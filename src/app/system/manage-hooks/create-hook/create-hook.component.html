@@ -6,94 +6,113 @@
           <mat-form-field class="flex-40">
             <mat-label>{{ 'labels.inputs.Hook Template' | translate }}</mat-label>
             <mat-select required formControlName="name">
-              <mat-option *ngFor="let hookTemplate of hooksTemplateData.templates" [value]="hookTemplate.name">
-                {{ hookTemplate.name | translateKey: 'text' }}
-              </mat-option>
+              @for (hookTemplate of hooksTemplateData.templates; track hookTemplate) {
+                <mat-option [value]="hookTemplate.name">
+                  {{ hookTemplate.name | translateKey: 'text' }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error *ngIf="hookForm.controls.name.hasError('required')">
-              {{ 'labels.inputs.Hook Template' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (hookForm.controls.name.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Hook Template' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field class="flex-40">
             <mat-label>{{ 'labels.inputs.Display Name' | translate }}</mat-label>
             <input matInput required formControlName="displayName" />
-            <mat-error *ngIf="hookForm.controls.displayName.hasError('required')">
-              {{ 'labels.inputs.Display Name' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (hookForm.controls.displayName.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Display Name' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
         </div>
 
         <div class="layout-row-wrap responsive-column gap-4percent">
-          <mat-form-field class="flex-40" *ngIf="hookForm.controls.name.value === 'Web'">
-            <mat-label>{{ 'labels.inputs.Content Type' | translate }}</mat-label>
-            <mat-select required formControlName="contentType">
-              <mat-option [value]="'json'">
-                {{ 'labels.inputs.json' | translate }}
-              </mat-option>
-              <mat-option [value]="'form'">
-                {{ 'labels.inputs.form' | translate }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="hookForm.controls.contentType.hasError('required')">
-              {{ 'labels.inputs.Content Type' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
-          </mat-form-field>
+          @if (hookForm.controls.name.value === 'Web') {
+            <mat-form-field class="flex-40">
+              <mat-label>{{ 'labels.inputs.Content Type' | translate }}</mat-label>
+              <mat-select required formControlName="contentType">
+                <mat-option [value]="'json'">
+                  {{ 'labels.inputs.json' | translate }}
+                </mat-option>
+                <mat-option [value]="'form'">
+                  {{ 'labels.inputs.form' | translate }}
+                </mat-option>
+              </mat-select>
+              @if (hookForm.controls.contentType.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Content Type' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+          }
 
-          <mat-form-field class="flex-fill flex-40" *ngIf="hookForm.controls.name.value === 'SMS Bridge'">
-            <mat-label>{{ 'labels.inputs.Phone Number' | translate }}</mat-label>
-            <input matInput type="tel" #input maxlength="10" required formControlName="phoneNumber" />
-            <mat-hint align="end">{{ input.value?.length || 0 }}/10</mat-hint>
-            <mat-error *ngIf="hookForm.controls.phoneNumber.hasError('required')">
-              {{ 'labels.inputs.Payload URL' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
-          </mat-form-field>
+          @if (hookForm.controls.name.value === 'SMS Bridge') {
+            <mat-form-field class="flex-fill flex-40">
+              <mat-label>{{ 'labels.inputs.Phone Number' | translate }}</mat-label>
+              <input matInput type="tel" #input maxlength="10" required formControlName="phoneNumber" />
+              <mat-hint align="end">{{ input.value?.length || 0 }}/10</mat-hint>
+              @if (hookForm.controls.phoneNumber.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Payload URL' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+          }
 
           <mat-form-field class="flex-40">
             <mat-label>{{ 'labels.inputs.Payload URL' | translate }}</mat-label>
             <input matInput required formControlName="payloadUrl" />
-            <mat-error *ngIf="hookForm.controls.payloadUrl.hasError('required')">
-              {{ 'labels.inputs.Payload URL' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (hookForm.controls.payloadUrl.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Payload URL' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
         </div>
 
-        <div
-          class="layout-row-wrap responsive-column gap-4percent"
-          *ngIf="hookForm.controls.name.value === 'SMS Bridge'"
-        >
-          <mat-form-field class="flex-30">
-            <mat-label>{{ 'labels.inputs.SMS Provider' | translate }}</mat-label>
-            <input matInput required formControlName="smsProvider" />
-            <mat-error *ngIf="hookForm.controls.smsProvider.hasError('required')">
-              {{ 'labels.inputs.SMS Provider' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field class="flex-30">
-            <mat-label>{{ 'labels.inputs.SMS Provider Account ID' | translate }}</mat-label>
-            <input matInput required formControlName="smsProviderAccountId" />
-            <mat-error *ngIf="hookForm.controls.smsProviderAccountId.hasError('required')">
-              {{ 'labels.inputs.SMS Provider Account ID' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field class="flex-30">
-            <mat-label>{{ 'labels.inputs.SMS Provider Token' | translate }}</mat-label>
-            <input matInput required formControlName="smsProviderToken" />
-            <mat-error *ngIf="hookForm.controls.smsProviderToken.hasError('required')">
-              {{ 'labels.inputs.SMS Provider Token' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
+        @if (hookForm.controls.name.value === 'SMS Bridge') {
+          <div class="layout-row-wrap responsive-column gap-4percent">
+            <mat-form-field class="flex-30">
+              <mat-label>{{ 'labels.inputs.SMS Provider' | translate }}</mat-label>
+              <input matInput required formControlName="smsProvider" />
+              @if (hookForm.controls.smsProvider.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.SMS Provider' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+            <mat-form-field class="flex-30">
+              <mat-label>{{ 'labels.inputs.SMS Provider Account ID' | translate }}</mat-label>
+              <input matInput required formControlName="smsProviderAccountId" />
+              @if (hookForm.controls.smsProviderAccountId.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.SMS Provider Account ID' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+            <mat-form-field class="flex-30">
+              <mat-label>{{ 'labels.inputs.SMS Provider Token' | translate }}</mat-label>
+              <input matInput required formControlName="smsProviderToken" />
+              @if (hookForm.controls.smsProviderToken.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.SMS Provider Token' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+          </div>
+        }
 
         <br />
 

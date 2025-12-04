@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, inject } from '@angular/core';
 import {
   MatTableDataSource,
   MatTable,
@@ -43,11 +43,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoansActiveClientMembersComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+
   loanId: any = null;
   @Input() activeClientMembers?: any;
   @Input() loansAccountFormValid: boolean;
 
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     this.loanId = this.route.snapshot.params['loanId'];
   }
   dataSource: any;

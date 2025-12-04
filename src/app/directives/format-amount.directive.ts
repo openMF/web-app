@@ -1,10 +1,14 @@
-import { Directive, HostListener, ElementRef, Input, OnInit, Inject } from '@angular/core';
+import { Directive, HostListener, ElementRef, Input, OnInit, inject } from '@angular/core';
 import { formatCurrency } from '@angular/common';
 import { NgControl } from '@angular/forms';
 import { LOCALE_ID } from '@angular/core';
 
 @Directive({ selector: '[mifosxFormatAmount]' })
 export class FormatAmountDirective implements OnInit {
+  private locale = inject(LOCALE_ID);
+  private el = inject(ElementRef);
+  private control = inject(NgControl);
+
   format = 'N0';
   digitsInfo = '1.0-0';
   currencyCode: string;
@@ -34,12 +38,6 @@ export class FormatAmountDirective implements OnInit {
       this.el.nativeElement.value = this.parse(this.el.nativeElement.value);
     });
   }
-
-  constructor(
-    @Inject(LOCALE_ID) private locale: string,
-    private el: ElementRef,
-    private control: NgControl
-  ) {}
 
   parse(value: any) {
     if (value == '') {

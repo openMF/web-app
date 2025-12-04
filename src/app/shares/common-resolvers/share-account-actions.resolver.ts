@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
@@ -13,10 +13,7 @@ import { SharesService } from '../shares.service';
  */
 @Injectable()
 export class ShareAccountActionsResolver {
-  /**
-   * @param {sharesService} SharesService Shares service.
-   */
-  constructor(private sharesService: SharesService) {}
+  private sharesService = inject(SharesService);
 
   /**
    * Returns the Shares account actions data.

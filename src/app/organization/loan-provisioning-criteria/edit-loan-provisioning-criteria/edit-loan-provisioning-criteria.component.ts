@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -58,6 +58,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditLoanProvisioningCriteriaComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private organizationService = inject(OrganizationService);
+  private router = inject(Router);
+  private settingsService = inject(SettingsService);
+  dialog = inject(MatDialog);
+  private route = inject(ActivatedRoute);
+
   /** Loan Provisioning Criteria form. */
   provisioningCriteriaForm: UntypedFormGroup;
   /** Loan Provisioning Criteria Template */
@@ -98,14 +105,7 @@ export class EditLoanProvisioningCriteriaComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private organizationService: OrganizationService,
-    private router: Router,
-    private settingsService: SettingsService,
-    public dialog: MatDialog,
-    private route: ActivatedRoute
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { loanProvisioningCriteriaAndTemplate: any }) => {
       this.loanProvisioningCriteriaAndTemplate = data.loanProvisioningCriteriaAndTemplate;
       this.definitions = this.loanProvisioningCriteriaAndTemplate.definitions;

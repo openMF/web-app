@@ -17,6 +17,7 @@ import { environment } from '../../../environments/environment';
 export class CacheInterceptor implements HttpInterceptor {
   private forceUpdate = false;
 
+  // eslint-disable-next-line @angular-eslint/prefer-inject
   constructor(private httpCacheService: HttpCacheService) {}
 
   /**

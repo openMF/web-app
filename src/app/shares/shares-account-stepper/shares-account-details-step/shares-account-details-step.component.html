@@ -3,9 +3,11 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Product Name' | translate }}</mat-label>
       <mat-select formControlName="productId" required>
-        <mat-option *ngFor="let product of productData" [value]="product.id">
-          {{ product.name }}
-        </mat-option>
+        @for (product of productData; track product) {
+          <mat-option [value]="product.id">
+            {{ product.name }}
+          </mat-option>
+        }
       </mat-select>
       <mat-error>
         {{ 'labels.inputs.Product Name' | translate }} {{ 'labels.commons.is' | translate }}

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -42,23 +42,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateSurveyComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private systemService = inject(SystemService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  dialog = inject(MatDialog);
+
   /** Survey form. */
   surveyForm: UntypedFormGroup;
-
-  /**
-   * @param {FormBuilder} formBuilder Form Builder.
-   * @param {SystemService} systemService System Service.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {Router} router Router for navigation.
-   * @param {MatDialog} dialog Dialog reference.
-   */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private systemService: SystemService,
-    private route: ActivatedRoute,
-    private router: Router,
-    public dialog: MatDialog
-  ) {}
 
   /**
    * Creates the survey form.
@@ -84,7 +75,8 @@ export class CreateSurveyComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern('^\\s*([A-Za-z]{2})?\\s*$')]
+          Validators.pattern('^\\s*([A-Za-z]{2})?\\s*$')
+        ]
       ],
       description: [''],
       questionDatas: this.formBuilder.array([])
@@ -163,7 +155,8 @@ export class CreateSurveyComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern('^\\s*[-]?\\d{0,4}\\s*$')]
+          Validators.pattern('^\\s*[-]?\\d{0,4}\\s*$')
+        ]
       ],
       sequenceNo: ['']
     });

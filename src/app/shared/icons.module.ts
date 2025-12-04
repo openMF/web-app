@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { NgModule } from '@angular/core';
+import { NgModule, inject } from '@angular/core';
 
 /** Angular Font Awesome Imports */
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
@@ -125,7 +125,9 @@ import {
   exports: [FontAwesomeModule]
 })
 export class IconsModule {
-  constructor(library: FaIconLibrary) {
+  constructor() {
+    const library = inject(FaIconLibrary);
+
     library.addIcons(
       faAnchor,
       faArchive,

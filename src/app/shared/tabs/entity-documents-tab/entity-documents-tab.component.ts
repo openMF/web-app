@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import lightGallery from 'lightgallery';
 import lgFullscreen from 'lightgallery/plugins/fullscreen';
@@ -27,6 +27,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
+  dialog = inject(MatDialog);
+  private savingsService = inject(SavingsService);
+  private loansService = inject(LoansService);
+  private clientsService = inject(ClientsService);
+  private documentPreviewService = inject(DocumentPreviewService);
+
   @ViewChild('lightboxRoot', { static: true }) lightboxRoot: ElementRef<HTMLElement>;
 
   @Input() entityId: string;
@@ -43,14 +49,6 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
     lgThumbnail,
     lgFullscreen
   ];
-
-  constructor(
-    public dialog: MatDialog,
-    private savingsService: SavingsService,
-    private loansService: LoansService,
-    private clientsService: ClientsService,
-    private documentPreviewService: DocumentPreviewService
-  ) {}
 
   ngOnInit(): void {
     this.prefetchThumbnails();

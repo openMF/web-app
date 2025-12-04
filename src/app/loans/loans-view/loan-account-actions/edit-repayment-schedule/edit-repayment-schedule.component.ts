@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -24,6 +24,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditRepaymentScheduleComponent implements OnInit {
+  private loansService = inject(LoansService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private dialog = inject(MatDialog);
+  private dateUtils = inject(Dates);
+  private translateService = inject(TranslateService);
+  private settingsService = inject(SettingsService);
+
   /** Loan ID. */
   loanId: string;
   /** Indicates If the Schedule has been changed */
@@ -43,15 +51,7 @@ export class EditRepaymentScheduleComponent implements OnInit {
    * @param {Dates} dateUtils Dates Utils.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private loansService: LoansService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private dialog: MatDialog,
-    private dateUtils: Dates,
-    private translateService: TranslateService,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.loanId = this.route.snapshot.params['loanId'];
     this.getRepaymentSchedule();
   }
@@ -107,7 +107,6 @@ export class EditRepaymentScheduleComponent implements OnInit {
         type: 'number',
         required: true
       })
-
     ];
     const data = {
       title: 'Pattern Update',

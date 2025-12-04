@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { Alert } from 'app/core/alert/alert.model';
 import { AlertService } from 'app/core/alert/alert.service';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
@@ -11,7 +11,7 @@ import { VersionService } from 'app/system/version.service';
 /** Environment Configuration */
 import { environment } from '../../../environments/environment';
 import { Subscription } from 'rxjs';
-import { NgIf, NgClass, DatePipe } from '@angular/common';
+import { NgClass, DatePipe } from '@angular/common';
 import { MatDivider } from '@angular/material/divider';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -30,6 +30,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class FooterComponent implements OnInit, OnDestroy {
+  private systemService = inject(SystemService);
+  private settingsService = inject(SettingsService);
+  private authenticationService = inject(AuthenticationService);
+  private alertService = inject(AlertService);
+  private dateUtils = inject(Dates);
+  private versionService = inject(VersionService);
+
   @Input() styleClass: string = '';
 
   /** Mifos X version. */
@@ -54,14 +61,7 @@ export class FooterComponent implements OnInit, OnDestroy {
 
   displayBackEndInfo = true;
 
-  constructor(
-    private systemService: SystemService,
-    private settingsService: SettingsService,
-    private authenticationService: AuthenticationService,
-    private alertService: AlertService,
-    private dateUtils: Dates,
-    private versionService: VersionService
-  ) {
+  constructor() {
     this.displayBackEndInfo = environment.displayBackEndInfo === 'true';
   }
 

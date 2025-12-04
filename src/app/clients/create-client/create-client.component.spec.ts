@@ -94,7 +94,6 @@ describe('CreateClientComponent - Integration Tests', () => {
         DecimalPipe,
         provideNativeDateAdapter(),
         provideAnimationsAsync()
-
       ]
     }).compileComponents();
 

@@ -1,46 +1,43 @@
-<div class="container" *ngIf="provisioningEntry">
-  <div class="m-b-20 layout-row align-end gap-20px">
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="createProvisioningJournalEntries()"
-      [disabled]="provisioningEntry.journalEntry"
-      *mifosxHasPermission="'CREATE_JOURNAL_ENTRY'"
-    >
-      <fa-icon icon="plus" class="m-r-10"></fa-icon>
-      {{ 'labels.buttons.Create Journal Entries' | translate }}
-    </button>
+@if (provisioningEntry) {
+  <div class="container">
+    <div class="m-b-20 layout-row align-end gap-20px">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="createProvisioningJournalEntries()"
+        [disabled]="provisioningEntry.journalEntry"
+        *mifosxHasPermission="'CREATE_JOURNAL_ENTRY'"
+      >
+        <fa-icon icon="plus" class="m-r-10"></fa-icon>
+        {{ 'labels.buttons.Create Journal Entries' | translate }}
+      </button>
+    </div>
+    <mat-card>
+      <mat-card-content>
+        <div class="layout-row-wrap responsive-column content">
+          <div class="flex-16 header">
+            {{ 'labels.inputs.Created By' | translate }}
+          </div>
+          <div class="flex-16">
+            {{ provisioningEntry.createdUser }}
+          </div>
+          <div class="flex-16 header">
+            {{ 'labels.inputs.Created On' | translate }}
+          </div>
+          <div class="flex-16">
+            {{ provisioningEntry.createdDate }}
+          </div>
+          <div class="flex-18 header">
+            {{ 'labels.inputs.Amount to be Reserved' | translate }}
+          </div>
+          <div class="flex-18">
+            {{ provisioningEntry.reservedAmount }}
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
   </div>
-
-  <mat-card>
-    <mat-card-content>
-      <div class="layout-row-wrap responsive-column content">
-        <div class="flex-16 header">
-          {{ 'labels.inputs.Created By' | translate }}
-        </div>
-        <div class="flex-16">
-          {{ provisioningEntry.createdUser }}
-        </div>
-
-        <div class="flex-16 header">
-          {{ 'labels.inputs.Created On' | translate }}
-        </div>
-
-        <div class="flex-16">
-          {{ provisioningEntry.createdDate }}
-        </div>
-
-        <div class="flex-18 header">
-          {{ 'labels.inputs.Amount to be Reserved' | translate }}
-        </div>
-
-        <div class="flex-18">
-          {{ provisioningEntry.reservedAmount }}
-        </div>
-      </div>
-    </mat-card-content>
-  </mat-card>
-</div>
+}
 
 <!-- Search -->
 <div class="container m-t-20 layout-row-wrap responsive-column gap-2percent">
@@ -62,24 +59,27 @@
 
 <!-- Autocomplete data -->
 <mat-autocomplete autoActiveFirstOption #officeNameAutocomplete="matAutocomplete">
-  <mat-option *ngFor="let office of filteredOfficeData | async" [value]="office.name">
-    {{ office.name }}
-  </mat-option>
+  @for (office of filteredOfficeData | async; track office) {
+    <mat-option [value]="office.name">
+      {{ office.name }}
+    </mat-option>
+  }
 </mat-autocomplete>
 
 <mat-autocomplete autoActiveFirstOption #loanProductAutocomplete="matAutocomplete">
-  <mat-option *ngFor="let loanProduct of filteredLoanProductData | async" [value]="loanProduct.name">
-    {{ loanProduct.name }}
-  </mat-option>
+  @for (loanProduct of filteredLoanProductData | async; track loanProduct) {
+    <mat-option [value]="loanProduct.name">
+      {{ loanProduct.name }}
+    </mat-option>
+  }
 </mat-autocomplete>
 
 <mat-autocomplete autoActiveFirstOption #provisioningCategoryAutocomplete="matAutocomplete">
-  <mat-option
-    *ngFor="let provisioningCategory of filteredProvisioningCategoryData | async"
-    [value]="provisioningCategory.categoryName"
-  >
-    {{ provisioningCategory.categoryName }}
-  </mat-option>
+  @for (provisioningCategory of filteredProvisioningCategoryData | async; track provisioningCategory) {
+    <mat-option [value]="provisioningCategory.categoryName">
+      {{ provisioningCategory.categoryName }}
+    </mat-option>
+  }
 </mat-autocomplete>
 
 <!--Table -->

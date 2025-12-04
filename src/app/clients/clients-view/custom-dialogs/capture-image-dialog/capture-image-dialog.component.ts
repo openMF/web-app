@@ -1,7 +1,7 @@
 /** Angular Imports */
-import { Component, ViewChild, ElementRef, AfterViewInit, Renderer2, OnDestroy } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, Renderer2, OnDestroy, inject } from '@angular/core';
 import { MatDialogRef, MatDialogTitle, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
-import { NgStyle, NgIf } from '@angular/common';
+import { NgStyle } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -22,6 +22,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {
+  dialogRef = inject<MatDialogRef<CaptureImageDialogComponent>>(MatDialogRef);
+  private renderer = inject(Renderer2);
+
   /** Video element reference */
   @ViewChild('video', { static: true }) video: ElementRef;
   /** Canvas element reference */
@@ -35,15 +38,6 @@ export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {
   isCaptured = false;
   /** Client image file */
   clientImageDataURL: string;
-
-  /**
-   * @param {MatDialogRef} dialogRef Mat Dialog Reference
-   * @param {Renderer2} renderer Template Renderer
-   */
-  constructor(
-    public dialogRef: MatDialogRef<CaptureImageDialogComponent>,
-    private renderer: Renderer2
-  ) {}
 
   ngAfterViewInit() {
     this.startCamera();

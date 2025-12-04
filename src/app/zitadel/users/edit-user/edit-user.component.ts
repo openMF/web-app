@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 /** Custom Services */
@@ -20,6 +20,12 @@ import { ZITADEL_LANGUAGES } from 'app/zitadel/constants/languages';
   ]
 })
 export class EditUserComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private UsersServiceZitadel = inject(UsersServiceZitadel);
+  private UsersService = inject(UsersService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   /** User Data */
   userData: any;
   /** Offices Data */
@@ -44,13 +50,7 @@ export class EditUserComponent implements OnInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {Router} router Router for navigation.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private UsersServiceZitadel: UsersServiceZitadel,
-    private UsersService: UsersService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { user: any; usersTemplate: any }) => {
       const fullUserData = data.user;
       this.userData = fullUserData.object?.result?.[0] || {};
@@ -115,13 +115,15 @@ export class EditUserComponent implements OnInit {
         profile.firstName || '',
         [
           Validators.required,
-          Validators.pattern('(^[A-z]).*')]
+          Validators.pattern('(^[A-z]).*')
+        ]
       ],
       lastname: [
         profile.lastName || '',
         [
           Validators.required,
-          Validators.pattern('(^[A-z]).*')]
+          Validators.pattern('(^[A-z]).*')
+        ]
       ],
       countryCode: [
         countryCode,

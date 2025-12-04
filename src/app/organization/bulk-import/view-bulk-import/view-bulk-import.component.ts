@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -58,6 +58,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewBulkImportComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private formBuilder = inject(UntypedFormBuilder);
+  private organizationService = inject(OrganizationService);
+
   /** offices Data */
   officeData: any;
   /** staff Data */
@@ -99,11 +103,7 @@ export class ViewBulkImportComponent implements OnInit {
    * @param {FormBuilder} formBuilder FormBuilder
    * @param {OrganizationService} organizationService OrganizationService
    */
-  constructor(
-    private route: ActivatedRoute,
-    private formBuilder: UntypedFormBuilder,
-    private organizationService: OrganizationService
-  ) {
+  constructor() {
     this.bulkImport.name = this.route.snapshot.params['import-name'];
     this.route.data.subscribe((data: any) => {
       this.officeData = data.offices;

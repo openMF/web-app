@@ -14,10 +14,12 @@
           />
           <mat-datepicker-toggle matSuffix [for]="activationDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #activationDatePicker></mat-datepicker>
-          <mat-error *ngIf="activateCenterForm.controls.activationDate.hasError('required')">
-            {{ 'labels.inputs.Activated On Date' | translate }} {{ 'labels.commons.is' | translate }}
-            <strong>{{ 'labels.commons.required' | translate }}</strong>
-          </mat-error>
+          @if (activateCenterForm.controls.activationDate.hasError('required')) {
+            <mat-error>
+              {{ 'labels.inputs.Activated On Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          }
         </mat-form-field>
       </mat-card-content>
 

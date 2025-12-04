@@ -85,7 +85,6 @@ describe('ViewTaxComponentComponent - Integration Tests', () => {
         DecimalPipe,
         provideNativeDateAdapter(),
         provideAnimationsAsync()
-
       ]
     }).compileComponents();
 

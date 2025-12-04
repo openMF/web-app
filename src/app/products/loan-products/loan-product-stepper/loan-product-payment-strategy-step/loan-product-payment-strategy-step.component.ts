@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, inject } from '@angular/core';
 import {
   AdvancedCreditAllocation,
   AdvancedPaymentAllocation,
@@ -38,6 +38,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoanProductPaymentStrategyStepComponent implements OnInit {
+  private dialog = inject(MatDialog);
+  private advancedPaymentStrategy = inject(AdvancedPaymentStrategy);
+  private translateService = inject(TranslateService);
+
   @Input() advancedPaymentAllocations: AdvancedPaymentAllocation[] = [];
   @Input() advancedCreditAllocations: AdvancedCreditAllocation[] = [];
   @Input() advancedPaymentAllocationTransactionTypes: PaymentAllocationTransactionType[] = [];
@@ -50,12 +54,6 @@ export class LoanProductPaymentStrategyStepComponent implements OnInit {
   @Output() setCreditAllocation = new EventEmitter<CreditAllocation[]>();
 
   @ViewChild(MatTabGroup) tabGroup: MatTabGroup;
-
-  constructor(
-    private dialog: MatDialog,
-    private advancedPaymentStrategy: AdvancedPaymentStrategy,
-    private translateService: TranslateService
-  ) {}
 
   ngOnInit(): void {
     this.sendAllocations();
@@ -105,7 +103,6 @@ export class LoanProductPaymentStrategyStepComponent implements OnInit {
         options: { label: 'value', value: 'code', data: transactionTypesOptions },
         order: 1
       })
-
     ];
     const data = {
       title: this.translateService.instant('labels.inputs.Advanced Payment Allocation Transaction Type'),

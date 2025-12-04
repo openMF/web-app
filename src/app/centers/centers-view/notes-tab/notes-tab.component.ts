@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
@@ -31,20 +31,20 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class NotesTabComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private formBuilder = inject(UntypedFormBuilder);
+  private centersService = inject(CentersService);
+  private authenticationService = inject(AuthenticationService);
+  private dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
+
   centerId: string;
   username: string;
   centerNotes: any;
   noteForm: UntypedFormGroup;
   @ViewChild('formRef', { static: true }) formRef: any;
 
-  constructor(
-    private route: ActivatedRoute,
-    private formBuilder: UntypedFormBuilder,
-    private centersService: CentersService,
-    private authenticationService: AuthenticationService,
-    private dialog: MatDialog,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     const savedCredentials = this.authenticationService.getCredentials();
     this.username = savedCredentials.username;
     this.centerId = this.route.parent.snapshot.params['centerId'];

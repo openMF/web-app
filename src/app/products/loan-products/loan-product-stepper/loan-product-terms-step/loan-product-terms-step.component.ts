@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -65,6 +65,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoanProductTermsStepComponent implements OnInit, OnChanges {
+  private formBuilder = inject(UntypedFormBuilder);
+  private processingStrategyService = inject(ProcessingStrategyService);
+  private dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
+
   @Input() loanProductsTemplate: any;
 
   loanProductTermsForm: UntypedFormGroup;
@@ -89,12 +94,7 @@ export class LoanProductTermsStepComponent implements OnInit, OnChanges {
   ];
   isAdvancedTransactionProcessingStrategy = false;
 
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private processingStrategyService: ProcessingStrategyService,
-    private dialog: MatDialog,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.createLoanProductTermsForm();
     this.setConditionalControls();
   }
@@ -456,7 +456,6 @@ export class LoanProductTermsStepComponent implements OnInit, OnChanges {
         type: 'number',
         order: 5
       })
-
     ];
     return formfields;
   }

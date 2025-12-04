@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { SavingsService } from 'app/savings/savings.service';
@@ -15,15 +15,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class NotesTabComponent {
+  private route = inject(ActivatedRoute);
+  private savingsService = inject(SavingsService);
+  private authenticationService = inject(AuthenticationService);
+
   entityId: string;
   username: string;
   entityNotes: any;
 
-  constructor(
-    private route: ActivatedRoute,
-    private savingsService: SavingsService,
-    private authenticationService: AuthenticationService
-  ) {
+  constructor() {
     const savedCredentials = this.authenticationService.getCredentials();
     this.username = savedCredentials.username;
     this.entityId = this.route.parent.snapshot.params['savingAccountId'];

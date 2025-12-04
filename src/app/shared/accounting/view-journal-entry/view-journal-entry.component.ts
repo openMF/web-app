@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -34,15 +34,17 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewJournalEntryComponent {
+  dialogRef = inject<MatDialogRef<ViewJournalEntryComponent>>(MatDialogRef);
+  data = inject(MAT_DIALOG_DATA);
+
   existsPaymentDetails = false;
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    * @param {any} data Provides journal entry.
    */
-  constructor(
-    public dialogRef: MatDialogRef<ViewJournalEntryComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
+  constructor() {
+    const data = this.data;
+
     this.existsPaymentDetails =
       data.journalEntry.transactionDetails != null && data.journalEntry.transactionDetails.paymentDetails != null;
   }

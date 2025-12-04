@@ -15,10 +15,12 @@
             />
             <mat-datepicker-toggle matSuffix [for]="withdrawnOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #withdrawnOnDatePicker></mat-datepicker>
-            <mat-error *ngIf="withdrawnByClientLoanForm.controls.withdrawnOnDate.hasError('required')">
-              {{ 'labels.inputs.Withdrawn On Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (withdrawnByClientLoanForm.controls.withdrawnOnDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Withdrawn On Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>

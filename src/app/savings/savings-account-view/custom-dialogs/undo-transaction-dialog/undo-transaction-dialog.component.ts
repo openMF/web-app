@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   MatDialogRef,
   MatDialogTitle,
@@ -26,8 +26,5 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class UndoTransactionDialogComponent {
-  /**
-   * @param {MatDialogRef} dialogRef Component reference to dialog.
-   */
-  constructor(public dialogRef: MatDialogRef<UndoTransactionDialogComponent>) {}
+  dialogRef = inject<MatDialogRef<UndoTransactionDialogComponent>>(MatDialogRef);
 }

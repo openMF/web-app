@@ -1,13 +1,11 @@
 import { DecimalPipe } from '@angular/common';
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 import { SettingsService } from 'app/settings/settings.service';
 
 @Pipe({ name: 'formatNumber' })
 export class FormatNumberPipe implements PipeTransform {
-  constructor(
-    private decimalFormat: DecimalPipe,
-    private settingsService: SettingsService
-  ) {}
+  private decimalFormat = inject(DecimalPipe);
+  private settingsService = inject(SettingsService);
 
   transform(value: string | number, defaultValue: any): string {
     if (value === undefined) {

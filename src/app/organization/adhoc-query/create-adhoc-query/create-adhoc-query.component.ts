@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -27,6 +27,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateAdhocQueryComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private organizationService = inject(OrganizationService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   /** Adhoc Query form. */
   adhocQueryForm: UntypedFormGroup;
   /** Adhoc Query template data. */
@@ -41,12 +46,7 @@ export class CreateAdhocQueryComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private organizationService: OrganizationService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { adhocQueryTemplate: any }) => {
       this.adhocQueryTemplateData = data.adhocQueryTemplate;
     });
@@ -101,7 +101,8 @@ export class CreateAdhocQueryComponent implements OnInit {
           'reportRunEvery',
           new UntypedFormControl('', [
             Validators.required,
-            Validators.min(1)])
+            Validators.min(1)
+          ])
         );
       } else {
         this.adhocQueryForm.removeControl('reportRunEvery');

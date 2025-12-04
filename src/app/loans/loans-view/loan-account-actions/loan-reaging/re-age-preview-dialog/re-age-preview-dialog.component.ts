@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 import { MatButton } from '@angular/material/button';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -23,13 +23,15 @@ export interface ReAgePreviewDialogData {
   ]
 })
 export class ReAgePreviewDialogComponent {
+  dialogRef = inject<MatDialogRef<ReAgePreviewDialogComponent>>(MatDialogRef);
+  data = inject<ReAgePreviewDialogData>(MAT_DIALOG_DATA);
+
   repaymentSchedule: RepaymentSchedule;
   currencyCode: string;
 
-  constructor(
-    public dialogRef: MatDialogRef<ReAgePreviewDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ReAgePreviewDialogData
-  ) {
+  constructor() {
+    const data = this.data;
+
     this.repaymentSchedule = data.repaymentSchedule;
     this.currencyCode = data.currencyCode;
   }

@@ -37,45 +37,51 @@
     <ng-container matColumnDef="documents">
       <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Identity Documents' | translate }}</th>
       <td mat-cell *matCellDef="let identity">
-        <div class="document-grid" *ngIf="identity.documents?.length; else noDocs">
-          <div class="document-card" *ngFor="let document of identity.documents; trackBy: trackByDocumentId">
-            <div
-              class="thumb"
-              [class.clickable]="isPreviewable(document)"
-              role="button"
-              tabindex="0"
-              [attr.aria-label]="('labels.buttons.Preview' | translate) + ': ' + document.name"
-              (keydown.enter)="isPreviewable(document) && openDocumentPreview(identity, document)"
-              (keydown.space)="isPreviewable(document) && openDocumentPreview(identity, document)"
-              (click)="isPreviewable(document) && openDocumentPreview(identity, document)"
-            >
-              <ng-container *ngIf="previewThumbnails[document.id]; else placeholder">
-                <img
-                  [src]="previewThumbnails[document.id]"
-                  [alt]="document.name"
-                  [title]="document.name"
-                  loading="lazy"
-                />
-              </ng-container>
-              <ng-template #placeholder>
-                <div class="placeholder">
-                  <fa-icon icon="file"></fa-icon>
-                  <span>{{ document.fileName || document.name }}</span>
+        @if (identity.documents?.length) {
+          <div class="document-grid">
+            @for (document of identity.documents; track trackByDocumentId($index, document)) {
+              <div class="document-card">
+                <div
+                  class="thumb"
+                  [class.clickable]="isPreviewable(document)"
+                  role="button"
+                  tabindex="0"
+                  [attr.aria-label]="('labels.buttons.Preview' | translate) + ': ' + document.name"
+                  (keydown.enter)="isPreviewable(document) && openDocumentPreview(identity, document)"
+                  (keydown.space)="isPreviewable(document) && openDocumentPreview(identity, document)"
+                  (click)="isPreviewable(document) && openDocumentPreview(identity, document)"
+                >
+                  @if (previewThumbnails[document.id]) {
+                    <img
+                      [src]="previewThumbnails[document.id]"
+                      [alt]="document.name"
+                      [title]="document.name"
+                      loading="lazy"
+                    />
+                  } @else {
+                    <div class="placeholder">
+                      <fa-icon icon="file"></fa-icon>
+                      <span>{{ document.fileName || document.name }}</span>
+                    </div>
+                  }
+                  @if (isPreviewable(document)) {
+                    <div class="preview-overlay">
+                      <fa-icon icon="eye"></fa-icon>
+                    </div>
+                  }
                 </div>
-              </ng-template>
-              <div class="preview-overlay" *ngIf="isPreviewable(document)">
-                <fa-icon icon="eye"></fa-icon>
+                <div class="card-body">
+                  <div class="title">{{ document.name }}</div>
+                  @if (document.fileName) {
+                    <div class="meta">{{ document.fileName }}</div>
+                  }
+                </div>
               </div>
-            </div>
-            <div class="card-body">
-              <div class="title">{{ document.name }}</div>
-              <div class="meta" *ngIf="document.fileName">{{ document.fileName }}</div>
-            </div>
+            }
           </div>
-        </div>
-        <ng-template #noDocs>
+        } @else {
           <span class="muted">{{ 'labels.text.NoDocuments' | translate }}</span>
-        </ng-template>
+        }
       </td>
     </ng-container>
 

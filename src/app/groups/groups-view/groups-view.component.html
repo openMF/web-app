@@ -35,22 +35,28 @@
             <b>{{ 'labels.inputs.Office Name' | translate }} :</b> {{ groupViewData.officeName }}<br />
             <b>{{ 'labels.inputs.Activation Date' | translate }} :</b>
             {{ groupViewData.activationDate ? (groupViewData.activationDate | dateFormat) : 'Not Activated' }}<br />
-            <span *ngIf="!groupViewData.active">
-              <b>{{ 'labels.inputs.Closure Date' | translate }} :</b>
-              {{ groupViewData.timeline.closedOnDate | dateFormat }}
-            </span>
+            @if (!groupViewData.active) {
+              <span>
+                <b>{{ 'labels.inputs.Closure Date' | translate }} :</b>
+                {{ groupViewData.timeline.closedOnDate | dateFormat }}
+              </span>
+            }
           </div>
           <div class="group-meeting flex-45 align-start-start">
-            <div *ngIf="groupViewData.collectionMeetingCalendar; else unassigned">
-              <p>
-                {{ 'labels.inputs.Next Meeting on' | translate }}:
-                {{ groupViewData.collectionMeetingCalendar?.nextTenRecurringDates[0] | dateFormat }}
-                <i class="fa fa-edit" *ngIf="editMeeting" (click)="doAction('Edit Meeting')"></i><br />
-                {{ 'labels.inputs.Meeting Frequency' | translate }}:
-                {{ groupViewData.collectionMeetingCalendar?.frequency.value | lowercase }}
-              </p>
-            </div>
-            <ng-template #unassigned>
+            @if (groupViewData.collectionMeetingCalendar) {
+              <div>
+                <p>
+                  {{ 'labels.inputs.Next Meeting on' | translate }}:
+                  {{ groupViewData.collectionMeetingCalendar?.nextTenRecurringDates[0] | dateFormat }}
+                  @if (editMeeting) {
+                    <i class="fa fa-edit" (click)="doAction('Edit Meeting')"></i>
+                  }
+                  <br />
+                  {{ 'labels.inputs.Meeting Frequency' | translate }}:
+                  {{ groupViewData.collectionMeetingCalendar?.frequency.value | lowercase }}
+                </p>
+              </div>
+            } @else {
               <div>
                 <p>
                   {{ 'labels.inputs.Next Meeting on' | translate }}: {{ 'labels.inputs.Unassigned' | translate }}
@@ -58,20 +64,22 @@
                   {{ 'labels.inputs.Meeting Frequency' | translate }}: {{ 'labels.inputs.N/A' | translate }}
                 </p>
               </div>
-            </ng-template>
+            }
           </div>
         </mat-card-subtitle>
       </div>
 
       <mat-menu #groupMenu="matMenu">
-        <span *ngIf="!(groupViewData.status.value === 'Active')">
-          <button mat-menu-item *mifosxHasPermission="'UPDATE_GROUP'" (click)="doAction('Activate')">
-            <mat-icon matListIcon>
-              <fa-icon icon="checkSign" size="sm"></fa-icon>
-            </mat-icon>
-            <span>{{ 'labels.buttons.Activate' | translate }}</span>
-          </button>
-        </span>
+        @if (!(groupViewData.status.value === 'Active')) {
+          <span>
+            <button mat-menu-item *mifosxHasPermission="'UPDATE_GROUP'" (click)="doAction('Activate')">
+              <mat-icon matListIcon>
+                <fa-icon icon="checkSign" size="sm"></fa-icon>
+              </mat-icon>
+              <span>{{ 'labels.buttons.Activate' | translate }}</span>
+            </button>
+          </span>
+        }
         <button mat-menu-item *mifosxHasPermission="'UPDATE_GROUP'" (click)="doAction('Edit')">
           <mat-icon matListIcon>
             <fa-icon icon="edit" size="sm"></fa-icon>
@@ -91,19 +99,23 @@
           <span>{{ 'labels.buttons.Manage Members' | translate }}</span>
         </button>
 
-        <button mat-menu-item *ngIf="groupViewData.active" [matMenuTriggerFor]="AccountApplications">
-          <mat-icon matListIcon>
-            <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
-          </mat-icon>
-          <span>{{ 'labels.buttons.Applications' | translate }}</span>
-        </button>
+        @if (groupViewData.active) {
+          <button mat-menu-item [matMenuTriggerFor]="AccountApplications">
+            <mat-icon matListIcon>
+              <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
+            </mat-icon>
+            <span>{{ 'labels.buttons.Applications' | translate }}</span>
+          </button>
+        }
 
         <mat-menu #AccountApplications="matMenu">
-          <span *ngIf="groupViewData.clientMembers">
-            <button mat-menu-item *mifosxHasPermission="'CREATE_LOAN'">
-              {{ 'labels.buttons.Bulk JLG Loan Application' | translate }}
-            </button></span
-          >
+          @if (groupViewData.clientMembers) {
+            <span>
+              <button mat-menu-item *mifosxHasPermission="'CREATE_LOAN'">
+                {{ 'labels.buttons.Bulk JLG Loan Application' | translate }}
+              </button></span
+            >
+          }
           <button
             mat-menu-item
             *mifosxHasPermission="'CREATE_SAVINGSACCOUNT'"
@@ -114,57 +126,67 @@
           <button mat-menu-item *mifosxHasPermission="'CREATE_LOAN'" [routerLink]="['loans-accounts', 'create']">
             {{ 'labels.buttons.Group Loan Application' | translate }}
           </button>
-          <span *ngIf="groupViewData.clientMembers">
-            <button
-              mat-menu-item
-              *mifosxHasPermission="'CREATE_LOAN'"
-              [routerLink]="['loans-accounts', 'glim-account', 'create']"
-            >
-              {{ 'labels.buttons.GLIM Application' | translate }}
-            </button>
-          </span>
-          <span *ngIf="groupViewData.clientMembers">
-            <button
-              mat-menu-item
-              *mifosxHasPermission="'CREATE_GSIMACCOUNT'"
-              [routerLink]="['savings-accounts', 'gsim-account', 'create']"
-            >
-              {{ 'labels.buttons.GSIM Application' | translate }}
-            </button>
-          </span>
+          @if (groupViewData.clientMembers) {
+            <span>
+              <button
+                mat-menu-item
+                *mifosxHasPermission="'CREATE_LOAN'"
+                [routerLink]="['loans-accounts', 'glim-account', 'create']"
+              >
+                {{ 'labels.buttons.GLIM Application' | translate }}
+              </button>
+            </span>
+          }
+          @if (groupViewData.clientMembers) {
+            <span>
+              <button
+                mat-menu-item
+                *mifosxHasPermission="'CREATE_GSIMACCOUNT'"
+                [routerLink]="['savings-accounts', 'gsim-account', 'create']"
+              >
+                {{ 'labels.buttons.GSIM Application' | translate }}
+              </button>
+            </span>
+          }
         </mat-menu>
 
         <button mat-menu-item [matMenuTriggerFor]="More">{{ 'labels.buttons.More' | translate }}</button>
         <mat-menu #More="matMenu">
-          <span *ngIf="groupViewData.collectionMeetingCalendar">
-            <button
-              mat-menu-item
-              *mifosxHasPermission="'SAVEORUPDATEATTENDANCE_MEETING'"
-              (click)="doAction('Attendance')"
+          @if (groupViewData.collectionMeetingCalendar) {
+            <span>
+              <button
+                mat-menu-item
+                *mifosxHasPermission="'SAVEORUPDATEATTENDANCE_MEETING'"
+                (click)="doAction('Attendance')"
+              >
+                {{ 'labels.buttons.Attendance' | translate }}
+              </button></span
             >
-              {{ 'labels.buttons.Attendance' | translate }}
-            </button></span
-          >
-          <span *ngIf="!groupViewData.staffId">
-            <button mat-menu-item *mifosxHasPermission="'ASSIGNSTAFF_GROUP'" (click)="doAction('Assign Staff')">
-              {{ 'labels.buttons.Assign Staff' | translate }}
-            </button></span
-          >
-          <span *ngIf="groupViewData.staffId">
-            <button mat-menu-item *mifosxHasPermission="'UNASSIGNSTAFF_GROUP'" (click)="doAction('Unassign Staff')">
-              {{ 'labels.buttons.Unassign Staff' | translate }}
-            </button></span
-          >
-          <span
-            *ngIf="
-              !(groupViewData.centerId || groupViewData.collectionMeetingCalendar) &&
-              groupViewData.status.value === 'Active'
-            "
-          >
-            <button mat-menu-item *mifosxHasPermission="'CREATE_MEETING'" (click)="doAction('Attach Meeting')">
-              {{ 'labels.buttons.Attach Meeting' | translate }}
-            </button></span
-          >
+          }
+          @if (!groupViewData.staffId) {
+            <span>
+              <button mat-menu-item *mifosxHasPermission="'ASSIGNSTAFF_GROUP'" (click)="doAction('Assign Staff')">
+                {{ 'labels.buttons.Assign Staff' | translate }}
+              </button></span
+            >
+          }
+          @if (groupViewData.staffId) {
+            <span>
+              <button mat-menu-item *mifosxHasPermission="'UNASSIGNSTAFF_GROUP'" (click)="doAction('Unassign Staff')">
+                {{ 'labels.buttons.Unassign Staff' | translate }}
+              </button></span
+            >
+          }
+          @if (
+            !(groupViewData.centerId || groupViewData.collectionMeetingCalendar) &&
+            groupViewData.status.value === 'Active'
+          ) {
+            <span>
+              <button mat-menu-item *mifosxHasPermission="'CREATE_MEETING'" (click)="doAction('Attach Meeting')">
+                {{ 'labels.buttons.Attach Meeting' | translate }}
+              </button></span
+            >
+          }
           <button mat-menu-item *mifosxHasPermission="'CLOSE_GROUP'" (click)="doAction('Close')">
             {{ 'labels.buttons.Close' | translate }}
           </button>
@@ -206,18 +228,20 @@
       >
         {{ 'labels.inputs.Committee' | translate }}
       </a>
-      <span *ngFor="let groupDatatable of groupDatatables">
-        <a
-          mat-tab-link
-          *mifosxHasPermission="'READ_' + groupDatatable.registeredTableName"
-          [routerLink]="['./datatables', groupDatatable.registeredTableName]"
-          routerLinkActive
-          #datatable="routerLinkActive"
-          [active]="datatable.isActive"
-        >
-          {{ groupDatatable.registeredTableName }}
-        </a>
-      </span>
+      @for (groupDatatable of groupDatatables; track groupDatatable) {
+        <span>
+          <a
+            mat-tab-link
+            *mifosxHasPermission="'READ_' + groupDatatable.registeredTableName"
+            [routerLink]="['./datatables', groupDatatable.registeredTableName]"
+            routerLinkActive
+            #datatable="routerLinkActive"
+            [active]="datatable.isActive"
+          >
+            {{ groupDatatable.registeredTableName }}
+          </a>
+        </span>
+      }
     </nav>
 
     <mat-tab-nav-panel #tabPanel>

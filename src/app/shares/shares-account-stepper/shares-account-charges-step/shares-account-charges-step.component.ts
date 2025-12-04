@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UntypedFormControl } from '@angular/forms';
 
@@ -56,6 +56,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
+  private dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
+
   /** Shares Account Product Template */
   @Input() sharesAccountProductTemplate: any;
   /** Shares Account Template */
@@ -79,14 +82,6 @@ export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
     'chargeTimeType',
     'action'
   ];
-
-  /**
-   * @param {MatDialog} dialog Mat Dialog
-   */
-  constructor(
-    private dialog: MatDialog,
-    private translateService: TranslateService
-  ) {}
 
   ngOnInit() {
     this.currencyCode.valueChanges.subscribe(() => {
@@ -129,7 +124,6 @@ export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
         type: 'number',
         required: false
       })
-
     ];
     const data = {
       title: this.translateService.instant('labels.heading.Edit Charge'),

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -22,13 +22,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditNotesDialogComponent implements OnInit {
-  noteForm: UntypedFormGroup;
+  dialogRef = inject<MatDialogRef<EditNotesDialogComponent>>(MatDialogRef);
+  private formBuilder = inject(UntypedFormBuilder);
+  data = inject(MAT_DIALOG_DATA);
 
-  constructor(
-    public dialogRef: MatDialogRef<EditNotesDialogComponent>,
-    private formBuilder: UntypedFormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  noteForm: UntypedFormGroup;
 
   ngOnInit() {
     this.createNoteForm();

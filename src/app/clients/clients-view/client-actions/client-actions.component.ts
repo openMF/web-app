@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClientAssignStaffComponent } from './client-assign-staff/client-assign-staff.component';
 import { CloseClientComponent } from './close-client/close-client.component';
@@ -49,6 +49,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ClientActionsComponent {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   /** Flag object to store possible actions and render appropriate UI to the user */
   actions: {
     'Assign Staff': boolean;
@@ -92,10 +95,7 @@ export class ClientActionsComponent {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     const name = this.route.snapshot.params['name'] as keyof typeof this.actions;
     this.actions[name] = true;

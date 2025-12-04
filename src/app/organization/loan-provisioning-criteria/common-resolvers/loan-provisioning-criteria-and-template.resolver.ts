@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
@@ -13,10 +13,7 @@ import { OrganizationService } from '../../organization.service';
  */
 @Injectable()
 export class LoanProvisioningCriteriaAndTemplateResolver {
-  /**
-   * @param {OrganizationService} organizationService Products service.
-   */
-  constructor(private organizationService: OrganizationService) {}
+  private organizationService = inject(OrganizationService);
 
   /**
    * Returns the Pprovisioning criteria and template data.

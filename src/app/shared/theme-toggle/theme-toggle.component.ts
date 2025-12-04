@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
 import { ThemingService } from './theming.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { MatIconButton } from '@angular/material/button';
@@ -16,12 +16,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ThemeToggleComponent implements OnInit, OnChanges {
-  darkModeOn: boolean;
+  private themingService = inject(ThemingService);
+  private settingsService = inject(SettingsService);
 
-  constructor(
-    private themingService: ThemingService,
-    private settingsService: SettingsService
-  ) {}
+  darkModeOn: boolean;
 
   ngOnInit(): void {
     this.darkModeOn = !!this.settingsService.themeDarkEnabled;

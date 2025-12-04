@@ -1,10 +1,10 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ClientsService } from 'app/clients/clients.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatCard, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { MatDivider } from '@angular/material/divider';
 import {
   MatTable,
@@ -52,6 +52,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewChargeComponent {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private clientService = inject(ClientsService);
+
   /** Charge Data. */
   chargeData: any;
   /** Mat Table Column defs. */
@@ -69,11 +73,7 @@ export class ViewChargeComponent {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private clientService: ClientsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { clientChargeData: any }) => {
       this.chargeData = data.clientChargeData;
     });

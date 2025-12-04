@@ -44,20 +44,22 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.System Defined' | translate }}</th>
         <td mat-cell *matCellDef="let entityDataTableCheck">
           <div [className]="entityDataTableCheck.systemDefined === true ? 'true' : 'false'">
-            <fa-icon
-              *ngIf="entityDataTableCheck.systemDefined"
-              icon="check-circle"
-              size="lg"
-              matTooltip="{{ 'tooltips.Yes' | translate }}"
-              matTooltipPosition="right"
-            ></fa-icon>
-            <fa-icon
-              *ngIf="!entityDataTableCheck.systemDefined"
-              icon="times-circle"
-              size="lg"
-              matTooltip="{{ 'tooltips.No' | translate }}"
-              matTooltipPosition="right"
-            ></fa-icon>
+            @if (entityDataTableCheck.systemDefined) {
+              <fa-icon
+                icon="check-circle"
+                size="lg"
+                matTooltip="{{ 'tooltips.Yes' | translate }}"
+                matTooltipPosition="right"
+              ></fa-icon>
+            }
+            @if (!entityDataTableCheck.systemDefined) {
+              <fa-icon
+                icon="times-circle"
+                size="lg"
+                matTooltip="{{ 'tooltips.No' | translate }}"
+                matTooltipPosition="right"
+              ></fa-icon>
+            }
           </div>
         </td>
       </ng-container>

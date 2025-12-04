@@ -6,65 +6,69 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Account Type' | translate }}</mat-label>
             <mat-select required formControlName="type">
-              <mat-option *ngFor="let accountType of accountTypeData" [value]="accountType.id">
-                {{ 'labels.inputs.accounting.' + accountType.value | translate }}
-              </mat-option>
+              @for (accountType of accountTypeData; track accountType) {
+                <mat-option [value]="accountType.id">
+                  {{ 'labels.inputs.accounting.' + accountType.value | translate }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error
-              *ngIf="
-                glAccountForm.controls.type.hasError('required') &&
-                (glAccountForm.controls.type.touched || glAccountForm.controls.type.dirty)
-              "
-            >
-              {{ 'labels.inputs.Account Type' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (
+              glAccountForm.controls.type.hasError('required') &&
+              (glAccountForm.controls.type.touched || glAccountForm.controls.type.dirty)
+            ) {
+              <mat-error>
+                {{ 'labels.inputs.Account Type' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Account Name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
-            <mat-error
-              *ngIf="
-                glAccountForm.controls.name.hasError('required') &&
-                (glAccountForm.controls.name.touched || glAccountForm.controls.name.dirty)
-              "
-            >
-              {{ 'labels.inputs.Account Name' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (
+              glAccountForm.controls.name.hasError('required') &&
+              (glAccountForm.controls.name.touched || glAccountForm.controls.name.dirty)
+            ) {
+              <mat-error>
+                {{ 'labels.inputs.Account Name' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Account Usage' | translate }}</mat-label>
             <mat-select required formControlName="usage">
-              <mat-option *ngFor="let accountUsage of accountUsageData" [value]="accountUsage.id">
-                {{ accountUsage.value }}
-              </mat-option>
+              @for (accountUsage of accountUsageData; track accountUsage) {
+                <mat-option [value]="accountUsage.id">
+                  {{ accountUsage.value }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error
-              *ngIf="
-                glAccountForm.controls.usage.hasError('required') &&
-                (glAccountForm.controls.usage.touched || glAccountForm.controls.usage.dirty)
-              "
-            >
-              {{ 'labels.inputs.Account Usage' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (
+              glAccountForm.controls.usage.hasError('required') &&
+              (glAccountForm.controls.usage.touched || glAccountForm.controls.usage.dirty)
+            ) {
+              <mat-error>
+                {{ 'labels.inputs.Account Usage' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.GL Code' | translate }}</mat-label>
             <input matInput required formControlName="glCode" />
-            <mat-error
-              *ngIf="
-                glAccountForm.controls.glCode.hasError('required') &&
-                (glAccountForm.controls.glCode.touched || glAccountForm.controls.glCode.dirty)
-              "
-            >
-              {{ 'labels.inputs.GL Code' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (
+              glAccountForm.controls.glCode.hasError('required') &&
+              (glAccountForm.controls.glCode.touched || glAccountForm.controls.glCode.dirty)
+            ) {
+              <mat-error>
+                {{ 'labels.inputs.GL Code' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mifosx-gl-account-selector
@@ -79,9 +83,11 @@
           <mat-form-field class="flex-28">
             <mat-label>{{ 'labels.inputs.Tag' | translate }}</mat-label>
             <mat-select formControlName="tagId">
-              <mat-option *ngFor="let tag of tagData" [value]="tag.id">
-                {{ tag.name }}
-              </mat-option>
+              @for (tag of tagData; track tag) {
+                <mat-option [value]="tag.id">
+                  {{ tag.name }}
+                </mat-option>
+              }
             </mat-select>
           </mat-form-field>
 

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 
@@ -26,6 +26,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class RecurringDepositsAccountDetailsStepComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private recurringDepositsService = inject(RecurringDepositsService);
+  private settingsService = inject(SettingsService);
+
   /** Recurring Deposits Account Template */
   @Input() recurringDepositsAccountTemplate: any;
 
@@ -53,11 +57,7 @@ export class RecurringDepositsAccountDetailsStepComponent implements OnInit {
    * @param {RecurringDepositsService} recurringDepositsService Recurring Deposits Service.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private recurringDepositsService: RecurringDepositsService,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.createRecurringDepositsAccountDetailsForm();
   }
 

@@ -1,6 +1,6 @@
 import { MatPaginatorModule } from '@angular/material/paginator';
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -28,6 +28,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   ]
 })
 export class UsersComponent implements OnInit, AfterViewInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  configurationWizardService = inject(ConfigurationWizardService);
+  private popoverService = inject(PopoverService);
+
   /** User data */
   usersData: any[] = [];
   usersZitadelData: any[] = [];
@@ -56,13 +61,6 @@ export class UsersComponent implements OnInit, AfterViewInit {
   @ViewChild('templateButtonCreateUser') templateButtonCreateUser!: TemplateRef<any>;
   @ViewChild('usersTable') usersTable!: ElementRef<any>;
   @ViewChild('templateUsersTable') templateUsersTable!: TemplateRef<any>;
-
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    public configurationWizardService: ConfigurationWizardService,
-    private popoverService: PopoverService
-  ) {}
 
   ngOnInit() {
     // Get data from resolver

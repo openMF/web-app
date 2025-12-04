@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
@@ -14,10 +14,7 @@ import { AccountingService } from '../accounting.service';
  */
 @Injectable()
 export class GlAccountAndChartOfAccountsTemplateResolver {
-  /**
-   * @param {AccountingService} accountingService Accounting service.
-   */
-  constructor(private accountingService: AccountingService) {}
+  private accountingService = inject(AccountingService);
 
   /**
    * Returns the gl account and chart of accounts template data.

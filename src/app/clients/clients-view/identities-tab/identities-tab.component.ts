@@ -56,6 +56,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class IdentitiesTabComponent implements OnDestroy {
+  private route = inject(ActivatedRoute);
+  private dialog = inject(MatDialog);
+  private clientService = inject(ClientsService);
+  private translateService = inject(TranslateService);
+  private documentPreviewService = inject(DocumentPreviewService);
+
   private destroyRef = inject(DestroyRef);
 
   /** Client Identities */
@@ -96,13 +102,7 @@ export class IdentitiesTabComponent implements OnDestroy {
    * @param {TranslateService} translateService Translate Service
    * @param {DocumentPreviewService} documentPreviewService Preview helper
    */
-  constructor(
-    private route: ActivatedRoute,
-    private dialog: MatDialog,
-    private clientService: ClientsService,
-    private translateService: TranslateService,
-    private documentPreviewService: DocumentPreviewService
-  ) {
+  constructor() {
     this.clientId = this.route.parent.snapshot.paramMap.get('clientId');
     this.route.data
       .pipe(takeUntilDestroyed(this.destroyRef))

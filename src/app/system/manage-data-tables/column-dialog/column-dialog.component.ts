@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,
@@ -34,21 +34,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ColumnDialogComponent implements OnInit {
+  dialogRef = inject<MatDialogRef<ColumnDialogComponent>>(MatDialogRef);
+  formBuilder = inject(UntypedFormBuilder);
+  data = inject(MAT_DIALOG_DATA);
+
   /** Column Form. */
   columnForm: UntypedFormGroup;
   /** Column Type Data */
   columnTypeData = columnTypeData;
-
-  /**
-   * @param {MatDialogRef} dialogRef Component reference to dialog.
-   * @param {FormBuilder} formBuilder Form Builder.
-   * @param {any} data Provides the column codes and values for the form (if available).
-   */
-  constructor(
-    public dialogRef: MatDialogRef<ColumnDialogComponent>,
-    public formBuilder: UntypedFormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
 
   /**
    * Creates the add column form.
@@ -69,7 +62,6 @@ export class ColumnDialogComponent implements OnInit {
           disabled: this.data.type === 'existing'
         },
         Validators.required
-
       ],
       length: [
         {
@@ -77,7 +69,6 @@ export class ColumnDialogComponent implements OnInit {
           disabled: this.getColumnType(this.data.columnDisplayType) !== 'String' || this.data.type === 'existing'
         },
         Validators.required
-
       ],
       mandatory: [{ value: this.data.isColumnNullable, disabled: this.data.type === 'existing' }],
       unique: [
@@ -89,7 +80,6 @@ export class ColumnDialogComponent implements OnInit {
           disabled: this.getColumnType(this.data.columnDisplayType) !== 'Dropdown' || this.data.type === 'existing'
         },
         Validators.required
-
       ]
     });
     this.onColumnTypeChanges();

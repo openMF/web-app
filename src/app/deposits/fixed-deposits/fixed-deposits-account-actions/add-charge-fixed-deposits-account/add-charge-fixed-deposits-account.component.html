@@ -6,91 +6,102 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Charge' | translate }}</mat-label>
             <mat-select required formControlName="chargeId">
-              <mat-option *ngFor="let savingsCharge of savingsChargeOptions" [value]="savingsCharge.id">
-                {{ savingsCharge.name + ' (' + savingsCharge.currency.name + ')' }}
-              </mat-option>
+              @for (savingsCharge of savingsChargeOptions; track savingsCharge) {
+                <mat-option [value]="savingsCharge.id">
+                  {{ savingsCharge.name + ' (' + savingsCharge.currency.name + ')' }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error *ngIf="fixedDepositsChargeForm.controls.chargeId.hasError('required')">
-              {{ 'labels.inputs.Charge' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (fixedDepositsChargeForm.controls.chargeId.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Charge' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
-          <div *ngIf="chargeDetails" class="layout-column">
-            <mat-form-field>
-              <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
-              <input type="number" required matInput formControlName="amount" />
-              <mat-error *ngIf="fixedDepositsChargeForm.controls.amount.hasError('required')">
-                {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
-                <strong>{{ 'labels.commons.required' | translate }}</strong>
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field>
-              <mat-label>{{ 'labels.inputs.Charge Calculation' | translate }}</mat-label>
-              <mat-select formControlName="chargeCalculationType">
-                <mat-option
-                  *ngFor="let chargeCalculation of chargeDetails.chargeCalculationTypeOptions"
-                  [value]="chargeCalculation.id"
-                >
-                  {{ chargeCalculation.value }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <mat-form-field>
-              <mat-label>{{ 'labels.inputs.Charge time type' | translate }}</mat-label>
-              <mat-select formControlName="chargeTimeType">
-                <mat-option *ngFor="let chargeTime of chargeDetails.chargeTimeTypeOptions" [value]="chargeTime.id">
-                  {{ chargeTime.value }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <mat-form-field *ngIf="fixedDepositsChargeForm.contains('dueDate')" (click)="dueDatePicker.open()">
-              <mat-label>{{ 'labels.inputs.Due for collection on' | translate }}</mat-label>
-              <input
-                matInput
-                [min]="minDate"
-                [max]="maxDate"
-                [matDatepicker]="dueDatePicker"
-                required
-                formControlName="dueDate"
-              />
-              <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
-              <mat-datepicker #dueDatePicker></mat-datepicker>
-              <mat-error *ngIf="fixedDepositsChargeForm.controls.dueDate.hasError('required')">
-                {{ 'labels.inputs.Due for collection on' | translate }} {{ 'labels.commons.is' | translate }}
-                <strong>{{ 'labels.commons.required' | translate }}</strong>
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field
-              *ngIf="fixedDepositsChargeForm.contains('feeOnMonthDay')"
-              (click)="feeOnMonthDayPicker.open()"
-            >
-              <mat-label>{{ 'labels.inputs.Due On' | translate }}</mat-label>
-              <input
-                matInput
-                [min]="minDate"
-                [max]="maxDate"
-                [matDatepicker]="feeOnMonthDayPicker"
-                required
-                formControlName="feeOnMonthDay"
-              />
-              <mat-datepicker-toggle matSuffix [for]="feeOnMonthDayPicker"></mat-datepicker-toggle>
-              <mat-datepicker #feeOnMonthDayPicker></mat-datepicker>
-              <mat-error *ngIf="fixedDepositsChargeForm.controls.feeOnMonthDay.hasError('required')">
-                {{ 'labels.inputs.Due Date' | translate }} {{ 'labels.commons.is' | translate }}
-                <strong>{{ 'labels.commons.required' | translate }}</strong>
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field *ngIf="fixedDepositsChargeForm.contains('feeInterval')">
-              <mat-label>{{ 'labels.inputs.Repeats Every' | translate }}</mat-label>
-              <input matInput formControlName="feeInterval" />
-            </mat-form-field>
-          </div>
+          @if (chargeDetails) {
+            <div class="layout-column">
+              <mat-form-field>
+                <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
+                <input type="number" required matInput formControlName="amount" />
+                @if (fixedDepositsChargeForm.controls.amount.hasError('required')) {
+                  <mat-error>
+                    {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
+                    <strong>{{ 'labels.commons.required' | translate }}</strong>
+                  </mat-error>
+                }
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>{{ 'labels.inputs.Charge Calculation' | translate }}</mat-label>
+                <mat-select formControlName="chargeCalculationType">
+                  @for (chargeCalculation of chargeDetails.chargeCalculationTypeOptions; track chargeCalculation) {
+                    <mat-option [value]="chargeCalculation.id">
+                      {{ chargeCalculation.value }}
+                    </mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>{{ 'labels.inputs.Charge time type' | translate }}</mat-label>
+                <mat-select formControlName="chargeTimeType">
+                  @for (chargeTime of chargeDetails.chargeTimeTypeOptions; track chargeTime) {
+                    <mat-option [value]="chargeTime.id">
+                      {{ chargeTime.value }}
+                    </mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+              @if (fixedDepositsChargeForm.contains('dueDate')) {
+                <mat-form-field (click)="dueDatePicker.open()">
+                  <mat-label>{{ 'labels.inputs.Due for collection on' | translate }}</mat-label>
+                  <input
+                    matInput
+                    [min]="minDate"
+                    [max]="maxDate"
+                    [matDatepicker]="dueDatePicker"
+                    required
+                    formControlName="dueDate"
+                  />
+                  <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #dueDatePicker></mat-datepicker>
+                  @if (fixedDepositsChargeForm.controls.dueDate.hasError('required')) {
+                    <mat-error>
+                      {{ 'labels.inputs.Due for collection on' | translate }} {{ 'labels.commons.is' | translate }}
+                      <strong>{{ 'labels.commons.required' | translate }}</strong>
+                    </mat-error>
+                  }
+                </mat-form-field>
+              }
+              @if (fixedDepositsChargeForm.contains('feeOnMonthDay')) {
+                <mat-form-field (click)="feeOnMonthDayPicker.open()">
+                  <mat-label>{{ 'labels.inputs.Due On' | translate }}</mat-label>
+                  <input
+                    matInput
+                    [min]="minDate"
+                    [max]="maxDate"
+                    [matDatepicker]="feeOnMonthDayPicker"
+                    required
+                    formControlName="feeOnMonthDay"
+                  />
+                  <mat-datepicker-toggle matSuffix [for]="feeOnMonthDayPicker"></mat-datepicker-toggle>
+                  <mat-datepicker #feeOnMonthDayPicker></mat-datepicker>
+                  @if (fixedDepositsChargeForm.controls.feeOnMonthDay.hasError('required')) {
+                    <mat-error>
+                      {{ 'labels.inputs.Due Date' | translate }} {{ 'labels.commons.is' | translate }}
+                      <strong>{{ 'labels.commons.required' | translate }}</strong>
+                    </mat-error>
+                  }
+                </mat-form-field>
+              }
+              @if (fixedDepositsChargeForm.contains('feeInterval')) {
+                <mat-form-field>
+                  <mat-label>{{ 'labels.inputs.Repeats Every' | translate }}</mat-label>
+                  <input matInput formControlName="feeInterval" />
+                </mat-form-field>
+              }
+            </div>
+          }
         </div>
 
         <mat-card-actions class="layout-row layout-xs-column layout-align-center gap-5px">

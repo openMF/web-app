@@ -34,7 +34,6 @@ const routes: Routes = [
       }
     }
   ])
-
 ];
 
 /**

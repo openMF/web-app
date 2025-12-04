@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ExternalAssetOwner } from 'app/loans/services/external-asset-owner';
 import { ExternalAssetOwnerService } from 'app/loans/services/external-asset-owner.service';
 import { CancelDialogComponent } from 'app/shared/cancel-dialog/cancel-dialog.component';
-import { NgIf, NgClass, DecimalPipe } from '@angular/common';
+import { NgClass, DecimalPipe } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { ExternalIdentifierComponent } from '../../../shared/external-identifier/external-identifier.component';
 import {
@@ -50,6 +50,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ExternalAssetOwnerTabComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
+  private externalAssetOwner = inject(ExternalAssetOwner);
+  private externalAssetOwnerService = inject(ExternalAssetOwnerService);
+
   defaultDate = '9999-12-31';
   loanTransfersData: any[] = [];
   activeTransferData: any;
@@ -66,13 +72,7 @@ export class ExternalAssetOwnerTabComponent implements OnInit {
   currentItem: any;
   existActiveTransfer = false;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private dialog: MatDialog,
-    private externalAssetOwner: ExternalAssetOwner,
-    private externalAssetOwnerService: ExternalAssetOwnerService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { loanTransfersData: any; activeTransferData: any }) => {
       this.loanTransfersData = data.loanTransfersData.empty ? [] : data.loanTransfersData.content;
       this.activeTransferData = data.activeTransferData || null;

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -43,6 +43,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewProvisioningJournalEntriesComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+
   /** Provisioning journal entry data. */
   provisioningJournalEntryData: any;
   /** Columns to be displayed in provisioning journal entries table. */
@@ -70,7 +72,7 @@ export class ViewProvisioningJournalEntriesComponent implements OnInit {
    * Retrieves the provisioning journal entries data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     this.route.data.subscribe((data: { provisioningJournalEntry: any }) => {
       this.provisioningJournalEntryData = data.provisioningJournalEntry.pageItems;
     });

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnChanges, Input } from '@angular/core';
+import { Component, OnChanges, Input, inject } from '@angular/core';
 
 /** Custom Services */
 import { ReportsService } from '../../reports.service';
@@ -31,6 +31,8 @@ Chart.register(...registerables);
   ]
 })
 export class ChartComponent implements OnChanges {
+  private reportsService = inject(ReportsService);
+
   /** Run Report Data */
   @Input() dataObject: any;
 
@@ -40,11 +42,6 @@ export class ChartComponent implements OnChanges {
   hideOutput = true;
   /** Data object for witching charts in view. */
   inputData: ChartData;
-
-  /**
-   * @param {ReportsService} reportsService Reports Service
-   */
-  constructor(private reportsService: ReportsService) {}
 
   /**
    * Fetches run report data post changes in run report form.

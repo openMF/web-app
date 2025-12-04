@@ -54,44 +54,48 @@
         {{ 'labels.text.Mandatory' | translate }}
       </th>
       <td mat-cell *matCellDef="let dataTable">
-        <fa-icon
-          *ngIf="!dataTable.isColumnNullable"
-          icon="check-circle"
-          size="lg"
-          class="column-mandatory"
-          matTooltip="{{ 'tooltips.Yes' | translate }}"
-          matTooltipPosition="right"
-        ></fa-icon>
-        <fa-icon
-          *ngIf="dataTable.isColumnNullable"
-          icon="times-circle"
-          size="lg"
-          class="not-column-mandatory"
-          matTooltip="{{ 'tooltips.No' | translate }}"
-          matTooltipPosition="right"
-        ></fa-icon>
+        @if (!dataTable.isColumnNullable) {
+          <fa-icon
+            icon="check-circle"
+            size="lg"
+            class="column-mandatory"
+            matTooltip="{{ 'tooltips.Yes' | translate }}"
+            matTooltipPosition="right"
+          ></fa-icon>
+        }
+        @if (dataTable.isColumnNullable) {
+          <fa-icon
+            icon="times-circle"
+            size="lg"
+            class="not-column-mandatory"
+            matTooltip="{{ 'tooltips.No' | translate }}"
+            matTooltipPosition="right"
+          ></fa-icon>
+        }
       </td>
     </ng-container>
 
     <ng-container matColumnDef="isColumnUnique">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="center">{{ 'labels.inputs.Unique' | translate }}</th>
       <td mat-cell *matCellDef="let dataTable">
-        <fa-icon
-          *ngIf="dataTable.isColumnUnique"
-          icon="check-circle"
-          size="lg"
-          class="column-mandatory"
-          matTooltip="{{ 'tooltips.Yes' | translate }}"
-          matTooltipPosition="right"
-        ></fa-icon>
-        <fa-icon
-          *ngIf="!dataTable.isColumnUnique"
-          icon="times-circle"
-          size="lg"
-          class="not-column-mandatory"
-          matTooltip="{{ 'tooltips.No' | translate }}"
-          matTooltipPosition="right"
-        ></fa-icon>
+        @if (dataTable.isColumnUnique) {
+          <fa-icon
+            icon="check-circle"
+            size="lg"
+            class="column-mandatory"
+            matTooltip="{{ 'tooltips.Yes' | translate }}"
+            matTooltipPosition="right"
+          ></fa-icon>
+        }
+        @if (!dataTable.isColumnUnique) {
+          <fa-icon
+            icon="times-circle"
+            size="lg"
+            class="not-column-mandatory"
+            matTooltip="{{ 'tooltips.No' | translate }}"
+            matTooltipPosition="right"
+          ></fa-icon>
+        }
       </td>
     </ng-container>
 
@@ -100,22 +104,24 @@
         {{ 'labels.inputs.Indexed' | translate }}
       </th>
       <td mat-cell *matCellDef="let dataTable">
-        <fa-icon
-          *ngIf="dataTable.isColumnIndexed"
-          icon="check-circle"
-          size="lg"
-          class="column-mandatory"
-          matTooltip="{{ 'tooltips.Yes' | translate }}"
-          matTooltipPosition="right"
-        ></fa-icon>
-        <fa-icon
-          *ngIf="!dataTable.isColumnIndexed"
-          icon="times-circle"
-          size="lg"
-          class="not-column-mandatory"
-          matTooltip="{{ 'tooltips.No' | translate }}"
-          matTooltipPosition="right"
-        ></fa-icon>
+        @if (dataTable.isColumnIndexed) {
+          <fa-icon
+            icon="check-circle"
+            size="lg"
+            class="column-mandatory"
+            matTooltip="{{ 'tooltips.Yes' | translate }}"
+            matTooltipPosition="right"
+          ></fa-icon>
+        }
+        @if (!dataTable.isColumnIndexed) {
+          <fa-icon
+            icon="times-circle"
+            size="lg"
+            class="not-column-mandatory"
+            matTooltip="{{ 'tooltips.No' | translate }}"
+            matTooltipPosition="right"
+          ></fa-icon>
+        }
       </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

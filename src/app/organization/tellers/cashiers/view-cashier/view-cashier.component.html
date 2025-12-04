@@ -29,13 +29,17 @@
           {{ cashierData.tellerName }}
         </div>
 
-        <div class="flex-50 header" *ngIf="cashierData.description !== ''">
-          {{ 'labels.inputs.Description' | translate }}
-        </div>
+        @if (cashierData.description !== '') {
+          <div class="flex-50 header">
+            {{ 'labels.inputs.Description' | translate }}
+          </div>
+        }
 
-        <div class="flex-50" *ngIf="cashierData.description !== ''">
-          {{ cashierData.description }}
-        </div>
+        @if (cashierData.description !== '') {
+          <div class="flex-50">
+            {{ cashierData.description }}
+          </div>
+        }
 
         <div class="flex-50 header">
           {{ 'labels.inputs.Start Date' | translate }}

@@ -1,63 +1,86 @@
-<div *ngIf="!oidcServerEnabled">
-  <form class="layout-column" [formGroup]="loginForm" (ngSubmit)="login()" id="login-form">
-    <mat-form-field class="login-input flex-align-center">
-      <span matPrefix class="m-r-10">
-        <fa-icon icon="user-circle" size="lg"></fa-icon>
-      </span>
-      <mat-label>{{ 'labels.inputs.Username' | translate }}</mat-label>
-      <input matInput type="text" autocomplete="off" formControlName="username" />
-      <mat-error *ngIf="loginForm.controls.username.hasError('required')">
-        {{ 'labels.inputs.Username' | translate }} <strong>{{ 'labels.commons.is required' | translate }}</strong>
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field class="login-input flex-align-center">
-      <span matPrefix class="m-r-10" *ngIf="!loginForm.controls.password.value">
-        <fa-icon icon="lock" size="lg"></fa-icon>
-      </span>
-      <mat-label>{{ 'labels.inputs.Password' | translate }}</mat-label>
-      <input matInput type="{{ passwordInputType }}" formControlName="password" />
+@if (!oidcServerEnabled) {
+  <div>
+    <form class="layout-column" [formGroup]="loginForm" (ngSubmit)="login()" id="login-form">
+      <mat-form-field class="login-input flex-align-center">
+        <span matPrefix class="m-r-10">
+          <fa-icon icon="user-circle" size="lg"></fa-icon>
+        </span>
+        <mat-label>{{ 'labels.inputs.Username' | translate }}</mat-label>
+        <input matInput type="text" autocomplete="off" formControlName="username" />
+        @if (loginForm.controls.username.hasError('required')) {
+          <mat-error>
+            {{ 'labels.inputs.Username' | translate }} <strong>{{ 'labels.commons.is required' | translate }}</strong>
+          </mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field class="login-input flex-align-center">
+        @if (!loginForm.controls.password.value) {
+          <span matPrefix class="m-r-10">
+            <fa-icon icon="lock" size="lg"></fa-icon>
+          </span>
+        }
+        <mat-label>{{ 'labels.inputs.Password' | translate }}</mat-label>
+        <input matInput type="{{ passwordInputType }}" formControlName="password" />
+        @if (loginForm.controls.password.value && !loading) {
+          <button
+            type="button"
+            matSuffix
+            mat-icon-button
+            (mousedown)="togglePasswordVisibility()"
+            (mouseup)="togglePasswordVisibility()"
+          >
+            @if (passwordInputType === 'password') {
+              <fa-icon icon="eye"></fa-icon>
+            }
+            @if (passwordInputType === 'text') {
+              <fa-icon icon="eye-slash"></fa-icon>
+            }
+          </button>
+        }
+        @if (loginForm.controls.password.hasError('required')) {
+          <mat-error>
+            {{ 'labels.inputs.Password' | translate }}
+            <strong>{{ 'labels.commons.pass is required' | translate }}</strong>
+          </mat-error>
+        }
+      </mat-form-field>
+      @if (loading) {
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      }
       <button
-        type="button"
-        matSuffix
-        *ngIf="loginForm.controls.password.value && !loading"
-        mat-icon-button
-        (mousedown)="togglePasswordVisibility()"
-        (mouseup)="togglePasswordVisibility()"
+        mat-raised-button
+        color="primary"
+        class="login-button-first flex-align-center"
+        [disabled]="!loginForm.valid"
       >
-        <fa-icon *ngIf="passwordInputType === 'password'" icon="eye"></fa-icon>
-        <fa-icon *ngIf="passwordInputType === 'text'" icon="eye-slash"></fa-icon>
+        {{ 'labels.buttons.Login' | translate }}
+        @if (loading) {
+          <mat-spinner [diameter]="20"></mat-spinner>
+        }
       </button>
-      <mat-error *ngIf="loginForm.controls.password.hasError('required')">
-        {{ 'labels.inputs.Password' | translate }} <strong>{{ 'labels.commons.pass is required' | translate }}</strong>
-      </mat-error>
-    </mat-form-field>
-
-    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
-
-    <button
-      mat-raised-button
-      color="primary"
-      class="login-button-first flex-align-center"
-      [disabled]="!loginForm.valid"
-    >
-      {{ 'labels.buttons.Login' | translate }}
-      <mat-spinner [diameter]="20" *ngIf="loading"></mat-spinner>
-    </button>
-  </form>
-</div>
-
-<div *ngIf="oidcServerEnabled" class="container container-margin">
-  <div *ngIf="!isLoggedIn" class="layout-column align-center-center">
-    <button mat-raised-button color="primary" class="login-button-first flex-align-center" (click)="loginOIDC()">
-      {{ 'labels.buttons.Login' | translate }}
-      <mat-spinner [diameter]="20" *ngIf="loading"></mat-spinner>
-    </button>
+    </form>
   </div>
-  <div *ngIf="isLoggedIn">
-    <p>Welcome! You are logged in.</p>
-    <button (click)="logout()">Logout</button>
-    <button (click)="loadProtectedData()">Load Protected Data</button>
-    <pre>{{ protectedData | json }}</pre>
+}
+
+@if (oidcServerEnabled) {
+  <div class="container container-margin">
+    @if (!isLoggedIn) {
+      <div class="layout-column align-center-center">
+        <button mat-raised-button color="primary" class="login-button-first flex-align-center" (click)="loginOIDC()">
+          {{ 'labels.buttons.Login' | translate }}
+          @if (loading) {
+            <mat-spinner [diameter]="20"></mat-spinner>
+          }
+        </button>
+      </div>
+    }
+    @if (isLoggedIn) {
+      <div>
+        <p>Welcome! You are logged in.</p>
+        <button (click)="logout()">Logout</button>
+        <button (click)="loadProtectedData()">Load Protected Data</button>
+        <pre>{{ protectedData | json }}</pre>
+      </div>
+    }
   </div>
-</div>
+}

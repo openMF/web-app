@@ -8,21 +8,17 @@
               <fa-icon icon="building" size="sm"></fa-icon>
             </mat-icon>
             <h4 matLine [routerLink]="['ranges']">{{ 'labels.heading.Manage Delinquency Ranges' | translate }}</h4>
-            <fa-icon
-              (click)="arrowBooleansToggle(0); $event.stopPropagation()"
-              *ngIf="!arrowBooleans[0]"
-              icon="arrow-down"
-              size="md"
-            ></fa-icon>
-            <fa-icon
-              (click)="arrowBooleansToggle(0); $event.stopPropagation()"
-              *ngIf="arrowBooleans[0]"
-              icon="arrow-up"
-              size="md"
-            ></fa-icon>
-            <p matLine *ngIf="arrowBooleans[0]" [routerLink]="['ranges']">
-              {{ 'labels.text.Define delinquency day ranges' | translate }}
-            </p>
+            @if (!arrowBooleans[0]) {
+              <fa-icon (click)="arrowBooleansToggle(0); $event.stopPropagation()" icon="arrow-down" size="md"></fa-icon>
+            }
+            @if (arrowBooleans[0]) {
+              <fa-icon (click)="arrowBooleansToggle(0); $event.stopPropagation()" icon="arrow-up" size="md"></fa-icon>
+            }
+            @if (arrowBooleans[0]) {
+              <p matLine [routerLink]="['ranges']">
+                {{ 'labels.text.Define delinquency day ranges' | translate }}
+              </p>
+            }
           </mat-list-item>
         </mat-nav-list>
       </div>
@@ -34,21 +30,17 @@
               <fa-icon icon="building" size="sm"></fa-icon>
             </mat-icon>
             <h4 matLine [routerLink]="['buckets']">{{ 'labels.heading.Manage Delinquency Buckets' | translate }}</h4>
-            <fa-icon
-              (click)="arrowBooleansToggle(1); $event.stopPropagation()"
-              *ngIf="!arrowBooleans[1]"
-              icon="arrow-down"
-              size="md"
-            ></fa-icon>
-            <fa-icon
-              (click)="arrowBooleansToggle(1); $event.stopPropagation()"
-              *ngIf="arrowBooleans[1]"
-              icon="arrow-up"
-              size="md"
-            ></fa-icon>
-            <p matLine *ngIf="arrowBooleans[1]" [routerLink]="['buckets']">
-              {{ 'labels.text.Define delinquency bucket as set of ranges' | translate }}
-            </p>
+            @if (!arrowBooleans[1]) {
+              <fa-icon (click)="arrowBooleansToggle(1); $event.stopPropagation()" icon="arrow-down" size="md"></fa-icon>
+            }
+            @if (arrowBooleans[1]) {
+              <fa-icon (click)="arrowBooleansToggle(1); $event.stopPropagation()" icon="arrow-up" size="md"></fa-icon>
+            }
+            @if (arrowBooleans[1]) {
+              <p matLine [routerLink]="['buckets']">
+                {{ 'labels.text.Define delinquency bucket as set of ranges' | translate }}
+              </p>
+            }
           </mat-list-item>
         </mat-nav-list>
       </div>

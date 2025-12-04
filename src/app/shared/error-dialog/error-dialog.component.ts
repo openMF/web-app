@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component, OnInit, Inject, SecurityContext } from '@angular/core';
+import { Component, OnInit, SecurityContext, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -26,17 +26,19 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ErrorDialogComponent {
+  dialogRef = inject<MatDialogRef<ErrorDialogComponent>>(MatDialogRef);
+  data = inject(MAT_DIALOG_DATA);
+  private sanitizer = inject(DomSanitizer);
+
   showAsCode = false;
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    * @param {unknown} data Provides any data.
    * @param {DomSanitizer} sanitizer Service to sanitize HTML content.
    */
-  constructor(
-    public dialogRef: MatDialogRef<ErrorDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: unknown,
-    private sanitizer: DomSanitizer
-  ) {
+  constructor() {
+    const data = this.data;
+
     // Guard for non-string data to avoid runtime error
     this.showAsCode = typeof data === 'string' && data.startsWith('<pre><code>');
   }

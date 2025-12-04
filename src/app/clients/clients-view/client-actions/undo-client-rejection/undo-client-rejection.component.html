@@ -14,10 +14,12 @@
           />
           <mat-datepicker-toggle matSuffix [for]="reopenedDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #reopenedDatePicker></mat-datepicker>
-          <mat-error *ngIf="undoClientRejectionForm.controls.reopenedDate.hasError('required')">
-            {{ 'labels.inputs.Reopened On Date' | translate }} {{ 'labels.commons.is' | translate }}
-            <strong>{{ 'labels.commons.required' | translate }}</strong>
-          </mat-error>
+          @if (undoClientRejectionForm.controls.reopenedDate.hasError('required')) {
+            <mat-error>
+              {{ 'labels.inputs.Reopened On Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          }
         </mat-form-field>
       </mat-card-content>
 

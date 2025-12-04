@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApproveFixedDepositsAccountComponent } from './approve-fixed-deposits-account/approve-fixed-deposits-account.component';
 import { RejectFixedDepositsAccountComponent } from './reject-fixed-deposits-account/reject-fixed-deposits-account.component';
@@ -33,6 +33,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class FixedDepositsAccountActionsComponent {
+  private route = inject(ActivatedRoute);
+
   /** Flag object to store possible actions and render appropriate UI to the user */
   actions: {
     Approve: boolean;
@@ -61,7 +63,7 @@ export class FixedDepositsAccountActionsComponent {
   /**
    * @param {ActivatedRoute} route Activated Route
    */
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     const name = this.route.snapshot.params['name'];
     if (name && name in this.actions) {
       this.actions[name as keyof typeof this.actions] = true;

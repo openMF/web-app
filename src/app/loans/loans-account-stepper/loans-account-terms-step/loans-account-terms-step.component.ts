@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
@@ -77,6 +77,11 @@ interface DisbursementData {
   ]
 })
 export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
+  private formBuilder = inject(UntypedFormBuilder);
+  private settingsService = inject(SettingsService);
+  private route = inject(ActivatedRoute);
+  dialog = inject(MatDialog);
+
   /** Loans Product Options */
   @Input() loansProductOptions: any;
   /** Loans Account Product Template */
@@ -162,12 +167,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
    * @param formBuilder FormBuilder
    * @param {SettingsService} settingsService SettingsService
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private settingsService: SettingsService,
-    private route: ActivatedRoute,
-    public dialog: MatDialog
-  ) {
+  constructor() {
     this.loanId = this.route.snapshot.params['loanId'];
     this.createloansAccountTermsForm();
   }
@@ -560,7 +560,6 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         required: true,
         order: 2
       })
-
     ];
     const data = {
       title: 'Add Disbursement Details',

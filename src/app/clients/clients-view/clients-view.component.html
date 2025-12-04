@@ -90,18 +90,24 @@
                       ></mifosx-external-identifier>
                     </td>
                   </tr>
-                  <tr *ngIf="clientViewData.activationDate">
-                    <td>
-                      <b>{{ 'labels.inputs.Activation Date' | translate }}</b>
-                    </td>
-                    <td>{{ clientViewData.activationDate | dateFormat }}</td>
-                  </tr>
+                  @if (clientViewData.activationDate) {
+                    <tr>
+                      <td>
+                        <b>{{ 'labels.inputs.Activation Date' | translate }}</b>
+                      </td>
+                      <td>{{ clientViewData.activationDate | dateFormat }}</td>
+                    </tr>
+                  }
                   <tr>
                     <td>
                       <b>{{ 'labels.inputs.Staff' | translate }}</b>
                     </td>
-                    <td *ngIf="clientViewData.staffName">{{ clientViewData.staffName }}</td>
-                    <td *ngIf="!clientViewData.staffName">{{ 'labels.inputs.Unassigned' | translate }}</td>
+                    @if (clientViewData.staffName) {
+                      <td>{{ clientViewData.staffName }}</td>
+                    }
+                    @if (!clientViewData.staffName) {
+                      <td>{{ 'labels.inputs.Unassigned' | translate }}</td>
+                    }
                   </tr>
                 </tbody>
               </table>
@@ -109,22 +115,28 @@
             <div class="flex-50">
               <table class="account-overview">
                 <tbody>
-                  <tr *ngIf="clientViewData.groups.length > 0">
-                    <td>
-                      <b>{{ 'labels.inputs.Member Of' | translate }}</b>
-                    </td>
-                    <td>
-                      <span *ngFor="let group of clientViewData.groups">
-                        <span class="m-r-3">{{ group.name }}</span>
-                      </span>
-                    </td>
-                  </tr>
-                  <tr *ngIf="clientViewData.clientType">
-                    <td>
-                      <b>{{ 'labels.inputs.Client Type' | translate }}</b>
-                    </td>
-                    <td>{{ clientViewData.clientType.name }}</td>
-                  </tr>
+                  @if (clientViewData.groups.length > 0) {
+                    <tr>
+                      <td>
+                        <b>{{ 'labels.inputs.Member Of' | translate }}</b>
+                      </td>
+                      <td>
+                        @for (group of clientViewData.groups; track group) {
+                          <span>
+                            <span class="m-r-3">{{ group.name }}</span>
+                          </span>
+                        }
+                      </td>
+                    </tr>
+                  }
+                  @if (clientViewData.clientType) {
+                    <tr>
+                      <td>
+                        <b>{{ 'labels.inputs.Client Type' | translate }}</b>
+                      </td>
+                      <td>{{ clientViewData.clientType.name }}</td>
+                    </tr>
+                  }
                   <tr>
                     <td>
                       <b>{{ 'labels.inputs.Mobile Number' | translate }}</b>
@@ -162,12 +174,14 @@
           <span>{{ 'labels.buttons.Edit' | translate }}</span>
         </button>
 
-        <button *ngIf="isActive()" mat-menu-item [matMenuTriggerFor]="accountApplications">
-          <mat-icon matListIcon>
-            <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
-          </mat-icon>
-          <span>{{ 'labels.buttons.Applications' | translate }}</span>
-        </button>
+        @if (isActive()) {
+          <button mat-menu-item [matMenuTriggerFor]="accountApplications">
+            <mat-icon matListIcon>
+              <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
+            </mat-icon>
+            <span>{{ 'labels.buttons.Applications' | translate }}</span>
+          </button>
+        }
 
         <button mat-menu-item [matMenuTriggerFor]="Actions">
           <mat-icon matListIcon>
@@ -176,21 +190,25 @@
           <span>{{ 'labels.buttons.Actions' | translate }}</span>
         </button>
 
-        <button mat-menu-item (click)="doAction('Assign Staff')" *ngIf="!clientViewData.staffId">
-          <mat-icon matListIcon>
-            <fa-icon icon="user-tie" size="sm"></fa-icon>
-          </mat-icon>
-          <span>{{ 'labels.buttons.Assign Staff' | translate }}</span>
-        </button>
-
-        <span *ngIf="clientViewData.staffId">
-          <button mat-menu-item *mifosxHasPermission="'UNASSIGNSTAFF_CLIENT'" (click)="doAction('Unassign Staff')">
+        @if (!clientViewData.staffId) {
+          <button mat-menu-item (click)="doAction('Assign Staff')">
             <mat-icon matListIcon>
               <fa-icon icon="user-tie" size="sm"></fa-icon>
             </mat-icon>
-            <span>{{ 'labels.buttons.Unassign Staff' | translate }}</span>
+            <span>{{ 'labels.buttons.Assign Staff' | translate }}</span>
           </button>
-        </span>
+        }
+
+        @if (clientViewData.staffId) {
+          <span>
+            <button mat-menu-item *mifosxHasPermission="'UNASSIGNSTAFF_CLIENT'" (click)="doAction('Unassign Staff')">
+              <mat-icon matListIcon>
+                <fa-icon icon="user-tie" size="sm"></fa-icon>
+              </mat-icon>
+              <span>{{ 'labels.buttons.Unassign Staff' | translate }}</span>
+            </button>
+          </span>
+        }
 
         <button mat-menu-item [matMenuTriggerFor]="More">{{ 'labels.buttons.More' | translate }}</button>
       </mat-menu>
@@ -230,49 +248,67 @@
         <button mat-menu-item (click)="doAction('Transfer Client')">
           {{ 'labels.buttons.Transfer Client' | translate }}
         </button>
-        <span *ngIf="clientViewData.status.value === 'Pending'"
-          ><button mat-menu-item (click)="doAction('Activate')">
-            {{ 'labels.buttons.Activate' | translate }}
-          </button></span
-        >
-        <span *ngIf="clientViewData.status.value === 'Pending'"
-          ><button mat-menu-item (click)="doAction('Withdraw')">
-            {{ 'labels.buttons.Withdraw' | translate }}
-          </button></span
-        >
-        <span *ngIf="clientViewData.status.value === 'Pending'"
-          ><button mat-menu-item (click)="doAction('Reject')">{{ 'labels.buttons.Reject' | translate }}</button></span
-        >
-        <span *ngIf="clientViewData.status.value === 'Pending'"
-          ><button mat-menu-item *mifosxHasPermission="'DELETE_CLIENT'" (click)="doAction('Delete')">
-            {{ 'labels.buttons.Delete' | translate }}
-          </button></span
-        >
-        <span *ngIf="clientViewData.status.value === 'Closed'"
-          ><button mat-menu-item (click)="doAction('Reactivate')">
-            {{ 'labels.buttons.Reactivate' | translate }}
-          </button></span
-        >
-        <span *ngIf="clientViewData.status.value === 'Rejected'"
-          ><button mat-menu-item (click)="doAction('Undo Rejection')">
-            {{ 'labels.buttons.Undo Rejection' | translate }}
-          </button></span
-        >
-        <span *ngIf="clientViewData.status.value === 'Transfer in progress'"
-          ><button mat-menu-item (click)="doAction('Undo Transfer')">
-            {{ 'labels.buttons.Undo Transfer' | translate }}
-          </button></span
-        >
-        <span *ngIf="clientViewData.status.value === 'Transfer in progress'"
-          ><button mat-menu-item (click)="doAction('Accept Transfer')">
-            {{ 'labels.buttons.Accept Transfer' | translate }}
-          </button></span
-        >
-        <span *ngIf="clientViewData.status.value === 'Transfer in progress'"
-          ><button mat-menu-item (click)="doAction('Reject Transfer')">
-            {{ 'labels.buttons.Reject transfer' | translate }}
-          </button></span
-        >
+        @if (clientViewData.status.value === 'Pending') {
+          <span
+            ><button mat-menu-item (click)="doAction('Activate')">
+              {{ 'labels.buttons.Activate' | translate }}
+            </button></span
+          >
+        }
+        @if (clientViewData.status.value === 'Pending') {
+          <span
+            ><button mat-menu-item (click)="doAction('Withdraw')">
+              {{ 'labels.buttons.Withdraw' | translate }}
+            </button></span
+          >
+        }
+        @if (clientViewData.status.value === 'Pending') {
+          <span
+            ><button mat-menu-item (click)="doAction('Reject')">{{ 'labels.buttons.Reject' | translate }}</button></span
+          >
+        }
+        @if (clientViewData.status.value === 'Pending') {
+          <span
+            ><button mat-menu-item *mifosxHasPermission="'DELETE_CLIENT'" (click)="doAction('Delete')">
+              {{ 'labels.buttons.Delete' | translate }}
+            </button></span
+          >
+        }
+        @if (clientViewData.status.value === 'Closed') {
+          <span
+            ><button mat-menu-item (click)="doAction('Reactivate')">
+              {{ 'labels.buttons.Reactivate' | translate }}
+            </button></span
+          >
+        }
+        @if (clientViewData.status.value === 'Rejected') {
+          <span
+            ><button mat-menu-item (click)="doAction('Undo Rejection')">
+              {{ 'labels.buttons.Undo Rejection' | translate }}
+            </button></span
+          >
+        }
+        @if (clientViewData.status.value === 'Transfer in progress') {
+          <span
+            ><button mat-menu-item (click)="doAction('Undo Transfer')">
+              {{ 'labels.buttons.Undo Transfer' | translate }}
+            </button></span
+          >
+        }
+        @if (clientViewData.status.value === 'Transfer in progress') {
+          <span
+            ><button mat-menu-item (click)="doAction('Accept Transfer')">
+              {{ 'labels.buttons.Accept Transfer' | translate }}
+            </button></span
+          >
+        }
+        @if (clientViewData.status.value === 'Transfer in progress') {
+          <span
+            ><button mat-menu-item (click)="doAction('Reject Transfer')">
+              {{ 'labels.buttons.Reject transfer' | translate }}
+            </button></span
+          >
+        }
       </mat-menu>
 
       <mat-menu #More="matMenu">
@@ -308,15 +344,17 @@
         >
           {{ 'labels.buttons.Create Standing Instructions' | translate }}
         </button>
-        <span *ngIf="clientViewData.status.value !== 'Transfer on hold'">
-          <button
-            mat-menu-item
-            (click)="doAction('View Standing Instructions')"
-            *mifosxHasPermission="'READ_STANDINGINSTRUCTION'"
-          >
-            {{ 'labels.buttons.View Standing Instructions' | translate }}
-          </button>
-        </span>
+        @if (clientViewData.status.value !== 'Transfer on hold') {
+          <span>
+            <button
+              mat-menu-item
+              (click)="doAction('View Standing Instructions')"
+              *mifosxHasPermission="'READ_STANDINGINSTRUCTION'"
+            >
+              {{ 'labels.buttons.View Standing Instructions' | translate }}
+            </button>
+          </span>
+        }
       </mat-menu>
     </mat-card-title-group>
   </mat-card-header>
@@ -380,7 +418,7 @@
       >
         {{ 'labels.inputs.Notes' | translate }}
       </a>
-      <ng-container *ngFor="let clientDatatable of clientDatatables">
+      @for (clientDatatable of clientDatatables; track clientDatatable) {
         <a
           mat-tab-link
           [routerLink]="['./datatables', clientDatatable.registeredTableName]"
@@ -391,7 +429,7 @@
         >
           {{ clientDatatable.registeredTableName }}
         </a>
-      </ng-container>
+      }
     </nav>
     <mat-tab-nav-panel #tabPanel>
       <router-outlet></router-outlet>

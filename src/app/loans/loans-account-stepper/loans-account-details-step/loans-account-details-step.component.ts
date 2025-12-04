@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -18,7 +18,7 @@ import { takeUntil } from 'rxjs/operators';
 import { ReplaySubject, Subject } from 'rxjs';
 import { MatTooltip } from '@angular/material/tooltip';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
-import { NgFor, NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { MatDivider } from '@angular/material/divider';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
@@ -45,6 +45,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoansAccountDetailsStepComponent implements OnInit, OnDestroy {
+  private formBuilder = inject(UntypedFormBuilder);
+  private loansService = inject(LoansService);
+  private route = inject(ActivatedRoute);
+  private translateService = inject(TranslateService);
+  private settingsService = inject(SettingsService);
+  private commons = inject(Commons);
+
   //** Defining PlaceHolders for the search bar */
   placeHolderLabel = '';
   noEntriesFoundLabel = '';
@@ -89,14 +96,7 @@ export class LoansAccountDetailsStepComponent implements OnInit, OnDestroy {
    * @param {LoansService} loansService Loans Service.
    * @param {SettingsService} settingsService SettingsService
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private loansService: LoansService,
-    private route: ActivatedRoute,
-    private translateService: TranslateService,
-    private settingsService: SettingsService,
-    private commons: Commons
-  ) {
+  constructor() {
     this.loanId = this.route.snapshot.params['loanId'];
   }
 

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle, MatDialogContent } from '@angular/material/dialog';
 import { KeyboardShortcutsConfiguration } from '../../keyboards-shortcut-config';
 import { CdkScrollable } from '@angular/cdk/scrolling';
@@ -21,13 +21,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class KeyboardShortcutsDialogComponent implements OnInit {
-  buttonConfig: KeyboardShortcutsConfiguration;
+  dialogRef = inject<MatDialogRef<KeyboardShortcutsDialogComponent>>(MatDialogRef);
 
-  /**
-   * @param {MatDialogRef} dialogRef Component reference to dialog.
-   * @param {any} data Provides a deleteContext.
-   */
-  constructor(public dialogRef: MatDialogRef<KeyboardShortcutsDialogComponent>) {}
+  buttonConfig: KeyboardShortcutsConfiguration;
 
   ngOnInit() {
     this.dialogRef.updateSize(`800px`);

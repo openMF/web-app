@@ -15,23 +15,29 @@
             />
             <mat-datepicker-toggle matSuffix [for]="rejectionDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #rejectionDatePicker></mat-datepicker>
-            <mat-error *ngIf="rejectClientForm.controls.rejectionDate.hasError('required')">
-              {{ 'labels.inputs.Rejection Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (rejectClientForm.controls.rejectionDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Rejection Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Rejection Reason' | translate }}</mat-label>
             <mat-select formControlName="rejectionReasonId">
-              <mat-option *ngFor="let reason of rejectionData" [value]="reason.id">
-                {{ reason.name }}
-              </mat-option>
+              @for (reason of rejectionData; track reason) {
+                <mat-option [value]="reason.id">
+                  {{ reason.name }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error *ngIf="rejectClientForm.controls.rejectionReasonId.hasError('required')">
-              {{ 'labels.inputs.Rejection Reason' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (rejectClientForm.controls.rejectionReasonId.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Rejection Reason' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
         </div>
       </mat-card-content>

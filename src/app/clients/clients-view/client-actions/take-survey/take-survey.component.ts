@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -24,6 +24,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class TakeSurveyComponent {
+  private route = inject(ActivatedRoute);
+  private clientsService = inject(ClientsService);
+  private router = inject(Router);
+  private authenticationService = inject(AuthenticationService);
+
   /** List of all Survey Data */
   allSurveyData: any;
   /** User Id */
@@ -52,12 +57,7 @@ export class TakeSurveyComponent {
    * @param {Router} router Router
    * @param {AuthenticationService} authenticationService AuthenticationService
    */
-  constructor(
-    private route: ActivatedRoute,
-    private clientsService: ClientsService,
-    private router: Router,
-    private authenticationService: AuthenticationService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.allSurveyData = data.clientActionData;
       this.clientId = this.route.parent.snapshot.params['clientId'];

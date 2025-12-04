@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -23,6 +23,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class UploadDocumentDialogComponent implements OnInit {
+  dialogRef = inject<MatDialogRef<UploadDocumentDialogComponent>>(MatDialogRef);
+  private formBuilder = inject(UntypedFormBuilder);
+  data = inject(MAT_DIALOG_DATA);
+
   /** Upload Document form. */
   uploadDocumentForm: UntypedFormGroup;
   /** Upload Document Data */
@@ -41,11 +45,9 @@ export class UploadDocumentDialogComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder
    * @param {any} data Dialog Data
    */
-  constructor(
-    public dialogRef: MatDialogRef<UploadDocumentDialogComponent>,
-    private formBuilder: UntypedFormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
+  constructor() {
+    const data = this.data;
+
     this.documentIdentifier = data.documentIdentifier;
     this.entityType = data.entityType;
     this.allowedDocumentTypes = data.allowedDocumentTypes || [];

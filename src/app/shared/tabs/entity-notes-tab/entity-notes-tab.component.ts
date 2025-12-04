@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ClientsService } from 'app/clients/clients.service';
@@ -24,6 +24,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EntityNotesTabComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private savingsService = inject(SavingsService);
+  private loansService = inject(LoansService);
+  private clientsService = inject(ClientsService);
+  private groupsService = inject(GroupsService);
+  private dialog = inject(MatDialog);
+
   @ViewChild('formRef', { static: true }) formRef: any;
 
   @Input() entityId: string;
@@ -34,15 +41,6 @@ export class EntityNotesTabComponent implements OnInit {
   @Input() callbackDelete: (noteId: string, index: number) => void;
 
   noteForm: UntypedFormGroup;
-
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private savingsService: SavingsService,
-    private loansService: LoansService,
-    private clientsService: ClientsService,
-    private groupsService: GroupsService,
-    private dialog: MatDialog
-  ) {}
 
   ngOnInit() {
     this.createNoteForm();

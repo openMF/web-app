@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { SettingsService } from 'app/settings/settings.service';
 import { CheckboxBase } from 'app/shared/form-dialog/formfield/model/checkbox-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
@@ -11,6 +11,9 @@ import { Dates } from './dates';
   providedIn: 'root'
 })
 export class Datatables {
+  private dateUtils = inject(Dates);
+  private settingsService = inject(SettingsService);
+
   systemFields: string[] = [
     'id',
     'created_at',
@@ -29,11 +32,6 @@ export class Datatables {
     'savings_product_id',
     'share_product_id'
   ];
-
-  constructor(
-    private dateUtils: Dates,
-    private settingsService: SettingsService
-  ) {}
 
   public getFormfields(columns: any, dateTransformColumns: string[], dataTableEntryObject: any) {
     return columns.map((column: any) => {

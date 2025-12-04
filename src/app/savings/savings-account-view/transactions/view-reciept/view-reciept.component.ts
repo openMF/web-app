@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -18,6 +18,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewRecieptComponent implements OnInit {
+  private sanitizer = inject(DomSanitizer);
+  private route = inject(ActivatedRoute);
+
   /** trusted resource url for pentaho output */
   pentahoUrl: any;
   /** Transaction Reciept Data */
@@ -28,10 +31,7 @@ export class ViewRecieptComponent implements OnInit {
    * @param {DomSanitizer} sanitizer DOM Sanitizer
    * @param {ActivatedRoute} route Activated Route
    */
-  constructor(
-    private sanitizer: DomSanitizer,
-    private route: ActivatedRoute
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { savingsTransactionReciept: any }) => {
       this.transactionRecieptData = data.savingsTransactionReciept;
     });

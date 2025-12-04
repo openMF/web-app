@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
@@ -14,7 +14,7 @@ import { ConfigurationWizardService } from '../../../configuration-wizard/config
 /** Custom Imports */
 import { frequentActivities } from './frequent-activities';
 import { SettingsService } from 'app/settings/settings.service';
-import { NgClass, NgFor } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { MatIconButton, MatButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -50,6 +50,14 @@ import { AuthService } from 'app/zitadel/auth.service';
   ]
 })
 export class SidenavComponent implements OnInit, AfterViewInit {
+  private router = inject(Router);
+  dialog = inject(MatDialog);
+  private authenticationService = inject(AuthenticationService);
+  private settingsService = inject(SettingsService);
+  private configurationWizardService = inject(ConfigurationWizardService);
+  private popoverService = inject(PopoverService);
+  private authService = inject(AuthService);
+
   /** True if sidenav is in collapsed state. */
   @Input() sidenavCollapsed: boolean;
   /** Tooltip position */
@@ -80,15 +88,7 @@ export class SidenavComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(
-    private router: Router,
-    public dialog: MatDialog,
-    private authenticationService: AuthenticationService,
-    private settingsService: SettingsService,
-    private configurationWizardService: ConfigurationWizardService,
-    private popoverService: PopoverService,
-    private authService: AuthService
-  ) {
+  constructor() {
     this.userActivity = JSON.parse(localStorage.getItem('mifosXLocation'));
   }
 

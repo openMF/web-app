@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoansAccountCloseComponent } from './loans-account-close/loans-account-close.component';
 import { UndoApprovalComponent } from './undo-approval/undo-approval.component';
@@ -75,6 +75,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoanAccountActionsComponent {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   /** Loan Details Data */
   navigationData: any;
 
@@ -167,11 +170,8 @@ export class LoanAccountActionsComponent {
   /**
    * @param route Activated Route.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
-    const currentNavigation = this.router.getCurrentNavigation();
+  constructor() {
+    const currentNavigation = this.router.currentNavigation();
     // Safely access data with optional chaining
     this.navigationData = currentNavigation?.extras?.state?.data;
 

@@ -8,8 +8,12 @@
     <ng-container matColumnDef="feepenalty">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Fee/Penalty' | translate }}</th>
       <td mat-cell *matCellDef="let charge">
-        <span *ngIf="charge.penalty">{{ 'labels.inputs.Penalty' | translate }}</span>
-        <span *ngIf="!charge.penalty">{{ 'labels.inputs.Fee' | translate }}</span>
+        @if (charge.penalty) {
+          <span>{{ 'labels.inputs.Penalty' | translate }}</span>
+        }
+        @if (!charge.penalty) {
+          <span>{{ 'labels.inputs.Fee' | translate }}</span>
+        }
       </td>
     </ng-container>
 
@@ -25,12 +29,20 @@
 
     <ng-container matColumnDef="dueDate">
       <th mat-header-cell *matHeaderCellDef mat-sort-header [hide]="useDueDate">
-        <span *ngIf="useDueDate"> {{ 'labels.inputs.Due As Of' | translate }} </span>
-        <span *ngIf="!useDueDate"> {{ 'labels.inputs.Submitted On' | translate }} </span>
+        @if (useDueDate) {
+          <span> {{ 'labels.inputs.Due As Of' | translate }} </span>
+        }
+        @if (!useDueDate) {
+          <span> {{ 'labels.inputs.Submitted On' | translate }} </span>
+        }
       </th>
       <td mat-cell *matCellDef="let charge">
-        <span *ngIf="useDueDate">{{ charge.dueDate | dateFormat }}</span>
-        <span *ngIf="!useDueDate">{{ charge.submittedOnDate | dateFormat }}</span>
+        @if (useDueDate) {
+          <span>{{ charge.dueDate | dateFormat }}</span>
+        }
+        @if (!useDueDate) {
+          <span>{{ charge.submittedOnDate | dateFormat }}</span>
+        }
       </td>
     </ng-container>
 
@@ -76,56 +88,61 @@
         {{ 'labels.inputs.Actions' | translate }}
       </th>
       <td mat-cell class="center" *matCellDef="let charge">
-        <span *ngIf="status === 'Submitted and pending approval'">
+        @if (status === 'Submitted and pending approval') {
+          <span>
+            <button
+              class="account-action-button"
+              mat-raised-button
+              color="primary"
+              matTooltip="{{ 'tooltips.Edit Charge' | translate }}"
+              (click)="routeEdit($event); editCharge(charge)"
+            >
+              <i class="fa fa-pencil"></i>
+            </button>
+            <button
+              class="account-action-button"
+              mat-raised-button
+              color="warn"
+              matTooltip="{{ 'tooltips.Delete Charge' | translate }}"
+              (click)="routeEdit($event); deleteCharge(charge.id)"
+            >
+              <i class="fa fa-trash"></i>
+            </button>
+          </span>
+        }
+        @if (!charge.paid && status === 'Active') {
+          <button
+            class="account-action-button"
+            mat-raised-button
+            color="accent"
+            matTooltip="{{ 'tooltips.Adjust Charge' | translate }}"
+            (click)="routeEdit($event); adjustCharge(charge.id)"
+          >
+            <i class="fa fa-pencil"></i>
+          </button>
+        }
+        @if (charge.chargePayable && !charge.paid && status === 'Active') {
           <button
             class="account-action-button"
             mat-raised-button
             color="primary"
-            matTooltip="{{ 'tooltips.Edit Charge' | translate }}"
-            (click)="routeEdit($event); editCharge(charge)"
+            matTooltip="{{ 'tooltips.Pay Charge' | translate }}"
+            (click)="routeEdit($event); payCharge(charge.id)"
           >
-            <i class="fa fa-pencil"></i>
+            <i class="fa fa-dollar"></i>
           </button>
+        }
+        @if (!charge.actionFlag) {
           <button
             class="account-action-button"
             mat-raised-button
-            color="warn"
-            matTooltip="{{ 'tooltips.Delete Charge' | translate }}"
-            (click)="routeEdit($event); deleteCharge(charge.id)"
+            color="primary"
+            matTooltip="{{ 'tooltips.Waive Charge' | translate }}"
+            (click)="routeEdit($event); waiveCharge(charge.id)"
           >
-            <i class="fa fa-trash"></i>
+            <i class="fa fa-flag"></i>
           </button>
-        </span>
-        <button
-          class="account-action-button"
-          mat-raised-button
-          color="accent"
-          matTooltip="{{ 'tooltips.Adjust Charge' | translate }}"
-          *ngIf="!charge.paid && status === 'Active'"
-          (click)="routeEdit($event); adjustCharge(charge.id)"
-        >
-          <i class="fa fa-pencil"></i>
-        </button>
-        <button
-          class="account-action-button"
-          mat-raised-button
-          color="primary"
-          matTooltip="{{ 'tooltips.Pay Charge' | translate }}"
-          *ngIf="charge.chargePayable && !charge.paid && status === 'Active'"
-          (click)="routeEdit($event); payCharge(charge.id)"
-        >
-          <i class="fa fa-dollar"></i>
-        </button>
-        <button
-          class="account-action-button"
-          mat-raised-button
-          color="primary"
-          matTooltip="{{ 'tooltips.Waive Charge' | translate }}"
-          *ngIf="!charge.actionFlag"
-          (click)="routeEdit($event); waiveCharge(charge.id)"
-        >
-          <i class="fa fa-flag"></i>
-        </button>
+        }
       </td>
     </ng-container>
 

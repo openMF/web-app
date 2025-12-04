@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
 
 /** Custom Model */
 import { Theme } from './theme.model';
@@ -36,6 +36,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ThemePickerComponent implements OnInit {
+  themeStorageService = inject(ThemeStorageService);
+
   /** Default theme for the application. */
   currentTheme: Theme = {
     href: 'denim-yellowgreen.css',
@@ -78,11 +80,6 @@ export class ThemePickerComponent implements OnInit {
       isDark: true
     }
   ];
-
-  /**
-   * @param {ThemeStorageService} themeStorageService Theme Storage Service.
-   */
-  constructor(public themeStorageService: ThemeStorageService) {}
 
   /**
    * Initializes the theme for the application.

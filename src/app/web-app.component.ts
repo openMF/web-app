@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/prefer-inject */
 /** Angular Imports */
 import { Component, OnInit, HostListener, HostBinding, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
@@ -75,13 +76,13 @@ registerLocaleData(localeSW);
     trigger('opacityScale', [
       transition(':enter', [
         style({ opacity: 0, transform: 'scale(.95)' }),
-        animate('100ms ease-out', style({ opacity: 1, transform: 'scale(1)' }))]),
+        animate('100ms ease-out', style({ opacity: 1, transform: 'scale(1)' }))
+      ]),
       transition(':leave', [
         style({ opacity: 1, transform: 'scale(1)' }),
-        animate('75ms ease-in', style({ opacity: 0, transform: 'scale(.95)' }))])
-
+        animate('75ms ease-in', style({ opacity: 0, transform: 'scale(.95)' }))
+      ])
     ])
-
   ],
 
   // eslint-disable-next-line @angular-eslint/prefer-standalone

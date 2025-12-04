@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import {
@@ -53,6 +53,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoanLockedComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private loansService = inject(LoansService);
+  private systemService = inject(SystemService);
+  private tasksService = inject(TasksService);
+  private dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
+
   /** Loans Data */
   loans: any[] = [];
   /** Batch Requests */
@@ -88,22 +96,6 @@ export class LoanLockedComponent implements OnInit {
   jobName: String = 'LOAN_COB';
 
   showPaginator = false;
-
-  /**
-   * @param {LoansService} loansService Loans Service
-   * @param {Router} router Router for navigation.
-   * @param {MatDialog} dialog Dialog reference.
-   * @param {TranslateService} translateService Translate Service.
-   */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private loansService: LoansService,
-    private systemService: SystemService,
-    private tasksService: TasksService,
-    private dialog: MatDialog,
-    private translateService: TranslateService
-  ) {}
 
   ngOnInit(): void {
     this.allowRunInlineJob = false;

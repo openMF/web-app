@@ -9,59 +9,71 @@
     </div>
   </div>
 
-  <div *ngIf="entityDocuments?.length; else empty">
-    <div class="document-grid">
-      <div class="document-card" *ngFor="let document of entityDocuments; trackBy: trackByDocumentId">
-        <div
-          class="thumb"
-          [class.clickable]="isPreviewable(document)"
-          role="button"
-          tabindex="0"
-          [attr.aria-label]="('labels.buttons.Preview' | translate) + ': ' + document.name"
-          (keydown.enter)="isPreviewable(document) && openPreview(document)"
-          (keydown.space)="isPreviewable(document) && openPreview(document)"
-          (click)="isPreviewable(document) && openPreview(document)"
-        >
-          <ng-container *ngIf="previewThumbnails[document.id]; else placeholder">
-            <img [src]="previewThumbnails[document.id]" [alt]="document.name" [title]="document.name" loading="lazy" />
-          </ng-container>
-          <ng-template #placeholder>
-            <div class="placeholder">
-              <fa-icon icon="file"></fa-icon>
-              <span>{{ document.fileName || document.name }}</span>
-            </div>
-          </ng-template>
-          <div class="preview-overlay" *ngIf="isPreviewable(document)">
-            <fa-icon icon="eye"></fa-icon>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="title">{{ document.name }}</div>
-          <div class="meta" *ngIf="document.fileName">{{ document.fileName }}</div>
-          <div class="description" *ngIf="document.description">{{ document.description }}</div>
-          <div class="actions">
-            <button
-              mat-icon-button
-              color="warn"
-              (click)="deleteDocument(document.id, document.name)"
-              title="Delete"
-              [attr.aria-label]="'labels.buttons.Delete' | translate"
-              *mifosxHasPermission="'DELETE_DOCUMENT'"
+  @if (entityDocuments?.length) {
+    <div>
+      <div class="document-grid">
+        @for (document of entityDocuments; track trackByDocumentId($index, document)) {
+          <div class="document-card">
+            <div
+              class="thumb"
+              [class.clickable]="isPreviewable(document)"
+              role="button"
+              tabindex="0"
+              [attr.aria-label]="('labels.buttons.Preview' | translate) + ': ' + document.name"
+              (keydown.enter)="isPreviewable(document) && openPreview(document)"
+              (keydown.space)="isPreviewable(document) && openPreview(document)"
+              (click)="isPreviewable(document) && openPreview(document)"
             >
-              <fa-icon icon="times"></fa-icon>
-            </button>
+              @if (previewThumbnails[document.id]) {
+                <img
+                  [src]="previewThumbnails[document.id]"
+                  [alt]="document.name"
+                  [title]="document.name"
+                  loading="lazy"
+                />
+              } @else {
+                <div class="placeholder">
+                  <fa-icon icon="file"></fa-icon>
+                  <span>{{ document.fileName || document.name }}</span>
+                </div>
+              }
+              @if (isPreviewable(document)) {
+                <div class="preview-overlay">
+                  <fa-icon icon="eye"></fa-icon>
+                </div>
+              }
+            </div>
+            <div class="card-body">
+              <div class="title">{{ document.name }}</div>
+              @if (document.fileName) {
+                <div class="meta">{{ document.fileName }}</div>
+              }
+              @if (document.description) {
+                <div class="description">{{ document.description }}</div>
+              }
+              <div class="actions">
+                <button
+                  mat-icon-button
+                  color="warn"
+                  (click)="deleteDocument(document.id, document.name)"
+                  title="Delete"
+                  [attr.aria-label]="'labels.buttons.Delete' | translate"
+                  *mifosxHasPermission="'DELETE_DOCUMENT'"
+                >
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
+        }
       </div>
     </div>
-  </div>
-
-  <ng-template #empty>
+  } @else {
     <div class="empty-state">
       <p>{{ 'labels.text.NoDocuments' | translate }}</p>
       <p class="muted">{{ 'labels.text.UploadDocumentHint' | translate }}</p>
     </div>
-  </ng-template>
+  }
 </div>
 
 <div #lightboxRoot class="document-lightbox-host"></div>

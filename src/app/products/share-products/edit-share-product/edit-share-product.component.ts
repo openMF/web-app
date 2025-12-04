@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Components */
@@ -42,6 +42,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditShareProductComponent {
+  private route = inject(ActivatedRoute);
+  private productsService = inject(ProductsService);
+  private router = inject(Router);
+  private settingsService = inject(SettingsService);
+  private accounting = inject(Accounting);
+
   @ViewChild(ShareProductDetailsStepComponent, { static: true })
   shareProductDetailsStep: ShareProductDetailsStepComponent;
   @ViewChild(ShareProductCurrencyStepComponent, { static: true })
@@ -66,13 +72,7 @@ export class EditShareProductComponent {
    * @param {SettingsService} settingsService Settings Service.
    */
 
-  constructor(
-    private route: ActivatedRoute,
-    private productsService: ProductsService,
-    private router: Router,
-    private settingsService: SettingsService,
-    private accounting: Accounting
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { shareProductAndTemplate: any }) => {
       this.shareProductAndTemplate = data.shareProductAndTemplate;
     });

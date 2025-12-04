@@ -6,65 +6,75 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
-            <mat-error *ngIf="taxComponentForm.controls.name.hasError('required')">
-              {{ 'labels.inputs.Name' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (taxComponentForm.controls.name.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Name' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Percentage' | translate }}</mat-label>
             <input type="number" matInput required formControlName="percentage" />
-            <mat-error *ngIf="taxComponentForm.controls.percentage.hasError('required')">
-              {{ 'labels.inputs.Percentage' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
-            <mat-error
-              *ngIf="
-                taxComponentForm.controls.percentage.hasError('pattern') ||
-                taxComponentForm.controls.percentage.hasError('max')
-              "
-            >
-              {{ 'labels.inputs.Percentage' | translate }} <strong>{{ 'labels.commons.should' | translate }}</strong>
-              {{ 'labels.commons.be larger than 0 and at most 100' | translate }}
-            </mat-error>
+            @if (taxComponentForm.controls.percentage.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Percentage' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
+            @if (
+              taxComponentForm.controls.percentage.hasError('pattern') ||
+              taxComponentForm.controls.percentage.hasError('max')
+            ) {
+              <mat-error>
+                {{ 'labels.inputs.Percentage' | translate }} <strong>{{ 'labels.commons.should' | translate }}</strong>
+                {{ 'labels.commons.be larger than 0 and at most 100' | translate }}
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Debit Account Type' | translate }}</mat-label>
             <mat-select formControlName="debitAccountType">
-              <mat-option *ngFor="let debitAccountType of debitAccountTypeData" [value]="debitAccountType.id">
-                {{ debitAccountType.value | translateKey: 'inputs.accounting' }}
-              </mat-option>
+              @for (debitAccountType of debitAccountTypeData; track debitAccountType) {
+                <mat-option [value]="debitAccountType.id">
+                  {{ debitAccountType.value | translateKey: 'inputs.accounting' }}
+                </mat-option>
+              }
             </mat-select>
           </mat-form-field>
 
-          <mifosx-gl-account-selector
-            *ngIf="debitAccountData.length > 0"
-            [inputFormControl]="taxComponentForm.controls.debitAccountId"
-            [glAccountList]="debitAccountData"
-            [required]="false"
-            [inputLabel]="'Debit Account'"
-          >
-          </mifosx-gl-account-selector>
+          @if (debitAccountData.length > 0) {
+            <mifosx-gl-account-selector
+              [inputFormControl]="taxComponentForm.controls.debitAccountId"
+              [glAccountList]="debitAccountData"
+              [required]="false"
+              [inputLabel]="'Debit Account'"
+            >
+            </mifosx-gl-account-selector>
+          }
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Credit Account Type' | translate }}</mat-label>
             <mat-select formControlName="creditAccountType">
-              <mat-option *ngFor="let creditAccountType of creditAccountTypeData" [value]="creditAccountType.id">
-                {{ creditAccountType.value | translateKey: 'inputs.accounting' }}
-              </mat-option>
+              @for (creditAccountType of creditAccountTypeData; track creditAccountType) {
+                <mat-option [value]="creditAccountType.id">
+                  {{ creditAccountType.value | translateKey: 'inputs.accounting' }}
+                </mat-option>
+              }
             </mat-select>
           </mat-form-field>
 
-          <mifosx-gl-account-selector
-            *ngIf="creditAccountData.length > 0"
-            [inputFormControl]="taxComponentForm.controls.creditAccountId"
-            [glAccountList]="creditAccountData"
-            [required]="false"
-            [inputLabel]="'Credit Account'"
-          >
-          </mifosx-gl-account-selector>
+          @if (creditAccountData.length > 0) {
+            <mifosx-gl-account-selector
+              [inputFormControl]="taxComponentForm.controls.creditAccountId"
+              [glAccountList]="creditAccountData"
+              [required]="false"
+              [inputLabel]="'Credit Account'"
+            >
+            </mifosx-gl-account-selector>
+          }
 
           <mat-form-field (click)="startDatePicker.open()">
             <mat-label>{{ 'labels.inputs.Start Date' | translate }}</mat-label>
@@ -78,10 +88,12 @@
             />
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #startDatePicker></mat-datepicker>
-            <mat-error *ngIf="taxComponentForm.controls.startDate.hasError('required')">
-              {{ 'labels.inputs.Start Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (taxComponentForm.controls.startDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Start Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
         </div>
       </mat-card-content>

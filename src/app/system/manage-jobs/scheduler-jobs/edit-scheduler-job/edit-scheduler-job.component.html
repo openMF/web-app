@@ -6,19 +6,23 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Job Name' | translate }}</mat-label>
             <input matInput required formControlName="displayName" />
-            <mat-error *ngIf="jobForm.controls.displayName.hasError('required')">
-              {{ 'labels.inputs.Job Name' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (jobForm.controls.displayName.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Job Name' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Cron Expression' | translate }}</mat-label>
             <input matInput required formControlName="cronExpression" />
-            <mat-error *ngIf="jobForm.controls.cronExpression.hasError('required')">
-              {{ 'labels.inputs.Cron Expression' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (jobForm.controls.cronExpression.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Cron Expression' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-checkbox labelPosition="before" formControlName="active">

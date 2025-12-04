@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, Input, ViewChild, OnChanges } from '@angular/core';
+import { Component, Input, ViewChild, OnChanges, inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import {
   MatTableDataSource,
@@ -14,7 +14,7 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { DecimalPipe, NgIf, NgFor } from '@angular/common';
+import { DecimalPipe } from '@angular/common';
 
 /** Custom Servies */
 import { ReportsService } from '../../reports.service';
@@ -54,6 +54,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class TableAndSmsComponent implements OnChanges {
+  private reportsService = inject(ReportsService);
+  dialog = inject(MatDialog);
+  private decimalPipe = inject(DecimalPipe);
+  private progressBarService = inject(ProgressBarService);
+
   /** Run Report Data */
   @Input() dataObject: any;
 
@@ -72,17 +77,6 @@ export class TableAndSmsComponent implements OnChanges {
 
   /** Paginator for run-report table. */
   @ViewChild(MatPaginator) paginator: MatPaginator;
-
-  /**
-   * @param {ReportsService} reportsService Reports Service
-   * @param {DecimalPipe} decimalPipe Decimal Pipe
-   */
-  constructor(
-    private reportsService: ReportsService,
-    public dialog: MatDialog,
-    private decimalPipe: DecimalPipe,
-    private progressBarService: ProgressBarService
-  ) {}
 
   /**
    * Fetches run report data post changes in run report form.
@@ -154,7 +148,6 @@ export class TableAndSmsComponent implements OnChanges {
         required: true,
         order: 2
       })
-
     ];
     const data = {
       title: 'Export data to File',

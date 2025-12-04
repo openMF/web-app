@@ -1,9 +1,27 @@
-<mifosx-approve-shares-account *ngIf="actions['Approve']"></mifosx-approve-shares-account>
-<mifosx-reject-shares-account *ngIf="actions['Reject']"></mifosx-reject-shares-account>
-<mifosx-close-shares-account *ngIf="actions['Close']"></mifosx-close-shares-account>
-<mifosx-activate-shares-account *ngIf="actions['Activate']"></mifosx-activate-shares-account>
-<mifosx-undo-approval-shares-account *ngIf="actions['Undo Approval']"></mifosx-undo-approval-shares-account>
-<mifosx-apply-shares *ngIf="actions['Apply Additional Shares']"></mifosx-apply-shares>
-<mifosx-redeem-shares *ngIf="actions['Redeem Shares']"></mifosx-redeem-shares>
-<mifosx-approve-shares *ngIf="actions['Approve Additional Shares']"></mifosx-approve-shares>
-<mifosx-reject-shares *ngIf="actions['Reject Additional Shares']"></mifosx-reject-shares>
+@if (actions['Approve']) {
+  <mifosx-approve-shares-account></mifosx-approve-shares-account>
+}
+@if (actions['Reject']) {
+  <mifosx-reject-shares-account></mifosx-reject-shares-account>
+}
+@if (actions['Close']) {
+  <mifosx-close-shares-account></mifosx-close-shares-account>
+}
+@if (actions['Activate']) {
+  <mifosx-activate-shares-account></mifosx-activate-shares-account>
+}
+@if (actions['Undo Approval']) {
+  <mifosx-undo-approval-shares-account></mifosx-undo-approval-shares-account>
+}
+@if (actions['Apply Additional Shares']) {
+  <mifosx-apply-shares></mifosx-apply-shares>
+}
+@if (actions['Redeem Shares']) {
+  <mifosx-redeem-shares></mifosx-redeem-shares>
+}
+@if (actions['Approve Additional Shares']) {
+  <mifosx-approve-shares></mifosx-approve-shares>
+}
+@if (actions['Reject Additional Shares']) {
+  <mifosx-reject-shares></mifosx-reject-shares>
+}

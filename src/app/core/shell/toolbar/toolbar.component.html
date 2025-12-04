@@ -1,25 +1,31 @@
 <mat-toolbar class="layout-row" color="primary" id="mifosx-toolbar">
-  <button
-    mat-icon-button
-    *ngIf="!sidenavCollapsed"
-    (click)="toggleSidenav()"
-    matTooltip="{{ 'tooltips.Toggle Hide/Open' | translate }}"
-    tabindex="0"
-  >
-    <fa-icon icon="bars" size="lg"></fa-icon>
-  </button>
+  @if (!sidenavCollapsed) {
+    <button
+      mat-icon-button
+      (click)="toggleSidenav()"
+      matTooltip="{{ 'tooltips.Toggle Hide/Open' | translate }}"
+      tabindex="0"
+    >
+      <fa-icon icon="bars" size="lg"></fa-icon>
+    </button>
+  }
 
-  <button
-    mat-icon-button
-    *ngIf="sidenav.opened"
-    (click)="toggleSidenavCollapse()"
-    matTooltip="{{ 'tooltips.Toggle Collapse' | translate }}"
-    class="hide-lt-md"
-    tabindex="0"
-  >
-    <fa-icon *ngIf="!sidenavCollapsed" icon="chevron-left"></fa-icon>
-    <fa-icon *ngIf="sidenavCollapsed" icon="chevron-right"></fa-icon>
-  </button>
+  @if (sidenav.opened) {
+    <button
+      mat-icon-button
+      (click)="toggleSidenavCollapse()"
+      matTooltip="{{ 'tooltips.Toggle Collapse' | translate }}"
+      class="hide-lt-md"
+      tabindex="0"
+    >
+      @if (!sidenavCollapsed) {
+        <fa-icon icon="chevron-left"></fa-icon>
+      }
+      @if (sidenavCollapsed) {
+        <fa-icon icon="chevron-right"></fa-icon>
+      }
+    </button>
+  }
 
   <div class="tab-nav-bar">
     <a

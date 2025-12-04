@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -24,6 +24,14 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
   ]
 })
 export class LoanReagingComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private settingsService = inject(SettingsService);
+  private loanService = inject(LoansService);
+  private dateUtils = inject(Dates);
+  private dialog = inject(MatDialog);
+
   @Input() dataObject: any;
   /** Loan Id */
   loanId: string;
@@ -42,15 +50,7 @@ export class LoanReagingComponent implements OnInit {
   loanTransactionData: LoanTransactionTemplate | null = null;
   addTransactionAmount = false;
 
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private settingsService: SettingsService,
-    private loanService: LoansService,
-    private dateUtils: Dates,
-    private dialog: MatDialog
-  ) {
+  constructor() {
     this.loanId = this.route.snapshot.params['loanId'];
   }
 

@@ -4,14 +4,16 @@
       <div class="m-b-20">
         <h3>{{ 'labels.heading.All Transactions' | translate }}</h3>
       </div>
-      <div class="action-button m-b-20 layout-row gap-20px" *ngIf="checkStatus()">
-        <mat-checkbox [formControl]="hideReversedParam" (click)="hideReversed()" class="accruals">
-          {{ 'labels.inputs.Hide Reversed' | translate }}</mat-checkbox
-        >
-        <mat-checkbox [formControl]="hideAccrualsParam" (click)="hideAccruals()" class="accruals">
-          {{ 'labels.inputs.Hide Accruals' | translate }}</mat-checkbox
-        >
-      </div>
+      @if (checkStatus()) {
+        <div class="action-button m-b-20 layout-row gap-20px">
+          <mat-checkbox [formControl]="hideReversedParam" (click)="hideReversed()" class="accruals">
+            {{ 'labels.inputs.Hide Reversed' | translate }}</mat-checkbox
+          >
+          <mat-checkbox [formControl]="hideAccrualsParam" (click)="hideAccruals()" class="accruals">
+            {{ 'labels.inputs.Hide Accruals' | translate }}</mat-checkbox
+          >
+        </div>
+      }
     </div>
 
     <table mat-table [dataSource]="dataSource">

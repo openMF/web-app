@@ -14,7 +14,7 @@ import {
   MatRow
 } from '@angular/material/table';
 import { LongTextComponent } from '../../../shared/long-text/long-text.component';
-import { NgIf, CurrencyPipe } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 import { ExternalIdentifierComponent } from '../../../shared/external-identifier/external-identifier.component';
 import { MatDivider } from '@angular/material/divider';
 import { MatStepperPrevious } from '@angular/material/stepper';

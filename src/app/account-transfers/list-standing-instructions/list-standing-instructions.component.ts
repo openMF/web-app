@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import {
@@ -55,6 +55,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ListStandingInstructionsComponent {
+  private route = inject(ActivatedRoute);
+  private accountTransfersService = inject(AccountTransfersService);
+  private settingsService = inject(SettingsService);
+  private dialog = inject(MatDialog);
+
   /** Recurring Deposits Data */
   standingIntructionsTemplateData: any;
   /** Instructions Data */
@@ -104,12 +109,7 @@ export class ListStandingInstructionsComponent {
    * @param {SettingsService} settingsService Settings Service
    * @param {AccountTransfersService} accountTransfersService Account Transfers Service
    */
-  constructor(
-    private route: ActivatedRoute,
-    private accountTransfersService: AccountTransfersService,
-    private settingsService: SettingsService,
-    private dialog: MatDialog
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { standingIntructionsTemplate: any }) => {
       this.standingIntructionsTemplateData = data.standingIntructionsTemplate;
       if (data.standingIntructionsTemplate.fromClient) {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -23,6 +23,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class NotesTabComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private authenticationService = inject(AuthenticationService);
+  private groupsService = inject(GroupsService);
+
   /** Group ID */
   entityId: string;
   /** Username */
@@ -36,11 +40,7 @@ export class NotesTabComponent implements OnInit {
    * @param {GroupsService} groupsService Groups Service
    * @param {AuthenticationService} authenticationService Authentication Service.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private authenticationService: AuthenticationService,
-    private groupsService: GroupsService
-  ) {
+  constructor() {
     this.entityId = this.route.parent.snapshot.params['groupId'];
     this.addNote = this.addNote.bind(this);
   }

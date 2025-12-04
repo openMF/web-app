@@ -1,8 +1,12 @@
 <h1 mat-dialog-title>{{ 'Error Log' | translate }}</h1>
 
 <div mat-dialog-content>
-  <p *ngIf="!showAsCode">{{ displayData }}</p>
-  <span *ngIf="showAsCode" [innerHTML]="sanitizedData"></span>
+  @if (!showAsCode) {
+    <p>{{ displayData }}</p>
+  }
+  @if (showAsCode) {
+    <span [innerHTML]="sanitizedData"></span>
+  }
 </div>
 
 <mat-dialog-actions align="left">

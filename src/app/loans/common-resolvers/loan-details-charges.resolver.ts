@@ -16,6 +16,7 @@ export class LoanDetailsChargesResolver implements Resolve<Object> {
   /**
    * @param {LoansService} LoansService Loans service.
    */
+  // eslint-disable-next-line @angular-eslint/prefer-inject
   constructor(private loansService: LoansService) {}
 
   /**

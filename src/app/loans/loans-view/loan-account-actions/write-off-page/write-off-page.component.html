@@ -15,10 +15,12 @@
             />
             <mat-datepicker-toggle matSuffix [for]="writeOffDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #writeOffDatePicker></mat-datepicker>
-            <mat-error *ngIf="writeOffForm.controls.transactionDate.hasError('required')">
-              {{ 'labels.inputs.Write Off Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (writeOffForm.controls.transactionDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Write Off Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
@@ -29,9 +31,11 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Reason for Write-Off' | translate }}</mat-label>
             <mat-select formControlName="writeoffReasonId">
-              <mat-option *ngFor="let writeOffReason of writeOffReasonOptions" [value]="writeOffReason.id">
-                {{ writeOffReason.name }}
-              </mat-option>
+              @for (writeOffReason of writeOffReasonOptions; track writeOffReason) {
+                <mat-option [value]="writeOffReason.id">
+                  {{ writeOffReason.name }}
+                </mat-option>
+              }
             </mat-select>
           </mat-form-field>
 

@@ -10,6 +10,7 @@ export class WorkflowJobResolver {
   /**
    * @param {SystemService} systemService System service.
    */
+  // eslint-disable-next-line @angular-eslint/prefer-inject
   constructor(private systemService: SystemService) {}
 
   /**

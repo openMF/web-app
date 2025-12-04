@@ -1,69 +1,79 @@
 <h1 mat-dialog-title>
-  <ng-container *ngIf="documentIdentifier; else defaultTitle">
+  @if (documentIdentifier) {
     {{ 'labels.heading.Add Client Identifier' | translate }}
-  </ng-container>
-  <ng-template #defaultTitle>
+  } @else {
     {{ 'labels.heading.Upload' | translate }} {{ entityType }} {{ 'labels.heading.Documents' | translate }}
-  </ng-template>
+  }
 </h1>
 <div class="m-l-10 m-r-10">
   <form [formGroup]="uploadDocumentForm" class="layout-column">
     <!-- Identity-specific fields -->
-    <ng-container *ngIf="documentIdentifier">
+    @if (documentIdentifier) {
       <mat-form-field class="flex-fill">
         <mat-label>{{ 'labels.inputs.Document Type' | translate }}</mat-label>
         <mat-select formControlName="documentTypeId" required>
-          <mat-option *ngFor="let docType of allowedDocumentTypes" [value]="docType.id">
-            {{ docType.name }}
-          </mat-option>
+          @for (docType of allowedDocumentTypes; track docType) {
+            <mat-option [value]="docType.id">
+              {{ docType.name }}
+            </mat-option>
+          }
         </mat-select>
-        <mat-error *ngIf="uploadDocumentForm.controls.documentTypeId?.hasError('required')">
-          {{ 'labels.inputs.Document Type' | translate }} {{ 'labels.commons.is' | translate }}
-          <strong>{{ 'labels.commons.required' | translate }}</strong>
-        </mat-error>
+        @if (uploadDocumentForm.controls.documentTypeId?.hasError('required')) {
+          <mat-error>
+            {{ 'labels.inputs.Document Type' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
+          </mat-error>
+        }
       </mat-form-field>
-
       <mat-form-field class="flex-fill">
         <mat-label>{{ 'labels.inputs.Status' | translate }}</mat-label>
         <mat-select formControlName="status" required>
-          <mat-option *ngFor="let status of statusOptions" [value]="status.value">
-            {{ status.label }}
-          </mat-option>
+          @for (status of statusOptions; track status) {
+            <mat-option [value]="status.value">
+              {{ status.label }}
+            </mat-option>
+          }
         </mat-select>
-        <mat-error *ngIf="uploadDocumentForm.controls.status?.hasError('required')">
-          {{ 'labels.inputs.Status' | translate }} {{ 'labels.commons.is' | translate }}
-          <strong>{{ 'labels.commons.required' | translate }}</strong>
-        </mat-error>
+        @if (uploadDocumentForm.controls.status?.hasError('required')) {
+          <mat-error>
+            {{ 'labels.inputs.Status' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
+          </mat-error>
+        }
       </mat-form-field>
-
       <mat-form-field class="flex-fill">
         <mat-label>{{ 'labels.inputs.Document Key' | translate }}</mat-label>
         <input formControlName="documentKey" required matInput />
-        <mat-error *ngIf="uploadDocumentForm.controls.documentKey?.hasError('required')">
-          {{ 'labels.inputs.Document Key' | translate }} {{ 'labels.commons.is' | translate }}
-          <strong>{{ 'labels.commons.required' | translate }}</strong>
-        </mat-error>
+        @if (uploadDocumentForm.controls.documentKey?.hasError('required')) {
+          <mat-error>
+            {{ 'labels.inputs.Document Key' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
+          </mat-error>
+        }
       </mat-form-field>
-
       <mat-form-field class="flex-fill">
         <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
         <input formControlName="description" matInput />
       </mat-form-field>
-    </ng-container>
+    }
 
     <mat-form-field class="flex-fill">
       <mat-label>{{ 'labels.inputs.File Name' | translate }}</mat-label>
       <input formControlName="fileName" required matInput />
-      <mat-error *ngIf="uploadDocumentForm.controls.fileName.hasError('required')">
-        {{ 'labels.inputs.File Name' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
+      @if (uploadDocumentForm.controls.fileName.hasError('required')) {
+        <mat-error>
+          {{ 'labels.inputs.File Name' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
     </mat-form-field>
 
-    <mat-form-field class="flex-fill" *ngIf="!documentIdentifier">
-      <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
-      <input formControlName="description" matInput />
-    </mat-form-field>
+    @if (!documentIdentifier) {
+      <mat-form-field class="flex-fill">
+        <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
+        <input formControlName="description" matInput />
+      </mat-form-field>
+    }
 
     <mifosx-file-upload flex="60%" (change)="onFileSelect($event)"></mifosx-file-upload>
 
@@ -75,12 +85,11 @@
         [disabled]="!uploadDocumentForm.valid"
         [mat-dialog-close]="uploadDocumentForm.value"
       >
-        <ng-container *ngIf="documentIdentifier; else uploadLabel">
+        @if (documentIdentifier) {
           {{ 'labels.buttons.Add' | translate }}
-        </ng-container>
-        <ng-template #uploadLabel>
+        } @else {
           {{ 'labels.buttons.Upload' | translate }}
-        </ng-template>
+        }
       </button>
     </mat-dialog-actions>
   </form>

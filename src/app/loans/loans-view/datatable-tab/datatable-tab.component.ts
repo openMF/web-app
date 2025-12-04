@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EntityDatatableTabComponent } from '../../../shared/tabs/entity-datatable-tab/entity-datatable-tab.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -13,6 +13,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class DatatableTabComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+
   entityId: string;
   /** Loan Datatable */
   entityDatatable: any = null;
@@ -23,7 +25,7 @@ export class DatatableTabComponent implements OnInit {
    * Fetches data table data from `resolve`
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     this.entityId = this.route.parent.parent.snapshot.paramMap.get('loanId');
     this.entityDatatable = null;
     this.route.data.subscribe((data: { loanDatatable: any }) => {

@@ -1,9 +1,11 @@
 <div class="layout-row align-end gap-2px responsive-column container m-b-20">
   <span *mifosxHasPermission="'ACTIVATE_HOLIDAY'">
-    <button mat-raised-button color="accent" (click)="activateHoliday()" *ngIf="holidayData.status.value !== 'Active'">
-      <fa-icon icon="lock-open" class="m-r-10"></fa-icon>
-      {{ 'labels.buttons.Activate' | translate }}
-    </button>
+    @if (holidayData.status.value !== 'Active') {
+      <button mat-raised-button color="accent" (click)="activateHoliday()">
+        <fa-icon icon="lock-open" class="m-r-10"></fa-icon>
+        {{ 'labels.buttons.Activate' | translate }}
+      </button>
+    }
   </span>
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_HOLIDAY'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
@@ -47,19 +49,17 @@
           {{ 'labels.inputs.Repayments Scheduled To' | translate }}
         </div>
 
-        <div
-          class="flex-50"
-          *ngIf="holidayData.repaymentsRescheduledTo !== undefined && holidayData.repaymentsRescheduledTo !== null"
-        >
-          {{ holidayData.repaymentsRescheduledTo | dateFormat }}
-        </div>
+        @if (holidayData.repaymentsRescheduledTo !== undefined && holidayData.repaymentsRescheduledTo !== null) {
+          <div class="flex-50">
+            {{ holidayData.repaymentsRescheduledTo | dateFormat }}
+          </div>
+        }
 
-        <div
-          class="flex-50"
-          *ngIf="holidayData.repaymentsRescheduledTo === undefined || holidayData.repaymentsRescheduledTo === null"
-        >
-          {{ 'labels.inputs.Next Repayment Date' | translate }}
-        </div>
+        @if (holidayData.repaymentsRescheduledTo === undefined || holidayData.repaymentsRescheduledTo === null) {
+          <div class="flex-50">
+            {{ 'labels.inputs.Next Repayment Date' | translate }}
+          </div>
+        }
       </div>
     </mat-card-content>
   </mat-card>

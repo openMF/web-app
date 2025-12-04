@@ -80,6 +80,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
+  private route = inject(ActivatedRoute);
+  private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
+  private dialog = inject(MatDialog);
+
   /** Currency Code */
   @Input() currencyCode: string;
   /** Loan Repayment Schedule to be Edited */
@@ -139,12 +144,7 @@ export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
    * Retrieves the loans with associations data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private settingsService: SettingsService,
-    private dateUtils: Dates,
-    private dialog: MatDialog
-  ) {
+  constructor() {
     this.businessDate = this.settingsService.businessDate;
   }
 
@@ -297,7 +297,6 @@ export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
         type: 'number',
         required: true
       })
-
     ];
 
     const data = {

@@ -1,80 +1,95 @@
 <div [formGroup]="form" class="flex-fill">
-  <div *ngIf="formfield.controlType === 'input' || formfield.controlType === 'select'" class="flex-fill">
-    <mat-form-field class="flex-fill">
-      <mat-label>{{ formfield.label }}</mat-label>
+  @if (formfield.controlType === 'input' || formfield.controlType === 'select') {
+    <div class="flex-fill">
+      <mat-form-field class="flex-fill">
+        <mat-label>{{ formfield.label }}</mat-label>
+        @if (formfield.controlType === 'input') {
+          <input
+            [type]="formfield.type"
+            matInput
+            [formControlName]="formfield.controlName"
+            [required]="formfield.required"
+          />
+        }
+        @if (form.controls[formfield.controlName].hasError('max')) {
+          <mat-error>
+            <strong>{{ 'labels.commons.Maximum Value must be' | translate }} {{ formfield.max }}</strong>
+          </mat-error>
+        }
+        @if (form.controls[formfield.controlName].hasError('min')) {
+          <mat-error>
+            <strong>{{ 'labels.commons.Minimum Value must be' | translate }} {{ formfield.min }}</strong>
+          </mat-error>
+        }
+        @if (formfield.controlType === 'select') {
+          <mat-select [formControlName]="formfield.controlName" [required]="formfield.required">
+            @for (option of formfield.options.data; track option) {
+              <mat-option [value]="option[formfield.options.value]">
+                {{ option[formfield.options.label] }}
+              </mat-option>
+            }
+          </mat-select>
+        }
+        @if (form.controls[formfield.controlName].hasError('required')) {
+          <mat-error>
+            {{ formfield.label }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
+          </mat-error>
+        }
+      </mat-form-field>
+    </div>
+  }
 
+  @if (formfield.controlType === 'datepicker') {
+    <mat-form-field class="flex-fill" Fill (click)="datePicker.open()">
+      <mat-label>{{ formfield.label }}</mat-label>
       <input
-        *ngIf="formfield.controlType === 'input'"
-        [type]="formfield.type"
         matInput
+        [matDatepicker]="datePicker"
+        [min]="formfield.minDate"
+        [max]="formfield.maxDate"
         [formControlName]="formfield.controlName"
         [required]="formfield.required"
       />
-      <mat-error *ngIf="form.controls[formfield.controlName].hasError('max')">
-        <strong>{{ 'labels.commons.Maximum Value must be' | translate }} {{ formfield.max }}</strong>
-      </mat-error>
-      <mat-error *ngIf="form.controls[formfield.controlName].hasError('min')">
-        <strong>{{ 'labels.commons.Minimum Value must be' | translate }} {{ formfield.min }}</strong>
-      </mat-error>
+      <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+      <mat-datepicker #datePicker></mat-datepicker>
+      @if (form.controls[formfield.controlName].hasError('required')) {
+        <mat-error>
+          {{ formfield.label }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
+    </mat-form-field>
+  }
 
-      <mat-select
-        *ngIf="formfield.controlType === 'select'"
+  @if (formfield.controlType === 'datetimepicker') {
+    <mat-form-field class="flex-fill" Fill (click)="datePicker.open()">
+      <mat-label>{{ formfield.label }}</mat-label>
+      <input
+        matInput
+        type="datetime-local"
+        [min]="formfield.minDate"
+        [max]="formfield.maxDate"
         [formControlName]="formfield.controlName"
         [required]="formfield.required"
-      >
-        <mat-option *ngFor="let option of formfield.options.data" [value]="option[formfield.options.value]">
-          {{ option[formfield.options.label] }}
-        </mat-option>
-      </mat-select>
-
-      <mat-error *ngIf="form.controls[formfield.controlName].hasError('required')">
-        {{ formfield.label }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
+      />
+      @if (form.controls[formfield.controlName].hasError('required')) {
+        <mat-error>
+          {{ formfield.label }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
     </mat-form-field>
-  </div>
+  }
 
-  <mat-form-field class="flex-fill" Fill *ngIf="formfield.controlType === 'datepicker'" (click)="datePicker.open()">
-    <mat-label>{{ formfield.label }}</mat-label>
-    <input
-      matInput
-      [matDatepicker]="datePicker"
-      [min]="formfield.minDate"
-      [max]="formfield.maxDate"
+  @if (formfield.controlType === 'checkbox') {
+    <mat-checkbox
+      labelPosition="before"
+      [checked]="formfield.value"
       [formControlName]="formfield.controlName"
       [required]="formfield.required"
-    />
-    <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
-    <mat-datepicker #datePicker></mat-datepicker>
-    <mat-error *ngIf="form.controls[formfield.controlName].hasError('required')">
-      {{ formfield.label }} {{ 'labels.commons.is' | translate }}
-      <strong>{{ 'labels.commons.required' | translate }}</strong>
-    </mat-error>
-  </mat-form-field>
-
-  <mat-form-field class="flex-fill" Fill *ngIf="formfield.controlType === 'datetimepicker'" (click)="datePicker.open()">
-    <mat-label>{{ formfield.label }}</mat-label>
-    <input
-      matInput
-      type="datetime-local"
-      [min]="formfield.minDate"
-      [max]="formfield.maxDate"
-      [formControlName]="formfield.controlName"
-      [required]="formfield.required"
-    />
-    <mat-error *ngIf="form.controls[formfield.controlName].hasError('required')">
-      {{ formfield.label }} {{ 'labels.commons.is' | translate }}
-      <strong>{{ 'labels.commons.required' | translate }}</strong>
-    </mat-error>
-  </mat-form-field>
-
-  <mat-checkbox
-    *ngIf="formfield.controlType === 'checkbox'"
-    labelPosition="before"
-    [checked]="formfield.value"
-    [formControlName]="formfield.controlName"
-    [required]="formfield.required"
-  >
-    {{ formfield.label }}
-  </mat-checkbox>
+    >
+      {{ formfield.label }}
+    </mat-checkbox>
+  }
 </div>

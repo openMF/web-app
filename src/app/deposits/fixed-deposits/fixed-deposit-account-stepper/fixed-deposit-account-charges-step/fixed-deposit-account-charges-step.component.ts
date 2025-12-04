@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, inject } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -58,6 +58,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class FixedDepositAccountChargesStepComponent implements OnInit, OnChanges {
+  dialog = inject(MatDialog);
+  private dateUtils = inject(Dates);
+  private settingsService = inject(SettingsService);
+
   /** Fixed deposits account template */
   @Input() fixedDepositsAccountTemplate: any;
   /** Fixed deposits account and product template */
@@ -85,17 +89,6 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
   isChargesPatched = false;
   /** Component is pristine if there has been no changes by user interaction */
   pristine = true;
-
-  /**
-   * @param {MatDialog} dialog Mat Dialog
-   * @param {Dates} dateUtils Date Utils
-   * @param {SettingsService} settingsService Settings Service
-   */
-  constructor(
-    public dialog: MatDialog,
-    private dateUtils: Dates,
-    private settingsService: SettingsService
-  ) {}
 
   ngOnInit() {
     this.chargesDataSource = [];
@@ -142,7 +135,6 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
         type: 'number',
         required: false
       })
-
     ];
     const data = {
       title: 'Edit Charge Amount',
@@ -173,7 +165,6 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
         type: 'datetime-local',
         required: false
       })
-
     ];
     const data = {
       title: 'Edit Charge Date',
@@ -215,7 +206,6 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
         type: 'text',
         required: false
       })
-
     ];
     const data = {
       title: 'Edit Charge Fee Interval',

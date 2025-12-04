@@ -7,24 +7,30 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Username' | translate }}</mat-label>
             <input matInput required formControlName="username" />
-            <mat-error *ngIf="userForm.controls.username.hasError('required')">
-              {{ 'labels.inputs.Username' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (userForm.controls.username.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Username' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <!-- Email -->
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Email' | translate }}</mat-label>
             <input matInput required formControlName="email" />
-            <mat-error *ngIf="userForm.controls.email.hasError('email')">
-              {{ 'labels.inputs.Email' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.invalid' | translate }}</strong>
-            </mat-error>
-            <mat-error *ngIf="userForm.controls.email.hasError('required')">
-              {{ 'labels.inputs.Email' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (userForm.controls.email.hasError('email')) {
+              <mat-error>
+                {{ 'labels.inputs.Email' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.invalid' | translate }}</strong>
+              </mat-error>
+            }
+            @if (userForm.controls.email.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Email' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <!-- First Name -->
@@ -43,9 +49,11 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Language' | translate }}</mat-label>
             <mat-select formControlName="preferredLanguage" required>
-              <mat-option *ngFor="let lang of languageCodes" [value]="lang.code">
-                {{ 'languages.' + lang.key | translate }}
-              </mat-option>
+              @for (lang of languageCodes; track lang) {
+                <mat-option [value]="lang.code">
+                  {{ 'languages.' + lang.key | translate }}
+                </mat-option>
+              }
             </mat-select>
           </mat-form-field>
           <!-- Gender -->
@@ -63,9 +71,11 @@
             <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Code' | translate }}</mat-label>
               <mat-select formControlName="countryCode" required>
-                <mat-option *ngFor="let country of countryCodes" [value]="country.code">
-                  {{ 'countries.' + country.key | translate }} ({{ country.code }})
-                </mat-option>
+                @for (country of countryCodes; track country) {
+                  <mat-option [value]="country.code">
+                    {{ 'countries.' + country.key | translate }} ({{ country.code }})
+                  </mat-option>
+                }
               </mat-select>
             </mat-form-field>
 
@@ -78,22 +88,28 @@
           <mat-form-field class="flex-20">
             <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
             <mat-select required formControlName="officeId">
-              <mat-option *ngFor="let office of officesData" [value]="office.id">
-                {{ office.name }}
-              </mat-option>
+              @for (office of officesData; track office) {
+                <mat-option [value]="office.id">
+                  {{ office.name }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error *ngIf="userForm.controls.officeId.hasError('required')">
-              {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (userForm.controls.officeId.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field class="flex-20">
             <mat-label>{{ 'labels.inputs.Staff' | translate }}</mat-label>
             <mat-select formControlName="staffId">
-              <mat-option *ngFor="let staff of staffData" [value]="staff.id">
-                {{ staff.displayName }}
-              </mat-option>
+              @for (staff of staffData; track staff) {
+                <mat-option [value]="staff.id">
+                  {{ staff.displayName }}
+                </mat-option>
+              }
             </mat-select>
           </mat-form-field>
 
@@ -101,69 +117,80 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Password' | translate }}</mat-label>
             <input matInput type="password" formControlName="password" required />
-            <mat-error *ngIf="userForm.get('password')?.hasError('required')">
-              {{ 'labels.inputs.Password' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
-            <mat-error *ngIf="userForm.get('password')?.hasError('minlength')">
-              {{ 'labels.commons.Password should be at least' | translate }}
-              <strong>{{ 'labels.commons.12 characters long' | translate }}</strong>
-            </mat-error>
-            <mat-error *ngIf="userForm.get('password')?.hasError('maxlength')">
-              {{ 'labels.commons.Password should not be more than' | translate }}
-              <strong>{{ 'labels.commons.50 characters long' | translate }}</strong>
-            </mat-error>
-            <mat-error
-              *ngIf="
-                userForm.get('password')?.hasError('pattern') &&
-                !userForm.get('password')?.hasError('minlength') &&
-                !userForm.get('password')?.hasError('maxlength')
-              "
-            >
-              {{ 'labels.commons.Password should include a' | translate }}
-              <strong>{{ 'labels.commons.numeral' | translate }}</strong>
-              {{ 'labels.commons.and at' | translate }}
-              <strong>{{ 'labels.commons.least one uppercase' | translate }}</strong
-              >,
-              <strong>{{ 'labels.commons.lowercase and special character' | translate }}</strong>
-            </mat-error>
+            @if (userForm.get('password')?.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Password' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
+            @if (userForm.get('password')?.hasError('minlength')) {
+              <mat-error>
+                {{ 'labels.commons.Password should be at least' | translate }}
+                <strong>{{ 'labels.commons.12 characters long' | translate }}</strong>
+              </mat-error>
+            }
+            @if (userForm.get('password')?.hasError('maxlength')) {
+              <mat-error>
+                {{ 'labels.commons.Password should not be more than' | translate }}
+                <strong>{{ 'labels.commons.50 characters long' | translate }}</strong>
+              </mat-error>
+            }
+            @if (
+              userForm.get('password')?.hasError('pattern') &&
+              !userForm.get('password')?.hasError('minlength') &&
+              !userForm.get('password')?.hasError('maxlength')
+            ) {
+              <mat-error>
+                {{ 'labels.commons.Password should include a' | translate }}
+                <strong>{{ 'labels.commons.numeral' | translate }}</strong>
+                {{ 'labels.commons.and at' | translate }}
+                <strong>{{ 'labels.commons.least one uppercase' | translate }}</strong
+                >,
+                <strong>{{ 'labels.commons.lowercase and special character' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <!-- Repeat password -->
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Repeat Password' | translate }}</mat-label>
             <input matInput type="password" formControlName="repeatPassword" required />
-            <mat-error *ngIf="userForm.get('repeatPassword')?.hasError('required')">
-              {{ 'labels.inputs.Password' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (userForm.get('repeatPassword')?.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Password' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <!-- Passwords do not match -->
-          <p
-            class="flex-98 reset-password-error"
-            *ngIf="
-              userForm.errors?.passwordsDoNotMatch &&
-              !userForm.get('password')?.hasError('required') &&
-              !userForm.get('repeatPassword')?.hasError('required')
-            "
-          >
-            {{ 'labels.inputs.Passwords' | translate }}
-            <strong>{{ 'labels.commons.do not match' | translate }}</strong>
-          </p>
+          @if (
+            userForm.errors?.passwordsDoNotMatch &&
+            !userForm.get('password')?.hasError('required') &&
+            !userForm.get('repeatPassword')?.hasError('required')
+          ) {
+            <p class="flex-98 reset-password-error">
+              {{ 'labels.inputs.Passwords' | translate }}
+              <strong>{{ 'labels.commons.do not match' | translate }}</strong>
+            </p>
+          }
 
           <!-- Roles -->
           <mat-form-field class="flex-20">
             <mat-label>{{ 'labels.inputs.Roles' | translate }}</mat-label>
             <mat-select formControlName="roles" required multiple>
-              <mat-option *ngFor="let role of rolesData" [value]="role.id">
-                {{ role.name }}
-              </mat-option>
+              @for (role of rolesData; track role) {
+                <mat-option [value]="role.id">
+                  {{ role.name }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error *ngIf="userForm.controls.roles.hasError('required')">
-              {{ 'labels.commons.At least one role' | translate }}
-              <strong>{{ 'labels.commons.must be selected' | translate }}</strong>
-            </mat-error>
+            @if (userForm.controls.roles.hasError('required')) {
+              <mat-error>
+                {{ 'labels.commons.At least one role' | translate }}
+                <strong>{{ 'labels.commons.must be selected' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
         </div>
       </mat-card-content>

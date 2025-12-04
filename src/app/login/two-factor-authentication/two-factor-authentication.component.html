@@ -5,85 +5,94 @@
 <mat-divider></mat-divider>
 
 <!-- Select delivery method to receive OTP -->
-<p *ngIf="!otpRequested">{{ 'labels.text.Please select a delivery method' | translate }}:</p>
+@if (!otpRequested) {
+  <p>{{ 'labels.text.Please select a delivery method' | translate }}:</p>
+}
 
-<form
-  class="layout-column two-factor-auth-form"
-  *ngIf="!otpRequested"
-  [formGroup]="twoFactorAuthenticationDeliveryMethodForm"
-  (ngSubmit)="requestOTP()"
->
-  <mat-radio-group
-    class="layout-column align-center radio-group-spacing"
-    formControlName="twoFactorAuthenticationDeliveryMethod"
+@if (!otpRequested) {
+  <form
+    class="layout-column two-factor-auth-form"
+    [formGroup]="twoFactorAuthenticationDeliveryMethodForm"
+    (ngSubmit)="requestOTP()"
   >
-    <mat-radio-button
-      *ngFor="let twoFactorAuthenticationDeliveryMethod of twoFactorAuthenticationDeliveryMethods"
-      [value]="twoFactorAuthenticationDeliveryMethod"
+    <mat-radio-group
+      class="layout-column align-center radio-group-spacing"
+      formControlName="twoFactorAuthenticationDeliveryMethod"
     >
-      {{ 'labels.inputs.Send' | translate }} {{ twoFactorAuthenticationDeliveryMethod.name }}
-      {{ 'labels.inputs.to' | translate }} {{ twoFactorAuthenticationDeliveryMethod.target }}
-    </mat-radio-button>
-  </mat-radio-group>
-
-  <button
-    mat-raised-button
-    color="primary"
-    class="flex-fill align-center"
-    [disabled]="!twoFactorAuthenticationDeliveryMethodForm.valid"
-  >
-    {{ 'labels.buttons.Request OTP' | translate }}
-    <mat-spinner [diameter]="20" *ngIf="loading"></mat-spinner>
-  </button>
-</form>
+      @for (
+        twoFactorAuthenticationDeliveryMethod of twoFactorAuthenticationDeliveryMethods;
+        track twoFactorAuthenticationDeliveryMethod
+      ) {
+        <mat-radio-button [value]="twoFactorAuthenticationDeliveryMethod">
+          {{ 'labels.inputs.Send' | translate }} {{ twoFactorAuthenticationDeliveryMethod.name }}
+          {{ 'labels.inputs.to' | translate }} {{ twoFactorAuthenticationDeliveryMethod.target }}
+        </mat-radio-button>
+      }
+    </mat-radio-group>
+    <button
+      mat-raised-button
+      color="primary"
+      class="flex-fill align-center"
+      [disabled]="!twoFactorAuthenticationDeliveryMethodForm.valid"
+    >
+      {{ 'labels.buttons.Request OTP' | translate }}
+      @if (loading) {
+        <mat-spinner [diameter]="20"></mat-spinner>
+      }
+    </button>
+  </form>
+}
 
 <!-- Show input for OTP -->
-<p *ngIf="otpRequested">{{ 'labels.text.Please enter the OTP' | translate }}:</p>
+@if (otpRequested) {
+  <p>{{ 'labels.text.Please enter the OTP' | translate }}:</p>
+}
 
-<form
-  class="layout-column two-factor-auth-form"
-  *ngIf="otpRequested"
-  [formGroup]="twoFactorAuthenticationForm"
-  (ngSubmit)="validateOTP()"
->
-  <mat-form-field class="two-factor-auth-input flex-fill align-center">
-    <span matPrefix>
-      <fa-icon icon="user-shield" class="m-r-10"></fa-icon>
-    </span>
-    <mat-label>{{ 'labels.inputs.OTP' | translate }}</mat-label>
-    <input type="password" matInput autocomplete="off" required formControlName="otp" />
-    <mat-hint align="start">
-      <strong>{{ 'labels.inputs.Delivery Method' | translate }}:</strong>
-      {{ selectedTwoFactorAuthenticationDeliveryMethod.name }}
-    </mat-hint>
-    <mat-hint align="end">
-      <strong>{{ 'labels.inputs.Validity' | translate }}:</strong> {{ tokenValidityTime / 60 }}
-      {{ 'labels.inputs.mins' | translate }}
-    </mat-hint>
-    <mat-error *ngIf="twoFactorAuthenticationForm.controls.otp.hasError('required')">
-      {{ 'labels.inputs.OTP' | translate }} {{ 'labels.commons.is' | translate }}
-      <strong>{{ 'labels.commons.required' | translate }}</strong>
-    </mat-error>
-  </mat-form-field>
-
-  <button
-    mat-raised-button
-    color="primary"
-    class="two-factor-auth-button align-center"
-    [disabled]="!twoFactorAuthenticationForm.valid"
-  >
-    {{ 'labels.buttons.Validate OTP' | translate }}
-    <mat-spinner [diameter]="20" *ngIf="loading"></mat-spinner>
-  </button>
-
-  <button
-    type="button"
-    mat-button
-    class="two-factor-auth-button align-center"
-    (click)="resendOTP()"
-    [disabled]="loading || resendOTPLoading"
-  >
-    {{ 'labels.buttons.Resend OTP' | translate }}
-    <mat-spinner [diameter]="20" *ngIf="resendOTPLoading"></mat-spinner>
-  </button>
-</form>
+@if (otpRequested) {
+  <form class="layout-column two-factor-auth-form" [formGroup]="twoFactorAuthenticationForm" (ngSubmit)="validateOTP()">
+    <mat-form-field class="two-factor-auth-input flex-fill align-center">
+      <span matPrefix>
+        <fa-icon icon="user-shield" class="m-r-10"></fa-icon>
+      </span>
+      <mat-label>{{ 'labels.inputs.OTP' | translate }}</mat-label>
+      <input type="password" matInput autocomplete="off" required formControlName="otp" />
+      <mat-hint align="start">
+        <strong>{{ 'labels.inputs.Delivery Method' | translate }}:</strong>
+        {{ selectedTwoFactorAuthenticationDeliveryMethod.name }}
+      </mat-hint>
+      <mat-hint align="end">
+        <strong>{{ 'labels.inputs.Validity' | translate }}:</strong> {{ tokenValidityTime / 60 }}
+        {{ 'labels.inputs.mins' | translate }}
+      </mat-hint>
+      @if (twoFactorAuthenticationForm.controls.otp.hasError('required')) {
+        <mat-error>
+          {{ 'labels.inputs.OTP' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
+    </mat-form-field>
+    <button
+      mat-raised-button
+      color="primary"
+      class="two-factor-auth-button align-center"
+      [disabled]="!twoFactorAuthenticationForm.valid"
+    >
+      {{ 'labels.buttons.Validate OTP' | translate }}
+      @if (loading) {
+        <mat-spinner [diameter]="20"></mat-spinner>
+      }
+    </button>
+    <button
+      type="button"
+      mat-button
+      class="two-factor-auth-button align-center"
+      (click)="resendOTP()"
+      [disabled]="loading || resendOTPLoading"
+    >
+      {{ 'labels.buttons.Resend OTP' | translate }}
+      @if (resendOTPLoading) {
+        <mat-spinner [diameter]="20"></mat-spinner>
+      }
+    </button>
+  </form>
+}

@@ -118,7 +118,6 @@ const routes: Routes = [
       children: selectedRoutes
     }
   ])
-
 ];
 
 /**

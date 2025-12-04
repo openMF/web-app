@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
@@ -14,14 +14,8 @@ import { SettingsService } from 'app/settings/settings.service';
  */
 @Injectable()
 export class ListTransactionsResolver {
-  /**
-   * @param {AccountTransfersService} accountTransfersService Account Transfers service.
-   * @param {SettingsService} settingsService Settings Service.
-   */
-  constructor(
-    private accountTransfersService: AccountTransfersService,
-    private settingsService: SettingsService
-  ) {}
+  private accountTransfersService = inject(AccountTransfersService);
+  private settingsService = inject(SettingsService);
 
   /**
    * Returns the Standing Instructions Data.

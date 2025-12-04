@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
 import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -67,6 +67,10 @@ import { AccountingMappingDTO, AdvancedMappingDTO } from '../../models/loan-prod
   ]
 })
 export class LoanProductAccountingStepComponent implements OnInit, OnChanges {
+  private formBuilder = inject(UntypedFormBuilder);
+  dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
+
   @Input() loanProductsTemplate: any;
   @Input() accountingRuleData: any;
   @Input() loanProductFormValid: boolean;
@@ -107,11 +111,7 @@ export class LoanProductAccountingStepComponent implements OnInit, OnChanges {
     'actions'
   ];
 
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    public dialog: MatDialog,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.createLoanProductAccountingForm();
     this.setConditionalControls();
   }
@@ -592,7 +592,6 @@ export class LoanProductAccountingStepComponent implements OnInit, OnChanges {
         required: true,
         order: 2
       })
-
     ];
     return formfields;
   }
@@ -615,7 +614,6 @@ export class LoanProductAccountingStepComponent implements OnInit, OnChanges {
         required: true,
         order: 2
       })
-
     ];
     return formfields;
   }
@@ -638,7 +636,6 @@ export class LoanProductAccountingStepComponent implements OnInit, OnChanges {
         required: true,
         order: 2
       })
-
     ];
     return formfields;
   }
@@ -662,7 +659,6 @@ export class LoanProductAccountingStepComponent implements OnInit, OnChanges {
         required: true,
         order: 2
       })
-
     ];
     return formfields;
   }

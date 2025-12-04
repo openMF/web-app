@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
@@ -26,6 +26,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class WaiveInterestComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private router = inject(Router);
+  private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
+  private loanService = inject(LoansService);
+  private route = inject(ActivatedRoute);
+
   @Input() dataObject: any;
 
   /** Loan Interest form. */
@@ -35,22 +42,6 @@ export class WaiveInterestComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   currency: Currency;
-
-  /**
-   * Get data from `Resolver`.
-   * @param {FormBuilder} formBuilder Form Builder.
-   * @param {Router} router Router.
-   * @param {LoansService} loanService Loan Service.
-   * @param {ActivatedRoute} route Activated Route.
-   */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private router: Router,
-    private settingsService: SettingsService,
-    private dateUtils: Dates,
-    private loanService: LoansService,
-    private route: ActivatedRoute
-  ) {}
 
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;

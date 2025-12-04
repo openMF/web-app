@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {
   UntypedFormBuilder,
@@ -33,6 +33,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditClientComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private clientsService = inject(ClientsService);
+  private dateUtils = inject(Dates);
+  private settingsService = inject(SettingsService);
+
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -70,14 +77,7 @@ export class EditClientComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private clientsService: ClientsService,
-    private dateUtils: Dates,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { clientDataAndTemplate: any }) => {
       this.clientDataAndTemplate = data.clientDataAndTemplate;
     });
@@ -194,7 +194,8 @@ export class EditClientComponent implements OnInit {
             ],
             incorpValidityTillDate: [
               this.clientDataAndTemplate.clientNonPersonDetails.incorpValidityTillDate &&
-                new Date(this.clientDataAndTemplate.clientNonPersonDetails.incorpValidityTillDate)],
+                new Date(this.clientDataAndTemplate.clientNonPersonDetails.incorpValidityTillDate)
+            ],
             incorpNumber: [this.clientDataAndTemplate.clientNonPersonDetails.incorpNumber],
             mainBusinessLineId: [
               this.clientDataAndTemplate.clientNonPersonDetails.mainBusinessLine &&

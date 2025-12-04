@@ -6,15 +6,14 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Interest Handling' | translate }}</mat-label>
             <mat-select formControlName="reAmortizationInterestHandling">
-              <mat-option
-                *ngFor="
-                  let reAmortizationInterestHandlingOption of reAmortizationInterestHandlingOptions;
-                  trackBy: trackByInterestHandlingOption
-                "
-                [value]="reAmortizationInterestHandlingOption.id"
-              >
-                {{ reAmortizationInterestHandlingOption.value | translateKey: 'catalogs' }}
-              </mat-option>
+              @for (
+                reAmortizationInterestHandlingOption of reAmortizationInterestHandlingOptions;
+                track trackByInterestHandlingOption($index, reAmortizationInterestHandlingOption)
+              ) {
+                <mat-option [value]="reAmortizationInterestHandlingOption.id">
+                  {{ reAmortizationInterestHandlingOption.value | translateKey: 'catalogs' }}
+                </mat-option>
+              }
             </mat-select>
           </mat-form-field>
         </div>
@@ -23,12 +22,14 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Reason' | translate }}</mat-label>
             <mat-select formControlName="reasonCodeValueId">
-              <mat-option
-                *ngFor="let reAmortizationReasonOption of reAmortizationReasonOptions; trackBy: trackByReasonOption"
-                [value]="reAmortizationReasonOption.id"
-              >
-                {{ reAmortizationReasonOption.name }}
-              </mat-option>
+              @for (
+                reAmortizationReasonOption of reAmortizationReasonOptions;
+                track trackByReasonOption($index, reAmortizationReasonOption)
+              ) {
+                <mat-option [value]="reAmortizationReasonOption.id">
+                  {{ reAmortizationReasonOption.name }}
+                </mat-option>
+              }
             </mat-select>
           </mat-form-field>
         </div>

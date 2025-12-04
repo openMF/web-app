@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Directive, Input, TemplateRef, ViewContainerRef, inject } from '@angular/core';
 
 /** Custom Services */
 import { AuthenticationService } from '../../core/authentication/authentication.service';
@@ -9,6 +9,10 @@ import { AuthenticationService } from '../../core/authentication/authentication.
  */
 @Directive({ selector: '[mifosxHasPermission]', standalone: true })
 export class HasPermissionDirective {
+  private templateRef = inject<TemplateRef<any>>(TemplateRef);
+  private viewContainer = inject(ViewContainerRef);
+  private authenticationService = inject(AuthenticationService);
+
   /** User Permissions */
   private userPermissions: any[];
 
@@ -18,11 +22,7 @@ export class HasPermissionDirective {
    * @param {ViewContainerRef} viewContainer View Container Reference
    * @param {AuthenticationService} authenticationService AuthenticationService
    */
-  constructor(
-    private templateRef: TemplateRef<any>,
-    private viewContainer: ViewContainerRef,
-    private authenticationService: AuthenticationService
-  ) {
+  constructor() {
     const savedCredentials = this.authenticationService.getCredentials();
     this.userPermissions = savedCredentials.permissions;
   }

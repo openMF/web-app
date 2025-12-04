@@ -1,70 +1,92 @@
 <div class="tab-container mat-typography">
   <h3>{{ datatableName }}</h3>
   <div class="layout-row align-end m-b-20">
-    <button mat-raised-button color="primary" (click)="add()" *ngIf="!dataObject.data[0]">
-      <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
-    </button>
-    <button mat-raised-button color="primary" (click)="edit()" *ngIf="dataObject.data[0]">
-      <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'labels.buttons.Edit' | translate }}
-    </button>
-    <button class="delete-button" mat-raised-button color="warn" (click)="delete()" *ngIf="dataObject.data[0]">
-      <fa-icon icon="trash" class="m-r-10"></fa-icon>{{ 'labels.buttons.Delete' | translate }}
-    </button>
+    @if (!dataObject.data[0]) {
+      <button mat-raised-button color="primary" (click)="add()">
+        <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
+      </button>
+    }
+    @if (dataObject.data[0]) {
+      <button mat-raised-button color="primary" (click)="edit()">
+        <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'labels.buttons.Edit' | translate }}
+      </button>
+    }
+    @if (dataObject.data[0]) {
+      <button class="delete-button" mat-raised-button color="warn" (click)="delete()">
+        <fa-icon icon="trash" class="m-r-10"></fa-icon>{{ 'labels.buttons.Delete' | translate }}
+      </button>
+    }
   </div>
 
   <mat-divider></mat-divider>
 
-  <div class="m-t-10" *ngIf="dataObject.data.length > 0">
-    <div
-      class="flex-fill"
-      *ngFor="let columnHeader of dataObject.columnHeaders; let i = index"
-      [ngClass]="setAttributeClass(columnHeader.columnName)"
-    >
-      <div class="mat-body-strong left flex-40">
-        {{ columnHeader.columnDisplayName }}
-        {{ getInputName(columnHeader.columnName) }}
-      </div>
-
-      <div [ngSwitch]="getColumnType(columnHeader.columnDisplayType, columnHeader.columnType)" class="right flex-60">
-        <span *ngSwitchCase="'DATE'">
-          {{ dataObject.data[0].row[i] | dateFormat }}
-        </span>
-        <span *ngSwitchCase="'DATETIME'">
-          {{ dataObject.data[0].row[i] | datetimeFormat }}
-        </span>
-        <span *ngSwitchCase="'INTEGER'">
-          {{ dataObject.data[0].row[i] }}
-        </span>
-        <span *ngSwitchCase="'DECIMAL'">
-          {{ dataObject.data[0].row[i] | formatNumber }}
-        </span>
-        <span *ngSwitchCase="'TEXT'" class="long-text">
-          {{ dataObject.data[0].row[i] }}
-        </span>
-        <textarea
-          *ngSwitchCase="'JSON'"
-          cdkTextareaAutosize="true"
-          cdkAutosizeMaxRows="20"
-          cdkAutosizeMinRows="1"
-          class="json-textarea"
-          [innerHTML]="dataObject.data[0].row[i].value | prettyPrint"
-        >
-        </textarea>
-        <span *ngSwitchDefault>
-          <span class="m-r-5" *ngIf="isValidUrl(dataObject.data[0].row[i])">
-            <button
-              mat-icon-button
-              matTooltip="{{ 'tooltips.View Link' | translate }}"
-              (click)="openSite(dataObject.data[0].row[i])"
-              matTooltipPosition="right"
-              class="small-icon"
-            >
-              <fa-icon icon="eye" size="lg"></fa-icon>
-            </button>
-          </span>
-          {{ dataObject.data[0].row[i] }}
-        </span>
-      </div>
+  @if (dataObject.data.length > 0) {
+    <div class="m-t-10">
+      @for (columnHeader of dataObject.columnHeaders; track columnHeader; let i = $index) {
+        <div class="flex-fill" [ngClass]="setAttributeClass(columnHeader.columnName)">
+          <div class="mat-body-strong left flex-40">
+            {{ columnHeader.columnDisplayName }}
+            {{ getInputName(columnHeader.columnName) }}
+          </div>
+          <div class="right flex-60">
+            @switch (getColumnType(columnHeader.columnDisplayType, columnHeader.columnType)) {
+              @case ('DATE') {
+                <span>
+                  {{ dataObject.data[0].row[i] | dateFormat }}
+                </span>
+              }
+              @case ('DATETIME') {
+                <span>
+                  {{ dataObject.data[0].row[i] | datetimeFormat }}
+                </span>
+              }
+              @case ('INTEGER') {
+                <span>
+                  {{ dataObject.data[0].row[i] }}
+                </span>
+              }
+              @case ('DECIMAL') {
+                <span>
+                  {{ dataObject.data[0].row[i] | formatNumber }}
+                </span>
+              }
+              @case ('TEXT') {
+                <span class="long-text">
+                  {{ dataObject.data[0].row[i] }}
+                </span>
+              }
+              @case ('JSON') {
+                <textarea
+                  cdkTextareaAutosize="true"
+                  cdkAutosizeMaxRows="20"
+                  cdkAutosizeMinRows="1"
+                  class="json-textarea"
+                  [innerHTML]="dataObject.data[0].row[i].value | prettyPrint"
+                >
+                </textarea>
+              }
+              @default {
+                <span>
+                  @if (isValidUrl(dataObject.data[0].row[i])) {
+                    <span class="m-r-5">
+                      <button
+                        mat-icon-button
+                        matTooltip="{{ 'tooltips.View Link' | translate }}"
+                        (click)="openSite(dataObject.data[0].row[i])"
+                        matTooltipPosition="right"
+                        class="small-icon"
+                      >
+                        <fa-icon icon="eye" size="lg"></fa-icon>
+                      </button>
+                    </span>
+                  }
+                  {{ dataObject.data[0].row[i] }}
+                </span>
+              }
+            }
+          </div>
+        </div>
+      }
     </div>
-  </div>
+  }
 </div>

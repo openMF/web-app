@@ -38,7 +38,9 @@ export interface ErrorMessage {
 })
 export class ErrorHandlerService {
   constructor(
+    // eslint-disable-next-line @angular-eslint/prefer-inject
     private snackBar: MatSnackBar,
+    // eslint-disable-next-line @angular-eslint/prefer-inject
     private router: Router
   ) {}
 

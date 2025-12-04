@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatTabChangeEvent, MatTabGroup, MatTab } from '@angular/material/tabs';
 import { SystemService } from '../system.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -21,13 +21,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ManageJobsComponent {
+  private systemService = inject(SystemService);
+  private translateService = inject(TranslateService);
+
   /** Process running flag */
   isCatchUpRunning = true;
-
-  constructor(
-    private systemService: SystemService,
-    private translateService: TranslateService
-  ) {}
 
   onJobTabChange(event: MatTabChangeEvent) {
     if (event.index === 2) {

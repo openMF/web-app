@@ -6,7 +6,17 @@ last 2 versions
 > 0.5%
 Firefox ESR
 not dead
+not and_qq 14.9
+not and_uc 15.5
+not android 142
 not kaios 2.5
+not kaios 3.0-3.1
 not op_mini all
+not op_mob 80
+not opera 122
+not opera 121
+not samsung 28
+not samsung 29
+not samsung 27
 # For IE 9-11 support, please uncomment the next line and adjust as needed
 # IE 9-11

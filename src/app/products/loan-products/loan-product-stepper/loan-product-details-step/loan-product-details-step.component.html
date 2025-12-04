@@ -41,9 +41,11 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Fund' | translate }}</mat-label>
       <mat-select matTooltip="{{ 'tooltips.Loan products may be assigned' | translate }}" formControlName="fundId">
-        <mat-option *ngFor="let fund of fundData" [value]="fund.id">
-          {{ fund.name }}
-        </mat-option>
+        @for (fund of fundData; track fund) {
+          <mat-option [value]="fund.id">
+            {{ fund.name }}
+          </mat-option>
+        }
       </mat-select>
     </mat-form-field>
 

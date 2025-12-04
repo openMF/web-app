@@ -19,12 +19,16 @@
     <hr class="section-divider" />
 
     <div class="flex-45 mat-body-strong left">{{ 'labels.inputs.External Id' | translate }}</div>
-    <div class="flex-50 right" *ngIf="officeData.externalId">
-      <mifosx-external-identifier externalId="{{ officeData.externalId }}"></mifosx-external-identifier>
-    </div>
-    <div class="flex-50 right" *ngIf="!officeData.externalId">
-      {{ 'labels.inputs.Unassigned' | translate }}
-    </div>
+    @if (officeData.externalId) {
+      <div class="flex-50 right">
+        <mifosx-external-identifier externalId="{{ officeData.externalId }}"></mifosx-external-identifier>
+      </div>
+    }
+    @if (!officeData.externalId) {
+      <div class="flex-50 right">
+        {{ 'labels.inputs.Unassigned' | translate }}
+      </div>
+    }
   </div>
 
   <div class="bottom-button-container small-buttons">

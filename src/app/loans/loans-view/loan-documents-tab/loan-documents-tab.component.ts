@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -22,6 +22,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoanDocumentsTabComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private loansService = inject(LoansService);
+  private settingsService = inject(SettingsService);
+
   /** Stores the resolved loan documents data */
   entityDocuments: any;
   /** Loan account Id */
@@ -32,11 +36,7 @@ export class LoanDocumentsTabComponent implements OnInit {
    * Retrieves the loans data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private loansService: LoansService,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.entityId = this.route.parent.snapshot.params['loanId'];
 
     this.route.data.subscribe((data: { loanDocuments: any }) => {

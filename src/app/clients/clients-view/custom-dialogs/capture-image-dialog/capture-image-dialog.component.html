@@ -10,12 +10,16 @@
   <p #fallback [ngStyle]="{ display: 'none' }" align="center"></p>
 
   <div class="flex-20" align="center">
-    <button #captureButton *ngIf="!isCaptured" mat-stroked-button color="primary" (click)="capture()">
-      {{ 'labels.buttons.Capture' | translate }}
-    </button>
-    <button *ngIf="isCaptured" mat-stroked-button color="primary" (click)="recapture()">
-      <fa-icon icon="undo" size="sm" class="m-r-10"></fa-icon>{{ 'labels.buttons.Recapture' | translate }}
-    </button>
+    @if (!isCaptured) {
+      <button #captureButton mat-stroked-button color="primary" (click)="capture()">
+        {{ 'labels.buttons.Capture' | translate }}
+      </button>
+    }
+    @if (isCaptured) {
+      <button mat-stroked-button color="primary" (click)="recapture()">
+        <fa-icon icon="undo" size="sm" class="m-r-10"></fa-icon>{{ 'labels.buttons.Recapture' | translate }}
+      </button>
+    }
   </div>
 
   <mat-dialog-actions align="end">

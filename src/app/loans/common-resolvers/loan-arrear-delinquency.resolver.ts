@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { SystemService } from 'app/system/system.service';
 import { Observable } from 'rxjs';
@@ -7,10 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class LoanArrearDelinquencyResolver {
-  /**
-   * @param {SystemService} systemService System service.
-   */
-  constructor(private systemService: SystemService) {}
+  private systemService = inject(SystemService);
 
   /**
    * Returns the loan-arrears-delinquency-display-data configuration data.

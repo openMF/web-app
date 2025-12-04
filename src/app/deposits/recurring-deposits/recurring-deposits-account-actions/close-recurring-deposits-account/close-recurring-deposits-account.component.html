@@ -17,106 +17,123 @@
             />
             <mat-datepicker-toggle matSuffix [for]="closedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #closedOnDatePicker></mat-datepicker>
-            <mat-error *ngIf="closeRecurringDepositForm.controls.closedOnDate.hasError('required')">
-              {{ 'labels.inputs.Closed On' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (closeRecurringDepositForm.controls.closedOnDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Closed On' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Maturity Amount' | translate }}</mat-label>
             <input matInput required formControlName="maturityAmount" />
-            <mat-error *ngIf="closeRecurringDepositForm.controls.maturityAmount.hasError('required')">
-              {{ 'labels.inputs.Maturity Amount' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (closeRecurringDepositForm.controls.maturityAmount.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Maturity Amount' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Action' | translate }}</mat-label>
             <mat-select formControlName="onAccountClosureId" required>
-              <mat-option
-                *ngFor="let onAccountClosureOption of onAccountClosureOptions"
-                [value]="onAccountClosureOption.id"
-              >
-                {{ onAccountClosureOption.value }}
-              </mat-option>
+              @for (onAccountClosureOption of onAccountClosureOptions; track onAccountClosureOption) {
+                <mat-option [value]="onAccountClosureOption.id">
+                  {{ onAccountClosureOption.value }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error *ngIf="closeRecurringDepositForm.controls.onAccountClosureId.hasError('required')">
-              {{ 'labels.inputs.Action' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (closeRecurringDepositForm.controls.onAccountClosureId.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Action' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
-          <mat-form-field *ngIf="closeRecurringDepositForm.contains('toSavingsAccountId')">
-            <mat-label>{{ 'labels.inputs.Transfer to Savings' | translate }}</mat-label>
-            <mat-select required formControlName="toSavingsAccountId">
-              <mat-option *ngFor="let account of savingsAccountsData" [value]="account.id">
-                {{ account.accountNo }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="closeRecurringDepositForm.controls.toSavingsAccountId.hasError('required')">
-              {{ 'labels.inputs.Transfer to savings account' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
-          </mat-form-field>
+          @if (closeRecurringDepositForm.contains('toSavingsAccountId')) {
+            <mat-form-field>
+              <mat-label>{{ 'labels.inputs.Transfer to Savings' | translate }}</mat-label>
+              <mat-select required formControlName="toSavingsAccountId">
+                @for (account of savingsAccountsData; track account) {
+                  <mat-option [value]="account.id">
+                    {{ account.accountNo }}
+                  </mat-option>
+                }
+              </mat-select>
+              @if (closeRecurringDepositForm.controls.toSavingsAccountId.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Transfer to savings account' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+          }
 
-          <mat-form-field *ngIf="closeRecurringDepositForm.contains('transferDescription')">
-            <mat-label>{{ 'labels.inputs.Transfer Description' | translate }}</mat-label>
-            <input matInput formControlName="transferDescription" />
-          </mat-form-field>
+          @if (closeRecurringDepositForm.contains('transferDescription')) {
+            <mat-form-field>
+              <mat-label>{{ 'labels.inputs.Transfer Description' | translate }}</mat-label>
+              <input matInput formControlName="transferDescription" />
+            </mat-form-field>
+          }
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Payment Type Id' | translate }}</mat-label>
             <mat-select formControlName="paymentTypeId" required>
-              <mat-option *ngFor="let paymentType of paymentTypes" [value]="paymentType.id">
-                {{ paymentType.name }}
-              </mat-option>
+              @for (paymentType of paymentTypes; track paymentType) {
+                <mat-option [value]="paymentType.id">
+                  {{ paymentType.name }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error *ngIf="closeRecurringDepositForm.controls.paymentTypeId.hasError('required')">
-              {{ 'labels.inputs.Payment Type' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (closeRecurringDepositForm.controls.paymentTypeId.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Payment Type' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <div class="flex-fill">
             <span class="flex-25"> {{ 'labels.inputs.Show Payment Details' | translate }}</span>
             <span class="expandcollapsebutton flex-75" (click)="toggleDisplay()">
-              <button mat-raised-button color="primary" *ngIf="showPaymentDetails">
-                <i class="fa fa-minus"></i>
-              </button>
-              <button mat-raised-button color="primary" *ngIf="!showPaymentDetails">
-                <i class="fa fa-plus"></i>
-              </button>
+              @if (showPaymentDetails) {
+                <button mat-raised-button color="primary">
+                  <i class="fa fa-minus"></i>
+                </button>
+              }
+              @if (!showPaymentDetails) {
+                <button mat-raised-button color="primary">
+                  <i class="fa fa-plus"></i>
+                </button>
+              }
             </span>
           </div>
 
-          <ng-container *ngIf="showPaymentDetails">
+          @if (showPaymentDetails) {
             <mat-form-field>
               <mat-label> {{ 'labels.inputs.Account' | translate }} #</mat-label>
               <input matInput formControlName="accountNumber" />
             </mat-form-field>
-
             <mat-form-field>
               <mat-label>{{ 'labels.inputs.Cheque' | translate }} #</mat-label>
               <input matInput formControlName="chequeNumber" />
             </mat-form-field>
-
             <mat-form-field>
               <mat-label>{{ 'labels.inputs.Routing Code' | translate }}</mat-label>
               <input matInput formControlName="routingCode" />
             </mat-form-field>
-
             <mat-form-field>
               <mat-label>{{ 'labels.inputs.Reciept' | translate }} #</mat-label>
               <input matInput formControlName="receiptNumber" />
             </mat-form-field>
-
             <mat-form-field>
               <mat-label>{{ 'labels.inputs.Bank' | translate }} #</mat-label>
               <input matInput formControlName="bankNumber" />
             </mat-form-field>
-          </ng-container>
+          }
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>

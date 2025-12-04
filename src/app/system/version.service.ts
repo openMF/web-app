@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 /** rxjs Imports */
@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class VersionService {
-  constructor(private http: HttpClient) {}
+  private http = inject(HttpClient);
 
   getBackendInfo(): Observable<any> {
     return this.http.get('/fineract-provider/actuator/info');

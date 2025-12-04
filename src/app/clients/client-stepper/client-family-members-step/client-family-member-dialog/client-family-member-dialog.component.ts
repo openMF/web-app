@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -31,26 +31,17 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ClientFamilyMemberDialogComponent implements OnInit {
+  dialogRef = inject<MatDialogRef<ClientFamilyMemberDialogComponent>>(MatDialogRef);
+  private formBuilder = inject(UntypedFormBuilder);
+  private dateUtils = inject(Dates);
+  data = inject(MAT_DIALOG_DATA);
+  private settingsService = inject(SettingsService);
+
   /** Maximum Due Date allowed. */
   maxDate = new Date();
 
   /** Add/Edit family member form. */
   familyMemberForm: UntypedFormGroup;
-
-  /**
-   * @param {MatDialogRef} dialogRef Client Family Member Dialog Reference
-   * @param {FormBuilder} formBuilder Form Builder
-   * @param {Dates} dateUtils Date Utils
-   * @param {any} data Dialog Data
-   * @param {SettingsService} settingsService Setting service
-   */
-  constructor(
-    public dialogRef: MatDialogRef<ClientFamilyMemberDialogComponent>,
-    private formBuilder: UntypedFormBuilder,
-    private dateUtils: Dates,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private settingsService: SettingsService
-  ) {}
 
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { UntypedFormBuilder, UntypedFormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -53,6 +53,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CheckerInboxComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private dialog = inject(MatDialog);
+  private dateUtils = inject(Dates);
+  private router = inject(Router);
+  private translateService = inject(TranslateService);
+  private tasksService = inject(TasksService);
+  private settingsService = inject(SettingsService);
+  private formBuilder = inject(UntypedFormBuilder);
+
   /** Data to be displayed */
   searchData: any;
   /** Maker Checker Template */
@@ -92,16 +101,7 @@ export class CheckerInboxComponent implements OnInit {
    * @param {TasksService} tasksService Tasks Service.
    * @param {FormBuilder} formBuilder Form Builder.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private dialog: MatDialog,
-    private dateUtils: Dates,
-    private router: Router,
-    private translateService: TranslateService,
-    private tasksService: TasksService,
-    private settingsService: SettingsService,
-    private formBuilder: UntypedFormBuilder
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { makerCheckerResource: any; makerCheckerTemplate: any }) => {
       this.searchData = data.makerCheckerResource;
       if (this.searchData.length > 0) {

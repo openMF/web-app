@@ -1,9 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges, inject } from '@angular/core';
 import { trigger, state, transition, animate, style } from '@angular/animations';
 import { Accounting } from 'app/core/utils/accounting';
 import { OptionData } from 'app/shared/models/option-data.model';
 import { MatDivider } from '@angular/material/divider';
-import { NgIf, NgFor, NgSwitch, NgSwitchCase } from '@angular/common';
+
 import {
   MatTable,
   MatColumnDef,
@@ -33,8 +33,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     trigger('expandChartSlab', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
       state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))])
-
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
+    ])
   ],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
@@ -46,8 +46,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatCellDef,
     MatCell,
     FaIconComponent,
-    NgSwitch,
-    NgSwitchCase,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
@@ -61,6 +59,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class FixedDepositProductPreviewStepComponent implements OnInit, OnChanges {
+  private accounting = inject(Accounting);
+
   @Input() fixedDepositProductsTemplate: any;
   @Input() chartSlabsDisplayedColumns: any[];
   @Input() accountingRuleData: any;
@@ -95,8 +95,6 @@ export class FixedDepositProductPreviewStepComponent implements OnInit, OnChange
 
   accountingMappings: any = {};
   accountingRule: OptionData;
-
-  constructor(private accounting: Accounting) {}
 
   ngOnInit() {
     this.setCurrentValues();

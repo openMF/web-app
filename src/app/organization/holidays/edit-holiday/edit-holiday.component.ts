@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
@@ -27,6 +27,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditHolidayComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private dateUtils = inject(Dates);
+  private organizatioService = inject(OrganizationService);
+  private settingsService = inject(SettingsService);
+  private router = inject(Router);
+
   /** Edit Holiday form. */
   holidayForm: UntypedFormGroup;
   /** Holiday data. */
@@ -48,14 +55,7 @@ export class EditHolidayComponent implements OnInit {
    * @param {OrganizationService} organizatioService Organization Service.
    * @param {Router} router Router.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private dateUtils: Dates,
-    private organizatioService: OrganizationService,
-    private settingsService: SettingsService,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { holiday: any; holidayTemplate: any }) => {
       this.holidayData = data.holiday;
       this.holidayData.repaymentSchedulingTypes = data.holidayTemplate;

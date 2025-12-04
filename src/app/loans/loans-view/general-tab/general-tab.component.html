@@ -1,5 +1,5 @@
 <div class="tab-container mat-typography">
-  <ng-container *ngIf="loanDetails.summary">
+  @if (loanDetails.summary) {
     <h3>{{ 'labels.heading.Performance History' | translate }}</h3>
     <div class="layout-row gap-32px performance-history-container">
       <table>
@@ -21,224 +21,253 @@
         </tbody>
       </table>
     </div>
-  </ng-container>
+  }
 
-  <div *ngIf="loanDetails.summary">
-    <h3>{{ 'labels.heading.Loan Summary' | translate }}</h3>
+  @if (loanDetails.summary) {
+    <div>
+      <h3>{{ 'labels.heading.Loan Summary' | translate }}</h3>
+      <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="Empty">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let ele">{{ ele.property }}</td>
+        </ng-container>
+        <ng-container matColumnDef="Original">
+          <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Original' | translate }}</th>
+          <td mat-cell class="r-amount" *matCellDef="let ele">
+            {{ ele.original | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="Paid">
+          <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Paid' | translate }}</th>
+          <td mat-cell class="r-amount amount-minus" *matCellDef="let ele">
+            {{ ele.paid | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="Adjustments">
+          <th mat-header-cell class="r-amount" *matHeaderCellDef>
+            {{ 'labels.inputs.Credit Adjustments' | translate }}
+          </th>
+          <td mat-cell class="r-amount amount-plus" *matCellDef="let ele">
+            {{ ele.adjustment | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="Waived">
+          <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Waived' | translate }}</th>
+          <td mat-cell class="r-amount amount-minus" *matCellDef="let ele">
+            {{ ele.waived | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="Written Off">
+          <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Written Off' | translate }}</th>
+          <td mat-cell class="r-amount amount-minus" *matCellDef="let ele">
+            {{ ele.writtenOff | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="Outstanding">
+          <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Outstanding' | translate }}</th>
+          <td mat-cell class="r-amount" *matCellDef="let ele">
+            {{ ele.outstanding | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="Over Due">
+          <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Over Due' | translate }}</th>
+          <td mat-cell class="r-amount" *matCellDef="let ele">
+            {{ ele.overdue | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="loanSummaryColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: loanSummaryColumns"></tr>
+      </table>
+    </div>
+  }
 
-    <table mat-table [dataSource]="dataSource">
-      <ng-container matColumnDef="Empty">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let ele">{{ ele.property }}</td>
-      </ng-container>
+  @if (loanDetails.summary) {
+    <div>
+      <h3>{{ 'labels.heading.Loan Details' | translate }}</h3>
+      <table mat-table [dataSource]="detailsDataSource">
+        <ng-container matColumnDef="Key">
+          <td mat-cell *matCellDef="let ele">{{ 'labels.inputs.' + ele.key | translate }}</td>
+        </ng-container>
+        <ng-container matColumnDef="Value">
+          <td mat-cell *matCellDef="let ele">
+            @if (ele.key === 'Disbursement Date') {
+              @if (loanDetails.timeline.actualDisbursementDate) {
+                <span>
+                  {{ loanDetails.timeline.actualDisbursementDate | dateFormat }}
+                </span>
+              }
+              @if (!loanDetails.timeline.actualDisbursementDate) {
+                <span>
+                  {{ 'labels.inputs.Not Available' | translate }}
+                </span>
+              }
+            }
+            @if (ele.key === 'Loan Purpose') {
+              @if (loanDetails.loanPurposeName) {
+                <span> {{ loanDetails.loanPurposeName }} </span>
+              }
+              @if (!loanDetails.loanPurposeName) {
+                <span> {{ 'labels.inputs.Not Available' | translate }} </span>
+              }
+            }
+            @if (ele.key === 'Loan Officer') {
+              @if (!loanDetails.loanOfficerName) {
+                <span> {{ 'labels.inputs.Unassigned' | translate }} </span>
+              }
+              @if (loanDetails.loanOfficerName) {
+                <span>
+                  {{ loanDetails.loanOfficerName }} &nbsp;
+                  @if (loanDetails.loanOfficerName) {
+                    <span> </span>
+                  }
+                </span>
+              }
+            }
+            @if (ele.key === 'Currency') {
+              <span> {{ loanDetails.currency.name }} {{ loanDetails.currency.code }} </span>
+            }
+            @if (ele.key === 'External Id') {
+              @if (loanDetails.externalId) {
+                <span>
+                  <mifosx-external-identifier
+                    externalId="{{ loanDetails.externalId }}"
+                    completed="true"
+                  ></mifosx-external-identifier>
+                </span>
+              }
+              @if (!loanDetails.externalId) {
+                <span> {{ 'labels.inputs.Not Available' | translate }} </span>
+              }
+            }
+            @if (ele.key === 'Write-off Reason') {
+              @if (ele.value) {
+                <span>{{ ele.value }}</span>
+              }
+              @if (!ele.value) {
+                <span>{{ 'labels.inputs.Not Available' | translate }}</span>
+              }
+            }
+            @if (ele.key === 'Proposed Amount' || ele.key === 'Approved Amount' || ele.key === 'Disburse Amount') {
+              {{ ele.value }}
+            }
+          </td>
+        </ng-container>
+        <tr mat-row *matRowDef="let row; columns: loanDetailsColumns"></tr>
+      </table>
+    </div>
+  }
 
-      <ng-container matColumnDef="Original">
-        <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Original' | translate }}</th>
-        <td mat-cell class="r-amount" *matCellDef="let ele">
-          {{ ele.original | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
-        </td>
-      </ng-container>
+  @if (!loanDetails.summary) {
+    <div>
+      <h3>{{ 'labels.heading.Loan Details' | translate }}</h3>
+      <table mat-table [dataSource]="detailsDataSource">
+        <ng-container matColumnDef="Key">
+          <td mat-cell *matCellDef="let ele">{{ 'labels.inputs.' + ele.key | translate }}</td>
+        </ng-container>
+        <ng-container matColumnDef="Value">
+          <td mat-cell *matCellDef="let ele">
+            @if (ele.key === 'Disbursement Date') {
+              @if (loanDetails.timeline.actualDisbursementDate) {
+                <span>
+                  {{ loanDetails.timeline.actualDisbursementDate | dateFormat }}
+                </span>
+              }
+              @if (!loanDetails.timeline.actualDisbursementDate) {
+                <span>
+                  {{ 'labels.inputs.Not Available' | translate }}
+                </span>
+              }
+            }
+            @if (ele.key === 'Loan Officer') {
+              @if (!loanDetails.loanOfficerName) {
+                <span> {{ 'labels.inputs.Unassigned' | translate }} </span>
+              }
+              @if (loanDetails.loanOfficerName) {
+                <span>
+                  {{ loanDetails.loanOfficerName }} &nbsp;
+                  @if (loanDetails.loanOfficerName) {
+                    <span> </span>
+                  }
+                </span>
+              }
+            }
+            @if (ele.key === 'Currency') {
+              <span> {{ loanDetails.currency.name }} {{ loanDetails.currency.code }} </span>
+            }
+            @if (ele.key === 'External Id') {
+              @if (loanDetails.externalId) {
+                <span>
+                  <mifosx-external-identifier
+                    externalId="{{ loanDetails.externalId }}"
+                    completed="true"
+                  ></mifosx-external-identifier>
+                </span>
+              }
+              @if (!loanDetails.externalId) {
+                <span> {{ 'labels.inputs.Not Available' | translate }} </span>
+              }
+            }
+          </td>
+        </ng-container>
+        <tr mat-row *matRowDef="let row; columns: loanDetailsColumns"></tr>
+      </table>
+    </div>
+  }
 
-      <ng-container matColumnDef="Paid">
-        <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Paid' | translate }}</th>
-        <td mat-cell class="r-amount amount-minus" *matCellDef="let ele">
-          {{ ele.paid | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="Adjustments">
-        <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Credit Adjustments' | translate }}</th>
-        <td mat-cell class="r-amount amount-plus" *matCellDef="let ele">
-          {{ ele.adjustment | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="Waived">
-        <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Waived' | translate }}</th>
-        <td mat-cell class="r-amount amount-minus" *matCellDef="let ele">
-          {{ ele.waived | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="Written Off">
-        <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Written Off' | translate }}</th>
-        <td mat-cell class="r-amount amount-minus" *matCellDef="let ele">
-          {{ ele.writtenOff | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="Outstanding">
-        <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Outstanding' | translate }}</th>
-        <td mat-cell class="r-amount" *matCellDef="let ele">
-          {{ ele.outstanding | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="Over Due">
-        <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Over Due' | translate }}</th>
-        <td mat-cell class="r-amount" *matCellDef="let ele">
-          {{ ele.overdue | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="loanSummaryColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: loanSummaryColumns"></tr>
-    </table>
-  </div>
-
-  <div *ngIf="loanDetails.summary">
-    <h3>{{ 'labels.heading.Loan Details' | translate }}</h3>
-    <table mat-table [dataSource]="detailsDataSource">
-      <ng-container matColumnDef="Key">
-        <td mat-cell *matCellDef="let ele">{{ 'labels.inputs.' + ele.key | translate }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="Value">
-        <td mat-cell *matCellDef="let ele">
-          <ng-container *ngIf="ele.key === 'Disbursement Date'">
-            <span *ngIf="loanDetails.timeline.actualDisbursementDate">
-              {{ loanDetails.timeline.actualDisbursementDate | dateFormat }}
-            </span>
-            <span *ngIf="!loanDetails.timeline.actualDisbursementDate">
-              {{ 'labels.inputs.Not Available' | translate }}
-            </span>
-          </ng-container>
-
-          <ng-container *ngIf="ele.key === 'Loan Purpose'">
-            <span *ngIf="loanDetails.loanPurposeName"> {{ loanDetails.loanPurposeName }} </span>
-            <span *ngIf="!loanDetails.loanPurposeName"> {{ 'labels.inputs.Not Available' | translate }} </span>
-          </ng-container>
-
-          <ng-container *ngIf="ele.key === 'Loan Officer'">
-            <span *ngIf="!loanDetails.loanOfficerName"> {{ 'labels.inputs.Unassigned' | translate }} </span>
-            <span *ngIf="loanDetails.loanOfficerName">
-              {{ loanDetails.loanOfficerName }} &nbsp;
-              <span *ngIf="loanDetails.loanOfficerName"> </span>
-            </span>
-          </ng-container>
-
-          <ng-container *ngIf="ele.key === 'Currency'">
-            <span> {{ loanDetails.currency.name }} {{ loanDetails.currency.code }} </span>
-          </ng-container>
-
-          <ng-container *ngIf="ele.key === 'External Id'">
-            <span *ngIf="loanDetails.externalId">
-              <mifosx-external-identifier
-                externalId="{{ loanDetails.externalId }}"
-                completed="true"
-              ></mifosx-external-identifier>
-            </span>
-            <span *ngIf="!loanDetails.externalId"> {{ 'labels.inputs.Not Available' | translate }} </span>
-          </ng-container>
-
-          <ng-container *ngIf="ele.key === 'Write-off Reason'">
-            <span *ngIf="ele.value">{{ ele.value }}</span>
-            <span *ngIf="!ele.value">{{ 'labels.inputs.Not Available' | translate }}</span>
-          </ng-container>
-
-          <ng-container
-            *ngIf="ele.key === 'Proposed Amount' || ele.key === 'Approved Amount' || ele.key === 'Disburse Amount'"
-          >
-            {{ ele.value }}
-          </ng-container>
-        </td>
-      </ng-container>
-
-      <tr mat-row *matRowDef="let row; columns: loanDetailsColumns"></tr>
-    </table>
-  </div>
-
-  <div *ngIf="!loanDetails.summary">
-    <h3>{{ 'labels.heading.Loan Details' | translate }}</h3>
-    <table mat-table [dataSource]="detailsDataSource">
-      <ng-container matColumnDef="Key">
-        <td mat-cell *matCellDef="let ele">{{ 'labels.inputs.' + ele.key | translate }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="Value">
-        <td mat-cell *matCellDef="let ele">
-          <ng-container *ngIf="ele.key === 'Disbursement Date'">
-            <span *ngIf="loanDetails.timeline.actualDisbursementDate">
-              {{ loanDetails.timeline.actualDisbursementDate | dateFormat }}
-            </span>
-            <span *ngIf="!loanDetails.timeline.actualDisbursementDate">
-              {{ 'labels.inputs.Not Available' | translate }}
-            </span>
-          </ng-container>
-
-          <ng-container *ngIf="ele.key === 'Loan Officer'">
-            <span *ngIf="!loanDetails.loanOfficerName"> {{ 'labels.inputs.Unassigned' | translate }} </span>
-            <span *ngIf="loanDetails.loanOfficerName">
-              {{ loanDetails.loanOfficerName }} &nbsp;
-              <span *ngIf="loanDetails.loanOfficerName"> </span>
-            </span>
-          </ng-container>
-
-          <ng-container *ngIf="ele.key === 'Currency'">
-            <span> {{ loanDetails.currency.name }} {{ loanDetails.currency.code }} </span>
-          </ng-container>
-
-          <ng-container *ngIf="ele.key === 'External Id'">
-            <span *ngIf="loanDetails.externalId">
-              <mifosx-external-identifier
-                externalId="{{ loanDetails.externalId }}"
-                completed="true"
-              ></mifosx-external-identifier>
-            </span>
-            <span *ngIf="!loanDetails.externalId"> {{ 'labels.inputs.Not Available' | translate }} </span>
-          </ng-container>
-        </td>
-      </ng-container>
-
-      <tr mat-row *matRowDef="let row; columns: loanDetailsColumns"></tr>
-    </table>
-  </div>
-
-  <div *ngIf="!loanDetails.summary">
-    <h3>{{ 'labels.heading.Loan Purpose' | translate }}</h3>
-    <div class="container">
-      <div class="layout-row-wrap responsive-column">
-        <div class="flex-contents">
-          <span class="flex-50">{{ 'labels.inputs.Loan Purpose' | translate }}:</span>
-          <span class="flex-50" *ngIf="loanDetails.loanPurposeName">
-            {{ loanDetails.loanPurposeName }}
-          </span>
-          <span class="flex-50" *ngIf="!loanDetails.loanPurposeName">
-            {{ 'labels.inputs.Not Provided' | translate }}
-          </span>
-        </div>
-
-        <div class="flex-contents">
-          <span class="flex-50">{{ 'labels.inputs.Proposed Amount' | translate }}:</span>
-          <span class="flex-50">{{
-            loanDetails.proposedPrincipal | currency: currencyCode : 'symbol-narrow' : '1.2-2'
-          }}</span>
-        </div>
-
-        <div class="flex-contents" *ngIf="showApprovedAmountBasedOnStatus()">
-          <span class="flex-50">{{ 'labels.inputs.Approved Amount' | translate }}:</span>
-          <span class="flex-50">{{
-            loanDetails.approvedPrincipal | currency: currencyCode : 'symbol-narrow' : '1.2-2'
-          }}</span>
-        </div>
-
-        <div class="flex-contents" *ngIf="showDisbursedAmountBasedOnStatus()">
-          <span class="flex-50">{{ 'labels.inputs.Disburse Amount' | translate }}:</span>
-          <span class="flex-50">{{ loanDetails.principal | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}</span>
-        </div>
-
-        <div class="flex-contents" *ngIf="loanDetails.balloonRepaymentAmount > 0">
-          <span class="flex-50">{{ 'labels.inputs.Balloon Repayment Amount' | translate }}:</span>
-          <span class="flex-50">{{
-            loanDetails.balloonRepaymentAmount | currency: currencyCode : 'symbol-narrow' : '1.2-2'
-          }}</span>
-        </div>
-
-        <div class="flex-contents">
-          <span class="flex-50">{{ 'labels.inputs.Arrears By' | translate }}:</span>
-          <span class="flex-50">{{ 'labels.inputs.Not Provided' | translate }}</span>
+  @if (!loanDetails.summary) {
+    <div>
+      <h3>{{ 'labels.heading.Loan Purpose' | translate }}</h3>
+      <div class="container">
+        <div class="layout-row-wrap responsive-column">
+          <div class="flex-contents">
+            <span class="flex-50">{{ 'labels.inputs.Loan Purpose' | translate }}:</span>
+            @if (loanDetails.loanPurposeName) {
+              <span class="flex-50">
+                {{ loanDetails.loanPurposeName }}
+              </span>
+            }
+            @if (!loanDetails.loanPurposeName) {
+              <span class="flex-50">
+                {{ 'labels.inputs.Not Provided' | translate }}
+              </span>
+            }
+          </div>
+          <div class="flex-contents">
+            <span class="flex-50">{{ 'labels.inputs.Proposed Amount' | translate }}:</span>
+            <span class="flex-50">{{
+              loanDetails.proposedPrincipal | currency: currencyCode : 'symbol-narrow' : '1.2-2'
+            }}</span>
+          </div>
+          @if (showApprovedAmountBasedOnStatus()) {
+            <div class="flex-contents">
+              <span class="flex-50">{{ 'labels.inputs.Approved Amount' | translate }}:</span>
+              <span class="flex-50">{{
+                loanDetails.approvedPrincipal | currency: currencyCode : 'symbol-narrow' : '1.2-2'
+              }}</span>
+            </div>
+          }
+          @if (showDisbursedAmountBasedOnStatus()) {
+            <div class="flex-contents">
+              <span class="flex-50">{{ 'labels.inputs.Disburse Amount' | translate }}:</span>
+              <span class="flex-50">{{
+                loanDetails.principal | currency: currencyCode : 'symbol-narrow' : '1.2-2'
+              }}</span>
+            </div>
+          }
+          @if (loanDetails.balloonRepaymentAmount > 0) {
+            <div class="flex-contents">
+              <span class="flex-50">{{ 'labels.inputs.Balloon Repayment Amount' | translate }}:</span>
+              <span class="flex-50">{{
+                loanDetails.balloonRepaymentAmount | currency: currencyCode : 'symbol-narrow' : '1.2-2'
+              }}</span>
+            </div>
+          }
+          <div class="flex-contents">
+            <span class="flex-50">{{ 'labels.inputs.Arrears By' | translate }}:</span>
+            <span class="flex-50">{{ 'labels.inputs.Not Provided' | translate }}</span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  }
 </div>

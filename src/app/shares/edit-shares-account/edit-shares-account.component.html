@@ -57,17 +57,18 @@
       </mifosx-shares-account-charges-step>
     </mat-step>
 
-    <mat-step *ngIf="sharesAccountFormValidAndNotPristine" completed>
-      <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
-
-      <mifosx-shares-account-preview-step
-        [sharesAccountProductTemplate]="sharesAccountProductTemplate"
-        [sharesAccountTemplate]="sharesAccountAndTemplate"
-        [sharesAccountTermsForm]="sharesAccountTermsForm"
-        [sharesAccount]="sharesAccount"
-        (submitEvent)="submit()"
-      >
-      </mifosx-shares-account-preview-step>
-    </mat-step>
+    @if (sharesAccountFormValidAndNotPristine) {
+      <mat-step completed>
+        <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
+        <mifosx-shares-account-preview-step
+          [sharesAccountProductTemplate]="sharesAccountProductTemplate"
+          [sharesAccountTemplate]="sharesAccountAndTemplate"
+          [sharesAccountTermsForm]="sharesAccountTermsForm"
+          [sharesAccount]="sharesAccount"
+          (submitEvent)="submit()"
+        >
+        </mifosx-shares-account-preview-step>
+      </mat-step>
+    }
   </mat-stepper>
 </div>

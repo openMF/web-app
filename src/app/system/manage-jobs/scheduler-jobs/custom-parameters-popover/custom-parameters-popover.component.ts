@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, Inject, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren, inject } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogTitle,
@@ -71,6 +71,9 @@ interface JobDataType {
   ]
 })
 export class CustomParametersPopoverComponent implements OnInit {
+  private systemService = inject(SystemService);
+  data = inject<SelectedJobsDataType>(MAT_DIALOG_DATA);
+
   /* Job table childer */
   @ViewChildren(CustomParametersTableComponent) tableComponents: QueryList<CustomParametersTableComponent>;
 
@@ -80,11 +83,6 @@ export class CustomParametersPopoverComponent implements OnInit {
   show: number;
   /* API call response message */
   messages: { message: string; status: number }[] = [];
-
-  constructor(
-    private systemService: SystemService,
-    @Inject(MAT_DIALOG_DATA) public data: SelectedJobsDataType
-  ) {}
 
   ngOnInit(): void {
     this.selectedJobs = this.data.selectedJobs.selected.map((jobJSON) => ({

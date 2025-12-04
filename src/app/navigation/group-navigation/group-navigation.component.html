@@ -45,41 +45,41 @@
           {{ groupData.staffName }}
         </div>
 
-        <div class="flex-50 mat-body-strong" *ngIf="groupData.centerName">
-          {{ 'labels.inputs.Associated Center' | translate }}
-        </div>
+        @if (groupData.centerName) {
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Associated Center' | translate }}
+          </div>
+        }
 
-        <div class="flex-50" *ngIf="groupData.centerName">
-          {{ groupData.centerName }}
-        </div>
+        @if (groupData.centerName) {
+          <div class="flex-50">
+            {{ groupData.centerName }}
+          </div>
+        }
 
-        <div
-          class="mat-body-strong flex-50"
-          *ngIf="groupData.collectionMeetingCalendar && groupData.collectionMeetingCalendar.nextTenRecurringDates[0]"
-        >
-          {{ 'labels.inputs.Next Meeting Date' | translate }}
-        </div>
+        @if (groupData.collectionMeetingCalendar && groupData.collectionMeetingCalendar.nextTenRecurringDates[0]) {
+          <div class="mat-body-strong flex-50">
+            {{ 'labels.inputs.Next Meeting Date' | translate }}
+          </div>
+        }
 
-        <div
-          class="flex-50"
-          *ngIf="groupData.collectionMeetingCalendar && groupData.collectionMeetingCalendar.nextTenRecurringDates[0]"
-        >
-          {{ groupData.collectionMeetingCalendar.nextTenRecurringDates[0] | dateFormat }}
-        </div>
+        @if (groupData.collectionMeetingCalendar && groupData.collectionMeetingCalendar.nextTenRecurringDates[0]) {
+          <div class="flex-50">
+            {{ groupData.collectionMeetingCalendar.nextTenRecurringDates[0] | dateFormat }}
+          </div>
+        }
 
-        <div
-          class="mat-body-strong flex-50"
-          *ngIf="groupData.collectionMeetingCalendar && groupData.collectionMeetingCalendar.humanReadable"
-        >
-          {{ 'labels.inputs.Meeting Frequency' | translate }}
-        </div>
+        @if (groupData.collectionMeetingCalendar && groupData.collectionMeetingCalendar.humanReadable) {
+          <div class="mat-body-strong flex-50">
+            {{ 'labels.inputs.Meeting Frequency' | translate }}
+          </div>
+        }
 
-        <div
-          class="flex-50"
-          *ngIf="groupData.collectionMeetingCalendar && groupData.collectionMeetingCalendar.humanReadable"
-        >
-          {{ groupData.collectionMeetingCalendar.humanReadable }}
-        </div>
+        @if (groupData.collectionMeetingCalendar && groupData.collectionMeetingCalendar.humanReadable) {
+          <div class="flex-50">
+            {{ groupData.collectionMeetingCalendar.humanReadable }}
+          </div>
+        }
 
         <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Number of Clients' | translate }}
@@ -91,14 +91,18 @@
       </div>
     </mat-tab>
 
-    <mat-tab label="Loan Accounts" *ngIf="groupAccountsData && groupAccountsData.loanAccounts">
-      <mifosx-loan-account-table [loanAccountData]="groupAccountsData.loanAccounts"></mifosx-loan-account-table>
-    </mat-tab>
+    @if (groupAccountsData && groupAccountsData.loanAccounts) {
+      <mat-tab label="Loan Accounts">
+        <mifosx-loan-account-table [loanAccountData]="groupAccountsData.loanAccounts"></mifosx-loan-account-table>
+      </mat-tab>
+    }
 
-    <mat-tab label="Savings Accounts" *ngIf="groupAccountsData && groupAccountsData.savingsAccounts">
-      <mifosx-savings-account-table
-        [savingsAccountData]="groupAccountsData.savingsAccounts"
-      ></mifosx-savings-account-table>
-    </mat-tab>
+    @if (groupAccountsData && groupAccountsData.savingsAccounts) {
+      <mat-tab label="Savings Accounts">
+        <mifosx-savings-account-table
+          [savingsAccountData]="groupAccountsData.savingsAccounts"
+        ></mifosx-savings-account-table>
+      </mat-tab>
+    }
   </mat-tab-group>
 </mat-card-content>

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -13,6 +13,13 @@ import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  private authenticationService = inject(AuthenticationService);
+  private http = inject(HttpClient);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private alertService = inject(AlertService);
+  private translateService = inject(TranslateService);
+
   private baseUrl = environment.OIDC.oidcBaseUrl;
   private authUrl = `${this.baseUrl}oauth/v2/authorize`;
   private tokenUrl = `${this.baseUrl}oauth/v2/token`;
@@ -21,14 +28,6 @@ export class AuthService {
   private frontUrl = environment.OIDC.oidcFrontUrl;
   private redirectUri = `${this.frontUrl}#/callback`;
   private refreshTimeoutId: any = null;
-  constructor(
-    private authenticationService: AuthenticationService,
-    private http: HttpClient,
-    private route: ActivatedRoute,
-    private router: Router,
-    private alertService: AlertService,
-    private translateService: TranslateService
-  ) {}
 
   async login() {
     const codeVerifier = this.generateRandomString();
