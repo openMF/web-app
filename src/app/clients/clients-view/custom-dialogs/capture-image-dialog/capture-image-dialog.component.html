@@ -1,7 +1,7 @@
 <div class="layout-column gap-2px">
   <h1 mat-dialog-title align="center">{{ 'labels.heading.Capture Client Image' | translate }}</h1>
 
-  <video #video width="540" height="480" autoplay></video>
+  <video #video class="capture-video" autoplay></video>
 
   <!-- Using a class will break renderer changes -->
   <canvas #canvas [ngStyle]="{ display: 'none' }"></canvas>

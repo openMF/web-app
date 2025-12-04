@@ -1,0 +1,11 @@
+@use '../../../../../assets/styles/colours' as colors;
+
+.capture-video {
+  width: 100%;
+  max-width: 640px;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 4px;
+  background-color: colors.$black;
+}
