@@ -3350,6 +3350,8 @@
       "Mandatory": "Obligatorio",
       "Voluntary": "Voluntario",
       "Write a note": "Escribe una nota",
+      "Tenant": "Inquilino",
+      "To": "a",
       "“Maker-Checker” principle requires every tasks": "El principio \"Maker-Checker\" requiere que dos personas completen cada tarea para reducir la posibilidad de errores y uso indebido. Una persona inicia el proceso y la segunda lo completa.",
       "Buy Down Fees": "Tarifas de compra",
       "UploadDocumentHint": "Sube un PDF o imagen para generar una vista previa."
