@@ -4,9 +4,9 @@ name: build-run
 on:
   # Triggers the workflow on push or pull request events for specific branches
   push:
-    branches: [main, dev, angular-update-18]
+    branches: [main, dev, dev-angular-19]
   pull_request:
-    branches: [main, dev, angular-update-18]
+    branches: [main, dev, dev-angular-19]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:

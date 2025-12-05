@@ -2,9 +2,9 @@ name: Tests
 
 on:
   push:
-    branches: [main, dev, angular-update-17-2]
+    branches: [main, dev, dev-angular-19]
   pull_request:
-    branches: [main, dev, angular-update-17-2]
+    branches: [main, dev, dev-angular-19]
 
 jobs:
   testRigor:
