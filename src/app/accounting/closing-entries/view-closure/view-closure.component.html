@@ -24,7 +24,7 @@
             {{ 'labels.inputs.Closure Date' | translate }}
           </div>
           <div class="flex-50">
-            {{ glAccountClosure.closingDate }}
+            {{ glAccountClosure.closingDate | date: 'medium' }}
           </div>
           <div class="flex-50 header">
             {{ 'labels.inputs.Closed By' | translate }}
@@ -48,7 +48,7 @@
             {{ 'labels.inputs.Closure Creation Date' | translate }}
           </div>
           <div class="flex-50">
-            {{ glAccountClosure.createdDate }}
+            {{ glAccountClosure.createdDate | date: 'medium' }}
           </div>
           <div class="flex-50 header">
             {{ 'labels.inputs.Comments' | translate }}

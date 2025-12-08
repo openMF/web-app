@@ -33,7 +33,7 @@
 
       <ng-container matColumnDef="closingDate">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Closure Date' | translate }}</th>
-        <td mat-cell *matCellDef="let glAccountClosure">{{ glAccountClosure.closingDate }}</td>
+        <td mat-cell *matCellDef="let glAccountClosure">{{ glAccountClosure.closingDate | date: 'medium' }}</td>
       </ng-container>
 
       <ng-container matColumnDef="comments">

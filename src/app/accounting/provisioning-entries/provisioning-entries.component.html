@@ -27,7 +27,7 @@
 
       <ng-container matColumnDef="createdDate">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Created On' | translate }}</th>
-        <td mat-cell *matCellDef="let provisioningEntry">{{ provisioningEntry.createdDate }}</td>
+        <td mat-cell *matCellDef="let provisioningEntry">{{ provisioningEntry.createdDate | date: 'medium' }}</td>
       </ng-container>
 
       <ng-container matColumnDef="journalEntry">

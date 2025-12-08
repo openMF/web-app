@@ -31,7 +31,6 @@ import {
   MatRow
 } from '@angular/material/table';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
-import { DatetimeFormatPipe } from '../../pipes/datetime-format.pipe';
 import { FormatNumberPipe } from '../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -62,7 +61,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatPaginator,
     AsyncPipe,
     DateFormatPipe,
-    DatetimeFormatPipe,
     FormatNumberPipe
   ]
 })
