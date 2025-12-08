@@ -3,7 +3,7 @@ const activities: any[] = [
   { activity: 'groups', path: '/groups' },
   { activity: 'centers', path: '/centers' },
   { activity: 'accounting', path: '/accounting' },
-  { activity: 'users', path: '/users' },
+  { activity: 'users', path: '/appusers' },
   { activity: 'organization', path: '/organization' },
   { activity: 'system', path: '/system' },
   { activity: 'templates', path: '/templates' },
