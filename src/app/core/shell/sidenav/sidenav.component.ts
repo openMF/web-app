@@ -24,9 +24,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatLine } from '@angular/material/grid-list';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
-/** Environment Configuration and Zitadel*/
-import { environment } from '../../../../environments/environment';
-import { AuthService } from 'app/zitadel/auth.service';
+import { catchError, finalize, of, take } from 'rxjs';
 
 /**
  * Sidenav component.
@@ -56,7 +54,6 @@ export class SidenavComponent implements OnInit, AfterViewInit {
   private settingsService = inject(SettingsService);
   private configurationWizardService = inject(ConfigurationWizardService);
   private popoverService = inject(PopoverService);
-  private authService = inject(AuthService);
 
   /** True if sidenav is in collapsed state. */
   @Input() sidenavCollapsed: boolean;
@@ -103,13 +100,17 @@ export class SidenavComponent implements OnInit, AfterViewInit {
 
   /**
    * Logs out the authenticated user and redirects to login page.
+   * Uses unified AuthenticationService which handles both OAuth2 and OIDC logout.
    */
   logout() {
-    if (!environment.OIDC.oidcServerEnabled) {
-      this.authenticationService.logout().subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
-    } else {
-      this.authService.logout();
-    }
+    this.authenticationService
+      .logout()
+      .pipe(
+        take(1),
+        catchError(() => of(void 0)),
+        finalize(() => this.router.navigate(['/login'], { replaceUrl: true }))
+      )
+      .subscribe();
   }
 
   /**

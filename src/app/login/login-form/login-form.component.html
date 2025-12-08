@@ -1,4 +1,5 @@
-@if (!oidcServerEnabled) {
+<!-- Basic Auth: Username/password form -->
+@if (!oauthEnabled) {
   <div>
     <form class="layout-column" [formGroup]="loginForm" (ngSubmit)="login()" id="login-form">
       <mat-form-field class="login-input flex-align-center">
@@ -62,25 +63,20 @@
   </div>
 }
 
-@if (oidcServerEnabled) {
-  <div class="container container-margin">
-    @if (!isLoggedIn) {
-      <div class="layout-column align-center-center">
-        <button mat-raised-button color="primary" class="login-button-first flex-align-center" (click)="loginOIDC()">
-          {{ 'labels.buttons.Login' | translate }}
-          @if (loading) {
-            <mat-spinner [diameter]="20"></mat-spinner>
-          }
-        </button>
-      </div>
-    }
-    @if (isLoggedIn) {
-      <div>
-        <p>Welcome! You are logged in.</p>
-        <button (click)="logout()">Logout</button>
-        <button (click)="loadProtectedData()">Load Protected Data</button>
-        <pre>{{ protectedData | json }}</pre>
-      </div>
-    }
+<!-- OAuth/OIDC: Simple login button (no credentials needed) -->
+@if (oauthEnabled) {
+  <div class="layout-column">
+    <button
+      mat-raised-button
+      color="primary"
+      class="login-button-first flex-align-center"
+      (click)="loginOAuth()"
+      [disabled]="loading"
+    >
+      {{ 'labels.buttons.Login' | translate }}
+      @if (loading) {
+        <mat-spinner [diameter]="20"></mat-spinner>
+      }
+    </button>
   </div>
 }

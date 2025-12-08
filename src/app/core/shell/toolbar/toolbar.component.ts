@@ -19,8 +19,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Router, RouterLink } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, finalize, map, take } from 'rxjs/operators';
 
 /** Custom Services */
 import { AuthenticationService } from '../../authentication/authentication.service';
@@ -42,9 +42,7 @@ import { NotificationsTrayComponent as NotificationsTrayComponent_1 } from '../.
 import { ThemeToggleComponent } from '../../../shared/theme-toggle/theme-toggle.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
-/** Environment Configuration and Zitadel*/
 import { environment } from '../../../../environments/environment';
-import { AuthService } from 'app/zitadel/auth.service';
 
 /**
  * Toolbar component.
@@ -77,7 +75,6 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
   private configurationWizardService = inject(ConfigurationWizardService);
   private dialog = inject(MatDialog);
   private changeDetector = inject(ChangeDetectorRef);
-  private authService = inject(AuthService);
 
   /* Reference of institution */
   @ViewChild('institution') institution: ElementRef<any>;
@@ -134,13 +131,17 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
 
   /**
    * Logs out the authenticated user and redirects to login page.
+   * Uses unified AuthenticationService which handles both OAuth2 and OIDC logout.
    */
   logout() {
-    if (!environment.OIDC.oidcServerEnabled) {
-      this.authenticationService.logout().subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
-    } else {
-      this.authService.logout();
-    }
+    this.authenticationService
+      .logout()
+      .pipe(
+        take(1),
+        catchError(() => of(void 0)),
+        finalize(() => this.router.navigate(['/login'], { replaceUrl: true }))
+      )
+      .subscribe();
   }
 
   /**

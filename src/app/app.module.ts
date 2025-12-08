@@ -58,6 +58,7 @@ import { TokenInterceptor as ZitadelTokenInterceptor } from './zitadel/token.int
 import { AuthService } from './zitadel/auth.service';
 import { environment } from '../environments/environment';
 import { CallbackComponent } from './zitadel/callback/callback.component';
+import { OAuthModule } from 'angular-oauth2-oidc';
 
 export class CustomMissingTranslationHandler implements MissingTranslationHandler {
   handle(params: MissingTranslationHandlerParams): string {
@@ -120,7 +121,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ConfigurationWizardModule,
     AppRoutingModule,
     NotFoundComponent,
-    CallbackComponent
+    CallbackComponent,
+    OAuthModule.forRoot()
   ],
   providers: [
     DatePipe,

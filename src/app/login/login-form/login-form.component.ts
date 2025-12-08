@@ -1,22 +1,18 @@
 /** Angular Imports */
 import { Component, OnInit, inject } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 /** rxjs Imports */
 import { finalize } from 'rxjs/operators';
 
 /** Custom Services */
 import { AuthenticationService } from '../../core/authentication/authentication.service';
-import { MatFormField, MatPrefix, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatPrefix } from '@angular/material/form-field';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatIconButton, MatButton } from '@angular/material/button';
-import { MatCheckbox } from '@angular/material/checkbox';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
-/** Custom Service Zitadel */
-import { AuthService } from '../../zitadel/auth.service';
 import { environment } from '../../../environments/environment';
 
 /**
@@ -30,7 +26,6 @@ import { environment } from '../../../environments/environment';
     ...STANDALONE_SHARED_IMPORTS,
     MatPrefix,
     FaIconComponent,
-    MatIconButton,
     MatProgressBar,
     MatProgressSpinner
   ]
@@ -38,7 +33,6 @@ import { environment } from '../../../environments/environment';
 export class LoginFormComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
   private authenticationService = inject(AuthenticationService);
-  private authService = inject(AuthService);
 
   /** Login form group. */
   loginForm: FormGroup;
@@ -46,7 +40,8 @@ export class LoginFormComponent implements OnInit {
   passwordInputType: string = 'password';
   /** True if loading. */
   loading = false;
-  oidcServerEnabled = environment.OIDC.oidcServerEnabled;
+  /** Whether OAuth (OIDC or OAuth2) is enabled */
+  oauthEnabled = environment.OIDC.oidcServerEnabled || environment.oauth.enabled;
   /** Whether remember me functionality is enabled */
   enableRememberMe = environment.enableRememberMe === true;
 
@@ -80,19 +75,23 @@ export class LoginFormComponent implements OnInit {
   }
 
   /**
-   * Authenticates the user if the credentials are valid to Zitadel.
+   * Initiates OAuth/OIDC login flow.
+   * The unified AuthenticationService handles both Fineract OAuth2 and OIDC providers.
    */
-
-  loginOIDC() {
-    this.authService.login();
-  }
-
-  getUsers() {
-    this.authService.getUsers();
-  }
-
-  logout() {
-    this.authService.logout();
+  loginOAuth() {
+    this.loading = true;
+    this.authenticationService
+      .login()
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+        })
+      )
+      .subscribe({
+        error: () => {
+          // Error handling is managed by the authentication service
+        }
+      });
   }
 
   /**

@@ -26,9 +26,14 @@ export const environment = {
   apiActuator: loadedEnv.apiActuator || '/fineract-provider',
   serverUrl: '',
   oauth: {
-    enabled: loadedEnv['oauthServerEnabled'] || false, // For connecting to Mifos X using OAuth2 Authentication change the value to true
-    serverUrl: loadedEnv['oauthServerUrl'] || '',
-    appId: loadedEnv['oauthAppId'] || ''
+    enabled: loadedEnv.oauthServerEnabled === true,
+    serverUrl: loadedEnv.oauthServerUrl || '',
+    logoutUrl: loadedEnv.oauthServerLogoutUrl || '',
+    appId: loadedEnv.oauthAppId || '',
+    authorizeUrl: loadedEnv.oauthAuthorizeUrl || '',
+    tokenUrl: loadedEnv.oauthTokenUrl || '',
+    redirectUri: loadedEnv.oauthRedirectUri || '',
+    scope: loadedEnv.oauthScope || ''
   },
   /** Feature flag for Remember Me functionality */
   enableRememberMe: false,
@@ -66,7 +71,7 @@ export const environment = {
   minPasswordLength: loadedEnv['minPasswordLength'] || 12,
 
   OIDC: {
-    oidcServerEnabled: window['env']['oidcServerEnabled'] || false,
+    oidcServerEnabled: window['env']['oidcServerEnabled'] === true || window['env']['oidcServerEnabled'] === 'true',
     oidcBaseUrl: window['env']['oidcBaseUrl'] || '',
     oidcClientId: window['env']['oidcClientId'] || '',
     oidcApiUrl: window['env']['oidcApiUrl'] || '',

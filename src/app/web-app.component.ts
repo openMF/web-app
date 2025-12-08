@@ -33,8 +33,6 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { I18nService } from './core/i18n/i18n.service';
 import { ThemingService } from './shared/theme-toggle/theming.service';
 
-import { AuthService } from './zitadel/auth.service';
-
 /** Initialize Logger */
 const log = new Logger('MifosX');
 
@@ -123,8 +121,7 @@ export class WebAppComponent implements OnInit, OnDestroy {
     private themingService: ThemingService,
     private dateUtils: Dates,
     private idle: IdleTimeoutService,
-    private dialog: MatDialog,
-    private authService: AuthService
+    private dialog: MatDialog
   ) {}
 
   @HostBinding('class') public cssClass: string;
@@ -140,10 +137,6 @@ export class WebAppComponent implements OnInit, OnDestroy {
    *
    * 4) Alerts
    */
-
-  login() {
-    this.authService.login();
-  }
 
   ngOnInit() {
     this.themingService.theme.subscribe((value: string) => {
@@ -252,11 +245,7 @@ export class WebAppComponent implements OnInit, OnDestroy {
         });
         this.dialog.open(SessionTimeoutDialogComponent);
         setTimeout(() => {
-          if (!environment.OIDC.oidcServerEnabled) {
-            this.logout();
-          } else {
-            this.authService.logout();
-          }
+          this.logout();
         }, 1000);
       });
     }

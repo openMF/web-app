@@ -52,6 +52,7 @@
     "@swimlane/ngx-graph": "^11.0.0",
     "@tailwindcss/forms": "^0.5.4",
     "@tinymce/tinymce-angular": "^9.1.1",
+    "angular-oauth2-oidc": "^20.0.0",
     "chart.js": "^4.5.1",
     "d3": "^7.9.0",
     "exceljs": "^4.4.0",
