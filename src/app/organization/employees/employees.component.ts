@@ -63,7 +63,8 @@ export class EmployeesComponent implements OnInit, AfterViewInit {
   employeesData: any;
   /** Columns to be displayed in employees table. */
   displayedColumns: string[] = [
-    'displayName',
+    'firstname',
+    'lastname',
     'isLoanOfficer',
     'officeName',
     'isActive'

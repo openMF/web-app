@@ -28,9 +28,14 @@
 
   <div #tableEmployees class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
-      <ng-container matColumnDef="displayName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.name' | translate }}</th>
-        <td mat-cell *matCellDef="let employee">{{ employee.displayName }}</td>
+      <ng-container matColumnDef="firstname">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.First Name' | translate }}</th>
+        <td mat-cell *matCellDef="let employee">{{ employee.firstname }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="lastname">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Last Name' | translate }}</th>
+        <td mat-cell *matCellDef="let employee">{{ employee.lastname }}</td>
       </ng-container>
 
       <ng-container matColumnDef="isLoanOfficer">
