@@ -8,7 +8,7 @@ import { forkJoin, merge } from 'rxjs';
 import { skip } from 'rxjs/operators';
 
 /** Custom Services */
-import { HomeService } from '../../home.service';
+import { HomeService } from 'app/customApis.service';
 
 /** Charting Imports */
 import { Dates } from 'app/core/utils/dates';
