@@ -1,20 +1,9 @@
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-/** Custom Components */
-import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
-import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
-
-/** Custom Services */
-import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from '../../../core/authentication/authentication.service';
 import { CentersService } from '../../centers.service';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatList, MatListItem } from '@angular/material/list';
-import { MatLine } from '@angular/material/grid-list';
-import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { EntityNotesTabComponent } from '../../../shared/tabs/entity-notes-tab/entity-notes-tab.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
@@ -23,101 +12,53 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./notes-tab.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    FaIconComponent,
-    MatList,
-    MatListItem,
-    MatLine,
-    DateFormatPipe
+    EntityNotesTabComponent
   ]
 })
 export class NotesTabComponent implements OnInit {
   private route = inject(ActivatedRoute);
-  private formBuilder = inject(UntypedFormBuilder);
-  private centersService = inject(CentersService);
   private authenticationService = inject(AuthenticationService);
-  private dialog = inject(MatDialog);
-  private translateService = inject(TranslateService);
+  private centersService = inject(CentersService);
 
-  centerId: string;
+  entityId: string;
   username: string;
-  centerNotes: any;
-  noteForm: UntypedFormGroup;
-  @ViewChild('formRef', { static: true }) formRef: any;
+  entityNotes: any;
 
   constructor() {
-    const savedCredentials = this.authenticationService.getCredentials();
-    this.username = savedCredentials.username;
-    this.centerId = this.route.parent.snapshot.params['centerId'];
-    this.route.data.subscribe((data: { centerNotes: any }) => {
-      this.centerNotes = data.centerNotes;
-    });
+    this.entityId = this.route.parent.parent.snapshot.params['centerId'];
+    this.addNote = this.addNote.bind(this);
+    this.editNote = this.editNote.bind(this);
+    this.deleteNote = this.deleteNote.bind(this);
   }
 
   ngOnInit() {
-    this.createNoteForm();
-  }
-
-  createNoteForm() {
-    this.noteForm = this.formBuilder.group({
-      note: [
-        '',
-        Validators.required
-      ]
+    const savedCredentials = this.authenticationService.getCredentials();
+    this.username = savedCredentials.username;
+    this.route.data.subscribe((data: { centerNotes: any }) => {
+      this.entityNotes = data.centerNotes;
     });
   }
 
-  submit() {
-    this.centersService.createCenterNote(this.centerId, this.noteForm.value).subscribe((response: any) => {
-      this.centerNotes.push({
+  addNote(noteContent: any) {
+    this.centersService.createCenterNote(this.entityId, noteContent).subscribe((response: any) => {
+      this.entityNotes.push({
         id: response.resourceId,
         createdByUsername: this.username,
         createdOn: new Date(),
-        note: this.noteForm.value.note
+        note: noteContent.note
       });
-      this.formRef.resetForm();
     });
   }
 
-  editNote(noteId: string, noteContent: string, index: number) {
-    const editNoteDialogRef = this.dialog.open(FormDialogComponent, {
-      data: {
-        formfields: [
-          {
-            controlName: 'note',
-            required: true,
-            value: noteContent,
-            controlType: 'input',
-            label: this.translateService.instant('labels.inputs.Note')
-          }
-        ],
-        layout: {
-          columns: 1,
-          addButtonText: 'Confirm'
-        },
-        title: this.translateService.instant('labels.heading.Edit Note')
-      }
-    });
-    editNoteDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
-        this.centersService.editCenterNote(this.centerId, noteId, response.data.value).subscribe(() => {
-          this.centerNotes[index].note = response.data.value.note;
-        });
-      }
+  editNote(noteId: string, noteContent: any, index: number) {
+    this.centersService.editCenterNote(this.entityId, noteId, noteContent).subscribe(() => {
+      this.entityNotes[index].note = noteContent.note;
     });
   }
 
   deleteNote(noteId: string, index: number) {
-    const deleteNoteDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: {
-        deleteContext: `${this.translateService.instant('labels.inputs.Note')} ${this.translateService.instant('labels.inputs.Id')}:${noteId}`
-      }
-    });
-    deleteNoteDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
-        this.centersService.deleteCenterNote(this.centerId, noteId).subscribe(() => {
-          this.centerNotes.splice(index, 1);
-        });
-      }
+    this.centersService.deleteCenterNote(this.entityId, noteId).subscribe(() => {
+      this.entityNotes.splice(index, 1);
     });
   }
 }

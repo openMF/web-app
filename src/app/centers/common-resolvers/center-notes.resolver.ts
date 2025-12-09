@@ -20,7 +20,7 @@ export class CenterNotesResolver {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const centerId = route.parent.paramMap.get('centerId');
+    const centerId = route.parent.parent.paramMap.get('centerId');
     return this.centersService.getCenterNotes(centerId);
   }
 }

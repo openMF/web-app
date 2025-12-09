@@ -1,49 +1,10 @@
-<div class="tab-container mat-typography">
-  <h3>{{ 'labels.heading.Notes' | translate }}</h3>
-  <div>
-    <form
-      #formRef="ngForm"
-      [formGroup]="noteForm"
-      class="layout-row align-start-baseline gap-20px"
-      (ngSubmit)="submit()"
-    >
-      <mat-form-field class="flex-90-minus-20px">
-        <textarea
-          formControlName="note"
-          matInput
-          placeholder="{{ 'labels.text.Write a note' | translate }} ...."
-        ></textarea>
-      </mat-form-field>
-      <button
-        mat-raised-button
-        class="flex-fill"
-        color="primary"
-        [disabled]="!noteForm.valid"
-        *mifosxHasPermission="'CREATE_GROUPNOTE'"
-      >
-        <fa-icon icon="plus" class="m-r-10"></fa-icon> {{ 'labels.buttons.Add' | translate }}
-      </button>
-    </form>
-  </div>
-  <mat-list>
-    @for (centerNote of centerNotes; track centerNote; let i = $index) {
-      <mat-list-item>
-        <fa-icon icon="sticky-note" matListIcon></fa-icon>
-        <h3 matLine>{{ centerNote.note }}</h3>
-        <p matLine>
-          <span>{{ 'labels.inputs.Created By' | translate }}: {{ centerNote.createdByUsername }}</span
-          ><br />
-          <span>{{ 'labels.inputs.Date' | translate }}: {{ centerNote.createdOn | dateFormat }}</span>
-        </p>
-        <div class="layout-row align-start">
-          <button mat-button color="primary" (click)="editNote(centerNote.id, centerNote.note, i)">
-            <fa-icon icon="edit"></fa-icon>
-          </button>
-          <button mat-button color="warn" (click)="deleteNote(centerNote.id, i)">
-            <fa-icon icon="trash"></fa-icon>
-          </button>
-        </div>
-      </mat-list-item>
-    }
-  </mat-list>
-</div>
+<mifosx-entity-notes-tab
+  [entityId]="entityId"
+  [entityNotes]="entityNotes"
+  [username]="username"
+  [notePermission]="'GROUPNOTE'"
+  [addNoteCallback]="addNote"
+  [editNoteCallback]="editNote"
+  [deleteNoteCallback]="deleteNote"
+>
+</mifosx-entity-notes-tab>
