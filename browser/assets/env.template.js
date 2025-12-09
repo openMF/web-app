@@ -7,6 +7,7 @@
 
   window['env']['apiProvider'] = '$FINERACT_API_PROVIDER';
   window['env']['apiVersion'] = '$FINERACT_API_VERSION';
+  window['env']['apiActuator'] = '$FINERACT_API_ACTUATOR';
 
   window['env']['fineractPlatformTenantId'] = '$FINERACT_PLATFORM_TENANT_IDENTIFIER';
   window['env']['fineractPlatformTenantIds'] = '$FINERACT_PLATFORM_TENANTS_IDENTIFIER';
