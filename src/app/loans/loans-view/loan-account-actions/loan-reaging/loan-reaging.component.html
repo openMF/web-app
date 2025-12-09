@@ -70,10 +70,7 @@
               <input matInput formControlName="note" />
             </mat-form-field>
             <div class="flex-fill">
-              <span
-                class="expandcollapsebutton m-l-10 m-t-5 m-b-5 flex-75"
-                (click)="addTransactionAmount = !addTransactionAmount"
-              >
+              <span class="expandcollapsebutton m-l-10 m-t-5 m-b-5 flex-75" (click)="displayTransactionAmount()">
                 <mat-slide-toggle>
                   <div>
                     <span class="m-l-10">{{ 'labels.inputs.Transaction Amount' | translate }}</span>
@@ -87,7 +84,7 @@
                 [isRequired]="false"
                 [inputFormControl]="reagingLoanForm.controls.transactionAmount"
                 [inputLabel]="'Transaction Amount'"
-                [minVal]="0.01"
+                [minVal]="loanTransactionData.amount"
                 [maxVal]="loanTransactionData.amount"
               >
               </mifosx-input-amount>

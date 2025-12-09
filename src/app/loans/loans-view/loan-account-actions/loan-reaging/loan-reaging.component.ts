@@ -88,7 +88,10 @@ export class LoanReagingComponent implements OnInit {
       ],
       transactionAmount: [
         ,
-        [Validators.max(this.loanTransactionData.amount)]
+        [
+          Validators.min(this.loanTransactionData.amount),
+          Validators.max(this.loanTransactionData.amount)
+        ]
       ],
       note: '',
       externalId: '',
@@ -142,6 +145,13 @@ export class LoanReagingComponent implements OnInit {
       error: (error) => {
         console.error('Error loading re-age preview:', error);
       }
+    });
+  }
+
+  displayTransactionAmount(): void {
+    this.addTransactionAmount = !this.addTransactionAmount;
+    this.reagingLoanForm.patchValue({
+      transactionAmount: null
     });
   }
 
