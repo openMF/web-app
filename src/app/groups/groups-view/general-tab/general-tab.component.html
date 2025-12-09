@@ -102,12 +102,16 @@
 
       <ng-container matColumnDef="Loan Balance">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Loan Balance' | translate }}</th>
-        <td mat-cell *matCellDef="let element">{{ element.loanBalance }}</td>
+        <td mat-cell *matCellDef="let element">
+          {{ element.loanBalance | currency: element.currency?.code || 'USD' : 'symbol' : '1.2-2' }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="Amount Paid">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount Paid' | translate }}</th>
-        <td mat-cell *matCellDef="let element">{{ element.amountPaid }}</td>
+        <td mat-cell *matCellDef="let element">
+          {{ element.amountPaid | currency: element.currency?.code || 'USD' : 'symbol' : '1.2-2' }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="Type">
