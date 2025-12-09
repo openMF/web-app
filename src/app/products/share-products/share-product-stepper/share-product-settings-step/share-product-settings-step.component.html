@@ -74,7 +74,13 @@
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
-      <input type="number" matInput formControlName="minimumActivePeriodForDividends" />
+      <input type="number" matInput formControlName="minimumActivePeriodForDividends" min="1" step="1" required />
+      <mat-error *ngIf="shareProductSettingsForm.get('minimumActivePeriodForDividends').hasError('required')">
+        Frequency is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="shareProductSettingsForm.get('minimumActivePeriodForDividends').hasError('min')">
+        Frequency must be greater than zero
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field class="flex-48">

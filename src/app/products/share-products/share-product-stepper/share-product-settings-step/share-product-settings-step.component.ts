@@ -79,7 +79,14 @@ export class ShareProductSettingsStepComponent implements OnInit {
             Validators.pattern(/^[0-9]+$/)
           ]
         ],
-        minimumActivePeriodForDividends: [''],
+        minimumActivePeriodForDividends: [
+          '',
+          [
+            Validators.required,
+            Validators.min(1),
+            Validators.pattern(/^[0-9]+$/)
+          ]
+        ],
         minimumactiveperiodFrequencyType: [''],
         lockinPeriodFrequency: [''],
         lockinPeriodFrequencyType: [''],
