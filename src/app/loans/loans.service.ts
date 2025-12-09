@@ -273,7 +273,7 @@ export class LoansService {
       }
     });
 
-    return this.http.get(`/loans/${loanId}/transactions/reamortized-preview`, { params: httpParams });
+    return this.http.get(`/loans/${loanId}/transactions/reamortization-preview`, { params: httpParams });
   }
 
   getLoanScreenReportsData(): Observable<any> {
