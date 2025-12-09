@@ -567,6 +567,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         required: true,
         order: 2
       })
+
     ];
     const data = {
       title: 'Add Disbursement Details',
@@ -708,10 +709,10 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
   }
 
   /**
-   * Check if full term tranche option should be editable at loan level.
-   * Only available if the loan product has it enabled and is PROGRESSIVE schedule type.
+   * Check if full term tranche option should be visible at loan level.
+   * Available when PROGRESSIVE schedule type and multi-disbursement is enabled.
    */
   isFullTermTrancheEditable(): boolean {
-    return this.isProgressive && this.loanProduct?.allowFullTermForTranche === true;
+    return this.isProgressive && this.multiDisburseLoan === true;
   }
 }

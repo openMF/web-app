@@ -718,20 +718,26 @@
       <span class="flex-60">{{ loanProduct.multiDisburseLoan | yesNo }}</span>
     </div>
     @if (loanProduct.multiDisburseLoan) {
-      <div class="flex-100 layout-row-wrap responsive-column">
+      <div class="flex-fill layout-row">
         <span class="flex-40">{{ 'labels.inputs.Maximum Tranche count' | translate }}:</span>
         <span class="flex-60">{{ loanProduct.maxTrancheCount }}</span>
-        @if (loanProduct.outstandingLoanBalance) {
-          <div class="flex-fill layout-row">
-            <span class="flex-40">{{ 'labels.inputs.Maximum allowed outstanding balance' | translate }}:</span>
-            <span class="flex-60">{{ loanProduct.outstandingLoanBalance }}</span>
-          </div>
-        }
-        <div class="flex-fill layout-row">
-          <span class="flex-40">{{ 'labels.inputs.Disallow Expected Disbursements' | translate }}:</span>
-          <span class="flex-60">{{ loanProduct.disallowExpectedDisbursements | yesNo }}</span>
-        </div>
       </div>
+      @if (loanProduct.outstandingLoanBalance) {
+        <div class="flex-fill layout-row">
+          <span class="flex-40">{{ 'labels.inputs.Maximum allowed outstanding balance' | translate }}:</span>
+          <span class="flex-60">{{ loanProduct.outstandingLoanBalance }}</span>
+        </div>
+      }
+      <div class="flex-fill layout-row">
+        <span class="flex-40">{{ 'labels.inputs.Disallow Expected Disbursements' | translate }}:</span>
+        <span class="flex-60">{{ loanProduct.disallowExpectedDisbursements | yesNo }}</span>
+      </div>
+      @if (loanProduct.loanScheduleType && loanProduct.loanScheduleType.code === 'PROGRESSIVE') {
+        <div class="flex-fill layout-row">
+          <span class="flex-40">{{ 'labels.inputs.Allow full term for each tranche' | translate }}:</span>
+          <span class="flex-60">{{ loanProduct.allowFullTermForTranche | yesNo }}</span>
+        </div>
+      }
     }
     <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Event Settings' | translate }}</h3>
     <div class="flex-100">
