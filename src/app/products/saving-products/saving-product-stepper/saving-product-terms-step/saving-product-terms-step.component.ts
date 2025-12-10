@@ -54,7 +54,8 @@ export class SavingProductTermsStepComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.min(0)]
+          Validators.min(0)
+        ]
       ],
       interestCompoundingPeriodType: [
         '',

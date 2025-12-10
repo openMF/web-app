@@ -89,8 +89,7 @@ export class LoanReagingComponent implements OnInit {
       transactionAmount: [
         ,
         [
-          Validators.min(this.loanTransactionData.amount),
-          Validators.max(this.loanTransactionData.amount)
+          Validators.min(0)
         ]
       ],
       note: '',

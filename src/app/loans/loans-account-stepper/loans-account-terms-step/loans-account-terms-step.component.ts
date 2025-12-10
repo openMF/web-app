@@ -567,7 +567,6 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         required: true,
         order: 2
       })
-
     ];
     const data = {
       title: 'Add Disbursement Details',
