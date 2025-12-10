@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -36,6 +36,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class SharesAccountActionsComponent {
+  private route = inject(ActivatedRoute);
+
   /** Shares Account Data */
   sharesAccountData: any;
   /** Flag object to store possible actions and render appropriate UI to the user */
@@ -64,7 +66,7 @@ export class SharesAccountActionsComponent {
   /**
    * @param {ActivatedRoute} route Activated Route
    */
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     const name = this.route.snapshot.params['name'];
     if (name && name in this.actions) {
       this.actions[name as keyof typeof this.actions] = true;

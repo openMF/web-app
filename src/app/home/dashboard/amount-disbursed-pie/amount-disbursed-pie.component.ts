@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -10,7 +10,7 @@ import { HomeService } from '../../home.service';
 import { Chart, registerables } from 'chart.js';
 import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { NgFor, NgStyle, NgIf } from '@angular/common';
+import { NgStyle } from '@angular/common';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 // Register Chart.js components
@@ -31,6 +31,9 @@ Chart.register(...registerables);
   ]
 })
 export class AmountDisbursedPieComponent implements OnInit {
+  private homeService = inject(HomeService);
+  private route = inject(ActivatedRoute);
+
   /** Static Form control for office Id */
   officeId = new UntypedFormControl();
   /** Office Data */
@@ -47,10 +50,7 @@ export class AmountDisbursedPieComponent implements OnInit {
    * @param {HomeService} homeService Home Service.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(
-    private homeService: HomeService,
-    private route: ActivatedRoute
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });

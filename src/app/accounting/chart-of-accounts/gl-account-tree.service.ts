@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 /** rxjs Imports */
 import { BehaviorSubject } from 'rxjs';
@@ -16,6 +16,8 @@ import { GLAccount } from 'app/shared/models/general.model';
   providedIn: 'root'
 })
 export class GlAccountTreeService {
+  private translateService = inject(TranslateService);
+
   /** GL Account data. */
   glAccountData: any;
   /** Chart of accounts tree data behavior subject to represent chart of accounts tree nodes. */
@@ -27,8 +29,6 @@ export class GlAccountTreeService {
   get treeData(): GLAccountNode[] {
     return this.treeDataChange.value;
   }
-
-  constructor(private translateService: TranslateService) {}
 
   /**
    * Builds the chart of accounts tree and emits the value.

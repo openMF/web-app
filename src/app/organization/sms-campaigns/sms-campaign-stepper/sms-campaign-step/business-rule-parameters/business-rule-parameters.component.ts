@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnChanges, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, OnChanges, Input, Output, EventEmitter, OnInit, inject } from '@angular/core';
 import { Validators, UntypedFormGroup, UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
@@ -31,6 +31,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class BusinessRuleParametersComponent implements OnInit, OnChanges {
+  private reportsService = inject(ReportsService);
+  private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
+
   /** Run Report Parameters Data */
   @Input() paramData: any;
 
@@ -47,17 +51,6 @@ export class BusinessRuleParametersComponent implements OnInit, OnChanges {
 
   /** Template Parameters Event Emitter */
   @Output() templateParameters = new EventEmitter();
-
-  /**
-   * @param {ReportsService} reportsService Reports Service.
-   * @param {SettingsService} settingsService Settings Service.
-   * @param {Dates} dateUtils Date Utils.
-   */
-  constructor(
-    private reportsService: ReportsService,
-    private settingsService: SettingsService,
-    private dateUtils: Dates
-  ) {}
 
   ngOnInit(): void {
     this.maxDate = this.settingsService.businessDate;

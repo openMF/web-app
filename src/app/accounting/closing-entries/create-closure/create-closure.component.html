@@ -6,14 +6,18 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
             <mat-select required formControlName="officeId">
-              <mat-option *ngFor="let office of officeData" [value]="office.id">
-                {{ office.name }}
-              </mat-option>
+              @for (office of officeData; track office) {
+                <mat-option [value]="office.id">
+                  {{ office.name }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error *ngIf="accountingClosureForm.controls.officeId.hasError('required')">
-              {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (accountingClosureForm.controls.officeId.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field (click)="closingDatePicker.open()">
@@ -28,10 +32,12 @@
             />
             <mat-datepicker-toggle matSuffix [for]="closingDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #closingDatePicker></mat-datepicker>
-            <mat-error *ngIf="accountingClosureForm.controls.closingDate.hasError('required')">
-              {{ 'labels.inputs.Closing Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (accountingClosureForm.controls.closingDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Closing Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>

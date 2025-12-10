@@ -25,22 +25,24 @@
       <ng-container matColumnDef="systemDefined">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.System Defined' | translate }}</th>
         <td mat-cell *matCellDef="let code">
-          <fa-icon
-            *ngIf="code.systemDefined"
-            icon="check-circle"
-            size="lg"
-            class="system-defined"
-            matTooltip="{{ 'tooltips.Yes' | translate }}"
-            matTooltipPosition="right"
-          ></fa-icon>
-          <fa-icon
-            *ngIf="!code.systemDefined"
-            icon="times-circle"
-            size="lg"
-            class="not-system-defined"
-            matTooltip="{{ 'tooltips.No' | translate }}"
-            matTooltipPosition="right"
-          ></fa-icon>
+          @if (code.systemDefined) {
+            <fa-icon
+              icon="check-circle"
+              size="lg"
+              class="system-defined"
+              matTooltip="{{ 'tooltips.Yes' | translate }}"
+              matTooltipPosition="right"
+            ></fa-icon>
+          }
+          @if (!code.systemDefined) {
+            <fa-icon
+              icon="times-circle"
+              size="lg"
+              class="not-system-defined"
+              matTooltip="{{ 'tooltips.No' | translate }}"
+              matTooltipPosition="right"
+            ></fa-icon>
+          }
         </td>
       </ng-container>
 

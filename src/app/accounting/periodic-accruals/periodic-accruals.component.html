@@ -15,10 +15,12 @@
             />
             <mat-datepicker-toggle matSuffix [for]="tillDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #tillDatePicker></mat-datepicker>
-            <mat-error *ngIf="periodicAccrualsForm.controls.tillDate.hasError('required')">
-              {{ 'labels.inputs.Accrue Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (periodicAccrualsForm.controls.tillDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Accrue Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
         </div>
       </mat-card-content>

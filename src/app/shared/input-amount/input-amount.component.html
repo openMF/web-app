@@ -1,52 +1,72 @@
-<mat-form-field appearance="fill" class="flex-100 input-container" *ngIf="isRequired">
-  <mat-label>{{ 'labels.inputs.' + inputLabel | translate }}</mat-label>
-  <div class="input-group">
-    <span>{{ currency.code }}</span>
+@if (isRequired) {
+  <mat-form-field appearance="fill" class="flex-100 input-container">
+    <mat-label>{{ 'labels.inputs.' + inputLabel | translate }}</mat-label>
+    <div class="input-group">
+      <span>{{ currency.code }}</span>
+      <input
+        mifosxFormatAmount="{{ currency.code }}:{{ currency.displaySymbol }}"
+        class="right-input"
+        [formControl]="inputFormControl"
+        (keypress)="numberOnly($event)"
+        required
+        matInput
+        (blur)="displayHint = false"
+        (focus)="displayHint = true"
+      />
+    </div>
+    @if (inputFormControl.hasError('required')) {
+      <mat-error>
+        {{ 'labels.inputs.' + inputLabel | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
+      </mat-error>
+    }
+    @if (displayHint) {
+      <mat-hint class="right-hint">{{
+        inputFormControl.value | currency: currency.code : currency.displaySymbol : '1.2-2'
+      }}</mat-hint>
+    }
+    @if (minVal && inputFormControl.hasError('min')) {
+      <mat-error>
+        {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.Must be at least' | translate }} {{ minVal }}
+      </mat-error>
+    }
+    @if (maxVal && inputFormControl.hasError('max')) {
+      <mat-error>
+        {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.Must be less or equal to' | translate }}
+        {{ maxVal }}
+      </mat-error>
+    }
+  </mat-form-field>
+}
+@if (!isRequired) {
+  <mat-form-field appearance="fill" class="flex-100">
+    <mat-label>{{ 'labels.inputs.' + inputLabel | translate }}</mat-label>
+    <span matTextSuffix class="m-l-10">{{ currency.code }}</span>
+    <span class="flex-auto"></span>
     <input
       mifosxFormatAmount="{{ currency.code }}:{{ currency.displaySymbol }}"
       class="right-input"
       [formControl]="inputFormControl"
       (keypress)="numberOnly($event)"
-      required
       matInput
       (blur)="displayHint = false"
       (focus)="displayHint = true"
     />
-  </div>
-  <mat-error *ngIf="inputFormControl.hasError('required')">
-    {{ 'labels.inputs.' + inputLabel | translate }} {{ 'labels.commons.is' | translate }}
-    <strong>{{ 'labels.commons.required' | translate }}</strong>
-  </mat-error>
-  <mat-hint class="right-hint" *ngIf="displayHint">{{
-    inputFormControl.value | currency: currency.code : currency.displaySymbol : '1.2-2'
-  }}</mat-hint>
-  <mat-error *ngIf="minVal && inputFormControl.hasError('min')">
-    {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.Must be at least' | translate }} {{ minVal }}
-  </mat-error>
-  <mat-error *ngIf="maxVal && inputFormControl.hasError('max')">
-    {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.Must be less or equal to' | translate }} {{ maxVal }}
-  </mat-error>
-</mat-form-field>
-<mat-form-field appearance="fill" class="flex-100" *ngIf="!isRequired">
-  <mat-label>{{ 'labels.inputs.' + inputLabel | translate }}</mat-label>
-  <span matTextSuffix class="m-l-10">{{ currency.code }}</span>
-  <span class="flex-auto"></span>
-  <input
-    mifosxFormatAmount="{{ currency.code }}:{{ currency.displaySymbol }}"
-    class="right-input"
-    [formControl]="inputFormControl"
-    (keypress)="numberOnly($event)"
-    matInput
-    (blur)="displayHint = false"
-    (focus)="displayHint = true"
-  />
-  <mat-hint class="right-hint" *ngIf="displayHint">{{
-    inputFormControl.value | currency: currency.code : currency.displaySymbol : '1.2-2'
-  }}</mat-hint>
-  <mat-error *ngIf="minVal && inputFormControl.hasError('min')">
-    {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.Must be at least' | translate }} {{ minVal }}
-  </mat-error>
-  <mat-error *ngIf="maxVal && inputFormControl.hasError('max')">
-    {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.Must be less or equal to' | translate }} {{ maxVal }}
-  </mat-error>
-</mat-form-field>
+    @if (displayHint) {
+      <mat-hint class="right-hint">{{
+        inputFormControl.value | currency: currency.code : currency.displaySymbol : '1.2-2'
+      }}</mat-hint>
+    }
+    @if (minVal && inputFormControl.hasError('min')) {
+      <mat-error>
+        {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.Must be at least' | translate }} {{ minVal }}
+      </mat-error>
+    }
+    @if (maxVal && inputFormControl.hasError('max')) {
+      <mat-error>
+        {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.Must be less or equal to' | translate }}
+        {{ maxVal }}
+      </mat-error>
+    }
+  </mat-form-field>
+}

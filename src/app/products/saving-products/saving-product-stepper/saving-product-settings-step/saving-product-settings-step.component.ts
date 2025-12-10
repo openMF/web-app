@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -28,6 +28,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class SavingProductSettingsStepComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+
   @Input() savingProductsTemplate: any;
 
   savingProductSettingsForm: UntypedFormGroup;
@@ -35,7 +37,7 @@ export class SavingProductSettingsStepComponent implements OnInit {
   lockinPeriodFrequencyTypeData: any;
   taxGroupData: any;
 
-  constructor(private formBuilder: UntypedFormBuilder) {
+  constructor() {
     this.createSavingProductSettingsForm();
     this.setConditionalControls();
   }

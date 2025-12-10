@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Accounting } from 'app/core/utils/accounting';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -46,6 +46,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ShareProductGeneralTabComponent {
+  private route = inject(ActivatedRoute);
+  private accounting = inject(Accounting);
+
   shareProduct: any;
 
   marketPriceDisplayedColumns: string[] = [
@@ -59,10 +62,7 @@ export class ShareProductGeneralTabComponent {
     'chargeTimeType'
   ];
 
-  constructor(
-    private route: ActivatedRoute,
-    private accounting: Accounting
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { shareProduct: any }) => {
       this.shareProduct = data.shareProduct;
     });

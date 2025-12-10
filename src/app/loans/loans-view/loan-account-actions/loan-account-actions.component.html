@@ -1,69 +1,108 @@
-<mifosx-loans-account-close [dataObject]="actionButtonData" *ngIf="actions['Close']"></mifosx-loans-account-close>
-<mifosx-undo-approval *ngIf="actions['Undo Approval']"></mifosx-undo-approval>
-<mifosx-assign-loan-officer
-  *ngIf="actions['Assign Loan Officer']"
-  [dataObject]="actionButtonData"
-></mifosx-assign-loan-officer>
-<mifosx-foreclosure [dataObject]="actionButtonData" *ngIf="actions['Foreclosure']"></mifosx-foreclosure>
-<mifosx-prepay-loan
-  [dataObject]="actionButtonData"
-  *ngIf="actions['Prepay Loan'] || actions['Contract Termination']"
-></mifosx-prepay-loan>
-<mifosx-make-repayment [dataObject]="actionButtonData" *ngIf="actions['Make Repayment']"></mifosx-make-repayment>
-<mifosx-make-repayment [dataObject]="actionButtonData" *ngIf="actions['Capitalized Income']"></mifosx-make-repayment>
-<mifosx-make-repayment [dataObject]="actionButtonData" *ngIf="actions['Goodwill Credit']"></mifosx-make-repayment>
-<mifosx-make-repayment [dataObject]="actionButtonData" *ngIf="actions['Buy Down Fee']"></mifosx-make-repayment>
-<mifosx-make-repayment
-  [dataObject]="actionButtonData"
-  *ngIf="actions['Interest Payment Waiver']"
-></mifosx-make-repayment>
-<mifosx-make-repayment [dataObject]="actionButtonData" *ngIf="actions['Payout Refund']"></mifosx-make-repayment>
-<mifosx-make-repayment
-  [dataObject]="actionButtonData"
-  *ngIf="actions['Merchant Issued Refund']"
-></mifosx-make-repayment>
-<mifosx-loan-credit-balance-refund
-  [dataObject]="actionButtonData"
-  *ngIf="actions['Credit Balance Refund']"
-></mifosx-loan-credit-balance-refund>
-<mifosx-waive-interest [dataObject]="actionButtonData" *ngIf="actions['Waive Interest']"></mifosx-waive-interest>
-<mifosx-write-off-page [dataObject]="actionButtonData" *ngIf="actions['Write Off']"></mifosx-write-off-page>
-<mifosx-close-as-rescheduled
-  [dataObject]="actionButtonData"
-  *ngIf="actions['Close (as Rescheduled)']"
-></mifosx-close-as-rescheduled>
-<mifosx-loan-reschedule [dataObject]="actionButtonData" *ngIf="actions['Reschedule']"></mifosx-loan-reschedule>
-<mifosx-recovery-repayment
-  [dataObject]="actionButtonData"
-  *ngIf="actions['Recovery Payment']"
-></mifosx-recovery-repayment>
-<mifosx-view-guarantors [dataObject]="actionButtonData" *ngIf="actions['View Guarantors']"></mifosx-view-guarantors>
-<mifosx-create-guarantor [dataObject]="actionButtonData" *ngIf="actions['Create Guarantor']"></mifosx-create-guarantor>
-<mifosx-disburse-to-savings-account
-  [dataObject]="actionButtonData"
-  *ngIf="actions['Disburse to Savings']"
-></mifosx-disburse-to-savings-account>
-<mifosx-reject-loan *ngIf="actions['Reject']"></mifosx-reject-loan>
-<mifosx-disburse [dataObject]="actionButtonData" *ngIf="actions['Disburse']"></mifosx-disburse>
-<mifosx-withdrawn-by-client *ngIf="actions['Withdrawn by Client']"></mifosx-withdrawn-by-client>
-<mifosx-add-collateral [dataObject]="actionButtonData" *ngIf="actions['Add Collateral']"></mifosx-add-collateral>
-<mifosx-undo-disbursal
-  *ngIf="actions['Undo Disbursal'] || actions['Undo Last Disbursal']"
-  [actionName]="actionName"
-></mifosx-undo-disbursal>
-<mifosx-loan-screen-reports
-  [dataObject]="actionButtonData"
-  *ngIf="actions['Loan Screen Reports']"
-></mifosx-loan-screen-reports>
-<mifosx-approve-loan *ngIf="actions['Approve']"></mifosx-approve-loan>
-<mifosx-add-loan-charge *ngIf="actions['Add Loan Charge']"></mifosx-add-loan-charge>
-<mifosx-edit-repayment-schedule *ngIf="actions['Edit Repayment Schedule']"></mifosx-edit-repayment-schedule>
-<mifosx-charge-off [dataObject]="actionButtonData" *ngIf="actions['Charge-Off']"></mifosx-charge-off>
-<mifosx-asset-transfer-loan *ngIf="actions['Sell Loan'] || actions['Buy Back Loan']"></mifosx-asset-transfer-loan>
-<mifosx-loan-reaging [dataObject]="actionButtonData" *ngIf="actions['Re-Age']"></mifosx-loan-reaging>
-<mifosx-loan-reamortize [dataObject]="actionButtonData" *ngIf="actions['Re-Amortize']"></mifosx-loan-reamortize>
-<mifosx-add-interest-pause
-  [dataObject]="navigationData"
-  *ngIf="actions['Add Interest Pause']"
-></mifosx-add-interest-pause>
-<mifosx-undo-write-off [dataObject]="actionButtonData" *ngIf="actions['Undo Write-off']"></mifosx-undo-write-off>
+@if (actions['Close']) {
+  <mifosx-loans-account-close [dataObject]="actionButtonData"></mifosx-loans-account-close>
+}
+@if (actions['Undo Approval']) {
+  <mifosx-undo-approval></mifosx-undo-approval>
+}
+@if (actions['Assign Loan Officer']) {
+  <mifosx-assign-loan-officer [dataObject]="actionButtonData"></mifosx-assign-loan-officer>
+}
+@if (actions['Foreclosure']) {
+  <mifosx-foreclosure [dataObject]="actionButtonData"></mifosx-foreclosure>
+}
+@if (actions['Prepay Loan'] || actions['Contract Termination']) {
+  <mifosx-prepay-loan [dataObject]="actionButtonData"></mifosx-prepay-loan>
+}
+@if (actions['Make Repayment']) {
+  <mifosx-make-repayment [dataObject]="actionButtonData"></mifosx-make-repayment>
+}
+@if (actions['Capitalized Income']) {
+  <mifosx-make-repayment [dataObject]="actionButtonData"></mifosx-make-repayment>
+}
+@if (actions['Goodwill Credit']) {
+  <mifosx-make-repayment [dataObject]="actionButtonData"></mifosx-make-repayment>
+}
+@if (actions['Buy Down Fee']) {
+  <mifosx-make-repayment [dataObject]="actionButtonData"></mifosx-make-repayment>
+}
+@if (actions['Interest Payment Waiver']) {
+  <mifosx-make-repayment [dataObject]="actionButtonData"></mifosx-make-repayment>
+}
+@if (actions['Payout Refund']) {
+  <mifosx-make-repayment [dataObject]="actionButtonData"></mifosx-make-repayment>
+}
+@if (actions['Merchant Issued Refund']) {
+  <mifosx-make-repayment [dataObject]="actionButtonData"></mifosx-make-repayment>
+}
+@if (actions['Credit Balance Refund']) {
+  <mifosx-loan-credit-balance-refund [dataObject]="actionButtonData"></mifosx-loan-credit-balance-refund>
+}
+@if (actions['Waive Interest']) {
+  <mifosx-waive-interest [dataObject]="actionButtonData"></mifosx-waive-interest>
+}
+@if (actions['Write Off']) {
+  <mifosx-write-off-page [dataObject]="actionButtonData"></mifosx-write-off-page>
+}
+@if (actions['Close (as Rescheduled)']) {
+  <mifosx-close-as-rescheduled [dataObject]="actionButtonData"></mifosx-close-as-rescheduled>
+}
+@if (actions['Reschedule']) {
+  <mifosx-loan-reschedule [dataObject]="actionButtonData"></mifosx-loan-reschedule>
+}
+@if (actions['Recovery Payment']) {
+  <mifosx-recovery-repayment [dataObject]="actionButtonData"></mifosx-recovery-repayment>
+}
+@if (actions['View Guarantors']) {
+  <mifosx-view-guarantors [dataObject]="actionButtonData"></mifosx-view-guarantors>
+}
+@if (actions['Create Guarantor']) {
+  <mifosx-create-guarantor [dataObject]="actionButtonData"></mifosx-create-guarantor>
+}
+@if (actions['Disburse to Savings']) {
+  <mifosx-disburse-to-savings-account [dataObject]="actionButtonData"></mifosx-disburse-to-savings-account>
+}
+@if (actions['Reject']) {
+  <mifosx-reject-loan></mifosx-reject-loan>
+}
+@if (actions['Disburse']) {
+  <mifosx-disburse [dataObject]="actionButtonData"></mifosx-disburse>
+}
+@if (actions['Withdrawn by Client']) {
+  <mifosx-withdrawn-by-client></mifosx-withdrawn-by-client>
+}
+@if (actions['Add Collateral']) {
+  <mifosx-add-collateral [dataObject]="actionButtonData"></mifosx-add-collateral>
+}
+@if (actions['Undo Disbursal'] || actions['Undo Last Disbursal']) {
+  <mifosx-undo-disbursal [actionName]="actionName"></mifosx-undo-disbursal>
+}
+@if (actions['Loan Screen Reports']) {
+  <mifosx-loan-screen-reports [dataObject]="actionButtonData"></mifosx-loan-screen-reports>
+}
+@if (actions['Approve']) {
+  <mifosx-approve-loan></mifosx-approve-loan>
+}
+@if (actions['Add Loan Charge']) {
+  <mifosx-add-loan-charge></mifosx-add-loan-charge>
+}
+@if (actions['Edit Repayment Schedule']) {
+  <mifosx-edit-repayment-schedule></mifosx-edit-repayment-schedule>
+}
+@if (actions['Charge-Off']) {
+  <mifosx-charge-off [dataObject]="actionButtonData"></mifosx-charge-off>
+}
+@if (actions['Sell Loan'] || actions['Buy Back Loan']) {
+  <mifosx-asset-transfer-loan></mifosx-asset-transfer-loan>
+}
+@if (actions['Re-Age']) {
+  <mifosx-loan-reaging [dataObject]="actionButtonData"></mifosx-loan-reaging>
+}
+@if (actions['Re-Amortize']) {
+  <mifosx-loan-reamortize [dataObject]="actionButtonData"></mifosx-loan-reamortize>
+}
+@if (actions['Add Interest Pause']) {
+  <mifosx-add-interest-pause [dataObject]="navigationData"></mifosx-add-interest-pause>
+}
+@if (actions['Undo Write-off']) {
+  <mifosx-undo-write-off [dataObject]="actionButtonData"></mifosx-undo-write-off>
+}

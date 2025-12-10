@@ -6,22 +6,28 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Teller Name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
-            <mat-error *ngIf="tellerForm.controls.name.hasError('required')">
-              {{ 'labels.inputs.Teller Name' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
-            <mat-error *ngIf="tellerForm.controls.name.hasError('pattern')">
-              {{ 'labels.inputs.Teller Name' | translate }} <strong>{{ 'labels.commons.cannot' | translate }}</strong>
-              {{ 'labels.commons.begin with a special character or number' | translate }}
-            </mat-error>
+            @if (tellerForm.controls.name.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Teller Name' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
+            @if (tellerForm.controls.name.hasError('pattern')) {
+              <mat-error>
+                {{ 'labels.inputs.Teller Name' | translate }} <strong>{{ 'labels.commons.cannot' | translate }}</strong>
+                {{ 'labels.commons.begin with a special character or number' | translate }}
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
             <mat-select formControlName="officeId">
-              <mat-option *ngFor="let office of officeData" [value]="office.id">
-                {{ office.name }}
-              </mat-option>
+              @for (office of officeData; track office) {
+                <mat-option [value]="office.id">
+                  {{ office.name }}
+                </mat-option>
+              }
             </mat-select>
           </mat-form-field>
 
@@ -42,10 +48,12 @@
             />
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #startDatePicker></mat-datepicker>
-            <mat-error *ngIf="tellerForm.controls.startDate.hasError('required')">
-              {{ 'labels.inputs.Start Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (tellerForm.controls.startDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Start Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field (click)="endDatePicker.open()">
@@ -64,14 +72,18 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Status' | translate }}</mat-label>
             <mat-select required formControlName="status">
-              <mat-option *ngFor="let tellerStatus of tellerStatusesData" [value]="tellerStatus.id">
-                {{ tellerStatus.value }}
-              </mat-option>
+              @for (tellerStatus of tellerStatusesData; track tellerStatus) {
+                <mat-option [value]="tellerStatus.id">
+                  {{ tellerStatus.value }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error *ngIf="tellerForm.controls.status.hasError('required')">
-              {{ 'labels.inputs.Status' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (tellerForm.controls.status.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Status' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
         </div>
       </mat-card-content>

@@ -807,7 +807,8 @@
       "on": "juu",
       "Password validation": "Nenosiri lazima liwe na herufi {{minchar}}, ambazo zinafaa kuingiza herufi 1 kubwa, ndogo na maalum na haipaswi kuwa na herufi zinazorudiwa au nafasi nyeupe.",
       "Must be at least": "Lazima iwe angalau",
-      "Must be less or equal to": "Lazima iwe chini au sawa na"
+      "Must be less or equal to": "Lazima iwe chini au sawa na",
+      "must be after or equal to start date": "lazima iwe baada ya au sawa na tarehe ya kuanza"
     },
     "heading": {
       "Account Linked Financial": "Orodha ya akaunti zilizounganishwa na shughuli tofauti za kifedha. Kujua zaidi bofya:",
@@ -2742,6 +2743,7 @@
       "All Fixed Deposits": "Amana Zote Zisizohamishika",
       "All Recurring Deposits": "Amana Zote Zinazorudiwa",
       "All Savings": "Akiba Yote",
+      "Savings Account Details": "Maelezo ya Akaunti ya Akiba",
       "Allocate Cash": "Tenga Pesa",
       "Allows you to create new fixed deposit product": "Chaguo hili hukuruhusu kuunda bidhaa mpya ya amana isiyobadilika.",
       "This option allows you to create new users in your organization": "Chaguo hili hukuruhusu kuunda watumiaji wapya katika shirika lako",
@@ -3099,6 +3101,7 @@
       "No checker inbox data available for this search": "Hakuna data ya kikasha kikagua inayopatikana kwa utafutaji huu.",
       "No client was found": "Hakuna mteja aliyepatikana",
       "No data found": "Hakuna data iliyopatikana",
+      "NoDocuments": "Hakuna hati zinazopatikana.",
       "No loan locked available": "Hakuna mkopo uliofungwa unaopatikana.",
       "No notifications": "Hakuna arifa",
       "No pending loan available for disbursal": "Hakuna mkopo unaosubiri kulipwa.",
@@ -3341,7 +3344,8 @@
       "Voluntary": "Kwa hiari",
       "Write a note": "Andika dokezo",
       "“Maker-Checker” principle requires every tasks": "Kanuni ya \"Mtengenezaji-Kikagua\" inahitaji kila kazi kukamilishwa na watu wawili ili kupunguza uwezekano wa makosa na matumizi mabaya. Mtu mmoja anaanzisha mchakato na wa pili anakamilisha.",
-      "Buy Down Fees": "Ada za Ununuzi"
+      "Buy Down Fees": "Ada za Ununuzi",
+      "UploadDocumentHint": "Pakia PDF au picha ili kutoa hakikisho."
     },
     "titles": {
       "Dashboard": "Dashibodi",

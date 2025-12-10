@@ -9,27 +9,29 @@
     {{ 'labels.text.Edit Role' | translate }}
   </button>
 
-  <button
-    *ngIf="!isRoleEnable(rolePermissionService.disabled)"
-    mat-raised-button
-    color="danger"
-    (click)="disableRolesConfirmation()"
-    [disabled]="rolePermissionService.name === 'Super user'"
-  >
-    <fa-icon icon="lock" class="m-r-10"></fa-icon>
-    {{ 'labels.buttons.Disable' | translate }} {{ 'labels.inputs.Role' | translate }}
-  </button>
+  @if (!isRoleEnable(rolePermissionService.disabled)) {
+    <button
+      mat-raised-button
+      color="danger"
+      (click)="disableRolesConfirmation()"
+      [disabled]="rolePermissionService.name === 'Super user'"
+    >
+      <fa-icon icon="lock" class="m-r-10"></fa-icon>
+      {{ 'labels.buttons.Disable' | translate }} {{ 'labels.inputs.Role' | translate }}
+    </button>
+  }
 
-  <button
-    *ngIf="isRoleEnable(rolePermissionService.disabled)"
-    mat-raised-button
-    color="primary"
-    (click)="enableRolesConfirmation()"
-    [disabled]="rolePermissionService.name === 'Super user'"
-  >
-    <fa-icon icon="lock-open" class="m-r-10"></fa-icon>
-    {{ 'labels.buttons.Enable' | translate }} {{ 'labels.inputs.Role' | translate }}
-  </button>
+  @if (isRoleEnable(rolePermissionService.disabled)) {
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="enableRolesConfirmation()"
+      [disabled]="rolePermissionService.name === 'Super user'"
+    >
+      <fa-icon icon="lock-open" class="m-r-10"></fa-icon>
+      {{ 'labels.buttons.Enable' | translate }} {{ 'labels.inputs.Role' | translate }}
+    </button>
+  }
 
   <button
     mat-raised-button
@@ -76,28 +78,31 @@
           </h3>
         </div>
 
-        <div class="flex-25 layout-row layout-xs-column layout-align-end gap-5px select-deselect" *ngIf="!isDisabled">
-          <button mat-raised-button color="primary" (click)="selectAll()">
-            {{ 'labels.buttons.Select All' | translate }}
-          </button>
-          <button mat-raised-button color="default" (click)="deselectAll()">
-            {{ 'labels.buttons.Deselect All' | translate }}
-          </button>
-        </div>
+        @if (!isDisabled) {
+          <div class="flex-25 layout-row layout-xs-column layout-align-end gap-5px select-deselect">
+            <button mat-raised-button color="primary" (click)="selectAll()">
+              {{ 'labels.buttons.Select All' | translate }}
+            </button>
+            <button mat-raised-button color="default" (click)="deselectAll()">
+              {{ 'labels.buttons.Deselect All' | translate }}
+            </button>
+          </div>
+        }
       </div>
 
       <div class="layout-row">
         <div class="layout-column flex-30">
           <mat-list>
-            <mat-list-item
-              [ngClass]="selectedItem === grouping ? 'active' : 'inactive'"
-              *ngFor="let grouping of groupings"
-              (click)="showPermissions(grouping)"
-            >
-              <span class="grouping-name">
-                {{ formatName(grouping) }}
-              </span>
-            </mat-list-item>
+            @for (grouping of groupings; track grouping) {
+              <mat-list-item
+                [ngClass]="selectedItem === grouping ? 'active' : 'inactive'"
+                (click)="showPermissions(grouping)"
+              >
+                <span class="grouping-name">
+                  {{ formatName(grouping) }}
+                </span>
+              </mat-list-item>
+            }
           </mat-list>
         </div>
 
@@ -105,27 +110,33 @@
 
         <div class="flex-70 layout-column list-permission">
           <form [formGroup]="formGroup" (submit)="submit()">
-            <div *ngFor="let permission of permissions.permissions" class="display-permissions">
-              <div formArrayName="roster">
-                <div [formGroupName]="permission.id">
-                  <mat-checkbox name="cp" id="{{ permission.code }}" formControlName="selected">
-                    {{ permissionName(permission.code) }}
-                  </mat-checkbox>
+            @for (permission of permissions.permissions; track permission) {
+              <div class="display-permissions">
+                <div formArrayName="roster">
+                  <div [formGroupName]="permission.id">
+                    <mat-checkbox name="cp" id="{{ permission.code }}" formControlName="selected">
+                      {{ permissionName(permission.code) }}
+                    </mat-checkbox>
+                  </div>
                 </div>
               </div>
-            </div>
+            }
           </form>
         </div>
       </div>
     </ng-container>
 
-    <div class="layout-row layout-align-center gap-5px layout-xs-column" *ngIf="!isDisabled">
-      <mat-card-actions>
-        <button type="button" mat-raised-button (click)="cancel(); restoreCheckboxes()">
-          {{ 'labels.buttons.Cancel' | translate }}
-        </button>
-        <button mat-raised-button color="primary" (click)="submit()">{{ 'labels.buttons.Submit' | translate }}</button>
-      </mat-card-actions>
-    </div>
+    @if (!isDisabled) {
+      <div class="layout-row layout-align-center gap-5px layout-xs-column">
+        <mat-card-actions>
+          <button type="button" mat-raised-button (click)="cancel(); restoreCheckboxes()">
+            {{ 'labels.buttons.Cancel' | translate }}
+          </button>
+          <button mat-raised-button color="primary" (click)="submit()">
+            {{ 'labels.buttons.Submit' | translate }}
+          </button>
+        </mat-card-actions>
+      </div>
+    }
   </mat-card>
 </div>

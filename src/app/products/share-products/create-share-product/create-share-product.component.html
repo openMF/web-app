@@ -81,17 +81,18 @@
       </mifosx-share-product-accounting-step>
     </mat-step>
 
-    <mat-step state="preview" *ngIf="shareProductFormValid" completed>
-      <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
-
-      <mifosx-share-product-preview-step
-        [shareProductsTemplate]="shareProductsTemplate"
-        [accountingRuleData]="accountingRuleData"
-        [shareProduct]="shareProduct"
-        [taskPermission]="'CREATE_SHAREPRODUCT'"
-        (submitEvent)="submit()"
-      >
-      </mifosx-share-product-preview-step>
-    </mat-step>
+    @if (shareProductFormValid) {
+      <mat-step state="preview" completed>
+        <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
+        <mifosx-share-product-preview-step
+          [shareProductsTemplate]="shareProductsTemplate"
+          [accountingRuleData]="accountingRuleData"
+          [shareProduct]="shareProduct"
+          [taskPermission]="'CREATE_SHAREPRODUCT'"
+          (submitEvent)="submit()"
+        >
+        </mifosx-share-product-preview-step>
+      </mat-step>
+    }
   </mat-stepper>
 </div>

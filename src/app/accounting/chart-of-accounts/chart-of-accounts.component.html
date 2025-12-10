@@ -70,22 +70,24 @@
           {{ 'labels.inputs.Manual Entries Allowed' | translate }}
         </th>
         <td mat-cell *matCellDef="let glAccount">
-          <fa-icon
-            *ngIf="glAccount.manualEntriesAllowed"
-            class="manual-entries-allowed"
-            matTooltip="{{ 'tooltips.Allowed' | translate }}"
-            matTooltipPosition="right"
-            icon="check-circle"
-            size="lg"
-          ></fa-icon>
-          <fa-icon
-            *ngIf="!glAccount.manualEntriesAllowed"
-            class="manual-entries-not-allowed"
-            matTooltip="{{ 'tooltips.' | translate }}"
-            matTooltipPosition="right"
-            icon="times-circle"
-            size="lg"
-          ></fa-icon>
+          @if (glAccount.manualEntriesAllowed) {
+            <fa-icon
+              class="manual-entries-allowed"
+              matTooltip="{{ 'tooltips.Allowed' | translate }}"
+              matTooltipPosition="right"
+              icon="check-circle"
+              size="lg"
+            ></fa-icon>
+          }
+          @if (!glAccount.manualEntriesAllowed) {
+            <fa-icon
+              class="manual-entries-not-allowed"
+              matTooltip="{{ 'tooltips.' | translate }}"
+              matTooltipPosition="right"
+              icon="times-circle"
+              size="lg"
+            ></fa-icon>
+          }
         </td>
       </ng-container>
 
@@ -123,7 +125,9 @@
           <li class="mat-tree-node">
             <button mat-icon-button disabled></button>
             <span (click)="viewGLAccountNode(node)">
-              <span *ngIf="node.glCode" class="m-r-10">{{ '(' + node.glCode + ')' }}</span>
+              @if (node.glCode) {
+                <span class="m-r-10">{{ '(' + node.glCode + ')' }}</span>
+              }
               {{ node.name }}
             </span>
           </li>
@@ -139,7 +143,9 @@
                 ></fa-icon>
               </button>
               <span (click)="viewGLAccountNode(node)">
-                <span *ngIf="node.glCode" class="m-r-10">{{ '(' + node.glCode + ')' }}</span>
+                @if (node.glCode) {
+                  <span class="m-r-10">{{ '(' + node.glCode + ')' }}</span>
+                }
                 {{ node.name }}
               </span>
             </div>
@@ -151,61 +157,52 @@
       </mat-tree>
     </div>
 
-    <div class="flex-48" *ngIf="glAccount">
-      <mat-card>
-        <mat-card-content>
-          <div class="layout-row-wrap">
-            <div class="flex-50 header">
-              {{ 'labels.inputs.Account Name' | translate }}
+    @if (glAccount) {
+      <div class="flex-48">
+        <mat-card>
+          <mat-card-content>
+            <div class="layout-row-wrap">
+              <div class="flex-50 header">
+                {{ 'labels.inputs.Account Name' | translate }}
+              </div>
+              <div class="flex-50">
+                {{ glAccount.name }}
+              </div>
+              <div class="flex-50 header">
+                {{ 'labels.inputs.GL Code' | translate }}
+              </div>
+              <div class="flex-50">
+                {{ glAccount.glCode }}
+              </div>
+              <div class="flex-50 header">
+                {{ 'labels.inputs.Account Type' | translate }}
+              </div>
+              <div class="flex-50">
+                {{ 'labels.inputs.accounting.' + glAccount.type | translate }}
+              </div>
+              <div class="flex-50 header">
+                {{ 'labels.inputs.Account Usage' | translate }}
+              </div>
+              <div class="flex-50">
+                {{ glAccount.usage }}
+              </div>
+              <div class="flex-50 header">
+                {{ 'labels.inputs.Manual Entries Allowed' | translate }}
+              </div>
+              <div class="flex-50">
+                {{ glAccount.manualEntriesAllowed }}
+              </div>
+              <div class="flex-50 header">
+                {{ 'labels.inputs.Description' | translate }}
+              </div>
+              <div class="flex-50">
+                {{ glAccount.description }}
+              </div>
             </div>
-
-            <div class="flex-50">
-              {{ glAccount.name }}
-            </div>
-
-            <div class="flex-50 header">
-              {{ 'labels.inputs.GL Code' | translate }}
-            </div>
-
-            <div class="flex-50">
-              {{ glAccount.glCode }}
-            </div>
-
-            <div class="flex-50 header">
-              {{ 'labels.inputs.Account Type' | translate }}
-            </div>
-
-            <div class="flex-50">
-              {{ 'labels.inputs.accounting.' + glAccount.type | translate }}
-            </div>
-
-            <div class="flex-50 header">
-              {{ 'labels.inputs.Account Usage' | translate }}
-            </div>
-
-            <div class="flex-50">
-              {{ glAccount.usage }}
-            </div>
-
-            <div class="flex-50 header">
-              {{ 'labels.inputs.Manual Entries Allowed' | translate }}
-            </div>
-
-            <div class="flex-50">
-              {{ glAccount.manualEntriesAllowed }}
-            </div>
-
-            <div class="flex-50 header">
-              {{ 'labels.inputs.Description' | translate }}
-            </div>
-
-            <div class="flex-50">
-              {{ glAccount.description }}
-            </div>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    }
   </div>
 </div>
 

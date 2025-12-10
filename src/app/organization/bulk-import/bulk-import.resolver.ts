@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
@@ -16,12 +16,9 @@ import { BulkImports } from './view-bulk-import/bulk-imports';
  */
 @Injectable()
 export class BulkImportResolver {
-  bulkImportsArray = BulkImports;
+  private organizationService = inject(OrganizationService);
 
-  /**
-   * @param {OrganizationService} organizationService Organization service.
-   */
-  constructor(private organizationService: OrganizationService) {}
+  bulkImportsArray = BulkImports;
 
   /**
    * Gets bulk-import's entity name

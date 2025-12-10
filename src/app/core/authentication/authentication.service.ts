@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
 /** rxjs Imports */
@@ -25,6 +25,10 @@ import { OAuth2Token } from './o-auth2-token.model';
  */
 @Injectable()
 export class AuthenticationService {
+  private http = inject(HttpClient);
+  private alertService = inject(AlertService);
+  private authenticationInterceptor = inject(AuthenticationInterceptor);
+
   changePassword(userId: string, passwordObj: any) {
     return this.http.put(`/users/${userId}`, passwordObj);
   }
@@ -61,11 +65,9 @@ export class AuthenticationService {
    * @param {AlertService} alertService Alert Service.
    * @param {AuthenticationInterceptor} authenticationInterceptor Authentication Interceptor.
    */
-  constructor(
-    private http: HttpClient,
-    private alertService: AlertService,
-    private authenticationInterceptor: AuthenticationInterceptor
-  ) {
+  constructor() {
+    const authenticationInterceptor = this.authenticationInterceptor;
+
     this.userLoggedIn = false;
     this.rememberMe = false;
     this.storage = sessionStorage;

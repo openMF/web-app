@@ -1,12 +1,12 @@
 <!-- The viewport is divided into two parts having max-width 70% and 30% -->
 <div class="layout-row">
   <!--
-    Content in 70%: (TODO: Allow customization by organization)
-      Cover Image
-      Organization/Application Name
-      Organization/Application Description
+  Content in 70%: (TODO: Allow customization by organization)
+  Cover Image
+  Organization/Application Name
+  Organization/Application Description
 
-    This content will be hidden for smaller screens.
+  This content will be hidden for smaller screens.
   -->
 
   <div class="flex-70 layout-column align-center align-items-center hide-lt-sm cover">
@@ -30,20 +30,22 @@
   </div>
 
   <!--
-    Content in 30%: (TODO: Allow customization of Name, Logo and Contact Information by organization)
+      Content in 30%: (TODO: Allow customization of Name, Logo and Contact Information by organization)
       Language Selector
       Organization/Application Name with Logo
       Form
       Contact Information/Resources
       Footer
-  -->
+      -->
 
   <div class="layout-column flex-gt-sm-30 login-container">
     <!-- Language Selector to the extreme right -->
     <div class="layout-row-reverse">
       <mifosx-language-selector class="p-t-10 p-r-10 width-40"></mifosx-language-selector>
       <mifosx-theme-toggle class="p-t-10"></mifosx-theme-toggle>
-      <mifosx-server-selector class="p-t-10" *ngIf="allowServerSwitch()"></mifosx-server-selector>
+      @if (allowServerSwitch()) {
+        <mifosx-server-selector class="p-t-10"></mifosx-server-selector>
+      }
     </div>
 
     <!-- Logo with Organization Name -->
@@ -54,19 +56,27 @@
     <!-- Form Section -->
     <div class="layout-column align-center-center">
       <!-- Tenant Identifier Name -->
-      <mifosx-tenant-selector *ngIf="displayTenantSelector()"></mifosx-tenant-selector>
+      @if (displayTenantSelector()) {
+        <mifosx-tenant-selector></mifosx-tenant-selector>
+      }
 
       <!--
-        Type of Form:
+          Type of Form:
           Login
           Reset Password
           Two Factor Authentication
-      -->
-      <mifosx-login-form *ngIf="!resetPassword && !twoFactorAuthenticationRequired"></mifosx-login-form>
+          -->
+      @if (!resetPassword && !twoFactorAuthenticationRequired) {
+        <mifosx-login-form></mifosx-login-form>
+      }
 
       <div class="layout-row">
-        <mifosx-reset-password *ngIf="resetPassword"></mifosx-reset-password>
-        <mifosx-two-factor-authentication *ngIf="twoFactorAuthenticationRequired"></mifosx-two-factor-authentication>
+        @if (resetPassword) {
+          <mifosx-reset-password></mifosx-reset-password>
+        }
+        @if (twoFactorAuthenticationRequired) {
+          <mifosx-two-factor-authentication></mifosx-two-factor-authentication>
+        }
       </div>
     </div>
 

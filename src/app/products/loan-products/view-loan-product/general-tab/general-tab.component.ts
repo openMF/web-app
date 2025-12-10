@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LoanProduct } from '../../models/loan-product.model';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
@@ -23,17 +23,17 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class GeneralTabComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
+  private productsService = inject(ProductsService);
+  private settingsService = inject(SettingsService);
+  private translateService = inject(TranslateService);
+
   loanProduct: LoanProduct;
   useDueForRepaymentsConfigurations = false;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private dialog: MatDialog,
-    private productsService: ProductsService,
-    private settingsService: SettingsService,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { loanProduct: any }) => {
       this.loanProduct = data.loanProduct;
       this.useDueForRepaymentsConfigurations =
@@ -80,7 +80,6 @@ export class GeneralTabComponent implements OnInit {
         required: true,
         order: 2
       })
-
     ];
     const data = {
       title: `${this.translateService.instant('labels.buttons.Create')} ${this.translateService.instant('labels.inputs.Loan Product')}`,

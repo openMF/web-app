@@ -7,22 +7,28 @@
           <mat-form-field class="flex-24">
             <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
             <mat-select required formControlName="officeId">
-              <mat-option *ngFor="let office of officeOptions" [value]="office.id">
-                {{ office.name }}
-              </mat-option>
+              @for (office of officeOptions; track office) {
+                <mat-option [value]="office.id">
+                  {{ office.name }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error *ngIf="editClientForm.controls.officeId.hasError('required')">
-              {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (editClientForm.controls.officeId.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field class="flex-24">
             <mat-label>{{ 'labels.inputs.Legal Form' | translate }}</mat-label>
             <mat-select formControlName="legalFormId">
-              <mat-option *ngFor="let legalForm of legalFormOptions" [value]="legalForm.id">
-                {{ legalForm.value }}
-              </mat-option>
+              @for (legalForm of legalFormOptions; track legalForm) {
+                <mat-option [value]="legalForm.id">
+                  {{ legalForm.value }}
+                </mat-option>
+              }
             </mat-select>
           </mat-form-field>
 
@@ -53,70 +59,84 @@
 
         <!-- Name fields section -->
         <div class="responsive-row">
-          <mat-form-field *ngIf="editClientForm.contains('fullname')" class="flex-48">
-            <mat-label>{{
-              'labels.inputs.' + getDateLabel(legalFormId, ['Name', 'Entity Name']) | translate
-            }}</mat-label>
-            <input
-              matInput
-              required
-              formControlName="fullname"
-              placeholder="Full Name"
-              title="Full Name"
-              [placeholder]="'labels.inputs.' + getDateLabel(legalFormId, ['Name', 'Entity Name']) | translate"
-              [title]="'labels.inputs.' + getDateLabel(legalFormId, ['Name', 'Entity Name']) | translate"
-            />
-            <mat-error *ngIf="editClientForm.controls.fullname.hasError('required')">
-              {{ 'labels.inputs.Client name' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
-          </mat-form-field>
+          @if (editClientForm.contains('fullname')) {
+            <mat-form-field class="flex-48">
+              <mat-label>{{
+                'labels.inputs.' + getDateLabel(legalFormId, ['Name', 'Entity Name']) | translate
+              }}</mat-label>
+              <input
+                matInput
+                required
+                formControlName="fullname"
+                placeholder="Full Name"
+                title="Full Name"
+                [placeholder]="'labels.inputs.' + getDateLabel(legalFormId, ['Name', 'Entity Name']) | translate"
+                [title]="'labels.inputs.' + getDateLabel(legalFormId, ['Name', 'Entity Name']) | translate"
+              />
+              @if (editClientForm.controls.fullname.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Client name' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+          }
 
-          <mat-form-field *ngIf="editClientForm.contains('firstname')" class="flex-32">
-            <mat-label>{{ 'labels.inputs.First Name' | translate }}</mat-label>
-            <input
-              matInput
-              required
-              formControlName="firstname"
-              placeholder="First Name"
-              title="First Name"
-              [placeholder]="'labels.inputs.First Name' | translate"
-              [title]="'labels.inputs.First Name' | translate"
-            />
-            <mat-error *ngIf="editClientForm.controls.firstname.hasError('required')">
-              {{ 'labels.inputs.Client first name' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
-          </mat-form-field>
+          @if (editClientForm.contains('firstname')) {
+            <mat-form-field class="flex-32">
+              <mat-label>{{ 'labels.inputs.First Name' | translate }}</mat-label>
+              <input
+                matInput
+                required
+                formControlName="firstname"
+                placeholder="First Name"
+                title="First Name"
+                [placeholder]="'labels.inputs.First Name' | translate"
+                [title]="'labels.inputs.First Name' | translate"
+              />
+              @if (editClientForm.controls.firstname.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Client first name' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+          }
 
-          <mat-form-field *ngIf="editClientForm.contains('middlename')" class="flex-32">
-            <mat-label>{{ 'labels.inputs.Middle Name' | translate }}</mat-label>
-            <input
-              matInput
-              formControlName="middlename"
-              placeholder="Middle Name"
-              title="Middle Name"
-              [placeholder]="'labels.inputs.Middle Name' | translate"
-              [title]="'labels.inputs.Middle Name' | translate"
-            />
-          </mat-form-field>
+          @if (editClientForm.contains('middlename')) {
+            <mat-form-field class="flex-32">
+              <mat-label>{{ 'labels.inputs.Middle Name' | translate }}</mat-label>
+              <input
+                matInput
+                formControlName="middlename"
+                placeholder="Middle Name"
+                title="Middle Name"
+                [placeholder]="'labels.inputs.Middle Name' | translate"
+                [title]="'labels.inputs.Middle Name' | translate"
+              />
+            </mat-form-field>
+          }
 
-          <mat-form-field *ngIf="editClientForm.contains('lastname')" class="flex-32">
-            <mat-label>{{ 'labels.inputs.Last Name' | translate }}</mat-label>
-            <input
-              matInput
-              required
-              formControlName="lastname"
-              placeholder="Last Name"
-              title="Last Name"
-              [placeholder]="'labels.inputs.Last Name' | translate"
-              [title]="'labels.inputs.Last Name' | translate"
-            />
-            <mat-error *ngIf="editClientForm.controls.lastname.hasError('required')">
-              {{ 'labels.inputs.Client last name' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
-          </mat-form-field>
+          @if (editClientForm.contains('lastname')) {
+            <mat-form-field class="flex-32">
+              <mat-label>{{ 'labels.inputs.Last Name' | translate }}</mat-label>
+              <input
+                matInput
+                required
+                formControlName="lastname"
+                placeholder="Last Name"
+                title="Last Name"
+                [placeholder]="'labels.inputs.Last Name' | translate"
+                [title]="'labels.inputs.Last Name' | translate"
+              />
+              @if (editClientForm.controls.lastname.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Client last name' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+          }
         </div>
 
         <mat-divider class="section-divider"></mat-divider>
@@ -145,14 +165,18 @@
             <mat-datepicker #dateOfBirthDatePicker></mat-datepicker>
           </mat-form-field>
 
-          <mat-form-field *ngIf="legalFormId === 1" class="flex-48">
-            <mat-label>{{ 'labels.inputs.Gender' | translate }}</mat-label>
-            <mat-select formControlName="genderId">
-              <mat-option *ngFor="let gender of genderOptions" [value]="gender.id">
-                {{ gender.name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          @if (legalFormId === 1) {
+            <mat-form-field class="flex-48">
+              <mat-label>{{ 'labels.inputs.Gender' | translate }}</mat-label>
+              <mat-select formControlName="genderId">
+                @for (gender of genderOptions; track gender) {
+                  <mat-option [value]="gender.id">
+                    {{ gender.name }}
+                  </mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          }
         </div>
 
         <!-- Staff and Is Staff Row -->
@@ -160,88 +184,85 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Staff' | translate }}</mat-label>
             <mat-select formControlName="staffId">
-              <mat-option *ngFor="let staff of staffOptions" [value]="staff.id">
-                {{ staff.displayName }}
-              </mat-option>
+              @for (staff of staffOptions; track staff) {
+                <mat-option [value]="staff.id">
+                  {{ staff.displayName }}
+                </mat-option>
+              }
             </mat-select>
           </mat-form-field>
 
-          <mat-checkbox
-            *ngIf="legalFormId === 1"
-            class="flex-48 margin-v"
-            labelPosition="before"
-            formControlName="isStaff"
-          >
-            {{ 'labels.inputs.Is staff' | translate }}?
-          </mat-checkbox>
+          @if (legalFormId === 1) {
+            <mat-checkbox class="flex-48 margin-v" labelPosition="before" formControlName="isStaff">
+              {{ 'labels.inputs.Is staff' | translate }}?
+            </mat-checkbox>
+          }
         </div>
 
-        <div
-          class="flex-100 layout-row-wrap gap-2percent column-on-small"
-          formGroupName="clientNonPersonDetails"
-          *ngIf="editClientForm.contains('clientNonPersonDetails')"
-        >
-          <mat-form-field class="flex-48">
-            <mat-label>{{ 'labels.inputs.Constitution' | translate }}</mat-label>
-            <mat-select formControlName="constitutionId" required>
-              <mat-option *ngFor="let constitution of constitutionOptions" [value]="constitution.id">
-                {{ constitution.name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field class="flex-48">
-            <mat-label>{{ 'labels.inputs.Main Business Line' | translate }}</mat-label>
-            <mat-select formControlName="mainBusinessLineId">
-              <mat-option *ngFor="let business of businessLineOptions" [value]="business.id">
-                {{ business.name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field class="flex-48" (click)="incorpValidityTillDateDatePicker.open()">
-            <mat-label>{{ 'labels.inputs.Incorporation Validity Till Date' | translate }}</mat-label>
-            <input
-              placeholder="Incorporation Validity Till Date"
-              title="Incorporation Validity Till Date"
-              [placeholder]="'labels.inputs.Incorporation Validity Till Date' | translate"
-              [title]="'labels.inputs.Incorporation Validity Till Date' | translate"
-              matInput
-              [min]="minDate"
-              [max]="maxDate"
-              [matDatepicker]="incorpValidityTillDateDatePicker"
-              formControlName="incorpValidityTillDate"
-            />
-            <mat-datepicker-toggle matSuffix [for]="incorpValidityTillDateDatePicker"></mat-datepicker-toggle>
-            <mat-datepicker #incorpValidityTillDateDatePicker></mat-datepicker>
-          </mat-form-field>
-
-          <mat-form-field class="flex-48">
-            <mat-label>{{ 'labels.inputs.Incorporation No' | translate }}</mat-label>
-            <input
-              matInput
-              formControlName="incorpNumber"
-              placeholder="Incorporation No"
-              title="Incorporation No"
-              [placeholder]="'labels.inputs.Incorporation No' | translate"
-              [title]="'labels.inputs.Incorporation No' | translate"
-            />
-          </mat-form-field>
-
-          <mat-form-field class="flex-98">
-            <mat-label>{{ 'labels.inputs.Remarks' | translate }}</mat-label>
-            <textarea
-              matInput
-              formControlName="remarks"
-              cdkTextareaAutosize
-              cdkAutosizeMinRows="2"
-              placeholder="Remarks"
-              title="Remarks"
-              [placeholder]="'labels.inputs.Remarks' | translate"
-              [title]="'labels.inputs.Remarks' | translate"
-            ></textarea>
-          </mat-form-field>
-        </div>
+        @if (editClientForm.contains('clientNonPersonDetails')) {
+          <div class="flex-100 layout-row-wrap gap-2percent column-on-small" formGroupName="clientNonPersonDetails">
+            <mat-form-field class="flex-48">
+              <mat-label>{{ 'labels.inputs.Constitution' | translate }}</mat-label>
+              <mat-select formControlName="constitutionId" required>
+                @for (constitution of constitutionOptions; track constitution) {
+                  <mat-option [value]="constitution.id">
+                    {{ constitution.name }}
+                  </mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="flex-48">
+              <mat-label>{{ 'labels.inputs.Main Business Line' | translate }}</mat-label>
+              <mat-select formControlName="mainBusinessLineId">
+                @for (business of businessLineOptions; track business) {
+                  <mat-option [value]="business.id">
+                    {{ business.name }}
+                  </mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="flex-48" (click)="incorpValidityTillDateDatePicker.open()">
+              <mat-label>{{ 'labels.inputs.Incorporation Validity Till Date' | translate }}</mat-label>
+              <input
+                placeholder="Incorporation Validity Till Date"
+                title="Incorporation Validity Till Date"
+                [placeholder]="'labels.inputs.Incorporation Validity Till Date' | translate"
+                [title]="'labels.inputs.Incorporation Validity Till Date' | translate"
+                matInput
+                [min]="minDate"
+                [max]="maxDate"
+                [matDatepicker]="incorpValidityTillDateDatePicker"
+                formControlName="incorpValidityTillDate"
+              />
+              <mat-datepicker-toggle matSuffix [for]="incorpValidityTillDateDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #incorpValidityTillDateDatePicker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="flex-48">
+              <mat-label>{{ 'labels.inputs.Incorporation No' | translate }}</mat-label>
+              <input
+                matInput
+                formControlName="incorpNumber"
+                placeholder="Incorporation No"
+                title="Incorporation No"
+                [placeholder]="'labels.inputs.Incorporation No' | translate"
+                [title]="'labels.inputs.Incorporation No' | translate"
+              />
+            </mat-form-field>
+            <mat-form-field class="flex-98">
+              <mat-label>{{ 'labels.inputs.Remarks' | translate }}</mat-label>
+              <textarea
+                matInput
+                formControlName="remarks"
+                cdkTextareaAutosize
+                cdkAutosizeMinRows="2"
+                placeholder="Remarks"
+                title="Remarks"
+                [placeholder]="'labels.inputs.Remarks' | translate"
+                [title]="'labels.inputs.Remarks' | translate"
+              ></textarea>
+            </mat-form-field>
+          </div>
+        }
 
         <!-- Mobile No and Email Address Row -->
         <div class="responsive-row">
@@ -268,7 +289,9 @@
               [placeholder]="'labels.inputs.Email Address' | translate"
               [title]="'labels.inputs.Email Address' | translate"
             />
-            <mat-error *ngIf="editClientForm.controls.emailAddress.errors?.email"> Email not valid </mat-error>
+            @if (editClientForm.controls.emailAddress.errors?.email) {
+              <mat-error> Email not valid </mat-error>
+            }
           </mat-form-field>
         </div>
 
@@ -277,21 +300,22 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Client Type' | translate }}</mat-label>
             <mat-select formControlName="clientTypeId">
-              <mat-option *ngFor="let clientType of clientTypeOptions" [value]="clientType.id">
-                {{ clientType.name }}
-              </mat-option>
+              @for (clientType of clientTypeOptions; track clientType) {
+                <mat-option [value]="clientType.id">
+                  {{ clientType.name }}
+                </mat-option>
+              }
             </mat-select>
           </mat-form-field>
 
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Client Classification' | translate }}</mat-label>
             <mat-select formControlName="clientClassificationId">
-              <mat-option
-                *ngFor="let clientClassification of clientClassificationTypeOptions"
-                [value]="clientClassification.id"
-              >
-                {{ clientClassification.name }}
-              </mat-option>
+              @for (clientClassification of clientClassificationTypeOptions; track clientClassification) {
+                <mat-option [value]="clientClassification.id">
+                  {{ clientClassification.name }}
+                </mat-option>
+              }
             </mat-select>
           </mat-form-field>
         </div>
@@ -314,10 +338,12 @@
             />
             <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #submittedOnDatePicker></mat-datepicker>
-            <mat-error *ngIf="editClientForm.controls.submittedOnDate.hasError('required')">
-              {{ 'labels.inputs.Submitted Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (editClientForm.controls.submittedOnDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Submitted Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field class="flex-48" (click)="activatedOnDatePicker.open()">

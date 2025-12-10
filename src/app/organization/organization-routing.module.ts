@@ -695,7 +695,6 @@ const routes: Routes = [
       ]
     }
   ])
-
 ];
 
 /**

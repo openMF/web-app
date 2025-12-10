@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Location, NgIf, NgClass } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatDivider } from '@angular/material/divider';
@@ -22,16 +22,16 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewAccountTransferComponent {
+  private route = inject(ActivatedRoute);
+  private location = inject(Location);
+
   viewAccountTransferData: any;
   /**
    * Retrieves the view account transfer data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Location} location Location.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private location: Location
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { viewAccountTransferData: any }) => {
       this.viewAccountTransferData = data.viewAccountTransferData;
     });

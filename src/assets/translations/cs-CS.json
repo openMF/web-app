@@ -807,7 +807,8 @@
       "on": "na",
       "Password validation": "Heslo by mělo obsahovat minimálně {{minchar}} znaků, které by měly obsahovat 1 velké písmeno, malé písmeno a speciální znak a nemělo by se skládat z opakujících se znaků nebo mezer.",
       "Must be at least": "Musí být alespoň",
-      "Must be less or equal to": "Musí být menší nebo rovno"
+      "Must be less or equal to": "Musí být menší nebo rovno",
+      "must be after or equal to start date": "musí být po nebo rovno datu zahájení"
     },
     "heading": {
       "Account Linked Financial": "Seznam účtů spojených s různými finančními aktivitami. Chcete-li vědět více, klikněte:",
@@ -2743,6 +2744,7 @@
       "All Fixed Deposits": "Všechny pevné vklady",
       "All Recurring Deposits": "Všechny opakované vklady",
       "All Savings": "Všechny úspory",
+      "Savings Account Details": "Podrobnosti spořicího účtu",
       "Allocate Cash": "Přidělte hotovost",
       "Allows you to create new fixed deposit product": "Tato možnost vám umožňuje vytvořit nový produkt s pevným vkladem.",
       "This option allows you to create new users in your organization": "Tato možnost vám umožňuje vytvářet nové uživatele ve vaší organizaci",
@@ -3100,6 +3102,7 @@
       "No checker inbox data available for this search": "Pro toto vyhledávání nejsou k dispozici žádná data doručené pošty Checker.",
       "No client was found": "Nebyl nalezen žádný klient",
       "No data found": "Nenalezena žádná data",
+      "NoDocuments": "Žádné dokumenty k dispozici.",
       "No loan locked available": "Žádná půjčka není k dispozici.",
       "No notifications": "Žádné oznámení",
       "No pending loan available for disbursal": "Není k dispozici žádná nevyřízená půjčka k vyplacení.",
@@ -3342,7 +3345,8 @@
       "Voluntary": "Dobrovolný",
       "Write a note": "Napište poznámku",
       "“Maker-Checker” principle requires every tasks": "Princip „Maker-Checker“ vyžaduje, aby každý úkol prováděli dva lidé, aby se snížila pravděpodobnost chyb a zneužití. Jedna osoba proces iniciuje a druhá jej dokončí.",
-      "Buy Down Fees": "Poplatky za odkup"
+      "Buy Down Fees": "Poplatky za odkup",
+      "UploadDocumentHint": "Nahrajte PDF nebo obrázek pro vygenerování náhledu."
     },
     "titles": {
       "Dashboard": "Přístrojová deska",

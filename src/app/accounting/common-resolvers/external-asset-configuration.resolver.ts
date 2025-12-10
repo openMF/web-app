@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,10 +12,7 @@ import { SystemService } from 'app/system/system.service';
  */
 @Injectable()
 export class ExternalAssetConfigurationResolver {
-  /**
-   * @param {AccountingService} accountingService Accounting service.
-   */
-  constructor(private systemService: SystemService) {}
+  private systemService = inject(SystemService);
 
   /**
    * Returns the offices data.

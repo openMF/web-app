@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, inject } from '@angular/core';
 // import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -65,6 +65,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
+  dialog = inject(MatDialog);
+  private dateUtils = inject(Dates);
+  private route = inject(ActivatedRoute);
+  private settingsService = inject(SettingsService);
+
   // @Input loansAccountProductTemplate: LoansAccountProductTemplate
   @Input() loansAccountProductTemplate: any;
   // @Imput loansAccountTemplate: LoansAccountTemplate
@@ -128,12 +133,7 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
    * @param {Dates} dateUtils Date Utils
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    public dialog: MatDialog,
-    private dateUtils: Dates,
-    private route: ActivatedRoute,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.loanId = this.route.snapshot.params['loanId'];
   }
 
@@ -218,7 +218,6 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
         type: 'number',
         required: false
       })
-
     ];
     const data = {
       title: 'Edit Charge Amount',
@@ -249,7 +248,6 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
         type: 'datetime-local',
         required: false
       })
-
     ];
     const data = {
       title: 'Edit Charge Date',
@@ -291,7 +289,6 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
         type: 'text',
         required: false
       })
-
     ];
     const data = {
       title: 'Edit Charge Fee Interval',

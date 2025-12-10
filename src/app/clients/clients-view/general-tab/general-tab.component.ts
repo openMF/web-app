@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services. */
@@ -16,7 +16,7 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { AccountNumberComponent } from '../../../shared/account-number/account-number.component';
 import { LongTextComponent } from '../../../shared/long-text/long-text.component';
 import { MatTooltip } from '@angular/material/tooltip';
@@ -56,6 +56,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class GeneralTabComponent {
+  private route = inject(ActivatedRoute);
+  private clientService = inject(ClientsService);
+  private router = inject(Router);
+
   /** Open Loan Accounts Columns */
   openLoansColumns: string[] = [
     'Account No',
@@ -159,11 +163,7 @@ export class GeneralTabComponent {
    * @param {ClientsService} clientService Clients Service
    * @param {Router} router Router
    */
-  constructor(
-    private route: ActivatedRoute,
-    private clientService: ClientsService,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe(
       (data: { clientAccountsData: any; clientChargesData: any; clientSummary: any; clientCollateralData: any }) => {
         this.clientAccountData = data.clientAccountsData;

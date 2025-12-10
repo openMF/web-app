@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -17,9 +17,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewRecurringDepositProductComponent {
+  private route = inject(ActivatedRoute);
+
   recurringDepositDatatables: any = [];
 
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     this.route.data.subscribe((data: { recurringDepositDatatables: any }) => {
       this.recurringDepositDatatables = [];
       data.recurringDepositDatatables.forEach((datatable: any) => {

@@ -1,31 +1,36 @@
-<mat-form-field id="server-selector" *ngIf="existMoreThanOneServer">
-  <mat-label>{{ 'labels.inputs.Server' | translate }}</mat-label>
-  <mat-select
-    [formControl]="serverSelector"
-    (selectionChange)="setServer()"
-    panelClass="server-panel"
-    panelWidth="null"
-  >
-    <div class="sticky">
-      <form [formGroup]="form" (ngSubmit)="addNewServer()">
-        <div class="actions">
-          <mat-form-field class="ml align-start">
-            <span matPrefix><mat-icon>language</mat-icon></span>
-            <mat-label>{{ 'labels.placeholders.Add new server' | translate }}</mat-label>
-            <input matInput type="text" autocomplete="off" formControlName="url" />
-            <mat-error *ngIf="form.controls.url.hasError('required')">
-              {{ 'labels.inputs.Url' | translate }} <strong>{{ 'labels.commons.is required' | translate }}</strong>
-            </mat-error>
-          </mat-form-field>
-
-          <button type="submit" [disabled]="form.invalid" class="ml" mat-raised-button color="primary">
-            {{ 'labels.buttons.Add' | translate }}
-          </button>
-        </div>
-      </form>
-    </div>
-    <mat-option *ngFor="let server of servers" [value]="server">
-      {{ server }}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+@if (existMoreThanOneServer) {
+  <mat-form-field id="server-selector">
+    <mat-label>{{ 'labels.inputs.Server' | translate }}</mat-label>
+    <mat-select
+      [formControl]="serverSelector"
+      (selectionChange)="setServer()"
+      panelClass="server-panel"
+      panelWidth="null"
+    >
+      <div class="sticky">
+        <form [formGroup]="form" (ngSubmit)="addNewServer()">
+          <div class="actions">
+            <mat-form-field class="ml align-start">
+              <span matPrefix><mat-icon>language</mat-icon></span>
+              <mat-label>{{ 'labels.placeholders.Add new server' | translate }}</mat-label>
+              <input matInput type="text" autocomplete="off" formControlName="url" />
+              @if (form.controls.url.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Url' | translate }} <strong>{{ 'labels.commons.is required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+            <button type="submit" [disabled]="form.invalid" class="ml" mat-raised-button color="primary">
+              {{ 'labels.buttons.Add' | translate }}
+            </button>
+          </div>
+        </form>
+      </div>
+      @for (server of servers; track server) {
+        <mat-option [value]="server">
+          {{ server }}
+        </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+}

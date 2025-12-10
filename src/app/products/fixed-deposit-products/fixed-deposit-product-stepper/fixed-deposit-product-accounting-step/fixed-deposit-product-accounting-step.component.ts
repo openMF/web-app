@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import {
   UntypedFormArray,
   UntypedFormBuilder,
@@ -67,6 +67,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class FixedDepositProductAccountingStepComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  dialog = inject(MatDialog);
+  private accounting = inject(Accounting);
+  private translateService = inject(TranslateService);
+
   @Input() fixedDepositProductsTemplate: any;
   @Input() accountingRuleData: any;
   @Input() fixedDepositProductFormValid: boolean;
@@ -92,12 +97,7 @@ export class FixedDepositProductAccountingStepComponent implements OnInit {
     'actions'
   ];
 
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    public dialog: MatDialog,
-    private accounting: Accounting,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.createfixedDepositProductAccountingForm();
     this.setConditionalControls();
   }
@@ -383,7 +383,6 @@ export class FixedDepositProductAccountingStepComponent implements OnInit {
         required: true,
         order: 2
       })
-
     ];
     return formfields;
   }
@@ -406,7 +405,6 @@ export class FixedDepositProductAccountingStepComponent implements OnInit {
         required: true,
         order: 2
       })
-
     ];
     return formfields;
   }
@@ -429,7 +427,6 @@ export class FixedDepositProductAccountingStepComponent implements OnInit {
         required: true,
         order: 2
       })
-
     ];
     return formfields;
   }

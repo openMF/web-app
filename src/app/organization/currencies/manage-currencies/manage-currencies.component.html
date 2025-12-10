@@ -17,14 +17,16 @@
                 [formControl]="filterFormCtrl"
               ></ngx-mat-select-search>
             </mat-option>
-            <mat-option *ngFor="let currency of currencyData | async" [value]="currency">
-              ({{ currency.code }}) {{ currency.name }}
-            </mat-option>
+            @for (currency of currencyData | async; track currency) {
+              <mat-option [value]="currency"> ({{ currency.code }}) {{ currency.name }} </mat-option>
+            }
           </mat-select>
-          <mat-error *ngIf="currencyForm.controls.currency.hasError('required')">
-            {{ 'labels.inputs.Currency' | translate }} {{ 'labels.commons.is' | translate }}
-            <strong>{{ 'labels.commons.required' | translate }}</strong>
-          </mat-error>
+          @if (currencyForm.controls.currency.hasError('required')) {
+            <mat-error>
+              {{ 'labels.inputs.Currency' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          }
         </mat-form-field>
 
         <button
@@ -40,24 +42,25 @@
     </div>
 
     <mat-grid-list cols="2" rowHeight="50px">
-      <mat-grid-tile class="grid-tile-content" *ngFor="let currency of selectedCurrencies; index as i">
-        <div class="grid-container">
-          <div>
-            <button
-              mat-button
-              color="warn"
-              (click)="deleteCurrency(currency.code, i)"
-              *mifosxHasPermission="'UPDATE_CURRENCY'"
+      @for (currency of selectedCurrencies; track currency; let i = $index) {
+        <mat-grid-tile class="grid-tile-content">
+          <div class="grid-container">
+            <div>
+              <button
+                mat-button
+                color="warn"
+                (click)="deleteCurrency(currency.code, i)"
+                *mifosxHasPermission="'UPDATE_CURRENCY'"
+              >
+                <fa-icon icon="trash"></fa-icon>
+              </button>
+            </div>
+            <span class="label m-l-10 p-t-5"
+              ><b>{{ currency.name }}</b></span
             >
-              <fa-icon icon="trash"></fa-icon>
-            </button>
           </div>
-
-          <span class="label m-l-10 p-t-5"
-            ><b>{{ currency.name }}</b></span
-          >
-        </div>
-      </mat-grid-tile>
+        </mat-grid-tile>
+      }
     </mat-grid-list>
   </mat-card>
 </div>

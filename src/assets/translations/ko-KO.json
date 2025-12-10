@@ -807,7 +807,8 @@
       "on": "~에",
       "Password validation": "비밀번호는 최소 자여야 하며 대문자, 소문자 및 특수 문자 1개가 포함되어야 하며 반복되는 문자나 공백으로 구성되어서는 안 됩니다.",
       "Must be at least": "최소한이어야 합니다",
-      "Must be less or equal to": "이보다 작거나 같아야 합니다."
+      "Must be less or equal to": "이보다 작거나 같아야 합니다.",
+      "must be after or equal to start date": "시작 날짜 이후이거나 같아야 합니다"
     },
     "heading": {
       "Account Linked Financial": "다양한 금융 활동과 연결된 계정 목록입니다. 자세한 내용을 보려면 다음을 클릭하세요.",
@@ -2743,6 +2744,7 @@
       "All Fixed Deposits": "정기예금 전체",
       "All Recurring Deposits": "모든 정기 예금",
       "All Savings": "모든 저축",
+      "Savings Account Details": "저축 계좌 세부 정보",
       "Allocate Cash": "현금 할당",
       "Allows you to create new fixed deposit product": "이 옵션을 사용하면 새로운 정기 예금 상품을 생성할 수 있습니다.",
       "This option allows you to create new users in your organization": "이 옵션을 사용하면 조직에 새 사용자를 만들 수 있습니다.",
@@ -3100,6 +3102,7 @@
       "No checker inbox data available for this search": "이 검색에 사용할 수 있는 검사기 받은 편지함 데이터가 없습니다.",
       "No client was found": "클라이언트를 찾을 수 없습니다.",
       "No data found": "데이터가 없습니다",
+      "NoDocuments": "사용 가능한 문서가 없습니다.",
       "No loan locked available": "잠긴 대출이 없습니다.",
       "No notifications": "알림 없음",
       "No pending loan available for disbursal": "지급 가능한 보류 중인 대출이 없습니다.",
@@ -3342,7 +3345,8 @@
       "Voluntary": "자발적인",
       "Write a note": "메모 쓰기",
       "“Maker-Checker” principle requires every tasks": "\"Maker-Checker\" 원칙은 오류와 오용 가능성을 줄이기 위해 모든 작업을 두 사람이 완료하도록 요구합니다. 한 사람이 프로세스를 시작하고 두 번째 사람이 프로세스를 완료합니다.",
-      "Buy Down Fees": "매입 수수료"
+      "Buy Down Fees": "매입 수수료",
+      "UploadDocumentHint": "미리보기를 생성하려면 PDF 또는 이미지를 업로드하세요."
     },
     "titles": {
       "Dashboard": "계기반",

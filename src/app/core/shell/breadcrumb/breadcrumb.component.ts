@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd, Data, RouterLink } from '@angular/router';
 
 /** rxjs Imports */
@@ -55,6 +55,12 @@ const routeAddBreadcrumbLink = 'addBreadcrumbLink';
   ]
 })
 export class BreadcrumbComponent implements AfterViewInit {
+  private activatedRoute = inject(ActivatedRoute);
+  private router = inject(Router);
+  private configurationWizardService = inject(ConfigurationWizardService);
+  private popoverService = inject(PopoverService);
+  private translateService = inject(TranslateService);
+
   /** Array of breadcrumbs. */
   breadcrumbs: Breadcrumb[];
   /* Reference of breadcrumb */
@@ -69,13 +75,7 @@ export class BreadcrumbComponent implements AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private configurationWizardService: ConfigurationWizardService,
-    private popoverService: PopoverService,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.generateBreadcrumbs();
   }
 

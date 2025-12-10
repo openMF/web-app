@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -42,6 +42,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CollateralsComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+
   /** Collateral Data */
   collateralData: any;
   /** Columns to be displayed in the Collaterals Table */
@@ -64,7 +66,7 @@ export class CollateralsComponent implements OnInit {
    * Retrieves the Collaterals data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     this.route.data.subscribe((data: { collaterals: any }) => {
       this.collateralData = data.collaterals;
     });

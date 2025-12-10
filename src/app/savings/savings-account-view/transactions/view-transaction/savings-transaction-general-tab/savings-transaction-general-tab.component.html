@@ -1,48 +1,49 @@
 <div class="container transaction-buttons m-b-20 align-end-center gap-2percent" align="end">
-  <span
-    *ngIf="
-      !(
-        transactionData.interestedPostedAsOn === false &&
-        (transactionData.transactionType.id === 17 || transactionData.transactionType.id === 3)
-      )
-    "
-  >
-    <span *mifosxHasPermission="'ADJUSTTRANSACTION_SAVINGSACCOUNT'">
-      <button
-        mat-raised-button
-        color="primary"
-        *ngIf="
+  @if (
+    !(
+      transactionData.interestedPostedAsOn === false &&
+      (transactionData.transactionType.id === 17 || transactionData.transactionType.id === 3)
+    )
+  ) {
+    <span>
+      <span *mifosxHasPermission="'ADJUSTTRANSACTION_SAVINGSACCOUNT'">
+        @if (
           transactionData.transactionType.value === 'Transfer' ||
           transactionData.reversed === 'true' ||
           transactionData.transactionType.id === 3 ||
           transactionData.transactionType.id === 17
-        "
-        [routerLink]="'edit'"
+        ) {
+          <button mat-raised-button color="primary" [routerLink]="'edit'">
+            <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'labels.buttons.Edit' | translate }}
+          </button>
+        }
+      </span>
+    </span>
+  }
+  @if (!transactionData.reversed && transactionData.transactionType.amountHold) {
+    <span>
+      <button
+        mat-raised-button
+        color="primary"
+        *mifosxHasPermission="'RELEASEAMOUNT_SAVINGSACCOUNT'"
+        (click)="releaseAmount()"
       >
-        <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'labels.buttons.Edit' | translate }}
+        <fa-icon icon="lock-open" class="m-r-10"></fa-icon>{{ 'labels.buttons.Release Amount' | translate }}
       </button>
     </span>
-  </span>
-  <span *ngIf="!transactionData.reversed && transactionData.transactionType.amountHold">
-    <button
-      mat-raised-button
-      color="primary"
-      *mifosxHasPermission="'RELEASEAMOUNT_SAVINGSACCOUNT'"
-      (click)="releaseAmount()"
-    >
-      <fa-icon icon="lock-open" class="m-r-10"></fa-icon>{{ 'labels.buttons.Release Amount' | translate }}
-    </button>
-  </span>
-  <span *ngIf="allowUndo()">
-    <button
-      mat-raised-button
-      color="warn"
-      *mifosxHasPermission="'UNDOTRANSACTION_SAVINGSACCOUNT'"
-      (click)="undoTransaction()"
-    >
-      <fa-icon icon="undo" class="m-r-10"></fa-icon>{{ 'labels.buttons.Undo' | translate }}
-    </button>
-  </span>
+  }
+  @if (allowUndo()) {
+    <span>
+      <button
+        mat-raised-button
+        color="warn"
+        *mifosxHasPermission="'UNDOTRANSACTION_SAVINGSACCOUNT'"
+        (click)="undoTransaction()"
+      >
+        <fa-icon icon="undo" class="m-r-10"></fa-icon>{{ 'labels.buttons.Undo' | translate }}
+      </button>
+    </span>
+  }
 </div>
 
 <div class="container">
@@ -91,19 +92,22 @@
           {{ transactionData.amount | currency: transactionData.currency.code : 'symbol-narrow' : '1.2-2' }}
         </div>
 
-        <div class="flex-50 mat-body-strong" *ngIf="transactionData.note">
-          {{ 'labels.inputs.Note' | translate }}
-        </div>
+        @if (transactionData.note) {
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Note' | translate }}
+          </div>
+        }
 
-        <div class="flex-50" *ngIf="transactionData.note">
-          {{ transactionData.note }}
-        </div>
+        @if (transactionData.note) {
+          <div class="flex-50">
+            {{ transactionData.note }}
+          </div>
+        }
 
-        <mifosx-transaction-payment-detail
-          *ngIf="transactionData.paymentDetailData"
-          [paymentDetailData]="transactionData.paymentDetailData"
-        >
-        </mifosx-transaction-payment-detail>
+        @if (transactionData.paymentDetailData) {
+          <mifosx-transaction-payment-detail [paymentDetailData]="transactionData.paymentDetailData">
+          </mifosx-transaction-payment-detail>
+        }
       </div>
 
       <div class="layout-row layout-align-center gap-2percent column-on-mobile">

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, inject } from '@angular/core';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
@@ -37,6 +37,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ClientGeneralStepComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private dateUtils = inject(Dates);
+  private settingsService = inject(SettingsService);
+  private clientService = inject(ClientsService);
+
   @Output() legalFormChangeEvent = new EventEmitter<{ legalForm: number }>();
 
   /** Minimum date allowed. */
@@ -74,12 +79,7 @@ export class ClientGeneralStepComponent implements OnInit {
    * @param {SettingsService} settingsService Setting service
    * @param {ClientsService} clientService Client service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private dateUtils: Dates,
-    private settingsService: SettingsService,
-    private clientService: ClientsService
-  ) {
+  constructor() {
     this.setClientForm();
   }
 
@@ -152,14 +152,16 @@ export class ClientGeneralStepComponent implements OnInit {
           'firstname',
           new UntypedFormControl('', [
             Validators.required,
-            Validators.pattern('(^[A-z]).*')])
+            Validators.pattern('(^[A-z]).*')
+          ])
         );
         this.createClientForm.addControl('middlename', new UntypedFormControl('', Validators.pattern('(^[A-z]).*')));
         this.createClientForm.addControl(
           'lastname',
           new UntypedFormControl('', [
             Validators.required,
-            Validators.pattern('(^[A-z]).*')])
+            Validators.pattern('(^[A-z]).*')
+          ])
         );
       } else {
         this.createClientForm.removeControl('firstname');
@@ -169,7 +171,8 @@ export class ClientGeneralStepComponent implements OnInit {
           'fullname',
           new UntypedFormControl('', [
             Validators.required,
-            Validators.pattern('(^[A-z]).*')])
+            Validators.pattern('(^[A-z]).*')
+          ])
         );
         this.createClientForm.addControl(
           'clientNonPersonDetails',

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,10 +12,7 @@ import { OrganizationService } from '../organization.service';
  */
 @Injectable()
 export class PasswordPreferencesTemplateResolver {
-  /**
-   * @param {OrganizationService} organizationService Organization service.
-   */
-  constructor(private organizationService: OrganizationService) {}
+  private organizationService = inject(OrganizationService);
 
   /**
    * Returns the password preferences template data.

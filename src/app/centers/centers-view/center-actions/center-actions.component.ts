@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ActivateCenterComponent } from './activate-center/activate-center.component';
 import { CenterAssignStaffComponent } from './center-assign-staff/center-assign-staff.component';
@@ -33,6 +33,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CenterActionsComponent {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   /** Flag object to store possible actions and render appropriate UI to the user */
   actions: {
     Activate: boolean;
@@ -59,10 +62,7 @@ export class CenterActionsComponent {
   /**
    * @param {ActivatedRoute} route Activated Route
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     const name = this.route.snapshot.params['action'];
 

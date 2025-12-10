@@ -6,9 +6,11 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Select Client Members for Transfer' | translate }}</mat-label>
             <mat-select required formControlName="clients" multiple>
-              <mat-option *ngFor="let member of clientMembers" [value]="{ id: member.id }">
-                {{ member.displayName }}
-              </mat-option>
+              @for (member of clientMembers; track member) {
+                <mat-option [value]="{ id: member.id }">
+                  {{ member.displayName }}
+                </mat-option>
+              }
             </mat-select>
           </mat-form-field>
 
@@ -23,50 +25,58 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Destination Group' | translate }}</mat-label>
             <input matInput formControlName="destinationGroupId" [matAutocomplete]="groupsAutocomplete" />
-            <mat-error *ngIf="transferClientsForm.controls.destinationGroupId.hasError('required')">
-              {{ 'labels.inputs.Destination Group' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (transferClientsForm.controls.destinationGroupId.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Destination Group' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
         </div>
 
         <mat-autocomplete autoActiveFirstOption #groupsAutocomplete="matAutocomplete" [displayWith]="displayGroup">
-          <mat-option *ngFor="let group of groupsData" [value]="group">
-            {{ group.name }}
-          </mat-option>
+          @for (group of groupsData; track group) {
+            <mat-option [value]="group">
+              {{ group.name }}
+            </mat-option>
+          }
         </mat-autocomplete>
 
-        <div class="mat-table" *ngIf="transferClientsForm.get('destinationGroupId').value?.id">
-          <div class="mat-header-row">
-            <div class="mat-header-cell">{{ 'labels.inputs.Destination Group Details' | translate }}</div>
-          </div>
-          <div class="mat-row">
-            <div class="mat-cell">{{ 'labels.inputs.name' | translate }}</div>
-            <div class="mat-cell">{{ transferClientsForm.get('destinationGroupId').value.name }}</div>
-          </div>
-          <div class="mat-row">
-            <div class="mat-cell">{{ 'labels.inputs.Id' | translate }}</div>
-            <div class="mat-cell">{{ transferClientsForm.get('destinationGroupId').value.id }}</div>
-          </div>
-          <div class="mat-row">
-            <div class="mat-cell">{{ 'labels.inputs.Activation Date' | translate }}</div>
-            <div class="mat-cell">
-              {{ (transferClientsForm.get('destinationGroupId').value.activationDate | dateFormat) || 'Not Activated' }}
+        @if (transferClientsForm.get('destinationGroupId').value?.id) {
+          <div class="mat-table">
+            <div class="mat-header-row">
+              <div class="mat-header-cell">{{ 'labels.inputs.Destination Group Details' | translate }}</div>
+            </div>
+            <div class="mat-row">
+              <div class="mat-cell">{{ 'labels.inputs.name' | translate }}</div>
+              <div class="mat-cell">{{ transferClientsForm.get('destinationGroupId').value.name }}</div>
+            </div>
+            <div class="mat-row">
+              <div class="mat-cell">{{ 'labels.inputs.Id' | translate }}</div>
+              <div class="mat-cell">{{ transferClientsForm.get('destinationGroupId').value.id }}</div>
+            </div>
+            <div class="mat-row">
+              <div class="mat-cell">{{ 'labels.inputs.Activation Date' | translate }}</div>
+              <div class="mat-cell">
+                {{
+                  (transferClientsForm.get('destinationGroupId').value.activationDate | dateFormat) || 'Not Activated'
+                }}
+              </div>
+            </div>
+            <div class="mat-row">
+              <div class="mat-cell">{{ 'labels.inputs.Staff' | translate }}</div>
+              <div class="mat-cell">
+                {{ transferClientsForm.get('destinationGroupId').value.staffName || 'Unassigned' }}
+              </div>
+            </div>
+            <div class="mat-row">
+              <div class="mat-cell">{{ 'labels.inputs.External Id' | translate }}</div>
+              <div class="mat-cell">
+                {{ transferClientsForm.get('destinationGroupId').value.externalId || 'Unassigned' }}
+              </div>
             </div>
           </div>
-          <div class="mat-row">
-            <div class="mat-cell">{{ 'labels.inputs.Staff' | translate }}</div>
-            <div class="mat-cell">
-              {{ transferClientsForm.get('destinationGroupId').value.staffName || 'Unassigned' }}
-            </div>
-          </div>
-          <div class="mat-row">
-            <div class="mat-cell">{{ 'labels.inputs.External Id' | translate }}</div>
-            <div class="mat-cell">
-              {{ transferClientsForm.get('destinationGroupId').value.externalId || 'Unassigned' }}
-            </div>
-          </div>
-        </div>
+        }
       </mat-card-content>
 
       <mat-card-actions class="layout-row align-center gap-5px responsive-column">

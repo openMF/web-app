@@ -807,7 +807,8 @@
       "on": "An",
       "Password validation": "Das Passwort sollte mindestens {{michar}} Zeichen enthalten, aus 1 Großbuchstaben, Kleinbuchstaben und Sonderzeichen bestehen und darf nicht aus wiederholten Zeichen oder Leerzeichen bestehen",
       "Must be at least": "Muss mindestens",
-      "Must be less or equal to": "Muss kleiner oder gleich sein"
+      "Must be less or equal to": "Muss kleiner oder gleich sein",
+      "must be after or equal to start date": "muss nach oder gleich dem Startdatum sein"
     },
     "heading": {
       "Account Linked Financial": "Liste der Konten, die mit verschiedenen Finanzaktivitäten verknüpft sind. Um mehr zu erfahren, klicken Sie:",
@@ -2743,6 +2744,7 @@
       "All Fixed Deposits": "Alle Festgelder",
       "All Recurring Deposits": "Alle wiederkehrenden Einzahlungen",
       "All Savings": "Alle Einsparungen",
+      "Savings Account Details": "Sparkonto-Details",
       "Allocate Cash": "Bargeld zuweisen",
       "Allows you to create new fixed deposit product": "Mit dieser Option können Sie ein neues Festgeldprodukt erstellen.",
       "This option allows you to create new users in your organization": "Mit dieser Option können Sie neue Benutzer in Ihrer Organisation erstellen",
@@ -3099,6 +3101,7 @@
       "No checker inbox data available for this search": "Für diese Suche sind keine Checker-Posteingangsdaten verfügbar.",
       "No client was found": "Es wurde kein Kunde gefunden",
       "No data found": "Keine Daten gefunden",
+      "NoDocuments": "Keine Dokumente verfügbar.",
       "No loan locked available": "Kein gesperrter Kredit verfügbar.",
       "No notifications": "Keine benachrichtigungen",
       "No pending loan available for disbursal": "Kein ausstehendes Darlehen zur Auszahlung verfügbar.",
@@ -3341,7 +3344,8 @@
       "Voluntary": "Freiwillig",
       "Write a note": "Schreib eine Notitz",
       "“Maker-Checker” principle requires every tasks": "Das „Maker-Checker“-Prinzip erfordert, dass jede Aufgabe von zwei Personen erledigt wird, um das Risiko von Fehlern und Missbrauch zu verringern. Eine Person leitet den Prozess ein und die zweite Person schließt ihn ab.",
-      "Buy Down Fees": "Kaufgebühren"
+      "Buy Down Fees": "Kaufgebühren",
+      "UploadDocumentHint": "Laden Sie ein PDF oder Bild hoch, um eine Vorschau zu erstellen."
     },
     "titles": {
       "Dashboard": "Armaturenbrett",

@@ -6,22 +6,28 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
-            <mat-error *ngIf="editCenterForm.controls.name.hasError('required')">
-              {{ 'labels.inputs.Center Name' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
-            <mat-error *ngIf="editCenterForm.controls.name.hasError('pattern')">
-              {{ 'labels.inputs.Center Name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
-              {{ 'labels.inputs.begin with a special character or number' | translate }}
-            </mat-error>
+            @if (editCenterForm.controls.name.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Center Name' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
+            @if (editCenterForm.controls.name.hasError('pattern')) {
+              <mat-error>
+                {{ 'labels.inputs.Center Name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
+                {{ 'labels.inputs.begin with a special character or number' | translate }}
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Staff' | translate }}</mat-label>
             <mat-select formControlName="staffId">
-              <mat-option *ngFor="let staff of staffs" [value]="staff.id">
-                {{ staff.displayName }}
-              </mat-option>
+              @for (staff of staffs; track staff) {
+                <mat-option [value]="staff.id">
+                  {{ staff.displayName }}
+                </mat-option>
+              }
             </mat-select>
           </mat-form-field>
 
@@ -30,25 +36,29 @@
             <input matInput formControlName="externalId" />
           </mat-form-field>
 
-          <ng-container *ngIf="centerData.status.value === 'Pending'" (click)="activatedOnDatePicker.open()">
-            <mat-form-field>
-              <mat-label>{{ 'labels.inputs.Activation Date' | translate }}</mat-label>
-              <input
-                matInput
-                [min]="minDate"
-                [max]="maxDate"
-                [matDatepicker]="activatedOnDatePicker"
-                required
-                formControlName="activationDate"
-              />
-              <mat-datepicker-toggle matSuffix [for]="activatedOnDatePicker"></mat-datepicker-toggle>
-              <mat-datepicker #activatedOnDatePicker></mat-datepicker>
-              <mat-error *ngIf="editCenterForm.controls.activationDate.hasError('required')">
-                {{ 'labels.inputs.Activation Date' | translate }} {{ 'labels.commons.is' | translate }}
-                <strong>{{ 'labels.commons.required' | translate }}</strong>
-              </mat-error>
-            </mat-form-field>
-          </ng-container>
+          @if (centerData.status.value === 'Pending') {
+            <ng-container (click)="activatedOnDatePicker.open()">
+              <mat-form-field>
+                <mat-label>{{ 'labels.inputs.Activation Date' | translate }}</mat-label>
+                <input
+                  matInput
+                  [min]="minDate"
+                  [max]="maxDate"
+                  [matDatepicker]="activatedOnDatePicker"
+                  required
+                  formControlName="activationDate"
+                />
+                <mat-datepicker-toggle matSuffix [for]="activatedOnDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #activatedOnDatePicker></mat-datepicker>
+                @if (editCenterForm.controls.activationDate.hasError('required')) {
+                  <mat-error>
+                    {{ 'labels.inputs.Activation Date' | translate }} {{ 'labels.commons.is' | translate }}
+                    <strong>{{ 'labels.commons.required' | translate }}</strong>
+                  </mat-error>
+                }
+              </mat-form-field>
+            </ng-container>
+          }
         </div>
       </mat-card-content>
 

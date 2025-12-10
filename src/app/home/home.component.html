@@ -22,9 +22,11 @@
       </div>
 
       <mat-autocomplete #activitySearch="matAutocomplete">
-        <mat-option *ngFor="let activity of filteredActivities | async" [routerLink]="activity.path">
-          <span>{{ activity.activity }}</span>
-        </mat-option>
+        @for (activity of filteredActivities | async; track activity) {
+          <mat-option [routerLink]="activity.path">
+            <span>{{ activity.activity }}</span>
+          </mat-option>
+        }
       </mat-autocomplete>
     </mat-card-content>
 
@@ -37,22 +39,24 @@
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button
-      *ngIf="prev"
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(prev.template, prev.target, 'bottom', true)"
-    >
-      {{ 'labels.buttons.Back' | translate }}
-    </button>
-    <button
-      *ngIf="next"
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(next.template, next.target, 'bottom', true)"
-    >
-      {{ 'labels.buttons.Next' | translate }}
-    </button>
+    @if (prev) {
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="popover.close(); showPopover(prev.template, prev.target, 'bottom', true)"
+      >
+        {{ 'labels.buttons.Back' | translate }}
+      </button>
+    }
+    @if (next) {
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="popover.close(); showPopover(next.template, next.target, 'bottom', true)"
+      >
+        {{ 'labels.buttons.Next' | translate }}
+      </button>
+    }
   </div>
 </ng-template>
 

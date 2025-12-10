@@ -2,14 +2,14 @@
   <mat-form-field class="flex-48">
     <mat-label>{{ 'labels.inputs.Charge' | translate }}</mat-label>
     <mat-select #charge>
-      <mat-option
-        *ngFor="
-          let charge of chargeData | chargesFilter: chargesDataSource : currencyCode.value : multiDisburseLoan.value
-        "
-        [value]="charge"
-      >
-        {{ charge.name }}
-      </mat-option>
+      @for (
+        charge of chargeData | chargesFilter: chargesDataSource : currencyCode.value : multiDisburseLoan.value;
+        track charge
+      ) {
+        <mat-option [value]="charge">
+          {{ charge.name }}
+        </mat-option>
+      }
     </mat-select>
   </mat-form-field>
 
@@ -77,12 +77,14 @@
   <mat-form-field class="flex-48">
     <mat-label>{{ 'labels.inputs.Overdue Charge' | translate }}</mat-label>
     <mat-select #overdueCharge>
-      <mat-option
-        *ngFor="let overdueCharge of overdueChargeData | chargesFilter: chargesDataSource : currencyCode.value"
-        [value]="overdueCharge"
-      >
-        {{ overdueCharge.name }}
-      </mat-option>
+      @for (
+        overdueCharge of overdueChargeData | chargesFilter: chargesDataSource : currencyCode.value;
+        track overdueCharge
+      ) {
+        <mat-option [value]="overdueCharge">
+          {{ overdueCharge.name }}
+        </mat-option>
+      }
     </mat-select>
   </mat-form-field>
 

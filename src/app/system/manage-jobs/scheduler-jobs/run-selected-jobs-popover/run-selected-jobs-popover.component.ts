@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, EventEmitter, Inject, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, QueryList, ViewChildren, inject } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogTitle,
@@ -52,6 +52,9 @@ export interface JobDataType {
   ]
 })
 export class RunSelectedJobsPopoverComponent implements OnInit {
+  private systemService = inject(SystemService);
+  data = inject<SelectedJobsDataType>(MAT_DIALOG_DATA);
+
   /** Confirmed jobs event emitter */
   @Output() confirmedJobs = new EventEmitter<JobDataType[]>();
 
@@ -66,12 +69,6 @@ export class RunSelectedJobsPopoverComponent implements OnInit {
 
   /** API call response message */
   messages: { message: string; status: number }[] = [];
-
-  constructor(
-    private systemService: SystemService,
-    @Inject(MAT_DIALOG_DATA)
-    public data: SelectedJobsDataType
-  ) {}
   ngOnInit(): void {
     this.selectedJobs = this.data.selectedJobs.selected.sort((a, b) => a.jobId - b.jobId);
   }

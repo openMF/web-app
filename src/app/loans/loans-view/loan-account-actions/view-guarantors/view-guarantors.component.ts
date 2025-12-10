@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -54,6 +54,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewGuarantorsComponent implements OnInit {
+  dialog = inject(MatDialog);
+  loansService = inject(LoansService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   @Input() dataObject: any;
   guarantorDetails: any;
   showDeletedGuarantorsAccounts = false;
@@ -75,12 +80,7 @@ export class ViewGuarantorsComponent implements OnInit {
    * @param {route} Route Route
    * @param {router} Router Router
    */
-  constructor(
-    public dialog: MatDialog,
-    public loansService: LoansService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.loanId = this.route.snapshot.params['loanId'];
   }
 

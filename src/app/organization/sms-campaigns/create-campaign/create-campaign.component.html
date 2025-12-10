@@ -46,15 +46,16 @@
       </mifosx-campaign-message-step>
     </mat-step>
 
-    <mat-step state="preview" *ngIf="smsCampaignForm.valid" completed>
-      <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
-
-      <mifosx-campaign-preview-step
-        [smsCampaignTemplate]="smsCampaignTemplate"
-        [campaign]="smsCampaign"
-        (submitEvent)="submit()"
-      >
-      </mifosx-campaign-preview-step>
-    </mat-step>
+    @if (smsCampaignForm.valid) {
+      <mat-step state="preview" completed>
+        <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
+        <mifosx-campaign-preview-step
+          [smsCampaignTemplate]="smsCampaignTemplate"
+          [campaign]="smsCampaign"
+          (submitEvent)="submit()"
+        >
+        </mifosx-campaign-preview-step>
+      </mat-step>
+    }
   </mat-stepper>
 </div>

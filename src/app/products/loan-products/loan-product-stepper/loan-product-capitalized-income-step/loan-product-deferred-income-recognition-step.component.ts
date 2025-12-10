@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { DeferredIncomeRecognition } from '../loan-product-payment-strategy-step/payment-allocation-model';
 import { StringEnumOptionData } from 'app/shared/models/option-data.model';
@@ -15,6 +15,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoanProductDeferredIncomeRecognitionStepComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+
   @Input() deferredIncomeRecognition: DeferredIncomeRecognition;
   @Input() capitalizedIncomeCalculationTypeOptions: StringEnumOptionData[];
   @Input() capitalizedIncomeStrategyOptions: StringEnumOptionData[];
@@ -30,7 +32,7 @@ export class LoanProductDeferredIncomeRecognitionStepComponent implements OnInit
 
   @Output() setViewChildForm = new EventEmitter<UntypedFormGroup>();
 
-  constructor(private formBuilder: UntypedFormBuilder) {
+  constructor() {
     this.enableIncomeCapitalization =
       this.deferredIncomeRecognition != null
         ? this.deferredIncomeRecognition.capitalizedIncome.enableIncomeCapitalization

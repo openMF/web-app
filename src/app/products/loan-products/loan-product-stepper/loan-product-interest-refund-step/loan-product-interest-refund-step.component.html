@@ -9,12 +9,11 @@
           'tooltips.Refund transactions where interest refund will automatically be calculated' | translate
         }}"
       >
-        <mat-option
-          *ngFor="let supportedTransaction of supportedInterestRefundTypesOptions"
-          [value]="supportedTransaction.id"
-        >
-          {{ supportedTransaction.value | translateKey: 'catalogs' }}
-        </mat-option>
+        @for (supportedTransaction of supportedInterestRefundTypesOptions; track supportedTransaction) {
+          <mat-option [value]="supportedTransaction.id">
+            {{ supportedTransaction.value | translateKey: 'catalogs' }}
+          </mat-option>
+        }
       </mat-select>
     </mat-form-field>
   </div>

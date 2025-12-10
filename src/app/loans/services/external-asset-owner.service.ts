@@ -1,14 +1,14 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExternalAssetOwnerService {
-  basePath = '/external-asset-owners';
+  private http = inject(HttpClient);
 
-  constructor(private http: HttpClient) {}
+  basePath = '/external-asset-owners';
 
   /**
    * @param {string} loanId Loan Id

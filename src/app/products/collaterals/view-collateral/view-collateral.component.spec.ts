@@ -98,7 +98,6 @@ describe('ViewCollateralComponent - Integration Tests', () => {
         },
         provideNativeDateAdapter(),
         provideAnimationsAsync()
-
       ],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();

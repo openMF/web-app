@@ -15,10 +15,12 @@
             />
             <mat-datepicker-toggle matSuffix [for]="rejectedDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #rejectedDatePicker></mat-datepicker>
-            <mat-error *ngIf="rejectLoanForm.controls.rejectedOnDate.hasError('required')">
-              {{ 'labels.inputs.Rejected Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (rejectLoanForm.controls.rejectedOnDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Rejected Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>

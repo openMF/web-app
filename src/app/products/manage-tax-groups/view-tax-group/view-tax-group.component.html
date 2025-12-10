@@ -30,20 +30,22 @@
         </div>
       </div>
 
-      <div class="layout-row-wrap" *ngFor="let taxcomponent of taxGroupData.taxAssociations">
-        <div class="flex-34">
-          {{ taxcomponent.taxComponent.glCode }}
-          {{ taxcomponent.taxComponent.name }}
+      @for (taxcomponent of taxGroupData.taxAssociations; track taxcomponent) {
+        <div class="layout-row-wrap">
+          <div class="flex-34">
+            {{ taxcomponent.taxComponent.glCode }}
+            {{ taxcomponent.taxComponent.name }}
+          </div>
+          <div class="flex-33">
+            {{ taxcomponent.startDate | dateFormat }}
+          </div>
+          @if (taxcomponent.endDate !== undefined || taxcomponent.endDate !== null) {
+            <div class="flex-33">
+              {{ taxcomponent.endDate | dateFormat }}
+            </div>
+          }
         </div>
-
-        <div class="flex-33">
-          {{ taxcomponent.startDate | dateFormat }}
-        </div>
-
-        <div class="flex-33" *ngIf="taxcomponent.endDate !== undefined || taxcomponent.endDate !== null">
-          {{ taxcomponent.endDate | dateFormat }}
-        </div>
-      </div>
+      }
     </mat-card-content>
   </mat-card>
 </div>

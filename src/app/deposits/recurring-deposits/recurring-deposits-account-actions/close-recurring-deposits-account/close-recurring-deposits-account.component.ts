@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -29,6 +29,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CloseRecurringDepositsAccountComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dateUtils = inject(Dates);
+  private recurringDepositsService = inject(RecurringDepositsService);
+  private settingsService = inject(SettingsService);
+
   /** Maturity Amount */
   maturityAmount: any;
   /** On Account Closure Options */
@@ -58,14 +65,7 @@ export class CloseRecurringDepositsAccountComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private dateUtils: Dates,
-    private recurringDepositsService: RecurringDepositsService,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { recurringDepositsAccountActionData: any }) => {
       this.savingsAccountsData = data.recurringDepositsAccountActionData.savingsAccounts;
       this.maturityAmount = data.recurringDepositsAccountActionData.maturityAmount;

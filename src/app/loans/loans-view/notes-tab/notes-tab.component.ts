@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Components */
@@ -19,15 +19,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class NotesTabComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private loansService = inject(LoansService);
+  private authenticationService = inject(AuthenticationService);
+
   entityId: string;
   username: string;
   entityNotes: any;
 
-  constructor(
-    private route: ActivatedRoute,
-    private loansService: LoansService,
-    private authenticationService: AuthenticationService
-  ) {
+  constructor() {
     const savedCredentials = this.authenticationService.getCredentials();
     this.username = savedCredentials.username;
     this.entityId = this.route.parent.snapshot.params['loanId'];

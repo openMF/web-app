@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,10 +12,7 @@ import { NavigationService } from './navigation.service';
  */
 @Injectable()
 export class OfficesResolver {
-  /**
-   * @param {NavigationService} navigationService Navigation service.
-   */
-  constructor(private navigationService: NavigationService) {}
+  private navigationService = inject(NavigationService);
 
   /**
    * Returns the Offices data.

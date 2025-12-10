@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -48,6 +48,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class SavingsAccountTableComponent {
+  private accountsFilterPipe = inject(AccountsFilterPipe);
+
   /** Columns to be displayed in the savings accounts table. */
   displayedColumns: string[] = [
     'accountNo',
@@ -80,11 +82,6 @@ export class SavingsAccountTableComponent {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
-  /**
-   * @param {AccountsFilterPipe} accountsFilterPipe Accounts Filter Pipe.
-   */
-  constructor(private accountsFilterPipe: AccountsFilterPipe) {}
 
   /**
    * Filters data in users table based on passed value.

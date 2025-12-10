@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -63,6 +63,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewCampaignComponent implements OnInit {
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  dialog = inject(MatDialog);
+  private formBuilder = inject(UntypedFormBuilder);
+  private dateUtils = inject(Dates);
+  private organizationService = inject(OrganizationService);
+  private settingsService = inject(SettingsService);
+
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -120,15 +128,7 @@ export class ViewCampaignComponent implements OnInit {
    * @param {OrganizationService} organizationService Organization Service
    * @param {SettingsService} settingsService Setting Service
    */
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    public dialog: MatDialog,
-    private formBuilder: UntypedFormBuilder,
-    private dateUtils: Dates,
-    private organizationService: OrganizationService,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { smsCampaign: any }) => {
       this.smsCampaignData = data.smsCampaign;
     });
@@ -176,7 +176,6 @@ export class ViewCampaignComponent implements OnInit {
         type: 'date',
         required: true
       })
-
     ];
     const data = {
       title: 'Close SMS Campaign',
@@ -214,7 +213,6 @@ export class ViewCampaignComponent implements OnInit {
         type: 'date',
         required: true
       })
-
     ];
     const data = {
       title: 'Activate SMS Campaign',
@@ -252,7 +250,6 @@ export class ViewCampaignComponent implements OnInit {
         type: 'date',
         required: true
       })
-
     ];
     const data = {
       title: 'Reactivate SMS Campaign',

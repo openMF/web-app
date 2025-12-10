@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
@@ -22,6 +22,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class UndoApprovalFixedDepositsAccountComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private savingsService = inject(SavingsService);
+  private fixedDepositsService = inject(FixedDepositsService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   /** Undo Approval Fixed Deposits Account form. */
   undoApprovalFixedDepositsAccountForm: UntypedFormGroup;
   /** Fixed Deposits Account Id */
@@ -37,13 +43,7 @@ export class UndoApprovalFixedDepositsAccountComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private savingsService: SavingsService,
-    private fixedDepositsService: FixedDepositsService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.undoCommand = 'undoapproval'; // Default command
     this.undoAction = this.route.snapshot.params['name'];
     if (this.undoAction === 'Undo Activation') {

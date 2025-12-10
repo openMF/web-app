@@ -6,10 +6,12 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Payment Type' | translate }}</mat-label>
             <input required matInput formControlName="name" />
-            <mat-error *ngIf="paymentTypeForm.controls.name.hasError('required')">
-              {{ 'labels.inputs.Payment Type' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (paymentTypeForm.controls.name.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Payment Type' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
@@ -24,13 +26,15 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Position' | translate }}</mat-label>
             <input required matInput type="number" min="1" formControlName="position" />
-            <mat-error *ngIf="paymentTypeForm.controls.position.hasError('min')">
-              {{ 'labels.inputs.Position' | translate }} must be a positive number.
-            </mat-error>
-            <mat-error *ngIf="paymentTypeForm.controls.position.hasError('required')">
-              {{ 'labels.inputs.Position' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (paymentTypeForm.controls.position.hasError('min')) {
+              <mat-error> {{ 'labels.inputs.Position' | translate }} must be a positive number. </mat-error>
+            }
+            @if (paymentTypeForm.controls.position.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Position' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
         </div>
       </mat-card-content>

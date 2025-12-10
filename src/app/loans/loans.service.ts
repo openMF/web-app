@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
@@ -15,11 +15,10 @@ import { DisbursementData } from './models/loan-account.model';
   providedIn: 'root'
 })
 export class LoansService {
-  constructor(
-    private http: HttpClient,
-    private settingsService: SettingsService,
-    private dateUtils: Dates
-  ) {}
+  private http = inject(HttpClient);
+  private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
+
   /**
    * @param {string} loanId loanId of the loan.
    * @returns {Observable<any>}
@@ -257,6 +256,24 @@ export class LoansService {
     });
 
     return this.http.get(`/loans/${loanId}/transactions/reage-preview`, { params: httpParams });
+  }
+
+  /**
+   * Get Re-Amortize preview with repayment schedule
+   * @param loanId Loan Id
+   * @param data Re-Amortize data
+   * @returns Observable with repayment schedule preview
+   */
+  getReAmortizePreview(loanId: string, data: any): Observable<any> {
+    let httpParams = new HttpParams();
+
+    Object.keys(data).forEach((key) => {
+      if (data[key] !== null && data[key] !== undefined && data[key] !== '') {
+        httpParams = httpParams.set(key, data[key].toString());
+      }
+    });
+
+    return this.http.get(`/loans/${loanId}/transactions/reamortized-preview`, { params: httpParams });
   }
 
   getLoanScreenReportsData(): Observable<any> {

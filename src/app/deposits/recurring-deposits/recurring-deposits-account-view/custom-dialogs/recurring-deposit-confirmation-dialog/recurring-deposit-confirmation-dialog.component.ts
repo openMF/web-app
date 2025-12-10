@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -24,12 +24,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class RecurringDepositConfirmationDialogComponent {
-  /**
-   * @param {MatDialogRef} dialogRef Component reference to dialog.
-   * @param {any} data Provides a confirmation for all the recurring deposit actions.
-   */
-  constructor(
-    public dialogRef: MatDialogRef<RecurringDepositConfirmationDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  dialogRef = inject<MatDialogRef<RecurringDepositConfirmationDialogComponent>>(MatDialogRef);
+  data = inject(MAT_DIALOG_DATA);
 }

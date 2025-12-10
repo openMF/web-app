@@ -1,10 +1,10 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 import { SettingsService } from 'app/settings/settings.service';
 import moment from 'moment';
 
 @Pipe({ name: 'dateFormat' })
 export class DateFormatPipe implements PipeTransform {
-  constructor(private settingsService: SettingsService) {}
+  private settingsService = inject(SettingsService);
 
   transform(value: any, dateFormat?: string): any {
     const defaultDateFormat = this.settingsService.dateFormat.replace('dd', 'DD');

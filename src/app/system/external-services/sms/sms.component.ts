@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -43,6 +43,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class SMSComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+
   /** SMS configuration data. */
   smsConfigurationData: any;
   /** Columns to be displayed in SMS configuration table. */
@@ -60,7 +62,7 @@ export class SMSComponent implements OnInit {
    * Retrieves the SMS configuration data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     this.route.data.subscribe((data: { smsConfiguration: any }) => {
       this.smsConfigurationData = data.smsConfiguration;
     });

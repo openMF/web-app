@@ -807,7 +807,8 @@
       "on": "ieslēgts",
       "Password validation": "Parolē jābūt vismaz {{minchar}} rakstzīmēm, tai jābūt 1 lielajam, mazajam un speciālajām rakstzīmēm, un tā nedrīkst sastāvēt no atkārtotām rakstzīmēm vai atstarpēm.",
       "Must be at least": "Jābūt vismaz",
-      "Must be less or equal to": "Jābūt mazākam vai vienādam ar"
+      "Must be less or equal to": "Jābūt mazākam vai vienādam ar",
+      "must be after or equal to start date": "jābūt pēc sākuma datuma vai vienādam ar to"
     },
     "heading": {
       "Account Linked Financial": "Ar dažādām finanšu darbībām saistīto kontu saraksts. Lai uzzinātu vairāk, noklikšķiniet:",
@@ -2743,6 +2744,7 @@
       "All Fixed Deposits": "Visi fiksētie noguldījumi",
       "All Recurring Deposits": "Visi atkārtotie noguldījumi",
       "All Savings": "Visi ietaupījumi",
+      "Savings Account Details": "Krājkonta informācija",
       "Allocate Cash": "Piešķirt skaidru naudu",
       "Allows you to create new fixed deposit product": "Šī opcija ļauj izveidot jaunu fiksētā depozīta produktu.",
       "This option allows you to create new users in your organization": "Šī opcija ļauj izveidot jaunus lietotājus jūsu organizācijā",
@@ -3100,6 +3102,7 @@
       "No checker inbox data available for this search": "Šai meklēšanai nav pieejami pārbaudītāja iesūtnes dati.",
       "No client was found": "Klients netika atrasts",
       "No data found": "Dati nav atrasti",
+      "NoDocuments": "Nav pieejamu dokumentu.",
       "No loan locked available": "Nav pieejams bloķēts aizdevums.",
       "No notifications": "Nav paziņojumu",
       "No pending loan available for disbursal": "Nav pieejams neizmaksāts aizdevums.",
@@ -3342,7 +3345,8 @@
       "Voluntary": "Brīvprātīgi",
       "Write a note": "Uzrakstiet piezīmi",
       "“Maker-Checker” principle requires every tasks": "“Maker-Checker” princips paredz, ka katrs uzdevums ir jāveic diviem cilvēkiem, lai samazinātu kļūdu un nepareizas lietošanas iespējamību. Viens cilvēks uzsāk procesu, bet otrs to pabeidz.",
-      "Buy Down Fees": "Izpirkšanas maksas"
+      "Buy Down Fees": "Izpirkšanas maksas",
+      "UploadDocumentHint": "Augšupielādējiet PDF vai attēlu, lai izveidotu priekšskatījumu."
     },
     "titles": {
       "Dashboard": "Mērinstrumentu panelis",

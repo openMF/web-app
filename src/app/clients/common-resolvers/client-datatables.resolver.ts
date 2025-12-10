@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,10 +12,7 @@ import { ClientsService } from '../clients.service';
  */
 @Injectable()
 export class ClientDatatablesResolver {
-  /**
-   * @param {ClientsService} ClientsService Clients service.
-   */
-  constructor(private clientsService: ClientsService) {}
+  private clientsService = inject(ClientsService);
 
   /**
    * Returns the Client datatables.

@@ -1,9 +1,27 @@
-<mifosx-group-assign-staff *ngIf="actions['Assign Staff']"></mifosx-group-assign-staff>
-<mifosx-close-group *ngIf="actions['Close']"></mifosx-close-group>
-<mifosx-activate-group *ngIf="actions['Activate']"></mifosx-activate-group>
-<mifosx-attach-group-meeting *ngIf="actions['Attach Meeting']"></mifosx-attach-group-meeting>
-<mifosx-group-attendance *ngIf="actions['Attendance']"></mifosx-group-attendance>
-<mifosx-manage-group-members *ngIf="actions['Manage Members']"></mifosx-manage-group-members>
-<mifosx-edit-group-meeting *ngIf="actions['Edit Meeting']"></mifosx-edit-group-meeting>
-<mifosx-edit-group-meeting-schedule *ngIf="actions['Edit Meeting Schedule']"></mifosx-edit-group-meeting-schedule>
-<mifosx-group-transfer-clients *ngIf="actions['Transfer Clients']"></mifosx-group-transfer-clients>
+@if (actions['Assign Staff']) {
+  <mifosx-group-assign-staff></mifosx-group-assign-staff>
+}
+@if (actions['Close']) {
+  <mifosx-close-group></mifosx-close-group>
+}
+@if (actions['Activate']) {
+  <mifosx-activate-group></mifosx-activate-group>
+}
+@if (actions['Attach Meeting']) {
+  <mifosx-attach-group-meeting></mifosx-attach-group-meeting>
+}
+@if (actions['Attendance']) {
+  <mifosx-group-attendance></mifosx-group-attendance>
+}
+@if (actions['Manage Members']) {
+  <mifosx-manage-group-members></mifosx-manage-group-members>
+}
+@if (actions['Edit Meeting']) {
+  <mifosx-edit-group-meeting></mifosx-edit-group-meeting>
+}
+@if (actions['Edit Meeting Schedule']) {
+  <mifosx-edit-group-meeting-schedule></mifosx-edit-group-meeting-schedule>
+}
+@if (actions['Transfer Clients']) {
+  <mifosx-group-transfer-clients></mifosx-group-transfer-clients>
+}

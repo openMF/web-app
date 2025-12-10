@@ -32,10 +32,12 @@
           <div class="value">{{ userData.lastname }}</div>
         </div>
 
-        <div class="content-row" *ngIf="userData.email">
-          <div class="label">{{ 'labels.inputs.Email' | translate }}</div>
-          <div class="value">{{ userData.email }}</div>
-        </div>
+        @if (userData.email) {
+          <div class="content-row">
+            <div class="label">{{ 'labels.inputs.Email' | translate }}</div>
+            <div class="value">{{ userData.email }}</div>
+          </div>
+        }
 
         <div class="content-row">
           <div class="label">{{ 'labels.inputs.Office' | translate }}</div>
@@ -45,9 +47,11 @@
         <div class="content-row">
           <div class="label">{{ 'labels.inputs.Roles' | translate }}</div>
           <div class="value">
-            <span *ngFor="let role of userData.selectedRoles">
-              {{ role.name }}
-            </span>
+            @for (role of userData.selectedRoles; track role) {
+              <span>
+                {{ role.name }}
+              </span>
+            }
           </div>
         </div>
       </div>

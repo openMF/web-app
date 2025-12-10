@@ -6,14 +6,18 @@
           <mat-form-field>
             <mat-label> {{ 'labels.inputs.To Loan Officer' | translate }}</mat-label>
             <mat-select required formControlName="toLoanOfficerId">
-              <mat-option *ngFor="let loanOfficer of loanOfficers" [value]="loanOfficer.id">
-                {{ loanOfficer.displayName }}
-              </mat-option>
+              @for (loanOfficer of loanOfficers; track loanOfficer) {
+                <mat-option [value]="loanOfficer.id">
+                  {{ loanOfficer.displayName }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error *ngIf="assignOfficerForm.controls.toLoanOfficerId.hasError('required')">
-              {{ 'labels.inputs.Loan Officer' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (assignOfficerForm.controls.toLoanOfficerId.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Loan Officer' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field (click)="assignOnDatePicker.open()">
@@ -28,10 +32,12 @@
             />
             <mat-datepicker-toggle matSuffix [for]="assignOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #assignOnDatePicker></mat-datepicker>
-            <mat-error *ngIf="assignOfficerForm.controls.assignmentDate.hasError('required')">
-              {{ 'labels.inputs.Assignment Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (assignOfficerForm.controls.assignmentDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Assignment Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
         </div>
 

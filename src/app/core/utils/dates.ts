@@ -1,18 +1,18 @@
 import { DatePipe } from '@angular/common';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Dates {
+  private datePipe = inject(DatePipe);
+
   public static DEFAULT_DATEFORMAT = 'yyyy-MM-dd';
   public static DEFAULT_DATETIMEFORMAT = 'yyyy-MM-dd HH:mm';
 
-  constructor(private datePipe: DatePipe) {}
-
   public getDate(timestamp: any): string {
-    return this.datePipe.transform(timestamp, 'YYYY-MM-DD');
+    return this.datePipe.transform(timestamp, 'yyyy-MM-dd');
   }
 
   public formatDate(timestamp: any, dateFormat: string): string {

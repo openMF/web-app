@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EntityDatatableTabComponent } from '../../../shared/tabs/entity-datatable-tab/entity-datatable-tab.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -17,6 +17,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class DatatableTabsComponent {
+  private route = inject(ActivatedRoute);
+
   entityId: string;
   /** Group Datatable */
   entityDatatable: any;
@@ -27,7 +29,7 @@ export class DatatableTabsComponent {
    * Fetches data table data from `resolve`
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     this.entityId = this.route.parent.parent.snapshot.paramMap.get('groupId');
 
     this.route.data.subscribe((data: { groupDatatable: any }) => {

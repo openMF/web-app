@@ -9,12 +9,16 @@
 
 <mat-card-content>
   <div class="layout-row-wrap">
-    <div class="flex-50 mat-body-strong" *ngIf="officeData.externalId">
-      {{ 'labels.inputs.External Id' | translate }}
-    </div>
-    <div class="flex-50" *ngIf="officeData.externalId">
-      <mifosx-external-identifier externalId="{{ officeData.externalId }}"></mifosx-external-identifier>
-    </div>
+    @if (officeData.externalId) {
+      <div class="flex-50 mat-body-strong">
+        {{ 'labels.inputs.External Id' | translate }}
+      </div>
+    }
+    @if (officeData.externalId) {
+      <div class="flex-50">
+        <mifosx-external-identifier externalId="{{ officeData.externalId }}"></mifosx-external-identifier>
+      </div>
+    }
 
     <div class="flex-50 mat-body-strong">
       {{ 'labels.inputs.Opened On' | translate }}

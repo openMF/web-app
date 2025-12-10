@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -32,6 +32,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChanges {
+  private formBuilder = inject(UntypedFormBuilder);
+  private settingsService = inject(SettingsService);
+
   /** Fixed deposits account template */
   @Input() fixedDepositsAccountTemplate: any;
   /** Fixed deposits account and product template */
@@ -52,16 +55,13 @@ export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChang
   /** Savings Accounts Data */
   savingsAccountsData: any;
 
-  maturityInstructionOptions: OptionData;
+  maturityInstructionOptions: OptionData[];
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.createFixedDepositAccountSettingsForm();
     this.buildDependencies();
   }

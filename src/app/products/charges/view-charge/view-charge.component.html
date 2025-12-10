@@ -53,21 +53,29 @@
           {{ chargeData.amount }}
         </div>
 
-        <div class="flex-50 mat-body-strong" *ngIf="minCap">
-          {{ 'labels.inputs.Minimum Charge Cap' | translate }}
-        </div>
+        @if (minCap) {
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Minimum Charge Cap' | translate }}
+          </div>
+        }
 
-        <div class="flex-50" *ngIf="minCap">
-          {{ chargeData.minCap }}
-        </div>
+        @if (minCap) {
+          <div class="flex-50">
+            {{ chargeData.minCap }}
+          </div>
+        }
 
-        <div class="flex-50 mat-body-strong" *ngIf="maxCap">
-          {{ 'labels.inputs.Maximum Charge Cap' | translate }}
-        </div>
+        @if (maxCap) {
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Maximum Charge Cap' | translate }}
+          </div>
+        }
 
-        <div class="flex-50" *ngIf="maxCap">
-          {{ chargeData.maxCap }}
-        </div>
+        @if (maxCap) {
+          <div class="flex-50">
+            {{ chargeData.maxCap }}
+          </div>
+        }
 
         <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Charge Time Type' | translate }}
@@ -101,41 +109,51 @@
           {{ chargeData.active === true | yesNo }}
         </div>
 
-        <div class="flex-50 mat-body-strong" *ngIf="chargeData.chargeTimeType.id === 9 && chargeData.feeFrequency">
-          {{ 'labels.inputs.Add Fee Frequency' | translate }}
-        </div>
+        @if (chargeData.chargeTimeType.id === 9 && chargeData.feeFrequency) {
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Add Fee Frequency' | translate }}
+          </div>
+        }
 
-        <div
-          class="flex-50"
-          *ngIf="chargeData.chargeTimeType.id === 9 && chargeData.feeFrequency && chargeData.feeFrequency"
-        >
-          {{ chargeData.feeFrequency.value | translateKey: 'catalogs' }}
-        </div>
+        @if (chargeData.chargeTimeType.id === 9 && chargeData.feeFrequency && chargeData.feeFrequency) {
+          <div class="flex-50">
+            {{ chargeData.feeFrequency.value | translateKey: 'catalogs' }}
+          </div>
+        }
 
-        <div class="flex-50 mat-body-strong" *ngIf="chargeData.chargeTimeType.id === 9 && chargeData.feeInterval">
-          {{ 'labels.inputs.Frequency Interval' | translate }}
-        </div>
+        @if (chargeData.chargeTimeType.id === 9 && chargeData.feeInterval) {
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Frequency Interval' | translate }}
+          </div>
+        }
 
-        <div class="flex-50" *ngIf="chargeData.chargeTimeType.id === 9 && chargeData.feeInterval">
-          {{ chargeData.feeInterval }}
-        </div>
+        @if (chargeData.chargeTimeType.id === 9 && chargeData.feeInterval) {
+          <div class="flex-50">
+            {{ chargeData.feeInterval }}
+          </div>
+        }
 
-        <mifosx-gl-account-display
-          class="flex-100"
-          [accountTitle]="'Income From Charges'"
-          *ngIf="chargeData.incomeOrLiabilityAccount"
-          [glAccount]="chargeData.incomeOrLiabilityAccount"
-          [withTitle]="'50%'"
-        >
-        </mifosx-gl-account-display>
+        @if (chargeData.incomeOrLiabilityAccount) {
+          <mifosx-gl-account-display
+            class="flex-100"
+            [accountTitle]="'Income From Charges'"
+            [glAccount]="chargeData.incomeOrLiabilityAccount"
+            [withTitle]="'50%'"
+          >
+          </mifosx-gl-account-display>
+        }
 
-        <div class="flex-50 mat-body-strong" *ngIf="chargeData.taxGroup">
-          {{ 'labels.inputs.Tax Group' | translate }}
-        </div>
+        @if (chargeData.taxGroup) {
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Tax Group' | translate }}
+          </div>
+        }
 
-        <div class="flex-50" *ngIf="chargeData.taxGroup">
-          {{ chargeData.taxGroup.name }}
-        </div>
+        @if (chargeData.taxGroup) {
+          <div class="flex-50">
+            {{ chargeData.taxGroup.name }}
+          </div>
+        }
       </div>
 
       <div class="layout-row layout-align-center gap-2percent column-on-mobile">

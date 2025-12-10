@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
@@ -23,6 +23,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditPaymentTypeComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private organizationService = inject(OrganizationService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+
   /** Payment Type form. */
   paymentTypeForm: UntypedFormGroup;
   /** Payment Type Data. */
@@ -35,12 +40,7 @@ export class EditPaymentTypeComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private organizationService: OrganizationService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { paymentType: any }) => {
       this.paymentTypeData = data.paymentType;
     });
@@ -68,7 +68,8 @@ export class EditPaymentTypeComponent implements OnInit {
         this.paymentTypeData.position,
         [
           Validators.required,
-          Validators.min(1)]
+          Validators.min(1)
+        ]
       ]
     });
   }

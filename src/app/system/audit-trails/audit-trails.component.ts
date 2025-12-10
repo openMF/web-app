@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -17,7 +17,7 @@ import { merge } from 'rxjs';
 import { tap, debounceTime, distinctUntilChanged, startWith, map } from 'rxjs/operators';
 import { Dates } from 'app/core/utils/dates';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { NgFor, NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { MatOption, MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import {
@@ -66,6 +66,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class AuditTrailsComponent implements OnInit, AfterViewInit {
+  private route = inject(ActivatedRoute);
+  private systemService = inject(SystemService);
+  private dateUtils = inject(Dates);
+  private settingsService = inject(SettingsService);
+
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -192,12 +197,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    * @param {Dates} dateUtils Dates utils
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private route: ActivatedRoute,
-    private systemService: SystemService,
-    private dateUtils: Dates,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { auditTrailSearchTemplate: any }) => {
       this.auditTrailSearchTemplateData = data.auditTrailSearchTemplate;
     });
@@ -556,7 +556,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
               (fieldName === 'madeOnDate' || fieldName === 'checkedOnDate') &&
               row[fieldName] != null &&
               row[fieldName] !== ''
-                ? JSON.stringify(this.dateUtils.formatDate(row[fieldName], 'YYYY-MM-DDTHH:mm:ssZ'))
+                ? JSON.stringify(this.dateUtils.formatDate(row[fieldName], 'yyyy-MM-ddTHH:mm:ssZ'))
                 : JSON.stringify(row[fieldName], replacer)
             )
           );
@@ -598,6 +598,6 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
       result.setMinutes(minutes || 0);
       result.setSeconds(seconds || 0);
     }
-    return this.dateUtils.formatDate(result, 'YYYY-MM-DDTHH:mm:ssZ');
+    return this.dateUtils.formatDate(result, 'yyyy-MM-ddTHH:mm:ssZ');
   }
 }

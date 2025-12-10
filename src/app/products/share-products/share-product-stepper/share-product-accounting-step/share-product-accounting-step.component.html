@@ -4,67 +4,58 @@
       class="flex-98 layout-row gap-5percent layout-column.lt-md radio-group-spacing"
       formControlName="accountingRule"
     >
-      <mat-radio-button *ngFor="let accountingRule of accountingRuleData; let i = index" [value]="i + 1">
-        {{ 'labels.accounting.' + accountingRule | translate }}
-      </mat-radio-button>
+      @for (accountingRule of accountingRuleData; track accountingRule; let i = $index) {
+        <mat-radio-button [value]="i + 1">
+          {{ 'labels.accounting.' + accountingRule | translate }}
+        </mat-radio-button>
+      }
     </mat-radio-group>
 
     <mat-divider class="flex-98"></mat-divider>
 
-    <div
-      *ngIf="shareProductAccountingForm.value.accountingRule === 2"
-      class="flex-fill layout-row-wrap gap-2percent responsive-column"
-    >
-      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Assets' | translate }}</h4>
-
-      <mifosx-gl-account-selector
-        class="flex-48"
-        [inputFormControl]="shareProductAccountingForm.controls.shareReferenceId"
-        [glAccountList]="assetAccountData"
-        [required]="true"
-        [inputLabel]="'Share reference'"
-      >
-      </mifosx-gl-account-selector>
-
-      <mat-divider class="flex-98"></mat-divider>
-
-      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Liabilities' | translate }}</h4>
-
-      <mifosx-gl-account-selector
-        class="flex-48"
-        [inputFormControl]="shareProductAccountingForm.controls.shareSuspenseId"
-        [glAccountList]="liabilityAccountData"
-        [required]="true"
-        [inputLabel]="'Share suspense control'"
-      >
-      </mifosx-gl-account-selector>
-
-      <mat-divider class="flex-98"></mat-divider>
-
-      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Share Equity' | translate }}</h4>
-
-      <mifosx-gl-account-selector
-        class="flex-48"
-        [inputFormControl]="shareProductAccountingForm.controls.shareEquityId"
-        [glAccountList]="equityAccountData"
-        [required]="true"
-        [inputLabel]="'Equity'"
-      >
-      </mifosx-gl-account-selector>
-
-      <mat-divider class="flex-98"></mat-divider>
-
-      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Income' | translate }}</h4>
-
-      <mifosx-gl-account-selector
-        class="flex-48"
-        [inputFormControl]="shareProductAccountingForm.controls.incomeFromFeeAccountId"
-        [glAccountList]="incomeAccountData"
-        [required]="true"
-        [inputLabel]="'Income from fees'"
-      >
-      </mifosx-gl-account-selector>
-    </div>
+    @if (shareProductAccountingForm.value.accountingRule === 2) {
+      <div class="flex-fill layout-row-wrap gap-2percent responsive-column">
+        <h4 class="mat-h4 flex-98">{{ 'labels.heading.Assets' | translate }}</h4>
+        <mifosx-gl-account-selector
+          class="flex-48"
+          [inputFormControl]="shareProductAccountingForm.controls.shareReferenceId"
+          [glAccountList]="assetAccountData"
+          [required]="true"
+          [inputLabel]="'Share reference'"
+        >
+        </mifosx-gl-account-selector>
+        <mat-divider class="flex-98"></mat-divider>
+        <h4 class="mat-h4 flex-98">{{ 'labels.heading.Liabilities' | translate }}</h4>
+        <mifosx-gl-account-selector
+          class="flex-48"
+          [inputFormControl]="shareProductAccountingForm.controls.shareSuspenseId"
+          [glAccountList]="liabilityAccountData"
+          [required]="true"
+          [inputLabel]="'Share suspense control'"
+        >
+        </mifosx-gl-account-selector>
+        <mat-divider class="flex-98"></mat-divider>
+        <h4 class="mat-h4 flex-98">{{ 'labels.heading.Share Equity' | translate }}</h4>
+        <mifosx-gl-account-selector
+          class="flex-48"
+          [inputFormControl]="shareProductAccountingForm.controls.shareEquityId"
+          [glAccountList]="equityAccountData"
+          [required]="true"
+          [inputLabel]="'Equity'"
+        >
+        </mifosx-gl-account-selector>
+        <mat-divider class="flex-98"></mat-divider>
+        <h4 class="mat-h4 flex-98">{{ 'labels.heading.Income' | translate }}</h4>
+        <mifosx-gl-account-selector
+          class="flex-48"
+          [inputFormControl]="shareProductAccountingForm.controls.incomeFromFeeAccountId"
+          [glAccountList]="incomeAccountData"
+          [required]="true"
+          [inputLabel]="'Income from fees'"
+        >
+        </mifosx-gl-account-selector>
+      </div>
+    }
   </div>
 
   <div class="layout-row align-center gap-2percent margin-t responsive-column">

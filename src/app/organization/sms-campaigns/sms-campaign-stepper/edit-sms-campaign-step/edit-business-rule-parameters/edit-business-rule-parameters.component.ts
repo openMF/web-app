@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnChanges, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, OnChanges, Input, Output, EventEmitter, OnInit, inject } from '@angular/core';
 import { Validators, UntypedFormGroup, UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Rxjs Imports */
@@ -37,6 +37,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditBusinessRuleParametersComponent implements OnInit, OnChanges {
+  private reportsService = inject(ReportsService);
+  private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
+
   /** Run Report Parameters Data */
   @Input() paramData: any;
   /** SMS Campaign */
@@ -54,16 +58,6 @@ export class EditBusinessRuleParametersComponent implements OnInit, OnChanges {
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
   maxDate = new Date();
-
-  /**
-   * @param {ReportsService} reportsService Reports Service
-   * @param {SettingsService} settingsService Settings Service.
-   */
-  constructor(
-    private reportsService: ReportsService,
-    private settingsService: SettingsService,
-    private dateUtils: Dates
-  ) {}
 
   ngOnInit(): void {
     this.maxDate = this.settingsService.businessDate;

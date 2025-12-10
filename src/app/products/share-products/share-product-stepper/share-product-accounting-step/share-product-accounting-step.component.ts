@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -29,6 +29,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ShareProductAccountingStepComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+
   @Input() shareProductsTemplate: any;
   @Input() accountingRuleData: any;
   @Input() shareProductFormValid: boolean;
@@ -40,7 +42,7 @@ export class ShareProductAccountingStepComponent implements OnInit {
   equityAccountData: any;
   liabilityAccountData: any;
 
-  constructor(private formBuilder: UntypedFormBuilder) {
+  constructor() {
     this.createShareProductAccountingForm();
     this.setConditionalControls();
   }

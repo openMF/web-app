@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -70,6 +70,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateFloatingRateComponent implements OnInit {
+  private router = inject(Router);
+  private formBuilder = inject(UntypedFormBuilder);
+  private productsService = inject(ProductsService);
+  private route = inject(ActivatedRoute);
+  private dateUtils = inject(Dates);
+  private dialog = inject(MatDialog);
+  private settingsService = inject(SettingsService);
+  private translateService = inject(TranslateService);
+
   /** Floating Rate Period Data. */
   floatingRatePeriodsData: any[] = [];
   /** Minimum floating rate period date allowed. */
@@ -92,27 +101,6 @@ export class CreateFloatingRateComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   /** Sorter for floating rate periods table. */
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-
-  /**
-   * @param {Router} router Router for navigation.
-   * @param {FormBuilder} formBuilder Form Builder.
-   * @param {ProductsService} productsService Product Service.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {Dates} dateUtils Date Utils.
-   * @param {MatDialog} dialog Dialog reference.
-   * @param {SettingsService} settingsService Settings Service.
-   * @param {TranslateService} translateService Translate Service.
-   */
-  constructor(
-    private router: Router,
-    private formBuilder: UntypedFormBuilder,
-    private productsService: ProductsService,
-    private route: ActivatedRoute,
-    private dateUtils: Dates,
-    private dialog: MatDialog,
-    private settingsService: SettingsService,
-    private translateService: TranslateService
-  ) {}
 
   /**
    * Sets the floating rate periods table.

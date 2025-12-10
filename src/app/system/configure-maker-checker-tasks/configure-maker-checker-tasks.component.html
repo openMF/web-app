@@ -18,15 +18,16 @@
       <div class="layout-row">
         <div #mcTable class="layout-column flex-30">
           <mat-list>
-            <mat-list-item
-              [ngClass]="selectedItem === grouping ? 'active' : 'inactive'"
-              *ngFor="let grouping of groupings"
-              (click)="showPermissions(grouping)"
-            >
-              <span class="grouping-name">
-                {{ formatName(grouping) }}
-              </span>
-            </mat-list-item>
+            @for (grouping of groupings; track grouping) {
+              <mat-list-item
+                [ngClass]="selectedItem === grouping ? 'active' : 'inactive'"
+                (click)="showPermissions(grouping)"
+              >
+                <span class="grouping-name">
+                  {{ formatName(grouping) }}
+                </span>
+              </mat-list-item>
+            }
           </mat-list>
         </div>
 
@@ -34,29 +35,33 @@
         <div class="list-permission layout-column flex-70">
           <form [formGroup]="formGroup" (submit)="submit()">
             <div formArrayName="roster">
-              <div *ngFor="let permission of permissions.permissions; let i = index" class="display-permissions">
-                <div [formGroupName]="i">
-                  <mat-checkbox name="cp" id="{{ permission.code }}" formControlName="selected">
-                    {{ permissionName(permission.code) }}
-                  </mat-checkbox>
+              @for (permission of permissions.permissions; track permission; let i = $index) {
+                <div class="display-permissions">
+                  <div [formGroupName]="i">
+                    <mat-checkbox name="cp" id="{{ permission.code }}" formControlName="selected">
+                      {{ permissionName(permission.code) }}
+                    </mat-checkbox>
+                  </div>
                 </div>
-              </div>
+              }
             </div>
           </form>
         </div>
       </div>
     </ng-container>
 
-    <div class="layout-row layout-align-center gap-5px layout-xs-column" *ngIf="!isDisabled">
-      <mat-card-actions>
-        <button type="button" mat-raised-button (click)="cancel(); restoreCheckboxes()">
-          {{ 'labels.buttons.Cancel' | translate }}
-        </button>
-        <button mat-raised-button color="primary" (click)="submit()" *mifosxHasPermission="'UPDATE_PERMISSION'">
-          {{ 'labels.buttons.Submit' | translate }}
-        </button>
-      </mat-card-actions>
-    </div>
+    @if (!isDisabled) {
+      <div class="layout-row layout-align-center gap-5px layout-xs-column">
+        <mat-card-actions>
+          <button type="button" mat-raised-button (click)="cancel(); restoreCheckboxes()">
+            {{ 'labels.buttons.Cancel' | translate }}
+          </button>
+          <button mat-raised-button color="primary" (click)="submit()" *mifosxHasPermission="'UPDATE_PERMISSION'">
+            {{ 'labels.buttons.Submit' | translate }}
+          </button>
+        </mat-card-actions>
+      </div>
+    }
   </mat-card>
 </div>
 

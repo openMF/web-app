@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { MatIconButton } from '@angular/material/button';
@@ -16,13 +16,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class DropdownComponent {
+  private translateService = inject(TranslateService);
+
   @Input() placeHolderText: string;
   @Input() labelText: string;
   @Input() selectOptions: any[] = [];
   @Input() controlSelect: UntypedFormControl;
   @Input() required: boolean;
-
-  constructor(private translateService: TranslateService) {}
 
   getPlaceHolderText(): string {
     return this.placeHolderText ? this.translateService.instant('labels.inputs.' + this.placeHolderText) : '';

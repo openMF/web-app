@@ -888,7 +888,6 @@ const routes: Routes = [
       ]
     }
   ])
-
 ];
 
 /**

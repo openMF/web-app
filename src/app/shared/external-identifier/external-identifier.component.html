@@ -1,16 +1,24 @@
-<span (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()" *ngIf="!emptyValue">
-  <span (click)="copyValue()" *ngIf="displayL && iconVisible"
-    ><fa-icon icon="copy" size="sm" title="Copy External Id"></fa-icon
-  ></span>
-  <span class="m-l-3" *ngIf="displayL && !completed && iconVisible && isLongValue()" (click)="showValue()"
-    ><fa-icon icon="eye" size="sm" [title]="externalId"></fa-icon
-  ></span>
-  <span class="m-l-5" *ngIf="!completed" (click)="showValue()">{{ externalId | externalIdentifier }}</span>
-  <span *ngIf="completed" (click)="showValue()">{{ externalId }}</span>
-  <span class="m-l-5" *ngIf="displayR && !completed && iconVisible && isLongValue()" (click)="showValue()"
-    ><fa-icon icon="eye" size="sm" [title]="externalId"></fa-icon
-  ></span>
-  <span class="m-l-3" (click)="copyValue()" *ngIf="displayR && iconVisible"
-    ><fa-icon icon="copy" size="sm" title="Copy External Id"></fa-icon
-  ></span>
-</span>
+@if (!emptyValue) {
+  <span (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()">
+    @if (displayL && iconVisible) {
+      <span (click)="copyValue()"><fa-icon icon="copy" size="sm" title="Copy External Id"></fa-icon></span>
+    }
+    @if (displayL && !completed && iconVisible && isLongValue()) {
+      <span class="m-l-3" (click)="showValue()"><fa-icon icon="eye" size="sm" [title]="externalId"></fa-icon></span>
+    }
+    @if (!completed) {
+      <span class="m-l-5" (click)="showValue()">{{ externalId | externalIdentifier }}</span>
+    }
+    @if (completed) {
+      <span (click)="showValue()">{{ externalId }}</span>
+    }
+    @if (displayR && !completed && iconVisible && isLongValue()) {
+      <span class="m-l-5" (click)="showValue()"><fa-icon icon="eye" size="sm" [title]="externalId"></fa-icon></span>
+    }
+    @if (displayR && iconVisible) {
+      <span class="m-l-3" (click)="copyValue()"
+        ><fa-icon icon="copy" size="sm" title="Copy External Id"></fa-icon
+      ></span>
+    }
+  </span>
+}

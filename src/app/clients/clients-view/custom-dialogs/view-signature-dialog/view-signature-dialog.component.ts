@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -35,6 +35,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewSignatureDialogComponent implements OnInit {
+  dialogRef = inject<MatDialogRef<ViewSignatureDialogComponent>>(MatDialogRef);
+  private clientsService = inject(ClientsService);
+  private sanitizer = inject(DomSanitizer);
+  data = inject<{
+    documents: any[];
+    id: string;
+  }>(MAT_DIALOG_DATA);
+
   /** Id of client signature in documents */
   signatureId: any;
   /** Signature Image */
@@ -46,12 +54,7 @@ export class ViewSignatureDialogComponent implements OnInit {
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    * @param {any} data Documents data
    */
-  constructor(
-    public dialogRef: MatDialogRef<ViewSignatureDialogComponent>,
-    private clientsService: ClientsService,
-    private sanitizer: DomSanitizer,
-    @Inject(MAT_DIALOG_DATA) public data: { documents: any[]; id: string }
-  ) {
+  constructor() {
     const signature = this.data.documents.find((document: any) => document.name === 'clientSignature') || {};
     this.signatureId = signature.id;
     this.clientId = this.data.id;

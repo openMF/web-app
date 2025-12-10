@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Currency } from 'app/shared/models/general.model';
 import {
@@ -50,6 +50,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class OriginalScheduleTabComponent {
+  private route = inject(ActivatedRoute);
+
   /** Loan Details Data */
   originalScheduleDetails: any;
   /** Columns to be displayed in original schedule table. */
@@ -70,7 +72,7 @@ export class OriginalScheduleTabComponent {
    * Retrieves the loans with associations data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
       this.currency = data.loanDetailsData.currency;
       this.originalScheduleDetails = data.loanDetailsData.originalSchedule;

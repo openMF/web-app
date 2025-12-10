@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Accounting } from 'app/core/utils/accounting';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -44,6 +44,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class SavingProductGeneralTabComponent {
+  private route = inject(ActivatedRoute);
+  private accounting = inject(Accounting);
+
   savingProduct: any;
 
   chargesDisplayedColumns: string[] = [
@@ -61,10 +64,7 @@ export class SavingProductGeneralTabComponent {
     'incomeAccountId'
   ];
 
-  constructor(
-    private route: ActivatedRoute,
-    private accounting: Accounting
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { savingProduct: any }) => {
       this.savingProduct = data.savingProduct;
     });

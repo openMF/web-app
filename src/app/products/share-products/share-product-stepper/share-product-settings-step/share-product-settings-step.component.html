@@ -45,12 +45,14 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="minimumactiveperiodFrequencyType">
-        <mat-option
-          *ngFor="let minimumActivePeriodFrequencyType of minimumActivePeriodFrequencyTypeData"
-          [value]="minimumActivePeriodFrequencyType.id"
-        >
-          {{ minimumActivePeriodFrequencyType.value | translateKey: 'catalogs' }}
-        </mat-option>
+        @for (
+          minimumActivePeriodFrequencyType of minimumActivePeriodFrequencyTypeData;
+          track minimumActivePeriodFrequencyType
+        ) {
+          <mat-option [value]="minimumActivePeriodFrequencyType.id">
+            {{ minimumActivePeriodFrequencyType.value | translateKey: 'catalogs' }}
+          </mat-option>
+        }
       </mat-select>
     </mat-form-field>
 
@@ -67,12 +69,11 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="lockinPeriodFrequencyType">
-        <mat-option
-          *ngFor="let lockinPeriodFrequencyType of lockinPeriodFrequencyTypeData"
-          [value]="lockinPeriodFrequencyType.id"
-        >
-          {{ lockinPeriodFrequencyType.value | translateKey: 'catalogs' }}
-        </mat-option>
+        @for (lockinPeriodFrequencyType of lockinPeriodFrequencyTypeData; track lockinPeriodFrequencyType) {
+          <mat-option [value]="lockinPeriodFrequencyType.id">
+            {{ lockinPeriodFrequencyType.value | translateKey: 'catalogs' }}
+          </mat-option>
+        }
       </mat-select>
     </mat-form-field>
 

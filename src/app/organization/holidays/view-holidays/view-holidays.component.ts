@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -28,6 +28,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewHolidaysComponent {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
+  private organizationService = inject(OrganizationService);
+
   /** Holiday data. */
   holidayData: any;
 
@@ -35,13 +41,7 @@ export class ViewHolidaysComponent {
    * Retrieves hioliday data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private dialog: MatDialog,
-    private translateService: TranslateService,
-    private organizationService: OrganizationService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { holidays: any }) => {
       this.holidayData = data.holidays;
     });

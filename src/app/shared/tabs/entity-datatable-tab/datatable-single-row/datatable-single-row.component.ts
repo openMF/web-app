@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Datatables } from 'app/core/utils/datatables';
@@ -8,7 +8,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SystemService } from 'app/system/system.service';
-import { NgIf, NgFor, NgClass, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatDivider } from '@angular/material/divider';
@@ -29,10 +29,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     FaIconComponent,
     MatDivider,
     NgClass,
-    NgSwitch,
-    NgSwitchCase,
     CdkTextareaAutosize,
-    NgSwitchDefault,
     MatIconButton,
     MatTooltip,
     DateFormatPipe,
@@ -42,26 +39,17 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class DatatableSingleRowComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private dateUtils = inject(Dates);
+  private dialog = inject(MatDialog);
+  private settingsService = inject(SettingsService);
+  private datatables = inject(Datatables);
+  private systemService = inject(SystemService);
+
   @Input() dataObject: any;
   @Input() entityId: string;
   @Input() entityType: string;
   datatableName: string;
-
-  /**
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {Dates} dateUtils Date Utils.
-   * @param {SystemService} systemService System Service.
-   * @param {SettingsService} settingsService Settings Service
-   * @param {Datatables} datatables Datatable utils
-   */
-  constructor(
-    private route: ActivatedRoute,
-    private dateUtils: Dates,
-    private dialog: MatDialog,
-    private settingsService: SettingsService,
-    private datatables: Datatables,
-    private systemService: SystemService
-  ) {}
 
   ngOnInit() {
     this.route.params.subscribe((routeParams: any) => {

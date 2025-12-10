@@ -4,9 +4,11 @@
   <mat-form-field>
     <mat-label>{{ 'labels.inputs.Attribute' | translate }}</mat-label>
     <mat-select formControlName="attributeName" required>
-      <mat-option *ngFor="let attributeName of attributeNameData" [value]="attributeName.id">
-        {{ attributeName.value }}
-      </mat-option>
+      @for (attributeName of attributeNameData; track attributeName) {
+        <mat-option [value]="attributeName.id">
+          {{ attributeName.value }}
+        </mat-option>
+      }
     </mat-select>
     <mat-error>
       {{ 'labels.inputs.Attribute' | translate }} {{ 'labels.commons.is' | translate }}
@@ -17,9 +19,11 @@
   <mat-form-field>
     <mat-label>{{ 'labels.inputs.Condition' | translate }}</mat-label>
     <mat-select formControlName="conditionType" required>
-      <mat-option *ngFor="let conditionType of conditionTypeData" [value]="conditionType.id">
-        {{ conditionType.value }}
-      </mat-option>
+      @for (conditionType of conditionTypeData; track conditionType) {
+        <mat-option [value]="conditionType.id">
+          {{ conditionType.value }}
+        </mat-option>
+      }
     </mat-select>
     <mat-error>
       {{ 'labels.inputs.Condition' | translate }} {{ 'labels.commons.is' | translate }}
@@ -27,32 +31,36 @@
     </mat-error>
   </mat-form-field>
 
-  <mat-form-field *ngIf="depositProductIncentiveForm.value.attributeName">
-    <mat-label>{{ 'labels.inputs.Value' | translate }}</mat-label>
-    <mat-select formControlName="attributeValue" *ngIf="depositProductIncentiveForm.value.attributeName !== 3" required>
-      <mat-option *ngFor="let attributeValue of attributeValueData" [value]="attributeValue.id">
-        {{ attributeValue.name }}
-      </mat-option>
-    </mat-select>
-    <input
-      type="number"
-      matInput
-      formControlName="attributeValue"
-      *ngIf="depositProductIncentiveForm.value.attributeName === 3"
-      required
-    />
-    <mat-error>
-      {{ 'labels.inputs.Value' | translate }} {{ 'labels.commons.is' | translate }}
-      <strong>{{ 'labels.commons.required' | translate }}</strong>
-    </mat-error>
-  </mat-form-field>
+  @if (depositProductIncentiveForm.value.attributeName) {
+    <mat-form-field>
+      <mat-label>{{ 'labels.inputs.Value' | translate }}</mat-label>
+      @if (depositProductIncentiveForm.value.attributeName !== 3) {
+        <mat-select formControlName="attributeValue" required>
+          @for (attributeValue of attributeValueData; track attributeValue) {
+            <mat-option [value]="attributeValue.id">
+              {{ attributeValue.name }}
+            </mat-option>
+          }
+        </mat-select>
+      }
+      @if (depositProductIncentiveForm.value.attributeName === 3) {
+        <input type="number" matInput formControlName="attributeValue" required />
+      }
+      <mat-error>
+        {{ 'labels.inputs.Value' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
+      </mat-error>
+    </mat-form-field>
+  }
 
   <mat-form-field>
     <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
     <mat-select formControlName="incentiveType" required>
-      <mat-option *ngFor="let incentiveType of incentiveTypeData" [value]="incentiveType.id">
-        {{ incentiveType.value }}
-      </mat-option>
+      @for (incentiveType of incentiveTypeData; track incentiveType) {
+        <mat-option [value]="incentiveType.id">
+          {{ incentiveType.value }}
+        </mat-option>
+      }
     </mat-select>
     <mat-error>
       {{ 'labels.inputs.Type' | translate }} {{ 'labels.commons.is' | translate }}

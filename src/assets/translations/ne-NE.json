@@ -807,7 +807,8 @@
       "on": "मा",
       "Password validation": "पासवर्डमा कम्तिमा १२ क्यारेक्टरहरू हुनुपर्छ, जसमा १ अपरकेस, लोअरकेस र स्पेशल क्यारेक्टरहरू हुनुपर्छ र दोहोरिएका क्यारेक्टरहरू वा सेतो-स्पेसहरू समावेश हुनु हुँदैन।",
       "Must be at least": "कम्तिमा हुनुपर्छ",
-      "Must be less or equal to": "कम वा बराबर हुनुपर्छ"
+      "Must be less or equal to": "कम वा बराबर हुनुपर्छ",
+      "must be after or equal to start date": "सुरु मिति पछि वा बराबर हुनुपर्छ"
     },
     "heading": {
       "Account Linked Financial": "विभिन्न वित्तीय गतिविधिहरु संग जोडिएको खाताहरु को सूची। थप जान्नको लागि क्लिक गर्नुहोस्:",
@@ -2743,6 +2744,7 @@
       "All Fixed Deposits": "सबै फिक्स्ड डिपोजिटहरू",
       "All Recurring Deposits": "सबै आवर्ती निक्षेपहरू",
       "All Savings": "सबै बचत",
+      "Savings Account Details": "बचत खाता विवरण",
       "Allocate Cash": "नगद आवंटित गर्नुहोस्",
       "Allows you to create new fixed deposit product": "यो विकल्पले तपाईंलाई नयाँ फिक्स्ड डिपोजिट उत्पादन सिर्जना गर्न अनुमति दिन्छ।",
       "This option allows you to create new users in your organization": "यो विकल्पले तपाईंलाई आफ्नो संगठनमा नयाँ प्रयोगकर्ताहरू सिर्जना गर्न अनुमति दिन्छ",
@@ -3100,6 +3102,7 @@
       "No checker inbox data available for this search": "यस खोजको लागि कुनै परीक्षक इनबक्स डाटा उपलब्ध छैन।",
       "No client was found": "कुनै ग्राहक भेटिएन",
       "No data found": "कुनै डाटा फेला परेन",
+      "NoDocuments": "कुनै कागजात उपलब्ध छैन।",
       "No loan locked available": "कुनै ऋण उपलब्ध छैन।",
       "No notifications": "कुनै सूचना छैन",
       "No pending loan available for disbursal": "वितरणको लागि कुनै पेन्डिङ ऋण उपलब्ध छैन।",
@@ -3342,7 +3345,8 @@
       "Voluntary": "स्वैच्छिक",
       "Write a note": "नोट लेख्नुहोस्",
       "“Maker-Checker” principle requires every tasks": "\"मेकर-चेकर\" सिद्धान्तले त्रुटि र दुरुपयोगको सम्भावना कम गर्न प्रत्येक कार्यहरू दुई व्यक्तिद्वारा पूरा गर्न आवश्यक छ। एक व्यक्तिले प्रक्रिया सुरु गर्छ र दोस्रोले यसलाई पूरा गर्दछ।",
-      "Buy Down Fees": "खरीद शुल्क"
+      "Buy Down Fees": "खरीद शुल्क",
+      "UploadDocumentHint": "पूर्वावलोकन उत्पन्न गर्न PDF वा छवि अपलोड गर्नुहोस्।"
     },
     "titles": {
       "Dashboard": "ड्यासबोर्ड",

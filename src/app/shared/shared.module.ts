@@ -145,7 +145,6 @@ import { DatetimePickerStubComponent } from './datetime-picker-stub/datetime-pic
     DropdownComponent,
     InputAmountComponent,
     DatetimePickerStubComponent // Export stub for datetime picker
-
   ]
 })
 export class SharedModule {}

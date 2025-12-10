@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -28,6 +28,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class DeleteSignatureDialogComponent {
+  dialogRef = inject<MatDialogRef<DeleteSignatureDialogComponent>>(MatDialogRef);
+  data = inject(MAT_DIALOG_DATA);
+
   /** Id of client signature in documents */
   signatureId: any;
 
@@ -35,10 +38,7 @@ export class DeleteSignatureDialogComponent {
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    * @param {any} data Documents data
    */
-  constructor(
-    public dialogRef: MatDialogRef<DeleteSignatureDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any[]
-  ) {
+  constructor() {
     const signature = this.data.find((document: any) => document.name === 'clientSignature') || {};
     this.signatureId = signature.id;
   }

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
@@ -23,21 +23,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreatePaymentTypeComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private organizationService = inject(OrganizationService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+
   /** Payment Type form. */
   paymentTypeForm: UntypedFormGroup;
-
-  /**
-   * @param {FormBuilder} formBuilder Form Builder.
-   * @param {OrganizationService} organizationService Organization Service.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {Router} router Router for navigation.
-   */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private organizationService: OrganizationService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
 
   /**
    * Creates and sets the payment type form.
@@ -61,7 +53,8 @@ export class CreatePaymentTypeComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.min(1)]
+          Validators.min(1)
+        ]
       ]
     });
   }

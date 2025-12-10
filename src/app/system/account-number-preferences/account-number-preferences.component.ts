@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -45,6 +45,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class AccountNumberPreferencesComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+
   /** Account Number Preferences data. */
   accountNumberPreferencesData: any;
   /** Columns to be displayed in account number preferences table. */
@@ -61,7 +63,7 @@ export class AccountNumberPreferencesComponent implements OnInit {
    * Retrieves the account number preferences data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     this.route.data.subscribe((data: { accountNumberPreferences: any }) => {
       this.accountNumberPreferencesData = data.accountNumberPreferences;
     });

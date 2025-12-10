@@ -807,7 +807,8 @@
       "on": "SU",
       "Password validation": "La password deve contenere almeno {{minchar}} caratteri, di cui 1 carattere maiuscolo, minuscolo e speciale e non deve essere composta da caratteri ripetuti o spazi bianchi",
       "Must be at least": "Deve essere almeno",
-      "Must be less or equal to": "Deve essere minore o uguale a"
+      "Must be less or equal to": "Deve essere minore o uguale a",
+      "must be after or equal to start date": "deve essere successiva o uguale alla data di inizio"
     },
     "heading": {
       "Account Linked Financial": "Elenco dei conti collegati a diverse attività finanziarie. Per saperne di più clicca:",
@@ -2743,6 +2744,7 @@
       "All Fixed Deposits": "Tutti i depositi fissi",
       "All Recurring Deposits": "Tutti i depositi ricorrenti",
       "All Savings": "Tutto il risparmio",
+      "Savings Account Details": "Dettagli del conto di risparmio",
       "Allocate Cash": "Assegnare contanti",
       "Allows you to create new fixed deposit product": "Questa opzione ti consente di creare un nuovo prodotto a deposito fisso.",
       "This option allows you to create new users in your organization": "Questa opzione ti consente di creare nuovi utenti nella tua organizzazione",
@@ -3100,6 +3102,7 @@
       "No checker inbox data available for this search": "Nessun dato della casella di posta disponibile per questa ricerca.",
       "No client was found": "Nessun cliente trovato",
       "No data found": "Nessun dato trovato",
+      "NoDocuments": "Nessun documento disponibile.",
       "No loan locked available": "Nessun prestito bloccato disponibile.",
       "No pending loan available for disbursal": "Nessun prestito pendente disponibile per l'erogazione.",
       "No notifications": "Nessuna notifica",
@@ -3342,7 +3345,8 @@
       "Voluntary": "Volontario",
       "Write a note": "Scrivi una nota",
       "“Maker-Checker” principle requires every tasks": "Il principio “Maker-Checker” richiede che ogni attività venga completata da due persone per ridurre la possibilità di errori e usi impropri. Una persona avvia il processo e la seconda lo completa.",
-      "Buy Down Fees": "Commissioni di acquisto"
+      "Buy Down Fees": "Commissioni di acquisto",
+      "UploadDocumentHint": "Carica un PDF o un'immagine per generare un'anteprima."
     },
     "titles": {
       "Dashboard": "Pannello di controllo",

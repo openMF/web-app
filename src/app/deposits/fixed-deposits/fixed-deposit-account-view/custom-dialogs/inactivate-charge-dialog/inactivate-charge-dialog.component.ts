@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -28,11 +28,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class InactivateChargeDialogComponent {
-  /**
-   * @param {MatDialogRef} dialogRef Component reference to dialog.
-   */
-  constructor(
-    public dialogRef: MatDialogRef<InactivateChargeDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  dialogRef = inject<MatDialogRef<InactivateChargeDialogComponent>>(MatDialogRef);
+  data = inject(MAT_DIALOG_DATA);
 }

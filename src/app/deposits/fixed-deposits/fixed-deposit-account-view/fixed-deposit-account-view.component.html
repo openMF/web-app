@@ -29,42 +29,44 @@
               <span class="account-overview">
                 <span class="m-r-10">{{ 'labels.text.' + entityType | translate }} :</span>
                 {{ fixedDepositsAccountData.clientName || fixedDepositsAccountData.groupName }}
-                <span class="m-l-10" *ngIf="fixedDepositsAccountData.clientAccountNo">
-                  <mifosx-account-number
-                    accountNo="{{ fixedDepositsAccountData.clientAccountNo }}"
-                  ></mifosx-account-number>
-                </span>
+                @if (fixedDepositsAccountData.clientAccountNo) {
+                  <span class="m-l-10">
+                    <mifosx-account-number
+                      accountNo="{{ fixedDepositsAccountData.clientAccountNo }}"
+                    ></mifosx-account-number>
+                  </span>
+                }
               </span>
             </div>
 
-            <div
-              *ngIf="
-                !fixedDepositsAccountData.status.rejected &&
-                !fixedDepositsAccountData.status.submittedAndPendingApproval
-              "
-              class="flex-30"
-            >
-              <h3 class="flex-100">{{ 'labels.heading.Account Overview' | translate }}</h3>
-              <table class="account-overview flex-100">
-                <tbody>
-                  <tr>
-                    <td class="flex-70">{{ 'labels.inputs.Current Balance' | translate }}</td>
-                    <td class="r-amount flex-30">
-                      {{
-                        fixedDepositsAccountData.summary.accountBalance
-                          | currency: currency.code : 'symbol-narrow' : '1.2-2'
-                      }}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="flex-70">{{ 'labels.inputs.Deposit Amount' | translate }}</td>
-                    <td class="r-amount flex-30">
-                      {{ fixedDepositsAccountData.depositAmount | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            @if (
+              !fixedDepositsAccountData.status.rejected && !fixedDepositsAccountData.status.submittedAndPendingApproval
+            ) {
+              <div class="flex-30">
+                <h3 class="flex-100">{{ 'labels.heading.Account Overview' | translate }}</h3>
+                <table class="account-overview flex-100">
+                  <tbody>
+                    <tr>
+                      <td class="flex-70">{{ 'labels.inputs.Current Balance' | translate }}</td>
+                      <td class="r-amount flex-30">
+                        {{
+                          fixedDepositsAccountData.summary.accountBalance
+                            | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                        }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="flex-70">{{ 'labels.inputs.Deposit Amount' | translate }}</td>
+                      <td class="r-amount flex-30">
+                        {{
+                          fixedDepositsAccountData.depositAmount | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                        }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            }
 
             <div class="flex-5">
               <button
@@ -83,20 +85,22 @@
       </div>
 
       <mat-menu #accountMenu="matMenu">
-        <ng-container *ngFor="let button of buttonConfig.singleButtons">
+        @for (button of buttonConfig.singleButtons; track button) {
           <button mat-menu-item (click)="doAction(button.name)">
             <i ngClass="{{ button.icon }}"></i> {{ button.name | translateKey: 'menus' }}
           </button>
-        </ng-container>
+        }
 
-        <ng-container *ngIf="buttonConfig.options.length">
+        @if (buttonConfig.options.length) {
           <button mat-menu-item [matMenuTriggerFor]="More">{{ 'More' | translateKey: 'menus' }}</button>
           <mat-menu #More="matMenu">
-            <span *ngFor="let option of buttonConfig.options">
-              <button mat-menu-item (click)="doAction(option.name)">{{ option.name | translateKey: 'menus' }}</button>
-            </span>
+            @for (option of buttonConfig.options; track option) {
+              <span>
+                <button mat-menu-item (click)="doAction(option.name)">{{ option.name | translateKey: 'menus' }}</button>
+              </span>
+            }
           </mat-menu>
-        </ng-container>
+        }
       </mat-menu>
     </mat-card-title-group>
   </mat-card-header>
@@ -121,17 +125,19 @@
       >
         {{ 'labels.inputs.Interest Rate Chart' | translate }}
       </a>
-      <span *ngIf="showTransactions">
-        <a
-          mat-tab-link
-          [routerLink]="['./transactions']"
-          routerLinkActive
-          #transactions="routerLinkActive"
-          [active]="transactions.isActive"
-        >
-          {{ 'labels.inputs.Transactions' | translate }}
-        </a>
-      </span>
+      @if (showTransactions) {
+        <span>
+          <a
+            mat-tab-link
+            [routerLink]="['./transactions']"
+            routerLinkActive
+            #transactions="routerLinkActive"
+            [active]="transactions.isActive"
+          >
+            {{ 'labels.inputs.Transactions' | translate }}
+          </a>
+        </span>
+      }
       <a
         mat-tab-link
         [routerLink]="['./charges']"
@@ -141,17 +147,18 @@
       >
         {{ 'labels.inputs.Charges' | translate }}
       </a>
-      <a
-        mat-tab-link
-        [routerLink]="['./standing-instructions']"
-        routerLinkActive
-        #standingInstructions="routerLinkActive"
-        [active]="standingInstructions.isActive"
-        *ngIf="fixedDepositsAccountData.clientId"
-      >
-        {{ 'labels.inputs.Standing Instructions' | translate }}
-      </a>
-      <ng-container *ngFor="let savingsDatatable of savingsDatatables">
+      @if (fixedDepositsAccountData.clientId) {
+        <a
+          mat-tab-link
+          [routerLink]="['./standing-instructions']"
+          routerLinkActive
+          #standingInstructions="routerLinkActive"
+          [active]="standingInstructions.isActive"
+        >
+          {{ 'labels.inputs.Standing Instructions' | translate }}
+        </a>
+      }
+      @for (savingsDatatable of savingsDatatables; track savingsDatatable) {
         <a
           mat-tab-link
           *mifosxHasPermission="'READ_' + savingsDatatable.registeredTableName"
@@ -162,7 +169,7 @@
         >
           {{ savingsDatatable.registeredTableName }}
         </a>
-      </ng-container>
+      }
     </nav>
 
     <mat-tab-nav-panel #tabPanel>

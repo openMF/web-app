@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
@@ -13,10 +13,7 @@ import { SavingsService } from '../savings.service';
  */
 @Injectable()
 export class SavingsAccountActionsResolver {
-  /**
-   * @param {SavingsService} SavingsService Savings service.
-   */
-  constructor(private savingsService: SavingsService) {}
+  private savingsService = inject(SavingsService);
 
   /**
    * Returns the Savings account actions data.
@@ -39,7 +36,8 @@ export class SavingsAccountActionsResolver {
       case 'Close':
         return forkJoin([
           this.savingsService.getSavingsTransactionTemplateResource(savingAccountId),
-          this.savingsService.getSavingsAccountData(savingAccountId)]);
+          this.savingsService.getSavingsAccountData(savingAccountId)
+        ]);
       case 'Apply Annual Fees':
         return this.savingsService.getSavingsAccountData(savingAccountId);
       default:

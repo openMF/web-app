@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,10 +12,7 @@ import { CentersService } from '../centers.service';
  */
 @Injectable()
 export class CenterDatatablesResolver {
-  /**
-   * @param {centersService} centersService centers service.
-   */
-  constructor(private centersService: CentersService) {}
+  private centersService = inject(CentersService);
 
   /**
    * Returns the center datatables.

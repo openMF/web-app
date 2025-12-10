@@ -10,7 +10,7 @@
       >
         {{ 'labels.heading.General' | translate }}
       </a>
-      <ng-container *ngFor="let recurringDepositDatatable of recurringDepositDatatables">
+      @for (recurringDepositDatatable of recurringDepositDatatables; track recurringDepositDatatable) {
         <a
           mat-tab-link
           [routerLink]="['./datatables', recurringDepositDatatable.registeredTableName]"
@@ -21,7 +21,7 @@
         >
           {{ recurringDepositDatatable.registeredTableName }}
         </a>
-      </ng-container>
+      }
     </nav>
 
     <mat-tab-nav-panel #tabPanel>

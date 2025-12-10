@@ -8,57 +8,62 @@
   </div>
 
   <mat-accordion>
-    <mat-expansion-panel *ngFor="let address of clientAddressData; index as i" class="address">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{ address.addressType }}
-        </mat-panel-title>
-        <mat-panel-description>
-          {{ address.relationship }}
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-
-      <mat-divider [inset]="true"></mat-divider>
-
-      <div class="address-actions layout-row align-end align-items-center">
-        <button mat-button color="primary" (click)="editAddress(address, i)">
-          <fa-icon icon="edit"></fa-icon>
-        </button>
-        <mat-slide-toggle [checked]="address.isActive" (change)="toggleAddress(address)"></mat-slide-toggle>
-      </div>
-
-      <p>
-        <span *ngIf="isFieldEnabled('street')"
-          >{{ 'labels.inputs.Street' | translate }} : {{ address.street }}<br
-        /></span>
-        <span *ngIf="isFieldEnabled('addressLine1')"
-          >{{ 'labels.inputs.Address Line' | translate }} 1 : {{ address.addressLine1 }}<br
-        /></span>
-        <span *ngIf="isFieldEnabled('addressLine2')"
-          >{{ 'labels.inputs.Address Line' | translate }} 2 : {{ address.addressLine2 }}<br
-        /></span>
-        <span *ngIf="isFieldEnabled('addressLine3')"
-          >{{ 'labels.inputs.Address Line' | translate }} 3 : {{ address.addressLine3 }}<br
-        /></span>
-        <span *ngIf="isFieldEnabled('townVillage')"
-          >{{ 'labels.inputs.Town / Village' | translate }} : {{ address.townVillage }}<br
-        /></span>
-        <span *ngIf="isFieldEnabled('city')">{{ 'labels.inputs.City' | translate }} : {{ address.city }}<br /></span>
-        <span *ngIf="isFieldEnabled('stateProvinceId')"
-          >{{ 'labels.inputs.State / Province' | translate }} :
-          {{ getSelectedValue('stateProvinceIdOptions', address.stateProvinceId)?.name }}<br
-        /></span>
-        <span *ngIf="isFieldEnabled('countryId')"
-          >{{ 'labels.inputs.Country' | translate }} : {{ getSelectedValue('countryIdOptions', address.countryId)?.name
-          }}<br
-        /></span>
-        <span *ngIf="isFieldEnabled('postalCode')"
-          >{{ 'labels.inputs.Postal Code' | translate }} : {{ address.postalCode }}<br
-        /></span>
-        <span *ngIf="isFieldEnabled('isActive')"
-          >{{ 'labels.inputs.Active Status' | translate }} : {{ address.isActive }}<br
-        /></span>
-      </p>
-    </mat-expansion-panel>
+    @for (address of clientAddressData; track address; let i = $index) {
+      <mat-expansion-panel class="address">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ address.addressType }}
+          </mat-panel-title>
+          <mat-panel-description>
+            {{ address.relationship }}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-divider [inset]="true"></mat-divider>
+        <div class="address-actions layout-row align-end align-items-center">
+          <button mat-button color="primary" (click)="editAddress(address, i)">
+            <fa-icon icon="edit"></fa-icon>
+          </button>
+          <mat-slide-toggle [checked]="address.isActive" (change)="toggleAddress(address)"></mat-slide-toggle>
+        </div>
+        <p>
+          @if (isFieldEnabled('street')) {
+            <span>{{ 'labels.inputs.Street' | translate }} : {{ address.street }}<br /></span>
+          }
+          @if (isFieldEnabled('addressLine1')) {
+            <span>{{ 'labels.inputs.Address Line' | translate }} 1 : {{ address.addressLine1 }}<br /></span>
+          }
+          @if (isFieldEnabled('addressLine2')) {
+            <span>{{ 'labels.inputs.Address Line' | translate }} 2 : {{ address.addressLine2 }}<br /></span>
+          }
+          @if (isFieldEnabled('addressLine3')) {
+            <span>{{ 'labels.inputs.Address Line' | translate }} 3 : {{ address.addressLine3 }}<br /></span>
+          }
+          @if (isFieldEnabled('townVillage')) {
+            <span>{{ 'labels.inputs.Town / Village' | translate }} : {{ address.townVillage }}<br /></span>
+          }
+          @if (isFieldEnabled('city')) {
+            <span>{{ 'labels.inputs.City' | translate }} : {{ address.city }}<br /></span>
+          }
+          @if (isFieldEnabled('stateProvinceId')) {
+            <span
+              >{{ 'labels.inputs.State / Province' | translate }} :
+              {{ getSelectedValue('stateProvinceIdOptions', address.stateProvinceId)?.name }}<br
+            /></span>
+          }
+          @if (isFieldEnabled('countryId')) {
+            <span
+              >{{ 'labels.inputs.Country' | translate }} :
+              {{ getSelectedValue('countryIdOptions', address.countryId)?.name }}<br
+            /></span>
+          }
+          @if (isFieldEnabled('postalCode')) {
+            <span>{{ 'labels.inputs.Postal Code' | translate }} : {{ address.postalCode }}<br /></span>
+          }
+          @if (isFieldEnabled('isActive')) {
+            <span>{{ 'labels.inputs.Active Status' | translate }} : {{ address.isActive }}<br /></span>
+          }
+        </p>
+      </mat-expansion-panel>
+    }
   </mat-accordion>
 </div>

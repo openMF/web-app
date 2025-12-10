@@ -15,29 +15,39 @@
             />
             <mat-datepicker-toggle matSuffix [for]="settlementDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #settlementDatePicker></mat-datepicker>
-            <mat-error *ngIf="saleLoanForm.controls.settlementDate.hasError('required')">
-              {{ 'labels.inputs.Settlement Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (saleLoanForm.controls.settlementDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Settlement Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
-          <mat-form-field *ngIf="!isBuyBack()">
-            <mat-label>{{ 'labels.inputs.Purchase Price Ratio' | translate }}</mat-label>
-            <input type="number" matInput required formControlName="purchasePriceRatio" />
-            <mat-error *ngIf="saleLoanForm.controls.purchasePriceRatio.hasError('required')">
-              {{ 'labels.inputs.Purchase Price Ratio' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
-          </mat-form-field>
+          @if (!isBuyBack()) {
+            <mat-form-field>
+              <mat-label>{{ 'labels.inputs.Purchase Price Ratio' | translate }}</mat-label>
+              <input type="number" matInput required formControlName="purchasePriceRatio" />
+              @if (saleLoanForm.controls.purchasePriceRatio.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Purchase Price Ratio' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+          }
 
-          <mat-form-field *ngIf="!isBuyBack()">
-            <mat-label>{{ 'labels.inputs.Owner External Id' | translate }}</mat-label>
-            <input matInput formControlName="ownerExternalId" />
-            <mat-error *ngIf="saleLoanForm.controls.ownerExternalId.hasError('required')">
-              {{ 'labels.inputs.Owner External Id' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
-          </mat-form-field>
+          @if (!isBuyBack()) {
+            <mat-form-field>
+              <mat-label>{{ 'labels.inputs.Owner External Id' | translate }}</mat-label>
+              <input matInput formControlName="ownerExternalId" />
+              @if (saleLoanForm.controls.ownerExternalId.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Owner External Id' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+          }
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Transfer External Id' | translate }}</mat-label>

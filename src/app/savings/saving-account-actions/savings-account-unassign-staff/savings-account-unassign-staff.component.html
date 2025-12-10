@@ -14,10 +14,12 @@
           />
           <mat-datepicker-toggle matSuffix [for]="unassignedDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #unassignedDatePicker></mat-datepicker>
-          <mat-error *ngIf="savingsUnassignStaffForm.controls.unassignedDate.hasError('required')">
-            {{ 'labels.inputs.Unassignment Date' | translate }} {{ 'labels.commons.is' | translate }}
-            <strong>{{ 'labels.commons.required' | translate }}</strong>
-          </mat-error>
+          @if (savingsUnassignStaffForm.controls.unassignedDate.hasError('required')) {
+            <mat-error>
+              {{ 'labels.inputs.Unassignment Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          }
         </mat-form-field>
       </mat-card-content>
 

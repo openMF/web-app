@@ -1,4 +1,4 @@
-import { Component, Input, Optional, Self, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, inject } from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -22,6 +22,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class InputPasswordComponent implements ControlValueAccessor, ErrorStateMatcher {
+  ngControl = inject(NgControl, { optional: true, self: true });
+
   disabled = false;
 
   icon = 'visibility_off';
@@ -61,7 +63,9 @@ export class InputPasswordComponent implements ControlValueAccessor, ErrorStateM
 
   private _visible = false;
 
-  constructor(@Optional() @Self() public ngControl: NgControl) {
+  constructor() {
+    const ngControl = this.ngControl;
+
     if (ngControl !== null) {
       ngControl.valueAccessor = this;
     }

@@ -27,6 +27,7 @@ export const environment = {
   allowServerSwitch: loadedEnv.allowServerSwitch || 'true',
   apiProvider: loadedEnv.apiProvider || '/fineract-provider/api',
   apiVersion: loadedEnv.apiVersion || '/v1',
+  apiActuator: loadedEnv.apiActuator || '/fineract-provider',
   serverUrl: '',
   /** Feature flag for Remember Me functionality */
   enableRememberMe: false,

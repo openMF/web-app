@@ -10,7 +10,7 @@
       >
         {{ 'labels.heading.General' | translate }}
       </a>
-      <ng-container *ngFor="let savingProductDatatable of savingProductDatatables">
+      @for (savingProductDatatable of savingProductDatatables; track savingProductDatatable) {
         <a
           mat-tab-link
           [routerLink]="['./datatables', savingProductDatatable.registeredTableName]"
@@ -21,7 +21,7 @@
         >
           {{ savingProductDatatable.registeredTableName }}
         </a>
-      </ng-container>
+      }
     </nav>
 
     <mat-tab-nav-panel #tabPanel>

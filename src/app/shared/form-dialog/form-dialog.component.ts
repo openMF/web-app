@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -13,7 +13,7 @@ import { FormfieldBase } from './formfield/model/formfield-base';
 
 import { FormGroupService } from './form-group.service';
 import { CdkScrollable } from '@angular/cdk/scrolling';
-import { NgClass, NgFor } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { FormfieldComponent } from './formfield/formfield.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -35,6 +35,10 @@ const layoutGap = 2;
   ]
 })
 export class FormDialogComponent implements OnInit {
+  dialogRef = inject<MatDialogRef<FormDialogComponent>>(MatDialogRef);
+  data = inject(MAT_DIALOG_DATA);
+  private formGroupService = inject(FormGroupService);
+
   layout: {
     columns: number;
     columnWidth?: number;
@@ -54,11 +58,9 @@ export class FormDialogComponent implements OnInit {
   formfields: FormfieldBase[];
   pristine: boolean;
 
-  constructor(
-    public dialogRef: MatDialogRef<FormDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private formGroupService: FormGroupService
-  ) {
+  constructor() {
+    const data = this.data;
+
     this.dialogRef.disableClose = data.disableClose !== undefined ? data.disableClose : true;
     this.formfields = data.formfields.sort(
       (formfieldA: FormfieldBase, formfieldB: FormfieldBase) => formfieldA.order - formfieldB.order

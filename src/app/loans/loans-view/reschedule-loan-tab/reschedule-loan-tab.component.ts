@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -19,7 +19,7 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatTooltip } from '@angular/material/tooltip';
 import { StatusLookupPipe } from '../../../pipes/status-lookup.pipe';
@@ -50,6 +50,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class RescheduleLoanTabComponent {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private loansServices = inject(LoansService);
+  private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
+  private translateService = inject(TranslateService);
+  private dialog = inject(MatDialog);
+
   @Input() loanStatus: LoanStatus;
 
   loanRescheduleData: any;
@@ -62,15 +70,7 @@ export class RescheduleLoanTabComponent {
   ];
   clientId: any;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private loansServices: LoansService,
-    private settingsService: SettingsService,
-    private dateUtils: Dates,
-    private translateService: TranslateService,
-    private dialog: MatDialog
-  ) {
+  constructor() {
     this.clientId = this.route.parent.parent.snapshot.paramMap.get('clientId');
     this.route.parent.data.subscribe((data: { loanRescheduleData: any }) => {
       this.loanRescheduleData = data.loanRescheduleData;

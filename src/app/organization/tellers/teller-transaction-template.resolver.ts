@@ -16,6 +16,7 @@ export class CashierTransactionTemplateResolver implements Resolve<Object> {
   /**
    * @param {OrganizationService} organizationService Organization service.
    */
+  // eslint-disable-next-line @angular-eslint/prefer-inject
   constructor(private organizationService: OrganizationService) {}
 
   /**

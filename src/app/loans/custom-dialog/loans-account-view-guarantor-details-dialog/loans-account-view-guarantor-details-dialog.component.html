@@ -25,20 +25,28 @@
     <div class="flex-fill">
       <span class="flex-50">{{ 'labels.inputs.Status' | translate }}:</span>
       <span class="flex-50">
-        <span *ngIf="data.guarantorData.status">
-          {{ 'labels.inputs.Active' | translate }}
-        </span>
-        <span *ngIf="!data.guarantorData.status">
-          {{ 'labels.inputs.Deleted' | translate }}
-        </span></span
-      >
+        @if (data.guarantorData.status) {
+          <span>
+            {{ 'labels.inputs.Active' | translate }}
+          </span>
+        }
+        @if (!data.guarantorData.status) {
+          <span>
+            {{ 'labels.inputs.Deleted' | translate }}
+          </span>
+        }
+      </span>
     </div>
-    <div class="flex-fill" *ngIf="data.loanData?.delinquent?.availableDisbursementAmountWithOverApplied !== undefined">
-      <span class="flex-50">{{ 'labels.inputs.Available Disbursement Amount (with Over Applied)' | translate }}:</span>
-      <span class="flex-50">{{
-        data.loanData.delinquent.availableDisbursementAmountWithOverApplied | formatNumber
-      }}</span>
-    </div>
+    @if (data.loanData?.delinquent?.availableDisbursementAmountWithOverApplied !== undefined) {
+      <div class="flex-fill">
+        <span class="flex-50"
+          >{{ 'labels.inputs.Available Disbursement Amount (with Over Applied)' | translate }}:</span
+        >
+        <span class="flex-50">{{
+          data.loanData.delinquent.availableDisbursementAmountWithOverApplied | formatNumber
+        }}</span>
+      </div>
+    }
   </div>
 </div>
 

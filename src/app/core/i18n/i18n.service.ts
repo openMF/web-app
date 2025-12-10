@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class I18nService {
+  // eslint-disable-next-line @angular-eslint/prefer-inject
   constructor(private translateService: TranslateService) {}
 
   public translate(key: string, params?: object): Observable<string> {

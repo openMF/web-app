@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -48,6 +48,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateEditComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private templateService = inject(TemplatesService);
+
   /** TinyMCE instance configuration */
   tinymceConfig = {
     base_url: 'assets/tinymce',
@@ -91,12 +96,7 @@ export class CreateEditComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {TemplateService} templateService Templates Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private templateService: TemplatesService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { templateData: any; mode: 'create' | 'edit' }) => {
       this.templateData = data.templateData;
       this.mode = data.mode;

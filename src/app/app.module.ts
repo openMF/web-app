@@ -121,7 +121,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppRoutingModule,
     NotFoundComponent,
     CallbackComponent
-
   ],
   providers: [
     DatePipe,

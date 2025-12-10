@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
@@ -13,10 +13,7 @@ import { ReportsService } from '../reports.service';
  */
 @Injectable()
 export class RunReportResolver {
-  /**
-   * @param {ReportsService} reportsService Reports service.
-   */
-  constructor(private reportsService: ReportsService) {}
+  private reportsService = inject(ReportsService);
 
   /**
    * Returns the report parameters data.

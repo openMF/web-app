@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
 import { I18nService } from 'app/core/i18n/i18n.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -42,6 +42,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateGlimAccountComponent {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private loansService = inject(LoansService);
+  private settingsService = inject(SettingsService);
+  private clientService = inject(ClientsService);
+  private dateUtils = inject(Dates);
+  private i18nService = inject(I18nService);
+
   /** Imports all the step component */
   @ViewChild(LoansAccountDetailsStepComponent, { static: true })
   loansAccountDetailsStep: LoansAccountDetailsStepComponent;
@@ -79,15 +87,7 @@ export class CreateGlimAccountComponent {
    * @param {SettingsService} settingsService Settings Service
    * @param {ClientsService} clientService Client Service
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private loansService: LoansService,
-    private settingsService: SettingsService,
-    private clientService: ClientsService,
-    private dateUtils: Dates,
-    private i18nService: I18nService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { loansAccountTemplate: any; groupsData: any }) => {
       this.loansAccountTemplate = data.loansAccountTemplate;
       this.dataSource = data.groupsData.activeClientMembers;

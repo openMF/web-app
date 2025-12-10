@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Components */
@@ -43,19 +43,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ClientFamilyMembersStepComponent {
+  dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
+
   /** Cient Template */
   @Input() clientTemplate: any;
   /** Client Family Members */
   clientFamilyMembers: any[] = [];
-
-  /**
-   * @param {MatDialog} dialog Mat Dialog
-   * @param {TranslateService} translateService Translate Service.
-   */
-  constructor(
-    public dialog: MatDialog,
-    private translateService: TranslateService
-  ) {}
 
   /**
    * Adds a family member.

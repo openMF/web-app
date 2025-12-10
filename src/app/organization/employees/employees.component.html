@@ -37,20 +37,22 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Loan Officer' | translate }}</th>
         <td mat-cell *matCellDef="let employee">
           <div [className]="employee.isLoanOfficer === true ? 'true' : 'false'">
-            <fa-icon
-              *ngIf="employee.isLoanOfficer"
-              icon="check-circle"
-              size="lg"
-              matTooltip="{{ 'tooltips.Yes' | translate }}"
-              matTooltipPosition="right"
-            ></fa-icon>
-            <fa-icon
-              *ngIf="!employee.isLoanOfficer"
-              icon="times-circle"
-              size="lg"
-              matTooltip="{{ 'tooltips.No' | translate }}"
-              matTooltipPosition="right"
-            ></fa-icon>
+            @if (employee.isLoanOfficer) {
+              <fa-icon
+                icon="check-circle"
+                size="lg"
+                matTooltip="{{ 'tooltips.Yes' | translate }}"
+                matTooltipPosition="right"
+              ></fa-icon>
+            }
+            @if (!employee.isLoanOfficer) {
+              <fa-icon
+                icon="times-circle"
+                size="lg"
+                matTooltip="{{ 'tooltips.No' | translate }}"
+                matTooltipPosition="right"
+              ></fa-icon>
+            }
           </div>
         </td>
       </ng-container>

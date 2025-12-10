@@ -12,19 +12,21 @@
         >
           {{ 'labels.inputs.General' | translate }}
         </a>
-        <span *ngFor="let officeDatatable of officeDatatables">
-          <a
-            mat-tab-link
-            *mifosxHasPermission="'READ_' + officeDatatable.registeredTableName"
-            [routerLink]="['./datatables', officeDatatable.registeredTableName]"
-            routerLinkActive
-            #datatable="routerLinkActive"
-            [active]="datatable.isActive"
-            class="compact-tab"
-          >
-            {{ officeDatatable.registeredTableName }}
-          </a>
-        </span>
+        @for (officeDatatable of officeDatatables; track officeDatatable) {
+          <span>
+            <a
+              mat-tab-link
+              *mifosxHasPermission="'READ_' + officeDatatable.registeredTableName"
+              [routerLink]="['./datatables', officeDatatable.registeredTableName]"
+              routerLinkActive
+              #datatable="routerLinkActive"
+              [active]="datatable.isActive"
+              class="compact-tab"
+            >
+              {{ officeDatatable.registeredTableName }}
+            </a>
+          </span>
+        }
       </nav>
 
       <mat-tab-nav-panel #tabPanel class="tab-panel">

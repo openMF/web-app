@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
@@ -13,10 +13,7 @@ import { UsersServiceZitadel } from './usersZitadel.service';
  */
 @Injectable()
 export class UserZitadelResolver {
-  /**
-   * @param {UsersServiceZitadel} usersServiceZitadel Users service.
-   */
-  constructor(private usersServiceZitadel: UsersServiceZitadel) {}
+  private usersServiceZitadel = inject(UsersServiceZitadel);
 
   /**
    * Returns the user data.

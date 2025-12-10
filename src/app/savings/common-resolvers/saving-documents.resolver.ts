@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { SavingsService } from '../savings.service';
@@ -7,10 +7,7 @@ import { SavingsService } from '../savings.service';
   providedIn: 'root'
 })
 export class SavingDocumentsResolver {
-  /**
-   * @param {SavingsService} savingsService Savings service.
-   */
-  constructor(private savingsService: SavingsService) {}
+  private savingsService = inject(SavingsService);
 
   /**
    * Returns the Savings data.

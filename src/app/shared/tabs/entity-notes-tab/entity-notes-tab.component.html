@@ -25,32 +25,32 @@
   </div>
 
   <div class="notes-container">
-    <div *ngIf="entityNotes && entityNotes.length > 0; else emptyState">
-      <div class="note-card" *ngFor="let entityNote of entityNotes; let i = index">
-        <div class="note-content">
-          {{ entityNote.note }}
-        </div>
-
-        <div class="note-footer">
-          <div class="note-meta">
-            <div class="created-by">Created by {{ entityNote.createdByUsername }}</div>
-            <div class="created-date">
-              {{ entityNote.createdOn | dateFormat }}
+    @if (entityNotes && entityNotes.length > 0) {
+      <div>
+        @for (entityNote of entityNotes; track entityNote; let i = $index) {
+          <div class="note-card">
+            <div class="note-content">
+              {{ entityNote.note }}
+            </div>
+            <div class="note-footer">
+              <div class="note-meta">
+                <div class="created-by">Created by {{ entityNote.createdByUsername }}</div>
+                <div class="created-date">
+                  {{ entityNote.createdOn | dateFormat }}
+                </div>
+              </div>
+              <div class="note-actions">
+                <button class="edit-btn" (click)="editNote(entityNote.id, entityNote.note, i)" title="Edit note">
+                  Edit
+                </button>
+                <button class="delete-btn" (click)="deleteNote(entityNote.id, i)" title="Delete note">Delete</button>
+              </div>
             </div>
           </div>
-
-          <div class="note-actions">
-            <button class="edit-btn" (click)="editNote(entityNote.id, entityNote.note, i)" title="Edit note">
-              Edit
-            </button>
-            <button class="delete-btn" (click)="deleteNote(entityNote.id, i)" title="Delete note">Delete</button>
-          </div>
-        </div>
+        }
       </div>
-    </div>
-
-    <ng-template #emptyState>
+    } @else {
       <div class="empty-state">No notes available</div>
-    </ng-template>
+    }
   </div>
 </div>

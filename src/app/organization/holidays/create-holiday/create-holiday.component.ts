@@ -1,6 +1,6 @@
 /** Angular Imports. */
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, OnInit, ViewChild, Injectable } from '@angular/core';
+import { Component, OnInit, ViewChild, Injectable, inject } from '@angular/core';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
@@ -53,6 +53,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateHolidayComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private dateUtils = inject(Dates);
+  private organizationService = inject(OrganizationService);
+  private settings = inject(SettingsService);
+  private router = inject(Router);
+  private _database = inject(ChecklistDatabase);
+  private createHoliday = inject(CreateHoliday);
+
   /** Create Holiday form. */
   holidayForm: UntypedFormGroup;
   /** Repayment Scheduling data. */
@@ -101,16 +110,9 @@ export class CreateHolidayComponent implements OnInit {
    * @param {OrganizationService} organizationService Organization Service.
    * @param {Router} router Router.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private dateUtils: Dates,
-    private organizationService: OrganizationService,
-    private settings: SettingsService,
-    private router: Router,
-    private _database: ChecklistDatabase,
-    private createHoliday: CreateHoliday
-  ) {
+  constructor() {
+    const _database = this._database;
+
     this.route.data.subscribe((data: { offices: any; holidayTemplate: any }) => {
       this.officesData = data.offices;
       this.repaymentSchedulingTypes = data.holidayTemplate;

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,6 +11,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { ReAgePreviewDialogComponent } from './re-age-preview-dialog/re-age-preview-dialog.component';
 import { InputAmountComponent } from 'app/shared/input-amount/input-amount.component';
 import { LoanTransactionTemplate } from 'app/loans/models/loan-transaction-type.model';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'mifosx-loan-reaging',
@@ -18,10 +19,19 @@ import { LoanTransactionTemplate } from 'app/loans/models/loan-transaction-type.
   styleUrls: ['./loan-reaging.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    InputAmountComponent
+    InputAmountComponent,
+    MatSlideToggle
   ]
 })
 export class LoanReagingComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private settingsService = inject(SettingsService);
+  private loanService = inject(LoansService);
+  private dateUtils = inject(Dates);
+  private dialog = inject(MatDialog);
+
   @Input() dataObject: any;
   /** Loan Id */
   loanId: string;
@@ -38,16 +48,9 @@ export class LoanReagingComponent implements OnInit {
   maxDate = new Date();
 
   loanTransactionData: LoanTransactionTemplate | null = null;
+  addTransactionAmount = false;
 
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private settingsService: SettingsService,
-    private loanService: LoansService,
-    private dateUtils: Dates,
-    private dialog: MatDialog
-  ) {
+  constructor() {
     this.loanId = this.route.snapshot.params['loanId'];
   }
 
@@ -84,7 +87,7 @@ export class LoanReagingComponent implements OnInit {
         this.reAgeInterestHandlingOptions[0]
       ],
       transactionAmount: [
-        this.loanTransactionData.amount,
+        ,
         [Validators.max(this.loanTransactionData.amount)]
       ],
       note: '',
@@ -143,10 +146,10 @@ export class LoanReagingComponent implements OnInit {
   }
 
   submit(): void {
-    if (this.reagingLoanForm.invalid) {
-      return;
-    }
     const data = this.prepareReagingData();
+    if (data['transactionAmount'] === null) {
+      delete data['transactionAmount'];
+    }
     this.loanService.submitLoanActionButton(this.loanId, data, 'reAge').subscribe({
       next: (response: any) => {
         this.router.navigate(['../../transactions'], { relativeTo: this.route });

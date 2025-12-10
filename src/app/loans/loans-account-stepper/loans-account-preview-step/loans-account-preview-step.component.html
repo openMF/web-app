@@ -13,26 +13,32 @@
     ></span>
   </div>
 
-  <div class="flex-fill" *ngIf="loansAccount.loanOfficerId">
-    <span class="flex-40">{{ 'labels.inputs.Loan officer' | translate }}:</span>
-    <span class="flex-60">{{
-      loansAccount.loanOfficerId | find: loansAccountProductTemplate.loanOfficerOptions : 'id' : 'displayName'
-    }}</span>
-  </div>
+  @if (loansAccount.loanOfficerId) {
+    <div class="flex-fill">
+      <span class="flex-40">{{ 'labels.inputs.Loan officer' | translate }}:</span>
+      <span class="flex-60">{{
+        loansAccount.loanOfficerId | find: loansAccountProductTemplate.loanOfficerOptions : 'id' : 'displayName'
+      }}</span>
+    </div>
+  }
 
-  <div class="flex-fill" *ngIf="loansAccount.loanPurposeId">
-    <span class="flex-40">{{ 'labels.inputs.Loan purpose' | translate }}:</span>
-    <span class="flex-60">{{
-      loansAccount.loanPurposeId | find: loansAccountProductTemplate.loanPurposeOptions : 'id' : 'name'
-    }}</span>
-  </div>
+  @if (loansAccount.loanPurposeId) {
+    <div class="flex-fill">
+      <span class="flex-40">{{ 'labels.inputs.Loan purpose' | translate }}:</span>
+      <span class="flex-60">{{
+        loansAccount.loanPurposeId | find: loansAccountProductTemplate.loanPurposeOptions : 'id' : 'name'
+      }}</span>
+    </div>
+  }
 
-  <div class="flex-fill" *ngIf="loansAccount.fundId">
-    <span class="flex-40">{{ 'labels.inputs.Fund' | translate }}:</span>
-    <span class="flex-60">{{
-      loansAccount.fundId | find: loansAccountProductTemplate.fundOptions : 'id' : 'name'
-    }}</span>
-  </div>
+  @if (loansAccount.fundId) {
+    <div class="flex-fill">
+      <span class="flex-40">{{ 'labels.inputs.Fund' | translate }}:</span>
+      <span class="flex-60">{{
+        loansAccount.fundId | find: loansAccountProductTemplate.fundOptions : 'id' : 'name'
+      }}</span>
+    </div>
+  }
 
   <div class="flex-fill">
     <span class="flex-40">{{ 'labels.inputs.Submitted on' | translate }}:</span>
@@ -44,14 +50,16 @@
     <span class="flex-60">{{ loansAccount.expectedDisbursementDate | dateFormat }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="loansAccount.externalId">
-    <span class="flex-40">{{ 'labels.inputs.External id' | translate }}:</span>
-    <span class="flex-60">
-      <mifosx-external-identifier externalId="{{ loansAccount.externalId }}"></mifosx-external-identifier>
-    </span>
-  </div>
+  @if (loansAccount.externalId) {
+    <div class="flex-fill">
+      <span class="flex-40">{{ 'labels.inputs.External id' | translate }}:</span>
+      <span class="flex-60">
+        <mifosx-external-identifier externalId="{{ loansAccount.externalId }}"></mifosx-external-identifier>
+      </span>
+    </div>
+  }
 
-  <ng-container *ngIf="activeClientMembers">
+  @if (activeClientMembers) {
     <h3 class="mat-h3 margin-t flex-fill">{{ 'labels.heading.Client Members' | translate }}</h3>
     <mat-divider class="flex-fill"></mat-divider>
     <div class="flex-60">
@@ -61,19 +69,16 @@
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Client ID' | translate }}</th>
           <td mat-cell *matCellDef="let element">{{ element.id }}</td>
         </ng-container>
-
         <!-- Name Column -->
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Client Name' | translate }}</th>
           <td mat-cell *matCellDef="let element">{{ element.displayName }}</td>
         </ng-container>
-
         <!-- Purpose Column -->
         <ng-container matColumnDef="purpose">
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Loan Purpose' | translate }}</th>
           <td mat-cell *matCellDef="let element">{{ element.purpose }}</td>
         </ng-container>
-
         <!-- Principal Column -->
         <ng-container matColumnDef="principal">
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Original Loan' | translate }}</th>
@@ -81,12 +86,11 @@
             {{ element.principal | currency: loansAccountProductTemplate.currency.code : 'symbol-narrow' : '1.2-2' }}
           </td>
         </ng-container>
-
         <tr mat-header-row *matHeaderRowDef="membersDisplayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: membersDisplayedColumns"></tr>
       </table>
     </div>
-  </ng-container>
+  }
 
   <h3 class="mat-h3 margin-t flex-fill">{{ 'labels.heading.Terms' | translate }}</h3>
 
@@ -134,39 +138,51 @@
     >
   </div>
 
-  <div class="flex-fill" *ngIf="productEnableDownPayment">
-    <span class="flex-40">{{ 'labels.inputs.Enable Down Payments' | translate }}:</span>
-    <span class="flex-60">{{ loansAccount.enableDownPayment | yesNo }}</span>
-  </div>
+  @if (productEnableDownPayment) {
+    <div class="flex-fill">
+      <span class="flex-40">{{ 'labels.inputs.Enable Down Payments' | translate }}:</span>
+      <span class="flex-60">{{ loansAccount.enableDownPayment | yesNo }}</span>
+    </div>
+  }
 
-  <div class="flex-fill" *ngIf="loansAccount.repaymentsStartingFromDate">
-    <span class="flex-40">{{ 'labels.inputs.First repayment on' | translate }}:</span>
-    <span class="flex-60">{{ loansAccount.repaymentsStartingFromDate | dateFormat }}</span>
-  </div>
+  @if (loansAccount.repaymentsStartingFromDate) {
+    <div class="flex-fill">
+      <span class="flex-40">{{ 'labels.inputs.First repayment on' | translate }}:</span>
+      <span class="flex-60">{{ loansAccount.repaymentsStartingFromDate | dateFormat }}</span>
+    </div>
+  }
 
-  <div class="flex-fill" *ngIf="loansAccount.interestChargedFromDate">
-    <span class="flex-40">{{ 'labels.inputs.Interest charged from' | translate }}:</span>
-    <span class="flex-60">{{ loansAccount.interestChargedFromDate | dateFormat }}</span>
-  </div>
+  @if (loansAccount.interestChargedFromDate) {
+    <div class="flex-fill">
+      <span class="flex-40">{{ 'labels.inputs.Interest charged from' | translate }}:</span>
+      <span class="flex-60">{{ loansAccount.interestChargedFromDate | dateFormat }}</span>
+    </div>
+  }
 
-  <div class="flex-fill" *ngIf="loansAccount.interestRatePerPeriod">
-    <span class="flex-40">{{ 'labels.inputs.Nominal interest rate' | translate }}:</span>
-    <span class="flex-60"
-      >{{ loansAccount.interestRatePerPeriod }}&nbsp;&nbsp;{{
-        loansAccountProductTemplate.interestRateFrequencyType.value
-      }}</span
-    >
-  </div>
+  @if (loansAccount.interestRatePerPeriod) {
+    <div class="flex-fill">
+      <span class="flex-40">{{ 'labels.inputs.Nominal interest rate' | translate }}:</span>
+      <span class="flex-60"
+        >{{ loansAccount.interestRatePerPeriod }}&nbsp;&nbsp;{{
+          loansAccountProductTemplate.interestRateFrequencyType.value
+        }}</span
+      >
+    </div>
+  }
 
-  <div class="flex-fill" *ngIf="loansAccount.interestType">
-    <span class="flex-40">{{ 'labels.inputs.Interest method' | translate }}: </span>
-    <span class="flex-60">{{ loansAccount.interestType }}</span>
-  </div>
+  @if (loansAccount.interestType) {
+    <div class="flex-fill">
+      <span class="flex-40">{{ 'labels.inputs.Interest method' | translate }}: </span>
+      <span class="flex-60">{{ loansAccount.interestType }}</span>
+    </div>
+  }
 
-  <div class="flex-fill" *ngIf="loansAccount.isEqualAmortization">
-    <span class="flex-40">{{ 'labels.inputs.Is Equal Amortization' | translate }}:</span>
-    <span class="flex-60">{{ loansAccount.isEqualAmortization }}</span>
-  </div>
+  @if (loansAccount.isEqualAmortization) {
+    <div class="flex-fill">
+      <span class="flex-40">{{ 'labels.inputs.Is Equal Amortization' | translate }}:</span>
+      <span class="flex-60">{{ loansAccount.isEqualAmortization }}</span>
+    </div>
+  }
 
   <div class="flex-fill">
     <span class="flex-40">{{ 'labels.inputs.Amortization' | translate }}</span>
@@ -183,20 +199,28 @@
     }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="loansAccount.allowPartialPeriodInterestCalculation">
-    <span class="flex-40">{{ 'labels.inputs.Calculate interest for exact days in partial period' | translate }}:</span>
-    <span class="flex-60">{{ loansAccount.allowPartialPeriodInterestCalculation }}</span>
-  </div>
+  @if (loansAccount.allowPartialPeriodInterestCalculation) {
+    <div class="flex-fill">
+      <span class="flex-40"
+        >{{ 'labels.inputs.Calculate interest for exact days in partial period' | translate }}:</span
+      >
+      <span class="flex-60">{{ loansAccount.allowPartialPeriodInterestCalculation }}</span>
+    </div>
+  }
 
-  <div class="flex-fill" *ngIf="loansAccount.inArrearsTolerance">
-    <span class="flex-40">{{ 'labels.inputs.Arrears tolerance' | translate }}: </span>
-    <span class="flex-60">{{ loansAccount.inArrearsTolerance }}</span>
-  </div>
+  @if (loansAccount.inArrearsTolerance) {
+    <div class="flex-fill">
+      <span class="flex-40">{{ 'labels.inputs.Arrears tolerance' | translate }}: </span>
+      <span class="flex-60">{{ loansAccount.inArrearsTolerance }}</span>
+    </div>
+  }
 
-  <div class="flex-fill" *ngIf="loansAccount.graceOnInterestCharged">
-    <span class="flex-40">{{ 'labels.inputs.Interest free period' | translate }}: </span>
-    <span class="flex-60">{{ loansAccount.graceOnInterestCharged }}</span>
-  </div>
+  @if (loansAccount.graceOnInterestCharged) {
+    <div class="flex-fill">
+      <span class="flex-40">{{ 'labels.inputs.Interest free period' | translate }}: </span>
+      <span class="flex-60">{{ loansAccount.graceOnInterestCharged }}</span>
+    </div>
+  }
 
   <div class="flex-fill">
     <span class="flex-40">{{ 'labels.inputs.Repayment strategy' | translate }}: </span>
@@ -219,138 +243,139 @@
   <h3 class="mat-h3 margin-t flex-fill">{{ 'labels.heading.Moratorium' | translate }}</h3>
 
   <mat-divider class="flex-fill"></mat-divider>
-  <div class="flex-fill" *ngIf="loansAccount.graceOnPrincipalPayment">
-    <span class="flex-40">{{ 'labels.inputs.On principal payment' | translate }}: </span>
-    <span class="flex-60">{{ loansAccount.graceOnPrincipalPayment }}</span>
-  </div>
+  @if (loansAccount.graceOnPrincipalPayment) {
+    <div class="flex-fill">
+      <span class="flex-40">{{ 'labels.inputs.On principal payment' | translate }}: </span>
+      <span class="flex-60">{{ loansAccount.graceOnPrincipalPayment }}</span>
+    </div>
+  }
 
-  <div class="flex-fill" *ngIf="loansAccount.graceOnInterestPayment">
-    <span class="flex-40">{{ 'labels.inputs.On interest payment' | translate }}: </span>
-    <span class="flex-60">{{ loansAccount.graceOnInterestPayment }}</span>
-  </div>
+  @if (loansAccount.graceOnInterestPayment) {
+    <div class="flex-fill">
+      <span class="flex-40">{{ 'labels.inputs.On interest payment' | translate }}: </span>
+      <span class="flex-60">{{ loansAccount.graceOnInterestPayment }}</span>
+    </div>
+  }
 
-  <div class="flex-fill" *ngIf="loansAccount.graceOnArrearsAgeing">
-    <span class="flex-40">{{ 'labels.inputs.On Arrears Aging' | translate }}: </span>
-    <span class="flex-60">{{ loansAccount.graceOnArrearsAgeing }}</span>
-  </div>
+  @if (loansAccount.graceOnArrearsAgeing) {
+    <div class="flex-fill">
+      <span class="flex-40">{{ 'labels.inputs.On Arrears Aging' | translate }}: </span>
+      <span class="flex-60">{{ loansAccount.graceOnArrearsAgeing }}</span>
+    </div>
+  }
 
   <div class="flex-fill">
     <span class="flex-40"> {{ 'labels.inputs.Enable installment level Delinquency' | translate }} </span>
     <span class="flex-60"> {{ loansAccount.enableInstallmentLevelDelinquency | yesNo }} </span>
   </div>
 
-  <div class="flex-fill" *ngIf="loansAccount.isTopup">
-    <span class="flex-40">{{ 'labels.inputs.Is Topup Loan' | translate }}? </span>
-    <span class="flex-60">{{ loansAccount.isTopup }}</span>
-  </div>
+  @if (loansAccount.isTopup) {
+    <div class="flex-fill">
+      <span class="flex-40">{{ 'labels.inputs.Is Topup Loan' | translate }}? </span>
+      <span class="flex-60">{{ loansAccount.isTopup }}</span>
+    </div>
+  }
 
   <div class="flex-fill">
     <span class="flex-40">{{ 'labels.inputs.Recalculate Interest' | translate }}: </span>
     <span class="flex-60">{{ loansAccountProductTemplate?.isInterestRecalculationEnabled | yesNo }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="loansAccountProductTemplate?.daysInMonthType">
-    <span class="flex-40">{{ 'labels.inputs.Days in month' | translate }}: </span>
-    <span class="flex-60">{{ loansAccountProductTemplate?.daysInMonthType.value }}</span>
-  </div>
+  @if (loansAccountProductTemplate?.daysInMonthType) {
+    <div class="flex-fill">
+      <span class="flex-40">{{ 'labels.inputs.Days in month' | translate }}: </span>
+      <span class="flex-60">{{ loansAccountProductTemplate?.daysInMonthType.value }}</span>
+    </div>
+  }
 
-  <div *ngIf="loansAccount.charges.length" class="layout-row-wrap responsive-column flex-fill margin-t">
-    <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Charges' | translate }}</h3>
-
-    <mat-divider class="flex-fill"></mat-divider>
-    <table class="flex-fill mat-elevation-z1" mat-table [dataSource]="loansAccount.charges">
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
-        <td mat-cell *matCellDef="let charge">
-          {{ charge.name + ', ' + (charge.currency?.displaySymbol || '') }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="chargeCalculationType">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Type' | translate }}</th>
-        <td mat-cell *matCellDef="let charge">
-          {{ charge.chargeCalculationType.value }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="amount">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
-        <td mat-cell *matCellDef="let charge">
-          {{ charge.amount }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="chargeTimeType">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Collected On' | translate }}</th>
-        <td mat-cell *matCellDef="let charge">
-          {{ charge.chargeTimeType.value }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="date">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Date' | translate }}</th>
-        <td mat-cell *matCellDef="let charge">
-          <span
-            *ngIf="charge.chargeTimeType.value === 'Specified due date' || charge.chargeTimeType.value === 'Weekly Fee'"
-          >
-            {{ (charge.dueDate | dateFormat) || 'Unassigned' }}
-          </span>
-          <span *ngIf="charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee'">
-            {{ (charge.feeOnMonthDay | dateFormat) || 'Unassigned' }}
-          </span>
-          <span
-            *ngIf="
+  @if (loansAccount.charges.length) {
+    <div class="layout-row-wrap responsive-column flex-fill margin-t">
+      <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Charges' | translate }}</h3>
+      <mat-divider class="flex-fill"></mat-divider>
+      <table class="flex-fill mat-elevation-z1" mat-table [dataSource]="loansAccount.charges">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
+          <td mat-cell *matCellDef="let charge">
+            {{ charge.name + ', ' + (charge.currency?.displaySymbol || '') }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="chargeCalculationType">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Type' | translate }}</th>
+          <td mat-cell *matCellDef="let charge">
+            {{ charge.chargeCalculationType.value }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
+          <td mat-cell *matCellDef="let charge">
+            {{ charge.amount }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="chargeTimeType">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Collected On' | translate }}</th>
+          <td mat-cell *matCellDef="let charge">
+            {{ charge.chargeTimeType.value }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Date' | translate }}</th>
+          <td mat-cell *matCellDef="let charge">
+            @if (charge.chargeTimeType.value === 'Specified due date' || charge.chargeTimeType.value === 'Weekly Fee') {
+              <span>
+                {{ (charge.dueDate | dateFormat) || 'Unassigned' }}
+              </span>
+            }
+            @if (charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee') {
+              <span>
+                {{ (charge.feeOnMonthDay | dateFormat) || 'Unassigned' }}
+              </span>
+            }
+            @if (
               !(
                 charge.chargeTimeType.value === 'Monthly Fee' ||
                 charge.chargeTimeType.value === 'Annual Fee' ||
                 charge.chargeTimeType.value === 'Specified due date' ||
                 charge.chargeTimeType.value === 'Weekly Fee'
               )
-            "
-          >
-            {{ 'labels.inputs.N/A' | translate }}
-          </span>
-        </td>
-      </ng-container>
+            ) {
+              <span>
+                {{ 'labels.inputs.N/A' | translate }}
+              </span>
+            }
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="chargesDisplayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: chargesDisplayedColumns"></tr>
+      </table>
+    </div>
+  }
 
-      <tr mat-header-row *matHeaderRowDef="chargesDisplayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: chargesDisplayedColumns"></tr>
-    </table>
-  </div>
-
-  <div
-    *ngIf="loansAccountProductTemplate.overdueCharges.length"
-    class="flex-fill layout-row-wrap layout-xs-column margin-t"
-  >
-    <h3 class="mat-h3 flex-98">{{ 'labels.heading.Overdue Charges' | translate }}</h3>
-
-    <mat-divider class="flex-98"></mat-divider>
-
-    <table mat-table class="mat-elevation-z1" [dataSource]="loansAccountProductTemplate.overdueCharges">
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
-        <td mat-cell *matCellDef="let charge">{{ charge.name + ', ' + (charge.currency?.displaySymbol || '') }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="type">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Type' | translate }}</th>
-        <td mat-cell *matCellDef="let charge">{{ charge.chargeCalculationType.value }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="amount">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
-        <td mat-cell *matCellDef="let charge">{{ charge.amount | formatNumber }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="collectedon">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Collected On' | translate }}</th>
-        <td mat-cell *matCellDef="let charge">{{ charge.chargeTimeType.value }}</td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="overdueChargesDisplayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: overdueChargesDisplayedColumns"></tr>
-    </table>
-  </div>
+  @if (loansAccountProductTemplate.overdueCharges.length) {
+    <div class="flex-fill layout-row-wrap layout-xs-column margin-t">
+      <h3 class="mat-h3 flex-98">{{ 'labels.heading.Overdue Charges' | translate }}</h3>
+      <mat-divider class="flex-98"></mat-divider>
+      <table mat-table class="mat-elevation-z1" [dataSource]="loansAccountProductTemplate.overdueCharges">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
+          <td mat-cell *matCellDef="let charge">{{ charge.name + ', ' + (charge.currency?.displaySymbol || '') }}</td>
+        </ng-container>
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Type' | translate }}</th>
+          <td mat-cell *matCellDef="let charge">{{ charge.chargeCalculationType.value }}</td>
+        </ng-container>
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
+          <td mat-cell *matCellDef="let charge">{{ charge.amount | formatNumber }}</td>
+        </ng-container>
+        <ng-container matColumnDef="collectedon">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Collected On' | translate }}</th>
+          <td mat-cell *matCellDef="let charge">{{ charge.chargeTimeType.value }}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="overdueChargesDisplayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: overdueChargesDisplayedColumns"></tr>
+      </table>
+    </div>
+  }
 </div>
 
 <div class="layout-row responsive-column align-center gap-2px margin-t">

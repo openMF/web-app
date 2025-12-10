@@ -1,5 +1,5 @@
 /** Angular Imports  */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, FormArray, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,7 +12,7 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
 import { DisableDialogComponent } from '../../../shared/disable-dialog/disable-dialog.component';
 import { EnableDialogComponent } from '../../../shared/enable-dialog/enable-dialog.component';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { NgIf, NgFor, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { MatList, MatListItem } from '@angular/material/list';
 import { MatDivider } from '@angular/material/divider';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -40,6 +40,14 @@ import { AuthService } from 'app/zitadel/auth.service';
   ]
 })
 export class ViewRoleComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private systemService = inject(SystemService);
+  private router = inject(Router);
+  private formBuilder = inject(UntypedFormBuilder);
+  private translateService = inject(TranslateService);
+  dialog = inject(MatDialog);
+  private authService = inject(AuthService);
+
   /** Role Permissions Data */
   rolePermissionService: any;
   /** Stores the current grouping */
@@ -83,15 +91,7 @@ export class ViewRoleComponent implements OnInit {
    * @param {MatDialog} dialog Shared Dialog Boxes.
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private systemService: SystemService,
-    private router: Router,
-    private formBuilder: UntypedFormBuilder,
-    private translateService: TranslateService,
-    public dialog: MatDialog,
-    private authService: AuthService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { roledetails: any }) => {
       this.rolePermissionService = data.roledetails;
     });

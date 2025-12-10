@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 /** Custom Services */
@@ -14,14 +14,8 @@ const log = new Logger('AuthenticationGuard');
  */
 @Injectable()
 export class AuthenticationGuard {
-  /**
-   * @param {Router} router Router for navigation.
-   * @param {AuthenticationService} authenticationService Authentication Service.
-   */
-  constructor(
-    private router: Router,
-    private authenticationService: AuthenticationService
-  ) {}
+  private router = inject(Router);
+  private authenticationService = inject(AuthenticationService);
 
   /**
    * Ensures route access is authorized only when user is authenticated, otherwise redirects to login.

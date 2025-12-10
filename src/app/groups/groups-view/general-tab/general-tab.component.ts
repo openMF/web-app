@@ -1,7 +1,7 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { NgIf, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import {
   MatTable,
   MatColumnDef,
@@ -48,6 +48,9 @@ import { GroupsService } from '../../groups.service';
   ]
 })
 export class GeneralTabComponent {
+  private route = inject(ActivatedRoute);
+  private groupsService = inject(GroupsService);
+
   /** Group's all accounts data */
   groupAccountData: any;
   /** Group's loan accounts data */
@@ -124,10 +127,7 @@ export class GeneralTabComponent {
   /** Boolean for toggling savings accounts table */
   showClosedSavingAccounts = false;
 
-  constructor(
-    private route: ActivatedRoute,
-    private groupsService: GroupsService
-  ) {
+  constructor() {
     this.route.data.subscribe(
       (data: { groupAccountsData: any; groupClientMembers: any; groupSummary: any; glimData: any; gsimData: any }) => {
         this.glimAccounts = data.glimData;

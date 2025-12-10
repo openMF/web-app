@@ -1,8 +1,10 @@
 <div class="container">
   <mat-card>
-    <h2 mat-title *ngIf="transactionType.withdrawal">
-      {{ 'labels.menus.' + actionName | translate }} {{ 'labels.heading.Recurring Deposit Transactions' | translate }}
-    </h2>
+    @if (transactionType.withdrawal) {
+      <h2 mat-title>
+        {{ 'labels.menus.' + actionName | translate }} {{ 'labels.heading.Recurring Deposit Transactions' | translate }}
+      </h2>
+    }
 
     <form [formGroup]="depositRecurringDepositForm" (ngSubmit)="submit()">
       <mat-card-content>
@@ -19,10 +21,12 @@
             />
             <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transactionDatePicker></mat-datepicker>
-            <mat-error *ngIf="depositRecurringDepositForm.controls.transactionDate.hasError('required')">
-              {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (depositRecurringDepositForm.controls.transactionDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mifosx-input-amount
@@ -36,14 +40,18 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Payment Type Id' | translate }}</mat-label>
             <mat-select formControlName="paymentTypeId" required>
-              <mat-option *ngFor="let paymentType of paymentTypes" [value]="paymentType.id">
-                {{ paymentType.name }}
-              </mat-option>
+              @for (paymentType of paymentTypes; track paymentType) {
+                <mat-option [value]="paymentType.id">
+                  {{ paymentType.name }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error *ngIf="depositRecurringDepositForm.controls.paymentTypeId.hasError('required')">
-              {{ 'labels.inputs.Payment Type' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (depositRecurringDepositForm.controls.paymentTypeId.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Payment Type' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <div class="flex-fill">
@@ -56,32 +64,28 @@
             </span>
           </div>
 
-          <ng-container *ngIf="showPaymentDetails">
+          @if (showPaymentDetails) {
             <mat-form-field>
               <mat-label> {{ 'labels.inputs.Account' | translate }} #</mat-label>
               <input matInput formControlName="accountNumber" />
             </mat-form-field>
-
             <mat-form-field>
               <mat-label>{{ 'labels.inputs.Cheque' | translate }} #</mat-label>
               <input matInput formControlName="checkNumber" />
             </mat-form-field>
-
             <mat-form-field>
               <mat-label>{{ 'labels.inputs.Routing Code' | translate }}</mat-label>
               <input matInput formControlName="routingCode" />
             </mat-form-field>
-
             <mat-form-field>
               <mat-label>{{ 'labels.inputs.Reciept' | translate }} #</mat-label>
               <input matInput formControlName="receiptNumber" />
             </mat-form-field>
-
             <mat-form-field>
               <mat-label>{{ 'labels.inputs.Bank' | translate }} #</mat-label>
               <input matInput formControlName="bankNumber" />
             </mat-form-field>
-          </ng-container>
+          }
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>

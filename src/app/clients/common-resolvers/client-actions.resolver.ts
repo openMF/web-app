@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
@@ -14,14 +14,8 @@ import { ProductsService } from 'app/products/products.service';
  */
 @Injectable()
 export class ClientActionsResolver {
-  /**
-   * @param {ClientsService} clientsService Clients service.
-   * @param {ProductsService} productsService Products Service
-   */
-  constructor(
-    private clientsService: ClientsService,
-    private productsService: ProductsService
-  ) {}
+  private clientsService = inject(ClientsService);
+  private productsService = inject(ProductsService);
 
   /**
    * Returns the clients actions data.

@@ -6,136 +6,145 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
             <mat-select required formControlName="officeId">
-              <mat-option *ngFor="let office of officeData" [value]="office.id">
-                {{ office.name }}
-              </mat-option>
+              @for (office of officeData; track office) {
+                <mat-option [value]="office.id">
+                  {{ office.name }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error *ngIf="frequentPostingsForm.controls.officeId.hasError('required')">
-              {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (frequentPostingsForm.controls.officeId.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Accounting Rule' | translate }}</mat-label>
             <mat-select required formControlName="accountingRule">
-              <mat-option *ngFor="let accountingRule of accountingRuleData" [value]="accountingRule">
-                {{ accountingRule.name }}
-              </mat-option>
+              @for (accountingRule of accountingRuleData; track accountingRule) {
+                <mat-option [value]="accountingRule">
+                  {{ accountingRule.name }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error *ngIf="frequentPostingsForm.controls.accountingRule.hasError('required')">
-              {{ 'labels.inputs.Accounting Rule' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (frequentPostingsForm.controls.accountingRule.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Accounting Rule' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
             <mat-select required formControlName="currencyCode">
-              <mat-option *ngFor="let currency of currencyData" [value]="currency.code">
-                {{ currency.displayLabel }}
-              </mat-option>
+              @for (currency of currencyData; track currency) {
+                <mat-option [value]="currency.code">
+                  {{ currency.displayLabel }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error *ngIf="frequentPostingsForm.controls.currencyCode.hasError('required')">
-              {{ 'labels.inputs.Currency' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (frequentPostingsForm.controls.currencyCode.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Currency' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <span class="flex-48 hide-lt-md"></span>
 
-          <div
-            class="flex-fill layout-row-wrap responsive-column"
-            formArrayName="debits"
-            *ngFor="let debit of debits.controls; let i = index"
-          >
-            <div class="flex-fill layout-row-wrap gap-2percent responsive-column" [formGroupName]="i">
-              <mat-form-field class="flex-48">
-                <mat-label>{{ 'labels.inputs.Affected GL Entry (Debit)' | translate }}</mat-label>
-                <mat-select required formControlName="glAccountId">
-                  <mat-option *ngFor="let affectedGLEntryDebit of debitAccountData" [value]="affectedGLEntryDebit.id">
-                    {{ affectedGLEntryDebit.name }}
-                  </mat-option>
-                </mat-select>
-                <mat-error *ngIf="debits.at(i).controls.glAccountId.hasError('required')">
-                  {{ 'labels.inputs.Affected GL Entry (Debit)' | translate }} {{ 'labels.commons.is' | translate }}
-                  <strong>{{ 'labels.commons.required' | translate }}</strong>
-                </mat-error>
-              </mat-form-field>
-
-              <mat-form-field class="flex-43">
-                <mat-label>{{ 'labels.inputs.Debit Amount' | translate }}</mat-label>
-                <input type="number" matInput required formControlName="amount" />
-                <mat-error *ngIf="debits.at(i).controls.amount.hasError('required')">
-                  {{ 'labels.inputs.Debit Amount' | translate }} {{ 'labels.commons.is' | translate }}
-                  <strong>{{ 'labels.commons.required' | translate }}</strong>
-                </mat-error>
-              </mat-form-field>
-
-              <span class="flex-fill">
-                <button *ngIf="i !== 0" type="button" mat-icon-button (click)="removeAffectedGLEntry(debits, i)">
-                  <fa-icon icon="minus-circle" size="lg"></fa-icon>
-                </button>
-                <button
-                  *ngIf="i === 0 && allowMultipleDebitEntries"
-                  type="button"
-                  mat-icon-button
-                  color="primary"
-                  (click)="addAffectedGLEntry(debits)"
-                >
-                  <fa-icon icon="plus-circle" size="lg"></fa-icon>
-                </button>
-              </span>
+          @for (debit of debits.controls; track debit; let i = $index) {
+            <div class="flex-fill layout-row-wrap responsive-column" formArrayName="debits">
+              <div class="flex-fill layout-row-wrap gap-2percent responsive-column" [formGroupName]="i">
+                <mat-form-field class="flex-48">
+                  <mat-label>{{ 'labels.inputs.Affected GL Entry (Debit)' | translate }}</mat-label>
+                  <mat-select required formControlName="glAccountId">
+                    @for (affectedGLEntryDebit of debitAccountData; track affectedGLEntryDebit) {
+                      <mat-option [value]="affectedGLEntryDebit.id">
+                        {{ affectedGLEntryDebit.name }}
+                      </mat-option>
+                    }
+                  </mat-select>
+                  @if (debits.at(i).controls.glAccountId.hasError('required')) {
+                    <mat-error>
+                      {{ 'labels.inputs.Affected GL Entry (Debit)' | translate }} {{ 'labels.commons.is' | translate }}
+                      <strong>{{ 'labels.commons.required' | translate }}</strong>
+                    </mat-error>
+                  }
+                </mat-form-field>
+                <mat-form-field class="flex-43">
+                  <mat-label>{{ 'labels.inputs.Debit Amount' | translate }}</mat-label>
+                  <input type="number" matInput required formControlName="amount" />
+                  @if (debits.at(i).controls.amount.hasError('required')) {
+                    <mat-error>
+                      {{ 'labels.inputs.Debit Amount' | translate }} {{ 'labels.commons.is' | translate }}
+                      <strong>{{ 'labels.commons.required' | translate }}</strong>
+                    </mat-error>
+                  }
+                </mat-form-field>
+                <span class="flex-fill">
+                  @if (i !== 0) {
+                    <button type="button" mat-icon-button (click)="removeAffectedGLEntry(debits, i)">
+                      <fa-icon icon="minus-circle" size="lg"></fa-icon>
+                    </button>
+                  }
+                  @if (i === 0 && allowMultipleDebitEntries) {
+                    <button type="button" mat-icon-button color="primary" (click)="addAffectedGLEntry(debits)">
+                      <fa-icon icon="plus-circle" size="lg"></fa-icon>
+                    </button>
+                  }
+                </span>
+              </div>
             </div>
-          </div>
+          }
 
-          <div
-            class="flex-fill layout-row-wrap responsive-column"
-            formArrayName="credits"
-            *ngFor="let credit of credits.controls; let i = index"
-          >
-            <div class="flex-fill layout-row-wrap gap-2percent responsive-column" [formGroupName]="i">
-              <mat-form-field class="flex-48">
-                <mat-label>{{ 'labels.inputs.Affected GL Entry (Credit)' | translate }}</mat-label>
-                <mat-select required formControlName="glAccountId">
-                  <mat-option
-                    *ngFor="let affectedGLEntryCredit of creditAccountData"
-                    [value]="affectedGLEntryCredit.id"
-                  >
-                    {{ affectedGLEntryCredit.name }}
-                  </mat-option>
-                </mat-select>
-                <mat-error *ngIf="credits.at(i).controls.glAccountId.hasError('required')">
-                  {{ 'labels.inputs.Affected GL Entry (Credit)' | translate }} {{ 'labels.commons.is' | translate }}
-                  <strong>{{ 'labels.commons.required' | translate }}</strong>
-                </mat-error>
-              </mat-form-field>
-
-              <mat-form-field class="flex-43">
-                <mat-label>{{ 'labels.inputs.Credit Amount' | translate }}</mat-label>
-                <input type="number" matInput required formControlName="amount" />
-                <mat-error *ngIf="credits.at(i).controls.amount.hasError('required')">
-                  {{ 'labels.inputs.Credit Amount' | translate }} {{ 'labels.commons.is' | translate }}
-                  <strong>{{ 'labels.commons.required' | translate }}</strong>
-                </mat-error>
-              </mat-form-field>
-
-              <span class="flex-fill">
-                <button *ngIf="i !== 0" type="button" mat-icon-button (click)="removeAffectedGLEntry(credits, i)">
-                  <fa-icon icon="minus-circle" size="lg"></fa-icon>
-                </button>
-                <button
-                  *ngIf="i === 0 && allowMultipleCreditEntries"
-                  type="button"
-                  mat-icon-button
-                  color="primary"
-                  (click)="addAffectedGLEntry(credits)"
-                >
-                  <fa-icon icon="plus-circle" size="lg"></fa-icon>
-                </button>
-              </span>
+          @for (credit of credits.controls; track credit; let i = $index) {
+            <div class="flex-fill layout-row-wrap responsive-column" formArrayName="credits">
+              <div class="flex-fill layout-row-wrap gap-2percent responsive-column" [formGroupName]="i">
+                <mat-form-field class="flex-48">
+                  <mat-label>{{ 'labels.inputs.Affected GL Entry (Credit)' | translate }}</mat-label>
+                  <mat-select required formControlName="glAccountId">
+                    @for (affectedGLEntryCredit of creditAccountData; track affectedGLEntryCredit) {
+                      <mat-option [value]="affectedGLEntryCredit.id">
+                        {{ affectedGLEntryCredit.name }}
+                      </mat-option>
+                    }
+                  </mat-select>
+                  @if (credits.at(i).controls.glAccountId.hasError('required')) {
+                    <mat-error>
+                      {{ 'labels.inputs.Affected GL Entry (Credit)' | translate }} {{ 'labels.commons.is' | translate }}
+                      <strong>{{ 'labels.commons.required' | translate }}</strong>
+                    </mat-error>
+                  }
+                </mat-form-field>
+                <mat-form-field class="flex-43">
+                  <mat-label>{{ 'labels.inputs.Credit Amount' | translate }}</mat-label>
+                  <input type="number" matInput required formControlName="amount" />
+                  @if (credits.at(i).controls.amount.hasError('required')) {
+                    <mat-error>
+                      {{ 'labels.inputs.Credit Amount' | translate }} {{ 'labels.commons.is' | translate }}
+                      <strong>{{ 'labels.commons.required' | translate }}</strong>
+                    </mat-error>
+                  }
+                </mat-form-field>
+                <span class="flex-fill">
+                  @if (i !== 0) {
+                    <button type="button" mat-icon-button (click)="removeAffectedGLEntry(credits, i)">
+                      <fa-icon icon="minus-circle" size="lg"></fa-icon>
+                    </button>
+                  }
+                  @if (i === 0 && allowMultipleCreditEntries) {
+                    <button type="button" mat-icon-button color="primary" (click)="addAffectedGLEntry(credits)">
+                      <fa-icon icon="plus-circle" size="lg"></fa-icon>
+                    </button>
+                  }
+                </span>
+              </div>
             </div>
-          </div>
+          }
 
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Reference Number' | translate }}</mat-label>
@@ -154,18 +163,22 @@
             />
             <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transactionDatePicker></mat-datepicker>
-            <mat-error *ngIf="frequentPostingsForm.controls.transactionDate.hasError('required')">
-              {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (frequentPostingsForm.controls.transactionDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Payment Type' | translate }}</mat-label>
             <mat-select formControlName="paymentTypeId">
-              <mat-option *ngFor="let paymentType of paymentTypeData" [value]="paymentType.id">
-                {{ paymentType.name }}
-              </mat-option>
+              @for (paymentType of paymentTypeData; track paymentType) {
+                <mat-option [value]="paymentType.id">
+                  {{ paymentType.name }}
+                </mat-option>
+              }
             </mat-select>
           </mat-form-field>
 

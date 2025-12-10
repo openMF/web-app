@@ -35,9 +35,11 @@
                 <span class="m-r-10"
                   >{{ 'labels.text.' + entityType | translate }} {{ 'labels.inputs.name' | translate }} :</span
                 >{{ sharesAccountData.clientName || sharesAccountData.groupName }}
-                <span class="m-l-10" *ngIf="sharesAccountData.clientAccountNo">
-                  <mifosx-account-number accountNo="{{ sharesAccountData.clientAccountNo }}"></mifosx-account-number>
-                </span>
+                @if (sharesAccountData.clientAccountNo) {
+                  <span class="m-l-10">
+                    <mifosx-account-number accountNo="{{ sharesAccountData.clientAccountNo }}"></mifosx-account-number>
+                  </span>
+                }
               </span>
               <div>
                 <table class="account-overview">
@@ -46,13 +48,15 @@
                       <td>{{ 'labels.inputs.Current Market Price' | translate }} :</td>
                       <td>{{ sharesAccountData.currentMarketPrice | formatNumber }}</td>
                     </tr>
-                    <tr *ngIf="sharesAccountData.lockinPeriod">
-                      <td>{{ 'labels.inputs.Lockin Period' | translate }} :</td>
-                      <td>
-                        {{ sharesAccountData.lockinPeriod }}
-                        {{ sharesAccountData.lockPeriodTypeEnum.value | translateKey: 'catalogs' }}
-                      </td>
-                    </tr>
+                    @if (sharesAccountData.lockinPeriod) {
+                      <tr>
+                        <td>{{ 'labels.inputs.Lockin Period' | translate }} :</td>
+                        <td>
+                          {{ sharesAccountData.lockinPeriod }}
+                          {{ sharesAccountData.lockPeriodTypeEnum.value | translateKey: 'catalogs' }}
+                        </td>
+                      </tr>
+                    }
                   </tbody>
                 </table>
               </div>
@@ -60,17 +64,18 @@
 
             <span class="flex-auto"></span>
             <div class="flex-40">
-              <button
-                mat-icon-button
-                [matMenuTriggerFor]="accountMenu"
-                aria-label="Share account actions"
-                yPosition="below"
-                *ngIf="buttonConfig.singleButtons.length > 0"
-              >
-                <mat-icon matListIcon class="actions-menu">
-                  <fa-icon icon="bars" size="sm"></fa-icon>
-                </mat-icon>
-              </button>
+              @if (buttonConfig.singleButtons.length > 0) {
+                <button
+                  mat-icon-button
+                  [matMenuTriggerFor]="accountMenu"
+                  aria-label="Share account actions"
+                  yPosition="below"
+                >
+                  <mat-icon matListIcon class="actions-menu">
+                    <fa-icon icon="bars" size="sm"></fa-icon>
+                  </mat-icon>
+                </button>
+              }
             </div>
           </div>
         </mat-card-title>
@@ -78,25 +83,27 @@
     </mat-card-title-group>
 
     <mat-menu #accountMenu="matMenu">
-      <ng-container *ngFor="let item of buttonConfig.singleButtons">
+      @for (item of buttonConfig.singleButtons; track item) {
         <button mat-menu-item *mifosxHasPermission="item.taskPermissionName" (click)="doAction(item.name)">
           <mat-icon matListIcon>
             <fa-icon icon="{{ item.icon }}" size="sm"></fa-icon>
           </mat-icon>
           <span>{{ 'labels.menus.' + item.name | translate }}</span>
         </button>
-      </ng-container>
+      }
 
-      <ng-container *ngIf="buttonConfig.options.length">
+      @if (buttonConfig.options.length) {
         <button mat-menu-item [matMenuTriggerFor]="More">{{ 'labels.menus.More' | translate }}</button>
         <mat-menu #More="matMenu">
-          <span *ngFor="let option of buttonConfig.options">
-            <button mat-menu-item *mifosxHasPermission="option.taskPermissionName" (click)="doAction(option.name)">
-              {{ 'labels.menus.' + option.name | translate }}
-            </button>
-          </span>
+          @for (option of buttonConfig.options; track option) {
+            <span>
+              <button mat-menu-item *mifosxHasPermission="option.taskPermissionName" (click)="doAction(option.name)">
+                {{ 'labels.menus.' + option.name | translate }}
+              </button>
+            </span>
+          }
         </mat-menu>
-      </ng-container>
+      }
     </mat-menu>
   </mat-card-header>
 

@@ -15,10 +15,12 @@
             />
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #startDatePicker></mat-datepicker>
-            <mat-error *ngIf="createDividendForm.controls.dividendPeriodStartDate.hasError('required')">
-              {{ 'labels.inputs.Starting Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (createDividendForm.controls.dividendPeriodStartDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Starting Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field (click)="endDatePicker.open()">
@@ -33,19 +35,23 @@
             />
             <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #endDatePicker></mat-datepicker>
-            <mat-error *ngIf="createDividendForm.controls.dividendPeriodEndDate.hasError('required')">
-              {{ 'labels.inputs.End Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (createDividendForm.controls.dividendPeriodEndDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.End Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Dividend Amount' | translate }}</mat-label>
             <input matInput required formControlName="dividendAmount" />
-            <mat-error *ngIf="createDividendForm.controls.dividendAmount.hasError('required')">
-              {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (createDividendForm.controls.dividendAmount.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
         </div>
       </mat-card-content>

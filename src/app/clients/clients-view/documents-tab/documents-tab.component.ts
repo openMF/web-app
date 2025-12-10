@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -17,26 +17,19 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class DocumentsTabComponent {
+  private route = inject(ActivatedRoute);
+  private clientsService = inject(ClientsService);
+  dialog = inject(MatDialog);
+
   entityDocuments: any;
   entityId: string;
   entityType = 'clients';
 
-  constructor(
-    private route: ActivatedRoute,
-    private clientsService: ClientsService,
-    public dialog: MatDialog
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { clientDocuments: any }) => {
       this.entityDocuments = data.clientDocuments;
     });
     this.entityId = this.route.parent.snapshot.paramMap.get('clientId');
-  }
-
-  downloadDocument(documentId: string) {
-    this.clientsService.downloadClientDocument(this.entityId, documentId).subscribe((res) => {
-      const url = window.URL.createObjectURL(res);
-      window.open(url);
-    });
   }
 
   deleteDocument(documentId: string) {

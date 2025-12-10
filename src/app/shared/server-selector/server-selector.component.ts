@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
@@ -23,6 +23,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ServerSelectorComponent implements OnInit {
+  private settingsService = inject(SettingsService);
+  dialog = inject(MatDialog);
+  private formBuilder = inject(UntypedFormBuilder);
+
   /** Input server. */
   form: any;
 
@@ -34,15 +38,6 @@ export class ServerSelectorComponent implements OnInit {
 
   /** Server list to show */
   existMoreThanOneServer = false;
-
-  /**
-   * @param {SettingsService} settingsService Settings Service
-   */
-  constructor(
-    private settingsService: SettingsService,
-    public dialog: MatDialog,
-    private formBuilder: UntypedFormBuilder
-  ) {}
 
   ngOnInit(): void {
     this.servers = this.settingsService.servers;
