@@ -72,7 +72,14 @@ export class SavingProductSettingsStepComponent implements OnInit {
   createSavingProductSettingsForm() {
     this.savingProductSettingsForm = this.formBuilder.group({
       minRequiredOpeningBalance: [''],
-      lockinPeriodFrequency: [''],
+      lockinPeriodFrequency: [
+        '',
+        [
+          Validators.required,
+          Validators.min(1),
+          Validators.pattern('^[1-9]\\d*$')
+        ]
+      ],
       lockinPeriodFrequencyType: [''],
       withdrawalFeeForTransfers: [false],
       minBalanceForInterestCalculation: [''],

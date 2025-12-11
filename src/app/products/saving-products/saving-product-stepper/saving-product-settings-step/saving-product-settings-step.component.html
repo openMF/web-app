@@ -19,7 +19,20 @@
         matInput
         matTooltip="{{ 'tooltips.Used to indicate the length of time' | translate }}"
         formControlName="lockinPeriodFrequency"
+        min="1"
+        step="1"
+        required
       />
+      <mat-error *ngIf="savingProductSettingsForm.get('lockinPeriodFrequency').hasError('required')">
+        {{ 'labels.inputs.Frequency' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
+      </mat-error>
+      <mat-error *ngIf="savingProductSettingsForm.get('lockinPeriodFrequency').hasError('min')">
+        {{ 'tooltips.Frequency must be greater than zero' | translate }}
+      </mat-error>
+      <mat-error *ngIf="savingProductSettingsForm.get('lockinPeriodFrequency').hasError('pattern')">
+        {{ 'tooltips.Frequency must be a positive integer' | translate }}
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field class="flex-48">
