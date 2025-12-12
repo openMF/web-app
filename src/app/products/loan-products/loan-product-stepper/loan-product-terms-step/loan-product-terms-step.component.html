@@ -10,31 +10,29 @@
 
     <mat-form-field class="flex-31">
       <mat-label>{{ 'labels.inputs.Minimum' | translate }}</mat-label>
-      <input type="number" matInput formControlName="minPrincipal" [min]="0" />
-      <mat-error>
+      <input type="number" matInput formControlName="minPrincipal" [min]="1" step="0.01" />
+      <mat-error *ngIf="loanProductTermsForm.get('minPrincipal')?.hasError('min')">
         {{ 'labels.commons.Minimum Value must be' | translate }}
-        <strong>{{ 'labels.commons.greater equal to than 0' | translate }}</strong>
+        <strong>{{ loanProductTermsForm.get('minPrincipal')?.errors?.['min']?.min || 1 }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field class="flex-31">
       <mat-label>{{ 'labels.inputs.Default' | translate }}</mat-label>
-      <input type="number" matInput formControlName="principal" required />
-      <mat-error>
+      <input type="number" matInput formControlName="principal" required [min]="1" step="0.01" />
+      <mat-error *ngIf="loanProductTermsForm.get('principal')?.hasError('min')">
         {{ 'labels.catalogs.Default' | translate }} {{ 'labels.inputs.Principal' | translate }}
         {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
+        <strong>{{ loanProductTermsForm.get('principal')?.errors?.['min']?.min || 1 }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field class="flex-31">
       <mat-label>{{ 'labels.inputs.Maximum' | translate }}</mat-label>
-      <input type="number" matInput formControlName="maxPrincipal" [min]="0" />
-      <mat-error>
+      <input type="number" matInput formControlName="maxPrincipal" [min]="1" step="0.01" />
+      <mat-error *ngIf="loanProductTermsForm.get('maxPrincipal')?.hasError('min')">
         {{ 'labels.commons.Minimum Value must be' | translate }}
-        <strong>{{ 'labels.commons.greater equal to than 0' | translate }}</strong>
-        {{ 'labels.commons.and must be greater than' | translate }}
-        <strong>{{ 'labels.commons.Minimum Principal' | translate }}</strong>
+        <strong>{{ loanProductTermsForm.get('maxPrincipal')?.errors?.['min']?.min || 1 }}</strong>
       </mat-error>
     </mat-form-field>
 

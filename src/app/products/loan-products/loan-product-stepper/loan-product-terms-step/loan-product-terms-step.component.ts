@@ -188,12 +188,25 @@ export class LoanProductTermsStepComponent implements OnInit, OnChanges {
   createLoanProductTermsForm() {
     this.loanProductTermsForm = this.formBuilder.group({
       useBorrowerCycle: [false],
-      minPrincipal: [''],
+      minPrincipal: [
+        '',
+        [
+          Validators.min(1)
+        ]
+      ],
       principal: [
         '',
-        Validators.required
+        [
+          Validators.required,
+          Validators.min(1)
+        ]
       ],
-      maxPrincipal: [''],
+      maxPrincipal: [
+        '',
+        [
+          Validators.min(1)
+        ]
+      ],
       minNumberOfRepayments: [
         '',
         [
