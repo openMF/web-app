@@ -44,9 +44,17 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
   private configurationWizardService = inject(ConfigurationWizardService);
   private popoverService = inject(PopoverService);
 
-  onCreditAmountInput(event: any) {
-    if (event.target.value < 1) {
-      event.target.value = 1;
+  onAmountInput(event: Event): void {
+    const target = event.target;
+    if (!(target instanceof HTMLInputElement)) return;
+
+    const raw = target.value.trim();
+    if (raw === '') return;
+
+    const value = Number(raw);
+    if (!Number.isFinite(value) || value < 1) {
+      target.value = '1';
+      target.dispatchEvent(new Event('input', { bubbles: true }));
     }
   }
   /** Minimum transaction date allowed. */
