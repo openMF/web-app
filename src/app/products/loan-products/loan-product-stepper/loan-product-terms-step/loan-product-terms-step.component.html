@@ -96,13 +96,13 @@
       <input type="number" matInput formControlName="minNumberOfRepayments" [min]="1" />
       <mat-error>
         {{ 'labels.commons.Minimum Value must be' | translate }}
-        <strong>{{ 'labels.commons.greater equal to than 0' | translate }}</strong>
+        <strong>1</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field class="flex-31">
       <mat-label>{{ 'labels.inputs.Default' | translate }}</mat-label>
-      <input type="number" matInput formControlName="numberOfRepayments" required />
+      <input type="number" matInput formControlName="numberOfRepayments" required [min]="1" />
       <mat-error>
         {{ 'labels.catalogs.Default' | translate }} {{ 'labels.inputs.Number of repayments' | translate }}
         {{ 'labels.commons.is' | translate }}
@@ -112,12 +112,12 @@
 
     <mat-form-field class="flex-31">
       <mat-label>{{ 'labels.inputs.Maximum' | translate }}</mat-label>
-      <input type="number" matInput formControlName="maxNumberOfRepayments" [min]="0" />
+      <input type="number" matInput formControlName="maxNumberOfRepayments" [min]="1" />
       <mat-error>
         {{ 'labels.commons.Maximum Value must be' | translate }}
-        <strong>{{ 'labels.commons.greater equal to than 0' | translate }}</strong>
+        <strong>1</strong>
         {{ 'labels.commons.and must be greater than' | translate }}
-        <strong>{{ 'labels.commons.Minimum Principal' | translate }}</strong>
+        <strong>{{ 'labels.inputs.Minimum' | translate }}</strong>
       </mat-error>
     </mat-form-field>
 

@@ -194,12 +194,25 @@ export class LoanProductTermsStepComponent implements OnInit, OnChanges {
         Validators.required
       ],
       maxPrincipal: [''],
-      minNumberOfRepayments: [''],
+      minNumberOfRepayments: [
+        '',
+        [
+          Validators.pattern('^[1-9]\\d*$')
+        ]
+      ],
       numberOfRepayments: [
         '',
-        Validators.required
+        [
+          Validators.required,
+          Validators.pattern('^[1-9]\\d*$')
+        ]
       ],
-      maxNumberOfRepayments: [''],
+      maxNumberOfRepayments: [
+        '',
+        [
+          Validators.pattern('^[1-9]\\d*$')
+        ]
+      ],
       isLinkedToFloatingInterestRates: [false],
       allowApprovedDisbursedAmountsOverApplied: [false],
       overAppliedCalculationType: [{ value: null, disabled: true }],
