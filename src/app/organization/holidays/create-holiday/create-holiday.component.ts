@@ -332,15 +332,28 @@ export class CreateHolidayComponent implements OnInit {
     const holidayFormData = this.holidayForm.value;
     const dateFormat = this.settings.dateFormat;
     const locale = this.settings.language.code;
-    const prevFromDate: Date = this.holidayForm.value.fromDate;
-    const prevToDate: Date = this.holidayForm.value.toDate;
-    holidayFormData.fromDate = this.dateUtils.formatDateAsString(prevFromDate, dateFormat);
-    holidayFormData.toDate = this.dateUtils.formatDateAsString(prevToDate, dateFormat);
+    const momentFormat = 'DD MMMM YYYY';
+    const coerceDate = (value: unknown): Date | null => {
+      if (value instanceof Date) return value;
+      if (value == null || value === '') return null;
+      const d = new Date(value as any);
+      return Number.isNaN(d.getTime()) ? null : d;
+    };
+    const fromDate = coerceDate(this.holidayForm.value.fromDate);
+    const toDate = coerceDate(this.holidayForm.value.toDate);
+    if (!fromDate || !toDate) {
+      return;
+    }
+    holidayFormData.fromDate = this.dateUtils.formatDateAsString(fromDate, momentFormat);
+    holidayFormData.toDate = this.dateUtils.formatDateAsString(toDate, momentFormat);
     if (this.holidayForm.contains('repaymentsRescheduledTo')) {
-      const prevRepaymentsRescheduledTo: Date = this.holidayForm.value.repaymentsRescheduledTo;
+      const repaymentsRescheduledTo = coerceDate(this.holidayForm.value.repaymentsRescheduledTo);
+      if (!repaymentsRescheduledTo) {
+        return;
+      }
       holidayFormData.repaymentsRescheduledTo = this.dateUtils.formatDateAsString(
-        prevRepaymentsRescheduledTo,
-        dateFormat
+        repaymentsRescheduledTo,
+        momentFormat
       );
     }
     const offices = this.holidayForm.value.offices.map((office: string) => {
