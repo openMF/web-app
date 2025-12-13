@@ -43,7 +43,7 @@ export class DatatableSingleRowComponent implements OnInit {
   private dateUtils = inject(Dates);
   private dialog = inject(MatDialog);
   private settingsService = inject(SettingsService);
-  private datatables = inject(Datatables);
+  public datatables = inject(Datatables);
   private systemService = inject(SystemService);
 
   @Input() dataObject: any;
@@ -123,7 +123,8 @@ export class DatatableSingleRowComponent implements OnInit {
     const data = {
       title: 'Edit ' + this.datatableName + ' for ' + this.entityType,
       formfields: formfields,
-      layout: { addButtonText: 'Save' }
+      layout: { addButtonText: 'Submit' },
+      pristine: false
     };
     const editDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
     editDialogRef.afterClosed().subscribe((response: any) => {
@@ -180,6 +181,9 @@ export class DatatableSingleRowComponent implements OnInit {
         return columnDisplayType;
       }
       case 'DECIMAL': {
+        return columnDisplayType;
+      }
+      case 'CODELOOKUP': {
         return columnDisplayType;
       }
       case 'TEXT': {

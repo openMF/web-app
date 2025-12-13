@@ -19,7 +19,8 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { SystemService } from 'app/system/system.service';
+import { Datatables } from 'app/core/utils/datatables';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
@@ -60,6 +61,7 @@ export class ViewDataTableComponent implements OnInit {
   private router = inject(Router);
   private dialog = inject(MatDialog);
   private translateService = inject(TranslateService);
+  public datatables = inject(Datatables);
 
   /** Data Table Data */
   dataTableData: any;
@@ -103,6 +105,13 @@ export class ViewDataTableComponent implements OnInit {
    */
   ngOnInit() {
     this.setColumnsTable();
+  }
+
+  /**
+   * Get display name for field (e.g., "Actividad" from "ADDRESS_TYPE_cd_ACTIVIDAD")
+   */
+  getFieldDisplayName(columnName: string): string {
+    return this.datatables.toDisplayLabel(columnName);
   }
 
   /**

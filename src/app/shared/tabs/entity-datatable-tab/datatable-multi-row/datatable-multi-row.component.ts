@@ -235,6 +235,11 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
             if (typeof value === 'number') {
               value = this.numberFormat.transform(value);
             }
+          } else if (columnDisplayType === 'CODELOOKUP') {
+            if (columnHeader.columnValues && value !== null && value !== undefined) {
+              const codeValue = columnHeader.columnValues.find((cv: any) => cv.id === value);
+              value = codeValue ? codeValue.value : value;
+            }
           }
           return true;
         }

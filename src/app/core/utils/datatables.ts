@@ -35,6 +35,7 @@ export class Datatables {
 
   public getFormfields(columns: any, dateTransformColumns: string[], dataTableEntryObject: any) {
     return columns.map((column: any) => {
+      const displayLabel = this.toDisplayLabel(column.columnName);
       switch (column.columnDisplayType) {
         case 'INTEGER':
         case 'STRING':
@@ -42,7 +43,7 @@ export class Datatables {
         case 'TEXT':
           return new InputBase({
             controlName: column.columnName,
-            label: column.columnName,
+            label: displayLabel,
             value: '',
             type: column.columnDisplayType === 'INTEGER' || column.columnDisplayType === 'DECIMAL' ? 'number' : 'text',
             required: column.isColumnNullable ? false : true
@@ -50,7 +51,7 @@ export class Datatables {
         case 'BOOLEAN':
           return new CheckboxBase({
             controlName: column.columnName,
-            label: column.columnName,
+            label: displayLabel,
             value: '',
             type: 'checkbox',
             required: column.isColumnNullable ? false : true
@@ -58,7 +59,7 @@ export class Datatables {
         case 'CODELOOKUP':
           return new SelectBase({
             controlName: column.columnName,
-            label: column.columnName,
+            label: displayLabel,
             value: '',
             options: { label: 'value', value: 'id', data: column.columnValues },
             required: column.isColumnNullable ? false : true
@@ -70,7 +71,7 @@ export class Datatables {
           }
           return new DatepickerBase({
             controlName: column.columnName,
-            label: column.columnName,
+            label: displayLabel,
             value: '',
             maxDate: this.settingsService.maxAllowedDate,
             required: column.isColumnNullable ? false : true
@@ -81,7 +82,7 @@ export class Datatables {
           dataTableEntryObject.dateFormat = Dates.DEFAULT_DATETIMEFORMAT;
           return new DateTimepickerBase({
             controlName: column.columnName,
-            label: column.columnName,
+            label: displayLabel,
             value: '',
             maxDate: this.settingsService.maxAllowedDate,
             required: column.isColumnNullable ? false : true
@@ -172,6 +173,56 @@ export class Datatables {
       return columnName.split('_cd_')[0];
     }
     return columnName;
+  }
+
+  public toDisplayLabel(columnName: string): string {
+    if (!columnName) {
+      return '';
+    }
+
+    // Handle CODELOOKUP pattern: extract the part after _cd_
+    if (columnName.includes('_cd_')) {
+      const parts = columnName.split('_cd_');
+      // Ensure parts[1] exists and is not empty before processing
+      if (parts.length > 1 && parts[1] && parts[1].trim()) {
+        // Return the part after _cd_ converted to Title Case
+        // Filter out standalone "cd" or "CD" words that are artifacts from naming convention
+        // This only affects display, not database column names
+        const displayWords = parts[1]
+          .split('_')
+          .filter((word) => word.trim() && word.toLowerCase() !== 'cd') // Remove empty strings and standalone "cd" artifacts
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+          .join(' ');
+
+        // Return empty string if all words were filtered out, otherwise return formatted label
+        return displayWords || parts[1].trim();
+      }
+    }
+
+    // Convert snake_case to Title Case (e.g., "created_at" -> "Created At")
+    // For non-CODELOOKUP fields, only filter standalone "cd" if it appears as an artifact
+    return (
+      columnName
+        .split('_')
+        .filter((word) => word.trim() && word.toLowerCase() !== 'cd') // Remove empty strings and standalone "cd" artifacts
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ') || columnName
+    ); // Fallback to original if all filtered out
+  }
+
+  public getCodeLookupValue(columnHeader: any, id: number): string {
+    if (!columnHeader?.columnValues || id === null || id === undefined) {
+      return '';
+    }
+    const codeValue = columnHeader.columnValues.find((cv: any) => cv.id === id);
+    return codeValue ? codeValue.value : id.toString();
+  }
+
+  public getCodeName(columnName: string): string {
+    if (columnName && columnName.includes('_cd_')) {
+      return columnName.split('_cd_')[0];
+    }
+    return '';
   }
 
   public isValidUrl(urlString: string): boolean {

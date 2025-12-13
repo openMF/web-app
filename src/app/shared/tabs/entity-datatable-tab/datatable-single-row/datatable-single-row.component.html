@@ -25,8 +25,7 @@
       @for (columnHeader of dataObject.columnHeaders; track columnHeader; let i = $index) {
         <div class="flex-fill" [ngClass]="setAttributeClass(columnHeader.columnName)">
           <div class="mat-body-strong left flex-40">
-            {{ columnHeader.columnDisplayName }}
-            {{ getInputName(columnHeader.columnName) }}
+            {{ datatables.toDisplayLabel(columnHeader.columnName) }}
           </div>
           <div class="right flex-60">
             @switch (getColumnType(columnHeader.columnDisplayType, columnHeader.columnType)) {
@@ -48,6 +47,11 @@
               @case ('DECIMAL') {
                 <span>
                   {{ dataObject.data[0].row[i] | formatNumber }}
+                </span>
+              }
+              @case ('CODELOOKUP') {
+                <span>
+                  {{ datatables.getCodeLookupValue(columnHeader, dataObject.data[0].row[i]) }}
                 </span>
               }
               @case ('TEXT') {
