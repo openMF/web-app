@@ -1,6 +1,7 @@
 <button
   mat-icon-button
   class="ml-1"
+  [attr.aria-label]="'tooltips.Notifications' | translate"
   matTooltip="{{ 'tooltips.Notifications' | translate }}"
   [matMenuTriggerFor]="notificationsMenu"
   (menuClosed)="menuClosed()"
@@ -9,30 +10,55 @@
   matBadgeColor="warn"
   matBadgeSize="medium"
 >
+  <span class="sr-only">{{ 'tooltips.Notifications' | translate }}</span>
   <fa-icon icon="bell" size="lg"></fa-icon>
 </button>
 
-<mat-menu class="mifosx-notifications-menu" #notificationsMenu="matMenu" [overlapTrigger]="false">
-  @if (unreadNotifications.length === 0) {
-    <div class="layout-column align-center-center no-notifications">
-      <mat-icon class="no-notifications-icon">
-        <span class="material-icons">{{ 'labels.menus.Notifications' | translate }}</span>
-      </mat-icon>
-      <p>{{ 'labels.text.No notifications' | translate }}</p>
-    </div>
-  }
+<mat-menu
+  class="mifosx-notifications-menu"
+  #notificationsMenu="matMenu"
+  [overlapTrigger]="false"
+  xPosition="before"
+  yPosition="below"
+>
+  <div class="notifications-container">
+    @if (unreadNotifications.length === 0 && displayedReadNotifications.length === 0) {
+      <div class="no-notifications">
+        <mat-icon class="no-notifications-icon">notifications_none</mat-icon>
+        <p class="no-notifications-text">{{ 'labels.text.No notifications' | translate }}</p>
+      </div>
+    } @else {
+      <div class="notifications-header">
+        <h3 class="notifications-title">{{ 'labels.menus.Notifications' | translate }}</h3>
+      </div>
+      <div class="notifications-list">
+        @for (notification of unreadNotifications; track notification) {
+          <button
+            mat-menu-item
+            class="notification-item unread"
+            [routerLink]="[routeMap[notification.objectType], notification.objectId]"
+          >
+            <div class="notification-content">
+              <span class="notification-text">{{ notification.content }}</span>
+              <span class="unread-indicator">●</span>
+            </div>
+            <span class="notification-time">{{ notification.createdAt }}</span>
+          </button>
+        }
 
-  @for (notification of unreadNotifications; track notification) {
-    <button mat-menu-item class="unread" [routerLink]="[routeMap[notification.objectType], notification.objectId]">
-      {{ notification.content }}*<br />
-      <span class="time">[{{ notification.createdAt }}]</span>
-    </button>
-  }
-
-  @for (notification of displayedReadNotifications; track notification) {
-    <button mat-menu-item [routerLink]="[routeMap[notification.objectType], notification.objectId]">
-      {{ notification.content }}<br />
-      <span class="time">[{{ notification.createdAt }}]</span>
-    </button>
-  }
+        @for (notification of displayedReadNotifications; track notification) {
+          <button
+            mat-menu-item
+            class="notification-item read"
+            [routerLink]="[routeMap[notification.objectType], notification.objectId]"
+          >
+            <div class="notification-content">
+              <span class="notification-text">{{ notification.content }}</span>
+            </div>
+            <span class="notification-time">{{ notification.createdAt }}</span>
+          </button>
+        }
+      </div>
+    }
+  </div>
 </mat-menu>
