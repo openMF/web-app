@@ -3,6 +3,9 @@
   "Logged in as": "Imeingia kama",
   "Remember me": "Nikumbuke",
   "errors": {
+    "accountingRule": {
+      "duplicateName": "Samahani, lakini Kanuni ya Uhasibu yenye jina hili tayari ipo."
+    },
     "error.resource.notImplemented.type": "Hitilafu ya Kukamilika Haijatimizwa",
     "error.resource.notImplemented.message": "Utendakazi haujatekelezwa!",
     "linkedSavingsAccountOwnership": "Akaunti ya akiba iliyounganishwa haimilikiwi na mteja aliyechaguliwa.",

@@ -3,6 +3,9 @@
   "Logged in as": "prisijungęs kaip",
   "Remember me": "Prisimink mane",
   "errors": {
+    "accountingRule": {
+      "duplicateName": "Atsiprašome, bet apskaitos taisyklė su šiuo pavadinimu jau egzistuoja."
+    },
     "error.resource.notImplemented.type": "Neįdiegta klaida",
     "error.resource.notImplemented.message": "Funkcionalumas neįdiegtas!",
     "linkedSavingsAccountOwnership": "Susieta taupomoji sąskaita nepriklauso pasirinktam klientui.",

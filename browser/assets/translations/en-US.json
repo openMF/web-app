@@ -5,6 +5,9 @@
   "error.resource.notImplemented.type": "Not Implemented Error",
   "error.resource.notImplemented.message": "Not implemented functionality!",
   "errors": {
+    "accountingRule": {
+      "duplicateName": "Sorry, but an Accounting Rule with this Name exists already."
+    },
     "linkedSavingsAccountOwnership": "Linked savings account does not belong to the selected client.",
     "clientNotInGSIM": "Client with ID {{id}} is not present in GSIM.",
     "Capitalized Income amount adjusted already adjusted": "Capitalized Income amount already adjusted",

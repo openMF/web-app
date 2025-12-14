@@ -3,6 +3,9 @@
   "Logged in as": "Přihlášen jako",
   "Remember me": "Zapamatuj si mě",
   "errors": {
+    "accountingRule": {
+      "duplicateName": "Omlouváme se, ale účetní pravidlo s tímto názvem již existuje."
+    },
     "error.resource.notImplemented.type": "Nenaimplementovaná chyba",
     "error.resource.notImplemented.message": "Funkce není implementována!",
     "linkedSavingsAccountOwnership": "Propojený spořicí účet nepatří vybranému klientovi.",

@@ -3,6 +3,9 @@
   "Logged in as": "connecté en tant que",
   "Remember me": "Souviens-toi de moi",
   "errors": {
+    "accountingRule": {
+      "duplicateName": "Désolé, mais une règle comptable portant ce nom existe déjà."
+    },
     "error.resource.notImplemented.type": "Erreur non implémentée",
     "error.resource.notImplemented.message": "Fonctionnalité non implémentée !",
     "linkedSavingsAccountOwnership": "Le compte d'épargne lié n'appartient pas au client sélectionné.",

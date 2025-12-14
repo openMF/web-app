@@ -3,6 +3,9 @@
   "Logged in as": "को रूपमा लग इन गरियो",
   "Remember me": "मलाई सम्झनुहोस्",
   "errors": {
+    "accountingRule": {
+      "duplicateName": "माफ गर्नुहोस्, यो नामको लेखा नियम पहिले नै अवस्थित छ।"
+    },
     "error.resource.notImplemented.type": "लागू नभएको त्रुटि",
     "error.resource.notImplemented.message": "कार्यक्षमता लागू गरिएको छैन!",
     "linkedSavingsAccountOwnership": "लिंक गरिएको बचत खाता चयनित ग्राहकको होइन।",

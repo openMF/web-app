@@ -3,6 +3,9 @@
   "Logged in as": "logado como",
   "Remember me": "Lembre de mim",
   "errors": {
+    "accountingRule": {
+      "duplicateName": "Desculpe, mas já existe uma regra contabilística com este nome."
+    },
     "error.resource.notImplemented.type": "Erro não implementado",
     "error.resource.notImplemented.message": "Funcionalidade não implementada!",
     "linkedSavingsAccountOwnership": "A conta poupança vinculada não pertence ao cliente selecionado.",

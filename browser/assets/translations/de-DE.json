@@ -3,6 +3,9 @@
   "Logged in as": "Angemeldet als",
   "Remember me": "Erinnere dich an mich",
   "errors": {
+    "accountingRule": {
+      "duplicateName": "Entschuldigung, aber eine Buchungsregel mit diesem Namen existiert bereits."
+    },
     "error.resource.notImplemented.type": "Nicht implementierter Fehler",
     "error.resource.notImplemented.message": "Nicht implementierte Funktion!",
     "linkedSavingsAccountOwnership": "Verknüpftes Sparkonto gehört nicht zum ausgewählten Kunden.",
