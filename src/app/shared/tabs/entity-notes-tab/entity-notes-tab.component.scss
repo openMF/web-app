@@ -96,46 +96,12 @@
 .note-actions {
   display: flex;
   gap: 8px;
-}
 
-.edit-btn,
-.delete-btn {
-  border: 1px solid #dee2e6;
-  padding: 8px 14px;
-  border-radius: 4px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  background: none;
-  outline: none;
-}
-
-.edit-btn {
-  color: #6c757d;
-  background-color: #daedff;
-}
-
-.delete-btn {
-  color: #dc3545;
-  background-color: #ffcfcf;
-}
-
-.edit-btn:disabled,
-.delete-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.edit-btn:hover:not(:disabled) {
-  background-color: #a8d4ff;
-  color: #495057;
-  border-color: #adb5bd;
-}
-
-.delete-btn:hover:not(:disabled) {
-  background-color: #f5c6cb;
-  color: #721c24;
-  border-color: #ff9ca5;
+  button {
+    min-width: auto;
+    padding: 8px 14px;
+    font-size: 14px;
+  }
 }
 
 .empty-state {
@@ -184,17 +150,16 @@
     gap: 12px;
   }
 
-  .edit-btn,
-  .delete-btn {
-    padding: 5px 10px;
-    font-size: 11px;
+  .note-actions {
+    align-self: flex-end;
+
+    button {
+      padding: 5px 10px;
+      font-size: 11px;
+    }
   }
 
   .note-meta {
     width: 100%;
-  }
-
-  .note-actions {
-    align-self: flex-end;
   }
 }
