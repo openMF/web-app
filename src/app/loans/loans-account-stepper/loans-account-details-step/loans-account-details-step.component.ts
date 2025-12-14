@@ -98,12 +98,12 @@ export class LoansAccountDetailsStepComponent implements OnInit, OnDestroy {
    */
   constructor() {
     this.loanId = this.route.snapshot.params['loanId'];
+    this.createLoansAccountDetailsForm();
   }
 
   ngOnInit() {
     this.placeHolderLabel = this.translateService.instant('labels.text.Search');
     this.noEntriesFoundLabel = this.translateService.instant('labels.text.No data found');
-    this.createLoansAccountDetailsForm();
     this.maxDate = this.settingsService.maxFutureDate;
     this.buildDependencies();
     if (this.loansAccountTemplate) {
