@@ -1,11 +1,3 @@
-// Version 1
-
-/*
- * Entry point of global application style.
- * Component-specific style should not go here and be included directly as part of the components.
- */
-
-// Import Default Theme for MifosX
 @use 'theme/mifosx-theme';
 @use 'theme/pictonblue-yellowgreen' as *;
 @use 'theme/indigo-pink' as *;
@@ -17,13 +9,20 @@
 @use 'lightgallery/scss/lg-thumbnail' as *;
 @use 'lightgallery/scss/lg-zoom' as *;
 @use 'lightgallery/scss/lg-fullscreen' as *;
+@use 'app/core/error-handler/error-handler.component';
 
 // Global Imports
 
 /* You can add global styles to this file, and also import other style files */
 
-// Error Handler Service Styles
-@use 'app/core/error-handler/error-handler.component';
+.custom-snackbar-top-right {
+  top: 48px !important;
+  right: 24px !important;
+  left: auto !important;
+  transform: none !important;
+  position: fixed !important;
+  z-index: 9999;
+}
 
 .scrollbar-styling {
   scrollbar-width: thin;

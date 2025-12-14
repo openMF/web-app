@@ -3,6 +3,9 @@
   "Logged in as": "ielogojies Kā",
   "Remember me": "Atceries mani",
   "errors": {
+    "accountingRule": {
+      "duplicateName": "Atvainojiet, bet grāmatvedības noteikums ar šo nosaukumu jau pastāv."
+    },
     "error.resource.notImplemented.type": "Neieviesta kļūda",
     "error.resource.notImplemented.message": "Funkcionalitāte nav ieviesta!",
     "linkedSavingsAccountOwnership": "Saistītais krājkonts nepieder izvēlētajam klientam.",

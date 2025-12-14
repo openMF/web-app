@@ -3,6 +3,9 @@
   "Logged in as": "다음 계정으로 로그인됨",
   "Remember me": "날 기억해",
   "errors": {
+    "accountingRule": {
+      "duplicateName": "죄송합니다. 이미 동일한 이름의 회계 규칙이 존재합니다."
+    },
     "error.resource.notImplemented.type": "구현되지 않은 오류",
     "error.resource.notImplemented.message": "구현되지 않은 기능입니다!",
     "linkedSavingsAccountOwnership": "연결된 저축 계좌가 선택한 클라이언트에 속하지 않습니다.",

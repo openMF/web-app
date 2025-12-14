@@ -3,6 +3,9 @@
   "Logged in as": "Conectado como",
   "Remember me": "Recordar me",
   "errors": {
+    "accountingRule": {
+      "duplicateName": "Lo sentimos, pero ya existe una regla contable con este nombre."
+    },
     "error.resource.notImplemented.type": "Error no implementado",
     "error.resource.notImplemented.message": "¡Funcionalidad no implementada!",
     "linkedSavingsAccountOwnership": "La cuenta de ahorro vinculada no pertenece al cliente seleccionado.",

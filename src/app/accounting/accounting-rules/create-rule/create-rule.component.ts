@@ -1,5 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, inject } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
@@ -33,6 +35,8 @@ export class CreateRuleComponent implements OnInit {
   private accountingService = inject(AccountingService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private snackBar = inject(MatSnackBar);
+  private translateService = inject(TranslateService);
 
   /** Accounting rule form. */
   accountingRuleForm: UntypedFormGroup;
@@ -45,13 +49,6 @@ export class CreateRuleComponent implements OnInit {
   /** Credit tag data. */
   creditTagData: any;
 
-  /**
-   * Retrieves the offices, gl accounts, debit tags and credit tags data from `resolve`.
-   * @param {FormBuilder} formBuilder Form Builder.
-   * @param {AccountingService} accountingService Accounting Service.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {Router} router Router for navigation.
-   */
   constructor() {
     this.route.data.subscribe((data: { accountingRulesTemplate: any }) => {
       this.officeData = data.accountingRulesTemplate.allowedOffices;
@@ -141,14 +138,42 @@ export class CreateRuleComponent implements OnInit {
     }
     delete accountingRule.debitRuleType;
     delete accountingRule.creditRuleType;
-    this.accountingService.createAccountingRule(accountingRule).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          '../view',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
+    this.accountingService.createAccountingRule(accountingRule).subscribe({
+      next: (response: any) => {
+        this.router.navigate(
+          [
+            '../view',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      },
+      error: (err) => {
+        const duplicateMsg = this.translateService.instant('errors.accountingRule.duplicateName');
+        if (
+          err?.error?.defaultUserMessage?.includes('Duplicate entry') ||
+          (typeof err?.error?.message === 'string' && err.error.message.includes('Duplicate entry')) ||
+          (typeof err?.error === 'string' && err.error.includes('Duplicate entry'))
+        ) {
+          this.snackBar.open(duplicateMsg, 'Close', {
+            duration: 7000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+            panelClass: 'custom-snackbar-top-right'
+          });
+        } else {
+          this.snackBar.open(
+            err?.error?.defaultUserMessage || err?.error?.message || 'An error occurred. Please try again.',
+            'Close',
+            {
+              duration: 7000,
+              verticalPosition: 'top',
+              horizontalPosition: 'right',
+              panelClass: 'custom-snackbar-top-right'
+            }
+          );
+        }
+      }
     });
   }
 }

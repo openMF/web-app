@@ -3,6 +3,9 @@
   "Logged in as": "Collegato come",
   "Remember me": "Ricordati di me",
   "errors": {
+    "accountingRule": {
+      "duplicateName": "Spiacenti, ma esiste già una regola contabile con questo nome."
+    },
     "error.resource.notImplemented.type": "Errore non implementato",
     "error.resource.notImplemented.message": "Funzionalità non implementata!",
     "linkedSavingsAccountOwnership": "Il conto di risparmio collegato non appartiene al cliente selezionato.",
