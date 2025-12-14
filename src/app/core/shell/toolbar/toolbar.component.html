@@ -34,25 +34,46 @@
       [matMenuTriggerFor]="institutionMenu"
       #institutionMenuTrigger="matMenuTrigger"
       tabindex="0"
+      *mifosxHasPermission="'READ_INSTITUTION'"
     >
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
       {{ 'labels.menus.Institution' | translate }}
     </a>
 
     <span class="hide-lt-md">
-      <a #accounting class="tab-link accounting-link" [routerLink]="['/accounting']" tabindex="0">
+      <a
+        #accounting
+        class="tab-link accounting-link"
+        [routerLink]="['/accounting']"
+        tabindex="0"
+        *mifosxHasPermission="'READ_ACCOUNTING'"
+      >
         <fa-icon class="mr-05" icon="money-bill-alt" size="lg"></fa-icon>
         {{ 'labels.menus.Accounting' | translate }}
       </a>
-      <a #reports class="tab-link" [matMenuTriggerFor]="reportsMenu" #reportsMenuTrigger="matMenuTrigger" tabindex="0">
+      <a
+        #reports
+        class="tab-link"
+        [matMenuTriggerFor]="reportsMenu"
+        #reportsMenuTrigger="matMenuTrigger"
+        tabindex="0"
+        *mifosxHasPermission="'READ_REPORTS'"
+      >
         <fa-icon class="mr-05" icon="chart-bar" size="lg"></fa-icon>
         {{ 'labels.menus.Reports' | translate }}
       </a>
-      <a #admin class="tab-link" [matMenuTriggerFor]="adminMenu" #adminMenuTrigger="matMenuTrigger" tabindex="0">
+      <a
+        #admin
+        class="tab-link"
+        [matMenuTriggerFor]="adminMenu"
+        #adminMenuTrigger="matMenuTrigger"
+        tabindex="0"
+        *mifosxHasPermission="'READ_ADMIN'"
+      >
         <fa-icon class="mr-05" icon="shield-alt" size="lg"></fa-icon>
         {{ 'labels.menus.Admin' | translate }}
       </a>
-      <a #configWizard class="tab-link" (click)="openDialog()" tabindex="0">
+      <a #configWizard class="tab-link" (click)="openDialog()" tabindex="0" *mifosxHasPermission="'READ_CONFIG_WIZARD'">
         <fa-icon class="mr-05" icon="info" size="lg"></fa-icon>
         {{ 'labels.menus.Configuration Wizard' | translate }}
       </a>

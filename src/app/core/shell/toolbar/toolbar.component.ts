@@ -157,6 +157,9 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
    * @param backdrop Boolean.
    */
   showPopover(template: TemplateRef<any>, target: ElementRef<any> | HTMLElement): void {
+    if (!target) {
+      return;
+    }
     setTimeout(() => this.popoverService.open(template, target, 'bottom', true, {}), 200);
   }
 
