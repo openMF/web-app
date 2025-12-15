@@ -5,127 +5,145 @@
   </button>
 </div>
 
-<div class="container layout-row-wrap gap-8px responsive-column">
-  <mat-form-field class="flex-48">
-    <mat-label>{{ 'labels.inputs.Resource ID' | translate }}</mat-label>
-    <input matInput [formControl]="resourceId" />
-  </mat-form-field>
+<mat-card class="container audit-filters-card">
+  <mat-card-content>
+    <div class="layout-row-wrap gap-8px responsive-column">
+      <mat-form-field class="flex-48">
+        <mat-label>{{ 'labels.inputs.Resource ID' | translate }}</mat-label>
+        <input matInput [formControl]="resourceId" />
+      </mat-form-field>
 
-  <mat-form-field class="flex-48">
-    <mat-label>{{ 'labels.inputs.Status' | translate }}</mat-label>
-    <mat-select [formControl]="processingResult" (selectionChange)="applyFilter($event.value, 'processingResult')">
-      @for (processingResult of auditTrailSearchTemplateData.processingResults; track processingResult) {
-        <mat-option [value]="processingResult.id">
-          {{ processingResult.processingResult }}
-        </mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
+      <mat-form-field class="flex-48">
+        <mat-label>{{ 'labels.inputs.Status' | translate }}</mat-label>
+        <mat-select [formControl]="processingResult" (selectionChange)="applyFilter($event.value, 'processingResult')">
+          @for (processingResult of auditTrailSearchTemplateData.processingResults; track processingResult) {
+            <mat-option [value]="processingResult.id">
+              {{ processingResult.processingResult }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
 
-  <mat-form-field class="flex-48">
-    <mat-label>{{ 'labels.inputs.User' | translate }}</mat-label>
-    <input matInput [formControl]="user" [matAutocomplete]="userNameAutocomplete" />
-  </mat-form-field>
+      <mat-form-field class="flex-48">
+        <mat-label>{{ 'labels.inputs.User' | translate }}</mat-label>
+        <input matInput [formControl]="user" [matAutocomplete]="userNameAutocomplete" />
+      </mat-form-field>
 
-  <mat-form-field class="flex-48">
-    <mat-label>{{ 'labels.inputs.Action' | translate }}</mat-label>
-    <input matInput [formControl]="actionName" [matAutocomplete]="actionNameAutocomplete" />
-  </mat-form-field>
+      <mat-form-field class="flex-48">
+        <mat-label>{{ 'labels.inputs.Action' | translate }}</mat-label>
+        <input matInput [formControl]="actionName" [matAutocomplete]="actionNameAutocomplete" />
+      </mat-form-field>
 
-  <mat-form-field class="flex-48">
-    <mat-label>{{ 'labels.inputs.Entity' | translate }}</mat-label>
-    <input matInput [formControl]="entityName" [matAutocomplete]="entityNameAutocomplete" />
-  </mat-form-field>
+      <mat-form-field class="flex-48">
+        <mat-label>{{ 'labels.inputs.Entity' | translate }}</mat-label>
+        <input matInput [formControl]="entityName" [matAutocomplete]="entityNameAutocomplete" />
+      </mat-form-field>
 
-  <mat-form-field class="flex-48">
-    <mat-label>{{ 'labels.inputs.Checker' | translate }}</mat-label>
-    <input matInput [formControl]="checker" [matAutocomplete]="checkerAutocomplete" />
-  </mat-form-field>
+      <mat-form-field class="flex-48">
+        <mat-label>{{ 'labels.inputs.Checker' | translate }}</mat-label>
+        <input matInput [formControl]="checker" [matAutocomplete]="checkerAutocomplete" />
+      </mat-form-field>
 
-  <div class="flex-48 layout-row-wrap gap-8px">
-    <mat-form-field class="flex-60" (click)="fromDatePicker.open()">
-      <mat-label>{{ 'labels.inputs.Maker From Date' | translate }}</mat-label>
-      <input
-        matInput
-        [min]="minDate"
-        [max]="maxDate"
-        [matDatepicker]="fromDatePicker"
-        [formControl]="fromDate"
-        placeholder="yyyy-MM-dd"
-      />
-      <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
-      <mat-datepicker #fromDatePicker></mat-datepicker>
-    </mat-form-field>
+      <div class="flex-48 layout-row-wrap gap-8px">
+        <mat-form-field class="flex-60" (click)="fromDatePicker.open()">
+          <mat-label>{{ 'labels.inputs.Maker From Date' | translate }}</mat-label>
+          <input
+            matInput
+            [min]="minDate"
+            [max]="maxDate"
+            [matDatepicker]="fromDatePicker"
+            [formControl]="fromDate"
+            placeholder="yyyy-MM-dd"
+          />
+          <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #fromDatePicker></mat-datepicker>
+        </mat-form-field>
 
-    <mat-form-field class="flex-38">
-      <mat-label>{{ 'labels.inputs.Time' | translate }}</mat-label>
-      <input matInput type="time" step="1" [formControl]="fromTime" placeholder="HH:MM:SS" class="time-input" />
-    </mat-form-field>
-  </div>
+        <mat-form-field class="flex-38">
+          <mat-label>{{ 'labels.inputs.Time' | translate }}</mat-label>
+          <input matInput type="time" step="1" [formControl]="fromTime" placeholder="HH:MM:SS" class="time-input" />
+        </mat-form-field>
+      </div>
 
-  <div class="flex-48 layout-row-wrap gap-8px">
-    <mat-form-field class="flex-60" (click)="toDatePicker.open()">
-      <mat-label>{{ 'labels.inputs.Maker To Date' | translate }}</mat-label>
-      <input
-        matInput
-        [min]="minDate"
-        [max]="maxDate"
-        [matDatepicker]="toDatePicker"
-        [formControl]="toDate"
-        placeholder="yyyy-MM-dd"
-      />
-      <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
-      <mat-datepicker #toDatePicker></mat-datepicker>
-    </mat-form-field>
+      <div class="flex-48 layout-row-wrap gap-8px">
+        <mat-form-field class="flex-60" (click)="toDatePicker.open()">
+          <mat-label>{{ 'labels.inputs.Maker To Date' | translate }}</mat-label>
+          <input
+            matInput
+            [min]="minDate"
+            [max]="maxDate"
+            [matDatepicker]="toDatePicker"
+            [formControl]="toDate"
+            placeholder="yyyy-MM-dd"
+          />
+          <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #toDatePicker></mat-datepicker>
+        </mat-form-field>
 
-    <mat-form-field class="flex-38">
-      <mat-label>{{ 'labels.inputs.Time' | translate }}</mat-label>
-      <input matInput type="time" step="1" [formControl]="toTime" placeholder="HH:MM:SS" class="time-input" />
-    </mat-form-field>
-  </div>
+        <mat-form-field class="flex-38">
+          <mat-label>{{ 'labels.inputs.Time' | translate }}</mat-label>
+          <input matInput type="time" step="1" [formControl]="toTime" placeholder="HH:MM:SS" class="time-input" />
+        </mat-form-field>
+      </div>
 
-  <div class="flex-48 layout-row-wrap gap-8px">
-    <mat-form-field class="flex-60" (click)="checkedFromDatePicker.open()">
-      <mat-label>{{ 'labels.inputs.Checker From Date' | translate }}</mat-label>
-      <input
-        matInput
-        [min]="minDate"
-        [max]="maxDate"
-        [matDatepicker]="checkedFromDatePicker"
-        [formControl]="checkedFromDate"
-        placeholder="yyyy-MM-dd"
-      />
-      <mat-datepicker-toggle matSuffix [for]="checkedFromDatePicker"></mat-datepicker-toggle>
-      <mat-datepicker #checkedFromDatePicker></mat-datepicker>
-    </mat-form-field>
+      <div class="flex-48 layout-row-wrap gap-8px">
+        <mat-form-field class="flex-60" (click)="checkedFromDatePicker.open()">
+          <mat-label>{{ 'labels.inputs.Checker From Date' | translate }}</mat-label>
+          <input
+            matInput
+            [min]="minDate"
+            [max]="maxDate"
+            [matDatepicker]="checkedFromDatePicker"
+            [formControl]="checkedFromDate"
+            placeholder="yyyy-MM-dd"
+          />
+          <mat-datepicker-toggle matSuffix [for]="checkedFromDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #checkedFromDatePicker></mat-datepicker>
+        </mat-form-field>
 
-    <mat-form-field class="flex-38">
-      <mat-label>{{ 'labels.inputs.Time' | translate }}</mat-label>
-      <input matInput type="time" step="1" [formControl]="checkedFromTime" placeholder="HH:MM:SS" class="time-input" />
-    </mat-form-field>
-  </div>
+        <mat-form-field class="flex-38">
+          <mat-label>{{ 'labels.inputs.Time' | translate }}</mat-label>
+          <input
+            matInput
+            type="time"
+            step="1"
+            [formControl]="checkedFromTime"
+            placeholder="HH:MM:SS"
+            class="time-input"
+          />
+        </mat-form-field>
+      </div>
 
-  <div class="flex-48 layout-row-wrap gap-8px">
-    <mat-form-field class="flex-60" (click)="checkedToDatePicker.open()">
-      <mat-label>{{ 'labels.inputs.Checked To Date' | translate }}</mat-label>
-      <input
-        matInput
-        [min]="minDate"
-        [max]="maxDate"
-        [matDatepicker]="checkedToDatePicker"
-        [formControl]="checkedToDate"
-        placeholder="yyyy-MM-dd"
-      />
-      <mat-datepicker-toggle matSuffix [for]="checkedToDatePicker"></mat-datepicker-toggle>
-      <mat-datepicker #checkedToDatePicker></mat-datepicker>
-    </mat-form-field>
+      <div class="flex-48 layout-row-wrap gap-8px">
+        <mat-form-field class="flex-60" (click)="checkedToDatePicker.open()">
+          <mat-label>{{ 'labels.inputs.Checked To Date' | translate }}</mat-label>
+          <input
+            matInput
+            [min]="minDate"
+            [max]="maxDate"
+            [matDatepicker]="checkedToDatePicker"
+            [formControl]="checkedToDate"
+            placeholder="yyyy-MM-dd"
+          />
+          <mat-datepicker-toggle matSuffix [for]="checkedToDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #checkedToDatePicker></mat-datepicker>
+        </mat-form-field>
 
-    <mat-form-field class="flex-38">
-      <mat-label>{{ 'labels.inputs.Time' | translate }}</mat-label>
-      <input matInput type="time" step="1" [formControl]="checkedToTime" placeholder="HH:MM:SS" class="time-input" />
-    </mat-form-field>
-  </div>
-</div>
+        <mat-form-field class="flex-38">
+          <mat-label>{{ 'labels.inputs.Time' | translate }}</mat-label>
+          <input
+            matInput
+            type="time"
+            step="1"
+            [formControl]="checkedToTime"
+            placeholder="HH:MM:SS"
+            class="time-input"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
 
 <!-- Autocomplete data -->
 <mat-autocomplete autoActiveFirstOption #userNameAutocomplete="matAutocomplete" [displayWith]="displayUserName">
