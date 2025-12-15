@@ -33,6 +33,7 @@ import {
   MatRow
 } from '@angular/material/table';
 import { DatetimeFormatPipe } from '../../pipes/datetime-format.pipe';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**

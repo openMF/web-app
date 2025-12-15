@@ -186,11 +186,11 @@
       </ng-container>
       <ng-container matColumnDef="actionName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Action' | translate }}</th>
-        <td mat-cell *matCellDef="let auditTrail">{{ auditTrail.actionName }}</td>
+        <td mat-cell *matCellDef="let auditTrail">{{ auditTrail.actionName | translateKey: 'auditTrail.actions' }}</td>
       </ng-container>
       <ng-container matColumnDef="entityName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Entity' | translate }}</th>
-        <td mat-cell *matCellDef="let auditTrail">{{ auditTrail.entityName }}</td>
+        <td mat-cell *matCellDef="let auditTrail">{{ auditTrail.entityName | translateKey: 'auditTrail.entities' }}</td>
       </ng-container>
       <ng-container matColumnDef="officeName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Office' | translate }}</th>

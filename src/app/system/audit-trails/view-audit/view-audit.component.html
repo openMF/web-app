@@ -33,7 +33,7 @@
             </div>
 
             <div class="flex-50">
-              {{ auditTrailData.actionName }}
+              {{ auditTrailData.actionName | translateKey: 'auditTrail.actions' }}
             </div>
 
             <div class="flex-50 mat-body-strong">
@@ -41,7 +41,7 @@
             </div>
 
             <div class="flex-50">
-              {{ auditTrailData.entityName }}
+              {{ auditTrailData.entityName | translateKey: 'auditTrail.entities' }}
             </div>
 
             <div class="flex-50 mat-body-strong">
