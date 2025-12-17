@@ -90,8 +90,15 @@
     <mifosx-language-selector class="ml-1 language hide-lt-md" tabindex="0"></mifosx-language-selector>
   </div>
 
-  <button mat-icon-button [matMenuTriggerFor]="languageMenu" tabindex="0">
-    <mat-icon class="lg-icon">language</mat-icon>
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="languageMenu"
+    class="show-lt-md"
+    tabindex="0"
+    [attr.aria-label]="'labels.menus.Language Selector' | translate"
+    matTooltip="{{ 'labels.menus.Language Selector' | translate }}"
+  >
+    <mat-icon>language</mat-icon>
   </button>
 
   <div #notifications>
