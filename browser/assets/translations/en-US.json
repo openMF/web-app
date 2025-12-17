@@ -3454,6 +3454,8 @@
       "Mandatory": "Mandatory",
       "Voluntary": "Voluntary",
       "Write a note": "Write a note",
+      "Tenant": "Tenant",
+      "To": "to",
       "“Maker-Checker” principle requires every tasks": "The “Maker-Checker” principle requires every tasks to be completed by two people to reduce the chance of errors and misuse. One person initiates the process and the second completes it.",
       "Buy Down Fees": "Buy Down Fees",
       "Undo Write-off Description": "This action will reverse the write-off transaction and restore the loan to its previous active status. Please provide a note explaining the reason for this action.",

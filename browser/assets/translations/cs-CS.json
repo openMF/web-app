@@ -3463,6 +3463,8 @@
     "Delete Image": "Smazat obrázek",
     "Delete Interest Rate Chart": "Smazat graf úrokových sazeb",
     "Delete Standing Instruction": "Smazat stálý pokyn",
+    "Tenant": "Nájemce",
+    "to": "do",
     "Deposit": "Vklad",
     "Description is used to provide additional information regarding the purpose": "Popis slouží k poskytnutí dalších informací týkajících se účelu a vlastností produktu s opakovaným vkladem.",
     "Due to regulatory requirements in some countries": "Vzhledem k regulačním požadavkům v některých zemích nemohou půjčky přesáhnout X dní, Fineract SOR je třeba rozšířit tak, aby podporoval definici, že půjčka má maximální délku a maximální délka této půjčky definuje délku poslední splátky, která bude kratší dobu než první splátky.",

@@ -3464,6 +3464,8 @@
     "Delete Image": "Lösche Bild",
     "Delete Interest Rate Chart": "Zinsdiagramm löschen",
     "Delete Standing Instruction": "Ständige Anweisung löschen",
+    "Tenant": "Mieter",
+    "to": "zu",
     "Deposit": "Kaution",
     "Description is used to provide additional information regarding the purpose": "Die Beschreibung wird verwendet, um zusätzliche Informationen über den Zweck und die Eigenschaften des wiederkehrenden Einzahlungsprodukts bereitzustellen.",
     "Due to regulatory requirements in some countries": "Aufgrund regulatorischer Anforderungen in einigen Ländern dürfen Kredite nicht länger als X Tage sein. Das Fineract SOR muss erweitert werden, um die Definition zu unterstützen, dass ein Kredit eine maximale Laufzeit hat und die maximale Laufzeit dieses Kredits die Länge der letzten Rate definiert, die a beträgt kürzerer Zeitraum als die ersten Raten.",
