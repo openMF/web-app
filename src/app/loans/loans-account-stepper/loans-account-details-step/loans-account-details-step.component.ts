@@ -25,6 +25,10 @@ import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+interface Account {
+  accountNumber: string;
+}
+
 /**
  * Loans Account Details Step
  */
@@ -191,7 +195,13 @@ export class LoansAccountDetailsStepComponent implements OnInit, OnDestroy {
         this.loanOfficerOptions = response.loanOfficerOptions;
         this.loanPurposeOptions = response.loanPurposeOptions;
         this.fundOptions = response.fundOptions;
+
         this.accountLinkingOptions = response.accountLinkingOptions;
+
+        // Test - New Filter
+        const allOptions = response.accountLinkingOptions || [];
+        this.accountLinkingOptions = allOptions.filter((account: any) => account.gsimid);
+
         this.loanProductSelected = true;
         if (response.createStandingInstructionAtDisbursement) {
           this.loansAccountDetailsForm
