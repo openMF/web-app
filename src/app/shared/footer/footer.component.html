@@ -1,41 +1,41 @@
-@if (displayBackEndInfo) {
-  <div class="layout-column m-b-20 f12" ngClass="{{ styleClass }}" id="footer">
-    <mat-divider class="divider align-center"></mat-divider>
-    <div class="layout-column m-b-20 content-wrapper footer-center">
-      <table class="versions">
-        <tr>
-          <td class="footer-content">Mifos</td>
-          <td class="right footer-content">
-            {{ versions.mifos }} - <b>{{ hash }}</b>
-          </td>
-        </tr>
-        <tr>
-          <td class="footer-content">{{ 'labels.text.Fineract' | translate }}</td>
-          <td class="right footer-content">
-            {{ versions.fineract.version }} - <b>{{ versions.fineract.hash }}</b>
-          </td>
-        </tr>
-        @if (displayBackEndInfo) {
-          <tr>
-            <td class="footer-content">{{ 'labels.inputs.Server' | translate }}</td>
-            <td class="right footer-content">
-              {{ server }}
-            </td>
-          </tr>
-        }
-        @if (isBusinessDateDefined) {
-          <tr>
-            <td class="footer-content">{{ 'labels.text.Current Business Date' | translate }}:</td>
-            <td class="center footer-content business-date">
-              <b>{{ businessDate | date: 'EEEE, MMMM dd, y' }}</b>
-            </td>
-          </tr>
-        }
-      </table>
-    </div>
-    <mat-divider class="divider align-center"></mat-divider>
+<div class="layout-column m-b-20 f12" ngClass="{{ styleClass }}" id="footer" *ngIf="displayBackEndInfo">
+  <mat-divider class="divider align-center"></mat-divider>
+  <div class="layout-column m-b-20 content-wrapper footer-center">
+    <table class="versions">
+      <tr>
+        <td class="footer-content">Tenant</td>
+        <td class="right footer-content">
+          {{ tenant | titlecase }}
+        </td>
+      </tr>
+      <tr>
+        <td class="footer-content">Mifos</td>
+        <td class="right footer-content">
+          {{ versions.mifos }} - <b>{{ hash }}</b>
+        </td>
+      </tr>
+      <tr>
+        <td class="footer-content">{{ 'labels.text.Fineract' | translate }}</td>
+        <td class="right footer-content">
+          {{ versions.fineract.version }} - <b>{{ versions.fineract.hash }}</b>
+        </td>
+      </tr>
+      <tr *ngIf="displayBackEndInfo">
+        <td class="footer-content">{{ 'labels.inputs.Server' | translate }}</td>
+        <td class="right footer-content">
+          {{ server }}
+        </td>
+      </tr>
+      <tr *ngIf="isBusinessDateDefined">
+        <td class="footer-content">{{ 'labels.text.Current Business Date' | translate }}:</td>
+        <td class="center footer-content business-date">
+          <b>{{ businessDate | date: 'EEEE, MMMM dd, y' }}</b>
+        </td>
+      </tr>
+    </table>
   </div>
-}
-<div class="layout-column m-b-20 copy-label">
-  <p class="footer-content align-center">{{ 'APP_NAME' | translate }} {{ 'labels.text.by' | translate }} Mifos</p>
+
+  <div class="layout-column m-b-20 copy-label">
+    <p class="footer-content align-center">{{ 'APP_NAME' | translate }} {{ 'labels.text.by' | translate }} Mifos</p>
+  </div>
 </div>

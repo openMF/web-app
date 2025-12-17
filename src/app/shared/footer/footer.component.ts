@@ -52,6 +52,8 @@ export class FooterComponent implements OnInit, OnDestroy {
   server = '';
   /** Business Date */
   businessDate: Date = null;
+  /** Tenant name */
+  tenant: string;
 
   isBusinessDateEnabled = false;
   isBusinessDateDefined = false;
@@ -87,6 +89,7 @@ export class FooterComponent implements OnInit, OnDestroy {
       });
       this.getConfigurations();
       this.server = this.settingsService.server;
+      this.tenant = this.tenantIdentifier();
       this.versionService.getBackendInfo().subscribe((data: any) => {
         if (data.git && data.git.build && data.git.build.version) {
           const buildVersion: string = data.git.build.version.split('-');
@@ -95,6 +98,13 @@ export class FooterComponent implements OnInit, OnDestroy {
         }
       });
     }
+  }
+
+  tenantIdentifier() {
+    if (!this.settingsService.tenantIdentifier || this.settingsService.tenantIdentifier === '') {
+      return 'default';
+    }
+    return this.settingsService.tenantIdentifier;
   }
 
   ngOnDestroy() {
