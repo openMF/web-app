@@ -36,7 +36,6 @@
     </mat-form-field>
 
     <mat-form-field class="flex-48">
-      <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="lockinPeriodFrequencyType">
         @for (lockinPeriodFrequencyType of lockinPeriodFrequencyTypeData; track lockinPeriodFrequencyType) {
           <mat-option [value]="lockinPeriodFrequencyType.id">
