@@ -75,7 +75,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   /* Template for popover on search activity */
   @ViewChild('templateSearchActivity', { static: false }) templateSearchActivity: TemplateRef<any>;
 
-  // No constructor needed; dependencies are injected via inject().
+  // All dependencies are injected using inject() above. No constructor needed.
   constructor() {}
 
   /**
