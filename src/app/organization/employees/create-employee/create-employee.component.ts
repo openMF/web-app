@@ -103,7 +103,12 @@ export class CreateEmployeeComponent implements OnInit, AfterViewInit {
         ]
       ],
       isLoanOfficer: [false],
-      mobileNo: [''],
+      mobileNo: [
+        '',
+        [
+          Validators.pattern(/^\+?[0-9. ()-]{0,25}$/)
+        ]
+      ],
       joiningDate: [
         '',
         Validators.required

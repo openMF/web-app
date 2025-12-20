@@ -61,6 +61,15 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Mobile Number for SMS' | translate }}</mat-label>
             <input matInput formControlName="mobileNo" />
+            @if (
+              employeeForm.controls.mobileNo.hasError('pattern') &&
+              (employeeForm.controls.mobileNo.dirty || employeeForm.controls.mobileNo.touched)
+            ) {
+              <mat-error>
+                {{ 'labels.inputs.Mobile Number for SMS' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.invalid' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field (click)="joiningDatePicker.open()">
