@@ -18,7 +18,14 @@
           cdkAutosizeMinRows="2"
         ></textarea>
       </mat-form-field>
-      <button type="button" mat-raised-button class="flex-1" color="primary" [disabled]="!noteForm.valid">
+      <button
+        type="button"
+        mat-raised-button
+        class="flex-1"
+        color="primary"
+        [disabled]="!noteForm.valid"
+        (click)="addNote()"
+      >
         <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
       </button>
     </form>
