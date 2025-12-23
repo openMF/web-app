@@ -50,7 +50,7 @@
 
     <!-- Logo with Organization Name -->
     <div class="layout-row align-center-center flex-auto">
-      <img src="assets/images/mifos_lg-logo.png" alt="{{ 'APP_NAME' | translate }} Logo" class="img-container" />
+      <img [src]="logoPath" (error)="onLogoError()" alt="{{ 'APP_NAME' | translate }} Logo" class="img-container" />
     </div>
 
     <!-- Form Section -->

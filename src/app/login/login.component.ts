@@ -65,11 +65,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   twoFactorAuthenticationRequired = false;
   /** Subscription to alerts. */
   alert$: Subscription;
+  logoPath = 'assets/images/default_home.png';
 
   /**
    * Subscribes to alert event of alert service.
    */
   ngOnInit() {
+    this.updateLogo();
     this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
       const alertType = alertEvent.type;
       if (alertType === 'Password Expired') {
@@ -82,6 +84,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.resetPassword = false;
         this.twoFactorAuthenticationRequired = false;
         this.router.navigate(['/'], { replaceUrl: true });
+      } else if (alertType === 'Tenant Changed') {
+        this.updateLogo();
       }
     });
   }
@@ -111,5 +115,22 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   allowServerSwitch(): boolean {
     return environment.allowServerSwitch === 'false' ? false : true;
+  }
+
+  updateLogo(): void {
+    if (environment.tenantLogoUrl && environment.tenantLogoUrl.trim() !== '') {
+      this.logoPath = environment.tenantLogoUrl;
+      return;
+    }
+    const tenant = this.settingsService.tenantIdentifier;
+    if (tenant && tenant !== 'default') {
+      this.logoPath = `assets/images/${tenant}_home.png`;
+    } else {
+      this.logoPath = 'assets/images/default_home.png';
+    }
+  }
+
+  onLogoError(): void {
+    this.logoPath = 'assets/images/default_home.png';
   }
 }
