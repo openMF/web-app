@@ -329,4 +329,19 @@ body.dark-theme {
       border-color: #424242;
     }
   }
+
+  // Configuration wizard dark theme styling
+  mifosx-configuration-wizard {
+    .config-wizard-content {
+      .description {
+        color: white !important;
+      }
+
+      .progress-section {
+        .progress-label {
+          color: white !important;
+        }
+      }
+    }
+  }
 }
