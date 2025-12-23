@@ -635,6 +635,23 @@ mifosx-notifications-page td {
   width: 100%;
 }
 
+/* Global overflow helpers to avoid repeated component overrides */
+.overflow-hidden {
+  overflow: hidden;
+}
+
+mat-card {
+  overflow: hidden;
+}
+
+.layout-row.responsive-column {
+  overflow: hidden;
+
+  > [class] {
+    overflow: hidden;
+  }
+}
+
 //Re-positions account type field on list standing instructions page
 .type-field {
   position: absolute;
