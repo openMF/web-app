@@ -42,6 +42,8 @@ export class NotesTabComponent implements OnInit {
   constructor() {
     this.entityId = this.route.parent.snapshot.params['clientId'];
     this.addNote = this.addNote.bind(this);
+    this.editNote = this.editNote.bind(this);
+    this.deleteNote = this.deleteNote.bind(this);
   }
 
   ngOnInit(): void {
