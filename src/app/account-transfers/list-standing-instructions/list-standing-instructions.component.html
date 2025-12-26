@@ -16,10 +16,10 @@
     @if (!isFromClient) {
       <div class="flex-fill">
         <mat-form-field class="flex-30">
-          <input matInput placeholder="ClientName" [formControl]="clientNameControl" />
+          <input matInput placeholder="{{ 'labels.text.ClientName' | translate }}" [formControl]="clientNameControl" />
         </mat-form-field>
         <mat-form-field class="flex-30">
-          <input matInput placeholder="From Client Id" [formControl]="fromClientId" />
+          <input matInput placeholder="{{ 'labels.text.FromClientId' | translate }}" [formControl]="fromClientId" />
         </mat-form-field>
       </div>
     }
@@ -38,7 +38,7 @@
     </mat-form-field>
 
     <mat-form-field class="account-Id-field">
-      <input matInput placeholder="From Account Id" [formControl]="fromAccountId" />
+      <input matInput placeholder="{{ 'labels.text.FromAccountId' | translate }}" [formControl]="fromAccountId" />
     </mat-form-field>
 
     <button

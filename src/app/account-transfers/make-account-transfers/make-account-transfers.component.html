@@ -57,7 +57,7 @@
                   [(ngModel)]="phoneAccount"
                   maxlength="10"
                   required
-                  placeholder="Enter phone number"
+                  placeholder="{{ 'labels.text.EnterPhoneNumber' | translate }}"
                   title="Phone number"
                 />
                 <mat-hint align="end">{{ phoneAccount.length || 0 }}/10</mat-hint>
@@ -99,7 +99,7 @@
                   [matDatepicker]="transferDatePicker"
                   required
                   formControlName="transferDate"
-                  placeholder="Select date"
+                  placeholder="{{ 'labels.text.SelectDate' | translate }}"
                   title="Transaction Date"
                 />
                 <mat-datepicker-toggle matSuffix [for]="transferDatePicker"></mat-datepicker-toggle>
@@ -133,7 +133,7 @@
                   matInput
                   formControlName="toClientId"
                   [matAutocomplete]="clientsAutocomplete"
-                  placeholder="Select or type client name"
+                  placeholder="{{ 'labels.text.SelectOrTypeClientName' | translate }}"
                   title="Client name"
                 />
                 @if (makeAccountTransferForm.controls.toClientId.hasError('required')) {
@@ -191,7 +191,7 @@
                   matInput
                   required
                   formControlName="transferAmount"
-                  placeholder="Enter amount"
+                  placeholder="{{ 'labels.text.EnterAmount' | translate }}"
                   title="Transfer amount"
                   min="0.01"
                   step="0.01"
@@ -216,7 +216,7 @@
                   formControlName="transferDescription"
                   cdkTextareaAutosize
                   cdkAutosizeMinRows="2"
-                  placeholder="Enter transfer description"
+                  placeholder="{{ 'labels.text.EnterTransferDescription' | translate }}"
                   title="Transfer description"
                 ></textarea>
                 @if (makeAccountTransferForm.controls.transferDescription.hasError('required')) {
@@ -243,7 +243,7 @@
                   [matDatepicker]="transferDatePicker"
                   required
                   formControlName="transferDate"
-                  placeholder="Select date"
+                  placeholder="{{ 'labels.text.SelectDate' | translate }}"
                   title="Transaction Date"
                 />
                 <mat-datepicker-toggle matSuffix [for]="transferDatePicker"></mat-datepicker-toggle>
@@ -257,11 +257,23 @@
               </mat-form-field>
               <mat-form-field class="form-field">
                 <mat-label>{{ 'labels.inputs.Bank' | translate }}</mat-label>
-                <input matInput formControlName="toBank" [readonly]="true" placeholder="Bank" title="Bank" />
+                <input
+                  matInput
+                  formControlName="toBank"
+                  [readonly]="true"
+                  placeholder="{{ 'labels.inputs.Bank' | translate }}"
+                  title="Bank"
+                />
               </mat-form-field>
               <mat-form-field class="form-field">
                 <mat-label>{{ 'labels.inputs.Client' | translate }}</mat-label>
-                <input matInput formControlName="toClientId" [readonly]="true" placeholder="Client" title="Client" />
+                <input
+                  matInput
+                  formControlName="toClientId"
+                  [readonly]="true"
+                  placeholder="{{ 'labels.inputs.Client' | translate }}"
+                  title="Client"
+                />
               </mat-form-field>
               <mat-form-field class="form-field">
                 <mat-label>{{ 'labels.inputs.Account Type' | translate }}</mat-label>
@@ -269,13 +281,19 @@
                   matInput
                   formControlName="toAccountType"
                   [readonly]="true"
-                  placeholder="Account Type"
+                  placeholder="{{ 'labels.inputs.Account Type' | translate }}"
                   title="Account Type"
                 />
               </mat-form-field>
               <mat-form-field class="form-field">
                 <mat-label>{{ 'labels.inputs.Account' | translate }}</mat-label>
-                <input matInput formControlName="toAccountId" [readonly]="true" placeholder="Account" title="Account" />
+                <input
+                  matInput
+                  formControlName="toAccountId"
+                  [readonly]="true"
+                  placeholder="{{ 'labels.inputs.Account' | translate }}"
+                  title="Account"
+                />
               </mat-form-field>
               <mat-form-field class="form-field">
                 <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
@@ -284,7 +302,7 @@
                   matInput
                   required
                   formControlName="transferAmount"
-                  placeholder="Enter amount"
+                  placeholder="{{ 'labels.text.EnterAmount' | translate }}"
                   title="Transfer amount"
                   min="0.01"
                   step="0.01"
@@ -314,7 +332,7 @@
                   formControlName="transferDescription"
                   cdkTextareaAutosize
                   cdkAutosizeMinRows="2"
-                  placeholder="Enter transfer description"
+                  placeholder="{{ 'labels.text.EnterTransferDescription' | translate }}"
                   title="Transfer description"
                 ></textarea>
                 @if (makeAccountTransferForm.controls.transferDescription.hasError('required')) {

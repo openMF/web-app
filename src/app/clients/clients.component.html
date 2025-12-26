@@ -4,7 +4,7 @@
       <mat-form-field class="search-box">
         <input
           matInput
-          placeholder="Search by client name, external Id, mobile"
+          placeholder="{{ 'labels.text.SearchByClient' | translate }}"
           class="search-box"
           (keydown.enter)="search($event.target.value)"
         />

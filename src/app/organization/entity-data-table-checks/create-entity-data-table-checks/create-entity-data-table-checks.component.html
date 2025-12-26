@@ -8,7 +8,7 @@
             <mat-select required formControlName="entity">
               @for (entity of entityTypes; track entity) {
                 <mat-option [value]="entity.value">
-                  {{ entity.name }}
+                  {{ entity.name | translateKey: 'catalogs' }}
                 </mat-option>
               }
             </mat-select>

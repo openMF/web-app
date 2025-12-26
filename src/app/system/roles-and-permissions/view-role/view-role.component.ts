@@ -176,7 +176,20 @@ export class ViewRoleComponent implements OnInit {
    * Formats the Role Name
    * @param string String
    */
-  formatName(string: any) {
+  formatName(string: string) {
+    if (!string) {
+      return string;
+    }
+    // Try to translate first
+    const translationKey = `labels.catalogs.${string}`;
+    const translated = this.translateService.instant(translationKey);
+
+    // If translation exists (and is different from key), use it
+    if (translated && translated !== translationKey) {
+      return translated;
+    }
+
+    // Otherwise, format the original string
     if (string.indexOf('portfolio_') > -1) {
       string = string.replace('portfolio_', '');
     }

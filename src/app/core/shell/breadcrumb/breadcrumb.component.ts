@@ -169,6 +169,25 @@ export class BreadcrumbComponent implements AfterViewInit {
               } else if (routeData.breadcrumb === 'Tax Groups') {
                 breadcrumbLabel = routeData.taxGroup.name;
               }
+
+              // Check if the breadcrumbLabel is an action name that should be translated using labels.menus
+              // This handles action names from route parameters for Savings, Loans, Shares, Fixed Deposits, and Recurring Deposits accounts
+              if (
+                breadcrumbLabel &&
+                (routeData.breadcrumb === 'Savings Account Actions' ||
+                  routeData.breadcrumb === 'Loan Account Actions' ||
+                  routeData.breadcrumb === 'Shares Account Actions' ||
+                  routeData.breadcrumb === 'Actions' ||
+                  routeData.breadcrumb === 'action' ||
+                  routeData.title === 'Fixed Deposits Account Actions' ||
+                  routeData.title === 'Recurring Deposits Account Actions')
+              ) {
+                const menuKey = 'labels.menus.' + breadcrumbLabel;
+                const menuTranslation = this.translateService.instant(menuKey);
+                if (menuTranslation !== menuKey) {
+                  breadcrumbLabel = menuTranslation;
+                }
+              }
             } else if (route.snapshot.data.hasOwnProperty(routeDataBreadcrumb)) {
               breadcrumbLabel = route.snapshot.data[routeDataBreadcrumb];
             }

@@ -10,9 +10,8 @@
     <div class="flex-fill layout-row">
       <span class="flex-50">{{ 'labels.inputs.Repayments' | translate }}</span>
       <span class="flex-50"
-        >{{ loanDetails.numberOfRepayments }} every {{ loanDetails.repaymentEvery }}&nbsp;{{
-          loanDetails.repaymentFrequencyType.value | translateKey: 'catalogs'
-        }}
+        >{{ loanDetails.numberOfRepayments }} {{ 'labels.commons.every' | translate }}
+        {{ loanDetails.repaymentEvery }}&nbsp;{{ loanDetails.repaymentFrequencyType.value | translateKey: 'catalogs' }}
         @if (
           loanDetails.repaymentFrequencyType?.id === 2 &&
           loanDetails.repaymentFrequencyNthDayType?.id !== 0 &&

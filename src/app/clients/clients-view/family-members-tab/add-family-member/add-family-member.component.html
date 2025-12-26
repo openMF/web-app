@@ -7,9 +7,9 @@
           formControlName="firstName"
           required
           matInput
-          aria-label="First Name"
-          placeholder="First Name"
-          title="First Name"
+          [attr.aria-label]="'labels.inputs.First Name' | translate"
+          placeholder="{{ 'labels.inputs.First Name' | translate }}"
+          [attr.title]="'labels.inputs.First Name' | translate"
         />
         @if (addFamilyMemberForm.controls.firstName.hasError('required')) {
           <mat-error>
@@ -24,9 +24,9 @@
         <input
           formControlName="middleName"
           matInput
-          aria-label="Middle Name"
-          placeholder="Middle Name"
-          title="Middle Name"
+          [attr.aria-label]="'labels.inputs.Middle Name' | translate"
+          placeholder="{{ 'labels.inputs.Middle Name' | translate }}"
+          [attr.title]="'labels.inputs.Middle Name' | translate"
         />
       </mat-form-field>
 
@@ -36,9 +36,9 @@
           formControlName="lastName"
           required
           matInput
-          aria-label="Last Name"
-          placeholder="Last Name"
-          title="Last Name"
+          [attr.aria-label]="'labels.inputs.Last Name' | translate"
+          placeholder="{{ 'labels.inputs.Last Name' | translate }}"
+          [attr.title]="'labels.inputs.Last Name' | translate"
         />
         @if (addFamilyMemberForm.controls.lastName.hasError('required')) {
           <mat-error>
@@ -53,9 +53,9 @@
         <input
           formControlName="qualification"
           matInput
-          aria-label="Qualification"
-          placeholder="Qualification"
-          title="Qualification"
+          [attr.aria-label]="'labels.inputs.Qualification' | translate"
+          placeholder="{{ 'labels.inputs.Qualification' | translate }}"
+          [attr.title]="'labels.inputs.Qualification' | translate"
         />
       </mat-form-field>
 
@@ -67,9 +67,9 @@
           matInput
           [min]="minAge"
           disabled
-          aria-label="Age"
-          placeholder="Age"
-          title="Age"
+          [attr.aria-label]="'labels.inputs.Age' | translate"
+          placeholder="{{ 'labels.inputs.Age' | translate }}"
+          [attr.title]="'labels.inputs.Age' | translate"
         />
       </mat-form-field>
 
@@ -140,9 +140,9 @@
           matInput
           [max]="maxDate"
           [matDatepicker]="dueDatePicker"
-          placeholder="Optional"
-          aria-label="Date Of Birth"
-          title="Date Of Birth"
+          placeholder="{{ 'labels.text.Optional' | translate }}"
+          [attr.aria-label]="'labels.inputs.Date Of Birth' | translate"
+          [attr.title]="'labels.inputs.Date Of Birth' | translate"
         />
         <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #dueDatePicker></mat-datepicker>

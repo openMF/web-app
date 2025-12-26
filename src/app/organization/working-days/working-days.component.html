@@ -9,7 +9,7 @@
               @for (day of recurrence.controls; track day; let i = $index) {
                 <div>
                   <mat-checkbox labelPosition="after" [formControlName]="i">
-                    {{ weekDays[i].name }}
+                    {{ weekDays[i].name | translateKey: 'catalogs' }}
                   </mat-checkbox>
                 </div>
               }
@@ -21,7 +21,7 @@
             <mat-select formControlName="repaymentRescheduleType">
               @for (repaymentRescheduleType of repaymentRescheduleTypeData; track repaymentRescheduleType) {
                 <mat-option [value]="repaymentRescheduleType.id">
-                  {{ repaymentRescheduleType.value }}
+                  {{ repaymentRescheduleType.value | translateKey: 'catalogs' }}
                 </mat-option>
               }
             </mat-select>

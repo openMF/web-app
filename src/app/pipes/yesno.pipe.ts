@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
-@Pipe({ name: 'yesNo' })
+@Pipe({ name: 'yesNo', pure: false })
 export class YesnoPipe implements PipeTransform {
   private translateService = inject(TranslateService);
 

@@ -3,7 +3,11 @@
     <div class="layout-row align-start-center">
       <div class="search-box flex-40">
         <mat-form-field class="flex-90">
-          <input matInput placeholder="Filter by loan Id or error" (keyup)="applyFilter($event.target.value)" />
+          <input
+            matInput
+            placeholder="{{ 'labels.text.FilterByLoanIdOrError' | translate }}"
+            (keyup)="applyFilter($event.target.value)"
+          />
         </mat-form-field>
       </div>
       @if (allowRunInlineJob) {

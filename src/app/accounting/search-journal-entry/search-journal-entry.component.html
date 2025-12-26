@@ -18,7 +18,7 @@
     <mat-select [formControl]="entryTypeFilter" (selectionChange)="applyFilter($event.value, 'manualEntriesOnly')">
       @for (filter of entryTypeFilterData; track filter) {
         <mat-option [value]="filter.value">
-          {{ filter.option }}
+          {{ filter.option | translate }}
         </mat-option>
       }
     </mat-select>

@@ -37,8 +37,6 @@
             <input
               matInput
               formControlName="accountNo"
-              placeholder="Account No"
-              title="Account No"
               [placeholder]="'labels.inputs.Account No' | translate"
               [title]="'labels.inputs.Account No' | translate"
             />
@@ -49,8 +47,6 @@
             <input
               matInput
               formControlName="externalId"
-              placeholder="External Id"
-              title="External Id"
               [placeholder]="'labels.inputs.External Id' | translate"
               [title]="'labels.inputs.External Id' | translate"
             />
@@ -68,8 +64,6 @@
                 matInput
                 required
                 formControlName="fullname"
-                placeholder="Full Name"
-                title="Full Name"
                 [placeholder]="'labels.inputs.' + getDateLabel(legalFormId, ['Name', 'Entity Name']) | translate"
                 [title]="'labels.inputs.' + getDateLabel(legalFormId, ['Name', 'Entity Name']) | translate"
               />
@@ -89,8 +83,6 @@
                 matInput
                 required
                 formControlName="firstname"
-                placeholder="First Name"
-                title="First Name"
                 [placeholder]="'labels.inputs.First Name' | translate"
                 [title]="'labels.inputs.First Name' | translate"
               />
@@ -109,8 +101,6 @@
               <input
                 matInput
                 formControlName="middlename"
-                placeholder="Middle Name"
-                title="Middle Name"
                 [placeholder]="'labels.inputs.Middle Name' | translate"
                 [title]="'labels.inputs.Middle Name' | translate"
               />
@@ -124,8 +114,6 @@
                 matInput
                 required
                 formControlName="lastname"
-                placeholder="Last Name"
-                title="Last Name"
                 [placeholder]="'labels.inputs.Last Name' | translate"
                 [title]="'labels.inputs.Last Name' | translate"
               />
@@ -152,8 +140,6 @@
               [max]="maxDate"
               [matDatepicker]="dateOfBirthDatePicker"
               formControlName="dateOfBirth"
-              placeholder="Date of Birth"
-              title="Date of Birth"
               [placeholder]="
                 'labels.inputs.' + getDateLabel(legalFormId, ['Date of Birth', 'Incorporation Date']) | translate
               "
@@ -224,8 +210,6 @@
             <mat-form-field class="flex-48" (click)="incorpValidityTillDateDatePicker.open()">
               <mat-label>{{ 'labels.inputs.Incorporation Validity Till Date' | translate }}</mat-label>
               <input
-                placeholder="Incorporation Validity Till Date"
-                title="Incorporation Validity Till Date"
                 [placeholder]="'labels.inputs.Incorporation Validity Till Date' | translate"
                 [title]="'labels.inputs.Incorporation Validity Till Date' | translate"
                 matInput
@@ -242,8 +226,6 @@
               <input
                 matInput
                 formControlName="incorpNumber"
-                placeholder="Incorporation No"
-                title="Incorporation No"
                 [placeholder]="'labels.inputs.Incorporation No' | translate"
                 [title]="'labels.inputs.Incorporation No' | translate"
               />
@@ -255,8 +237,6 @@
                 formControlName="remarks"
                 cdkTextareaAutosize
                 cdkAutosizeMinRows="2"
-                placeholder="Remarks"
-                title="Remarks"
                 [placeholder]="'labels.inputs.Remarks' | translate"
                 [title]="'labels.inputs.Remarks' | translate"
               ></textarea>
@@ -272,8 +252,6 @@
               matInput
               type="text"
               formControlName="mobileNo"
-              placeholder="Mobile No"
-              title="Mobile No"
               [placeholder]="'labels.inputs.Mobile No' | translate"
               [title]="'labels.inputs.Mobile No' | translate"
             />
@@ -284,8 +262,6 @@
             <input
               matInput
               formControlName="emailAddress"
-              placeholder="Email Address"
-              title="Email Address"
               [placeholder]="'labels.inputs.Email Address' | translate"
               [title]="'labels.inputs.Email Address' | translate"
             />
@@ -325,8 +301,6 @@
           <mat-form-field class="flex-48" (click)="submittedOnDatePicker.open()">
             <mat-label>{{ 'labels.inputs.Submitted On' | translate }}</mat-label>
             <input
-              placeholder="Submitted On"
-              title="Submitted On"
               [placeholder]="'labels.inputs.Submitted On' | translate"
               [title]="'labels.inputs.Submitted On' | translate"
               matInput
@@ -349,8 +323,6 @@
           <mat-form-field class="flex-48" (click)="activatedOnDatePicker.open()">
             <mat-label>{{ 'labels.inputs.Activated On' | translate }}</mat-label>
             <input
-              placeholder="Activated On"
-              title="Activated On"
               [placeholder]="'labels.inputs.Activated On' | translate"
               [title]="'labels.inputs.Activated On' | translate"
               matInput

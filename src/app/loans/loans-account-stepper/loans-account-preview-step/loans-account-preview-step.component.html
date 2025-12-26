@@ -187,7 +187,9 @@
   <div class="flex-fill">
     <span class="flex-40">{{ 'labels.inputs.Amortization' | translate }}</span>
     <span class="flex-60">{{
-      loansAccount.amortizationType | find: loansAccountProductTemplate.amortizationTypeOptions : 'id' : 'value'
+      loansAccount.amortizationType
+        | find: loansAccountProductTemplate.amortizationTypeOptions : 'id' : 'value'
+        | translateKey: 'catalogs'
     }}</span>
   </div>
 
@@ -196,6 +198,7 @@
     <span class="flex-60">{{
       loansAccount.interestCalculationPeriodType
         | find: loansAccountProductTemplate.interestCalculationPeriodTypeOptions : 'id' : 'value'
+        | translateKey: 'catalogs'
     }}</span>
   </div>
 
@@ -227,6 +230,7 @@
     <span class="flex-60">{{
       loansAccount.transactionProcessingStrategyCode
         | find: loansAccountProductTemplate.transactionProcessingStrategyOptions : 'code' : 'name'
+        | translateKey: 'catalogs'
     }}</span>
   </div>
 
@@ -284,7 +288,7 @@
   @if (loansAccountProductTemplate?.daysInMonthType) {
     <div class="flex-fill">
       <span class="flex-40">{{ 'labels.inputs.Days in month' | translate }}: </span>
-      <span class="flex-60">{{ loansAccountProductTemplate?.daysInMonthType.value }}</span>
+      <span class="flex-60">{{ loansAccountProductTemplate?.daysInMonthType.value | translateKey: 'catalogs' }}</span>
     </div>
   }
 

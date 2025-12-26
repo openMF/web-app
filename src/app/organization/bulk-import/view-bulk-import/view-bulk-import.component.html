@@ -2,7 +2,9 @@
   <div class="gap-2percent m-b-20">
     <mat-card class="layout-column gap-2percent flex-50">
       <h3>
-        <strong>{{ bulkImport.name }} {{ 'labels.heading.Template' | translate }}</strong>
+        <strong
+          >{{ 'labels.heading.' + bulkImport.name | translate }} {{ 'labels.heading.Template' | translate }}</strong
+        >
       </h3>
 
       <form [formGroup]="bulkImportForm">
@@ -65,7 +67,7 @@
 
     <mat-card class="layout-column gap-2percent flex-50">
       <h3>
-        <strong>{{ bulkImport.name }}</strong>
+        <strong>{{ 'labels.heading.' + bulkImport.name | translate }}</strong>
       </h3>
 
       <h4>{{ 'labels.heading.Select Excel File' | translate }}</h4>

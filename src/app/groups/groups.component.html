@@ -2,7 +2,7 @@
   <div class="layout-column layout-gt-sm-row align-gt-sm-start-center">
     <div class="search-box m-r-30">
       <mat-form-field class="search-box">
-        <input matInput placeholder="Search by Name" [formControl]="name" />
+        <input matInput placeholder="{{ 'labels.text.SearchByName' | translate }}" [formControl]="name" />
       </mat-form-field>
       <mat-checkbox #showClosedGroups labelPosition="after" (change)="changeShowClosedGroups()" class="m-r-10">{{
         'labels.inputs.Show Closed Groups' | translate

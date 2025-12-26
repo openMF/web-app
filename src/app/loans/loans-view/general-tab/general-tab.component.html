@@ -29,7 +29,7 @@
       <table mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="Empty">
           <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let ele">{{ ele.property }}</td>
+          <td mat-cell *matCellDef="let ele">{{ 'labels.inputs.' + ele.property | translate }}</td>
         </ng-container>
         <ng-container matColumnDef="Original">
           <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Original' | translate }}</th>

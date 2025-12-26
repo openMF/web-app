@@ -93,15 +93,15 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
   /** Entry type filter data. */
   entryTypeFilterData = [
     {
-      option: 'All',
+      option: 'labels.inputs.All',
       value: ''
     },
     {
-      option: 'Manual Entries',
+      option: 'labels.inputs.Manual Entries',
       value: true
     },
     {
-      option: 'System Entries',
+      option: 'labels.inputs.System Entries',
       value: false // Bug: unable to implement from server side
     }
   ];
