@@ -1,3 +1,5 @@
+@use '../../../../assets/styles/colours' as *;
+
 .container {
   padding: 24px;
   max-width: 100%;
@@ -128,4 +130,26 @@
 
 mat-paginator {
   margin-top: 16px;
+}
+
+:host-context(.dark-theme) {
+  .container {
+    .gap-2percent {
+      mat-card {
+        h3 {
+          color: $white;
+        }
+
+        h4 {
+          color: $white;
+        }
+      }
+    }
+
+    mat-card:last-child {
+      .documents {
+        color: $white;
+      }
+    }
+  }
 }
