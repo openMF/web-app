@@ -79,7 +79,11 @@
           [ngClass]="savingsTransactionColor(transaction)"
           (click)="showTransactions(transaction)"
         >
-          {{ isDebit(transaction.transactionType) ? (transaction.amount | formatNumber) : 'N/A' }}
+          {{
+            isDebit(transaction.transactionType)
+              ? (transaction.amount | currency: currency?.code || 'USD' : 'symbol-narrow' : '1.2-2')
+              : 'N/A'
+          }}
         </td>
       </ng-container>
 
@@ -92,7 +96,11 @@
           [ngClass]="savingsTransactionColor(transaction)"
           (click)="showTransactions(transaction)"
         >
-          {{ !isDebit(transaction.transactionType) ? (transaction.amount | formatNumber) : 'N/A' }}
+          {{
+            !isDebit(transaction.transactionType)
+              ? (transaction.amount | currency: currency?.code || 'USD' : 'symbol-narrow' : '1.2-2')
+              : 'N/A'
+          }}
         </td>
       </ng-container>
 
@@ -105,7 +113,7 @@
           [ngClass]="savingsTransactionColor(transaction)"
           (click)="showTransactions(transaction)"
         >
-          {{ transaction.runningBalance | formatNumber }}
+          {{ transaction.runningBalance | currency: currency?.code || 'USD' : 'symbol-narrow' : '1.2-2' }}
         </td>
       </ng-container>
 

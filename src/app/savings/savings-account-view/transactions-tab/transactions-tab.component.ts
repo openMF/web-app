@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { CurrencyPipe, NgClass } from '@angular/common';
 import {
   MatTableDataSource,
   MatTable,
@@ -26,7 +27,7 @@ import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { UndoTransactionDialogComponent } from '../custom-dialogs/undo-transaction-dialog/undo-transaction-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { NgClass } from '@angular/common';
+import { Currency } from 'app/shared/models/general.model';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { ExternalIdentifierComponent } from '../../../shared/external-identifier/external-identifier.component';
@@ -34,7 +35,6 @@ import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { MatIcon } from '@angular/material/icon';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
-import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -69,7 +69,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRow,
     MatPaginator,
     DateFormatPipe,
-    FormatNumberPipe
+    CurrencyPipe
   ]
 })
 export class TransactionsTabComponent implements OnInit {
@@ -82,6 +82,8 @@ export class TransactionsTabComponent implements OnInit {
 
   /** Savings Account Status */
   status: any;
+  /** Currency */
+  currency: Currency | null = null;
   /** Transactions Data */
   transactionsData: SavingsAccountTransaction[] = [];
   /** Form control to handle accural parameter */
@@ -116,6 +118,7 @@ export class TransactionsTabComponent implements OnInit {
     this.route.parent.parent.data.subscribe((data: { savingsAccountData: any }) => {
       this.transactionsData = data.savingsAccountData.transactions;
       this.status = data.savingsAccountData.status.value;
+      this.currency = data.savingsAccountData.currency || null;
     });
     this.accountId = this.route.parent.parent.snapshot.params['savingAccountId'];
   }
