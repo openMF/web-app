@@ -1106,6 +1106,7 @@
       "Offices": "Oficinas",
       "Options": "Opciones",
       "Other Details": "Otros detalles",
+      "Overdue": "Vencido",
       "Overdue Charges": "Comisiones Moratorias",
       "Password Preferences": "Preferencias de contraseña",
       "Payment Type": "Tipo de pago",
@@ -2359,6 +2360,7 @@
       "Show Closed Centers": "Mostrar Centros Cerrados",
       "Show Closed Groups": "Mostrar grupos cerrados",
       "Show Payment Details": "Mostrar detalles de pago",
+      "Waive Penalties": "Renunciar a Penalizaciones",
       "Specific to Installment": "Específico para la cuota",
       "Slab": "Tramo",
       "Staff": "Asesor",
@@ -2585,7 +2587,9 @@
       "Buy down fee Expense": "Gastos por comisiones de compra inicial",
       "Skip Interest Refund Transaction Posting": "Omitir el registro de la devolución de intereses",
       "Incorporation Date": "Fecha de Constitución",
-      "Available Disbursement Amount (with Over Applied)": "Monto disponible para desembolso (con sobreaplicación)"
+      "Available Disbursement Amount (with Over Applied)": "Monto disponible para desembolso (con sobreaplicación)",
+      "Overdue": "Vencido",
+      "Overdue Fees": "Cargos vencidos"
     },
     "links": {
       "Community": "Comunidad",
@@ -2910,7 +2914,6 @@
       "Create Recurring Deposits Account": "Crear cuenta de depósitos recurrentes",
       "Create Report": "Crear reporte",
       "Create SMS Campaign": "Crear campaña de SMS",
-      "Create Savings Product": "Crear producto de ahorro",
       "Create Savings Account": "Crear Cuenta de Ahorros",
       "Create Self Service User": "Crear usuario de autoservicio",
       "Create Share Product": "Crear producto de Acciones",
@@ -3171,6 +3174,7 @@
       "No checker inbox data available for this search": "No hay datos de la bandeja de entrada del verificador disponibles para esta búsqueda.",
       "No client was found": "No se encontró ningún cliente",
       "No data found": "Datos no encontrados",
+      "No penalties found": "No se encontraron penalizaciones",
       "NoDocuments": "No hay documentos disponibles.",
       "NoFileSelected": "No se ha seleccionado ningún archivo",
       "NoNotesAvailable": "No hay notas disponibles",
