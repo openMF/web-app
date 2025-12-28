@@ -143,15 +143,21 @@
       </ng-container>
       <ng-container matColumnDef="Original Loan">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Original Loan' | translate }}</th>
-        <td mat-cell *matCellDef="let element">{{ element.originalLoan }}</td>
+        <td mat-cell *matCellDef="let element">
+          {{ element.originalLoan | currency: element.currency?.code || 'USD' : 'symbol-narrow' : '1.2-2' }}
+        </td>
       </ng-container>
       <ng-container matColumnDef="Loan Balance">
         <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Loan Balance' | translate }}</th>
-        <td mat-cell class="r-amount" *matCellDef="let element">{{ element.loanBalance | formatNumber }}</td>
+        <td mat-cell class="r-amount" *matCellDef="let element">
+          {{ element.loanBalance | currency: element.currency?.code || 'USD' : 'symbol-narrow' : '1.2-2' }}
+        </td>
       </ng-container>
       <ng-container matColumnDef="Amount Paid">
         <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Amount Paid' | translate }}</th>
-        <td mat-cell class="r-amount" *matCellDef="let element">{{ element.amountPaid | formatNumber }}</td>
+        <td mat-cell class="r-amount" *matCellDef="let element">
+          {{ element.amountPaid | currency: element.currency?.code || 'USD' : 'symbol-narrow' : '1.2-2' }}
+        </td>
       </ng-container>
       <ng-container matColumnDef="Type">
         <th mat-header-cell class="center" *matHeaderCellDef>{{ 'labels.inputs.Type' | translate }}</th>
@@ -264,11 +270,15 @@
       </ng-container>
       <ng-container matColumnDef="Loan Balance">
         <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Loan Balance' | translate }}</th>
-        <td mat-cell class="r-amount" *matCellDef="let element">{{ element.loanBalance | formatNumber }}</td>
+        <td mat-cell class="r-amount" *matCellDef="let element">
+          {{ element.loanBalance | currency: element.currency?.code || 'USD' : 'symbol-narrow' : '1.2-2' }}
+        </td>
       </ng-container>
       <ng-container matColumnDef="Amount Paid">
         <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Amount Paid' | translate }}</th>
-        <td mat-cell class="r-amount" *matCellDef="let element">{{ element.accountBalance | formatNumber }}</td>
+        <td mat-cell class="r-amount" *matCellDef="let element">
+          {{ element.accountBalance | currency: element.currency?.code || 'USD' : 'symbol-narrow' : '1.2-2' }}
+        </td>
       </ng-container>
       <ng-container matColumnDef="Type">
         <th mat-header-cell class="center" *matHeaderCellDef>{{ 'labels.inputs.Type' | translate }}</th>
@@ -332,7 +342,9 @@
       </ng-container>
       <ng-container matColumnDef="Balance">
         <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Balance' | translate }}</th>
-        <td mat-cell class="r-amount" *matCellDef="let element">{{ element.accountBalance | formatNumber }}</td>
+        <td mat-cell class="r-amount" *matCellDef="let element">
+          {{ element.accountBalance | currency: element.currency?.code || 'USD' : 'symbol-narrow' : '1.2-2' }}
+        </td>
       </ng-container>
       <ng-container matColumnDef="Actions">
         <th mat-header-cell class="center" *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
@@ -465,7 +477,9 @@
       </ng-container>
       <ng-container matColumnDef="Balance">
         <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Balance' | translate }}</th>
-        <td mat-cell class="r-amount" *matCellDef="let element">{{ element.accountBalance | formatNumber }}</td>
+        <td mat-cell class="r-amount" *matCellDef="let element">
+          {{ element.accountBalance | currency: element.currency?.code || 'USD' : 'symbol-narrow' : '1.2-2' }}
+        </td>
       </ng-container>
       <ng-container matColumnDef="Actions">
         <th mat-header-cell class="center" *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
@@ -579,7 +593,9 @@
       </ng-container>
       <ng-container matColumnDef="Balance">
         <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Balance' | translate }}</th>
-        <td mat-cell class="r-amount" *matCellDef="let element">{{ element.accountBalance | formatNumber }}</td>
+        <td mat-cell class="r-amount" *matCellDef="let element">
+          {{ element.accountBalance | currency: element.currency?.code || 'USD' : 'symbol-narrow' : '1.2-2' }}
+        </td>
       </ng-container>
       <ng-container matColumnDef="Actions">
         <th mat-header-cell class="center" *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
@@ -815,7 +831,9 @@
     <ng-container matColumnDef="Total Value">
       <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Total Value' | translate }}</th>
       <td mat-cell class="r-amount" *matCellDef="let element">
-        {{ element.basePrice * element.quantity | formatNumber }}
+        {{
+          element.basePrice * element.quantity | currency: element.currency?.code || 'USD' : 'symbol-narrow' : '1.2-2'
+        }}
       </td>
     </ng-container>
 
@@ -824,7 +842,10 @@
         {{ 'labels.inputs.Total Collateral Value' | translate }}
       </th>
       <td mat-cell class="r-amount" *matCellDef="let element">
-        {{ (element.pctToBase * element.basePrice * element.quantity) / 100 | formatNumber }}
+        {{
+          (element.pctToBase * element.basePrice * element.quantity) / 100
+            | currency: element.currency?.code || 'USD' : 'symbol-narrow' : '1.2-2'
+        }}
       </td>
     </ng-container>
 
