@@ -26,7 +26,7 @@ export class DatetimeFormatPipe implements PipeTransform {
     } else {
       dateVal = moment(value as any);
     }
-    const fmt = datetimeFormat ?? 'yyyy-MM-ddTHH:mm:ssZ';
+    const fmt = datetimeFormat ?? 'YYYY-MM-DDTHH:mm:ssZ';
     return dateVal.format(fmt);
   }
 }

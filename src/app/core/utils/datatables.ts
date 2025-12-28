@@ -199,15 +199,16 @@ export class Datatables {
       }
     }
 
-    // Convert snake_case to Title Case (e.g., "created_at" -> "Created At")
-    // For non-CODELOOKUP fields, only filter standalone "cd" if it appears as an artifact
-    return (
-      columnName
-        .split('_')
-        .filter((word) => word.trim() && word.toLowerCase() !== 'cd') // Remove empty strings and standalone "cd" artifacts
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-        .join(' ') || columnName
-    ); // Fallback to original if all filtered out
+    if (columnName.includes('_')) {
+      return (
+        columnName
+          .split('_')
+          .filter((word) => word.trim() && word.toLowerCase() !== 'cd')
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+          .join(' ') || columnName
+      );
+    }
+    return columnName;
   }
 
   public getCodeLookupValue(columnHeader: any, id: number): string {

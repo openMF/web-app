@@ -21,76 +21,86 @@
   <mat-divider></mat-divider>
 
   @if (dataObject.data.length > 0) {
-    <div class="m-t-10">
-      @for (columnHeader of dataObject.columnHeaders; track columnHeader; let i = $index) {
-        <div class="flex-fill" [ngClass]="setAttributeClass(columnHeader.columnName)">
-          <div class="mat-body-strong left flex-40">
-            {{ datatables.toDisplayLabel(columnHeader.columnName) }}
-          </div>
-          <div class="right flex-60">
-            @switch (getColumnType(columnHeader.columnDisplayType, columnHeader.columnType)) {
-              @case ('DATE') {
-                <span>
-                  {{ dataObject.data[0].row[i] | dateFormat }}
-                </span>
-              }
-              @case ('DATETIME') {
-                <span>
-                  {{ dataObject.data[0].row[i] | datetimeFormat }}
-                </span>
-              }
-              @case ('INTEGER') {
-                <span>
-                  {{ dataObject.data[0].row[i] }}
-                </span>
-              }
-              @case ('DECIMAL') {
-                <span>
-                  {{ dataObject.data[0].row[i] | formatNumber }}
-                </span>
-              }
-              @case ('CODELOOKUP') {
-                <span>
-                  {{ datatables.getCodeLookupValue(columnHeader, dataObject.data[0].row[i]) }}
-                </span>
-              }
-              @case ('TEXT') {
-                <span class="long-text">
-                  {{ dataObject.data[0].row[i] }}
-                </span>
-              }
-              @case ('JSON') {
-                <textarea
-                  cdkTextareaAutosize="true"
-                  cdkAutosizeMaxRows="20"
-                  cdkAutosizeMinRows="1"
-                  class="json-textarea"
-                  [innerHTML]="dataObject.data[0].row[i].value | prettyPrint"
-                >
-                </textarea>
-              }
-              @default {
-                <span>
-                  @if (isValidUrl(dataObject.data[0].row[i])) {
-                    <span class="m-r-5">
-                      <button
-                        mat-icon-button
-                        matTooltip="{{ 'tooltips.View Link' | translate }}"
-                        (click)="openSite(dataObject.data[0].row[i])"
-                        matTooltipPosition="right"
-                        class="small-icon"
-                      >
-                        <fa-icon icon="eye" size="lg"></fa-icon>
-                      </button>
+    <mat-card class="data-display-card m-t-20">
+      <mat-card-content>
+        <div class="data-grid">
+          @for (columnHeader of dataObject.columnHeaders; track columnHeader; let i = $index) {
+            <div class="data-item" [ngClass]="setAttributeClass(columnHeader.columnName)">
+              <div class="data-label mat-body-strong">
+                {{ datatables.toDisplayLabel(columnHeader.columnName) }}
+              </div>
+              <div class="data-value">
+                @switch (getColumnType(columnHeader.columnDisplayType, columnHeader.columnType)) {
+                  @case ('DATE') {
+                    <span>
+                      {{ dataObject.data[0].row[i] | dateFormat }}
                     </span>
                   }
-                  {{ dataObject.data[0].row[i] }}
-                </span>
-              }
-            }
-          </div>
+                  @case ('DATETIME') {
+                    <span>
+                      {{ dataObject.data[0].row[i] | datetimeFormat }}
+                    </span>
+                  }
+                  @case ('INTEGER') {
+                    <span>
+                      {{ dataObject.data[0].row[i] }}
+                    </span>
+                  }
+                  @case ('DECIMAL') {
+                    <span>
+                      {{ dataObject.data[0].row[i] | formatNumber }}
+                    </span>
+                  }
+                  @case ('CODELOOKUP') {
+                    <span>
+                      {{ datatables.getCodeLookupValue(columnHeader, dataObject.data[0].row[i]) }}
+                    </span>
+                  }
+                  @case ('TEXT') {
+                    <span class="long-text">
+                      {{ dataObject.data[0].row[i] }}
+                    </span>
+                  }
+                  @case ('JSON') {
+                    <textarea
+                      cdkTextareaAutosize="true"
+                      cdkAutosizeMaxRows="20"
+                      cdkAutosizeMinRows="1"
+                      class="json-textarea"
+                      [innerHTML]="dataObject.data[0].row[i].value | prettyPrint"
+                    >
+                    </textarea>
+                  }
+                  @default {
+                    <div class="default-value">
+                      @if (columnHeader.columnName === 'created_at' || columnHeader.columnName === 'updated_at') {
+                        <span>
+                          {{ dataObject.data[0].row[i] | datetimeFormat }}
+                        </span>
+                      } @else if (isValidUrl(dataObject.data[0].row[i])) {
+                        <span class="m-r-5">
+                          <button
+                            mat-icon-button
+                            matTooltip="{{ 'tooltips.View Link' | translate }}"
+                            (click)="openSite(dataObject.data[0].row[i])"
+                            matTooltipPosition="right"
+                            class="small-icon"
+                          >
+                            <fa-icon icon="eye" size="lg"></fa-icon>
+                          </button>
+                        </span>
+                        {{ dataObject.data[0].row[i] }}
+                      } @else {
+                        {{ dataObject.data[0].row[i] }}
+                      }
+                    </div>
+                  }
+                }
+              </div>
+            </div>
+          }
         </div>
-      }
-    </div>
+      </mat-card-content>
+    </mat-card>
   }
 </div>

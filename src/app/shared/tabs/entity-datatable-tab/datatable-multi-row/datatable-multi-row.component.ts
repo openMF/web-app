@@ -16,6 +16,7 @@ import {
   MatRow
 } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { MatCard, MatCardContent } from '@angular/material/card';
 import { Datatables } from 'app/core/utils/datatables';
 import { Dates } from 'app/core/utils/dates';
 import { DateFormatPipe } from 'app/pipes/date-format.pipe';
@@ -36,6 +37,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
+    MatCard,
+    MatCardContent,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,

@@ -12,6 +12,7 @@ import { NgClass } from '@angular/common';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatDivider } from '@angular/material/divider';
+import { MatCard, MatCardContent } from '@angular/material/card';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MatTooltip } from '@angular/material/tooltip';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
@@ -28,6 +29,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     MatDivider,
+    MatCard,
+    MatCardContent,
     NgClass,
     CdkTextareaAutosize,
     MatIconButton,
@@ -170,6 +173,15 @@ export class DatatableSingleRowComponent implements OnInit {
   }
 
   getColumnType(columnDisplayType: string, columnType: string) {
+    if (
+      columnType &&
+      (columnType.toLowerCase().includes('timestamp') ||
+        columnType.toLowerCase() === 'created_at' ||
+        columnType.toLowerCase() === 'updated_at')
+    ) {
+      return 'DATETIME';
+    }
+
     switch (columnDisplayType) {
       case 'DATE': {
         return columnDisplayType;

@@ -32,33 +32,35 @@
     </div>
   </div>
 
-  <div class="m-t-10">
-    <table #dataTable mat-table [dataSource]="datatableData" class="mat-elevation-z1 m-b-25">
-      @for (datatableColumn of datatableColumns; track datatableColumn; let i = $index) {
-        <ng-container [matColumnDef]="datatableColumn">
-          @if (i === 0) {
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let data">
-              <mat-checkbox
-                class="center"
-                (click)="$event.stopPropagation()"
-                (change)="$event ? itemToggle(data) : null"
-                [checked]="selection.isSelected(data)"
-              >
-              </mat-checkbox>
-            </td>
-          }
-          @if (i > 0) {
-            <th mat-header-cell class="right" *matHeaderCellDef>{{ getInputName(datatableColumn) }}</th>
-            <td mat-cell class="right" *matCellDef="let data" [ngClass]="isToDelete(data)">
-              {{ formatValue(data, datatableColumn) }}
-            </td>
-          }
-        </ng-container>
-      }
+  <mat-card class="data-table-card m-t-10">
+    <mat-card-content>
+      <table #dataTable mat-table [dataSource]="datatableData" class="mat-elevation-z2 m-b-25">
+        @for (datatableColumn of datatableColumns; track datatableColumn; let i = $index) {
+          <ng-container [matColumnDef]="datatableColumn">
+            @if (i === 0) {
+              <th mat-header-cell *matHeaderCellDef class="checkbox-column"></th>
+              <td mat-cell *matCellDef="let data">
+                <mat-checkbox
+                  class="center"
+                  (click)="$event.stopPropagation()"
+                  (change)="$event ? itemToggle(data) : null"
+                  [checked]="selection.isSelected(data)"
+                >
+                </mat-checkbox>
+              </td>
+            }
+            @if (i > 0) {
+              <th mat-header-cell class="right" *matHeaderCellDef>{{ getInputName(datatableColumn) }}</th>
+              <td mat-cell class="right" *matCellDef="let data" [ngClass]="isToDelete(data)">
+                {{ formatValue(data, datatableColumn) }}
+              </td>
+            }
+          </ng-container>
+        }
 
-      <tr mat-header-row *matHeaderRowDef="datatableColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: datatableColumns"></tr>
-    </table>
-  </div>
+        <tr mat-header-row *matHeaderRowDef="datatableColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: datatableColumns" class="data-row"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
 </div>
