@@ -89,15 +89,49 @@
             </mat-select>
           </mat-form-field>
 
-          <div class="flex-fill">
-            <span class="expandcollapsebutton m-l-10 m-t-40 flex-75" (click)="addPaymentDetails()">
-              <mat-slide-toggle>
-                <div [className]="showPaymentDetails ? 'enabled' : 'disabled'">
-                  <span class="m-l-10">{{ 'labels.inputs.Show Payment Details' | translate }}</span>
-                </div>
-              </mat-slide-toggle>
-            </span>
+          <div class="flex-fill m-b-10">
+            <mat-slide-toggle [checked]="showPaymentDetails" (change)="addPaymentDetails()">
+              {{ 'labels.inputs.Show Payment Details' | translate }}
+            </mat-slide-toggle>
           </div>
+
+          <div class="flex-fill m-b-10">
+            <mat-slide-toggle [checked]="waivePenalties" (change)="toggleWaivePenalties()">
+              {{ 'labels.inputs.Waive Penalties' | translate }}
+            </mat-slide-toggle>
+          </div>
+
+          @if (waivePenalties) {
+            @if (penalties.length > 0) {
+              <div class="layout-row-wrap m-t-20">
+                <div class="flex-100 m-b-10">
+                  <mat-checkbox [checked]="selectAllPenalties" (change)="toggleSelectAllPenalties()">
+                    {{ 'labels.inputs.All' | translate }}
+                  </mat-checkbox>
+                </div>
+                <div class="flex-100 layout-row-wrap">
+                  @for (penalty of penalties; track penalty.id) {
+                    <div class="penalty-item-container">
+                      <mat-checkbox
+                        [checked]="isPenaltySelected(penalty.id)"
+                        (change)="togglePenaltySelection(penalty.id)"
+                      ></mat-checkbox>
+                      <span class="penalty-label mat-body-strong">{{ 'labels.inputs.Penalty' | translate }}</span>
+                      <span class="penalty-name">{{ getPenaltyDisplayKey(penalty) | translate }}</span>
+                      <span class="penalty-date">{{ penalty.dueDate | dateFormat }}</span>
+                      <span class="penalty-amount r-amount">{{
+                        penalty.amountOutstanding || penalty.amount || 0 | formatNumber
+                      }}</span>
+                    </div>
+                  }
+                </div>
+              </div>
+            } @else {
+              <div class="m-t-20 m-l-10">
+                <span class="mat-body-2">{{ 'labels.text.No penalties found' | translate }}</span>
+              </div>
+            }
+          }
 
           @if (showPaymentDetails) {
             <mat-form-field>

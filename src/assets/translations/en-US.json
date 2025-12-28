@@ -1112,6 +1112,7 @@
       "Offices": "Offices",
       "Options": "Options",
       "Other Details": "Other Details",
+      "Overdue": "Overdue",
       "Overdue Charges": "Overdue Charges",
       "Password Preferences": "Password Preferences",
       "Payment Type": "Payment Type",
@@ -2591,7 +2592,10 @@
       "Income from Buy down fees": "Income from Buy down fees",
       "Buy down fee Expense": "Buy down fee Expense",
       "Skip Interest Refund Transaction Posting": "Skip Interest Refund Transaction Posting",
-      "Available Disbursement Amount (with Over Applied)": "Available Disbursement Amount (with Over Applied)"
+      "Available Disbursement Amount (with Over Applied)": "Available Disbursement Amount (with Over Applied)",
+      "Waive Penalties": "Waive Penalties",
+      "Overdue": "Overdue",
+      "Overdue Fees": "Overdue Fees"
     },
     "links": {
       "Community": "Community",
@@ -3532,8 +3536,7 @@
       "“Maker-Checker” principle requires every tasks": "The “Maker-Checker” principle requires every tasks to be completed by two people to reduce the chance of errors and misuse. One person initiates the process and the second completes it.",
       "Buy Down Fees": "Buy Down Fees",
       "Undo Write-off Description": "This action will reverse the write-off transaction and restore the loan to its previous active status. Please provide a note explaining the reason for this action.",
-      "UploadDocumentHint": "Upload a PDF or image to generate a preview.",
-      "Create Savings Product": "Create Savings Product"
+      "UploadDocumentHint": "Upload a PDF or image to generate a preview."
     },
     "auditTrail": {
       "actions": {

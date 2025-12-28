@@ -529,6 +529,14 @@ export class LoansService {
   }
 
   /**
+   * @param {string} loanId Loan Id
+   * @returns {Observable<any>} All charges for the loan
+   */
+  getLoanCharges(loanId: string): Observable<any> {
+    return this.http.get(`/loans/${loanId}/charges`);
+  }
+
+  /**
    * @param {string} accountId loans account Id
    * @param {string} chargeId loans charge Id
    * @returns {Observable<any>}

@@ -1,3 +1,45 @@
 .container {
   max-width: 37rem;
 }
+
+.penalty-item-container {
+  width: 100%;
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: auto minmax(80px, 110px) minmax(140px, 100%) minmax(130px, 170px) minmax(90px, 120px);
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 12px 16px;
+  background-color: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.penalty-label {
+  min-width: 80px;
+}
+
+.penalty-name {
+  min-width: 120px;
+}
+
+.penalty-date {
+  color: rgb(0 0 0 / 70%);
+  white-space: nowrap;
+}
+
+.penalty-amount {
+  text-align: right;
+  white-space: nowrap;
+}
+
+:host-context(.dark-theme) {
+  .penalty-item-container {
+    background-color: #3a3a3a;
+    color: rgb(255 255 255 / 87%);
+    border-color: #4a4a4a;
+  }
+}

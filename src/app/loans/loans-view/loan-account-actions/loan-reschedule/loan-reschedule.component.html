@@ -116,6 +116,42 @@
               <input matInput formControlName="newInterestRate" />
             </mat-form-field>
           }
+
+          <mat-checkbox class="m-b-10" [formControl]="waivePenalties">
+            {{ 'labels.inputs.Waive Penalties' | translate }}
+          </mat-checkbox>
+
+          @if (waivePenalties.value) {
+            @if (penalties.length > 0) {
+              <div class="layout-row-wrap m-t-20">
+                <div class="flex-100 m-b-10">
+                  <mat-checkbox [checked]="selectAllPenalties" (change)="toggleSelectAllPenalties()">
+                    {{ 'labels.inputs.All' | translate }}
+                  </mat-checkbox>
+                </div>
+                <div class="flex-100 layout-row-wrap">
+                  @for (penalty of penalties; track penalty.id) {
+                    <div class="penalty-item-container">
+                      <mat-checkbox
+                        [checked]="isPenaltySelected(penalty.id)"
+                        (change)="togglePenaltySelection(penalty.id)"
+                      ></mat-checkbox>
+                      <span class="penalty-label mat-body-strong">{{ 'labels.inputs.Penalty' | translate }}</span>
+                      <span class="penalty-name">{{ getPenaltyDisplayKey(penalty) | translate }}</span>
+                      <span class="penalty-date">{{ penalty.dueDate | dateFormat }}</span>
+                      <span class="penalty-amount r-amount">{{
+                        penalty.amountOutstanding || penalty.amount || 0 | formatNumber
+                      }}</span>
+                    </div>
+                  }
+                </div>
+              </div>
+            } @else {
+              <div class="m-t-20 m-l-10">
+                <span class="mat-body-2">{{ 'labels.text.No penalties found' | translate }}</span>
+              </div>
+            }
+          }
         </div>
 
         <mat-card-actions class="layout-row align-center gap-5px responsive-column">

@@ -1106,6 +1106,7 @@
       "Offices": "Kanceláře",
       "Options": "Možnosti",
       "Other Details": "Další detaily",
+      "Overdue": "Po splatnosti",
       "Overdue Charges": "Poplatky po splatnosti",
       "Password Preferences": "Předvolby hesla",
       "Payment Type": "Způsob platby",
@@ -2358,6 +2359,7 @@
       "Show Closed Centers": "Zobrazit uzavřená centra",
       "Show Closed Groups": "Zobrazit uzavřené skupiny",
       "Show Payment Details": "Zobrazit podrobnosti o platbě",
+      "Waive Penalties": "Zřeknutí se pokut",
       "Slab": "Pásmo",
       "Specific to Installment": "Specifické pro splátky",
       "Staff": "Personál",
@@ -2583,7 +2585,9 @@
       "Income from Buy down fees": "Příjmy z poplatků za odkup",
       "Buy down fee Expense": "Náklady na poplatek za odkup",
       "Skip Interest Refund Transaction Posting": "Přeskočit zaúčtování vrácení úroků",
-      "Available Disbursement Amount (with Over Applied)": "Dostupná částka k výplatě (s přeplatkem)"
+      "Available Disbursement Amount (with Over Applied)": "Dostupná částka k výplatě (s přeplatkem)",
+      "Overdue": "Po splatnosti",
+      "Overdue Fees": "Poplatky po splatnosti"
     },
     "links": {
       "Community": "Společenství",
@@ -3167,6 +3171,7 @@
     "No checker inbox data available for this search": "Pro toto vyhledávání nejsou k dispozici žádná data doručené pošty Checker.",
     "No client was found": "Nebyl nalezen žádný klient",
     "No data found": "Nenalezena žádná data",
+    "No penalties found": "Nebyly nalezeny žádné pokuty",
     "NoDocuments": "Žádné dokumenty k dispozici.",
     "NoFileSelected": "Nevybrán žádný soubor",
     "NoNotesAvailable": "Žádné poznámky k dispozici",
