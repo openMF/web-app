@@ -33,6 +33,30 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   }
 
   /**
+   * Reformats name from "Last, First" to "First Last" in error messages.
+   * @param message The error message that may contain a name in "Last, First" format
+   * @returns The error message with the name reformatted to "First Last"
+   */
+  private reformatNameInErrorMessage(message: string): string {
+    if (!message) {
+      return message;
+    }
+
+    // Match pattern: 'Last, First' (name in single quotes with comma)
+    const namePattern = /'([^']+),\s*([^']+)'/;
+    const match = message.match(namePattern);
+
+    if (match) {
+      const lastName = match[1].trim();
+      const firstName = match[2].trim();
+      // Replace "Last, First" with "First Last"
+      return message.replace(namePattern, `'${firstName} ${lastName}'`);
+    }
+
+    return message;
+  }
+
+  /**
    * Error handler.
    */
   private handleError(response: HttpErrorResponse, request: HttpRequest<any>): Observable<HttpEvent<any>> {
@@ -43,6 +67,9 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
         errorMessage = response.error.errors[0].defaultUserMessage || response.error.errors[0].developerMessage;
       }
     }
+
+    // Reformat name from "Last, First" to "First Last" in error messages
+    errorMessage = this.reformatNameInErrorMessage(errorMessage);
 
     const isClientImage404 = status === 404 && request.url.includes('/clients/') && request.url.includes('/images');
 
