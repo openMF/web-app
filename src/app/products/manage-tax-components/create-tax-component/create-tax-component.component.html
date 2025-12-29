@@ -35,27 +35,6 @@
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{ 'labels.inputs.Debit Account Type' | translate }}</mat-label>
-            <mat-select formControlName="debitAccountType">
-              @for (debitAccountType of debitAccountTypeData; track debitAccountType) {
-                <mat-option [value]="debitAccountType.id">
-                  {{ debitAccountType.value | translateKey: 'inputs.accounting' }}
-                </mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-
-          @if (debitAccountData.length > 0) {
-            <mifosx-gl-account-selector
-              [inputFormControl]="taxComponentForm.controls.debitAccountId"
-              [glAccountList]="debitAccountData"
-              [required]="false"
-              [inputLabel]="'Debit Account'"
-            >
-            </mifosx-gl-account-selector>
-          }
-
-          <mat-form-field>
             <mat-label>{{ 'labels.inputs.Credit Account Type' | translate }}</mat-label>
             <mat-select formControlName="creditAccountType">
               @for (creditAccountType of creditAccountTypeData; track creditAccountType) {
@@ -68,9 +47,9 @@
 
           @if (creditAccountData.length > 0) {
             <mifosx-gl-account-selector
-              [inputFormControl]="taxComponentForm.controls.creditAccountId"
+              [inputFormControl]="getCreditAccountIdControl()"
               [glAccountList]="creditAccountData"
-              [required]="false"
+              [required]="true"
               [inputLabel]="'Credit Account'"
             >
             </mifosx-gl-account-selector>

@@ -48,10 +48,6 @@ export class CreateTaxComponentComponent implements OnInit {
   creditAccountTypeData: any;
   /** Credit Account data. */
   creditAccountData: any[] = [];
-  /** Debit Account Type data. */
-  debitAccountTypeData: any;
-  /** Debit Account data. */
-  debitAccountData: any[] = [];
 
   /**
    * Retrieves the tax Component template data from `resolve`.
@@ -76,13 +72,21 @@ export class CreateTaxComponentComponent implements OnInit {
     this.maxDate = this.settingsService.maxAllowedDate;
     this.createTaxComponentForm();
     this.setConditionalControls();
+    const initialCreditAccountType = this.taxComponentForm.get('creditAccountType')?.value;
+    if (initialCreditAccountType) {
+      this.creditAccountData = this.getAccountsData(initialCreditAccountType);
+      if (this.creditAccountData.length > 0) {
+        this.taxComponentForm.get('creditAccountId').setValidators([Validators.required]);
+        this.taxComponentForm.get('creditAccountId').updateValueAndValidity();
+      }
+    }
   }
 
   /**
    * Creates the tax Component form
    */
   createTaxComponentForm() {
-    this.creditAccountTypeData = this.debitAccountTypeData = this.taxComponentTemplateData.glAccountTypeOptions;
+    this.creditAccountTypeData = this.taxComponentTemplateData.glAccountTypeOptions;
     this.taxComponentForm = this.formBuilder.group({
       name: [
         '',
@@ -97,7 +101,7 @@ export class CreateTaxComponentComponent implements OnInit {
         ]
       ],
       creditAccountType: [''],
-      debitAccountType: [''],
+      creditAccountId: [''],
       startDate: [
         '',
         Validators.required
@@ -109,13 +113,20 @@ export class CreateTaxComponentComponent implements OnInit {
    * Sets the conditional controls of the tax Component form
    */
   setConditionalControls() {
-    this.taxComponentForm.get('debitAccountType').valueChanges.subscribe((debitAccountTypeId) => {
-      this.debitAccountData = this.getAccountsData(debitAccountTypeId);
-      this.taxComponentForm.addControl('debitAccountId', new UntypedFormControl('', Validators.required));
-    });
+    const creditAccountIdControl = this.taxComponentForm.get('creditAccountId');
+
     this.taxComponentForm.get('creditAccountType').valueChanges.subscribe((creditAccountTypeId) => {
       this.creditAccountData = this.getAccountsData(creditAccountTypeId);
-      this.taxComponentForm.addControl('creditAccountId', new UntypedFormControl('', Validators.required));
+
+      if (creditAccountTypeId && this.creditAccountData.length > 0) {
+        creditAccountIdControl.setValidators([Validators.required]);
+        creditAccountIdControl.updateValueAndValidity();
+      } else {
+        creditAccountIdControl.clearValidators();
+        creditAccountIdControl.setValue('');
+        creditAccountIdControl.updateValueAndValidity();
+        this.creditAccountData = [];
+      }
     });
   }
 
@@ -135,7 +146,13 @@ export class CreateTaxComponentComponent implements OnInit {
         return this.taxComponentTemplateData.glAccountOptions.incomeAccountOptions || [];
       case 5:
         return this.taxComponentTemplateData.glAccountOptions.expenseAccountOptions || [];
+      default:
+        return [];
     }
+  }
+
+  getCreditAccountIdControl(): UntypedFormControl {
+    return this.taxComponentForm.get('creditAccountId') as UntypedFormControl;
   }
 
   /**
@@ -143,18 +160,32 @@ export class CreateTaxComponentComponent implements OnInit {
    * if successful redirects to Tax Components.
    */
   submit() {
-    const taxComponentFormData = this.taxComponentForm.value;
+    const formValues = this.taxComponentForm.getRawValue();
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    const prevStartDate: Date = this.taxComponentForm.value.startDate;
-    if (taxComponentFormData.startDate instanceof Date) {
-      taxComponentFormData.startDate = this.dateUtils.formatDate(prevStartDate, dateFormat);
+
+    if (formValues.creditAccountType && !formValues.creditAccountId) {
+      this.taxComponentForm.get('creditAccountId').markAsTouched();
+      return;
     }
-    const data = {
-      ...taxComponentFormData,
+
+    let formattedStartDate: any = formValues.startDate;
+    if (formValues.startDate instanceof Date) {
+      formattedStartDate = this.dateUtils.formatDate(formValues.startDate, dateFormat);
+    }
+
+    const data: any = {
+      name: formValues.name,
+      percentage: formValues.percentage,
+      startDate: formattedStartDate,
       dateFormat,
       locale
     };
+    if (formValues.creditAccountType && formValues.creditAccountId) {
+      data.creditAccountType = formValues.creditAccountType;
+      data.creditAcountId = formValues.creditAccountId;
+    }
+
     this.productsService.createTaxComponent(data).subscribe((response: any) => {
       this.router.navigate(
         [
