@@ -33,7 +33,7 @@
   <p class="mw400">
     {{ 'labels.text.To create code,create' | translate }}<br />
     {{ 'labels.text.For more details click' | translate }}:
-    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895350/Manage+Codes" target="_blank">{{
+    <a [href]="'manageCodes' | documentationLink" target="_blank" rel="noopener noreferrer">{{
       'labels.inputs.Manage Codes' | translate
     }}</a>
   </p>

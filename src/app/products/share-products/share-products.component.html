@@ -86,7 +86,7 @@
 <ng-template #templateShareProductsTable let-popover="popover">
   <h4 class="mw300">
     {{ 'labels.heading.List of share products in the organization' | translate }}:
-    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/129531946/Share+products" target="_blank">{{
+    <a [href]="'shareProducts' | documentationLink" target="_blank" rel="noopener noreferrer">{{
       'labels.text.Share Products' | translate
     }}</a>
   </h4>

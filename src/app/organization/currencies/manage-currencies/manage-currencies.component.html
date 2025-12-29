@@ -69,7 +69,7 @@
   <h4>{{ 'labels.heading.Add Currency Form' | translate }}</h4>
   <p class="mw400">
     {{ 'labels.text.Used to add currency' | translate }}:
-    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141734/Currency+Configuration" target="_blank">{{
+    <a [href]="'currencyConfiguration' | documentationLink" target="_blank" rel="noopener noreferrer">{{
       'labels.inputs.Currency Configuration' | translate
     }}</a>
   </p>

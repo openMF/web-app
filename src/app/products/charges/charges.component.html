@@ -152,7 +152,7 @@
 <ng-template #templateChargesTable let-popover="popover">
   <h4 class="mw300">
     {{ 'labels.heading.List of charges in the organization. For more details click' | translate }}:
-    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/72908813/Charges" target="_blank">{{
+    <a [href]="'charges' | documentationLink" target="_blank" rel="noopener noreferrer">{{
       'labels.heading.Charges' | translate
     }}</a>
   </h4>

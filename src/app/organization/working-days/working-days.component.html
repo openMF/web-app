@@ -52,7 +52,7 @@
   <h2>{{ 'labels.heading.Working Days' | translate }}</h2>
   <p class="mw400">
     {{ 'labels.text.Click (Define Working Days)' | translate }}:
-    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/90243212/Working+Days" target="_blank">{{
+    <a [href]="'workingDays' | documentationLink" target="_blank" rel="noopener noreferrer">{{
       'labels.inputs.Working Days' | translate
     }}</a>
   </p>

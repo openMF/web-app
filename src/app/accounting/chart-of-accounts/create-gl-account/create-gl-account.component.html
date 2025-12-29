@@ -125,11 +125,9 @@
   <h2>{{ 'labels.heading.Create GL account' | translate }}</h2>
   <p class="mw400">
     {{ 'labels.text.Filling Details' | translate }}
-    <a
-      href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141745/Chart+of+Accounts+-+General+Ledger+Setup"
-      target="_blank"
-      >{{ 'labels.inputs.Chart of Accounts' | translate }}</a
-    >
+    <a [href]="'chartOfAccountsSetup' | documentationLink" target="_blank" rel="noopener noreferrer">{{
+      'labels.inputs.Chart of Accounts' | translate
+    }}</a>
   </p>
   <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">

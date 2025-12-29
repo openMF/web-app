@@ -219,7 +219,7 @@
   <h2>{{ 'labels.buttons.Create Datatable' | translate }}</h2>
   <p class="mw400">
     {{ 'labels.text.Filling Details' | translate }}
-    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/52592760/Manage+Data+Tables" target="_blank">{{
+    <a [href]="'manageDataTables' | documentationLink" target="_blank" rel="noopener noreferrer">{{
       'labels.inputs.Manage Datatables' | translate
     }}</a>
   </p>

@@ -105,7 +105,7 @@
 <ng-template #templateClosuresTable let-popover="popover">
   <h4>
     {{ 'labels.heading.List of closures. To know more click' | translate }}:
-    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895316/Closing+Entries" target="_blank">{{
+    <a [href]="'closingEntries' | documentationLink" target="_blank" rel="noopener noreferrer">{{
       'labels.inputs.Closing Entries' | translate
     }}</a>
   </h4>

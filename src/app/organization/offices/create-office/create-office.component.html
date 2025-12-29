@@ -74,7 +74,7 @@
   <h2>{{ 'labels.heading.Create Office' | translate }}</h2>
   <p class="mw400">
     {{ 'labels.text.Filling Details' | translate }}
-    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141727/Manage+Offices" target="_blank">{{
+    <a [href]="'manageOffices' | documentationLink" target="_blank" rel="noopener noreferrer">{{
       'labels.inputs.Manage Offices' | translate
     }}</a>
   </p>

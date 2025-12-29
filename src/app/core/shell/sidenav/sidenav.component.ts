@@ -10,6 +10,7 @@ import { KeyboardShortcutsDialogComponent } from 'app/shared/keyboard-shortcuts-
 import { AuthenticationService } from '../../authentication/authentication.service';
 import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
+import { DocumentationLinksService } from 'app/shared/services/documentation-links.service';
 
 /** Custom Imports */
 import { frequentActivities } from './frequent-activities';
@@ -54,6 +55,7 @@ export class SidenavComponent implements OnInit, AfterViewInit {
   private settingsService = inject(SettingsService);
   private configurationWizardService = inject(ConfigurationWizardService);
   private popoverService = inject(PopoverService);
+  private documentationLinks = inject(DocumentationLinksService);
 
   /** True if sidenav is in collapsed state. */
   @Input() sidenavCollapsed: boolean;
@@ -117,7 +119,7 @@ export class SidenavComponent implements OnInit, AfterViewInit {
    * Opens Mifos JIRA Wiki page.
    */
   help() {
-    window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');
+    this.documentationLinks.open('userManual');
   }
 
   /**

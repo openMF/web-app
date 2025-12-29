@@ -139,7 +139,7 @@
 <ng-template #templateReportsTable let-popover="popover">
   <h4 class="mw300">
     {{ 'labels.heading.List of all currently available reports' | translate }}:
-    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895354/Manage+Reports" target="_blank">{{
+    <a [href]="'manageReports' | documentationLink" target="_blank" rel="noopener noreferrer">{{
       'labels.heading.Manage Reports' | translate
     }}</a>
   </h4>

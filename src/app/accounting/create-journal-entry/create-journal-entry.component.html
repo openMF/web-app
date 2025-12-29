@@ -221,7 +221,7 @@
   <h2>{{ 'labels.heading.Add Journal Entry Form' | translate }}</h2>
   <p class="mw300">
     {{ 'labels.text.Red asterisk field' | translate }}
-    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895310/Add+Journal+Entries" target="_blank">{{
+    <a [href]="'addJournalEntries' | documentationLink" target="_blank" rel="noopener noreferrer">{{
       'labels.inputs.Add Journal Entries' | translate
     }}</a>
   </p>

@@ -211,7 +211,7 @@
   <h2>{{ 'labels.heading.Create User' | translate }}</h2>
   <p class="mw400">
     {{ 'labels.text.Filling Details' | translate }}:
-    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141740/Users" target="_blank">{{
+    <a [href]="'users' | documentationLink" target="_blank" rel="noopener noreferrer">{{
       'labels.inputs.Users' | translate
     }}</a>
   </p>

@@ -41,7 +41,7 @@
   <h2>{{ 'labels.heading.Manage Funds' | translate }}</h2>
   <p class="mw300">
     {{ 'labels.text.Used Add Fund' | translate }}:
-    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141736/Manage+Funds" target="_blank">{{
+    <a [href]="'manageFunds' | documentationLink" target="_blank" rel="noopener noreferrer">{{
       'labels.inputs.Manage Funds' | translate
     }}</a>
   </p>

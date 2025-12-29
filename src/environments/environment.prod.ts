@@ -53,6 +53,7 @@ export const environment = {
   displayBackEndInfo: loadedEnv['displayBackEndInfo'] || 'true',
   displayTenantSelector: loadedEnv['displayTenantSelector'] || 'true',
   tenantLogoUrl: loadedEnv['tenantLogoUrl'] || 'assets/images/mifos_lg-logo.png',
+  documentationBaseUrl: loadedEnv['documentationBaseUrl'] || 'https://mifosforge.jira.com/wiki',
   // Time in seconds, default 60 seconds
   waitTimeForNotifications: loadedEnv['waitTimeForNotifications'] || 60,
   // Time in seconds, default 30 seconds

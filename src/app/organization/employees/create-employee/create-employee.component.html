@@ -116,7 +116,7 @@
   <p class="mw400">
     {{ 'labels.text.Start filling the details' | translate }} <br />
     {{ 'labels.text.For more details click' | translate }}:
-    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141732/Manage+Employees" target="_blank">{{
+    <a [href]="'manageEmployees' | documentationLink" target="_blank" rel="noopener noreferrer">{{
       'labels.inputs.Manage Employees' | translate
     }}</a>
   </p>

@@ -108,11 +108,9 @@
 <ng-template #templateTableRolesandPermissions let-popover="popover">
   <h4 class="mw300">
     {{ 'labels.heading.List of roles defined within the organization' | translate }}:
-    <a
-      href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895364/Manage+Roles+and+Permissions"
-      target="_blank"
-      >{{ 'labels.inputs.Manage Roles and Permission' | translate }}</a
-    >
+    <a [href]="'rolesAndPermissions' | documentationLink" target="_blank" rel="noopener noreferrer">{{
+      'labels.inputs.Manage Roles and Permission' | translate
+    }}</a>
   </h4>
   <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
