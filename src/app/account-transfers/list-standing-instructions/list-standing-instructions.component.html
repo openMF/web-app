@@ -1,143 +1,171 @@
-<!-- Version 1 -->
+<div class="container m-b-20 layout-row align-end">
+  <button
+    mat-raised-button
+    color="primary"
+    *mifosxHasPermission="'READ_STANDINGINSTRUCTION'"
+    (click)="filterStandingInstructions()"
+  >
+    {{ 'labels.buttons.Filter' | translate | titlecase }}
+  </button>
+</div>
 
 <mat-card class="container">
-  <div class="layout-row-wrap gap-2px responsive-column">
-    @if (isFromClient) {
-      <div class="flex-fill">
-        <span class="flex-40">
-          <h3 class="mat-h3">{{ 'labels.heading.Client Type' | translate }}</h3>
-        </span>
-        <span class="client-Name">
-          <h3 class="mat-h3">{{ clientName }}</h3>
-        </span>
-      </div>
-    }
+  <mat-card-content>
+    <div class="layout-row-wrap gap-20px responsive-column">
+      @if (isFromClient) {
+        <div class="flex-100 layout-row align-items-center gap-20px">
+          <div>
+            <h3 class="mat-h3 no-m-b">{{ 'labels.heading.Client Type' | translate }}</h3>
+          </div>
+          <div>
+            <h3 class="mat-h3 no-m-b">{{ clientName }}</h3>
+          </div>
+        </div>
+      }
 
-    @if (!isFromClient) {
-      <div class="flex-fill">
-        <mat-form-field class="flex-30">
-          <input matInput placeholder="{{ 'labels.text.ClientName' | translate }}" [formControl]="clientNameControl" />
+      @if (!isFromClient) {
+        <mat-form-field class="flex-48">
+          <mat-label>{{ 'labels.text.ClientName' | translate }}</mat-label>
+          <input matInput [formControl]="clientNameControl" />
         </mat-form-field>
-        <mat-form-field class="flex-30">
-          <input matInput placeholder="{{ 'labels.text.FromClientId' | translate }}" [formControl]="fromClientId" />
+
+        <mat-form-field class="flex-48">
+          <mat-label>{{ 'labels.text.FromClientId' | translate }}</mat-label>
+          <input matInput [formControl]="fromClientId" />
         </mat-form-field>
-      </div>
-    }
+      }
 
-    <mat-divider [inset]="true"></mat-divider>
+      <mat-form-field class="flex-48">
+        <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
+        <mat-select [formControl]="transferType">
+          @for (transferTypeData of transferTypeDatas; track transferTypeData) {
+            <mat-option [value]="transferTypeData.id">
+              {{ transferTypeData.value }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
 
-    <mat-form-field class="type-field">
-      <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
-      <mat-select [formControl]="transferType">
-        @for (transferTypeData of transferTypeDatas; track transferTypeData) {
-          <mat-option [value]="transferTypeData.id">
-            {{ transferTypeData.value }}
-          </mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
+      <mat-form-field class="flex-48">
+        <mat-label>{{ 'labels.text.FromAccountId' | translate }}</mat-label>
+        <input matInput [formControl]="fromAccountId" />
+      </mat-form-field>
+    </div>
+  </mat-card-content>
 
-    <mat-form-field class="account-Id-field">
-      <input matInput placeholder="{{ 'labels.text.FromAccountId' | translate }}" [formControl]="fromAccountId" />
-    </mat-form-field>
-
-    <button
-      mat-raised-button
-      color="primary"
-      *mifosxHasPermission="'READ_STANDINGINSTRUCTION'"
-      (click)="filterStandingInstructions()"
-      class="filter-button"
+  <div class="table-container">
+    <table
+      mat-table
+      #instructionsTable
+      [dataSource]="dataSource"
+      class="bordered-table"
+      [attr.aria-label]="'labels.heading.List Standing Instructions' | translate"
     >
-      {{ 'labels.buttons.Filter' | translate | titlecase }}
-    </button>
+      <ng-container matColumnDef="client">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Client' | translate }}</th>
+        <td mat-cell *matCellDef="let instruction">
+          @if (instruction?.fromClient) {
+            {{ instruction.fromClient.displayName }}-{{ instruction.fromClient.id }}
+          }
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="fromAccount">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.From Account' | translate }}</th>
+        <td mat-cell *matCellDef="let instruction">
+          @if (instruction?.fromAccount && instruction?.fromAccountType) {
+            {{ instruction.fromAccount.accountNo }} ({{ instruction.fromAccountType.value }})
+          }
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="beneficiary">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Beneficiary' | translate }}</th>
+        <td mat-cell *matCellDef="let instruction">
+          @if (instruction?.toClient) {
+            {{ instruction.toClient.displayName }}
+          }
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="toAccount">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.To Account' | translate }}</th>
+        <td mat-cell *matCellDef="let instruction">
+          @if (instruction?.toAccount && instruction?.toAccountType) {
+            {{ instruction.toAccount.accountNo }} ({{ instruction.toAccountType.value }})
+          }
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
+        <td mat-cell *matCellDef="let instruction">
+          @if (instruction?.instructionType && instruction?.amount !== undefined) {
+            {{ instruction.instructionType.value }}/{{ instruction.amount }}
+          }
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="validity">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Validity' | translate }}</th>
+        <td mat-cell *matCellDef="let instruction">
+          @if (instruction?.validFrom && instruction?.validTill) {
+            {{ instruction.validFrom | dateFormat }} to {{ instruction.validTill | dateFormat }}
+          }
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
+        <td mat-cell *matCellDef="let instruction">
+          @if (instruction?.status?.value !== 'Deleted') {
+            <span>
+              <button
+                class="account-action-button"
+                mat-raised-button
+                color="primary"
+                [attr.aria-label]="'tooltips.Edit Standing Instruction' | translate"
+                matTooltip="{{ 'tooltips.Edit Standing Instruction' | translate }}"
+                *mifosxHasPermission="'UPDATE_STANDINGINSTRUCTION'"
+                [routerLink]="['../', instruction.id, 'edit']"
+              >
+                <i class="fa fa-edit"></i>
+              </button>
+            </span>
+          }
+          @if (instruction?.status?.value !== 'Deleted') {
+            <span>
+              <button
+                class="account-action-button"
+                mat-raised-button
+                color="warn"
+                [attr.aria-label]="'tooltips.Delete Standing Instruction' | translate"
+                matTooltip="{{ 'tooltips.Delete Standing Instruction' | translate }}"
+                *mifosxHasPermission="'DELETE_STANDINGINSTRUCTION'"
+                (click)="deleteStandingInstruction(instruction.id)"
+              >
+                <i class="fa fa-times"></i>
+              </button>
+            </span>
+          }
+          <button
+            class="account-action-button"
+            mat-raised-button
+            color="primary"
+            [attr.aria-label]="'tooltips.View Standing Instruction' | translate"
+            matTooltip="{{ 'tooltips.View Standing Instruction' | translate }}"
+            *mifosxHasPermission="'READ_STANDINGINSTRUCTION'"
+            [routerLink]="['../', instruction.id, 'view']"
+          >
+            <i class="fa fa-eye"></i>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
   </div>
-
-  <table mat-table #instructionsTable [dataSource]="dataSource">
-    <ng-container matColumnDef="client">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Client' | translate }}</th>
-      <td mat-cell *matCellDef="let instruction">
-        {{ instruction.fromClient.displayName }}-{{ instruction.fromClient.id }}
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="fromAccount">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.From Account' | translate }}</th>
-      <td mat-cell *matCellDef="let instruction">
-        {{ instruction.fromAccount.accountNo }} ({{ instruction.fromAccountType.value }})
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="beneficiary">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Beneficiary' | translate }}</th>
-      <td mat-cell *matCellDef="let instruction">{{ instruction.toClient.displayName }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="toAccount">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.To Account' | translate }}</th>
-      <td mat-cell *matCellDef="let instruction">
-        {{ instruction.toAccount.accountNo }} ({{ instruction.toAccountType.value }})
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="amount">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
-      <td mat-cell *matCellDef="let instruction">{{ instruction.instructionType.value }}/{{ instruction.amount }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="validity">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Validity' | translate }}</th>
-      <td mat-cell *matCellDef="let instruction">
-        {{ instruction.validFrom | dateFormat }} to {{ instruction.validTill | dateFormat }}
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
-      <td mat-cell *matCellDef="let instruction">
-        @if (instruction.status.value !== 'Deleted') {
-          <span>
-            <button
-              class="account-action-button"
-              mat-raised-button
-              color="primary"
-              matTooltip="{{ 'tooltips.Edit Standing Instruction' | translate }}"
-              *mifosxHasPermission="'UPDATE_STANDINGINSTRUCTION'"
-              [routerLink]="['../', instruction.id, 'edit']"
-            >
-              <i class="fa fa-edit"></i>
-            </button>
-          </span>
-        }
-        @if (instruction.status.value !== 'Deleted') {
-          <span>
-            <button
-              class="account-action-button"
-              mat-raised-button
-              color="warn"
-              matTooltip="{{ 'tooltips.Delete Standing Instruction' | translate }}"
-              *mifosxHasPermission="'DELETE_STANDINGINSTRUCTION'"
-              (click)="deleteStandingInstruction(instruction.id)"
-            >
-              <i class="fa fa-times"></i>
-            </button>
-          </span>
-        }
-        <button
-          class="account-action-button"
-          mat-raised-button
-          color="primary"
-          matTooltip="{{ 'tooltips.View Standing Instruction' | translate }}"
-          *mifosxHasPermission="'READ_STANDINGINSTRUCTION'"
-          [routerLink]="['../', instruction.id, 'view']"
-        >
-          <i class="fa fa-eye"></i>
-        </button>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
-
-  <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
 </mat-card>

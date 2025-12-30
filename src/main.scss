@@ -651,23 +651,3 @@ mat-card {
     overflow: hidden;
   }
 }
-
-//Re-positions account type field on list standing instructions page
-.type-field {
-  position: absolute;
-  left: 1px;
-  top: 20px;
-}
-
-//Re-positions account id field on list standing instructions page
-.account-Id-field {
-  position: absolute;
-  left: 490px;
-  top: 20px;
-}
-
-//Re-positions client name label on list standing instructions page
-.client-Name {
-  position: absolute;
-  left: 490px;
-}
