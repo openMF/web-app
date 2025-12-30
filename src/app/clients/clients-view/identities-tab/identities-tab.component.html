@@ -1,16 +1,19 @@
 <div class="tab-container mat-typography">
-  <h3>{{ 'labels.heading.Identities' | translate }}</h3>
-
-  <div class="layout-row align-flex-end">
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="addIdentifier()"
-      *mifosxHasPermission="'CREATE_CLIENTIDENTIFIER'"
-    >
-      <fa-icon icon="plus" class="m-r-10"></fa-icon>
-      {{ 'labels.buttons.Add' | translate }}
-    </button>
+  <div class="layout-row align-start">
+    <div class="m-b-10">
+      <h3>{{ 'labels.heading.Identities' | translate }}</h3>
+    </div>
+    <div class="action-button m-b-10 gap-25px">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="addIdentifier()"
+        *mifosxHasPermission="'CREATE_CLIENTIDENTIFIER'"
+      >
+        <fa-icon icon="plus" class="m-r-10"></fa-icon>
+        {{ 'labels.buttons.Add' | translate }}
+      </button>
+    </div>
   </div>
 
   <table mat-table #identifiersTable [dataSource]="clientIdentities" [ngStyle]="{ 'margin-top': '3%' }">

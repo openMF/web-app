@@ -1,15 +1,18 @@
 <div class="tab-container mat-typography">
   <router-outlet>
-    <h3>{{ 'labels.heading.Family Members' | translate }}</h3>
-
-    <div class="layout-row align-flex-end">
-      <button mat-raised-button color="primary" [routerLink]="['./add']">
-        <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
-      </button>
+    <div class="layout-row align-start">
+      <div class="m-b-10">
+        <h3>{{ 'labels.heading.Family Members' | translate }}</h3>
+      </div>
+      <div class="action-button m-b-10 gap-25px">
+        <button mat-raised-button color="primary" [routerLink]="['./add']">
+          <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
+        </button>
+      </div>
     </div>
 
     <mat-accordion>
-      @for (member of clientFamilyMembers; track member; let i = $index) {
+      @for (member of clientFamilyMembers; track member.id; let i = $index) {
         <mat-expansion-panel class="family-member">
           <mat-expansion-panel-header>
             <mat-panel-title>
