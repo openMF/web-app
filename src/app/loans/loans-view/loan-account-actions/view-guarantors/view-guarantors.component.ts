@@ -24,6 +24,7 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
+import { MatTooltip } from '@angular/material/tooltip';
 import { AccountsFilterPipe } from '../../../../pipes/accounts-filter.pipe';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -49,6 +50,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatHeaderRow,
     MatRowDef,
     MatRow,
+    MatTooltip,
     AccountsFilterPipe,
     FormatNumberPipe
   ]

@@ -91,7 +91,11 @@
           <div class="layout-column flex-50">
             <div class="layout-row align-flex-end">
               <button mat-raised-button class="f-right" color="primary" (click)="toggleGuarantorsDetailsOverview()">
-                {{ showDeletedGuarantorsAccounts ? 'Hide Deleted Guarantors' : 'Show Deleted Guarantors' }}
+                {{
+                  showDeletedGuarantorsAccounts
+                    ? ('labels.buttons.Hide Deleted Guarantors' | translate)
+                    : ('labels.buttons.Show Deleted Guarantors' | translate)
+                }}
               </button>
             </div>
           </div>
@@ -183,11 +187,23 @@
                     color="primary"
                     *mifosxHasPermission="'READ_SAVINGSACCOUNT'"
                     (click)="viewGuarantorDetails(guarantor)"
+                    [matTooltip]="'labels.buttons.View' | translate"
+                    [attr.aria-label]="'labels.buttons.View' | translate"
+                    [attr.title]="'labels.buttons.View' | translate"
+                    matTooltipPosition="above"
                   >
                     <fa-icon icon="eye" class="m-r-10"></fa-icon>
                   </button>
                   @if (guarantor.status && guarantor.guarantorType.id === 3 && guarantor.id) {
-                    <button mat-raised-button class="account-action-button" color="primary">
+                    <button
+                      mat-raised-button
+                      class="account-action-button"
+                      color="primary"
+                      [matTooltip]="'labels.buttons.Edit' | translate"
+                      [attr.aria-label]="'labels.buttons.Edit' | translate"
+                      [attr.title]="'labels.buttons.Edit' | translate"
+                      matTooltipPosition="above"
+                    >
                       <fa-icon icon="edit" class="m-r-10"></fa-icon>
                     </button>
                   }
@@ -199,6 +215,10 @@
                         color="warn"
                         *mifosxHasPermission="'DELETE_GUARANTOR'"
                         (click)="deleteGuarantor(guarantor.id)"
+                        [matTooltip]="'labels.buttons.Delete' | translate"
+                        [attr.aria-label]="'labels.buttons.Delete' | translate"
+                        [attr.title]="'labels.buttons.Delete' | translate"
+                        matTooltipPosition="above"
                       >
                         <fa-icon icon="trash" class="m-r-10"></fa-icon>
                       </button>
