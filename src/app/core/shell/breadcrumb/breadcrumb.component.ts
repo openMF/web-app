@@ -1,9 +1,10 @@
 /** Angular Imports */
-import { Component, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
+import { Component, TemplateRef, ElementRef, ViewChild, AfterViewInit, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd, Data, RouterLink } from '@angular/router';
 
 /** rxjs Imports */
-import { filter } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
+import { merge, Subject } from 'rxjs';
 
 /** Custom Model */
 import { Breadcrumb } from './breadcrumb.model';
@@ -54,12 +55,13 @@ const routeAddBreadcrumbLink = 'addBreadcrumbLink';
     ...STANDALONE_SHARED_IMPORTS
   ]
 })
-export class BreadcrumbComponent implements AfterViewInit {
+export class BreadcrumbComponent implements AfterViewInit, OnDestroy {
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
   private configurationWizardService = inject(ConfigurationWizardService);
   private popoverService = inject(PopoverService);
   private translateService = inject(TranslateService);
+  private destroy$ = new Subject<void>();
 
   /** Array of breadcrumbs. */
   breadcrumbs: Breadcrumb[];
@@ -85,142 +87,130 @@ export class BreadcrumbComponent implements AfterViewInit {
   generateBreadcrumbs() {
     const onNavigationEnd = this.router.events.pipe(filter((event) => event instanceof NavigationEnd));
 
-    onNavigationEnd.subscribe(() => {
-      this.breadcrumbs = [];
-      let currentRoute = this.activatedRoute.root;
-      let currentUrl = '';
+    // Merge navigation events with language change events to regenerate breadcrumbs when language changes
+    merge(onNavigationEnd, this.translateService.onLangChange)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.breadcrumbs = [];
+        let currentRoute = this.activatedRoute.root;
+        let currentUrl = '';
 
-      while (currentRoute.children.length > 0) {
-        const childrenRoutes = currentRoute.children;
-        let breadcrumbLabel: any;
-        let url: any;
+        while (currentRoute.children.length > 0) {
+          const childrenRoutes = currentRoute.children;
+          let breadcrumbLabel: any;
+          let url: any;
 
-        childrenRoutes.forEach((route) => {
-          currentRoute = route;
-          breadcrumbLabel = false;
+          childrenRoutes.forEach((route) => {
+            currentRoute = route;
+            breadcrumbLabel = false;
 
-          if (route.outlet !== 'primary') {
-            return;
-          }
+            if (route.outlet !== 'primary') {
+              return;
+            }
 
-          const routeURL = route.snapshot.url.map((segment) => segment.path).join('/');
-          currentUrl += `/${routeURL}`;
+            const routeURL = route.snapshot.url.map((segment) => segment.path).join('/');
+            currentUrl += `/${routeURL}`;
 
-          if (currentUrl === '/') {
-            breadcrumbLabel = 'Home';
-          }
+            if (currentUrl === '/') {
+              breadcrumbLabel = 'Home';
+            }
 
-          const hasData = route.routeConfig && route.routeConfig.data;
+            const hasData = route.routeConfig && route.routeConfig.data;
 
-          if (hasData) {
-            if (
-              route.snapshot.data.hasOwnProperty(routeResolveBreadcrumb) &&
-              route.snapshot.data[routeResolveBreadcrumb]
-            ) {
-              breadcrumbLabel = route.snapshot.data;
-              route.snapshot.data[routeResolveBreadcrumb].forEach((property: any) => {
-                breadcrumbLabel = breadcrumbLabel[property];
-              });
-            } else if (
-              route.snapshot.data.hasOwnProperty(routeParamBreadcrumb) &&
-              route.snapshot.paramMap.get(route.snapshot.data[routeParamBreadcrumb])
-            ) {
-              breadcrumbLabel = route.snapshot.paramMap.get(route.snapshot.data[routeParamBreadcrumb]);
-              const routeData: Data = route.snapshot.data;
-              if (routeData.breadcrumb === 'Clients') {
-                breadcrumbLabel = this.printableValue(routeData.clientViewData.displayName);
-                currentUrl += `/general`;
-              } else if (routeData.breadcrumb === 'Groups') {
-                breadcrumbLabel = routeData.groupViewData.name;
-              } else if (routeData.breadcrumb === 'Centers') {
-                breadcrumbLabel = routeData.centerViewData.name;
-              } else if (routeData.breadcrumb === 'Loans') {
-                breadcrumbLabel =
-                  this.printableValue(routeData.loanDetailsData.loanProductName) +
-                  ' (' +
-                  routeData.loanDetailsData.accountNo +
-                  ')';
-              } else if (routeData.breadcrumb === 'Savings') {
-                const savingsProductName = routeData.savingsAccountData?.savingsProductName ?? '';
-                const accountNo = routeData.savingsAccountData?.accountNo ?? '';
-                breadcrumbLabel = this.printableValue(savingsProductName) + (accountNo ? ' (' + accountNo + ')' : '');
-              } else if (routeData.breadcrumb === 'Fixed Deposits') {
-                breadcrumbLabel =
-                  this.printableValue(routeData.fixedDepositsAccountData.depositProductName) +
-                  ' (' +
-                  routeData.fixedDepositsAccountData.accountNo +
-                  ')';
-              } else if (routeData.breadcrumb === 'Loan Products') {
-                breadcrumbLabel = this.printableValue(routeData.loanProduct.name);
-              } else if (routeData.breadcrumb === 'Charges') {
-                breadcrumbLabel = routeData.loansAccountCharge.name;
-              } else if (routeData.breadcrumb === 'Saving Products') {
-                breadcrumbLabel = routeData.savingProduct.name;
-              } else if (routeData.breadcrumb === 'Share Products') {
-                breadcrumbLabel = routeData.shareProduct.name;
-              } else if (routeData.breadcrumb === 'Fixed Deposit Products') {
-                breadcrumbLabel = routeData.fixedDepositProduct.name;
-              } else if (routeData.breadcrumb === 'Recurring Deposit Products') {
-                breadcrumbLabel = routeData.recurringDepositProduct.name;
-              } else if (routeData.breadcrumb === 'Floating Rates') {
-                breadcrumbLabel = routeData.floatingRate.name;
-              } else if (routeData.breadcrumb === 'Tax Components') {
-                breadcrumbLabel = routeData.taxComponent.name;
-              } else if (routeData.breadcrumb === 'Tax Groups') {
-                breadcrumbLabel = routeData.taxGroup.name;
-              }
-
-              // Check if the breadcrumbLabel is an action name that should be translated using labels.menus
-              // This handles action names from route parameters for Savings, Loans, Shares, Fixed Deposits, and Recurring Deposits accounts
+            if (hasData) {
               if (
-                breadcrumbLabel &&
-                (routeData.breadcrumb === 'Savings Account Actions' ||
-                  routeData.breadcrumb === 'Loan Account Actions' ||
-                  routeData.breadcrumb === 'Shares Account Actions' ||
-                  routeData.breadcrumb === 'Actions' ||
-                  routeData.breadcrumb === 'action' ||
-                  routeData.title === 'Fixed Deposits Account Actions' ||
-                  routeData.title === 'Recurring Deposits Account Actions')
+                route.snapshot.data.hasOwnProperty(routeResolveBreadcrumb) &&
+                route.snapshot.data[routeResolveBreadcrumb]
               ) {
-                const menuKey = 'labels.menus.' + breadcrumbLabel;
-                const menuTranslation = this.translateService.instant(menuKey);
-                if (menuTranslation !== menuKey) {
-                  breadcrumbLabel = menuTranslation;
+                breadcrumbLabel = route.snapshot.data;
+                route.snapshot.data[routeResolveBreadcrumb].forEach((property: any) => {
+                  breadcrumbLabel = breadcrumbLabel[property];
+                });
+              } else if (
+                route.snapshot.data.hasOwnProperty(routeParamBreadcrumb) &&
+                route.snapshot.paramMap.get(route.snapshot.data[routeParamBreadcrumb])
+              ) {
+                breadcrumbLabel = route.snapshot.paramMap.get(route.snapshot.data[routeParamBreadcrumb]);
+                const routeData: Data = route.snapshot.data;
+                if (routeData.breadcrumb === 'Clients') {
+                  breadcrumbLabel = this.printableValue(routeData.clientViewData.displayName);
+                  currentUrl += `/general`;
+                } else if (routeData.breadcrumb === 'Groups') {
+                  breadcrumbLabel = routeData.groupViewData.name;
+                } else if (routeData.breadcrumb === 'Centers') {
+                  breadcrumbLabel = routeData.centerViewData.name;
+                } else if (routeData.breadcrumb === 'Loans') {
+                  breadcrumbLabel =
+                    this.printableValue(routeData.loanDetailsData.loanProductName) +
+                    ' (' +
+                    routeData.loanDetailsData.accountNo +
+                    ')';
+                } else if (routeData.breadcrumb === 'Savings') {
+                  const savingsProductName = routeData.savingsAccountData?.savingsProductName ?? '';
+                  const accountNo = routeData.savingsAccountData?.accountNo ?? '';
+                  breadcrumbLabel = this.printableValue(savingsProductName) + (accountNo ? ' (' + accountNo + ')' : '');
+                } else if (routeData.breadcrumb === 'Fixed Deposits') {
+                  breadcrumbLabel =
+                    this.printableValue(routeData.fixedDepositsAccountData.depositProductName) +
+                    ' (' +
+                    routeData.fixedDepositsAccountData.accountNo +
+                    ')';
+                } else if (routeData.breadcrumb === 'Loan Products') {
+                  breadcrumbLabel = this.printableValue(routeData.loanProduct.name);
+                } else if (routeData.breadcrumb === 'Charges') {
+                  breadcrumbLabel = routeData.loansAccountCharge.name;
+                } else if (routeData.breadcrumb === 'Saving Products') {
+                  breadcrumbLabel = routeData.savingProduct.name;
+                } else if (routeData.breadcrumb === 'Share Products') {
+                  breadcrumbLabel = routeData.shareProduct.name;
+                } else if (routeData.breadcrumb === 'Fixed Deposit Products') {
+                  breadcrumbLabel = routeData.fixedDepositProduct.name;
+                } else if (routeData.breadcrumb === 'Recurring Deposit Products') {
+                  breadcrumbLabel = routeData.recurringDepositProduct.name;
+                } else if (routeData.breadcrumb === 'Floating Rates') {
+                  breadcrumbLabel = routeData.floatingRate.name;
+                } else if (routeData.breadcrumb === 'Tax Components') {
+                  breadcrumbLabel = routeData.taxComponent.name;
+                } else if (routeData.breadcrumb === 'Tax Groups') {
+                  breadcrumbLabel = routeData.taxGroup.name;
                 }
+
+                // For action names, keep the original name and let getTranslate() handle translation dynamically
+                // This ensures breadcrumbs update when language changes without requiring navigation
+                // The getTranslate() method will check both labels.text.* and labels.menus.* for translations
+              } else if (route.snapshot.data.hasOwnProperty(routeDataBreadcrumb)) {
+                breadcrumbLabel = route.snapshot.data[routeDataBreadcrumb];
               }
-            } else if (route.snapshot.data.hasOwnProperty(routeDataBreadcrumb)) {
-              breadcrumbLabel = route.snapshot.data[routeDataBreadcrumb];
+
+              if (route.snapshot.data.hasOwnProperty(routeAddBreadcrumbLink)) {
+                url = route.snapshot.data[routeAddBreadcrumbLink];
+              } else {
+                url = currentUrl;
+              }
+            }
+            if (url !== undefined) {
+              if (url.length > 8 && url.search(`/clients/`) > 0) {
+                const replaceGeneral = `/general/`;
+                let currentUrlTemp = url.replace(replaceGeneral, `/`);
+                currentUrlTemp = currentUrlTemp.replace(`//`, `/`);
+                currentUrlTemp += `/general`;
+                const replaceDoubleSlash = `/general/general`;
+                currentUrlTemp = currentUrlTemp.replace(replaceDoubleSlash, `/general`);
+                url = currentUrlTemp;
+              }
             }
 
-            if (route.snapshot.data.hasOwnProperty(routeAddBreadcrumbLink)) {
-              url = route.snapshot.data[routeAddBreadcrumbLink];
-            } else {
-              url = currentUrl;
-            }
-          }
-          if (url !== undefined) {
-            if (url.length > 8 && url.search(`/clients/`) > 0) {
-              const replaceGeneral = `/general/`;
-              let currentUrlTemp = url.replace(replaceGeneral, `/`);
-              currentUrlTemp = currentUrlTemp.replace(`//`, `/`);
-              currentUrlTemp += `/general`;
-              const replaceDoubleSlash = `/general/general`;
-              currentUrlTemp = currentUrlTemp.replace(replaceDoubleSlash, `/general`);
-              url = currentUrlTemp;
-            }
-          }
+            const breadcrumb: Breadcrumb = {
+              label: breadcrumbLabel,
+              url: url
+            };
 
-          const breadcrumb: Breadcrumb = {
-            label: breadcrumbLabel,
-            url: url
-          };
-
-          if (breadcrumbLabel) {
-            this.breadcrumbs.push(breadcrumb);
-          }
-        });
-      }
-    });
+            if (breadcrumbLabel) {
+              this.breadcrumbs.push(breadcrumb);
+            }
+          });
+        }
+      });
   }
 
   printableValue(value: string): string {
@@ -280,9 +270,29 @@ export class BreadcrumbComponent implements AfterViewInit {
   }
 
   getTranslate(text: string): any {
-    const key: string = 'labels.text.' + text;
-    const translation = this.translateService.instant(key);
-    const result = translation !== key ? translation : text;
-    return result;
+    // First try labels.text.* (for static breadcrumb labels)
+    let key: string = 'labels.text.' + text;
+    let translation = this.translateService.instant(key);
+    if (translation !== key) {
+      return translation;
+    }
+
+    // Then try labels.menus.* (for action names like "View Guarantors")
+    key = 'labels.menus.' + text;
+    translation = this.translateService.instant(key);
+    if (translation !== key) {
+      return translation;
+    }
+
+    // If no translation found, return the original text
+    return text;
+  }
+
+  /**
+   * Clean up subscriptions on component destroy.
+   */
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
