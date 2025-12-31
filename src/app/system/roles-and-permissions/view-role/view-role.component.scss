@@ -1,5 +1,36 @@
+@use '../../../../assets/styles/colours' as *;
+
+.container {
+  padding: 1rem;
+
+  mat-card {
+    margin-bottom: 0.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba($black, 0.1);
+    border: 1px solid var(--border-color, $mid-grey);
+    border-radius: 8px;
+    transition:
+      background-color 0.3s ease,
+      border-color 0.3s ease;
+
+    mat-card-content {
+      padding: 0;
+    }
+
+    .layout-row {
+      margin: 0;
+      padding: 0;
+    }
+
+    &.role-details-card {
+      padding: 0.5rem;
+    }
+  }
+}
+
 .display-permissions {
   padding-top: 15px;
+  padding-bottom: 8px;
 }
 
 span {
@@ -8,14 +39,12 @@ span {
 
 mat-list-item {
   cursor: pointer;
+  padding: 8px 0;
 }
 
 .mat-list-base .mat-list-item .mat-list-item-content {
   cursor: pointer;
-}
-
-.active {
-  background-color: #f2f2f2;
+  padding: 0 16px;
 }
 
 .grouping-name {
@@ -23,28 +52,54 @@ mat-list-item {
 }
 
 .list-permission {
-  padding-left: 20px;
+  padding-left: 24px;
+  padding-right: 16px;
 }
 
 .permission-selected {
-  margin-top: 10px;
-  height: 40px;
+  margin-top: 0;
+  margin-bottom: 16px;
+  height: auto;
+  min-height: 40px;
+  padding-bottom: 8px;
+
+  h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 500;
+  }
 }
 
 .inactive {
   transition: all 0.2s ease-in-out;
-}
 
-.inactive:hover {
-  transform: scale(1.1);
+  &:hover {
+    transform: scale(1.01);
+    background-color: $light-grey;
+  }
 }
 
 .content {
   div {
-    line-height: 3rem;
+    line-height: 2.5rem;
+    margin-bottom: 0.5rem;
 
     &.header {
       font-weight: 500;
+      padding: 0.5rem 0;
+    }
+  }
+}
+
+mat-card-actions {
+  padding: 16px 0 0;
+  margin: 0;
+
+  button {
+    margin-right: 8px;
+
+    &:last-child {
+      margin-right: 0;
     }
   }
 }
