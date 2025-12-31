@@ -1,14 +1,14 @@
 <div class="container mat-elevation-z8">
   <mat-card>
     @if (transactionType.withdrawal) {
-      <h2 mat-title class="m-l-10">
+      <mat-card-title class="form-heading">
         {{ 'labels.heading.Withdraw Money From Saving Account' | translate }}
-      </h2>
+      </mat-card-title>
     }
     @if (transactionType.deposit) {
-      <h2 mat-title class="m-l-10">
+      <mat-card-title class="form-heading">
         {{ 'labels.heading.Deposit Money To Saving Account' | translate }}
-      </h2>
+      </mat-card-title>
     }
 
     <form [formGroup]="savingAccountTransactionForm" (ngSubmit)="submit()">
