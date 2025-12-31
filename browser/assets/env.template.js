@@ -32,6 +32,9 @@
   // Display or not the Tenant Selector
   window['env']['displayTenantSelector'] = '$MIFOS_DISPLAY_TENANT_SELECTOR';
 
+  // Documentation base URL for in-app help links
+  window['env']['documentationBaseUrl'] = '$MIFOS_DOCUMENTATION_BASE_URL';
+
   // Time in seconds for Notifications, default 60 seconds
   window['env']['waitTimeForNotifications'] = '$MIFOS_WAIT_TIME_FOR_NOTIFICATIONS';
 
