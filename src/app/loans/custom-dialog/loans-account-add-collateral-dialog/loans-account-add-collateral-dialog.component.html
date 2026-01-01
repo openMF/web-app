@@ -1,49 +1,53 @@
 <h1 mat-dialog-title>{{ 'labels.heading.Add Loan Collateral' | translate }}</h1>
 
-<div mat-dialog-content [formGroup]="addCollateralForm" class="layout-column">
-  <mat-form-field>
-    <mat-label>{{ 'labels.inputs.Collateral' | translate }}</mat-label>
-    <mat-select formControlName="collateral" required>
-      @for (collateralType of collateralTypeData; track collateralType) {
-        <mat-option [value]="collateralType">
-          {{ collateralType.name }}
-        </mat-option>
-      }
-    </mat-select>
-    <mat-error>
-      {{ 'labels.inputs.Collateral' | translate }} {{ 'labels.commons.is' | translate }}
-      <strong>{{ 'labels.commons.required' | translate }}</strong>
-    </mat-error>
-  </mat-form-field>
+<mat-dialog-content>
+  <form [formGroup]="addCollateralForm">
+    <div class="layout-column">
+      <mat-form-field>
+        <mat-label>{{ 'labels.inputs.Collateral' | translate }}</mat-label>
+        <mat-select formControlName="collateral" required>
+          @for (collateralType of collateralTypeData; track collateralType) {
+            <mat-option [value]="collateralType">
+              {{ collateralType.name }}
+            </mat-option>
+          }
+        </mat-select>
+        <mat-error>
+          {{ 'labels.inputs.Collateral' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>{{ 'labels.inputs.Quantity' | translate }}</mat-label>
-    <input type="number" [max]="maxQuantity" [min]="0" matInput formControlName="quantity" required />
-    @if (addCollateralForm.controls.quantity.hasError('required')) {
-      <mat-error>
-        {{ 'labels.inputs.Quantity' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
-    }
-    @if (addCollateralForm.controls.quantity.hasError('max')) {
-      <mat-error>
-        {{ 'labels.inputs.Quantity can not be more than' | translate }} <strong>{{ maxQuantity }}</strong>
-      </mat-error>
-    }
-  </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{ 'labels.inputs.Quantity' | translate }}</mat-label>
+        <input type="number" [max]="maxQuantity" [min]="0" matInput formControlName="quantity" required />
+        @if (addCollateralForm.controls.quantity.hasError('required')) {
+          <mat-error>
+            {{ 'labels.inputs.Quantity' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
+          </mat-error>
+        }
+        @if (addCollateralForm.controls.quantity.hasError('max')) {
+          <mat-error>
+            {{ 'labels.inputs.Quantity can not be more than' | translate }} <strong>{{ maxQuantity }}</strong>
+          </mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>{{ 'labels.inputs.Total Value' | translate }}</mat-label>
-    <input type="text" matInput formControlName="totalValue" [disabled]="true" />
-  </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{ 'labels.inputs.Total Value' | translate }}</mat-label>
+        <input type="text" matInput formControlName="totalValue" [disabled]="true" />
+      </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>{{ 'labels.inputs.Total Collateral Value' | translate }}</mat-label>
-    <input type="text" matInput formControlName="totalCollateralValue" [disabled]="true" />
-  </mat-form-field>
-</div>
+      <mat-form-field>
+        <mat-label>{{ 'labels.inputs.Total Collateral Value' | translate }}</mat-label>
+        <input type="text" matInput formControlName="totalCollateralValue" [disabled]="true" />
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
 
-<mat-dialog-actions class="layout-row layout-xs-column layout-align-center gap-2percent">
+<mat-dialog-actions align="center">
   <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
   <button
     mat-raised-button
