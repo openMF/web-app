@@ -18,14 +18,7 @@
           cdkAutosizeMinRows="2"
         ></textarea>
       </mat-form-field>
-      <button
-        type="button"
-        mat-raised-button
-        class="flex-1"
-        color="primary"
-        [disabled]="!noteForm.valid"
-        (click)="addNote()"
-      >
+      <button type="submit" mat-raised-button class="flex-1" color="primary" [disabled]="!noteForm.valid">
         <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
       </button>
     </form>
@@ -41,7 +34,9 @@
             </div>
             <div class="note-footer">
               <div class="note-meta">
-                <div class="created-by">Created by {{ entityNote.createdByUsername }}</div>
+                <div class="created-by">
+                  {{ 'labels.inputs.Created By' | translate }} {{ entityNote.createdByUsername }}
+                </div>
                 <div class="created-date">
                   {{ entityNote.createdOn | dateFormat }}
                 </div>
@@ -52,18 +47,18 @@
                   mat-raised-button
                   color="primary"
                   (click)="editNote(entityNote.id, entityNote.note, i)"
-                  title="Edit note"
+                  [title]="'labels.heading.Edit Note' | translate"
                 >
-                  Edit
+                  {{ 'labels.buttons.Edit' | translate }}
                 </button>
                 <button
                   type="button"
                   mat-raised-button
                   color="warn"
                   (click)="deleteNote(entityNote.id, i)"
-                  title="Delete note"
+                  [title]="('labels.inputs.Note' | translate) + ': ' + ('labels.buttons.Delete' | translate)"
                 >
-                  Delete
+                  {{ 'labels.buttons.Delete' | translate }}
                 </button>
               </div>
             </div>
