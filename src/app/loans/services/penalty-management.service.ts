@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, forkJoin, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import { LoansService } from '../loans.service';
 import { Dates } from 'app/core/utils/dates';
 
@@ -186,5 +186,31 @@ export class PenaltyManagementService {
 
     // Fall back to the raw name (translate pipe will no-op if not a key)
     return rawName;
+  }
+
+  /**
+   * Waive selected penalties for a loan
+   * Uses the existing executeLoansAccountChargesCommand API with 'waive' command
+   * @param loanId The loan ID
+   * @param penaltyIds Array of penalty/charge IDs to waive
+   * @returns Observable that completes when all penalties are waived
+   */
+  waivePenalties(loanId: string, penaltyIds: number[]): Observable<any[]> {
+    if (!penaltyIds || penaltyIds.length === 0) {
+      return of([]);
+    }
+
+    // Create waive requests for each penalty
+    const waiveRequests = penaltyIds.map((chargeId: number) =>
+      this.loanService.executeLoansAccountChargesCommand(loanId, 'waive', {}, chargeId).pipe(
+        catchError((error: any) => {
+          console.error(`Error waiving penalty ${chargeId}:`, error);
+          // Return null for failed waive operations so we can continue with others
+          return of(null);
+        })
+      )
+    );
+
+    return forkJoin(waiveRequests);
   }
 }
