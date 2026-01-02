@@ -81,6 +81,7 @@
     "validation.msg.loan.principal.is.greater.than.max": "Le montant principal {{params[0].value}} n'est pas valide. Doit être un montant inférieur ou égal au montant principal maximum {{params[1].value}}.",
     "validation.msg.loan.principal.is.less.than.min": "Le montant principal {{params[0].value}} n'est pas valide. Doit être un montant supérieur ou égal au montant principal minimum {{params[1].value}}.",
     "validation.msg.loanproduct.accountingType.cannot.be.blank": "Le type de comptabilité est obligatoire.",
+    "labels.commons.Only up to 6 decimal places allowed": "Jusqu'à 6 décimales autorisées.",
     "validation.msg.loanproduct.accountingType.is.not.within.expected.range": "Le type de comptabilité n'est pas valide. Doit être un nombre compris entre {{params[1].value}} et {{params[2].value}} inclus.",
     "validation.msg.loanproduct.allowPartialPeriodInterestCalculation.not.supported.for.daily.calculations": "Autoriser le calcul des versements partiels ne peut pas être défini comme vrai pour le calcul quotidien",
     "validation.msg.loanproduct.allowVariableInstallments.not.supported.for.selected.interest.calculation.type": "Le versement variable doit être utilisé avec le calcul des intérêts quotidiens ou permettre le calcul des intérêts partiels.",

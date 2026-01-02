@@ -81,6 +81,7 @@
     "validation.msg.loan.principal.is.greater.than.max": "Pamatsumma {{params[0].value}} nav derīga. Jābūt summai, kas ir mazāka vai vienāda ar maksimālo pamatsummu {{params[1].value}}.",
     "validation.msg.loan.principal.is.less.than.min": "Pamatsumma {{params[0].value}} nav derīga. Jābūt summai, kas ir lielāka vai vienāda ar minimālo pamatsummu {{params[1].value}}.",
     "validation.msg.loanproduct.accountingType.cannot.be.blank": "Uzskaites veids ir obligāts.",
+    "labels.commons.Only up to 6 decimal places allowed": "Atļauts tikai līdz 6 zīmēm aiz komata.",
     "validation.msg.loanproduct.accountingType.is.not.within.expected.range": "Uzskaites veids nav derīgs. Jābūt skaitlim starp {{params[1].value}} un {{params[2].value}} ieskaitot.",
     "validation.msg.loanproduct.allowPartialPeriodInterestCalculation.not.supported.for.daily.calculations": "Atļaut daļējas iemaksas aprēķinu nevar iestatīt kā patiesu ikdienas aprēķinam",
     "validation.msg.loanproduct.allowVariableInstallments.not.supported.for.selected.interest.calculation.type": "Mainīgā iemaksa jāizmanto, aprēķinot ikdienas procentus, vai arī pieļaujot daļēju procentu aprēķinu",

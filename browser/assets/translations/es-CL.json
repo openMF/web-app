@@ -81,6 +81,7 @@
     "validation.msg.loan.principal.is.greater.than.max": "El importe principal {{params[0].value}} no es válido. Debe ser un monto menor o igual al monto principal máximo {{params[1].value}}.",
     "validation.msg.loan.principal.is.less.than.min": "El importe principal {{params[0].value}} no es válido. Debe ser un monto mayor o igual al monto mínimo de capital {{params[1].value}}.",
     "validation.msg.loanproduct.accountingType.cannot.be.blank": "El tipo de contabilidad es obligatorio.",
+    "labels.commons.Only up to 6 decimal places allowed": "Solo se permiten hasta 6 decimales.",
     "validation.msg.loanproduct.accountingType.is.not.within.expected.range": "El tipo de contabilidad no es válido. Debe ser un número entre {{params[1].value}} y {{params[2].value}} inclusive.",
     "validation.msg.loanproduct.allowPartialPeriodInterestCalculation.not.supported.for.daily.calculations": "Permitir el cálculo de cuotas parciales no se puede establecer como verdadero para el cálculo diario",
     "validation.msg.loanproduct.allowVariableInstallments.not.supported.for.selected.interest.calculation.type": "La cuota variable debe usarse con el cálculo de interés diario o permitir el cálculo de interés parcial.",

@@ -81,6 +81,7 @@
     "validation.msg.loan.principal.is.greater.than.max": "मूल रकम {{params[0].value}} अमान्य छ। अधिकतम मूल रकम {{params[1].value}} भन्दा कम वा बराबरको रकम हुनुपर्छ।",
     "validation.msg.loan.principal.is.less.than.min": "मूल रकम {{params[0].value}} अमान्य छ। न्यूनतम प्रिन्सिपल रकम {{params[1].value}} भन्दा बढी वा बराबरको रकम हुनुपर्छ।",
     "validation.msg.loanproduct.accountingType.cannot.be.blank": "लेखा प्रकार अनिवार्य छ।",
+    "labels.commons.Only up to 6 decimal places allowed": "अधिकतम ६ दशमलव स्थानहरू मात्र अनुमति छ।",
     "validation.msg.loanproduct.accountingType.is.not.within.expected.range": "लेखा प्रकार अमान्य छ। समावेशी {{params[1].value}} र {{params[2].value}} बीचको संख्या हुनुपर्छ।",
     "validation.msg.loanproduct.allowPartialPeriodInterestCalculation.not.supported.for.daily.calculations": "अनुमति दिनुहोस् आंशिक किस्ता गणना दैनिक गणनाको लागि सत्यको रूपमा सेट गर्न सकिँदैन",
     "validation.msg.loanproduct.allowVariableInstallments.not.supported.for.selected.interest.calculation.type": "चर किस्ता दैनिक ब्याज गणनाको साथ प्रयोग गरिनु पर्छ वा आंशिक ब्याज गणनालाई अनुमति दिनुपर्छ।",

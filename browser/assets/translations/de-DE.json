@@ -81,6 +81,7 @@
     "validation.msg.loan.principal.is.greater.than.max": "Der Kapitalbetrag {{params[0].value}} ist ungültig. Muss ein Betrag sein, der kleiner oder gleich dem maximalen Kapitalbetrag {{params[1].value}} ist.",
     "validation.msg.loan.principal.is.less.than.min": "Der Kapitalbetrag {{params[0].value}} ist ungültig. Muss ein Betrag sein, der größer oder gleich dem Mindestkapitalbetrag {{params[1].value}} ist.",
     "validation.msg.loanproduct.accountingType.cannot.be.blank": "Der Abrechnungstyp ist obligatorisch.",
+    "labels.commons.Only up to 6 decimal places allowed": "Nur bis zu 6 Dezimalstellen erlaubt.",
     "validation.msg.loanproduct.accountingType.is.not.within.expected.range": "Der Abrechnungstyp ist ungültig. Muss eine Zahl zwischen {{params[1].value}} und {{params[2].value}} (einschließlich) sein.",
     "validation.msg.loanproduct.allowPartialPeriodInterestCalculation.not.supported.for.daily.calculations": "Teilzahlungsberechnung zulassen kann für die tägliche Berechnung nicht auf „Wahr“ gesetzt werden",
     "validation.msg.loanproduct.allowVariableInstallments.not.supported.for.selected.interest.calculation.type": "Variable Ratenzahlung sollte entweder mit täglicher Zinsberechnung verwendet werden oder eine Teilzinsberechnung zulassen",

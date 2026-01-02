@@ -84,6 +84,7 @@
     "validation.msg.loanproduct.accountingType.is.not.within.expected.range": "회계 유형이 잘못되었습니다. {{params[1].value}}와 {{params[2].value}} 사이의 숫자여야 합니다.",
     "validation.msg.loanproduct.allowPartialPeriodInterestCalculation.not.supported.for.daily.calculations": "일일 계산에서는 부분 할부 계산 허용을 true로 설정할 수 없습니다.",
     "validation.msg.loanproduct.allowVariableInstallments.not.supported.for.selected.interest.calculation.type": "변액할부는 일일이자 계산과 함께 사용하거나 부분이자 계산을 허용해야 합니다.",
+    "labels.commons.Only up to 6 decimal places allowed": "6자리 이하의 소수점만 허용됩니다.",
     "validation.msg.loanproduct.amortizationType.cannot.be.blank": "분할 상환 유형은 필수입니다.",
     "validation.msg.loanproduct.amortizationType.is.not.within.expected.range": "할부 상환 유형이 잘못되었습니다. {{params[1].value}}와 {{params[2].value}} 사이의 숫자여야 합니다.",
     "validation.msg.loanproduct.currencyCode.cannot.be.blank": "통화는 필수입니다.",

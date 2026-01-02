@@ -81,6 +81,7 @@
     "validation.msg.loan.principal.is.greater.than.max": "Principal amount {{params[0].value}} is invalid. Must be an amount less than or equal to Maximum principal amount {{params[1].value}}.",
     "validation.msg.loan.principal.is.less.than.min": "Principal amount {{params[0].value}} is invalid. Must be an amount greater than or equal to Minimum Principal amount {{params[1].value}}.",
     "validation.msg.loanproduct.accountingType.cannot.be.blank": "Accounting type is mandatory.",
+    "labels.commons.Only up to 6 decimal places allowed": "Only up to 6 decimal places allowed.",
     "validation.msg.loanproduct.accountingType.is.not.within.expected.range": "Accounting type is invalid. Must be a number between {{params[1].value}} and {{params[2].value}} inclusive.",
     "validation.msg.loanproduct.allowPartialPeriodInterestCalculation.not.supported.for.daily.calculations": "Allow Partial Installment Calculation cannot be set as true for daily calculation",
     "validation.msg.loanproduct.allowVariableInstallments.not.supported.for.selected.interest.calculation.type": "Variable Installment should be used with either daily interest calculation  or allow partial interest calculation true",

@@ -81,6 +81,7 @@
     "validation.msg.loan.principal.is.greater.than.max": "Kiasi kikuu {{params[0].value}} si sahihi. Ni lazima kiwe kiasi kidogo kuliko au sawa na Kiwango cha juu kabisa cha msingi {{params[1].value}}.",
     "validation.msg.loan.principal.is.less.than.min": "Kiasi kikuu {{params[0].value}} si sahihi. Ni lazima kiwe kiasi kikubwa kuliko au sawa na Kiasi cha Chini cha Msingi {{params[1].value}}.",
     "validation.msg.loanproduct.accountingType.cannot.be.blank": "Aina ya uhasibu ni ya lazima.",
+    "labels.commons.Only up to 6 decimal places allowed": "Inaruhusiwa hadi sehemu 6 za desimali pekee.",
     "validation.msg.loanproduct.accountingType.is.not.within.expected.range": "Aina ya uhasibu ni batili. Lazima iwe nambari kati ya {{params[1].value}} na {{params[2].value}} zikijumlishwa.",
     "validation.msg.loanproduct.allowPartialPeriodInterestCalculation.not.supported.for.daily.calculations": "Ruhusu Ukokotoaji wa Usawa wa Kiasi hauwezi kuwekwa kuwa kweli kwa hesabu ya kila siku",
     "validation.msg.loanproduct.allowVariableInstallments.not.supported.for.selected.interest.calculation.type": "Malipo ya Kubadilishana yanapaswa kutumiwa pamoja na hesabu ya maslahi ya kila siku au kuruhusu ukokotoaji wa riba kiasi kuwa kweli",

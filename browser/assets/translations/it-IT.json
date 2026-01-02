@@ -84,6 +84,7 @@
     "validation.msg.loanproduct.accountingType.is.not.within.expected.range": "Il tipo di contabilità non è valido. Deve essere un numero compreso tra {{params[1].value}} e {{params[2].value}} inclusi.",
     "validation.msg.loanproduct.allowPartialPeriodInterestCalculation.not.supported.for.daily.calculations": "Consenti calcolo rata parziale non può essere impostato su vero per il calcolo giornaliero",
     "validation.msg.loanproduct.allowVariableInstallments.not.supported.for.selected.interest.calculation.type": "La rata variabile deve essere utilizzata con il calcolo dell'interesse giornaliero o con il calcolo dell'interesse parziale vero",
+    "labels.commons.Only up to 6 decimal places allowed": "Sono consentiti solo fino a 6 decimali.",
     "validation.msg.loanproduct.amortizationType.cannot.be.blank": "La tipologia di ammortamento è obbligatoria.",
     "validation.msg.loanproduct.amortizationType.is.not.within.expected.range": "Il tipo di ammortamento non è valido. Deve essere un numero compreso tra {{params[1].value}} e {{params[2].value}} inclusi.",
     "validation.msg.loanproduct.currencyCode.cannot.be.blank": "La valuta è obbligatoria.",

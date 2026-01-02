@@ -81,6 +81,7 @@
     "validation.msg.loan.principal.is.greater.than.max": "O valor principal {{params[0].value}} é inválido. Deve ser um valor menor ou igual ao valor principal máximo {{params[1].value}}.",
     "validation.msg.loan.principal.is.less.than.min": "O valor principal {{params[0].value}} é inválido. Deve ser um valor maior ou igual ao valor principal mínimo {{params[1].value}}.",
     "validation.msg.loanproduct.accountingType.cannot.be.blank": "O tipo de contabilidade é obrigatório.",
+    "labels.commons.Only up to 6 decimal places allowed": "Apenas até 6 casas decimais permitidas.",
     "validation.msg.loanproduct.accountingType.is.not.within.expected.range": "O tipo de contabilidade é inválido. Deve ser um número entre {{params[1].value}} e {{params[2].value}} inclusive.",
     "validation.msg.loanproduct.allowPartialPeriodInterestCalculation.not.supported.for.daily.calculations": "Permitir cálculo de parcela parcial não pode ser definido como verdadeiro para cálculo diário",
     "validation.msg.loanproduct.allowVariableInstallments.not.supported.for.selected.interest.calculation.type": "A Parcela Variável deve ser usada com cálculo de juros diários ou permitir cálculo de juros parciais verdadeiro",

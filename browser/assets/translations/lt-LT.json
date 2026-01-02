@@ -81,6 +81,7 @@
     "validation.msg.loan.principal.is.greater.than.max": "Pagrindinė suma {{params[0].value}} yra neteisinga. Turi būti suma, mažesnė arba lygi didžiausiai pagrindinei sumai {{params[1].value}}.",
     "validation.msg.loan.principal.is.less.than.min": "Pagrindinė suma {{params[0].value}} yra neteisinga. Turi būti suma, didesnė arba lygi minimaliajai pagrindinei sumai {{params[1].value}}.",
     "validation.msg.loanproduct.accountingType.cannot.be.blank": "Apskaitos tipas yra privalomas.",
+    "labels.commons.Only up to 6 decimal places allowed": "Leidžiama iki 6 dešimtainių skaičių.",
     "validation.msg.loanproduct.accountingType.is.not.within.expected.range": "Netinkamas apskaitos tipas. Turi būti skaičius tarp {{params[1].value}} ir {{params[2].value}} imtinai.",
     "validation.msg.loanproduct.allowPartialPeriodInterestCalculation.not.supported.for.daily.calculations": "Leisti dalinį įmokos apskaičiavimą negali būti nustatyta kaip teisinga atliekant kasdienį skaičiavimą",
     "validation.msg.loanproduct.allowVariableInstallments.not.supported.for.selected.interest.calculation.type": "Kintamoji įmoka turėtų būti naudojama skaičiuojant kasdienes palūkanas arba leidžiant skaičiuoti dalines palūkanas",
