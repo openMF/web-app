@@ -271,7 +271,7 @@ body.dark-theme {
 
   // Home page logo styling for dark mode
   mifosx-home {
-    [src*='mifos_lg-logo.png'],
+    [src*='mifos_lg-logo.jpg'],
     [src$='_home.png'] {
       content: url('../assets/images/white-mifos.png');
     }
