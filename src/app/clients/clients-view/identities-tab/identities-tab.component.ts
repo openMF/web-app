@@ -88,6 +88,7 @@ export class IdentitiesTabComponent implements OnDestroy {
 
   /** Cached thumbnails for previewable docs */
   previewThumbnails: Record<string, string> = {};
+  thumbnailsLoading: Record<string, boolean> = {};
   private lightboxInstance: LightGallery | null = null;
   private readonly lightboxPlugins = [
     lgZoom,
@@ -260,10 +261,13 @@ export class IdentitiesTabComponent implements OnDestroy {
           );
           if (preview.type === 'image') {
             this.previewThumbnails[doc.id] = preview.url;
+          } else if (preview.type === 'pdf' && preview.thumbnailUrl) {
+            // Use PDF thumbnail for display
+            this.previewThumbnails[doc.id] = preview.thumbnailUrl;
           }
           items.push({
             src: preview.url,
-            thumb: preview.type === 'image' ? preview.url : undefined,
+            thumb: preview.type === 'image' ? preview.url : preview.thumbnailUrl,
             subHtml: this.buildSubHtml(doc, identity),
             iframe: preview.type === 'pdf'
           });
@@ -322,6 +326,10 @@ export class IdentitiesTabComponent implements OnDestroy {
     if (!this.documentPreviewService.isPreviewable(document)) {
       return;
     }
+
+    // Set loading state immediately
+    this.thumbnailsLoading[document.id] = true;
+
     this.documentPreviewService
       .resolvePreviewUrl(document, () =>
         this.clientService.downloadClientIdentificationDocument(document.parentEntityId || this.clientId, document.id)
@@ -329,9 +337,16 @@ export class IdentitiesTabComponent implements OnDestroy {
       .then((preview) => {
         if (preview.type === 'image') {
           this.previewThumbnails[document.id] = preview.url;
+        } else if (preview.type === 'pdf' && preview.thumbnailUrl) {
+          // Use PDF thumbnail for display
+          this.previewThumbnails[document.id] = preview.thumbnailUrl;
         }
       })
-      .catch((): void => undefined);
+      .catch((): void => undefined)
+      .finally(() => {
+        // Clear loading state
+        delete this.thumbnailsLoading[document.id];
+      });
   }
 
   private prefetchThumbnails(): void {

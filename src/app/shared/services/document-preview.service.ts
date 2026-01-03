@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, firstValueFrom } from 'rxjs';
+import { PdfThumbnailService } from './pdf-thumbnail.service';
 
 export type DocumentPreviewType = 'image' | 'pdf' | 'other';
 
@@ -16,6 +17,7 @@ interface CachedPreview {
   url: string;
   type: DocumentPreviewType;
   isObjectUrl: boolean;
+  thumbnailUrl?: string; // For PDF thumbnails
 }
 
 @Injectable({
@@ -23,6 +25,15 @@ interface CachedPreview {
 })
 export class DocumentPreviewService {
   private readonly previewCache = new Map<string, CachedPreview>();
+  private pdfThumbnailService = inject(PdfThumbnailService);
+  private readonly thumbnailGenerationQueue = new Map<string, Promise<string>>();
+
+  constructor() {
+    // Preload PDF.js once so first thumbnail generation doesn't block on library download
+    this.pdfThumbnailService.preload().catch((error) => {
+      console.warn('PDF.js preload failed, will lazy load on demand', error);
+    });
+  }
 
   /**
    * Determine whether the document can be previewed inline.
@@ -38,24 +49,105 @@ export class DocumentPreviewService {
   async resolvePreviewUrl(
     document: DocumentDescriptor,
     downloadFn: (descriptor: DocumentDescriptor) => Observable<Blob>
-  ): Promise<{ url: string; type: DocumentPreviewType }> {
+  ): Promise<{ url: string; type: DocumentPreviewType; thumbnailUrl?: string }> {
     const cached = this.previewCache.get(document.id);
     if (cached) {
-      return { url: cached.url, type: cached.type };
+      return { url: cached.url, type: cached.type, thumbnailUrl: cached.thumbnailUrl };
     }
 
     const inline = this.getInlineData(document);
     if (inline) {
       const type = this.detectType(inline.mimeType, document.fileName, document.fileData);
-      this.previewCache.set(document.id, { url: inline.url, type, isObjectUrl: inline.isObjectUrl });
-      return { url: inline.url, type };
+      const entry: CachedPreview = { url: inline.url, type, isObjectUrl: inline.isObjectUrl };
+
+      // Generate PDF thumbnail if it's a PDF
+      if (type === 'pdf') {
+        entry.thumbnailUrl = await this.generatePdfThumbnailCached(document.id, inline.url);
+      }
+
+      this.previewCache.set(document.id, entry);
+      return { url: inline.url, type, thumbnailUrl: entry.thumbnailUrl };
     }
 
     const blob = await firstValueFrom(downloadFn(document));
     const objectUrl = URL.createObjectURL(blob);
     const type = this.detectType(blob.type || document.mimeType, document.fileName, document.fileData);
-    this.previewCache.set(document.id, { url: objectUrl, type, isObjectUrl: true });
-    return { url: objectUrl, type };
+    const entry: CachedPreview = { url: objectUrl, type, isObjectUrl: true };
+
+    // Generate PDF thumbnail if it's a PDF
+    if (type === 'pdf') {
+      entry.thumbnailUrl = await this.generatePdfThumbnailCached(document.id, blob);
+    }
+
+    this.previewCache.set(document.id, entry);
+    return { url: objectUrl, type, thumbnailUrl: entry.thumbnailUrl };
+  }
+
+  /**
+   * Get the thumbnail URL for a PDF document (if available)
+   */
+  async getThumbnailUrl(
+    document: DocumentDescriptor,
+    downloadFn: (descriptor: DocumentDescriptor) => Observable<Blob>
+  ): Promise<string | null> {
+    const type = this.detectType(document.mimeType, document.fileName, document.fileData);
+    if (type !== 'pdf') {
+      return null;
+    }
+
+    const cached = this.previewCache.get(document.id);
+    if (cached?.thumbnailUrl) {
+      return cached.thumbnailUrl;
+    }
+
+    try {
+      const preview = await this.resolvePreviewUrl(document, downloadFn);
+      return preview.thumbnailUrl || null;
+    } catch (error) {
+      console.error('Failed to get thumbnail for PDF:', error);
+      return null;
+    }
+  }
+
+  /**
+   * Generate PDF thumbnail with caching and queue management
+   */
+  private async generatePdfThumbnailCached(documentId: string, source: string | Blob): Promise<string | undefined> {
+    // Check if already generating
+    const existingQueue = this.thumbnailGenerationQueue.get(documentId);
+    if (existingQueue) {
+      return existingQueue;
+    }
+
+    const generationPromise = (async () => {
+      try {
+        if (typeof source === 'string') {
+          // Data URL
+          return await this.pdfThumbnailService.generateThumbnailFromDataUrl(source, {
+            width: 300,
+            height: 400,
+            quality: 0.85,
+            format: 'jpeg'
+          });
+        } else {
+          // Blob
+          return await this.pdfThumbnailService.generateThumbnail(source, {
+            width: 300,
+            height: 400,
+            quality: 0.85,
+            format: 'jpeg'
+          });
+        }
+      } catch (error) {
+        console.error('Failed to generate PDF thumbnail:', error);
+        return undefined;
+      } finally {
+        this.thumbnailGenerationQueue.delete(documentId);
+      }
+    })();
+
+    this.thumbnailGenerationQueue.set(documentId, generationPromise);
+    return generationPromise;
   }
 
   /**

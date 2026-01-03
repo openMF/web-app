@@ -5,6 +5,13 @@
 // Allow .json files imports
 declare module '*.json';
 
+// pdfjs-dist module declaration (package has broken/missing types)
+declare module 'pdfjs-dist' {
+  export const GlobalWorkerOptions: any;
+  export function getDocument(src: any): any;
+  export const version: string;
+}
+
 // SystemJS module definition
 declare var module: NodeModule;
 interface NodeModule {

@@ -103,6 +103,31 @@
     font-size: 0.75rem;
     line-height: 1.2;
   }
+
+  &.loading {
+    padding: 0;
+    background: linear-gradient(135deg, rgba($peter-river, 0.03) 0%, rgba($peter-river, 0.01) 100%);
+
+    .mifos-preview-logo {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 0.5rem;
+      opacity: 0.7;
+      animation: pulse 2s ease-in-out infinite;
+    }
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+
+  50% {
+    opacity: 0.4;
+  }
 }
 
 .preview-btn {

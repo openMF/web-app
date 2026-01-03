@@ -25,12 +25,11 @@
               (click)="isPreviewable(document) && openPreview(document)"
             >
               @if (previewThumbnails[document.id]) {
-                <img
-                  [src]="previewThumbnails[document.id]"
-                  [alt]="document.name"
-                  [title]="document.name"
-                  loading="lazy"
-                />
+                <img [src]="previewThumbnails[document.id]" [alt]="document.name" [title]="document.name" />
+              } @else if (thumbnailsLoading[document.id]) {
+                <div class="placeholder loading">
+                  <img src="assets/images/mifos-logo-flat.png" alt="Generating preview" class="mifos-preview-logo" />
+                </div>
               } @else {
                 <div class="placeholder">
                   <fa-icon icon="file"></fa-icon>
