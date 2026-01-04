@@ -12,7 +12,7 @@ Mifos X Web App is a modern single-page application (SPA) built on top of the Mi
 
 ## Quick Links
 
-- [Live Demo](https://sandbox.mifos.community/#/login) (Updated nightly ** System is restored every 6 hours **)
+- [Live Demo](https://sandbox.mifos.community/#/login) (Updated nightly — sandbox data is reset every 6 hours; test data and transient state may be cleared.)
 - [GitHub Repository](https://github.com/openMF/web-app)
 - [Slack Channel](https://app.slack.com/client/T0F5GHE8Y/CJJGJLN10)
 - [Jira Board of Mifos](https://mifosforge.jira.com/jira/your-work)
@@ -31,13 +31,13 @@ Before installing the web app, you need to set up the Fineract backend server:
 
 1. **Choose ONE of these backend options:**
    - **Option A: Use existing remote server**
-     - Use the sandbox (MariaDB) at https://sandbox.mifos.community ** System is restored every 6 hours **
-     - Use the demo (MariaDB) at https://demo.mifos.community
-     - Use the demo (Keycloak) at https://oauth.mifos.community
-     - Use the demo (2FA) at https://2fa.mifos.community
-     - Use the demo (Oidc) at https://oidc.mifos.community
-     - Use the demo (Postgres) at https://elephant.mifos.community
-     - Configure to your server by updating API URLs in environment files
+   - Use the [sandbox (MariaDB)](https://sandbox.mifos.community) — sandbox data is reset every 6 hours; test data and transient state may be cleared.
+   - Use the [demo (MariaDB)](https://demo.mifos.community)
+   - Use the [demo (Keycloak)](https://oauth.mifos.community)
+   - Use the [demo (2FA)](https://2fa.mifos.community)
+   - Use the [demo (Oidc)](https://oidc.mifos.community)
+   - Use the [demo (Postgres)](https://elephant.mifos.community)
+   - Configure to your server by updating API URLs in environment files
 
    - **Option B: Install local Fineract server**
 
@@ -132,6 +132,101 @@ When using the development server with basic authentication:
 - **Build for production:** `ng build --configuration production` or `npm run build:prod`
 - **Get Angular CLI help:** `ng help`
 
+## Proxy Configuration
+
+The web app includes a proxy configuration (`proxy.conf.js`) that allows you to forward API requests to a remote Fineract backend during local development. This helps avoid CORS issues and enables you to work against production-like environments.
+
+### Using the Sandbox Proxy (Default)
+
+By default, the proxy forwards `/fineract-provider` requests to the Mifos sandbox environment:
+
+- **Target:** `https://sandbox.mifos.community`
+- **API Endpoint:** `https://apis.mifos.community` (exposed in the sandbox)
+- **System Reset:** Sandbox test data and transient state are reset every 6 hours (expect data to be periodically cleared).
+
+**Sandbox Environment Variables:**
+
+```bash
+FINERACT_API_URLS=https://apis.mifos.community
+FINERACT_API_URL=https://apis.mifos.community
+FINERACT_API_PROVIDER=/fineract-provider/api
+FINERACT_API_ACTUATOR=/fineract-provider
+FINERACT_API_VERSION=/v1
+FINERACT_PLATFORM_TENANT_IDENTIFIER=default
+MIFOS_DEFAULT_LANGUAGE=en-US
+MIFOS_SUPPORTED_LANGUAGES=cs-CS,de-DE,en-US,es-MX,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,ne-NE,pt-PT,sw-SW
+MIFOS_PRELOAD_CLIENTS=true
+MIFOS_DEFAULT_CHAR_DELIMITER=,
+```
+
+### Using a Local Fineract Instance
+
+To proxy to a local Fineract server instead:
+
+Use the provided localhost proxy file (recommended for `ng serve`):
+
+1. Start the dev server with the localhost proxy:
+
+   ```bash
+   ng serve --proxy-config proxy.localhost.conf.js
+   ```
+
+2. Ensure your local Fineract instance is running on `http://localhost:8443`.
+
+Notes:
+
+- `proxy.localhost.conf.js` forwards `/fineract-provider` to your local backend to avoid CORS during development.
+- The `HttpsProxyAgent` / `setupForProxy` logic (present in `proxy.conf.js`) is only necessary when an upstream corporate/HTTP proxy must be used (set via `HTTP_PROXY`/`http_proxy`). It is not required for a direct `localhost` backend.
+
+### Proxy Features
+
+- **CORS Avoidance:** Eliminates cross-origin issues during local development
+- **Error Handling:** Gracefully handles proxy failures with detailed logging
+- **Corporate Proxy Support:** Maintains support for corporate proxy agents via `HTTP_PROXY` environment variable
+- **Debug Logging:** All proxy requests are logged for troubleshooting
+
+The proxy is configured to work with Fineract endpoints as described in this section.
+
+### Testing the Proxy
+
+To verify the proxy is working correctly, start the development server (`ng serve`) and test with curl:
+
+**Successful proxy request:**
+
+```bash
+curl -i "http://localhost:4200/fineract-provider/api/v1/runreports/FullClientReport?R_officeId=1&output-type=HTML&R_loanOfficerId=-1"
+```
+
+Expected: HTTP 200 response with proxied data from the sandbox. Server console shows:
+
+```text
+[Proxy] Proxying: GET /fineract-provider/api/v1/runreports/... -> https://sandbox.mifos.community/api/v1/runreports/...
+```
+
+**Simulated proxy error (backend unreachable):**
+
+If the backend is unreachable or returns an error, the proxy returns HTTP 502:
+
+```bash
+# Stop your Fineract backend (if using localhost) or test with an invalid target
+# The proxy will log the error and return:
+```
+
+Server console (example):
+
+```text
+[Proxy] Error while proxying request: GET /fineract-provider/... -> https://sandbox.mifos.community - ECONNREFUSED
+```
+
+HTTP response:
+
+```http
+HTTP/1.1 502 Bad Gateway
+Content-Type: text/plain
+
+Proxy error: connect ECONNREFUSED
+```
+
 ## Configuration Options
 
 ### Environment Variables for Docker
@@ -166,7 +261,7 @@ Available languages:
 | French     | fr   | fr-FR.json |
 | Italian    | it   | it-IT.json |
 | Korean     | ko   | ko-KO.json |
-| Lithuanian | li   | li-LI.json |
+| Lithuanian | lt   | lt-LT.json |
 | Latvian    | lv   | lv-LV.json |
 | Nepali     | ne   | ne-NE.json |
 | Portuguese | pt   | pt-PT.json |
