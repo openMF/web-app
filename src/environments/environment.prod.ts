@@ -26,14 +26,18 @@ export const environment = {
   apiActuator: loadedEnv.apiActuator || '/fineract-provider',
   serverUrl: '',
   oauth: {
-    enabled: loadedEnv.oauthServerEnabled === true,
-    serverUrl: loadedEnv.oauthServerUrl || '',
+    // Support legacy MIFOS_OAUTH_* variable names for backward compatibility with Keycloak
+    enabled:
+      loadedEnv.oauthServerEnabled === true ||
+      String(loadedEnv.oauthServerEnabled).toLowerCase() === 'true' ||
+      String(loadedEnv['MIFOS_OAUTH_SERVER_ENABLED']).toLowerCase() === 'true',
+    serverUrl: loadedEnv.oauthServerUrl || loadedEnv['MIFOS_OAUTH_SERVER_URL'] || '',
     logoutUrl: loadedEnv.oauthServerLogoutUrl || '',
-    appId: loadedEnv.oauthAppId || '',
+    appId: loadedEnv.oauthAppId || loadedEnv['MIFOS_OAUTH_CLIENT_ID'] || '',
     authorizeUrl: loadedEnv.oauthAuthorizeUrl || '',
     tokenUrl: loadedEnv.oauthTokenUrl || '',
-    redirectUri: loadedEnv.oauthRedirectUri || '',
-    scope: loadedEnv.oauthScope || ''
+    redirectUri: loadedEnv.oauthRedirectUri || `${window.location.origin}/#/callback`,
+    scope: loadedEnv.oauthScope || 'openid profile email'
   },
   /** Feature flag for Remember Me functionality */
   enableRememberMe: false,

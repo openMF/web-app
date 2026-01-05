@@ -61,21 +61,35 @@ function getOIDCConfig(): AuthConfig {
 }
 
 /**
- * Creates the configuration required for classic OAuth2 providers (e.g., Fineract).
+ * Creates the configuration required for classic OAuth2 providers (e.g., Fineract, Keycloak).
  * @returns {AuthConfig} OAuth2 configuration block.
  */
 function getOAuth2Config(): AuthConfig {
   const frontendUrl = window.location.origin;
+  const { serverUrl, authorizeUrl, tokenUrl, redirectUri, scope, appId } = environment.oauth;
+  const normalizedServerUrl = serverUrl?.replace(/\/$/, '') || '';
+
+  // Allow custom Keycloak realm via MIFOS_OAUTH_REALM (defaults to master)
+  const keycloakRealm = (window as any)['env']?.['MIFOS_OAUTH_REALM'] || 'master';
+  const resolvedAuthorizeUrl =
+    authorizeUrl || `${normalizedServerUrl}/auth/realms/${keycloakRealm}/protocol/openid-connect/auth`;
+  const resolvedTokenUrl =
+    tokenUrl || `${normalizedServerUrl}/auth/realms/${keycloakRealm}/protocol/openid-connect/token`;
+  const resolvedRedirectUri = redirectUri || `${frontendUrl}/#/callback`;
+  const resolvedScope = scope || 'openid profile email';
+
+  // For Keycloak, issuer should be the realm URL for correct OAuth2 semantics
+  const issuerUrl = authorizeUrl ? normalizedServerUrl : `${normalizedServerUrl}/auth/realms/${keycloakRealm}`;
 
   return {
-    issuer: environment.oauth.serverUrl,
-    loginUrl: environment.oauth.authorizeUrl,
-    tokenEndpoint: environment.oauth.tokenUrl,
-    redirectUri: environment.oauth.redirectUri,
+    issuer: issuerUrl,
+    loginUrl: resolvedAuthorizeUrl,
+    tokenEndpoint: resolvedTokenUrl,
+    redirectUri: resolvedRedirectUri,
     postLogoutRedirectUri: `${frontendUrl}/#/login`,
-    clientId: environment.oauth.appId,
+    clientId: appId,
     responseType: 'code',
-    scope: environment.oauth.scope,
+    scope: resolvedScope,
     useSilentRefresh: false,
     oidc: false,
     // Skip issuer validation for OAuth2 (non-OIDC) flows
