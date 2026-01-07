@@ -1,12 +1,12 @@
-# Playwright E2E Testing
+﻿# Playwright E2E Testing
 
-Production-grade End-to-End testing infrastructure for Mifos X Web App using [Playwright](https://playwright.dev/).
+Production-grade End-to-End testing infrastructure for Mifos® X Web App using [Playwright](https://playwright.dev/).
 
 ## Prerequisites
 
 Before running the tests, ensure the local environment is running:
 
-1. **Backend:** Ensure Fineract is running on `https://localhost:8443`
+1. **Backend:** Ensure Apache Fineract® is running on `https://localhost:8443`
 2. **Frontend:** Serve the Angular app:
    ```bash
    ng serve
@@ -54,7 +54,7 @@ playwright/
 
 ### SSL Certificate Handling
 
-The local Fineract backend uses a self-signed certificate. This is handled automatically:
+The local Apache Fineract® backend uses a self-signed certificate. This is handled automatically:
 
 ```typescript
 // playwright.config.ts

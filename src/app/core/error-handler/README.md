@@ -1,8 +1,8 @@
-# Error Handler Service
+﻿# Error Handler Service
 
 ## Overview
 
-The `ErrorHandlerService` is a centralized error-handling service for the Mifos X Web App. It provides consistent, user-friendly error messaging across the application by converting HTTP errors into meaningful messages and displaying them through Material Design snackbars.
+The `ErrorHandlerService` is a centralized error-handling service for the Mifos® X Web App. It provides consistent, user-friendly error messaging across the application by converting HTTP errors into meaningful messages and displaying them through Material Design snackbars.
 
 ## How It Works
 
@@ -22,7 +22,7 @@ The `ErrorHandlerService` is **manually triggered** by components and services u
 - **Manually invoked** per API call
 - Provides **context-specific** error messages
 - Displays user-friendly snackbar notifications
-- Extracts Fineract-specific error details
+- Extracts Apache Fineract®-specific error details
 - Gives developers fine-grained control
 
 ### When to Use
@@ -32,7 +32,7 @@ Use `ErrorHandlerService` when you need:
 - Custom error messages for specific operations
 - Context-aware error handling (e.g., "User not found", "Loan approval failed")
 - Snackbar notifications instead of modal dialogs
-- To extract and display Fineract API error messages
+- To extract and display Apache Fineract® API error messages
 
 The interceptor still catches errors you don't explicitly handle, providing a safety net.
 
@@ -57,7 +57,7 @@ The interceptor still catches errors you don't explicitly handle, providing a sa
 ### 1. HTTP Error Handling
 
 - Automatically converts HTTP status codes into user-friendly messages
-- Extracts Fineract-specific error messages
+- Extracts Apache Fineract®-specific error messages
 - Handles network/connection errors
 - Supports contextual error messages
 
@@ -247,12 +247,12 @@ Shows an informational message to the user.
 this.errorHandler.showInfo('Loading data...', 'Dismiss');
 ```
 
-## Fineract Integration
+## Apache Fineract® Integration
 
-The service automatically extracts Fineract-specific error messages:
+The service automatically extracts Apache Fineract®-specific error messages:
 
 ```typescript
-// Fineract error structure
+// Apache Fineract® error structure
 {
   "errors": [{
     "defaultUserMessage": "Client with same name already exists"
@@ -376,7 +376,7 @@ When modifying this service:
 1. Ensure all HTTP status codes are handled appropriately
 2. Update the documentation with new features
 3. Maintain consistent snackbar positioning and duration
-4. Test with actual Fineract API responses
+4. Test with actual Apache Fineract® API responses
 5. Follow Angular and TypeScript best practices
 
 ## License

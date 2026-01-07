@@ -1,8 +1,8 @@
-# Mifos X Web App ![build](https://github.com/openMF/web-app/actions/workflows/build.yml/badge.svg)
+# Mifos® X Web App ![build](https://github.com/openMF/web-app/actions/workflows/build.yml/badge.svg)
 
 ## Overview
 
-Mifos X Web App is a modern single-page application (SPA) built on top of the Mifos X platform for financial inclusion. It serves as the default web interface for the Mifos user community.
+Mifos® X Web App is a modern single-page application (SPA) built on top of the Mifos® X platform for financial inclusion. It serves as the default web interface for the Mifos® user community.
 
 **Technologies Used:**
 
@@ -23,11 +23,11 @@ Mifos X Web App is a modern single-page application (SPA) built on top of the Mi
 ### Prerequisites for All Methods
 
 - Git: [Download here](https://git-scm.com/downloads)
-- Mifos X Backend (Fineract) - **Required before running the web app**
+- Mifos® X Backend (Apache Fineract®) - **Required before running the web app**
 
 ### Backend Setup (REQUIRED FIRST)
 
-Before installing the web app, you need to set up the Fineract backend server:
+Before installing the web app, you need to set up the Apache Fineract® backend server:
 
 1. **Choose ONE of these backend options:**
    - **Option A: Use existing remote server**
@@ -98,7 +98,7 @@ Choose ONE of the following methods to install the web app:
 
 #### Method 3: Docker Compose (Frontend + Backend)
 
-This sets up both the Mifos X Web App and Fineract backend:
+This sets up both the Mifos® X Web App and Apache Fineract® backend:
 
 1. Clone the repository:
    ```
@@ -311,9 +311,9 @@ For more detailed configuration options, refer to the `env.sample` file in the r
 
 ### 1.0.0 (Tag: 1.0.0-fineract1.11)
 
-This is the first official release of the Mifos X web application:
+This is the first official release of the Mifos® X web application:
 
-- Developed for Fineract 1.11
+- Developed for Apache Fineract® 1.11
 - No Self Service area
 - GLIM support limited
 - JLG not yet supported
@@ -325,4 +325,4 @@ We welcome contributions! Please read our [contribution guidelines](./CONTRIBUTI
 
 ## Related Projects
 
-[Apache Fineract](https://github.com/apache/fineract) - Apache Fineract provides open APIs and affordable core banking solution for financial institutions and is the backend for all UIs of the Mifos.
+[Apache Fineract](https://github.com/apache/fineract) - Apache Fineract® provides open APIs and affordable core banking solution for financial institutions and is the backend for all UIs of the Mifos®.
