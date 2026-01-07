@@ -505,6 +505,7 @@
       "Select All": "Tout sélectionner",
       "Show more": "Montre plus",
       "Show less": "Montrer moins",
+      "Signing in...": "Connexion",
       "Staff": "Personnel",
       "Staff Assignment History": "Historique des affectations du personnel",
       "Subledger Account": "Compte auxiliaire",
@@ -1243,7 +1244,10 @@
       "Not Yet Amortized Amount": "Montant pas encore amorti",
       "Adjusted Amount": "Montant ajusté",
       "Charged Off Amount": "Montant radié",
-      "Date": "Date"
+      "Date": "Date",
+      "Secure & Reliable": "Sécurisé et fiable",
+      "Community Driven": "Axé sur la communauté",
+      "Global Impact": "Impact mondial"
     },
     "inputs": {
       "accounting": {
@@ -2723,7 +2727,9 @@
     },
     "placeholders": {
       "Add new server": "Ajouter un nouveau serveur",
-      "Search Activity": "Activité de recherche"
+      "Search Activity": "Activité de recherche",
+      "Enter your username": "Saisissez votre nom d'utilisateur",
+      "Enter your password": "Saisissez votre mot de passe"
     },
     "status": {
       "Active": "Actif",
@@ -2911,7 +2917,6 @@
       "Create Recurring Deposits Account": "Créer un compte de dépôts récurrents",
       "Create Report": "Creer un rapport",
       "Create SMS Campaign": "Créer une campagne SMS",
-      "Create Savings Product": "Créer un produit d'épargne",
       "Create Savings Account": "Créer un compte d'épargne",
       "Create Self Service User": "Créer un utilisateur libre-service",
       "Create Share Product": "Créer un produit partagé",

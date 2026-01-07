@@ -506,6 +506,7 @@
       "Select All": "Select All",
       "Show less": "Show less",
       "Show more": "Show more",
+      "Signing in...": "Signing in...",
       "Staff": "Staff",
       "Staff Assignment History": "Staff Assignment History",
       "Subledger Account": "Subledger Account",
@@ -1247,7 +1248,10 @@
       "Not Yet Amortized Amount": "Not Yet Amortized Amount",
       "Adjusted Amount": "Adjusted Amount",
       "Charged Off Amount": "Charged Off Amount",
-      "Date": "Date"
+      "Date": "Date",
+      "Secure & Reliable": "Secure & Reliable",
+      "Community Driven": "Community Driven",
+      "Global Impact": "Global Impact"
     },
     "inputs": {
       "accounting": {
@@ -2735,7 +2739,9 @@
     },
     "placeholders": {
       "Add new server": "Add new server",
-      "Search Activity": "Search Activity"
+      "Search Activity": "Search Activity",
+      "Enter your username": "Enter your username",
+      "Enter your password": "Enter your password"
     },
     "status": {
       "Active": "Active",

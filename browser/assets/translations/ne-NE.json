@@ -505,6 +505,7 @@
       "Select All": "सबै छान्नु",
       "Show more": "थप देखाउनुहोस्",
       "Show less": "कम देखाउनुहोस्",
+      "Signing in...": "साइन इन गर्दै",
       "Staff": "कर्मचारी",
       "Staff Assignment History": "कर्मचारी असाइनमेन्ट इतिहास",
       "Subledger Account": "Subledger खाता",
@@ -1241,7 +1242,10 @@
       "Not Yet Amortized Amount": "Not Yet Amortized Amount",
       "Adjusted Amount": "समायोजित रकम",
       "Charged Off Amount": "चार्ज गरिएको रकम",
-      "Date": "मिति"
+      "Date": "मिति",
+      "Secure & Reliable": "सुरक्षित र भरपर्दो",
+      "Community Driven": "समुदाय संचालित",
+      "Global Impact": "विश्वव्यापी प्रभाव"
     },
     "inputs": {
       "accounting": {
@@ -2721,7 +2725,9 @@
     },
     "placeholders": {
       "Add new server": "नयाँ सर्भर थप्नुहोस्",
-      "Search Activity": "खोज गतिविधि"
+      "Search Activity": "खोज गतिविधि",
+      "Enter your username": "आफ्नो प्रयोगकर्ता नाम प्रविष्ट गर्नुहोस्",
+      "Enter your password": "आफ्नो पासवर्ड प्रविष्ट गर्नुहोस्"
     },
     "status": {
       "Active": "सक्रिय",

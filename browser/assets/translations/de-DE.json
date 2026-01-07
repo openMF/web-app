@@ -505,6 +505,7 @@
       "Select All": "Wählen Sie Alle",
       "Show more": "Zeig mehr",
       "Show less": "Zeige weniger",
+      "Signing in...": "Anmelden",
       "Staff": "Personal",
       "Staff Assignment History": "Verlauf der Personalzuweisungen",
       "Subledger Account": "Nebenbuchkonto",
@@ -1243,7 +1244,10 @@
       "Not Yet Amortized Amount": "Noch nicht amortisierter Betrag",
       "Adjusted Amount": "Angepasster Betrag",
       "Charged Off Amount": "Abgeschriebener Betrag",
-      "Date": "Datum"
+      "Date": "Datum",
+      "Secure & Reliable": "Sicher und zuverlässig",
+      "Community Driven": "Gemeinschaftsorientiert",
+      "Global Impact": "Globale Auswirkungen"
     },
     "inputs": {
       "accounting": {
@@ -2725,7 +2729,9 @@
     },
     "placeholders": {
       "Add new server": "Neuen Server hinzufügen",
-      "Search Activity": "Suchaktivität"
+      "Search Activity": "Suchaktivität",
+      "Enter your username": "Geben Sie Ihren Benutzernamen ein",
+      "Enter your password": "Geben Sie Ihr Passwort ein"
     },
     "status": {
       "Active": "Aktiv",

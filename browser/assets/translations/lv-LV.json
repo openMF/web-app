@@ -505,6 +505,7 @@
       "Select All": "Izvēlēties visus",
       "Show more": "Parādīt vairāk",
       "Show less": "Rādīt mazāk",
+      "Signing in...": "Pierakstīšanās",
       "Staff": "Personāls",
       "Staff Assignment History": "Personāla norīkošanas vēsture",
       "Subledger Account": "Subledger konts",
@@ -1243,7 +1244,10 @@
       "Not Yet Amortized Amount": "Vel nav amortizeta summa",
       "Adjusted Amount": "Koriģētā summa",
       "Charged Off Amount": "Norakstītā summa",
-      "Date": "Datums"
+      "Date": "Datums",
+      "Secure & Reliable": "Drošs un uzticams",
+      "Community Driven": "Kopienas vadīts",
+      "Global Impact": "Globālā ietekme"
     },
     "inputs": {
       "accounting": {
@@ -2723,7 +2727,9 @@
     },
     "placeholders": {
       "Add new server": "Pievienot jaunu serveri",
-      "Search Activity": "Meklēšanas darbība"
+      "Search Activity": "Meklēšanas darbība",
+      "Enter your username": "Ievadiet savu lietotājvārdu",
+      "Enter your password": "Ievadiet savu paroli"
     },
     "status": {
       "Active": "Aktīvs",
@@ -2803,7 +2809,6 @@
       "All Recurring Deposits": "Visi atkārtotie noguldījumi",
       "All Savings": "Visi ietaupījumi",
       "Savings Account Details": "Krājkonta informācija",
-      "Create Savings Product": "Izveidot uzkrājumu produktu",
       "Allocate Cash": "Piešķirt skaidru naudu",
       "Allows you to create new fixed deposit product": "Šī opcija ļauj izveidot jaunu fiksētā depozīta produktu.",
       "This option allows you to create new users in your organization": "Šī opcija ļauj izveidot jaunus lietotājus jūsu organizācijā",

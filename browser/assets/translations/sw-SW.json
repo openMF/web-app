@@ -505,6 +505,7 @@
       "Select All": "Chagua Zote",
       "Show more": "Onyesha zaidi",
       "Show less": "Onyesha kidogo",
+      "Signing in...": "Kuingia",
       "Staff": "Wafanyakazi",
       "Staff Assignment History": "Historia ya Kazi ya Wafanyakazi",
       "Subledger Account": "Akaunti ya Subleja",
@@ -1241,7 +1242,10 @@
       "Not Yet Amortized Amount": "Kiasi Bado Kijaondolewa",
       "Adjusted Amount": "Kiasi Kilichorekebishwa",
       "Charged Off Amount": "Kiasi Kilichofutwa",
-      "Date": "Tarehe"
+      "Date": "Tarehe",
+      "Secure & Reliable": "Salama na ya Kuaminika",
+      "Community Driven": "Inaendeshwa na Jumuiya",
+      "Global Impact": "Athari ya Kimataifa"
     },
     "inputs": {
       "accounting": {
@@ -2721,7 +2725,9 @@
     },
     "placeholders": {
       "Add new server": "Ongeza seva mpya",
-      "Search Activity": "Shughuli ya Utafutaji"
+      "Search Activity": "Shughuli ya Utafutaji",
+      "Enter your username": "Ingiza jina lako la mtumiaji",
+      "Enter your password": "Ingiza nenosiri lako"
     },
     "status": {
       "Active": "Inayotumika",

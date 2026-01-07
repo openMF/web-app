@@ -505,6 +505,7 @@
       "Select All": "Vybrat vše",
       "Show more": "Zobrazit více",
       "Show less": "Ukaž méně",
+      "Signing in...": "Přihlašování",
       "Staff": "Personál",
       "Staff Assignment History": "Historie přidělení zaměstnanců",
       "Subledger Account": "Účet vedlejší knihy",
@@ -1242,7 +1243,10 @@
       "Not Yet Amortized Amount": "Dosud neamortizovana castka",
       "Adjusted Amount": "Upravená částka",
       "Charged Off Amount": "Odepsaná částka",
-      "Date": "Datum"
+      "Date": "Datum",
+      "Secure & Reliable": "Bezpečné a spolehlivé",
+      "Community Driven": "Komunitně řízené",
+      "Global Impact": "Globální dopad"
     },
     "inputs": {
       "accounting": {
@@ -2725,7 +2729,9 @@
     },
     "placeholders": {
       "Add new server": "Přidat nový server",
-      "Search Activity": "Aktivita vyhledávání"
+      "Search Activity": "Aktivita vyhledávání",
+      "Enter your username": "Zadejte své uživatelské jméno",
+      "Enter your password": "Zadejte své heslo"
     },
     "status": {
       "Active": "Aktivní",

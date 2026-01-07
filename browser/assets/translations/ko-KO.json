@@ -505,6 +505,7 @@
       "Select All": "모두 선택",
       "Show more": "자세히보기",
       "Show less": "간략히 보기",
+      "Signing in...": "로그인",
       "Staff": "직원",
       "Staff Assignment History": "직원 배정 내역",
       "Subledger Account": "보조원장 계정",
@@ -1244,7 +1245,10 @@
       "Not Yet Amortized Amount": "Not Yet Amortized Amount",
       "Adjusted Amount": "조정된 금액",
       "Charged Off Amount": "상각 금액",
-      "Date": "날짜"
+      "Date": "날짜",
+      "Secure & Reliable": "안전하고 신뢰할 수 있음",
+      "Community Driven": "커뮤니티 주도형",
+      "Global Impact": "글로벌 영향"
     },
     "inputs": {
       "accounting": {
@@ -2723,7 +2727,9 @@
     },
     "placeholders": {
       "Add new server": "새 서버 추가",
-      "Search Activity": "검색 활동"
+      "Search Activity": "검색 활동",
+      "Enter your username": "사용자 이름을 입력하세요",
+      "Enter your password": "비밀번호를 입력하세요"
     },
     "status": {
       "Active": "활동적인",
@@ -2911,7 +2917,6 @@
       "Create Recurring Deposits Account": "정기예금 계좌 생성",
       "Create Report": "보고서 작성",
       "Create SMS Campaign": "SMS 캠페인 생성",
-      "Create Savings Product": "저장상품 생성",
       "Create Savings Account": "저축 계좌 만들기",
       "Create Self Service User": "셀프 서비스 사용자 생성",
       "Create Share Product": "공유상품 생성",

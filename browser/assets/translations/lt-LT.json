@@ -505,6 +505,7 @@
       "Select All": "Pasirinkti viską",
       "Show more": "Rodyti daugiau",
       "Show less": "Rodyti mažiau",
+      "Signing in...": "Prisijungimas",
       "Staff": "Personalas",
       "Staff Assignment History": "Darbuotojų paskyrimo istorija",
       "Subledger Account": "Subledger sąskaita",
@@ -1243,7 +1244,10 @@
       "Not Yet Amortized Amount": "Dar neamortizuota suma",
       "Adjusted Amount": "Koreguota suma",
       "Charged Off Amount": "Nurašyta suma",
-      "Date": "Data"
+      "Date": "Data",
+      "Secure & Reliable": "Saugu ir patikima",
+      "Community Driven": "Bendruomenės varomas",
+      "Global Impact": "Pasaulinis poveikis"
     },
     "inputs": {
       "accounting": {
@@ -2725,7 +2729,9 @@
     },
     "placeholders": {
       "Add new server": "Pridėti naują serverį",
-      "Search Activity": "Paieškos veikla"
+      "Search Activity": "Paieškos veikla",
+      "Enter your username": "Įveskite savo vartotojo vardą",
+      "Enter your password": "Įveskite slaptažodį"
     },
     "status": {
       "Active": "Aktyvus",
