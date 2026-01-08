@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>Import Loan Product</h1>
+
+<mat-dialog-content>
+  <form [formGroup]="importLoanProductForm">
+    <p>Select a JSON file containing the loan product definition.</p>
+
+    <!-- File Upload Component -->
+    <mifosx-file-upload (change)="onFileSelect($event)" acceptFilter=".json"> </mifosx-file-upload>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close>
+    {{ 'labels.buttons.Cancel' | translate }}
+  </button>
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="!importLoanProductForm.valid"
+    [mat-dialog-close]="importLoanProductForm.value"
+  >
+    Import
+  </button>
+</mat-dialog-actions>
