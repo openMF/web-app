@@ -1,3 +1,44 @@
+// Version Info Table
+.login-version-table {
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  background: none;
+}
+
+.login-version-table td {
+  padding: 0.4rem 0.7rem;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.version-label {
+  font-weight: 500;
+  color: var(--md-sys-color-on-surface-variant, #44474e);
+  width: 50%;
+}
+
+.version-value {
+  font-weight: 400;
+  color: var(--md-sys-color-on-surface, #1a1c1e);
+  width: 50%;
+  word-break: break-all;
+}
+
+// Responsive
+@media (width <= 768px) {
+  .login-version-table {
+    font-size: 0.85rem;
+    max-width: 100%;
+  }
+
+  .login-version-table td {
+    padding: 0.3rem 0.4rem;
+  }
+}
+
 /**
  * Modern Material Design 3 Login Component Styles
  */
@@ -358,6 +399,15 @@
   flex-shrink: 0;
 }
 
+// ===== Version Info Section =====
+.login-version-info {
+  margin-bottom: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 // ===== Resources Section =====
 .resources-section {
   margin-top: auto;
@@ -511,76 +561,6 @@
   }
 }
 
-// ===== Dark Theme Support =====
-:host-context(.dark-theme) {
-  .login-wrapper {
-    background: #1a1c1e;
-  }
-
-  .login-panel {
-    background: #1a1c1e;
-  }
-
-  .login-card {
-    background: #1a1c1e;
-    box-shadow:
-      0 1px 2px #0000004d,
-      0 2px 6px #0003,
-      0 8px 24px #0000004d;
-  }
-
-  .logo-image {
-    max-width: 20rem;
-    padding: 0;
-    margin: 0;
-    height: 63px;
-    content: url('../../assets/images/white-mifos.png');
-  }
-
-  .welcome-text {
-    color: var(--md-sys-color-on-surface, #e2e2e5);
-  }
-
-  .welcome-subtitle {
-    color: var(--md-sys-color-on-surface-variant, #c4c6d0);
-  }
-
-  .resources-divider {
-    &::before {
-      background: var(--md-sys-color-outline-variant, #44474e);
-    }
-
-    .divider-text {
-      background: var(--md-sys-color-surface-container-low, #2c2f36);
-      color: var(--md-sys-color-on-surface, #e2e2e5);
-    }
-  }
-
-  .resource-button {
-    color: var(--md-sys-color-primary, #5ba2ec);
-
-    &:hover {
-      background: #5ba2ec1f;
-    }
-  }
-
-  // Header controls dark theme
-  .login-header {
-    ::ng-deep mifosx-theme-toggle {
-      button {
-        color: var(--md-sys-color-on-surface, #e2e2e5);
-
-        &:hover {
-          background: #5ba2ec1f;
-          color: var(--md-sys-color-primary, #5ba2ec);
-        }
-      }
-    }
-
-    // Language selector and server selector dark theme styles are handled by the components themselves
-  }
-}
-
 // ===== Responsive Design =====
 
 // Tablet
@@ -707,6 +687,14 @@
 
   .form-section {
     margin-bottom: 0.75rem;
+  }
+
+  .login-version-info {
+    margin-bottom: 0.75rem;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.85rem;
   }
 
   .login-footer {

@@ -36,7 +36,6 @@
           </a>
         </div>
       </div>
-      <mifosx-footer variant="compact"></mifosx-footer>
     </div>
   </div>
 
@@ -87,6 +86,28 @@
           @if (twoFactorAuthenticationRequired) {
             <mifosx-two-factor-authentication></mifosx-two-factor-authentication>
           }
+        </div>
+
+        <!-- Version Info Table -->
+        <div class="login-version-info">
+          <table class="login-version-table">
+            <tr>
+              <td class="version-label">Tenant</td>
+              <td class="version-value">{{ versions?.tenant || 'Default' }}</td>
+            </tr>
+            <tr>
+              <td class="version-label">Mifos® WebApp</td>
+              <td class="version-value">{{ versions?.mifos }}</td>
+            </tr>
+            <tr>
+              <td class="version-label">Apache Fineract®</td>
+              <td class="version-value">{{ versions?.fineract?.version }}</td>
+            </tr>
+            <tr>
+              <td class="version-label">Server</td>
+              <td class="version-value">{{ server }}</td>
+            </tr>
+          </table>
         </div>
 
         <!-- Resources Links -->

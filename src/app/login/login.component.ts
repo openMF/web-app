@@ -3,7 +3,19 @@ import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 /** rxjs Imports */
+
 import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
+/**
+ * Interface for version information.
+ */
+export interface VersionInfo {
+  tenant?: string;
+  mifos?: string;
+  fineract?: {
+    version?: string;
+  };
+}
 
 /** Custom Models */
 import { Alert } from '../core/alert/alert.model';
@@ -23,10 +35,11 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { TwoFactorAuthenticationComponent } from './two-factor-authentication/two-factor-authentication.component';
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
-import { FooterComponent } from '../shared/footer/footer.component';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { M3IconComponent } from '../shared/m3-ui/m3-icon/m3-icon.component';
+
+import { VersionService } from '../system/version.service';
 
 /**
  * Login component.
@@ -45,7 +58,6 @@ import { M3IconComponent } from '../shared/m3-ui/m3-icon/m3-icon.component';
     ResetPasswordComponent,
     TwoFactorAuthenticationComponent,
     MatMenuTrigger,
-    FooterComponent,
     FaIconComponent,
     MatMenu,
     MatMenuItem,
@@ -58,7 +70,14 @@ export class LoginComponent implements OnInit, OnDestroy {
   private themingService = inject(ThemingService);
   private router = inject(Router);
 
+  private versionService = inject(VersionService);
+
   public environment = environment;
+
+  /** Version info for display */
+  versions: VersionInfo = {};
+  /** Server info for display */
+  server: string = '';
 
   /** True if password requires a reset. */
   resetPassword = false;
@@ -103,6 +122,35 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.updateLogo();
       }
     });
+
+    // Load version info for table
+    this.versionService
+      .getBackendInfo()
+      .pipe(take(1))
+      .subscribe(
+        (info: any) => {
+          this.versions = {
+            tenant: this.settingsService.tenantIdentifier,
+            mifos: info?.mifos || info?.mifosX || info?.mifos_x || info?.version || environment.version,
+            fineract:
+              typeof info?.fineract === 'object' && info?.fineract !== null
+                ? { version: info.fineract.version }
+                : typeof info?.fineract === 'string'
+                  ? { version: info.fineract }
+                  : info?.fineractX || info?.fineract_x
+                    ? { version: info.fineractX || info.fineract_x }
+                    : { version: info?.git?.build?.version }
+          };
+        },
+        () => {
+          this.versions = {
+            tenant: this.settingsService.tenantIdentifier,
+            mifos: environment.version,
+            fineract: { version: '' }
+          };
+        }
+      );
+    this.server = this.settingsService.server;
   }
 
   /**
