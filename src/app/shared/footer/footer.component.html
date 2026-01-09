@@ -4,7 +4,7 @@
     @if (displayBackEndInfo) {
       <div class="footer-info">
         <span class="info-item">
-          <span class="info-label">Mifos® WebApp:</span>
+          <span class="info-label">{{ 'APP_NAME' | translate }}</span>
           <span class="info-value">{{ versions.mifos }}</span>
         </span>
         <span class="info-separator">•</span>
@@ -27,7 +27,7 @@
       <div class="layout-column m-t-10 m-b-10 content-wrapper footer-center">
         <table class="versions">
           <tr>
-            <td class="footer-content">Mifos® WebApp</td>
+            <td class="footer-content">{{ 'APP_NAME' | translate }}</td>
             <td class="right footer-content">
               {{ versions.mifos }} - <b>{{ hash }}</b>
             </td>
