@@ -1,3 +1,10 @@
+﻿/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -28,15 +35,15 @@ export type M3IconStyle = 'outlined' | 'filled' | 'rounded' | 'sharp';
  * <mifosx-m3-icon name="visibility" [size]="24"></mifosx-m3-icon>
  *
  * Common icon mappings from Font Awesome:
- * - user-circle → account_circle
- * - lock → lock
- * - eye → visibility
- * - eye-slash → visibility_off
- * - home → home
- * - search → search
- * - settings → settings
- * - menu → menu
- * - close → close
+ * - user-circle â†’ account_circle
+ * - lock â†’ lock
+ * - eye â†’ visibility
+ * - eye-slash â†’ visibility_off
+ * - home â†’ home
+ * - search â†’ search
+ * - settings â†’ settings
+ * - menu â†’ menu
+ * - close â†’ close
  */
 @Component({
   selector: 'mifosx-m3-icon',
