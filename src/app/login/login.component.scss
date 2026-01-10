@@ -5,34 +5,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-// Version Info Table
-.login-version-table {
-  width: 100%;
-  max-width: 350px;
-  margin: 0 auto;
-  border-collapse: collapse;
-  font-size: 0.95rem;
-  background: none;
-}
-
-.login-version-table td {
-  padding: 0.4rem 0.7rem;
-  text-align: left;
-  vertical-align: middle;
-}
-
-.version-label {
-  font-weight: 500;
-  color: var(--md-sys-color-on-surface-variant, #44474e);
-  width: 50%;
-}
-
-.version-value {
-  font-weight: 400;
-  color: var(--md-sys-color-on-surface, #1a1c1e);
-  width: 50%;
-  word-break: break-all;
-}
 
 // Responsive
 @media (width <= 768px) {
@@ -151,19 +123,24 @@
 
   .hero-highlight {
     font-weight: 600;
-    color: #b4d575;
+    color: #fff;
   }
 
   .hero-features {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    margin-bottom: 3rem;
+    position: absolute;
+    top: 80vh; /* 80% of the viewport height from the top */
+    left: 50%;
+    transform: translateX(-50%); /* Optional: centers horizontally */
+    width: 100%;
+    max-width: 800px; /* Optional: constrain width if needed */
+    text-align: center; /* Optional: center text */
   }
 
   .feature-item {
     display: flex;
+    justify-content: center;
     align-items: center;
+    text-align: center;
     gap: 1rem;
     padding: 1rem;
     background: #ffffff1a;
@@ -408,11 +385,41 @@
 
 // ===== Version Info Section =====
 .login-version-info {
-  margin-bottom: 1rem;
-  width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  margin-top: 20px; /* Optional: adjust spacing as needed */
+}
+
+.login-version-table {
+  border-collapse: separate; /* Required for rounded corners */
+  border-spacing: 0;
+  border-radius: 12px; /* Adjust radius as desired */
+  overflow: hidden; /* Ensures corners stay rounded */
+  background-color: #f9f9f9; /* Optional: light background */
+  box-shadow: 0 2px 6px oklch(0% 0 0deg / 10%); /* Optional: subtle shadow */
+  width: 100%;
+  max-width: 400px; /* Optional: constrain width */
+}
+
+.login-version-table td {
+  padding: 10px 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Remove bottom border from last row */
+.login-version-table tr:last-child td {
+  border-bottom: none;
+}
+
+.version-label {
+  font-weight: 600;
+  color: #333;
+  width: 50%; /* Ensures consistent column width */
+}
+
+.version-value {
+  color: #555;
+  text-align: right;
 }
 
 // ===== Resources Section =====
