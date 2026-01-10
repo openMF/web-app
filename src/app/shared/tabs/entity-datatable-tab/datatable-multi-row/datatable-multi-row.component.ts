@@ -1,6 +1,6 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { DecimalPipe, NgIf, NgFor, NgClass } from '@angular/common';
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { DecimalPipe, NgClass } from '@angular/common';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { MatCheckboxChange as MatCheckboxChange, MatCheckbox } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -16,6 +16,7 @@ import {
   MatRow
 } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { MatCard, MatCardContent } from '@angular/material/card';
 import { Datatables } from 'app/core/utils/datatables';
 import { Dates } from 'app/core/utils/dates';
 import { DateFormatPipe } from 'app/pipes/date-format.pipe';
@@ -36,6 +37,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
+    MatCard,
+    MatCardContent,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -51,6 +54,16 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges {
+  private route = inject(ActivatedRoute);
+  private dateUtils = inject(Dates);
+  private systemService = inject(SystemService);
+  private settingsService = inject(SettingsService);
+  private dialog = inject(MatDialog);
+  private datatables = inject(Datatables);
+  private dateFormat = inject(DateFormatPipe);
+  private dateTimeFormat = inject(DatetimeFormatPipe);
+  private numberFormat = inject(DecimalPipe);
+
   SELECT_NAME_FIELD = 'select';
   /** Data Object */
   @Input() dataObject: any;
@@ -73,27 +86,6 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
 
   /** Data Table Reference */
   @ViewChild('dataTable') dataTableRef: MatTable<Element>;
-
-  /**
-   * Fetches center Id from parent route params.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {Dates} dateUtils Date Utils.
-   * @param {SystemService} systemService system Service.
-   * @param {SettingsService} settingsService Settings Service.
-   * @param {MatDialog} dialog Mat Dialog.
-   * @param {Datatables} datatables Datatable utils
-   */
-  constructor(
-    private route: ActivatedRoute,
-    private dateUtils: Dates,
-    private systemService: SystemService,
-    private settingsService: SettingsService,
-    private dialog: MatDialog,
-    private datatables: Datatables,
-    private dateFormat: DateFormatPipe,
-    private dateTimeFormat: DatetimeFormatPipe,
-    private numberFormat: DecimalPipe
-  ) {}
 
   /**
    * Fetches data table name from route params.
@@ -245,6 +237,11 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
           } else if (columnDisplayType === 'INTEGER' || columnDisplayType === 'DECIMAL') {
             if (typeof value === 'number') {
               value = this.numberFormat.transform(value);
+            }
+          } else if (columnDisplayType === 'CODELOOKUP') {
+            if (columnHeader.columnValues && value !== null && value !== undefined) {
+              const codeValue = columnHeader.columnValues.find((cv: any) => cv.id === value);
+              value = codeValue ? codeValue.value : value;
             }
           }
           return true;

@@ -2,7 +2,7 @@
 <div>
   <form #formRef="ngForm" [formGroup]="noteForm">
     <mat-form-field>
-      <textarea formControlName="note" matInput placeholder="Write a note ...."></textarea>
+      <textarea formControlName="note" matInput placeholder="{{ 'labels.text.Write a note' | translate }}"></textarea>
     </mat-form-field>
     <mat-dialog-actions align="end">
       <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>

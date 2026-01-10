@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -24,10 +24,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoansAccountViewGuarantorDetailsDialogComponent implements OnInit {
-  constructor(
-    public dialogRef: MatDialogRef<LoansAccountViewGuarantorDetailsDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  dialogRef = inject<MatDialogRef<LoansAccountViewGuarantorDetailsDialogComponent>>(MatDialogRef);
+  data = inject(MAT_DIALOG_DATA);
 
   ngOnInit() {
     this.dialogRef.updateSize('400px');

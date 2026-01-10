@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { UntypedFormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -57,6 +57,10 @@ export interface JobStep {
   ]
 })
 export class WorkflowJobsComponent implements OnInit {
+  private systemService = inject(SystemService);
+  dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
+
   stepOrderHasChanged = false;
 
   jobNameOptions: any = [];
@@ -75,12 +79,6 @@ export class WorkflowJobsComponent implements OnInit {
     'stepOrder',
     'actions'
   ];
-
-  constructor(
-    private systemService: SystemService,
-    public dialog: MatDialog,
-    private translateService: TranslateService
-  ) {}
 
   ngOnInit(): void {
     this.systemService
@@ -171,7 +169,6 @@ export class WorkflowJobsComponent implements OnInit {
                 options: { label: 'stepDescription', value: 'stepName', data: this.jobAvailableStepsData },
                 order: 1
               })
-
             ];
             const data = {
               title: this.translateService.instant('labels.text.Add Job Step to Workflow'),

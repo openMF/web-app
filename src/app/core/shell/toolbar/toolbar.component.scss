@@ -58,15 +58,14 @@
   }
 }
 
-// Show icon on small screens
-.lg-icon {
+// Show language icon button only on small screens (when full selector is hidden)
+.show-lt-md {
   display: none;
 }
 
-@media (width <= 959px) {
-  .lg-icon {
-    display: block;
-    margin-left: 5px;
+@media (width <= 768px) {
+  .show-lt-md {
+    display: inline-flex;
   }
 }
 

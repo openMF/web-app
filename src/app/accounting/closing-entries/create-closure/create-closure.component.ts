@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
@@ -22,6 +22,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateClosureComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private accountingService = inject(AccountingService);
+  private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   /** Minimum closing date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum closing date allowed. */
@@ -39,14 +46,7 @@ export class CreateClosureComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private accountingService: AccountingService,
-    private settingsService: SettingsService,
-    private dateUtils: Dates,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });

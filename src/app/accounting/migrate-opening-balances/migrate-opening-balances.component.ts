@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -19,7 +19,7 @@ import { ConfigurationWizardService } from '../../configuration-wizard/configura
 import { onlyOneOfTheFieldsIsRequiredValidator } from './only-one-of-the-fields-is-required.validator';
 import { Dates } from 'app/core/utils/dates';
 import { TranslateService } from '@ngx-translate/core';
-import { NgFor, NgIf, CurrencyPipe } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 import { GlAccountDisplayComponent } from '../../shared/accounting/gl-account-display/gl-account-display.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -37,6 +37,16 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private accountingService = inject(AccountingService);
+  private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private configurationWizardService = inject(ConfigurationWizardService);
+  private popoverService = inject(PopoverService);
+  private translateService = inject(TranslateService);
+
   /** Minimum opening balances date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum opening balances date allowed. */
@@ -70,17 +80,7 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private accountingService: AccountingService,
-    private settingsService: SettingsService,
-    private dateUtils: Dates,
-    private route: ActivatedRoute,
-    private router: Router,
-    private configurationWizardService: ConfigurationWizardService,
-    private popoverService: PopoverService,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { offices: any; currencies: any }) => {
       this.officeData = data.offices;
       this.currencyData = data.currencies.selectedCurrencyOptions;

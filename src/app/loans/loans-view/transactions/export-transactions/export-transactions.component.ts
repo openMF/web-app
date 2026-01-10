@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -24,6 +24,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ExportTransactionsComponent implements OnInit {
+  private sanitizer = inject(DomSanitizer);
+  private reportsService = inject(ReportsService);
+  private formBuilder = inject(UntypedFormBuilder);
+  private dateUtils = inject(Dates);
+  private route = inject(ActivatedRoute);
+  private settingsService = inject(SettingsService);
+
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -46,14 +53,7 @@ export class ExportTransactionsComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private sanitizer: DomSanitizer,
-    private reportsService: ReportsService,
-    private formBuilder: UntypedFormBuilder,
-    private dateUtils: Dates,
-    private route: ActivatedRoute,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.parent.parent.data.subscribe((data: { loanDetailsData: any }) => {
       this.loansAccountId = data.loanDetailsData.accountNo;
     });

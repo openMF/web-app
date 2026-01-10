@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
@@ -23,6 +23,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditGroupMeetingScheduleComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private groupsService = inject(GroupsService);
+  private dateUtils = inject(Dates);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private settingsService = inject(SettingsService);
+
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -47,14 +54,7 @@ export class EditGroupMeetingScheduleComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService SettingsService
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private groupsService: GroupsService,
-    private dateUtils: Dates,
-    private route: ActivatedRoute,
-    private router: Router,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { groupActionData: any }) => {
       this.calendarTemplate = data.groupActionData;
       this.nextMeetingDates = this.calendarTemplate.nextTenRecurringDates;

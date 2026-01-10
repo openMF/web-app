@@ -1,8 +1,7 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AlertService } from 'app/core/alert/alert.service';
 import { Dates } from 'app/core/utils/dates';
-import { safeParse, safeParseArray, safeParseObject } from 'app/core/utils/json';
 
 /** Environment Imports */
 import { environment } from '../../environments/environment';
@@ -14,17 +13,15 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class SettingsService {
+  private alertService = inject(AlertService);
+  private dateUtils = inject(Dates);
+
   public static businessDateFormat = 'yyyy-MM-dd';
   public static businessDateConfigName = 'enable-business-date';
   public static businessDateType = 'BUSINESS_DATE';
   public static cobDateType = 'COB_DATE';
   minAllowedDate = new Date(1950, 0, 1);
   maxAllowedDate = new Date(2100, 0, 1);
-
-  constructor(
-    private alertService: AlertService,
-    private dateUtils: Dates
-  ) {}
 
   /**
    * Sets date format setting throughout the app.
@@ -109,9 +106,8 @@ export class SettingsService {
   /**
    * Returns date format setting.
    */
-  get dateFormat(): string {
-    const parsed = safeParse<string | null>(localStorage.getItem('mifosXDateFormat'), null);
-    return typeof parsed === 'string' && parsed.length > 0 ? parsed : 'dd MMMM yyyy';
+  get dateFormat() {
+    return JSON.parse(localStorage.getItem('mifosXDateFormat'));
   }
 
   /**
@@ -121,10 +117,7 @@ export class SettingsService {
     if (!localStorage.getItem('mifosXLanguage')) {
       this.setDefaultLanguage();
     }
-    return safeParseObject<{ name: string; code: string } | undefined>(
-      localStorage.getItem('mifosXLanguage'),
-      undefined
-    );
+    return JSON.parse(localStorage.getItem('mifosXLanguage'));
   }
 
   get languageCode() {
@@ -152,7 +145,7 @@ export class SettingsService {
    * Returns list of default server
    */
   get servers() {
-    return safeParseArray<string>(localStorage.getItem('mifosXServers'), []);
+    return JSON.parse(localStorage.getItem('mifosXServers'));
   }
 
   /**
@@ -165,7 +158,7 @@ export class SettingsService {
     if (environment.baseApiUrl && environment.baseApiUrl !== '') {
       return environment.baseApiUrl;
     } else {
-      return this.servers[0];
+      return this.servers()[0];
     }
   }
 
@@ -222,7 +215,7 @@ export class SettingsService {
    * Returns list of Tenant Identifiers
    */
   get tenantIdentifiers(): any {
-    return safeParseArray<string>(localStorage.getItem('mifosXTenantIdentifiers'), []);
+    return JSON.parse(localStorage.getItem('mifosXTenantIdentifiers'));
   }
 
   /**
@@ -265,6 +258,6 @@ export class SettingsService {
   }
 
   get themeDarkEnabled(): boolean {
-    return safeParse<boolean>(localStorage.getItem('mifosXThemeDarkEnabled'), false);
+    return JSON.parse(localStorage.getItem('mifosXThemeDarkEnabled'));
   }
 }

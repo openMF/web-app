@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
@@ -8,7 +8,6 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
-import { AnyKindOfDictionary } from 'cypress/types/lodash';
 import {
   MatTable,
   MatColumnDef,
@@ -52,6 +51,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoanTermVariationsTabComponent {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dates = inject(Dates);
+  private settingsService = inject(SettingsService);
+  private loansService = inject(LoansService);
+  private dialog = inject(MatDialog);
+
   /** Loan Term Variation Data */
   loanTermVariationsData: any[] = [];
   loanDTermVariationsColumns: string[] = [
@@ -76,16 +82,11 @@ export class LoanTermVariationsTabComponent {
   invalidData: any[] = [];
 
   loanId: number;
-  clientId: AnyKindOfDictionary;
+  clientId: string;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private dates: Dates,
-    private settingsService: SettingsService,
-    private loansService: LoansService,
-    private dialog: MatDialog
-  ) {
+  constructor() {
+    const dates = this.dates;
+
     this.interestPausesData = [];
     this.clientId = this.route.parent.parent.snapshot.paramMap.get('clientId');
     this.route.data.subscribe((data: { loanDetailsData: any }) => {
@@ -241,7 +242,6 @@ export class LoanTermVariationsTabComponent {
         maxDate: this.settingsService.maxFutureDate,
         required: true
       })
-
     ];
 
     const data = {

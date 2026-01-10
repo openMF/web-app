@@ -1,5 +1,5 @@
 /* Angular Imports */
-import { Directive, Renderer2, ElementRef, HostBinding, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Directive, Renderer2, ElementRef, HostBinding, ChangeDetectorRef, OnDestroy, inject } from '@angular/core';
 
 /* rxjs Imports */
 import { Subscription } from 'rxjs';
@@ -13,6 +13,9 @@ import { PopoverRef } from './popover-ref';
  */
 @Directive({ selector: '[mifosxPopoverArrow]' })
 export class PopoverArrowDirective implements OnDestroy {
+  private popoverRef = inject(PopoverRef);
+  private cd = inject(ChangeDetectorRef);
+
   @HostBinding('style.width.px')
   @HostBinding('style.height.px')
   arrowSize: number;
@@ -35,10 +38,9 @@ export class PopoverArrowDirective implements OnDestroy {
    * @param {PopoverRef} popoverRef PopoverRef.
    * @param {ChangeDetectorRef} cd ChangeDetectorRef
    */
-  constructor(
-    private popoverRef: PopoverRef,
-    private cd: ChangeDetectorRef
-  ) {
+  constructor() {
+    const popoverRef = this.popoverRef;
+
     this.arrowSize = popoverRef.config.arrowSize;
 
     this.subscription = popoverRef.positionChanges().subscribe((p) => {

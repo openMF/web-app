@@ -6,18 +6,22 @@
           <mat-form-field class="flex-fill">
             <mat-label>{{ 'labels.inputs.Provisioning Criteria' | translate }}</mat-label>
             <input required matInput formControlName="criteriaName" />
-            <mat-error *ngIf="provisioningCriteriaForm.controls.criteriaName.hasError('required')">
-              {{ 'labels.inputs.Provisioning Criteria' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (provisioningCriteriaForm.controls.criteriaName.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Provisioning Criteria' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field class="flex-fill">
             <mat-label>{{ 'labels.inputs.Selected Products' | translate }}</mat-label>
             <mat-select formControlName="loanProducts" [compareWith]="compareOptions" multiple>
-              <mat-option *ngFor="let product of loanProducts" [value]="product">
-                {{ product.name }}
-              </mat-option>
+              @for (product of loanProducts; track product) {
+                <mat-option [value]="product">
+                  {{ product.name }}
+                </mat-option>
+              }
             </mat-select>
           </mat-form-field>
         </div>
@@ -25,9 +29,9 @@
     </div>
 
     <div class="mat-elevation-z1">
-      <mat-hint *ngIf="!provisioningCriteriaFormValid">{{
-        'labels.text.Provisioning criteria definitions' | translate
-      }}</mat-hint>
+      @if (!provisioningCriteriaFormValid) {
+        <mat-hint>{{ 'labels.text.Provisioning criteria definitions' | translate }}</mat-hint>
+      }
 
       <table mat-table class="m-t-10" [dataSource]="definitions">
         <ng-container matColumnDef="category">

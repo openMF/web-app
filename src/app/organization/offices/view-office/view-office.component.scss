@@ -21,7 +21,6 @@
   .navigation-tabs {
     overflow: auto;
     padding: 0.2rem 0;
-    scrollbar-width: thin;
 
     &::-webkit-scrollbar {
       height: 4px;
@@ -71,4 +70,32 @@
 
 .tab-panel {
   padding: 0.5rem 0;
+}
+
+.action-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  max-width: 600px;
+  margin: 0 auto 0.5rem;
+  padding: 0 0.5rem;
+}
+
+.edit-button {
+  min-width: 110px;
+  padding: 0.4rem 1rem;
+  font-size: 0.95rem;
+}
+
+.tab-header-with-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0.5rem 0.5rem 0;
+  margin-bottom: 0.5rem;
+}
+
+.tab-actions {
+  display: flex;
+  gap: 0.5rem;
 }

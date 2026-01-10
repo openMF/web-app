@@ -1,10 +1,12 @@
-import { ApplicationRef, Injectable } from '@angular/core';
+import { ApplicationRef, Injectable, inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ThemingService {
+  private ref = inject(ApplicationRef);
+
   private darkModeOn = false;
 
   themes = [
@@ -13,7 +15,7 @@ export class ThemingService {
   ]; // <- list all themes in this array
   theme = new BehaviorSubject('light-theme'); // <- initial theme
 
-  constructor(private ref: ApplicationRef) {
+  constructor() {
     // Initially check if dark mode is enabled on system
     this.darkModeOn = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
@@ -39,8 +41,10 @@ export class ThemingService {
     this.darkModeOn = isDarkMode;
     if (isDarkMode) {
       document.body.classList.add('dark-theme');
+      document.body.classList.remove('light-theme');
       this.theme.next('dark-theme');
     } else {
+      document.body.classList.add('light-theme');
       document.body.classList.remove('dark-theme');
       this.theme.next('light-theme');
     }

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Directive, HostListener, Input, Optional } from '@angular/core';
+import { Directive, HostListener, Input, inject } from '@angular/core';
 
 /** Popover Ref */
 import { PopoverRef } from './popover-ref';
@@ -9,12 +9,9 @@ import { PopoverRef } from './popover-ref';
  */
 @Directive({ selector: '[mifosxPopoverClose]' })
 export class PopoverCloseDirective<T = any> {
-  @Input('mifosxPopoverClose') popoverResult: T;
+  private popoverRef = inject<PopoverRef<T>>(PopoverRef, { optional: true });
 
-  /**
-   * @param {PopoverRef<T>} popoverRef PopoverRef<T>.
-   */
-  constructor(@Optional() private popoverRef: PopoverRef<T>) {}
+  @Input('mifosxPopoverClose') popoverResult: T;
 
   @HostListener('click') onClick(): void {
     if (!this.popoverRef) {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -67,6 +67,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class RecurringDepositProductAccountingStepComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private dialog = inject(MatDialog);
+  private accounting = inject(Accounting);
+  private translateService = inject(TranslateService);
+
   @Input() recurringDepositProductsTemplate: any;
   @Input() accountingRuleData: any;
   @Input() recurringDepositProductFormValid: boolean;
@@ -92,12 +97,7 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
     'actions'
   ];
 
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private dialog: MatDialog,
-    private accounting: Accounting,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.createrecurringDepositProductAccountingForm();
     this.setConditionalControls();
   }
@@ -388,7 +388,6 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
         required: true,
         order: 2
       })
-
     ];
     return formfields;
   }
@@ -411,7 +410,6 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
         required: true,
         order: 2
       })
-
     ];
     return formfields;
   }
@@ -434,7 +432,6 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
         required: true,
         order: 2
       })
-
     ];
     return formfields;
   }

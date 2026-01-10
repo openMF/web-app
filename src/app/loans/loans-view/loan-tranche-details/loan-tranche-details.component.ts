@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
@@ -27,6 +27,7 @@ import {
 import { MatTooltip } from '@angular/material/tooltip';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
+import { YesnoPipe } from '../../../pipes/yesno.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
@@ -49,10 +50,18 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRowDef,
     MatRow,
     DateFormatPipe,
-    FormatNumberPipe
+    FormatNumberPipe,
+    YesnoPipe
   ]
 })
 export class LoanTrancheDetailsComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
+  private loanServices = inject(LoansService);
+  private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
+
   loanDetails: any;
   return: any;
   status: any;
@@ -81,14 +90,7 @@ export class LoanTrancheDetailsComponent implements OnInit {
    * Retrieves the loans data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private dialog: MatDialog,
-    private loanServices: LoansService,
-    private settingsService: SettingsService,
-    private dateUtils: Dates
-  ) {
+  constructor() {
     this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
       this.loanId = data.loanDetailsData.id;
       this.loanDetails = data.loanDetailsData;
@@ -177,7 +179,6 @@ export class LoanTrancheDetailsComponent implements OnInit {
         required: true,
         order: 2
       })
-
     ];
     return formBase;
   }

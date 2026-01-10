@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -9,16 +9,13 @@ import {
 } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
-/** CKEditor5 Imports */
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-
 /** Custom Imports */
 import { clientParameterLabels, loanParameterLabels, repaymentParameterLabels } from '../template-parameter-labels';
 
 /** Custom Services */
 import { TemplatesService } from '../templates.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { EditorComponent, EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import {
   MatAccordion,
   MatExpansionPanel,
@@ -37,18 +34,42 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    CKEditorModule,
+    EditorModule,
     MatAccordion,
     MatExpansionPanel,
     MatExpansionPanelHeader,
     MatExpansionPanelTitle
+  ],
+  providers: [
+    {
+      provide: TINYMCE_SCRIPT_SRC,
+      useValue: 'assets/tinymce/tinymce.min.js'
+    }
   ]
 })
 export class CreateEditComponent implements OnInit {
-  /** CKEditor5 */
-  public Editor = ClassicEditor;
-  /** CKEditor5 Template Reference */
-  @ViewChild('ckEditor', { static: true }) ckEditor: any;
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private templateService = inject(TemplatesService);
+
+  /** TinyMCE instance configuration */
+  tinymceConfig = {
+    base_url: 'assets/tinymce',
+    suffix: '.min',
+    menubar: false,
+    branding: false,
+    height: 320,
+    forced_root_block: false,
+    statusbar: false,
+    elementpath: false,
+    resize: false,
+    plugins: 'lists link table media codesample',
+    toolbar:
+      'undo redo | blocks | bold italic underline | link | numlist bullist outdent indent | alignleft aligncenter alignright alignjustify | table media | removeformat'
+  };
+  /** TinyMCE component reference */
+  @ViewChild('tinymceEditor', { static: false }) tinymceEditor: EditorComponent;
 
   /** Template form. */
   templateForm: UntypedFormGroup;
@@ -75,12 +96,7 @@ export class CreateEditComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {TemplateService} templateService Templates Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private templateService: TemplatesService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { templateData: any; mode: 'create' | 'edit' }) => {
       this.templateData = data.templateData;
       this.mode = data.mode;
@@ -166,6 +182,7 @@ export class CreateEditComponent implements OnInit {
         });
       }
       this.setEditorContent('');
+      this.templateForm.get('text').setValue('');
     });
     if (this.mode === 'create') {
       this.templateForm.get('entity').patchValue(0);
@@ -192,42 +209,29 @@ export class CreateEditComponent implements OnInit {
   }
 
   /**
-   * Adds text to CKEditor at cursor position.
+   * Adds text to the editor at cursor position.
    * @param {string} label Template parameter label.
    */
   addText(label: string) {
-    if (this.ckEditor && this.ckEditor.editorInstance) {
-      this.ckEditor.editorInstance.model.change((writer: any) => {
-        const insertPosition = this.ckEditor.editorInstance.model.document.selection.getFirstPosition();
-        writer.insertText(label, insertPosition);
-      });
-    }
+    this.tinymceEditor?.editor?.insertContent(label);
   }
 
   /**
-   * Gets the contents of CKEditor.
+   * Gets the contents of the editor.
    */
   getEditorContent() {
-    if (this.ckEditor && this.ckEditor.editorInstance) {
-      return this.ckEditor.editorInstance.getData();
-    }
-    return '';
+    return this.tinymceEditor?.editor?.getContent({ format: 'html' }) || '';
   }
 
   /**
-   * Sets the contents of CKEditor.
+   * Sets the contents of the editor.
    * @param {string} content Editor Content
    */
   setEditorContent(content: string) {
-    if (this.ckEditor && this.ckEditor.editorInstance) {
-      return this.ckEditor.editorInstance.setData(content);
+    if (this.tinymceEditor?.editor) {
+      this.tinymceEditor.editor.setContent(content || '');
     }
     return '';
-  }
-
-  onEditorChange(event: any) {
-    const editorContent = event.editor.getData();
-    this.templateForm.get('text').setValue(editorContent);
   }
 
   /**

@@ -12,21 +12,56 @@
 
     <mat-form-field class="flex-31">
       <mat-label>{{ 'labels.inputs.Minimum' | translate }}</mat-label>
-      <input type="number" matInput formControlName="minimumShares" />
+      <input type="number" matInput formControlName="minimumShares" min="1" step="1" required />
+      <mat-error *ngIf="shareProductSettingsForm.get('minimumShares').hasError('required')">
+        Minimum is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="shareProductSettingsForm.get('minimumShares').hasError('min')">
+        {{ 'labels.inputs.Minimum Shares per Client' | translate }}
+        {{ 'labels.commons.must be greater than zero' | translate }}
+      </mat-error>
+      <mat-error *ngIf="shareProductSettingsForm.get('minimumShares').hasError('pattern')">
+        {{ 'labels.inputs.Minimum Shares per Client' | translate }}
+        {{ 'labels.commons.must be an integer' | translate }}
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field class="flex-31">
       <mat-label>{{ 'labels.inputs.Default' | translate }}</mat-label>
-      <input type="number" matInput formControlName="nominalShares" required />
-      <mat-error>
-        {{ 'labels.inputs.Default Shares per Client' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
+      <input type="number" matInput formControlName="nominalShares" min="1" step="1" required />
+      <mat-error *ngIf="shareProductSettingsForm.get('nominalShares').hasError('required')">
+        Default is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="shareProductSettingsForm.get('nominalShares').hasError('min')">
+        {{ 'labels.inputs.Default Shares per Client' | translate }}
+        {{ 'labels.commons.must be greater than zero' | translate }}
+      </mat-error>
+      <mat-error *ngIf="shareProductSettingsForm.get('nominalShares').hasError('pattern')">
+        {{ 'labels.inputs.Default Shares per Client' | translate }}
+        {{ 'labels.commons.must be an integer' | translate }}
       </mat-error>
     </mat-form-field>
 
     <mat-form-field class="flex-31">
       <mat-label>{{ 'labels.inputs.Maximum' | translate }}</mat-label>
-      <input type="number" matInput formControlName="maximumShares" />
+      <input type="number" matInput formControlName="maximumShares" min="1" step="1" required />
+      <mat-error *ngIf="shareProductSettingsForm.get('maximumShares').hasError('required')">
+        Maximum is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="shareProductSettingsForm.get('maximumShares').hasError('min')">
+        {{ 'labels.inputs.Maximum Shares per Client' | translate }}
+        {{ 'labels.commons.must be greater than zero' | translate }}
+      </mat-error>
+      <mat-error *ngIf="shareProductSettingsForm.get('maximumShares').hasError('pattern')">
+        {{ 'labels.inputs.Maximum Shares per Client' | translate }}
+        {{ 'labels.commons.must be an integer' | translate }}
+      </mat-error>
+      <mat-error *ngIf="shareProductSettingsForm.hasError('sharesOrder')">
+        {{
+          'labels.commons.minimum must be less than or equal to default and default must be less than or equal to maximum'
+            | translate
+        }}
+      </mat-error>
     </mat-form-field>
 
     <h4 class="mat-h4 flex-98">
@@ -39,18 +74,26 @@
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
-      <input type="number" matInput formControlName="minimumActivePeriodForDividends" />
+      <input type="number" matInput formControlName="minimumActivePeriodForDividends" min="1" step="1" required />
+      <mat-error *ngIf="shareProductSettingsForm.get('minimumActivePeriodForDividends').hasError('required')">
+        Frequency is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="shareProductSettingsForm.get('minimumActivePeriodForDividends').hasError('min')">
+        Frequency must be greater than zero
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="minimumactiveperiodFrequencyType">
-        <mat-option
-          *ngFor="let minimumActivePeriodFrequencyType of minimumActivePeriodFrequencyTypeData"
-          [value]="minimumActivePeriodFrequencyType.id"
-        >
-          {{ minimumActivePeriodFrequencyType.value | translateKey: 'catalogs' }}
-        </mat-option>
+        @for (
+          minimumActivePeriodFrequencyType of minimumActivePeriodFrequencyTypeData;
+          track minimumActivePeriodFrequencyType
+        ) {
+          <mat-option [value]="minimumActivePeriodFrequencyType.id">
+            {{ minimumActivePeriodFrequencyType.value | translateKey: 'catalogs' }}
+          </mat-option>
+        }
       </mat-select>
     </mat-form-field>
 
@@ -61,18 +104,23 @@
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
-      <input type="number" matInput formControlName="lockinPeriodFrequency" />
+      <input type="number" matInput formControlName="lockinPeriodFrequency" min="1" step="1" required />
+      <mat-error *ngIf="shareProductSettingsForm.get('lockinPeriodFrequency').hasError('required')">
+        Frequency is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="shareProductSettingsForm.get('lockinPeriodFrequency').hasError('min')">
+        Frequency must be greater than zero
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="lockinPeriodFrequencyType">
-        <mat-option
-          *ngFor="let lockinPeriodFrequencyType of lockinPeriodFrequencyTypeData"
-          [value]="lockinPeriodFrequencyType.id"
-        >
-          {{ lockinPeriodFrequencyType.value | translateKey: 'catalogs' }}
-        </mat-option>
+        @for (lockinPeriodFrequencyType of lockinPeriodFrequencyTypeData; track lockinPeriodFrequencyType) {
+          <mat-option [value]="lockinPeriodFrequencyType.id">
+            {{ lockinPeriodFrequencyType.value | translateKey: 'catalogs' }}
+          </mat-option>
+        }
       </mat-select>
     </mat-form-field>
 

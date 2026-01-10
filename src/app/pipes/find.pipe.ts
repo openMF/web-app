@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform, SecurityContext } from '@angular/core';
+import { Pipe, PipeTransform, SecurityContext, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 /**
@@ -10,7 +10,7 @@ const lookupCache = new WeakMap<any[], Map<string, Map<any, any>>>();
 
 @Pipe({ name: 'find' })
 export class FindPipe implements PipeTransform {
-  constructor(private sanitizer: DomSanitizer) {}
+  private sanitizer = inject(DomSanitizer);
 
   transform(value: any, options: any, key: string, property: string): string {
     if (!options || !key || value === null || value === undefined) {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -59,6 +59,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ApproveSharesComponent implements OnInit {
+  private sharesService = inject(SharesService);
+  private route = inject(ActivatedRoute);
+  dialog = inject(MatDialog);
+  private settingsService = inject(SettingsService);
+
   /** Shares account data. */
   sharesAccountData: any;
 
@@ -90,12 +95,7 @@ export class ApproveSharesComponent implements OnInit {
    * @param {MatDialog} dialog Dialog reference.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private sharesService: SharesService,
-    private route: ActivatedRoute,
-    public dialog: MatDialog,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.accountId = this.route.parent.snapshot.params['shareAccountId'];
     this.route.data.subscribe((data: { shareAccountActionData: any }) => {
       this.sharesAccountData = data.shareAccountActionData;

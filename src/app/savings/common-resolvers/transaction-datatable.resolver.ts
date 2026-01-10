@@ -1,5 +1,5 @@
 // Angular Imports
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 // rxjs Imports
@@ -10,11 +10,8 @@ import { SavingsService } from '../savings.service';
 
 @Injectable()
 export class TransactionDatatableResolver {
-  /**
-   *
-   * @param {SavingsService} savingsService
-   */
-  constructor(private savingsService: SavingsService) {}
+  private savingsService = inject(SavingsService);
+
   /**
    * Returns the Transactions Account's Datatable data.
    * @returns {Observable<any>}

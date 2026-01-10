@@ -15,10 +15,12 @@
             />
             <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transactionDatePicker></mat-datepicker>
-            <mat-error *ngIf="creditBalanceLoanForm.controls.transactionDate.hasError('required')">
-              {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (creditBalanceLoanForm.controls.transactionDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mifosx-input-amount

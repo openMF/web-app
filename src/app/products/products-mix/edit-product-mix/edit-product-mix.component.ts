@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
@@ -19,6 +19,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditProductMixComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private productsService = inject(ProductsService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   /** Product mix form. */
   productMixForm: UntypedFormGroup;
   /** Products mix template data. */
@@ -35,12 +40,7 @@ export class EditProductMixComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private productsService: ProductsService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { productMix: any }) => {
       this.productMixData = data.productMix;
     });

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { NgModule, Optional, SkipSelf, Injector } from '@angular/core';
+import { NgModule, Optional, Injector, inject } from '@angular/core';
 import {
   HTTP_INTERCEPTORS,
   HttpClient,
@@ -49,7 +49,6 @@ import { ContentComponent } from './shell/content/content.component';
 @NgModule({
   exports: [
     SharedModule // TO BE REMOVED: Once all components have replaced the core module import by shared module.
-
   ],
   imports: [
     SharedModule,
@@ -112,7 +111,9 @@ import { ContentComponent } from './shell/content/content.component';
   ]
 })
 export class CoreModule {
-  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
+  constructor() {
+    const parentModule = inject(CoreModule, { optional: true, skipSelf: true });
+
     // Import guard
     if (parentModule) {
       throw new Error(`${parentModule} has already been loaded. Import Core module in the AppModule only.`);

@@ -15,10 +15,12 @@
             />
             <mat-datepicker-toggle matSuffix [for]="activatedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #activatedOnDatePicker></mat-datepicker>
-            <mat-error *ngIf="activateSavingsAccountForm.controls.activatedOnDate.hasError('required')">
-              {{ 'labels.inputs.Activated On Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (activateSavingsAccountForm.controls.activatedOnDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Activated On Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
         </div>
       </mat-card-content>

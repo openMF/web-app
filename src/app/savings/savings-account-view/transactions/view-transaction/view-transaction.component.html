@@ -9,7 +9,7 @@
     >
       {{ 'labels.heading.General' | translate }}
     </a>
-    <ng-container *ngFor="let entityDatatable of entityDatatables">
+    @for (entityDatatable of entityDatatables; track entityDatatable) {
       <a
         mat-tab-link
         [routerLink]="['./datatables', entityDatatable.registeredTableName]"
@@ -20,7 +20,7 @@
       >
         {{ entityDatatable.registeredTableName }}
       </a>
-    </ng-container>
+    }
   </nav>
 
   <mat-tab-nav-panel #tabPanel>

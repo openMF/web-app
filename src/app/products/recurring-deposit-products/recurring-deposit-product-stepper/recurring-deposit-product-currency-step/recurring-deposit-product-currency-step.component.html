@@ -7,9 +7,11 @@
         matTooltip="{{ 'tooltips.The currency in which the deposit will be disbursed' | translate }}"
         required
       >
-        <mat-option *ngFor="let currency of currencyData" [value]="currency.code">
-          {{ currency.name }}
-        </mat-option>
+        @for (currency of currencyData; track currency) {
+          <mat-option [value]="currency.code">
+            {{ currency.name }}
+          </mat-option>
+        }
       </mat-select>
       <mat-error>
         {{ 'labels.inputs.Currency' | translate }} {{ 'labels.commons.is' | translate }}

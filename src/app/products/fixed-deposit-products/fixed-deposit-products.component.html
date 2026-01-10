@@ -86,7 +86,7 @@
 <ng-template #templateFixedProductsTable let-popover="popover">
   <h4 class="mw300">
     {{ 'labels.text.List of fixed deposit products in the organization' | translate }}:
-    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/102629544/Fixed+Deposit+Products" target="_blank">{{
+    <a [href]="'fixedDepositProducts' | documentationLink" target="_blank" rel="noopener noreferrer">{{
       'labels.inputs.Fixed Deposit Products' | translate
     }}</a>
   </h4>

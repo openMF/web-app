@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -41,7 +41,7 @@ import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatCard, MatCardContent, MatCardTitle } from '@angular/material/card';
-import { NgIf, NgFor, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { MatTabGroup, MatTab } from '@angular/material/tabs';
 import { ExternalIdentifierComponent } from '../../shared/external-identifier/external-identifier.component';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
@@ -88,6 +88,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class OfficesComponent implements OnInit, AfterViewInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private officeTreeService = inject(OfficeTreeService);
+  private treeControlService = inject(TreeControlService);
+  private configurationWizardService = inject(ConfigurationWizardService);
+  private popoverService = inject(PopoverService);
+
   /** Button toggle group form control for type of view. (list/tree) */
   viewGroup = new UntypedFormControl('listView');
 
@@ -135,14 +142,9 @@ export class OfficesComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private officeTreeService: OfficeTreeService,
-    private treeControlService: TreeControlService,
-    private configurationWizardService: ConfigurationWizardService,
-    private popoverService: PopoverService
-  ) {
+  constructor() {
+    const officeTreeService = this.officeTreeService;
+
     this.route.data.subscribe((data: { offices: any; officeDataTables: any }) => {
       this.officesData = data.offices;
       officeTreeService.initialize(this.officesData);

@@ -2,8 +2,8 @@ describe('Login Page', () => {
   it('Visits the initial web page', () => {
     cy.visit('/');
     cy.url().should('includes', 'login');
-    cy.get('#mat-input-0').should ('be.visible');
-    cy.get('#mat-input-1').should ('be.visible');
+    cy.get('#mat-input-0').should('be.visible');
+    cy.get('#mat-input-1').should('be.visible');
     cy.contains('Login');
     cy.contains('Remember me');
   });
@@ -26,5 +26,4 @@ describe('Login Page', () => {
     cy.get('#logout').click();
     cy.contains('Username');
   });
-
 });

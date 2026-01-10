@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnChanges, OnInit, Input } from '@angular/core';
+import { Component, OnChanges, OnInit, Input, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -31,6 +31,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class SavingsAccountTermsStepComponent implements OnChanges, OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private settingsService = inject(SettingsService);
+
   /** Savings Account and Product Template */
   @Input() savingsAccountProductTemplate: any;
   /** Savings Account Template */
@@ -57,10 +60,7 @@ export class SavingsAccountTermsStepComponent implements OnChanges, OnInit {
    * @param {FormBuilder} formBuilder Form Builder
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.createSavingsAccountTermsForm();
     this.buildDependencies();
   }

@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
@@ -28,6 +28,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ApproveLoanComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private dateUtils = inject(Dates);
+  private loanService = inject(LoansService);
+  private router = inject(Router);
+  private settingsService = inject(SettingsService);
+
   /** Approve Loan form. */
   approveLoanForm: UntypedFormGroup;
   /** Loan data. */
@@ -49,14 +56,7 @@ export class ApproveLoanComponent implements OnInit {
    * @param router Router.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private dateUtils: Dates,
-    private loanService: LoansService,
-    private router: Router,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { actionButtonData: any }) => {
       this.loanData = data.actionButtonData;
       this.currency = data.actionButtonData.currency;

@@ -35,41 +35,51 @@
             />
             <mat-datepicker-toggle matSuffix [for]="cashDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #cashDatePicker></mat-datepicker>
-            <mat-error *ngIf="allocateCashForm.controls.txnDate.hasError('required')">
-              {{ 'labels.inputs.Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (allocateCashForm.controls.txnDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
             <mat-select required formControlName="currencyCode">
-              <mat-option *ngFor="let currency of cashierData.currencyOptions" [value]="currency.code">
-                {{ currency.name }}
-              </mat-option>
+              @for (currency of cashierData.currencyOptions; track currency) {
+                <mat-option [value]="currency.code">
+                  {{ currency.name }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error *ngIf="allocateCashForm.controls.currencyCode.hasError('required')">
-              {{ 'labels.inputs.Currency' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (allocateCashForm.controls.currencyCode.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Currency' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
             <input matInput required formControlName="txnAmount" />
-            <mat-error *ngIf="allocateCashForm.controls.txnAmount.hasError('required')">
-              {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (allocateCashForm.controls.txnAmount.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Notes/Comments' | translate }}</mat-label>
             <input matInput required formControlName="txnNote" />
-            <mat-error *ngIf="allocateCashForm.controls.txnNote.hasError('required')">
-              {{ 'labels.inputs.Notes/Comments' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (allocateCashForm.controls.txnNote.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Notes/Comments' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
         </div>
       </mat-card-content>

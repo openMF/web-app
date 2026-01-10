@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { AfterViewInit, Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, TemplateRef, ViewChild, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -28,6 +28,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class AccountingComponent implements AfterViewInit {
+  private router = inject(Router);
+  private configurationWizardService = inject(ConfigurationWizardService);
+  private popoverService = inject(PopoverService);
+
   /* Reference of Chart of Accounts */
   @ViewChild('chartofAccounts') chartofAccounts: ElementRef<any>;
   /* Template for popover on Chart of Accounts */
@@ -50,17 +54,6 @@ export class AccountingComponent implements AfterViewInit {
   @ViewChild('templateCreateJournalEntries') templateCreateJournalEntries: TemplateRef<any>;
   // Initialize an array of 10 boolean values, all set to false
   arrowBooleans: boolean[] = new Array(10).fill(false);
-
-  /**
-   * @param {Router} router Router.
-   * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
-   * @param {PopoverService} popoverService PopoverService.
-   */
-  constructor(
-    private router: Router,
-    private configurationWizardService: ConfigurationWizardService,
-    private popoverService: PopoverService
-  ) {}
 
   /**
    * Popover function

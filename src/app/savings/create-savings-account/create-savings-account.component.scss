@@ -1,0 +1,69 @@
+// Container styling with proper spacing and margins
+.container {
+  margin: 1.5rem auto;
+  max-width: 75rem;
+  width: 100%;
+  padding: 0 1.5rem;
+  box-sizing: border-box;
+}
+
+// Material Stepper styling with proper spacing
+:host ::ng-deep mat-stepper {
+  background: transparent;
+
+  .mat-step-header {
+    padding: 1rem 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .mat-step-content {
+    padding: 1.5rem;
+    margin: 1rem 0;
+  }
+}
+
+// Form field spacing within steps
+:host ::ng-deep mat-step-content {
+  mat-form-field {
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+
+  .layout-row-wrap {
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+
+// Responsive design
+@media (width <= 768px) {
+  .container {
+    padding: 0 1rem;
+    margin: 1rem auto;
+  }
+
+  :host ::ng-deep mat-stepper {
+    .mat-step-content {
+      padding: 1rem;
+      margin: 0.75rem 0;
+    }
+
+    .mat-step-header {
+      padding: 0.75rem 1rem;
+    }
+  }
+}
+
+@media (width <= 480px) {
+  .container {
+    padding: 0 0.75rem;
+    margin: 0.75rem auto;
+  }
+
+  :host ::ng-deep mat-stepper {
+    .mat-step-content {
+      padding: 0.75rem;
+      margin: 0.5rem 0;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   MatTableDataSource,
@@ -13,7 +13,7 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { NgIf, CurrencyPipe } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 import { ExternalIdentifierComponent } from '../../../shared/external-identifier/external-identifier.component';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
@@ -42,6 +42,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class GeneralTabComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+
   /** Currency Code */
   currencyCode: string;
   loanDetails: any;
@@ -61,13 +63,13 @@ export class GeneralTabComponent implements OnInit {
   ];
   loanSummaryTableData: {
     property: string;
-    original: string;
-    adjustment: string;
-    paid: string;
-    waived: string;
-    writtenOff: string;
-    outstanding: string;
-    overdue: string;
+    original: number;
+    adjustment: number;
+    paid: number;
+    waived: number;
+    writtenOff: number;
+    outstanding: number;
+    overdue: number;
   }[];
   loanDetailsTableData: {
     key: string;
@@ -78,7 +80,7 @@ export class GeneralTabComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   detailsDataSource: MatTableDataSource<any>;
 
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
       this.loanDetails = data.loanDetailsData;
       this.currencyCode = this.loanDetails.currency.code;
@@ -127,7 +129,7 @@ export class GeneralTabComponent implements OnInit {
       {
         property: 'Interest',
         original: this.loanDetails.summary.interestCharged,
-        adjustment: '0',
+        adjustment: 0,
         paid: this.loanDetails.summary.interestPaid,
         waived: this.loanDetails.summary.interestWaived,
         writtenOff: this.loanDetails.summary.interestWrittenOff,
@@ -137,7 +139,7 @@ export class GeneralTabComponent implements OnInit {
       {
         property: 'Fees',
         original: this.loanDetails.summary.feeChargesCharged,
-        adjustment: '0',
+        adjustment: 0,
         paid: this.loanDetails.summary.feeChargesPaid,
         waived: this.loanDetails.summary.feeChargesWaived,
         writtenOff: this.loanDetails.summary.feeChargesWrittenOff,
@@ -147,7 +149,7 @@ export class GeneralTabComponent implements OnInit {
       {
         property: 'Penalties',
         original: this.loanDetails.summary.penaltyChargesCharged,
-        adjustment: '0',
+        adjustment: 0,
         paid: this.loanDetails.summary.penaltyChargesPaid,
         waived: this.loanDetails.summary.penaltyChargesWaived,
         writtenOff: this.loanDetails.summary.penaltyChargesWrittenOff,

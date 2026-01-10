@@ -1,130 +1,149 @@
 <div class="container space">
   <div class="mat-elevation-z8">
-    <div *ngIf="!isBusinessDateEnabled">
-      <p>
-        {{ 'labels.text.Business Date functionality is not enabled' | translate }}: <code>{{ configurationName }}</code>
-      </p>
-    </div>
+    @if (!isBusinessDateEnabled) {
+      <div>
+        <p>
+          {{ 'labels.text.Business Date functionality is not enabled' | translate }}:
+          <code>{{ configurationName }}</code>
+        </p>
+      </div>
+    }
 
-    <div *ngIf="isBusinessDateEnabled">
-      <mat-card>
-        <form [formGroup]="businessDateForm">
-          <mat-card-content>
-            <div class="flex-100 layout-row layout-lt-md-column space">
-              <div class="flex-50">
-                <span class="date-type flex-40">{{ 'labels.inputs.User date format' | translate }}: </span>
-                <span class="date-value flex-60 m-l-30">{{ userDateFormat }}</span>
+    @if (isBusinessDateEnabled) {
+      <div>
+        <mat-card>
+          <form [formGroup]="businessDateForm">
+            <mat-card-content>
+              <div class="flex-100 layout-row layout-lt-md-column space">
+                <div class="flex-50">
+                  <span class="date-type flex-40">{{ 'labels.inputs.User date format' | translate }}: </span>
+                  <span class="date-value flex-60 m-l-30">{{ userDateFormat }}</span>
+                </div>
               </div>
-            </div>
-
-            <!-- Business Date -->
-            <div class="flex-100 layout-row layout-lt-md-column">
-              <div class="flex-50 table-row" *ngIf="!isEditInProgress">
-                <span class="date-type flex-40">{{ 'labels.inputs.Business Date' | translate }}: </span>
-                <span class="date-value flex-60 m-l-40">{{ businessDate | dateFormat }}</span>
+              <!-- Business Date -->
+              <div class="flex-100 layout-row layout-lt-md-column">
+                @if (!isEditInProgress) {
+                  <div class="flex-50 table-row">
+                    <span class="date-type flex-40">{{ 'labels.inputs.Business Date' | translate }}: </span>
+                    <span class="date-value flex-60 m-l-40">{{ businessDate | dateFormat }}</span>
+                  </div>
+                }
+                @if (isEditInProgress && dateIndex === 0) {
+                  <mat-form-field (click)="businessDatePicker.open()">
+                    <mat-label>{{ 'labels.inputs.Business Date' | translate }}</mat-label>
+                    <input
+                      matInput
+                      [min]="minDate"
+                      [max]="maxDate"
+                      [matDatepicker]="businessDatePicker"
+                      formControlName="businessDate"
+                    />
+                    <mat-datepicker-toggle matSuffix [for]="businessDatePicker"> </mat-datepicker-toggle>
+                    <mat-datepicker #businessDatePicker></mat-datepicker>
+                    @if (businessDateForm.controls.businessDate.hasError('required')) {
+                      <mat-error>
+                        {{ 'labels.inputs.Business Date' | translate }} {{ 'labels.commons.is' | translate }}
+                        <strong>{{ 'labels.commons.required' | translate }}</strong>
+                      </mat-error>
+                    }
+                  </mat-form-field>
+                }
+                <div class="options-wrapper gap-2percent flex-22">
+                  @if (isEditInProgress && dateIndex === 0) {
+                    <span>
+                      <button
+                        mat-raised-button
+                        color="primary"
+                        [disabled]="businessDateForm.pristine"
+                        (click)="submit()"
+                        *mifosxHasPermission="'UPDATE_BUSINESSDATE'"
+                      >
+                        {{ 'labels.buttons.Submit' | translate }}
+                      </button>
+                      <button mat-raised-button (click)="editInProgressToggle(0)">
+                        {{ 'labels.buttons.Cancel' | translate }}
+                      </button>
+                    </span>
+                  }
+                  @if (!isEditInProgress) {
+                    <button
+                      type="button"
+                      color="primary"
+                      mat-icon-button
+                      matTooltip="{{ 'tooltips.Edit the Business Date' | translate }}"
+                      matTooltipPosition="above"
+                      (click)="editInProgressToggle(0)"
+                    >
+                      <fa-icon icon="edit" size="lg"></fa-icon>
+                    </button>
+                  }
+                </div>
               </div>
-
-              <mat-form-field (click)="businessDatePicker.open()" *ngIf="isEditInProgress && dateIndex === 0">
-                <mat-label>{{ 'labels.inputs.Business Date' | translate }}</mat-label>
-                <input
-                  matInput
-                  [min]="minDate"
-                  [max]="maxDate"
-                  [matDatepicker]="businessDatePicker"
-                  formControlName="businessDate"
-                />
-                <mat-datepicker-toggle matSuffix [for]="businessDatePicker"> </mat-datepicker-toggle>
-                <mat-datepicker #businessDatePicker></mat-datepicker>
-                <mat-error *ngIf="businessDateForm.controls.businessDate.hasError('required')">
-                  {{ 'labels.inputs.Business Date' | translate }} {{ 'labels.commons.is' | translate }}
-                  <strong>{{ 'labels.commons.required' | translate }}</strong>
-                </mat-error>
-              </mat-form-field>
-
-              <div class="options-wrapper gap-2percent flex-22">
-                <span *ngIf="isEditInProgress && dateIndex === 0">
-                  <button
-                    mat-raised-button
-                    color="primary"
-                    [disabled]="businessDateForm.pristine"
-                    (click)="submit()"
-                    *mifosxHasPermission="'UPDATE_BUSINESSDATE'"
-                  >
-                    {{ 'labels.buttons.Submit' | translate }}
-                  </button>
-                  <button mat-raised-button (click)="editInProgressToggle(0)">
-                    {{ 'labels.buttons.Cancel' | translate }}
-                  </button>
-                </span>
-                <button
-                  type="button"
-                  color="primary"
-                  *ngIf="!isEditInProgress"
-                  mat-icon-button
-                  matTooltip="{{ 'tooltips.Edit the Business Date' | translate }}"
-                  matTooltipPosition="above"
-                  (click)="editInProgressToggle(0)"
-                >
-                  <fa-icon icon="edit" size="lg"></fa-icon>
-                </button>
+              <!-- COB Date -->
+              <div class="flex-100 layout-row layout-lt-md-column">
+                @if (!isEditInProgress) {
+                  <div class="flex-50 table-row">
+                    <span class="date-type">{{ 'labels.inputs.COB Date' | translate }}: </span>
+                    <span class="date-value flex-60 m-l-80">{{ cobDate | dateFormat }}</span>
+                  </div>
+                }
+                @if (isEditInProgress && dateIndex === 1) {
+                  <mat-form-field (click)="cobDatePicker.open()">
+                    <mat-label>{{ 'labels.inputs.COB Date' | translate }}</mat-label>
+                    <input
+                      matInput
+                      [min]="minDate"
+                      [max]="maxDate"
+                      [matDatepicker]="cobDatePicker"
+                      formControlName="businessDate"
+                    />
+                    <mat-datepicker-toggle matSuffix [for]="cobDatePicker"> </mat-datepicker-toggle>
+                    <mat-datepicker #cobDatePicker></mat-datepicker>
+                    @if (businessDateForm.controls.cobDate.hasError('required')) {
+                      <mat-error>
+                        {{ 'labels.inputs.COB Date' | translate }} {{ 'labels.commons.is' | translate }}
+                        <strong>{{ 'labels.commons.required' | translate }}</strong>
+                      </mat-error>
+                    }
+                  </mat-form-field>
+                }
+                <div class="options-wrapper flex-22 gap-4percent">
+                  @if (isEditInProgress && dateIndex === 1) {
+                    <span>
+                      <button
+                        mat-stroked-button
+                        color="primary"
+                        [disabled]="businessDateForm.pristine"
+                        (click)="submit()"
+                        *mifosxHasPermission="'UPDATE_BUSINESSDATE'"
+                      >
+                        {{ 'labels.buttons.Submit' | translate }}
+                      </button>
+                    </span>
+                  }
+                  @if (isEditInProgress && dateIndex === 1) {
+                    <button mat-button (click)="editInProgressToggle(1)">
+                      {{ 'labels.buttons.Cancel' | translate }}
+                    </button>
+                  }
+                  @if (!isEditInProgress) {
+                    <button
+                      type="button"
+                      color="primary"
+                      mat-icon-button
+                      matTooltip="{{ 'tooltips.Edit the COB Date' | translate }}"
+                      matTooltipPosition="above"
+                      (click)="editInProgressToggle(1)"
+                    >
+                      <fa-icon icon="edit" size="lg"></fa-icon>
+                    </button>
+                  }
+                </div>
               </div>
-            </div>
-
-            <!-- COB Date -->
-            <div class="flex-100 layout-row layout-lt-md-column">
-              <div class="flex-50 table-row" *ngIf="!isEditInProgress">
-                <span class="date-type">{{ 'labels.inputs.COB Date' | translate }}: </span>
-                <span class="date-value flex-60 m-l-80">{{ cobDate | dateFormat }}</span>
-              </div>
-
-              <mat-form-field (click)="cobDatePicker.open()" *ngIf="isEditInProgress && dateIndex === 1">
-                <mat-label>{{ 'labels.inputs.COB Date' | translate }}</mat-label>
-                <input
-                  matInput
-                  [min]="minDate"
-                  [max]="maxDate"
-                  [matDatepicker]="cobDatePicker"
-                  formControlName="businessDate"
-                />
-                <mat-datepicker-toggle matSuffix [for]="cobDatePicker"> </mat-datepicker-toggle>
-                <mat-datepicker #cobDatePicker></mat-datepicker>
-                <mat-error *ngIf="businessDateForm.controls.cobDate.hasError('required')">
-                  {{ 'labels.inputs.COB Date' | translate }} {{ 'labels.commons.is' | translate }}
-                  <strong>{{ 'labels.commons.required' | translate }}</strong>
-                </mat-error>
-              </mat-form-field>
-
-              <div class="options-wrapper flex-22 gap-4percent">
-                <span *ngIf="isEditInProgress && dateIndex === 1">
-                  <button
-                    mat-stroked-button
-                    color="primary"
-                    [disabled]="businessDateForm.pristine"
-                    (click)="submit()"
-                    *mifosxHasPermission="'UPDATE_BUSINESSDATE'"
-                  >
-                    {{ 'labels.buttons.Submit' | translate }}
-                  </button>
-                </span>
-                <button mat-button *ngIf="isEditInProgress && dateIndex === 1" (click)="editInProgressToggle(1)">
-                  {{ 'labels.buttons.Cancel' | translate }}
-                </button>
-                <button
-                  type="button"
-                  color="primary"
-                  *ngIf="!isEditInProgress"
-                  mat-icon-button
-                  matTooltip="{{ 'tooltips.Edit the COB Date' | translate }}"
-                  matTooltipPosition="above"
-                  (click)="editInProgressToggle(1)"
-                >
-                  <fa-icon icon="edit" size="lg"></fa-icon>
-                </button>
-              </div>
-            </div>
-          </mat-card-content>
-        </form>
-      </mat-card>
-    </div>
+            </mat-card-content>
+          </form>
+        </mat-card>
+      </div>
+    }
   </div>
 </div>

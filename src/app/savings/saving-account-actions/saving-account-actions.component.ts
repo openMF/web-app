@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Currency } from 'app/shared/models/general.model';
 import { ApproveSavingsAccountComponent } from './approve-savings-account/approve-savings-account.component';
@@ -42,6 +42,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class SavingAccountActionsComponent {
+  private route = inject(ActivatedRoute);
+
   /** Flag object to store possible actions and render appropriate UI to the user */
   actions: {
     Approve: boolean;
@@ -92,7 +94,7 @@ export class SavingAccountActionsComponent {
   /**
    * @param {ActivatedRoute} route Activated Route
    */
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
       if (data.savingsAccountActionData) {
         this.currency = data.savingsAccountActionData.currency;

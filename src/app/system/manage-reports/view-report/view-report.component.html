@@ -4,12 +4,14 @@
     {{ 'labels.buttons.Edit' | translate }}
   </button>
 
-  <span *ngIf="!reportData.coreReport">
-    <button mat-raised-button color="warn" (click)="delete()" *mifosxHasPermission="'DELETE_REPORT'">
-      <fa-icon icon="trash" class="m-r-10"></fa-icon>
-      {{ 'labels.buttons.Delete' | translate }}
-    </button>
-  </span>
+  @if (!reportData.coreReport) {
+    <span>
+      <button mat-raised-button color="warn" (click)="delete()" *mifosxHasPermission="'DELETE_REPORT'">
+        <fa-icon icon="trash" class="m-r-10"></fa-icon>
+        {{ 'labels.buttons.Delete' | translate }}
+      </button>
+    </span>
+  }
 </div>
 
 <div class="container">
@@ -28,13 +30,15 @@
           {{ reportData.reportType | translateKey: 'text' }}
         </div>
 
-        <div *ngIf="reportData.reportSubType" class="mat-body-strong flex-50">
-          {{ 'labels.inputs.Report Sub Type' | translate }}:
-        </div>
+        @if (reportData.reportSubType) {
+          <div class="mat-body-strong flex-50">{{ 'labels.inputs.Report Sub Type' | translate }}:</div>
+        }
 
-        <div *ngIf="reportData.reportSubType" class="flex-50">
-          {{ reportData.reportSubType | translateKey: 'text' }}
-        </div>
+        @if (reportData.reportSubType) {
+          <div class="flex-50">
+            {{ reportData.reportSubType | translateKey: 'text' }}
+          </div>
+        }
 
         <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Report Category' | translate }}:</div>
 

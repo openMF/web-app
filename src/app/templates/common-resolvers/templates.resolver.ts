@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,10 +12,7 @@ import { TemplatesService } from '../templates.service';
  */
 @Injectable()
 export class TemplatesResolver {
-  /**
-   * @param {TemplatesService} templatesService Templates service.
-   */
-  constructor(private templatesService: TemplatesService) {}
+  private templatesService = inject(TemplatesService);
 
   /**
    * Returns the templates data.

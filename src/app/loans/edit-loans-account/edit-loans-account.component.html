@@ -70,16 +70,17 @@
       </mifosx-loans-account-schedule-step>
     </mat-step>
 
-    <mat-step state="preview" *ngIf="loansAccountFormValidAndNotPristine" completed>
-      <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
-
-      <mifosx-loans-account-preview-step
-        [loansAccountTemplate]="loansAccountAndTemplate"
-        [loansAccountProductTemplate]="loansAccountProductTemplate"
-        [loansAccount]="loansAccount"
-        (submitEvent)="submit()"
-      >
-      </mifosx-loans-account-preview-step>
-    </mat-step>
+    @if (loansAccountFormValidAndNotPristine) {
+      <mat-step state="preview" completed>
+        <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
+        <mifosx-loans-account-preview-step
+          [loansAccountTemplate]="loansAccountAndTemplate"
+          [loansAccountProductTemplate]="loansAccountProductTemplate"
+          [loansAccount]="loansAccount"
+          (submitEvent)="submit()"
+        >
+        </mifosx-loans-account-preview-step>
+      </mat-step>
+    }
   </mat-stepper>
 </div>

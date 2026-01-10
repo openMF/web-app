@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   MatCell,
   MatCellDef,
@@ -36,6 +36,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoanDeferredIncomeTabComponent {
+  private route = inject(ActivatedRoute);
+
   capitalizedIncomeData: LoanCapitalizedIncomeData[] = [];
 
   loanId: any;
@@ -47,7 +49,7 @@ export class LoanDeferredIncomeTabComponent {
     'amountAdjustment'
   ];
 
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     this.loanId = this.route.parent.parent.snapshot.params['loanId'];
 
     this.capitalizedIncomeData = [];

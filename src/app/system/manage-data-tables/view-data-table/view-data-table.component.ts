@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -19,7 +19,8 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { SystemService } from 'app/system/system.service';
+import { Datatables } from 'app/core/utils/datatables';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
@@ -55,6 +56,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewDataTableComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private systemService = inject(SystemService);
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
+  public datatables = inject(Datatables);
+
   /** Data Table Data */
   dataTableData: any;
   /** Column Data */
@@ -85,13 +93,7 @@ export class ViewDataTableComponent implements OnInit {
    * @param {MatDialog} dialog Dialog reference.
    *  @param {TranslateService} translateService Translate Service.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private systemService: SystemService,
-    private router: Router,
-    private dialog: MatDialog,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { dataTable: any }) => {
       this.dataTableData = data.dataTable;
       this.columnsData = this.dataTableData.columnHeaderData;
@@ -103,6 +105,13 @@ export class ViewDataTableComponent implements OnInit {
    */
   ngOnInit() {
     this.setColumnsTable();
+  }
+
+  /**
+   * Get display name for field (e.g., "Actividad" from "ADDRESS_TYPE_cd_ACTIVIDAD")
+   */
+  getFieldDisplayName(columnName: string): string {
+    return this.datatables.toDisplayLabel(columnName);
   }
 
   /**

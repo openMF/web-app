@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -24,6 +24,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewAdhocQueryComponent {
+  private organizationService = inject(OrganizationService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
+
   /** Adhoc query data. */
   adhocQueryData: any;
 
@@ -34,12 +39,7 @@ export class ViewAdhocQueryComponent {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(
-    private organizationService: OrganizationService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private dialog: MatDialog
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { adhocQuery: any }) => {
       this.adhocQueryData = data.adhocQuery;
     });

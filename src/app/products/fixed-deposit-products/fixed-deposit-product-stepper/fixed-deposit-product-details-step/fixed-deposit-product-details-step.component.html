@@ -3,28 +3,34 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Product Name' | translate }}</mat-label>
       <input matInput formControlName="name" required />
-      <mat-error *ngIf="fixedDepositProductDetailsForm.controls.name.hasError('required')">
-        {{ 'labels.inputs.Product Name' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
+      @if (fixedDepositProductDetailsForm.controls.name.hasError('required')) {
+        <mat-error>
+          {{ 'labels.inputs.Product Name' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Short Name' | translate }}</mat-label>
       <input matInput formControlName="shortName" maxlength="4" required />
-      <mat-error *ngIf="fixedDepositProductDetailsForm.controls.shortName.hasError('required')">
-        {{ 'labels.inputs.Short Name' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
+      @if (fixedDepositProductDetailsForm.controls.shortName.hasError('required')) {
+        <mat-error>
+          {{ 'labels.inputs.Short Name' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field class="flex-98">
       <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
       <textarea matInput formControlName="description" required></textarea>
-      <mat-error *ngIf="fixedDepositProductDetailsForm.controls.description.hasError('required')">
-        {{ 'labels.inputs.Description' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
+      @if (fixedDepositProductDetailsForm.controls.description.hasError('required')) {
+        <mat-error>
+          {{ 'labels.inputs.Description' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
     </mat-form-field>
   </div>
 

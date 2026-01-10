@@ -11,10 +11,12 @@
               matTooltip="{{ 'tooltips.Unique name for the floating rate scheme' | translate }}"
               formControlName="name"
             />
-            <mat-error *ngIf="floatingRateForm.controls.name.hasError('required')">
-              {{ 'labels.inputs.Floating Rate Name' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (floatingRateForm.controls.name.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Floating Rate Name' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <div class="checkbox-wrapper flex-25">
@@ -97,22 +99,24 @@
               {{ 'labels.inputs.Is Differential' | translate }}?
             </th>
             <td mat-cell *matCellDef="let floatingRate">
-              <fa-icon
-                *ngIf="floatingRate.isDifferentialToBaseLendingRate"
-                icon="check-circle"
-                size="lg"
-                class="is-differential"
-                matTooltip="{{ 'tooltips.Yes' | translate }}"
-                matTooltipPosition="right"
-              ></fa-icon>
-              <fa-icon
-                *ngIf="!floatingRate.isDifferentialToBaseLendingRate"
-                icon="times-circle"
-                size="lg"
-                class="not-is-differential"
-                matTooltip="{{ 'tooltips.No' | translate }}"
-                matTooltipPosition="right"
-              ></fa-icon>
+              @if (floatingRate.isDifferentialToBaseLendingRate) {
+                <fa-icon
+                  icon="check-circle"
+                  size="lg"
+                  class="is-differential"
+                  matTooltip="{{ 'tooltips.Yes' | translate }}"
+                  matTooltipPosition="right"
+                ></fa-icon>
+              }
+              @if (!floatingRate.isDifferentialToBaseLendingRate) {
+                <fa-icon
+                  icon="times-circle"
+                  size="lg"
+                  class="not-is-differential"
+                  matTooltip="{{ 'tooltips.No' | translate }}"
+                  matTooltipPosition="right"
+                ></fa-icon>
+              }
             </td>
           </ng-container>
 

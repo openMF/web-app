@@ -1,10 +1,10 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, inject } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { GLAccount } from 'app/shared/models/general.model';
 import { ReplaySubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -19,6 +19,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class GlAccountSelectorComponent implements OnInit, OnChanges, OnDestroy {
+  private translateService = inject(TranslateService);
+
   @Input() inputFormControl: UntypedFormControl;
   @Input() glAccountList: GLAccount[] = [];
   @Input() required = false;
@@ -35,8 +37,6 @@ export class GlAccountSelectorComponent implements OnInit, OnChanges, OnDestroy 
 
   placeHolderLabel = '';
   noEntriesFoundLabel = '';
-
-  constructor(private translateService: TranslateService) {}
 
   ngOnInit(): void {
     // listen for search field value changes

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
@@ -19,6 +19,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewTransactionComponent {
+  private route = inject(ActivatedRoute);
+  dialog = inject(MatDialog);
+
   /** Transaction data. */
   transactionData: any;
 
@@ -30,10 +33,7 @@ export class ViewTransactionComponent {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(
-    private route: ActivatedRoute,
-    public dialog: MatDialog
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { transactionDatatables: any }) => {
       this.accountId = this.route.snapshot.params['savingAccountId'];
       this.entityDatatables = data.transactionDatatables;

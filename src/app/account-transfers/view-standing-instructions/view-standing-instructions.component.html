@@ -57,8 +57,12 @@
         <div class="flex-fill">
           <span class="flex-40">{{ 'labels.inputs.Destination' | translate }}:</span>
           <span class="flex-60">
-            <span *ngIf="allowclientedit"> {{ 'labels.inputs.Within Bank' | translate }} </span>
-            <span *ngIf="!allowclientedit"> {{ 'labels.inputs.Own Account' | translate }} </span>
+            @if (allowclientedit) {
+              <span> {{ 'labels.inputs.Within Bank' | translate }} </span>
+            }
+            @if (!allowclientedit) {
+              <span> {{ 'labels.inputs.Own Account' | translate }} </span>
+            }
           </span>
         </div>
 

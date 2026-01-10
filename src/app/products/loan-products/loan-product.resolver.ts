@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
@@ -13,10 +13,7 @@ import { ProductsService } from '../products.service';
  */
 @Injectable()
 export class LoanProductResolver {
-  /**
-   * @param {ProductsService} productsService Products service.
-   */
-  constructor(private productsService: ProductsService) {}
+  private productsService = inject(ProductsService);
 
   /**
    * Returns the loan product data.

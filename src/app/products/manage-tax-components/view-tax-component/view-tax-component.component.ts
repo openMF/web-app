@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
@@ -21,6 +21,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewTaxComponentComponent {
+  private route = inject(ActivatedRoute);
+
   /** tax Component Data. */
   taxComponentData: any;
 
@@ -28,7 +30,7 @@ export class ViewTaxComponentComponent {
    * Retrieves the tax Component data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     this.route.data.subscribe((data: { taxComponent: any }) => {
       this.taxComponentData = data.taxComponent;
     });

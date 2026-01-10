@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
@@ -64,6 +64,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class GroupAttendanceComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private dateUtils = inject(Dates);
+  private router = inject(Router);
+  private groupsService = inject(GroupsService);
+  dialog = inject(MatDialog);
+  private settingsService = inject(SettingsService);
+
   /** Members data. */
   membersData: any;
   /** Group Data */
@@ -91,14 +98,7 @@ export class GroupAttendanceComponent implements OnInit {
    * @param {MatDialog} dialog Mat Dialog
    * @param {SettingsService} settingsService SettingsService
    */
-  constructor(
-    private route: ActivatedRoute,
-    private dateUtils: Dates,
-    private router: Router,
-    private groupsService: GroupsService,
-    public dialog: MatDialog,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { groupActionData: any }) => {
       this.groupData = data.groupActionData;
       this.membersData = data.groupActionData.clientMembers;
@@ -140,7 +140,6 @@ export class GroupAttendanceComponent implements OnInit {
         options: { label: 'value', value: 'id', data: this.attendanceTypeOptions },
         required: false
       })
-
     ];
     const data = {
       title: 'Assign Member Attendance',

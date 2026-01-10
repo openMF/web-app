@@ -6,12 +6,16 @@
         <tbody>
           <tr>
             <td>{{ 'labels.inputs.Activated On' | translate }}</td>
-            <td *ngIf="sharesAccountData.timeline.activatedDate">
-              {{ sharesAccountData.timeline.activatedDate | dateFormat }}
-            </td>
-            <td *ngIf="!sharesAccountData.timeline.activatedDate">
-              {{ 'labels.text.Not Activated' | translate }}
-            </td>
+            @if (sharesAccountData.timeline.activatedDate) {
+              <td>
+                {{ sharesAccountData.timeline.activatedDate | dateFormat }}
+              </td>
+            }
+            @if (!sharesAccountData.timeline.activatedDate) {
+              <td>
+                {{ 'labels.text.Not Activated' | translate }}
+              </td>
+            }
           </tr>
           <tr>
             <td>{{ 'labels.inputs.Currency' | translate }}</td>
@@ -19,26 +23,36 @@
           </tr>
           <tr>
             <td>{{ 'labels.inputs.External Id' | translate }}</td>
-            <td *ngIf="sharesAccountData.externalId">
-              <mifosx-external-identifier externalId="{{ sharesAccountData.externalId }}"></mifosx-external-identifier>
-            </td>
-            <td *ngIf="!sharesAccountData.externalId">
-              {{ 'labels.inputs.Unassigned' | translate }}
-            </td>
+            @if (sharesAccountData.externalId) {
+              <td>
+                <mifosx-external-identifier
+                  externalId="{{ sharesAccountData.externalId }}"
+                ></mifosx-external-identifier>
+              </td>
+            }
+            @if (!sharesAccountData.externalId) {
+              <td>
+                {{ 'labels.inputs.Unassigned' | translate }}
+              </td>
+            }
           </tr>
           <tr>
             <td>{{ 'labels.inputs.Linked Savings Account(Dividend Posting)' | translate }}</td>
-            <td *ngIf="sharesAccountData.savingsAccountNumber">
-              <mifosx-account-number
-                accountType="2"
-                clientId="{{ sharesAccountData.clientId }}"
-                accountId="{{ sharesAccountData.savingsAccountId }}"
-                accountNo="{{ sharesAccountData.savingsAccountNumber }}"
-              ></mifosx-account-number>
-            </td>
-            <td *ngIf="!sharesAccountData.savingsAccountNumber">
-              {{ 'labels.inputs.Unassigned' | translate }}
-            </td>
+            @if (sharesAccountData.savingsAccountNumber) {
+              <td>
+                <mifosx-account-number
+                  accountType="2"
+                  clientId="{{ sharesAccountData.clientId }}"
+                  accountId="{{ sharesAccountData.savingsAccountId }}"
+                  accountNo="{{ sharesAccountData.savingsAccountNumber }}"
+                ></mifosx-account-number>
+              </td>
+            }
+            @if (!sharesAccountData.savingsAccountNumber) {
+              <td>
+                {{ 'labels.inputs.Unassigned' | translate }}
+              </td>
+            }
           </tr>
         </tbody>
       </table>

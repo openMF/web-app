@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
@@ -27,6 +27,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewHookComponent {
+  private route = inject(ActivatedRoute);
+  private dialog = inject(MatDialog);
+  private systemService = inject(SystemService);
+  private router = inject(Router);
+  private translateService = inject(TranslateService);
+
   /** Hook Data. */
   hookData: any;
 
@@ -38,13 +44,7 @@ export class ViewHookComponent {
    * @param {Router} router Router for navigation.
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private dialog: MatDialog,
-    private systemService: SystemService,
-    private router: Router,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { hook: any }) => {
       this.hookData = data.hook;
     });

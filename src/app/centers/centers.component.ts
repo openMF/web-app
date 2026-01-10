@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, inject } from '@angular/core';
 import { MatCheckbox } from '@angular/material/checkbox';
 
 import { MatPaginator } from '@angular/material/paginator';
@@ -63,6 +63,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CentersComponent implements OnInit, AfterViewInit {
+  private centersService = inject(CentersService);
+
   @ViewChild('showClosedCenters', { static: true }) showClosedCenters: MatCheckbox;
 
   /** Name form control. */
@@ -95,8 +97,6 @@ export class CentersComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   /** Sorter for centers table. */
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-
-  constructor(private centersService: CentersService) {}
 
   ngOnInit() {
     this.getCenters();

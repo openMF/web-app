@@ -7,9 +7,12 @@
 
   window["env"]["apiProvider"] = '';
   window["env"]["apiVersion"]  = '';
+  window["env"]["apiActuator"]  = '';
 
   window["env"]["fineractPlatformTenantId"]  = '';
   window["env"]["fineractPlatformTenantIds"]  = '';
+
+  window['env']['tenantLogoUrl'] = '';
 
   // Language Environment variables
   window["env"]["defaultLanguage"] = '';

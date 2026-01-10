@@ -1,1 +1,3 @@
-<iframe *ngIf="!hideOutput" [src]="pentahoUrl" frameborder="0" width="100%" height="750px;"></iframe>
+@if (!hideOutput) {
+  <iframe [src]="pentahoUrl" frameborder="0" width="100%" height="750px;"></iframe>
+}

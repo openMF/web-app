@@ -14,7 +14,7 @@ import {
   MatRow
 } from '@angular/material/table';
 import { LongTextComponent } from '../../../shared/long-text/long-text.component';
-import { NgIf, CurrencyPipe } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 import { ExternalIdentifierComponent } from '../../../shared/external-identifier/external-identifier.component';
 import { MatDivider } from '@angular/material/divider';
 import { MatStepperPrevious } from '@angular/material/stepper';
@@ -23,6 +23,7 @@ import { FindPipe } from '../../../pipes/find.pipe';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 import { YesnoPipe } from '../../../pipes/yesno.pipe';
+import { TranslatePipe } from '../../../pipes/translate.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -53,7 +54,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     FindPipe,
     DateFormatPipe,
     FormatNumberPipe,
-    YesnoPipe
+    YesnoPipe,
+    TranslatePipe
   ]
 })
 export class LoansAccountPreviewStepComponent implements OnChanges {

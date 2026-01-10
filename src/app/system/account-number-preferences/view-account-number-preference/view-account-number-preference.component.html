@@ -22,13 +22,17 @@
           {{ accountNumberPreferenceData.accountType.value | translateKey: 'catalogs' }}
         </div>
 
-        <div class="flex-50 mat-body-strong" *ngIf="accountNumberPreferenceData.prefixType">
-          {{ 'labels.inputs.Prefix Type' | translate }}
-        </div>
+        @if (accountNumberPreferenceData.prefixType) {
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Prefix Type' | translate }}
+          </div>
+        }
 
-        <div class="flex-50" *ngIf="accountNumberPreferenceData.prefixType">
-          {{ accountNumberPreferenceData.prefixType.value }}
-        </div>
+        @if (accountNumberPreferenceData.prefixType) {
+          <div class="flex-50">
+            {{ accountNumberPreferenceData.prefixType.value }}
+          </div>
+        }
       </div>
     </mat-card-content>
   </mat-card>

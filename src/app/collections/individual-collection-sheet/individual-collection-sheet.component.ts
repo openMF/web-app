@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -63,6 +63,15 @@ import { OrganizationService } from 'app/organization/organization.service';
   ]
 })
 export class IndividualCollectionSheetComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private collectionsService = inject(CollectionsService);
+  private organizationService = inject(OrganizationService);
+  private route = inject(ActivatedRoute);
+  private dateUtils = inject(Dates);
+  dialog = inject(MatDialog);
+  private router = inject(Router);
+  private settingsService = inject(SettingsService);
+
   /** Offices Data */
   officesData: any;
   /** Loan Officer Data */
@@ -134,16 +143,7 @@ export class IndividualCollectionSheetComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private collectionsService: CollectionsService,
-    private organizationService: OrganizationService,
-    private route: ActivatedRoute,
-    private dateUtils: Dates,
-    public dialog: MatDialog,
-    private router: Router,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { officesData: any }) => {
       this.officesData = data.officesData;
     });
@@ -285,7 +285,6 @@ export class IndividualCollectionSheetComponent implements OnInit {
         type: 'number',
         required: false
       })
-
     ];
     const data = {
       title: `Payment for ${type === 'loans' ? 'Loan' : 'Saving'} Id ${type === 'loans' ? selectedData.loanId : selectedData.savingsId}`,

@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
@@ -25,6 +25,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateEntityDataTableChecksComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private organizationService = inject(OrganizationService);
+  private router = inject(Router);
+
   /** Create Entity Datatable Checks form. */
   createEntityForm: UntypedFormGroup;
   /** Entity Datatable Checks data. */
@@ -45,12 +50,7 @@ export class CreateEntityDataTableChecksComponent implements OnInit {
    * @param {OrganizationService} organizationService Organization Service.
    * @param {Router} router Router.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private organizationService: OrganizationService,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { dataTableEntity: any }) => {
       this.createEntityData = data.dataTableEntity;
       // hardcoded, because data.dataTableEntity.entities might change anytime its order

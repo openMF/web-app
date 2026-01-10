@@ -1,19 +1,131 @@
-::ng-deep .mat-mdc-form-field-bottom-align::before {
-  border-bottom-color: white;
+// ===== Base Language Selector Styles =====
+#language-selector {
+  &.mat-mdc-form-field {
+    // Default styles (fill variant)
+    &:not(.outlined-variant) {
+      margin-left: 10px;
+
+      .mat-mdc-text-field-wrapper {
+        padding-bottom: 0;
+      }
+    }
+
+    // Outlined variant styles (used in login)
+    &.outlined-variant {
+      .mat-mdc-text-field-wrapper {
+        padding: 0;
+      }
+
+      .mat-mdc-form-field-flex {
+        align-items: center;
+      }
+
+      .mat-mdc-form-field-infix {
+        padding: 12px 0;
+        min-height: 48px;
+      }
+
+      // Outlined border styles with Material Design 3
+      .mdc-notched-outline {
+        .mdc-notched-outline__leading,
+        .mdc-notched-outline__notch,
+        .mdc-notched-outline__trailing {
+          border-color: var(--md-sys-color-outline, #79747e);
+          border-width: 1px;
+        }
+      }
+
+      // Hover state
+      &:hover:not(.mat-form-field-disabled) {
+        .mdc-notched-outline {
+          .mdc-notched-outline__leading,
+          .mdc-notched-outline__notch,
+          .mdc-notched-outline__trailing {
+            border-color: var(--md-sys-color-on-surface, #1a1c1e);
+          }
+        }
+      }
+
+      // Focused state
+      &.mat-focused {
+        .mdc-notched-outline {
+          .mdc-notched-outline__leading,
+          .mdc-notched-outline__notch,
+          .mdc-notched-outline__trailing {
+            border-color: var(--md-sys-color-primary, #1074b9);
+            border-width: 2px;
+          }
+        }
+
+        .mat-mdc-floating-label {
+          color: var(--md-sys-color-primary, #1074b9);
+        }
+      }
+
+      // Select styling
+      .mat-mdc-select {
+        font-size: 0.875rem;
+        color: var(--md-sys-color-on-surface, #1a1c1e);
+      }
+
+      .mat-mdc-select-arrow {
+        color: var(--md-sys-color-on-surface-variant, #44474e);
+      }
+
+      // Label styling
+      .mat-mdc-floating-label {
+        font-size: 0.875rem;
+        color: var(--md-sys-color-on-surface-variant, #44474e);
+      }
+    }
+  }
 }
 
-::ng-deep .mdc-line-ripple::before {
-  border-bottom-color: white;
-}
+// Dark theme support for outlined variant
+.dark-theme {
+  #language-selector.outlined-variant {
+    .mdc-notched-outline {
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__trailing {
+        border-color: var(--md-sys-color-outline, #938f99);
+      }
+    }
 
-::ng-deep .mdc-line-ripple::after {
-  border-bottom-color: white;
-}
+    &:hover:not(.mat-form-field-disabled) {
+      .mdc-notched-outline {
+        .mdc-notched-outline__leading,
+        .mdc-notched-outline__notch,
+        .mdc-notched-outline__trailing {
+          border-color: var(--md-sys-color-on-surface, #e2e2e5);
+        }
+      }
+    }
 
-::ng-deep .mat-mdc-form-field .mdc-line-ripple::before {
-  border-bottom-color: white !important;
-}
+    &.mat-focused {
+      .mdc-notched-outline {
+        .mdc-notched-outline__leading,
+        .mdc-notched-outline__notch,
+        .mdc-notched-outline__trailing {
+          border-color: var(--md-sys-color-primary, #5ba2ec);
+        }
+      }
 
-::ng-deep .mat-mdc-form-field .mdc-line-ripple::after {
-  border-bottom-color: white !important;
+      .mat-mdc-floating-label {
+        color: var(--md-sys-color-primary, #5ba2ec);
+      }
+    }
+
+    .mat-mdc-select {
+      color: var(--md-sys-color-on-surface, #e2e2e5);
+    }
+
+    .mat-mdc-select-arrow {
+      color: var(--md-sys-color-on-surface-variant, #c4c6d0);
+    }
+
+    .mat-mdc-floating-label {
+      color: var(--md-sys-color-on-surface-variant, #c4c6d0);
+    }
+  }
 }

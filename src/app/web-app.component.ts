@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/prefer-inject */
 /** Angular Imports */
 import { Component, OnInit, HostListener, HostBinding, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
@@ -21,6 +22,7 @@ import { ThemeStorageService } from './shared/theme-picker/theme-storage.service
 import { AlertService } from './core/alert/alert.service';
 import { AuthenticationService } from './core/authentication/authentication.service';
 import { SettingsService } from './settings/settings.service';
+import { DocumentationLinksService } from 'app/shared/services/documentation-links.service';
 import { IdleTimeoutService } from './home/timeout-dialog/idle-timeout.service';
 import { SessionTimeoutDialogComponent } from './home/timeout-dialog/session-timeout-dialog.component';
 
@@ -31,9 +33,6 @@ import { Dates } from './core/utils/dates';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { I18nService } from './core/i18n/i18n.service';
 import { ThemingService } from './shared/theme-toggle/theming.service';
-import { safeParseArray } from 'app/core/utils/json';
-
-import { AuthService } from './zitadel/auth.service';
 
 /** Initialize Logger */
 const log = new Logger('MifosX');
@@ -76,13 +75,13 @@ registerLocaleData(localeSW);
     trigger('opacityScale', [
       transition(':enter', [
         style({ opacity: 0, transform: 'scale(.95)' }),
-        animate('100ms ease-out', style({ opacity: 1, transform: 'scale(1)' }))]),
+        animate('100ms ease-out', style({ opacity: 1, transform: 'scale(1)' }))
+      ]),
       transition(':leave', [
         style({ opacity: 1, transform: 'scale(1)' }),
-        animate('75ms ease-in', style({ opacity: 0, transform: 'scale(.95)' }))])
-
+        animate('75ms ease-in', style({ opacity: 0, transform: 'scale(.95)' }))
+      ])
     ])
-
   ],
 
   // eslint-disable-next-line @angular-eslint/prefer-standalone
@@ -124,7 +123,7 @@ export class WebAppComponent implements OnInit, OnDestroy {
     private dateUtils: Dates,
     private idle: IdleTimeoutService,
     private dialog: MatDialog,
-    private authService: AuthService
+    private documentationLinks: DocumentationLinksService
   ) {}
 
   @HostBinding('class') public cssClass: string;
@@ -140,10 +139,6 @@ export class WebAppComponent implements OnInit, OnDestroy {
    *
    * 4) Alerts
    */
-
-  login() {
-    this.authService.login();
-  }
 
   ngOnInit() {
     this.themingService.theme.subscribe((value: string) => {
@@ -196,7 +191,7 @@ export class WebAppComponent implements OnInit, OnDestroy {
     // Stores top 100 user activites as local storage object.
     let activities: string[] = [];
     if (localStorage.getItem('mifosXLocation')) {
-      const activitiesArray = safeParseArray<string>(localStorage.getItem('mifosXLocation'), []);
+      const activitiesArray: string[] = JSON.parse(localStorage.getItem('mifosXLocation'));
       const length = activitiesArray.length;
       activities = length > 100 ? activitiesArray.slice(length - 100) : activitiesArray;
     }
@@ -252,11 +247,7 @@ export class WebAppComponent implements OnInit, OnDestroy {
         });
         this.dialog.open(SessionTimeoutDialogComponent);
         setTimeout(() => {
-          if (!environment.OIDC.oidcServerEnabled) {
-            this.logout();
-          } else {
-            this.authService.logout();
-          }
+          this.logout();
         }, 1000);
       });
     }
@@ -275,7 +266,7 @@ export class WebAppComponent implements OnInit, OnDestroy {
   }
 
   help() {
-    window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');
+    this.documentationLinks.open('userManual');
   }
 
   // Monitor all keyboard events and excute keyboard shortcuts

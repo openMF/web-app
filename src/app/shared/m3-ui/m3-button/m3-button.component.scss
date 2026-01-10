@@ -1,0 +1,20 @@
+// Material Web Button Component Styles
+// Base styles are applied globally in src/theme/_material-web.scss
+
+.m3-button-container {
+  display: inline-block;
+
+  &--full-width {
+    display: block;
+    width: 100%;
+
+    md-filled-button,
+    md-outlined-button,
+    md-elevated-button,
+    md-text-button,
+    md-filled-tonal-button {
+      color: var(--md-filled-button-disabled-label-text-color, #44474e);
+      width: 100%;
+    }
+  }
+}

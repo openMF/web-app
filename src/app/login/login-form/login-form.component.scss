@@ -1,39 +1,476 @@
+/**
+ * Modern Material Design 3 Login Form Styles
+ */
+
+// ===== Main Form Container =====
+.modern-login-form {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
 #login-form {
-  .login-input {
-    width: 14rem;
-    margin-bottom: 0.1rem;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  animation: slide-in 0.4s ease-out;
+  flex: 1;
+}
 
-  [matPrefix] fa-icon {
-    font-size: 16px;
-    position: absolute;
-    top: 50%;
-    left: 190px;
-    transform: translateY(-50%);
-  }
+// ===== Tenant Selector Styles =====
+::ng-deep .tenant-section {
+  width: 100%;
 
-  .login-button-first {
-    width: 14rem;
-    margin-top: 0.8rem;
-    background-color: #1976d2;
-    color: white;
-    border-radius: 8px;
-    margin-bottom: 0.5rem;
-  }
+  mifosx-tenant-selector {
+    display: block;
+    width: 100%;
 
-  mat-spinner {
-    float: right;
-    margin: 0.5rem 0;
+    #tenant-selector {
+      width: 100%;
+      margin-bottom: 0;
+
+      // Apply same styling as login fields
+      .mat-mdc-text-field-wrapper {
+        border-radius: 12px 12px 0 0;
+      }
+
+      .mat-mdc-form-field-focus-overlay {
+        border-radius: 12px 12px 0 0;
+        background-color: var(--md-sys-color-on-surface, #1a1c1e);
+        opacity: 0.04;
+      }
+
+      &.mat-focused {
+        .mat-mdc-form-field-focus-overlay {
+          opacity: 0.12;
+        }
+      }
+
+      .mdc-line-ripple::after {
+        border-bottom-color: var(--md-sys-color-primary, #1074b9);
+      }
+
+      .mat-mdc-select {
+        font-size: 1rem;
+        font-weight: 400;
+        color: var(--md-sys-color-on-surface, #1a1c1e);
+      }
+
+      .mat-mdc-floating-label {
+        font-size: 1rem;
+        color: var(--md-sys-color-on-surface-variant, #44474e);
+      }
+
+      .mat-mdc-form-field-icon-prefix {
+        padding-right: 0.75rem;
+        color: var(--md-sys-color-on-surface-variant, #44474e);
+
+        fa-icon {
+          font-size: 1.25rem;
+          opacity: 0.7;
+        }
+      }
+    }
+
+    .tenantselector {
+      width: 100%;
+    }
   }
 }
 
-::ng-deep .mat-mdc-form-field-infix {
-  width: 144px !important;
+// ===== Form Fields =====
+.login-field {
+  width: 100%;
+  margin-bottom: 0;
+
+  ::ng-deep {
+    // Field container
+    .mat-mdc-text-field-wrapper {
+      border-radius: 12px 12px 0 0;
+    }
+
+    // Focus overlay
+    .mat-mdc-form-field-focus-overlay {
+      border-radius: 12px 12px 0 0;
+      background-color: var(--md-sys-color-on-surface, #1a1c1e);
+      opacity: 0.04;
+    }
+
+    // Focus state
+    &.mat-focused {
+      .mat-mdc-form-field-focus-overlay {
+        opacity: 0.12;
+      }
+    }
+
+    // Bottom indicator line
+    .mdc-line-ripple::after {
+      border-bottom-color: var(--md-sys-color-primary, #1074b9);
+    }
+
+    // Input field
+    .mat-mdc-input-element {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--md-sys-color-on-surface, #1a1c1e);
+      padding: 0.875rem 0.75rem;
+
+      &::placeholder {
+        color: var(--md-sys-color-on-surface-variant, #44474e);
+        opacity: 0.6;
+      }
+    }
+
+    // Label
+    .mat-mdc-floating-label {
+      font-size: 1rem;
+      color: var(--md-sys-color-on-surface-variant, #44474e);
+    }
+
+    // Prefix icon
+    .mat-mdc-form-field-icon-prefix {
+      padding-right: 0.75rem;
+      color: var(--md-sys-color-on-surface-variant, #44474e);
+
+      fa-icon {
+        font-size: 1.25rem;
+        opacity: 0.7;
+      }
+    }
+
+    // Suffix button (password toggle)
+    .mat-mdc-form-field-icon-suffix {
+      button {
+        background: transparent;
+        border: none;
+        color: var(--md-sys-color-on-surface-variant, #44474e);
+        transition: all 0.2s ease;
+
+        &:hover {
+          color: var(--md-sys-color-primary, #1074b9);
+          background: #1074b914;
+        }
+      }
+    }
+
+    // Error state
+    &.mat-form-field-invalid {
+      .mdc-line-ripple::after {
+        border-bottom-color: var(--md-sys-color-error, #ba1a1a);
+      }
+
+      .mat-mdc-form-field-icon-prefix fa-icon {
+        color: var(--md-sys-color-error, #ba1a1a);
+      }
+    }
+
+    // Error message
+    .mat-mdc-form-field-error {
+      font-size: 0.75rem;
+      margin-top: 0.25rem;
+      color: var(--md-sys-color-error, #ba1a1a);
+    }
+  }
 }
 
-.container-margin {
-  margin-top: 8rem;
-  margin-bottom: 8rem;
-  border-radius: 50px;
-  border: solid 1px black;
+// ===== Loading Progress =====
+.login-progress {
+  height: 3px;
+  border-radius: 4px;
+  margin: -0.5rem 0 0.5rem;
+
+  ::ng-deep {
+    .mdc-linear-progress__bar-inner {
+      border-color: var(--md-sys-color-primary, #1074b9);
+    }
+  }
+}
+
+// ===== Submit Button =====
+.login-submit-button {
+  min-height: 48px;
+  color: var(--md-sys-color-on-surface-variant, #44474e);
+  margin-top: 0.5rem;
+
+  ::ng-deep md-filled-button {
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+
+  .button-spinner {
+    margin-left: 0.75rem;
+
+    ::ng-deep circle {
+      stroke: currentcolor;
+    }
+  }
+}
+
+// ===== Login Actions =====
+.login-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.forgot-password-link {
+  font-size: 0.875rem;
+  color: var(--md-sys-color-primary, #1074b9);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #1074b914;
+    text-decoration: underline;
+  }
+
+  &:focus {
+    outline: 2px solid var(--md-sys-color-primary, #1074b9);
+    outline-offset: 2px;
+  }
+}
+
+// ===== OIDC Login =====
+.oidc-login-container {
+  width: 100%;
+  padding: 1rem 0;
+}
+
+.oidc-login-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  text-align: center;
+}
+
+.oidc-description {
+  font-size: 0.95rem;
+  color: var(--md-sys-color-on-surface-variant, #44474e);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.oidc-logged-in {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.welcome-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+  background: var(--md-sys-color-primary-container, #d1e4ff);
+  border-radius: 16px;
+
+  .success-icon {
+    font-size: 3rem;
+    color: var(--md-sys-color-primary, #1074b9);
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--md-sys-color-on-primary-container, #001d36);
+  }
+}
+
+.oidc-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+
+  mifosx-m3-button {
+    flex: 1;
+    min-width: 140px;
+  }
+}
+
+.protected-data {
+  padding: 1rem;
+  background: var(--md-sys-color-surface-container, #f3f3f3);
+  border-radius: 12px;
+  border: 1px solid var(--md-sys-color-outline-variant, #c4c6d0);
+  max-height: 300px;
+  overflow: auto;
+
+  pre {
+    margin: 0;
+    font-size: 0.875rem;
+    font-family: 'Courier New', monospace;
+    color: var(--md-sys-color-on-surface, #1a1c1e);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+}
+
+// ===== Dark Theme Support =====
+:host-context(.dark-theme) {
+  // Tenant selector dark theme
+  ::ng-deep .tenant-section {
+    mifosx-tenant-selector {
+      #tenant-selector {
+        .mat-mdc-select {
+          color: var(--md-sys-color-on-surface, #e2e2e5);
+        }
+
+        .mat-mdc-floating-label {
+          color: var(--md-sys-color-on-surface-variant, #c4c6d0);
+        }
+
+        .mat-mdc-form-field-icon-prefix {
+          color: var(--md-sys-color-on-surface-variant, #c4c6d0);
+        }
+      }
+    }
+  }
+
+  .login-field {
+    ::ng-deep {
+      .mat-mdc-input-element {
+        color: var(--md-sys-color-on-surface, #e2e2e5);
+
+        &::placeholder {
+          color: var(--md-sys-color-on-surface-variant, #c4c6d0);
+        }
+      }
+
+      .mat-mdc-floating-label {
+        color: var(--md-sys-color-on-surface-variant, #c4c6d0);
+      }
+
+      .mat-mdc-form-field-icon-prefix {
+        color: var(--md-sys-color-on-surface-variant, #c4c6d0);
+      }
+
+      .mat-mdc-form-field-icon-suffix button {
+        color: var(--md-sys-color-on-surface-variant, #c4c6d0);
+
+        &:hover {
+          color: var(--md-sys-color-primary, #5ba2ec);
+          background: #5ba2ec1f;
+        }
+      }
+    }
+  }
+
+  .forgot-password-link {
+    color: var(--md-sys-color-primary, #5ba2ec);
+
+    &:hover {
+      background: #5ba2ec1f;
+    }
+  }
+
+  .oidc-description {
+    color: var(--md-sys-color-on-surface-variant, #c4c6d0);
+  }
+
+  .welcome-message {
+    background: var(--md-sys-color-primary-container, #003a6b);
+
+    .success-icon {
+      color: var(--md-sys-color-primary, #5ba2ec);
+    }
+
+    h3 {
+      color: var(--md-sys-color-on-primary-container, #d1e4ff);
+    }
+  }
+
+  .protected-data {
+    background: var(--md-sys-color-surface-container, #2c2f36);
+    border-color: var(--md-sys-color-outline-variant, #44474e);
+
+    pre {
+      color: var(--md-sys-color-on-surface, #e2e2e5);
+    }
+  }
+}
+
+// ===== Responsive Design =====
+@media (width <= 768px) {
+  #login-form {
+    gap: 0.25rem;
+  }
+
+  .login-field {
+    margin-bottom: 0;
+  }
+
+  .login-submit-button {
+    margin-top: 0.5rem;
+  }
+
+  .login-actions {
+    margin-top: 0.5rem;
+  }
+}
+
+@media (width <= 480px) {
+  #login-form {
+    gap: 0.15rem;
+  }
+
+  .login-field {
+    margin-bottom: 0;
+
+    ::ng-deep {
+      .mat-mdc-input-element {
+        font-size: 0.95rem;
+        padding: 0.65rem 0.5rem;
+      }
+
+      .mat-mdc-floating-label {
+        font-size: 0.9rem;
+      }
+
+      .mat-mdc-form-field-icon-prefix {
+        padding-right: 0.5rem;
+      }
+    }
+  }
+
+  .login-submit-button {
+    min-height: 42px;
+    margin-top: 0.4rem;
+  }
+
+  .login-actions {
+    margin-top: 0.4rem;
+  }
+
+  .forgot-password-link {
+    font-size: 0.8125rem;
+    padding: 0.35rem 0.65rem;
+  }
+
+  .oidc-actions {
+    flex-direction: column;
+
+    mifosx-m3-button {
+      width: 100%;
+    }
+  }
+}
+
+// ===== Animations =====
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
@@ -64,6 +64,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ManageFundsComponent implements OnInit, AfterViewInit {
+  private route = inject(ActivatedRoute);
+  private formBuilder = inject(UntypedFormBuilder);
+  private organizationservice = inject(OrganizationService);
+  dialog = inject(MatDialog);
+  private router = inject(Router);
+  private configurationWizardService = inject(ConfigurationWizardService);
+  private popoverService = inject(PopoverService);
+
   /** Manage Funds data. */
   fundsData: any;
   /** New Fund form */
@@ -98,15 +106,7 @@ export class ManageFundsComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private formBuilder: UntypedFormBuilder,
-    private organizationservice: OrganizationService,
-    public dialog: MatDialog,
-    private router: Router,
-    private configurationWizardService: ConfigurationWizardService,
-    private popoverService: PopoverService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { funds: any }) => {
       this.fundsData = data.funds;
     });
@@ -171,7 +171,6 @@ export class ManageFundsComponent implements OnInit, AfterViewInit {
         type: 'text',
         required: true
       })
-
     ];
     const data = {
       title: 'Edit Fund',

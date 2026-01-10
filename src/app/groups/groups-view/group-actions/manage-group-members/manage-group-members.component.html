@@ -6,9 +6,11 @@
     </mat-form-field>
 
     <mat-autocomplete autoActiveFirstOption #clientsAutocomplete="matAutocomplete" [displayWith]="displayClient">
-      <mat-option *ngFor="let client of clientsData" [value]="client">
-        {{ client.displayName }}
-      </mat-option>
+      @for (client of clientsData; track client) {
+        <mat-option [value]="client">
+          {{ client.displayName }}
+        </mat-option>
+      }
     </mat-autocomplete>
 
     <div class="mat-table">
@@ -36,20 +38,24 @@
   <mat-card class="flex-50">
     <h3 matSubheader>{{ 'labels.heading.Client Members' | translate }}</h3>
 
-    <mat-nav-list *ngIf="clientMembers?.length">
-      <div mat-list-item *ngFor="let client of clientMembers; index as i">
-        <span matLine class="p-t-10">{{ client.displayName }}</span>
-        <div class="flex-fill"></div>
-        <button
-          mat-icon-button
-          color="warn"
-          (click)="removeClient(i, client)"
-          matTooltip="{{ 'tooltips.Remove Client from Group' | translate }}"
-          matTooltipPosition="left"
-        >
-          <fa-icon icon="trash"></fa-icon>
-        </button>
-      </div>
-    </mat-nav-list>
+    @if (clientMembers?.length) {
+      <mat-nav-list>
+        @for (client of clientMembers; track client; let i = $index) {
+          <div mat-list-item>
+            <span matLine class="p-t-10">{{ client.displayName }}</span>
+            <div class="flex-fill"></div>
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="removeClient(i, client)"
+              matTooltip="{{ 'tooltips.Remove Client from Group' | translate }}"
+              matTooltipPosition="left"
+            >
+              <fa-icon icon="trash"></fa-icon>
+            </button>
+          </div>
+        }
+      </mat-nav-list>
+    }
   </mat-card>
 </div>

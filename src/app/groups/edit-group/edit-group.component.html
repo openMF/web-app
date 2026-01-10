@@ -6,22 +6,28 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
-            <mat-error *ngIf="editGroupForm.controls.name.hasError('required')">
-              {{ 'labels.inputs.Group Name' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
-            <mat-error *ngIf="editGroupForm.controls.name.hasError('pattern')">
-              {{ 'labels.inputs.Group Name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
-              {{ 'labels.commons.begin with a special character or number' | translate }}
-            </mat-error>
+            @if (editGroupForm.controls.name.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Group Name' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
+            @if (editGroupForm.controls.name.hasError('pattern')) {
+              <mat-error>
+                {{ 'labels.inputs.Group Name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
+                {{ 'labels.commons.begin with a special character or number' | translate }}
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Staff' | translate }}</mat-label>
             <mat-select formControlName="staffId">
-              <mat-option *ngFor="let staff of staffData" [value]="staff.id">
-                {{ staff.displayName }}
-              </mat-option>
+              @for (staff of staffData; track staff) {
+                <mat-option [value]="staff.id">
+                  {{ staff.displayName }}
+                </mat-option>
+              }
             </mat-select>
           </mat-form-field>
 
@@ -37,29 +43,35 @@
             />
             <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #submittedOnDatePicker></mat-datepicker>
-            <mat-error *ngIf="editGroupForm.controls.submittedOnDate.hasError('required')">
-              {{ 'labels.inputs.Submission Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (editGroupForm.controls.submittedOnDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Submission Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
-          <mat-form-field *ngIf="this.editGroupForm.contains('activationDate')" (click)="activationDatePicker.open()">
-            <mat-label>{{ 'labels.inputs.Activation Date' | translate }}</mat-label>
-            <input
-              matInput
-              [min]="editGroupForm.value.submittedOnDate"
-              [max]="maxDate"
-              [matDatepicker]="activationDatePicker"
-              required
-              formControlName="activationDate"
-            />
-            <mat-datepicker-toggle matSuffix [for]="activationDatePicker"></mat-datepicker-toggle>
-            <mat-datepicker #activationDatePicker></mat-datepicker>
-            <mat-error *ngIf="editGroupForm.controls.activationDate.hasError('required')">
-              {{ 'labels.inputs.Activation Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
-          </mat-form-field>
+          @if (this.editGroupForm.contains('activationDate')) {
+            <mat-form-field (click)="activationDatePicker.open()">
+              <mat-label>{{ 'labels.inputs.Activation Date' | translate }}</mat-label>
+              <input
+                matInput
+                [min]="editGroupForm.value.submittedOnDate"
+                [max]="maxDate"
+                [matDatepicker]="activationDatePicker"
+                required
+                formControlName="activationDate"
+              />
+              <mat-datepicker-toggle matSuffix [for]="activationDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #activationDatePicker></mat-datepicker>
+              @if (editGroupForm.controls.activationDate.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Activation Date' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+          }
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.External id' | translate }}</mat-label>

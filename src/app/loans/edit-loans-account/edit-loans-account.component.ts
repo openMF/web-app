@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoansService } from '../loans.service';
 import { LoansAccountDetailsStepComponent } from '../loans-account-stepper/loans-account-details-step/loans-account-details-step.component';
@@ -36,6 +36,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditLoansAccountComponent {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dateUtils = inject(Dates);
+  private loansService = inject(LoansService);
+  private settingsService = inject(SettingsService);
+
   @ViewChild(LoansAccountDetailsStepComponent, { static: true })
   loansAccountDetailsStep: LoansAccountDetailsStepComponent;
   @ViewChild(LoansAccountTermsStepComponent, { static: true }) loansAccountTermsStep: LoansAccountTermsStepComponent;
@@ -60,13 +66,7 @@ export class EditLoansAccountComponent {
    * @param {loansService} LoansService Loans Service
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private dateUtils: Dates,
-    private loansService: LoansService,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { loansAccountAndTemplate: any }) => {
       this.loansAccountAndTemplate = data.loansAccountAndTemplate;
     });

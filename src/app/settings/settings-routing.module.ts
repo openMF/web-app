@@ -17,7 +17,6 @@ const routes: Routes = [
       data: { title: 'Settings', breadcrumb: 'Settings' }
     }
   ])
-
 ];
 
 /**

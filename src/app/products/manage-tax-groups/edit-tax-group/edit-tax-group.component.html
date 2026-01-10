@@ -6,10 +6,12 @@
           <mat-form-field class="flex-fill flex-100">
             <mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
-            <mat-error *ngIf="taxGroupForm.controls.name.hasError('required')">
-              {{ 'labels.inputs.Name' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (taxGroupForm.controls.name.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Name' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <h3 class="mat-h3 flex-40">{{ 'labels.inputs.Tax Components' | translate }}</h3>
@@ -51,17 +53,18 @@
                 >
                   <fa-icon icon="edit"></fa-icon>
                 </button>
-                <button
-                  type="button"
-                  mat-icon-button
-                  color="warn"
-                  *ngIf="taxComponent.isNew"
-                  (click)="delete(taxComponentIndex)"
-                  matTooltip="{{ 'tooltips.Delete Interest Rate Chart' | translate }}"
-                  matTooltipPosition="left"
-                >
-                  <fa-icon icon="trash"></fa-icon>
-                </button>
+                @if (taxComponent.isNew) {
+                  <button
+                    type="button"
+                    mat-icon-button
+                    color="warn"
+                    (click)="delete(taxComponentIndex)"
+                    matTooltip="{{ 'tooltips.Delete Interest Rate Chart' | translate }}"
+                    matTooltipPosition="left"
+                  >
+                    <fa-icon icon="trash"></fa-icon>
+                  </button>
+                }
               </td>
             </ng-container>
 

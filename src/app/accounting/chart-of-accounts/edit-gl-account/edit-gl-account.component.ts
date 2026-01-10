@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
@@ -25,6 +25,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditGlAccountComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private accountingService = inject(AccountingService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   /** GL account form. */
   glAccountForm: UntypedFormGroup;
   /** GL account and chart of accounts data. */
@@ -45,12 +50,7 @@ export class EditGlAccountComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private accountingService: AccountingService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { glAccountAndChartOfAccountsTemplate: any }) => {
       this.glAccount = data.glAccountAndChartOfAccountsTemplate;
     });

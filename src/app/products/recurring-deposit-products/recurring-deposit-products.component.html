@@ -95,7 +95,7 @@
 <ng-template #templateRecurringProductsTable let-popover="popover">
   <h4 class="mw300">
     {{ 'labels.heading.List of recurring deposit products in the organization' | translate }}:
-    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/102629552/Recurring+Deposit" target="_blank">{{
+    <a [href]="'recurringDepositProducts' | documentationLink" target="_blank" rel="noopener noreferrer">{{
       'labels.heading.Recurring Deposit Products' | translate
     }}</a>
   </h4>

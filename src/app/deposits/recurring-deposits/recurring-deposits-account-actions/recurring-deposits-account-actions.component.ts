@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Currency } from 'app/shared/models/general.model';
 import { ActivateRecurringDepositsAccountComponent } from './activate-recurring-deposits-account/activate-recurring-deposits-account.component';
@@ -30,6 +30,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class RecurringDepositsAccountActionsComponent {
+  private route = inject(ActivatedRoute);
+
   /** Flag object to store possible actions and render appropriate UI to the user */
   actions: {
     Activate: boolean;
@@ -62,7 +64,7 @@ export class RecurringDepositsAccountActionsComponent {
   /**
    * @param {ActivatedRoute} route Activated Route
    */
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     this.route.data.subscribe((data: { recurringDepositsAccountActionData: any }) => {
       if (data.recurringDepositsAccountActionData) {
         this.currency = data.recurringDepositsAccountActionData.currency;

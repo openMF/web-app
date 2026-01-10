@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   AbstractControl,
@@ -44,6 +44,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private accountTransfersService = inject(AccountTransfersService);
+  private dateUtils = inject(Dates);
+  private settingsService = inject(SettingsService);
+  private clientsService = inject(ClientsService);
+
   /** Standing Instructions Data */
   accountTransferTemplateData: any;
   /** Minimum date allowed. */
@@ -87,15 +95,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
    * @param {SettingsService} settingsService Settings Service
    * @param {ClientsService} clientsService Clients Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private accountTransfersService: AccountTransfersService,
-    private dateUtils: Dates,
-    private settingsService: SettingsService,
-    private clientsService: ClientsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { accountTransferTemplate: any }) => {
       this.accountTransferTemplateData = data.accountTransferTemplate;
       this.setParams();
@@ -117,7 +117,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
         this.accountTypeId = '2';
         this.id = this.route.snapshot.queryParams['savingsId'];
         this.interbank = this.route.snapshot.queryParams['interbank'] === 'true';
-        const navigationBalance = this.router.getCurrentNavigation()?.extras?.state?.balance;
+        const navigationBalance = this.router.currentNavigation()?.extras?.state?.balance;
         const templateBalance =
           this.accountTransferTemplateData?.fromAccount?.availableBalance ??
           this.accountTransferTemplateData?.fromAccount?.summary?.accountBalance ??
@@ -168,7 +168,8 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
         [
           Validators.required,
           Validators.min(0.01),
-          this.amountExceedsBalanceValidator.bind(this)]
+          this.amountExceedsBalanceValidator.bind(this)
+        ]
       ],
       transferDate: [
         this.settingsService.businessDate,
@@ -207,7 +208,8 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
         [
           Validators.required,
           Validators.min(0.01),
-          this.amountExceedsBalanceValidator.bind(this)]
+          this.amountExceedsBalanceValidator.bind(this)
+        ]
       ],
       transferDate: [
         this.settingsService.businessDate,
@@ -252,7 +254,8 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
         [
           Validators.required,
           Validators.min(0.01),
-          this.amountExceedsBalanceValidator.bind(this)]
+          this.amountExceedsBalanceValidator.bind(this)
+        ]
       ],
       transferDate: [
         this.settingsService.businessDate,

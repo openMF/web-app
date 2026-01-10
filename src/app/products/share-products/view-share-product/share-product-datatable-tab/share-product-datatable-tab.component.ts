@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EntityDatatableTabComponent } from '../../../../shared/tabs/entity-datatable-tab/entity-datatable-tab.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -13,11 +13,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ShareProductDatatableTabComponent {
+  private route = inject(ActivatedRoute);
+
   entityId: string;
   entityDatatable: any;
   multiRowDatatableFlag: boolean;
 
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     this.entityId = this.route.parent.parent.snapshot.paramMap.get('productId');
 
     this.route.data.subscribe((data: { shareProductDatatable: any }) => {

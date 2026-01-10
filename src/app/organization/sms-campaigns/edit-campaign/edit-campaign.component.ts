@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -35,6 +35,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditCampaignComponent {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dateUtils = inject(Dates);
+  private organizationService = inject(OrganizationService);
+  private settingsService = inject(SettingsService);
+
   /** smsCampaign */
   smsCampaign: any;
   /** SMS Campaign Template */
@@ -53,13 +59,7 @@ export class EditCampaignComponent {
    * @param {OrganizationService} organizationService Organiztion Service
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private dateUtils: Dates,
-    private organizationService: OrganizationService,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { smsCampaign: any; smsCampaignTemplate: any }) => {
       this.smsCampaignTemplate = data.smsCampaignTemplate;
       this.smsCampaign = data.smsCampaign;

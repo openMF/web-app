@@ -27,13 +27,19 @@ export const environment = {
   allowServerSwitch: loadedEnv.allowServerSwitch || 'true',
   apiProvider: loadedEnv.apiProvider || '/fineract-provider/api',
   apiVersion: loadedEnv.apiVersion || '/v1',
+  apiActuator: loadedEnv.apiActuator || '/fineract-provider',
   serverUrl: '',
   /** Feature flag for Remember Me functionality */
   enableRememberMe: false,
   oauth: {
-    enabled: loadedEnv.oauthServerEnabled || false, // For connecting to Mifos X using OAuth2 Authentication change the value to true
+    enabled: loadedEnv.oauthServerEnabled === true,
     serverUrl: loadedEnv.oauthServerUrl || '',
-    appId: loadedEnv.oauthAppId || ''
+    logoutUrl: loadedEnv.oauthServerLogoutUrl || '',
+    appId: loadedEnv.oauthAppId || '',
+    authorizeUrl: loadedEnv.oauthAuthorizeUrl || '',
+    tokenUrl: loadedEnv.oauthTokenUrl || '',
+    redirectUri: loadedEnv.oauthRedirectUri || '',
+    scope: loadedEnv.oauthScope || ''
   },
   warningDialog: {
     title: 'Warning',
@@ -50,6 +56,8 @@ export const environment = {
 
   displayBackEndInfo: loadedEnv.displayBackEndInfo || 'true',
   displayTenantSelector: loadedEnv.displayTenantSelector || 'true',
+  tenantLogoUrl: loadedEnv.tenantLogoUrl || 'assets/images/mifos_lg-logo.jpg',
+  documentationBaseUrl: loadedEnv.documentationBaseUrl || 'https://mifosforge.jira.com/wiki',
   // Time in seconds, default 60 seconds
   waitTimeForNotifications: loadedEnv.waitTimeForNotifications || 60,
   // Time in seconds, default 30 seconds
@@ -69,11 +77,15 @@ export const environment = {
   minPasswordLength: loadedEnv.minPasswordLength || 12,
 
   OIDC: {
-    oidcServerEnabled: window['env']['oidcServerEnabled'] || false,
-    oidcBaseUrl: window['env']['oidcBaseUrl'] || '',
-    oidcClientId: window['env']['oidcClientId'] || '',
-    oidcApiUrl: window['env']['oidcApiUrl'] || '',
-    oidcFrontUrl: window['env']['oidcFrontUrl'] || ''
+    // Support legacy FINERACT_PLUGIN_OIDC_* variable names for backward compatibility
+    oidcServerEnabled:
+      loadedEnv.oidcServerEnabled === true ||
+      loadedEnv.oidcServerEnabled === 'true' ||
+      loadedEnv.FINERACT_PLUGIN_OIDC_ENABLED === 'true',
+    oidcBaseUrl: loadedEnv.oidcBaseUrl || loadedEnv.FINERACT_PLUGIN_OIDC_BASE_URL || '',
+    oidcClientId: loadedEnv.oidcClientId || loadedEnv.FINERACT_PLUGIN_OIDC_CLIENT_ID || '',
+    oidcApiUrl: loadedEnv.oidcApiUrl || loadedEnv.FINERACT_PLUGIN_OIDC_API_URL || '',
+    oidcFrontUrl: loadedEnv.oidcFrontUrl || loadedEnv.FINERACT_PLUGIN_OIDC_FRONTEND_URL || ''
   }
 };
 

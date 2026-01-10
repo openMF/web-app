@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
@@ -15,13 +15,8 @@ import { SettingsService } from 'app/settings/settings.service';
   providedIn: 'root'
 })
 export class OrganizationService {
-  /**
-   * @param {HttpClient} http Http Client to send requests.
-   */
-  constructor(
-    private http: HttpClient,
-    private settingsService: SettingsService
-  ) {}
+  private http = inject(HttpClient);
+  private settingsService = inject(SettingsService);
 
   /**
    * @returns {Observable<any>} Loan Provisioning Criteria data

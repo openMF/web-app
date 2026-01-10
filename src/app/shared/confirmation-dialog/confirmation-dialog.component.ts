@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -30,16 +30,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ConfirmationDialogComponent implements OnInit {
+  dialogRef = inject<MatDialogRef<ConfirmationDialogComponent>>(MatDialogRef);
+  private dialogs = inject(Dialogs);
+  data = inject<DialogData>(MAT_DIALOG_DATA);
+
   color: string;
-  /**
-   * @param {MatDialogRef} dialogRef Component reference to dialog.
-   * @param {any} data Provides a deleteContext.
-   */
-  constructor(
-    public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
-    private dialogs: Dialogs,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
-  ) {}
 
   ngOnInit() {
     this.setColor();

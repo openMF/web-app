@@ -78,16 +78,17 @@
       </mifosx-recurring-deposits-account-charges-step>
     </mat-step>
 
-    <mat-step state="preview" *ngIf="recurringDepositAccountFormValidAndNotPristine" completed>
-      <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
-
-      <mifosx-recurring-deposits-account-preview-step
-        [recurringDepositsAccountTemplate]="recurringDepositsAccountAndTemplate"
-        [recurringDepositsAccountProductTemplate]="recurringDepositsAccountProductTemplate"
-        [recurringDepositAccountData]="recurringDepositAccountData"
-        (submitEvent)="submit()"
-      >
-      </mifosx-recurring-deposits-account-preview-step>
-    </mat-step>
+    @if (recurringDepositAccountFormValidAndNotPristine) {
+      <mat-step state="preview" completed>
+        <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
+        <mifosx-recurring-deposits-account-preview-step
+          [recurringDepositsAccountTemplate]="recurringDepositsAccountAndTemplate"
+          [recurringDepositsAccountProductTemplate]="recurringDepositsAccountProductTemplate"
+          [recurringDepositAccountData]="recurringDepositAccountData"
+          (submitEvent)="submit()"
+        >
+        </mifosx-recurring-deposits-account-preview-step>
+      </mat-step>
+    }
   </mat-stepper>
 </div>

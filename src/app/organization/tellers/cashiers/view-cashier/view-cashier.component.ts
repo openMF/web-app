@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Dialogs */
@@ -26,6 +26,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewCashierComponent {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private organizationService = inject(OrganizationService);
+  dialog = inject(MatDialog);
+
   /** Cashier data. */
   cashierData: any;
 
@@ -36,12 +41,7 @@ export class ViewCashierComponent {
    * @param {OrganizationService} organizationService Organization Service
    * @param {MatDialog} dialog Mat Dialog
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private organizationService: OrganizationService,
-    public dialog: MatDialog
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { cashier: any }) => {
       this.cashierData = data.cashier;
     });

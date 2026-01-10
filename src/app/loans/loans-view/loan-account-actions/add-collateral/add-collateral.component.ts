@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
@@ -21,26 +21,17 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class AddCollateralComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private loanService = inject(LoansService);
+
   @Input() dataObject: any;
 
   /** Collateral form. */
   collateralForm: UntypedFormGroup;
   /** Loan Id. */
   loanId: string;
-
-  /**
-   * Retrieve data from `Resolver`.
-   * @param {FormBuilder} formBuilder Form Builder.
-   * @param {Router} router Router.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {LoansService} LoansService loans service.
-   */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private router: Router,
-    private route: ActivatedRoute,
-    private loanService: LoansService
-  ) {}
 
   ngOnInit() {
     this.createAddCollateralForm();

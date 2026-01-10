@@ -47,43 +47,49 @@
           <span class="flex-60">{{ checkerInboxDetail.entityName }}</span>
         </div>
 
-        <div class="flex-fill" *ngIf="checkerInboxDetail.resourceId">
-          <span class="flex-40">{{ 'labels.inputs.Resource ID' | translate }}:</span>
-          <span class="flex-60">{{ checkerInboxDetail.resourceId }}</span>
-        </div>
+        @if (checkerInboxDetail.resourceId) {
+          <div class="flex-fill">
+            <span class="flex-40">{{ 'labels.inputs.Resource ID' | translate }}:</span>
+            <span class="flex-60">{{ checkerInboxDetail.resourceId }}</span>
+          </div>
+        }
 
         <div class="flex-fill">
           <span class="flex-40">{{ 'labels.inputs.Date' | translate }}:</span>
           <span class="flex-60">{{ checkerInboxDetail.madeOnDate | dateFormat }}</span>
         </div>
 
-        <div class="flex-fill" *ngIf="checkerInboxDetail.officeName">
-          <span class="flex-40">{{ 'labels.inputs.Office' | translate }}:</span>
-          <span class="flex-60">{{ checkerInboxDetail.officeName }}</span>
-        </div>
+        @if (checkerInboxDetail.officeName) {
+          <div class="flex-fill">
+            <span class="flex-40">{{ 'labels.inputs.Office' | translate }}:</span>
+            <span class="flex-60">{{ checkerInboxDetail.officeName }}</span>
+          </div>
+        }
 
-        <div class="flex-fill" *ngIf="checkerInboxDetail.savingsAccountNo">
-          <span class="flex-40">{{ 'labels.inputs.Savings Account Number' | translate }}:</span>
-          <span class="flex-60">{{ checkerInboxDetail.savingsAccountNo }}</span>
-        </div>
+        @if (checkerInboxDetail.savingsAccountNo) {
+          <div class="flex-fill">
+            <span class="flex-40">{{ 'labels.inputs.Savings Account Number' | translate }}:</span>
+            <span class="flex-60">{{ checkerInboxDetail.savingsAccountNo }}</span>
+          </div>
+        }
 
-        <div class="flex-fill" *ngIf="checkerInboxDetail.groupLevelName">
-          <span class="flex-40"> {{ checkerInboxDetail.groupLevelName }}</span>
-          <span class="flex-60">{{ checkerInboxDetail.groupName }}</span>
-        </div>
+        @if (checkerInboxDetail.groupLevelName) {
+          <div class="flex-fill">
+            <span class="flex-40"> {{ checkerInboxDetail.groupLevelName }}</span>
+            <span class="flex-60">{{ checkerInboxDetail.groupName }}</span>
+          </div>
+        }
 
-        <ng-container *ngIf="displayJSONData">
+        @if (displayJSONData) {
           <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Command' | translate }}</h3>
-
           <mat-divider [inset]="true"></mat-divider>
-
-          <ng-container *ngFor="let json of jsondata | keyvalue">
+          @for (json of jsondata | keyvalue; track json) {
             <div class="flex-fill">
               <span class="flex-40">{{ json.key }}:</span>
               <span class="flex-60">{{ json.value }}</span>
             </div>
-          </ng-container>
-        </ng-container>
+          }
+        }
       </div>
     </mat-card-content>
   </mat-card>

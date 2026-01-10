@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
@@ -30,6 +30,14 @@ interface TransactionType {
   ]
 })
 export class ManageSavingsAccountComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private savingsService = inject(SavingsService);
+  private dateUtils = inject(Dates);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private systemService = inject(SystemService);
+  private settingsService = inject(SettingsService);
+
   @Input() currency: Currency;
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -58,15 +66,7 @@ export class ManageSavingsAccountComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private savingsService: SavingsService,
-    private dateUtils: Dates,
-    private route: ActivatedRoute,
-    private router: Router,
-    private systemService: SystemService,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.transactionCommand = this.route.snapshot.params['name'].toLowerCase().replaceAll(' ', '');
     this.transactionType[this.transactionCommand] = true;
     this.savingAccountId = this.route.snapshot.params['savingAccountId'];

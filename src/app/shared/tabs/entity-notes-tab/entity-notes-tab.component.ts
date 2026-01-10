@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ClientsService } from 'app/clients/clients.service';
@@ -11,6 +11,7 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'mifosx-entity-notes-tab',
@@ -24,6 +25,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EntityNotesTabComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private savingsService = inject(SavingsService);
+  private loansService = inject(LoansService);
+  private clientsService = inject(ClientsService);
+  private groupsService = inject(GroupsService);
+  private dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
+
   @ViewChild('formRef', { static: true }) formRef: any;
 
   @Input() entityId: string;
@@ -34,15 +43,6 @@ export class EntityNotesTabComponent implements OnInit {
   @Input() callbackDelete: (noteId: string, index: number) => void;
 
   noteForm: UntypedFormGroup;
-
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private savingsService: SavingsService,
-    private loansService: LoansService,
-    private clientsService: ClientsService,
-    private groupsService: GroupsService,
-    private dialog: MatDialog
-  ) {}
 
   ngOnInit() {
     this.createNoteForm();
@@ -71,14 +71,14 @@ export class EntityNotesTabComponent implements OnInit {
             required: true,
             value: noteContent,
             controlType: 'input',
-            label: 'Note'
+            label: this.translateService.instant('labels.inputs.Note')
           }
         ],
         layout: {
           columns: 1,
           addButtonText: 'Confirm'
         },
-        title: 'Edit Note'
+        title: this.translateService.instant('labels.heading.Edit Note')
       }
     });
     editNoteDialogRef.afterClosed().subscribe((response: any) => {
@@ -89,8 +89,9 @@ export class EntityNotesTabComponent implements OnInit {
   }
 
   deleteNote(noteId: string, index: number) {
+    const noteLabel = this.translateService.instant('labels.inputs.Note');
     const deleteNoteDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `Note: ${this.entityNotes[index].note}` }
+      data: { deleteContext: `${noteLabel}: ${this.entityNotes[index].note}` }
     });
     deleteNoteDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {

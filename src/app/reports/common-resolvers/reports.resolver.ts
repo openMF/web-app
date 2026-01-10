@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,10 +12,7 @@ import { ReportsService } from '../reports.service';
  */
 @Injectable()
 export class ReportsResolver {
-  /**
-   * @param {ReportsService} reportsService Reports service.
-   */
-  constructor(private reportsService: ReportsService) {}
+  private reportsService = inject(ReportsService);
 
   /**
    * Returns the reports data.

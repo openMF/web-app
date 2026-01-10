@@ -1,0 +1,84 @@
+/**
+ * Material Design 3 Toolbar Design Tokens
+ *
+ * This file contains all the design tokens for the toolbar component
+ * following Material Design 3 guidelines.
+ */
+
+:root {
+  // Surface Colors - Light Theme
+  --toolbar-surface: var(--md-sys-color-surface-container, #f3f3f3);
+  --toolbar-on-surface: var(--md-sys-color-on-surface, #1a1c1e);
+  --toolbar-on-surface-variant: var(--md-sys-color-on-surface-variant, #44474e);
+  --toolbar-primary: var(--md-sys-color-primary, #1074b9);
+  --toolbar-on-primary: var(--md-sys-color-on-primary, #fff);
+  --toolbar-primary-container: var(--md-sys-color-primary-container, #d1e4ff);
+  --toolbar-on-primary-container: var(--md-sys-color-on-primary-container, #001d35);
+  --toolbar-surface-container-high: var(--md-sys-color-surface-container-high, #e8e8eb);
+
+  // Dimensions
+  --toolbar-height: 64px;
+  --toolbar-height-mobile: 56px;
+  --toolbar-padding-inline: 16px;
+  --toolbar-padding-inline-mobile: 8px;
+  --toolbar-gap: 8px;
+  --toolbar-gap-small: 4px;
+
+  // Navigation Items
+  --toolbar-nav-item-padding: 12px 16px;
+  --toolbar-nav-item-padding-mobile: 8px 12px;
+  --toolbar-nav-item-border-radius: 20px;
+  --toolbar-nav-item-gap: 8px;
+  --toolbar-nav-item-min-height: 40px;
+
+  // Typography
+  --toolbar-font-family: 'Roboto', system-ui, sans-serif;
+  --toolbar-font-size: 14px;
+  --toolbar-font-weight: 500;
+  --toolbar-font-weight-active: 600;
+  --toolbar-line-height: 20px;
+  --toolbar-letter-spacing: 0.1px;
+
+  // Icon sizing
+  --toolbar-icon-size: 20px;
+  --toolbar-icon-button-size: 48px;
+
+  // State Layers (MD3 standard opacities)
+  --toolbar-state-hover-opacity: 0.08;
+  --toolbar-state-focus-opacity: 0.12;
+  --toolbar-state-pressed-opacity: 0.12;
+  --toolbar-state-active-opacity: 0.16;
+
+  // Elevation (MD3 Level 2)
+  --toolbar-elevation: 0px 2px 4px rgb(0 0 0 / 4%), 0px 1px 2px rgb(0 0 0 / 6%);
+  --toolbar-elevation-scrolled: 0px 4px 8px rgb(0 0 0 / 6%), 0px 2px 4px rgb(0 0 0 / 8%);
+
+  // Motion (MD3 easing curves)
+  --toolbar-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --toolbar-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --toolbar-duration-short: 200ms;
+  --toolbar-duration-medium: 250ms;
+
+  // Search Component
+  --toolbar-search-background: var(--md-sys-color-surface-container-high, #e8e8eb);
+  --toolbar-search-border-radius: 28px;
+  --toolbar-search-padding: 4px 16px;
+}
+
+.dark-theme {
+  // Surface Colors - Dark Theme
+  --toolbar-surface: var(--md-sys-color-surface-container, #2c2f36);
+  --toolbar-on-surface: var(--md-sys-color-on-surface, #e2e2e5);
+  --toolbar-on-surface-variant: var(--md-sys-color-on-surface-variant, #c4c6d0);
+  --toolbar-primary: var(--md-sys-color-primary, #5ba2ec);
+  --toolbar-primary-container: var(--md-sys-color-primary-container, #003a6b);
+  --toolbar-on-primary-container: var(--md-sys-color-on-primary-container, #d1e4ff);
+  --toolbar-surface-container-high: var(--md-sys-color-surface-container-high, #3d4047);
+
+  // Elevation (MD3 Level 2 - Dark theme has stronger shadows)
+  --toolbar-elevation: 0px 2px 4px rgb(0 0 0 / 12%), 0px 1px 2px rgb(0 0 0 / 16%);
+  --toolbar-elevation-scrolled: 0px 4px 8px rgb(0 0 0 / 16%), 0px 2px 4px rgb(0 0 0 / 20%);
+
+  // Search Component
+  --toolbar-search-background: var(--md-sys-color-surface-container-high, #3d4047);
+}

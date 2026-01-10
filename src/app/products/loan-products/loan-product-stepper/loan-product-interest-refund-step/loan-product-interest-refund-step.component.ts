@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, ReactiveFormsModule } from '@angular/forms';
 import { StringEnumOptionData } from '../../../../shared/models/option-data.model';
 import { MatTooltip } from '@angular/material/tooltip';
@@ -14,6 +14,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoanProductInterestRefundStepComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+
   @Input() loanProductsTemplate: any;
   @Output() supportedInterestRefundTypes = new EventEmitter<StringEnumOptionData[]>();
 
@@ -21,7 +23,7 @@ export class LoanProductInterestRefundStepComponent implements OnInit {
 
   supportedInterestRefundTypesOptions: StringEnumOptionData[];
 
-  constructor(private formBuilder: UntypedFormBuilder) {
+  constructor() {
     this.createLoanProductInterestRefundForm();
     this.setConditionalControls();
   }

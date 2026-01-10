@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -24,6 +24,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewClosureComponent {
+  private accountingService = inject(AccountingService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  dialog = inject(MatDialog);
+
   /** GL Account closure. */
   glAccountClosure: any;
 
@@ -34,12 +39,7 @@ export class ViewClosureComponent {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(
-    private accountingService: AccountingService,
-    private route: ActivatedRoute,
-    private router: Router,
-    public dialog: MatDialog
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { glAccountClosure: any }) => {
       this.glAccountClosure = data.glAccountClosure;
     });

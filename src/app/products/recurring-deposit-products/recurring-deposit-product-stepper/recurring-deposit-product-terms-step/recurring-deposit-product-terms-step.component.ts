@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDivider } from '@angular/material/divider';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
@@ -18,6 +18,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class RecurringDepositProductTermsStepComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+
   @Input() recurringDepositProductsTemplate: any;
 
   recurringDepositProductTermsForm: UntypedFormGroup;
@@ -27,7 +29,7 @@ export class RecurringDepositProductTermsStepComponent implements OnInit {
   interestCalculationTypeData: any;
   interestCalculationDaysInYearTypeData: any;
 
-  constructor(private formBuilder: UntypedFormBuilder) {
+  constructor() {
     this.createrecurringDepositProductTermsForm();
   }
 

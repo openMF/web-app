@@ -34,20 +34,22 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.System Defined' | translate }}</th>
         <td mat-cell *matCellDef="let paymentType">
           <div [className]="paymentType.isSystemDefined === true ? 'true text-center' : 'false text-center'">
-            <fa-icon
-              *ngIf="paymentType.isSystemDefined"
-              icon="check-circle"
-              size="lg"
-              matTooltip="{{ 'tooltips.Yes' | translate }}"
-              matTooltipPosition="right"
-            ></fa-icon>
-            <fa-icon
-              *ngIf="!paymentType.isSystemDefined"
-              icon="times-circle"
-              size="lg"
-              matTooltip="{{ 'tooltips.No' | translate }}"
-              matTooltipPosition="right"
-            ></fa-icon>
+            @if (paymentType.isSystemDefined) {
+              <fa-icon
+                icon="check-circle"
+                size="lg"
+                matTooltip="{{ 'tooltips.Yes' | translate }}"
+                matTooltipPosition="right"
+              ></fa-icon>
+            }
+            @if (!paymentType.isSystemDefined) {
+              <fa-icon
+                icon="times-circle"
+                size="lg"
+                matTooltip="{{ 'tooltips.No' | translate }}"
+                matTooltipPosition="right"
+              ></fa-icon>
+            }
           </div>
         </td>
       </ng-container>
@@ -56,20 +58,22 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Cash Payment' | translate }}</th>
         <td mat-cell *matCellDef="let paymentType">
           <div [className]="paymentType.isCashPayment === true ? 'true text-center' : 'false text-center'">
-            <fa-icon
-              *ngIf="paymentType.isCashPayment"
-              icon="check-circle"
-              size="lg"
-              matTooltip="{{ 'tooltips.Yes' | translate }}"
-              matTooltipPosition="right"
-            ></fa-icon>
-            <fa-icon
-              *ngIf="!paymentType.isCashPayment"
-              icon="times-circle"
-              size="lg"
-              matTooltip="{{ 'tooltips.No' | translate }}"
-              matTooltipPosition="right"
-            ></fa-icon>
+            @if (paymentType.isCashPayment) {
+              <fa-icon
+                icon="check-circle"
+                size="lg"
+                matTooltip="{{ 'tooltips.Yes' | translate }}"
+                matTooltipPosition="right"
+              ></fa-icon>
+            }
+            @if (!paymentType.isCashPayment) {
+              <fa-icon
+                icon="times-circle"
+                size="lg"
+                matTooltip="{{ 'tooltips.No' | translate }}"
+                matTooltipPosition="right"
+              ></fa-icon>
+            }
           </div>
         </td>
       </ng-container>
@@ -82,24 +86,16 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
         <td mat-cell *matCellDef="let paymentType" class="layout-row">
-          <button
-            mat-button
-            [routerLink]="[paymentType.id, 'edit']"
-            color="primary"
-            *ngIf="!paymentType.isSystemDefined"
-            class="no-wrap"
-          >
-            <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'labels.buttons.Edit' | translate }}
-          </button>
-          <button
-            mat-button
-            (click)="deletePaymentType(paymentType.id)"
-            color="warn"
-            *ngIf="!paymentType.isSystemDefined"
-            class="no-wrap"
-          >
-            <fa-icon icon="trash" class="m-r-10"></fa-icon>{{ 'labels.buttons.Delete' | translate }}
-          </button>
+          @if (!paymentType.isSystemDefined) {
+            <button mat-button [routerLink]="[paymentType.id, 'edit']" color="primary" class="no-wrap">
+              <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'labels.buttons.Edit' | translate }}
+            </button>
+          }
+          @if (!paymentType.isSystemDefined) {
+            <button mat-button (click)="deletePaymentType(paymentType.id)" color="warn" class="no-wrap">
+              <fa-icon icon="trash" class="m-r-10"></fa-icon>{{ 'labels.buttons.Delete' | translate }}
+            </button>
+          }
         </td>
       </ng-container>
 

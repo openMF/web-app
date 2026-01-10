@@ -1,3 +1,20 @@
+.office-card-wrapper {
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0.75rem 0.25rem;
+}
+
+.card-title {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
 .tab-container {
   padding: 0.5rem;
   margin: 1% auto;

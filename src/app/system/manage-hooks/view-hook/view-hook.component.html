@@ -41,62 +41,77 @@
         <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Events' | translate }}:</div>
 
         <div class="flex-50">
-          <mat-label *ngFor="let event of hookData.events">
-            {{ event.actionName + '  -  ' + event.entityName }}
-
-            <br />
-          </mat-label>
+          @for (event of hookData.events; track event) {
+            <mat-label>
+              {{ event.actionName + '  -  ' + event.entityName }}
+              <br />
+            </mat-label>
+          }
         </div>
 
-        <div class="flex-50 mat-body-strong" *ngIf="hookData.name === 'Web'">
-          {{ 'labels.inputs.Content Type' | translate }}:
-        </div>
+        @if (hookData.name === 'Web') {
+          <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Content Type' | translate }}:</div>
+        }
 
-        <div class="flex-50" *ngIf="hookData.name === 'Web'">
-          {{ hookData.config[0].fieldValue }}
-        </div>
+        @if (hookData.name === 'Web') {
+          <div class="flex-50">
+            {{ hookData.config[0].fieldValue }}
+          </div>
+        }
 
         <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Payload URL' | translate }}:</div>
 
-        <div class="flex-50" *ngIf="hookData.name === 'Web'">
-          {{ hookData.config[1].fieldValue }}
-        </div>
+        @if (hookData.name === 'Web') {
+          <div class="flex-50">
+            {{ hookData.config[1].fieldValue }}
+          </div>
+        }
 
-        <div class="flex-50" *ngIf="hookData.name === 'SMS Bridge'">
-          {{ hookData.config[0].fieldValue }}
-        </div>
+        @if (hookData.name === 'SMS Bridge') {
+          <div class="flex-50">
+            {{ hookData.config[0].fieldValue }}
+          </div>
+        }
 
-        <div class="flex-50 mat-body-strong" *ngIf="hookData.name === 'SMS Bridge'">
-          {{ 'labels.inputs.Phone Number' | translate }}:
-        </div>
+        @if (hookData.name === 'SMS Bridge') {
+          <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Phone Number' | translate }}:</div>
+        }
 
-        <div class="flex-50" *ngIf="hookData.name === 'SMS Bridge'">
-          {{ hookData.config[1].fieldValue }}
-        </div>
+        @if (hookData.name === 'SMS Bridge') {
+          <div class="flex-50">
+            {{ hookData.config[1].fieldValue }}
+          </div>
+        }
 
-        <div class="flex-50 mat-body-strong" *ngIf="hookData.name === 'SMS Bridge'">
-          {{ 'labels.inputs.SMS Provider' | translate }}:
-        </div>
+        @if (hookData.name === 'SMS Bridge') {
+          <div class="flex-50 mat-body-strong">{{ 'labels.inputs.SMS Provider' | translate }}:</div>
+        }
 
-        <div class="flex-50" *ngIf="hookData.name === 'SMS Bridge'">
-          {{ hookData.config[2].fieldValue }}
-        </div>
+        @if (hookData.name === 'SMS Bridge') {
+          <div class="flex-50">
+            {{ hookData.config[2].fieldValue }}
+          </div>
+        }
 
-        <div class="flex-50 mat-body-strong" *ngIf="hookData.name === 'SMS Bridge'">
-          {{ 'labels.inputs.SMS Provider Account ID' | translate }}:
-        </div>
+        @if (hookData.name === 'SMS Bridge') {
+          <div class="flex-50 mat-body-strong">{{ 'labels.inputs.SMS Provider Account ID' | translate }}:</div>
+        }
 
-        <div class="flex-50" *ngIf="hookData.name === 'SMS Bridge'">
-          {{ hookData.config[3].fieldValue }}
-        </div>
+        @if (hookData.name === 'SMS Bridge') {
+          <div class="flex-50">
+            {{ hookData.config[3].fieldValue }}
+          </div>
+        }
 
-        <div class="flex-50 mat-body-strong" *ngIf="hookData.name === 'SMS Bridge'">
-          {{ 'labels.inputs.SMS Provider Token' | translate }}:
-        </div>
+        @if (hookData.name === 'SMS Bridge') {
+          <div class="flex-50 mat-body-strong">{{ 'labels.inputs.SMS Provider Token' | translate }}:</div>
+        }
 
-        <div class="flex-50" *ngIf="hookData.name === 'SMS Bridge'">
-          {{ hookData.config[4].fieldValue }}
-        </div>
+        @if (hookData.name === 'SMS Bridge') {
+          <div class="flex-50">
+            {{ hookData.config[4].fieldValue }}
+          </div>
+        }
       </div>
     </mat-card-content>
   </mat-card>

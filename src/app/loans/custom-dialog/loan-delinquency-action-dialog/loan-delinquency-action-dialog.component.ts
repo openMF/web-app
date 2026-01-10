@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import {
   MAT_DIALOG_DATA,
@@ -25,17 +25,17 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoanDelinquencyActionDialogComponent {
+  dialogRef = inject<MatDialogRef<LoanDelinquencyActionDialogComponent>>(MatDialogRef);
+  data = inject(MAT_DIALOG_DATA);
+  private formBuilder = inject(UntypedFormBuilder);
+
   delinquencyActionForm: UntypedFormGroup;
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
   maxDate = new Date(2100, 0, 1);
 
-  constructor(
-    public dialogRef: MatDialogRef<LoanDelinquencyActionDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private formBuilder: UntypedFormBuilder
-  ) {
+  constructor() {
     this.createDelinquencyActionForm();
   }
 

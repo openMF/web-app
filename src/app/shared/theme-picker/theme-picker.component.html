@@ -4,19 +4,18 @@
 
 <mat-menu class="mifosx-theme-picker-menu" #themeMenu="matMenu" x-position="before">
   <mat-grid-list cols="2">
-    <mat-grid-tile *ngFor="let theme of themes">
-      <div mat-menu-item (click)="installTheme(theme)">
-        <div class="mifosx-theme-picker-swatch">
-          <fa-icon
-            class="mifosx-theme-chosen-icon"
-            *ngIf="currentTheme.href === theme.href"
-            icon="check-circle"
-            size="lg"
-          ></fa-icon>
-          <div class="mifosx-theme-picker-primary" [style.background]="theme.primary"></div>
-          <div class="mifosx-theme-picker-accent" [style.background]="theme.accent"></div>
+    @for (theme of themes; track theme) {
+      <mat-grid-tile>
+        <div mat-menu-item (click)="installTheme(theme)">
+          <div class="mifosx-theme-picker-swatch">
+            @if (currentTheme.href === theme.href) {
+              <fa-icon class="mifosx-theme-chosen-icon" icon="check-circle" size="lg"></fa-icon>
+            }
+            <div class="mifosx-theme-picker-primary" [style.background]="theme.primary"></div>
+            <div class="mifosx-theme-picker-accent" [style.background]="theme.accent"></div>
+          </div>
         </div>
-      </div>
-    </mat-grid-tile>
+      </mat-grid-tile>
+    }
   </mat-grid-list>
 </mat-menu>

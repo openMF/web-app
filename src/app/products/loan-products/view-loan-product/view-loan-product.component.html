@@ -10,7 +10,7 @@
       >
         {{ 'labels.heading.General' | translate }}
       </a>
-      <ng-container *ngFor="let loanProductDatatable of loanProductDatatables">
+      @for (loanProductDatatable of loanProductDatatables; track loanProductDatatable) {
         <a
           mat-tab-link
           [routerLink]="['./datatables', loanProductDatatable.registeredTableName]"
@@ -21,7 +21,7 @@
         >
           {{ loanProductDatatable.registeredTableName }}
         </a>
-      </ng-container>
+      }
     </nav>
 
     <mat-tab-nav-panel #tabPanel>

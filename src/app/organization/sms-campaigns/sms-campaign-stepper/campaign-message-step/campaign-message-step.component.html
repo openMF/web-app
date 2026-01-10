@@ -7,15 +7,11 @@
   <h3 class="mat-h3 flex-98">{{ 'labels.heading.Template Parameters' | translate }}</h3>
 
   <div class="layout-row-wrap layout-xs-column layout-align-center">
-    <button
-      mat-stroked-button
-      color="primary"
-      class="parameter"
-      *ngFor="let label of parameterLabels"
-      (click)="addText(label)"
-    >
-      {{ label }}
-    </button>
+    @for (label of parameterLabels; track label) {
+      <button mat-stroked-button color="primary" class="parameter" (click)="addText(label)">
+        {{ label }}
+      </button>
+    }
   </div>
 
   <div class="layout-row align-center gap-2percent margin-t responsive-column">

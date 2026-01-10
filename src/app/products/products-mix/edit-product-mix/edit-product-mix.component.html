@@ -8,18 +8,24 @@
             <input matInput formControlName="productId" />
           </mat-form-field>
 
-          <mat-form-field *ngIf="productData">
-            <mat-label>{{ 'labels.inputs.Restricted products' | translate }}</mat-label>
-            <mat-select required formControlName="restrictedProducts" multiple>
-              <mat-option *ngFor="let product of productData" [value]="product.id">
-                {{ product.name }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="productMixForm.controls.restrictedProducts.hasError('required')">
-              {{ 'labels.commons.At least one restricted product' | translate }}
-              <strong>{{ 'labels.commons.must be selected' | translate }}</strong>
-            </mat-error>
-          </mat-form-field>
+          @if (productData) {
+            <mat-form-field>
+              <mat-label>{{ 'labels.inputs.Restricted products' | translate }}</mat-label>
+              <mat-select required formControlName="restrictedProducts" multiple>
+                @for (product of productData; track product) {
+                  <mat-option [value]="product.id">
+                    {{ product.name }}
+                  </mat-option>
+                }
+              </mat-select>
+              @if (productMixForm.controls.restrictedProducts.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.commons.At least one restricted product' | translate }}
+                  <strong>{{ 'labels.commons.must be selected' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+          }
         </div>
       </mat-card-content>
 

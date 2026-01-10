@@ -1,0 +1,80 @@
+export type DocumentationPage =
+  | 'userManual'
+  | 'closingEntries'
+  | 'addJournalEntries'
+  | 'chartOfAccountsSetup'
+  | 'financialActivityMappings'
+  | 'migrateOpeningBalances'
+  | 'users'
+  | 'keyDesignPrinciples'
+  | 'rolesAndPermissions'
+  | 'shareProducts'
+  | 'loanProducts'
+  | 'manageReports'
+  | 'manageDataTables'
+  | 'manageSchedulerJobs'
+  | 'globalConfiguration'
+  | 'savingsProducts'
+  | 'manageCodes'
+  | 'configureMakerCheckerTasks'
+  | 'fixedDepositProducts'
+  | 'recurringDepositProducts'
+  | 'charges'
+  | 'workingDays'
+  | 'manageEmployees'
+  | 'currencyConfiguration'
+  | 'manageOffices'
+  | 'manageFunds'
+  | 'mifosHome'
+  | 'mifosCommunity'
+  | 'mifosVolunteer'
+  | 'fineractFunctionalSpecs'
+  | 'fineractContributorZone'
+  | 'mifosUserGroup'
+  | 'mifosDeveloperGroup'
+  | 'mifosIrc'
+  | 'sourceforgeMifos'
+  | 'mifosDonate'
+  | 'cronmaker';
+
+export const DOCUMENTATION_PATHS: Record<DocumentationPage, string> = {
+  userManual: 'spaces/docs/pages/52035622/User+Manual',
+  closingEntries: 'spaces/docs/pages/67895316/Closing+Entries',
+  addJournalEntries: 'spaces/docs/pages/67895310/Add+Journal+Entries',
+  chartOfAccountsSetup: 'spaces/docs/pages/67141745/Chart+of+Accounts+-+General+Ledger+Setup',
+  financialActivityMappings: 'spaces/docs/pages/106430472/Accounts+linked+to+Financial+Activities',
+  migrateOpeningBalances: 'spaces/docs/pages/90243328/Migrate+opening+balances+Office-wise',
+  users: 'spaces/docs/pages/67141740/Users',
+  keyDesignPrinciples: 'spaces/MDZ/pages/92012624/Key+Design+Principles',
+  rolesAndPermissions: 'spaces/docs/pages/67895364/Manage+Roles+and+Permissions',
+  shareProducts: 'spaces/docs/pages/129531946/Share+products',
+  loanProducts: 'spaces/docs/pages/102039585/Loan+Products',
+  manageReports: 'spaces/docs/pages/67895354/Manage+Reports',
+  manageDataTables: 'spaces/docs/pages/52592760/Manage+Data+Tables',
+  manageSchedulerJobs: 'spaces/docs/pages/67895356/Manage+Scheduler+Jobs',
+  globalConfiguration: 'spaces/docs/pages/67895362/Global+Configuration',
+  savingsProducts: 'spaces/docs/pages/102629497/Savings+Products',
+  manageCodes: 'spaces/docs/pages/67895350/Manage+Codes',
+  configureMakerCheckerTasks: 'spaces/docs/pages/67895359/Configure+Maker-Checker+Tasks',
+  fixedDepositProducts: 'spaces/docs/pages/102629544/Fixed+Deposit+Products',
+  recurringDepositProducts: 'spaces/docs/pages/102629552/Recurring+Deposit',
+  charges: 'spaces/docs/pages/72908813/Charges',
+  workingDays: 'spaces/docs/pages/90243212/Working+Days',
+  manageEmployees: 'spaces/docs/pages/67141732/Manage+Employees',
+  currencyConfiguration: 'spaces/docs/pages/67141734/Currency+Configuration',
+  manageOffices: 'spaces/docs/pages/67141727/Manage+Offices',
+  manageFunds: 'spaces/docs/pages/67141736/Manage+Funds',
+  // External links (full URLs)
+  mifosHome: 'https://mifos.org/',
+  mifosCommunity: 'https://mifos.org/resources/community/',
+  mifosVolunteer: 'https://mifos.org/take-action/volunteer/',
+  fineractFunctionalSpecs:
+    'https://cwiki.apache.org/confluence/display/FINERACT/Apache+Fineract+1.0+Functional+Specifications',
+  fineractContributorZone: 'https://cwiki.apache.org/confluence/display/FINERACT/Contributor%27s+Zone',
+  mifosUserGroup: 'https://groups.google.com/forum/#!forum/mifosusers',
+  mifosDeveloperGroup: 'https://groups.google.com/forum/#!forum/mifosdeveloper',
+  mifosIrc: 'https://mifos.org/resources/community/communications/#mifos-irc',
+  sourceforgeMifos: 'https://sourceforge.net/projects/mifos/',
+  mifosDonate: 'https://mifos.org/donate/',
+  cronmaker: 'http://www.cronmaker.com/'
+};

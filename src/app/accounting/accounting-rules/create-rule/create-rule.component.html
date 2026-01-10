@@ -6,23 +6,29 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Accounting Rule Name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
-            <mat-error *ngIf="accountingRuleForm.controls.name.hasError('required')">
-              {{ 'labels.inputs.Accounting Rule Name' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (accountingRuleForm.controls.name.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Accounting Rule Name' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
             <mat-select required formControlName="officeId">
-              <mat-option *ngFor="let office of officeData" [value]="office.id">
-                {{ office.name }}
-              </mat-option>
+              @for (office of officeData; track office) {
+                <mat-option [value]="office.id">
+                  {{ office.name }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error *ngIf="accountingRuleForm.controls.officeId.hasError('required')">
-              {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (accountingRuleForm.controls.officeId.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <div class="rule-wrapper flex-48 layout-row responsive-column">
@@ -40,34 +46,38 @@
             </mat-radio-group>
           </div>
 
-          <mat-form-field class="flex-48" *ngIf="accountingRuleForm.controls.debitRuleType.value === 'fixedAccount'">
-            <mat-label>{{ 'labels.inputs.Account to Debit' | translate }}</mat-label>
-            <mat-select formControlName="accountToDebit">
-              <mat-option *ngFor="let glAccount of glAccountData" [value]="glAccount.id">
-                {{ glAccount.name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <div
-            class="flex-48 layout-row gap-2percent responsive-column"
-            *ngIf="accountingRuleForm.controls.debitRuleType.value === 'listOfAccounts'"
-          >
-            <mat-form-field class="flex-50">
-              <mat-label>{{ 'labels.inputs.Debit Tags' | translate }}</mat-label>
-              <mat-select formControlName="debitTags" multiple>
-                <mat-option *ngFor="let debitTag of debitTagData" [value]="debitTag.id">
-                  {{ debitTag.name }}
-                </mat-option>
+          @if (accountingRuleForm.controls.debitRuleType.value === 'fixedAccount') {
+            <mat-form-field class="flex-48">
+              <mat-label>{{ 'labels.inputs.Account to Debit' | translate }}</mat-label>
+              <mat-select formControlName="accountToDebit">
+                @for (glAccount of glAccountData; track glAccount) {
+                  <mat-option [value]="glAccount.id">
+                    {{ glAccount.name }}
+                  </mat-option>
+                }
               </mat-select>
             </mat-form-field>
+          }
 
-            <div class="flex-50" ngClass.gt-md="entries-wrapper">
-              <mat-checkbox labelPosition="before" formControlName="allowMultipleDebitEntries" class="entries">
-                {{ 'labels.inputs.Multiple Debit Entries Allowed' | translate }}
-              </mat-checkbox>
+          @if (accountingRuleForm.controls.debitRuleType.value === 'listOfAccounts') {
+            <div class="flex-48 layout-row gap-2percent responsive-column">
+              <mat-form-field class="flex-50">
+                <mat-label>{{ 'labels.inputs.Debit Tags' | translate }}</mat-label>
+                <mat-select formControlName="debitTags" multiple>
+                  @for (debitTag of debitTagData; track debitTag) {
+                    <mat-option [value]="debitTag.id">
+                      {{ debitTag.name }}
+                    </mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+              <div class="flex-50" ngClass.gt-md="entries-wrapper">
+                <mat-checkbox labelPosition="before" formControlName="allowMultipleDebitEntries" class="entries">
+                  {{ 'labels.inputs.Multiple Debit Entries Allowed' | translate }}
+                </mat-checkbox>
+              </div>
             </div>
-          </div>
+          }
 
           <div class="rule-wrapper flex-48 layout-row responsive-column">
             <mat-label class="flex-50"
@@ -84,34 +94,38 @@
             </mat-radio-group>
           </div>
 
-          <mat-form-field class="flex-48" *ngIf="accountingRuleForm.controls.creditRuleType.value === 'fixedAccount'">
-            <mat-label>{{ 'labels.inputs.Account to Credit' | translate }}</mat-label>
-            <mat-select formControlName="accountToCredit">
-              <mat-option *ngFor="let glAccount of glAccountData" [value]="glAccount.id">
-                {{ glAccount.name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <div
-            class="flex-48 layout-row gap-2percent responsive-column"
-            *ngIf="accountingRuleForm.controls.creditRuleType.value === 'listOfAccounts'"
-          >
-            <mat-form-field class="flex-50">
-              <mat-label>{{ 'labels.inputs.Credit Tags' | translate }}</mat-label>
-              <mat-select formControlName="creditTags" multiple>
-                <mat-option *ngFor="let creditTag of creditTagData" [value]="creditTag.id">
-                  {{ creditTag.name }}
-                </mat-option>
+          @if (accountingRuleForm.controls.creditRuleType.value === 'fixedAccount') {
+            <mat-form-field class="flex-48">
+              <mat-label>{{ 'labels.inputs.Account to Credit' | translate }}</mat-label>
+              <mat-select formControlName="accountToCredit">
+                @for (glAccount of glAccountData; track glAccount) {
+                  <mat-option [value]="glAccount.id">
+                    {{ glAccount.name }}
+                  </mat-option>
+                }
               </mat-select>
             </mat-form-field>
+          }
 
-            <div class="flex-50" ngClass.gt-md="entries-wrapper">
-              <mat-checkbox labelPosition="before" formControlName="allowMultipleCreditEntries" class="entries">
-                {{ 'labels.inputs.Multiple Credit Entries Allowed' | translate }}
-              </mat-checkbox>
+          @if (accountingRuleForm.controls.creditRuleType.value === 'listOfAccounts') {
+            <div class="flex-48 layout-row gap-2percent responsive-column">
+              <mat-form-field class="flex-50">
+                <mat-label>{{ 'labels.inputs.Credit Tags' | translate }}</mat-label>
+                <mat-select formControlName="creditTags" multiple>
+                  @for (creditTag of creditTagData; track creditTag) {
+                    <mat-option [value]="creditTag.id">
+                      {{ creditTag.name }}
+                    </mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+              <div class="flex-50" ngClass.gt-md="entries-wrapper">
+                <mat-checkbox labelPosition="before" formControlName="allowMultipleCreditEntries" class="entries">
+                  {{ 'labels.inputs.Multiple Credit Entries Allowed' | translate }}
+                </mat-checkbox>
+              </div>
             </div>
-          </div>
+          }
 
           <mat-form-field class="flex-98">
             <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>

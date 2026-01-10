@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -53,6 +53,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class TransactionsComponent implements OnInit {
+  private organizationService = inject(OrganizationService);
+  private route = inject(ActivatedRoute);
+
   /** Currency selector. */
   currencySelector = new UntypedFormControl();
   /** Cashier Id */
@@ -85,10 +88,7 @@ export class TransactionsComponent implements OnInit {
    * @param {OrganizationService} organizationService Organization Service.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(
-    private organizationService: OrganizationService,
-    private route: ActivatedRoute
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { currencies: any }) => {
       this.currencyData = data.currencies.selectedCurrencyOptions;
     });

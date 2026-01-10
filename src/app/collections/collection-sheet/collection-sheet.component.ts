@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { CollectionsService } from '../collections.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -22,6 +22,15 @@ import { CollectionSheetData, JLGGroupData, MeetingFallCenter } from '../models/
   ]
 })
 export class CollectionSheetComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private centerService = inject(CentersService);
+  private collectionsService = inject(CollectionsService);
+  private organizationService = inject(OrganizationService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
+
   /** Offices Data */
   officesData: any;
   /** Group Data */
@@ -50,16 +59,7 @@ export class CollectionSheetComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private centerService: CentersService,
-    private collectionsService: CollectionsService,
-    private organizationService: OrganizationService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private settingsService: SettingsService,
-    private dateUtils: Dates
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { officesData: any }) => {
       this.officesData = data.officesData;
     });

@@ -1,7 +1,14 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { UntypedFormControl, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  AbstractControl,
+  UntypedFormControl,
+  UntypedFormGroup,
+  ValidatorFn,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 
 /** Custom Services */
 import { ReportsService } from '../reports.service';
@@ -42,6 +49,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class RunReportComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private reportsService = inject(ReportsService);
+  private settingsService = inject(SettingsService);
+  private alertService = inject(AlertService);
+  private dateUtils = inject(Dates);
+
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -87,13 +100,7 @@ export class RunReportComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    * @param {Dates} dateUtils Date Utils
    */
-  constructor(
-    private route: ActivatedRoute,
-    private reportsService: ReportsService,
-    private settingsService: SettingsService,
-    private alertService: AlertService,
-    private dateUtils: Dates
-  ) {
+  constructor() {
     this.report.name = this.route.snapshot.params['name'];
     this.route.queryParams.subscribe((queryParams: { type: any; id: any }) => {
       this.report.type = queryParams.type;
@@ -176,6 +183,7 @@ export class RunReportComponent implements OnInit {
     }
     this.decimalChoice.patchValue('0');
     this.setChildControls();
+    this.addDateRangeValidator();
   }
 
   /**
@@ -204,6 +212,62 @@ export class RunReportComponent implements OnInit {
         param.pentahoName = `R_${entry.reportParameterName}`;
       });
     });
+  }
+
+  addDateRangeValidator(): void {
+    const dateParams = this.paramData.filter((param: ReportParameter) => param.displayType === 'date');
+    const startParam = dateParams.find((param: ReportParameter) => this.isStartDateParam(param));
+    const endParam = dateParams.find((param: ReportParameter) => this.isEndDateParam(param));
+
+    if (!startParam || !endParam) {
+      return;
+    }
+
+    const startControl = this.reportForm.get(startParam.name);
+    const endControl = this.reportForm.get(endParam.name);
+
+    if (!startControl || !endControl) {
+      return;
+    }
+
+    endControl.addValidators(this.endDateAfterStartValidator(startParam.name));
+    endControl.updateValueAndValidity({ emitEvent: false });
+    startControl.valueChanges.subscribe(() => endControl.updateValueAndValidity({ emitEvent: false }));
+  }
+
+  endDateAfterStartValidator(startControlName: string): ValidatorFn {
+    return (control: AbstractControl) => {
+      const startControl = control.parent?.get(startControlName);
+      const startValue = startControl?.value;
+      const endValue = control.value;
+
+      if (!startValue || !endValue) {
+        return null;
+      }
+
+      const startDate = new Date(startValue);
+      const endDate = new Date(endValue);
+
+      if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+        return null;
+      }
+
+      if (endDate < startDate) {
+        return { endBeforeStart: true };
+      }
+
+      return null;
+    };
+  }
+
+  isStartDateParam(param: ReportParameter): boolean {
+    const identifier = `${param.name}${param.variable}${param.label}`.toLowerCase();
+    return identifier.includes('start') || identifier.includes('from');
+  }
+
+  isEndDateParam(param: ReportParameter): boolean {
+    const identifier = `${param.name}${param.variable}${param.label}`.toLowerCase();
+    return identifier.includes('end') || identifier.includes('to');
   }
 
   /**

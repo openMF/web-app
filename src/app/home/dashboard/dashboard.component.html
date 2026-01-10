@@ -8,9 +8,11 @@
         </mat-form-field>
 
         <mat-autocomplete #activitySearch="matAutocomplete">
-          <mat-option *ngFor="let activity of filteredActivities | async" [routerLink]="activity.path">
-            <span>{{ activity.activity }}</span>
-          </mat-option>
+          @for (activity of filteredActivities | async; track activity) {
+            <mat-option [routerLink]="activity.path">
+              <span>{{ activity.activity }}</span>
+            </mat-option>
+          }
         </mat-autocomplete>
       </mat-card-content>
     </div>

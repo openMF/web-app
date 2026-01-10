@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
@@ -72,6 +72,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class TransactionsTabComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private dateUtils = inject(Dates);
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
+  private loansService = inject(LoansService);
+  private translateService = inject(TranslateService);
+  private settingsService = inject(SettingsService);
+  private alertService = inject(AlertService);
+
   /** Loan Details Data */
   transactionsData: LoanTransaction[] = [];
   loanDetailsData: any;
@@ -127,16 +136,7 @@ export class TransactionsTabComponent implements OnInit {
    * Retrieves the loans with associations data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private dateUtils: Dates,
-    private router: Router,
-    private dialog: MatDialog,
-    private loansService: LoansService,
-    private translateService: TranslateService,
-    private settingsService: SettingsService,
-    private alertService: AlertService
-  ) {
+  constructor() {
     this.route.parent.parent.data.subscribe((data: { loanDetailsData: any }) => {
       this.loanDetailsData = data.loanDetailsData;
       this.status = data.loanDetailsData.status.value;
@@ -520,7 +520,6 @@ export class TransactionsTabComponent implements OnInit {
             required: false,
             order: 4
           })
-
         ];
         const data = {
           title: this.translateService.instant('labels.buttons.Create Interest Refund'),
@@ -595,10 +594,10 @@ export class TransactionsTabComponent implements OnInit {
               max: transactionAmount,
               validators: [
                 Validators.min(0.001),
-                Validators.max(transactionAmount)],
+                Validators.max(transactionAmount)
+              ],
               order: 2
             })
-
           ];
           const data = {
             title: `Adjustment ${transaction.type.value} Transaction`,
@@ -671,10 +670,10 @@ export class TransactionsTabComponent implements OnInit {
               max: transactionAmount,
               validators: [
                 Validators.min(0.001),
-                Validators.max(transactionAmount)],
+                Validators.max(transactionAmount)
+              ],
               order: 2
             })
-
           ];
           const data = {
             title: `Adjustment ${transaction.type.value} Transaction`,

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import {
   UntypedFormBuilder,
   UntypedFormControl,
@@ -26,18 +26,16 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoansAccountDatatableStepComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
+
   /** Input Fields Data */
   @Input() datatableData: any;
   /** Create Input Form */
   datatableForm: UntypedFormGroup;
 
   datatableInputs: any = [];
-
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private settingsService: SettingsService,
-    private dateUtils: Dates
-  ) {}
 
   ngOnInit(): void {
     this.datatableInputs = this.datatableData.columnHeaderData.filter((column: any) => {

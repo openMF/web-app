@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
@@ -13,10 +13,8 @@ import { ClientsService } from '../clients.service';
  */
 @Injectable()
 export class ClientIdentifierTemplateResolver {
-  /**
-   * @param {ClientsService} ClientsService Clients service.
-   */
-  constructor(private clientsService: ClientsService) {}
+  private clientsService = inject(ClientsService);
+
   /**
    * Returns the Client Identities data.
    * @returns {Observable<any>}

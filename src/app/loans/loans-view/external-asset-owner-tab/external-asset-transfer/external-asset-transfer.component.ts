@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { ExternalAssetOwner } from 'app/loans/services/external-asset-owner';
 import { NgClass } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -21,10 +21,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ExternalAssetTransferComponent {
+  private externalAssetOwner = inject(ExternalAssetOwner);
+
   /** Input Fields Data */
   @Input() transferData: any;
-
-  constructor(private externalAssetOwner: ExternalAssetOwner) {}
 
   itemStatus(status: string): string {
     return this.externalAssetOwner.itemStatus(status);

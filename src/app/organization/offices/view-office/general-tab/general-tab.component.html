@@ -1,3 +1,15 @@
+<div class="office-card-wrapper">
+  <div class="card-header">
+    <span class="card-title">
+      {{ 'labels.heading.General' | translate }}
+    </span>
+  </div>
+
+  <div class="tab-container mat-typography compact-view">
+    <div class="layout-row-wrap responsive-column compact-details condensed">...</div>
+  </div>
+</div>
+
 <div class="tab-container mat-typography compact-view">
   <div class="layout-row-wrap responsive-column compact-details condensed">
     <div class="flex-45 mat-body-strong left">{{ 'labels.inputs.Parent Office' | translate }}</div>
@@ -19,19 +31,15 @@
     <hr class="section-divider" />
 
     <div class="flex-45 mat-body-strong left">{{ 'labels.inputs.External Id' | translate }}</div>
-    <div class="flex-50 right" *ngIf="officeData.externalId">
-      <mifosx-external-identifier externalId="{{ officeData.externalId }}"></mifosx-external-identifier>
-    </div>
-    <div class="flex-50 right" *ngIf="!officeData.externalId">
-      {{ 'labels.inputs.Unassigned' | translate }}
-    </div>
-  </div>
-
-  <div class="bottom-button-container small-buttons">
-    <span *mifosxHasPermission="'UPDATE_OFFICE'">
-      <button mat-raised-button color="primary" [routerLink]="['../edit']" class="edit-button">
-        <fa-icon icon="edit" class="m-r-5"></fa-icon>{{ 'labels.buttons.Edit' | translate }}
-      </button>
-    </span>
+    @if (officeData.externalId) {
+      <div class="flex-50 right">
+        <mifosx-external-identifier externalId="{{ officeData.externalId }}"></mifosx-external-identifier>
+      </div>
+    }
+    @if (!officeData.externalId) {
+      <div class="flex-50 right">
+        {{ 'labels.inputs.Unassigned' | translate }}
+      </div>
+    }
   </div>
 </div>

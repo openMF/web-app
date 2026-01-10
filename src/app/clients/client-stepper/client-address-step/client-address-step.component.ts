@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Models */
@@ -46,6 +46,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ClientAddressStepComponent {
+  private dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
+
   /** Client Address Field Config */
   @Input() clientAddressFieldConfig: any;
   /** Client Template */
@@ -58,10 +61,7 @@ export class ClientAddressStepComponent {
    * @param {MatDialog} dialog Mat Dialog
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor(
-    private dialog: MatDialog,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.clientAddressData = [];
   }
 

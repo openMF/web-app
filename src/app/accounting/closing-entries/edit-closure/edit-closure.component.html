@@ -6,9 +6,11 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
             <mat-select required formControlName="officeId">
-              <mat-option *ngFor="let office of officeData" [value]="office.id">
-                {{ office.name }}
-              </mat-option>
+              @for (office of officeData; track office) {
+                <mat-option [value]="office.id">
+                  {{ office.name }}
+                </mat-option>
+              }
             </mat-select>
           </mat-form-field>
 

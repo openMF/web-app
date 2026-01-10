@@ -38,33 +38,36 @@
       ></mifosx-client-family-members-step>
     </mat-step>
 
-    <mat-step *ngIf="clientTemplate.isAddressEnabled">
-      <ng-template matStepLabel>{{ 'labels.inputs.ADDRESS' | translate }}</ng-template>
+    @if (clientTemplate.isAddressEnabled) {
+      <mat-step>
+        <ng-template matStepLabel>{{ 'labels.inputs.ADDRESS' | translate }}</ng-template>
+        <mifosx-client-address-step
+          #clientAddress
+          [clientTemplate]="clientTemplate"
+          [clientAddressFieldConfig]="clientAddressFieldConfig"
+        >
+        </mifosx-client-address-step>
+      </mat-step>
+    }
 
-      <mifosx-client-address-step
-        #clientAddress
-        [clientTemplate]="clientTemplate"
-        [clientAddressFieldConfig]="clientAddressFieldConfig"
-      >
-      </mifosx-client-address-step>
-    </mat-step>
+    @for (datatable of datatables; track datatable) {
+      <mat-step>
+        <ng-template matStepLabel>{{ datatable.registeredTableName }}</ng-template>
+        <mifosx-client-datatable-step [datatableData]="datatable" #dtclient></mifosx-client-datatable-step>
+      </mat-step>
+    }
 
-    <mat-step *ngFor="let datatable of datatables">
-      <ng-template matStepLabel>{{ datatable.registeredTableName }}</ng-template>
-
-      <mifosx-client-datatable-step [datatableData]="datatable" #dtclient></mifosx-client-datatable-step>
-    </mat-step>
-
-    <mat-step *ngIf="areFormvalids()" completed>
-      <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
-
-      <mifosx-client-preview-step
-        [clientTemplate]="clientTemplate"
-        [clientAddressFieldConfig]="clientAddressFieldConfig"
-        [client]="client"
-        (submitEvent)="submit()"
-      >
-      </mifosx-client-preview-step>
-    </mat-step>
+    @if (areFormvalids()) {
+      <mat-step completed>
+        <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
+        <mifosx-client-preview-step
+          [clientTemplate]="clientTemplate"
+          [clientAddressFieldConfig]="clientAddressFieldConfig"
+          [client]="client"
+          (submitEvent)="submit()"
+        >
+        </mifosx-client-preview-step>
+      </mat-step>
+    }
   </mat-stepper>
 </div>

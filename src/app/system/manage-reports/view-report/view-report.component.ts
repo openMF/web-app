@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -28,6 +28,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewReportComponent {
+  private route = inject(ActivatedRoute);
+  private systemService = inject(SystemService);
+  private dialog = inject(MatDialog);
+  private router = inject(Router);
+
   /** Report Data. */
   reportData: any;
 
@@ -38,12 +43,7 @@ export class ViewReportComponent {
    * @param {MatDialog} dialog Dialog Reference.
    * @param {Router} router Router for navigation.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private systemService: SystemService,
-    private dialog: MatDialog,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { report: any }) => {
       this.reportData = data.report;
     });

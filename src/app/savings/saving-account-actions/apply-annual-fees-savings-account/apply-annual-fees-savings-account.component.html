@@ -15,19 +15,23 @@
             />
             <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #dueDatePicker></mat-datepicker>
-            <mat-error *ngIf="applyAnnualFeesForm.controls.dueDate.hasError('required')">
-              {{ 'labels.inputs.Due Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (applyAnnualFeesForm.controls.dueDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Due Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
             <input type="number" formControlName="amount" required matInput />
-            <mat-error *ngIf="applyAnnualFeesForm.controls.amount.hasError('required')">
-              {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (applyAnnualFeesForm.controls.amount.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
         </div>
       </mat-card-content>

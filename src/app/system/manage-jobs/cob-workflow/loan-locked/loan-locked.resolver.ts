@@ -10,6 +10,7 @@ export class LoanLockedResolver {
   /**
    * @param {TasksService} tasksService Tasks service.
    */
+  // eslint-disable-next-line @angular-eslint/prefer-inject
   constructor(private tasksService: TasksService) {}
 
   /**

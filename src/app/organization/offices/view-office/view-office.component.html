@@ -1,4 +1,17 @@
 <div class="container narrow-container extra-small">
+  <div class="action-bar">
+    <button
+      mat-raised-button
+      color="primary"
+      class="edit-button"
+      [routerLink]="['./edit']"
+      *mifosxHasPermission="'UPDATE_OFFICE'"
+    >
+      <fa-icon icon="edit" class="m-r-10"></fa-icon>
+      {{ 'labels.buttons.Edit' | translate }}
+    </button>
+  </div>
+
   <mat-card class="office-card">
     <mat-card-content class="card-content">
       <nav mat-tab-nav-bar class="navigation-tabs" [tabPanel]="tabPanel">
@@ -12,19 +25,21 @@
         >
           {{ 'labels.inputs.General' | translate }}
         </a>
-        <span *ngFor="let officeDatatable of officeDatatables">
-          <a
-            mat-tab-link
-            *mifosxHasPermission="'READ_' + officeDatatable.registeredTableName"
-            [routerLink]="['./datatables', officeDatatable.registeredTableName]"
-            routerLinkActive
-            #datatable="routerLinkActive"
-            [active]="datatable.isActive"
-            class="compact-tab"
-          >
-            {{ officeDatatable.registeredTableName }}
-          </a>
-        </span>
+        @for (officeDatatable of officeDatatables; track officeDatatable) {
+          <span>
+            <a
+              mat-tab-link
+              *mifosxHasPermission="'READ_' + officeDatatable.registeredTableName"
+              [routerLink]="['./datatables', officeDatatable.registeredTableName]"
+              routerLinkActive
+              #datatable="routerLinkActive"
+              [active]="datatable.isActive"
+              class="compact-tab"
+            >
+              {{ officeDatatable.registeredTableName }}
+            </a>
+          </span>
+        }
       </nav>
 
       <mat-tab-nav-panel #tabPanel class="tab-panel">

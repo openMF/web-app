@@ -1,0 +1,317 @@
+/**
+ * Material Web Components Global Styles
+ * These styles apply to @material/web components throughout the app
+ * Following Material Design 3 specifications
+ */
+
+// Material Web Button Components base styling
+md-filled-button,
+md-outlined-button,
+md-elevated-button,
+md-text-button,
+md-filled-tonal-button {
+  // Ensure buttons are properly displayed
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  // Ensure minimum height for consistency
+  min-height: 40px;
+
+  // Typography
+  --md-filled-button-label-text-size: 14px;
+  --md-filled-button-label-text-weight: 500;
+  --md-filled-button-label-text-font: 'Roboto', sans-serif;
+  --md-outlined-button-label-text-size: 14px;
+  --md-outlined-button-label-text-weight: 500;
+  --md-outlined-button-label-text-font: 'Roboto', sans-serif;
+  --md-elevated-button-label-text-size: 14px;
+  --md-elevated-button-label-text-weight: 500;
+  --md-elevated-button-label-text-font: 'Roboto', sans-serif;
+  --md-text-button-label-text-size: 14px;
+  --md-text-button-label-text-weight: 500;
+  --md-text-button-label-text-font: 'Roboto', sans-serif;
+  --md-filled-tonal-button-label-text-size: 14px;
+  --md-filled-tonal-button-label-text-weight: 500;
+  --md-filled-tonal-button-label-text-font: 'Roboto', sans-serif;
+  // Border radius (Material Design 3 uses 20px for buttons)
+  --md-filled-button-container-shape: 20px;
+  --md-outlined-button-container-shape: 20px;
+  --md-elevated-button-container-shape: 20px;
+  --md-text-button-container-shape: 20px;
+  --md-filled-tonal-button-container-shape: 20px;
+
+  // Padding
+  --md-filled-button-leading-space: 24px;
+  --md-filled-button-trailing-space: 24px;
+  --md-outlined-button-leading-space: 24px;
+  --md-outlined-button-trailing-space: 24px;
+  --md-elevated-button-leading-space: 24px;
+  --md-elevated-button-trailing-space: 24px;
+  --md-text-button-leading-space: 24px;
+  --md-text-button-trailing-space: 24px;
+  --md-filled-tonal-button-leading-space: 24px;
+  --md-filled-tonal-button-trailing-space: 24px;
+
+  // Apply theme colors using Material Design tokens
+  --md-sys-color-primary: #1074b9;
+  --md-sys-color-on-primary: #fff;
+  --md-sys-color-surface-container-highest: #e1e2ec;
+  --md-sys-color-on-surface: #303135;
+  --md-sys-color-on-surface-variant: #44474e;
+
+  // ========== FILLED BUTTON ==========
+  // Normal state
+  --md-filled-button-container-color: #1074b9;
+  --md-filled-button-label-text-color: #fff;
+
+  // Hover state
+  --md-filled-button-hover-state-layer-color: #fff;
+  --md-filled-button-hover-state-layer-opacity: 8%;
+
+  // Focus state
+  --md-filled-button-focus-state-layer-color: #fff;
+  --md-filled-button-focus-state-layer-opacity: 12%;
+
+  // Pressed state
+  --md-filled-button-pressed-state-layer-color: #fff;
+  --md-filled-button-pressed-state-layer-opacity: 12%;
+
+  // Disabled state
+  --md-filled-button-disabled-container-color: #e0e0e0;
+  --md-filled-button-disabled-container-opacity: 1;
+  --md-filled-button-disabled-label-text-color: #9e9e9e;
+  --md-filled-button-disabled-label-text-opacity: 1;
+
+  // ========== OUTLINED BUTTON ==========
+  // Normal state
+  --md-outlined-button-outline-color: #1074b9;
+  --md-outlined-button-label-text-color: #1074b9;
+  --md-outlined-button-outline-width: 1px;
+
+  // Hover state
+  --md-outlined-button-hover-state-layer-color: #1074b9;
+  --md-outlined-button-hover-state-layer-opacity: 8%;
+
+  // Focus state
+  --md-outlined-button-focus-state-layer-color: #1074b9;
+  --md-outlined-button-focus-state-layer-opacity: 12%;
+
+  // Pressed state
+  --md-outlined-button-pressed-state-layer-color: #1074b9;
+  --md-outlined-button-pressed-state-layer-opacity: 12%;
+
+  // Disabled state
+  --md-outlined-button-disabled-outline-color: #e0e0e0;
+  --md-outlined-button-disabled-outline-opacity: 1;
+  --md-outlined-button-disabled-label-text-color: #9e9e9e;
+  --md-outlined-button-disabled-label-text-opacity: 1;
+
+  // ========== ELEVATED BUTTON ==========
+  // Normal state
+  --md-elevated-button-container-color: #f5f5f5;
+  --md-elevated-button-label-text-color: #1074b9;
+  --md-elevated-button-container-elevation: 1;
+
+  // Hover state
+  --md-elevated-button-hover-state-layer-color: #1074b9;
+  --md-elevated-button-hover-state-layer-opacity: 8%;
+  --md-elevated-button-hover-container-elevation: 2;
+
+  // Focus state
+  --md-elevated-button-focus-state-layer-color: #1074b9;
+  --md-elevated-button-focus-state-layer-opacity: 12%;
+  --md-elevated-button-focus-container-elevation: 1;
+
+  // Pressed state
+  --md-elevated-button-pressed-state-layer-color: #1074b9;
+  --md-elevated-button-pressed-state-layer-opacity: 12%;
+  --md-elevated-button-pressed-container-elevation: 1;
+
+  // Disabled state
+  --md-elevated-button-disabled-container-color: #e0e0e0;
+  --md-elevated-button-disabled-container-opacity: 1;
+  --md-elevated-button-disabled-container-elevation: 0;
+  --md-elevated-button-disabled-label-text-color: #9e9e9e;
+  --md-elevated-button-disabled-label-text-opacity: 1;
+
+  // ========== TEXT BUTTON ==========
+  // Normal state
+  --md-text-button-label-text-color: #1074b9;
+
+  // Hover state
+  --md-text-button-hover-state-layer-color: #1074b9;
+  --md-text-button-hover-state-layer-opacity: 8%;
+
+  // Focus state
+  --md-text-button-focus-state-layer-color: #1074b9;
+  --md-text-button-focus-state-layer-opacity: 12%;
+
+  // Pressed state
+  --md-text-button-pressed-state-layer-color: #1074b9;
+  --md-text-button-pressed-state-layer-opacity: 12%;
+
+  // Disabled state
+  --md-text-button-disabled-label-text-color: #9e9e9e;
+  --md-text-button-disabled-label-text-opacity: 1;
+
+  // ========== TONAL BUTTON ==========
+  // Normal state
+  --md-filled-tonal-button-container-color: #d1e4ff;
+  --md-filled-tonal-button-label-text-color: #001d36;
+
+  // Hover state
+  --md-filled-tonal-button-hover-state-layer-color: #001d36;
+  --md-filled-tonal-button-hover-state-layer-opacity: 8%;
+
+  // Focus state
+  --md-filled-tonal-button-focus-state-layer-color: #001d36;
+  --md-filled-tonal-button-focus-state-layer-opacity: 12%;
+
+  // Pressed state
+  --md-filled-tonal-button-pressed-state-layer-color: #001d36;
+  --md-filled-tonal-button-pressed-state-layer-opacity: 12%;
+
+  // Disabled state
+  --md-filled-tonal-button-disabled-container-color: #e0e0e0;
+  --md-filled-tonal-button-disabled-container-opacity: 1;
+  --md-filled-tonal-button-disabled-label-text-color: #9e9e9e;
+  --md-filled-tonal-button-disabled-label-text-opacity: 1;
+}
+
+// Dark theme support
+.dark-theme {
+  --mat-app-text-color: #e2e2e5;
+  --md-sys-color-surface: #424242;
+  --md-sys-color-surface-container-low: #424242;
+  --md-sys-color-on-surface: #e2e2e5;
+
+  // Icons Prefix - Global definition for dark theme
+  --md-icon-prefix-label-text-color: #e3e2e6;
+
+  md-filled-button,
+  md-outlined-button,
+  md-elevated-button,
+  md-text-button,
+  md-filled-tonal-button {
+    --md-sys-color-primary: #5ba2ec;
+    --md-sys-color-on-primary: #001d36;
+    --md-sys-color-surface-container-highest: #42464e;
+    --md-sys-color-on-surface: #424242;
+    --md-sys-color-on-surface-variant: #c4c6d0;
+    // ========== FILLED BUTTON DARK ==========
+    // Normal state
+    --md-filled-button-container-color: #5ba2ec;
+    --md-filled-button-label-text-color: #fff;
+
+    // Hover state
+    --md-filled-button-hover-state-layer-color: #001d36;
+    --md-filled-button-hover-state-layer-opacity: 8%;
+
+    // Focus state
+    --md-filled-button-focus-state-layer-color: #001d36;
+    --md-filled-button-focus-state-layer-opacity: 12%;
+
+    // Pressed state
+    --md-filled-button-pressed-state-layer-color: #001d36;
+    --md-filled-button-pressed-state-layer-opacity: 12%;
+
+    // Disabled state
+    --md-filled-button-disabled-container-color: #e3e2e6;
+    --md-filled-button-disabled-container-opacity: 1;
+    --md-filled-button-disabled-label-text-color: #44474e;
+    --md-filled-button-disabled-label-text-opacity: 1;
+
+    // ========== OUTLINED BUTTON DARK ==========
+    // Normal state
+    --md-outlined-button-outline-color: #5ba2ec;
+    --md-outlined-button-label-text-color: #5ba2ec;
+
+    // Hover state
+    --md-outlined-button-hover-state-layer-color: #5ba2ec;
+    --md-outlined-button-hover-state-layer-opacity: 8%;
+
+    // Focus state
+    --md-outlined-button-focus-state-layer-color: #5ba2ec;
+    --md-outlined-button-focus-state-layer-opacity: 12%;
+
+    // Pressed state
+    --md-outlined-button-pressed-state-layer-color: #5ba2ec;
+    --md-outlined-button-pressed-state-layer-opacity: 12%;
+
+    // Disabled state
+    --md-outlined-button-disabled-outline-color: #e3e2e6;
+    --md-outlined-button-disabled-outline-opacity: 1;
+    --md-outlined-button-disabled-label-text-color: #44474e;
+    --md-outlined-button-disabled-label-text-opacity: 1;
+
+    // ========== ELEVATED BUTTON DARK ==========
+    // Normal state
+    --md-elevated-button-container-color: #2c2f36;
+    --md-elevated-button-label-text-color: #5ba2ec;
+    --md-elevated-button-container-elevation: 1;
+
+    // Hover state
+    --md-elevated-button-hover-state-layer-color: #5ba2ec;
+    --md-elevated-button-hover-state-layer-opacity: 8%;
+    --md-elevated-button-hover-container-elevation: 2;
+
+    // Focus state
+    --md-elevated-button-focus-state-layer-color: #5ba2ec;
+    --md-elevated-button-focus-state-layer-opacity: 12%;
+
+    // Pressed state
+    --md-elevated-button-pressed-state-layer-color: #5ba2ec;
+    --md-elevated-button-pressed-state-layer-opacity: 12%;
+
+    // Disabled state
+    --md-elevated-button-disabled-container-color: #e3e2e6;
+    --md-elevated-button-disabled-container-opacity: 1;
+    --md-elevated-button-disabled-container-elevation: 0;
+    --md-elevated-button-disabled-label-text-color: #44474e;
+    --md-elevated-button-disabled-label-text-opacity: 1;
+
+    // ========== TEXT BUTTON DARK ==========
+    // Normal state
+    --md-text-button-label-text-color: #5ba2ec;
+
+    // Hover state
+    --md-text-button-hover-state-layer-color: #5ba2ec;
+    --md-text-button-hover-state-layer-opacity: 8%;
+
+    // Focus state
+    --md-text-button-focus-state-layer-color: #5ba2ec;
+    --md-text-button-focus-state-layer-opacity: 12%;
+
+    // Pressed state
+    --md-text-button-pressed-state-layer-color: #5ba2ec;
+    --md-text-button-pressed-state-layer-opacity: 12%;
+
+    // Disabled state
+    --md-text-button-disabled-label-text-color: #e3e2e6;
+    --md-text-button-disabled-label-text-opacity: 1;
+
+    // ========== TONAL BUTTON DARK ==========
+    // Normal state
+    --md-filled-tonal-button-container-color: #003a6b;
+    --md-filled-tonal-button-label-text-color: #d1e4ff;
+
+    // Hover state
+    --md-filled-tonal-button-hover-state-layer-color: #d1e4ff;
+    --md-filled-tonal-button-hover-state-layer-opacity: 8%;
+
+    // Focus state
+    --md-filled-tonal-button-focus-state-layer-color: #d1e4ff;
+    --md-filled-tonal-button-focus-state-layer-opacity: 12%;
+
+    // Pressed state
+    --md-filled-tonal-button-pressed-state-layer-color: #d1e4ff;
+    --md-filled-tonal-button-pressed-state-layer-opacity: 12%;
+
+    // Disabled state
+    --md-filled-tonal-button-disabled-container-color: #e3e2e6;
+    --md-filled-tonal-button-disabled-container-opacity: 1;
+    --md-filled-tonal-button-disabled-label-text-color: #e3e2e6;
+    --md-filled-tonal-button-disabled-label-text-opacity: 1;
+  }
+}

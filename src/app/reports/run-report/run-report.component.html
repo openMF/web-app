@@ -29,6 +29,9 @@
                 {{ param.label }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
+              <mat-error *ngIf="reportForm.controls[param.name].hasError('endBeforeStart')">
+                {{ param.label }} {{ 'labels.commons.must be after or equal to start date' | translate }}
+              </mat-error>
             </mat-form-field>
 
             <mat-form-field class="form-field" *ngSwitchCase="'select'">

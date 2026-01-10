@@ -53,22 +53,24 @@
               {{ 'labels.inputs.Is Differential' | translate }}?
             </th>
             <td mat-cell *matCellDef="let floatingRate">
-              <fa-icon
-                *ngIf="floatingRate.isDifferentialToBaseLendingRate"
-                icon="check-circle"
-                size="lg"
-                class="is-differential"
-                matTooltip="{{ 'tooltips.Yes' | translate }}"
-                matTooltipPosition="right"
-              ></fa-icon>
-              <fa-icon
-                *ngIf="!floatingRate.isDifferentialToBaseLendingRate"
-                icon="times-circle"
-                size="lg"
-                class="not-is-differential"
-                matTooltip="{{ 'tooltips.No' | translate }}"
-                matTooltipPosition="right"
-              ></fa-icon>
+              @if (floatingRate.isDifferentialToBaseLendingRate) {
+                <fa-icon
+                  icon="check-circle"
+                  size="lg"
+                  class="is-differential"
+                  matTooltip="{{ 'tooltips.Yes' | translate }}"
+                  matTooltipPosition="right"
+                ></fa-icon>
+              }
+              @if (!floatingRate.isDifferentialToBaseLendingRate) {
+                <fa-icon
+                  icon="times-circle"
+                  size="lg"
+                  class="not-is-differential"
+                  matTooltip="{{ 'tooltips.No' | translate }}"
+                  matTooltipPosition="right"
+                ></fa-icon>
+              }
             </td>
           </ng-container>
 

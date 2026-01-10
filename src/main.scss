@@ -1,22 +1,88 @@
-// Version 1
-
-/*
- * Entry point of global application style.
- * Component-specific style should not go here and be included directly as part of the components.
- */
-
-// Import Default Theme for MifosX
 @use 'theme/mifosx-theme';
+@use 'theme/material-web' as *;
 @use 'theme/pictonblue-yellowgreen' as *;
 @use 'theme/indigo-pink' as *;
 @use 'theme/pink-bluegrey' as *;
 @use 'theme/deeppurple-amber' as *;
 @use 'theme/purple-green.scss' as *;
+@use 'assets/styles/helper';
+@use 'lightgallery/scss/lightgallery' as *;
+@use 'lightgallery/scss/lg-thumbnail' as *;
+@use 'lightgallery/scss/lg-zoom' as *;
+@use 'lightgallery/scss/lg-fullscreen' as *;
+@use 'app/core/error-handler/error-handler.component';
 
 // Global Imports
 
 /* You can add global styles to this file, and also import other style files */
-@use 'assets/styles/helper';
+
+.custom-snackbar-top-right {
+  top: 48px !important;
+  right: 24px !important;
+  left: auto !important;
+  transform: none !important;
+  position: fixed !important;
+  z-index: 9999;
+}
+
+// ===== Material Select Panel Styles (Material Design 3) =====
+.mat-mdc-select-panel {
+  background: var(--md-sys-color-surface-container, #fff);
+  border-radius: 8px;
+  box-shadow:
+    0 2px 4px #00000014,
+    0 4px 12px #0000000f,
+    0 8px 24px #00000014;
+
+  .mat-mdc-option {
+    font-size: 0.875rem;
+    min-height: 48px;
+    padding: 0 16px;
+    color: var(--md-sys-color-on-surface, #1a1c1e);
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: #1074b914;
+    }
+
+    &.mat-mdc-option-active {
+      background-color: #1074b91f;
+    }
+
+    &.mdc-list-item--selected {
+      background-color: #1074b91f;
+      color: var(--md-sys-color-primary, #1074b9);
+      font-weight: 500;
+    }
+
+    .mdc-list-item__primary-text {
+      color: inherit;
+    }
+  }
+}
+
+// Dark theme select panel
+.dark-theme .mat-mdc-select-panel {
+  background: var(--md-sys-color-surface-container, #2c2f36);
+
+  .mat-mdc-option {
+    color: var(--md-sys-color-on-surface, #e2e2e5);
+
+    &:hover {
+      background-color: #5ba2ec14;
+    }
+
+    &.mat-mdc-option-active {
+      background-color: #5ba2ec1f;
+    }
+
+    &.mdc-list-item--selected {
+      background-color: #5ba2ec1f;
+      color: var(--md-sys-color-primary, #5ba2ec);
+      font-weight: 500;
+    }
+  }
+}
 
 .scrollbar-styling {
   scrollbar-width: thin;
@@ -564,11 +630,14 @@
 .menu-explanation {
   font-size: 14px;
   margin: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .menu-list-item-content {
   display: flex;
   width: 100%;
+  overflow: hidden;
 }
 
 .menu-left-section {
@@ -576,6 +645,9 @@
   align-items: center;
   width: 100%;
   gap: 10px;
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
 }
 
 .menu-right-section fa-icon {
@@ -587,6 +659,19 @@
   display: flex;
   gap: 4px;
   margin-right: 10px;
+  flex-shrink: 0;
+}
+
+mat-nav-list {
+  overflow: hidden;
+
+  mat-list-item {
+    overflow: hidden;
+
+    .mat-list-item-content {
+      overflow: hidden;
+    }
+  }
 }
 
 .content {
@@ -610,22 +695,19 @@ mifosx-notifications-page td {
   width: 100%;
 }
 
-//Re-positions account type field on list standing instructions page
-.type-field {
-  position: absolute;
-  left: 1px;
-  top: 20px;
+/* Global overflow helpers to avoid repeated component overrides */
+.overflow-hidden {
+  overflow: hidden;
 }
 
-//Re-positions account id field on list standing instructions page
-.account-Id-field {
-  position: absolute;
-  left: 490px;
-  top: 20px;
+mat-card {
+  overflow: hidden;
 }
 
-//Re-positions client name label on list standing instructions page
-.client-Name {
-  position: absolute;
-  left: 490px;
+.layout-row.responsive-column {
+  overflow: hidden;
+
+  > [class] {
+    overflow: hidden;
+  }
 }

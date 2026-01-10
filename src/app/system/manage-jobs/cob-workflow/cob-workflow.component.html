@@ -6,10 +6,12 @@
       }}</span>
     </h2>
   </div>
-  <button mat-raised-button class="activate" (click)="runCatchUp()" *ngIf="!isCatchUpRunning">
-    <fa-icon icon="times-circle" class="m-r-10"></fa-icon>
-    {{ 'labels.buttons.Run Catch-Up' | translate }}
-  </button>
+  @if (!isCatchUpRunning) {
+    <button mat-raised-button class="activate" (click)="runCatchUp()">
+      <fa-icon icon="times-circle" class="m-r-10"></fa-icon>
+      {{ 'labels.buttons.Run Catch-Up' | translate }}
+    </button>
+  }
 </div>
 
 <div class="container space-top">

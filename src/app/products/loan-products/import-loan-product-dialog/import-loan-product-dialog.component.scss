@@ -1,0 +1,18 @@
+mat-dialog-content {
+  padding: 20px 24px;
+  min-height: 150px;
+
+  p {
+    margin-bottom: 20px;
+    color: rgb(0 0 0 / 60%);
+  }
+}
+
+mat-dialog-actions {
+  padding: 8px 24px 16px;
+  margin: 0;
+
+  button {
+    margin-left: 8px;
+  }
+}

@@ -550,7 +550,7 @@ const routes: Routes = [
         {
           path: 'bulkloan',
           component: BulkLoanReassignmnetComponent,
-          data: { title: 'Bulk Loan Reassignment', breadcrumb: 'Bulk Loan Reasssignment' },
+          data: { title: 'Bulk Loan Reassignment', breadcrumb: 'Bulk Loan Reassignment' },
           resolve: {
             offices: OfficesResolver
           }
@@ -695,7 +695,6 @@ const routes: Routes = [
       ]
     }
   ])
-
 ];
 
 /**

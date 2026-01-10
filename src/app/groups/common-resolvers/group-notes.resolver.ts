@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
@@ -13,10 +13,7 @@ import { GroupsService } from '../groups.service';
  */
 @Injectable()
 export class GroupNotesResolver {
-  /**
-   * @param {GroupsService} GroupsService Groups service.
-   */
-  constructor(private groupsService: GroupsService) {}
+  private groupsService = inject(GroupsService);
 
   /**
    * Returns the Group's Notes data.

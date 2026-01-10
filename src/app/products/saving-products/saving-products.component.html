@@ -81,7 +81,7 @@
 <ng-template #templateSavingProductTable let-popover="popover">
   <h4 class="mw300">
     {{ 'labels.heading.List of saving products in the organization' | translate }}:
-    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/102629497/Savings+Products" target="_blank">{{
+    <a [href]="'savingsProducts' | documentationLink" target="_blank" rel="noopener noreferrer">{{
       'labels.heading.Savings Products' | translate
     }}</a>
   </h4>

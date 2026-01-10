@@ -5,5 +5,21 @@
     </button>
   </div>
 
-  <iframe [src]="pentahoUrl" frameborder="0" width="100%" height="600px;"></iframe>
+  <div *ngIf="pentahoUrl; else noData" class="pdf-container">
+    <iframe [src]="pentahoUrl" class="pdf-iframe"></iframe>
+  </div>
+
+  <ng-template #noData>
+    <div class="error-message">
+      <h3>Unable to Load Receipt</h3>
+      <p>The transaction receipt could not be loaded. This may be due to:</p>
+      <ul>
+        <li>Missing or incomplete report configuration</li>
+        <li>Report generation service unavailable</li>
+        <li>Invalid transaction data</li>
+      </ul>
+      <p><strong>Please contact your system administrator for assistance.</strong></p>
+      <p class="console-hint">Technical details may be available in the browser console (F12).</p>
+    </div>
+  </ng-template>
 </mat-card>

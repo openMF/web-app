@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,10 +12,7 @@ import { ProductsService } from '../products.service';
  */
 @Injectable()
 export class ManageTaxGroupsResolver {
-  /**
-   * @param {ProductsService} productsService Products service.
-   */
-  constructor(private productsService: ProductsService) {}
+  private productsService = inject(ProductsService);
 
   /**
    * Returns the tax groups data.

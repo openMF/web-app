@@ -7,15 +7,19 @@
           <tr>
             <td>{{ 'labels.inputs.External Id' | translate }}</td>
             <td>
-              <span *ngIf="fixedDepositsAccountData.externalId">
-                <mifosx-external-identifier
-                  externalId="{{ fixedDepositsAccountData.externalId }}"
-                  completed="true"
-                ></mifosx-external-identifier>
-              </span>
-              <span *ngIf="!fixedDepositsAccountData.externalId">
-                {{ 'labels.inputs.Not Available' | translate }}
-              </span>
+              @if (fixedDepositsAccountData.externalId) {
+                <span>
+                  <mifosx-external-identifier
+                    externalId="{{ fixedDepositsAccountData.externalId }}"
+                    completed="true"
+                  ></mifosx-external-identifier>
+                </span>
+              }
+              @if (!fixedDepositsAccountData.externalId) {
+                <span>
+                  {{ 'labels.inputs.Not Available' | translate }}
+                </span>
+              }
             </td>
           </tr>
           <tr>
@@ -28,10 +32,12 @@
               }}
             </td>
           </tr>
-          <tr *ngIf="fixedDepositsAccountData.timeline.closedOnDate">
-            <td>{{ 'labels.inputs.Closed On' | translate }}</td>
-            <td>{{ fixedDepositsAccountData.timeline.closedOnDate | dateFormat }}</td>
-          </tr>
+          @if (fixedDepositsAccountData.timeline.closedOnDate) {
+            <tr>
+              <td>{{ 'labels.inputs.Closed On' | translate }}</td>
+              <td>{{ fixedDepositsAccountData.timeline.closedOnDate | dateFormat }}</td>
+            </tr>
+          }
           <tr>
             <td>{{ 'labels.inputs.Field Officer' | translate }}</td>
             <td>
@@ -56,14 +62,18 @@
               }}
             </td>
           </tr>
-          <tr *ngIf="fixedDepositsAccountData.withHoldTax">
-            <td>{{ 'labels.inputs.Tax Group' | translate }}</td>
-            <td>{{ fixedDepositsAccountData.taxGroup.name }}</td>
-          </tr>
-          <tr *ngIf="fixedDepositsAccountData.onAccountClosure">
-            <td>{{ 'labels.inputs.Maturity Instructions' | translate }}</td>
-            <td>{{ fixedDepositsAccountData.onAccountClosure.value | translateKey: 'catalogs' }}</td>
-          </tr>
+          @if (fixedDepositsAccountData.withHoldTax) {
+            <tr>
+              <td>{{ 'labels.inputs.Tax Group' | translate }}</td>
+              <td>{{ fixedDepositsAccountData.taxGroup.name }}</td>
+            </tr>
+          }
+          @if (fixedDepositsAccountData.onAccountClosure) {
+            <tr>
+              <td>{{ 'labels.inputs.Maturity Instructions' | translate }}</td>
+              <td>{{ fixedDepositsAccountData.onAccountClosure.value | translateKey: 'catalogs' }}</td>
+            </tr>
+          }
         </tbody>
       </table>
     </div>
@@ -92,68 +102,74 @@
             <td>{{ 'labels.inputs.No. of Days in Year' | translate }}</td>
             <td>{{ fixedDepositsAccountData.interestCalculationDaysInYearType.value | translateKey: 'catalogs' }}</td>
           </tr>
-          <tr *ngIf="fixedDepositsAccountData.preClosurePenalApplicable">
-            <td>{{ 'labels.inputs.Pre-cloure Penal' | translate }}</td>
-            <td>
-              {{ fixedDepositsAccountData.preClosurePenalInterest }} % on
-              {{ fixedDepositsAccountData.preClosurePenalInterestOnType.value | translateKey: 'catalogs' }}
-            </td>
-          </tr>
+          @if (fixedDepositsAccountData.preClosurePenalApplicable) {
+            <tr>
+              <td>{{ 'labels.inputs.Pre-cloure Penal' | translate }}</td>
+              <td>
+                {{ fixedDepositsAccountData.preClosurePenalInterest }} % on
+                {{ fixedDepositsAccountData.preClosurePenalInterestOnType.value | translateKey: 'catalogs' }}
+              </td>
+            </tr>
+          }
         </tbody>
       </table>
     </div>
   </div>
 
   <div class="flex-49">
-    <div
-      *ngIf="
-        !fixedDepositsAccountData.status.rejected && !fixedDepositsAccountData.status.submittedAndPendingApproval;
-        else otherDetails
-      "
-    >
-      <h4 class="table-headers">{{ 'labels.heading.Performance History' | translate }}</h4>
-      <table>
-        <tbody>
-          <tr>
-            <td>{{ 'labels.inputs.Principal Amount' | translate }}</td>
-            <td class="r-amount">
-              {{ fixedDepositsAccountData.depositAmount | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
-            </td>
-          </tr>
-          <tr>
-            <td>{{ 'labels.inputs.Maturity Amount' | translate }}</td>
-            <td class="r-amount">
-              {{ fixedDepositsAccountData.maturityAmount | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
-            </td>
-          </tr>
-          <tr *ngIf="fixedDepositsAccountData.summary.totalDeposits">
-            <td>{{ 'labels.inputs.Total Deposits' | translate }}</td>
-            <td class="r-amount">
-              {{ fixedDepositsAccountData.summary.totalDeposits | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
-            </td>
-          </tr>
-          <tr *ngIf="fixedDepositsAccountData.summary.totalWithdrawals">
-            <td>{{ 'labels.inputs.Total Withdrawals' | translate }}</td>
-            <td class="r-amount">
-              {{
-                fixedDepositsAccountData.summary.totalWithdrawals | currency: currency.code : 'symbol-narrow' : '1.2-2'
-              }}
-            </td>
-          </tr>
-          <tr *ngIf="fixedDepositsAccountData.summary.totalInterestEarned >= 0">
-            <td>{{ 'labels.inputs.Total Interest Earned' | translate }}</td>
-            <td class="r-amount">
-              {{
-                fixedDepositsAccountData.summary.totalInterestEarned
-                  | currency: currency.code : 'symbol-narrow' : '1.2-2'
-              }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <ng-template #otherDetails>
+    @if (!fixedDepositsAccountData.status.rejected && !fixedDepositsAccountData.status.submittedAndPendingApproval) {
+      <div>
+        <h4 class="table-headers">{{ 'labels.heading.Performance History' | translate }}</h4>
+        <table>
+          <tbody>
+            <tr>
+              <td>{{ 'labels.inputs.Principal Amount' | translate }}</td>
+              <td class="r-amount">
+                {{ fixedDepositsAccountData.depositAmount | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+              </td>
+            </tr>
+            <tr>
+              <td>{{ 'labels.inputs.Maturity Amount' | translate }}</td>
+              <td class="r-amount">
+                {{ fixedDepositsAccountData.maturityAmount | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+              </td>
+            </tr>
+            @if (fixedDepositsAccountData.summary.totalDeposits) {
+              <tr>
+                <td>{{ 'labels.inputs.Total Deposits' | translate }}</td>
+                <td class="r-amount">
+                  {{
+                    fixedDepositsAccountData.summary.totalDeposits | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                  }}
+                </td>
+              </tr>
+            }
+            @if (fixedDepositsAccountData.summary.totalWithdrawals) {
+              <tr>
+                <td>{{ 'labels.inputs.Total Withdrawals' | translate }}</td>
+                <td class="r-amount">
+                  {{
+                    fixedDepositsAccountData.summary.totalWithdrawals
+                      | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                  }}
+                </td>
+              </tr>
+            }
+            @if (fixedDepositsAccountData.summary.totalInterestEarned >= 0) {
+              <tr>
+                <td>{{ 'labels.inputs.Total Interest Earned' | translate }}</td>
+                <td class="r-amount">
+                  {{
+                    fixedDepositsAccountData.summary.totalInterestEarned
+                      | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                  }}
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    } @else {
       <div>
         <h4 class="table-headers">{{ 'labels.heading.Other Details' | translate }}</h4>
         <table>
@@ -173,6 +189,6 @@
           </tbody>
         </table>
       </div>
-    </ng-template>
+    }
   </div>
 </div>

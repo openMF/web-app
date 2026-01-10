@@ -1,0 +1,31 @@
+<div [class]="containerClasses">
+  @if (variant === 'filled') {
+    <md-filled-button [type]="type" [disabled]="disabled" (click)="onClick($event)">
+      {{ label }}<ng-content></ng-content>
+    </md-filled-button>
+  }
+
+  @if (variant === 'outlined') {
+    <md-outlined-button [type]="type" [disabled]="disabled" (click)="onClick($event)">
+      {{ label }}<ng-content></ng-content>
+    </md-outlined-button>
+  }
+
+  @if (variant === 'elevated') {
+    <md-elevated-button [type]="type" [disabled]="disabled" (click)="onClick($event)">
+      {{ label }}<ng-content></ng-content>
+    </md-elevated-button>
+  }
+
+  @if (variant === 'text') {
+    <md-text-button [type]="type" [disabled]="disabled" (click)="onClick($event)">
+      {{ label }}<ng-content></ng-content>
+    </md-text-button>
+  }
+
+  @if (variant === 'tonal') {
+    <md-filled-tonal-button [type]="type" [disabled]="disabled" (click)="onClick($event)">
+      {{ label }}<ng-content></ng-content>
+    </md-filled-tonal-button>
+  }
+</div>

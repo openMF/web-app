@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { GLAccount } from 'app/shared/models/general.model';
-import { NgIf, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({

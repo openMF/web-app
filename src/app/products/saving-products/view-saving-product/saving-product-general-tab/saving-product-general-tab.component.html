@@ -25,10 +25,12 @@
       <span class="flex-60">{{ savingProduct.shortName }}</span>
     </div>
 
-    <div class="flex-fill layout-row" *ngIf="savingProduct.description">
-      <span class="flex-40">{{ 'labels.inputs.Description' | translate }}:</span>
-      <span class="flex-60">{{ savingProduct.description }}</span>
-    </div>
+    @if (savingProduct.description) {
+      <div class="flex-fill layout-row">
+        <span class="flex-40">{{ 'labels.inputs.Description' | translate }}:</span>
+        <span class="flex-60">{{ savingProduct.description }}</span>
+      </div>
+    }
 
     <h3 class="mat-h3 flex-fill">{{ 'labels.inputs.Currency' | translate }}</h3>
 
@@ -84,122 +86,136 @@
 
     <mat-divider [inset]="true"></mat-divider>
 
-    <div class="flex-fill layout-row" *ngIf="savingProduct.minRequiredOpeningBalance">
-      <span class="flex-40">{{ 'labels.inputs.Minimum Opening Balance' | translate }}:</span>
-      <span class="flex-60">{{ savingProduct.minRequiredOpeningBalance | formatNumber }}</span>
-    </div>
+    @if (savingProduct.minRequiredOpeningBalance) {
+      <div class="flex-fill layout-row">
+        <span class="flex-40">{{ 'labels.inputs.Minimum Opening Balance' | translate }}:</span>
+        <span class="flex-60">{{ savingProduct.minRequiredOpeningBalance | formatNumber }}</span>
+      </div>
+    }
 
-    <div class="flex-fill layout-row" *ngIf="savingProduct.lockinPeriodFrequency">
-      <span class="flex-40">{{ 'labels.inputs.Lock-in Period' | translate }}:</span>
-      <span class="flex-60">{{
-        savingProduct.lockinPeriodFrequency + ' ' + savingProduct.lockinPeriodFrequencyType.value
-      }}</span>
-    </div>
+    @if (savingProduct.lockinPeriodFrequency) {
+      <div class="flex-fill layout-row">
+        <span class="flex-40">{{ 'labels.inputs.Lock-in Period' | translate }}:</span>
+        <span class="flex-60">{{
+          savingProduct.lockinPeriodFrequency + ' ' + savingProduct.lockinPeriodFrequencyType.value
+        }}</span>
+      </div>
+    }
 
     <div class="flex-fill layout-row">
       <span class="flex-40">{{ 'labels.inputs.Apply Withdrawal Fee for Transfers' | translate }}:</span>
       <span class="flex-60">{{ savingProduct.withdrawalFeeForTransfers | yesNo }}</span>
     </div>
 
-    <div class="flex-fill layout-row" *ngIf="savingProduct.minBalanceForInterestCalculation">
-      <span class="flex-40">{{ 'labels.inputs.Balance Required for Interest Calculation' | translate }}:</span>
-      <span class="flex-60">{{ savingProduct.minBalanceForInterestCalculation | formatNumber }}</span>
-    </div>
+    @if (savingProduct.minBalanceForInterestCalculation) {
+      <div class="flex-fill layout-row">
+        <span class="flex-40">{{ 'labels.inputs.Balance Required for Interest Calculation' | translate }}:</span>
+        <span class="flex-60">{{ savingProduct.minBalanceForInterestCalculation | formatNumber }}</span>
+      </div>
+    }
 
     <div class="flex-fill layout-row">
       <span class="flex-40">{{ 'labels.inputs.Enforce Minimum Balance' | translate }}:</span>
       <span class="flex-60">{{ savingProduct.enforceMinRequiredBalance | yesNo }}</span>
     </div>
 
-    <div class="flex-fill layout-row" *ngIf="savingProduct.minRequiredBalance">
-      <span class="flex-40">{{ 'labels.inputs.Minimum Balance' | translate }}:</span>
-      <span class="flex-60">{{ savingProduct.minRequiredBalance | formatNumber }}</span>
-    </div>
+    @if (savingProduct.minRequiredBalance) {
+      <div class="flex-fill layout-row">
+        <span class="flex-40">{{ 'labels.inputs.Minimum Balance' | translate }}:</span>
+        <span class="flex-60">{{ savingProduct.minRequiredBalance | formatNumber }}</span>
+      </div>
+    }
 
     <div class="flex-fill layout-row">
       <span class="flex-40">{{ 'labels.inputs.Withhold Tax is Applicable' | translate }}:</span>
       <span class="flex-60">{{ savingProduct.withHoldTax | yesNo }}</span>
     </div>
 
-    <div class="flex-fill layout-row" *ngIf="savingProduct.withHoldTax">
-      <span class="flex-40">{{ 'labels.inputs.Tax Group' | translate }}:</span>
-      <span class="flex-60">{{ savingProduct.taxGroup.name }}</span>
-    </div>
+    @if (savingProduct.withHoldTax) {
+      <div class="flex-fill layout-row">
+        <span class="flex-40">{{ 'labels.inputs.Tax Group' | translate }}:</span>
+        <span class="flex-60">{{ savingProduct.taxGroup.name }}</span>
+      </div>
+    }
 
     <div class="flex-fill layout-row">
       <span class="flex-40">{{ 'labels.inputs.Is Overdraft Allowed' | translate }}:</span>
       <span class="flex-60">{{ savingProduct.allowOverdraft | yesNo }}</span>
     </div>
 
-    <div class="flex-fill layout-row" *ngIf="savingProduct.minOverdraftForInterestCalculation">
-      <span class="flex-40"
-        >{{ 'labels.inputs.Minimum Overdraft Required for Interest Calculation' | translate }}:</span
-      >
-      <span class="flex-60">{{ savingProduct.minOverdraftForInterestCalculation }}</span>
-    </div>
+    @if (savingProduct.minOverdraftForInterestCalculation) {
+      <div class="flex-fill layout-row">
+        <span class="flex-40"
+          >{{ 'labels.inputs.Minimum Overdraft Required for Interest Calculation' | translate }}:</span
+        >
+        <span class="flex-60">{{ savingProduct.minOverdraftForInterestCalculation }}</span>
+      </div>
+    }
 
-    <div class="flex-fill layout-row" *ngIf="savingProduct.nominalAnnualInterestRateOverdraft">
-      <span class="flex-40">{{ 'labels.inputs.Nominal Annual Interest for Overdraft' | translate }}:</span>
-      <span class="flex-60">{{ savingProduct.nominalAnnualInterestRateOverdraft }} %</span>
-    </div>
+    @if (savingProduct.nominalAnnualInterestRateOverdraft) {
+      <div class="flex-fill layout-row">
+        <span class="flex-40">{{ 'labels.inputs.Nominal Annual Interest for Overdraft' | translate }}:</span>
+        <span class="flex-60">{{ savingProduct.nominalAnnualInterestRateOverdraft }} %</span>
+      </div>
+    }
 
-    <div class="flex-fill layout-row" *ngIf="savingProduct.overdraftLimit">
-      <span class="flex-40">{{ 'labels.inputs.Maximum Overdraft Amount Limit' | translate }}:</span>
-      <span class="flex-60">{{ savingProduct.overdraftLimit | formatNumber }}</span>
-    </div>
+    @if (savingProduct.overdraftLimit) {
+      <div class="flex-fill layout-row">
+        <span class="flex-40">{{ 'labels.inputs.Maximum Overdraft Amount Limit' | translate }}:</span>
+        <span class="flex-60">{{ savingProduct.overdraftLimit | formatNumber }}</span>
+      </div>
+    }
 
     <div class="flex-fill layout-row">
       <span class="flex-40">{{ 'labels.inputs.Enable Dormancy Tracking' | translate }}:</span>
       <span class="flex-60">{{ savingProduct.isDormancyTrackingActive | yesNo }}</span>
     </div>
 
-    <div *ngIf="savingProduct.isDormancyTrackingActive" class="layout-row-wrap responsive-column flex-fill">
-      <span class="flex-40">{{ 'labels.inputs.Number of Days to Inactive sub-status' | translate }}:</span>
-      <span class="flex-60">{{ savingProduct.daysToInactive }}</span>
-      <span class="flex-40">{{ 'labels.inputs.Number of Days to Dormant sub-status' | translate }}:</span>
-      <span class="flex-60">{{ savingProduct.daysToDormancy }}</span>
-      <span class="flex-40">{{ 'labels.inputs.Number of Days to Escheat' | translate }}:</span>
-      <span class="flex-60">{{ savingProduct.daysToEscheat }}</span>
-    </div>
+    @if (savingProduct.isDormancyTrackingActive) {
+      <div class="layout-row-wrap responsive-column flex-fill">
+        <span class="flex-40">{{ 'labels.inputs.Number of Days to Inactive sub-status' | translate }}:</span>
+        <span class="flex-60">{{ savingProduct.daysToInactive }}</span>
+        <span class="flex-40">{{ 'labels.inputs.Number of Days to Dormant sub-status' | translate }}:</span>
+        <span class="flex-60">{{ savingProduct.daysToDormancy }}</span>
+        <span class="flex-40">{{ 'labels.inputs.Number of Days to Escheat' | translate }}:</span>
+        <span class="flex-60">{{ savingProduct.daysToEscheat }}</span>
+      </div>
+    }
 
-    <div *ngIf="savingProduct.charges.length" class="layout-row-wrap responsive-column flex-fill">
-      <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Charges' | translate }}</h3>
-
-      <mat-divider [inset]="true"></mat-divider>
-
-      <table class="flex-fill mat-elevation-z1" mat-table [dataSource]="savingProduct.charges">
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Name' | translate }}</th>
-          <td mat-cell *matCellDef="let charge">
-            {{ charge.name + ', ' + charge.currency.displaySymbol }}
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="chargeCalculationType">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Type' | translate }}</th>
-          <td mat-cell *matCellDef="let charge">
-            {{ charge.chargeCalculationType.value | translateKey: 'catalogs' }}
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="amount">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
-          <td mat-cell *matCellDef="let charge">
-            {{ charge.amount | formatNumber }}
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="chargeTimeType">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Collected On' | translate }}</th>
-          <td mat-cell *matCellDef="let charge">
-            {{ charge.chargeTimeType.value | translateKey: 'catalogs' }}
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="chargesDisplayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: chargesDisplayedColumns"></tr>
-      </table>
-    </div>
+    @if (savingProduct.charges.length) {
+      <div class="layout-row-wrap responsive-column flex-fill">
+        <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Charges' | translate }}</h3>
+        <mat-divider [inset]="true"></mat-divider>
+        <table class="flex-fill mat-elevation-z1" mat-table [dataSource]="savingProduct.charges">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Name' | translate }}</th>
+            <td mat-cell *matCellDef="let charge">
+              {{ charge.name + ', ' + charge.currency.displaySymbol }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="chargeCalculationType">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Type' | translate }}</th>
+            <td mat-cell *matCellDef="let charge">
+              {{ charge.chargeCalculationType.value | translateKey: 'catalogs' }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
+            <td mat-cell *matCellDef="let charge">
+              {{ charge.amount | formatNumber }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="chargeTimeType">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Collected On' | translate }}</th>
+            <td mat-cell *matCellDef="let charge">
+              {{ charge.chargeTimeType.value | translateKey: 'catalogs' }}
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="chargesDisplayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: chargesDisplayedColumns"></tr>
+        </table>
+      </div>
+    }
 
     <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Accounting' | translate }}</h3>
 
@@ -212,96 +228,86 @@
     >
     </mifosx-view-savings-accounting-details>
 
-    <div
-      *ngIf="
-        savingProduct.paymentChannelToFundSourceMappings?.length ||
-        savingProduct.feeToIncomeAccountMappings?.length ||
-        savingProduct.penaltyToIncomeAccountMappings?.length
-      "
-      class="flex-fill layout-row-wrap responsive-column"
-    >
-      <h3 class="mat-h3 flex-fill">{{ 'labels.inputs.Advanced Accounting Rules' | translate }}</h3>
-
-      <mat-divider [inset]="true"></mat-divider>
-
-      <div
-        *ngIf="savingProduct.paymentChannelToFundSourceMappings?.length"
-        class="flex-fill layout-row-wrap responsive-column"
-      >
-        <h4 class="mat-h4 flex-fill">{{ 'labels.inputs.Fund Sources for Payment Channels' | translate }}</h4>
-
-        <table
-          class="mat-elevation-z1 flex-fill"
-          mat-table
-          [dataSource]="savingProduct.paymentChannelToFundSourceMappings"
-        >
-          <ng-container matColumnDef="paymentTypeId">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Payment Type' | translate }}</th>
-            <td mat-cell *matCellDef="let paymentFundSource">
-              {{ paymentFundSource.paymentType.name }}
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="fundSourceAccountId">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Fund Source' | translate }}</th>
-            <td mat-cell *matCellDef="let paymentFundSource">
-              ({{ paymentFundSource.fundSourceAccount.glCode }}) {{ paymentFundSource.fundSourceAccount.name }}
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="paymentFundSourceDisplayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: paymentFundSourceDisplayedColumns"></tr>
-        </table>
+    @if (
+      savingProduct.paymentChannelToFundSourceMappings?.length ||
+      savingProduct.feeToIncomeAccountMappings?.length ||
+      savingProduct.penaltyToIncomeAccountMappings?.length
+    ) {
+      <div class="flex-fill layout-row-wrap responsive-column">
+        <h3 class="mat-h3 flex-fill">{{ 'labels.inputs.Advanced Accounting Rules' | translate }}</h3>
+        <mat-divider [inset]="true"></mat-divider>
+        @if (savingProduct.paymentChannelToFundSourceMappings?.length) {
+          <div class="flex-fill layout-row-wrap responsive-column">
+            <h4 class="mat-h4 flex-fill">{{ 'labels.inputs.Fund Sources for Payment Channels' | translate }}</h4>
+            <table
+              class="mat-elevation-z1 flex-fill"
+              mat-table
+              [dataSource]="savingProduct.paymentChannelToFundSourceMappings"
+            >
+              <ng-container matColumnDef="paymentTypeId">
+                <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Payment Type' | translate }}</th>
+                <td mat-cell *matCellDef="let paymentFundSource">
+                  {{ paymentFundSource.paymentType.name }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="fundSourceAccountId">
+                <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Fund Source' | translate }}</th>
+                <td mat-cell *matCellDef="let paymentFundSource">
+                  ({{ paymentFundSource.fundSourceAccount.glCode }}) {{ paymentFundSource.fundSourceAccount.name }}
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="paymentFundSourceDisplayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: paymentFundSourceDisplayedColumns"></tr>
+            </table>
+          </div>
+        }
+        @if (savingProduct.feeToIncomeAccountMappings?.length) {
+          <div class="flex-fill layout-row-wrap responsive-column">
+            <h4 class="mat-h4 flex-fill">{{ 'labels.inputs.Fees to Specific Income Accounts' | translate }}</h4>
+            <table class="flex-fill mat-elevation-z1" mat-table [dataSource]="savingProduct.feeToIncomeAccountMappings">
+              <ng-container matColumnDef="chargeId">
+                <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Fees' | translate }}</th>
+                <td mat-cell *matCellDef="let feesIncome">
+                  {{ feesIncome.charge.name }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="incomeAccountId">
+                <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Income Account' | translate }}</th>
+                <td mat-cell *matCellDef="let feesIncome">
+                  ({{ feesIncome.incomeAccount.glCode }}) {{ feesIncome.incomeAccount.name }}
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="feesPenaltyIncomeDisplayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: feesPenaltyIncomeDisplayedColumns"></tr>
+            </table>
+          </div>
+        }
+        @if (savingProduct.penaltyToIncomeAccountMappings?.length) {
+          <div class="flex-fill layout-row-wrap responsive-column">
+            <h4 class="mat-h4 flex-fill">{{ 'labels.inputs.Penalties to Specific Income Accounts' | translate }}</h4>
+            <table
+              class="mat-elevation-z1 flex-fill"
+              mat-table
+              [dataSource]="savingProduct.penaltyToIncomeAccountMappings"
+            >
+              <ng-container matColumnDef="chargeId">
+                <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Penalty' | translate }}</th>
+                <td mat-cell *matCellDef="let penaltyIncome">
+                  {{ penaltyIncome.charge.name }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="incomeAccountId">
+                <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Income Account' | translate }}</th>
+                <td mat-cell *matCellDef="let penaltyIncome">
+                  ({{ penaltyIncome.incomeAccount.glCode }}) {{ penaltyIncome.incomeAccount.name }}
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="feesPenaltyIncomeDisplayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: feesPenaltyIncomeDisplayedColumns"></tr>
+            </table>
+          </div>
+        }
       </div>
-
-      <div *ngIf="savingProduct.feeToIncomeAccountMappings?.length" class="flex-fill layout-row-wrap responsive-column">
-        <h4 class="mat-h4 flex-fill">{{ 'labels.inputs.Fees to Specific Income Accounts' | translate }}</h4>
-
-        <table class="flex-fill mat-elevation-z1" mat-table [dataSource]="savingProduct.feeToIncomeAccountMappings">
-          <ng-container matColumnDef="chargeId">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Fees' | translate }}</th>
-            <td mat-cell *matCellDef="let feesIncome">
-              {{ feesIncome.charge.name }}
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="incomeAccountId">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Income Account' | translate }}</th>
-            <td mat-cell *matCellDef="let feesIncome">
-              ({{ feesIncome.incomeAccount.glCode }}) {{ feesIncome.incomeAccount.name }}
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="feesPenaltyIncomeDisplayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: feesPenaltyIncomeDisplayedColumns"></tr>
-        </table>
-      </div>
-
-      <div
-        *ngIf="savingProduct.penaltyToIncomeAccountMappings?.length"
-        class="flex-fill layout-row-wrap responsive-column"
-      >
-        <h4 class="mat-h4 flex-fill">{{ 'labels.inputs.Penalties to Specific Income Accounts' | translate }}</h4>
-
-        <table class="mat-elevation-z1 flex-fill" mat-table [dataSource]="savingProduct.penaltyToIncomeAccountMappings">
-          <ng-container matColumnDef="chargeId">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Penalty' | translate }}</th>
-            <td mat-cell *matCellDef="let penaltyIncome">
-              {{ penaltyIncome.charge.name }}
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="incomeAccountId">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Income Account' | translate }}</th>
-            <td mat-cell *matCellDef="let penaltyIncome">
-              ({{ penaltyIncome.incomeAccount.glCode }}) {{ penaltyIncome.incomeAccount.name }}
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="feesPenaltyIncomeDisplayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: feesPenaltyIncomeDisplayedColumns"></tr>
-        </table>
-      </div>
-    </div>
+    }
   </div>
 </div>

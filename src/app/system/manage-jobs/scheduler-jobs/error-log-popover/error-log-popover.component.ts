@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogTitle,
@@ -31,15 +31,13 @@ interface ErrorJobDataType {
   ]
 })
 export class ErrorLogPopoverComponent implements OnInit {
+  data = inject<ErrorJobDataType>(MAT_DIALOG_DATA);
+  private translateService = inject(TranslateService);
+
   show = false;
 
   /* Initialize Selected Job */
   job: SchedulerJob;
-
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: ErrorJobDataType,
-    private translateService: TranslateService
-  ) {}
 
   ngOnInit(): void {
     this.job = this.data.job;

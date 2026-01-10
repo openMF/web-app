@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -66,6 +66,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class SavingProductAccountingStepComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
+
   @Input() savingProductsTemplate: any;
   @Input() accountingRuleData: any;
   @Input() isDormancyTrackingActive: UntypedFormControl;
@@ -95,11 +99,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
     'actions'
   ];
 
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private dialog: MatDialog,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.createsavingProductAccountingForm();
     this.setConditionalControls();
   }
@@ -426,7 +426,6 @@ export class SavingProductAccountingStepComponent implements OnInit {
         required: true,
         order: 2
       })
-
     ];
     return formfields;
   }
@@ -449,7 +448,6 @@ export class SavingProductAccountingStepComponent implements OnInit {
         required: true,
         order: 2
       })
-
     ];
     return formfields;
   }
@@ -472,7 +470,6 @@ export class SavingProductAccountingStepComponent implements OnInit {
         required: true,
         order: 2
       })
-
     ];
     return formfields;
   }

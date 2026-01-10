@@ -97,6 +97,7 @@ export interface LoanProduct {
   creditAllocationAllocationTypes: OptionData[];
   multiDisburseLoan: boolean;
   maxTrancheCount: number;
+  allowFullTermForTranche: boolean;
   disallowExpectedDisbursements: boolean;
   allowApprovedDisbursedAmountsOverApplied: boolean;
   overAppliedNumber: number;

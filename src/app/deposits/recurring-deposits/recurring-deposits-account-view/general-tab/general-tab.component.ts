@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Currency } from 'app/shared/models/general.model';
-import { NgIf, DecimalPipe, CurrencyPipe } from '@angular/common';
+import { DecimalPipe, CurrencyPipe } from '@angular/common';
 import { ExternalIdentifierComponent } from '../../../../shared/external-identifier/external-identifier.component';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
@@ -21,15 +21,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class GeneralTabComponent {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   recurringDepositsAccountData: any;
   isprematureAllowed = false;
   entityType: string;
   currency: Currency;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.route.parent.data.subscribe((data: { recurringDepositsAccountData: any }) => {
       this.recurringDepositsAccountData = data.recurringDepositsAccountData;
       this.currency = this.recurringDepositsAccountData.currency;

@@ -6,14 +6,18 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Existing Meeting Date' | translate }}</mat-label>
             <mat-select formControlName="presentMeetingDate">
-              <mat-option *ngFor="let date of nextMeetingDates" [value]="date">
-                {{ date | dateFormat }}
-              </mat-option>
+              @for (date of nextMeetingDates; track date) {
+                <mat-option [value]="date">
+                  {{ date | dateFormat }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error *ngIf="groupEditMeetingScheduleForm.controls.presentMeetingDate.hasError('repeatsOnDay')">
-              {{ 'labels.inputs.Existing Meeting Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (groupEditMeetingScheduleForm.controls.presentMeetingDate.hasError('repeatsOnDay')) {
+              <mat-error>
+                {{ 'labels.inputs.Existing Meeting Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field (click)="newMeetingDatePicker.open()">
@@ -28,10 +32,12 @@
             />
             <mat-datepicker-toggle matSuffix [for]="newMeetingDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #newMeetingDatePicker></mat-datepicker>
-            <mat-error *ngIf="groupEditMeetingScheduleForm.controls.newMeetingDate.hasError('required')">
-              {{ 'labels.inputs.Revised Meeting Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (groupEditMeetingScheduleForm.controls.newMeetingDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Revised Meeting Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
         </div>
       </mat-card-content>

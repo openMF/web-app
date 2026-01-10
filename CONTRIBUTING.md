@@ -1,48 +1,155 @@
-# Getting Started
+# Contributing to Mifos X Web App
+
+Thank you for your interest in contributing to the Mifos X Web App! We welcome contributions from the community to help improve financial inclusion solutions globally.
+
+To ensure a smooth collaboration process and maintain code quality, we enforce a strict **7-Step Contribution Workflow**. Please read this guide carefully before submitting any code.
+
+## Quick Links
 
 - View the [README](./README.md) or [watch this video](https://youtu.be/OnxxC3K2oro) to get your development environment up and running.
 - Sign the [Contribution License Agreement](http://mifos.org/about-us/financial-legal/mifos-contributor-agreement/).
-- Always follow the [code of conduct](https://mifos.org/resources/community/code-of-conduct/) - this is important to us. We are proud to be open, tolerant and providing a positive environment.
-- Introduce yourself or ask a question on the [#webapp channel on Slack](https://app.slack.com/client/T0F5GHE8Y/CJJGJLN10).
-- Find a [Jira](https://mifosforge.jira.com/browse/WEB) ticket to work on and start smashing!
-- Sign up to the [mailing list](https://sourceforge.net/projects/mifos/lists/mifos-developer).
+- Always follow the [code of conduct](https://mifos.org/resources/community/code-of-conduct/) - this is important to us.
 - Learn more at our [getting started guide](https://mifosforge.jira.com/wiki/spaces/RES/pages/464322561/New+Contributor+Getting+Started+Guide).
 - Have a look at our [Wiki](https://github.com/openMF/web-app/wiki).
+- Sign up to the [mailing list](https://sourceforge.net/projects/mifos/lists/mifos-developer).
 
-Tips for working with the web app repository:
+---
 
-- Learn how to [format pull requests](#submitting-a-pull-request).
+## The Golden Rule: Discuss First
+
+> **Do not open a Pull Request without prior discussion.**
+
+We avoid "surprise" contributions. Before writing code, you must validate your idea with the community to ensure it aligns with the roadmap and isn't already in progress.
+
+---
+
+## Step 1: Discuss on Slack
+
+Before you start coding (especially for new features, UI changes, or refactoring), you must signal your intent.
+
+1. **Join the Community:** [Mifos Slack](https://mifos.slack.com)
+2. **Find the Channel:** Navigate to `#web-app`
+3. **Post Your Proposal:**
+   - **Features:** Explain what you want to build and why.
+   - **Bugs:** Briefly explain the issue and provide screenshots if applicable.
+4. **Wait for Approval:** Do not proceed until a maintainer or community member acknowledges the task is valid and free for you to take.
+
+---
+
+## Step 2: Jira Issue Tracking
+
+All development work is tracked in Jira to manage the release backlog and ensure transparency.
+
+- **System:** [Mifos Jira](https://mifosforge.jira.com)
+- **Project:** WEB (Mifos X Web App)
+- **Board:** [Board 62](https://mifosforge.jira.com/jira/software/c/projects/WEB/boards/62) (Active Development Board)
+
+### Workflow
+
+1. **Search:** Check the [Jira Board](https://mifosforge.jira.com/jira/software/c/projects/WEB/boards/62) to ensure the ticket doesn't already exist.
+2. **Create:** If unique, create a new ticket in Project WEB.
+   - **Summary:** `[Component] Concise description` (e.g., `[Client] Fix submit button alignment`)
+   - **Description:** Steps to reproduce, expected result, actual result, and environment details.
+3. **Assign:**
+   - Assign the ticket to yourself if you have permissions.
+   - If you lack permissions, comment "I am working on this" on the ticket and ask a maintainer to assign it to you.
+4. **Manage Status:**
+   - **To Do:** Task is open.
+   - **In Progress:** Move here immediately when you begin coding.
+   - **In Review:** Move here when you post the PR link in the comments.
+   - **Done:** Do not move here. Maintainers will move the ticket to Done after the PR is merged.
+
+---
+
+## Step 3: Branching Strategy
+
+We follow a strict branching model to keep our history clean.
+
+- **Upstream Branch:** Always branch from `dev`. Never branch from `master` or `main`.
+- **Naming Convention:** Your branch name must include the Jira Ticket ID.
+  - **Format:** `WEB-<ID>-<short-description>`
+  - **Example:** `git checkout -b WEB-123-fix-login-button`
+
+---
+
+## Step 4: UI/UX Consistency
+
+The Web App utilizes Angular Material. Design consistency is critical for user trust in financial software.
+
+### Visual Checks
+
+- **Reference:** Match the Figma mockup or the existing page layout exactly.
+- **Grid System:** Spacing must be multiples of 8px (8px, 16px, 24px). Do not use arbitrary values like 10px or 15px.
+- **Typography:** Use standard fonts (Roboto) and weights (500 for headers) defined in the SCSS variables.
+- **Components:** Always use Angular Material components (e.g., `<mat-select>`, `<mat-card>`) instead of native HTML tags.
+
+### Evidence Requirement
+
+You must attach **"Before"** and **"After"** screenshots to your Pull Request description. PRs involving UI changes without screenshots will be declined.
+
+---
+
+## Step 5: Code Formatting (Prettier)
+
+We use Prettier to enforce a consistent code style automatically. This eliminates "style wars" in code review.
+
+- **Configuration:** The project includes a `.prettierrc` file.
+- **Run Prettier:** Before committing, run the following command in the root directory:
+  ```bash
+  npx prettier --write .
+  ```
+- **Linting:** Ensure your code passes Angular linting:
+  ```bash
+  ng lint
+  ```
+
+> ⚠️ If the CI build fails due to formatting or linting errors, your PR will not be reviewed.
+
+---
+
+## Step 6: Commit Hygiene (Squash)
+
+We maintain a linear, meaningful git history.
+
+- **One Feature = One PR:** Do not combine unrelated fixes.
+- **Squash Requirement:** If your PR contains more than 2 commits, you must squash them.
+  - ❌ **Bad History:** `init`, `wip`, `typo`, `fix`, `fix again`
+  - ✅ **Good History:** `WEB-123: Implement client search functionality`
+
+**How to Squash:**
+
+```bash
+git rebase -i HEAD~N  # Replace N with the number of commits
+# Mark the first commit as 'pick' and subsequent commits as 'squash'
+git push --force-with-lease
+```
+
+---
+
+## Step 7: Pull Request Checklist
+
+When you are ready to submit your PR:
+
+- [ ] **Target:** The `dev` branch.
+- [ ] **Title:** Includes the Jira Key (e.g., `WEB-123: Fix login button`).
+- [ ] **Description:** Includes a link to the Jira ticket.
+- [ ] **Context:** Includes a link to the Slack discussion or summary of approval.
+- [ ] **Visuals:** "Before" and "After" screenshots are attached (if UI related).
+- [ ] **Quality:** Prettier formatting is applied and `ng lint` passes.
+
+---
+
+## Getting Help
+
+If you get stuck, please reach out in the `#web-app` channel on [Slack](https://mifos.slack.com). We are happy to help you navigate the codebase or troubleshoot environment issues!
+
+---
+
+## Additional Resources
+
+- Learn how to [format pull requests](#best-practices-to-send-pull-requests).
 - Read how to [rebase/merge upstream branches](#configuring-remotes).
 - Understand our [commit message conventions](./.github/COMMIT_MESSAGE.md).
-
-## Our processes
-
-### Reporting or requesting Issues/Enhancements
-
-- Before you submit an issue in Jira, please browse existing issues or ask on Slack. Maybe an issue for your problem already exists, or the discussion might inform you of workarounds readily available.
-- Include screenshots if helpful (specially for UI related issues).
-- For UI enhancements include mockups to provide a clear idea to the reader.
-
-### Getting assigned and working on an Issue/Enhancement
-
-- Always outline the change you wish to make via a Jira ticket _before_ contributing.
-- Do not create Jira tickets for support questions. Jira is for bug reports and feature requests. (If you have questions, ask in the above Slack channel or write an email on the named mailing list.)
-- If you would like to work on a Jira issue, make sure it is not assigned to someone else. (We do not appreciate pull requests for issues that are assigned to someone else or do not refer to a Jira ticket.)
-- If you want to take over a ticket, ask the assignee in a comment (utilizing the "@" prefix), if you can. Wait 3 days, before you assign the ticket to yourself.
-- If you don't work on a Jira ticket, unassign yourself.
-
-## Jira
-
-Our Jira tickets follow the following life cycle:
-
-- To Do: The issue is not prioritized yet. Make sure it makes sense working on it by asking in Slack.
-- On Deck: The issue can be worked on, but work hasn't been started. Often the issue has already someone assigned to it.
-- In Progress: The issue is being worked on.
-- In Review: There is a Pull Request on GitHub or the ticket is on hold, because someone needs to review made changes.
-- Done: The Pull Request got merged on GitHub.
-- Canceled: The ticket is unnecessary and for some reason (probably in the comments) work on it became unnecessary.
-
-Updating the Jira ticket is the responsibility of the person working on it. Make in particular sure the Status field is up-to-date.
 
 ## Git and Github
 

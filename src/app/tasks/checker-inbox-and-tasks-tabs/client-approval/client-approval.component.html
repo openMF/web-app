@@ -1,78 +1,76 @@
-<div class="tab-container mat-typography" *ngIf="showData">
-  <div class="layout-row align-start-center">
-    <div class="search-box flex-40">
-      <mat-form-field class="flex-fill flex-90">
-        <input
-          matInput
-          placeholder="{{ 'labels.text.Filter by name' | translate }}"
-          (keyup)="applyFilter($event.target.value)"
-        />
-      </mat-form-field>
+@if (showData) {
+  <div class="tab-container mat-typography">
+    <div class="layout-row align-start-center">
+      <div class="search-box flex-40">
+        <mat-form-field class="flex-fill flex-90">
+          <input
+            matInput
+            placeholder="{{ 'labels.text.Filter by name' | translate }}"
+            (keyup)="applyFilter($event.target.value)"
+          />
+        </mat-form-field>
+      </div>
+      <div class="flex-60">
+        <button mat-raised-button color="success" *mifosxHasPermission="'ACTIVATE_CLIENT'" (click)="approveClients()">
+          <fa-icon icon="check" class="m-r-10"></fa-icon>{{ 'labels.buttons.Approve' | translate }}
+        </button>
+      </div>
     </div>
-    <div class="flex-60">
-      <button mat-raised-button color="success" *mifosxHasPermission="'ACTIVATE_CLIENT'" (click)="approveClients()">
-        <fa-icon icon="check" class="m-r-10"></fa-icon>{{ 'labels.buttons.Approve' | translate }}
-      </button>
+    @for (client of groupedClients | keyvalue; track client) {
+      <h3>{{ client.key }}</h3>
+      @if (client.value.length > 0) {
+        <table mat-table [dataSource]="client.value | accountsFilter: 'clientApproval'">
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox
+                (change)="$event ? masterToggle(client.value) : null"
+                [checked]="selection.hasValue() && isAllSelected(client.value)"
+                [indeterminate]="selection.hasValue() && !isAllSelected(client.value)"
+                [aria-label]="checkboxLabel(client.value)"
+              >
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <mat-checkbox
+                (click)="$event.stopPropagation()"
+                (change)="$event ? selection.toggle(row) : null"
+                [checked]="selection.isSelected(row)"
+                [aria-label]="checkboxLabel(row)"
+              >
+              </mat-checkbox>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
+            <td mat-cell *matCellDef="let element" class="view-details" [routerLink]="['../../clients', element.id]">
+              {{ element.displayName }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="accountNumber">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account Number' | translate }}</th>
+            <td mat-cell *matCellDef="let element" class="view-details" [routerLink]="['../../clients', element.id]">
+              {{ element.accountNo }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="staff">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Staff' | translate }}</th>
+            <td mat-cell *matCellDef="let element" class="view-details" [routerLink]="['../../clients', element.id]">
+              {{ element.staffName }}
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="selection.toggle(row)"></tr>
+        </table>
+      }
+    }
+  </div>
+}
+
+@if (!showData) {
+  <div class="alert">
+    <div class="message">
+      <i class="fa fa-exclamation-circle alert-check"></i>
+      {{ 'labels.text.No pending loans for approval' | translate }}
     </div>
   </div>
-
-  <ng-container *ngFor="let client of groupedClients | keyvalue">
-    <h3>{{ client.key }}</h3>
-
-    <ng-container *ngIf="client.value.length > 0">
-      <table mat-table [dataSource]="client.value | accountsFilter: 'clientApproval'">
-        <ng-container matColumnDef="select">
-          <th mat-header-cell *matHeaderCellDef>
-            <mat-checkbox
-              (change)="$event ? masterToggle(client.value) : null"
-              [checked]="selection.hasValue() && isAllSelected(client.value)"
-              [indeterminate]="selection.hasValue() && !isAllSelected(client.value)"
-              [aria-label]="checkboxLabel(client.value)"
-            >
-            </mat-checkbox>
-          </th>
-          <td mat-cell *matCellDef="let row">
-            <mat-checkbox
-              (click)="$event.stopPropagation()"
-              (change)="$event ? selection.toggle(row) : null"
-              [checked]="selection.isSelected(row)"
-              [aria-label]="checkboxLabel(row)"
-            >
-            </mat-checkbox>
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
-          <td mat-cell *matCellDef="let element" class="view-details" [routerLink]="['../../clients', element.id]">
-            {{ element.displayName }}
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="accountNumber">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account Number' | translate }}</th>
-          <td mat-cell *matCellDef="let element" class="view-details" [routerLink]="['../../clients', element.id]">
-            {{ element.accountNo }}
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="staff">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Staff' | translate }}</th>
-          <td mat-cell *matCellDef="let element" class="view-details" [routerLink]="['../../clients', element.id]">
-            {{ element.staffName }}
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="selection.toggle(row)"></tr>
-      </table>
-    </ng-container>
-  </ng-container>
-</div>
-
-<div class="alert" *ngIf="!showData">
-  <div class="message">
-    <i class="fa fa-exclamation-circle alert-check"></i>
-    {{ 'labels.text.No pending loans for approval' | translate }}
-  </div>
-</div>
+}

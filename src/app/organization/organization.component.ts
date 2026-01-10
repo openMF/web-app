@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { AfterViewInit, Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, TemplateRef, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -28,6 +28,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class OrganizationComponent implements AfterViewInit {
+  private activatedRoute = inject(ActivatedRoute);
+  private router = inject(Router);
+  private configurationWizardService = inject(ConfigurationWizardService);
+  private popoverService = inject(PopoverService);
+
   shouldShowFundMapping = false;
   /* Reference of manage offices */
   @ViewChild('office') office: ElementRef<any>;
@@ -55,19 +60,6 @@ export class OrganizationComponent implements AfterViewInit {
   @ViewChild('templateManageFunds') templateManageFunds: TemplateRef<any>;
   // Initialize an array of 18 boolean values, all set to false
   arrowBooleans: boolean[] = new Array(18).fill(false);
-
-  /**
-   * @param {ActivatedRoute} activatedRoute ActivatedRoute.
-   * @param {Router} router Router.
-   * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
-   * @param {PopoverService} popoverService PopoverService.
-   */
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private configurationWizardService: ConfigurationWizardService,
-    private popoverService: PopoverService
-  ) {}
 
   /**
    * Popover function

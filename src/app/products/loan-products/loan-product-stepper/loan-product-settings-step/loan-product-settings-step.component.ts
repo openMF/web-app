@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -35,6 +35,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoanProductSettingsStepComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private processingStrategyService = inject(ProcessingStrategyService);
+
   DAYS_BEFORE_REPAYMENT_IS_DUE = LoanProducts.DAYS_BEFORE_REPAYMENT_IS_DUE;
   DAYS_AFTER_REPAYMENT_IS_OVERDUE = LoanProducts.DAYS_AFTER_REPAYMENT_IS_OVERDUE;
 
@@ -74,10 +77,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
   /** Values to Days for Repayments */
   defaultConfigValues: GlobalConfiguration[] = [];
 
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private processingStrategyService: ProcessingStrategyService
-  ) {
+  constructor() {
     this.createLoanProductSettingsForm();
     this.setConditionalControls();
   }
@@ -146,6 +146,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
       multiDisburseLoan: this.loanProductsTemplate.multiDisburseLoan,
       maxTrancheCount: this.loanProductsTemplate.maxTrancheCount,
       outstandingLoanBalance: this.loanProductsTemplate.outstandingLoanBalance,
+      allowFullTermForTranche: this.loanProductsTemplate.allowFullTermForTranche,
       enableDownPayment: this.loanProductsTemplate.enableDownPayment,
       enableInstallmentLevelDelinquency: this.loanProductsTemplate.enableInstallmentLevelDelinquency,
       loanScheduleType: this.loanProductsTemplate.loanScheduleType.code,
@@ -314,6 +315,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
       isInterestRecalculationEnabled: [false],
       holdGuaranteeFunds: [false],
       multiDisburseLoan: [false],
+      allowFullTermForTranche: [false],
       allowAttributeConfiguration: [true],
       allowPartialPeriodInterestCalculation: [false],
       allowAttributeOverrides: this.formBuilder.group({
@@ -553,7 +555,10 @@ export class LoanProductSettingsStepComponent implements OnInit {
       } else {
         this.loanProductSettingsForm.removeControl('maxTrancheCount');
         this.loanProductSettingsForm.removeControl('outstandingLoanBalance');
-        this.loanProductSettingsForm.patchValue({ disallowExpectedDisbursements: false });
+        this.loanProductSettingsForm.patchValue({
+          disallowExpectedDisbursements: false,
+          allowFullTermForTranche: false
+        });
       }
     });
 
@@ -563,7 +568,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
           'disbursedAmountPercentageForDownPayment',
           new UntypedFormControl(0, [
             Validators.required,
-            rangeValidator(0, 100)])
+            rangeValidator(0, 100)
+          ])
         );
         this.loanProductSettingsForm.addControl('enableAutoRepaymentForDownPayment', new UntypedFormControl(false, []));
       } else {
@@ -646,6 +652,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
         this.advancedTransactionProcessingStrategyDisabled = false;
         this.isAdvancedTransactionProcessingStrategy = false;
         this.loanProductSettingsForm.removeControl('chargeOffBehaviour');
+        this.loanProductSettingsForm.patchValue({ allowFullTermForTranche: false });
       } else {
         // Only Advanced Payment Allocation Strategy
         this.transactionProcessingStrategyDataBase.some((cn: CodeName) => {

@@ -1,14 +1,16 @@
 <div>
-  <mifosx-datatable-multi-row
-    *ngIf="multiRowDatatableFlag"
-    [entityType]="entityType"
-    [entityId]="entityId"
-    [dataObject]="entityDatatable"
-  ></mifosx-datatable-multi-row>
-  <mifosx-datatable-single-row
-    *ngIf="!multiRowDatatableFlag"
-    [entityType]="entityType"
-    [entityId]="entityId"
-    [dataObject]="entityDatatable"
-  ></mifosx-datatable-single-row>
+  @if (multiRowDatatableFlag) {
+    <mifosx-datatable-multi-row
+      [entityType]="entityType"
+      [entityId]="entityId"
+      [dataObject]="entityDatatable"
+    ></mifosx-datatable-multi-row>
+  }
+  @if (!multiRowDatatableFlag) {
+    <mifosx-datatable-single-row
+      [entityType]="entityType"
+      [entityId]="entityId"
+      [dataObject]="entityDatatable"
+    ></mifosx-datatable-single-row>
+  }
 </div>

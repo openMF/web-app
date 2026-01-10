@@ -4,21 +4,31 @@
       <ng-container matColumnDef="entitymapping">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Mapping Between Entities' | translate }}</th>
         <td mat-cell *matCellDef="let mappingType" (click)="showFilters(mappingType.id)">
-          <span *ngIf="mappingType.mappingTypes === 'office_access_to_loan_products'">
-            {{ 'labels.inputs.Offices Loan Products' | translate }}
-          </span>
-          <span *ngIf="mappingType.mappingTypes === 'office_access_to_savings_products'">
-            {{ 'labels.inputs.Offices Savings Products' | translate }}
-          </span>
-          <span *ngIf="mappingType.mappingTypes === 'office_access_to_fees/charges'">
-            {{ 'labels.inputs.Offices Charges/Fees' | translate }}
-          </span>
-          <span *ngIf="mappingType.mappingTypes === 'role_access_to_loan_products'">
-            {{ 'labels.inputs.Roles Loan Products' | translate }}
-          </span>
-          <span *ngIf="mappingType.mappingTypes === 'role_access_to_savings_products'">
-            {{ 'labels.inputs.Roles Savings Products' | translate }}
-          </span>
+          @if (mappingType.mappingTypes === 'office_access_to_loan_products') {
+            <span>
+              {{ 'labels.inputs.Offices Loan Products' | translate }}
+            </span>
+          }
+          @if (mappingType.mappingTypes === 'office_access_to_savings_products') {
+            <span>
+              {{ 'labels.inputs.Offices Savings Products' | translate }}
+            </span>
+          }
+          @if (mappingType.mappingTypes === 'office_access_to_fees/charges') {
+            <span>
+              {{ 'labels.inputs.Offices Charges/Fees' | translate }}
+            </span>
+          }
+          @if (mappingType.mappingTypes === 'role_access_to_loan_products') {
+            <span>
+              {{ 'labels.inputs.Roles Loan Products' | translate }}
+            </span>
+          }
+          @if (mappingType.mappingTypes === 'role_access_to_savings_products') {
+            <span>
+              {{ 'labels.inputs.Roles Savings Products' | translate }}
+            </span>
+          }
         </td>
       </ng-container>
 
@@ -27,7 +37,7 @@
     </table>
 
     <!---------------- SHOW FILTERING OPTION  ----------->
-    <ng-container *ngIf="selectedMappingType > 0">
+    @if (selectedMappingType > 0) {
       <mat-card>
         <form [formGroup]="filterPreferenceForm" (ngSubmit)="showFilteredData()">
           <mat-card-title>
@@ -42,73 +52,71 @@
                   <mat-option [value]="0">
                     {{ 'labels.inputs.All' | translate }}
                   </mat-option>
-                  <mat-option *ngFor="let firstEntity of firstEntityData" [value]="firstEntity.id">
-                    {{ firstEntity.name }}
-                  </mat-option>
+                  @for (firstEntity of firstEntityData; track firstEntity) {
+                    <mat-option [value]="firstEntity.id">
+                      {{ firstEntity.name }}
+                    </mat-option>
+                  }
                 </mat-select>
-                <mat-error *ngIf="filterPreferenceForm.controls.mappingFirstParamId.hasError('required')">
-                  {{ firstMappingEntity | translateKey: 'inputs' }} {{ 'labels.commons.is' | translate }}
-                  <strong>{{ 'labels.commons.required' | translate }}</strong>
-                </mat-error>
+                @if (filterPreferenceForm.controls.mappingFirstParamId.hasError('required')) {
+                  <mat-error>
+                    {{ firstMappingEntity | translateKey: 'inputs' }} {{ 'labels.commons.is' | translate }}
+                    <strong>{{ 'labels.commons.required' | translate }}</strong>
+                  </mat-error>
+                }
               </mat-form-field>
-
               <mat-form-field>
                 <mat-label>{{ secondMappingEntity | translateKey: 'text' }}</mat-label>
                 <mat-select required formControlName="mappingSecondParamId">
                   <mat-option [value]="0">
                     {{ 'labels.inputs.All' | translate }}
                   </mat-option>
-                  <mat-option *ngFor="let secondEntity of secondEntityData" [value]="secondEntity.id">
-                    {{ secondEntity.name }}
-                  </mat-option>
+                  @for (secondEntity of secondEntityData; track secondEntity) {
+                    <mat-option [value]="secondEntity.id">
+                      {{ secondEntity.name }}
+                    </mat-option>
+                  }
                 </mat-select>
-                <mat-error *ngIf="filterPreferenceForm.controls.mappingSecondParamId.hasError('required')">
-                  {{ secondMappingEntity | translateKey: 'text' }} {{ 'labels.commons.is' | translate }}
-                  <strong>{{ 'labels.commons.required' | translate }}</strong>
-                </mat-error>
+                @if (filterPreferenceForm.controls.mappingSecondParamId.hasError('required')) {
+                  <mat-error>
+                    {{ secondMappingEntity | translateKey: 'text' }} {{ 'labels.commons.is' | translate }}
+                    <strong>{{ 'labels.commons.required' | translate }}</strong>
+                  </mat-error>
+                }
               </mat-form-field>
-
               <mat-card-actions class="layout-row align-center gap-5px responsive-column">
                 <button mat-raised-button color="primary" [disabled]="!filterPreferenceForm.valid">
                   {{ 'labels.buttons.Submit' | translate }}
                 </button>
-                <button
-                  *ngIf="hasClickedFilters"
-                  mat-raised-button
-                  color="primary"
-                  (click)="showAddScreen(selectedMappingType)"
-                >
-                  {{ 'labels.buttons.Add' | translate }}
-                </button>
+                @if (hasClickedFilters) {
+                  <button mat-raised-button color="primary" (click)="showAddScreen(selectedMappingType)">
+                    {{ 'labels.buttons.Add' | translate }}
+                  </button>
+                }
               </mat-card-actions>
             </div>
           </mat-card-content>
         </form>
-
         <!----------------- DISPLAY THE MAPPING LIST DATA FOR SELECTED TYPE AND SELECTED ENTITIES -------------------->
-        <ng-container *ngIf="hasClickedFilters">
+        @if (hasClickedFilters) {
           <div>
             <table mat-table [dataSource]="entityMappingsListData">
               <ng-container matColumnDef="fromentity">
                 <th mat-header-cell *matHeaderCellDef>{{ firstMappingEntity | translateKey: 'inputs' }}</th>
                 <td mat-cell *matCellDef="let listdata">{{ listdata.fromEntity }}</td>
               </ng-container>
-
               <ng-container matColumnDef="toentity">
                 <th mat-header-cell *matHeaderCellDef>{{ secondMappingEntity | translateKey: 'text' }}</th>
                 <td mat-cell *matCellDef="let listdata">{{ listdata.toEntity }}</td>
               </ng-container>
-
               <ng-container matColumnDef="startdate">
                 <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Start Date' | translate }}</th>
                 <td mat-cell *matCellDef="let listdata">{{ listdata.startDate | dateFormat }}</td>
               </ng-container>
-
               <ng-container matColumnDef="enddate">
                 <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.End Date' | translate }}</th>
                 <td mat-cell *matCellDef="let listdata">{{ listdata.endDate | dateFormat }}</td>
               </ng-container>
-
               <ng-container matColumnDef="edit">
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let listdata">
@@ -125,7 +133,6 @@
                   </button>
                 </td>
               </ng-container>
-
               <ng-container matColumnDef="delete">
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let listdata">
@@ -142,14 +149,13 @@
                   </button>
                 </td>
               </ng-container>
-
               <tr mat-header-row *matHeaderRowDef="entityMappingListColumns"></tr>
               <tr mat-row *matRowDef="let row; columns: entityMappingListColumns" class="select-row"></tr>
             </table>
             <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
           </div>
-        </ng-container>
+        }
       </mat-card>
-    </ng-container>
+    }
   </div>
 </div>

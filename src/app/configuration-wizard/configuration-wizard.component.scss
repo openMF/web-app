@@ -1,0 +1,73 @@
+.config-wizard-container {
+  padding: 24px;
+  max-width: 800px;
+
+  h1 {
+    margin: 0 0 24px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 500;
+  }
+}
+
+.config-wizard-actions {
+  padding: 16px 0 0 !important;
+  margin: 0 !important;
+  justify-content: center;
+  border-top: 1px solid #e0e0e0;
+
+  button {
+    min-width: 180px;
+    height: 40px;
+  }
+}
+
+.config-wizard-content {
+  padding: 0 !important;
+  margin-bottom: 24px;
+
+  .description {
+    text-align: center;
+    font-size: 16px;
+    margin: 0 0 32px;
+    color: #555;
+  }
+
+  .buttons-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 32px;
+
+    button {
+      flex: 1 1 calc(33.333% - 11px);
+      min-width: 180px;
+      height: 48px;
+      text-transform: none;
+
+      @media (width < 768px) {
+        flex: 1 1 calc(50% - 8px);
+      }
+
+      @media (width < 480px) {
+        flex: 1 1 100%;
+      }
+    }
+  }
+
+  .progress-section {
+    margin-top: 32px;
+
+    .progress-label {
+      font-size: 14px;
+      font-weight: 500;
+      margin: 0 0 12px;
+      color: #333;
+    }
+
+    mat-progress-bar {
+      height: 8px;
+      border-radius: 4px;
+    }
+  }
+}

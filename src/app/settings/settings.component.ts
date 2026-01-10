@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
 /** Custom Service */
 import { SettingsService } from './settings.service';
@@ -32,6 +32,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class SettingsComponent implements OnInit {
+  private settingsService = inject(SettingsService);
+
   /** Placeholder for languages. update once translations are set up */
   languages: any[] = [
     {
@@ -72,11 +74,6 @@ export class SettingsComponent implements OnInit {
   dateFormat = new UntypedFormControl('');
   /** Decimals to Display Setting */
   decimalsToDisplay = new UntypedFormControl('');
-
-  /**
-   * @param {SettingsService} settingsService Settings Service
-   */
-  constructor(private settingsService: SettingsService) {}
 
   ngOnInit() {
     this.language.patchValue(this.settingsService.language);

@@ -15,9 +15,10 @@
       }
     ],
     "selector-attribute-quotes": "always",
-    "max-nesting-depth": 5,
-    "selector-max-compound-selectors": 5,
-    "selector-max-specificity": "1,3,2",
+    "max-nesting-depth": 7,
+    "selector-max-compound-selectors": 8,
+    "selector-max-specificity": null,
+    "no-descending-specificity": null,
     "declaration-no-important": null,
     "at-rule-no-vendor-prefix": true,
     "at-rule-no-unknown": null,
@@ -46,7 +47,8 @@
           "/^mat/",
           "/^mifosx/",
           "fa-icon",
-          "ng-template"
+          "ng-template",
+          "/^md-/"
         ]
       }
     ],

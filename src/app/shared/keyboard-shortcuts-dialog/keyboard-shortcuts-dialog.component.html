@@ -2,25 +2,33 @@
 
 <div mat-dialog-content>
   <div class="layout-column gap-2px">
-    <ng-container *ngFor="let item of buttonConfig.buttonCombinations">
+    @for (item of buttonConfig.buttonCombinations; track item) {
       <mat-divider [inset]="true"></mat-divider>
       <div class="flex-fill flex-50">
         <span class="flex-50">
-          <span *ngIf="item.ctrlKey">
-            <span class="modifier-key">{{ 'labels.inputs.Ctrl' | translate }}</span> +
-          </span>
-          <span *ngIf="item.shiftKey">
-            <span class="modifier-key">{{ 'labels.inputs.Shift' | translate }}</span> +
-          </span>
-          <span *ngIf="item.altKey">
-            <span class="modifier-key">{{ 'labels.inputs.Alt' | translate }}</span> +
-          </span>
-          <span *ngIf="item.key">
-            <span class="modifier-key">{{ item.key }}</span></span
-          >
+          @if (item.ctrlKey) {
+            <span>
+              <span class="modifier-key">{{ 'labels.inputs.Ctrl' | translate }}</span> +
+            </span>
+          }
+          @if (item.shiftKey) {
+            <span>
+              <span class="modifier-key">{{ 'labels.inputs.Shift' | translate }}</span> +
+            </span>
+          }
+          @if (item.altKey) {
+            <span>
+              <span class="modifier-key">{{ 'labels.inputs.Alt' | translate }}</span> +
+            </span>
+          }
+          @if (item.key) {
+            <span>
+              <span class="modifier-key">{{ item.key }}</span></span
+            >
+          }
         </span>
         <span class="flex-50">{{ item.title }}</span>
       </div>
-    </ng-container>
+    }
   </div>
 </div>

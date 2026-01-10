@@ -1,0 +1,71 @@
+// Material Symbols Font Faces
+// These will be loaded from Google Fonts or local files
+@use 'theme/material-web' as *;
+
+.m3-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  vertical-align: middle;
+
+  // Smooth rendering
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizelegibility;
+}
+
+// Material Symbols base styles
+.material-symbols-outlined,
+.material-symbols-filled,
+.material-symbols-rounded,
+.material-symbols-sharp {
+  font-family: 'Material Symbols Outlined', sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  color: var(--md-icon-prefix-label-text-color, #44474e);
+}
+
+// Filled variant
+.material-symbols-filled {
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+// Outlined variant (default)
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+// Rounded variant
+.material-symbols-rounded {
+  font-family: 'Material Symbols Rounded', sans-serif;
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+// Sharp variant
+.material-symbols-sharp {
+  font-family: 'Material Symbols Sharp', sans-serif;
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}

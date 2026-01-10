@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -32,6 +32,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateGlAccountComponent implements OnInit, AfterViewInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private accountingService = inject(AccountingService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private configurationWizardService = inject(ConfigurationWizardService);
+  private popoverService = inject(PopoverService);
+  dialog = inject(MatDialog);
+
   /** GL account form. */
   glAccountForm: UntypedFormGroup;
   /** Chart of accounts data. */
@@ -66,15 +74,7 @@ export class CreateGlAccountComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    * @param {Matdialog} dialog Matdialog.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private accountingService: AccountingService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private configurationWizardService: ConfigurationWizardService,
-    private popoverService: PopoverService,
-    public dialog: MatDialog
-  ) {
+  constructor() {
     this.route.queryParamMap.subscribe((params) => {
       this.accountTypeId = Number(params.get('accountType'));
       this.parentId = Number(params.get('parent'));

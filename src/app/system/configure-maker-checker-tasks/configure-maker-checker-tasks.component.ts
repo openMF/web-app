@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import * as _ from 'lodash';
@@ -9,7 +9,7 @@ import { ConfigurationWizardService } from '../../configuration-wizard/configura
 import { SystemService } from '../system.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatList, MatListItem } from '@angular/material/list';
-import { NgFor, NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { MatDivider } from '@angular/material/divider';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -50,6 +50,13 @@ interface SubmitPermissionData {
   ]
 })
 export class ConfigureMakerCheckerTasksComponent implements OnInit, AfterViewInit {
+  private route = inject(ActivatedRoute);
+  private systemService = inject(SystemService);
+  private formBuilder = inject(UntypedFormBuilder);
+  private router = inject(Router);
+  private configurationWizardService = inject(ConfigurationWizardService);
+  private popoverService = inject(PopoverService);
+
   permissionsData: Permission[] = [];
   groupings: string[] = [];
   currentGrouping = '';
@@ -82,14 +89,7 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit, AfterViewIni
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private systemService: SystemService,
-    private formBuilder: UntypedFormBuilder,
-    private router: Router,
-    private configurationWizardService: ConfigurationWizardService,
-    private popoverService: PopoverService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { permissions: any }) => {
       this.permissionsData = data.permissions;
     });

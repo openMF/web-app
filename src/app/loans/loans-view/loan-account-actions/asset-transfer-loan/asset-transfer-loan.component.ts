@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
@@ -15,6 +15,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class AssetTransferLoanComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private externalAssetOwnerService = inject(ExternalAssetOwnerService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dateUtils = inject(Dates);
+  private settingsService = inject(SettingsService);
+
   BUYBACK_COMMAND = 'buyback';
   SALE_COMMAND = 'sale';
 
@@ -28,14 +35,7 @@ export class AssetTransferLoanComponent implements OnInit {
   /** Sell Loan Form */
   saleLoanForm: UntypedFormGroup;
 
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private externalAssetOwnerService: ExternalAssetOwnerService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private dateUtils: Dates,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.loanId = this.route.snapshot.params['loanId'];
     const actionName = this.route.snapshot.params['action'];
     this.command = actionName === 'Sell Loan' ? this.SALE_COMMAND : this.BUYBACK_COMMAND;

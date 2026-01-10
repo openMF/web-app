@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -67,6 +67,12 @@ import { LoanProducts } from 'app/products/loan-products/loan-products';
   ]
 })
 export class LoansViewComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  loansService = inject(LoansService);
+  private translateService = inject(TranslateService);
+  dialog = inject(MatDialog);
+
   /** Loan Details Data */
   loanDetailsData: any;
   /** Loan Datatables */
@@ -94,13 +100,9 @@ export class LoansViewComponent implements OnInit {
   loanReAged = false;
   loanReAmortized = false;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    public loansService: LoansService,
-    private translateService: TranslateService,
-    public dialog: MatDialog
-  ) {
+  constructor() {
+    const loansService = this.loansService;
+
     this.route.data.subscribe(
       (data: { loanDetailsData: any; loanDatatables: any; loanArrearsDelinquencyConfig: any }) => {
         this.loanDetailsData = data.loanDetailsData;

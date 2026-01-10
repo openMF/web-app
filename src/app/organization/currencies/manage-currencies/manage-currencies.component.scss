@@ -2,6 +2,29 @@
   width: 74rem;
 }
 
+.currency-form-container {
+  padding: 16px 24px;
+  margin-bottom: 16px;
+}
+
+.currency-search-field {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin-right: 20px;
+}
+
+.add-currency-button {
+  flex-shrink: 0;
+  min-width: 56px;
+  width: 56px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-end;
+  margin-bottom: 2.1em;
+}
+
 .currency-grid {
   max-width: 40%;
   justify-content: left !important;

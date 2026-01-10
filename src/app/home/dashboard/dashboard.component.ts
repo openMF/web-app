@@ -1,12 +1,12 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { activities } from '../activities';
 import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
-import { NgFor, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { ClientTrendsBarComponent } from './client-trends-bar/client-trends-bar.component';
 import { AmountDisbursedPieComponent } from './amount-disbursed-pie/amount-disbursed-pie.component';
 import { AmountCollectedPieComponent } from './amount-collected-pie/amount-collected-pie.component';
@@ -29,6 +29,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class DashboardComponent implements OnInit {
+  private router = inject(Router);
+
   /** Array of all user activities */
   userActivity: string[];
   /** Array of most recent user activities */
@@ -45,7 +47,7 @@ export class DashboardComponent implements OnInit {
   /**
    * Gets user activities from local storage.
    */
-  constructor(private router: Router) {
+  constructor() {
     this.userActivity = JSON.parse(localStorage.getItem('mifosXLocation'));
   }
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   MatDialogRef,
   MatDialogTitle,
@@ -23,5 +23,5 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class SessionTimeoutDialogComponent {
-  constructor(public dialogRef: MatDialogRef<SessionTimeoutDialogComponent>) {}
+  dialogRef = inject<MatDialogRef<SessionTimeoutDialogComponent>>(MatDialogRef);
 }

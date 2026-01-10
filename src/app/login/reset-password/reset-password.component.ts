@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** rxjs Imports */
@@ -35,22 +35,16 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ResetPasswordComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private authenticationService = inject(AuthenticationService);
+  private passwordsUtility = inject(PasswordsUtility);
+
   /** Reset password form group. */
   resetPasswordForm: UntypedFormGroup;
   /** Password input field type. */
   passwordInputType: string;
   /** True if loading. */
   loading = false;
-
-  /**
-   * @param {FormBuilder} formBuilder Form Builder.
-   * @param {AuthenticationService} authenticationService Authentication Service.
-   */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private authenticationService: AuthenticationService,
-    private passwordsUtility: PasswordsUtility
-  ) {}
 
   /**
    * Creates reset password form.

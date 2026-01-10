@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -28,6 +28,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class SavingProductSettingsStepComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+
   @Input() savingProductsTemplate: any;
 
   savingProductSettingsForm: UntypedFormGroup;
@@ -35,7 +37,7 @@ export class SavingProductSettingsStepComponent implements OnInit {
   lockinPeriodFrequencyTypeData: any;
   taxGroupData: any;
 
-  constructor(private formBuilder: UntypedFormBuilder) {
+  constructor() {
     this.createSavingProductSettingsForm();
     this.setConditionalControls();
   }
@@ -44,12 +46,12 @@ export class SavingProductSettingsStepComponent implements OnInit {
     this.lockinPeriodFrequencyTypeData = this.savingProductsTemplate.lockinPeriodFrequencyTypeOptions;
     this.taxGroupData = this.savingProductsTemplate.taxGroupOptions;
 
+    const hasLockinPeriod =
+      this.savingProductsTemplate.lockinPeriodFrequency && this.savingProductsTemplate.lockinPeriodFrequency > 0;
+
     this.savingProductSettingsForm.patchValue({
       minRequiredOpeningBalance: this.savingProductsTemplate.minRequiredOpeningBalance,
-      lockinPeriodFrequency: this.savingProductsTemplate.lockinPeriodFrequency,
-      lockinPeriodFrequencyType:
-        this.savingProductsTemplate.lockinPeriodFrequencyType &&
-        this.savingProductsTemplate.lockinPeriodFrequencyType.id,
+      enableLockinPeriod: hasLockinPeriod,
       withdrawalFeeForTransfers: this.savingProductsTemplate.withdrawalFeeForTransfers,
       minBalanceForInterestCalculation: this.savingProductsTemplate.minBalanceForInterestCalculation,
       enforceMinRequiredBalance: this.savingProductsTemplate.enforceMinRequiredBalance,
@@ -65,13 +67,24 @@ export class SavingProductSettingsStepComponent implements OnInit {
       daysToDormancy: this.savingProductsTemplate.daysToDormancy,
       daysToEscheat: this.savingProductsTemplate.daysToEscheat
     });
+
+    if (hasLockinPeriod) {
+      this.savingProductSettingsForm.patchValue({
+        lockinPeriodFrequency: this.savingProductsTemplate.lockinPeriodFrequency,
+        lockinPeriodFrequencyType:
+          this.savingProductsTemplate.lockinPeriodFrequencyType &&
+          this.savingProductsTemplate.lockinPeriodFrequencyType.id
+      });
+    }
   }
 
   createSavingProductSettingsForm() {
     this.savingProductSettingsForm = this.formBuilder.group({
-      minRequiredOpeningBalance: [''],
-      lockinPeriodFrequency: [''],
-      lockinPeriodFrequencyType: [''],
+      minRequiredOpeningBalance: [
+        '',
+        [Validators.min(0)]
+      ],
+      enableLockinPeriod: [false],
       withdrawalFeeForTransfers: [false],
       minBalanceForInterestCalculation: [''],
       enforceMinRequiredBalance: [false],
@@ -83,6 +96,26 @@ export class SavingProductSettingsStepComponent implements OnInit {
   }
 
   setConditionalControls() {
+    this.savingProductSettingsForm.get('enableLockinPeriod').valueChanges.subscribe((enableLockinPeriod: any) => {
+      if (enableLockinPeriod) {
+        this.savingProductSettingsForm.addControl(
+          'lockinPeriodFrequency',
+          new UntypedFormControl('', [
+            Validators.required,
+            Validators.min(1),
+            Validators.pattern('^[1-9]\\d*$')
+          ])
+        );
+        this.savingProductSettingsForm.addControl(
+          'lockinPeriodFrequencyType',
+          new UntypedFormControl('', Validators.required)
+        );
+      } else {
+        this.savingProductSettingsForm.removeControl('lockinPeriodFrequency');
+        this.savingProductSettingsForm.removeControl('lockinPeriodFrequencyType');
+      }
+    });
+
     this.savingProductSettingsForm.get('allowOverdraft').valueChanges.subscribe((allowOverdraft: any) => {
       if (allowOverdraft) {
         this.savingProductSettingsForm.addControl('minOverdraftForInterestCalculation', new UntypedFormControl(''));
@@ -119,6 +152,8 @@ export class SavingProductSettingsStepComponent implements OnInit {
   }
 
   get savingProductSettings() {
-    return this.savingProductSettingsForm.value;
+    const formValue = { ...this.savingProductSettingsForm.value };
+    delete formValue.enableLockinPeriod;
+    return formValue;
   }
 }

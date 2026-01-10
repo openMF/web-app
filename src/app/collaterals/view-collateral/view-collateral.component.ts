@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CollateralsService } from '../collaterals.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -44,6 +44,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewCollateralComponent {
+  private route = inject(ActivatedRoute);
+  private collateralsService = inject(CollateralsService);
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
+
   clientCollateralData: any;
 
   collateralColumns: string[] = [
@@ -53,12 +58,7 @@ export class ViewCollateralComponent {
     'Last Repayment Date'
   ];
 
-  constructor(
-    private route: ActivatedRoute,
-    private collateralsService: CollateralsService,
-    private router: Router,
-    private dialog: MatDialog
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { clientCollateralData: any }) => {
       this.clientCollateralData = data.clientCollateralData;
     });
