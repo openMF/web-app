@@ -5,7 +5,8 @@ import {
   UntypedFormGroup,
   Validators,
   UntypedFormControl,
-  ReactiveFormsModule
+  ReactiveFormsModule,
+  FormsModule
 } from '@angular/forms';
 import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
@@ -28,6 +29,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./client-general-step.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    FormsModule,
     MatDivider,
     CdkTextareaAutosize,
     MatCheckbox,
@@ -38,6 +40,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class ClientGeneralStepComponent implements OnInit {
   @Output() legalFormChangeEvent = new EventEmitter<{ legalForm: number }>();
+
+  /** Toggle for progressive disclosure - Easy mode (false) vs Expert mode (true) */
+  isExpertMode = false;
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);

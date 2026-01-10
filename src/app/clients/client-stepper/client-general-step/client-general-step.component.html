@@ -22,7 +22,16 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field class="flex-fill flex-23">
+    <mat-checkbox
+      class="flex-fill flex-23"
+      labelPosition="after"
+      [(ngModel)]="isExpertMode"
+      [ngModelOptions]="{ standalone: true }"
+    >
+      {{ 'labels.inputs.Show advanced fields' | translate }}
+    </mat-checkbox>
+
+    <mat-form-field *ngIf="isExpertMode" class="flex-fill flex-23">
       <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
       <input matInput formControlName="externalId" />
     </mat-form-field>
@@ -156,7 +165,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field class="flex-48">
+    <mat-form-field *ngIf="isExpertMode" class="flex-48">
       <mat-label>{{ 'labels.inputs.Staff' | translate }}</mat-label>
       <mat-select formControlName="staffId">
         <mat-option *ngFor="let staff of staffOptions" [value]="staff.id">
@@ -166,7 +175,7 @@
     </mat-form-field>
 
     <mat-checkbox
-      *ngIf="createClientForm.value.legalFormId === 1"
+      *ngIf="isExpertMode && createClientForm.value.legalFormId === 1"
       class="flex-48 margin-v"
       labelPosition="before"
       formControlName="isStaff"
@@ -189,7 +198,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="flex-48">
+    <mat-form-field *ngIf="isExpertMode" class="flex-48">
       <mat-label>{{ 'labels.inputs.Client Type' | translate }}</mat-label>
       <mat-select formControlName="clientTypeId">
         <mat-option *ngFor="let clientType of clientTypeOptions" [value]="clientType.id">
@@ -198,7 +207,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field class="flex-48">
+    <mat-form-field *ngIf="isExpertMode" class="flex-48">
       <mat-label>{{ 'labels.inputs.Client Classification' | translate }}</mat-label>
       <mat-select formControlName="clientClassificationId">
         <mat-option
