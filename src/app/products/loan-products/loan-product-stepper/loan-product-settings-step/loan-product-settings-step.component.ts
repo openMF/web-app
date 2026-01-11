@@ -313,10 +313,19 @@ export class LoanProductSettingsStepComponent implements OnInit {
         Validators.required
       ],
       canDefineInstallmentAmount: [false],
-      graceOnArrearsAgeing: [''],
-      overdueDaysForNPA: [''],
+      graceOnArrearsAgeing: [
+        '',
+        [Validators.min(0)]
+      ],
+      overdueDaysForNPA: [
+        '',
+        [Validators.min(0)]
+      ],
       accountMovesOutOfNPAOnlyOnArrearsCompletion: [false],
-      principalThresholdForLastInstallment: [''],
+      principalThresholdForLastInstallment: [
+        '',
+        [Validators.min(0)]
+      ],
       allowVariableInstallments: [false],
       disallowExpectedDisbursements: [false],
       canUseForTopup: [false],

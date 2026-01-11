@@ -382,7 +382,7 @@
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.On arrears ageing' | translate }}</mat-label>
-      <input type="number" matInput formControlName="graceOnArrearsAgeing" />
+      <input type="number" min="0" matInput formControlName="graceOnArrearsAgeing" />
     </mat-form-field>
 
     <h4 class="flex-48">
@@ -398,7 +398,7 @@
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Overdue days for NPA' | translate }}</mat-label>
-      <input type="number" matInput formControlName="overdueDaysForNPA" />
+      <input type="number" min="0" matInput formControlName="overdueDaysForNPA" />
     </mat-form-field>
 
     <mat-checkbox
@@ -411,7 +411,7 @@
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Principal Threshold (%) for Last Instalment' | translate }}</mat-label>
-      <input type="number" matInput formControlName="principalThresholdForLastInstallment" />
+      <input type="number" min="0" matInput formControlName="principalThresholdForLastInstallment" />
     </mat-form-field>
 
     <mat-checkbox
