@@ -760,6 +760,7 @@
           <mat-label>{{ 'labels.inputs.Due days for repayment event' | translate }}</mat-label>
           <input
             type="number"
+            min="0"
             matInput
             matTooltip="{{ 'tooltips.Maximum outstanding loan account balance' | translate }}"
             formControlName="dueDaysForRepaymentEvent"
@@ -769,6 +770,7 @@
           <mat-label>{{ 'labels.inputs.OverDue days for repayment event' | translate }}</mat-label>
           <input
             type="number"
+            min="0"
             matInput
             matTooltip="{{ 'tooltips.Maximum outstanding loan account balance' | translate }}"
             formControlName="overDueDaysForRepaymentEvent"

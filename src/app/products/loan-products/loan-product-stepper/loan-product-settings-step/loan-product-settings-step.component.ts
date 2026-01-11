@@ -352,8 +352,14 @@ export class LoanProductSettingsStepComponent implements OnInit {
       enableDownPayment: [false],
       enableInstallmentLevelDelinquency: [false],
       useDueForRepaymentsConfigurations: [false],
-      dueDaysForRepaymentEvent: [''],
-      overDueDaysForRepaymentEvent: [''],
+      dueDaysForRepaymentEvent: [
+        '',
+        [Validators.min(0)]
+      ],
+      overDueDaysForRepaymentEvent: [
+        '',
+        [Validators.min(0)]
+      ],
       loanScheduleType: [
         LoanProducts.LOAN_SCHEDULE_TYPE_CUMULATIVE,
         Validators.required
@@ -401,7 +407,6 @@ export class LoanProductSettingsStepComponent implements OnInit {
           this.loanProductSettingsForm.removeControl('maximumGap');
         }
       });
-
     this.loanProductSettingsForm
       .get('isInterestRecalculationEnabled')
       .valueChanges.subscribe((isInterestRecalculationEnabled: any) => {
