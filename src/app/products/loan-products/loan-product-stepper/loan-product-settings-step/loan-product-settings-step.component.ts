@@ -300,10 +300,22 @@ export class LoanProductSettingsStepComponent implements OnInit {
         '',
         Validators.required
       ],
-      graceOnPrincipalPayment: [''],
-      graceOnInterestPayment: [''],
-      graceOnInterestCharged: [''],
-      inArrearsTolerance: [''],
+      graceOnPrincipalPayment: [
+        '',
+        [Validators.min(0)]
+      ],
+      graceOnInterestPayment: [
+        '',
+        [Validators.min(0)]
+      ],
+      graceOnInterestCharged: [
+        '',
+        [Validators.min(0)]
+      ],
+      inArrearsTolerance: [
+        '',
+        [Validators.min(0)]
+      ],
       daysInYearType: [
         '',
         Validators.required

@@ -260,12 +260,12 @@
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Grace on principal payment' | translate }}</mat-label>
-      <input type="number" matInput formControlName="graceOnPrincipalPayment" />
+      <input type="number" min="0" matInput formControlName="graceOnPrincipalPayment" />
     </mat-form-field>
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Grace on interest payment' | translate }}</mat-label>
-      <input type="number" matInput formControlName="graceOnInterestPayment" />
+      <input type="number" min="0" matInput formControlName="graceOnInterestPayment" />
     </mat-form-field>
 
     <mat-divider class="flex-98"></mat-divider>
@@ -298,6 +298,7 @@
       <mat-label>{{ 'labels.inputs.Interest free period' | translate }}</mat-label>
       <input
         type="number"
+        min="0"
         matInput
         matTooltip="{{ 'tooltips.If the Interest Free Period' | translate }}"
         formControlName="graceOnInterestCharged"
@@ -308,6 +309,7 @@
       <mat-label>{{ 'labels.inputs.Arrears tolerance' | translate }}</mat-label>
       <input
         type="number"
+        min="0"
         matInput
         matTooltip="{{ 'tooltips.With Arrears tolerance' | translate }}"
         formControlName="inArrearsTolerance"
