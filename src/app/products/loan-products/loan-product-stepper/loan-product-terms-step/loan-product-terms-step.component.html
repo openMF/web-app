@@ -535,7 +535,7 @@
 
     <mat-form-field class="flex-30">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
-      <input type="number" matInput formControlName="repaymentEvery" required />
+      <input type="number" min="1" matInput formControlName="repaymentEvery" required />
       <mat-error>
         {{ 'labels.inputs.Repaid every' | translate }} {{ 'labels.inputs.Frequency' | translate }}
         {{ 'labels.commons.is' | translate }}
@@ -584,7 +584,7 @@
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Minimum days between disbursal and first repayment date' | translate }}</mat-label>
-      <input type="number" matInput formControlName="minimumDaysBetweenDisbursalAndFirstRepayment" />
+      <input type="number" min="0" matInput formControlName="minimumDaysBetweenDisbursalAndFirstRepayment" />
     </mat-form-field>
   </div>
 

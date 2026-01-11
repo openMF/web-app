@@ -266,13 +266,19 @@ export class LoanProductTermsStepComponent implements OnInit, OnChanges {
       ],
       repaymentEvery: [
         '',
-        Validators.required
+        [
+          Validators.required,
+          Validators.min(1)
+        ]
       ],
       repaymentFrequencyType: [
         '',
         Validators.required
       ],
-      minimumDaysBetweenDisbursalAndFirstRepayment: [''],
+      minimumDaysBetweenDisbursalAndFirstRepayment: [
+        '',
+        []
+      ],
       repaymentStartDateType: [1],
       fixedLength: [null],
       interestRecognitionOnDisbursementDate: [false]
