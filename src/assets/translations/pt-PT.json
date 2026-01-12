@@ -284,6 +284,12 @@
     "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "O tipo de período de taxa de retirada é obrigatório."
   },
   "labels": {
+    "version": {
+      "Tenant": "Inquilino",
+      "Mifos WebApp": "Mifos® WebApp",
+      "Apache Fineract": "Apache Fineract®",
+      "Server": "Servidor"
+    },
     "accounting": {
       "Accrual (periodic)": "Acumulação (periódica)",
       "Accrual (upfront)": "Acumulação (antecipada)",

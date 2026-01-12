@@ -284,6 +284,12 @@
     "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Le type de période de frais de retrait est obligatoire."
   },
   "labels": {
+    "version": {
+      "Tenant": "Locataire",
+      "Mifos WebApp": "Mifos® WebApp",
+      "Apache Fineract": "Apache Fineract®",
+      "Server": "Serveur"
+    },
     "accounting": {
       "Accrual (periodic)": "Accumulation (périodique)",
       "Accrual (upfront)": "Accumulation (d'avance)",

@@ -284,6 +284,12 @@
     "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Išėmimo mokesčio laikotarpio tipas yra privalomas."
   },
   "labels": {
+    "version": {
+      "Tenant": "Nuomininkas",
+      "Mifos WebApp": "Mifos® WebApp",
+      "Apache Fineract": "Apache Fineract®",
+      "Server": "Serveris"
+    },
     "accounting": {
       "Accrual (periodic)": "Kaupiamasis (periodinis)",
       "Accrual (upfront)": "Sukaupimas (išankstinis)",

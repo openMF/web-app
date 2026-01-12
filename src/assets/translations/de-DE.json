@@ -284,6 +284,12 @@
     "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Der Zeitraumtyp der Auszahlungsgebühr ist obligatorisch."
   },
   "labels": {
+    "version": {
+      "Tenant": "Mieter",
+      "Mifos WebApp": "Mifos® WebApp",
+      "Apache Fineract": "Apache Fineract®",
+      "Server": "Server"
+    },
     "accounting": {
       "Accrual (periodic)": "Abgrenzung (periodisch)",
       "Accrual (upfront)": "Rückstellung (im Voraus)",

@@ -96,22 +96,22 @@
         </div>
 
         <!-- Version Info Table -->
-        <div class="login-version-info">
+        <div class="login-version-info" *ngIf="displayBackendInfo">
           <table class="login-version-table">
             <tr>
-              <td class="version-label">Tenant</td>
+              <td class="version-label">{{ 'labels.version.Tenant' | translate }}</td>
               <td class="version-value">{{ versions?.tenant || 'Default' }}</td>
             </tr>
             <tr>
-              <td class="version-label">MifosÂ® WebApp</td>
+              <td class="version-label">{{ 'labels.version.Mifos WebApp' | translate }}</td>
               <td class="version-value">{{ versions?.mifos }}</td>
             </tr>
             <tr>
-              <td class="version-label">Apache FineractÂ®</td>
+              <td class="version-label">{{ 'labels.version.Apache Fineract' | translate }}</td>
               <td class="version-value">{{ versions?.fineract?.version }}</td>
             </tr>
             <tr>
-              <td class="version-label">Server</td>
+              <td class="version-label">{{ 'labels.version.Server' | translate }}</td>
               <td class="version-value">{{ server }}</td>
             </tr>
           </table>

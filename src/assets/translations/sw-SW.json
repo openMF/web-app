@@ -284,6 +284,12 @@
     "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Aina ya muda wa ada ya kujiondoa ni ya lazima."
   },
   "labels": {
+    "version": {
+      "Tenant": "Mpangaji",
+      "Mifos WebApp": "Mifos® WebApp",
+      "Apache Fineract": "Apache Fineract®",
+      "Server": "Seva"
+    },
     "accounting": {
       "Accrual (periodic)": "Accrual (mara kwa mara)",
       "Accrual (upfront)": "Accrual (mbele)",

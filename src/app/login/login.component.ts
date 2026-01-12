@@ -73,6 +73,9 @@ import { VersionService } from '../system/version.service';
   ]
 })
 export class LoginComponent implements OnInit, OnDestroy {
+  /** Show version info table if env allows */
+  displayBackendInfo = environment.displayBackEndInfo !== 'false';
+
   private alertService = inject(AlertService);
   private settingsService = inject(SettingsService);
   private themingService = inject(ThemingService);

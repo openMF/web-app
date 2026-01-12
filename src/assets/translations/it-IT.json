@@ -284,6 +284,12 @@
     "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Il tipo di periodo della commissione di prelievo è obbligatorio."
   },
   "labels": {
+    "version": {
+      "Tenant": "Inquilino",
+      "Mifos WebApp": "Mifos® WebApp",
+      "Apache Fineract": "Apache Fineract®",
+      "Server": "Server"
+    },
     "accounting": {
       "Accrual (periodic)": "Accantonamento (periodico)",
       "Accrual (upfront)": "Accantonamento (in anticipo)",
@@ -2809,7 +2815,7 @@
       "All Recurring Deposits": "Tutti i depositi ricorrenti",
       "All Savings": "Tutto il risparmio",
       "Savings Account Details": "Dettagli del conto di risparmio",
-      // "Create Savings Product": "Crea prodotto di risparmio", // Removed duplicate
+      "Create Savings Product": "Crea prodotto di risparmio",
       "Allocate Cash": "Assegnare contanti",
       "Allows you to create new fixed deposit product": "Questa opzione ti consente di creare un nuovo prodotto a deposito fisso.",
       "This option allows you to create new users in your organization": "Questa opzione ti consente di creare nuovi utenti nella tua organizzazione",
