@@ -1182,7 +1182,14 @@
       "Not Yet Amortized Amount": "Not Yet Amortized Amount",
       "Adjusted Amount": "조정된 금액",
       "Charged Off Amount": "상각 금액",
-      "Date": "날짜"
+      "Date": "날짜",
+      "Basic": "Basic",
+      "Standard": "Standard",
+      "Strong": "Strong",
+      "Recommended": "Recommended",
+      "Basic Password Description": "Password must be at least 1 character and not more than 50 characters long.",
+      "Standard Password Description": "Password must be between 6 and 50 characters long and must include at least one uppercase letter, one lowercase letter, and one numeric digit, with no spaces.",
+      "Strong Password Description": "Password must be between 12 and 50 characters long and must include at least one uppercase letter, one lowercase letter, one numeric digit, and one special character, with no spaces or consecutive repeating characters."
     },
     "inputs": {
       "accounting": {
