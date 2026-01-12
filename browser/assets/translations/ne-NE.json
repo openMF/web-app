@@ -284,6 +284,12 @@
     "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "निकासी शुल्क अवधि प्रकार अनिवार्य छ।"
   },
   "labels": {
+    "version": {
+      "Tenant": "भाडामा लिने व्यक्ति",
+      "Mifos WebApp": "Mifos® WebApp",
+      "Apache Fineract": "Apache Fineract®",
+      "Server": "सर्भर"
+    },
     "accounting": {
       "Accrual (periodic)": "उपार्जन (आवधिक)",
       "Accrual (upfront)": "उपार्जन (अगाडि)",

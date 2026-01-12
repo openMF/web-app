@@ -284,6 +284,12 @@
     "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Typ období poplatku za výběr je povinný."
   },
   "labels": {
+    "version": {
+      "Tenant": "Instanci",
+      "Mifos WebApp": "Mifos® WebApp",
+      "Apache Fineract": "Apache Fineract®",
+      "Server": "Server"
+    },
     "accounting": {
       "Accrual (periodic)": "Akruální (periodické)",
       "Accrual (upfront)": "Akruální (předem)",

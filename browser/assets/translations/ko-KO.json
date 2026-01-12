@@ -284,6 +284,12 @@
     "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "출금 수수료 기간 유형은 필수입니다."
   },
   "labels": {
+    "version": {
+      "Tenant": "임차인",
+      "Mifos WebApp": "Mifos® WebApp",
+      "Apache Fineract": "Apache Fineract®",
+      "Server": "서버"
+    },
     "accounting": {
       "Accrual (periodic)": "발생(정기적)",
       "Accrual (upfront)": "발생(선불)",

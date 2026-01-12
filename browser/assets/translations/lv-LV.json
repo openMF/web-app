@@ -284,6 +284,12 @@
     "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Izņemšanas maksas perioda veids ir obligāts."
   },
   "labels": {
+    "version": {
+      "Tenant": "Nomnieks",
+      "Mifos WebApp": "Mifos® WebApp",
+      "Apache Fineract": "Apache Fineract®",
+      "Server": "Serveris"
+    },
     "accounting": {
       "Accrual (periodic)": "Uzkrāšana (periodiski)",
       "Accrual (upfront)": "Uzkrāšana (iepriekšēja)",

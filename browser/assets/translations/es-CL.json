@@ -284,6 +284,12 @@
     "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "El tipo de período de comisión de retiro es obligatorio."
   },
   "labels": {
+    "version": {
+      "Tenant": "Arrendatario",
+      "Mifos WebApp": "Mifos® WebApp",
+      "Apache Fineract": "Apache Fineract®",
+      "Server": "Servidor"
+    },
     "accounting": {
       "Accrual (periodic)": "Devengo (periódico)",
       "Accrual (upfront)": "Devengo (adelantado)",
