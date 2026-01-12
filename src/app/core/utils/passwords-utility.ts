@@ -17,9 +17,8 @@ import { environment } from '../../../environments/environment';
 })
 export class PasswordsUtility {
   minPasswordLength: number = environment.minPasswordLength | 12;
-  // password regex pattern
   public static PASSWORD_REGEX =
-    '^(?!.*(.)\\1{1,})(?!.*\\s)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^\\w\\s]).{' +
+    '^(?!.*(.)\\1)(?!.*\\s)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^\\w\\s]).{' +
     (environment.minPasswordLength | 12) +
     ',50}$';
 

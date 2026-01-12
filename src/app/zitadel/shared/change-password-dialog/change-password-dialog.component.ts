@@ -60,7 +60,7 @@ export class ChangePasswordDialogComponent implements OnInit {
             Validators.required,
             Validators.minLength(this.minPasswordLength),
             Validators.maxLength(50),
-            Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/)
+            Validators.pattern(/^(?!.*(.)\1)(?!.*\s)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).+$/)
           ]
         ],
         repeatPassword: [

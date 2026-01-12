@@ -31,11 +31,17 @@ export function passwordValidator(): ValidatorFn {
     if (!/\d/.test(value)) {
       errors['number'] = 'Password must contain at least one number';
     }
-    if (!/^(?:(.)(?!\1))+$/.test(value)) {
-      errors['repeated'] = 'Password must have not consecutive repeating characters';
+    // Check for consecutive repeating characters (e.g., aa, 11, @@)
+    if (/(.)\1/.test(value)) {
+      errors['repeated'] = 'Password must not have consecutive repeating characters';
     }
-    if (!/[@$!%*?&]/.test(value)) {
-      errors['specialChar'] = 'Password must contain at least one special character (@$!%*?&)';
+    // Check for any special character (non-alphanumeric, non-space)
+    if (!/[^\w\s]/.test(value)) {
+      errors['specialChar'] = 'Password must contain at least one special character';
+    }
+    // Check for spaces
+    if (/\s/.test(value)) {
+      errors['spaces'] = 'Password must not contain spaces';
     }
 
     return Object.keys(errors).length > 0 ? errors : null;
