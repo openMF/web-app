@@ -57,9 +57,13 @@ table {
 }
 
 .mat-header-cell {
-  color: rgba($color: #000, $alpha: 54%);
+  color: rgb(0 0 0 / 54%);
   font-size: 12px;
   font-weight: 500;
+}
+
+:host-context(.dark-theme) .mat-header-cell {
+  color: rgb(255 255 255 / 70%);
 }
 
 div.container {
