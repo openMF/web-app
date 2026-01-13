@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -19,7 +27,7 @@ import {
 } from '@angular/material/table';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SavingsAccountTransaction } from 'app/savings/models/savings-account-transaction.model';
-import { NgIf, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatIconButton } from '@angular/material/button';
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
@@ -61,6 +69,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class TransactionsTabComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  dialog = inject(MatDialog);
+
   accountId: string;
   status: any;
   /** Transactions Data */
@@ -89,11 +101,7 @@ export class TransactionsTabComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    public dialog: MatDialog
-  ) {
+  constructor() {
     this.route.parent.data.subscribe((data: { fixedDepositsAccountData: any }) => {
       this.transactionsData = data.fixedDepositsAccountData.transactions;
       this.accountId = this.route.parent.snapshot.params['fixedDepositAccountId'];

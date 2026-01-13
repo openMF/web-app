@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
@@ -22,6 +30,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditTellerComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private organizationService = inject(OrganizationService);
+  private settingsService = inject(SettingsService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dateUtils = inject(Dates);
+
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -44,14 +59,7 @@ export class EditTellerComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {Dates} dateUtils Date Utils to format date.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private organizationService: OrganizationService,
-    private settingsService: SettingsService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private dateUtils: Dates
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { teller: any; offices: any }) => {
       this.tellerData = data.teller;
       this.officeData = data.offices;
@@ -88,7 +96,8 @@ export class EditTellerComponent implements OnInit {
         this.tellerData.name,
         [
           Validators.required,
-          Validators.pattern('(^[A-z]).*')]
+          Validators.pattern('(^[A-z]).*')
+        ]
       ],
       description: [this.tellerData.description],
       startDate: [

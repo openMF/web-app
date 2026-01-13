@@ -1,3 +1,11 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
 import {
   Component,
@@ -8,7 +16,8 @@ import {
   AfterViewInit,
   OnDestroy,
   OnChanges,
-  SimpleChanges
+  SimpleChanges,
+  inject
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -29,7 +38,7 @@ import { takeUntil } from 'rxjs/operators';
 import { ReplaySubject, Subject } from 'rxjs';
 import { Currency } from 'app/shared/models/general.model';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
-import { NgFor, NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -51,6 +60,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
+  private route = inject(ActivatedRoute);
+  private formBuilder = inject(UntypedFormBuilder);
+  private organizationservice = inject(OrganizationService);
+  dialog = inject(MatDialog);
+  private router = inject(Router);
+  private translateService = inject(TranslateService);
+  private configurationWizardService = inject(ConfigurationWizardService);
+  private popoverService = inject(PopoverService);
+
   //** Defining PlaceHolders for the search bar */
   placeHolderLabel = '';
   noEntriesFoundLabel = '';
@@ -82,16 +100,7 @@ export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnDestr
    * @param {OrganizationService} organizationservice Organization Service
    * @param {MatDialog} dialog Mat Dialog
    */
-  constructor(
-    private route: ActivatedRoute,
-    private formBuilder: UntypedFormBuilder,
-    private organizationservice: OrganizationService,
-    public dialog: MatDialog,
-    private router: Router,
-    private translateService: TranslateService,
-    private configurationWizardService: ConfigurationWizardService,
-    private popoverService: PopoverService
-  ) {
+  constructor() {
     this.route.parent.data.subscribe((data: { currencies: any }) => {
       this.selectedCurrencies = data.currencies.selectedCurrencyOptions;
       this.currencyList = data.currencies.currencyOptions;

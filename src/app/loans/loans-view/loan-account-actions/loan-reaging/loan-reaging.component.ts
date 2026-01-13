@@ -1,21 +1,45 @@
-import { Component, Input, OnInit } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 import { Dates } from 'app/core/utils/dates';
 import { LoansService } from 'app/loans/loans.service';
+import { RepaymentSchedule } from 'app/loans/models/loan-account.model';
 import { SettingsService } from 'app/settings/settings.service';
 import { OptionData } from 'app/shared/models/option-data.model';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { ReAgePreviewDialogComponent } from './re-age-preview-dialog/re-age-preview-dialog.component';
+import { InputAmountComponent } from 'app/shared/input-amount/input-amount.component';
+import { LoanTransactionTemplate } from 'app/loans/models/loan-transaction-type.model';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'mifosx-loan-reaging',
   templateUrl: './loan-reaging.component.html',
   styleUrls: ['./loan-reaging.component.scss'],
   imports: [
-    ...STANDALONE_SHARED_IMPORTS
+    ...STANDALONE_SHARED_IMPORTS,
+    InputAmountComponent,
+    MatSlideToggle
   ]
 })
 export class LoanReagingComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private settingsService = inject(SettingsService);
+  private loanService = inject(LoansService);
+  private dateUtils = inject(Dates);
+  private dialog = inject(MatDialog);
+
   @Input() dataObject: any;
   /** Loan Id */
   loanId: string;
@@ -31,24 +55,21 @@ export class LoanReagingComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
 
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private settingsService: SettingsService,
-    private loanService: LoansService,
-    private dateUtils: Dates
-  ) {
+  loanTransactionData: LoanTransactionTemplate | null = null;
+  addTransactionAmount = false;
+
+  constructor() {
     this.loanId = this.route.snapshot.params['loanId'];
   }
 
   ngOnInit(): void {
+    this.loanTransactionData = this.dataObject;
+
     this.maxDate = this.settingsService.maxFutureDate;
 
     this.reAgeReasonOptions = this.dataObject.reAgeReasonOptions;
     this.reAgeInterestHandlingOptions = this.dataObject.reAgeInterestHandlingOptions;
     this.periodFrequencyOptions = this.dataObject.periodFrequencyOptions;
-
     this.createReagingLoanForm();
   }
 
@@ -73,27 +94,86 @@ export class LoanReagingComponent implements OnInit {
       reAgeInterestHandling: [
         this.reAgeInterestHandlingOptions[0]
       ],
+      transactionAmount: [
+        ,
+        [
+          Validators.min(0)
+        ]
+      ],
       note: '',
       externalId: '',
       reasonCodeValueId: null
     });
   }
 
-  submit(): void {
-    const reagingLoanFormData = this.reagingLoanForm.value;
+  private prepareReagingData() {
+    const reagingLoanFormData = { ...this.reagingLoanForm.value };
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const startDate: Date = this.reagingLoanForm.value.startDate;
     if (reagingLoanFormData.startDate instanceof Date) {
       reagingLoanFormData.startDate = this.dateUtils.formatDate(startDate, dateFormat);
     }
-    const data = {
+    if (reagingLoanFormData.reAgeInterestHandling && typeof reagingLoanFormData.reAgeInterestHandling === 'object') {
+      reagingLoanFormData.reAgeInterestHandling = reagingLoanFormData.reAgeInterestHandling.id;
+    }
+    return {
       ...reagingLoanFormData,
       dateFormat,
       locale
     };
-    this.loanService.submitLoanActionButton(this.loanId, data, 'reAge').subscribe((response: any) => {
-      this.router.navigate(['../../transactions'], { relativeTo: this.route });
+  }
+
+  preview(): void {
+    if (this.reagingLoanForm.invalid) {
+      return;
+    }
+    const data = this.prepareReagingData();
+
+    this.loanService.getReAgePreview(this.loanId, data).subscribe({
+      next: (response: RepaymentSchedule) => {
+        const currencyCode = response.currency?.code || this.loanTransactionData.currency.code;
+
+        if (!currencyCode) {
+          console.error('Currency code is not available in API response or loan details');
+          return;
+        }
+
+        this.dialog.open(ReAgePreviewDialogComponent, {
+          data: {
+            repaymentSchedule: response,
+            currencyCode: currencyCode
+          },
+          width: '95%',
+          maxWidth: '1400px',
+          height: '90vh'
+        });
+      },
+      error: (error) => {
+        console.error('Error loading re-age preview:', error);
+      }
+    });
+  }
+
+  displayTransactionAmount(): void {
+    this.addTransactionAmount = !this.addTransactionAmount;
+    this.reagingLoanForm.patchValue({
+      transactionAmount: null
+    });
+  }
+
+  submit(): void {
+    const data = this.prepareReagingData();
+    if (data['transactionAmount'] === null) {
+      delete data['transactionAmount'];
+    }
+    this.loanService.submitLoanActionButton(this.loanId, data, 'reAge').subscribe({
+      next: (response: any) => {
+        this.router.navigate(['../../transactions'], { relativeTo: this.route });
+      },
+      error: (error) => {
+        console.error('Error submitting re-age:', error);
+      }
     });
   }
 }

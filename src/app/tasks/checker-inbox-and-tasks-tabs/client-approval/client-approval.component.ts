@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import * as _ from 'lodash';
@@ -27,7 +35,7 @@ import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicke
 import { TasksService } from '../../tasks.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
-import { NgIf, NgFor, KeyValuePipe } from '@angular/common';
+import { KeyValuePipe } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { AccountsFilterPipe } from '../../../pipes/accounts-filter.pipe';
@@ -56,6 +64,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ClientApprovalComponent {
+  private route = inject(ActivatedRoute);
+  private dialog = inject(MatDialog);
+  private dateUtils = inject(Dates);
+  private router = inject(Router);
+  private settingsService = inject(SettingsService);
+  private tasksService = inject(TasksService);
+
   /** Grouped Clients Data */
   groupedClients: any;
   /** Checks to show the data */
@@ -83,14 +98,7 @@ export class ClientApprovalComponent {
    * @param {SettingsService} settingsService Settings Service.
    * @param {TasksService} tasksService Tasks Service.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private dialog: MatDialog,
-    private dateUtils: Dates,
-    private router: Router,
-    private settingsService: SettingsService,
-    private tasksService: TasksService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { groupedClientData: any }) => {
       this.groupedClients = _.groupBy(data.groupedClientData.pageItems, 'officeName');
       if (Object.keys(this.groupedClients).length) {
@@ -135,7 +143,6 @@ export class ClientApprovalComponent {
         type: 'datetime-local',
         required: true
       })
-
     ];
     const data = {
       title: 'Enter Clients Activation Date',

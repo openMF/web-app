@@ -1,4 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormBuilder,
   UntypedFormControl,
@@ -25,6 +33,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class AdjustLoanChargeComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private loanService = inject(LoansService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private settingsService = inject(SettingsService);
+  private organizationService = inject(OrganizationService);
+
   /** Loan Id */
   loanId: string;
   chargeId: string;
@@ -50,14 +65,7 @@ export class AdjustLoanChargeComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private loanService: LoansService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private settingsService: SettingsService,
-    private organizationService: OrganizationService
-  ) {
+  constructor() {
     this.loanId = this.route.snapshot.params['loanId'];
     this.chargeId = this.route.snapshot.params['id'];
     this.route.data.subscribe((data: { loansAccountCharge: any; loanDetailsData: any }) => {

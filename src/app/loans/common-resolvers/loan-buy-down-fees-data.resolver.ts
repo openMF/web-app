@@ -1,11 +1,19 @@
-import { Injectable } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Injectable, inject } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { LoansService } from '../loans.service';
 
 @Injectable()
 export class LoanBuyDownFeesDataResolver implements Resolve<Object> {
-  constructor(private loansService: LoansService) {}
+  private loansService = inject(LoansService);
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const loanId = route.paramMap.get('loanId') || route.parent.paramMap.get('loanId');

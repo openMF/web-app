@@ -1,73 +1,110 @@
-<div *ngIf="!oidcServerEnabled">
-  <form class="layout-column" [formGroup]="loginForm" (ngSubmit)="login()" id="login-form">
-    <mat-form-field class="login-input flex-align-center">
-      <span matPrefix class="m-r-10">
-        <fa-icon icon="user-circle" size="lg"></fa-icon>
-      </span>
-      <mat-label>{{ 'labels.inputs.Username' | translate }}</mat-label>
-      <input matInput type="text" autocomplete="off" formControlName="username" />
-      <mat-error *ngIf="loginForm.controls.username.hasError('required')">
-        {{ 'labels.inputs.Username' | translate }} <strong>{{ 'labels.commons.is required' | translate }}</strong>
-      </mat-error>
-    </mat-form-field>
+<!--
+  Copyright since 2025 Mifos Initiative
 
-    <mat-form-field class="login-input flex-align-center">
-      <span matPrefix class="m-r-10">
-        <fa-icon icon="lock" size="lg"></fa-icon>
-      </span>
-      <mat-label>{{ 'labels.inputs.Password' | translate }}</mat-label>
-      <input matInput type="{{ passwordInputType }}" formControlName="password" />
-      <button
-        type="button"
-        matSuffix
-        *ngIf="loginForm.controls.password.value && !loading"
-        mat-icon-button
-        (mousedown)="togglePasswordVisibility()"
-        (mouseup)="togglePasswordVisibility()"
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<!-- Basic Auth: Username/password form -->
+@if (!oauthEnabled) {
+  <div>
+    <form class="layout-column" [formGroup]="loginForm" (ngSubmit)="login()" id="login-form">
+      <mat-form-field class="login-field flex-align-center">
+        <mat-label>{{ 'labels.inputs.Username' | translate }}</mat-label>
+        <input
+          matInput
+          type="text"
+          autocomplete="username"
+          formControlName="username"
+          [placeholder]="'labels.placeholders.Enter your username' | translate"
+        />
+        <mifosx-m3-icon matIconPrefix name="account_circle"></mifosx-m3-icon>
+        @if (loginForm.controls.username.hasError('required')) {
+          <mat-error>
+            {{ 'labels.inputs.Username' | translate }}
+            <strong>{{ 'labels.commons.is required' | translate }}</strong>
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Password Field -->
+      <mat-form-field class="login-field" appearance="fill">
+        <mat-label>{{ 'labels.inputs.Password' | translate }}</mat-label>
+        <input
+          matInput
+          [type]="passwordInputType"
+          autocomplete="current-password"
+          formControlName="password"
+          [placeholder]="'labels.placeholders.Enter your password' | translate"
+        />
+        <mifosx-m3-icon matIconPrefix name="lock"></mifosx-m3-icon>
+        @if (loginForm.controls.password.value && !loading) {
+          <button
+            type="button"
+            matSuffix
+            mat-icon-button
+            (click)="togglePasswordVisibility()"
+            [attr.aria-label]="passwordInputType === 'password' ? 'Show password' : 'Hide password'"
+          >
+            @if (passwordInputType === 'password') {
+              <mifosx-m3-icon name="visibility"></mifosx-m3-icon>
+            } @else {
+              <mifosx-m3-icon name="visibility_off"></mifosx-m3-icon>
+            }
+          </button>
+        }
+        @if (loginForm.controls.password.hasError('required')) {
+          <mat-error>
+            {{ 'labels.inputs.Password' | translate }}
+            <strong>{{ 'labels.commons.pass is required' | translate }}</strong>
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Loading Progress -->
+      @if (loading) {
+        <mat-progress-bar mode="indeterminate" class="login-progress"></mat-progress-bar>
+      }
+
+      <!-- Submit Button -->
+      <mifosx-m3-button
+        variant="filled"
+        type="submit"
+        class="login-submit-button"
+        [disabled]="!loginForm.valid || loading"
+        [fullWidth]="true"
+        [label]="(loading ? 'labels.buttons.Signing in...' : 'labels.buttons.Login') | translate"
       >
-        <fa-icon *ngIf="passwordInputType === 'password'" icon="eye"></fa-icon>
-        <fa-icon *ngIf="passwordInputType === 'text'" icon="eye-slash"></fa-icon>
-      </button>
-      <mat-error *ngIf="loginForm.controls.password.hasError('required')">
-        {{ 'labels.inputs.Password' | translate }} <strong>{{ 'labels.commons.pass is required' | translate }}</strong>
-      </mat-error>
-    </mat-form-field>
+        @if (loading) {
+          <mat-spinner [diameter]="20" class="button-spinner"></mat-spinner>
+        }
+      </mifosx-m3-button>
 
-    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+      <!-- Forgot Password Link -->
+      <div class="login-actions">
+        <a href="#" class="forgot-password-link">
+          {{ 'labels.links.Forgot Password?' | translate }}
+        </a>
+      </div>
+    </form>
+  </div>
+}
 
+<!-- OAuth/OIDC: Simple login button (no credentials needed) -->
+@if (oauthEnabled) {
+  <div class="layout-column">
     <button
       mat-raised-button
       color="primary"
       class="login-button-first flex-align-center"
-      [disabled]="!loginForm.valid"
-    >
-      {{ 'labels.buttons.Login' | translate }}
-      <mat-spinner [diameter]="20" *ngIf="loading"></mat-spinner>
-    </button>
-
-    <button
-      type="button"
-      mat-button
-      class="login-button flex-align-center"
-      (click)="forgotPassword()"
+      (click)="loginOAuth()"
       [disabled]="loading"
     >
-      {{ 'labels.links.Forgot Password?' | translate }}
-    </button>
-  </form>
-</div>
-
-<div *ngIf="oidcServerEnabled" class="container container-margin">
-  <div *ngIf="!isLoggedIn">
-    <button mat-raised-button color="primary" class="login-button-z" (click)="loginOIDC()">
       {{ 'labels.buttons.Login' | translate }}
-      <mat-spinner [diameter]="20" *ngIf="loading"></mat-spinner>
+      @if (loading) {
+        <mat-spinner [diameter]="20"></mat-spinner>
+      }
     </button>
   </div>
-  <div *ngIf="isLoggedIn">
-    <p>Welcome! You are logged in.</p>
-    <button (click)="logout()">Logout</button>
-    <button (click)="loadProtectedData()">Load Protected Data</button>
-    <pre>{{ protectedData | json }}</pre>
-  </div>
-</div>
+}

@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -20,7 +28,7 @@ import {
   MatCardContent
 } from '@angular/material/card';
 import { MatTooltip } from '@angular/material/tooltip';
-import { NgClass, NgIf, NgFor, LowerCasePipe } from '@angular/common';
+import { NgClass, LowerCasePipe } from '@angular/common';
 import { MatIconButton } from '@angular/material/button';
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { MatIcon } from '@angular/material/icon';
@@ -64,6 +72,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CentersViewComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  dialog = inject(MatDialog);
+  centersService = inject(CentersService);
+  private translateService = inject(TranslateService);
+
   /** Stores Center View Data */
   centerViewData: any;
   /** Center datatable */
@@ -75,13 +89,7 @@ export class CentersViewComponent implements OnInit {
    * Retrieves the data for center
    * @param route route Activated Route.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    public dialog: MatDialog,
-    public centersService: CentersService,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { centerViewData: any; centerDatatables: any }) => {
       this.centerViewData = data.centerViewData;
       this.centerDatatables = data.centerDatatables;

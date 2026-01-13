@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports. */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort, MatSortHeader } from '@angular/material/sort';
@@ -20,7 +28,7 @@ import {
 /** Custom Services */
 import { environment } from '../../environments/environment';
 import { ClientsService } from './clients.service';
-import { NgIf, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { AccountNumberComponent } from '../shared/account-number/account-number.component';
@@ -57,6 +65,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ClientsComponent implements OnInit {
+  private clientService = inject(ClientsService);
+
   @ViewChild('showClosedAccounts') showClosedAccounts: MatCheckbox;
 
   displayedColumns = [
@@ -83,8 +93,6 @@ export class ClientsComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-
-  constructor(private clientService: ClientsService) {}
 
   ngOnInit() {
     if (environment.preloadClients) {

@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -41,6 +49,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditRecurringDepositAccountComponent {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dateUtils = inject(Dates);
+  private recurringDepositsService = inject(RecurringDepositsService);
+  private settingsService = inject(SettingsService);
+
   /** Imports all the step component */
   @ViewChild(RecurringDepositsAccountDetailsStepComponent, { static: true })
   recurringDepositsAccountDetailsStep: RecurringDepositsAccountDetailsStepComponent;
@@ -56,13 +70,7 @@ export class EditRecurringDepositAccountComponent {
   /** Recurring Deposit Account Product Template */
   recurringDepositsAccountProductTemplate: any;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private dateUtils: Dates,
-    private recurringDepositsService: RecurringDepositsService,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { recurringDepositsAccountAndTemplate: any }) => {
       this.recurringDepositsAccountAndTemplate = data.recurringDepositsAccountAndTemplate;
     });

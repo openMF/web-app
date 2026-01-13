@@ -1,3 +1,11 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <div
   [ngClass]="{
     'sidebar-full': !sidenavCollapsed,
@@ -40,16 +48,18 @@
         </div>
       </div>
       <div class="icon-menu">
-        <div class="icon-menu-item" *ngFor="let activity of mappedActivities">
-          <button
-            mat-raised-button
-            [matTooltipPosition]="tooltipPosition"
-            [matTooltip]="activity.toolTip"
-            [routerLink]="[activity.path]"
-          >
-            <fa-icon [icon]="activity.icon" size="lg"></fa-icon>
-          </button>
-        </div>
+        @for (activity of mappedActivities; track activity) {
+          <div class="icon-menu-item">
+            <button
+              mat-raised-button
+              [matTooltipPosition]="tooltipPosition"
+              [matTooltip]="activity.toolTip"
+              [routerLink]="[activity.path]"
+            >
+              <fa-icon [icon]="activity.icon" size="lg"></fa-icon>
+            </button>
+          </div>
+        }
       </div>
 
       <div class="nav-item-sep">
@@ -97,7 +107,7 @@
         <mat-list-item
           [routerLink]="['/collections/collection-sheet']"
           [matTooltipPosition]="tooltipPosition"
-          matTooltip="{{ 'tooltips.Collection Sheet' | translate }}"
+          matTooltip="{{ 'labels.menus.Collection Sheet' | translate }}"
           routerLinkActive="active-menu"
           [routerLinkActiveOptions]="{ exact: false }"
         >

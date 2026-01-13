@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -29,7 +37,7 @@ import {
 import { LoanTransactionType } from 'app/loans/models/loan-transaction-type.model';
 import { AlertService } from 'app/core/alert/alert.service';
 import { TranslateService } from '@ngx-translate/core';
-import { NgIf, NgClass, CurrencyPipe } from '@angular/common';
+import { NgClass, CurrencyPipe } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { ExternalIdentifierComponent } from '../../../../shared/external-identifier/external-identifier.component';
 import { MatDivider } from '@angular/material/divider';
@@ -71,6 +79,16 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewTransactionComponent implements OnInit {
+  private loansService = inject(LoansService);
+  private route = inject(ActivatedRoute);
+  private dateUtils = inject(Dates);
+  private router = inject(Router);
+  dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
+  private settingsService = inject(SettingsService);
+  private organizationService = inject(OrganizationService);
+  private alertService = inject(AlertService);
+
   /** Transaction data. */
   transactionData: any;
   transactionType: LoanTransactionType;
@@ -106,17 +124,7 @@ export class ViewTransactionComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    * @param {AlertService} alertService Alert Service
    */
-  constructor(
-    private loansService: LoansService,
-    private route: ActivatedRoute,
-    private dateUtils: Dates,
-    private router: Router,
-    public dialog: MatDialog,
-    private translateService: TranslateService,
-    private settingsService: SettingsService,
-    private organizationService: OrganizationService,
-    private alertService: AlertService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { loansAccountTransaction: any }) => {
       this.transactionData = data.loansAccountTransaction;
       this.transactionType = this.transactionData.type;
@@ -228,7 +236,6 @@ export class ViewTransactionComponent implements OnInit {
           required: false,
           order: 2
         })
-
       ];
       const data = {
         title: this.translateService.instant('labels.heading.Undo Transaction'),
@@ -303,7 +310,6 @@ export class ViewTransactionComponent implements OnInit {
         max: this.amountRelationsAllowed,
         order: 2
       })
-
     ];
     const data = {
       title: `Chargeback ${this.transactionType.value} Transaction`,

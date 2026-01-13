@@ -1,6 +1,14 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports. */
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, OnInit, ViewChild, Injectable } from '@angular/core';
+import { Component, OnInit, ViewChild, Injectable, inject } from '@angular/core';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
@@ -53,6 +61,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateHolidayComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private dateUtils = inject(Dates);
+  private organizationService = inject(OrganizationService);
+  private settings = inject(SettingsService);
+  private router = inject(Router);
+  private _database = inject(ChecklistDatabase);
+  private createHoliday = inject(CreateHoliday);
+
   /** Create Holiday form. */
   holidayForm: UntypedFormGroup;
   /** Repayment Scheduling data. */
@@ -101,16 +118,9 @@ export class CreateHolidayComponent implements OnInit {
    * @param {OrganizationService} organizationService Organization Service.
    * @param {Router} router Router.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private dateUtils: Dates,
-    private organizationService: OrganizationService,
-    private settings: SettingsService,
-    private router: Router,
-    private _database: ChecklistDatabase,
-    private createHoliday: CreateHoliday
-  ) {
+  constructor() {
+    const _database = this._database;
+
     this.route.data.subscribe((data: { offices: any; holidayTemplate: any }) => {
       this.officesData = data.offices;
       this.repaymentSchedulingTypes = data.holidayTemplate;
@@ -330,13 +340,29 @@ export class CreateHolidayComponent implements OnInit {
     const holidayFormData = this.holidayForm.value;
     const dateFormat = this.settings.dateFormat;
     const locale = this.settings.language.code;
-    const prevFromDate: Date = this.holidayForm.value.fromDate;
-    const prevToDate: Date = this.holidayForm.value.toDate;
-    holidayFormData.fromDate = this.dateUtils.formatDate(prevFromDate, dateFormat);
-    holidayFormData.toDate = this.dateUtils.formatDate(prevToDate, dateFormat);
+    const momentFormat = 'DD MMMM YYYY';
+    const coerceDate = (value: unknown): Date | null => {
+      if (value instanceof Date) return value;
+      if (value == null || value === '') return null;
+      const d = new Date(value as any);
+      return Number.isNaN(d.getTime()) ? null : d;
+    };
+    const fromDate = coerceDate(this.holidayForm.value.fromDate);
+    const toDate = coerceDate(this.holidayForm.value.toDate);
+    if (!fromDate || !toDate) {
+      return;
+    }
+    holidayFormData.fromDate = this.dateUtils.formatDateAsString(fromDate, momentFormat);
+    holidayFormData.toDate = this.dateUtils.formatDateAsString(toDate, momentFormat);
     if (this.holidayForm.contains('repaymentsRescheduledTo')) {
-      const prevRepaymentsRescheduledTo: Date = this.holidayForm.value.repaymentsRescheduledTo;
-      holidayFormData.repaymentsRescheduledTo = this.dateUtils.formatDate(prevRepaymentsRescheduledTo, dateFormat);
+      const repaymentsRescheduledTo = coerceDate(this.holidayForm.value.repaymentsRescheduledTo);
+      if (!repaymentsRescheduledTo) {
+        return;
+      }
+      holidayFormData.repaymentsRescheduledTo = this.dateUtils.formatDateAsString(
+        repaymentsRescheduledTo,
+        momentFormat
+      );
     }
     const offices = this.holidayForm.value.offices.map((office: string) => {
       return { officeId: Number.parseInt(office, 10) };

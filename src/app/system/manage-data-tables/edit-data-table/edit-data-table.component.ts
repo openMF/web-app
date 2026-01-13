@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -63,6 +71,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditDataTableComponent implements OnInit {
+  private systemService = inject(SystemService);
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
+
   /** Data Table Form. */
   dataTableForm: UntypedFormGroup;
   /** Data Table Data. */
@@ -144,14 +159,7 @@ export class EditDataTableComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {MatDialog} dialog Dialog Reference.
    */
-  constructor(
-    private systemService: SystemService,
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private dialog: MatDialog,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { dataTable: any; columnCodes: any }) => {
       this.dataTableData = data.dataTable;
 

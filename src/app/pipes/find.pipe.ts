@@ -1,4 +1,12 @@
-import { Pipe, PipeTransform, SecurityContext } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Pipe, PipeTransform, SecurityContext, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 /**
@@ -10,7 +18,7 @@ const lookupCache = new WeakMap<any[], Map<string, Map<any, any>>>();
 
 @Pipe({ name: 'find' })
 export class FindPipe implements PipeTransform {
-  constructor(private sanitizer: DomSanitizer) {}
+  private sanitizer = inject(DomSanitizer);
 
   transform(value: any, options: any, key: string, property: string): string {
     if (!options || !key || value === null || value === undefined) {

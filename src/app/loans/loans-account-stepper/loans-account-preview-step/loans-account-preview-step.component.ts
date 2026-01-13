@@ -1,3 +1,11 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import {
@@ -14,7 +22,7 @@ import {
   MatRow
 } from '@angular/material/table';
 import { LongTextComponent } from '../../../shared/long-text/long-text.component';
-import { NgIf, CurrencyPipe } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 import { ExternalIdentifierComponent } from '../../../shared/external-identifier/external-identifier.component';
 import { MatDivider } from '@angular/material/divider';
 import { MatStepperPrevious } from '@angular/material/stepper';
@@ -23,6 +31,7 @@ import { FindPipe } from '../../../pipes/find.pipe';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 import { YesnoPipe } from '../../../pipes/yesno.pipe';
+import { TranslatePipe } from '../../../pipes/translate.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -53,7 +62,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     FindPipe,
     DateFormatPipe,
     FormatNumberPipe,
-    YesnoPipe
+    YesnoPipe,
+    TranslatePipe
   ]
 })
 export class LoansAccountPreviewStepComponent implements OnChanges {

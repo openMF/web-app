@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -7,11 +15,14 @@ import { ActivatedRoute } from '@angular/router';
 import { HomeService } from '../../home.service';
 
 /** Charting Imports */
-import Chart from 'chart.js';
+import { Chart, registerables } from 'chart.js';
 import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { NgFor, NgStyle, NgIf } from '@angular/common';
+import { NgStyle } from '@angular/common';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+
+// Register Chart.js components
+Chart.register(...registerables);
 
 /**
  * Amount Collected Pie Chart Component
@@ -28,6 +39,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class AmountCollectedPieComponent implements OnInit {
+  private homeService = inject(HomeService);
+  private route = inject(ActivatedRoute);
+
   /** Static Form control for office Id */
   officeId = new UntypedFormControl();
   /** Office Data */
@@ -44,10 +58,7 @@ export class AmountCollectedPieComponent implements OnInit {
    * @param {HomeService} homeService Home Service.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(
-    private homeService: HomeService,
-    private route: ActivatedRoute
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });

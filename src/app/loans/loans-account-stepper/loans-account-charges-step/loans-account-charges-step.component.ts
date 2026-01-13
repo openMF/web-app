@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, inject } from '@angular/core';
 // import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -65,6 +73,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
+  dialog = inject(MatDialog);
+  private dateUtils = inject(Dates);
+  private route = inject(ActivatedRoute);
+  private settingsService = inject(SettingsService);
+
   // @Input loansAccountProductTemplate: LoansAccountProductTemplate
   @Input() loansAccountProductTemplate: any;
   // @Imput loansAccountTemplate: LoansAccountTemplate
@@ -128,12 +141,7 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
    * @param {Dates} dateUtils Date Utils
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    public dialog: MatDialog,
-    private dateUtils: Dates,
-    private route: ActivatedRoute,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.loanId = this.route.snapshot.params['loanId'];
   }
 
@@ -218,7 +226,6 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
         type: 'number',
         required: false
       })
-
     ];
     const data = {
       title: 'Edit Charge Amount',
@@ -249,7 +256,6 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
         type: 'datetime-local',
         required: false
       })
-
     ];
     const data = {
       title: 'Edit Charge Date',
@@ -291,7 +297,6 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
         type: 'text',
         required: false
       })
-
     ];
     const data = {
       title: 'Edit Charge Fee Interval',
@@ -338,32 +343,21 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
   get loansAccountCharges() {
     const uniqueCharges = this.getUniqueCharges(this.chargesDataSource);
     return {
-      charges: uniqueCharges.map((charge: any) => {
-        const result: any = {};
-        result.chargeId = charge.chargeId;
-
-        if (charge.id && charge.id !== charge.chargeId) {
-          result.id = charge.id;
-        }
-
-        if (charge.amount !== undefined) result.amount = charge.amount;
-        if (charge.dueDate !== undefined) result.dueDate = charge.dueDate;
-        if (charge.feeInterval !== undefined) result.feeInterval = charge.feeInterval;
-        if (charge.feeOnMonthDay !== undefined) result.feeOnMonthDay = charge.feeOnMonthDay;
-
-        return result;
-      })
+      charges: uniqueCharges.map((charge: any) => ({
+        ...charge,
+        chargeId: charge.chargeId ?? charge.id
+      }))
     };
   }
   private getUniqueCharges<T extends { id?: number | string; chargeId?: number | string }>(charges: T[]): T[] {
     const uniqueChargesMap = new Map<number | string, T>();
 
     for (const charge of charges ?? []) {
-      const chargeId = charge.chargeId;
+      const chargeId = charge.chargeId ?? charge.id;
       if (chargeId == null) {
         continue;
       }
-      uniqueChargesMap.set(chargeId, charge);
+      uniqueChargesMap.set(chargeId, { ...charge, chargeId });
     }
 
     return Array.from(uniqueChargesMap.values());

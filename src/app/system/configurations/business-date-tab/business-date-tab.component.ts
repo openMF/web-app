@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { Alert } from 'app/core/alert/alert.model';
@@ -29,6 +37,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class BusinessDateTabComponent implements OnInit {
+  private systemService = inject(SystemService);
+  private settingsService = inject(SettingsService);
+  private formBuilder = inject(UntypedFormBuilder);
+  private dateUtils = inject(Dates);
+  private alertService = inject(AlertService);
+
   /** Subscription to alerts. */
   alert$: Subscription;
 
@@ -46,24 +60,9 @@ export class BusinessDateTabComponent implements OnInit {
   businessDateData: any;
 
   dateIndex = 0;
-  userDateFormat: string = '';
+  userDateFormat: '';
   isBusinessDateEnabled = false;
   isEditInProgress = false;
-
-  /**
-   * Retrieves the configurations data from `resolve`.
-   * @param {SystemService} systemService System Service.
-   * @param {SettingsService} settingsService Settings Service.
-   * @param {FormBuilder} formBuilder Form Builder.
-   * @param {Dates} dateUtils Date Utils.
-   */
-  constructor(
-    private systemService: SystemService,
-    private settingsService: SettingsService,
-    private formBuilder: UntypedFormBuilder,
-    private dateUtils: Dates,
-    private alertService: AlertService
-  ) {}
 
   ngOnInit(): void {
     this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: Alert) => {

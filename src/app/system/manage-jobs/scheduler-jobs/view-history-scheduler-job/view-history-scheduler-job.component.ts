@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports. */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import {
   MatTableDataSource,
@@ -50,6 +58,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewHistorySchedulerJobComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private dialog = inject(MatDialog);
+  private router = inject(Router);
+
   /** Job History data. */
   jobHistoryData: any;
   /** Columns to be displayed in Scheduler Job History. */
@@ -73,11 +85,7 @@ export class ViewHistorySchedulerJobComponent implements OnInit {
    * Retrieves the scheduler Job History data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private dialog: MatDialog,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { jobsSchedulerHistory: any }) => {
       this.jobHistoryData = data.jobsSchedulerHistory;
     });

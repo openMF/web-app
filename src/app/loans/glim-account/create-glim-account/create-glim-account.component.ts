@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
 import { I18nService } from 'app/core/i18n/i18n.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -42,6 +50,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateGlimAccountComponent {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private loansService = inject(LoansService);
+  private settingsService = inject(SettingsService);
+  private clientService = inject(ClientsService);
+  private dateUtils = inject(Dates);
+  private i18nService = inject(I18nService);
+
   /** Imports all the step component */
   @ViewChild(LoansAccountDetailsStepComponent, { static: true })
   loansAccountDetailsStep: LoansAccountDetailsStepComponent;
@@ -79,15 +95,7 @@ export class CreateGlimAccountComponent {
    * @param {SettingsService} settingsService Settings Service
    * @param {ClientsService} clientService Client Service
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private loansService: LoansService,
-    private settingsService: SettingsService,
-    private clientService: ClientsService,
-    private dateUtils: Dates,
-    private i18nService: I18nService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { loansAccountTemplate: any; groupsData: any }) => {
       this.loansAccountTemplate = data.loansAccountTemplate;
       this.dataSource = data.groupsData.activeClientMembers;
@@ -183,10 +191,31 @@ export class CreateGlimAccountComponent {
     // const monthDayFormat = 'dd MMMM';
     const data = {
       ...this.loansAccount,
-      charges: this.loansAccount.charges.map((charge: any) => ({
-        chargeId: charge.id,
-        amount: charge.amount
-      })),
+      charges: (this.loansAccount.charges ?? [])
+        .map((charge: any) => {
+          const chargeId = charge.chargeId ?? charge.id;
+          if (chargeId == null) {
+            return null;
+          }
+          const mappedCharge: any = {
+            chargeId,
+            amount: charge.amount
+          };
+          if (charge.id && charge.id !== chargeId) {
+            mappedCharge.id = charge.id;
+          }
+          if (charge.dueDate) {
+            mappedCharge.dueDate = this.dateUtils.formatDate(charge.dueDate, dateFormat);
+          }
+          if (charge.feeInterval !== undefined) {
+            mappedCharge.feeInterval = charge.feeInterval;
+          }
+          if (charge.feeOnMonthDay !== undefined) {
+            mappedCharge.feeOnMonthDay = charge.feeOnMonthDay;
+          }
+          return mappedCharge;
+        })
+        .filter(Boolean),
       clientId: client.id,
       totalLoan: totalLoan,
       loanType: 'glim',

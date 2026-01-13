@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -41,6 +49,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ChangePasswordDialogComponent implements OnInit {
+  dialogRef = inject<MatDialogRef<ChangePasswordDialogComponent>>(MatDialogRef);
+  data = inject(MAT_DIALOG_DATA);
+  private formBuilder = inject(UntypedFormBuilder);
+  private passwordsUtility = inject(PasswordsUtility);
+
   minPasswordLength: number = environment.minPasswordLength | 12;
 
   /** Change Password Form */
@@ -50,17 +63,6 @@ export class ChangePasswordDialogComponent implements OnInit {
     'password',
     'password'
   ];
-
-  /**
-   * @param {MatDialogRef} dialogRef Component reference to dialog.
-   * @param {any} data Provides any data.
-   */
-  constructor(
-    public dialogRef: MatDialogRef<ChangePasswordDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private formBuilder: UntypedFormBuilder,
-    private passwordsUtility: PasswordsUtility
-  ) {}
 
   ngOnInit() {
     this.createChangePasswordForm();
@@ -78,7 +80,8 @@ export class ChangePasswordDialogComponent implements OnInit {
           '',
           [
             Validators.required,
-            this.confirmPassword('password')]
+            this.confirmPassword('password')
+          ]
         ]
       },
       { updateOn: 'blur' }

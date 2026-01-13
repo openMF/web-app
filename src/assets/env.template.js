@@ -1,18 +1,34 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 (function (window) {
   window['env'] = window['env'] || {};
 
   // BackEnd Environment variables
   window['env']['fineractApiUrls'] = '$FINERACT_API_URLS';
+
   window['env']['fineractApiUrl'] = '$FINERACT_API_URL';
 
   window['env']['apiProvider'] = '$FINERACT_API_PROVIDER';
+
   window['env']['apiVersion'] = '$FINERACT_API_VERSION';
 
+  window['env']['apiActuator'] = '$FINERACT_API_ACTUATOR';
+
   window['env']['fineractPlatformTenantId'] = '$FINERACT_PLATFORM_TENANT_IDENTIFIER';
+
   window['env']['fineractPlatformTenantIds'] = '$FINERACT_PLATFORM_TENANTS_IDENTIFIER';
+
+  window['env']['tenantLogoUrl'] = '$TENANT_LOGO_URL';
 
   // Language Environment variables
   window['env']['defaultLanguage'] = '$MIFOS_DEFAULT_LANGUAGE';
+
   window['env']['supportedLanguages'] = '$MIFOS_SUPPORTED_LANGUAGES';
 
   window['env']['preloadClients'] = '$MIFOS_PRELOAD_CLIENTS';
@@ -28,6 +44,9 @@
 
   // Display or not the Tenant Selector
   window['env']['displayTenantSelector'] = '$MIFOS_DISPLAY_TENANT_SELECTOR';
+
+  // Documentation base URL for in-app help links
+  window['env']['documentationBaseUrl'] = '$MIFOS_DOCUMENTATION_BASE_URL';
 
   // Time in seconds for Notifications, default 60 seconds
   window['env']['waitTimeForNotifications'] = '$MIFOS_WAIT_TIME_FOR_NOTIFICATIONS';

@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -29,6 +37,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateTaxComponentComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private productsService = inject(ProductsService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dateUtils = inject(Dates);
+  private settingsService = inject(SettingsService);
+
   /** Minimum start date allowed. */
   minDate = new Date();
   /** Maximum start date allowed. */
@@ -55,14 +70,7 @@ export class CreateTaxComponentComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils to format date.
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private productsService: ProductsService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private dateUtils: Dates,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { taxComponentTemplate: any }) => {
       this.taxComponentTemplateData = data.taxComponentTemplate;
     });
@@ -93,7 +101,8 @@ export class CreateTaxComponentComponent implements OnInit {
         [
           Validators.required,
           Validators.pattern('^(0*[1-9][0-9]*(\\.[0-9]+)?|0+\\.[0-9]*[1-9][0-9]*)$'),
-          Validators.max(100)]
+          Validators.max(100)
+        ]
       ],
       creditAccountType: [''],
       debitAccountType: [''],

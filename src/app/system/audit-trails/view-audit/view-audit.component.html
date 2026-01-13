@@ -1,3 +1,11 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <div class="container layout-row align-between responsive-column">
   <mat-card class="flex-100">
     <mat-card-content class="flex-100">
@@ -33,7 +41,7 @@
             </div>
 
             <div class="flex-50">
-              {{ auditTrailData.actionName }}
+              {{ auditTrailData.actionName | translateKey: 'auditTrail.actions' }}
             </div>
 
             <div class="flex-50 mat-body-strong">
@@ -41,7 +49,7 @@
             </div>
 
             <div class="flex-50">
-              {{ auditTrailData.entityName }}
+              {{ auditTrailData.entityName | translateKey: 'auditTrail.entities' }}
             </div>
 
             <div class="flex-50 mat-body-strong">
@@ -60,38 +68,54 @@
               {{ auditTrailData.madeOnDate | datetimeFormat }}
             </div>
 
-            <div class="flex-50 mat-body-strong" *ngIf="auditTrailData.officeName">
-              {{ 'labels.inputs.Office' | translate }}
-            </div>
+            @if (auditTrailData.officeName) {
+              <div class="flex-50 mat-body-strong">
+                {{ 'labels.inputs.Office' | translate }}
+              </div>
+            }
 
-            <div class="flex-50" *ngIf="auditTrailData.officeName">
-              {{ auditTrailData.officeName }}
-            </div>
+            @if (auditTrailData.officeName) {
+              <div class="flex-50">
+                {{ auditTrailData.officeName }}
+              </div>
+            }
 
-            <div class="flex-50 mat-body-strong" *ngIf="auditTrailData.savingsAccountNo">
-              {{ 'labels.inputs.Savings Account No' | translate }}
-            </div>
+            @if (auditTrailData.savingsAccountNo) {
+              <div class="flex-50 mat-body-strong">
+                {{ 'labels.inputs.Savings Account No' | translate }}
+              </div>
+            }
 
-            <div class="flex-50" *ngIf="auditTrailData.savingsAccountNo">
-              {{ auditTrailData.savingsAccountNo }}
-            </div>
+            @if (auditTrailData.savingsAccountNo) {
+              <div class="flex-50">
+                {{ auditTrailData.savingsAccountNo }}
+              </div>
+            }
 
-            <div class="flex-50 mat-body-strong" *ngIf="auditTrailData.groupLevelName">
-              {{ 'labels.inputs.Group Level' | translate }}
-            </div>
+            @if (auditTrailData.groupLevelName) {
+              <div class="flex-50 mat-body-strong">
+                {{ 'labels.inputs.Group Level' | translate }}
+              </div>
+            }
 
-            <div class="flex-50" *ngIf="auditTrailData.groupLevelName">
-              {{ auditTrailData.groupLevelName }}
-            </div>
+            @if (auditTrailData.groupLevelName) {
+              <div class="flex-50">
+                {{ auditTrailData.groupLevelName }}
+              </div>
+            }
           </div>
 
-          <div fxFlex="50%" class="mat-body-strong" *ngIf="auditTrailData.ip">
-            {{ 'labels.inputs.Client Ip' | translate }}
-          </div>
+          @if (auditTrailData.ip) {
+            <div fxFlex="50%" class="mat-body-strong">
+              {{ 'labels.inputs.Client Ip' | translate }}
+            </div>
+          }
 
-          <div fxFlex="50%" *ngIf="auditTrailData.ip">
-            {{ auditTrailData.ip }}
-          </div>
+          @if (auditTrailData.ip) {
+            <div fxFlex="50%">
+              {{ auditTrailData.ip }}
+            </div>
+          }
         </div>
 
         <div class="flex-46 command">

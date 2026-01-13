@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
@@ -15,11 +23,10 @@ import { DisbursementData } from './models/loan-account.model';
   providedIn: 'root'
 })
 export class LoansService {
-  constructor(
-    private http: HttpClient,
-    private settingsService: SettingsService,
-    private dateUtils: Dates
-  ) {}
+  private http = inject(HttpClient);
+  private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
+
   /**
    * @param {string} loanId loanId of the loan.
    * @returns {Observable<any>}
@@ -239,6 +246,42 @@ export class LoansService {
   submitLoanActionButton(loanId: string, data: any, command: any) {
     const httpParams = new HttpParams().set('command', command);
     return this.http.post(`/loans/${loanId}/transactions`, data, { params: httpParams });
+  }
+
+  /**
+   * Get Re-Age preview with repayment schedule
+   * @param loanId Loan Id
+   * @param data Re-Age data
+   * @returns Observable with repayment schedule preview
+   */
+  getReAgePreview(loanId: string, data: any): Observable<any> {
+    let httpParams = new HttpParams();
+
+    Object.keys(data).forEach((key) => {
+      if (data[key] !== null && data[key] !== undefined && data[key] !== '') {
+        httpParams = httpParams.set(key, data[key].toString());
+      }
+    });
+
+    return this.http.get(`/loans/${loanId}/transactions/reage-preview`, { params: httpParams });
+  }
+
+  /**
+   * Get Re-Amortize preview with repayment schedule
+   * @param loanId Loan Id
+   * @param data Re-Amortize data
+   * @returns Observable with repayment schedule preview
+   */
+  getReAmortizePreview(loanId: string, data: any): Observable<any> {
+    let httpParams = new HttpParams();
+
+    Object.keys(data).forEach((key) => {
+      if (data[key] !== null && data[key] !== undefined && data[key] !== '') {
+        httpParams = httpParams.set(key, data[key].toString());
+      }
+    });
+
+    return this.http.get(`/loans/${loanId}/transactions/reamortization-preview`, { params: httpParams });
   }
 
   getLoanScreenReportsData(): Observable<any> {
@@ -475,7 +518,7 @@ export class LoansService {
 
   getTemplateData(templateId: any, loanId: any): Observable<any> {
     const httpParams = new HttpParams().set('loanId', loanId);
-    return this.http.post(`/templates/${templateId}`, {}, { params: httpParams, responseType: 'text' });
+    return this.http.get(`/templates/${templateId}`, { params: httpParams, responseType: 'text' });
   }
 
   /**
@@ -491,6 +534,14 @@ export class LoansService {
   guarantorAccountResource(loanId: string, clientId: any): Observable<any> {
     const httpParams = new HttpParams().set('clientId', clientId);
     return this.http.get(`/loans/${loanId}/guarantors/accounts/template`, { params: httpParams });
+  }
+
+  /**
+   * @param {string} loanId Loan Id
+   * @returns {Observable<any>} All charges for the loan
+   */
+  getLoanCharges(loanId: string): Observable<any> {
+    return this.http.get(`/loans/${loanId}/charges`);
   }
 
   /**
@@ -624,11 +675,31 @@ export class LoansService {
   ): any {
     const loansAccountData = {
       ...loansAccount,
-      charges: loansAccount.charges.map((charge: any) => ({
-        chargeId: charge.id,
-        amount: charge.amount,
-        dueDate: charge.dueDate && this.dateUtils.formatDate(charge.dueDate, dateFormat)
-      })),
+      charges: (loansAccount.charges ?? [])
+        .map((charge: any) => {
+          const chargeId = charge.chargeId ?? charge.id;
+          if (chargeId == null) {
+            return null;
+          }
+          const mappedCharge: any = {
+            chargeId,
+            amount: charge.amount
+          };
+          if (charge.id && charge.id !== chargeId) {
+            mappedCharge.id = charge.id;
+          }
+          if (charge.dueDate) {
+            mappedCharge.dueDate = this.dateUtils.formatDate(charge.dueDate, dateFormat);
+          }
+          if (charge.feeInterval !== undefined) {
+            mappedCharge.feeInterval = charge.feeInterval;
+          }
+          if (charge.feeOnMonthDay !== undefined) {
+            mappedCharge.feeOnMonthDay = charge.feeOnMonthDay;
+          }
+          return mappedCharge;
+        })
+        .filter(Boolean),
       disbursementData: loansAccount.disbursementData.map((item: any) => ({
         expectedDisbursementDate: this.dateUtils.formatDate(item.expectedDisbursementDate, dateFormat),
         principal: item.principal

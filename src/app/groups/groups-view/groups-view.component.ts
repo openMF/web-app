@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -18,7 +26,7 @@ import {
   MatCardSubtitle,
   MatCardContent
 } from '@angular/material/card';
-import { NgClass, NgIf, NgFor, LowerCasePipe } from '@angular/common';
+import { NgClass, LowerCasePipe } from '@angular/common';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatIconButton } from '@angular/material/button';
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
@@ -62,6 +70,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class GroupsViewComponent {
+  private route = inject(ActivatedRoute);
+  private groupsService = inject(GroupsService);
+  private router = inject(Router);
+  dialog = inject(MatDialog);
+
   /** Group view data */
   groupViewData: any;
   /** Group datatables data */
@@ -74,12 +87,7 @@ export class GroupsViewComponent {
    * @param {Router} router Router
    * @param {MatDialog} dialog Dialog
    */
-  constructor(
-    private route: ActivatedRoute,
-    private groupsService: GroupsService,
-    private router: Router,
-    public dialog: MatDialog
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { groupViewData: any; groupDatatables: any }) => {
       this.groupViewData = data.groupViewData;
       this.groupDatatables = data.groupDatatables;

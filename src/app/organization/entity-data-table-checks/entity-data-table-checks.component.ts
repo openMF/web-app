@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -54,6 +62,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EntityDataTableChecksComponent implements OnInit {
+  private organizationService = inject(OrganizationService);
+  private route = inject(ActivatedRoute);
+  private dialog = inject(MatDialog);
+
   /** Entity Data Table Checks data. */
   entityDataTableChecksData: any;
   /** Columns to be displayed in entity data table checks table. */
@@ -98,11 +110,7 @@ export class EntityDataTableChecksComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(
-    private organizationService: OrganizationService,
-    private route: ActivatedRoute,
-    private dialog: MatDialog
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { entityDataTableChecks: any }) => {
       this.entityDataTableChecksData = data.entityDataTableChecks.pageItems;
     });

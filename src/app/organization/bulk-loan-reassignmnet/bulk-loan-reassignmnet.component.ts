@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports. */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -29,6 +37,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class BulkLoanReassignmnetComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private organizationSevice = inject(OrganizationService);
+  private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
+  private router = inject(Router);
+
   /** Bulk Loan form. */
   bulkLoanForm: UntypedFormGroup;
   /** Office data. */
@@ -56,14 +71,7 @@ export class BulkLoanReassignmnetComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    * @param {Router} router Router.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private organizationSevice: OrganizationService,
-    private settingsService: SettingsService,
-    private dateUtils: Dates,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { offices: any }) => {
       this.offices = data.offices;
     });
@@ -79,8 +87,12 @@ export class BulkLoanReassignmnetComponent implements OnInit {
    */
   setBulkLoanForm() {
     this.bulkLoanForm = this.formBuilder.group({
+      officeId: [
+        '',
+        Validators.required
+      ],
       assignmentDate: [
-        new Date(),
+        this.settingsService.businessDate,
         Validators.required
       ],
       toLoanOfficerId: [

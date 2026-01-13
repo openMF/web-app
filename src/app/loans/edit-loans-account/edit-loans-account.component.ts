@@ -1,4 +1,12 @@
-import { Component, ViewChild } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoansService } from '../loans.service';
 import { LoansAccountDetailsStepComponent } from '../loans-account-stepper/loans-account-details-step/loans-account-details-step.component';
@@ -36,6 +44,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditLoansAccountComponent {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dateUtils = inject(Dates);
+  private loansService = inject(LoansService);
+  private settingsService = inject(SettingsService);
+
   @ViewChild(LoansAccountDetailsStepComponent, { static: true })
   loansAccountDetailsStep: LoansAccountDetailsStepComponent;
   @ViewChild(LoansAccountTermsStepComponent, { static: true }) loansAccountTermsStep: LoansAccountTermsStepComponent;
@@ -60,13 +74,7 @@ export class EditLoansAccountComponent {
    * @param {loansService} LoansService Loans Service
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private dateUtils: Dates,
-    private loansService: LoansService,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { loansAccountAndTemplate: any }) => {
       this.loansAccountAndTemplate = data.loansAccountAndTemplate;
     });

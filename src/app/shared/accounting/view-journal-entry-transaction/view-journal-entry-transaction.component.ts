@@ -1,4 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ViewJournalEntryComponent } from '../view-journal-entry/view-journal-entry.component';
 import { RevertTransactionComponent } from 'app/accounting/revert-transaction/revert-transaction.component';
 import { AccountingService } from 'app/accounting/accounting.service';
@@ -19,7 +27,7 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { Location, NgIf } from '@angular/common';
+import { Location } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { DatetimeFormatPipe } from '../../../pipes/datetime-format.pipe';
@@ -53,6 +61,12 @@ import { YesnoPipe } from '@pipes/yesno.pipe';
   ]
 })
 export class ViewJournalEntryTransactionComponent implements OnInit {
+  private accountingService = inject(AccountingService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  dialog = inject(MatDialog);
+  private location = inject(Location);
+
   title: string;
   journalEntriesData: any[];
   /** Transaction data.  */
@@ -79,20 +93,6 @@ export class ViewJournalEntryTransactionComponent implements OnInit {
   isJournalEntryLoaded = false;
 
   isManualJournalEntry = false;
-
-  /**
-   * @param {AccountingService} accountingService Accounting Service.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {Router} router Router for navigation.
-   * @param {MatDialog} dialog Dialog reference.
-   */
-  constructor(
-    private accountingService: AccountingService,
-    private route: ActivatedRoute,
-    private router: Router,
-    public dialog: MatDialog,
-    private location: Location
-  ) {}
 
   /**
    * Retrieves the transaction data from `resolve` and sets the transaction table.

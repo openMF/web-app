@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
@@ -52,6 +60,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoanDisbursalComponent {
+  private route = inject(ActivatedRoute);
+  private dialog = inject(MatDialog);
+  private dateUtils = inject(Dates);
+  private settingsService = inject(SettingsService);
+  private translateService = inject(TranslateService);
+  private tasksService = inject(TasksService);
+
   /** Loans Data */
   loans: any;
   /** Batch Requests */
@@ -78,14 +93,7 @@ export class LoanDisbursalComponent {
    * @param {SettingsService} settingsService Settings Service.
    * @param {TasksService} tasksService Tasks Service.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private dialog: MatDialog,
-    private dateUtils: Dates,
-    private settingsService: SettingsService,
-    private translateService: TranslateService,
-    private tasksService: TasksService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { loansData: any }) => {
       this.loans = data.loansData.pageItems;
       this.loans = this.loans.filter((account: any) => {

@@ -1,3 +1,11 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 #mifosx-toolbar {
   position: relative;
   box-shadow:
@@ -58,15 +66,14 @@
   }
 }
 
-// Show icon on small screens
-.lg-icon {
+// Show language icon button only on small screens (when full selector is hidden)
+.show-lt-md {
   display: none;
 }
 
-@media (width <= 959px) {
-  .lg-icon {
-    display: block;
-    margin-left: 5px;
+@media (width <= 768px) {
+  .show-lt-md {
+    display: inline-flex;
   }
 }
 

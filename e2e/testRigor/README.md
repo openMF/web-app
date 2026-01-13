@@ -1,6 +1,6 @@
-# Test Automation with testRigor for MIFOS
+# Test Automation with testRigor for Mifos® X
 
-This document provides step-by-step instructions for setting up test automation for MIFOS using testRigor. It covers creating an account, setting up a test suite, and running tests using the testRigor CLI.
+This document provides step-by-step instructions for setting up test automation for Mifos® X using testRigor. It covers creating an account, setting up a test suite, and running tests using the testRigor CLI.
 
 ## Table of Contents
 
@@ -43,7 +43,7 @@ This document provides step-by-step instructions for setting up test automation 
    - Before running the tests, create a .env file on the testRigor directory and set the following variables to the parameters you obtained:
      - `MIFOS_TEST_SUITE_ID`: Set this variable to your Test Suite ID.
      - `MIFOS_AUTH_TOKEN`: Set this variable to your auth token.
-     - `LOCALHOST_URL`: Set this variable to the URL where MIFOS
+     - `LOCALHOST_URL`: Set this variable to the URL where Mifos® X
        is running locally.
 
 4. **Run Tests:**

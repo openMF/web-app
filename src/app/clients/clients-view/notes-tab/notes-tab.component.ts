@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Components */
@@ -23,6 +31,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class NotesTabComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private clientsService = inject(ClientsService);
+  private authenticationService = inject(AuthenticationService);
+
   /** Client ID */
   entityId: string;
   /** Username */
@@ -35,13 +47,11 @@ export class NotesTabComponent implements OnInit {
    * @param {ClientsService} clientsService Clients Service
    * @param {AuthenticationService} authenticationService Authentication Service
    */
-  constructor(
-    private route: ActivatedRoute,
-    private clientsService: ClientsService,
-    private authenticationService: AuthenticationService
-  ) {
+  constructor() {
     this.entityId = this.route.parent.snapshot.params['clientId'];
     this.addNote = this.addNote.bind(this);
+    this.editNote = this.editNote.bind(this);
+    this.deleteNote = this.deleteNote.bind(this);
   }
 
   ngOnInit(): void {

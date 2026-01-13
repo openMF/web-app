@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
@@ -26,7 +34,7 @@ import {
 } from '@angular/material/card';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
-import { NgClass, NgIf, NgFor } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { EntityNameComponent } from '../../shared/entity-name/entity-name.component';
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { MatIcon } from '@angular/material/icon';
@@ -70,18 +78,18 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ClientsViewComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private clientsService = inject(ClientsService);
+  private _sanitizer = inject(DomSanitizer);
+  dialog = inject(MatDialog);
+
   clientViewData: any;
   clientDatatables: any;
   clientImage: any;
   clientTemplateData: any;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private clientsService: ClientsService,
-    private _sanitizer: DomSanitizer,
-    public dialog: MatDialog
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { clientViewData: any; clientTemplateData: any; clientDatatables: any }) => {
       this.clientViewData = data.clientViewData;
       this.clientDatatables = data.clientDatatables;

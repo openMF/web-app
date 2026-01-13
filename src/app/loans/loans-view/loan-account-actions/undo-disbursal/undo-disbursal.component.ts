@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { UntypedFormControl, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
@@ -21,6 +29,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class UndoDisbursalComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private loansService = inject(LoansService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+
   @Input() actionName: string;
 
   /** Loan ID. */
@@ -34,12 +47,7 @@ export class UndoDisbursalComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private loansService: LoansService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {
+  constructor() {
     this.loanId = this.route.snapshot.params['loanId'];
   }
 

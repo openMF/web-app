@@ -1,3 +1,11 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <div class="container mat-elevation-z8">
   <mat-card>
     <form [formGroup]="applyAnnualFeesForm" (ngSubmit)="submit()">
@@ -15,19 +23,23 @@
             />
             <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #dueDatePicker></mat-datepicker>
-            <mat-error *ngIf="applyAnnualFeesForm.controls.dueDate.hasError('required')">
-              {{ 'labels.inputs.Due Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (applyAnnualFeesForm.controls.dueDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Due Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
             <input type="number" formControlName="amount" required matInput />
-            <mat-error *ngIf="applyAnnualFeesForm.controls.amount.hasError('required')">
-              {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (applyAnnualFeesForm.controls.amount.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
         </div>
       </mat-card-content>

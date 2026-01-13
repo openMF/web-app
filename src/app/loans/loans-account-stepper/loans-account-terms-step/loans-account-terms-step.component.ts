@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
@@ -77,6 +85,11 @@ interface DisbursementData {
   ]
 })
 export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
+  private formBuilder = inject(UntypedFormBuilder);
+  private settingsService = inject(SettingsService);
+  private route = inject(ActivatedRoute);
+  dialog = inject(MatDialog);
+
   /** Loans Product Options */
   @Input() loansProductOptions: any;
   /** Loans Account Product Template */
@@ -162,12 +175,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
    * @param formBuilder FormBuilder
    * @param {SettingsService} settingsService SettingsService
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private settingsService: SettingsService,
-    private route: ActivatedRoute,
-    public dialog: MatDialog
-  ) {
+  constructor() {
     this.loanId = this.route.snapshot.params['loanId'];
     this.createloansAccountTermsForm();
   }
@@ -253,6 +261,12 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
       if (this.productEnableDownPayment) {
         const enableDownPayment = this.loansAccountTermsData['enableDownPayment'] === false ? false : true;
         this.loansAccountTermsForm.addControl('enableDownPayment', new UntypedFormControl(enableDownPayment));
+      }
+
+      if (this.isFullTermTrancheEditable()) {
+        const allowFullTermForTranche =
+          this.loansAccountTermsData.allowFullTermForTranche ?? this.loanProduct?.allowFullTermForTranche ?? false;
+        this.loansAccountTermsForm.patchValue({ allowFullTermForTranche });
       }
 
       const allowAttributeOverrides = this.loansAccountTermsData.product.allowAttributeOverrides;
@@ -517,7 +531,8 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
       multiDisburseLoan: [false],
       interestRateFrequencyType: [''],
       balloonRepaymentAmount: [''],
-      interestRecognitionOnDisbursementDate: [false]
+      interestRecognitionOnDisbursementDate: [false],
+      allowFullTermForTranche: [false]
     });
   }
 
@@ -560,7 +575,6 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         required: true,
         order: 2
       })
-
     ];
     const data = {
       title: 'Add Disbursement Details',
@@ -699,5 +713,13 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
     return {
       collateral: this.collateralDataSource
     };
+  }
+
+  /**
+   * Check if full term tranche option should be visible at loan level.
+   * Available when PROGRESSIVE schedule type and multi-disbursement is enabled.
+   */
+  isFullTermTrancheEditable(): boolean {
+    return this.isProgressive && this.multiDisburseLoan === true;
   }
 }

@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
@@ -21,6 +29,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditOfficeComponent implements OnInit {
+  private organizationService = inject(OrganizationService);
+  private settingsService = inject(SettingsService);
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dateUtils = inject(Dates);
+
   /** Selected Data. */
   officeData: any;
   /** Office form. */
@@ -40,14 +55,7 @@ export class EditOfficeComponent implements OnInit {
    * @param {MatDialog} dialog Dialog reference.
    * @param {Dates} dateUtils Date Utils
    */
-  constructor(
-    private organizationService: OrganizationService,
-    private settingsService: SettingsService,
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private dateUtils: Dates
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { officeTemplate: any }) => {
       this.officeData = data.officeTemplate;
     });

@@ -1,8 +1,22 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <div class="container m-b-20 layout-row align-end gap-20px">
   <div #buttonCreateLoanProduct class="in-block">
     <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_LOANPRODUCT'">
       <fa-icon icon="plus" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Create Loan Product' | translate }}
+    </button>
+  </div>
+  <div class="in-block">
+    <button mat-raised-button color="primary" (click)="openImportDialog()" *mifosxHasPermission="'CREATE_LOANPRODUCT'">
+      <fa-icon icon="upload" class="m-r-10"></fa-icon>
+      Import
     </button>
   </div>
 </div>
@@ -104,7 +118,7 @@
 <ng-template #templateLoanProductsTable let-popover="popover">
   <h4 class="mw300">
     {{ 'labels.heading.List of loan products in the organization' | translate }}:
-    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/102039585/Loan+Products" target="_blank">{{
+    <a [href]="'loanProducts' | documentationLink" target="_blank" rel="noopener noreferrer">{{
       'labels.heading.Loan Products' | translate
     }}</a>
   </h4>

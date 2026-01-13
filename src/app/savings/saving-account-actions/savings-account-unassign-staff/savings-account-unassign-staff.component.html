@@ -1,3 +1,11 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <div class="container mat-elevation-z8">
   <mat-card>
     <form [formGroup]="savingsUnassignStaffForm" (ngSubmit)="submit()">
@@ -14,10 +22,12 @@
           />
           <mat-datepicker-toggle matSuffix [for]="unassignedDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #unassignedDatePicker></mat-datepicker>
-          <mat-error *ngIf="savingsUnassignStaffForm.controls.unassignedDate.hasError('required')">
-            {{ 'labels.inputs.Unassignment Date' | translate }} {{ 'labels.commons.is' | translate }}
-            <strong>{{ 'labels.commons.required' | translate }}</strong>
-          </mat-error>
+          @if (savingsUnassignStaffForm.controls.unassignedDate.hasError('required')) {
+            <mat-error>
+              {{ 'labels.inputs.Unassignment Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          }
         </mat-form-field>
       </mat-card-content>
 

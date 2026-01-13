@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
@@ -22,6 +30,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LanguageSelectorComponent {
+  private translateService = inject(TranslateService);
+  private settingsService = inject(SettingsService);
+
+  /** Appearance of the form field (fill, outline). Defaults to 'fill'. */
+  @Input() appearance: 'fill' | 'outline' = 'fill';
+
+  /** Show label in the form field. Defaults to true. */
+  @Input() showLabel: boolean = true;
+
   /** Language selector form control. */
   languageSelector = new UntypedFormControl();
 
@@ -29,10 +46,7 @@ export class LanguageSelectorComponent {
    * Sets the language of the application in the selector on initial setup.
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor(
-    private translateService: TranslateService,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.languageSelector.setValue(this.currentLanguage);
   }
 

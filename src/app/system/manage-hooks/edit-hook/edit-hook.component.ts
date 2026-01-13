@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -67,6 +75,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditHookComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private systemService = inject(SystemService);
+  private router = inject(Router);
+  private formBuilder = inject(UntypedFormBuilder);
+  private dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
+  private snackBar = inject(MatSnackBar);
+  private cdr = inject(ChangeDetectorRef);
+
   @NgModule({
     imports: [
       MatSnackBarModule
@@ -103,16 +120,7 @@ export class EditHookComponent implements OnInit {
    * @param {MatDialog} dialog Dialog Reference.
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private systemService: SystemService,
-    private router: Router,
-    private formBuilder: UntypedFormBuilder,
-    private dialog: MatDialog,
-    private translateService: TranslateService,
-    private snackBar: MatSnackBar,
-    private cdr: ChangeDetectorRef
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { hooksTemplate: any; hook: any }) => {
       this.hooksTemplateData = data.hooksTemplate;
       this.hookData = data.hook;
@@ -156,7 +164,6 @@ export class EditHookComponent implements OnInit {
           disabled: this.hookData.name !== 'SMS Bridge'
         },
         Validators.required
-
       ],
       smsProvider: [
         {
@@ -164,7 +171,6 @@ export class EditHookComponent implements OnInit {
           disabled: this.hookData.name !== 'SMS Bridge'
         },
         Validators.required
-
       ],
       smsProviderAccountId: [
         {
@@ -172,7 +178,6 @@ export class EditHookComponent implements OnInit {
           disabled: this.hookData.name !== 'SMS Bridge'
         },
         Validators.required
-
       ],
       smsProviderToken: [
         {
@@ -180,7 +185,6 @@ export class EditHookComponent implements OnInit {
           disabled: this.hookData.name !== 'SMS Bridge'
         },
         Validators.required
-
       ],
       contentType: [
         {
@@ -188,7 +192,6 @@ export class EditHookComponent implements OnInit {
           disabled: this.hookData.name !== 'Web'
         },
         Validators.required
-
       ],
       payloadUrl: [
         this.hookData.name === 'Web' ? this.hookData.config[1].fieldValue : this.hookData.config[0].fieldValue,

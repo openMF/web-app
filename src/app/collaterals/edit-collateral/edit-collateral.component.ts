@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
@@ -17,6 +25,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditCollateralComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private settingsService = inject(SettingsService);
+  private collateralService = inject(CollateralsService);
+
   /** Client Collateral Form */
   clientCollateralForm: UntypedFormGroup;
   /** Client Collateral Options */
@@ -34,13 +48,7 @@ export class EditCollateralComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    * @param {CollateralsService} collateralService Collateral Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private settingsService: SettingsService,
-    private collateralService: CollateralsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { clientCollateralData: any }) => {
       this.collateralDetails = data.clientCollateralData;
     });

@@ -1,9 +1,19 @@
-<div class="container m-b-20 layout-row layout-align-end gap-20px" *ngIf="!isdividendPosted">
-  <button mat-raised-button color="primary" *mifosxHasPermission="'POST_DIVIDENDS'" (click)="postDividends()">
-    <fa-icon icon="plus" class="m-r-10"></fa-icon>
-    {{ 'labels.buttons.buttons' | translate }}
-  </button>
-</div>
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+@if (!isdividendPosted) {
+  <div class="container m-b-20 layout-row layout-align-end gap-20px">
+    <button mat-raised-button color="primary" *mifosxHasPermission="'POST_DIVIDENDS'" (click)="postDividends()">
+      <fa-icon icon="plus" class="m-r-10"></fa-icon>
+      {{ 'labels.buttons.buttons' | translate }}
+    </button>
+  </div>
+}
 
 <div class="container">
   <div class="layout-row">

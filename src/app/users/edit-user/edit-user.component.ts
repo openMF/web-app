@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
@@ -21,6 +29,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditUserComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private usersService = inject(UsersService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   /** User Data */
   userData: any;
   /** Offices Data */
@@ -39,12 +52,7 @@ export class EditUserComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private usersService: UsersService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { user: any; usersTemplate: any }) => {
       this.userData = data.user;
       this.officesData = data.usersTemplate.allowedOffices;
@@ -78,13 +86,15 @@ export class EditUserComponent implements OnInit {
         this.userData.firstname,
         [
           Validators.required,
-          Validators.pattern('(^[A-z]).*')]
+          Validators.pattern('(^[A-z]).*')
+        ]
       ],
       lastname: [
         this.userData.lastname,
         [
           Validators.required,
-          Validators.pattern('(^[A-z]).*')]
+          Validators.pattern('(^[A-z]).*')
+        ]
       ],
       passwordNeverExpires: [this.userData.passwordNeverExpires],
       officeId: [

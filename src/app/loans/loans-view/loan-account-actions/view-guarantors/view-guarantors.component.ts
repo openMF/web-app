@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -54,6 +62,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewGuarantorsComponent implements OnInit {
+  dialog = inject(MatDialog);
+  loansService = inject(LoansService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   @Input() dataObject: any;
   guarantorDetails: any;
   showDeletedGuarantorsAccounts = false;
@@ -75,12 +88,7 @@ export class ViewGuarantorsComponent implements OnInit {
    * @param {route} Route Route
    * @param {router} Router Router
    */
-  constructor(
-    public dialog: MatDialog,
-    public loansService: LoansService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.loanId = this.route.snapshot.params['loanId'];
   }
 

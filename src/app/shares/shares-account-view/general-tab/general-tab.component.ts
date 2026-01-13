@@ -1,4 +1,12 @@
-import { Component } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ExternalIdentifierComponent } from '../../../shared/external-identifier/external-identifier.component';
 import { AccountNumberComponent } from '../../../shared/account-number/account-number.component';
@@ -19,6 +27,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class GeneralTabComponent {
+  private route = inject(ActivatedRoute);
+
   /** Shares Account Data */
   sharesAccountData: any;
 
@@ -26,7 +36,7 @@ export class GeneralTabComponent {
    * Fetches shares account data from `resolve`
    * @param {ActivatedRoute} route Activated Route
    */
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     this.route.data.subscribe((data: { sharesAccountData: any }) => {
       this.sharesAccountData = data.sharesAccountData;
     });

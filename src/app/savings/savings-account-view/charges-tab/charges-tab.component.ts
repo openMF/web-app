@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -32,7 +40,7 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { Dates } from 'app/core/utils/dates';
 import { TranslateService } from '@ngx-translate/core';
-import { NgIf, CurrencyPipe } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 import { MatTooltip } from '@angular/material/tooltip';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -62,6 +70,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ChargesTabComponent implements OnInit {
+  private savingsService = inject(SavingsService);
+  private route = inject(ActivatedRoute);
+  private dateUtils = inject(Dates);
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
+  private settingsService = inject(SettingsService);
+  private translateService = inject(TranslateService);
+
   /** Savings Account Data */
   savingsAccountData: any;
   /** Charges Data */
@@ -97,15 +113,7 @@ export class ChargesTabComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils.
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(
-    private savingsService: SavingsService,
-    private route: ActivatedRoute,
-    private dateUtils: Dates,
-    private router: Router,
-    private dialog: MatDialog,
-    private settingsService: SettingsService,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.route.parent.data.subscribe((data: { savingsAccountData: any }) => {
       this.savingsAccountData = data.savingsAccountData;
       this.chargesData = this.savingsAccountData.charges;
@@ -152,7 +160,6 @@ export class ChargesTabComponent implements OnInit {
         type: 'date',
         required: true
       })
-
     ];
     const data = {
       title: `Pay Charge ${chargeId}`,
@@ -226,7 +233,6 @@ export class ChargesTabComponent implements OnInit {
         type: 'number',
         required: true
       })
-
     ];
     const data = {
       title: `Edit Charge ${charge.id}`,

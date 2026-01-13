@@ -1,4 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, OnInit, Input, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
@@ -18,13 +26,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoanProductCurrencyStepComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+
   @Input() loanProductsTemplate: any;
 
   loanProductCurrencyForm: UntypedFormGroup;
 
   currencyData: any;
 
-  constructor(private formBuilder: UntypedFormBuilder) {
+  constructor() {
     this.createLoanProductCurrencyForm();
   }
 
@@ -35,8 +45,8 @@ export class LoanProductCurrencyStepComponent implements OnInit {
       digitsAfterDecimal: this.loanProductsTemplate.currency.decimalPlaces
         ? this.loanProductsTemplate.currency.decimalPlaces
         : 2,
-      inMultiplesOf: this.loanProductsTemplate.currency.inMultiplesOf,
-      installmentAmountInMultiplesOf: this.loanProductsTemplate.installmentAmountInMultiplesOf
+      inMultiplesOf: this.loanProductsTemplate.currency.inMultiplesOf ?? 1,
+      installmentAmountInMultiplesOf: this.loanProductsTemplate.installmentAmountInMultiplesOf ?? 1
     });
   }
 
@@ -48,10 +58,25 @@ export class LoanProductCurrencyStepComponent implements OnInit {
       ],
       digitsAfterDecimal: [
         2,
-        Validators.required
+        [
+          Validators.required,
+          Validators.min(0)
+        ]
       ],
-      inMultiplesOf: '',
-      installmentAmountInMultiplesOf: ''
+      inMultiplesOf: [
+        1,
+        [
+          Validators.required,
+          Validators.min(1)
+        ]
+      ],
+      installmentAmountInMultiplesOf: [
+        '',
+        [
+          Validators.required,
+          Validators.min(1)
+        ]
+      ]
     });
   }
 

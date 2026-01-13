@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { UntypedFormArray } from '@angular/forms';
 import { MatIconButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -45,6 +53,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrl: './advanced-accounting-mapping-rule.component.scss'
 })
 export class AdvancedAccountingMappingRuleComponent implements OnInit {
+  dialog = inject(MatDialog);
+  translateService = inject(TranslateService);
+
   @Input() formType: string;
   @Input() formArray: UntypedFormArray;
   @Input() textHeading: string;
@@ -72,11 +83,6 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
     'glAccountId',
     'actions'
   ];
-
-  constructor(
-    public dialog: MatDialog,
-    public translateService: TranslateService
-  ) {}
 
   ngOnInit(): void {
     this.tableData = this.formArray?.value || [];
@@ -137,7 +143,8 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
     let newData = [
       ...this.tableData.slice(0, index),
       updatedData,
-      ...this.tableData.slice(index + 1)];
+      ...this.tableData.slice(index + 1)
+    ];
     this.tableData = newData;
   }
 
@@ -261,7 +268,6 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
         required: true,
         order: 2
       })
-
     ];
     return formfields;
   }
@@ -284,7 +290,6 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
         required: true,
         order: 2
       })
-
     ];
     return formfields;
   }
@@ -307,7 +312,6 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
         required: true,
         order: 2
       })
-
     ];
     return formfields;
   }
@@ -333,7 +337,6 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
         required: true,
         order: 2
       })
-
     ];
     return formfields;
   }
@@ -359,7 +362,6 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
         required: true,
         order: 2
       })
-
     ];
     return formfields;
   }

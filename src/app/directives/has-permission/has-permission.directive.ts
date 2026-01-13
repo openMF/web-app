@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Directive, Input, TemplateRef, ViewContainerRef, inject } from '@angular/core';
 
 /** Custom Services */
 import { AuthenticationService } from '../../core/authentication/authentication.service';
@@ -9,6 +17,10 @@ import { AuthenticationService } from '../../core/authentication/authentication.
  */
 @Directive({ selector: '[mifosxHasPermission]', standalone: true })
 export class HasPermissionDirective {
+  private templateRef = inject<TemplateRef<any>>(TemplateRef);
+  private viewContainer = inject(ViewContainerRef);
+  private authenticationService = inject(AuthenticationService);
+
   /** User Permissions */
   private userPermissions: any[];
 
@@ -18,11 +30,7 @@ export class HasPermissionDirective {
    * @param {ViewContainerRef} viewContainer View Container Reference
    * @param {AuthenticationService} authenticationService AuthenticationService
    */
-  constructor(
-    private templateRef: TemplateRef<any>,
-    private viewContainer: ViewContainerRef,
-    private authenticationService: AuthenticationService
-  ) {
+  constructor() {
     const savedCredentials = this.authenticationService.getCredentials();
     this.userPermissions = savedCredentials.permissions;
   }

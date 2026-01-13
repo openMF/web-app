@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import {
@@ -24,7 +32,6 @@ import { AccountTransfersService } from '../account-transfers.service';
 /** Dialog Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { SettingsService } from 'app/settings/settings.service';
-import { MatDivider } from '@angular/material/divider';
 import { MatTooltip } from '@angular/material/tooltip';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -38,7 +45,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./list-standing-instructions.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    MatDivider,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -55,6 +61,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ListStandingInstructionsComponent {
+  private route = inject(ActivatedRoute);
+  private accountTransfersService = inject(AccountTransfersService);
+  private settingsService = inject(SettingsService);
+  private dialog = inject(MatDialog);
+
   /** Recurring Deposits Data */
   standingIntructionsTemplateData: any;
   /** Instructions Data */
@@ -104,12 +115,7 @@ export class ListStandingInstructionsComponent {
    * @param {SettingsService} settingsService Settings Service
    * @param {AccountTransfersService} accountTransfersService Account Transfers Service
    */
-  constructor(
-    private route: ActivatedRoute,
-    private accountTransfersService: AccountTransfersService,
-    private settingsService: SettingsService,
-    private dialog: MatDialog
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { standingIntructionsTemplate: any }) => {
       this.standingIntructionsTemplateData = data.standingIntructionsTemplate;
       if (data.standingIntructionsTemplate.fromClient) {

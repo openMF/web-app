@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, Renderer2, ViewChild, ElementRef, SecurityContext } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild, ElementRef, SecurityContext, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
@@ -22,6 +30,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ClientScreenReportsComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private clientsService = inject(ClientsService);
+  private route = inject(ActivatedRoute);
+  private sanitizer = inject(DomSanitizer);
+  private renderer = inject(Renderer2);
+
   /** Client Screen Reportform. */
   clientScreenReportForm: UntypedFormGroup;
   /** Templates Data */
@@ -42,13 +56,7 @@ export class ClientScreenReportsComponent implements OnInit {
    * @param {DomSanitizer} sanitizer DOM Sanitizer
    * @param {Renderer2} renderer Renderer 2
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private clientsService: ClientsService,
-    private route: ActivatedRoute,
-    private sanitizer: DomSanitizer,
-    private renderer: Renderer2
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.templatesData = data.clientActionData;
     });

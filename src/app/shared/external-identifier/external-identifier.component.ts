@@ -1,4 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { AlertService } from 'app/core/alert/alert.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -16,6 +24,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ExternalIdentifierComponent implements OnInit {
+  private clipboard = inject(Clipboard);
+  private alertService = inject(AlertService);
+
   @Input() externalId: string;
   @Input() completed = false;
   @Input() display = 'right';
@@ -24,11 +35,6 @@ export class ExternalIdentifierComponent implements OnInit {
   displayL = false;
   displayR = true;
   emptyValue = false;
-
-  constructor(
-    private clipboard: Clipboard,
-    private alertService: AlertService
-  ) {}
 
   ngOnInit(): void {
     this.emptyValue = !this.externalId || this.externalId === '';

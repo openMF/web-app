@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,10 +20,7 @@ import { AccountingService } from '../accounting.service';
  */
 @Injectable()
 export class ChartOfAccountsResolver {
-  /**
-   * @param {AccountingService} accountingService Accounting service.
-   */
-  constructor(private accountingService: AccountingService) {}
+  private accountingService = inject(AccountingService);
 
   /**
    * Returns the chart of accounts data.

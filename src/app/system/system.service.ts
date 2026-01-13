@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
@@ -13,14 +21,11 @@ import { RunJobWithParamPayloadType } from './manage-jobs/scheduler-jobs/custom-
   providedIn: 'root'
 })
 export class SystemService {
+  private http = inject(HttpClient);
+
   public static CONFIG_ASSET_EXTERNALIZATION = 'asset-externalization-of-non-active-loans';
 
   emptyPayload: any = {};
-
-  /**
-   * @param {HttpClient} http Http Client to send requests.
-   */
-  constructor(private http: HttpClient) {}
 
   /**
    * @returns {Observable<any>} Data tables.

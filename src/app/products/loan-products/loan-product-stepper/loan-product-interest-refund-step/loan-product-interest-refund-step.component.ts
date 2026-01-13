@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, ReactiveFormsModule } from '@angular/forms';
 import { StringEnumOptionData } from '../../../../shared/models/option-data.model';
 import { MatTooltip } from '@angular/material/tooltip';
@@ -14,6 +22,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoanProductInterestRefundStepComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+
   @Input() loanProductsTemplate: any;
   @Output() supportedInterestRefundTypes = new EventEmitter<StringEnumOptionData[]>();
 
@@ -21,7 +31,7 @@ export class LoanProductInterestRefundStepComponent implements OnInit {
 
   supportedInterestRefundTypesOptions: StringEnumOptionData[];
 
-  constructor(private formBuilder: UntypedFormBuilder) {
+  constructor() {
     this.createLoanProductInterestRefundForm();
     this.setConditionalControls();
   }

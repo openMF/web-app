@@ -1,4 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, OnInit, Input, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -28,6 +36,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class RecurringDepositProductSettingsStepComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+
   @Input() recurringDepositProductsTemplate: any;
 
   recurringDepositProductSettingsForm: UntypedFormGroup;
@@ -37,7 +47,7 @@ export class RecurringDepositProductSettingsStepComponent implements OnInit {
   preClosurePenalInterestOnTypeData: any;
   taxGroupData: any;
 
-  constructor(private formBuilder: UntypedFormBuilder) {
+  constructor() {
     this.createrecurringDepositProductSettingsForm();
     this.setConditionalControls();
   }

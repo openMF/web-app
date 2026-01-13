@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services. */
@@ -16,7 +24,7 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { AccountNumberComponent } from '../../../shared/account-number/account-number.component';
 import { LongTextComponent } from '../../../shared/long-text/long-text.component';
 import { MatTooltip } from '@angular/material/tooltip';
@@ -24,6 +32,7 @@ import { StatusLookupPipe } from '../../../pipes/status-lookup.pipe';
 import { AccountsFilterPipe } from '../../../pipes/accounts-filter.pipe';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
+import { CurrencyPipe } from '@angular/common';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -52,10 +61,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     StatusLookupPipe,
     AccountsFilterPipe,
     DateFormatPipe,
-    FormatNumberPipe
+    FormatNumberPipe,
+    CurrencyPipe
   ]
 })
 export class GeneralTabComponent {
+  private route = inject(ActivatedRoute);
+  private clientService = inject(ClientsService);
+  private router = inject(Router);
+
   /** Open Loan Accounts Columns */
   openLoansColumns: string[] = [
     'Account No',
@@ -159,11 +173,7 @@ export class GeneralTabComponent {
    * @param {ClientsService} clientService Clients Service
    * @param {Router} router Router
    */
-  constructor(
-    private route: ActivatedRoute,
-    private clientService: ClientsService,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe(
       (data: { clientAccountsData: any; clientChargesData: any; clientSummary: any; clientCollateralData: any }) => {
         this.clientAccountData = data.clientAccountsData;

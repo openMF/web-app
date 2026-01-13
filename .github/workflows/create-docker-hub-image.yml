@@ -2,7 +2,7 @@ name: Publish Image in Docker Hub
 
 on:
   push:
-    branches: [main, dev, angular-update]
+    branches: [main, dev, dev-angular-19]
 
 jobs:
   build:

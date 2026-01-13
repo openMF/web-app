@@ -1,3 +1,11 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <div class="layout-row align-end container m-b-20">
   <div #buttonDefineMapping>
     <button
@@ -71,11 +79,9 @@
 <ng-template #templateActivitiesTable let-popover="popover">
   <h4 class="mw300">
     {{ 'labels.heading.Account Linked Financial' | translate }}
-    <a
-      href="https://mifosforge.jira.com/wiki/spaces/docs/pages/106430472/Accounts+linked+to+Financial+Activities"
-      target="_blank"
-      >{{ 'labels.heading.Accounts linked to Financial Activities' | translate }}</a
-    >
+    <a [href]="'financialActivityMappings' | documentationLink" target="_blank" rel="noopener noreferrer">{{
+      'labels.heading.Accounts linked to Financial Activities' | translate
+    }}</a>
   </h4>
   <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">

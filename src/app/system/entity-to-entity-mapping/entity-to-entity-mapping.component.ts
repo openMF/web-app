@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -66,6 +74,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EntityToEntityMappingComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private formBuilder = inject(UntypedFormBuilder);
+  private systemService = inject(SystemService);
+  private dateUtils = inject(Dates);
+  private dialog = inject(MatDialog);
+  private settingsService = inject(SettingsService);
+  private translateService = inject(TranslateService);
+
   /** Stores entity to entity mapping data */
   entityMappings: string[] = [];
   /** Stores Id of selected mapping type */
@@ -123,15 +139,7 @@ export class EntityToEntityMappingComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private formBuilder: UntypedFormBuilder,
-    private systemService: SystemService,
-    private dateUtils: Dates,
-    private dialog: MatDialog,
-    private settingsService: SettingsService,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { entityMappings: any }) => {
       this.entityMappings = data.entityMappings;
     });
@@ -290,7 +298,6 @@ export class EntityToEntityMappingComponent implements OnInit {
         type: 'date',
         required: false
       })
-
     ];
     const data = {
       title:
@@ -345,7 +352,6 @@ export class EntityToEntityMappingComponent implements OnInit {
         type: 'date',
         required: false
       })
-
     ];
     const data = {
       title:

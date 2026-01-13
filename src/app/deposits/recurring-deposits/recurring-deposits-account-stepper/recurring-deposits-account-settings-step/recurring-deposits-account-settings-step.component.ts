@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -36,6 +44,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class RecurringDepositsAccountSettingsStepComponent implements OnInit, OnChanges {
+  private formBuilder = inject(UntypedFormBuilder);
+  private settingsService = inject(SettingsService);
+
   @Input() isNew = true;
   @Input() recurringDepositsAccountTemplate: any;
   @Input() recurringDepositsAccountProductTemplate: any;
@@ -60,10 +71,7 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
    * @param {FormBuilder} formBuilder Form Builder
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.createRecurringDepositAccountSettingsForm();
     this.buildDependencies();
   }

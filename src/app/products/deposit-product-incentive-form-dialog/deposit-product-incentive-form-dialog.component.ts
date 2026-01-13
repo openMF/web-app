@@ -1,4 +1,12 @@
-import { Component, OnInit, Inject } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, OnInit, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -26,6 +34,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class DepositProductIncentiveFormDialogComponent implements OnInit {
+  dialogRef = inject<MatDialogRef<DepositProductIncentiveFormDialogComponent>>(MatDialogRef);
+  data = inject(MAT_DIALOG_DATA);
+  private formBuilder = inject(UntypedFormBuilder);
+  private translateService = inject(TranslateService);
+
   layout: {
     addButtonText?: string;
   } = {
@@ -42,12 +55,9 @@ export class DepositProductIncentiveFormDialogComponent implements OnInit {
   attributeValueData: any;
   incentiveTypeData: any;
 
-  constructor(
-    public dialogRef: MatDialogRef<DepositProductIncentiveFormDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private formBuilder: UntypedFormBuilder,
-    private translateService: TranslateService
-  ) {
+  constructor() {
+    const data = this.data;
+
     this.createDepositProductIncentiveForm();
     this.setConditionalControls();
     this.layout = { ...this.layout, ...data.layout };

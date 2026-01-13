@@ -1,4 +1,12 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, OnInit, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -65,6 +73,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoanProductTermsStepComponent implements OnInit, OnChanges {
+  private formBuilder = inject(UntypedFormBuilder);
+  private processingStrategyService = inject(ProcessingStrategyService);
+  private dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
+
   @Input() loanProductsTemplate: any;
 
   loanProductTermsForm: UntypedFormGroup;
@@ -89,12 +102,7 @@ export class LoanProductTermsStepComponent implements OnInit, OnChanges {
   ];
   isAdvancedTransactionProcessingStrategy = false;
 
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private processingStrategyService: ProcessingStrategyService,
-    private dialog: MatDialog,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.createLoanProductTermsForm();
     this.setConditionalControls();
   }
@@ -188,28 +196,70 @@ export class LoanProductTermsStepComponent implements OnInit, OnChanges {
   createLoanProductTermsForm() {
     this.loanProductTermsForm = this.formBuilder.group({
       useBorrowerCycle: [false],
-      minPrincipal: [''],
+      minPrincipal: [
+        '',
+        [
+          Validators.min(1)
+        ]
+      ],
       principal: [
         '',
-        Validators.required
+        [
+          Validators.required,
+          Validators.min(1)
+        ]
       ],
-      maxPrincipal: [''],
-      minNumberOfRepayments: [''],
+      maxPrincipal: [
+        '',
+        [
+          Validators.min(1)
+        ]
+      ],
+      minNumberOfRepayments: [
+        '',
+        [
+          Validators.pattern('^[1-9]\\d*$')
+        ]
+      ],
       numberOfRepayments: [
         '',
-        Validators.required
+        [
+          Validators.required,
+          Validators.pattern('^[1-9]\\d*$')
+        ]
       ],
-      maxNumberOfRepayments: [''],
+      maxNumberOfRepayments: [
+        '',
+        [
+          Validators.pattern('^[1-9]\\d*$')
+        ]
+      ],
       isLinkedToFloatingInterestRates: [false],
       allowApprovedDisbursedAmountsOverApplied: [false],
       overAppliedCalculationType: [{ value: null, disabled: true }],
       overAppliedNumber: [{ value: null, disabled: true }],
-      minInterestRatePerPeriod: [''],
+      minInterestRatePerPeriod: [
+        '',
+        [
+          Validators.min(0),
+          Validators.pattern(/^\d+([.,]\d{1,6})?$/)
+        ]
+      ],
       interestRatePerPeriod: [
         '',
-        Validators.required
+        [
+          Validators.required,
+          Validators.min(0),
+          Validators.pattern(/^\d+([.,]\d{1,6})?$/)
+        ]
       ],
-      maxInterestRatePerPeriod: [''],
+      maxInterestRatePerPeriod: [
+        '',
+        [
+          Validators.min(0),
+          Validators.pattern(/^\d+([.,]\d{1,6})?$/)
+        ]
+      ],
       interestRateFrequencyType: [
         '',
         Validators.required
@@ -456,13 +506,26 @@ export class LoanProductTermsStepComponent implements OnInit, OnChanges {
         type: 'number',
         order: 5
       })
-
     ];
     return formfields;
   }
 
   get loanProductTerms() {
-    return this.loanProductTermsForm.getRawValue();
+    const formValue = this.loanProductTermsForm.getRawValue();
+    // Normalize decimal separators: convert comma to dot for backend compatibility
+    const normalizeDecimal = (value: any) => {
+      if (typeof value === 'string' && value.includes(',')) {
+        return value.replace(',', '.');
+      }
+      return value;
+    };
+
+    return {
+      ...formValue,
+      minInterestRatePerPeriod: normalizeDecimal(formValue.minInterestRatePerPeriod),
+      interestRatePerPeriod: normalizeDecimal(formValue.interestRatePerPeriod),
+      maxInterestRatePerPeriod: normalizeDecimal(formValue.maxInterestRatePerPeriod)
+    };
   }
 
   isZeroInterest(): boolean {

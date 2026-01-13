@@ -1,4 +1,12 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, Input, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
 import { AccountingMappingDTO, DelinquencyBucket, LoanProduct } from '../../models/loan-product.model';
 import {
   AccountingMapping,
@@ -71,6 +79,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoanProductSummaryComponent implements OnInit, OnChanges {
+  private accounting = inject(Accounting);
+
   @Input() action: string;
   @Input() loanProduct: LoanProduct;
   @Input() loanProductsTemplate: any | null;
@@ -118,8 +128,6 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
   buydownFeeClassificationToIncomeAccountMappings: ClassificationToIncomeAccountMapping[] = [];
   capitalizedIncomeClassificationToIncomeAccountMappings: ClassificationToIncomeAccountMapping[] = [];
   writeOffReasonsToExpenseMappings: ChargeOffReasonToExpenseAccountMapping[] = [];
-
-  constructor(private accounting: Accounting) {}
 
   ngOnInit() {
     this.accountingRuleData = this.accounting.getAccountingRulesForLoans();

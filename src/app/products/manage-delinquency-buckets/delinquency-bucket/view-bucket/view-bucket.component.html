@@ -1,3 +1,11 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <div class="container m-b-20 layout-row layout-lt-md-column align-end gap-2percent">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_DELINQUENCY_BUCKET'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
@@ -42,19 +50,19 @@
         </div>
       </div>
 
-      <div class="layout-row-wrap bucket-range" *ngFor="let range of delinquencyBucketData.ranges">
-        <div class="flex-60">
-          {{ range.classification }}
+      @for (range of delinquencyBucketData.ranges; track range) {
+        <div class="layout-row-wrap bucket-range">
+          <div class="flex-60">
+            {{ range.classification }}
+          </div>
+          <div class="flex-20 r-value">
+            {{ range.minimumAgeDays }}
+          </div>
+          <div class="flex-20 r-value">
+            {{ range.maximumAgeDays }}
+          </div>
         </div>
-
-        <div class="flex-20 r-value">
-          {{ range.minimumAgeDays }}
-        </div>
-
-        <div class="flex-20 r-value">
-          {{ range.maximumAgeDays }}
-        </div>
-      </div>
+      }
     </mat-card-content>
   </mat-card>
 </div>

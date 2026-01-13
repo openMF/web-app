@@ -1,4 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, OnInit, Input, Output, EventEmitter, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -35,6 +43,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoanProductSettingsStepComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private processingStrategyService = inject(ProcessingStrategyService);
+
   DAYS_BEFORE_REPAYMENT_IS_DUE = LoanProducts.DAYS_BEFORE_REPAYMENT_IS_DUE;
   DAYS_AFTER_REPAYMENT_IS_OVERDUE = LoanProducts.DAYS_AFTER_REPAYMENT_IS_OVERDUE;
 
@@ -74,10 +85,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
   /** Values to Days for Repayments */
   defaultConfigValues: GlobalConfiguration[] = [];
 
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private processingStrategyService: ProcessingStrategyService
-  ) {
+  constructor() {
     this.createLoanProductSettingsForm();
     this.setConditionalControls();
   }
@@ -146,6 +154,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
       multiDisburseLoan: this.loanProductsTemplate.multiDisburseLoan,
       maxTrancheCount: this.loanProductsTemplate.maxTrancheCount,
       outstandingLoanBalance: this.loanProductsTemplate.outstandingLoanBalance,
+      allowFullTermForTranche: this.loanProductsTemplate.allowFullTermForTranche,
       enableDownPayment: this.loanProductsTemplate.enableDownPayment,
       enableInstallmentLevelDelinquency: this.loanProductsTemplate.enableInstallmentLevelDelinquency,
       loanScheduleType: this.loanProductsTemplate.loanScheduleType.code,
@@ -291,10 +300,22 @@ export class LoanProductSettingsStepComponent implements OnInit {
         '',
         Validators.required
       ],
-      graceOnPrincipalPayment: [''],
-      graceOnInterestPayment: [''],
-      graceOnInterestCharged: [''],
-      inArrearsTolerance: [''],
+      graceOnPrincipalPayment: [
+        '',
+        [Validators.min(0)]
+      ],
+      graceOnInterestPayment: [
+        '',
+        [Validators.min(0)]
+      ],
+      graceOnInterestCharged: [
+        '',
+        [Validators.min(0)]
+      ],
+      inArrearsTolerance: [
+        '',
+        [Validators.min(0)]
+      ],
       daysInYearType: [
         '',
         Validators.required
@@ -304,16 +325,26 @@ export class LoanProductSettingsStepComponent implements OnInit {
         Validators.required
       ],
       canDefineInstallmentAmount: [false],
-      graceOnArrearsAgeing: [''],
-      overdueDaysForNPA: [''],
+      graceOnArrearsAgeing: [
+        '',
+        [Validators.min(0)]
+      ],
+      overdueDaysForNPA: [
+        '',
+        [Validators.min(0)]
+      ],
       accountMovesOutOfNPAOnlyOnArrearsCompletion: [false],
-      principalThresholdForLastInstallment: [''],
+      principalThresholdForLastInstallment: [
+        '',
+        [Validators.min(0)]
+      ],
       allowVariableInstallments: [false],
       disallowExpectedDisbursements: [false],
       canUseForTopup: [false],
       isInterestRecalculationEnabled: [false],
       holdGuaranteeFunds: [false],
       multiDisburseLoan: [false],
+      allowFullTermForTranche: [false],
       allowAttributeConfiguration: [true],
       allowPartialPeriodInterestCalculation: [false],
       allowAttributeOverrides: this.formBuilder.group({
@@ -330,8 +361,14 @@ export class LoanProductSettingsStepComponent implements OnInit {
       enableDownPayment: [false],
       enableInstallmentLevelDelinquency: [false],
       useDueForRepaymentsConfigurations: [false],
-      dueDaysForRepaymentEvent: [''],
-      overDueDaysForRepaymentEvent: [''],
+      dueDaysForRepaymentEvent: [
+        '',
+        [Validators.min(0)]
+      ],
+      overDueDaysForRepaymentEvent: [
+        '',
+        [Validators.min(0)]
+      ],
       loanScheduleType: [
         LoanProducts.LOAN_SCHEDULE_TYPE_CUMULATIVE,
         Validators.required
@@ -379,7 +416,6 @@ export class LoanProductSettingsStepComponent implements OnInit {
           this.loanProductSettingsForm.removeControl('maximumGap');
         }
       });
-
     this.loanProductSettingsForm
       .get('isInterestRecalculationEnabled')
       .valueChanges.subscribe((isInterestRecalculationEnabled: any) => {
@@ -553,7 +589,10 @@ export class LoanProductSettingsStepComponent implements OnInit {
       } else {
         this.loanProductSettingsForm.removeControl('maxTrancheCount');
         this.loanProductSettingsForm.removeControl('outstandingLoanBalance');
-        this.loanProductSettingsForm.patchValue({ disallowExpectedDisbursements: false });
+        this.loanProductSettingsForm.patchValue({
+          disallowExpectedDisbursements: false,
+          allowFullTermForTranche: false
+        });
       }
     });
 
@@ -563,7 +602,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
           'disbursedAmountPercentageForDownPayment',
           new UntypedFormControl(0, [
             Validators.required,
-            rangeValidator(0, 100)])
+            rangeValidator(0, 100)
+          ])
         );
         this.loanProductSettingsForm.addControl('enableAutoRepaymentForDownPayment', new UntypedFormControl(false, []));
       } else {
@@ -646,6 +686,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
         this.advancedTransactionProcessingStrategyDisabled = false;
         this.isAdvancedTransactionProcessingStrategy = false;
         this.loanProductSettingsForm.removeControl('chargeOffBehaviour');
+        this.loanProductSettingsForm.patchValue({ allowFullTermForTranche: false });
       } else {
         // Only Advanced Payment Allocation Strategy
         this.transactionProcessingStrategyDataBase.some((cn: CodeName) => {

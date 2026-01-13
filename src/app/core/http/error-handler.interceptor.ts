@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 
 /** rxjs Imports */
@@ -22,14 +30,8 @@ const log = new Logger('ErrorHandlerInterceptor');
  */
 @Injectable()
 export class ErrorHandlerInterceptor implements HttpInterceptor {
-  /**
-   * @param {AlertService} alertService Alert Service.
-   * @param {TranslateService} translate Translation Service.
-   */
-  constructor(
-    private alertService: AlertService,
-    private translate: TranslateService // Added TranslateService
-  ) {}
+  private alertService = inject(AlertService);
+  private translate = inject(TranslateService);
 
   /**
    * Intercepts a Http request and adds a default error handler.
@@ -86,6 +88,11 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
       this.alertService.alert({
         type: 'Internal Server Error',
         message: 'Internal Server Error. Please try again later.'
+      });
+    } else if (status === 501) {
+      this.alertService.alert({
+        type: this.translate.instant('error.resource.notImplemented.type'),
+        message: this.translate.instant('error.resource.notImplemented.message')
       });
     } else {
       this.alertService.alert({ type: 'Unknown Error', message: 'Unknown Error. Please try again later.' });

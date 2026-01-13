@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
@@ -15,15 +23,10 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class UsersServiceZitadel {
-  private api = environment.OIDC.oidcApiUrl;
+  private http = inject(HttpClient);
+  private autservice = inject(AuthService);
 
-  /**
-   * @param {HttpClient} http Http Client to send requests.
-   */
-  constructor(
-    private http: HttpClient,
-    private autservice: AuthService
-  ) {}
+  private api = environment.OIDC.oidcApiUrl;
 
   /**
    * @param {any} user User to be created.

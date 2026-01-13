@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
@@ -21,6 +29,11 @@ import { MatIconModule } from '@angular/material/icon';
   ]
 })
 export class PasswordPreferencesComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private organizationService = inject(OrganizationService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   /** Password preferences form. */
   passwordPreferencesForm: UntypedFormGroup;
   /** Password preferences data. */
@@ -55,12 +68,7 @@ export class PasswordPreferencesComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private organizationService: OrganizationService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { passwordPreferencesTemplate: any }) => {
       this.passwordPreferencesData = data.passwordPreferencesTemplate;
     });

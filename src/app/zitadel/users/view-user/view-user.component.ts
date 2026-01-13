@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -13,7 +21,6 @@ import { AuthService } from 'app/zitadel/auth.service';
 /** Custom Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { ChangePasswordDialogComponent } from 'app/zitadel/shared/change-password-dialog/change-password-dialog.component';
-import { strings } from '@angular-devkit/schematics';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -30,6 +37,12 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   ]
 })
 export class ViewUserComponent {
+  private usersService = inject(UsersServiceZitadel);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
+  private authService = inject(AuthService);
+
   /** User Data. */
   userData: any;
 
@@ -40,13 +53,7 @@ export class ViewUserComponent {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(
-    private usersService: UsersServiceZitadel,
-    private route: ActivatedRoute,
-    private router: Router,
-    private dialog: MatDialog,
-    private authService: AuthService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { user: any }) => {
       const u = data.user.object?.result?.[0];
 

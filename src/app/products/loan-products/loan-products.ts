@@ -1,4 +1,12 @@
-import { Injectable } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Injectable, inject } from '@angular/core';
 import { SettingsService } from 'app/settings/settings.service';
 import { GlobalConfiguration } from 'app/system/configurations/global-configurations-tab/configuration.model';
 
@@ -6,6 +14,8 @@ import { GlobalConfiguration } from 'app/system/configurations/global-configurat
   providedIn: 'root'
 })
 export class LoanProducts {
+  private settingsService = inject(SettingsService);
+
   public static LOAN_SCHEDULE_TYPE_CUMULATIVE = 'CUMULATIVE';
   public static LOAN_SCHEDULE_TYPE_PROGRESSIVE = 'PROGRESSIVE';
 
@@ -29,8 +39,6 @@ export class LoanProducts {
   public static isAdvancedPaymentAllocationStrategy(code: string): boolean {
     return code === this.ADVANCED_PAYMENT_ALLOCATION_STRATEGY;
   }
-
-  constructor(private settingsService: SettingsService) {}
 
   public setItemsByDefault(configurations: any) {
     const itemsByDefault: GlobalConfiguration[] = [];

@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, Input, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
@@ -10,11 +18,12 @@ import { KeyboardShortcutsDialogComponent } from 'app/shared/keyboard-shortcuts-
 import { AuthenticationService } from '../../authentication/authentication.service';
 import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
+import { DocumentationLinksService } from 'app/shared/services/documentation-links.service';
 
 /** Custom Imports */
 import { frequentActivities } from './frequent-activities';
 import { SettingsService } from 'app/settings/settings.service';
-import { NgClass, NgFor } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { MatIconButton, MatButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -24,9 +33,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatLine } from '@angular/material/grid-list';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
-/** Environment Configuration and Zitadel*/
-import { environment } from '../../../../environments/environment';
-import { AuthService } from 'app/zitadel/auth.service';
+import { catchError, finalize, of, take } from 'rxjs';
 
 /**
  * Sidenav component.
@@ -50,6 +57,14 @@ import { AuthService } from 'app/zitadel/auth.service';
   ]
 })
 export class SidenavComponent implements OnInit, AfterViewInit {
+  private router = inject(Router);
+  dialog = inject(MatDialog);
+  private authenticationService = inject(AuthenticationService);
+  private settingsService = inject(SettingsService);
+  private configurationWizardService = inject(ConfigurationWizardService);
+  private popoverService = inject(PopoverService);
+  private documentationLinks = inject(DocumentationLinksService);
+
   /** True if sidenav is in collapsed state. */
   @Input() sidenavCollapsed: boolean;
   /** Tooltip position */
@@ -80,15 +95,7 @@ export class SidenavComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(
-    private router: Router,
-    public dialog: MatDialog,
-    private authenticationService: AuthenticationService,
-    private settingsService: SettingsService,
-    private configurationWizardService: ConfigurationWizardService,
-    private popoverService: PopoverService,
-    private authService: AuthService
-  ) {
+  constructor() {
     this.userActivity = JSON.parse(localStorage.getItem('mifosXLocation'));
   }
 
@@ -103,20 +110,24 @@ export class SidenavComponent implements OnInit, AfterViewInit {
 
   /**
    * Logs out the authenticated user and redirects to login page.
+   * Uses unified AuthenticationService which handles both OAuth2 and OIDC logout.
    */
   logout() {
-    if (!environment.OIDC.oidcServerEnabled) {
-      this.authenticationService.logout().subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
-    } else {
-      this.authService.logout();
-    }
+    this.authenticationService
+      .logout()
+      .pipe(
+        take(1),
+        catchError(() => of(void 0)),
+        finalize(() => this.router.navigate(['/login'], { replaceUrl: true }))
+      )
+      .subscribe();
   }
 
   /**
    * Opens Mifos JIRA Wiki page.
    */
   help() {
-    window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');
+    this.documentationLinks.open('userManual');
   }
 
   /**
@@ -169,8 +180,8 @@ export class SidenavComponent implements OnInit, AfterViewInit {
         this.pushActivity('/accounting');
       } else if (activity.includes('/reports')) {
         this.pushActivity('/reports');
-      } else if (activity.includes('/users')) {
-        this.pushActivity('/users');
+      } else if (activity.includes('/appusers')) {
+        this.pushActivity('/appusers');
       } else if (activity.includes('/organization')) {
         this.pushActivity('/organization');
       } else if (activity.includes('/system')) {

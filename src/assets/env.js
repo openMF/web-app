@@ -1,3 +1,11 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 (function(window) {
   window["env"] = window["env"] || {};
 
@@ -7,9 +15,12 @@
 
   window["env"]["apiProvider"] = '';
   window["env"]["apiVersion"]  = '';
+  window["env"]["apiActuator"]  = '';
 
   window["env"]["fineractPlatformTenantId"]  = '';
   window["env"]["fineractPlatformTenantIds"]  = '';
+
+  window['env']['tenantLogoUrl'] = '';
 
   // Language Environment variables
   window["env"]["defaultLanguage"] = '';

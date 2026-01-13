@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
@@ -16,12 +24,9 @@ import { BulkImports } from './view-bulk-import/bulk-imports';
  */
 @Injectable()
 export class BulkImportResolver {
-  bulkImportsArray = BulkImports;
+  private organizationService = inject(OrganizationService);
 
-  /**
-   * @param {OrganizationService} organizationService Organization service.
-   */
-  constructor(private organizationService: OrganizationService) {}
+  bulkImportsArray = BulkImports;
 
   /**
    * Gets bulk-import's entity name

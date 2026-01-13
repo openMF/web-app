@@ -1,4 +1,12 @@
-import { Component } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, inject } from '@angular/core';
 import { MatTabChangeEvent, MatTabGroup, MatTab } from '@angular/material/tabs';
 import { SystemService } from '../system.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -21,13 +29,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ManageJobsComponent {
+  private systemService = inject(SystemService);
+  private translateService = inject(TranslateService);
+
   /** Process running flag */
   isCatchUpRunning = true;
-
-  constructor(
-    private systemService: SystemService,
-    private translateService: TranslateService
-  ) {}
 
   onJobTabChange(event: MatTabChangeEvent) {
     if (event.index === 2) {

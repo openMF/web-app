@@ -1,20 +1,30 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <mat-card class="container">
   <div class="layout-column layout-gt-sm-row align-gt-sm-start-center">
     <div class="search-box m-r-30">
       <mat-form-field class="search-box">
         <input
           matInput
-          placeholder="Search by client name, external Id, mobile"
+          placeholder="{{ 'labels.text.SearchByClient' | translate }}"
           class="search-box"
           (keydown.enter)="search($event.target.value)"
         />
       </mat-form-field>
     </div>
-    <div class="filter-box" *ngIf="existsClientsToFilter">
-      <mat-checkbox #showClosedAccounts labelPosition="after" class="m-r-10"
-        >{{ 'labels.inputs.Show Closed Accounts' | translate }}
-      </mat-checkbox>
-    </div>
+    @if (existsClientsToFilter) {
+      <div class="filter-box">
+        <mat-checkbox #showClosedAccounts labelPosition="after" class="m-r-10"
+          >{{ 'labels.inputs.Show Closed Accounts' | translate }}
+        </mat-checkbox>
+      </div>
+    }
     <div class="action-button gap-25px">
       <button
         mat-raised-button
@@ -31,9 +41,11 @@
   </div>
 
   <div [hidden]="!existsClientsToFilter" class="client-list">
-    <div *ngIf="isLoading">
-      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-    </div>
+    @if (isLoading) {
+      <div>
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </div>
+    }
     <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortChanged($event)" class="bordered-table">
       <!-- Name Column -->
       <ng-container matColumnDef="displayName">

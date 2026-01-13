@@ -1,4 +1,11 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+﻿/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+import { Component, Input, OnDestroy, inject } from '@angular/core';
 import { SystemService } from 'app/system/system.service';
 import { environment } from '../../../../environments/environment';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -15,19 +22,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     LoanLockedComponent
   ]
 })
-export class CobWorkflowComponent implements OnInit, OnDestroy {
+export class CobWorkflowComponent implements OnDestroy {
+  private systemService = inject(SystemService);
+
   /** Wait time between API status calls 30 seg */
   waitTime = environment.waitTimeForCOBCatchUp || 30;
   /** Process running flag */
   @Input() isCatchUpRunning = true;
   /** Timer to refetch COB Catch-Up status every 5 seconds */
   timer: any;
-
-  constructor(private systemService: SystemService) {}
-
-  ngOnInit(): void {
-    this.getCOBCatchUpStatus();
-  }
 
   ngOnDestroy() {
     clearTimeout(this.timer);

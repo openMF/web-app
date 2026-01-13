@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import * as _ from 'lodash';
@@ -60,6 +68,14 @@ interface RescheduleFormData {
   ]
 })
 export class RescheduleLoanComponent {
+  private route = inject(ActivatedRoute);
+  private dialog = inject(MatDialog);
+  private dateUtils = inject(Dates);
+  private router = inject(Router);
+  private settingsService = inject(SettingsService);
+  private translateService = inject(TranslateService);
+  private tasksService = inject(TasksService);
+
   /** Loans Data */
   loans: any;
   /** Datasource */
@@ -87,15 +103,7 @@ export class RescheduleLoanComponent {
    * @param {SettingsService} settingsService Settings Service.
    * @param {TasksService} tasksService Tasks Service.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private dialog: MatDialog,
-    private dateUtils: Dates,
-    private router: Router,
-    private settingsService: SettingsService,
-    private translateService: TranslateService,
-    private tasksService: TasksService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { rescheduleLoansData: any }) => {
       this.loans = data.rescheduleLoansData;
       this.dataSource = new MatTableDataSource(this.loans);

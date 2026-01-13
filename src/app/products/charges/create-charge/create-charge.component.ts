@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -37,6 +45,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateChargeComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private productsService = inject(ProductsService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dateUtils = inject(Dates);
+  private settingsService = inject(SettingsService);
+
   /** Charge form. */
   chargeForm: UntypedFormGroup;
   /** Charges template data. */
@@ -65,14 +80,7 @@ export class CreateChargeComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils to format date.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private productsService: ProductsService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private dateUtils: Dates,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { chargesTemplate: any }) => {
       this.chargesTemplateData = data.chargesTemplate;
       const incomeOptions = data.chargesTemplate.incomeOrLiabilityAccountOptions.incomeAccountOptions || [];
@@ -123,7 +131,8 @@ export class CreateChargeComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern('^\\s*(?=.*[1-9])\\d*(?:\\.\\d+)?\\s*$')]
+          Validators.pattern('^\\s*(?=.*[1-9])\\d*(?:\\.\\d+)?\\s*$')
+        ]
       ],
       active: [false],
       penalty: [false],
@@ -263,7 +272,8 @@ export class CreateChargeComponent implements OnInit {
               Validators.required,
               Validators.min(1),
               Validators.max(12),
-              Validators.pattern('^[1-9]\\d*$')])
+              Validators.pattern('^[1-9]\\d*$')
+            ])
           );
           this.repeatEveryLabel = 'Months';
           break;
@@ -277,7 +287,8 @@ export class CreateChargeComponent implements OnInit {
                 'feeInterval',
                 new UntypedFormControl('', [
                   Validators.required,
-                  Validators.pattern('^[1-9]\\d*$')])
+                  Validators.pattern('^[1-9]\\d*$')
+                ])
               );
             } else {
               this.chargeForm.removeControl('feeFrequency');
@@ -290,7 +301,8 @@ export class CreateChargeComponent implements OnInit {
             'feeInterval',
             new UntypedFormControl('', [
               Validators.required,
-              Validators.pattern('^[1-9]\\d*$')])
+              Validators.pattern('^[1-9]\\d*$')
+            ])
           );
           this.repeatEveryLabel = 'Weeks';
           break;
