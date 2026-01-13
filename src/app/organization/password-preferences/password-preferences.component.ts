@@ -16,6 +16,16 @@ import { OrganizationService } from '../organization.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { MatIconModule } from '@angular/material/icon';
 
+/** Password Policy Interface */
+interface PasswordPolicy {
+  id: number;
+  key: string;
+  titleKey: string;
+  descriptionKey: string;
+  recommended?: boolean;
+  description?: string;
+}
+
 /**
  * Password preferences component.
  */
@@ -39,7 +49,7 @@ export class PasswordPreferencesComponent implements OnInit {
   /** Password preferences data. */
   passwordPreferencesData: any;
   /** Password policy cards */
-  passwordPolicies = [
+  passwordPolicies: PasswordPolicy[] = [
     {
       id: 1,
       key: 'basic',
