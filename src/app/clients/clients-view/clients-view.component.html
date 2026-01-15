@@ -435,7 +435,7 @@
           [active]="datatable.isActive"
           *mifosxHasPermission="'READ_' + clientDatatable.registeredTableName"
         >
-          {{ clientDatatable.registeredTableName }}
+          {{ formatTabLabel(clientDatatable.registeredTableName) }}
         </a>
       }
     </nav>

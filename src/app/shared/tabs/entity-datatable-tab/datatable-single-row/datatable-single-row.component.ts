@@ -28,6 +28,7 @@ import { DatetimeFormatPipe } from '../../../../pipes/datetime-format.pipe';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
 import { PrettyPrintPipe } from '../../../../pipes/pretty-print.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { formatTabLabel } from 'app/shared/utils/format-tab-label.util';
 
 @Component({
   selector: 'mifosx-datatable-single-row',
@@ -62,6 +63,10 @@ export class DatatableSingleRowComponent implements OnInit {
   @Input() entityType: string;
   datatableName: string;
 
+  formatTabLabel(label: string): string {
+    return formatTabLabel(label);
+  }
+
   ngOnInit() {
     this.route.params.subscribe((routeParams: any) => {
       this.datatableName = routeParams.datatableName;
@@ -80,7 +85,7 @@ export class DatatableSingleRowComponent implements OnInit {
       dataTableEntryObject
     );
     const data = {
-      title: 'Add ' + this.datatableName + ' for ' + this.entityType,
+      title: 'Add ' + formatTabLabel(this.datatableName) + ' for ' + this.entityType,
       formfields: formfields
     };
     const addDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
@@ -132,7 +137,7 @@ export class DatatableSingleRowComponent implements OnInit {
       return formfield;
     });
     const data = {
-      title: 'Edit ' + this.datatableName + ' for ' + this.entityType,
+      title: 'Edit ' + formatTabLabel(this.datatableName) + ' for ' + this.entityType,
       formfields: formfields,
       layout: { addButtonText: 'Submit' },
       pristine: false
@@ -160,7 +165,7 @@ export class DatatableSingleRowComponent implements OnInit {
 
   delete() {
     const deleteDataTableDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: ` the contents of ${this.datatableName}` }
+      data: { deleteContext: ` the contents of ${formatTabLabel(this.datatableName)}` }
     });
     deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {

@@ -22,6 +22,7 @@ import { PopoverService } from '../../../configuration-wizard/popover/popover.se
 import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
 import { TranslateService } from '@ngx-translate/core';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { formatTabLabel } from 'app/shared/utils/format-tab-label.util';
 
 /**
  * Route data property to generate breadcrumb using a static string.
@@ -139,6 +140,9 @@ export class BreadcrumbComponent implements AfterViewInit, OnDestroy {
                 route.snapshot.paramMap.get(route.snapshot.data[routeParamBreadcrumb])
               ) {
                 breadcrumbLabel = route.snapshot.paramMap.get(route.snapshot.data[routeParamBreadcrumb]);
+                if (route.snapshot.data[routeParamBreadcrumb] === 'datatableName' && breadcrumbLabel) {
+                  breadcrumbLabel = formatTabLabel(breadcrumbLabel);
+                }
                 const routeData: Data = route.snapshot.data;
                 if (routeData.breadcrumb === 'Clients') {
                   breadcrumbLabel = this.printableValue(routeData.clientViewData.displayName);

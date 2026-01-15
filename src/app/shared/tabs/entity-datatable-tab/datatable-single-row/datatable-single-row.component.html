@@ -7,7 +7,7 @@
 -->
 
 <div class="tab-container mat-typography">
-  <h3>{{ datatableName }}</h3>
+  <h3>{{ formatTabLabel(datatableName) }}</h3>
   <div class="layout-row align-end m-b-20">
     @if (!dataObject.data[0]) {
       <button mat-raised-button color="primary" (click)="add()">
