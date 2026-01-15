@@ -266,12 +266,11 @@ test.describe('Client Creation - Advanced Fields Toggle', () => {
       await clientCreationPage.nextButton.click();
       await page.waitForTimeout(500);
 
-      // If we captured a payload, validate externalId is present
-      if (requestCaptured && capturedPayload) {
-        // Assert externalId is included in payload
-        expect(capturedPayload.externalId).toBeDefined();
-        expect(capturedPayload.externalId).toBe(testExternalId);
-      }
+      // Ensure we captured the payload - fail explicitly if not
+      expect(requestCaptured).toBe(true);
+      expect(capturedPayload).toBeDefined();
+      // Assert externalId is included in payload
+      expect(capturedPayload.externalId).toBe(testExternalId);
 
       // The payload structure should include all expected fields
       // Empty optional fields should either be omitted or sent as empty strings

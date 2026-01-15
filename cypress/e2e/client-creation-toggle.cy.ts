@@ -14,8 +14,8 @@ describe('Client Creation - Advanced Fields Toggle', () => {
   beforeEach(() => {
     // Login and navigate to client creation
     cy.visit('/');
-    cy.get('input[formcontrolname="username"]').type('mifos');
-    cy.get('input[formcontrolname="password"]').type('password');
+    cy.get('input[formcontrolname="username"]').type(Cypress.env('username') || 'mifos');
+    cy.get('input[formcontrolname="password"]').type(Cypress.env('password') || 'password');
     cy.get('button').contains('Login').click();
 
     // Wait for login to complete by checking URL change
