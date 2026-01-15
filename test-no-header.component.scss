@@ -1,0 +1,28 @@
+.test-container {
+    padding: 20px;
+    margin: 10px;
+    background-color: #f5f5f5;
+
+    h1 {
+        color: #333;
+        font-size: 24px;
+    }
+
+    p {
+        color: #666;
+        margin: 10px 0;
+    }
+
+    button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #0056b3;
+        }
+    }
+}
