@@ -1,0 +1,103 @@
+name: License Header Check
+
+on:
+  pull_request:
+    branches: [main, dev, dev-angular-19]
+    paths:
+      - 'src/**/*.ts'
+      - 'src/**/*.js'
+      - 'src/**/*.html'
+      - 'src/**/*.css'
+      - 'src/**/*.scss'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  check-headers:
+    name: Validate MPL-2.0 Headers
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check file headers
+        run: |
+          echo "Checking for MPL-2.0 license headers in changed files..."
+
+          # Get list of changed files in PR
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+
+          # Get changed files (added, copied, modified, renamed, type changed)
+          CHANGED_FILES=$(git diff --name-only --diff-filter=ACMRT $BASE_SHA $HEAD_SHA | \
+            grep -E '\.(ts|js|html|css|scss)$' | \
+            grep -v -E '\.(spec\.ts|spec\.js|d\.ts)$' | \
+            grep -v -E '(environment\.ts|environment\.prod\.ts|polyfills\.ts|setup-jest\.ts|jest\.config\.ts|node_modules)' || true)
+
+          if [ -z "$CHANGED_FILES" ]; then
+            echo "No relevant source files changed in this PR"
+            exit 0
+          fi
+
+          # Count files
+          FILE_COUNT=$(echo "$CHANGED_FILES" | wc -l)
+          echo "Checking $FILE_COUNT changed file(s)..."
+          echo ""
+          echo "$CHANGED_FILES"
+          echo ""
+
+          # Run the header check
+          echo "$CHANGED_FILES" | xargs node scripts/check-file-headers.js
+
+          if [ $? -eq 0 ]; then
+            echo ""
+            echo "All changed files have valid MPL-2.0 headers!"
+          else
+            echo ""
+            echo "Header validation failed!"
+            echo ""
+            echo "To fix locally:"
+            echo "   npm run headers:add -- <file-path>"
+            echo ""
+            echo "   Or add the header manually (see docs/FILE_HEADER_VALIDATION.md)"
+            exit 1
+          fi
+
+      - name: Comment on PR (if failed)
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '## License Header Validation Failed\n\n' +
+                    'Some files are missing the required MPL-2.0 license header.\n\n' +
+                    '### How to fix:\n\n' +
+                    '1. **Automatically add headers:**\n' +
+                    '   ```bash\n' +
+                    '   npm run headers:add -- <file-path>\n' +
+                    '   ```\n\n' +
+                    '2. **Or manually add the header:**\n' +
+                    '   ```typescript\n' +
+                    '   /**\n' +
+                    '    * Copyright since 2025 Mifos Initiative\n' +
+                    '    *\n' +
+                    '    * This Source Code Form is subject to the terms of the Mozilla Public\n' +
+                    '    * License, v. 2.0. If a copy of the MPL was not distributed with this\n' +
+                    '    * file, You can obtain one at http://mozilla.org/MPL/2.0/.\n' +
+                    '    */\n' +
+                    '   ```\n\n' +
+                    '3. **Check the build logs above** to see which files need headers.\n\n' +
+                    'For more information, see [FILE_HEADER_VALIDATION.md](https://github.com/' + context.repo.owner + '/' + context.repo.repo + '/blob/dev/web-app/docs/FILE_HEADER_VALIDATION.md)'
+            })

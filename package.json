@@ -32,7 +32,9 @@
     "playwright": "playwright test",
     "playwright:ui": "playwright test --ui",
     "playwright:headed": "playwright test --headed",
-    "playwright:debug": "playwright test --debug"
+    "playwright:debug": "playwright test --debug",
+    "headers:check": "node scripts/check-file-headers.js",
+    "headers:add": "node scripts/add-file-headers.js"
   },
   "dependencies": {
     "@angular/animations": "20.3.15",
@@ -134,8 +136,15 @@
     "npm": ">= 8.11.0"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": "eslint --cache",
-    "*.{css,scss}": "stylelint",
+    "*.{js,jsx,ts,tsx}": [
+      "node scripts/check-file-headers.js",
+      "eslint --cache"
+    ],
+    "*.{css,scss}": [
+      "node scripts/check-file-headers.js",
+      "stylelint"
+    ],
+    "*.html": "node scripts/check-file-headers.js",
     "*": "prettier --check --ignore-unknown"
   },
   "overrides": {

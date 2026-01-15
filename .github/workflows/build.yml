@@ -54,6 +54,31 @@ jobs:
       - name: Run HTMLHint
         run: npx htmlhint "src" --config .htmlhintrc
 
+      - name: Check file headers
+        run: |
+          echo "Checking for MPL-2.0 license headers in changed files..."
+
+          # Get list of changed files (comparing with base branch)
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          else
+            BASE_SHA="${{ github.event.before }}"
+          fi
+
+          # Get changed files
+          CHANGED_FILES=$(git diff --name-only --diff-filter=ACMRT $BASE_SHA HEAD | grep -E '\.(ts|js|html|css|scss)$' | grep -v -E '\.(spec\.ts|spec\.js|d\.ts)$' | grep -v -E '(environment\.ts|environment\.prod\.ts|polyfills\.ts|node_modules)' || true)
+
+          if [ -z "$CHANGED_FILES" ]; then
+            echo "✅ No relevant files changed"
+            exit 0
+          fi
+
+          echo "📋 Checking $(echo "$CHANGED_FILES" | wc -l) changed file(s)..."
+          echo "$CHANGED_FILES"
+
+          # Run header check on changed files
+          echo "$CHANGED_FILES" | xargs node scripts/check-file-headers.js
+
       - name: Run production build
         run: npm run build:prod
 
