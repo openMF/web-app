@@ -28,6 +28,11 @@
       </mat-select>
     </mat-form-field>
 
+    <mat-form-field class="flex-fill flex-23">
+      <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
+      <input matInput formControlName="externalId" />
+    </mat-form-field>
+
     <mat-checkbox
       class="flex-fill flex-23"
       labelPosition="after"
@@ -36,11 +41,6 @@
     >
       {{ 'labels.inputs.Show advanced fields' | translate }}
     </mat-checkbox>
-
-    <mat-form-field *ngIf="isExpertMode" class="flex-fill flex-23">
-      <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
-      <input matInput formControlName="externalId" />
-    </mat-form-field>
 
     @if (createClientForm.contains('fullname')) {
       <mat-form-field class="flex-48">
