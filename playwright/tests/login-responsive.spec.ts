@@ -236,8 +236,8 @@ test.describe('Login Page - Responsive Layout', () => {
       const cardCenter = cardBox.y + cardBox.height / 2;
       const viewportCenter = viewportHeight / 2;
 
-      // Allow 100px tolerance for header/footer
-      expect(Math.abs(cardCenter - viewportCenter)).toBeLessThan(150);
+      // Allow tolerance for header/footer (header ~76px, footer ~60px)
+      expect(Math.abs(cardCenter - viewportCenter)).toBeLessThan(200);
     }
   });
 

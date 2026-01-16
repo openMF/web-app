@@ -8,10 +8,10 @@
 // Version Info Table
 .login-version-table {
   width: 100%;
-  max-width: 350px;
-  margin: 0 auto;
+  margin: 0 5px;
   border-collapse: collapse;
-  font-size: 0.95rem;
+  font-size: 0.75rem;
+  color: var(--md-sys-color-on-surface, #1a1c1e);
   background: none;
 }
 
@@ -35,7 +35,8 @@
 }
 
 // Responsive
-@media (width <= 768px) {
+/* stylelint-disable-next-line media-feature-range-notation -- Safari compatibility */
+@media (max-width: 768px) {
   .login-version-table {
     font-size: 0.85rem;
     max-width: 100%;
@@ -70,7 +71,12 @@
   // Dark overlay for better text contrast
   .hero-overlay {
     position: absolute;
-    inset: 0;
+    /* stylelint-disable declaration-block-no-redundant-longhand-properties -- Safari compatibility */
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /* stylelint-enable declaration-block-no-redundant-longhand-properties */
     background: linear-gradient(135deg, #1074b99e 0%, #004989a6 100%);
     z-index: 1;
   }
@@ -137,6 +143,8 @@
     line-height: 1.2;
     letter-spacing: -0.02em;
     background: linear-gradient(135deg, #fff 0%, #e3f2fd 100%);
+    /* stylelint-disable-next-line property-no-vendor-prefix -- Safari compatibility */
+    -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
@@ -168,6 +176,8 @@
     padding: 1rem;
     background: #ffffff1a;
     border-radius: 12px;
+    /* stylelint-disable-next-line property-no-vendor-prefix -- Safari compatibility */
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     transition: all 0.3s ease;
 
@@ -225,6 +235,7 @@
   background: var(--md-sys-color-surface, #fff);
   position: relative;
   min-height: 100vh;
+  min-height: -webkit-fill-available; // Safari fix: use available height
   overflow-y: auto;
 }
 
@@ -234,6 +245,8 @@
   gap: 0.5rem;
   padding: 1rem 1.5rem;
   background: transparent;
+  flex-shrink: 0; // Safari fix: prevent header from growing
+  max-height: 76px; // Safari fix: constrain header height
 
   .header-control {
     opacity: 0.8;
@@ -245,7 +258,7 @@
   }
 
   .theme-toggle {
-    min-height: -webkit-fill-available;
+    flex-shrink: 0; // Prevent toggle from growing
   }
 
   // Theme Toggle Button Styles
@@ -270,19 +283,23 @@
   // Language Selector Outlined Styles
   ::ng-deep mifosx-language-selector {
     width: 20%;
+    flex-shrink: 0; // Safari fix
 
     #language-selector.outlined-variant {
       width: 100%;
       margin: 0;
+      max-height: 56px; // Safari fix: constrain height
 
       // Compact outlined field for header
       .mat-mdc-form-field-flex {
         height: 44px;
+        max-height: 44px; // Safari fix
       }
 
       .mat-mdc-form-field-infix {
         padding: 10px 0;
         min-height: 44px;
+        max-height: 44px; // Safari fix
       }
 
       // Rounded corners for Material Design 3
@@ -302,19 +319,23 @@
   // Server Selector Outlined Styles
   ::ng-deep mifosx-server-selector {
     width: 70%;
+    flex-shrink: 0; // Safari fix
 
     #server-selector.outlined-variant {
       width: 100%;
       margin: 0;
+      max-height: 56px; // Safari fix: constrain height
 
       // Compact outlined field for header
       .mat-mdc-form-field-flex {
         height: 44px;
+        max-height: 44px; // Safari fix
       }
 
       .mat-mdc-form-field-infix {
         padding: 10px 0;
         min-height: 44px;
+        max-height: 44px; // Safari fix
       }
 
       // Rounded corners for Material Design 3
@@ -338,9 +359,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; // Safari fix: avoid center calculation issues
   padding: 1rem;
-  height: 100%;
+  min-height: 0; // Safari fix: allows flex item to shrink below content size
   animation: fade-in 0.6s ease-out;
 }
 
@@ -353,6 +374,8 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
+  margin-top: auto; // Safari fix: push card to center using margin
+  margin-bottom: auto;
 
   &:hover {
     box-shadow:
@@ -571,7 +594,8 @@
 // ===== Responsive Design =====
 
 // Tablet
-@media (width <= 1024px) {
+/* stylelint-disable-next-line media-feature-range-notation -- Safari compatibility */
+@media (max-width: 1024px) {
   .hero-panel {
     flex: 0 0 45%;
 
@@ -613,7 +637,8 @@
 }
 
 // Mobile
-@media (width <= 768px) {
+/* stylelint-disable-next-line media-feature-range-notation -- Safari compatibility */
+@media (max-width: 768px) {
   .login-wrapper {
     flex-direction: column;
   }
@@ -722,7 +747,8 @@
 }
 
 // Small mobile
-@media (width <= 480px) {
+/* stylelint-disable-next-line media-feature-range-notation -- Safari compatibility */
+@media (max-width: 480px) {
   .login-header {
     padding: 0.5rem 0.75rem;
     gap: 0.25rem;
@@ -770,13 +796,15 @@
 
 // ===== Utilities =====
 .hide-lt-md {
-  @media (width <= 768px) {
+  /* stylelint-disable-next-line media-feature-range-notation -- Safari compatibility */
+  @media (max-width: 768px) {
     display: none !important;
   }
 }
 
 .hide-lt-lg {
-  @media (width <= 1024px) {
+  /* stylelint-disable-next-line media-feature-range-notation -- Safari compatibility */
+  @media (max-width: 1024px) {
     display: none !important;
   }
 }

@@ -405,7 +405,8 @@
 }
 
 // ===== Responsive Design =====
-@media (width <= 768px) {
+/* stylelint-disable-next-line media-feature-range-notation -- Safari compatibility */
+@media (max-width: 768px) {
   #login-form {
     gap: 0.25rem;
   }
@@ -423,7 +424,8 @@
   }
 }
 
-@media (width <= 480px) {
+/* stylelint-disable-next-line media-feature-range-notation -- Safari compatibility */
+@media (max-width: 480px) {
   #login-form {
     gap: 0.15rem;
   }
