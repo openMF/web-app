@@ -23,6 +23,11 @@
 
     .mat-card-content {
       padding: 0;
+
+      .table-scroll-wrapper {
+        overflow-x: auto;
+        width: 100%;
+      }
     }
   }
 
