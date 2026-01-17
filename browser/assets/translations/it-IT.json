@@ -866,6 +866,7 @@
       "must be after or equal to start date": "deve essere successiva o uguale alla data di inizio"
     },
     "passwordPreferences": {
+      "Password most be at least 1 character and not more that 50 characters long": "La password deve contenere almeno 1 carattere e non più di 50 caratteri",
       "Password must be at least 1 character and not more than 50 characters long": "La password deve contenere almeno 1 carattere e non più di 50 caratteri",
       "Password must be at least 6 characters, no more than 50 characters long, must include at least one upper case letter, one lower case letter, one numeric digit and no space": "La password deve contenere almeno 6 caratteri, non più di 50 caratteri, deve includere almeno una lettera maiuscola, una lettera minuscola, una cifra numerica e nessuno spazio",
       "Password must be 12 to 50 characters long, containing at least one uppercase letter, one lowercase letter, one numeric digit, and one special character, with no spaces or consecutive repeating characters": "La password deve contenere tra 12 e 50 caratteri, contenente almeno una lettera maiuscola, una lettera minuscola, una cifra numerica e un carattere speciale, senza spazi o caratteri ripetuti consecutivi"
@@ -1263,6 +1264,9 @@
         "INCOME": "REDDITO",
         "EXPENSE": "SPESE"
       },
+      "Basic": "Base",
+      "Standard": "Standard",
+      "Strong": "Forte",
       "Percentage is required": "Percentuale richiesta",
       "ACCOUNTING": "CONTABILITÀ",
       "ADDRESS": "INDIRIZZO",

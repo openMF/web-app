@@ -866,6 +866,7 @@
       "must be after or equal to start date": "musí být po nebo rovno datu zahájení"
     },
     "passwordPreferences": {
+      "Password most be at least 1 character and not more that 50 characters long": "Heslo musí obsahovat alespoň 1 znak a ne více než 50 znaků",
       "Password must be at least 1 character and not more than 50 characters long": "Heslo musí obsahovat alespoň 1 znak a ne více než 50 znaků",
       "Password must be at least 6 characters, no more than 50 characters long, must include at least one upper case letter, one lower case letter, one numeric digit and no space": "Heslo musí obsahovat alespoň 6 znaků, ne více než 50 znaků, musí obsahovat alespoň jedno velké písmeno, jedno malé písmeno, jednu číslici a žádnou mezeru",
       "Password must be 12 to 50 characters long, containing at least one uppercase letter, one lowercase letter, one numeric digit, and one special character, with no spaces or consecutive repeating characters": "Heslo musí být dlouhé 12 až 50 znaků, obsahovat alespoň jedno velké písmeno, jedno malé písmeno, jednu číslici a jeden speciální znak, bez mezer nebo po sobě jdoucích opakujících se znaků"
@@ -1262,6 +1263,9 @@
         "INCOME": "PŘÍJEM",
         "EXPENSE": "NÁKLADY"
       },
+      "Basic": "Základní",
+      "Standard": "Standardní",
+      "Strong": "Silný",
       "ACCOUNTING": "ÚČETNICTVÍ",
       "Percentage is required": "Je vyžadováno procento",
       "ADDRESS": "ADRESA",

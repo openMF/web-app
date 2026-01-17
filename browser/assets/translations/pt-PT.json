@@ -866,6 +866,7 @@
       "must be after or equal to start date": "deve ser posterior ou igual à data de início"
     },
     "passwordPreferences": {
+      "Password most be at least 1 character and not more that 50 characters long": "A senha deve ter pelo menos 1 caractere e não mais que 50 caracteres",
       "Password must be at least 1 character and not more than 50 characters long": "A senha deve ter pelo menos 1 caractere e não mais que 50 caracteres",
       "Password must be at least 6 characters, no more than 50 characters long, must include at least one upper case letter, one lower case letter, one numeric digit and no space": "A senha deve ter pelo menos 6 caracteres, não mais que 50 caracteres, deve incluir pelo menos uma letra maiúscula, uma letra minúscula, um dígito numérico e nenhum espaço",
       "Password must be 12 to 50 characters long, containing at least one uppercase letter, one lowercase letter, one numeric digit, and one special character, with no spaces or consecutive repeating characters": "A senha deve ter entre 12 e 50 caracteres, contendo pelo menos uma letra maiúscula, uma letra minúscula, um dígito numérico e um caractere especial, sem espaços ou caracteres repetidos consecutivos"
@@ -1263,6 +1264,9 @@
         "INCOME": "RENDA",
         "EXPENSE": "DESPESA"
       },
+      "Basic": "Básico",
+      "Standard": "Padrão",
+      "Strong": "Forte",
       "Percentage is required": "Percentual é obrigatório",
       "ACCOUNTING": "CONTABILIDADE",
       "ADDRESS": "ENDEREÇO",
