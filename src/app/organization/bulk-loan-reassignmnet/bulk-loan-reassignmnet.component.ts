@@ -120,8 +120,8 @@ export class BulkLoanReassignmnetComponent implements OnInit {
    */
   getFromOfficers(officerId: any) {
     this.toLoanOfficers = this.fromLoanOfficers?.filter((officer: any) => officer.id !== officerId) || [];
-    if (officerId && this.officeTemplate && this.officeTemplate.id) {
-      this.organizationSevice.getOfficerTemplate(officerId, this.officeTemplate.id).subscribe((response: any) => {
+    if (officerId && this.officeTemplate && this.officeTemplate.officeId) {
+      this.organizationSevice.getOfficerTemplate(officerId, this.officeTemplate.officeId).subscribe((response: any) => {
         this.officerTemplate = response;
       });
     } else {
@@ -148,7 +148,7 @@ export class BulkLoanReassignmnetComponent implements OnInit {
    * Submits bulk loan reassignment form.
    */
   submit() {
-    const bulkLoanFormData = this.bulkLoanForm.value;
+    const { officeId, ...bulkLoanFormData } = this.bulkLoanForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevAssignmentDate = this.bulkLoanForm.value.assignmentDate;
