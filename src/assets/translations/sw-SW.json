@@ -866,6 +866,7 @@
       "must be after or equal to start date": "lazima iwe baada ya au sawa na tarehe ya kuanza"
     },
     "passwordPreferences": {
+      "Password most be at least 1 character and not more that 50 characters long": "Nenosiri lazima liwe na angalau herufi 1 na si zaidi ya herufi 50",
       "Password must be at least 1 character and not more than 50 characters long": "Nenosiri lazima liwe na angalau herufi 1 na si zaidi ya herufi 50",
       "Password must be at least 6 characters, no more than 50 characters long, must include at least one upper case letter, one lower case letter, one numeric digit and no space": "Nenosiri lazima liwe na angalau herufi 6, si zaidi ya herufi 50, lazima liwe na angalau herufi moja kubwa, herufi moja ndogo, nambari moja na hakuna nafasi",
       "Password must be 12 to 50 characters long, containing at least one uppercase letter, one lowercase letter, one numeric digit, and one special character, with no spaces or consecutive repeating characters": "Nenosiri lazima liwe na herufi 12 hadi 50, likiwa na angalau herufi moja kubwa, herufi moja ndogo, nambari moja na herufi maalum moja, bila nafasi au herufi zinazorudiwa mfululizo"
@@ -1261,6 +1262,9 @@
         "INCOME": "MAPATO",
         "EXPENSE": "GHARAMA"
       },
+      "Basic": "Msingi",
+      "Standard": "Kiwango",
+      "Strong": "Imara",
       "ACCOUNTING": "UHASIBU",
       "Percentage is required": "Asilimia inahitajika",
       "ADDRESS": "ANWANI",

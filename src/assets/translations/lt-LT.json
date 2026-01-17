@@ -866,6 +866,7 @@
       "must be after or equal to start date": "turi būti po pradžios datos arba jai lygi"
     },
     "passwordPreferences": {
+      "Password most be at least 1 character and not more that 50 characters long": "Slaptažodis turi būti ne mažiau kaip 1 simbolis ir ne daugiau kaip 50 simbolių",
       "Password must be at least 1 character and not more than 50 characters long": "Slaptažodis turi būti ne mažiau kaip 1 simbolis ir ne daugiau kaip 50 simbolių",
       "Password must be at least 6 characters, no more than 50 characters long, must include at least one upper case letter, one lower case letter, one numeric digit and no space": "Slaptažodis turi būti ne mažiau kaip 6 simboliai, ne daugiau kaip 50 simbolių, turi būti bent viena didžioji raidė, viena mažoji raidė, vienas skaitmuo ir neturėti tarpų",
       "Password must be 12 to 50 characters long, containing at least one uppercase letter, one lowercase letter, one numeric digit, and one special character, with no spaces or consecutive repeating characters": "Slaptažodis turi būti nuo 12 iki 50 simbolių, turėti bent vieną didžiąją raidę, vieną mažąją raidę, vieną skaitmenį ir vieną specialųjį simbolį, be tarpų arba iš eilės einančių pasikartojančių simbolių"
@@ -1263,6 +1264,9 @@
         "INCOME": "PAJAMOS",
         "EXPENSE": "IŠLAIDOS"
       },
+      "Basic": "Pagrindinis",
+      "Standard": "Standartinis",
+      "Strong": "Stiprus",
       "Percentage is required": "Reikalingas procentas",
       "ACCOUNTING": "APSKAITA",
       "ADDRESS": "ADRESAS",

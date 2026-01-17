@@ -866,6 +866,7 @@
       "must be after or equal to start date": "시작 날짜 이후이거나 같아야 합니다"
     },
     "passwordPreferences": {
+      "Password most be at least 1 character and not more that 50 characters long": "비밀번호는 최소 1자 이상 50자 이하여야 합니다",
       "Password must be at least 1 character and not more than 50 characters long": "비밀번호는 최소 1자 이상 50자 이하여야 합니다",
       "Password must be at least 6 characters, no more than 50 characters long, must include at least one upper case letter, one lower case letter, one numeric digit and no space": "비밀번호는 최소 6자 이상 50자 이하여야 하며, 최소 하나의 대문자, 하나의 소문자, 하나의 숫자 및 공백이 없어야 합니다",
       "Password must be 12 to 50 characters long, containing at least one uppercase letter, one lowercase letter, one numeric digit, and one special character, with no spaces or consecutive repeating characters": "비밀번호는 12자 이상 50자 이하여야 하며, 최소 하나의 대문자, 하나의 소문자, 하나의 숫자 및 하나의 특수 문자를 포함해야 하며, 공백이나 연속된 반복 문자는 없어야 합니다"
@@ -1264,6 +1265,9 @@
         "INCOME": "소득",
         "EXPENSE": "비용"
       },
+      "Basic": "기본",
+      "Standard": "표준",
+      "Strong": "강력",
       "Percentage is required": "백분율이 필요합니다",
       "ACCOUNTING": "회계",
       "ADDRESS": "주소",
