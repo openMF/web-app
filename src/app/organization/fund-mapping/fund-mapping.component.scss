@@ -6,18 +6,207 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-.container {
-  max-width: 73rem;
+.fund-mapping-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
 
-  .margin-v {
-    margin: 1em 0;
+  @media (width <= 768px) {
+    padding: 16px;
+  }
+}
+
+// 12-column grid system
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, calc(100% / 12));
+  gap: 20px;
+  align-items: start;
+
+  @media (width <= 768px) {
+    grid-template-columns: 100%;
+    gap: 16px;
+
+    .col-12,
+    .col-6,
+    .col-4 {
+      grid-column: 1 / -1;
+    }
+  }
+}
+
+// Grid utility classes
+.col-12 {
+  grid-column: span 12;
+
+  @media (width <= 768px) {
+    grid-column: 1 / -1;
+  }
+}
+
+.col-6 {
+  grid-column: span 6;
+
+  @media (width <= 768px) {
+    grid-column: 1 / -1;
+  }
+}
+
+.col-4 {
+  grid-column: span 4;
+
+  @media (width <= 768px) {
+    grid-column: 1 / -1;
+  }
+}
+
+// Section styling
+.filter-section {
+  margin-bottom: 32px;
+  padding: 24px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+  border: 1px solid rgb(0 0 0 / 8%);
+
+  &:last-child {
+    margin-bottom: 0;
   }
 
-  .margin-b {
-    margin: 0 0 1em;
+  .section-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: rgb(0 0 0 / 87%);
+    margin: 0 0 20px;
+    line-height: 1.4;
   }
 
-  .margin-t {
-    margin-top: 1em;
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+
+    .section-checkbox {
+      margin: 0;
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 500;
+    }
   }
+
+  .conditional-content {
+    padding-left: 44px;
+
+    @media (width <= 768px) {
+      padding-left: 0;
+    }
+
+    &.disabled {
+      opacity: 0.5;
+      pointer-events: none;
+
+      .mat-mdc-form-field {
+        .mat-mdc-input-element {
+          background-color: rgb(0 0 0 / 4%);
+        }
+      }
+    }
+  }
+}
+
+// Form field styling
+.mat-mdc-form-field {
+  width: 100%;
+
+  &.mat-form-field-appearance-outline {
+    .mat-mdc-text-field-wrapper {
+      padding-bottom: 0;
+    }
+
+    .mat-mdc-form-field-flex {
+      align-items: center;
+    }
+
+    .mat-mdc-form-field-focus-overlay {
+      opacity: 0;
+    }
+
+    &.mat-focused .mat-mdc-form-field-focus-overlay {
+      opacity: 0.04;
+    }
+  }
+
+  .mat-mdc-input-element {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .mat-mdc-form-field-label {
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .mat-mdc-form-field-required-marker {
+    color: #f44336;
+  }
+
+  .mat-mdc-form-field-hint {
+    font-size: 12px;
+    color: rgb(0 0 0 / 60%);
+    margin-top: 4px;
+  }
+}
+
+// Actions styling
+.actions-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgb(0 0 0 / 12%);
+
+  @media (width <= 768px) {
+    flex-direction: column;
+    align-items: stretch;
+
+    button {
+      margin-bottom: 8px;
+    }
+  }
+
+  .mat-mdc-stroked-button {
+    border-color: rgb(0 0 0 / 12%);
+
+    &:hover {
+      background-color: rgb(0 0 0 / 4%);
+    }
+
+    &:focus {
+      outline: 2px solid #1976d2;
+      outline-offset: 2px;
+    }
+  }
+
+  .mat-mdc-raised-button {
+    &:focus {
+      outline: 2px solid #1976d2;
+      outline-offset: 2px;
+    }
+
+    &[disabled] {
+      background-color: rgb(0 0 0 / 12%);
+      color: rgb(0 0 0 / 26%);
+    }
+  }
+}
+
+// Results table styling
+.parameters-button {
+  margin-bottom: 24px;
 }
