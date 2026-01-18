@@ -306,7 +306,8 @@
       }
     },
     "breadcrumbs": {
-      "Home": "Casa"
+      "Home": "Casa",
+      "Account Transfers": "Trasferimenti tra conti"
     },
     "buttons": {
       "Accept Transfer": "Accetta trasferimento",

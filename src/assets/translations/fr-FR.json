@@ -306,7 +306,8 @@
       }
     },
     "breadcrumbs": {
-      "Home": "Maison"
+      "Home": "Maison",
+      "Account Transfers": "Virements de compte"
     },
     "buttons": {
       "Accept Transfer": "Accepter le transfert",

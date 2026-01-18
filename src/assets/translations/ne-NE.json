@@ -306,7 +306,8 @@
       }
     },
     "breadcrumbs": {
-      "Home": "घर"
+      "Home": "घर",
+      "Account Transfers": "खाता स्थानान्तरण"
     },
     "buttons": {
       "Accept Transfer": "स्थानान्तरण स्वीकार गर्नुहोस्",

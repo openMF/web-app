@@ -307,7 +307,8 @@
       }
     },
     "breadcrumbs": {
-      "Home": "Home"
+      "Home": "Home",
+      "Account Transfers": "Account Transfers"
     },
     "buttons": {
       "Accept Transfer": "Accept Transfer",

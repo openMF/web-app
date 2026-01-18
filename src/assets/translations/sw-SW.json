@@ -306,7 +306,8 @@
       }
     },
     "breadcrumbs": {
-      "Home": "Nyumbani"
+      "Home": "Nyumbani",
+      "Account Transfers": "Uhamisho za akaunti"
     },
     "buttons": {
       "Accept Transfer": "Kubali Uhamisho",

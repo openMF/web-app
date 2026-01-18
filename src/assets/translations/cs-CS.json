@@ -306,7 +306,8 @@
       }
     },
     "breadcrumbs": {
-      "Home": "Domov"
+      "Home": "Domov",
+      "Account Transfers": "Převody mezi účty"
     },
     "buttons": {
       "Accept Transfer": "Přijmout převod",

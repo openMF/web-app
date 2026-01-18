@@ -66,7 +66,11 @@ const routes: Routes = [
       },
       {
         path: 'account-transfers',
-        data: { title: 'View Account Transfer', breadcrumb: 'Account Transfers', routeParamBreadcrumb: false },
+        data: {
+          title: 'View Account Transfer',
+          breadcrumb: 'labels.breadcrumbs.Account Transfers',
+          routeParamBreadcrumb: false
+        },
         children: [
           {
             path: ':transferid',

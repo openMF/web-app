@@ -306,7 +306,8 @@
       }
     },
     "breadcrumbs": {
-      "Home": "Inicio"
+      "Home": "Inicio",
+      "Account Transfers": "Transferencias entre cuentas"
     },
     "buttons": {
       "Accept Transfer": "Aceptar transferencia",
