@@ -72,6 +72,9 @@
   // Enable or Disable HTTP Cache
   window['env']['httpCacheEnabled'] = '$MIFOS_HTTP_CACHE_ENABLED';
 
+  // Hide client data (mask names)
+  window['env']['complianceHideClientData'] = '$MIFOS_COMPLIANCE_HIDE_CLIENT_DATA';
+
   window['env']['vNextApiUrl'] = '$VNEXT_API_URL';
   window['env']['vNextApiProvider'] = '$VNEXT_API_PROVIDER';
   window['env']['vNextApiVersion'] = '$VNEXT_API_VERSION';

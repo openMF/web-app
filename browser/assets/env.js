@@ -58,6 +58,10 @@
   // OAuth Client Id
   window['env']['oauthAppId'] = '';
 
+
+  // Hide client data (mask names)
+  window['env']['complianceHideClientData'] = '';
+
   // OIDC Plugin Environment variables
   window['env']['oidcServerEnabled'] = false;
   window['env']['oidcBaseUrl']       = '';
