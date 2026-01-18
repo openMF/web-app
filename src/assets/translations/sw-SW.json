@@ -863,7 +863,10 @@
       "Password validation": "Nenosiri lazima liwe na herufi {{minchar}}, ambazo zinafaa kuingiza herufi 1 kubwa, ndogo na maalum na haipaswi kuwa na herufi zinazorudiwa au nafasi nyeupe.",
       "Must be at least": "Lazima iwe angalau",
       "Must be less or equal to": "Lazima iwe chini au sawa na",
-      "must be after or equal to start date": "lazima iwe baada ya au sawa na tarehe ya kuanza"
+      "must be after or equal to start date": "lazima iwe baada ya au sawa na tarehe ya kuanza",
+      "No classification data available": "Hakuna data ya uainishaji inayopatikana",
+      "No": "Hapana",
+      "Yes": "Ndiyo"
     },
     "passwordPreferences": {
       "Password most be at least 1 character and not more that 50 characters long": "Nenosiri lazima liwe na angalau herufi 1 na si zaidi ya herufi 50",
@@ -1252,7 +1255,15 @@
       "Date": "Tarehe",
       "Secure & Reliable": "Salama na ya Kuaminika",
       "Community Driven": "Inaendeshwa na Jumuiya",
-      "Global Impact": "Athari ya Kimataifa"
+      "Global Impact": "Athari ya Kimataifa",
+      "Personal Information": "Taarifa za Kibinafsi",
+      "Account Information": "Taarifa za Akaunti",
+      "Entity Details": "Maelezo ya Huluki",
+      "Group Membership": "Uanachama wa Kikundi",
+      "Important Dates": "Tarehe Muhimu",
+      "Contact Information": "Maelezo ya Mawasiliano",
+      "Classification": "Uainishaji",
+      "Status": "Hali"
     },
     "inputs": {
       "accounting": {
@@ -1464,6 +1475,8 @@
       "Client Principal Loan": "Mkopo Mkuu wa Mteja",
       "Create standing instructions at disbursement": "Unda maagizo ya kusimama katika utoaji",
       "Client Screen Reports": "Ripoti za Skrini ya Mteja",
+      "CLIENT STATUS": "HALI YA MTEJA",
+      "Client Status": "Hali ya Mteja",
       "Client Trends": "Mitindo ya Wateja",
       "Client Type": "Aina ya Mteja",
       "Client first name": "Jina la kwanza mteja",
@@ -2176,6 +2189,7 @@
       "Amount Range From": "Kiwango cha kuanzia",
       "Amount Range To": "Kiasi cha Masafa Kwa",
       "Person": "Mtu",
+      "Personal Data": "Taarifa za Kibinafsi",
       "Phone Number": "Nambari ya simu",
       "Place Guarantee Funds On-Hold": "Weka Pesa za Dhamana Kwa Muda",
       "Port": "Bandari",
@@ -2809,6 +2823,7 @@
       "Add, modify or inactivate a Fixed deposit product": "Ongeza, rekebisha au uzime bidhaa ya amana isiyobadilika",
       "Add, modify or inactivate a Recurring Deposit product": "Ongeza, rekebisha au uzime bidhaa ya Amana Inayojirudia",
       "Address": "Anwani",
+      "Personal Data": "Taarifa za Kibinafsi",
       "Adhoc Query": "Swali la Adhoc",
       "Advance Search": "Utafutaji wa Juu",
       "Advanced search option for journal entries": "Chaguo la utafutaji wa kina kwa maingizo ya jarida",

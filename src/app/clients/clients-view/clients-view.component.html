@@ -380,6 +380,15 @@
       </a>
       <a
         mat-tab-link
+        [routerLink]="['./personal-data']"
+        routerLinkActive
+        #personalData="routerLinkActive"
+        [active]="personalData.isActive"
+      >
+        {{ 'labels.inputs.Personal Data' | translate }}
+      </a>
+      <a
+        mat-tab-link
         [routerLink]="['./address']"
         routerLinkActive
         #address="routerLinkActive"

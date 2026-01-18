@@ -863,7 +863,10 @@
       "Password validation": "비밀번호는 최소 자여야 하며 대문자, 소문자 및 특수 문자 1개가 포함되어야 하며 반복되는 문자나 공백으로 구성되어서는 안 됩니다.",
       "Must be at least": "최소한이어야 합니다",
       "Must be less or equal to": "이보다 작거나 같아야 합니다.",
-      "must be after or equal to start date": "시작 날짜 이후이거나 같아야 합니다"
+      "must be after or equal to start date": "시작 날짜 이후이거나 같아야 합니다",
+      "No classification data available": "분류 데이터를 사용할 수 없습니다",
+      "No": "아니요",
+      "Yes": "예"
     },
     "passwordPreferences": {
       "Password most be at least 1 character and not more that 50 characters long": "비밀번호는 최소 1자 이상 50자 이하여야 합니다",
@@ -1255,7 +1258,15 @@
       "Date": "날짜",
       "Secure & Reliable": "안전하고 신뢰할 수 있음",
       "Community Driven": "커뮤니티 주도형",
-      "Global Impact": "글로벌 영향"
+      "Global Impact": "글로벌 영향",
+      "Personal Information": "개인 정보",
+      "Account Information": "계정 정보",
+      "Entity Details": "엔티티 세부 정보",
+      "Group Membership": "그룹 회원",
+      "Important Dates": "중요한 날짜",
+      "Contact Information": "연락처 정보",
+      "Classification": "분류",
+      "Status": "상태"
     },
     "inputs": {
       "accounting": {
@@ -1467,6 +1478,8 @@
       "Client Principal Loan": "고객 원금대출",
       "Create standing instructions at disbursement": "지급시 상관 지침을 만듭니다",
       "Client Screen Reports": "클라이언트 화면 보고서",
+      "CLIENT STATUS": "클라이언트 상태",
+      "Client Status": "클라이언트 상태",
       "Client Trends": "클라이언트 동향",
       "Client Type": "클라이언트 유형",
       "Client first name": "고객 이름",
@@ -2179,6 +2192,7 @@
       "Amount Range From": "금액 범위: 부터",
       "Amount Range To": "금액 범위:",
       "Person": "사람",
+      "Personal Data": "개인 데이터",
       "Phone Number": "전화 번호",
       "Place Guarantee Funds On-Hold": "보증 자금 보류",
       "Port": "포트",
@@ -2811,6 +2825,7 @@
       "Add, modify or inactivate a Fixed deposit product": "정기예금 상품 추가, 수정, 비활성화",
       "Add, modify or inactivate a Recurring Deposit product": "정기예금 상품 추가, 수정 또는 비활성화",
       "Address": "주소",
+      "Personal Data": "개인 데이터",
       "Adhoc Query": "임시 쿼리",
       "Advance Search": "고급 검색",
       "Advanced search option for journal entries": "분개 항목에 대한 고급 검색 옵션",

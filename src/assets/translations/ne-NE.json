@@ -861,7 +861,10 @@
       "Password validation": "पासवर्डमा कम्तिमा १२ क्यारेक्टरहरू हुनुपर्छ, जसमा १ अपरकेस, लोअरकेस र स्पेशल क्यारेक्टरहरू हुनुपर्छ र दोहोरिएका क्यारेक्टरहरू वा सेतो-स्पेसहरू समावेश हुनु हुँदैन।",
       "Must be at least": "कम्तिमा हुनुपर्छ",
       "Must be less or equal to": "कम वा बराबर हुनुपर्छ",
-      "must be after or equal to start date": "सुरु मिति पछि वा बराबर हुनुपर्छ"
+      "must be after or equal to start date": "सुरु मिति पछि वा बराबर हुनुपर्छ",
+      "No classification data available": "कुनै वर्गीकरण डाटा उपलब्ध छैन",
+      "No": "छैन",
+      "Yes": "हो"
     },
     "passwordPreferences": {
       "Password most be at least 1 character and not more that 50 characters long": "पासवर्ड कम्तिमा १ क्यारेक्टर र ५० क्यारेक्टरभन्दा बढी नहुने हुनुपर्छ",
@@ -1252,7 +1255,15 @@
       "Date": "मिति",
       "Secure & Reliable": "सुरक्षित र भरपर्दो",
       "Community Driven": "समुदाय संचालित",
-      "Global Impact": "विश्वव्यापी प्रभाव"
+      "Global Impact": "विश्वव्यापी प्रभाव",
+      "Personal Information": "व्यक्तिगत जानकारी",
+      "Account Information": "खाता जानकारी",
+      "Entity Details": "संस्था विवरण",
+      "Group Membership": "समूह सदस्यता",
+      "Important Dates": "महत्वपूर्ण मितिहरू",
+      "Contact Information": "सम्पर्क जानकारी",
+      "Classification": "वर्गीकरण",
+      "Status": "स्थिति"
     },
     "inputs": {
       "accounting": {
@@ -1464,6 +1475,8 @@
       "Client Principal Loan": "ग्राहक प्रिन्सिपल ऋण",
       "Create standing instructions at disbursement": "वितरणमा खडा निर्देशनहरू सिर्जना गर्नुहोस्",
       "Client Screen Reports": "ग्राहक स्क्रिन रिपोर्टहरू",
+      "CLIENT STATUS": "ग्राहक स्थिति",
+      "Client Status": "ग्राहक स्थिति",
       "Client Trends": "ग्राहक प्रवृत्ति",
       "Client Type": "ग्राहक प्रकार",
       "Client first name": "ग्राहकको पहिलो नाम",
@@ -2176,6 +2189,7 @@
       "Amount Range From": "बाट रकम दायरा",
       "Amount Range To": "रकम दायरा",
       "Person": "व्यक्ति",
+      "Personal Data": "व्यक्तिगत डाटा",
       "Phone Number": "फोन नम्बर",
       "Place Guarantee Funds On-Hold": "ग्यारेन्टी कोष अन-होल्ड राख्नुहोस्",
       "Port": "पोर्ट",
@@ -2809,6 +2823,7 @@
       "Add, modify or inactivate a Fixed deposit product": "फिक्स्ड डिपोजिट उत्पादन थप्नुहोस्, परिमार्जन गर्नुहोस् वा निष्क्रिय गर्नुहोस्",
       "Add, modify or inactivate a Recurring Deposit product": "पुनरावर्ती जम्मा उत्पादन थप्नुहोस्, परिमार्जन गर्नुहोस् वा निष्क्रिय गर्नुहोस्",
       "Address": "ठेगाना",
+      "Personal Data": "व्यक्तिगत डाटा",
       "Adhoc Query": "तदर्थ प्रश्न",
       "Advance Search": "उन्नत खोज",
       "Advanced search option for journal entries": "जर्नल प्रविष्टिहरूको लागि उन्नत खोज विकल्प",

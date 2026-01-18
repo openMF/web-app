@@ -24,6 +24,7 @@ import { NotesTabComponent } from './clients-view/notes-tab/notes-tab.component'
 import { DocumentsTabComponent } from './clients-view/documents-tab/documents-tab.component';
 import { DatatableTabComponent } from './clients-view/datatable-tab/datatable-tab.component';
 import { AddressTabComponent } from './clients-view/address-tab/address-tab.component';
+import { PersonalDataTabComponent } from './clients-view/personal-data-tab/personal-data-tab.component';
 import { ClientActionsComponent } from './clients-view/client-actions/client-actions.component';
 import { ViewChargeComponent } from './clients-view/charges/view-charge/view-charge.component';
 import { ClientPayChargesComponent } from './clients-view/charges/client-pay-charges/client-pay-charges.component';
@@ -98,6 +99,11 @@ const routes: Routes = [
                 clientChargesData: ClientChargesResolver,
                 clientCollateralData: ClientCollateralResolver
               }
+            },
+            {
+              path: 'personal-data',
+              component: PersonalDataTabComponent,
+              data: { title: 'Personal Data', breadcrumb: 'Personal Data', routeParamBreadcrumb: false }
             },
             {
               path: 'address',

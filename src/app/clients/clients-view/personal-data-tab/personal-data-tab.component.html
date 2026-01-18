@@ -1,0 +1,247 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="tab-container mat-typography">
+  <!-- Personal Information Section -->
+  <div class="section">
+    <h3>{{ 'labels.heading.Personal Information' | translate }}</h3>
+    <div class="data-grid">
+      <!-- Display Name (common for both person and entity) -->
+      @if (clientViewData.displayName) {
+        <div class="data-item">
+          <span class="label">{{ 'labels.inputs.Display Name' | translate }}</span>
+          <span class="value">{{ clientViewData.displayName }}</span>
+        </div>
+      }
+      @if (isPerson()) {
+        @if (clientViewData.firstname) {
+          <div class="data-item">
+            <span class="label">{{ 'labels.inputs.First Name' | translate }}</span>
+            <span class="value">{{ clientViewData.firstname }}</span>
+          </div>
+        }
+        @if (clientViewData.middlename) {
+          <div class="data-item">
+            <span class="label">{{ 'labels.inputs.Middle Name' | translate }}</span>
+            <span class="value">{{ clientViewData.middlename }}</span>
+          </div>
+        }
+        @if (clientViewData.lastname) {
+          <div class="data-item">
+            <span class="label">{{ 'labels.inputs.Last Name' | translate }}</span>
+            <span class="value">{{ clientViewData.lastname }}</span>
+          </div>
+        }
+        @if (clientViewData.dateOfBirth) {
+          <div class="data-item">
+            <span class="label">{{ 'labels.inputs.Date of Birth' | translate }}</span>
+            <span class="value">{{ clientViewData.dateOfBirth | dateFormat }}</span>
+          </div>
+        }
+        @if (clientViewData.gender) {
+          <div class="data-item">
+            <span class="label">{{ 'labels.inputs.Gender' | translate }}</span>
+            <span class="value">{{ clientViewData.gender.name }}</span>
+          </div>
+        }
+        <div class="data-item">
+          <span class="label">{{ 'labels.inputs.Is staff' | translate }}</span>
+          <span class="value">{{
+            clientViewData.isStaff ? ('labels.commons.Yes' | translate) : ('labels.commons.No' | translate)
+          }}</span>
+        </div>
+      }
+      @if (isLegalEntity()) {
+        @if (clientViewData.fullname) {
+          <div class="data-item">
+            <span class="label">{{ 'labels.inputs.Entity Name' | translate }}</span>
+            <span class="value">{{ clientViewData.fullname }}</span>
+          </div>
+        }
+        @if (clientViewData.dateOfBirth) {
+          <div class="data-item">
+            <span class="label">{{ 'labels.inputs.Incorporation Date' | translate }}</span>
+            <span class="value">{{ clientViewData.dateOfBirth | dateFormat }}</span>
+          </div>
+        }
+      }
+      @if (clientViewData.legalForm) {
+        <div class="data-item">
+          <span class="label">{{ 'labels.inputs.Legal Form' | translate }}</span>
+          <span class="value">{{ clientViewData.legalForm.value }}</span>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Account Information Section -->
+  <div class="section">
+    <h3>{{ 'labels.heading.Account Information' | translate }}</h3>
+    <div class="data-grid">
+      <div class="data-item">
+        <span class="label">{{ 'labels.inputs.Account No' | translate }}</span>
+        <span class="value">{{ clientViewData.accountNo || '-' }}</span>
+      </div>
+      <div class="data-item">
+        <span class="label">{{ 'labels.inputs.External Id' | translate }}</span>
+        <span class="value">{{ clientViewData.externalId || '-' }}</span>
+      </div>
+      <div class="data-item">
+        <span class="label">{{ 'labels.inputs.Office' | translate }}</span>
+        <span class="value">{{ clientViewData.officeName || '-' }}</span>
+      </div>
+      <div class="data-item">
+        <span class="label">{{ 'labels.inputs.Staff' | translate }}</span>
+        <span class="value">{{ clientViewData.staffName || ('labels.inputs.Unassigned' | translate) }}</span>
+      </div>
+      @if (clientViewData.savingsAccountId) {
+        <div class="data-item">
+          <span class="label">{{ 'labels.inputs.Default Savings Account' | translate }}</span>
+          <span class="value">{{ clientViewData.savingsAccountId }}</span>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Non-Person Details Section (for Legal Entities) -->
+  @if (isLegalEntity() && clientViewData.clientNonPersonDetails) {
+    <div class="section">
+      <h3>{{ 'labels.heading.Entity Details' | translate }}</h3>
+      <div class="data-grid">
+        @if (clientViewData.clientNonPersonDetails.constitution) {
+          <div class="data-item">
+            <span class="label">{{ 'labels.inputs.Constitution' | translate }}</span>
+            <span class="value">{{ clientViewData.clientNonPersonDetails.constitution.name }}</span>
+          </div>
+        }
+        @if (clientViewData.clientNonPersonDetails.mainBusinessLine) {
+          <div class="data-item">
+            <span class="label">{{ 'labels.inputs.Main Business Line' | translate }}</span>
+            <span class="value">{{ clientViewData.clientNonPersonDetails.mainBusinessLine.name }}</span>
+          </div>
+        }
+        @if (clientViewData.clientNonPersonDetails.incorpValidityTillDate) {
+          <div class="data-item">
+            <span class="label">{{ 'labels.inputs.Incorporation Validity Till Date' | translate }}</span>
+            <span class="value">{{ clientViewData.clientNonPersonDetails.incorpValidityTillDate | dateFormat }}</span>
+          </div>
+        }
+        @if (clientViewData.clientNonPersonDetails.incorpNumber) {
+          <div class="data-item">
+            <span class="label">{{ 'labels.inputs.Incorporation No' | translate }}</span>
+            <span class="value">{{ clientViewData.clientNonPersonDetails.incorpNumber }}</span>
+          </div>
+        }
+        @if (clientViewData.clientNonPersonDetails.remarks) {
+          <div class="data-item full-width">
+            <span class="label">{{ 'labels.inputs.Remarks' | translate }}</span>
+            <span class="value">{{ clientViewData.clientNonPersonDetails.remarks }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Contact Information Section -->
+  <div class="section">
+    <h3>{{ 'labels.heading.Contact Information' | translate }}</h3>
+    <div class="data-grid">
+      <div class="data-item">
+        <span class="label">{{ 'labels.inputs.Mobile Number' | translate }}</span>
+        <span class="value">{{ clientViewData.mobileNo || '-' }}</span>
+      </div>
+      <div class="data-item">
+        <span class="label">{{ 'labels.inputs.Email' | translate }}</span>
+        <span class="value">{{ clientViewData.emailAddress || '-' }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Classification Section -->
+  <div class="section">
+    <h3>{{ 'labels.heading.Classification' | translate }}</h3>
+    <div class="data-grid">
+      @if (clientViewData.clientType) {
+        <div class="data-item">
+          <span class="label">{{ 'labels.inputs.Client Type' | translate }}</span>
+          <span class="value">{{ clientViewData.clientType.name }}</span>
+        </div>
+      }
+      @if (clientViewData.clientClassification) {
+        <div class="data-item">
+          <span class="label">{{ 'labels.inputs.Client Classification' | translate }}</span>
+          <span class="value">{{ clientViewData.clientClassification.name }}</span>
+        </div>
+      }
+      @if (!clientViewData.clientType && !clientViewData.clientClassification) {
+        <div class="data-item">
+          <span class="value no-data">{{ 'labels.commons.No classification data available' | translate }}</span>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Group Membership Section -->
+  @if (clientViewData.groups && clientViewData.groups.length > 0) {
+    <div class="section">
+      <h3>{{ 'labels.heading.Group Membership' | translate }}</h3>
+      <div class="data-grid">
+        @for (group of clientViewData.groups; track group) {
+          <div class="data-item">
+            <span class="label">{{ 'labels.inputs.Group' | translate }}</span>
+            <span class="value">{{ group.name }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Important Dates Section -->
+  <div class="section">
+    <h3>{{ 'labels.heading.Important Dates' | translate }}</h3>
+    <div class="data-grid">
+      @if (clientViewData.timeline?.submittedOnDate) {
+        <div class="data-item">
+          <span class="label">{{ 'labels.inputs.Submitted On' | translate }}</span>
+          <span class="value">{{ clientViewData.timeline.submittedOnDate | dateFormat }}</span>
+        </div>
+      }
+      @if (clientViewData.activationDate) {
+        <div class="data-item">
+          <span class="label">{{ 'labels.inputs.Activation Date' | translate }}</span>
+          <span class="value">{{ clientViewData.activationDate | dateFormat }}</span>
+        </div>
+      }
+      @if (clientViewData.timeline?.closedOnDate) {
+        <div class="data-item">
+          <span class="label">{{ 'labels.inputs.Closed Date' | translate }}</span>
+          <span class="value">{{ clientViewData.timeline.closedOnDate | dateFormat }}</span>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Status Section -->
+  <div class="section">
+    <h3>{{ 'labels.heading.Status' | translate }}</h3>
+    <div class="data-grid">
+      @if (clientViewData.status) {
+        <div class="data-item">
+          <span class="label">{{ 'labels.inputs.Client Status' | translate }}</span>
+          <span class="value">{{ 'labels.status.' + clientViewData.status.value | translate }}</span>
+        </div>
+      }
+      @if (clientViewData.subStatus) {
+        <div class="data-item">
+          <span class="label">{{ 'labels.inputs.Sub Status' | translate }}</span>
+          <span class="value">{{ clientViewData.subStatus.name }}</span>
+        </div>
+      }
+    </div>
+  </div>
+</div>
