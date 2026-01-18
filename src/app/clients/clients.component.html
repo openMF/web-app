@@ -50,7 +50,9 @@
       <!-- Name Column -->
       <ng-container matColumnDef="displayName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.name' | translate }}</th>
-        <td mat-cell *matCellDef="let row" [routerLink]="[row.id, 'general']">{{ row.displayName }}</td>
+        <td mat-cell *matCellDef="let row" [routerLink]="[row.id, 'general']">
+          {{ hideClientData ? maskName(row.displayName) : row.displayName }}
+        </td>
       </ng-container>
 
       <!-- Account no Column -->

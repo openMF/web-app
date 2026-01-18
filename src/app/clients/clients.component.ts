@@ -67,6 +67,20 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 export class ClientsComponent implements OnInit {
   private clientService = inject(ClientsService);
 
+  /** Returns true if client data masking is enabled */
+  get hideClientData(): boolean {
+    return environment.complianceHideClientData;
+  }
+
+  /** Mask a client name */
+  maskName(name: string): string {
+    if (!name) return '';
+    return name
+      .split(' ')
+      .map((part) => (part.length > 1 ? part[0] + '*'.repeat(part.length - 1) : part))
+      .join(' ');
+  }
+
   @ViewChild('showClosedAccounts') showClosedAccounts: MatCheckbox;
 
   displayedColumns = [

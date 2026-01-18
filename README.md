@@ -281,11 +281,12 @@ Available languages:
 
 #### UI Display Settings
 
-| Variable                           | Description                           | Default Value |
-| ---------------------------------- | ------------------------------------- | ------------- |
-| MIFOS_DISPLAY_TENANT_SELECTOR      | Display tenant selector in Login view | true          |
-| MIFOS_DISPLAY_BACKEND_INFO         | Display backend info in footer        | true          |
-| MIFOS_ALLOW_SERVER_SWITCH_SELECTOR | Display DNS server list               | true          |
+| Variable                           | Description                            | Default Value |
+| ---------------------------------- | -------------------------------------- | ------------- |
+| MIFOS_DISPLAY_TENANT_SELECTOR      | Display tenant selector in Login view  | true          |
+| MIFOS_DISPLAY_BACKEND_INFO         | Display backend info in footer         | true          |
+| MIFOS_ALLOW_SERVER_SWITCH_SELECTOR | Display DNS server list                | true          |
+| MIFOS_COMPLIANCE_HIDE_CLIENT_DATA  | Hide client names in UI (mask with \*) | false         |
 
 #### OAUTH Settings
 
@@ -306,6 +307,20 @@ Available languages:
 | FINERACT_PLUGIN_OIDC_FRONTEND_URL | Set the Front End URL callback |               |
 
 For more detailed configuration options, refer to the `env.sample` file in the root directory of the project.
+
+### Client Data Masking Example
+
+When `MIFOS_COMPLIANCE_HIDE_CLIENT_DATA=false` (default):
+
+EMANUEL CASTILLO
+MIGUEL TECO
+
+When `MIFOS_COMPLIANCE_HIDE_CLIENT_DATA=true`:
+
+E**\*** C**\*\*\***
+M**\*** T\*\*\*
+
+This applies to client name display, e.g. in Institution/Clients list.
 
 ## Releases
 

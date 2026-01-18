@@ -80,6 +80,13 @@ export const environment = {
 
   minPasswordLength: loadedEnv['minPasswordLength'] || 12,
 
+  /**
+   * Hide client data information (mask client names with *)
+   * Set via MIFOS_COMPLIANCE_HIDE_CLIENT_DATA env var
+   */
+  complianceHideClientData:
+    loadedEnv['complianceHideClientData'] === 'true' || loadedEnv['complianceHideClientData'] === true || false,
+
   OIDC: {
     // Support legacy FINERACT_PLUGIN_OIDC_* variable names for backward compatibility
     oidcServerEnabled:
