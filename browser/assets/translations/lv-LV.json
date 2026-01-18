@@ -863,7 +863,10 @@
       "Password validation": "Parolē jābūt vismaz {{minchar}} rakstzīmēm, tai jābūt 1 lielajam, mazajam un speciālajām rakstzīmēm, un tā nedrīkst sastāvēt no atkārtotām rakstzīmēm vai atstarpēm.",
       "Must be at least": "Jābūt vismaz",
       "Must be less or equal to": "Jābūt mazākam vai vienādam ar",
-      "must be after or equal to start date": "jābūt pēc sākuma datuma vai vienādam ar to"
+      "must be after or equal to start date": "jābūt pēc sākuma datuma vai vienādam ar to",
+      "No classification data available": "Nav pieejami klasifikācijas dati",
+      "No": "Nē",
+      "Yes": "Jā"
     },
     "passwordPreferences": {
       "Password most be at least 1 character and not more that 50 characters long": "Parolei jābūt vismaz 1 rakstzīmei un ne vairāk kā 50 rakstzīmēm",
@@ -1254,7 +1257,15 @@
       "Date": "Datums",
       "Secure & Reliable": "Drošs un uzticams",
       "Community Driven": "Kopienas vadīts",
-      "Global Impact": "Globālā ietekme"
+      "Global Impact": "Globālā ietekme",
+      "Personal Information": "Personīgā informācija",
+      "Account Information": "Konta informācija",
+      "Entity Details": "Uzņēmuma detaļas",
+      "Group Membership": "Grupas biedrība",
+      "Important Dates": "Svarīgi datumi",
+      "Contact Information": "Kontaktinformācija",
+      "Classification": "Klasifikācija",
+      "Status": "Statuss"
     },
     "inputs": {
       "accounting": {
@@ -1466,6 +1477,8 @@
       "Client Principal Loan": "Klienta galvenais aizdevums",
       "Create standing instructions at disbursement": "Izveidojiet pastāvīgas instrukcijas izmaksās",
       "Client Screen Reports": "Klienta ekrāna pārskati",
+      "CLIENT STATUS": "KLIENTA STATUSS",
+      "Client Status": "Klienta statuss",
       "Client Trends": "Klientu tendences",
       "Client Type": "Klienta veids",
       "Client first name": "Klienta vārds",
@@ -2178,6 +2191,7 @@
       "Amount Range From": "Summa diapazons no",
       "Amount Range To": "Summa diapazons Līdz",
       "Person": "Persona",
+      "Personal Data": "Personīgie dati",
       "Phone Number": "Telefona numurs",
       "Place Guarantee Funds On-Hold": "Vietas garantijas fondu aizturēšana",
       "Port": "Osta",
@@ -2811,6 +2825,7 @@
       "Add, modify or inactivate a Fixed deposit product": "Pievienojiet, mainiet vai deaktivizējiet fiksētā depozīta produktu",
       "Add, modify or inactivate a Recurring Deposit product": "Pievienojiet, mainiet vai deaktivizējiet atkārtota depozīta produktu",
       "Address": "Adrese",
+      "Personal Data": "Personīgie dati",
       "Adhoc Query": "Adhoc vaicājums",
       "Advance Search": "Izvērstā meklēšana",
       "Advanced search option for journal entries": "Izvērstā meklēšanas opcija žurnāla ierakstiem",

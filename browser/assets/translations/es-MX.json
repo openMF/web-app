@@ -862,7 +862,10 @@
       "Password validation": "La contraseña debe contener un mínimo de {{minchar}} caracteres, que deben incluir 1 carácter mayúscula, minúscula y especial y no debe constar de caracteres repetidos ni espacios en blanco.",
       "Must be at least": "Debe ser al menos",
       "Must be less or equal to": "Debe ser menor o igual a",
-      "must be after or equal to start date": "debe ser posterior o igual a la fecha de inicio"
+      "must be after or equal to start date": "debe ser posterior o igual a la fecha de inicio",
+      "No classification data available": "No hay datos de clasificaci\u00f3n disponibles",
+      "No": "No",
+      "Yes": "S\u00ed"
     },
     "passwordPreferences": {
       "Password most be at least 1 character and not more that 50 characters long": "La contraseña debe tener al menos 1 carácter y no más de 50 caracteres",
@@ -1253,7 +1256,15 @@
       "Date": "Fecha",
       "Secure & Reliable": "Seguro y Confiable",
       "Community Driven": "Impulsado por la Comunidad",
-      "Global Impact": "Impacto Global"
+      "Global Impact": "Impacto Global",
+      "Personal Information": "Informaci\u00f3n Personal",
+      "Account Information": "Informaci\u00f3n de la Cuenta",
+      "Entity Details": "Detalles de la Entidad",
+      "Group Membership": "Membres\u00eda del Grupo",
+      "Important Dates": "Fechas Importantes",
+      "Contact Information": "Informaci\u00f3n de Contacto",
+      "Classification": "Clasificaci\u00f3n",
+      "Status": "Estado"
     },
     "inputs": {
       "accounting": {
@@ -1465,6 +1476,8 @@
       "Client Principal Loan": "Crédito principal del cliente",
       "Create standing instructions at disbursement": "Crear instrucciones permanentes en el desembolso",
       "Client Screen Reports": "Reportes de pantalla del cliente",
+      "CLIENT STATUS": "ESTADO DEL CLIENTE",
+      "Client Status": "Estado del cliente",
       "Client Trends": "Tendencias del cliente",
       "Client Type": "Tipo de cliente",
       "Client first name": "Nombre del cliente",
@@ -2179,6 +2192,7 @@
       "Amount Range From": "Monto desde",
       "Amount Range To": "Monto hasta",
       "Person": "Persona",
+      "Personal Data": "Datos Personales",
       "Phone Number": "Número de teléfono",
       "Place Guarantee Funds On-Hold": "Poner los fondos de garantía en espera",
       "Port": "Puerto",
@@ -2815,6 +2829,7 @@
       "Add, modify or inactivate a Fixed deposit product": "Agregar, modificar o desactivar un producto de Depósito Fijo",
       "Add, modify or inactivate a Recurring Deposit product": "Agregar, modificar o desactivar un producto de Depósito Recurrente",
       "Address": "Domicilio",
+      "Personal Data": "Datos Personales",
       "Adhoc Query": "Consulta ad hoc",
       "Advance Search": "Búsqueda Avanzada",
       "Advanced search option for journal entries": "Opción de búsqueda avanzada para entradas de diario",

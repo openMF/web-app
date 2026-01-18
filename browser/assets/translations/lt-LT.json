@@ -863,7 +863,10 @@
       "Password validation": "Slaptažodį turi sudaryti ne mažiau kaip {{minchar}} simbolių, iš kurių turi būti 1 didžioji, mažoji raidė ir specialus simbolis, o jį neturėtų sudaryti pasikartojantys simboliai ar tarpai",
       "Must be at least": "Turi būti bent jau",
       "Must be less or equal to": "Turi būti mažesnis arba lygus",
-      "must be after or equal to start date": "turi būti po pradžios datos arba jai lygi"
+      "must be after or equal to start date": "turi būti po pradžios datos arba jai lygi",
+      "No classification data available": "Nėra klasifikacijos duomenų",
+      "No": "Ne",
+      "Yes": "Taip"
     },
     "passwordPreferences": {
       "Password most be at least 1 character and not more that 50 characters long": "Slaptažodis turi būti ne mažiau kaip 1 simbolis ir ne daugiau kaip 50 simbolių",
@@ -1254,7 +1257,15 @@
       "Date": "Data",
       "Secure & Reliable": "Saugu ir patikima",
       "Community Driven": "Bendruomenės varomas",
-      "Global Impact": "Pasaulinis poveikis"
+      "Global Impact": "Pasaulinis poveikis",
+      "Personal Information": "Asmens informacija",
+      "Account Information": "Paskyros informacija",
+      "Entity Details": "Subjekto informacija",
+      "Group Membership": "Grupės narystė",
+      "Important Dates": "Svarbios datos",
+      "Contact Information": "Kontaktinė informacija",
+      "Classification": "Klasifikacija",
+      "Status": "Statusas"
     },
     "inputs": {
       "accounting": {
@@ -1466,6 +1477,8 @@
       "Client Principal Loan": "Pagrindinė kliento paskola",
       "Create standing instructions at disbursement": "Sukurkite nuolatines instrukcijas išmokant",
       "Client Screen Reports": "Kliento ekrano ataskaitos",
+      "CLIENT STATUS": "KLIENTO STATUSAS",
+      "Client Status": "Kliento statusas",
       "Client Trends": "Klientų tendencijos",
       "Client Type": "Kliento tipas",
       "Client first name": "Kliento vardas",
@@ -2178,6 +2191,7 @@
       "Amount Range From": "Sumos diapazonas nuo",
       "Amount Range To": "Sumos diapazonas Iki",
       "Person": "Asmuo",
+      "Personal Data": "Asmens duomenys",
       "Phone Number": "Telefono numeris",
       "Place Guarantee Funds On-Hold": "Vietos garantijos lėšos yra sulaikytos",
       "Port": "Uostas",
@@ -2813,6 +2827,7 @@
       "Add, modify or inactivate a Fixed deposit product": "Pridėkite, pakeiskite arba išaktyvinkite fiksuoto indėlio produktą",
       "Add, modify or inactivate a Recurring Deposit product": "Pridėkite, pakeiskite arba išaktyvinkite pasikartojančio indėlio produktą",
       "Address": "Adresas",
+      "Personal Data": "Asmens duomenys",
       "Adhoc Query": "Adhoc užklausa",
       "Advance Search": "Išplėstinė paieška",
       "Advanced search option for journal entries": "Išplėstinė žurnalo įrašų paieškos parinktis",

@@ -863,7 +863,10 @@
       "Password validation": "Das Passwort sollte mindestens {{michar}} Zeichen enthalten, aus 1 Großbuchstaben, Kleinbuchstaben und Sonderzeichen bestehen und darf nicht aus wiederholten Zeichen oder Leerzeichen bestehen",
       "Must be at least": "Muss mindestens",
       "Must be less or equal to": "Muss kleiner oder gleich sein",
-      "must be after or equal to start date": "muss nach oder gleich dem Startdatum sein"
+      "must be after or equal to start date": "muss nach oder gleich dem Startdatum sein",
+      "No classification data available": "Keine Klassifizierungsdaten verfügbar",
+      "No": "Nein",
+      "Yes": "Ja"
     },
     "passwordPreferences": {
       "Password most be at least 1 character and not more that 50 characters long": "Das Passwort muss mindestens 1 Zeichen und nicht mehr als 50 Zeichen lang sein",
@@ -1254,7 +1257,15 @@
       "Date": "Datum",
       "Secure & Reliable": "Sicher und zuverlässig",
       "Community Driven": "Gemeinschaftsorientiert",
-      "Global Impact": "Globale Auswirkungen"
+      "Global Impact": "Globale Auswirkungen",
+      "Personal Information": "Persönliche Informationen",
+      "Account Information": "Kontoinformationen",
+      "Entity Details": "Entitätsdetails",
+      "Group Membership": "Gruppenmitgliedschaft",
+      "Important Dates": "Wichtige Daten",
+      "Contact Information": "Kontaktinformationen",
+      "Classification": "Klassifizierung",
+      "Status": "Status"
     },
     "inputs": {
       "accounting": {
@@ -1466,6 +1477,8 @@
       "Client Principal Loan": "Hauptdarlehen des Kunden",
       "Create standing instructions at disbursement": "Erstellen Sie bei der Auszahlung ständige Anweisungen",
       "Client Screen Reports": "Kundenbildschirmberichte",
+      "Personal Data": "Persönliche Daten",
+      "CLIENT STATUS": "KUNDENSTATUS",
       "Client Trends": "Kundentrends",
       "Client Type": "Clienttyp",
       "Client first name": "Vorname des Kunden",
@@ -2178,6 +2191,7 @@
       "Amount Range From": "Betragsbereich von",
       "Amount Range To": "Betragsbereich bis",
       "Person": "Person",
+      "Client Status": "Kundenstatus",
       "Phone Number": "Telefonnummer",
       "Place Guarantee Funds On-Hold": "Stellen Sie Garantiefonds auf Eis",
       "Port": "Hafen",
@@ -2812,6 +2826,7 @@
     "Add, modify or inactivate a Fixed deposit product": "Ein Festgeldprodukt hinzufügen, ändern oder deaktivieren",
     "Add, modify or inactivate a Recurring Deposit product": "Fügen Sie ein Produkt mit wiederkehrender Einzahlung hinzu, ändern oder deaktivieren Sie es",
     "Address": "Adresse",
+    "Personal Data": "Persönliche Daten",
     "Adhoc Query": "Ad-hoc-Abfrage",
     "Advance Search": "Erweiterte Suche",
     "Advanced search option for journal entries": "Erweiterte Suchoption für Journaleinträge",
