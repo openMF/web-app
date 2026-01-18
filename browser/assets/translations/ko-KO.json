@@ -306,7 +306,8 @@
       }
     },
     "breadcrumbs": {
-      "Home": "집"
+      "Home": "집",
+      "Account Transfers": "계좌 이체"
     },
     "buttons": {
       "Accept Transfer": "전송 수락",

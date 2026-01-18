@@ -306,7 +306,8 @@
       }
     },
     "breadcrumbs": {
-      "Home": "Heim"
+      "Home": "Heim",
+      "Account Transfers": "Kontoüberweisungen"
     },
     "buttons": {
       "Accept Transfer": "Akzeptieren Sie die Übertragung",

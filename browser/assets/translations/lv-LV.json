@@ -306,7 +306,8 @@
       }
     },
     "breadcrumbs": {
-      "Home": "Mājas"
+      "Home": "Mājas",
+      "Account Transfers": "Kontu pārskaitījumi"
     },
     "buttons": {
       "Accept Transfer": "Pieņemt pārsūtīšanu",

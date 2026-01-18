@@ -306,7 +306,8 @@
       }
     },
     "breadcrumbs": {
-      "Home": "Lar"
+      "Home": "Lar",
+      "Account Transfers": "Transferências entre contas"
     },
     "buttons": {
       "Accept Transfer": "Aceitar transferência",

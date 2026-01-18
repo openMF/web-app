@@ -306,7 +306,8 @@
       }
     },
     "breadcrumbs": {
-      "Home": "Namai"
+      "Home": "Namai",
+      "Account Transfers": "Sąskaitų pervedimai"
     },
     "buttons": {
       "Accept Transfer": "Priimti perkėlimą",
