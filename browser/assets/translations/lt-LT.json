@@ -288,7 +288,10 @@
       "Tenant": "Nuomininkas",
       "Mifos WebApp": "Mifos® WebApp",
       "Apache Fineract": "Apache Fineract®",
-      "Server": "Serveris"
+      "Server": "Serveris",
+      "Username": "Vartotojo vardas",
+      "Name": "Vardas",
+      "Render Time": "Atvaizdavimo laikas"
     },
     "accounting": {
       "Accrual (periodic)": "Kaupiamasis (periodinis)",

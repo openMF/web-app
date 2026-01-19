@@ -288,7 +288,10 @@
       "Tenant": "Nomnieks",
       "Mifos WebApp": "Mifos® WebApp",
       "Apache Fineract": "Apache Fineract®",
-      "Server": "Serveris"
+      "Server": "Serveris",
+      "Username": "Lietotājvārds",
+      "Name": "Vārds",
+      "Render Time": "Attēlošanas laiks"
     },
     "accounting": {
       "Accrual (periodic)": "Uzkrāšana (periodiski)",
