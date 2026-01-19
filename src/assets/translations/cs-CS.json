@@ -450,6 +450,7 @@
       "Import Employees": "Import zaměstnanců",
       "Import Group": "Skupina importu",
       "Import Offices": "Dovozní kanceláře",
+      "Import": "Import",
       "Initiate Dividend": "Iniciovat dividendu",
       "Link Job Step": "Krok propojení úlohy",
       "Login": "Přihlásit se",
@@ -1032,6 +1033,7 @@
       "identifier id": "identifikátor id",
       "Identities": "Totožnosti",
       "Import Employees": "Import zaměstnanců",
+      "Import Loan Product": "Importovat úvěrový produkt",
       "Import Offices": "Dovozní kanceláře",
       "Inactivate Charge": "Deaktivovat nabíjení",
       "Incentives": "Pobídky",
@@ -2800,6 +2802,9 @@
       "the productmix component with id": "komponenta productmix s id",
       "the Reschedule Loan": "přeplánovat půjčku",
       "the Transaction Type": "typ transakce"
+    },
+    "text": {
+      "Select a JSON file containing the loan product definition": "Select a JSON file containing the loan product definition"
     },
     "A": "A",
     "Ability to manage holidays for individual offices": "Schopnost spravovat svátky pro jednotlivé kanceláře je velmi užitečným nástrojem pro organizaci zahrnující více míst. Tuto možnost použijte k přizpůsobení svátků pro každou kancelář vaší organizace.",

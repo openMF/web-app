@@ -450,6 +450,7 @@
       "Import Employees": "Mitarbeiter importieren",
       "Import Group": "Gruppe importieren",
       "Import Offices": "Importbüros",
+      "Import": "Import",
       "Initiate Dividend": "Dividende einleiten",
       "Link Job Step": "Jobschritt verknüpfen",
       "Login": "Anmeldung",
@@ -1033,6 +1034,7 @@
       "identifier id": "Identifikator-ID",
       "Identities": "Identitäten",
       "Import Employees": "Mitarbeiter importieren",
+      "Import Loan Product": "Kreditprodukt importieren",
       "Import Offices": "Importbüros",
       "Inactivate Charge": "Ladung deaktivieren",
       "Incentives": "Anreize",
@@ -2801,6 +2803,9 @@
       "the productmix component with id": "die Productmix-Komponente mit der ID",
       "the Reschedule Loan": "das Darlehen umplanen",
       "the Transaction Type": "der Transaktionstyp"
+    },
+    "text": {
+      "Select a JSON file containing the loan product definition": "Select a JSON file containing the loan product definition"
     },
     "A": "A",
     "Ability to manage holidays for individual offices": "Die Möglichkeit, Feiertage für einzelne Büros zu verwalten, ist ein sehr nützliches Werkzeug für eine Organisation mit mehreren Standorten. Verwenden Sie diese Option, um Feiertage für jedes Büro Ihrer Organisation anzupassen.",

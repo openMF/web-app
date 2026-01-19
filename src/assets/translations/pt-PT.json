@@ -450,6 +450,7 @@
       "Import Employees": "Importar funcionários",
       "Import Group": "Grupo de importação",
       "Import Offices": "Escritórios de Importação",
+      "Import": "Importar",
       "Initiate Dividend": "Iniciar Dividendo",
       "Link Job Step": "Etapa do trabalho de link",
       "Login": "Conecte-se",
@@ -963,7 +964,6 @@
       "Create fixed deposit product": "Criar produto de depósito fixo",
       "Create loan product": "Criar produto de empréstimo",
       "Create recurring deposit product": "Crie um produto de depósito recorrente",
-
       "Create share product": "Criar produto compartilhado",
       "Currency": "Moeda",
       "Currency Configuration": "Configuração de moeda",
@@ -1033,6 +1033,7 @@
       "identifier id": "ID do identificador",
       "Identities": "Identidades",
       "Import Employees": "Importar funcionários",
+      "Import Loan Product": "Importar produto de empréstimo",
       "Import Offices": "Escritórios de Importação",
       "Inactivate Charge": "Inativar cobrança",
       "Incentives": "Incentivos",
