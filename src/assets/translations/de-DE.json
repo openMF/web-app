@@ -288,7 +288,10 @@
       "Tenant": "Mieter",
       "Mifos WebApp": "Mifos® WebApp",
       "Apache Fineract": "Apache Fineract®",
-      "Server": "Server"
+      "Server": "Server",
+      "Username": "Benutzername",
+      "Name": "Name",
+      "Render Time": "Renderzeit"
     },
     "accounting": {
       "Accrual (periodic)": "Abgrenzung (periodisch)",

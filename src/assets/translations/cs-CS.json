@@ -288,7 +288,10 @@
       "Tenant": "Instanci",
       "Mifos WebApp": "Mifos® WebApp",
       "Apache Fineract": "Apache Fineract®",
-      "Server": "Server"
+      "Server": "Server",
+      "Username": "Uživatelské jméno",
+      "Name": "Jméno",
+      "Render Time": "Doba vykreslování"
     },
     "accounting": {
       "Accrual (periodic)": "Akruální (periodické)",

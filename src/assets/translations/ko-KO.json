@@ -288,7 +288,10 @@
       "Tenant": "임차인",
       "Mifos WebApp": "Mifos® WebApp",
       "Apache Fineract": "Apache Fineract®",
-      "Server": "서버"
+      "Server": "서버",
+      "Username": "사용자 이름",
+      "Name": "이름",
+      "Render Time": "렌더링 시간"
     },
     "accounting": {
       "Accrual (periodic)": "발생(정기적)",

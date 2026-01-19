@@ -289,7 +289,10 @@
       "Tenant": "Tenant",
       "Mifos WebApp": "Mifos® WebApp",
       "Apache Fineract": "Apache Fineract®",
-      "Server": "Server"
+      "Server": "Server",
+      "Username": "Username",
+      "Name": "Name",
+      "Render Time": "Render Time"
     },
     "accounting": {
       "Accrual (periodic)": "Accrual (periodic)",

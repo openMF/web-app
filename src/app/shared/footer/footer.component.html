@@ -51,6 +51,24 @@
               {{ server }}
             </td>
           </tr>
+          <tr>
+            <td class="footer-content">{{ 'labels.version.Username' | translate }}</td>
+            <td class="right footer-content">
+              {{ username }}
+            </td>
+          </tr>
+          <tr>
+            <td class="footer-content">{{ 'labels.version.Name' | translate }}</td>
+            <td class="right footer-content">
+              {{ name }}
+            </td>
+          </tr>
+          <tr>
+            <td class="footer-content">{{ 'labels.version.Render Time' | translate }}</td>
+            <td class="right footer-content">
+              {{ renderTime | date: 'dd MMMM yyyy HH:mm:ss' }}
+            </td>
+          </tr>
           @if (isBusinessDateDefined) {
             <tr>
               <td class="footer-content">{{ 'labels.text.Current Business Date' | translate }}:</td>

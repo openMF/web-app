@@ -43,6 +43,10 @@ export class FooterComponent implements OnInit, OnDestroy {
   private dateUtils = inject(Dates);
   private versionService = inject(VersionService);
 
+  username: string = '';
+  name: string = '';
+  renderTime: Date = new Date();
+
   @Input() styleClass: string = '';
   @Input() variant: 'default' | 'compact' = 'default';
 
@@ -72,6 +76,8 @@ export class FooterComponent implements OnInit, OnDestroy {
 
   constructor() {
     this.displayBackEndInfo = environment.displayBackEndInfo === 'true';
+    this.setUserInfo();
+    this.renderTime = new Date();
   }
 
   ngOnInit() {
@@ -104,6 +110,18 @@ export class FooterComponent implements OnInit, OnDestroy {
           this.versions.fineract.hash = buildVersion[1];
         }
       });
+      this.setUserInfo();
+    }
+  }
+
+  setUserInfo() {
+    const credentials = this.authenticationService.getCredentials();
+    if (credentials) {
+      this.username = credentials.username;
+      this.name = credentials.staffDisplayName || credentials.username;
+    } else {
+      this.username = '';
+      this.name = '';
     }
   }
 

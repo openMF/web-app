@@ -288,7 +288,10 @@
       "Tenant": "भाडामा लिने व्यक्ति",
       "Mifos WebApp": "Mifos® WebApp",
       "Apache Fineract": "Apache Fineract®",
-      "Server": "सर्भर"
+      "Server": "सर्भर",
+      "Username": "प्रयोगकर्ता नाम",
+      "Name": "नाम",
+      "Render Time": "प्रस्तुति समय"
     },
     "accounting": {
       "Accrual (periodic)": "उपार्जन (आवधिक)",

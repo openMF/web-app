@@ -288,7 +288,10 @@
       "Tenant": "Inquilino",
       "Mifos WebApp": "Mifos® WebApp",
       "Apache Fineract": "Apache Fineract®",
-      "Server": "Servidor"
+      "Server": "Servidor",
+      "Username": "Nome de usuário",
+      "Name": "Nome",
+      "Render Time": "Tempo de renderização"
     },
     "accounting": {
       "Accrual (periodic)": "Acumulação (periódica)",
