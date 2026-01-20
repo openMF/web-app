@@ -132,7 +132,7 @@ export class AccountTransfersService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http
       .post(
-        `${environment.vNextApiUrl}${environment.vNextApiVersion}${environment.vNextApiProvider}/participant`,
+        `${environment.mifosInterbankTransfersApiUrl}${environment.mifosInterbankTransfersApiVersion}${environment.mifosInterbankTransfersApiProvider}/participant`,
         JSON.stringify(payload),
         { headers }
       )
@@ -140,7 +140,7 @@ export class AccountTransfersService {
         switchMap((participant: any) => {
           const body = JSON.stringify({ ...payload, ownerFspId: participant.fspId });
           return this.http.post(
-            `${environment.vNextApiUrl}${environment.vNextApiVersion}${environment.vNextApiProvider}/partyinfo`,
+            `${environment.mifosInterbankTransfersApiUrl}${environment.mifosInterbankTransfersApiVersion}${environment.mifosInterbankTransfersApiProvider}/partyinfo`,
             body,
             { headers }
           );
@@ -151,7 +151,7 @@ export class AccountTransfersService {
   sendInterbankTransfer(body: any): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post(
-      `${environment.vNextApiUrl}${environment.vNextApiVersion}${environment.vNextApiProvider}/executetransfer`,
+      `${environment.mifosInterbankTransfersApiUrl}${environment.mifosInterbankTransfersApiVersion}${environment.mifosInterbankTransfersApiProvider}/executetransfer`,
       body,
       { headers }
     );

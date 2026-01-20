@@ -73,10 +73,10 @@ export const environment = {
   },
   httpCacheEnabled: loadedEnv.httpCacheEnabled || false,
 
-  vNextApiUrl: window['env']['vNextApiUrl'] || 'https://apis.mifos.community',
-  vNextApiProvider: window['env']['vNextApiProvider'] || '/vnext1',
-  vNextApiVersion: window['env']['vNextApiVersion'] || '/v1.0',
-  interbankTransfers: window['env']['interbankTransfers'] || false,
+  mifosInterbankTransfersApiUrl: loadedEnv['mifosInterbankTransfersApiUrl'] || 'https://apis.mifos.community',
+  mifosInterbankTransfersApiProvider: loadedEnv['mifosInterbankTransfersApiProvider'] || '/vnext1',
+  mifosInterbankTransfersApiVersion: loadedEnv['mifosInterbankTransfersApiVersion'] || '/v1.0',
+  mifosInterbankTransfersEnabled: loadedEnv['mifosInterbankTransfersEnabled'] ?? true,
 
   minPasswordLength: loadedEnv['minPasswordLength'] || 12,
 

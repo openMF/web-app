@@ -62,6 +62,12 @@
   // Hide client data (mask names)
   window['env']['complianceHideClientData'] = '';
 
+   // Interbank Transfers Environment variables
+  window['env']['mifosInterbankTransfersApiUrl'] = '';
+  window['env']['mifosInterbankTransfersApiProvider'] = '';
+  window['env']['mifosInterbankTransfersApiVersion'] = '';
+  window['env']['mifosInterbankTransfersEnabled'] = 'true';
+  
   // OIDC Plugin Environment variables
   window['env']['oidcServerEnabled'] = false;
   window['env']['oidcBaseUrl']       = '';

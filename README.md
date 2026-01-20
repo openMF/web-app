@@ -322,6 +322,10 @@ M**\*** T\*\*\*
 
 This applies to client name display, e.g. in Institution/Clients list.
 
+## Interbank Transfer Menu
+
+By default, the “Interbank Transfer” menu will be displayed in the hamburger menu of the Savings account.
+
 ## Releases
 
 ### 1.0.0 (Tag: 1.0.0-fineract1.11)

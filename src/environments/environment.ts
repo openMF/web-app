@@ -77,10 +77,10 @@ export const environment = {
   },
   httpCacheEnabled: loadedEnv.httpCacheEnabled || false,
 
-  vNextApiUrl: window.env?.vNextApiUrl || 'https://apis.flexcore.mx',
-  vNextApiProvider: window.env?.vNextApiProvider || '/vnext1',
-  vNextApiVersion: window.env?.vNextApiVersion || '/v1.0',
-  interbankTransfers: window.env?.interbankTransfers || false,
+  mifosInterbankTransfersApiUrl: window.env?.mifosInterbankTransfersApiUrl || 'https://apis.flexcore.mx',
+  mifosInterbankTransfersApiProvider: window.env?.mifosInterbankTransfersApiProvider || '/vnext1',
+  mifosInterbankTransfersApiVersion: window.env?.mifosInterbankTransfersApiVersion || '/v1.0',
+  mifosInterbankTransfersEnabled: window.env?.mifosInterbankTransfersEnabled ?? true,
 
   minPasswordLength: loadedEnv.minPasswordLength || 12,
 
