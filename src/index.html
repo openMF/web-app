@@ -31,16 +31,58 @@
     <!-- Load environment variables -->
   </head>
   <body class="h-full">
+    <!--
+      OAuth Redirect Interceptor (PRODUCTION)
+      -------------------------------------
+      OAuth providers cannot redirect to hash-based routes (#).
+      This script intercepts OAuth callbacks BEFORE Angular initializes,
+      stores the response parameters, and rewrites the URL to a hash route
+      that Angular can handle.
+
+      DO NOT remove unless migrating to path-based routing.
+    -->
     <script>
-      function getQueryParam(param) {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get(param);
-      }
-      const code = getQueryParam('code');
-      if (code) {
-        sessionStorage.setItem('oauth_callback_query', window.location.search);
-        window.location.href = '/#/callback';
-      }
+      (function () {
+        // ===== CONFIGURATION =====
+        var OAUTH_CALLBACK_PATHS = ['/callback'];
+        var STORAGE_KEY = 'oauth_callback_query';
+
+        // ===== DETECTION =====
+        var params = new URLSearchParams(window.location.search);
+        var isOAuthResponse = params.has('code') || params.has('error');
+
+        if (!isOAuthResponse) {
+          return;
+        }
+
+        // Prevent redirect loop
+        if (window.location.hash && window.location.hash.length > 1) {
+          return;
+        }
+
+        var currentPath = window.location.pathname;
+
+        // Only allow known OAuth callback paths
+        if (OAUTH_CALLBACK_PATHS.indexOf(currentPath) === -1) {
+          return;
+        }
+
+        // ===== PERSIST & REDIRECT =====
+        try {
+          sessionStorage.setItem(STORAGE_KEY, window.location.search);
+        } catch (e) {
+          console.warn('OAuth interceptor: sessionStorage unavailable, appending query to hash');
+        }
+
+        // Always redirect, even if storage fails
+        var redirectUrl = window.location.origin + '/#' + currentPath;
+
+        if (!sessionStorage.getItem(STORAGE_KEY)) {
+          redirectUrl += window.location.search;
+        }
+
+        window.location.replace(redirectUrl);
+      })();
     </script>
     <script src="assets/env.js"></script>
     <!--[if lt IE 10]>
