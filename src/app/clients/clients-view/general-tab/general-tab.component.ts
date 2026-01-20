@@ -149,8 +149,20 @@ export class GeneralTabComponent {
   shareAccounts: any;
   /** Upcoming Charges Data */
   upcomingCharges: any;
-  /** Client Summary Data */
-  clientSummary: any;
+  /** Performance History Data */
+  performanceHistory: {
+    loanCycle: number;
+    activeLoans: number;
+    lastLoanAmount: number;
+    activeSavings: number;
+    totalSavings: number;
+  } = {
+    loanCycle: 0,
+    activeLoans: 0,
+    lastLoanAmount: 0,
+    activeSavings: 0,
+    totalSavings: 0
+  };
   /** Collaterals Data */
   collaterals: any;
 
@@ -182,10 +194,52 @@ export class GeneralTabComponent {
         this.shareAccounts = data.clientAccountsData.shareAccounts;
         this.upcomingCharges = data.clientChargesData.pageItems;
         this.collaterals = data.clientCollateralData;
-        this.clientSummary = data.clientSummary ? data.clientSummary[0] : [];
         this.clientid = this.route.parent.snapshot.params['clientId'];
+
+        // Compute performance history from accounts data
+        this.computePerformanceHistory(data.clientAccountsData);
       }
     );
+  }
+
+  private computePerformanceHistory(accountsData: any) {
+    // Loan Cycles: total number of loans
+    const allLoans = accountsData.loanAccounts || [];
+    this.performanceHistory.loanCycle = allLoans.length;
+    // Active Loans: status === 'Active'
+    this.performanceHistory.activeLoans = allLoans.filter((l: any) => {
+      if (!l.status) return false;
+      if (typeof l.status === 'string') {
+        return l.status.toLowerCase() === 'active';
+      }
+      if (typeof l.status === 'object' && l.status.value) {
+        return l.status.value.toLowerCase() === 'active';
+      }
+      return false;
+    }).length;
+    // Loan Amount: most recent loan by submittedOnDate
+    if (allLoans.length > 0) {
+      const sortedLoans = [...allLoans].sort(
+        (a, b) => new Date(b.submittedOnDate).getTime() - new Date(a.submittedOnDate).getTime()
+      );
+      this.performanceHistory.lastLoanAmount = sortedLoans[0].principal || 0;
+    } else {
+      this.performanceHistory.lastLoanAmount = 0;
+    }
+    // Active Savings: status === 'Active'
+    const allSavings = accountsData.savingsAccounts || [];
+    this.performanceHistory.activeSavings = allSavings.filter((s: any) => {
+      if (!s.status) return false;
+      if (typeof s.status === 'string') {
+        return s.status.toLowerCase() === 'active';
+      }
+      if (typeof s.status === 'object' && s.status.value) {
+        return s.status.value.toLowerCase() === 'active';
+      }
+      return false;
+    }).length;
+    // Total Savings: sum of balances
+    this.performanceHistory.totalSavings = allSavings.reduce((sum: number, s: any) => sum + (s.accountBalance || 0), 0);
   }
 
   /**

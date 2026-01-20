@@ -14,16 +14,17 @@
         <tr>
           <td>
             <p>
-              {{ 'labels.inputs.No. Of Loan Cycles' | translate }} :{{ clientSummary?.loanCycle }} <br />
-              {{ 'labels.inputs.No. of Active Loans' | translate }} :{{ clientSummary?.activeLoans }} <br />
-              {{ 'labels.inputs.Last Loan Amount' | translate }} :{{ clientSummary?.lastLoanAmount | formatNumber }}
+              {{ 'labels.inputs.No. Of Loan Cycles' | translate }} :{{ performanceHistory.loanCycle }} <br />
+              {{ 'labels.inputs.No. of Active Loans' | translate }} :{{ performanceHistory.activeLoans }} <br />
+              {{ 'labels.inputs.Last Loan Amount' | translate }} :{{ performanceHistory.lastLoanAmount | formatNumber }}
               <br />
             </p>
           </td>
           <td>
             <p>
-              {{ 'labels.inputs.No. of Active Savings' | translate }} :{{ clientSummary?.activeSavings }} <br />
-              {{ 'labels.inputs.Total Savings' | translate }} :{{ clientSummary?.totalSavings | formatNumber }} <br />
+              {{ 'labels.inputs.No. of Active Savings' | translate }} :{{ performanceHistory.activeSavings }} <br />
+              {{ 'labels.inputs.Total Savings' | translate }} :{{ performanceHistory.totalSavings | formatNumber }}
+              <br />
             </p>
           </td>
         </tr>
