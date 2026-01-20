@@ -144,6 +144,14 @@
                       </td>
                       <td>{{ clientViewData.clientType.name }}</td>
                     </tr>
+                    @if (clientViewData.clientClassification) {
+                      <tr>
+                        <td>
+                          <b>{{ 'labels.inputs.Client Classification' | translate }}</b>
+                        </td>
+                        <td>{{ clientViewData.clientClassification.name }}</td>
+                      </tr>
+                    }
                   }
                   <tr>
                     <td>
