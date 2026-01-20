@@ -75,10 +75,10 @@
   // Hide client data (mask names)
   window['env']['complianceHideClientData'] = '$MIFOS_COMPLIANCE_HIDE_CLIENT_DATA';
 
-  window['env']['vNextApiUrl'] = '$VNEXT_API_URL';
-  window['env']['vNextApiProvider'] = '$VNEXT_API_PROVIDER';
-  window['env']['vNextApiVersion'] = '$VNEXT_API_VERSION';
-  window['env']['interbankTransfers'] = '$VNEXT_INTERBANK_TRANSFERS';
+  window['env']['mifosInterbankTransfersApiUrl'] = '$MIFOS_INTERBANK_TRANSFERS_API_URL';
+  window['env']['mifosInterbankTransfersApiProvider'] = '$MIFOS_INTERBANK_TRANSFERS_API_PROVIDER';
+  window['env']['mifosInterbankTransfersApiVersion'] = '$MIFOS_INTERBANK_TRANSFERS_API_VERSION';
+  window['env']['mifosInterbankTransfersEnabled'] = '$MIFOS_INTERBANK_TRANSFERS_ENABLED';
 
   // OIDC Plugin Environment variables
   window['env']['oidcServerEnabled'] = '$FINERACT_PLUGIN_OIDC_ENABLED';
