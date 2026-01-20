@@ -67,7 +67,9 @@
 
             <div class="info-row">
               <span class="info-label">{{ 'labels.inputs.Account Type' | translate }}:</span>
-              <span class="info-value">{{ viewAccountTransferData.fromAccountType?.value }}</span>
+              <span class="info-value" *ngIf="viewAccountTransferData.fromAccountType?.value">
+                {{ 'labels.catalogs.' + viewAccountTransferData.fromAccountType.value | translate }}
+              </span>
             </div>
 
             <div class="info-row">
@@ -98,7 +100,9 @@
 
             <div class="info-row">
               <span class="info-label">{{ 'labels.inputs.Account Type' | translate }}:</span>
-              <span class="info-value">{{ viewAccountTransferData.toAccountType?.value }}</span>
+              <span class="info-value" *ngIf="viewAccountTransferData.toAccountType?.value">
+                {{ 'labels.catalogs.' + viewAccountTransferData.toAccountType.value | translate }}
+              </span>
             </div>
 
             <div class="info-row">
