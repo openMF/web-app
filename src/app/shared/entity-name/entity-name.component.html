@@ -7,7 +7,7 @@
 -->
 
 <span (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()">
-  @if (displayL && iconVisible) {
+  @if (displayL && iconVisible && !hideCopy) {
     <span class="m-l-5" (click)="copyValue()"
       ><b><fa-icon icon="copy" size="sm" title="{{ 'labels.text.Copy Account Number' | translate }}"></fa-icon></b
     ></span>
@@ -15,7 +15,7 @@
   <span class="m-l-5"
     ><b>{{ entityName }}</b></span
   >
-  @if (displayR && iconVisible) {
+  @if (displayR && iconVisible && !hideCopy) {
     <span class="m-l-3" (click)="copyValue()"
       ><b><fa-icon icon="copy" size="sm" title="{{ 'labels.text.Copy Account Number' | translate }}"></fa-icon></b
     ></span>

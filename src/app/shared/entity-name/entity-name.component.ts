@@ -25,6 +25,7 @@ export class EntityNameComponent implements OnInit {
 
   @Input() entityName: string;
   @Input() display = 'right';
+  @Input() hideCopy = false;
 
   iconVisible = false;
   displayL = false;
@@ -36,7 +37,9 @@ export class EntityNameComponent implements OnInit {
   }
 
   copyValue(): void {
-    this.clipboard.copy(this.entityName);
+    if (!this.hideCopy) {
+      this.clipboard.copy(this.entityName);
+    }
   }
 
   mouseEnter() {

@@ -8,7 +8,7 @@
 
 @if (!emptyValue) {
   <span (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()">
-    @if (displayL && iconVisible) {
+    @if (displayL && iconVisible && !hideCopy) {
       <span (click)="copyValue()"><fa-icon icon="copy" size="sm" title="Copy External Id"></fa-icon></span>
     }
     @if (displayL && !completed && iconVisible && isLongValue()) {
@@ -23,7 +23,7 @@
     @if (displayR && !completed && iconVisible && isLongValue()) {
       <span class="m-l-5" (click)="showValue()"><fa-icon icon="eye" size="sm" [title]="externalId"></fa-icon></span>
     }
-    @if (displayR && iconVisible) {
+    @if (displayR && iconVisible && !hideCopy) {
       <span class="m-l-3" (click)="copyValue()"
         ><fa-icon icon="copy" size="sm" title="Copy External Id"></fa-icon
       ></span>

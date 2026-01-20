@@ -58,8 +58,14 @@
               [ngClass]="clientViewData.status.code | statusLookup"
               matTooltip="{{ 'labels.status.' + clientViewData.status.value | translate }}"
             ></i>
-            <b>{{ 'labels.inputs.Client Name' | translate }} :</b
-            ><mifosx-entity-name entityName="{{ clientViewData.displayName }}"></mifosx-entity-name>
+            <b>{{ 'labels.inputs.Client Name' | translate }} :</b>
+            <mifosx-entity-name
+              [entityName]="
+                complianceHideClientData ? maskName(clientViewData.displayName) : clientViewData.displayName
+              "
+              [display]="'right'"
+              [hideCopy]="complianceHideClientData"
+            ></mifosx-entity-name>
           </h3>
           <div class="flex-5 align-end-center">
             <button mat-icon-button [matMenuTriggerFor]="clientMenu" aria-label="Client actions" yPosition="below">
@@ -79,7 +85,7 @@
                     <td>
                       <b>{{ 'labels.inputs.Office' | translate }}</b>
                     </td>
-                    <td><mifosx-entity-name entityName="{{ clientViewData.officeName }}"></mifosx-entity-name></td>
+                    <td><mifosx-entity-name [entityName]="clientViewData.officeName"></mifosx-entity-name></td>
                   </tr>
                   <tr>
                     <td>
@@ -93,8 +99,11 @@
                     </td>
                     <td>
                       <mifosx-external-identifier
-                        externalId="{{ clientViewData.externalId }}"
-                        completed="true"
+                        [externalId]="
+                          complianceHideClientData ? maskValue(clientViewData.externalId) : clientViewData.externalId
+                        "
+                        [completed]="true"
+                        [hideCopy]="complianceHideClientData"
                       ></mifosx-external-identifier>
                     </td>
                   </tr>
@@ -151,8 +160,11 @@
                     </td>
                     <td>
                       <mifosx-external-identifier
-                        externalId="{{ clientViewData.mobileNo }}"
-                        completed="true"
+                        [externalId]="
+                          complianceHideClientData ? maskValue(clientViewData.mobileNo) : clientViewData.mobileNo
+                        "
+                        [completed]="true"
+                        [hideCopy]="complianceHideClientData"
                       ></mifosx-external-identifier>
                     </td>
                   </tr>
@@ -162,8 +174,13 @@
                     </td>
                     <td>
                       <mifosx-external-identifier
-                        externalId="{{ clientViewData.emailAddress }}"
-                        completed="true"
+                        [externalId]="
+                          complianceHideClientData
+                            ? maskEmail(clientViewData.emailAddress)
+                            : clientViewData.emailAddress
+                        "
+                        [completed]="true"
+                        [hideCopy]="complianceHideClientData"
                       ></mifosx-external-identifier>
                     </td>
                   </tr>

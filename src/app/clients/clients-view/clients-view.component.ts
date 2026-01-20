@@ -8,6 +8,7 @@
 
 /** Angular Imports */
 import { Component, OnInit, inject } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
@@ -79,6 +80,53 @@ import { formatTabLabel } from 'app/shared/utils/format-tab-label.util';
   ]
 })
 export class ClientsViewComponent implements OnInit {
+  complianceHideClientData = environment.complianceHideClientData;
+  /**
+   * Mask a string, keeping first and last letter, masking the rest with *
+   */
+  maskName(name: string): string {
+    if (!name) return '';
+    return name
+      .trim()
+      .split(/(\s+)/)
+      .map((word) => {
+        if (!word.trim()) return word;
+        if (word.length <= 2) return word[0] + '*';
+        return word[0] + '*'.repeat(word.length - 2) + word[word.length - 1];
+      })
+      .join('');
+  }
+
+  /**
+   * Mask external id, mobile, etc (show only first char, rest as *)
+   */
+  maskValue(val: string): string {
+    if (!val) return '';
+    if (val.length <= 2) return val[0] + '*';
+    return val[0] + '*'.repeat(val.length - 1);
+  }
+
+  /**
+   * Mask email: v********@f*******
+   */
+  maskEmail(email: string): string {
+    if (!email) return '';
+    const [
+      user,
+      domain
+    ] = email.split('@');
+    if (!user || !domain || user.length < 1) return this.maskValue(email);
+    let maskedUser = user.length > 1 ? user[0] + '*'.repeat(user.length - 1) : user[0] + '*';
+    const domainLabel = domain.split('.')[0] || '';
+    const domainMaskLen = Math.max(0, domainLabel.length - 1);
+    let maskedDomain = domainLabel.length > 0 ? domainLabel[0] + '*'.repeat(domainMaskLen) : '';
+    let domainRest = '';
+    if (domain.length > domainLabel.length) {
+      domainRest = domain.substring(domainLabel.length);
+    }
+    if (!maskedDomain) return this.maskValue(email);
+    return maskedUser + '@' + maskedDomain + domainRest;
+  }
   formatTabLabel(label: string): string {
     return formatTabLabel(label);
   }

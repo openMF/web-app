@@ -30,6 +30,7 @@ export class ExternalIdentifierComponent implements OnInit {
   @Input() externalId: string;
   @Input() completed = false;
   @Input() display = 'right';
+  @Input() hideCopy = false;
 
   iconVisible = false;
   displayL = false;
@@ -54,8 +55,10 @@ export class ExternalIdentifierComponent implements OnInit {
   }
 
   copyValue(): void {
-    this.clipboard.copy(this.externalId);
-    this.alertService.alert({ type: 'Clipboard', message: 'Copied: ' + this.externalId });
+    if (!this.hideCopy) {
+      this.clipboard.copy(this.externalId);
+      this.alertService.alert({ type: 'Clipboard', message: 'Copied: ' + this.externalId });
+    }
   }
 
   mouseEnter() {
