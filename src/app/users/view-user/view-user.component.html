@@ -48,11 +48,6 @@
         }
 
         <div class="content-row">
-          <div class="label">{{ 'labels.inputs.Office' | translate }}</div>
-          <div class="value">{{ userData.officeName }}</div>
-        </div>
-
-        <div class="content-row">
           <div class="label">{{ 'labels.inputs.Roles' | translate }}</div>
           <div class="value">
             @for (role of userData.selectedRoles; track role) {
@@ -60,6 +55,17 @@
                 {{ role.name }}
               </span>
             }
+          </div>
+        </div>
+
+        <div class="content-row">
+          <div class="label">{{ 'labels.buttons.Is Self Service' | translate }}</div>
+          <div class="value">
+            <span
+              [ngClass]="userData.selfService ? 'self-service-true' : 'self-service-false'"
+              class="self-service-indicator"
+            ></span>
+            {{ userData.selfService ? ('labels.buttons.Yes' | translate) : ('labels.buttons.No' | translate) }}
           </div>
         </div>
       </div>
