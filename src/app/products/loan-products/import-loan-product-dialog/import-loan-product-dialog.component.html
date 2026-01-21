@@ -5,11 +5,11 @@
   License, v. 2.0. If a copy of the MPL was not distributed with this
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
-<h1 mat-dialog-title>Import Loan Product</h1>
+<h1 mat-dialog-title>{{ 'labels.buttons.Import Loan Product' | translate }}</h1>
 
 <mat-dialog-content>
   <form [formGroup]="importLoanProductForm">
-    <p>Select a JSON file containing the loan product definition.</p>
+    <p>{{ 'labels.buttons.Select a JSON file containing the loan product definition' | translate }}</p>
 
     <!-- File Upload Component -->
     <mifosx-file-upload (change)="onFileSelect($event)" acceptFilter=".json"> </mifosx-file-upload>
@@ -26,6 +26,6 @@
     [disabled]="!importLoanProductForm.valid"
     [mat-dialog-close]="importLoanProductForm.value"
   >
-    Import
+    {{ 'labels.buttons.Import' | translate }}
   </button>
 </mat-dialog-actions>
