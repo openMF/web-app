@@ -30,7 +30,7 @@
         mat-row
         *matRowDef="let row; columns: displayedColumns"
         class="select-row"
-        [routerLink]="[routeMap[row.objectType], row.objectId]"
+        (click)="navigateToNotification(row)"
       ></tr>
       <tr *matNoDataRow>
         <td [attr.colspan]="displayedColumns.length">You don't have any notifications</td>

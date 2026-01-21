@@ -41,11 +41,7 @@
       </div>
       <div class="notifications-list">
         @for (notification of unreadNotifications; track notification) {
-          <button
-            mat-menu-item
-            class="notification-item unread"
-            [routerLink]="[routeMap[notification.objectType], notification.objectId]"
-          >
+          <button mat-menu-item class="notification-item unread" (click)="navigateToNotification(notification, $event)">
             <div class="notification-content">
               <span class="notification-text">{{ notification.content }}</span>
               <span class="unread-indicator">●</span>
@@ -55,11 +51,7 @@
         }
 
         @for (notification of displayedReadNotifications; track notification) {
-          <button
-            mat-menu-item
-            class="notification-item read"
-            [routerLink]="[routeMap[notification.objectType], notification.objectId]"
-          >
+          <button mat-menu-item class="notification-item read" (click)="navigateToNotification(notification, $event)">
             <div class="notification-content">
               <span class="notification-text">{{ notification.content }}</span>
             </div>

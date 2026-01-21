@@ -24,8 +24,9 @@ import {
   MatRow,
   MatNoDataRow
 } from '@angular/material/table';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { NotificationsService } from '../notifications.service';
 
 /**
  * Notifications Page Component
@@ -54,6 +55,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class NotificationsPageComponent implements OnInit {
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private notificationsService = inject(NotificationsService);
 
   /** Notifications data. */
   notificationsData: any;
@@ -111,5 +114,89 @@ export class NotificationsPageComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.notificationsData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  /**
+   * Navigate to notification object with proper entity context
+   * @param {any} notification Notification object
+   */
+  navigateToNotification(notification: any): void {
+    const objectType = notification.objectType;
+    const objectId = notification.objectId;
+
+    // For entities that don't require parent context (client, group, center, products)
+    if ([
+        'client',
+        'group',
+        'center',
+        'shareProduct',
+        'loanProduct'
+      ].includes(objectType)) {
+      this.router.navigate([
+        this.routeMap[objectType],
+        objectId
+      ]);
+      return;
+    }
+
+    // For account types that require parent entity (client/group) ID
+    switch (objectType) {
+      case 'loan':
+        this.notificationsService.getLoanAccount(objectId).subscribe((account) => {
+          if (account && (account.clientId || account.groupId)) {
+            const entityType = account.clientId ? 'clients' : 'groups';
+            const entityId = account.clientId || account.groupId;
+            this.router.navigate([`/${entityType}/${entityId}/loans-accounts/${account.accountId}`]);
+          }
+        });
+        break;
+
+      case 'savingsAccount':
+        this.notificationsService.getSavingsAccount(objectId).subscribe((account) => {
+          if (account && (account.clientId || account.groupId)) {
+            const entityType = account.clientId ? 'clients' : 'groups';
+            const entityId = account.clientId || account.groupId;
+            this.router.navigate([`/${entityType}/${entityId}/savings-accounts/${account.accountId}`]);
+          }
+        });
+        break;
+
+      case 'fixedDeposit':
+        this.notificationsService.getFixedDepositAccount(objectId).subscribe((account) => {
+          if (account && (account.clientId || account.groupId)) {
+            const entityType = account.clientId ? 'clients' : 'groups';
+            const entityId = account.clientId || account.groupId;
+            this.router.navigate([`/${entityType}/${entityId}/fixed-deposits-accounts/${account.accountId}`]);
+          }
+        });
+        break;
+
+      case 'recurringDepositAccount':
+        this.notificationsService.getRecurringDepositAccount(objectId).subscribe((account) => {
+          if (account && (account.clientId || account.groupId)) {
+            const entityType = account.clientId ? 'clients' : 'groups';
+            const entityId = account.clientId || account.groupId;
+            this.router.navigate([`/${entityType}/${entityId}/recurring-deposits-accounts/${account.accountId}`]);
+          }
+        });
+        break;
+
+      case 'shareAccount':
+        this.notificationsService.getShareAccount(objectId).subscribe((account) => {
+          if (account && (account.clientId || account.groupId)) {
+            const entityType = account.clientId ? 'clients' : 'groups';
+            const entityId = account.clientId || account.groupId;
+            this.router.navigate([`/${entityType}/${entityId}/shares-accounts/${account.accountId}`]);
+          }
+        });
+        break;
+
+      default:
+        // Fallback to old behavior for unknown types
+        this.router.navigate([
+          this.routeMap[objectType],
+          objectId
+        ]);
+    }
   }
 }
