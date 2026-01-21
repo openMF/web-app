@@ -10,7 +10,7 @@
 @if (!oauthEnabled) {
   <div>
     <form class="layout-column" [formGroup]="loginForm" (ngSubmit)="login()" id="login-form">
-      <mat-form-field class="login-field flex-align-center">
+      <mat-form-field class="login-field flex-align-center" appearance="fill">
         <mat-label>{{ 'labels.inputs.Username' | translate }}</mat-label>
         <input
           matInput
