@@ -68,7 +68,7 @@ const routes: Routes = [
         path: 'account-transfers',
         data: {
           title: 'View Account Transfer',
-          breadcrumb: 'labels.breadcrumbs.Account Transfers',
+          breadcrumb: 'Account Transfers',
           routeParamBreadcrumb: false
         },
         children: [
