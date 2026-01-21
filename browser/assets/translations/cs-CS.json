@@ -552,7 +552,8 @@
       "Withdraw": "Ustoupit",
       "View Active Charges": "Zobrazit aktivní poplatky",
       "View Inactive Charges": "Zobrazit neaktivní poplatky",
-      "Yes": "Ano"
+      "Yes": "Ano",
+      "Is Self Service": "Je samoobsluha"
     },
     "catalogs": {
       "Interest payment waiver": "Prominutí platby úroků",

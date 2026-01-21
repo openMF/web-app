@@ -552,7 +552,8 @@
       "Withdraw": "Atsitraukti",
       "View Active Charges": "Peržiūrėti aktyvius mokesčius",
       "View Inactive Charges": "Peržiūrėkite neaktyvius mokesčius",
-      "Yes": "Taip"
+      "Yes": "Taip",
+      "Is Self Service": "Savitarna"
     },
     "catalogs": {
       "Interest payment waiver": "Palūkanų mokėjimo atsisakymas",

@@ -552,7 +552,8 @@
       "Withdraw": "Retirar",
       "View Active Charges": "Ver Comisiones Activas",
       "View Inactive Charges": "Ver Comisiones inactivas",
-      "Yes": "Sí"
+      "Yes": "Sí",
+      "Is Self Service": "Es autoservicio"
     },
     "catalogs": {
       "Interest payment waiver": "Exención de pago de intereses",

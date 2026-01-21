@@ -552,7 +552,8 @@
       "Withdraw": "Retirer",
       "View Active Charges": "Afficher les frais actifs",
       "View Inactive Charges": "Afficher les frais inactifs",
-      "Yes": "Oui"
+      "Yes": "Oui",
+      "Is Self Service": "Est libre-service"
     },
     "catalogs": {
       "Interest payment waiver": "Renonciation au paiement des intérêts",

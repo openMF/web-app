@@ -552,7 +552,8 @@
       "Withdraw": "Kutoa",
       "View Active Charges": "Tazama Malipo Yanayotumika",
       "View Inactive Charges": "Tazama Gharama Isiyotumika",
-      "Yes": "Ndiyo"
+      "Yes": "Ndiyo",
+      "Is Self Service": "Ni huduma binafsi"
     },
     "catalogs": {
       "Interest payment waiver": "Msamaha wa Malipo ya Riba",

@@ -552,7 +552,8 @@
       "Withdraw": "철회하다",
       "View Active Charges": "활성 요금 보기",
       "View Inactive Charges": "비활성 요금 보기",
-      "Yes": "예"
+      "Yes": "예",
+      "Is Self Service": "셀프 서비스입니다"
     },
     "catalogs": {
       "Interest payment waiver": "이자 지급 면제",

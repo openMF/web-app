@@ -552,7 +552,8 @@
       "Withdraw": "Zurückziehen",
       "View Active Charges": "Aktive Gebühren anzeigen",
       "View Inactive Charges": "Inaktive Gebühren anzeigen",
-      "Yes": "Ja"
+      "Yes": "Ja",
+      "Is Self Service": "Ist Selbstbedienung"
     },
     "catalogs": {
       "Interest payment waiver": "Zinszahlungsverzicht",

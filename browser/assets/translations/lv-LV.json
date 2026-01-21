@@ -552,7 +552,8 @@
       "Withdraw": "Izņemt",
       "View Active Charges": "Skatīt aktīvās maksas",
       "View Inactive Charges": "Skatīt neaktīvās maksas",
-      "Yes": "Jā"
+      "Yes": "Jā",
+      "Is Self Service": "Ir pašapkalpošanās"
     },
     "catalogs": {
       "Interest payment waiver": "Atteikšanās no procentu maksājumiem",

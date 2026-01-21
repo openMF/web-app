@@ -552,7 +552,8 @@
       "Withdraw": "Retirar",
       "View Active Charges": "Ver cobranças ativas",
       "View Inactive Charges": "Ver cobranças inativas",
-      "Yes": "Sim"
+      "Yes": "Sim",
+      "Is Self Service": "É autoatendimento"
     },
     "catalogs": {
       "Interest payment waiver": "Isenção de pagamento de juros",
