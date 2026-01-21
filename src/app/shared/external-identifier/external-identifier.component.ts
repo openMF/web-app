@@ -10,7 +10,6 @@ import { Component, Input, OnInit, inject } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { AlertService } from 'app/core/alert/alert.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { ExternalIdentifierPipe } from '../../pipes/external-identifier.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
@@ -19,8 +18,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./external-identifier.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    FaIconComponent,
-    ExternalIdentifierPipe
+    FaIconComponent
   ]
 })
 export class ExternalIdentifierComponent implements OnInit {

@@ -15,7 +15,7 @@
       <span class="m-l-3" (click)="showValue()"><fa-icon icon="eye" size="sm" [title]="externalId"></fa-icon></span>
     }
     @if (!completed) {
-      <span class="m-l-5" (click)="showValue()">{{ externalId | externalIdentifier }}</span>
+      <span class="m-l-5" (click)="showValue()">{{ externalId }}</span>
     }
     @if (completed) {
       <span (click)="showValue()">{{ externalId }}</span>
