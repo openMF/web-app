@@ -46,6 +46,13 @@
                 accountNo="{{ savingsAccountData.accountNo }}"
                 display="left"
               ></mifosx-account-number>
+              <!-- External ID display -->
+              @if (savingsAccountData.externalId) {
+                <span class="external-id-row">
+                  <span class="m-r-5">{{ 'labels.inputs.External Id' | translate }} :</span>
+                  <span>{{ savingsAccountData.externalId }}</span>
+                </span>
+              }
             </h3>
             <span class="account-overview">
               {{ 'labels.text.' + entityType | translate }} {{ 'labels.inputs.name' | translate }}:
