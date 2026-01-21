@@ -309,8 +309,7 @@
       }
     },
     "breadcrumbs": {
-      "Home": "Namai",
-      "Account Transfers": "Sąskaitų pervedimai"
+      "Home": "Namai"
     },
     "buttons": {
       "Accept Transfer": "Priimti perkėlimą",
@@ -558,8 +557,6 @@
     "catalogs": {
       "Interest payment waiver": "Palūkanų mokėjimo atsisakymas",
       "Active": "Aktyvus",
-      "Account_transfer": "Sąskaitos Perkėlimas",
-      "account_transfer": "Sąskaitos Perkėlimas",
       "Accounting": "Apskaita",
       "accounting": "Apskaita",
       "Authorisation": "Autorizacija",
@@ -624,7 +621,7 @@
       "Shares": "Akcijos",
       "Regular": "Reguliarus",
       "Running": "Bėgimas",
-      "Account transfer": "Sąskaitos perkėlimas",
+      "Account transfer": "Sąskaitų pervedimai",
       "Flat": "Butas",
       "Fund": "fondas",
       "GROUP": "GRUPĖ",
@@ -2808,6 +2805,7 @@
     },
     "text": {
       "A": "A",
+      "Account Transfers": "Sąskaitų pervedimai",
       "Ability to manage holidays for individual offices": "Galimybė tvarkyti atskirų biurų atostogas yra labai naudingas įrankis organizacijai, kuri veikia keliose vietose. Naudokite šią parinktį, kad tinkintumėte atostogas kiekvienam savo organizacijos biurui.",
       "Account Detail": "Sąskaitos informacija",
       "Account Number Preferences": "Sąskaitos numerio nuostatos",

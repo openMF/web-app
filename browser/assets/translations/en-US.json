@@ -310,8 +310,7 @@
       }
     },
     "breadcrumbs": {
-      "Home": "Home",
-      "Account Transfers": "Account Transfers"
+      "Home": "Home"
     },
     "buttons": {
       "Accept Transfer": "Accept Transfer",
@@ -2818,6 +2817,7 @@
     },
     "text": {
       "A": "A",
+      "Account Transfers": "Account Transfers",
       "Ability to manage holidays for individual offices": "The ability to manage holidays for individual offices is a very useful tool for an organization spanning multiple locations.Use this option to customize holidays for each office of your organization.",
       "Account Detail": "Account Detail",
       "Account Number Preferences": "Account Number Preferences",

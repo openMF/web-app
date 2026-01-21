@@ -309,8 +309,7 @@
       }
     },
     "breadcrumbs": {
-      "Home": "Heim",
-      "Account Transfers": "Kontoüberweisungen"
+      "Home": "Heim"
     },
     "buttons": {
       "Accept Transfer": "Akzeptieren Sie die Übertragung",
@@ -2807,6 +2806,7 @@
       "the Transaction Type": "der Transaktionstyp"
     },
     "A": "A",
+    "Account Transfers": "Kontoüberweisungen",
     "Ability to manage holidays for individual offices": "Die Möglichkeit, Feiertage für einzelne Büros zu verwalten, ist ein sehr nützliches Werkzeug für eine Organisation mit mehreren Standorten. Verwenden Sie diese Option, um Feiertage für jedes Büro Ihrer Organisation anzupassen.",
     "Account Detail": "Kontodetails",
     "Account Number Preferences": "Kontonummerneinstellungen",

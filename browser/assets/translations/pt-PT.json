@@ -309,8 +309,7 @@
       }
     },
     "breadcrumbs": {
-      "Home": "Lar",
-      "Account Transfers": "Transferências entre contas"
+      "Home": "Lar"
     },
     "buttons": {
       "Accept Transfer": "Aceitar transferência",
@@ -2806,6 +2805,7 @@
     },
     "text": {
       "A": "A",
+      "Account Transfers": "Transferências entre contas",
       "Ability to manage holidays for individual offices": "A capacidade de gerenciar feriados para escritórios individuais é uma ferramenta muito útil para uma organização que abrange vários locais. Use esta opção para personalizar feriados para cada escritório da sua organização.",
       "Account Detail": "Detalhes da conta",
       "Account Number Preferences": "Preferências de número de conta",

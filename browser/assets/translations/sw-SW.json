@@ -309,8 +309,7 @@
       }
     },
     "breadcrumbs": {
-      "Home": "Nyumbani",
-      "Account Transfers": "Uhamisho za akaunti"
+      "Home": "Nyumbani"
     },
     "buttons": {
       "Accept Transfer": "Kubali Uhamisho",
@@ -2804,6 +2803,7 @@
     },
     "text": {
       "A": "A",
+      "Account Transfers": "Uhamisho za akaunti",
       "Ability to manage holidays for individual offices": "Uwezo wa kudhibiti likizo kwa ofisi binafsi ni zana muhimu sana kwa shirika linalotumia maeneo mengi.Tumia chaguo hili kubinafsisha likizo kwa kila ofisi ya shirika lako.",
       "Account Detail": "Maelezo ya Akaunti",
       "Account Number Preferences": "Mapendeleo ya Nambari ya Akaunti",

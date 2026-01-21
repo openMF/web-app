@@ -309,8 +309,7 @@
       }
     },
     "breadcrumbs": {
-      "Home": "Inicio",
-      "Account Transfers": "Transferencias entre cuentas"
+      "Home": "Inicio"
     },
     "buttons": {
       "Accept Transfer": "Aceptar transferencia",
@@ -2807,6 +2806,7 @@
     },
     "text": {
       "A": "Una",
+      "Account Transfers": "Transferencias entre cuentas",
       "Ability to manage holidays for individual offices": "La capacidad de gestionar días festivos para oficinas individuales es una herramienta muy útil para una organización que abarca varias ubicaciones. Utilice esta opción para personalizar los días festivos para cada oficina de su organización.",
       "Account Detail": "Detalle de cuenta",
       "Account Number Preferences": "Preferencias de número de cuenta",

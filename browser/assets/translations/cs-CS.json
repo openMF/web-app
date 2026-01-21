@@ -309,8 +309,7 @@
       }
     },
     "breadcrumbs": {
-      "Home": "Domov",
-      "Account Transfers": "Převody mezi účty"
+      "Home": "Domov"
     },
     "buttons": {
       "Accept Transfer": "Přijmout převod",
@@ -2806,6 +2805,7 @@
       "the Transaction Type": "typ transakce"
     },
     "A": "A",
+    "Account Transfers": "Převody mezi účty",
     "Ability to manage holidays for individual offices": "Schopnost spravovat svátky pro jednotlivé kanceláře je velmi užitečným nástrojem pro organizaci zahrnující více míst. Tuto možnost použijte k přizpůsobení svátků pro každou kancelář vaší organizace.",
     "Account Detail": "Detail účtu",
     "Account Number Preferences": "Předvolby čísla účtu",

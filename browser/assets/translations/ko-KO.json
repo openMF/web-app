@@ -309,8 +309,7 @@
       }
     },
     "breadcrumbs": {
-      "Home": "집",
-      "Account Transfers": "계좌 이체"
+      "Home": "집"
     },
     "buttons": {
       "Accept Transfer": "전송 수락",
@@ -2806,6 +2805,7 @@
     },
     "text": {
       "A": "ㅏ",
+      "Account Transfers": "계좌 이체",
       "Ability to manage holidays for individual offices": "개별 사무실의 휴일을 관리하는 기능은 여러 위치에 걸쳐 있는 조직에 매우 유용한 도구입니다. 조직의 각 사무실에 대한 휴일을 사용자 정의하려면 이 옵션을 사용하십시오.",
       "Account Detail": "계정 세부정보",
       "Account Number Preferences": "계좌번호 기본 설정",
