@@ -38,22 +38,31 @@
                   [matTooltip]="savingsAccountData.subStatus.value"
                 ></i>
               }
-              <span class="m-r-5">{{ 'labels.inputs.Savings Product' | translate }} :</span>
-              <span class="m-r-5"
-                ><mifosx-long-text textValue="{{ savingsAccountData.savingsProductName }}"></mifosx-long-text
-              ></span>
-              <mifosx-account-number
-                accountNo="{{ savingsAccountData.accountNo }}"
-                display="left"
-              ></mifosx-account-number>
-              <!-- External ID display -->
-              @if (savingsAccountData.externalId) {
-                <span class="external-id-row">
-                  <span class="m-r-5">{{ 'labels.inputs.External Id' | translate }} :</span>
-                  <span>{{ savingsAccountData.externalId }}</span>
-                </span>
-              }
             </h3>
+            <!-- Product Name Row -->
+            <span class="product-row">
+              <span class="m-r-5">{{ 'labels.inputs.Savings Product' | translate }} :</span>
+              <span class="m-r-5">
+                <mifosx-long-text textValue="{{ savingsAccountData.savingsProductName }}"></mifosx-long-text>
+              </span>
+            </span>
+            <!-- Account Number Row -->
+            <span class="account-number-row">
+              <span class="m-r-5">{{ 'labels.inputs.Account Number' | translate }} :</span>
+              <span class="m-r-5">
+                <mifosx-account-number
+                  accountNo="{{ savingsAccountData.accountNo }}"
+                  display="left"
+                ></mifosx-account-number>
+              </span>
+            </span>
+            <!-- External ID Row -->
+            @if (savingsAccountData.externalId) {
+              <span class="external-id-row">
+                <span class="m-r-5">{{ 'labels.inputs.External Id' | translate }} :</span>
+                <span>{{ savingsAccountData.externalId }}</span>
+              </span>
+            }
             <span class="account-overview">
               {{ 'labels.text.' + entityType | translate }} {{ 'labels.inputs.name' | translate }}:
               {{ savingsAccountData.clientName || savingsAccountData.groupName }}
