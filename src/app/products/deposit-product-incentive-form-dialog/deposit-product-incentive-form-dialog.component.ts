@@ -5,8 +5,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -15,10 +15,12 @@ import {
   MatDialogActions,
   MatDialogClose
 } from '@angular/material/dialog';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { CdkScrollable } from '@angular/cdk/scrolling';
+import { TranslateService } from '@ngx-translate/core';
+
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { ConditionLabelService } from 'app/shared/common-logic/condition-label.service';
 
 @Component({
   selector: 'mifosx-deposit-product-incentive-form-dialog',
@@ -34,20 +36,24 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class DepositProductIncentiveFormDialogComponent implements OnInit {
-  dialogRef = inject<MatDialogRef<DepositProductIncentiveFormDialogComponent>>(MatDialogRef);
+  private destroyRef = inject(DestroyRef);
+
+  private dialogRef = inject<MatDialogRef<DepositProductIncentiveFormDialogComponent>>(MatDialogRef);
+
   data = inject(MAT_DIALOG_DATA);
+
   private formBuilder = inject(UntypedFormBuilder);
+
+  protected conditionLabelService = inject(ConditionLabelService);
+
   private translateService = inject(TranslateService);
 
-  layout: {
-    addButtonText?: string;
-  } = {
+  layout: { addButtonText?: string } = {
     addButtonText: 'Add'
   };
 
-  depositProductIncentiveForm: UntypedFormGroup;
-
-  title: string;
+  depositProductIncentiveForm!: UntypedFormGroup;
+  title!: string;
 
   entityTypeData: any;
   attributeNameData: any;
@@ -55,16 +61,11 @@ export class DepositProductIncentiveFormDialogComponent implements OnInit {
   attributeValueData: any;
   incentiveTypeData: any;
 
-  constructor() {
-    const data = this.data;
-
+  ngOnInit(): void {
     this.createDepositProductIncentiveForm();
     this.setConditionalControls();
-    this.layout = { ...this.layout, ...data.layout };
-    this.dialogRef.disableClose = true;
-  }
 
-  ngOnInit() {
+    this.dialogRef.disableClose = true;
     this.dialogRef.updateSize('400px');
 
     this.entityTypeData = this.data.chartTemplate.entityTypeOptions;
@@ -86,20 +87,24 @@ export class DepositProductIncentiveFormDialogComponent implements OnInit {
         entityType: this.data.entityType
       });
     }
+
     this.title = this.translateService.instant('labels.heading.Incentives');
   }
 
-  setConditionalControls() {
-    this.depositProductIncentiveForm.get('attributeName').valueChanges.subscribe((attributeName: any) => {
-      this.depositProductIncentiveForm.patchValue({ attributeValue: '' });
-      this.attributeValueData =
-        this.data.chartTemplate[
-          `${this.attributeNameData.find((option: any) => option.id === attributeName).code.split('.')[1]}Options`
-        ];
-    });
+  setConditionalControls(): void {
+    this.depositProductIncentiveForm
+      .get('attributeName')
+      ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((attributeName: any) => {
+        this.depositProductIncentiveForm.patchValue({ attributeValue: '' });
+
+        const option = this.attributeNameData?.find((o: any) => o.id === attributeName);
+
+        this.attributeValueData = option ? this.data.chartTemplate[`${option.code.split('.')[1]}Options`] : [];
+      });
   }
 
-  createDepositProductIncentiveForm() {
+  createDepositProductIncentiveForm(): void {
     this.depositProductIncentiveForm = this.formBuilder.group({
       entityType: [''],
       attributeName: [

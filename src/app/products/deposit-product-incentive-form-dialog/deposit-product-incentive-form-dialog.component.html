@@ -29,7 +29,7 @@
     <mat-select formControlName="conditionType" required>
       @for (conditionType of conditionTypeData; track conditionType) {
         <mat-option [value]="conditionType.id">
-          {{ conditionType.value }}
+          {{ conditionLabelService.getConditionLabel(conditionType.value) }}
         </mat-option>
       }
     </mat-select>
