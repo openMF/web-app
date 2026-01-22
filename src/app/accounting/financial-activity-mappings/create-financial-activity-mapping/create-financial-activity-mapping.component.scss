@@ -9,3 +9,7 @@
 .container {
   max-width: 37rem;
 }
+
+::ng-deep mifosx-gl-account-selector .layout-column {
+  margin-right: 0;
+}
