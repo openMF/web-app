@@ -30,6 +30,11 @@
         <td mat-cell *matCellDef="let user">{{ user.firstname }}</td>
       </ng-container>
 
+      <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Login Name' | translate }}</th>
+        <td mat-cell *matCellDef="let user">{{ user.username }}</td>
+      </ng-container>
+
       <ng-container matColumnDef="lastname">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Last Name' | translate }}</th>
         <td mat-cell *matCellDef="let user">{{ user.lastname }}</td>
@@ -43,6 +48,17 @@
       <ng-container matColumnDef="officeName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Office' | translate }}</th>
         <td mat-cell *matCellDef="let user">{{ user.officeName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="isSelfServiceUser">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.buttons.Is Self Service' | translate }}</th>
+        <td mat-cell *matCellDef="let user">
+          <span
+            [ngClass]="user.isSelfServiceUser ? 'self-service-true' : 'self-service-false'"
+            class="self-service-indicator"
+          ></span>
+          {{ user.isSelfServiceUser ? ('labels.buttons.Yes' | translate) : ('labels.buttons.No' | translate) }}
+        </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

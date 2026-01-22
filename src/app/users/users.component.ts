@@ -69,10 +69,12 @@ export class UsersComponent implements OnInit, AfterViewInit {
   usersData: any;
   /** Columns to be displayed in users table. */
   displayedColumns: string[] = [
+    'username',
     'firstname',
     'lastname',
     'email',
-    'officeName'
+    'officeName',
+    'isSelfServiceUser'
   ];
   /** Data source for users table. */
   dataSource: MatTableDataSource<any>;

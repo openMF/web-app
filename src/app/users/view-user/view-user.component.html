@@ -61,11 +61,13 @@
         <div class="content-row">
           <div class="label">{{ 'labels.buttons.Is Self Service' | translate }}</div>
           <div class="value">
-            <span
-              [ngClass]="userData.selfService ? 'self-service-true' : 'self-service-false'"
-              class="self-service-indicator"
-            ></span>
-            {{ userData.selfService ? ('labels.buttons.Yes' | translate) : ('labels.buttons.No' | translate) }}
+            <span class="self-service-container">
+              <span
+                [ngClass]="userData.selfService ? 'self-service-true' : 'self-service-false'"
+                class="self-service-indicator"
+              ></span>
+              {{ userData.selfService ? ('labels.buttons.Yes' | translate) : ('labels.buttons.No' | translate) }}
+            </span>
           </div>
         </div>
       </div>
