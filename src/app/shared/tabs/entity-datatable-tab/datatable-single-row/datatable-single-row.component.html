@@ -7,23 +7,25 @@
 -->
 
 <div class="tab-container mat-typography">
-  <h3>{{ formatTabLabel(datatableName) }}</h3>
-  <div class="layout-row align-end m-b-20">
-    @if (!dataObject.data[0]) {
-      <button mat-raised-button color="primary" (click)="add()">
-        <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
-      </button>
-    }
-    @if (dataObject.data[0]) {
-      <button mat-raised-button color="primary" (click)="edit()">
-        <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'labels.buttons.Edit' | translate }}
-      </button>
-    }
-    @if (dataObject.data[0]) {
-      <button class="delete-button" mat-raised-button color="warn" (click)="delete()">
-        <fa-icon icon="trash" class="m-r-10"></fa-icon>{{ 'labels.buttons.Delete' | translate }}
-      </button>
-    }
+  <div class="layout-row align-between align-items-center m-b-20">
+    <h3>{{ formatTabLabel(datatableName) }}</h3>
+    <div class="layout-row gap-10px">
+      @if (!dataObject.data[0]) {
+        <button mat-raised-button color="primary" (click)="add()">
+          <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
+        </button>
+      }
+      @if (dataObject.data[0]) {
+        <button mat-raised-button color="primary" (click)="edit()">
+          <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'labels.buttons.Edit' | translate }}
+        </button>
+      }
+      @if (dataObject.data[0]) {
+        <button mat-raised-button color="warn" (click)="delete()">
+          <fa-icon icon="trash" class="m-r-10"></fa-icon>{{ 'labels.buttons.Delete' | translate }}
+        </button>
+      }
+    </div>
   </div>
 
   <mat-divider></mat-divider>

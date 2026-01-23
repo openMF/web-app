@@ -13,8 +13,12 @@
   padding: 1%;
   margin: 1%;
 
-  .delete-button {
-    margin-left: 1%;
+  h3 {
+    margin: 0;
+  }
+
+  :host-context(.dark-theme) & h3 {
+    color: rgb(255 255 255 / 87%) !important;
   }
 }
 
@@ -42,9 +46,18 @@
 
   &:hover {
     background-color: rgb(0 0 0 / 4%);
-    border-left-color: var(--primary-color, #3f51b5);
+    border-left-color: $accent;
     transform: translateY(-2px);
     box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+  }
+}
+
+:host-context(.dark-theme) .data-item {
+  background-color: rgb(255 255 255 / 3%);
+
+  &:hover {
+    background-color: rgb(255 255 255 / 6%);
+    box-shadow: 0 2px 8px rgb(0 0 0 / 30%);
   }
 }
 
@@ -55,6 +68,10 @@
   letter-spacing: 0.3px;
   font-weight: 500;
   line-height: 1.2;
+}
+
+:host-context(.dark-theme) .data-label {
+  color: rgb(255 255 255 / 70%) !important;
 }
 
 .data-value {
@@ -71,6 +88,10 @@
   div {
     width: 100%;
   }
+}
+
+:host-context(.dark-theme) .data-value {
+  color: rgb(255 255 255 / 87%) !important;
 }
 
 .default-value {
@@ -90,7 +111,7 @@
 .system-defined {
   margin-top: 3px;
   background-color: rgb(63 81 181 / 8%);
-  border-left-color: #3f51b5;
+  border-left-color: $accent;
 }
 
 .long-text {
