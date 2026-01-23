@@ -607,6 +607,8 @@
 }
 
 .mat-mdc-form-field {
+  margin-bottom: 16px;
+
   .mat-mdc-input-element::placeholder {
     font-size: 14px !important;
     color: #999 !important;
@@ -614,6 +616,16 @@
 
   .mdc-floating-label {
     font-size: 14px !important;
+  }
+}
+
+mat-stepper {
+  ::ng-deep .mat-vertical-content {
+    padding: 16px;
+  }
+
+  ::ng-deep .mat-vertical-stepper-content {
+    padding-top: 16px;
   }
 }
 
