@@ -703,7 +703,6 @@ mifosx-notifications-page td {
   width: 100%;
 }
 
-/* Global overflow helpers to avoid repeated component overrides */
 .overflow-hidden {
   overflow: hidden;
 }
@@ -799,5 +798,17 @@ mat-card {
     background-color: #303135 !important;
     border-color: #444 !important;
     color: rgb(255 255 255 / 60%) !important;
+  }
+}
+
+.mat-mdc-table {
+  .mat-mdc-header-cell.center,
+  .mat-mdc-cell.center {
+    text-align: center !important;
+    justify-content: center !important;
+
+    .mat-sort-header-container {
+      justify-content: center !important;
+    }
   }
 }

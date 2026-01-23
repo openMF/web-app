@@ -48,22 +48,30 @@
       </ng-container>
 
       <ng-container matColumnDef="chargeTimeType">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Time' | translate }}</th>
-        <td mat-cell *matCellDef="let charge">{{ charge.chargeTimeType.value | translateKey: 'catalogs' }}</td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="center">{{ 'labels.inputs.Time' | translate }}</th>
+        <td mat-cell *matCellDef="let charge" class="center">
+          {{ charge.chargeTimeType.value | translateKey: 'catalogs' }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="chargeCalculationType">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Calculation' | translate }}</th>
-        <td mat-cell *matCellDef="let charge">{{ charge.chargeCalculationType.value | translateKey: 'catalogs' }}</td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="center">
+          {{ 'labels.inputs.Calculation' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let charge" class="center">
+          {{ charge.chargeCalculationType.value | translateKey: 'catalogs' }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="amount">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Amount' | translate }}</th>
-        <td mat-cell *matCellDef="let charge" class="r-amount">{{ charge.amount | formatNumber }}</td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="center">
+          {{ 'labels.inputs.Amount' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let charge" class="center">{{ charge.amount | formatNumber }}</td>
       </ng-container>
 
       <ng-container matColumnDef="penalty">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="center">
           {{ 'labels.commons.Is' | translate }} {{ 'labels.inputs.Penalty' | translate }}?
         </th>
         <td mat-cell *matCellDef="let charge" class="center">
@@ -89,7 +97,7 @@
       </ng-container>
 
       <ng-container matColumnDef="active">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="center">
           {{ 'labels.commons.Is' | translate }} {{ 'labels.status.Active' | translate }}?
         </th>
         <td mat-cell *matCellDef="let charge" class="center">
