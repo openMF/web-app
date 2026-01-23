@@ -880,6 +880,12 @@
       "Password must be at least 6 characters, no more than 50 characters long, must include at least one upper case letter, one lower case letter, one numeric digit and no space": "La password deve contenere almeno 6 caratteri, non più di 50 caratteri, deve includere almeno una lettera maiuscola, una lettera minuscola, una cifra numerica e nessuno spazio",
       "Password must be 12 to 50 characters long, containing at least one uppercase letter, one lowercase letter, one numeric digit, and one special character, with no spaces or consecutive repeating characters": "La password deve contenere tra 12 e 50 caratteri, contenente almeno una lettera maiuscola, una lettera minuscola, una cifra numerica e un carattere speciale, senza spazi o caratteri ripetuti consecutivi"
     },
+    "conditions": {
+      "LessThan": "Minore di",
+      "Equal": "Uguale",
+      "GreaterThan": "Maggiore di",
+      "NotEqual": "Diverso da"
+    },
     "heading": {
       "Account Linked Financial": "Elenco dei conti collegati a diverse attività finanziarie. Per saperne di più clicca:",
       "Account Name": "Nome utente",

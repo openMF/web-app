@@ -725,8 +725,6 @@
       "LOAN_PROVISIONING": "Utoaji wa Mkopo",
       "Loan Interest Recalculation": "Uhesabuji wa Riba ya Mkopo",
       "Reamortization": "Remortization",
-      "equals": "sawa",
-      "greater than": "kubwa kuliko",
       "Equal installments": "Awamu sawa",
       "Equal principal payments": "Malipo ya msingi sawa",
       "Till Pre-Close Date": "Hadi Tarehe ya Kufungwa",
@@ -880,6 +878,12 @@
       "Password must be at least 1 character and not more than 50 characters long": "Nenosiri lazima liwe na angalau herufi 1 na si zaidi ya herufi 50",
       "Password must be at least 6 characters, no more than 50 characters long, must include at least one upper case letter, one lower case letter, one numeric digit and no space": "Nenosiri lazima liwe na angalau herufi 6, si zaidi ya herufi 50, lazima liwe na angalau herufi moja kubwa, herufi moja ndogo, nambari moja na hakuna nafasi",
       "Password must be 12 to 50 characters long, containing at least one uppercase letter, one lowercase letter, one numeric digit, and one special character, with no spaces or consecutive repeating characters": "Nenosiri lazima liwe na herufi 12 hadi 50, likiwa na angalau herufi moja kubwa, herufi moja ndogo, nambari moja na herufi maalum moja, bila nafasi au herufi zinazorudiwa mfululizo"
+    },
+    "conditions": {
+      "LessThan": "Chini ya",
+      "Equal": "Sawa",
+      "GreaterThan": "Zaidi ya",
+      "NotEqual": "Sio sawa"
     },
     "heading": {
       "Account Linked Financial": "Orodha ya akaunti zilizounganishwa na shughuli tofauti za kifedha. Kujua zaidi bofya:",

@@ -881,6 +881,12 @@
       "Password must be at least 6 characters, no more than 50 characters long, must include at least one upper case letter, one lower case letter, one numeric digit and no space": "Parolei jābūt vismaz 6 rakstzīmēm, ne vairāk kā 50 rakstzīmēm, jāiekļauj vismaz viens lielais burts, viens mazais burts, viens cipars un nedrīkst būt atstarpes",
       "Password must be 12 to 50 characters long, containing at least one uppercase letter, one lowercase letter, one numeric digit, and one special character, with no spaces or consecutive repeating characters": "Parolei jābūt no 12 līdz 50 rakstzīmēm, jāiekļauj vismaz viens lielais burts, viens mazais burts, viens cipars un viens speciāls rakstzīme, bez atstarpēm vai secīgiem atkārtotiem rakstzīmēm"
     },
+    "conditions": {
+      "LessThan": "Mazāks nekā",
+      "Equal": "Vienāds",
+      "GreaterThan": "Lielāks nekā",
+      "NotEqual": "Nevienāds"
+    },
     "heading": {
       "Account Linked Financial": "Ar dažādām finanšu darbībām saistīto kontu saraksts. Lai uzzinātu vairāk, noklikšķiniet:",
       "Account Name": "Konta vārds",

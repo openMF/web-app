@@ -879,6 +879,13 @@
       "Password must be at least 6 characters, no more than 50 characters long, must include at least one upper case letter, one lower case letter, one numeric digit and no space": "पासवर्ड कम्तिमा ६ क्यारेक्टर, ५० क्यारेक्टरभन्दा बढी नहुने, कम्तिमा एक अपरकेस अक्षर, एक लोअरकेस अक्षर, एक संख्यात्मक अंक र कुनै खाली ठाउँ नहुने हुनुपर्छ",
       "Password must be 12 to 50 characters long, containing at least one uppercase letter, one lowercase letter, one numeric digit, and one special character, with no spaces or consecutive repeating characters": "पासवर्ड १२ देखि ५० क्यारेक्टर लामो हुनुपर्छ, जसमा कम्तिमा एक अपरकेस अक्षर, एक लोअरकेस अक्षर, एक संख्यात्मक अंक, र एक विशेष क्यारेक्टर हुनुपर्छ, कुनै खाली ठाउँ वा लगातार दोहोरिएका क्यारेक्टरहरू नहुने"
     },
+    "conditions": {
+      "LessThan": "भन्दा कम",
+      "Equal": "बराबर",
+      "GreaterThan": "भन्दा ठुलो",
+      "NotEqual": "बराबर छैन"
+    },
+
     "heading": {
       "Account Linked Financial": "विभिन्न वित्तीय गतिविधिहरु संग जोडिएको खाताहरु को सूची। थप जान्नको लागि क्लिक गर्नुहोस्:",
       "Account Name": "खाताको नाम",
