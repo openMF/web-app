@@ -14,7 +14,7 @@ module.exports = {
     './index.html'
   ],
   theme: {
-    extends: {
+    extend: {
       animation: {
         wiggle: 'wiggle 1s ease-in-out infinite',
         'fade-in-down': 'fade-in-down 0.3s ease-out',
