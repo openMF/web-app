@@ -8,6 +8,7 @@
 
 /** Angular Imports */
 import { Component, OnInit, inject } from '@angular/core';
+import { environment } from '../../../../environments/environment';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services. */
@@ -66,6 +67,17 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class GeneralTabComponent {
+  openLoanApplicationReport(event: MouseEvent, loanId: string) {
+    event.stopPropagation();
+    const baseApiUrl = environment.baseApiUrl?.replace(/\/$/, '') || '';
+    const apiProvider = environment.apiProvider?.replace(/\/$/, '') || '';
+    const apiVersion = environment.apiVersion?.replace(/\/$/, '') || '';
+    const tenantIdentifier = environment.fineractPlatformTenantId || 'default';
+    const locale = environment.defaultLanguage || 'en';
+    const dateFormat = 'dd MMMM yyyy';
+    const reportUrl = `${baseApiUrl}${apiProvider}${apiVersion}/runreports/LoanApplicationReport?tenantIdentifier=${tenantIdentifier}&locale=${locale}&dateFormat=${encodeURIComponent(dateFormat)}&R_loanId=${loanId}&output-type=PDF`;
+    window.open(reportUrl, '_blank', 'noopener,noreferrer');
+  }
   private route = inject(ActivatedRoute);
   private clientService = inject(ClientsService);
   private router = inject(Router);
@@ -88,7 +100,8 @@ export class GeneralTabComponent {
     'Loan Balance',
     'Amount Paid',
     'Type',
-    'Closed Date'
+    'Closed Date',
+    'Actions'
   ];
   /** Open Savings Accounts Columns */
   openSavingsColumns: string[] = [

@@ -182,6 +182,18 @@
       <ng-container matColumnDef="Actions">
         <th mat-header-cell class="center" *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
         <td mat-cell class="center" *matCellDef="let element">
+          <!-- Print Icon -->
+          <button
+            class="account-action-button"
+            mat-raised-button
+            color="accent"
+            matTooltip="{{ 'tooltips.Print Loan Application' | translate }}"
+            matTooltipPosition="above"
+            aria-label="{{ 'tooltips.Print Loan Application' | translate }}"
+            (click)="openLoanApplicationReport($event, element.id)"
+          >
+            <i class="fa fa-print"></i>
+          </button>
           @if (element.status.active) {
             <button
               class="account-action-button"
@@ -303,6 +315,22 @@
       <ng-container matColumnDef="Closed Date">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Closed Date' | translate }}</th>
         <td mat-cell *matCellDef="let element">{{ element.timeline.closedOnDate | dateFormat }}</td>
+      </ng-container>
+      <ng-container matColumnDef="Actions">
+        <th mat-header-cell class="center" *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
+        <td mat-cell class="center" *matCellDef="let element">
+          <!-- Print Icon -->
+          <button
+            class="account-action-button"
+            mat-raised-button
+            color="accent"
+            matTooltip="{{ 'tooltips.Print Loan Application' | translate }}"
+            matTooltipPosition="above"
+            (click)="openLoanApplicationReport($event, element.id)"
+          >
+            <i class="fa fa-print"></i>
+          </button>
+        </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="closedLoansColumns"></tr>
       <tr
