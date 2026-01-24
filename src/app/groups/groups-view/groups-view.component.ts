@@ -7,9 +7,11 @@
  */
 
 /** Angular Imports */
-import { Component, inject } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { ActivatedRoute, Router, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 /** Custom Dialogs */
 import { UnassignStaffDialogComponent } from './custom-dialogs/unassign-staff-dialog/unassign-staff-dialog.component';
@@ -17,14 +19,13 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 
 /** Custom Services */
 import { GroupsService } from '../groups.service';
+import { DataReloadService } from 'app/core/services/data-reload.service';
 import {
-  MatCard,
   MatCardHeader,
   MatCardTitleGroup,
   MatCardMdImage,
   MatCardTitle,
-  MatCardSubtitle,
-  MatCardContent
+  MatCardSubtitle
 } from '@angular/material/card';
 import { NgClass, LowerCasePipe } from '@angular/common';
 import { MatTooltip } from '@angular/material/tooltip';
@@ -69,29 +70,41 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     DateFormatPipe
   ]
 })
-export class GroupsViewComponent {
+export class GroupsViewComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
-  private groupsService = inject(GroupsService);
   private router = inject(Router);
-  dialog = inject(MatDialog);
+  private dialog = inject(MatDialog);
+  private groupsService = inject(GroupsService);
+  private dataReloadService = inject(DataReloadService);
 
-  /** Group view data */
   groupViewData: any;
-  /** Group datatables data */
   groupDatatables: any;
 
-  /**
-   * Fetches group data from `resolve`
-   * @param {ActivatedRoute} route Activated Route
-   * @param {GroupsService} groupsService Groups Service
-   * @param {Router} router Router
-   * @param {MatDialog} dialog Dialog
-   */
-  constructor() {
-    this.route.data.subscribe((data: { groupViewData: any; groupDatatables: any }) => {
+  private reloadContext!: string;
+  private destroy$ = new Subject<void>();
+
+  ngOnInit(): void {
+    this.route.data.pipe(takeUntil(this.destroy$)).subscribe((data: { groupViewData: any; groupDatatables: any }) => {
       this.groupViewData = data.groupViewData;
       this.groupDatatables = data.groupDatatables;
+      this.reloadContext = `group-${this.groupViewData.id}`;
+
+      // Subscribe to reload events after we have the group ID
+      this.dataReloadService
+        .getReloadObservable(this.reloadContext)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(() => {
+          this.refreshData();
+        });
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+    if (this.reloadContext) {
+      this.dataReloadService.cleanup(this.reloadContext);
+    }
   }
 
   /**
@@ -116,8 +129,12 @@ export class GroupsViewComponent {
         }
         break;
       case 'Edit Meeting':
-        const queryParams: any = { calendarId: this.groupViewData.collectionMeetingCalendar.id };
-        this.router.navigate([`actions/${name}`], { relativeTo: this.route, queryParams: queryParams });
+        this.router.navigate([`actions/${name}`], {
+          relativeTo: this.route,
+          queryParams: {
+            calendarId: this.groupViewData.collectionMeetingCalendar.id
+          }
+        });
         break;
       case 'Edit':
         this.router.navigate(['edit'], { relativeTo: this.route });
@@ -136,36 +153,43 @@ export class GroupsViewComponent {
   /**
    * Checks if meeting is editable.
    */
-  get editMeeting() {
-    if (this.groupViewData.collectionMeetingCalendar) {
-      const entityType = this.groupViewData.collectionMeetingCalendar.entityType.value;
-      if (entityType === 'GROUPS' && this.groupViewData.hierarchy === '.' + this.groupViewData.id + '.') {
-        return true;
-      }
+  get editMeeting(): boolean {
+    if (!this.groupViewData?.collectionMeetingCalendar) {
+      return false;
     }
-    return false;
+
+    const entityType = this.groupViewData.collectionMeetingCalendar.entityType.value;
+    return entityType === 'GROUPS' && this.groupViewData.hierarchy === `.${this.groupViewData.id}.`;
   }
   /**
-   * Refetches data for the component
-   * TODO: Replace by a custom reload component instead of hard-coded back-routing.
+   * Triggers a reload event for this group.
    */
-  reload() {
-    const url: string = this.router.url;
-    this.router.navigateByUrl(`/groups`, { skipLocationChange: true }).then(() => this.router.navigate([url]));
+  reload(): void {
+    this.dataReloadService.triggerReload(this.reloadContext);
+  }
+
+  /**
+   * Refreshes the group data when reload is triggered.
+   */
+  private refreshData(): void {
+    this.groupsService
+      .getGroupData(this.groupViewData.id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        this.groupViewData = data;
+      });
   }
 
   /**
    * Unassign's the group's staff.
    */
-  private unassignStaff() {
-    const unAssignStaffDialogRef = this.dialog.open(UnassignStaffDialogComponent);
-    unAssignStaffDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
-      if (response.confirm) {
+  private unassignStaff(): void {
+    const dialogRef = this.dialog.open(UnassignStaffDialogComponent);
+    dialogRef.afterClosed().subscribe((response: { confirm: boolean }) => {
+      if (response?.confirm) {
         this.groupsService
           .executeGroupCommand(this.groupViewData.id, 'unassignStaff', { staffId: this.groupViewData.staffId })
-          .subscribe(() => {
-            this.reload();
-          });
+          .subscribe(() => this.reload());
       }
     });
   }
@@ -173,14 +197,17 @@ export class GroupsViewComponent {
   /**
    * Deletes the group
    */
-  private deleteGroup() {
-    const deleteGroupDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `group with id: ${this.groupViewData.id}` }
+  private deleteGroup(): void {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: {
+        deleteContext: `group with id: ${this.groupViewData.id}`
+      }
     });
-    deleteGroupDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
+
+    dialogRef.afterClosed().subscribe((response: any) => {
+      if (response?.delete) {
         this.groupsService.deleteGroup(this.groupViewData.id).subscribe(() => {
-          this.router.navigate(['/groups'], { relativeTo: this.route });
+          this.router.navigate(['/groups']);
         });
       }
     });
