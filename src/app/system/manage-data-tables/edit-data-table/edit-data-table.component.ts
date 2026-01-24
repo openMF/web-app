@@ -29,6 +29,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { SystemService } from '../../system.service';
+import { Datatables } from 'app/core/utils/datatables';
 
 /** Data Imports */
 import { appTableData, entitySubTypeData } from '../app-table-data';
@@ -77,6 +78,7 @@ export class EditDataTableComponent implements OnInit {
   private router = inject(Router);
   private dialog = inject(MatDialog);
   private translateService = inject(TranslateService);
+  public datatables = inject(Datatables);
 
   /** Data Table Form. */
   dataTableForm: UntypedFormGroup;
@@ -225,13 +227,11 @@ export class EditDataTableComponent implements OnInit {
 
   /**
    * Initializes data table changes and column data.
+   * Filters out system columns (id, created_at, updated_at) using centralized utility.
    */
   initData() {
-    // Remove the 'id' column if it exists (primary key for multi-row datatables)
-    // but keep the relationship column visible (it's already marked as system)
-    if (this.columnData.length > 0 && this.columnData[0].columnName === 'id') {
-      this.columnData.shift();
-    }
+    // Use filterSystemColumns to remove all system fields consistently
+    this.columnData = this.datatables.filterSystemColumns(this.columnData);
 
     this.dataTableChangesData.apptableName = this.dataTableData.applicationTableName;
     this.dataTableChangesData.entitySubType = this.dataTableData.entitySubType;

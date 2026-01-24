@@ -124,11 +124,12 @@ export class ViewDataTableComponent implements OnInit {
 
   /**
    * Initializes the data source, paginator and sorter for columns table.
+   * Filters out system columns (id, created_at, updated_at) using centralized utility.
    */
   setColumnsTable() {
-    this.columnsData.shift();
-    // TODO: Figure out a better approach in order to pass only updated parameters instead of all of them.
-    this.dataSource = new MatTableDataSource(this.columnsData);
+    // Use filterSystemColumns to remove system fields without mutating original data
+    const filteredColumns = this.datatables.filterSystemColumns(this.columnsData);
+    this.dataSource = new MatTableDataSource(filteredColumns);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }

@@ -25,7 +25,8 @@ export class DataTableResolver {
 
   /**
    * Returns the Data Table data.
-   * TODO: Delete the extra column to avoid multiple usages of `this.columnsData.shift()`.
+   * Note: System columns (id, created_at, updated_at) are filtered by components
+   * using the Datatables.filterSystemColumns() utility method.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
