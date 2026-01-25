@@ -893,4 +893,14 @@
       [routerLink]="['../', 'client-collateral', row.collateralId]"
     ></tr>
   </table>
+
+  <!-- PDF Viewer Modal -->
+  <div *ngIf="showPdf" class="pdf-modal-overlay">
+    <div class="pdf-modal-content">
+      <button mat-icon-button class="pdf-modal-close" (click)="closePdf()" aria-label="Close PDF">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <embed [src]="pdfUrl" type="application/pdf" width="100%" height="600px" />
+    </div>
+  </div>
 </div>

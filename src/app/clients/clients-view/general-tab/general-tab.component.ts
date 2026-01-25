@@ -7,9 +7,9 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
-import { environment } from '../../../../environments/environment';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 /** Custom Services. */
 import { ClientsService } from 'app/clients/clients.service';
@@ -35,6 +35,12 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 import { CurrencyPipe } from '@angular/common';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { ReportsService } from 'app/reports/reports.service';
+import { SettingsService } from 'app/settings/settings.service';
+import { Subject } from 'rxjs';
+import { takeUntil, catchError } from 'rxjs/operators';
+import { AlertService } from 'app/core/alert/alert.service';
+import { EMPTY } from 'rxjs';
 
 /**
  * General Tab component.
@@ -66,21 +72,76 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     CurrencyPipe
   ]
 })
-export class GeneralTabComponent {
+export class GeneralTabComponent implements OnDestroy {
+  private destroy$ = new Subject<void>();
+  private alertService = inject(AlertService);
+  private sanitizer = inject(DomSanitizer);
+  pdfUrl: SafeResourceUrl | null = null;
+  rawPdfUrl: string | null = null;
+  showPdf: boolean = false;
+
   openLoanApplicationReport(event: MouseEvent, loanId: string) {
     event.stopPropagation();
-    const baseApiUrl = environment.baseApiUrl?.replace(/\/$/, '') || '';
-    const apiProvider = environment.apiProvider?.replace(/\/$/, '') || '';
-    const apiVersion = environment.apiVersion?.replace(/\/$/, '') || '';
-    const tenantIdentifier = environment.fineractPlatformTenantId || 'default';
-    const locale = environment.defaultLanguage || 'en';
-    const dateFormat = 'dd MMMM yyyy';
-    const reportUrl = `${baseApiUrl}${apiProvider}${apiVersion}/runreports/LoanApplicationReport?tenantIdentifier=${tenantIdentifier}&locale=${locale}&dateFormat=${encodeURIComponent(dateFormat)}&R_loanId=${loanId}&output-type=PDF`;
-    window.open(reportUrl, '_blank', 'noopener,noreferrer');
+    const tenantIdentifier = this.settingsService.tenantIdentifier || 'default';
+    const locale = this.settingsService.languageCode || 'en-US';
+    const dateFormat = this.settingsService.dateFormat || 'dd MMMM yyyy';
+    const formData = { R_loanId: loanId, 'output-type': 'PDF' };
+    this.reportsService
+      .getPentahoRunReportData('LoanApplicationReport', formData, tenantIdentifier, locale, dateFormat)
+      .pipe(
+        takeUntil(this.destroy$),
+        catchError((error): any => {
+          this.showPdf = false;
+          if (this.rawPdfUrl) {
+            URL.revokeObjectURL(this.rawPdfUrl);
+            this.rawPdfUrl = null;
+          }
+          this.pdfUrl = null;
+          this.alertService.alert({
+            type: 'error',
+            message: 'Failed to load Loan Application PDF report.'
+          });
+          return EMPTY;
+        })
+      )
+      .subscribe((res: any) => {
+        if (this.rawPdfUrl) {
+          URL.revokeObjectURL(this.rawPdfUrl);
+          this.rawPdfUrl = null;
+          this.pdfUrl = null;
+        }
+        const contentType = res.headers.get('Content-Type') || 'application/pdf';
+        const file = new Blob([res.body], { type: contentType });
+        this.rawPdfUrl = URL.createObjectURL(file);
+        this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.rawPdfUrl);
+        this.showPdf = true;
+      });
   }
+
+  closePdf() {
+    this.showPdf = false;
+    if (this.rawPdfUrl) {
+      URL.revokeObjectURL(this.rawPdfUrl);
+      this.rawPdfUrl = null;
+    }
+    this.pdfUrl = null;
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+    if (this.rawPdfUrl) {
+      URL.revokeObjectURL(this.rawPdfUrl);
+      this.rawPdfUrl = null;
+    }
+    this.pdfUrl = null;
+  }
+
   private route = inject(ActivatedRoute);
   private clientService = inject(ClientsService);
   private router = inject(Router);
+  private reportsService = inject(ReportsService);
+  private settingsService = inject(SettingsService);
 
   /** Open Loan Accounts Columns */
   openLoansColumns: string[] = [
