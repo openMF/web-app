@@ -45,7 +45,7 @@ export class LoanProductCurrencyStepComponent implements OnInit {
       digitsAfterDecimal: this.loanProductsTemplate.currency.decimalPlaces
         ? this.loanProductsTemplate.currency.decimalPlaces
         : 2,
-      inMultiplesOf: this.loanProductsTemplate.currency.inMultiplesOf ?? 1,
+      inMultiplesOf: this.loanProductsTemplate.currency.inMultiplesOf || '',
       installmentAmountInMultiplesOf: this.loanProductsTemplate.installmentAmountInMultiplesOf ?? 1
     });
   }
@@ -64,7 +64,7 @@ export class LoanProductCurrencyStepComponent implements OnInit {
         ]
       ],
       inMultiplesOf: [
-        1,
+        '',
         [
           Validators.required,
           Validators.min(1)
