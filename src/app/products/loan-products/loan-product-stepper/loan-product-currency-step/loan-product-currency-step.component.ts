@@ -42,11 +42,24 @@ export class LoanProductCurrencyStepComponent implements OnInit {
     this.currencyData = this.loanProductsTemplate.currencyOptions;
     this.loanProductCurrencyForm.patchValue({
       currencyCode: this.loanProductsTemplate.currency.code || this.currencyData[0].code,
-      digitsAfterDecimal: this.loanProductsTemplate.currency.decimalPlaces
-        ? this.loanProductsTemplate.currency.decimalPlaces
-        : 2,
-      inMultiplesOf: this.loanProductsTemplate.currency.inMultiplesOf || '',
-      installmentAmountInMultiplesOf: this.loanProductsTemplate.installmentAmountInMultiplesOf ?? 1
+      digitsAfterDecimal:
+        this.loanProductsTemplate.currency.decimalPlaces === 0 ||
+        this.loanProductsTemplate.currency.decimalPlaces === undefined ||
+        this.loanProductsTemplate.currency.decimalPlaces === null
+          ? ''
+          : this.loanProductsTemplate.currency.decimalPlaces,
+      inMultiplesOf:
+        this.loanProductsTemplate.currency.inMultiplesOf === 0 ||
+        this.loanProductsTemplate.currency.inMultiplesOf === undefined ||
+        this.loanProductsTemplate.currency.inMultiplesOf === null
+          ? ''
+          : this.loanProductsTemplate.currency.inMultiplesOf,
+      installmentAmountInMultiplesOf:
+        this.loanProductsTemplate.installmentAmountInMultiplesOf === 0 ||
+        this.loanProductsTemplate.installmentAmountInMultiplesOf === undefined ||
+        this.loanProductsTemplate.installmentAmountInMultiplesOf === null
+          ? ''
+          : this.loanProductsTemplate.installmentAmountInMultiplesOf
     });
   }
 
@@ -57,7 +70,7 @@ export class LoanProductCurrencyStepComponent implements OnInit {
         Validators.required
       ],
       digitsAfterDecimal: [
-        2,
+        '',
         [
           Validators.required,
           Validators.min(0)
