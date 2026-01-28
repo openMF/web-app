@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { TasksService } from '../tasks.service';
+import { OfficesService } from '@fineract/client';
 
 /**
  * Offices data resolver.
@@ -13,15 +13,15 @@ import { TasksService } from '../tasks.service';
 @Injectable()
 export class GetOffices {
   /**
-   * @param {TasksService} tasksService Tasks service.
+   * @param {OfficesService} officesService Offices service.
    */
-  constructor(private tasksService: TasksService) {}
+  constructor(private officesService: OfficesService) {}
 
   /**
    * Returns the offices data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.tasksService.getAllOffices();
+    return this.officesService.retrieveOffices();
   }
 }

@@ -11,8 +11,8 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 
 import { jsPDF, jsPDFOptions } from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import { NgIf, NgClass, CurrencyPipe } from '@angular/common';
-import { MatButton, MatIconButton } from '@angular/material/button';
+import { NgClass, CurrencyPipe } from '@angular/common';
+import { MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import {
   MatTable,
@@ -172,6 +172,7 @@ export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
     if (!installment.fromDate) {
       return '';
     } else {
+      this.businessDate = this.settingsService.businessDate;
       const fromDate = this.dateUtils.parseDate(installment.fromDate);
       const dueDate = this.dateUtils.parseDate(installment.dueDate);
       if (fromDate <= this.businessDate && this.businessDate < dueDate) {

@@ -6,7 +6,7 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Entity' | translate }}</mat-label>
             <mat-select required formControlName="entity">
-              <mat-option *ngFor="let entity of templateData.entities" [value]="entity.id">
+              <mat-option *ngFor="let entity of templateData.entities; trackBy: trackByEntityId" [value]="entity.id">
                 {{ entity.name }}
               </mat-option>
             </mat-select>
@@ -19,7 +19,7 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
             <mat-select required formControlName="type">
-              <mat-option *ngFor="let type of templateData.types" [value]="type.id">
+              <mat-option *ngFor="let type of templateData.types; trackBy: trackByTypeId" [value]="type.id">
                 {{ type.name }}
               </mat-option>
             </mat-select>
@@ -41,114 +41,123 @@
       </mat-card-content>
     </form>
 
-    <div role="toggle" class="flex-33">
-      <button mat-raised-button color="primary" (click)="showAdvanceOptions = !showAdvanceOptions">
-        {{ 'labels.buttons.Advanced Options' | translate }}
-      </button>
-    </div>
-
-    <ng-container role="mappers" *ngIf="showAdvanceOptions">
-      <div *ngFor="let mapper of mappers; index as i" class="layout-row gap-2percent">
-        <mat-form-field class="flex-48">
-          <mat-label>{{ 'labels.inputs.Mapper Key' | translate }}</mat-label>
-          <input matInput [formControl]="mapper.mapperskey" />
-        </mat-form-field>
-
-        <mat-form-field class="flex-fill flex-38">
-          <mat-label>{{ 'labels.inputs.Mapper Value' | translate }}</mat-label>
-          <input matInput [formControl]="mapper.mappersvalue" />
-        </mat-form-field>
-
-        <button *ngIf="i === 0" class="mapper-button flex-8" mat-raised-button color="primary" (click)="addMapper()">
-          <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
-        </button>
-        <button
-          *ngIf="!(i === 0)"
-          class="mapper-button flex-9"
-          mat-raised-button
-          color="primary"
-          (click)="removeMapper(i)"
-        >
-          <fa-icon icon="minus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Remove' | translate }}
+    <mat-card-content>
+      <div role="toggle" class="advanced-options-wrapper">
+        <button mat-raised-button color="primary" (click)="showAdvanceOptions = !showAdvanceOptions">
+          {{ 'labels.buttons.Advanced Options' | translate }}
         </button>
       </div>
-    </ng-container>
 
-    <div role="editor">
-      <label for="ckeditor" class="required-label required-label-ckeditor">
-        {{ 'labels.inputs.Text' | translate }} <span class="required-asterisk">*</span>
-      </label>
-      <ckeditor
-        #ckEditor
-        [editor]="Editor"
-        (change)="onEditorChange($event)"
-        [data]="templateData.template?.text"
-      ></ckeditor>
-    </div>
+      <ng-container role="mappers" *ngIf="showAdvanceOptions">
+        <div
+          *ngFor="let mapper of mappers; index as i; trackBy: trackByMapperIndex"
+          class="mapper-row layout-row gap-2percent"
+        >
+          <mat-form-field class="flex-48">
+            <mat-label>{{ 'labels.inputs.Mapper Key' | translate }}</mat-label>
+            <input matInput [formControl]="mapper.mapperskey" />
+          </mat-form-field>
 
-    <div role="template-parameters">
-      <mat-accordion>
-        <mat-expansion-panel *ngIf="templateForm.controls.entity.value === 0">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              {{ 'labels.inputs.Client Parameters' | translate }}
-            </mat-panel-title>
-          </mat-expansion-panel-header>
+          <mat-form-field class="flex-fill flex-38">
+            <mat-label>{{ 'labels.inputs.Mapper Value' | translate }}</mat-label>
+            <input matInput [formControl]="mapper.mappersvalue" />
+          </mat-form-field>
 
-          <div class="layout-row-wrap layout-xs-column layout-align-center">
-            <button
-              mat-stroked-button
-              color="primary"
-              class="parameter"
-              *ngFor="let label of clientParameterLabels"
-              (click)="addText(label)"
-            >
-              {{ label }}
-            </button>
-          </div>
-        </mat-expansion-panel>
+          <button *ngIf="i === 0" class="mapper-button flex-8" mat-raised-button color="primary" (click)="addMapper()">
+            <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
+          </button>
+          <button
+            *ngIf="!(i === 0)"
+            class="mapper-button flex-9"
+            mat-raised-button
+            color="primary"
+            (click)="removeMapper(i)"
+          >
+            <fa-icon icon="minus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Remove' | translate }}
+          </button>
+        </div>
+      </ng-container>
+    </mat-card-content>
 
-        <mat-expansion-panel *ngIf="templateForm.controls.entity.value === 1">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              {{ 'labels.inputs.Loan Parameters' | translate }}
-            </mat-panel-title>
-          </mat-expansion-panel-header>
+    <mat-card-content>
+      <div role="editor" class="editor-wrapper">
+        <label for="ckeditor" class="required-label required-label-ckeditor">
+          {{ 'labels.inputs.Text' | translate }} <span class="required-asterisk">*</span>
+        </label>
+        <ckeditor
+          #ckEditor
+          [editor]="Editor"
+          (change)="onEditorChange($event)"
+          [data]="templateData.template?.text"
+        ></ckeditor>
+      </div>
+    </mat-card-content>
 
-          <div class="layout-row-wrap layout-xs-column layout-align-center">
-            <button
-              mat-stroked-button
-              color="primary"
-              class="parameter"
-              *ngFor="let label of loanParameterLabels"
-              (click)="addText(label)"
-            >
-              {{ label }}
-            </button>
-          </div>
-        </mat-expansion-panel>
+    <mat-card-content>
+      <div role="template-parameters">
+        <mat-accordion>
+          <mat-expansion-panel *ngIf="templateForm.controls.entity.value === 0">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{ 'labels.inputs.Client Parameters' | translate }}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
 
-        <mat-expansion-panel *ngIf="templateForm.controls.entity.value === 1">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              {{ 'labels.inputs.Repayment Schedule Parameters' | translate }}
-            </mat-panel-title>
-          </mat-expansion-panel-header>
+            <div class="layout-row-wrap layout-xs-column layout-align-center">
+              <button
+                mat-stroked-button
+                color="primary"
+                class="parameter"
+                *ngFor="let label of clientParameterLabels; trackBy: trackByLabel"
+                (click)="addText(label)"
+              >
+                {{ label }}
+              </button>
+            </div>
+          </mat-expansion-panel>
 
-          <div class="layout-row-wrap layout-xs-column layout-align-center">
-            <button
-              mat-stroked-button
-              color="primary"
-              class="parameter"
-              *ngFor="let label of repaymentParameterLabels"
-              (click)="addText(label)"
-            >
-              {{ label }}
-            </button>
-          </div>
-        </mat-expansion-panel>
-      </mat-accordion>
-    </div>
+          <mat-expansion-panel *ngIf="templateForm.controls.entity.value === 1">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{ 'labels.inputs.Loan Parameters' | translate }}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="layout-row-wrap layout-xs-column layout-align-center">
+              <button
+                mat-stroked-button
+                color="primary"
+                class="parameter"
+                *ngFor="let label of loanParameterLabels; trackBy: trackByLabel"
+                (click)="addText(label)"
+              >
+                {{ label }}
+              </button>
+            </div>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel *ngIf="templateForm.controls.entity.value === 1">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{ 'labels.inputs.Repayment Schedule Parameters' | translate }}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="layout-row-wrap layout-xs-column layout-align-center">
+              <button
+                mat-stroked-button
+                color="primary"
+                class="parameter"
+                *ngFor="let label of repaymentParameterLabels; trackBy: trackByLabel"
+                (click)="addText(label)"
+              >
+                {{ label }}
+              </button>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </mat-card-content>
 
     <mat-card-actions class="m-b-20 layout-row layout-xs-column layout-align-center gap-5px">
       <button type="button" mat-raised-button [routerLink]="['../']">{{ 'labels.buttons.Cancel' | translate }}</button>

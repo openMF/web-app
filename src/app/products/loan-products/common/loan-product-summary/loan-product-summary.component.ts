@@ -117,6 +117,7 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
   chargeOffReasonToExpenseAccountMappings: ChargeOffReasonToExpenseAccountMapping[] = [];
   buydownFeeClassificationToIncomeAccountMappings: ClassificationToIncomeAccountMapping[] = [];
   capitalizedIncomeClassificationToIncomeAccountMappings: ClassificationToIncomeAccountMapping[] = [];
+  writeOffReasonsToExpenseMappings: ChargeOffReasonToExpenseAccountMapping[] = [];
 
   constructor(private accounting: Accounting) {}
 
@@ -152,6 +153,7 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
         this.loanProduct.buydownFeeClassificationToIncomeAccountMappings || [];
       this.capitalizedIncomeClassificationToIncomeAccountMappings =
         this.loanProduct.capitalizedIncomeClassificationToIncomeAccountMappings || [];
+      this.writeOffReasonsToExpenseMappings = this.loanProduct.writeOffReasonsToExpenseMappings || [];
     } else {
       this.accountingMappings = {};
 
@@ -166,6 +168,7 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
         const assetAndLiabilityAccountData =
           this.loanProductsTemplate.accountingMappingOptions.assetAndLiabilityAccountOptions || [];
         const chargeOffReasonOptions: any = this.loanProductsTemplate.chargeOffReasonOptions || [];
+        const writeOffReasonOptions: any = this.loanProductsTemplate.writeOffReasonOptions || [];
         const buydownFeeClassificationOptions: any = this.loanProductsTemplate.buydownFeeClassificationOptions || [];
         const capitalizedIncomeClassificationOptions: any =
           this.loanProductsTemplate.capitalizedIncomeClassificationOptions || [];
@@ -269,7 +272,7 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
               let optionData = this.optionDataLookUp(m.chargeOffReasonCodeValueId, chargeOffReasonOptions);
               this.chargeOffReasonToExpenseAccountMappings.push({
                 expenseAccount: this.glAccountLookUp(m.expenseAccountId, expenseAccountData),
-                chargeOffReasonCodeValue: {
+                reasonCodeValue: {
                   id: optionData.id,
                   name: optionData.value
                 } as CodeValue
@@ -279,8 +282,8 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
         }
 
         this.buydownFeeClassificationToIncomeAccountMappings = [];
-        if (this.loanProduct.buydownFeeClassificationToIncomeAccountMappings?.length > 0) {
-          this.loanProduct.buydownFeeClassificationToIncomeAccountMappings.forEach((m: any) => {
+        if (this.loanProduct.buydownfeeClassificationToIncomeAccountMappings?.length > 0) {
+          this.loanProduct.buydownfeeClassificationToIncomeAccountMappings.forEach((m: any) => {
             let optionData = this.optionDataLookUp(m.classificationCodeValueId, buydownFeeClassificationOptions);
             if (optionData !== null) {
               this.buydownFeeClassificationToIncomeAccountMappings.push({
@@ -301,6 +304,22 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
               this.capitalizedIncomeClassificationToIncomeAccountMappings.push({
                 incomeAccount: this.glAccountLookUp(m.incomeAccountId, incomeAccountData),
                 classificationCodeValue: {
+                  id: optionData.id,
+                  name: optionData.value
+                } as CodeValue
+              });
+            }
+          });
+        }
+
+        this.writeOffReasonsToExpenseMappings = [];
+        if (this.loanProduct.writeOffReasonsToExpenseMappings?.length > 0) {
+          this.loanProduct.writeOffReasonsToExpenseMappings.forEach((m: any) => {
+            let optionData = this.optionDataLookUp(m.writeOffReasonCodeValueId, writeOffReasonOptions);
+            if (optionData !== null) {
+              this.writeOffReasonsToExpenseMappings.push({
+                expenseAccount: this.glAccountLookUp(m.expenseAccountId, expenseAccountData),
+                reasonCodeValue: {
                   id: optionData.id,
                   name: optionData.value
                 } as CodeValue
@@ -618,8 +637,9 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
       this.loanProduct.feeToIncomeAccountMappings?.length > 0 ||
       this.loanProduct.penaltyToIncomeAccountMappings?.length > 0 ||
       this.loanProduct.chargeOffReasonToExpenseAccountMappings?.length > 0 ||
-      this.loanProduct.buydownFeeClassificationToIncomeAccountMappings?.length > 0 ||
-      this.loanProduct.capitalizedIncomeClassificationToIncomeAccountMappings?.length > 0
+      this.loanProduct.buydownfeeClassificationToIncomeAccountMappings?.length > 0 ||
+      this.loanProduct.capitalizedIncomeClassificationToIncomeAccountMappings?.length > 0 ||
+      this.loanProduct.writeOffReasonsToExpenseMappings?.length > 0
     );
   }
 

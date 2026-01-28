@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
-import { TasksService } from 'app/tasks/tasks.service';
+import { LoanAccountLockService } from '@fineract/client';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
@@ -8,15 +8,15 @@ import { Observable, of } from 'rxjs';
 })
 export class LoanLockedResolver {
   /**
-   * @param {TasksService} tasksService Tasks service.
+   * @param {LoanAccountLockService} loanAccountLockService Loan Account Lock service.
    */
-  constructor(private tasksService: TasksService) {}
+  constructor(private loanAccountLockService: LoanAccountLockService) {}
 
   /**
    * Returns all the loans data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.tasksService.getAllLoansLocked(0, 200);
+    return this.loanAccountLockService.retrieveLockedAccounts();
   }
 }

@@ -1,0 +1,49 @@
+// Advanced Options button wrapper - aligns with Name field above
+.advanced-options-wrapper {
+  margin-bottom: 16px;
+}
+
+// Mapper row styling - adds space between Advanced Options button and Mapper Key field
+.mapper-row {
+  margin-top: 16px;
+  margin-bottom: 8px;
+
+  // Ensure buttons don't touch the right border
+  .mapper-button {
+    margin-left: 8px;
+  }
+}
+
+// Editor wrapper - prevents CKEditor from touching borders on left and right
+.editor-wrapper {
+  margin-top: 16px;
+
+  .required-label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .required-asterisk {
+    color: #f44336;
+  }
+
+  // CKEditor container spacing
+  ::ng-deep {
+    .ck-editor {
+      margin: 0;
+
+      .ck-editor__main {
+        .ck-content {
+          min-height: 200px;
+        }
+      }
+    }
+  }
+}
+
+// Ensure mat-card-content has consistent padding
+mat-card-content {
+  padding: 16px;
+}

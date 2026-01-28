@@ -22,7 +22,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 
 /** Custom Services */
-import { TasksService } from '../../tasks.service';
+import { BatchAPIService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { TranslateService } from '@ngx-translate/core';
@@ -85,7 +85,7 @@ export class RescheduleLoanComponent {
    * @param {Dates} dateUtils Date Utils.
    * @param {router} router Router.
    * @param {SettingsService} settingsService Settings Service.
-   * @param {TasksService} tasksService Tasks Service.
+   * @param {BatchAPIService} batchAPIService Batch API Service.
    */
   constructor(
     private route: ActivatedRoute,
@@ -94,7 +94,7 @@ export class RescheduleLoanComponent {
     private router: Router,
     private settingsService: SettingsService,
     private translateService: TranslateService,
-    private tasksService: TasksService
+    private batchAPIService: BatchAPIService
   ) {
     this.route.data.subscribe((data: { recheduleLoansData: any }) => {
       this.loans = data.recheduleLoansData;
@@ -164,7 +164,7 @@ export class RescheduleLoanComponent {
       const batchData = { requestId: reqId++, relativeUrl: url, method: 'POST', body: bodyData };
       this.batchRequests.push(batchData);
     });
-    this.tasksService.submitBatchData(this.batchRequests).subscribe((response: any) => {
+    this.batchAPIService.handleBatchRequests({ batchRequest: this.batchRequests }).subscribe((response: any) => {
       this.reload();
     });
   }

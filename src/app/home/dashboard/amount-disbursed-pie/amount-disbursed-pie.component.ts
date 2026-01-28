@@ -4,7 +4,7 @@ import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
-import { HomeService } from '../../home.service';
+import { HomeService } from 'app/customApis.service';
 
 /** Charting Imports */
 import Chart from 'chart.js';

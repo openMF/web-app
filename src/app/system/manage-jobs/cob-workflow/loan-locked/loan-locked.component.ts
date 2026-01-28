@@ -20,7 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { LoansService } from '@fineract/client';
 import { ErrorDialogComponent } from 'app/shared/error-dialog/error-dialog.component';
 import { SystemService } from 'app/system/system.service';
-import { TasksService } from 'app/tasks/tasks.service';
+import { LoanAccountLockService } from '@fineract/client';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -94,13 +94,14 @@ export class LoanLockedComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    * @param {TranslateService} translateService Translate Service.
+   * @param {LoanAccountLockService} tasksService Loan Account Lock Service.
    */
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private loansService: LoansService,
     private systemService: SystemService,
-    private tasksService: TasksService,
+    private loanAccountLockService: LoanAccountLockService,
     private dialog: MatDialog,
     private translateService: TranslateService
   ) {}
@@ -122,7 +123,7 @@ export class LoanLockedComponent implements OnInit {
   }
 
   getLoansLocked(page: number) {
-    this.tasksService.getAllLoansLocked(page, this.itemsToRead).subscribe((data: any) => {
+    this.loanAccountLockService.retrieveLockedAccounts({ page: page }).subscribe((data: any) => {
       this.loans = data.content;
       this.dataSource = new MatTableDataSource(this.loans);
       this.dataSource.paginator = this.paginator;

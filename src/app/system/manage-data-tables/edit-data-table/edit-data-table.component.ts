@@ -154,11 +154,17 @@ export class EditDataTableComponent implements OnInit {
   ) {
     this.route.data.subscribe((data: { dataTable: any; columnCodes: any }) => {
       this.dataTableData = data.dataTable;
+
+      // Get the relationship column name based on application table
+      const relationshipColumnName = this.getRelationshipColumnName(this.dataTableData.applicationTableName);
+
       this.dataTableData.columnHeaderData.forEach((item: any) => {
+        // Mark system columns (id, created_at, updated_at) and relationship column as system
         item.system = [
-          'created_at',
-          'updated_at'
-        ].includes(item.columnName);
+            'id',
+            'created_at',
+            'updated_at'
+          ].includes(item.columnName) || item.columnName === relationshipColumnName;
       });
       this.columnData = this.dataTableData.columnHeaderData;
       this.dataForDialog.columnCodes = data.columnCodes;
@@ -166,7 +172,30 @@ export class EditDataTableComponent implements OnInit {
   }
 
   /**
-   * Creates and sets data table form and columns table.
+   * Gets the relationship column name.
+   * @param {string} appTableName Application table name.
+   * @returns {string} Relationship column name.
+   */
+  getRelationshipColumnName(appTableName: string): string {
+    // Map application table names to their relationship column names
+    const tableToColumnMap: { [key: string]: string } = {
+      m_client: 'client_id',
+      m_group: 'group_id',
+      m_center: 'center_id',
+      m_office: 'office_id',
+      m_loan: 'loan_id',
+      m_savings_account: 'savings_account_id',
+      m_savings_account_transaction: 'savings_transaction_id',
+      m_product_loan: 'product_loan_id',
+      m_savings_product: 'savings_product_id',
+      m_share_product: 'share_product_id'
+    };
+
+    return tableToColumnMap[appTableName] || '';
+  }
+
+  /**
+   * Create and set data table form and columns table.
    */
   ngOnInit() {
     this.initData();
@@ -190,7 +219,12 @@ export class EditDataTableComponent implements OnInit {
    * Initializes data table changes and column data.
    */
   initData() {
-    this.columnData.shift();
+    // Remove the 'id' column if it exists (primary key for multi-row datatables)
+    // but keep the relationship column visible (it's already marked as system)
+    if (this.columnData.length > 0 && this.columnData[0].columnName === 'id') {
+      this.columnData.shift();
+    }
+
     this.dataTableChangesData.apptableName = this.dataTableData.applicationTableName;
     this.dataTableChangesData.entitySubType = this.dataTableData.entitySubType;
     for (let index = 0; index < this.columnData.length; index++) {

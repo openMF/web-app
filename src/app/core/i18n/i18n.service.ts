@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 export class I18nService {
   constructor(private translateService: TranslateService) {}
 
-  public translate(key: string): Observable<string> {
-    return this.translateService.get(key);
+  public translate(key: string, params?: object): Observable<string> {
+    return this.translateService.get(key, params);
   }
 }

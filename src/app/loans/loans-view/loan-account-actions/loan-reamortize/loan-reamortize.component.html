@@ -4,8 +4,32 @@
       <mat-card-content>
         <div class="layout-column">
           <mat-form-field>
+            <mat-label>{{ 'labels.inputs.Interest Handling' | translate }}</mat-label>
+            <mat-select formControlName="reAmortizationInterestHandling">
+              <mat-option
+                *ngFor="
+                  let reAmortizationInterestHandlingOption of reAmortizationInterestHandlingOptions;
+                  trackBy: trackByInterestHandlingOption
+                "
+                [value]="reAmortizationInterestHandlingOption.id"
+              >
+                {{ reAmortizationInterestHandlingOption.value | translateKey: 'catalogs' }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="layout-column">
+          <mat-form-field>
             <mat-label>{{ 'labels.inputs.Reason' | translate }}</mat-label>
-            <input matInput formControlName="note" />
+            <mat-select formControlName="reasonCodeValueId">
+              <mat-option
+                *ngFor="let reAmortizationReasonOption of reAmortizationReasonOptions; trackBy: trackByReasonOption"
+                [value]="reAmortizationReasonOption.id"
+              >
+                {{ reAmortizationReasonOption.name }}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
         </div>
 
@@ -13,6 +37,13 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
             <input matInput formControlName="externalId" />
+          </mat-form-field>
+        </div>
+
+        <div class="layout-column">
+          <mat-form-field>
+            <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>
+            <input matInput formControlName="note" />
           </mat-form-field>
         </div>
 

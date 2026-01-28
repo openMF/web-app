@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { TasksService } from '../tasks.service';
+import { RescheduleLoansService } from '@fineract/client';
 
 /**
  * Pending Reschedule Loans data resolver.
@@ -13,15 +13,15 @@ import { TasksService } from '../tasks.service';
 @Injectable()
 export class GetRescheduleLoans {
   /**
-   * @param {TasksService} tasksService Tasks service.
+   * @param {RescheduleLoansService} rescheduleLoansService Reschedule Loans service.
    */
-  constructor(private tasksService: TasksService) {}
+  constructor(private rescheduleLoansService: RescheduleLoansService) {}
 
   /**
    * Returns the pending reschedule data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.tasksService.getPendingRescheduleLoans();
+    return this.rescheduleLoansService.retrieveAllRescheduleRequest();
   }
 }
