@@ -133,8 +133,10 @@ export class CreateSavingsAccountComponent {
       charges: this.savingsAccount.charges.map((charge: any) => ({
         chargeId: charge.id,
         amount: charge.amount,
-        dueDate: charge.dueDate,
-        feeOnMonthDay: charge.feeOnMonthDay,
+        dueDate: charge.dueDate ? this.dateUtils.formatDate(charge.dueDate, dateFormat) : charge.dueDate,
+        feeOnMonthDay: charge.feeOnMonthDay
+          ? this.dateUtils.formatDate(charge.feeOnMonthDay, monthDayFormat)
+          : charge.feeOnMonthDay,
         feeInterval: charge.feeInterval
       })),
       submittedOnDate: this.dateUtils.formatDate(this.savingsAccount.submittedOnDate, dateFormat),
