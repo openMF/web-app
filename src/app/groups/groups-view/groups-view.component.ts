@@ -143,6 +143,9 @@ export class GroupsViewComponent implements OnInit, OnDestroy {
         this.unassignStaff();
         break;
       case 'Delete':
+        if (!this.canDeleteGroup()) {
+          return;
+        }
         this.deleteGroup();
         break;
     }
@@ -192,6 +195,13 @@ export class GroupsViewComponent implements OnInit, OnDestroy {
           .subscribe(() => this.reload());
       }
     });
+  }
+  /**
+   * Checks if the group can be deleted.
+   * Only groups in Pending state are allowed to be deleted.
+   */
+  canDeleteGroup(): boolean {
+    return this.groupViewData?.status?.value === 'Pending';
   }
 
   /**

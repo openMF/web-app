@@ -198,7 +198,13 @@
           <button mat-menu-item *mifosxHasPermission="'CLOSE_GROUP'" (click)="doAction('Close')">
             {{ 'labels.buttons.Close' | translate }}
           </button>
-          <button mat-menu-item *mifosxHasPermission="'DELETE_GROUP'" (click)="doAction('Delete')">
+          <button
+            mat-menu-item
+            *mifosxHasPermission="'DELETE_GROUP'"
+            [disabled]="!canDeleteGroup()"
+            matTooltip="Only pending groups can be deleted"
+            (click)="doAction('Delete')"
+          >
             {{ 'labels.buttons.Delete' | translate }}
           </button>
         </mat-menu>
