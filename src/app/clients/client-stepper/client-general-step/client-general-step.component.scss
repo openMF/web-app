@@ -1,7 +1,126 @@
+form {
+  padding: 16px 0;
+
+  .layout-row-wrap {
+    gap: 8px !important;
+  }
+}
+
+mat-form-field {
+  margin-bottom: 8px;
+}
+
+mat-divider {
+  margin: 16px 0;
+}
+
 .margin-v {
   margin: 2em 0 0;
 }
 
 .margin-t {
   margin-top: 2em;
+}
+
+.name-fields-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-bottom: 8px;
+
+  .name-field {
+    flex: 1;
+    min-width: 200px;
+
+    &.first-name,
+    &.last-name {
+      flex: 1.2;
+    }
+
+    &.middle-name {
+      flex: 1;
+    }
+  }
+}
+
+@media (width <= 768px) {
+  .name-fields-row {
+    flex-direction: column;
+    gap: 4px;
+
+    .name-field {
+      width: 100%;
+      min-width: unset;
+      flex: none;
+    }
+  }
+}
+
+.name-fields-row + mat-form-field,
+.name-fields-row + mat-divider,
+.name-fields-row + div {
+  margin-top: 8px;
+}
+
+.layout-row.align-center {
+  padding-top: 16px;
+  margin-top: 12px;
+
+  button {
+    margin: 0 6px;
+  }
+}
+
+.flex-100 {
+  margin: 16px 0;
+  padding: 8px 0;
+}
+
+mat-checkbox {
+  margin: 8px 0;
+
+  &.margin-v {
+    margin-top: 12px;
+  }
+}
+
+@media (width <= 768px) {
+  form {
+    padding: 12px 0;
+
+    .layout-row-wrap {
+      gap: 6px !important;
+    }
+  }
+
+  mat-form-field {
+    margin-bottom: 6px;
+  }
+
+  mat-divider {
+    margin: 12px 0;
+  }
+
+  .layout-row.align-center {
+    padding-top: 12px;
+    margin-top: 8px;
+    flex-direction: column;
+    gap: 8px;
+
+    button {
+      width: 100%;
+      margin: 2px 0;
+    }
+  }
+}
+
+@media (width <= 480px) {
+  form {
+    padding: 8px 0;
+
+    .layout-row-wrap {
+      gap: 4px !important;
+    }
+  }
 }

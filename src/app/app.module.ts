@@ -138,10 +138,6 @@ export function HttpLoaderFactory(http: HttpClient) {
       provide: HTTP_INTERCEPTORS,
       useClass: !environment.OIDC.oidcServerEnabled ? TokenInterceptor : ZitadelTokenInterceptor,
       multi: true
-    },
-    {
-      provide: BASE_PATH,
-      useValue: '' // Empty so ApiPrefixInterceptor handles all URL construction
     }
   ]
 })

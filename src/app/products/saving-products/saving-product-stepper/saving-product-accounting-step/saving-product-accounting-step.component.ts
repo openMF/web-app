@@ -268,10 +268,6 @@ export class SavingProductAccountingStepComponent implements OnInit {
             }
           });
           this.savingProductAccountingForm.addControl(
-            'interestReceivableAccountId',
-            new UntypedFormControl('', Validators.required)
-          );
-          this.savingProductAccountingForm.addControl(
             'interestPayableAccountId',
             new UntypedFormControl('', Validators.required)
           );

@@ -41,7 +41,7 @@
 
           <mifosx-gl-account-selector
             *ngIf="debitAccountData.length > 0"
-            [inputFormControl]="taxComponentForm.controls.debitAcountId"
+            [inputFormControl]="taxComponentForm.controls.debitAccountId"
             [glAccountList]="debitAccountData"
             [required]="false"
             [inputLabel]="'Debit Account'"
@@ -59,7 +59,7 @@
 
           <mifosx-gl-account-selector
             *ngIf="creditAccountData.length > 0"
-            [inputFormControl]="taxComponentForm.controls.creditAcountId"
+            [inputFormControl]="taxComponentForm.controls.creditAccountId"
             [glAccountList]="creditAccountData"
             [required]="false"
             [inputLabel]="'Credit Account'"

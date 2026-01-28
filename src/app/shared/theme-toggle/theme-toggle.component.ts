@@ -24,16 +24,16 @@ export class ThemeToggleComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnInit(): void {
-    this.darkModeOn = this.settingsService.themeDarkEnabled === 'true';
+    this.darkModeOn = !!this.settingsService.themeDarkEnabled;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.darkModeOn = this.settingsService.themeDarkEnabled === 'true';
+    this.darkModeOn = !!this.settingsService.themeDarkEnabled;
   }
 
   toggleTheme() {
     this.darkModeOn = !this.darkModeOn;
-    this.settingsService.setThemeDarkEnabled(this.darkModeOn ? 'true' : 'false');
+    this.settingsService.setThemeDarkEnabled(this.darkModeOn);
     this.themingService.setDarkMode(this.darkModeOn);
   }
 }

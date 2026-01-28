@@ -155,8 +155,10 @@ export interface LoanProduct {
   enableAccrualActivityPosting?: boolean;
   supportedInterestRefundTypes?: StringEnumOptionData[];
   chargeOffBehaviour?: StringEnumOptionData;
+  buydownfeeClassificationToIncomeAccountMappings?: ClassificationToIncomeAccountMapping[];
   buydownFeeClassificationToIncomeAccountMappings?: ClassificationToIncomeAccountMapping[];
   capitalizedIncomeClassificationToIncomeAccountMappings?: ClassificationToIncomeAccountMapping[];
+  writeOffReasonsToExpenseMappings?: ChargeOffReasonToExpenseAccountMapping[];
 }
 
 export interface AllowAttributeOverrides {

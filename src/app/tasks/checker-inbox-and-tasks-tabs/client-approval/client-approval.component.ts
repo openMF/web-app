@@ -24,7 +24,7 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 
 /** Custom Services */
-import { TasksService } from '../../tasks.service';
+import { BatchAPIService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { NgIf, NgFor, KeyValuePipe } from '@angular/common';
@@ -81,7 +81,7 @@ export class ClientApprovalComponent {
    * @param {Dates} dateUtils Date Utils.
    * @param {router} router Router.
    * @param {SettingsService} settingsService Settings Service.
-   * @param {TasksService} tasksService Tasks Service.
+   * @param {BatchAPIService} batchAPIService Batch API Service.
    */
   constructor(
     private route: ActivatedRoute,
@@ -89,7 +89,7 @@ export class ClientApprovalComponent {
     private dateUtils: Dates,
     private router: Router,
     private settingsService: SettingsService,
-    private tasksService: TasksService
+    private batchAPIService: BatchAPIService
   ) {
     this.route.data.subscribe((data: { groupedClientData: any }) => {
       this.groupedClients = _.groupBy(data.groupedClientData.pageItems, 'officeName');
@@ -170,7 +170,7 @@ export class ClientApprovalComponent {
       const batchData = { requestId: reqId++, relativeUrl: url, method: 'POST', body: bodyData };
       this.batchRequests.push(batchData);
     });
-    this.tasksService.submitBatchData(this.batchRequests).subscribe((response: any) => {
+    this.batchAPIService.handleBatchRequests({ batchRequest: this.batchRequests }).subscribe((response: any) => {
       response.forEach((responseEle: any) => {
         if ((responseEle.statusCode = '200')) {
           activatedAccounts++;

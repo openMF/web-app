@@ -16,7 +16,7 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { DatetimeFormatPipe } from '../../../pipes/datetime-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -40,7 +40,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    DateFormatPipe
+    DatetimeFormatPipe
   ]
 })
 export class ViewAuditComponent implements OnInit {

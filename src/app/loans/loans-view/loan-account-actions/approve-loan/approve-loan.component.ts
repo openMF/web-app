@@ -103,6 +103,19 @@ export class ApproveLoanComponent implements OnInit {
         this.loanData.delinquent = delinquencyData.delinquent;
       }
     });
+
+    // Get delinquency data for available disbursement amount with over applied
+    this.loanService.retrieveLoan(this.loanId).subscribe((delinquencyData: any) => {
+      // Check if the field is at root level
+      if (delinquencyData.availableDisbursementAmountWithOverApplied !== undefined) {
+        this.loanData.availableDisbursementAmountWithOverApplied =
+          delinquencyData.availableDisbursementAmountWithOverApplied;
+      }
+      // Also check if it's in delinquent object
+      if (delinquencyData.delinquent) {
+        this.loanData.delinquent = delinquencyData.delinquent;
+      }
+    });
   }
 
   /**

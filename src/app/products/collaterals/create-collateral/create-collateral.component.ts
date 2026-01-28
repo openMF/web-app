@@ -45,7 +45,6 @@ export class CreateCollateralComponent implements OnInit {
   ) {
     this.route.data.subscribe((data: { collateralTemplate: any }) => {
       this.organizationService.getCurrencies().subscribe((orgCurrencies: any) => {
-        console.log('Organization currencies response:', orgCurrencies);
         let orgCurrencyList = Array.isArray(orgCurrencies.selectedCurrencyOptions)
           ? orgCurrencies.selectedCurrencyOptions
           : [];
