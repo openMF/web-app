@@ -83,7 +83,8 @@ export class GeneralTabComponent implements OnDestroy {
   openLoanApplicationReport(event: MouseEvent, loanId: string) {
     event.stopPropagation();
     const tenantIdentifier = this.settingsService.tenantIdentifier || 'default';
-    const locale = this.settingsService.languageCode || 'en-US';
+    let locale = this.settingsService.languageCode || 'en-US';
+    locale = locale.split('-')[0];
     const dateFormat = this.settingsService.dateFormat || 'dd MMMM yyyy';
     const formData = { R_loanId: loanId, 'output-type': 'PDF' };
     this.reportsService
