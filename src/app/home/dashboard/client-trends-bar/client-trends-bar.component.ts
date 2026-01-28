@@ -8,7 +8,7 @@ import { forkJoin, merge } from 'rxjs';
 import { skip } from 'rxjs/operators';
 
 /** Custom Services */
-import { HomeService } from '../../home.service';
+import { HomeService } from 'app/customApis.service';
 
 /** Charting Imports */
 import { Dates } from 'app/core/utils/dates';
@@ -24,6 +24,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
  */
 @Component({
   selector: 'mifosx-client-trends-bar',
+  standalone: true,
   templateUrl: './client-trends-bar.component.html',
   styleUrls: ['./client-trends-bar.component.scss'],
   imports: [

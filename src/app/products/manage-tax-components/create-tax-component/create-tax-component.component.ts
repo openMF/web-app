@@ -110,11 +110,11 @@ export class CreateTaxComponentComponent implements OnInit {
   setConditionalControls() {
     this.taxComponentForm.get('debitAccountType').valueChanges.subscribe((debitAccountTypeId) => {
       this.debitAccountData = this.getAccountsData(debitAccountTypeId);
-      this.taxComponentForm.addControl('debitAcountId', new UntypedFormControl('', Validators.required));
+      this.taxComponentForm.addControl('debitAccountId', new UntypedFormControl('', Validators.required));
     });
     this.taxComponentForm.get('creditAccountType').valueChanges.subscribe((creditAccountTypeId) => {
       this.creditAccountData = this.getAccountsData(creditAccountTypeId);
-      this.taxComponentForm.addControl('creditAcountId', new UntypedFormControl('', Validators.required));
+      this.taxComponentForm.addControl('creditAccountId', new UntypedFormControl('', Validators.required));
     });
   }
 

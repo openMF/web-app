@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { TasksService } from '../tasks.service';
+import { MakerCheckerOr4EyeFunctionalityService } from '@fineract/client';
 
 /**
  * Maker Checker Template resolver.
@@ -13,15 +13,15 @@ import { TasksService } from '../tasks.service';
 @Injectable()
 export class MakerCheckerTemplate {
   /**
-   * @param {TasksService} tasksService Tasks service.
+   * @param {MakerCheckerOr4EyeFunctionalityService} makerCheckerService Maker Checker service.
    */
-  constructor(private tasksService: TasksService) {}
+  constructor(private makerCheckerService: MakerCheckerOr4EyeFunctionalityService) {}
 
   /**
    * Returns the maker checker template data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.tasksService.getMakerCheckerTemplate();
+    return this.makerCheckerService.retrieveCommands();
   }
 }

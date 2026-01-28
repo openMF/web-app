@@ -4,7 +4,11 @@
   padding: 1rem;
 }
 
-// Card styling
+#search-button {
+  background-color: #1074b9;
+  color: white;
+}
+
 .transfer-card {
   border-radius: 8px;
   box-shadow: 0 2px 10px rgb(0 0 0 / 8%);
@@ -22,8 +26,7 @@
   font-weight: 600;
   color: #333;
   margin: 0 0 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid rgb(0 0 0 / 12%);
+  padding-bottom: 0;
 
   &.transfer-heading {
     font-weight: 700;
@@ -46,7 +49,9 @@
   align-items: center;
   padding: 0.5rem;
   background-color: rgb(0 0 0 / 2%);
-  border-radius: 4px;
+  box-shadow: 0 0.5px 1px rgb(0 0 0 / 10%);
+  border: 1px solid var(--border-color, #ddd);
+  border-radius: 8px;
 
   &:hover {
     background-color: rgb(0 0 0 / 4%);
@@ -100,13 +105,14 @@ mat-divider {
 // Button styling
 .action-buttons {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   gap: 1rem;
   padding: 1rem 1.5rem;
-  margin-top: 1rem;
+  margin-top: 0;
 
   @media (width <= 576px) {
     flex-direction: column;
+    align-items: center;
   }
 
   button {
@@ -114,6 +120,7 @@ mat-divider {
 
     @media (width <= 576px) {
       width: 100%;
+      max-width: 300px;
       margin-bottom: 0.5rem;
     }
   }
@@ -179,12 +186,16 @@ mat-divider {
 // Dark theme
 // Lower specificity selectors first
 .dark-theme {
+  .info-row {
+    color: #fff !important;
+  }
+
   .info-label {
-    color: rgb(255 255 255 / 70%);
+    color: rgb(255 255 255 / 70%) !important;
   }
 
   .info-value {
-    color: rgb(255 255 255 / 87%);
+    color: rgb(255 255 255 / 87%) !important;
   }
 
   .section-title {
@@ -222,6 +233,18 @@ mat-divider {
 }
 
 // Higher specificity selectors
+:host-context(.dark-theme) .info-row {
+  color: #fff !important;
+}
+
+:host-context(.dark-theme) .info-label {
+  color: rgb(255 255 255 / 70%) !important;
+}
+
+:host-context(.dark-theme) .info-value {
+  color: rgb(255 255 255 / 87%) !important;
+}
+
 :host-context(.dark-theme) .transfer-heading {
   color: #fff;
   font-weight: 700;
@@ -243,6 +266,18 @@ mat-divider {
 // Medium specificity selectors
 body.dark-theme {
   .container {
+    .info-row {
+      color: #fff !important;
+    }
+
+    .info-label {
+      color: rgb(255 255 255 / 70%) !important;
+    }
+
+    .info-value {
+      color: rgb(255 255 255 / 87%) !important;
+    }
+
     .section-title {
       color: #fff;
     }

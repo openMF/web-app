@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { TasksService } from '../tasks.service';
+import { LoansService } from '@fineract/client';
 
 /**
  * Loans data resolver.
@@ -13,15 +13,15 @@ import { TasksService } from '../tasks.service';
 @Injectable()
 export class GetLoansToBeDisbursed {
   /**
-   * @param {TasksService} tasksService Tasks service.
+   * @param {LoansService} loansService Loans service.
    */
-  constructor(private tasksService: TasksService) {}
+  constructor(private loansService: LoansService) {}
 
   /**
    * Returns all the loans data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.tasksService.getAllLoansToBeDisbursed();
+    return this.loansService.retrieveAll27();
   }
 }

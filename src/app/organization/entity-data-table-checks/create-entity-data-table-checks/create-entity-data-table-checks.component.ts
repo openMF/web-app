@@ -55,10 +55,10 @@ export class CreateEntityDataTableChecksComponent implements OnInit {
       this.createEntityData = data.dataTableEntity;
       // hardcoded, because data.dataTableEntity.entities might change anytime its order
       this.entityTypes = [
-        { name: 'Client', value: this.createEntityData.entityTypes[0] },
-        { name: 'Loan', value: this.createEntityData.entityTypes[1] },
-        { name: 'Group', value: this.createEntityData.entityTypes[2] },
-        { name: 'Savings Account', value: this.createEntityData.entityTypes[3] }
+        { name: 'Client', value: 'm_client' },
+        { name: 'Loan', value: 'm_loan' },
+        { name: 'Group', value: 'm_group' },
+        { name: 'Savings Account', value: 'm_savings_account' }
       ];
     });
   }

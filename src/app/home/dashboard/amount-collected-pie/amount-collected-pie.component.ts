@@ -4,7 +4,7 @@ import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
-import { HomeService } from '../../home.service';
+import { HomeService } from 'app/customApis.service';
 
 /** Charting Imports */
 import Chart from 'chart.js';
@@ -18,6 +18,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
  */
 @Component({
   selector: 'mifosx-amount-collected-pie',
+  standalone: true,
   templateUrl: './amount-collected-pie.component.html',
   styleUrls: ['./amount-collected-pie.component.scss'],
   imports: [

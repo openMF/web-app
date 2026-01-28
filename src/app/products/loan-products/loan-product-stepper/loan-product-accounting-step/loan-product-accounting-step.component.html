@@ -536,6 +536,17 @@
           [accountingMappingOptions]="capitalizedIncomeClassificationOptions"
           (formChangeEvent)="formChangeEvent($event)"
         ></mifosx-advanced-accounting-mapping-rule>
+
+        <mifosx-advanced-accounting-mapping-rule
+          class="flex-100 m-t-10"
+          [textField]="'WriteOff Reason'"
+          [formType]="'WriteOffReasonToExpense'"
+          [formArray]="writeOffReasonsToExpenseMappings"
+          [textHeading]="'WriteOff reasons to Expense accounts'"
+          [expenseAccountData]="expenseAccountData"
+          [accountingMappingOptions]="writeOffReasonOptions"
+          (formChangeEvent)="formChangeEvent($event)"
+        ></mifosx-advanced-accounting-mapping-rule>
       </div>
     </div>
   </div>

@@ -1,6 +1,6 @@
-<div class="container">
+<div class="container narrow-container extra-small">
   <mat-card class="office-card">
-    <mat-card-content>
+    <mat-card-content class="card-content">
       <nav mat-tab-nav-bar class="navigation-tabs" [tabPanel]="tabPanel">
         <a
           mat-tab-link
@@ -8,6 +8,7 @@
           routerLinkActive
           #general="routerLinkActive"
           [active]="general.isActive"
+          class="compact-tab"
         >
           {{ 'labels.inputs.General' | translate }}
         </a>
@@ -19,13 +20,14 @@
             routerLinkActive
             #datatable="routerLinkActive"
             [active]="datatable.isActive"
+            class="compact-tab"
           >
             {{ officeDatatable.registeredTableName }}
           </a>
         </span>
       </nav>
 
-      <mat-tab-nav-panel #tabPanel>
+      <mat-tab-nav-panel #tabPanel class="tab-panel">
         <router-outlet></router-outlet>
       </mat-tab-nav-panel>
     </mat-card-content>
