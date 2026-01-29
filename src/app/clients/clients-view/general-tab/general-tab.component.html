@@ -895,12 +895,33 @@
   </table>
 
   <!-- PDF Viewer Modal -->
-  <div *ngIf="showPdf" class="pdf-modal-overlay">
-    <div class="pdf-modal-content">
+  <div *ngIf="showPdf" class="pdf-modal-overlay" (click)="closePdf()">
+    <div
+      class="pdf-modal-content"
+      role="dialog"
+      aria-modal="true"
+      aria-label="PDF preview"
+      (click)="$event.stopPropagation()"
+    >
       <button mat-icon-button class="pdf-modal-close" (click)="closePdf()" aria-label="Close PDF">
         <span aria-hidden="true">&times;</span>
       </button>
-      <embed [src]="pdfUrl" type="application/pdf" width="100%" height="600px" />
+
+      <div class="pdf-modal-header">
+        <a
+          class="pdf-download"
+          *ngIf="rawPdfUrl"
+          [href]="rawPdfUrl"
+          download="report.pdf"
+          target="_blank"
+          rel="noopener"
+        >
+          {{ 'labels.buttons.Download' | translate }}
+        </a>
+      </div>
+
+      <!-- Use iframe (better cross-browser support) -->
+      <iframe *ngIf="pdfUrl" [src]="pdfUrl" class="pdf-iframe" frameborder="0" title="PDF preview"></iframe>
     </div>
   </div>
 </div>
