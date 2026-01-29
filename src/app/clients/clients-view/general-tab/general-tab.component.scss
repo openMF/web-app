@@ -56,3 +56,62 @@
   align-items: center; /* Ensure buttons are vertically aligned */
   gap: 0.5rem; /* Add spacing between buttons if needed */
 }
+
+/* PDF modal styles */
+.pdf-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000; /* make sure this is above other UI */
+  padding: 1rem;
+}
+
+.pdf-modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  height: 90vh;
+  background: #fff;
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.pdf-modal-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.5rem 0.75rem;
+  background: #f7f7f7;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  z-index: 2;
+}
+
+.pdf-download {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.pdf-modal-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 3;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+}
+
+.pdf-iframe {
+  width: 100%;
+  height: calc(100% - 44px); /* leave room for header */
+  border: none;
+  background: #fff;
+}
