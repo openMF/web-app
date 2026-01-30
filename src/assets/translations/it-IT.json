@@ -3528,7 +3528,19 @@
       "Login": "Login"
     },
     "messages": {
-      "No Data Found": "Nessun dato trovato"
+      "No Data Found": "Nessun dato trovato",
+      "No Upcoming Charges Available": "Nessun addebito imminente disponibile",
+      "No Active Loan Accounts Available": "Nessun conto prestito attivo disponibile",
+      "No Closed Loan Accounts Available": "Nessun conto prestito chiuso disponibile",
+      "No Active Saving Accounts Available": "Nessun conto risparmio attivo disponibile",
+      "No Closed Saving Accounts Available": "Nessun conto risparmio chiuso disponibile",
+      "No Active Fixed Deposit Accounts Available": "Nessun conto deposito fisso attivo disponibile",
+      "No Closed Fixed Deposit Accounts Available": "Nessun conto deposito fisso chiuso disponibile",
+      "No Active Recurring Deposit Accounts Available": "Nessun conto deposito ricorrente attivo disponibile",
+      "No Closed Recurring Deposit Accounts Available": "Nessun conto deposito ricorrente chiuso disponibile",
+      "No Active Share Accounts Available": "Nessun conto azioni attivo disponibile",
+      "No Closed Share Accounts Available": "Nessun conto azioni chiuso disponibile",
+      "No Collateral Data Available": "Nessun dato collaterale disponibile"
     }
   },
   "languages": {

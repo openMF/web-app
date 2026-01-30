@@ -217,13 +217,13 @@ export class GeneralTabComponent implements OnDestroy {
   /** Client Account Data */
   clientAccountData: any;
   /** Loan Accounts Data */
-  loanAccounts: any;
+  loanAccounts: any[] = [];
   /** Savings Accounts Data */
-  savingAccounts: any;
+  savingAccounts: any[] = [];
   /** Shares Accounts Data */
-  shareAccounts: any;
+  shareAccounts: any[] = [];
   /** Upcoming Charges Data */
-  upcomingCharges: any;
+  upcomingCharges: any[] = [];
   /** Performance History Data */
   performanceHistory: {
     loanCycle: number;
@@ -239,7 +239,7 @@ export class GeneralTabComponent implements OnDestroy {
     totalSavings: 0
   };
   /** Collaterals Data */
-  collaterals: any;
+  collaterals: any[] = [];
 
   /** Show Closed Loan Accounts */
   showClosedLoanAccounts = false;
@@ -264,11 +264,11 @@ export class GeneralTabComponent implements OnDestroy {
     this.route.data.subscribe(
       (data: { clientAccountsData: any; clientChargesData: any; clientSummary: any; clientCollateralData: any }) => {
         this.clientAccountData = data.clientAccountsData;
-        this.savingAccounts = data.clientAccountsData.savingsAccounts;
-        this.loanAccounts = data.clientAccountsData.loanAccounts;
-        this.shareAccounts = data.clientAccountsData.shareAccounts;
-        this.upcomingCharges = data.clientChargesData.pageItems;
-        this.collaterals = data.clientCollateralData;
+        this.savingAccounts = data.clientAccountsData.savingsAccounts || [];
+        this.loanAccounts = data.clientAccountsData.loanAccounts || [];
+        this.shareAccounts = data.clientAccountsData.shareAccounts || [];
+        this.upcomingCharges = data.clientChargesData.pageItems || [];
+        this.collaterals = data.clientCollateralData || [];
         this.clientid = this.route.parent.snapshot.params['clientId'];
 
         // Compute performance history from accounts data

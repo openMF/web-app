@@ -56,3 +56,18 @@
   align-items: center; /* Ensure buttons are vertically aligned */
   gap: 0.5rem; /* Add spacing between buttons if needed */
 }
+
+.no-data-message {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: #757575;
+  font-style: italic;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  margin: 1rem 0;
+
+  p {
+    margin: 0;
+    font-size: 1rem;
+  }
+}
