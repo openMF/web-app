@@ -159,7 +159,7 @@
             <mat-datepicker #dateOfBirthDatePicker></mat-datepicker>
           </mat-form-field>
 
-          @if (legalFormId === 1) {
+          @if (legalFormId === LegalFormId.PERSON) {
             <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Gender' | translate }}</mat-label>
               <mat-select formControlName="genderId">
@@ -186,7 +186,7 @@
             </mat-select>
           </mat-form-field>
 
-          @if (legalFormId === 1) {
+          @if (legalFormId === LegalFormId.PERSON) {
             <mat-checkbox class="flex-48 margin-v" labelPosition="before" formControlName="isStaff">
               {{ 'labels.inputs.Is staff' | translate }}?
             </mat-checkbox>

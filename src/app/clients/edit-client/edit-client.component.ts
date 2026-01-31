@@ -9,6 +9,7 @@
 /** Angular Imports */
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { LegalFormId } from 'app/clients/models/legal-form.enum';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
@@ -74,7 +75,10 @@ export class EditClientComponent implements OnInit {
   constitutionOptions: any;
   /** Gender Options */
   genderOptions: any;
-  legalFormId = 1;
+  legalFormId = LegalFormId.PERSON;
+
+  /** Expose enum to template */
+  readonly LegalFormId = LegalFormId;
 
   /**
    * Fetches client template data from `resolve`
@@ -96,7 +100,7 @@ export class EditClientComponent implements OnInit {
     this.createEditClientForm();
     this.setOptions();
     this.buildDependencies();
-    this.legalFormId = 1;
+    this.legalFormId = LegalFormId.PERSON;
     this.editClientForm.patchValue({
       officeId: this.clientDataAndTemplate.officeId,
       staffId: this.clientDataAndTemplate.staffId,
@@ -172,7 +176,7 @@ export class EditClientComponent implements OnInit {
    */
   buildDependencies() {
     this.editClientForm.get('legalFormId').valueChanges.subscribe((legalFormId: any) => {
-      if (legalFormId === 1) {
+      if (legalFormId === LegalFormId.PERSON) {
         this.editClientForm.removeControl('fullname');
         this.editClientForm.removeControl('clientNonPersonDetails');
         this.editClientForm.addControl(
@@ -217,7 +221,7 @@ export class EditClientComponent implements OnInit {
   }
 
   getDateLabel(legalFormId: number, values: string[]): string {
-    return legalFormId === 1 ? values[0] : values[1];
+    return legalFormId === LegalFormId.PERSON ? values[0] : values[1];
   }
 
   /**

@@ -19,6 +19,7 @@ import { Subject } from 'rxjs';
 import { filter, switchMap, takeUntil } from 'rxjs/operators';
 import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
+import { LegalFormId } from 'app/clients/models/legal-form.enum';
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
@@ -56,6 +57,9 @@ export class ClientGeneralStepComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   @Output() legalFormChangeEvent = new EventEmitter<{ legalForm: number }>();
+
+  /** Expose enum to template */
+  readonly LegalFormId = LegalFormId;
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -161,7 +165,7 @@ export class ClientGeneralStepComponent implements OnInit, OnDestroy {
       .valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe((legalFormId: number) => {
         this.legalFormChangeEvent.emit({ legalForm: legalFormId });
-        if (legalFormId === 1) {
+        if (legalFormId === LegalFormId.PERSON) {
           this.createClientForm.removeControl('fullname');
           this.createClientForm.removeControl('clientNonPersonDetails');
           this.createClientForm.addControl(
@@ -205,7 +209,7 @@ export class ClientGeneralStepComponent implements OnInit, OnDestroy {
           );
         }
       });
-    this.createClientForm.get('legalFormId').patchValue(1);
+    this.createClientForm.get('legalFormId').patchValue(LegalFormId.PERSON);
     this.createClientForm
       .get('active')
       .valueChanges.pipe(takeUntil(this.destroy$))
@@ -244,7 +248,7 @@ export class ClientGeneralStepComponent implements OnInit, OnDestroy {
   }
 
   getDateLabel(legalFormId: number, values: string[]): string {
-    return legalFormId === 1 ? values[0] : values[1];
+    return legalFormId === LegalFormId.PERSON ? values[0] : values[1];
   }
 
   /**

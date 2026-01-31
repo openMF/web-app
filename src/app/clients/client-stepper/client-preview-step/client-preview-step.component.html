@@ -13,10 +13,10 @@
 
   <div class="flex-fill">
     <span class="flex-40">{{ 'labels.inputs.name' | translate }}</span>
-    @if (client.legalFormId === 2) {
+    @if (client.legalFormId === LegalFormId.ENTITY) {
       <span class="flex-60">{{ client.fullname }}</span>
     }
-    @if (client.legalFormId === 1) {
+    @if (client.legalFormId === LegalFormId.PERSON) {
       <span class="flex-60"
         >{{ client.firstname }}
         {{ client.middlename ? client.middlename + ' ' + client.lastname : client.lastname }}</span
@@ -43,7 +43,9 @@
 
   @if (client.dateOfBirth) {
     <div class="flex-fill">
-      <span class="flex-40">{{ client.legalFormId === 1 ? 'Date of Birth' : 'Incorporation Date' }}</span>
+      <span class="flex-40">{{
+        client.legalFormId === LegalFormId.PERSON ? 'Date of Birth' : 'Incorporation Date'
+      }}</span>
       <span class="flex-60">{{ client.dateOfBirth | dateFormat }}</span>
     </div>
   }
@@ -115,7 +117,7 @@
     </div>
   }
 
-  @if (client.legalFormId === 1) {
+  @if (client.legalFormId === LegalFormId.PERSON) {
     @if (client.genderId) {
       <div class="flex-fill">
         <span class="flex-40">{{ 'labels.inputs.Gender' | translate }}</span>
@@ -128,7 +130,7 @@
     </div>
   }
 
-  @if (client.legalFormId === 2) {
+  @if (client.legalFormId === LegalFormId.ENTITY) {
     @if (client.clientNonPersonDetails.incorpValidityTillDate) {
       <div class="flex-fill">
         <span class="flex-40">{{ 'labels.inputs.Incorporation Validity Till Date' | translate }}</span>
