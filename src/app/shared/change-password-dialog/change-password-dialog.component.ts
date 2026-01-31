@@ -54,7 +54,7 @@ export class ChangePasswordDialogComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   private passwordsUtility = inject(PasswordsUtility);
 
-  minPasswordLength: number = environment.minPasswordLength | 12;
+  minPasswordLength: number = environment.minPasswordLength || 12;
 
   /** Change Password Form */
   changePasswordForm: any;
