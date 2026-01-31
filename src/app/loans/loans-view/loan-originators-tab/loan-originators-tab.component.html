@@ -1,0 +1,52 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container">
+  <h3>{{ 'labels.heading.Loan Originators' | translate }}</h3>
+
+  <table mat-table [dataSource]="loanOriginatorsData">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Id' | translate }}</th>
+      <td mat-cell *matCellDef="let item">
+        {{ item.id }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="externalId">
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.External Id' | translate }}</th>
+      <td mat-cell *matCellDef="let item">
+        {{ item.externalId }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Name' | translate }}</th>
+      <td mat-cell *matCellDef="let item">
+        {{ item.name }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Status' | translate }}</th>
+      <td mat-cell *matCellDef="let item">
+        {{ item.status }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="originatorTypeId">
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Originator Type' | translate }}</th>
+      <td mat-cell *matCellDef="let item">
+        {{ item.originatorTypeId }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="channelTypeId">
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Channel Type' | translate }}</th>
+      <td mat-cell *matCellDef="let item">
+        {{ item.channelTypeId }}
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="loanoriginatorsColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: loanoriginatorsColumns"></tr>
+  </table>
+</div>

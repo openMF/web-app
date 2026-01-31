@@ -172,3 +172,12 @@ export interface ScheduleChangeRecord {
   dueDate: string;
   installmentAmount: number;
 }
+
+export interface LoanOriginator {
+  id: number;
+  externalId: string;
+  name: string;
+  status: string;
+  originatorTypeId: number;
+  channelTypeId: number;
+}

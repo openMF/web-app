@@ -278,6 +278,15 @@
           {{ 'labels.inputs.Delinquency Tags' | translate }}
         </a>
       }
+      <a
+        mat-tab-link
+        [routerLink]="['./originators']"
+        routerLinkActive
+        #originators="routerLinkActive"
+        [active]="originators.isActive"
+      >
+        {{ 'labels.inputs.Originators' | translate }}
+      </a>
       @if (loanDetailsData.collateral) {
         <a
           mat-tab-link

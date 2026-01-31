@@ -74,6 +74,8 @@ import { LoanTermVariationsResolver } from './common-resolvers/loan-term-variati
 import { LoanDeferredIncomeTabComponent } from './loans-view/loan-deferred-income-tab/loan-deferred-income-tab.component';
 import { LoanDeferredIncomeDataResolver } from './common-resolvers/loan-deferred-income-data.resolver';
 import { LoanBuyDownFeesDataResolver } from './common-resolvers/loan-buy-down-fees-data.resolver';
+import { LoanOriginatorsTabComponent } from './loans-view/loan-originators-tab/loan-originators-tab.component';
+import { LoanOriginatorsResolver } from './common-resolvers/loan-originators.resolver';
 
 /** Loans Route. */
 const routes: Routes = [
@@ -108,10 +110,7 @@ const routes: Routes = [
             path: 'general',
             component: GeneralTabComponent,
             data: { title: 'General', breadcrumb: 'General', routeParamBreadcrumb: false },
-            resolve: {
-              loanDetailsData: LoanDetailsResolver,
-              loanDatatables: LoanDatatablesResolver
-            }
+            resolve: {}
           },
           {
             path: 'accountdetail',
@@ -268,6 +267,19 @@ const routes: Routes = [
                 resolve: {
                   loanDatatable: LoanDatatableResolver
                 }
+              }
+            ]
+          },
+          {
+            path: 'originators',
+            data: { title: 'Loans Originators', breadcrumb: 'Originators', routeParamBreadcrumb: false },
+            resolve: {
+              loanOriginatorsData: LoanOriginatorsResolver
+            },
+            children: [
+              {
+                path: '',
+                component: LoanOriginatorsTabComponent
               }
             ]
           },

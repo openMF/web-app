@@ -771,4 +771,11 @@ export class LoansService {
   getLoanDisbursementDetailsData(): DisbursementData[] {
     return JSON.parse(localStorage.getItem('disbursementData'));
   }
+
+  /**
+   * Returns the Loan Originators data
+   */
+  getLoanOriginators(loanId: any) {
+    return this.http.get(`/loans/${loanId}/originators`);
+  }
 }
