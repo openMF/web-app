@@ -975,7 +975,6 @@
       "Create fixed deposit product": "Criar produto de depósito fixo",
       "Create loan product": "Criar produto de empréstimo",
       "Create recurring deposit product": "Crie um produto de depósito recorrente",
-
       "Create share product": "Criar produto compartilhado",
       "Currency": "Moeda",
       "Currency Configuration": "Configuração de moeda",
@@ -3202,6 +3201,7 @@
       "Manual journal entry transactions recorded in a journal": "Transações de lançamento manual registradas em um diário",
       "Message Gateway": "Gateway de mensagens",
       "Mifos Initiative": "Iniciativa Mifos®",
+      "Powered by": "Desenvolvido por",
       "Mifos X data-tables allow the user to add custom fields": "As tabelas de dados Mifos X permitem ao usuário adicionar campos personalizados além dos campos integrados a um perfil de cliente, empréstimo/conta poupança, grupo, centro ou escritório.",
       "Migrate Opening Balances": "Migrar saldos de abertura",
       "Modify Loans Account": "Modificar conta de empréstimos",

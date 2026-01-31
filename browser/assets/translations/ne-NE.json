@@ -885,7 +885,6 @@
       "GreaterThan": "भन्दा ठुलो",
       "NotEqual": "बराबर छैन"
     },
-
     "heading": {
       "Account Linked Financial": "विभिन्न वित्तीय गतिविधिहरु संग जोडिएको खाताहरु को सूची। थप जान्नको लागि क्लिक गर्नुहोस्:",
       "Account Name": "खाताको नाम",
@@ -3201,6 +3200,7 @@
       "Manual journal entry transactions recorded in a journal": "जर्नलमा रेकर्ड गरिएको म्यानुअल जर्नल प्रविष्टि लेनदेन",
       "Message Gateway": "सन्देश गेटवे",
       "Mifos Initiative": "Mifos® पहल",
+      "Powered by": "द्वारा संचालित",
       "Mifos X data-tables allow the user to add custom fields": "Mifos X डाटा-टेबलहरूले प्रयोगकर्तालाई ग्राहक प्रोफाइल, ऋण/बचत खाता, समूह, केन्द्र वा कार्यालयमा निर्मित क्षेत्रहरू बाहेक अनुकूलन क्षेत्रहरू थप्न अनुमति दिन्छ।",
       "Migrate Opening Balances": "ओप्रवाहको ब्यालेन्स सारियो",
       "Modify Loans Account": "ऋण खाता परिमार्जन गर्नुहोस्",
