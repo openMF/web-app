@@ -31,6 +31,8 @@ interface Window {
     defaultCharDelimiter?: string;
     displayBackEndInfo?: string;
     displayTenantSelector?: string;
+    /** Production mode - when true, shows minimal hero with only branding at bottom */
+    productionMode?: string | boolean;
     waitTimeForNotifications?: number;
     waitTimeForCOBCatchUp?: number;
     sessionIdleTimeout?: number;

@@ -8,41 +8,55 @@
 <!-- Modern Material Design 3 Login Layout -->
 <div class="login-wrapper">
   <!-- Left Panel - Hero Section (Hidden on mobile) -->
-  <div class="hero-panel hide-lt-md">
+  <div class="hero-panel hide-lt-md" [class.production-mode]="productionMode">
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <div class="hero-text">
-        <h1 class="hero-title">{{ 'APP_NAME' | translate }}</h1>
-        <p class="hero-subtitle">
-          {{ 'labels.text.A' | translate }}
-          <span class="hero-highlight">{{ 'labels.text.global community' | translate }}</span>
-          {{ 'labels.text.elimination of poverty' | translate }}
-        </p>
-        <div class="hero-features">
-          <div class="feature-item">
-            <fa-icon icon="shield-alt" class="feature-icon"></fa-icon>
-            <span class="feature-text">{{ 'labels.heading.Secure & Reliable' | translate }}</span>
+      <!-- Default Mode: Full content -->
+      @if (!productionMode) {
+        <div class="hero-text">
+          <h1 class="hero-title">{{ 'APP_NAME' | translate }}</h1>
+          <p class="hero-subtitle">
+            {{ 'labels.text.A' | translate }}
+            <span class="hero-highlight">{{ 'labels.text.global community' | translate }}</span>
+            {{ 'labels.text.elimination of poverty' | translate }}
+          </p>
+          <div class="hero-features">
+            <div class="feature-item">
+              <fa-icon icon="shield-alt" class="feature-icon"></fa-icon>
+              <span class="feature-text">{{ 'labels.heading.Secure & Reliable' | translate }}</span>
+            </div>
+            <div class="feature-item">
+              <fa-icon icon="users" class="feature-icon"></fa-icon>
+              <span class="feature-text">{{ 'labels.heading.Community Driven' | translate }}</span>
+            </div>
+            <div class="feature-item">
+              <fa-icon icon="globe" class="feature-icon"></fa-icon>
+              <span class="feature-text">{{ 'labels.heading.Global Impact' | translate }}</span>
+            </div>
           </div>
-          <div class="feature-item">
-            <fa-icon icon="users" class="feature-icon"></fa-icon>
-            <span class="feature-text">{{ 'labels.heading.Community Driven' | translate }}</span>
-          </div>
-          <div class="feature-item">
-            <fa-icon icon="globe" class="feature-icon"></fa-icon>
-            <span class="feature-text">{{ 'labels.heading.Global Impact' | translate }}</span>
+          <div class="hero-links">
+            <a [href]="'mifosHome' | documentationLink" target="_blank" rel="noopener noreferrer" class="hero-link">
+              {{ 'labels.text.Mifos Initiative' | translate }}
+              <fa-icon icon="external-link-alt" size="sm"></fa-icon>
+            </a>
+            <a
+              [href]="'mifosVolunteer' | documentationLink"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hero-link"
+            >
+              {{ 'labels.text.Get involved' | translate }}
+              <fa-icon icon="external-link-alt" size="sm"></fa-icon>
+            </a>
           </div>
         </div>
-        <div class="hero-links">
-          <a [href]="'mifosHome' | documentationLink" target="_blank" rel="noopener noreferrer" class="hero-link">
-            {{ 'labels.text.Mifos Initiative' | translate }}
-            <fa-icon icon="external-link-alt" size="sm"></fa-icon>
-          </a>
-          <a [href]="'mifosVolunteer' | documentationLink" target="_blank" rel="noopener noreferrer" class="hero-link">
-            {{ 'labels.text.Get involved' | translate }}
-            <fa-icon icon="external-link-alt" size="sm"></fa-icon>
-          </a>
+      }
+      <!-- Production Mode: Minimal branding at bottom -->
+      @if (productionMode) {
+        <div class="hero-branding-bottom">
+          <h1 class="hero-title-minimal">{{ 'APP_NAME' | translate }}</h1>
         </div>
-      </div>
+      }
     </div>
   </div>
 
@@ -69,7 +83,6 @@
           } @else {
             <img src="assets/images/white-mifos.png" alt="{{ 'APP_NAME' | translate }} Logo" class="logo-image" />
           }
-          <h2 class="welcome-text">{{ 'labels.heading.Welcome to Mifos' | translate }}</h2>
         </div>
 
         <!-- Form Section -->
@@ -95,61 +108,64 @@
           }
         </div>
 
-        <!-- Version Info Table -->
+        <!-- Version Info Section -->
         <div class="login-version-info" *ngIf="displayBackendInfo">
-          <table class="login-version-table">
-            <tr>
-              <td class="version-label">{{ 'labels.version.Tenant' | translate }}</td>
-              <td class="version-value">{{ versions?.tenant || 'Default' }}</td>
-            </tr>
-            <tr>
-              <td class="version-label">{{ 'labels.version.Mifos WebApp' | translate }}</td>
-              <td class="version-value">{{ versions?.mifos }}</td>
-            </tr>
-            <tr>
-              <td class="version-label">{{ 'labels.version.Apache Fineract' | translate }}</td>
-              <td class="version-value">{{ versions?.fineract?.version }}</td>
-            </tr>
-            <tr>
-              <td class="version-label">{{ 'labels.version.Server' | translate }}</td>
-              <td class="version-value">{{ server }}</td>
-            </tr>
-          </table>
+          <div class="version-info-container">
+            <div class="version-item">
+              <span class="version-label">{{ 'labels.version.Tenant' | translate }}</span>
+              <span class="version-value">{{ tenantDisplayName }}</span>
+            </div>
+            <div class="version-item">
+              <span class="version-label">{{ 'labels.version.Mifos WebApp' | translate }}</span>
+              <span class="version-value">{{ versions?.mifos }}</span>
+            </div>
+            <div class="version-item">
+              <span class="version-label">{{ 'labels.version.Apache Fineract' | translate }}</span>
+              <span class="version-value">{{ versions?.fineract?.version }}</span>
+            </div>
+            <div class="version-item">
+              <span class="version-label">{{ 'labels.version.Server' | translate }}</span>
+              <span class="version-value">{{ server }}</span>
+            </div>
+          </div>
         </div>
 
-        <!-- Resources Links -->
-        <div class="resources-section">
-          <div class="resources-divider">
-            <span class="divider-text">{{ 'labels.links.Resources' | translate }}</span>
+        <!-- Resources Links (hidden in production mode) -->
+        @if (!productionMode) {
+          <div class="resources-section">
+            <div class="resources-branding">
+              <span class="branding-text"
+                >{{ 'labels.text.Powered by' | translate }}
+                <a href="https://mifos.org" target="_blank" rel="noopener noreferrer">{{
+                  'labels.text.Mifos Initiative' | translate
+                }}</a></span
+              >
+            </div>
+            <div class="resources-links">
+              <button mat-button [matMenuTriggerFor]="resourcesMenu" class="resource-button">
+                <fa-icon icon="book" size="sm"></fa-icon>
+                {{ 'labels.links.Resources' | translate }}
+              </button>
+              <button mat-button [matMenuTriggerFor]="communityMenu" class="resource-button">
+                <fa-icon icon="users" size="sm"></fa-icon>
+                {{ 'labels.links.Community' | translate }}
+              </button>
+              <button mat-button [matMenuTriggerFor]="contributeMenu" class="resource-button">
+                <fa-icon icon="heart" size="sm"></fa-icon>
+                {{ 'labels.links.Contribute' | translate }}
+              </button>
+            </div>
           </div>
-          <div class="resources-links">
-            <button mat-button [matMenuTriggerFor]="resourcesMenu" class="resource-button">
-              <fa-icon icon="book" size="sm"></fa-icon>
-              {{ 'labels.links.Resources' | translate }}
-            </button>
-            <button mat-button [matMenuTriggerFor]="communityMenu" class="resource-button">
-              <fa-icon icon="users" size="sm"></fa-icon>
-              {{ 'labels.links.Community' | translate }}
-            </button>
-            <button mat-button [matMenuTriggerFor]="contributeMenu" class="resource-button">
-              <fa-icon icon="heart" size="sm"></fa-icon>
-              {{ 'labels.links.Contribute' | translate }}
-            </button>
-          </div>
-        </div>
+        }
       </div>
 
       <!-- Footer -->
       <div class="login-footer">
-        <div class="layout-column copy-label">
-          <p class="footer-content align-center">
-            {{ 'APP_NAME' | translate }} {{ 'labels.text.by' | translate }} Mifos
-          </p>
-        </div>
         <button
           mat-icon-button
           (click)="reloadSettings()"
           class="reload-button"
+          title="Reload Settings"
           matTooltip="Reload Settings"
           attr.aria-label="Reload Settings"
         >

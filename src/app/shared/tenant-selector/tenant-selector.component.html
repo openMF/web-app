@@ -10,7 +10,7 @@
   <mat-select [formControl]="tenantSelector" (selectionChange)="setTenantIdentifier()" class="tenantselector">
     @for (tenant of tenants; track tenant) {
       <mat-option [value]="tenant">
-        {{ tenant }}
+        {{ tenant | titlecase }}
       </mat-option>
     }
   </mat-select>

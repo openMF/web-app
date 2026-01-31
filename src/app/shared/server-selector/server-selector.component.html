@@ -21,7 +21,7 @@
       <div class="sticky">
         <form [formGroup]="form" (ngSubmit)="addNewServer()">
           <div class="actions">
-            <mat-form-field class="ml align-start">
+            <mat-form-field class="add-server-field" appearance="outline">
               <span matPrefix><mat-icon>language</mat-icon></span>
               <mat-label>{{ 'labels.placeholders.Add new server' | translate }}</mat-label>
               <input matInput type="text" autocomplete="off" formControlName="url" />
@@ -31,7 +31,7 @@
                 </mat-error>
               }
             </mat-form-field>
-            <button type="submit" [disabled]="form.invalid" class="ml" mat-raised-button color="primary">
+            <button type="submit" [disabled]="form.invalid" mat-raised-button color="primary">
               {{ 'labels.buttons.Add' | translate }}
             </button>
           </div>
