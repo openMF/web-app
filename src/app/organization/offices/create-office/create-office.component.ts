@@ -121,7 +121,7 @@ export class CreateOfficeComponent implements OnInit, AfterViewInit {
       locale
     };
     this.organizationService.createOffice(data).subscribe((response) => {
-      if (this.configurationWizardService.showOfficeForm === true) {
+      if (this.configurationWizardService.showOfficeForm) {
         this.configurationWizardService.showOfficeForm = false;
         this.openDialog();
       } else {
@@ -176,7 +176,7 @@ export class CreateOfficeComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showOfficeForm === true) {
+    if (this.configurationWizardService.showOfficeForm) {
       setTimeout(() => {
         this.showPopover(this.templateCreateOfficeForm, this.createOfficeFormRef.nativeElement, 'right', true);
       });

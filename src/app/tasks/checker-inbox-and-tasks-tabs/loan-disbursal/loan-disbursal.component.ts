@@ -177,7 +177,7 @@ export class LoanDisbursalComponent {
     this.tasksService.getAllLoansToBeDisbursed().subscribe((response: any) => {
       this.loans = response.pageItems;
       this.loans = this.loans.filter((account: any) => {
-        return account.status.waitingForDisbursal === true;
+        return account.status.waitingForDisbursal;
       });
       this.dataSource = new MatTableDataSource(this.loans);
       this.selection = new SelectionModel(true, []);

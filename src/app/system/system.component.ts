@@ -92,37 +92,37 @@ export class SystemComponent implements AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showDatatables === true) {
+    if (this.configurationWizardService.showDatatables) {
       setTimeout(() => {
         this.showPopover(this.templateDatatables, this.datatables.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showSystemCodes === true) {
+    if (this.configurationWizardService.showSystemCodes) {
       setTimeout(() => {
         this.showPopover(this.templateCodes, this.codes.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showRolesandPermission === true) {
+    if (this.configurationWizardService.showRolesandPermission) {
       setTimeout(() => {
         this.showPopover(this.templateRolesandPermission, this.rolesandpermission.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showMakerCheckerTable === true) {
+    if (this.configurationWizardService.showMakerCheckerTable) {
       setTimeout(() => {
         this.showPopover(this.templateMakerCheckerTable, this.makerCheckerTable.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showConfigurations === true) {
+    if (this.configurationWizardService.showConfigurations) {
       setTimeout(() => {
         this.showPopover(this.templateConfigurations, this.configurations.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showSchedulerJobs === true) {
+    if (this.configurationWizardService.showSchedulerJobs) {
       setTimeout(() => {
         this.showPopover(this.templateSchedulerJobs, this.schedulerJobs.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showManageReports === true) {
+    if (this.configurationWizardService.showManageReports) {
       setTimeout(() => {
         this.showPopover(this.templateManageReports, this.manageReports.nativeElement, 'bottom', true);
       });

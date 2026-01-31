@@ -87,7 +87,7 @@ export class PenaltyManagementService {
       }
       // Check if it's a penalty charge
       const isPenalty =
-        charge.penalty === true ||
+        charge.penalty ||
         charge.penalty === 'true' ||
         (charge.chargeTimeType &&
           (charge.chargeTimeType.value?.toLowerCase().includes('overdue') ||
@@ -99,7 +99,7 @@ export class PenaltyManagementService {
       }
 
       // Check if already waived or paid
-      if (charge.waived === true || charge.waived === 'true' || charge.paid === true || charge.paid === 'true') {
+      if (charge.waived || charge.waived === 'true' || charge.paid || charge.paid === 'true') {
         return false;
       }
 

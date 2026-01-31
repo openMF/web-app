@@ -252,7 +252,7 @@ export class BreadcrumbComponent implements AfterViewInit, OnDestroy {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showBreadcrumbs === true) {
+    if (this.configurationWizardService.showBreadcrumbs) {
       setTimeout(() => {
         this.showPopover(this.templateBreadcrumb, this.breadcrumb.nativeElement, 'bottom', true);
       });

@@ -142,12 +142,12 @@ export class CodesComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showSystemCodesPage === true) {
+    if (this.configurationWizardService.showSystemCodesPage) {
       setTimeout(() => {
         this.showPopover(this.templateButtonCreateCode, this.buttonCreateCode.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showSystemCodesList === true) {
+    if (this.configurationWizardService.showSystemCodesList) {
       setTimeout(() => {
         this.showPopover(this.templateTableCodes, this.tableCodes.nativeElement, 'top', true);
       });

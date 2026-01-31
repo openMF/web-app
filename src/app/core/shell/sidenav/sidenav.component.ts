@@ -226,12 +226,12 @@ export class SidenavComponent implements OnInit, AfterViewInit {
    * To show popovers
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showSideNav === true) {
+    if (this.configurationWizardService.showSideNav) {
       setTimeout(() => {
         this.showPopover(this.templateLogo, this.logo.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showSideNavChartofAccounts === true) {
+    if (this.configurationWizardService.showSideNavChartofAccounts) {
       setTimeout(() => {
         this.showPopover(this.templateChartOfAccounts, this.chartOfAccounts.nativeElement, 'top', true);
       });

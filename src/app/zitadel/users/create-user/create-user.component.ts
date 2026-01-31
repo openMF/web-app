@@ -265,7 +265,7 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
             if (selectedRoleIds?.length > 0) {
               this.usersService.assignRolesToUser(userId, selectedRoleIds).subscribe(
                 () => {
-                  if (this.configurationWizardService.showUsersForm === true) {
+                  if (this.configurationWizardService.showUsersForm) {
                     this.configurationWizardService.showUsersForm = false;
                     this.openDialog();
                   } else {
@@ -310,7 +310,7 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showUsersForm === true) {
+    if (this.configurationWizardService.showUsersForm) {
       setTimeout(() => {
         this.showPopover(this.templateUserFormRef, this.userFormRef.nativeElement, 'top', true);
       });

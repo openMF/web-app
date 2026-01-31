@@ -147,7 +147,7 @@ export class AddChargeFixedDepositsAccountComponent implements OnInit {
       savingsCharge.feeInterval = this.chargeDetails.feeInterval;
     }
     if (this.chargeDetails.dueDateNotRequired !== true) {
-      if (this.chargeDetails.chargeTimeTypeAnnualOrMonth === true) {
+      if (this.chargeDetails.chargeTimeTypeAnnualOrMonth) {
         const monthDayFormat = 'MMMM-dd'; // TODO: Update once language and date settings are setup
         savingsCharge.monthDayFormat = monthDayFormat;
         if (savingsCharge.feeOnMonthDay) {

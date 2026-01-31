@@ -150,13 +150,13 @@ export class UsersComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showUsers === true) {
+    if (this.configurationWizardService.showUsers) {
       setTimeout(() => {
         this.showPopover(this.templateButtonCreateUser, this.buttonCreateUser.nativeElement, 'bottom', true);
       });
     }
 
-    if (this.configurationWizardService.showUsersList === true) {
+    if (this.configurationWizardService.showUsersList) {
       setTimeout(() => {
         this.showPopover(this.templateUsersTable, this.usersTable.nativeElement, 'top', true);
       });

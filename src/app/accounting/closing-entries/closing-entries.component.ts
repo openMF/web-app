@@ -184,13 +184,13 @@ export class ClosingEntriesComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showClosingEntriesPage === true) {
+    if (this.configurationWizardService.showClosingEntriesPage) {
       setTimeout(() => {
         this.showPopover(this.templateButtonCreateClosure, this.buttonCreateClosure.nativeElement, 'bottom', true);
       });
     }
 
-    if (this.configurationWizardService.showClosingEntriesList === true) {
+    if (this.configurationWizardService.showClosingEntriesList) {
       setTimeout(() => {
         this.showPopover(this.templateClosuresTable, this.closuresTable.nativeElement, 'top', true);
       });

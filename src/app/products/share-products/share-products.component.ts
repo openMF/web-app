@@ -105,7 +105,7 @@ export class ShareProductsComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showShareProductsPage === true) {
+    if (this.configurationWizardService.showShareProductsPage) {
       setTimeout(() => {
         this.showPopover(
           this.templateButtonCreateShareProduct,
@@ -116,7 +116,7 @@ export class ShareProductsComponent implements OnInit, AfterViewInit {
       });
     }
 
-    if (this.configurationWizardService.showShareProductsList === true) {
+    if (this.configurationWizardService.showShareProductsList) {
       setTimeout(() => {
         this.showPopover(this.templateShareProductsTable, this.shareProductsTable.nativeElement, 'top', true);
       });

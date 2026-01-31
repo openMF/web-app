@@ -339,7 +339,7 @@ export class EditLoanProductComponent implements OnInit {
 
   submit() {
     const loanProduct = this.loanProducts.buildPayload(this.loanProduct, this.itemsByDefault);
-    if (loanProduct['useDueForRepaymentsConfigurations'] === true) {
+    if (loanProduct['useDueForRepaymentsConfigurations']) {
       loanProduct['dueDaysForRepaymentEvent'] = null;
       loanProduct['overDueDaysForRepaymentEvent'] = null;
     }

@@ -130,7 +130,7 @@ export class FixedDepositProductsComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showFixedDepositProductsPage === true) {
+    if (this.configurationWizardService.showFixedDepositProductsPage) {
       setTimeout(() => {
         this.showPopover(
           this.templateButtonCreateFixedProduct,
@@ -141,7 +141,7 @@ export class FixedDepositProductsComponent implements OnInit, AfterViewInit {
       });
     }
 
-    if (this.configurationWizardService.showFixedDepositProductsList === true) {
+    if (this.configurationWizardService.showFixedDepositProductsList) {
       setTimeout(() => {
         this.showPopover(this.templateFixedProductsTable, this.fixedProductsTable.nativeElement, 'top', true);
       });

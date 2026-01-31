@@ -183,7 +183,7 @@ export class PopoverService {
         }
       ];
     }
-    if (backdrop === true) {
+    if (backdrop) {
       showbackdrop = true;
     } else {
       showbackdrop = false;

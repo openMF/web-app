@@ -173,13 +173,13 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showHolidayPage === true) {
+    if (this.configurationWizardService.showHolidayPage) {
       setTimeout(() => {
         this.showPopover(this.templateButtonCreateHoliday, this.buttonCreateHoliday.nativeElement, 'bottom', true);
       });
     }
 
-    if (this.configurationWizardService.showHolidayFilter === true) {
+    if (this.configurationWizardService.showHolidayFilter) {
       setTimeout(() => {
         this.showPopover(this.templateFilterRef, this.filterRef.nativeElement, 'bottom', true);
       });

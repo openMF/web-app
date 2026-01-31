@@ -149,13 +149,13 @@ export class FinancialActivityMappingsComponent implements OnInit, AfterViewInit
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showAccountsLinkedPage === true) {
+    if (this.configurationWizardService.showAccountsLinkedPage) {
       setTimeout(() => {
         this.showPopover(this.templateButtonDefineMapping, this.buttonDefineMapping.nativeElement, 'bottom', true);
       });
     }
 
-    if (this.configurationWizardService.showAccountsLinkedList === true) {
+    if (this.configurationWizardService.showAccountsLinkedList) {
       setTimeout(() => {
         this.showPopover(this.templateActivitiesTable, this.activitiesTable.nativeElement, 'top', true);
       });

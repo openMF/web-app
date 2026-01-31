@@ -135,7 +135,7 @@ export class ManageReportsComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showManageReports === true) {
+    if (this.configurationWizardService.showManageReports) {
       setTimeout(() => {
         this.showPopover(this.templateButtonCreateReport, this.buttonCreateReport.nativeElement, 'bottom', true);
       });

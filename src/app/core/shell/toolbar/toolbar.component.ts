@@ -234,20 +234,17 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
    * To show popovers
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showToolbar === true) {
+    if (this.configurationWizardService.showToolbar) {
       setTimeout(() => {
         this.showPopover(this.templateInstitution, this.institution.nativeElement);
       });
     }
 
-    if (
-      this.configurationWizardService.showSideNav === true ||
-      this.configurationWizardService.showSideNavChartofAccounts === true
-    ) {
+    if (this.configurationWizardService.showSideNav || this.configurationWizardService.showSideNavChartofAccounts) {
       this.toggleSidenavCollapse();
     }
 
-    if (this.configurationWizardService.showToolbarAdmin === true) {
+    if (this.configurationWizardService.showToolbarAdmin) {
       setTimeout(() => {
         this.showPopover(this.templateAppMenu, this.appMenu.nativeElement);
       });

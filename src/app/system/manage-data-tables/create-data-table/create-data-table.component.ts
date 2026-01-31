@@ -296,7 +296,7 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
       delete payload.entitySubType;
     }
     this.systemService.createDataTable(payload).subscribe((response: any) => {
-      if (this.configurationWizardService.showDatatablesForm === true) {
+      if (this.configurationWizardService.showDatatablesForm) {
         this.configurationWizardService.showDatatablesForm = false;
         this.openDialog();
       } else {
@@ -331,7 +331,7 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showDatatablesForm === true) {
+    if (this.configurationWizardService.showDatatablesForm) {
       setTimeout(() => {
         this.showPopover(this.templateDataTableFormRef, this.dataTableFormRef.nativeElement, 'bottom', true);
       });

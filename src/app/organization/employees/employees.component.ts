@@ -151,12 +151,12 @@ export class EmployeesComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showEmployeeList === true) {
+    if (this.configurationWizardService.showEmployeeList) {
       setTimeout(() => {
         this.showPopover(this.templateButtonImportEmployees, this.buttonImportEmployees.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showEmployeeTable === true) {
+    if (this.configurationWizardService.showEmployeeTable) {
       setTimeout(() => {
         this.showPopover(this.templateTableEmployees, this.tableEmployees.nativeElement, 'top', true);
       });
