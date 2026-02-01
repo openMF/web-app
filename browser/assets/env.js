@@ -21,6 +21,7 @@
   window["env"]["fineractPlatformTenantIds"]  = '';
 
   window['env']['tenantLogoUrl'] = '';
+  window['env']['tenantLogoUrlDark'] = '';
 
   // Language Environment variables
   window["env"]["defaultLanguage"] = '';
