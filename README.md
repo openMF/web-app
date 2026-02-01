@@ -281,12 +281,13 @@ Available languages:
 
 #### UI Display Settings
 
-| Variable                           | Description                            | Default Value |
-| ---------------------------------- | -------------------------------------- | ------------- |
-| MIFOS_DISPLAY_TENANT_SELECTOR      | Display tenant selector in Login view  | true          |
-| MIFOS_DISPLAY_BACKEND_INFO         | Display backend info in footer         | true          |
-| MIFOS_ALLOW_SERVER_SWITCH_SELECTOR | Display DNS server list                | true          |
-| MIFOS_COMPLIANCE_HIDE_CLIENT_DATA  | Hide client names in UI (mask with \*) | false         |
+| Variable                           | Description                                | Default Value |
+| ---------------------------------- | ------------------------------------------ | ------------- |
+| MIFOS_DISPLAY_TENANT_SELECTOR      | Display tenant selector in Login view      | true          |
+| MIFOS_DISPLAY_BACKEND_INFO         | Display backend info in footer             | true          |
+| MIFOS_PRODUCTION_MODE              | Show minimal production hero on login page | false         |
+| MIFOS_ALLOW_SERVER_SWITCH_SELECTOR | Display DNS server list                    | true          |
+| MIFOS_COMPLIANCE_HIDE_CLIENT_DATA  | Hide client names in UI (mask with \*)     | false         |
 
 #### OAUTH Settings
 
