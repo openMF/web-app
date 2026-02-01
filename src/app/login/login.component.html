@@ -81,7 +81,12 @@
           @if (!themeDarkEnabled) {
             <img [src]="logoPath" (error)="onLogoError()" alt="{{ 'APP_NAME' | translate }} Logo" class="logo-image" />
           } @else {
-            <img src="assets/images/white-mifos.png" alt="{{ 'APP_NAME' | translate }} Logo" class="logo-image" />
+            <img
+              [src]="logoPathDark"
+              (error)="onLogoErrorDark()"
+              alt="{{ 'APP_NAME' | translate }} Logo"
+              class="logo-image"
+            />
           }
         </div>
 

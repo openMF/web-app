@@ -105,6 +105,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   /** Subscription to alerts. */
   alert$: Subscription;
   logoPath = 'assets/images/default_home.png';
+  logoPathDark = 'assets/images/white-mifos.png';
   /** Subscription to theme changes. */
   theme$: Subscription;
 
@@ -205,19 +206,29 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   updateLogo(): void {
+    const tenant = this.settingsService.tenantIdentifier;
+    const isTenantSpecific = tenant && tenant !== 'default';
+
+    // Set light mode logo (env override takes priority)
     if (environment.tenantLogoUrl && environment.tenantLogoUrl.trim() !== '') {
       this.logoPath = environment.tenantLogoUrl;
-      return;
-    }
-    const tenant = this.settingsService.tenantIdentifier;
-    if (tenant && tenant !== 'default') {
-      this.logoPath = `assets/images/${tenant}_home.png`;
     } else {
-      this.logoPath = 'assets/images/default_home.png';
+      this.logoPath = isTenantSpecific ? `assets/images/${tenant}_home.png` : 'assets/images/default_home.png';
+    }
+
+    // Set dark mode logo (env override takes priority)
+    if (environment.tenantLogoUrlDark && environment.tenantLogoUrlDark.trim() !== '') {
+      this.logoPathDark = environment.tenantLogoUrlDark;
+    } else {
+      this.logoPathDark = isTenantSpecific ? `assets/images/${tenant}_home_dark.png` : 'assets/images/white-mifos.png';
     }
   }
 
   onLogoError(): void {
     this.logoPath = 'assets/images/default_home.png';
+  }
+
+  onLogoErrorDark(): void {
+    this.logoPathDark = 'assets/images/white-mifos.png';
   }
 }
