@@ -1,0 +1,96 @@
+name: Cron – Check Broken Markdown Links
+
+on:
+  schedule:
+    - cron: '0 0 1 * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Run without creating issues? (true/false)'
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  cron-check-broken-links:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Harden runner (audit outbound calls)
+        uses: step-security/harden-runner@e3f713f2d8f53843e71c69a996d56f51aa9adfb9 # v2.14.1
+        with:
+          egress-policy: audit
+
+      - name: Checkout repository
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+
+      - name: Check Markdown links (Lychee)
+        id: lychee
+        uses: lycheeverse/lychee-action@a8c4c7cb88f0c7386610c35eb25108e448569cb0 # v2.7.0
+        continue-on-error: true
+        with:
+          args: --verbose --no-progress './**/*.md'
+          fail: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Report Broken Links (Idempotent Issue Management)
+        if: steps.lychee.outcome == 'failure'
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+        with:
+          script: |
+            // Determine if this is a dry run
+            const isManual = context.eventName === 'workflow_dispatch';
+            const dryRun = isManual ? String(context.payload.inputs.dry_run).toLowerCase() === 'true' : false;
+            // Labels configuration
+            const targetLabels = ['broken-markdown-links', 'automated'];
+            const issueTitle = "Scheduled Markdown Link Check Found Broken Links";
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            console.log(`Event: ${context.eventName}, Dry Run: ${dryRun}`);
+            // Define Issue Body
+            const body = `### 🔗 Broken Links Detected\n\n` +
+              `The scheduled markdown link check workflow has detected broken links.\n\n` +
+              `**Run Details:**\n` +
+              `- **Timestamp:** ${new Date().toISOString()}\n` +
+              `- **Workflow Run:** [View Logs](${runUrl})\n\n` +
+              `> **Note:** We use [Lychee](https://github.com/lycheeverse/lychee) for link checking. ` +
+              `Please check the "Check Markdown links" step in the logs to see the specific URLs that failed.`;
+            if (dryRun) {
+              console.log("DRY RUN: Would have created or updated an issue.");
+              return;
+            }
+            // Search for existing issue and Update/Create
+            try {
+              const { data: issues } = await github.rest.issues.listForRepo({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: 'open',
+                labels: targetLabels.join(','),
+                per_page: 100
+              });
+              const existingIssue = issues.find(issue => issue.title === issueTitle);
+              if (existingIssue) {
+                console.log(`Updating existing issue #${existingIssue.number}`);
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: existingIssue.number,
+                  body: `**Update ${new Date().toISOString()}:** Still finding broken links.\nCheck new run logs: ${runUrl}`
+                });
+              } else {
+                console.log("Creating a new issue...");
+                await github.rest.issues.create({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  title: issueTitle,
+                  body: body,
+                  labels: targetLabels
+                });
+              }
+            } catch (error) {
+              console.error('Failed to manage broken link issue:', error);
+              core.setFailed(`Failed to create or update issue: ${error.message}`);
+            }
