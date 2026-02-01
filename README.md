@@ -291,11 +291,16 @@ Available languages:
 
 #### OAUTH Settings
 
-| Variable                   | Description                    | Default Value |
-| -------------------------- | ------------------------------ | ------------- |
-| MIFOS_OAUTH_SERVER_ENABLED | Enable the use of Oauth server | false         |
-| MIFOS_OAUTH_SERVER_URL     | Set the Oauth server URL       |               |
-| MIFOS_OAUTH_CLIENT_ID      | Set the Client Id              |               |
+| Variable                      | Description                                      | Default Value |
+| ----------------------------- | ------------------------------------------------ | ------------- |
+| MIFOS_OAUTH_SERVER_ENABLED    | Enable the use of OAuth2 server                  | false         |
+| MIFOS_OAUTH_SERVER_URL        | Set the OAuth2 server URL (issuer)               |               |
+| MIFOS_OAUTH_SERVER_LOGOUT_URL | Set the OAuth2 server logout URL                 |               |
+| MIFOS_OAUTH_CLIENT_ID         | Set the OAuth2 Client Id                         |               |
+| MIFOS_OAUTH_AUTHORIZE_URL     | Set the OAuth2 authorization endpoint URL        |               |
+| MIFOS_OAUTH_TOKEN_URL         | Set the OAuth2 token endpoint URL                |               |
+| MIFOS_OAUTH_REDIRECT_URI      | Set the OAuth2 redirect URI after authentication |               |
+| MIFOS_OAUTH_SCOPE             | Set the OAuth2 scopes (e.g., openid profile)     |               |
 
 #### OIDC Settings
 

@@ -58,8 +58,23 @@
   // OAuth Server URL
   window['env']['oauthServerUrl'] = '';
 
+  // OAuth Server Logout URL
+  window['env']['oauthServerLogoutUrl'] = '';
+
   // OAuth Client Id
   window['env']['oauthAppId'] = '';
+
+  // OAuth Authorize URL
+  window['env']['oauthAuthorizeUrl'] = '';
+
+  // OAuth Token URL
+  window['env']['oauthTokenUrl'] = '';
+
+  // OAuth Redirect URI
+  window['env']['oauthRedirectUri'] = '';
+
+  // OAuth Scope
+  window['env']['oauthScope'] = '';
 
 
   // Hide client data (mask names)

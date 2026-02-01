@@ -66,8 +66,23 @@
   // OAuth Server URL
   window['env']['oauthServerUrl'] = '$MIFOS_OAUTH_SERVER_URL';
 
+  // OAuth Server Logout URL
+  window['env']['oauthServerLogoutUrl'] = '$MIFOS_OAUTH_SERVER_LOGOUT_URL';
+
   // OAuth Client Id
   window['env']['oauthAppId'] = '$MIFOS_OAUTH_CLIENT_ID';
+
+  // OAuth Authorize URL
+  window['env']['oauthAuthorizeUrl'] = '$MIFOS_OAUTH_AUTHORIZE_URL';
+
+  // OAuth Token URL
+  window['env']['oauthTokenUrl'] = '$MIFOS_OAUTH_TOKEN_URL';
+
+  // OAuth Redirect URI
+  window['env']['oauthRedirectUri'] = '$MIFOS_OAUTH_REDIRECT_URI';
+
+  // OAuth Scope
+  window['env']['oauthScope'] = '$MIFOS_OAUTH_SCOPE';
 
   // Min Password length
   window['env']['minPasswordLength'] = '$MIFOS_MIN_PASSWORD_LENGTH';
