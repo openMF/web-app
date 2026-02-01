@@ -71,32 +71,32 @@ export class ProductsComponent implements AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showCharges === true) {
+    if (this.configurationWizardService.showCharges) {
       setTimeout(() => {
         this.showPopover(this.templateCharges, this.charges.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showLoanProducts === true) {
+    if (this.configurationWizardService.showLoanProducts) {
       setTimeout(() => {
         this.showPopover(this.templateLoanProducts, this.loanProducts.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showSavingsProducts === true) {
+    if (this.configurationWizardService.showSavingsProducts) {
       setTimeout(() => {
         this.showPopover(this.templateSavingsProducts, this.savingsProducts.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showShareProducts === true) {
+    if (this.configurationWizardService.showShareProducts) {
       setTimeout(() => {
         this.showPopover(this.templateShareProducts, this.shareProducts.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showFixedDepositProducts === true) {
+    if (this.configurationWizardService.showFixedDepositProducts) {
       setTimeout(() => {
         this.showPopover(this.templateFixedDepositProducts, this.fixedDepositProducts.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showRecurringDepositProducts === true) {
+    if (this.configurationWizardService.showRecurringDepositProducts) {
       setTimeout(() => {
         this.showPopover(
           this.templateRecurringDepositProducts,

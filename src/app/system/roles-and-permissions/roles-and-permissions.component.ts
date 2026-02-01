@@ -159,12 +159,12 @@ export class RolesAndPermissionsComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showRolesandPermissionPage === true) {
+    if (this.configurationWizardService.showRolesandPermissionPage) {
       setTimeout(() => {
         this.showPopover(this.templateButtonAddRole, this.buttonAddRole.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showRolesandPermissionList === true) {
+    if (this.configurationWizardService.showRolesandPermissionList) {
       setTimeout(() => {
         this.showPopover(
           this.templateTableRolesandPermissions,

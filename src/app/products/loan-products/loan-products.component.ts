@@ -125,7 +125,7 @@ export class LoanProductsComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showLoanProductsPage === true) {
+    if (this.configurationWizardService.showLoanProductsPage) {
       setTimeout(() => {
         this.showPopover(
           this.templateButtonCreateLoanProduct,
@@ -136,7 +136,7 @@ export class LoanProductsComponent implements OnInit, AfterViewInit {
       });
     }
 
-    if (this.configurationWizardService.showLoanProductsList === true) {
+    if (this.configurationWizardService.showLoanProductsList) {
       setTimeout(() => {
         this.showPopover(this.templateLoanProductsTable, this.loanProductsTable.nativeElement, 'top', true);
       });

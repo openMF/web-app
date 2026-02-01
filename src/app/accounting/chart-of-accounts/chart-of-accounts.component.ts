@@ -181,13 +181,13 @@ export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
       }
     };
     this.tableDataSource.sort = this.sort;
-    if (this.configurationWizardService.showChartofAccountsPage === true) {
+    if (this.configurationWizardService.showChartofAccountsPage) {
       setTimeout(() => {
         this.showPopover(this.templateButtonTreeView, this.buttonTreeView.nativeElement, 'bottom', true);
       });
     }
 
-    if (this.configurationWizardService.showChartofAccountsList === true) {
+    if (this.configurationWizardService.showChartofAccountsList) {
       setTimeout(() => {
         this.showPopover(this.templateAccountsTable, this.accountsTable.nativeElement, 'top', true);
       });

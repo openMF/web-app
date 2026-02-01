@@ -29,7 +29,8 @@ export class Dates {
   }
 
   public formatDateAsString(value: Date, dateFormat: string): string {
-    return moment(value).format(dateFormat);
+    const momentFormat = dateFormat.replace(/y/g, 'Y').replace(/d/g, 'D').replace(/a/g, 'A');
+    return moment(value).format(momentFormat);
   }
 
   public parseDate(value: any): Date {
@@ -45,7 +46,8 @@ export class Dates {
   }
 
   public convertToDate(value: any, format: string): Date {
-    return moment(value).toDate();
+    const momentFormat = format.replace(/y/g, 'Y').replace(/d/g, 'D').replace(/a/g, 'A');
+    return moment(value, momentFormat).toDate();
   }
 
   get language() {

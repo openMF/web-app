@@ -104,13 +104,13 @@ export class SavingProductsComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showSavingsProductsPage === true) {
+    if (this.configurationWizardService.showSavingsProductsPage) {
       setTimeout(() => {
         this.showPopover(this.templateButtonSavingProduct, this.buttonSavingProduct.nativeElement, 'bottom', true);
       });
     }
 
-    if (this.configurationWizardService.showSavingsProductsList === true) {
+    if (this.configurationWizardService.showSavingsProductsList) {
       setTimeout(() => {
         this.showPopover(this.templateSavingProductTable, this.savingProductTable.nativeElement, 'top', true);
       });

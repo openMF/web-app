@@ -137,7 +137,7 @@ export class RecurringDepositProductsComponent implements OnInit, AfterViewInit 
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showRecurringDepositProductsPage === true) {
+    if (this.configurationWizardService.showRecurringDepositProductsPage) {
       setTimeout(() => {
         this.showPopover(
           this.templateButtonCreateRecurringProduct,
@@ -148,7 +148,7 @@ export class RecurringDepositProductsComponent implements OnInit, AfterViewInit 
       });
     }
 
-    if (this.configurationWizardService.showRecurringDepositProductsList === true) {
+    if (this.configurationWizardService.showRecurringDepositProductsList) {
       setTimeout(() => {
         this.showPopover(this.templateRecurringProductsTable, this.recurringProductsTable.nativeElement, 'top', true);
       });

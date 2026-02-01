@@ -720,6 +720,6 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
    * Available when PROGRESSIVE schedule type and multi-disbursement is enabled.
    */
   isFullTermTrancheEditable(): boolean {
-    return this.isProgressive && this.multiDisburseLoan === true;
+    return this.isProgressive && !!this.multiDisburseLoan;
   }
 }

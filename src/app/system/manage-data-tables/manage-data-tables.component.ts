@@ -147,12 +147,12 @@ export class ManageDataTablesComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showDatatablesPage === true) {
+    if (this.configurationWizardService.showDatatablesPage) {
       setTimeout(() => {
         this.showPopover(this.templateCreateDatatableRef, this.createDatatableRef.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showDatatablesList === true) {
+    if (this.configurationWizardService.showDatatablesList) {
       setTimeout(() => {
         this.showPopover(this.templateDatatablesList, this.datatablesList.nativeElement, 'top', true);
       });

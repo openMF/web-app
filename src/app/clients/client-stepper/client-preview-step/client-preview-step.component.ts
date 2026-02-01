@@ -23,6 +23,7 @@ import { FindPipe } from '../../../pipes/find.pipe';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { YesnoPipe } from '../../../pipes/yesno.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LegalFormId } from 'app/clients/models/legal-form.enum';
 
 /**
  * Client Preview Step Component
@@ -57,6 +58,9 @@ export class ClientPreviewStepComponent {
 
   /** Form submission event */
   @Output() submitEvent = new EventEmitter();
+
+  /** Expose enum to template */
+  readonly LegalFormId = LegalFormId;
 
   constructor() {}
 

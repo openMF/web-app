@@ -240,7 +240,7 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showMigrateOpeningBalances === true) {
+    if (this.configurationWizardService.showMigrateOpeningBalances) {
       setTimeout(() => {
         this.showPopover(this.templateSearchFormRef, this.searchFormRef.nativeElement, 'bottom', true);
       });

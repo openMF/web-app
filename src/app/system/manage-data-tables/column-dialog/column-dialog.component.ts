@@ -110,7 +110,7 @@ export class ColumnDialogComponent implements OnInit {
         return 'Dropdown';
       }
       default: {
-        return columnDisplayType[0] + columnDisplayType.substr(1).toLowerCase();
+        return columnDisplayType[0] + columnDisplayType.substring(1).toLowerCase();
       }
     }
   }

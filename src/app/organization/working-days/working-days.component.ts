@@ -153,7 +153,7 @@ export class WorkingDaysComponent implements OnInit, AfterViewInit {
     }
     workingDays.recurrence = recurrence;
     this.organizationService.updateWorkingDays(workingDays).subscribe((response) => {
-      if (this.configurationWizardService.showDefineWorkingDays === true) {
+      if (this.configurationWizardService.showDefineWorkingDays) {
         this.configurationWizardService.showDefineWorkingDays = false;
         this.openNextStepDialog();
       } else {
@@ -182,7 +182,7 @@ export class WorkingDaysComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showDefineWorkingDays === true) {
+    if (this.configurationWizardService.showDefineWorkingDays) {
       setTimeout(() => {
         this.showPopover(this.templateWorkingDaysFormRef, this.workingDaysFormRef.nativeElement, 'right', true);
       });

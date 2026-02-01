@@ -154,13 +154,13 @@ export class ChargesComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showChargesPage === true) {
+    if (this.configurationWizardService.showChargesPage) {
       setTimeout(() => {
         this.showPopover(this.templateButtonCreateCharge, this.buttonCreateCharge.nativeElement, 'bottom', true);
       });
     }
 
-    if (this.configurationWizardService.showChargesList === true) {
+    if (this.configurationWizardService.showChargesList) {
       setTimeout(() => {
         this.showPopover(this.templateChargesTable, this.chargesTable.nativeElement, 'top', true);
       });

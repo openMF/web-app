@@ -258,12 +258,12 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit, AfterViewIni
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showMakerCheckerTablePage === true) {
+    if (this.configurationWizardService.showMakerCheckerTablePage) {
       setTimeout(() => {
         this.showPopover(this.templateButtonEdit, this.buttonEdit.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showMakerCheckerTableList === true) {
+    if (this.configurationWizardService.showMakerCheckerTableList) {
       setTimeout(() => {
         this.showPopover(this.templateMcTable, this.mcTable.nativeElement, 'top', true);
       });

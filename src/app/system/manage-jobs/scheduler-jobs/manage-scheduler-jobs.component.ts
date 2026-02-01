@@ -265,12 +265,12 @@ export class ManageSchedulerJobsComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showSchedulerJobsPage === true) {
+    if (this.configurationWizardService.showSchedulerJobsPage) {
       setTimeout(() => {
         this.showPopover(this.templateSchedulerStatus, this.schedulerStatus.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showSchedulerJobsList === true) {
+    if (this.configurationWizardService.showSchedulerJobsList) {
       setTimeout(() => {
         this.showPopover(this.templateJobsTable, this.jobsTable.nativeElement, 'top', true);
       });

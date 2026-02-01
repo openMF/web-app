@@ -90,32 +90,32 @@ export class OrganizationComponent implements AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showCreateOffice === true) {
+    if (this.configurationWizardService.showCreateOffice) {
       setTimeout(() => {
         this.showPopover(this.templateOffice, this.office.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showAddEditCurrency === true) {
+    if (this.configurationWizardService.showAddEditCurrency) {
       setTimeout(() => {
         this.showPopover(this.templateAddEditCurrency, this.addEditCurrency.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showCreateHoliday === true) {
+    if (this.configurationWizardService.showCreateHoliday) {
       setTimeout(() => {
         this.showPopover(this.templateHolidays, this.holidays.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showCreateEmployee === true) {
+    if (this.configurationWizardService.showCreateEmployee) {
       setTimeout(() => {
         this.showPopover(this.templateEmployee, this.employee.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showDefineWorkingDays === true) {
+    if (this.configurationWizardService.showDefineWorkingDays) {
       setTimeout(() => {
         this.showPopover(this.templateWorkingDays, this.workingDays.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showManageFunds === true) {
+    if (this.configurationWizardService.showManageFunds) {
       setTimeout(() => {
         this.showPopover(this.templateManageFunds, this.manageFunds.nativeElement, 'bottom', true);
       });

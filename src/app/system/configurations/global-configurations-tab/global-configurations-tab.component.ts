@@ -176,13 +176,13 @@ export class GlobalConfigurationsTabComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showConfigurationsPage === true) {
+    if (this.configurationWizardService.showConfigurationsPage) {
       setTimeout(() => {
         this.showPopover(this.templateFilter, this.filter.nativeElement, 'bottom', true);
       });
     }
 
-    if (this.configurationWizardService.showConfigurationsList === true) {
+    if (this.configurationWizardService.showConfigurationsList) {
       setTimeout(() => {
         this.showPopover(this.templateConfigurationsTable, this.configurationsTable.nativeElement, 'top', true);
       });

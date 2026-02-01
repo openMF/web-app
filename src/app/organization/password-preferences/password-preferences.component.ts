@@ -75,7 +75,7 @@ export class PasswordPreferencesComponent implements OnInit {
    */
   setPasswordPreferencesForm() {
     for (const passwordPreference of this.passwordPreferencesData) {
-      if (passwordPreference.active === true) {
+      if (passwordPreference.active) {
         this.passwordPreferencesForm.get('validationPolicyId').setValue(passwordPreference.id);
       }
     }

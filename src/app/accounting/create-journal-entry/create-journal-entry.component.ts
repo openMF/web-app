@@ -251,7 +251,7 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showCreateJournalEntries === true) {
+    if (this.configurationWizardService.showCreateJournalEntries) {
       setTimeout(() => {
         this.showPopover(this.templateCreateJournalFormRef, this.createJournalFormRef.nativeElement, 'top', true);
       });

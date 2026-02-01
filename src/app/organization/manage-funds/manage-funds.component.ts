@@ -157,7 +157,7 @@ export class ManageFundsComponent implements OnInit, AfterViewInit {
         name: newFund.name
       });
       this.formRef.resetForm();
-      if (this.configurationWizardService.showManageFunds === true) {
+      if (this.configurationWizardService.showManageFunds) {
         this.configurationWizardService.showManageFunds = false;
         this.openDialog();
       }
@@ -215,7 +215,7 @@ export class ManageFundsComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showManageFunds === true) {
+    if (this.configurationWizardService.showManageFunds) {
       setTimeout(() => {
         this.showPopover(this.templateFundFormRef, this.fundFormRef.nativeElement, 'bottom', true);
       });

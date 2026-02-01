@@ -67,7 +67,7 @@ export class CreateCodeComponent implements OnInit, AfterViewInit {
    */
   submit() {
     this.systemService.createCode(this.codeForm.value).subscribe((response: any) => {
-      if (this.configurationWizardService.showSystemCodesForm === true) {
+      if (this.configurationWizardService.showSystemCodesForm) {
         this.configurationWizardService.showSystemCodesForm = false;
         this.configurationWizardService.showRolesandPermission = true;
         this.router.navigate(['/system']);
@@ -103,7 +103,7 @@ export class CreateCodeComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showSystemCodesForm === true) {
+    if (this.configurationWizardService.showSystemCodesForm) {
       setTimeout(() => {
         this.showPopover(this.templateCodeFormRef, this.codeFormRef.nativeElement, 'right', true);
       });

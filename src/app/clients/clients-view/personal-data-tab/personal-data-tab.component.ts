@@ -14,6 +14,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 /** Custom Imports */
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { LegalFormId } from 'app/clients/models/legal-form.enum';
 
 /** Interfaces */
 interface ClientViewData {
@@ -71,16 +72,16 @@ export class PersonalDataTabComponent {
   }
 
   /**
-   * Check if client is a person (legalFormId = 1) or entity (legalFormId = 2)
+   * Check if client is a person (individual)
    */
   isPerson(): boolean {
-    return this.clientViewData?.legalForm?.id === 1;
+    return this.clientViewData?.legalForm?.id === LegalFormId.PERSON;
   }
 
   /**
-   * Check if client is a legal entity
+   * Check if client is a legal entity (organization)
    */
   isLegalEntity(): boolean {
-    return this.clientViewData?.legalForm?.id === 2;
+    return this.clientViewData?.legalForm?.id === LegalFormId.ENTITY;
   }
 }

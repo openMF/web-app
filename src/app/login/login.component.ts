@@ -75,6 +75,8 @@ import { VersionService } from '../system/version.service';
 export class LoginComponent implements OnInit, OnDestroy {
   /** Show version info table if env allows */
   displayBackendInfo = environment.displayBackEndInfo !== 'false';
+  /** Production mode - minimal hero with branding only */
+  productionMode = environment.productionMode === true;
 
   private alertService = inject(AlertService);
   private settingsService = inject(SettingsService);
@@ -89,6 +91,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   versions: VersionInfo = {};
   /** Server info for display */
   server: string = '';
+
+  /** Get tenant display name with first letter capitalized */
+  get tenantDisplayName(): string {
+    const tenant = this.versions?.tenant || this.settingsService.tenantIdentifier || 'default';
+    return tenant.charAt(0).toUpperCase() + tenant.slice(1).toLowerCase();
+  }
 
   /** True if password requires a reset. */
   resetPassword = false;

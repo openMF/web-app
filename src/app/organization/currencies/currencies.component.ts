@@ -146,13 +146,13 @@ export class CurrenciesComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showCurrencyPage === true) {
+    if (this.configurationWizardService.showCurrencyPage) {
       setTimeout(() => {
         this.showPopover(this.templateButtonAddEdit, this.buttonAddEdit.nativeElement, 'bottom', true);
       });
     }
 
-    if (this.configurationWizardService.showCurrencyList === true) {
+    if (this.configurationWizardService.showCurrencyList) {
       setTimeout(() => {
         this.showPopover(this.templateTableCurrencies, this.tableCurrencies.nativeElement, 'top', true);
       });

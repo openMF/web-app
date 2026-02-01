@@ -141,12 +141,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showHome === true) {
+    if (this.configurationWizardService.showHome) {
       setTimeout(() => {
         this.showPopover(this.templateButtonDashboard, this.buttonDashboard.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showHomeSearchActivity === true) {
+    if (this.configurationWizardService.showHomeSearchActivity) {
       setTimeout(() => {
         this.showPopover(this.templateSearchActivity, this.searchActivity.nativeElement, 'bottom', true);
       });

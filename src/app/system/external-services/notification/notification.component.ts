@@ -94,7 +94,10 @@ export class NotificationComponent implements OnInit {
   getConfigurationValue(configuration: any): string {
     const value = configuration.value;
     if (configuration.name === 'server_key') {
-      return value.replace(value.substr(1, value.length - 3), value.substr(1, value.length - 3).replace(/./g, '*'));
+      return value.replace(
+        value.substring(1, value.length - 2),
+        value.substring(1, value.length - 2).replace(/./g, '*')
+      );
     }
     return value;
   }

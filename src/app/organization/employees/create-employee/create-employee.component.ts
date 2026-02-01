@@ -142,7 +142,7 @@ export class CreateEmployeeComponent implements OnInit, AfterViewInit {
       locale
     };
     this.organizationService.createEmployee(data).subscribe((response: any) => {
-      if (this.configurationWizardService.showEmployeeForm === true) {
+      if (this.configurationWizardService.showEmployeeForm) {
         this.configurationWizardService.showEmployeeForm = false;
         this.openDialog();
       } else {
@@ -171,7 +171,7 @@ export class CreateEmployeeComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showEmployeeForm === true) {
+    if (this.configurationWizardService.showEmployeeForm) {
       setTimeout(() => {
         this.showPopover(this.templateCreateEmployeeForm, this.createEmployeeFormRef.nativeElement, 'right', true);
       });

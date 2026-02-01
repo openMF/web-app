@@ -173,7 +173,7 @@ export class CreateGlAccountComponent implements OnInit, AfterViewInit {
       return;
     }
     this.accountingService.createGlAccount(this.glAccountForm.value).subscribe((response: any) => {
-      if (this.configurationWizardService.showChartofAccounts === true) {
+      if (this.configurationWizardService.showChartofAccounts) {
         this.configurationWizardService.showChartofAccounts = false;
         this.openDialog();
       } else {
@@ -208,7 +208,7 @@ export class CreateGlAccountComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showChartofAccountsForm === true) {
+    if (this.configurationWizardService.showChartofAccountsForm) {
       setTimeout(() => {
         this.showPopover(this.templateAccountFormRef, this.accountFormRef.nativeElement, 'bottom', true);
       });

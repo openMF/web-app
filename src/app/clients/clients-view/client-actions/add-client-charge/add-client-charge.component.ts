@@ -146,7 +146,7 @@ export class AddClientChargeComponent implements OnInit {
       clientCharge.feeInterval = this.chargeDetails.feeInterval;
     }
     if (this.chargeDetails.dueDateNotRequired !== true) {
-      if (this.chargeDetails.chargeTimeTypeAnnualOrMonth === true) {
+      if (this.chargeDetails.chargeTimeTypeAnnualOrMonth) {
         const monthDayFormat = 'MMMM-dd'; // TODO: Update once language and date settings are setup
         clientCharge.monthDayFormat = monthDayFormat;
         if (clientCharge.feeOnMonthDay) {

@@ -240,12 +240,12 @@ export class OfficesComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showOfficeList === true) {
+    if (this.configurationWizardService.showOfficeList) {
       setTimeout(() => {
         this.showPopover(this.templateButtonTreeView, this.buttonTreeView.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showOfficeTable === true) {
+    if (this.configurationWizardService.showOfficeTable) {
       setTimeout(() => {
         this.showPopover(this.templateTableOffices, this.tableOffices.nativeElement, 'top', true);
       });

@@ -166,7 +166,7 @@ export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnDestr
       this.organizationservice.updateCurrencies(selectedCurrencyCodes).subscribe((response: any) => {
         this.selectedCurrencies.push(newCurrency);
         this.formRef.resetForm();
-        if (this.configurationWizardService.showCurrencyForm === true) {
+        if (this.configurationWizardService.showCurrencyForm) {
           this.configurationWizardService.showCurrencyForm = false;
           this.openDialog();
         }
@@ -205,7 +205,7 @@ export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   ngAfterViewInit() {
-    if (this.configurationWizardService.showCurrencyForm === true) {
+    if (this.configurationWizardService.showCurrencyForm) {
       setTimeout(() => {
         this.showPopover(this.templateCurrencyFormRef, this.currencyFormRef.nativeElement, 'bottom', true);
       });
