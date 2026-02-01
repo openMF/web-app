@@ -37,6 +37,9 @@
   // Display or not the BackEnd Info
   window['env']['displayBackEndInfo'] = '';
 
+  // Show minimal production hero on login page
+  window['env']['productionMode'] = '';
+
   // Display or not the Tenant Selector
   window['env']['displayTenantSelector'] = '';
 
