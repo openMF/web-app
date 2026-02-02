@@ -106,7 +106,7 @@
 
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
-        <td mat-cell class="center" *matCellDef="let transaction">
+        <td mat-cell class="center" *matCellDef="let transaction; let idx = index">
           <button mat-icon-button [matMenuTriggerFor]="transactionMenu" aria-label="" class="action-button">
             <mat-icon>more_vert</mat-icon>
           </button>
@@ -115,6 +115,12 @@
               <mat-icon><fa-icon icon="eye" size="sm"></fa-icon></mat-icon>
               <span>{{ 'labels.text.View Transaction' | translate }}</span>
             </button>
+            @if (!isFirstTransaction(idx)) {
+              <button mat-menu-item (click)="undoTransaction(transaction)">
+                <mat-icon><fa-icon icon="undo" size="sm"></fa-icon></mat-icon>
+                <span>{{ 'tooltips.Undo Transaction' | translate }}</span>
+              </button>
+            }
             <button
               mat-menu-item
               (click)="routeEdit($event)"
