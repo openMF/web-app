@@ -1,0 +1,189 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.dashboard-container {
+  padding: 20px;
+  background: linear-gradient(135deg, #0d47a1 0%, #1565c0 50%, #1976d2 100%);
+}
+
+.dashboard-header-card {
+  margin-bottom: 24px;
+  padding: 0;
+  border: none;
+  background: rgb(255 255 255 / 10%);
+  backdrop-filter: blur(10px);
+
+  .header {
+    padding: 16px 24px;
+    background: transparent;
+    border-bottom: 1px solid rgb(255 255 255 / 20%);
+
+    h3 {
+      margin: 0;
+      color: white;
+      font-size: 22px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+
+      fa-icon {
+        color: white;
+      }
+    }
+  }
+}
+
+.metrics-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.metrics-grid .metric-card {
+  flex: 1 1 250px;
+  min-width: 250px;
+}
+
+.metric-card {
+  background: rgb(255 255 255 / 95%);
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 15%);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgb(0 0 0 / 20%);
+  }
+
+  mat-card-content {
+    padding: 24px;
+  }
+
+  .metric-label {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+  }
+
+  .metric-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1976d2;
+    margin-bottom: 12px;
+
+    &.success {
+      color: #4caf50;
+    }
+
+    &.warning {
+      color: #ff9800;
+    }
+  }
+
+  .metric-progress {
+    margin-top: 12px;
+    height: 8px;
+    background: linear-gradient(90deg, #e3f2fd 0%, #bbdefb 100%);
+    border-radius: 4px;
+    overflow: hidden;
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #4caf50 0%, #66bb6a 100%);
+      transition: width 0.6s ease;
+      box-shadow: 0 2px 8px rgb(76 175 80 / 30%);
+    }
+  }
+}
+
+.charts-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.charts-grid .chart-card {
+  flex: 1 1 450px;
+  min-width: 450px;
+}
+
+.chart-card {
+  background: rgb(255 255 255 / 95%);
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 15%);
+  overflow: hidden;
+
+  mat-card-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid #e0e0e0;
+    background: linear-gradient(135deg, #f5f5f5 0%, #fafafa 100%);
+
+    mat-card-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1976d2;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+
+      fa-icon {
+        color: #1976d2;
+      }
+    }
+  }
+
+  mat-card-content {
+    padding: 24px;
+    background: white;
+  }
+
+  .chart-container {
+    width: 100%;
+    height: 350px;
+    position: relative;
+
+    canvas {
+      max-width: 100%;
+      height: auto !important;
+    }
+
+    .no-data-message {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #999;
+      font-size: 14px;
+      text-align: center;
+      font-weight: 500;
+    }
+  }
+}
+
+@media (width <= 768px) {
+  .metrics-grid .metric-card {
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+
+  .charts-grid .chart-card {
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+
+  .dashboard-container {
+    padding: 12px;
+  }
+}

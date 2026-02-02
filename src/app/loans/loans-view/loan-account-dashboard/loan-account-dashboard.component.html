@@ -1,0 +1,90 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="dashboard-container">
+  <mat-card class="dashboard-header-card">
+    <mat-card-header class="header">
+      <h3>
+        {{ 'labels.heading.Loan Dashboard' | translate }}
+      </h3>
+    </mat-card-header>
+  </mat-card>
+
+  <!-- Metrics Cards -->
+  <div class="metrics-grid">
+    <mat-card class="metric-card">
+      <mat-card-content>
+        <div class="metric-label">{{ 'labels.inputs.Principal Amount' | translate }}</div>
+        <div class="metric-value">{{ principalAmount | number: '1.2-2' }}</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="metric-card">
+      <mat-card-content>
+        <div class="metric-label">{{ 'labels.inputs.Total Repaid' | translate }}</div>
+        <div class="metric-value success">{{ totalRepaid | number: '1.2-2' }}</div>
+        <div class="metric-progress">
+          <div class="progress-bar" [style.width.%]="progressPercentage"></div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="metric-card">
+      <mat-card-content>
+        <div class="metric-label">{{ 'labels.inputs.Outstanding Balance' | translate }}</div>
+        <div class="metric-value warning">{{ outstandingBalance | number: '1.2-2' }}</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="metric-card">
+      <mat-card-content>
+        <div class="metric-label">{{ 'labels.inputs.Interest Charged' | translate }}</div>
+        <div class="metric-value">{{ interestCharged | number: '1.2-2' }}</div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Charts Section -->
+  <div class="charts-grid">
+    <mat-card class="chart-card">
+      <mat-card-header>
+        <mat-card-title>
+          {{ 'labels.heading.Repayment Progress' | translate }}
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="chart-container">
+          <canvas #statusChart></canvas>
+          @if (!loanData) {
+            <div class="no-data-message">{{ 'labels.text.Loading data' | translate }}...</div>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="chart-card">
+      <mat-card-header>
+        <mat-card-title>
+          {{ 'labels.heading.Payment Schedule' | translate }}
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="chart-container">
+          <canvas #paymentsChart></canvas>
+          @if (!loanData) {
+            <div class="no-data-message">{{ 'labels.text.Loading data' | translate }}...</div>
+          } @else if (!loanData.repaymentSchedule?.periods || loanData.repaymentSchedule.periods.length === 0) {
+            <div class="no-data-message">
+              {{ 'labels.text.No repayment schedule available' | translate }}
+            </div>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

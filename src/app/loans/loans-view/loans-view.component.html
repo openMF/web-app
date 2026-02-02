@@ -207,6 +207,15 @@
       </a>
       <a
         mat-tab-link
+        [routerLink]="['./dashboard']"
+        routerLinkActive
+        #dashboard="routerLinkActive"
+        [active]="dashboard.isActive"
+      >
+        {{ 'labels.inputs.Dashboard' | translate }}
+      </a>
+      <a
+        mat-tab-link
         [routerLink]="['./accountdetail']"
         routerLinkActive
         #accountdetail="routerLinkActive"

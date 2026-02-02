@@ -37,6 +37,7 @@ import { ExportTransactionsComponent } from './loans-view/transactions/export-tr
 import { GlimAccountComponent } from './glim-account/glim-account.component';
 import { CreateGlimAccountComponent } from './glim-account/create-glim-account/create-glim-account.component';
 import { LoanBuyDownFeesTabComponent } from './loans-view/loan-buy-down-fees-tab/loan-buy-down-fees-tab.component';
+import { LoanAccountDashboardComponent } from './loans-view/loan-account-dashboard/loan-account-dashboard.component';
 
 /** Custom Resolvers */
 import { LoanDetailsResolver } from './common-resolvers/loan-details.resolver';
@@ -111,6 +112,11 @@ const routes: Routes = [
             component: GeneralTabComponent,
             data: { title: 'General', breadcrumb: 'General', routeParamBreadcrumb: false },
             resolve: {}
+          },
+          {
+            path: 'dashboard',
+            component: LoanAccountDashboardComponent,
+            data: { title: 'Dashboard', breadcrumb: 'Dashboard', routeParamBreadcrumb: false }
           },
           {
             path: 'accountdetail',
