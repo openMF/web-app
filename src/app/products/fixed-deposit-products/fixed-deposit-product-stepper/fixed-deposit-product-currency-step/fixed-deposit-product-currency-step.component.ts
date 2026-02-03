@@ -6,9 +6,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, Input, inject } from '@angular/core';
+import { Component, OnInit, Input, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { startWith } from 'rxjs/operators';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { MatCheckbox } from '@angular/material/checkbox';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -20,11 +23,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ...STANDALONE_SHARED_IMPORTS,
     MatStepperPrevious,
     FaIconComponent,
-    MatStepperNext
+    MatStepperNext,
+    MatCheckbox
   ]
 })
 export class FixedDepositProductCurrencyStepComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
+  private destroyRef = inject(DestroyRef);
 
   @Input() fixedDepositProductsTemplate: any;
 
@@ -39,18 +44,14 @@ export class FixedDepositProductCurrencyStepComponent implements OnInit {
   ngOnInit() {
     this.currencyData = this.fixedDepositProductsTemplate.currencyOptions;
 
-    if (!(this.fixedDepositProductsTemplate === undefined) && this.fixedDepositProductsTemplate.id) {
-      this.fixedDepositProductCurrencyForm.patchValue({
-        currencyCode: this.fixedDepositProductsTemplate.currency.code,
-        digitsAfterDecimal: this.fixedDepositProductsTemplate.currency.decimalPlaces,
-        inMultiplesOf: this.fixedDepositProductsTemplate.currency.inMultiplesOf
-      });
-    } else {
-      this.fixedDepositProductCurrencyForm.patchValue({
-        currencyCode: this.currencyData[0].code,
-        digitsAfterDecimal: 2
-      });
-    }
+    this.fixedDepositProductCurrencyForm.patchValue({
+      currencyCode: this.fixedDepositProductsTemplate.currency?.code || this.currencyData[0].code,
+      digitsAfterDecimal: this.fixedDepositProductsTemplate.digitsAfterDecimal ?? '',
+      setMultiples: !!this.fixedDepositProductsTemplate.inMultiplesOf,
+      inMultiplesOf: this.fixedDepositProductsTemplate.inMultiplesOf ?? ''
+    });
+
+    this.setupConditionalValidation();
   }
 
   createFixedDepositProductCurrencyForm() {
@@ -61,13 +62,47 @@ export class FixedDepositProductCurrencyStepComponent implements OnInit {
       ],
       digitsAfterDecimal: [
         '',
-        Validators.required
+        [
+          Validators.required,
+          Validators.min(0)
+        ]
       ],
+      setMultiples: [false],
       inMultiplesOf: ['']
     });
   }
 
+  setupConditionalValidation() {
+    const inMultiplesOfControl = this.fixedDepositProductCurrencyForm.get('inMultiplesOf');
+    const setMultiplesControl = this.fixedDepositProductCurrencyForm.get('setMultiples');
+
+    setMultiplesControl?.valueChanges
+      .pipe(startWith(setMultiplesControl.value), takeUntilDestroyed(this.destroyRef))
+      .subscribe((checked) => {
+        if (checked) {
+          inMultiplesOfControl?.setValidators([
+            Validators.required,
+            Validators.min(1)
+          ]);
+        } else {
+          inMultiplesOfControl?.clearValidators();
+          inMultiplesOfControl?.setValue('');
+        }
+        inMultiplesOfControl?.updateValueAndValidity();
+      });
+  }
+
   get fixedDepositProductCurrency() {
-    return this.fixedDepositProductCurrencyForm.value;
+    const formValue = this.fixedDepositProductCurrencyForm.value;
+    const result: any = {
+      currencyCode: formValue.currencyCode,
+      digitsAfterDecimal: formValue.digitsAfterDecimal
+    };
+
+    if (formValue.inMultiplesOf !== '' && formValue.inMultiplesOf !== null && formValue.inMultiplesOf !== undefined) {
+      result.inMultiplesOf = formValue.inMultiplesOf;
+    }
+
+    return result;
   }
 }

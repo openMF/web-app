@@ -43,21 +43,26 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="flex-48">
-      <mat-label>{{ 'labels.inputs.Currency in multiples of' | translate }}</mat-label>
-      <input
-        type="number"
-        min="1"
-        matInput
-        matTooltip="{{ 'tooltips.Amount to be rounded off' | translate }}"
-        formControlName="inMultiplesOf"
-        required
-      />
-      <mat-error>
-        {{ 'labels.inputs.Currency in multiples of' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
-    </mat-form-field>
+    <mat-checkbox labelPosition="before" formControlName="setMultiples" class="flex-98 margin-t checkbox-align-center">
+      {{ 'labels.inputs.Set the saving installment in multiples of' | translate }}
+    </mat-checkbox>
+
+    @if (savingProductCurrencyForm.value.setMultiples) {
+      <mat-form-field class="flex-48">
+        <mat-label>{{ 'labels.inputs.Currency in multiples of' | translate }}</mat-label>
+        <input
+          type="number"
+          min="1"
+          matInput
+          matTooltip="{{ 'tooltips.Amount to be rounded off' | translate }}"
+          formControlName="inMultiplesOf"
+        />
+        <mat-error>
+          {{ 'labels.inputs.Currency in multiples of' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      </mat-form-field>
+    }
   </div>
 
   <div class="layout-row align-center gap-2percent margin-t responsive-column">

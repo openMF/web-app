@@ -37,13 +37,15 @@
 
   <div class="flex-fill layout-row">
     <span class="flex-40">{{ 'labels.inputs.Decimal Places' | translate }}:</span>
-    <span class="flex-60">{{ shareProduct.digitsAfterDecimal }}</span>
+    <span class="flex-60">{{ shareProduct.digitsAfterDecimal ?? shareProduct.currency?.decimalPlaces }}</span>
   </div>
 
-  <div class="flex-fill layout-row">
-    <span class="flex-40">{{ 'labels.inputs.Currency in multiples of' | translate }}:</span>
-    <span class="flex-60">{{ shareProduct.inMultiplesOf }}</span>
-  </div>
+  @if (shareProduct.inMultiplesOf) {
+    <div class="flex-fill layout-row">
+      <span class="flex-40">{{ 'labels.inputs.Currency in multiples of' | translate }}:</span>
+      <span class="flex-60">{{ shareProduct.inMultiplesOf }}</span>
+    </div>
+  }
 
   <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Terms' | translate }}</h3>
 

@@ -37,13 +37,17 @@
 
   <div class="layout-row flex-100">
     <span class="flex-40">{{ 'labels.inputs.Decimal Places' | translate }}:</span>
-    <span class="flex-60">{{ recurringDepositProduct.digitsAfterDecimal }}</span>
+    <span class="flex-60">{{
+      recurringDepositProduct.digitsAfterDecimal ?? recurringDepositProduct.currency?.decimalPlaces
+    }}</span>
   </div>
 
-  <div class="layout-row flex-100">
-    <span class="flex-40">{{ 'labels.inputs.Currency in multiples of' | translate }}:</span>
-    <span class="flex-60">{{ recurringDepositProduct.inMultiplesOf }}</span>
-  </div>
+  @if (recurringDepositProduct.inMultiplesOf) {
+    <div class="layout-row flex-100">
+      <span class="flex-40">{{ 'labels.inputs.Currency in multiples of' | translate }}:</span>
+      <span class="flex-60">{{ recurringDepositProduct.inMultiplesOf }}</span>
+    </div>
+  }
 
   <h3 class="mat-h3 flex-100">{{ 'labels.heading.Terms' | translate }}</h3>
 

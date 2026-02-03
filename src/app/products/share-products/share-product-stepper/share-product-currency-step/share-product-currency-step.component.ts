@@ -6,10 +6,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, Input, inject } from '@angular/core';
+import { Component, OnInit, Input, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { MatCheckbox } from '@angular/material/checkbox';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -22,11 +24,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatTooltip,
     MatStepperPrevious,
     FaIconComponent,
-    MatStepperNext
+    MatStepperNext,
+    MatCheckbox
   ]
 })
 export class ShareProductCurrencyStepComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
+  private destroyRef = inject(DestroyRef);
 
   @Input() shareProductsTemplate: any;
 
@@ -41,18 +45,14 @@ export class ShareProductCurrencyStepComponent implements OnInit {
   ngOnInit() {
     this.currencyData = this.shareProductsTemplate.currencyOptions;
 
-    if (this.shareProductsTemplate.currency) {
-      this.shareProductCurrencyForm.patchValue({
-        currencyCode: this.shareProductsTemplate.currency.code,
-        digitsAfterDecimal: this.shareProductsTemplate.currency.decimalPlaces,
-        inMultiplesOf: this.shareProductsTemplate.currency.inMultiplesOf
-      });
-    } else {
-      this.shareProductCurrencyForm.patchValue({
-        currencyCode: this.currencyData[0].code,
-        digitsAfterDecimal: 2
-      });
-    }
+    this.shareProductCurrencyForm.patchValue({
+      currencyCode: this.shareProductsTemplate.currency?.code || this.currencyData[0].code,
+      digitsAfterDecimal: this.shareProductsTemplate.digitsAfterDecimal ?? '',
+      setMultiples: !!this.shareProductsTemplate.inMultiplesOf,
+      inMultiplesOf: this.shareProductsTemplate.inMultiplesOf ?? ''
+    });
+
+    this.setupConditionalValidation();
   }
 
   createShareProductCurrencyForm() {
@@ -68,17 +68,48 @@ export class ShareProductCurrencyStepComponent implements OnInit {
           Validators.min(0)
         ]
       ],
-      inMultiplesOf: [
-        '',
-        [
+      setMultiples: [false],
+      inMultiplesOf: ['']
+    });
+  }
+
+  setupConditionalValidation() {
+    const inMultiplesOfControl = this.shareProductCurrencyForm.get('inMultiplesOf');
+    const setMultiplesControl = this.shareProductCurrencyForm.get('setMultiples');
+
+    const applyInMultiplesValidators = (checked: boolean) => {
+      if (checked) {
+        inMultiplesOfControl?.setValidators([
           Validators.required,
           Validators.min(1)
-        ]
-      ]
+        ]);
+      } else {
+        inMultiplesOfControl?.clearValidators();
+        inMultiplesOfControl?.setValue('');
+      }
+      inMultiplesOfControl?.updateValueAndValidity();
+    };
+
+    // Apply validators based on initial value
+    applyInMultiplesValidators(setMultiplesControl?.value);
+
+    // Listen for changes
+    setMultiplesControl?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((checked) => {
+      applyInMultiplesValidators(checked);
     });
   }
 
   get shareProductCurrency() {
-    return this.shareProductCurrencyForm.value;
+    const formValue = this.shareProductCurrencyForm.value;
+    const result: any = {
+      currencyCode: formValue.currencyCode,
+      digitsAfterDecimal: formValue.digitsAfterDecimal
+    };
+
+    if (formValue.inMultiplesOf !== '' && formValue.inMultiplesOf !== null && formValue.inMultiplesOf !== undefined) {
+      result.inMultiplesOf = formValue.inMultiplesOf;
+    }
+
+    return result;
   }
 }

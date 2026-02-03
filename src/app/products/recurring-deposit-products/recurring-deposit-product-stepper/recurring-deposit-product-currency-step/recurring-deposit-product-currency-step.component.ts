@@ -6,12 +6,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, Input, inject } from '@angular/core';
+import { Component, OnInit, Input, inject, DestroyRef } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { MatCheckbox } from '@angular/material/checkbox';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'mifosx-recurring-deposit-product-currency-step',
@@ -22,11 +24,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatTooltip,
     MatStepperPrevious,
     FaIconComponent,
-    MatStepperNext
+    MatStepperNext,
+    MatCheckbox
   ]
 })
 export class RecurringDepositProductCurrencyStepComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
+  private destroyRef = inject(DestroyRef);
 
   @Input() recurringDepositProductsTemplate: any;
 
@@ -40,17 +44,25 @@ export class RecurringDepositProductCurrencyStepComponent implements OnInit {
 
   ngOnInit() {
     this.currencyData = this.recurringDepositProductsTemplate.currencyOptions;
-    if (!(this.recurringDepositProductsTemplate === undefined) && this.recurringDepositProductsTemplate.id) {
-      this.recurringDepositProductCurrencyForm.patchValue({
-        currencyCode: this.recurringDepositProductsTemplate.currency.code,
-        digitsAfterDecimal: this.recurringDepositProductsTemplate.currency.decimalPlaces,
-        inMultiplesOf: this.recurringDepositProductsTemplate.currency.inMultiplesOf
-      });
-    } else {
-      this.recurringDepositProductCurrencyForm.patchValue({
-        currencyCode: this.currencyData[0].code,
-        digitsAfterDecimal: 2
-      });
+
+    this.recurringDepositProductCurrencyForm.patchValue({
+      currencyCode: this.recurringDepositProductsTemplate.currency?.code || this.currencyData[0].code,
+      digitsAfterDecimal: this.recurringDepositProductsTemplate.digitsAfterDecimal ?? '',
+      setMultiples: !!this.recurringDepositProductsTemplate.inMultiplesOf,
+      inMultiplesOf: this.recurringDepositProductsTemplate.inMultiplesOf ?? ''
+    });
+
+    this.setupConditionalValidation();
+
+    // Apply initial validators based on the patched setMultiples value
+    const inMultiplesOfControl = this.recurringDepositProductCurrencyForm.get('inMultiplesOf');
+    const setMultiplesControl = this.recurringDepositProductCurrencyForm.get('setMultiples');
+    if (setMultiplesControl?.value) {
+      inMultiplesOfControl?.setValidators([
+        Validators.required,
+        Validators.min(1)
+      ]);
+      inMultiplesOfControl?.updateValueAndValidity();
     }
   }
 
@@ -62,13 +74,45 @@ export class RecurringDepositProductCurrencyStepComponent implements OnInit {
       ],
       digitsAfterDecimal: [
         '',
-        Validators.required
+        [
+          Validators.required,
+          Validators.min(0)
+        ]
       ],
+      setMultiples: [false],
       inMultiplesOf: ['']
     });
   }
 
+  setupConditionalValidation() {
+    const inMultiplesOfControl = this.recurringDepositProductCurrencyForm.get('inMultiplesOf');
+    const setMultiplesControl = this.recurringDepositProductCurrencyForm.get('setMultiples');
+
+    setMultiplesControl?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((checked) => {
+      if (checked) {
+        inMultiplesOfControl?.setValidators([
+          Validators.required,
+          Validators.min(1)
+        ]);
+      } else {
+        inMultiplesOfControl?.clearValidators();
+        inMultiplesOfControl?.setValue('');
+      }
+      inMultiplesOfControl?.updateValueAndValidity();
+    });
+  }
+
   get recurringDepositProductCurrency() {
-    return this.recurringDepositProductCurrencyForm.value;
+    const formValue = this.recurringDepositProductCurrencyForm.value;
+    const result: any = {
+      currencyCode: formValue.currencyCode,
+      digitsAfterDecimal: formValue.digitsAfterDecimal
+    };
+
+    if (formValue.inMultiplesOf !== '' && formValue.inMultiplesOf !== null && formValue.inMultiplesOf !== undefined) {
+      result.inMultiplesOf = formValue.inMultiplesOf;
+    }
+
+    return result;
   }
 }
