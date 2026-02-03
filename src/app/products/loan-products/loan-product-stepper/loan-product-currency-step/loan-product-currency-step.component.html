@@ -47,38 +47,44 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="flex-48">
-      <mat-label>{{ 'labels.inputs.Currency in multiples of' | translate }}</mat-label>
-      <input
-        type="number"
-        min="1"
-        matInput
-        matTooltip="{{ 'tooltips.Enter multiples of currency value' | translate }}"
-        formControlName="inMultiplesOf"
-        required
-      />
-      <mat-error *ngIf="loanProductCurrencyForm.get('inMultiplesOf')?.hasError('required')">
-        {{ 'labels.inputs.Currency in multiples of' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
-      <mat-error *ngIf="loanProductCurrencyForm.get('inMultiplesOf')?.hasError('min')">
-        {{ 'labels.inputs.Currency in multiples of' | translate }}
-        {{ 'labels.commons.Minimum Value must be' | translate }} <strong>1</strong>
-      </mat-error>
-    </mat-form-field>
+    <mat-checkbox labelPosition="before" formControlName="setMultiples" class="flex-98 margin-t">
+      {{ 'labels.inputs.Set the multiples of the loan and its installment' | translate }}
+    </mat-checkbox>
 
-    <mat-form-field class="flex-48">
-      <mat-label>{{ 'labels.inputs.Installment in multiples of' | translate }}</mat-label>
-      <input type="number" min="1" matInput formControlName="installmentAmountInMultiplesOf" required />
-      <mat-error *ngIf="loanProductCurrencyForm.get('installmentAmountInMultiplesOf')?.hasError('required')">
-        {{ 'labels.inputs.Installment in multiples of' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
-      <mat-error *ngIf="loanProductCurrencyForm.get('installmentAmountInMultiplesOf')?.hasError('min')">
-        {{ 'labels.inputs.Installment in multiples of' | translate }}
-        {{ 'labels.commons.Minimum Value must be' | translate }} <strong>1</strong>
-      </mat-error>
-    </mat-form-field>
+    @if (loanProductCurrencyForm.value.setMultiples) {
+      <mat-form-field class="flex-48">
+        <mat-label>{{ 'labels.inputs.Currency in multiples of' | translate }}</mat-label>
+        <input
+          type="number"
+          min="1"
+          matInput
+          matTooltip="{{ 'tooltips.Enter multiples of currency value' | translate }}"
+          formControlName="inMultiplesOf"
+          required
+        />
+        <mat-error *ngIf="loanProductCurrencyForm.get('inMultiplesOf')?.hasError('required')">
+          {{ 'labels.inputs.Currency in multiples of' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+        <mat-error *ngIf="loanProductCurrencyForm.get('inMultiplesOf')?.hasError('min')">
+          {{ 'labels.inputs.Currency in multiples of' | translate }}
+          {{ 'labels.commons.Minimum Value must be' | translate }} <strong>1</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="flex-48">
+        <mat-label>{{ 'labels.inputs.Installment in multiples of' | translate }}</mat-label>
+        <input type="number" min="1" matInput formControlName="installmentAmountInMultiplesOf" required />
+        <mat-error *ngIf="loanProductCurrencyForm.get('installmentAmountInMultiplesOf')?.hasError('required')">
+          {{ 'labels.inputs.Installment in multiples of' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+        <mat-error *ngIf="loanProductCurrencyForm.get('installmentAmountInMultiplesOf')?.hasError('min')">
+          {{ 'labels.inputs.Installment in multiples of' | translate }}
+          {{ 'labels.commons.Minimum Value must be' | translate }} <strong>1</strong>
+        </mat-error>
+      </mat-form-field>
+    }
   </div>
 
   <div class="layout-row align-center gap-2percent margin-t responsive-column">

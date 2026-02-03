@@ -61,16 +61,20 @@
     </div>
     <div class="flex-fill layout-row">
       <span class="flex-40">{{ 'labels.inputs.Decimal Places' | translate }}:</span>
-      <span class="flex-60">{{ loanProduct.currency.decimalPlaces }}</span>
+      <span class="flex-60">{{ loanProduct.digitsAfterDecimal ?? loanProduct.currency.decimalPlaces }}</span>
     </div>
-    <div class="flex-fill layout-row">
-      <span class="flex-40">{{ 'labels.inputs.Currency in multiples of' | translate }}:</span>
-      <span class="flex-60">{{ loanProduct.currency.inMultiplesOf }}</span>
-    </div>
-    <div class="flex-fill layout-row">
-      <span class="flex-40">{{ 'labels.inputs.Installment in multiples of' | translate }}:</span>
-      <span class="flex-60">{{ loanProduct.installmentAmountInMultiplesOf }}</span>
-    </div>
+    @if (loanProduct.inMultiplesOf || loanProduct.currency?.inMultiplesOf) {
+      <div class="flex-fill layout-row">
+        <span class="flex-40">{{ 'labels.inputs.Currency in multiples of' | translate }}:</span>
+        <span class="flex-60">{{ loanProduct.inMultiplesOf ?? loanProduct.currency.inMultiplesOf }}</span>
+      </div>
+    }
+    @if (loanProduct.installmentAmountInMultiplesOf) {
+      <div class="flex-fill layout-row">
+        <span class="flex-40">{{ 'labels.inputs.Installment in multiples of' | translate }}:</span>
+        <span class="flex-60">{{ loanProduct.installmentAmountInMultiplesOf }}</span>
+      </div>
+    }
     <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Terms' | translate }}</h3>
     <mat-divider [inset]="true"></mat-divider>
     <div class="flex-fill layout-row">

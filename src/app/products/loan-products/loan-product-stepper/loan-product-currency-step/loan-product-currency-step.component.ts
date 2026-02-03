@@ -9,6 +9,7 @@
 import { Component, OnInit, Input, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
+import { MatCheckbox } from '@angular/material/checkbox';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -20,6 +21,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     MatTooltip,
+    MatCheckbox,
     MatStepperPrevious,
     FaIconComponent,
     MatStepperNext
@@ -48,6 +50,11 @@ export class LoanProductCurrencyStepComponent implements OnInit {
         this.loanProductsTemplate.currency.decimalPlaces === null
           ? ''
           : this.loanProductsTemplate.currency.decimalPlaces,
+      setMultiples: !!(
+        (this.loanProductsTemplate.currency.inMultiplesOf && this.loanProductsTemplate.currency.inMultiplesOf !== 0) ||
+        (this.loanProductsTemplate.installmentAmountInMultiplesOf &&
+          this.loanProductsTemplate.installmentAmountInMultiplesOf !== 0)
+      ),
       inMultiplesOf:
         this.loanProductsTemplate.currency.inMultiplesOf === 0 ||
         this.loanProductsTemplate.currency.inMultiplesOf === undefined ||
@@ -61,6 +68,50 @@ export class LoanProductCurrencyStepComponent implements OnInit {
           ? ''
           : this.loanProductsTemplate.installmentAmountInMultiplesOf
     });
+
+    this.setupConditionalValidation();
+  }
+
+  setupConditionalValidation() {
+    this.loanProductCurrencyForm.get('setMultiples')?.valueChanges.subscribe((setMultiples: boolean) => {
+      const inMultiplesOfControl = this.loanProductCurrencyForm.get('inMultiplesOf');
+      const installmentControl = this.loanProductCurrencyForm.get('installmentAmountInMultiplesOf');
+
+      if (setMultiples) {
+        inMultiplesOfControl?.setValidators([
+          Validators.required,
+          Validators.min(1)
+        ]);
+        installmentControl?.setValidators([
+          Validators.required,
+          Validators.min(1)
+        ]);
+      } else {
+        inMultiplesOfControl?.clearValidators();
+        installmentControl?.clearValidators();
+        inMultiplesOfControl?.setValue('');
+        installmentControl?.setValue('');
+      }
+
+      inMultiplesOfControl?.updateValueAndValidity();
+      installmentControl?.updateValueAndValidity();
+    });
+
+    const initialSetMultiples = this.loanProductCurrencyForm.get('setMultiples')?.value;
+    if (initialSetMultiples) {
+      const inMultiplesOfControl = this.loanProductCurrencyForm.get('inMultiplesOf');
+      const installmentControl = this.loanProductCurrencyForm.get('installmentAmountInMultiplesOf');
+      inMultiplesOfControl?.setValidators([
+        Validators.required,
+        Validators.min(1)
+      ]);
+      installmentControl?.setValidators([
+        Validators.required,
+        Validators.min(1)
+      ]);
+      inMultiplesOfControl?.updateValueAndValidity();
+      installmentControl?.updateValueAndValidity();
+    }
   }
 
   createLoanProductCurrencyForm() {
@@ -76,24 +127,33 @@ export class LoanProductCurrencyStepComponent implements OnInit {
           Validators.min(0)
         ]
       ],
-      inMultiplesOf: [
-        '',
-        [
-          Validators.required,
-          Validators.min(1)
-        ]
-      ],
-      installmentAmountInMultiplesOf: [
-        '',
-        [
-          Validators.required,
-          Validators.min(1)
-        ]
-      ]
+      setMultiples: [false],
+      inMultiplesOf: [''],
+      installmentAmountInMultiplesOf: ['']
     });
   }
 
   get loanProductCurrency() {
-    return this.loanProductCurrencyForm.value;
+    const formValue = this.loanProductCurrencyForm.value;
+    const result: any = {
+      currencyCode: formValue.currencyCode,
+      digitsAfterDecimal: formValue.digitsAfterDecimal
+    };
+
+    if (formValue.setMultiples) {
+      if (formValue.inMultiplesOf !== '' && formValue.inMultiplesOf !== null && formValue.inMultiplesOf !== undefined) {
+        result.inMultiplesOf = formValue.inMultiplesOf;
+      }
+
+      if (
+        formValue.installmentAmountInMultiplesOf !== '' &&
+        formValue.installmentAmountInMultiplesOf !== null &&
+        formValue.installmentAmountInMultiplesOf !== undefined
+      ) {
+        result.installmentAmountInMultiplesOf = formValue.installmentAmountInMultiplesOf;
+      }
+    }
+
+    return result;
   }
 }
