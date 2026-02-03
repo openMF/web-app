@@ -189,7 +189,7 @@ export class RunReportComponent implements OnInit {
     if (this.exportToS3Allowed) {
       this.reportForm.addControl('exportOutputToS3', new UntypedFormControl(false));
     }
-    this.decimalChoice.patchValue('0');
+    this.decimalChoice.patchValue('2');
     this.setChildControls();
     this.addDateRangeValidator();
   }
