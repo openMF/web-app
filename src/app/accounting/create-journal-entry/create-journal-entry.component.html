@@ -46,7 +46,7 @@
           </mat-form-field>
 
           @if (assetExternalizationEnabled) {
-            <mat-form-field class="flex-24">
+            <mat-form-field class="flex-23">
               <mat-label>{{ 'labels.inputs.External Asset Owner' | translate }}</mat-label>
               <input matInput formControlName="externalAssetOwner" />
             </mat-form-field>
@@ -63,7 +63,7 @@
                   [inputLabel]="'Affected GL Entry (Debit)'"
                 >
                 </mifosx-gl-account-selector>
-                <mat-form-field class="flex-43">
+                <mat-form-field class="flex-48">
                   <mat-label>{{ 'labels.inputs.Debit Amount' | translate }}</mat-label>
                   <input
                     type="number"
@@ -107,7 +107,7 @@
                   [inputLabel]="'Affected GL Entry (Credit)'"
                 >
                 </mifosx-gl-account-selector>
-                <mat-form-field class="flex-43">
+                <mat-form-field class="flex-48">
                   <mat-label>{{ 'labels.inputs.Credit Amount' | translate }}</mat-label>
                   <input
                     type="number"
