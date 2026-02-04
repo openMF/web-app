@@ -97,22 +97,37 @@ export class FixedDepositProductSettingsStepComponent implements OnInit {
 
   createFixedDepositProductSettingsForm() {
     this.fixedDepositProductSettingsForm = this.formBuilder.group({
-      lockinPeriodFrequency: [''],
+      lockinPeriodFrequency: [
+        '',
+        Validators.min(0)
+      ],
       lockinPeriodFrequencyType: [''],
       minDepositTerm: [
         '',
-        Validators.required
+        [
+          Validators.required,
+          Validators.min(0)
+        ]
       ],
       minDepositTermTypeId: [
         '',
         Validators.required
       ],
-      inMultiplesOfDepositTerm: [''],
+      inMultiplesOfDepositTerm: [
+        '',
+        Validators.min(0)
+      ],
       inMultiplesOfDepositTermTypeId: [''],
-      maxDepositTerm: [''],
+      maxDepositTerm: [
+        '',
+        Validators.min(0)
+      ],
       maxDepositTermTypeId: [''],
       preClosurePenalApplicable: [false],
-      preClosurePenalInterest: [''],
+      preClosurePenalInterest: [
+        '',
+        Validators.min(0)
+      ],
       preClosurePenalInterestOnTypeId: [''],
       withHoldTax: [false]
     });
