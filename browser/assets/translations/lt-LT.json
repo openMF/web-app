@@ -1283,6 +1283,8 @@
       "Status": "Statusas"
     },
     "inputs": {
+      "Terms": "Sąlygos",
+      "Settings": "Nustatymai",
       "accounting": {
         "ASSET": "TURTAS",
         "LIABILITY": "ATSAKOMYBĖ",

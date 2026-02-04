@@ -1289,6 +1289,8 @@
       "Global Impact": "Global Impact"
     },
     "inputs": {
+      "Terms": "Terms",
+      "Settings": "Settings",
       "accounting": {
         "ASSET": "ASSET",
         "LIABILITY": "LIABILITY",

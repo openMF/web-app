@@ -1284,6 +1284,8 @@
       "Status": "Stav"
     },
     "inputs": {
+      "Terms": "Podmínky",
+      "Settings": "Nastavení",
       "accounting": {
         "ASSET": "AKTIVUM",
         "LIABILITY": "ODPOVĚDNOST",

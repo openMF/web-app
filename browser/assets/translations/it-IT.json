@@ -1284,6 +1284,8 @@
       "Status": "Stato"
     },
     "inputs": {
+      "Terms": "Termini",
+      "Settings": "Impostazioni",
       "accounting": {
         "ASSET": "RISORSA",
         "LIABILITY": "RESPONSABILITÀ",

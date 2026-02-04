@@ -1285,6 +1285,8 @@
       "Status": "Statut"
     },
     "inputs": {
+      "Terms": "Termes",
+      "Settings": "Paramètres",
       "accounting": {
         "ASSET": "ACTIF",
         "LIABILITY": "RESPONSABILITÉ",

@@ -1285,6 +1285,8 @@
       "Status": "Status"
     },
     "inputs": {
+      "Terms": "Bedingungen",
+      "Settings": "Einstellungen",
       "accounting": {
         "ASSET": "VERMÖGENSWERT",
         "LIABILITY": "HAFTUNG",

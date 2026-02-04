@@ -1281,6 +1281,8 @@
       "Status": "Hali"
     },
     "inputs": {
+      "Terms": "Masharti",
+      "Settings": "Mipangilio",
       "accounting": {
         "ASSET": "ASSET",
         "LIABILITY": "DHIMA",

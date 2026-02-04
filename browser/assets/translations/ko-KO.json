@@ -1286,6 +1286,8 @@
       "Status": "상태"
     },
     "inputs": {
+      "Terms": "약관",
+      "Settings": "설정",
       "accounting": {
         "ASSET": "유산",
         "LIABILITY": "책임",

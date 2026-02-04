@@ -1283,6 +1283,8 @@
       "Status": "स्थिति"
     },
     "inputs": {
+      "Terms": "सर्तहरू",
+      "Settings": "सेटिङहरू",
       "accounting": {
         "ASSET": "सम्पत्ति",
         "LIABILITY": "दायित्व",

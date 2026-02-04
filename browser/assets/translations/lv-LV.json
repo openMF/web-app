@@ -1285,6 +1285,8 @@
       "Status": "Statuss"
     },
     "inputs": {
+      "Terms": "Noteikumi",
+      "Settings": "Iestatījumi",
       "accounting": {
         "ASSET": "AKTĪVS",
         "LIABILITY": "ATBILDĪBA",
