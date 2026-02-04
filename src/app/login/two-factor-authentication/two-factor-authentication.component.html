@@ -15,18 +15,9 @@
 <!-- Select delivery method to receive OTP -->
 @if (!otpRequested) {
   <p>{{ 'labels.text.Please select a delivery method' | translate }}:</p>
-}
 
-@if (!otpRequested) {
-  <form
-    class="layout-column two-factor-auth-form"
-    [formGroup]="twoFactorAuthenticationDeliveryMethodForm"
-    (ngSubmit)="requestOTP()"
-  >
-    <mat-radio-group
-      class="layout-column align-center radio-group-spacing"
-      formControlName="twoFactorAuthenticationDeliveryMethod"
-    >
+  <form class="two-factor-auth-form" [formGroup]="twoFactorAuthenticationDeliveryMethodForm" (ngSubmit)="requestOTP()">
+    <mat-radio-group class="radio-group-spacing" formControlName="twoFactorAuthenticationDeliveryMethod">
       @for (
         twoFactorAuthenticationDeliveryMethod of twoFactorAuthenticationDeliveryMethods;
         track twoFactorAuthenticationDeliveryMethod
@@ -37,12 +28,7 @@
         </mat-radio-button>
       }
     </mat-radio-group>
-    <button
-      mat-raised-button
-      color="primary"
-      class="flex-fill align-center"
-      [disabled]="!twoFactorAuthenticationDeliveryMethodForm.valid"
-    >
+    <button mat-raised-button color="primary" [disabled]="!twoFactorAuthenticationDeliveryMethodForm.valid || loading">
       {{ 'labels.buttons.Request OTP' | translate }}
       @if (loading) {
         <mat-spinner [diameter]="20"></mat-spinner>
@@ -54,11 +40,9 @@
 <!-- Show input for OTP -->
 @if (otpRequested) {
   <p>{{ 'labels.text.Please enter the OTP' | translate }}:</p>
-}
 
-@if (otpRequested) {
-  <form class="layout-column two-factor-auth-form" [formGroup]="twoFactorAuthenticationForm" (ngSubmit)="validateOTP()">
-    <mat-form-field class="two-factor-auth-input flex-fill align-center">
+  <form class="two-factor-auth-form" [formGroup]="twoFactorAuthenticationForm" (ngSubmit)="validateOTP()">
+    <mat-form-field class="two-factor-auth-input" appearance="fill">
       <span matPrefix>
         <fa-icon icon="user-shield" class="m-r-10"></fa-icon>
       </span>
@@ -79,24 +63,13 @@
         </mat-error>
       }
     </mat-form-field>
-    <button
-      mat-raised-button
-      color="primary"
-      class="two-factor-auth-button align-center"
-      [disabled]="!twoFactorAuthenticationForm.valid"
-    >
+    <button mat-raised-button color="primary" [disabled]="!twoFactorAuthenticationForm.valid || loading">
       {{ 'labels.buttons.Validate OTP' | translate }}
       @if (loading) {
         <mat-spinner [diameter]="20"></mat-spinner>
       }
     </button>
-    <button
-      type="button"
-      mat-button
-      class="two-factor-auth-button align-center"
-      (click)="resendOTP()"
-      [disabled]="loading || resendOTPLoading"
-    >
+    <button type="button" mat-button (click)="resendOTP()" [disabled]="loading || resendOTPLoading">
       {{ 'labels.buttons.Resend OTP' | translate }}
       @if (resendOTPLoading) {
         <mat-spinner [diameter]="20"></mat-spinner>

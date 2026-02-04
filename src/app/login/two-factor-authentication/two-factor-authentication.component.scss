@@ -6,39 +6,243 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+// ===== Host Container =====
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  animation: fade-in-up 0.4s ease-out;
+}
+
+// ===== Title Section =====
+p {
+  text-align: center;
+  font-size: 1.1rem;
+  color: var(--md-sys-color-on-surface, #1a1c1e);
+  margin: 0 0 1rem;
+
+  strong {
+    font-weight: 600;
+    color: inherit;
+  }
+}
+
+// ===== Divider =====
+mat-divider {
+  margin-bottom: 1.5rem;
+}
+
+// ===== Delivery Method Description =====
+p:not(:first-of-type) {
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--md-sys-color-on-surface-variant, #44474e);
+  margin-bottom: 1rem;
+}
+
+// ===== Main Form Container =====
 .two-factor-auth-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+
   mat-radio-button {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
 
     &:last-child {
-      margin-bottom: 1rem;
+      margin-bottom: 0;
+    }
+
+    // Style radio buttons to match Material Design 3
+    ::ng-deep {
+      .mdc-form-field {
+        font-size: 0.95rem;
+        color: var(--md-sys-color-on-surface, #1a1c1e);
+      }
+
+      .mdc-radio__outer-circle {
+        border-color: var(--md-sys-color-on-surface-variant, #44474e);
+      }
+
+      .mdc-radio--selected .mdc-radio__outer-circle,
+      .mdc-radio--selected .mdc-radio__inner-circle {
+        border-color: var(--md-sys-color-primary, #1074b9);
+      }
     }
   }
 
-  .two-factor-auth-button {
-    width: 14rem;
-    margin-top: 0.5rem;
+  // ===== OTP Input Field =====
+  .two-factor-auth-input {
+    width: 100%;
+    max-width: 320px;
+
+    [matPrefix] {
+      padding-left: 1rem;
+
+      fa-icon {
+        margin-right: 0.75rem;
+      }
+    }
+
+    ::ng-deep {
+      .mat-mdc-text-field-wrapper {
+        border-radius: 12px 12px 0 0;
+      }
+
+      .mat-mdc-form-field-focus-overlay {
+        border-radius: 12px 12px 0 0;
+        background-color: var(--md-sys-color-on-surface, #1a1c1e);
+        opacity: 0.04;
+      }
+
+      .mdc-line-ripple::after {
+        border-bottom-color: var(--md-sys-color-primary, #1074b9);
+      }
+
+      .mat-mdc-form-field-hint-wrapper {
+        padding: 0.5rem 1rem;
+      }
+
+      mat-hint {
+        font-size: 0.75rem;
+        color: var(--md-sys-color-on-surface-variant, #44474e);
+      }
+    }
   }
 
-  .two-factor-auth-input {
-    width: 14rem;
+  // ===== Buttons =====
+  .two-factor-auth-button,
+  [mat-raised-button],
+  [mat-button] {
+    width: 100%;
+    max-width: 320px;
+    height: 48px;
+    border-radius: 24px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  [mat-raised-button] {
+    background: var(--md-sys-color-primary, #1074b9);
+    color: var(--md-sys-color-on-primary, #fff);
+    box-shadow:
+      0 1px 2px rgb(0 0 0 / 30%),
+      0 1px 3px 1px rgb(0 0 0 / 15%);
+
+    &:hover:not([disabled]) {
+      box-shadow:
+        0 1px 3px rgb(0 0 0 / 30%),
+        0 4px 8px 3px rgb(0 0 0 / 15%);
+    }
+
+    &[disabled] {
+      background: var(--md-sys-color-on-surface, #1a1c1e);
+      opacity: 0.38;
+    }
+  }
+
+  [mat-button] {
+    color: var(--md-sys-color-primary, #1074b9);
+    background: transparent;
+
+    &:hover:not([disabled]) {
+      background: rgb(16 116 185 / 8%);
+    }
   }
 
   mat-spinner {
-    float: right;
-    margin: 0.5rem 0;
+    display: inline-block;
+    margin-left: 0.5rem;
   }
 }
 
+// ===== Radio Group Spacing =====
 .radio-group-spacing {
   display: flex;
-  gap: 2rem;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
 }
 
+// ===== Animations =====
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ===== Dark Mode Support =====
+:host-context(.dark-theme),
+:host-context([data-theme='dark']) {
+  p {
+    color: var(--md-sys-color-on-surface, #e2e2e5);
+
+    strong {
+      color: inherit;
+    }
+  }
+
+  p:not(:first-of-type) {
+    color: var(--md-sys-color-on-surface-variant, #c4c6cf);
+  }
+
+  .two-factor-auth-form {
+    mat-radio-button {
+      ::ng-deep {
+        .mdc-form-field {
+          color: var(--md-sys-color-on-surface, #e2e2e5);
+        }
+
+        .mdc-radio__outer-circle {
+          border-color: var(--md-sys-color-on-surface-variant, #c4c6cf);
+        }
+      }
+    }
+
+    [mat-raised-button] {
+      background: var(--md-sys-color-primary, #a8c8ff);
+      color: var(--md-sys-color-on-primary, #003258);
+    }
+
+    [mat-button] {
+      color: var(--md-sys-color-primary, #a8c8ff);
+
+      &:hover:not([disabled]) {
+        background: rgb(168 200 255 / 12%);
+      }
+    }
+  }
+}
+
+// ===== Responsive Styles =====
 /* stylelint-disable-next-line media-feature-range-notation -- Safari compatibility */
 @media (max-width: 768px) {
   .radio-group-spacing {
-    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .two-factor-auth-form {
+    .two-factor-auth-input,
+    [mat-raised-button],
+    [mat-button] {
+      max-width: 100%;
+    }
   }
 }
