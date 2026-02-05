@@ -1,0 +1,62 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container m-b-20 layout-row align-end gap-20px">
+  <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_LOAN_ORIGINATOR'">
+    <fa-icon icon="edit" class="m-r-10"></fa-icon>
+    {{ 'labels.buttons.Edit' | translate }}
+  </button>
+</div>
+
+<div class="container">
+  <mat-card>
+    <mat-card-content>
+      <div class="layout-row-wrap">
+        <div class="flex-50 mat-body-strong">
+          {{ 'labels.inputs.Name' | translate }}
+        </div>
+
+        <div class="flex-50 wrap-content">
+          {{ loanOriginatorData.name }}
+        </div>
+
+        <div class="flex-50 mat-body-strong">
+          {{ 'labels.inputs.External Id' | translate }}
+        </div>
+
+        <div class="flex-50 wrap-content">
+          {{ loanOriginatorData.externalId }}
+        </div>
+
+        <div class="flex-50 mat-body-strong">
+          {{ 'labels.inputs.Status' | translate }}
+        </div>
+
+        <div class="flex-50">
+          {{ loanOriginatorData.status }}
+        </div>
+
+        <div class="flex-50 mat-body-strong">
+          {{ 'labels.inputs.Originator Type' | translate }}
+        </div>
+
+        <div class="flex-50">
+          {{ loanOriginatorData.originatorType.name }}
+        </div>
+
+        <div class="flex-50 mat-body-strong">
+          {{ 'labels.inputs.Channel Type' | translate }}
+        </div>
+
+        <div class="flex-50">
+          {{ loanOriginatorData.channelType.name }}
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

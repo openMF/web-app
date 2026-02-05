@@ -67,7 +67,7 @@ export class OrganizationComponent implements AfterViewInit {
   /* Template for popover on manage funds */
   @ViewChild('templateManageFunds') templateManageFunds: TemplateRef<any>;
   // Initialize an array of 18 boolean values, all set to false
-  arrowBooleans: boolean[] = new Array(18).fill(false);
+  arrowBooleans: boolean[] = new Array(19).fill(false);
 
   /**
    * Popover function

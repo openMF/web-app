@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Currency } from 'app/shared/models/general.model';
+import { CodeValue, Currency } from 'app/shared/models/general.model';
 
 export interface DelinquencyRange {
   id: number;
@@ -178,6 +178,6 @@ export interface LoanOriginator {
   externalId: string;
   name: string;
   status: string;
-  originatorTypeId: number;
-  channelTypeId: number;
+  originatorType: CodeValue;
+  channelType: CodeValue;
 }

@@ -57,17 +57,6 @@
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{ 'labels.inputs.Transaction Amount' | translate }}</mat-label>
-            <input matInput type="number" required formControlName="approvedLoanAmount" />
-            @if (approveLoanForm.controls.approvedLoanAmount.hasError('required')) {
-              <mat-error>
-                {{ 'labels.inputs.Transaction Amount' | translate }} {{ 'labels.commons.is' | translate }}
-                <strong>{{ 'labels.commons.required' | translate }}</strong>
-              </mat-error>
-            }
-          </mat-form-field>
-
-          <mat-form-field>
             <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>
             <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
           </mat-form-field>

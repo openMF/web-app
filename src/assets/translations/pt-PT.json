@@ -1111,6 +1111,7 @@
       "Manage Holidays": "Gerenciar feriados",
       "Manage Hooks": "Gerenciar ganchos",
       "Manage Jobs": "Gerenciar trabalhos",
+      "Manage Loan Originators": "Gerenciar Originadores de Empréstimos",
       "Manage Offices": "Gerenciar escritórios",
       "Manage Reports": "Gerenciar relatórios",
       "Manage Roles and Permissions": "Gerenciar funções e permissões",
@@ -1976,6 +1977,7 @@
       "Loan Documents": "Documentos de empréstimo",
       "Loan Id": "ID do empréstimo",
       "Loan Officer": "Oficial de Empréstimo",
+      "Loan Originator": "Originador de empréstimo",
       "Loan Outstanding Amount": "Valor pendente do empréstimo",
       "Loan Outstanding Percentage": "Porcentagem pendente de empréstimo",
       "Loan Parameters": "Parâmetros de empréstimo",
@@ -2675,6 +2677,7 @@
       "Application Menu": "Menu de aplicativos",
       "Approve": "Aprovar",
       "Assign Loan Officer": "Designar oficial de empréstimo",
+      "Attach Loan Originator": "Anexar Originador de Empréstimo",
       "Assign Staff": "Atribuir equipe",
       "Block Account": "Bloquear conta",
       "Block Deposit": "Bloquear Depósito",
@@ -3182,6 +3185,7 @@
       "Loan Collateral Details": "Detalhes da garantia do empréstimo",
       "Loan Disbursal": "Desembolso de empréstimo",
       "Loan Documents": "Documentos de empréstimo",
+      "Loan Originators are associated with loan accounts": "Os originadores de empréstimos estão associados às contas de empréstimo.",
       "Loan Products": "Produtos de empréstimo",
       "Loan Provisioning Criteria Organization": "Definir critérios de provisionamento de empréstimos para a organização",
       "Loan Tranche Details": "Detalhes da parcela do empréstimo",
@@ -3764,7 +3768,10 @@
     "loan product will be active and available to clients": "A data em que o produto de empréstimo estará ativo e disponível para os clientes. Se estiver em branco, o produto de empréstimo estará ativo assim que for criado.",
     "loan product will become inactive and unavailable to clients": "A data em que o produto de empréstimo ficará inativo e indisponível para os clientes. Se estiver em branco, o produto de carregamento nunca ficará inativo.",
     "Refund transactions where interest refund will automatically be calculated": "Transações de reembolso em que o reembolso de juros será calculado automaticamente",
-    "Create Interest Refund": "Criar reembolso de juros"
+    "Create Interest Refund": "Criar reembolso de juros",
+    "ACTIVE": "ATIVO",
+    "PENDING": "PENDENTE",
+    "INACTIVE": "INATIVO"
   },
   "countries": {
     "AF": "Afeganistão",

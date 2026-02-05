@@ -15,6 +15,7 @@ import { Observable } from 'rxjs';
 
 /** Custom Services */
 import { LoansService } from '../loans.service';
+import { OrganizationService } from 'app/organization/organization.service';
 
 /**
  * Loans notes data resolver.
@@ -22,6 +23,7 @@ import { LoansService } from '../loans.service';
 @Injectable()
 export class LoanActionButtonResolver {
   private loansService = inject(LoansService);
+  private organizationService = inject(OrganizationService);
 
   /**
    * Returns the Loans Notes Data.
@@ -88,6 +90,8 @@ export class LoanActionButtonResolver {
       return this.loansService.getLoanActionTemplate(loanId, 'reAge');
     } else if (loanActionButton === 'Re-Amortize') {
       return this.loansService.getLoanActionTemplate(loanId, 'reAmortization');
+    } else if (loanActionButton === 'Attach Loan Originator') {
+      return this.organizationService.getLoanOriginators();
     } else {
       return undefined;
     }

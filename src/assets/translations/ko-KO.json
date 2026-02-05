@@ -1112,6 +1112,7 @@
       "Manage Holidays": "휴일 관리",
       "Manage Hooks": "후크 관리",
       "Manage Jobs": "채용정보 관리",
+      "Manage Loan Originators": "대출 담당자 관리",
       "Manage Offices": "사무실 관리",
       "Manage Reports": "보고서 관리",
       "Manage Roles and Permissions": "역할 및 권한 관리",
@@ -1978,6 +1979,7 @@
       "Loan Documents": "대출 서류",
       "Loan Id": "대출 ID",
       "Loan Officer": "대출 담당자",
+      "Loan Originator": "대출 담당자",
       "Loan Outstanding Amount": "대출 미결제 금액",
       "Loan Outstanding Percentage": "대출 미결제 비율",
       "Loan Parameters": "대출 매개변수",
@@ -2677,6 +2679,7 @@
       "Application Menu": "애플리케이션 메뉴",
       "Approve": "승인하다",
       "Assign Loan Officer": "대출 담당자 지정",
+      "Attach Loan Originator": "대출 담당자 첨부",
       "Assign Staff": "직원 배정",
       "Block Account": "블록 계정",
       "Block Deposit": "블록입금",
@@ -3183,6 +3186,7 @@
       "Loan Collateral Details": "대출 담보 세부정보",
       "Loan Disbursal": "대출금 지급",
       "Loan Documents": "대출 서류",
+      "Loan Originators are associated with loan accounts": "대출 담당자는 대출 계좌와 관련이 있습니다.",
       "Loan Products": "대출상품",
       "Loan Provisioning Criteria Organization": "조직에 대한 대출 준비 기준 정의",
       "Loan Tranche Details": "대출 트랜치 세부정보",
@@ -3765,7 +3769,10 @@
     "loan product will be active and available to clients": "대출 상품이 활성화되어 고객에게 제공되는 날짜입니다. 비어 있으면 대출 상품이 생성되자마자 활성화됩니다.",
     "loan product will become inactive and unavailable to clients": "대출 상품이 비활성화되어 고객이 사용할 수 없게 되는 날짜입니다. 비어 있으면 로드 제품이 비활성화되지 않습니다.",
     "Refund transactions where interest refund will automatically be calculated": "이자 환불이 자동으로 계산되는 환불 거래",
-    "Create Interest Refund": "이자 환불 생성"
+    "Create Interest Refund": "이자 환불 생성",
+    "ACTIVE": "활동적인",
+    "PENDING": "보류 중",
+    "INACTIVE": "비활성"
   },
   "countries": {
     "AF": "아프가니스탄",

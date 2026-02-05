@@ -831,4 +831,46 @@ export class OrganizationService {
     formData.append('dateFormat', this.settingsService.dateFormat);
     return this.http.post(`${urlSuffix}/uploadtemplate`, formData, { params: httpParams });
   }
+
+  /**
+   * @returns {Observable<any>} Loan Originators data
+   */
+  getLoanOriginators(): Observable<any> {
+    return this.http.get('/loan-originators');
+  }
+
+  /**
+   * @returns {Observable<any>} Loan Originators Template data
+   */
+  getLoanOriginatorsTemplate(): Observable<any> {
+    return this.http.get('/loan-originators/template');
+  }
+
+  /**
+   * @returns {Observable<any>} Loan Originator data
+   */
+  getLoanOriginator(originatorId: string): Observable<any> {
+    return this.http.get(`/loan-originators/${originatorId}`);
+  }
+
+  /**
+   * @returns {Observable<any>}
+   */
+  createLoanOriginator(payload: any): Observable<any> {
+    return this.http.post(`/loan-originators`, payload);
+  }
+
+  /**
+   * @returns {Observable<any>}
+   */
+  updateLoanOriginator(originatorId: number, payload: any): Observable<any> {
+    return this.http.put(`/loan-originators/${originatorId}`, payload);
+  }
+
+  /**
+   * @returns {Observable<any>}
+   */
+  deleteLoanOriginator(originatorId: number): Observable<any> {
+    return this.http.delete(`/loan-originators/${originatorId}`);
+  }
 }

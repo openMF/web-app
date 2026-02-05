@@ -90,6 +90,11 @@ export class LoansAccountButtonConfiguration {
             name: 'Reject',
             icon: 'times',
             taskPermissionName: 'REJECT_LOAN'
+          },
+          {
+            name: 'Attach Loan Originator',
+            icon: 'edit',
+            taskPermissionName: 'ATTACH_LOAN_ORIGINATOR'
           }
         ];
         break;

@@ -1,0 +1,116 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container">
+  <mat-card>
+    <form [formGroup]="loanOriginatorForm" (ngSubmit)="submit()">
+      <mat-card-content>
+        <div #editEmployeeFormRef class="layout-column">
+          <mat-form-field>
+            <mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label>
+            <input matInput required formControlName="name" />
+            @if (loanOriginatorForm.controls.name.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Name' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
+            @if (loanOriginatorForm.controls.name.hasError('pattern')) {
+              <mat-error>
+                {{ 'labels.inputs.Name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
+                {{ 'labels.inputs.begin with a special character or number' | translate }}
+              </mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
+            <input matInput formControlName="externalId" readonly />
+            @if (loanOriginatorForm.controls.externalId.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.External Id' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
+            @if (loanOriginatorForm.controls.externalId.hasError('pattern')) {
+              <mat-error>
+                {{ 'labels.inputs.External Id' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
+                {{ 'labels.inputs.begin with a special character or number' | translate }}
+              </mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'labels.inputs.Status' | translate }}</mat-label>
+            <mat-select required formControlName="status">
+              @for (status of statusOptions; track status) {
+                <mat-option [value]="status">
+                  {{ 'tooltips.' + status | translate }}
+                </mat-option>
+              }
+            </mat-select>
+            @if (loanOriginatorForm.controls.status.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Status' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'labels.inputs.Originator Type' | translate }}</mat-label>
+            <mat-select formControlName="originatorTypeId">
+              @for (originatorType of originatorTypeOptions; track originatorType) {
+                <mat-option [value]="originatorType.id">
+                  {{ originatorType.name }}
+                </mat-option>
+              }
+            </mat-select>
+            @if (loanOriginatorForm.controls.originatorTypeId.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Originator Type' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'labels.inputs.Channel Type' | translate }}</mat-label>
+            <mat-select formControlName="channelTypeId">
+              @for (channelTypeI of channelTypeOptions; track channelTypeI) {
+                <mat-option [value]="channelTypeI.id">
+                  {{ channelTypeI.name }}
+                </mat-option>
+              }
+            </mat-select>
+            @if (loanOriginatorForm.controls.channelTypeId.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Channel Type' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions class="layout-row align-center gap-5px responsive-column">
+        <button type="button" mat-raised-button [routerLink]="['../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!loanOriginatorForm.valid"
+          *mifosxHasPermission="'UPDATE_LOAN_ORIGINATOR'"
+        >
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>

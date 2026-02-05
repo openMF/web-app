@@ -85,6 +85,7 @@ import {
   faTrash,
   faUndo,
   faUniversity,
+  faUnlink,
   faUserCircle,
   faUser,
   faUsers,
@@ -271,7 +272,8 @@ export class IconsModule {
       faUndo,
       faReceipt,
       faTableCells,
-      faSave
+      faSave,
+      faUnlink
     );
   }
 }

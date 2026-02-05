@@ -323,6 +323,34 @@
             </mat-list-item>
           </div>
 
+          <div #manageLoanOriginators>
+            <mat-list-item *mifosxHasPermission="'READ_LOAN_ORIGINATOR'">
+              <div class="menu-list-item-content">
+                <div class="menu-left-section" [routerLink]="['manage-loan-originators']">
+                  <mat-icon matListIcon>
+                    <fa-icon icon="edit" size="sm"></fa-icon>
+                  </mat-icon>
+                  <div matLine>
+                    {{ 'labels.heading.Manage Loan Originators' | translate }}
+                    @if (arrowBooleans[18]) {
+                      <p matLine [routerLink]="['manage-loan-originators']" class="menu-explanation">
+                        {{ 'labels.text.Loan Originators are associated with loan accounts' | translate }}
+                      </p>
+                    }
+                  </div>
+                </div>
+                <div class="menu-right-section">
+                  @if (!arrowBooleans[18]) {
+                    <fa-icon (click)="arrowBooleansToggle(18)" icon="arrow-down" size="md"></fa-icon>
+                  }
+                  @if (arrowBooleans[18]) {
+                    <fa-icon (click)="arrowBooleansToggle(18)" icon="arrow-up" size="md"></fa-icon>
+                  }
+                </div>
+              </div>
+            </mat-list-item>
+          </div>
+
           <div #bulkloan>
             <mat-list-item *mifosxHasPermission="'BULKREASSIGN_LOAN'">
               <div class="menu-list-item-content">

@@ -658,6 +658,16 @@ export class LoansService {
     return this.http.post('/loans?command=calculateLoanSchedule', payload);
   }
 
+  attachLoanOriginator(loanId: string, originatorId: string): Observable<any> {
+    const emptyBody = {};
+    return this.http.post(`/loans/${loanId}/originators/${originatorId}`, emptyBody);
+  }
+
+  dettachLoanOriginator(loanId: string, originatorId: string): Observable<any> {
+    const emptyBody = {};
+    return this.http.delete(`/loans/${loanId}/originators/${originatorId}`, emptyBody);
+  }
+
   /**
    * @param loansAccount Loan account data used for the request
    * @param loansAccountTemplate Loan account template for getting product default values
