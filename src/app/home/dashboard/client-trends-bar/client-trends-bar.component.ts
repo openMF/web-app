@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -17,6 +18,7 @@ import { skip } from 'rxjs/operators';
 
 /** Custom Services */
 import { HomeService } from '../../home.service';
+import { ThemingService } from 'app/shared/theme-toggle/theming.service';
 
 /** Charting Imports */
 import { Dates } from 'app/core/utils/dates';
@@ -50,6 +52,8 @@ export class ClientTrendsBarComponent implements OnInit {
   private homeService = inject(HomeService);
   private route = inject(ActivatedRoute);
   private dateUtils = inject(Dates);
+  private themingService = inject(ThemingService);
+  private destroyRef = inject(DestroyRef);
 
   /** Static Form control for office Id */
   officeId = new UntypedFormControl();
@@ -69,7 +73,7 @@ export class ClientTrendsBarComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils
    */
   constructor() {
-    this.route.data.subscribe((data: { offices: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });
   }
@@ -77,6 +81,28 @@ export class ClientTrendsBarComponent implements OnInit {
   ngOnInit() {
     this.getChartData();
     this.initializeControls();
+    this.subscribeToThemeChanges();
+  }
+
+  /**
+   * Subscribe to theme changes and update chart colors accordingly.
+   */
+  subscribeToThemeChanges() {
+    this.themingService.theme.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+      if (this.chart) {
+        this.updateChartColors();
+      }
+    });
+  }
+
+  /**
+   * Update chart colors based on current theme.
+   */
+  updateChartColors() {
+    const isDarkTheme = document.body.classList.contains('dark-theme');
+    this.chart.options.plugins.legend.labels.color = isDarkTheme ? '#ffffff' : '#9d9d9d';
+    this.chart.options.scales.y.title.color = isDarkTheme ? '#ffffff' : '#1074B9';
+    this.chart.update();
   }
 
   /**
@@ -93,53 +119,62 @@ export class ClientTrendsBarComponent implements OnInit {
    */
   getChartData() {
     merge(this.officeId.valueChanges, this.timescale.valueChanges)
-      .pipe(skip(1))
+      .pipe(skip(1), takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
         const officeId = this.officeId.value;
         const timescale = this.timescale.value;
         switch (timescale) {
-          case 'Day':
+          case 'Day': {
             const clientsByDay = this.homeService.getClientTrendsByDay(officeId);
             const loansByDay = this.homeService.getLoanTrendsByDay(officeId);
             forkJoin([
               clientsByDay,
               loansByDay
-            ]).subscribe((data: any[]) => {
-              const dayLabels = this.getLabels(timescale);
-              const clientCounts = this.getCounts(data[0], dayLabels, timescale, 'client');
-              const loanCounts = this.getCounts(data[1], dayLabels, timescale, 'loan');
-              this.setChart(dayLabels, clientCounts, loanCounts);
-              this.hideOutput = false;
-            });
+            ])
+              .pipe(takeUntilDestroyed(this.destroyRef))
+              .subscribe((data: any[]) => {
+                const dayLabels = this.getLabels(timescale);
+                const clientCounts = this.getCounts(data[0], dayLabels, timescale, 'client');
+                const loanCounts = this.getCounts(data[1], dayLabels, timescale, 'loan');
+                this.setChart(dayLabels, clientCounts, loanCounts);
+                this.hideOutput = false;
+              });
             break;
-          case 'Week':
+          }
+          case 'Week': {
             const clientsByWeek = this.homeService.getClientTrendsByWeek(officeId);
             const loansByWeek = this.homeService.getLoanTrendsByWeek(officeId);
             forkJoin([
               clientsByWeek,
               loansByWeek
-            ]).subscribe((data: any[]) => {
-              const weekLabels = this.getLabels(timescale);
-              const clientCounts = this.getCounts(data[0], weekLabels, timescale, 'client');
-              const loanCounts = this.getCounts(data[1], weekLabels, timescale, 'loan');
-              this.setChart(weekLabels, clientCounts, loanCounts);
-              this.hideOutput = false;
-            });
+            ])
+              .pipe(takeUntilDestroyed(this.destroyRef))
+              .subscribe((data: any[]) => {
+                const weekLabels = this.getLabels(timescale);
+                const clientCounts = this.getCounts(data[0], weekLabels, timescale, 'client');
+                const loanCounts = this.getCounts(data[1], weekLabels, timescale, 'loan');
+                this.setChart(weekLabels, clientCounts, loanCounts);
+                this.hideOutput = false;
+              });
             break;
-          case 'Month':
+          }
+          case 'Month': {
             const clientsByMonth = this.homeService.getClientTrendsByMonth(officeId);
             const loansByMonth = this.homeService.getLoanTrendsByMonth(officeId);
             forkJoin([
               clientsByMonth,
               loansByMonth
-            ]).subscribe((data: any[]) => {
-              const monthLabels = this.getLabels(timescale);
-              const clientCounts = this.getCounts(data[0], monthLabels, timescale, 'client');
-              const loanCounts = this.getCounts(data[1], monthLabels, timescale, 'loan');
-              this.setChart(monthLabels, clientCounts, loanCounts);
-              this.hideOutput = false;
-            });
+            ])
+              .pipe(takeUntilDestroyed(this.destroyRef))
+              .subscribe((data: any[]) => {
+                const monthLabels = this.getLabels(timescale);
+                const clientCounts = this.getCounts(data[0], monthLabels, timescale, 'client');
+                const loanCounts = this.getCounts(data[1], monthLabels, timescale, 'loan');
+                this.setChart(monthLabels, clientCounts, loanCounts);
+                this.hideOutput = false;
+              });
             break;
+          }
         }
       });
   }
@@ -275,13 +310,20 @@ export class ClientTrendsBarComponent implements OnInit {
         },
         options: {
           responsive: true,
+          plugins: {
+            legend: {
+              labels: {
+                color: document.body.classList.contains('dark-theme') ? '#ffffff' : '#9d9d9d'
+              }
+            }
+          },
           scales: {
             y: {
               min: 0,
               title: {
                 display: true,
                 text: 'Values',
-                color: '#1074B9'
+                color: document.body.classList.contains('dark-theme') ? '#ffffff' : '#1074B9'
               }
             }
           }
@@ -291,7 +333,7 @@ export class ClientTrendsBarComponent implements OnInit {
       this.chart.data.labels = labels;
       this.chart.data.datasets[0].data = clientCounts;
       this.chart.data.datasets[1].data = loanCounts;
-      this.chart.update();
+      this.updateChartColors();
     }
   }
 }

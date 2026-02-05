@@ -7,12 +7,14 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
 import { HomeService } from '../../home.service';
+import { ThemingService } from 'app/shared/theme-toggle/theming.service';
 
 /** Charting Imports */
 import { Chart, registerables } from 'chart.js';
@@ -41,6 +43,8 @@ Chart.register(...registerables);
 export class AmountDisbursedPieComponent implements OnInit {
   private homeService = inject(HomeService);
   private route = inject(ActivatedRoute);
+  private themingService = inject(ThemingService);
+  private destroyRef = inject(DestroyRef);
 
   /** Static Form control for office Id */
   officeId = new UntypedFormControl();
@@ -59,7 +63,7 @@ export class AmountDisbursedPieComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.subscribe((data: { offices: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });
   }
@@ -71,24 +75,48 @@ export class AmountDisbursedPieComponent implements OnInit {
   ngOnInit() {
     this.getChartData();
     this.officeId.patchValue(1);
+    this.subscribeToThemeChanges();
+  }
+
+  /**
+   * Subscribe to theme changes and update chart colors accordingly.
+   */
+  subscribeToThemeChanges() {
+    this.themingService.theme.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+      if (this.chart) {
+        this.updateChartColors();
+      }
+    });
+  }
+
+  /**
+   * Update chart colors based on current theme.
+   */
+  updateChartColors() {
+    const isDarkTheme = document.body.classList.contains('dark-theme');
+    this.chart.options.plugins.legend.labels.color = isDarkTheme ? '#ffffff' : '#9d9d9d';
+    this.chart.update();
   }
 
   /**
    * Subscribes to value changes of office Id fetches chart data accordingly.
    */
   getChartData() {
-    this.officeId.valueChanges.subscribe((value: number) => {
-      this.homeService.getDisbursedAmount(value).subscribe((response: any) => {
-        const data = Object.entries(response[0]).map((entry) => entry[1]);
-        if (!(data[0] === 0 && data[1] === 0)) {
-          this.setChart(data);
-          this.showFallback = false;
-          this.hideOutput = false;
-        } else {
-          this.showFallback = true;
-          this.hideOutput = true;
-        }
-      });
+    this.officeId.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value: number) => {
+      this.homeService
+        .getDisbursedAmount(value)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((response: any) => {
+          const data = Object.entries(response[0]).map((entry) => entry[1]);
+          if (!(data[0] === 0 && data[1] === 0)) {
+            this.setChart(data);
+            this.showFallback = false;
+            this.hideOutput = false;
+          } else {
+            this.showFallback = true;
+            this.hideOutput = true;
+          }
+        });
     });
   }
 
@@ -117,6 +145,13 @@ export class AmountDisbursedPieComponent implements OnInit {
           ]
         },
         options: {
+          plugins: {
+            legend: {
+              labels: {
+                color: document.body.classList.contains('dark-theme') ? '#ffffff' : '#9d9d9d'
+              }
+            }
+          },
           layout: {
             padding: {
               top: 10,
@@ -127,7 +162,7 @@ export class AmountDisbursedPieComponent implements OnInit {
       });
     } else {
       this.chart.data.datasets[0].data = data;
-      this.chart.update();
+      this.updateChartColors();
     }
   }
 }
