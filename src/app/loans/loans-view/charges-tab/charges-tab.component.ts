@@ -8,7 +8,7 @@
 
 /** Angular Imports */
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -47,6 +47,8 @@ import { CurrencyPipe } from '@angular/common';
 import { MatTooltip } from '@angular/material/tooltip';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanCharge } from 'app/loans/models/loan-charge.model';
+import { FormatNumberPipe } from '@pipes/format-number.pipe';
 
 @Component({
   selector: 'mifosx-charges-tab',
@@ -69,7 +71,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRow,
     MatPaginator,
     CurrencyPipe,
-    DateFormatPipe
+    DateFormatPipe,
+    FormatNumberPipe
   ]
 })
 export class ChargesTabComponent implements OnInit {
@@ -78,14 +81,14 @@ export class ChargesTabComponent implements OnInit {
   private dateUtils = inject(Dates);
   private router = inject(Router);
   private translateService = inject(TranslateService);
-  dialog = inject(MatDialog);
+  private dialog = inject(MatDialog);
   private settingsService = inject(SettingsService);
   private systemService = inject(SystemService);
 
   /** Loan Details Data */
   loanDetails: any;
   /** Charges Data */
-  chargesData: any;
+  chargesData: LoanCharge[] = [];
   /** Status */
   status: any;
   /** Columns to be displayed in charges table. */
@@ -232,7 +235,7 @@ export class ChargesTabComponent implements OnInit {
       new InputBase({
         controlName: 'amount',
         label: 'Amount',
-        value: charge.amount || charge.amountOrPercentage,
+        value: this.isPercentageCharge(charge) ? charge.amountOrPercentage : charge.amount,
         type: 'number',
         required: true
       })
@@ -294,5 +297,9 @@ export class ChargesTabComponent implements OnInit {
     this.router
       .navigateByUrl(`/clients/${clientId}/loans-accounts`, { skipLocationChange: true })
       .then(() => this.router.navigate([url]));
+  }
+
+  isPercentageCharge(loanCharge: LoanCharge): boolean {
+    return loanCharge.chargeCalculationType.code.includes('.percent.');
   }
 }
