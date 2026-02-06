@@ -1110,6 +1110,7 @@
       "Manage Holidays": "Tvarkyti šventes",
       "Manage Hooks": "Tvarkyti kabliukus",
       "Manage Jobs": "Tvarkyti darbus",
+      "Manage Loan Originators": "Tvarkyti paskolų teikėjus",
       "Manage Offices": "Tvarkyti biurus",
       "Manage Reports": "Tvarkyti ataskaitas",
       "Manage Roles and Permissions": "Tvarkykite vaidmenis ir leidimus",
@@ -1975,6 +1976,7 @@
       "Loan Documents": "Paskolos dokumentai",
       "Loan Id": "Paskolos ID",
       "Loan Officer": "Paskolos pareigūnas",
+      "Loan Originator": "Paskolos teikėjas",
       "Loan Outstanding Amount": "Nemokėta paskolos suma",
       "Loan Outstanding Percentage": "Nemokėtos paskolos procentas",
       "Loan Parameters": "Paskolos parametrai",
@@ -2676,6 +2678,7 @@
       "Application Menu": "Programų meniu",
       "Approve": "Patvirtinti",
       "Assign Loan Officer": "Paskirkite paskolos pareigūną",
+      "Attach Loan Originator": "Pridėti paskolos teikėją",
       "Assign Staff": "Paskirkite darbuotojus",
       "Block Account": "Blokuoti paskyrą",
       "Block Deposit": "Blokuoti indėlį",
@@ -3183,6 +3186,7 @@
       "Loan Collateral Details": "Paskolos užstato informacija",
       "Loan Disbursal": "Paskolos išmokėjimas",
       "Loan Documents": "Paskolos dokumentai",
+      "Loan Originators are associated with loan accounts": "Paskolų teikėjai yra susieti su paskolų sąskaitomis",
       "Loan Products": "Paskolos produktai",
       "Loan Provisioning Criteria Organization": "Apibrėžkite organizacijos paskolos suteikimo kriterijus",
       "Loan Tranche Details": "Išsami informacija apie paskolos dalį",
@@ -3765,7 +3769,10 @@
     "loan product will be active and available to clients": "Data, kada paskolos produktas bus aktyvus ir bus prieinamas klientams. Jei tuščia, paskolos produktas bus aktyvus, kai tik bus sukurtas.",
     "loan product will become inactive and unavailable to clients": "Data, kai paskolos produktas taps neaktyvus ir nepasiekiamas klientams. Jei tuščia, įkėlimo produktas niekada netaps neaktyvus.",
     "Refund transactions where interest refund will automatically be calculated": "Atmaksas darījumi, kuros procentu atmaksa tiks aprēķināta automātiski",
-    "Create Interest Refund": "Sukurti palūkanų grąžinimą"
+    "Create Interest Refund": "Sukurti palūkanų grąžinimą",
+    "ACTIVE": "AKTYVUS",
+    "PENDING": "LAUKIAMA",
+    "INACTIVE": "NEAKTYVUS"
   },
   "countries": {
     "AF": "Afganistanas",

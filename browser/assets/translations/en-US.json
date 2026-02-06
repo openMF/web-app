@@ -1125,6 +1125,7 @@
       "Manage Holidays": "Manage Holidays",
       "Manage Hooks": "Manage Hooks",
       "Manage Jobs": "Manage Jobs",
+      "Manage Loan Originators": "Manage Loan Originators",
       "Manage Offices": "Manage Offices",
       "Manage Reports": "Manage Reports",
       "Manage Roles and Permissions": "Manage Roles and Permissions",
@@ -1984,6 +1985,7 @@
       "Loan Documents": "Loan Documents",
       "Loan Id": "Loan Id",
       "Loan Officer": "Loan Officer",
+      "Loan Originator": "Loan Originator",
       "Loan Outstanding Amount": "Loan Outstanding Amount",
       "Loan Outstanding Percentage": "Loan Outstanding Percentage",
       "Loan Parameters": "Loan Parameters",
@@ -2686,6 +2688,7 @@
       "Application Menu": "Application Menu",
       "Approve": "Approve",
       "Assign Loan Officer": "Assign Loan Officer",
+      "Attach Loan Originator": "Attach Loan Originator",
       "Assign Staff": "Assign Staff",
       "Block Account": "Block Account",
       "Block Deposit": "Block Deposit",
@@ -3279,6 +3282,7 @@
       "Loan Collateral Details": "Loan Collateral Details",
       "Loan Disbursal": "Loan Disbursal",
       "Loan Documents": "Loan Documents",
+      "Loan Originators are associated with loan accounts": "Loan Originators are associated with loan accounts",
       "Loan Products": "Loan Products",
       "Loan Provisioning Criteria Organization": "Define Loan Provisioning Criteria for Organization",
       "Loan Tranche Details": "Loan Tranche Details",
@@ -3875,7 +3879,10 @@
     "loan product will be active and available to clients": "The date that the loan product will be active and available to clients. If blank, the loan product will be active as soon as it is created.",
     "loan product will become inactive and unavailable to clients": "The date that the loan product will become inactive and unavailable to clients. If blank, the load product will never become inactive.",
     "Refund transactions where interest refund will automatically be calculated": "Refund transactions where interest refund will automatically be calculated",
-    "Create Interest Refund": "Create Interest Refund"
+    "Create Interest Refund": "Create Interest Refund",
+    "ACTIVE": "ACTIVE",
+    "PENDING": "PENDING",
+    "INACTIVE": "INACTIVE"
   },
   "countries": {
     "AF": "Afghanistan",

@@ -1109,6 +1109,7 @@
       "Manage Holidays": "Dhibiti Sikukuu",
       "Manage Hooks": "Kusimamia Hooks",
       "Manage Jobs": "Simamia Ajira",
+      "Manage Loan Originators": "Dhibiti Waanzilishi wa Mikopo",
       "Manage Offices": "Kusimamia Ofisi",
       "Manage Reports": "Dhibiti Ripoti",
       "Manage Roles and Permissions": "Dhibiti Majukumu na Ruhusa",
@@ -1973,6 +1974,7 @@
       "Loan Documents": "Nyaraka za Mkopo",
       "Loan Id": "Kitambulisho cha mkopo",
       "Loan Officer": "Afisa Mikopo",
+      "Loan Originator": "Mwanzilishi wa Mkopo",
       "Loan Outstanding Amount": "Kiasi Kilichobaki cha Mkopo",
       "Loan Outstanding Percentage": "Asilimia Iliyobaki ya Mkopo",
       "Loan Parameters": "Vigezo vya Mkopo",
@@ -2672,6 +2674,7 @@
       "Application Menu": "Menyu ya Maombi",
       "Approve": "Idhinisha",
       "Assign Loan Officer": "Mpe Afisa Mikopo",
+      "Attach Loan Originator": "Ambatisha Mwanzilishi wa Mkopo",
       "Assign Staff": "Wape Wafanyakazi",
       "Block Account": "Zuia Akaunti",
       "Block Deposit": "Kuzuia Amana",
@@ -3179,6 +3182,7 @@
       "Loan Collateral Details": "Maelezo ya Dhamana ya Mkopo",
       "Loan Disbursal": "Utoaji wa mkopo",
       "Loan Documents": "Nyaraka za Mkopo",
+      "Loan Originators are associated with loan accounts": "Waanzilishi wa Mikopo wanahusishwa na akaunti za mikopo",
       "Loan Products": "Bidhaa za Mkopo",
       "Loan Provisioning Criteria Organization": "Bainisha Vigezo vya Utoaji wa Mkopo kwa Shirika",
       "Loan Tranche Details": "Maelezo ya Mkopo",
@@ -3761,7 +3765,10 @@
     "loan product will be active and available to clients": "Tarehe ambayo bidhaa ya mkopo itaanza kutumika na inapatikana kwa wateja. Ikiwa tupu, bidhaa ya mkopo itaanza kutumika mara tu itakapoundwa.",
     "loan product will become inactive and unavailable to clients": "Tarehe ambayo bidhaa ya mkopo itaacha kutumika na haitapatikana kwa wateja. Ikiwa tupu, bidhaa ya kupakia haitafanya kazi kamwe.",
     "Refund transactions where interest refund will automatically be calculated": "Shughuli za kurejesha pesa ambapo urejeshaji wa riba utahesabiwa kiotomatiki",
-    "Create Interest Refund": "Unda Marejesho ya Riba"
+    "Create Interest Refund": "Unda Marejesho ya Riba",
+    "ACTIVE": "INAYOENDELEA",
+    "PENDING": "INAKARIBISHWA",
+    "INACTIVE": "HAITUMIKI"
   },
   "countries": {
     "AF": "Afghanistani",

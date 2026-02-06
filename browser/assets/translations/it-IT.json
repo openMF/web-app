@@ -1111,6 +1111,7 @@
       "Manage Holidays": "Gestisci le vacanze",
       "Manage Hooks": "Gestisci gli hook",
       "Manage Jobs": "Gestisci lavori",
+      "Manage Loan Originators": "Gestire gli originatori di prestiti",
       "Manage Offices": "Gestire gli uffici",
       "Manage Reports": "Gestisci rapporti",
       "Manage Roles and Permissions": "Gestisci ruoli e autorizzazioni",
@@ -1976,6 +1977,7 @@
       "Loan Documents": "Documenti di prestito",
       "Loan Id": "Identificativo prestito",
       "Loan Officer": "Ufficiale di prestito",
+      "Loan Originator": "Originatore di prestiti",
       "Loan Outstanding Amount": "Importo residuo del prestito",
       "Loan Outstanding Percentage": "Percentuale del prestito in sospeso",
       "Loan Parameters": "Parametri del prestito",
@@ -2675,6 +2677,7 @@
       "Application Menu": "Menù dell'applicazione",
       "Approve": "Approvare",
       "Assign Loan Officer": "Assegnare l'ufficiale di prestito",
+      "Attach Loan Originator": "Allega l'originatore del prestito",
       "Assign Staff": "Assegnare il personale",
       "Block Account": "Blocca conto",
       "Block Deposit": "Deposito in blocco",
@@ -3182,6 +3185,7 @@
       "Loan Collateral Details": "Dettagli della garanzia del prestito",
       "Loan Disbursal": "Erogazione del prestito",
       "Loan Documents": "Documenti di prestito",
+      "Loan Originators are associated with loan accounts": "Gli originatori di prestiti sono associati ai conti di prestito",
       "Loan Products": "Prodotti di prestito",
       "Loan Provisioning Criteria Organization": "Definire i criteri di erogazione del prestito per l'organizzazione",
       "Loan Tranche Details": "Dettagli della tranche del prestito",
@@ -3764,7 +3768,10 @@
     "loan product will be active and available to clients": "La data in cui il prodotto di prestito sarà attivo e disponibile per i clienti. Se vuoto, il prodotto di prestito sarà attivo non appena verrà creato.",
     "loan product will become inactive and unavailable to clients": "La data in cui il prodotto di prestito diventerà inattivo e non disponibile per i clienti. Se vuoto, il prodotto caricato non diventerà mai inattivo.",
     "Refund transactions where interest refund will automatically be calculated": "Transazioni di rimborso in cui il rimborso degli interessi verrà calcolato automaticamente",
-    "Create Interest Refund": "Crea rimborso interessi"
+    "Create Interest Refund": "Crea rimborso interessi",
+    "ACTIVE": "ATTIVO",
+    "PENDING": "IN ATTESA DI",
+    "INACTIVE": "INATTIVO"
   },
   "countries": {
     "AF": "Afghanistan",

@@ -1112,6 +1112,7 @@
       "Manage Holidays": "Administrar festivos",
       "Manage Hooks": "Administrar ganchos",
       "Manage Jobs": "Administrar procesos",
+      "Manage Loan Originators": "Administrar originadores de préstamos",
       "Manage Offices": "Administrar oficinas",
       "Manage Reports": "Administrar reportes",
       "Manage Roles and Permissions": "Administrar roles y permisos",
@@ -1977,6 +1978,7 @@
       "Loan Documents": "Documentos de Crédito",
       "Loan Id": "Id del Crédito",
       "Loan Officer": "Oficial de Créditos",
+      "Loan Originator": "Originador de Créditos",
       "Loan Outstanding Amount": "Monto pendiente del Crédito",
       "Loan Outstanding Percentage": "Porcentaje pendiente del Crédito",
       "Loan Parameters": "Parámetros del Crédito",
@@ -2677,6 +2679,7 @@
       "Application Menu": "Menú de aplicaciones",
       "Approve": "Aprobar",
       "Assign Loan Officer": "Asignar oficial de Créditos",
+      "Attach Loan Originator": "Adjuntar Originador de Créditos",
       "Assign Staff": "Asignar Asesor",
       "Block Account": "Bloquear Cuenta",
       "Block Deposit": "Bloquear depósitos",
@@ -3184,6 +3187,7 @@
       "Loan Collateral Details": "Detalles de la garantía del Crédito",
       "Loan Disbursal": "Curso del Crédito",
       "Loan Documents": "Documentos de Crédito",
+      "Loan Originators are associated with loan accounts": "Los originadores de préstamos están asociados con cuentas de préstamos",
       "Loan Products": "Productos de Crédito",
       "Loan Provisioning Criteria Organization": "Definir criterios de concesión de Créditos para la organización",
       "Loan Tranche Details": "Detalles de la Dispersión de Crédito",
@@ -3766,7 +3770,10 @@
     "loan product will be active and available to clients": "La fecha en que el producto de Crédito estará activo y disponible para los clientes. Si está en blanco, el producto de Crédito estará activo tan pronto como se cree.",
     "loan product will become inactive and unavailable to clients": "La fecha en que el producto de Crédito quedará inactivo y no estará disponible para los clientes. Si está en blanco, el producto de carga nunca quedará inactivo.",
     "Refund transactions where interest refund will automatically be calculated": "Transacciones de reembolso en las que el reembolso de intereses se calculará automáticamente",
-    "Create Interest Refund": "Crear reembolso de intereses"
+    "Create Interest Refund": "Crear reembolso de intereses",
+    "ACTIVE": "ACTIVO",
+    "PENDING": "PENDIENTE",
+    "INACTIVE": "INACTIVO"
   },
   "countries": {
     "AF": "Afganistán",

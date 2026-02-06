@@ -1112,6 +1112,7 @@
       "Manage Holidays": "Feiertage verwalten",
       "Manage Hooks": "Hooks verwalten",
       "Manage Jobs": "Jobs verwalten",
+      "Manage Loan Originators": "Kreditvermittler verwalten",
       "Manage Offices": "Büros verwalten",
       "Manage Reports": "Berichte verwalten",
       "Manage Roles and Permissions": "Verwalten Sie Rollen und Berechtigungen",
@@ -1977,6 +1978,7 @@
       "Loan Documents": "Darlehensunterlagen",
       "Loan Id": "Kredit-ID",
       "Loan Officer": "Kreditsachbearbeiter",
+      "Loan Originator": "Kreditvermittler",
       "Loan Outstanding Amount": "Ausstehender Kreditbetrag",
       "Loan Outstanding Percentage": "Prozentsatz der ausstehenden Kredite",
       "Loan Parameters": "Kreditparameter",
@@ -2678,6 +2680,7 @@
       "Application Menu": "Anwendungsmenü",
       "Approve": "Genehmigen",
       "Assign Loan Officer": "Weisen Sie einen Kreditsachbearbeiter zu",
+      "Attach Loan Originator": "Darlehensgeber hinzufügen",
       "Assign Staff": "Personal zuweisen",
       "Block Account": "Konto sperren",
       "Block Deposit": "Blockeinzahlung",
@@ -3184,6 +3187,7 @@
       "Loan Collateral Details": "Details zur Kreditsicherheit",
       "Loan Disbursal": "Kreditauszahlung",
       "Loan Documents": "Darlehensunterlagen",
+      "Loan Originators are associated with loan accounts": "Kreditvermittler sind mit Kreditkonten verknüpft.",
       "Loan Products": "Kreditprodukte",
       "Loan Provisioning Criteria Organization": "Definieren Sie Kreditbereitstellungskriterien für die Organisation",
       "Loan Tranche Details": "Details zur Darlehenstranche",
@@ -3765,7 +3769,10 @@
     "loan product will be active and available to clients": "Das Datum, an dem das Kreditprodukt aktiv und für Kunden verfügbar sein wird. Wenn das Feld leer ist, ist das Kreditprodukt aktiv, sobald es erstellt wird.",
     "loan product will become inactive and unavailable to clients": "Das Datum, an dem das Kreditprodukt inaktiv wird und für Kunden nicht mehr verfügbar ist. Wenn es leer ist, wird das Ladeprodukt niemals inaktiv.",
     "Refund transactions where interest refund will automatically be calculated": "Rückerstattungstransaktionen, bei denen die Zinsrückerstattung automatisch berechnet wird",
-    "Create Interest Refund": "Zinsrückerstattung erstellen"
+    "Create Interest Refund": "Zinsrückerstattung erstellen",
+    "ACTIVE": "AKTIV",
+    "PENDING": "AUSSTEHEND",
+    "INACTIVE": "INAKTIV"
   },
   "countries": {
     "AF": "Afghanistan",

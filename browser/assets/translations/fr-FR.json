@@ -1112,6 +1112,7 @@
       "Manage Holidays": "Gérer les jours fériés",
       "Manage Hooks": "Gérer les hooks",
       "Manage Jobs": "Gérer les travaux",
+      "Manage Loan Originators": "Gérer les courtiers en prêts",
       "Manage Offices": "Gérer les bureaux",
       "Manage Reports": "Gérer les rapports",
       "Manage Roles and Permissions": "Gérer les rôles et les autorisations",
@@ -1977,6 +1978,7 @@
       "Loan Documents": "Documents de prêt",
       "Loan Id": "Identifiant du prêt",
       "Loan Officer": "Agent de crédit",
+      "Loan Originator": "Agent de prêt",
       "Loan Outstanding Amount": "Encours du prêt",
       "Loan Outstanding Percentage": "Pourcentage d'encours du prêt",
       "Loan Parameters": "Paramètres du prêt",
@@ -2676,6 +2678,7 @@
       "Application Menu": "Menu des applications",
       "Approve": "Approuver",
       "Assign Loan Officer": "Désigner un agent de crédit",
+      "Attach Loan Originator": "Attacher l'initiateur de crédit",
       "Assign Staff": "Affecter du personnel",
       "Block Account": "Bloquer le compte",
       "Block Deposit": "Dépôt en bloc",
@@ -3182,6 +3185,7 @@
       "Loan Collateral Details": "Détails de la garantie de prêt",
       "Loan Disbursal": "Décaissement du prêt",
       "Loan Documents": "Documents de prêt",
+      "Loan Originators are associated with loan accounts": "Les courtiers en prêts sont associés aux comptes de prêt.",
       "Loan Products": "Produits de prêt",
       "Loan Provisioning Criteria Organization": "Définir les critères de provisionnement des prêts pour l'organisation",
       "Loan Tranche Details": "Détails de la tranche de prêt",
@@ -3764,7 +3768,10 @@
     "loan product will be active and available to clients": "La date à laquelle le produit de prêt sera actif et disponible pour les clients. Si ce champ est vide, le produit de prêt sera actif dès sa création.",
     "loan product will become inactive and unavailable to clients": "Date à laquelle le produit de prêt deviendra inactif et indisponible pour les clients. S'il est vide, le produit chargé ne deviendra jamais inactif.",
     "Refund transactions where interest refund will automatically be calculated": "Opérations de remboursement pour lesquelles le remboursement des intérêts sera automatiquement calculé",
-    "Create Interest Refund": "Créer un remboursement d’intérêts"
+    "Create Interest Refund": "Créer un remboursement d’intérêts",
+    "ACTIVE": "ACTIF",
+    "PENDING": "EN ATTENTE",
+    "INACTIVE": "INACTIF"
   },
   "countries": {
     "AF": "Afghanistan",

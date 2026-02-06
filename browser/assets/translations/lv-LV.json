@@ -1112,6 +1112,7 @@
       "Manage Holidays": "Pārvaldīt brīvdienas",
       "Manage Hooks": "Pārvaldīt āķus",
       "Manage Jobs": "Pārvaldīt darbus",
+      "Manage Loan Originators": "Pārvaldīt aizdevumu izsniedzējus",
       "Manage Offices": "Pārvaldīt birojus",
       "Manage Reports": "Pārvaldīt pārskatus",
       "Manage Roles and Permissions": "Pārvaldiet lomas un atļaujas",
@@ -1977,6 +1978,7 @@
       "Loan Documents": "Aizdevuma dokumenti",
       "Loan Id": "Aizdevuma ID",
       "Loan Officer": "Aizdevuma darbinieks",
+      "Loan Originator": "Aizdevuma izsniedzējs",
       "Loan Outstanding Amount": "Aizdevuma neatmaksātā summa",
       "Loan Outstanding Percentage": "Aizdevuma neatmaksātā procentuālā daļa",
       "Loan Parameters": "Aizdevuma parametri",
@@ -2676,6 +2678,7 @@
       "Application Menu": "Lietojumprogrammu izvēlne",
       "Approve": "Apstiprināt",
       "Assign Loan Officer": "Norīkojiet aizdevuma speciālistu",
+      "Attach Loan Originator": "Pievienot aizdevuma izsniedzēju",
       "Assign Staff": "Norīkojiet personālu",
       "Block Account": "Bloķēt kontu",
       "Block Deposit": "Bloķēt depozītu",
@@ -3183,6 +3186,7 @@
       "Loan Collateral Details": "Sīkāka informācija par aizdevuma nodrošinājumu",
       "Loan Disbursal": "Aizdevuma izsniegšana",
       "Loan Documents": "Aizdevuma dokumenti",
+      "Loan Originators are associated with loan accounts": "Aizdevumu izsniedzēji ir saistīti ar aizdevumu kontiem",
       "Loan Products": "Aizdevuma produkti",
       "Loan Provisioning Criteria Organization": "Definējiet organizācijas aizdevuma piešķiršanas kritērijus",
       "Loan Tranche Details": "Sīkāka informācija par aizdevuma daļu",
@@ -3765,7 +3769,10 @@
     "loan product will be active and available to clients": "Datums, kad aizdevuma produkts būs aktīvs un pieejams klientiem. Ja lauks ir tukšs, aizdevuma produkts būs aktīvs, tiklīdz tas tiks izveidots.",
     "loan product will become inactive and unavailable to clients": "Datums, kad aizdevuma produkts kļūs neaktīvs un klientiem nebūs pieejams. Ja lauks ir tukšs, ielādes produkts nekad nekļūs neaktīvs.",
     "Refund transactions where interest refund will automatically be calculated": "Grąžinimo operacijos, kai palūkanų grąžinimas bus skaičiuojamas automatiškai",
-    "Create Interest Refund": "Izveidot procentu atmaksu"
+    "Create Interest Refund": "Izveidot procentu atmaksu",
+    "ACTIVE": "AKTĪVS",
+    "PENDING": "NEAPSTRĀDĀTS",
+    "INACTIVE": "NEAKTIVS"
   },
   "countries": {
     "AF": "Afganistāna",

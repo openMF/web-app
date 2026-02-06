@@ -1110,6 +1110,7 @@
       "Manage Holidays": "बिदाहरू व्यवस्थापन गर्नुहोस्",
       "Manage Hooks": "हुकहरू प्रबन्ध गर्नुहोस्",
       "Manage Jobs": "कार्यहरू प्रबन्ध गर्नुहोस्",
+      "Manage Loan Originators": "ऋण सुरुवातकर्ताहरू व्यवस्थापन गर्नुहोस्",
       "Manage Offices": "कार्यालयहरू प्रबन्ध गर्नुहोस्",
       "Manage Reports": "रिपोर्टहरू प्रबन्ध गर्नुहोस्",
       "Manage Roles and Permissions": "भूमिका र अनुमतिहरू प्रबन्ध गर्नुहोस्",
@@ -1975,6 +1976,7 @@
       "Loan Documents": "ऋण कागजातहरू",
       "Loan Id": "ऋण आईडी",
       "Loan Officer": "ऋण अधिकारी",
+      "Loan Originator": "ऋण प्रवर्तक",
       "Loan Outstanding Amount": "ऋण बक्यौता रकम",
       "Loan Outstanding Percentage": "ऋण बकाया प्रतिशत",
       "Loan Parameters": "ऋण मापदण्डहरू",
@@ -2674,6 +2676,7 @@
       "Application Menu": "आवेदन मेनु",
       "Approve": "अनुमोदन गर्नुहोस्",
       "Assign Loan Officer": "ऋण अधिकारी नियुक्त गर्नुहोस्",
+      "Attach Loan Originator": "ऋण सुरुवातकर्ता संलग्न गर्नुहोस्",
       "Assign Staff": "कर्मचारी नियुक्त गर्नुहोस्",
       "Block Account": "खाता ब्लक गर्नुहोस्",
       "Block Deposit": "ब्लक निक्षेप",
@@ -3181,6 +3184,7 @@
       "Loan Collateral Details": "ऋण संपार्श्विक विवरण",
       "Loan Disbursal": "ऋण वितरण",
       "Loan Documents": "ऋण कागजातहरू",
+      "Loan Originators are associated with loan accounts": "ऋण सुरुवातकर्ताहरू ऋण खाताहरूसँग सम्बन्धित छन्",
       "Loan Products": "ऋण उत्पादनहरू",
       "Loan Provisioning Criteria Organization": "संस्थाको लागि ऋण प्रावधान मापदण्ड परिभाषित गर्नुहोस्",
       "Loan Tranche Details": "ऋण किस्ता विवरण",
@@ -3763,7 +3767,10 @@
     "loan product will be active and available to clients": "ऋण उत्पादन सक्रिय र ग्राहकहरूको लागि उपलब्ध हुने मिति। खाली भएमा, ऋण उत्पादन सिर्जना हुने बित्तिकै सक्रिय हुनेछ।",
     "loan product will become inactive and unavailable to clients": "ऋण उत्पादन निष्क्रिय र ग्राहकहरु को लागी अनुपलब्ध हुने मिति। यदि खाली छ भने, लोड उत्पादन कहिल्यै निष्क्रिय हुनेछैन।",
     "Refund transactions where interest refund will automatically be calculated": "फिर्ता लेनदेन जहाँ ब्याज फिर्ता स्वतः गणना हुनेछ",
-    "Create Interest Refund": "ब्याज फिर्ता सिर्जना गर्नुहोस्"
+    "Create Interest Refund": "ब्याज फिर्ता सिर्जना गर्नुहोस्",
+    "ACTIVE": "सक्रिय",
+    "PENDING": "पेन्डिङ",
+    "INACTIVE": "निष्क्रिय"
   },
   "countries": {
     "AF": "अफगानिस्तान",

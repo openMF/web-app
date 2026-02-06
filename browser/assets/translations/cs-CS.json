@@ -1111,6 +1111,7 @@
       "Manage Holidays": "Spravovat svátky",
       "Manage Hooks": "Správa háčků",
       "Manage Jobs": "Správa úloh",
+      "Manage Loan Originators": "Správa poskytovatelů úvěrů",
       "Manage Offices": "Správa kanceláří",
       "Manage Reports": "Správa přehledů",
       "Manage Roles and Permissions": "Správa rolí a oprávnění",
@@ -1976,6 +1977,7 @@
       "Loan Documents": "Dokumenty o půjčce",
       "Loan Id": "ID půjčky",
       "Loan Officer": "Úvěrový úředník",
+      "Loan Originator": "Poskytovatel úvěrů",
       "Loan Outstanding Amount": "Nesplacená částka úvěru",
       "Loan Outstanding Percentage": "Procento nesplacené půjčky",
       "Loan Parameters": "Parametry půjčky",
@@ -2677,6 +2679,7 @@
       "Application Menu": "Nabídka aplikací",
       "Approve": "Schvalovat",
       "Assign Loan Officer": "Přiřadit úvěrového úředníka",
+      "Attach Loan Originator": "Připojit poskytovatele půjčky",
       "Assign Staff": "Přiřadit personál",
       "Block Account": "Blokovat účet",
       "Block Deposit": "Blokový vklad",
@@ -3184,6 +3187,7 @@
       "Loan Collateral Details": "Podrobnosti o zajištění úvěru",
       "Loan Disbursal": "Vyplacení půjčky",
       "Loan Documents": "Dokumenty o půjčce",
+      "Loan Originators are associated with loan accounts": "Poskytovatelé půjček jsou spojeni s účty půjček",
       "Loan Products": "Úvěrové produkty",
       "Loan Provisioning Criteria Organization": "Definujte kritéria pro poskytování úvěrů pro organizaci",
       "Loan Tranche Details": "Podrobnosti o tranši úvěru",
@@ -3765,7 +3769,10 @@
     "loan product will be active and available to clients": "Datum, kdy bude úvěrový produkt aktivní a dostupný klientům. Pokud nevyplníte, bude úvěrový produkt aktivní, jakmile bude vytvořen.",
     "loan product will become inactive and unavailable to clients": "Datum, kdy se úvěrový produkt stane neaktivním a nedostupným pro klienty. Pokud je prázdné, produkt zatížení se nikdy nestane neaktivním.",
     "Refund transactions where interest refund will automatically be calculated": "Transakce s vrácením peněz, kde bude automaticky vypočítána refundace úroků",
-    "Create Interest Refund": "Vytvořit vrácení úroků"
+    "Create Interest Refund": "Vytvořit vrácení úroků",
+    "ACTIVE": "AKTIVNÍ",
+    "PENDING": "ČEKÁ NA VYŘÍZENÍ",
+    "INACTIVE": "NEAKTIVNÍ"
   },
   "countries": {
     "AF": "Afghánistán",
