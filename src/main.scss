@@ -813,3 +813,34 @@ mat-card {
     color: rgb(255 255 255 / 60%) !important;
   }
 }
+
+.app-sidenav {
+  .mat-mdc-nav-list .mat-mdc-list-item {
+    .mdc-list-item__primary-text {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    [matlisticon] {
+      flex-shrink: 0;
+      width: 24px;
+      min-width: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      fa-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .fa {
+        display: inline-block;
+        width: 1em;
+        text-align: center;
+      }
+    }
+  }
+}
