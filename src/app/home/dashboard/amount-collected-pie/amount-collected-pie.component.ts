@@ -7,12 +7,14 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, DestroyRef } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /** Custom Services */
 import { HomeService } from '../../home.service';
+import { ThemingService } from 'app/shared/theme-toggle/theming.service';
 
 /** Charting Imports */
 import { Chart, registerables } from 'chart.js';
@@ -41,6 +43,11 @@ Chart.register(...registerables);
 export class AmountCollectedPieComponent implements OnInit {
   private homeService = inject(HomeService);
   private route = inject(ActivatedRoute);
+  private themingService = inject(ThemingService);
+  private destroyRef = inject(DestroyRef);
+
+  /** Current theme */
+  private currentTheme = 'light-theme';
 
   /** Static Form control for office Id */
   officeId = new UntypedFormControl();
@@ -71,6 +78,13 @@ export class AmountCollectedPieComponent implements OnInit {
   ngOnInit() {
     this.getChartData();
     this.officeId.patchValue(1);
+    // Subscribe to theme changes to update chart legend colors
+    this.themingService.theme.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((theme) => {
+      this.currentTheme = theme;
+      if (this.chart) {
+        this.updateChartColors();
+      }
+    });
   }
 
   /**
@@ -98,6 +112,8 @@ export class AmountCollectedPieComponent implements OnInit {
    * @param {any} data Chart Data.
    */
   setChart(data: any) {
+    const legendColor = this.getLegendColor();
+
     if (!this.chart) {
       this.chart = new Chart('collection-pie', {
         type: 'doughnut',
@@ -117,6 +133,13 @@ export class AmountCollectedPieComponent implements OnInit {
           ]
         },
         options: {
+          plugins: {
+            legend: {
+              labels: {
+                color: legendColor
+              }
+            }
+          },
           layout: {
             padding: {
               top: 10,
@@ -127,6 +150,25 @@ export class AmountCollectedPieComponent implements OnInit {
       });
     } else {
       this.chart.data.datasets[0].data = data;
+      this.chart.update();
+    }
+  }
+
+  /**
+   * Gets the legend color based on the current theme.
+   */
+  private getLegendColor(): string {
+    return this.currentTheme === 'dark-theme' ? 'white' : '#666';
+  }
+
+  /**
+   * Updates chart colors based on the current theme.
+   */
+  updateChartColors() {
+    const legendColor = this.getLegendColor();
+
+    if (this.chart?.options?.plugins?.legend?.labels) {
+      this.chart.options.plugins.legend.labels.color = legendColor;
       this.chart.update();
     }
   }
