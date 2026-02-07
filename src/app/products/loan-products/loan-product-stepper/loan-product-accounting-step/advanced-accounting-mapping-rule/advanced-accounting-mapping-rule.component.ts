@@ -89,16 +89,19 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
     this.sendParentData();
   }
 
-  add() {
+  fillCurrentFormValues(): void {
     this.currentFormValues = [];
-    if (this.formType == 'ChargeOffReasonExpense') {
-      this.allowAddAccountingMapping = true;
-      this.tableData.forEach((item: any) => this.currentFormValues.push(item.chargeOffReasonCodeValueId));
-      if (this.accountingMappingOptions.length == this.currentFormValues.length) {
-        this.allowAddAccountingMapping = false;
-        return;
-      }
+    this.allowAddAccountingMapping = true;
+    this.tableData.forEach((item: any) => this.currentFormValues.push(item.value.id));
+    this.allowAddAccountingMapping = !(this.accountingMappingOptions.length == this.currentFormValues.length);
+  }
+
+  add() {
+    this.fillCurrentFormValues();
+    if (!this.allowAddAccountingMapping) {
+      return;
     }
+
     const data = { ...this.getData(this.formType), pristine: false };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
@@ -123,6 +126,7 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
           this.addTableData(addData);
         }
         this.sendParentData();
+        this.fillCurrentFormValues();
 
         if (this.formType == 'ChargeOffReasonExpense') {
           this.allowAddAccountingMapping = this.tableData.length < this.accountingMappingOptions.length;
@@ -156,6 +160,7 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
       if (response.delete) {
         this.tableData = this.tableData.filter((_, i) => i !== index);
         this.sendParentData();
+        this.fillCurrentFormValues();
       }
     });
   }
