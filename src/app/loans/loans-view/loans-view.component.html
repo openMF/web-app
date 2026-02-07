@@ -414,17 +414,19 @@
           {{ 'labels.inputs.External Asset Owner' | translate }}
         </a>
       }
-      @for (loanDatatable of loanDatatables; track loanDatatable) {
-        <a
-          mat-tab-link
-          *mifosxHasPermission="'READ_' + loanDatatable.registeredTableName"
-          [routerLink]="['./datatables', loanDatatable.registeredTableName]"
-          routerLinkActive
-          #datatable="routerLinkActive"
-          [active]="datatable.isActive"
-        >
-          {{ loanDatatable.registeredTableName }}
-        </a>
+      @if (datatablesReady) {
+        @for (loanDatatable of loanDatatables; track loanDatatable) {
+          <a
+            mat-tab-link
+            *mifosxHasPermission="'READ_' + loanDatatable.registeredTableName"
+            [routerLink]="['./datatables', loanDatatable.registeredTableName]"
+            routerLinkActive
+            #datatable="routerLinkActive"
+            [active]="datatable.isActive"
+          >
+            {{ loanDatatable.registeredTableName }}
+          </a>
+        }
       }
     </nav>
     <mat-tab-nav-panel #tabPanel>

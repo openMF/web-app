@@ -788,4 +788,16 @@ export class LoansService {
   getLoanOriginators(loanId: any) {
     return this.http.get(`/loans/${loanId}/originators`);
   }
+
+  /**
+   * Get Entity Datatable Checks
+   * Used to filter datatables based on product configuration
+   * @param {number} offset Page offset
+   * @param {number} limit Number of entries
+   * @returns {Observable<any>} Entity Datatable Checks data
+   */
+  getEntityDataTableChecks(offset: number = 0, limit: number = -1): Observable<any> {
+    const httpParams = new HttpParams().set('offset', offset.toString()).set('limit', limit.toString());
+    return this.http.get('/entityDatatableChecks', { params: httpParams });
+  }
 }
