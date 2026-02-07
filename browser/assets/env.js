@@ -87,6 +87,10 @@
   window['env']['mifosInterbankTransfersApiVersion'] = '';
   window['env']['mifosInterbankTransfersEnabled'] = 'true';
   
+  // Enable Role-Based Access Control (RBAC) for menu/button permissions
+  // Set to true to enable RBAC, false (default) for backward compatibility
+  window['env']['productionModeEnableRBAC'] = false;
+
   // OIDC Plugin Environment variables
   window['env']['oidcServerEnabled'] = false;
   window['env']['oidcBaseUrl']       = '';
