@@ -8,21 +8,24 @@
 
 @if (showData) {
   <div class="tab-container mat-typography">
-    <div class="layout-row align-start-center">
-      <div class="search-box flex-40">
-        <mat-form-field class="flex-fill flex-90">
-          <input
-            matInput
-            placeholder="{{ 'labels.text.Filter by name' | translate }}"
-            (keyup)="applyFilter($event.target.value)"
-          />
-        </mat-form-field>
-      </div>
-      <div class="flex-60">
-        <button mat-raised-button color="success" *mifosxHasPermission="'ACTIVATE_CLIENT'" (click)="approveClients()">
-          <fa-icon icon="check" class="m-r-10"></fa-icon>{{ 'labels.buttons.Approve' | translate }}
-        </button>
-      </div>
+    <div class="tasks-header">
+      <mat-form-field class="tasks-search-field">
+        <input
+          #filterInput
+          matInput
+          placeholder="{{ 'labels.text.Filter by name' | translate }}"
+          (keyup)="applyFilter(filterInput.value)"
+        />
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="success"
+        *mifosxHasPermission="'ACTIVATE_CLIENT'"
+        (click)="approveClients()"
+        class="tasks-action-btn"
+      >
+        <fa-icon icon="check" class="m-r-10"></fa-icon>{{ 'labels.buttons.Approve' | translate }}
+      </button>
     </div>
     @for (client of groupedClients | keyvalue; track client) {
       <h3>{{ client.key }}</h3>

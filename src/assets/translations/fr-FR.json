@@ -555,7 +555,10 @@
       "View Active Charges": "Afficher les frais actifs",
       "View Inactive Charges": "Afficher les frais inactifs",
       "Yes": "Oui",
-      "Is Self Service": "Est libre-service"
+      "Is Self Service": "Est libre-service",
+      "Advanced Search": "Recherche avancée",
+      "Show advanced search": "Afficher la recherche avancée",
+      "Hide advanced search": "Masquer la recherche avancée"
     },
     "catalogs": {
       "Interest payment waiver": "Renonciation au paiement des intérêts",
@@ -1278,12 +1281,13 @@
       "Global Impact": "Impact mondial",
       "Personal Information": "Informations personnelles",
       "Account Information": "Informations sur le compte",
-      "Entity Details": "D\u00e9tails de l'entit\u00e9",
-      "Group Membership": "Adh\u00e9sion au groupe",
+      "Entity Details": "Détails de l'entité",
+      "Group Membership": "Adhésion au groupe",
       "Important Dates": "Dates importantes",
-      "Contact Information": "Coordonn\u00e9es",
+      "Contact Information": "Coordonnées",
       "Classification": "Classification",
-      "Status": "Statut"
+      "Status": "Statut",
+      "Pending Tasks": "Tâches en attente"
     },
     "inputs": {
       "Terms": "Termes",
@@ -2647,7 +2651,12 @@
       "Income from Buy down fees": "Revenus des commissions de rachat",
       "Buy down fee Expense": "Charges des commissions de rachat",
       "Skip Interest Refund Transaction Posting": "Ignorer la comptabilisation du remboursement des intérêts",
-      "Available Disbursement Amount (with Over Applied)": "Montant de décaissement disponible (avec sur-application)"
+      "Available Disbursement Amount (with Over Applied)": "Montant de décaissement disponible (avec sur-application)",
+      "From date": "Date de début",
+      "Resource id": "Identifiant de ressource",
+      "To date": "Date de fin",
+      "Select action": "Sélectionner une action",
+      "Select entity": "Sélectionner une entité"
     },
     "links": {
       "Community": "Communauté",
@@ -2781,7 +2790,8 @@
       "Apply Additional Shares": "Appliquer supplémentaire",
       "Redeem Shares": "Racheter des actions",
       "Approve Additional Shares": "Approuver des partages supplémentaires",
-      "Reject Additional Shares": "Rejeter les partages supplémentaires"
+      "Reject Additional Shares": "Rejeter les partages supplémentaires",
+      "Tasks": "Tâches"
     },
     "placeholders": {
       "Add new server": "Ajouter un nouveau serveur",

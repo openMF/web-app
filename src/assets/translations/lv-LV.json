@@ -555,7 +555,10 @@
       "View Active Charges": "Skatīt aktīvās maksas",
       "View Inactive Charges": "Skatīt neaktīvās maksas",
       "Yes": "Jā",
-      "Is Self Service": "Ir pašapkalpošanās"
+      "Is Self Service": "Ir pašapkalpošanās",
+      "Advanced Search": "Advanced Search",
+      "Show advanced search": "Rādīt paplašinātu meklēšanu",
+      "Hide advanced search": "Paslēpt paplašinātu meklēšanu"
     },
     "catalogs": {
       "Interest payment waiver": "Atteikšanās no procentu maksājumiem",
@@ -1283,7 +1286,8 @@
       "Important Dates": "Svarīgi datumi",
       "Contact Information": "Kontaktinformācija",
       "Classification": "Klasifikācija",
-      "Status": "Statuss"
+      "Status": "Statuss",
+      "Pending Tasks": "Pending Tasks"
     },
     "inputs": {
       "Terms": "Noteikumi",
@@ -2647,7 +2651,12 @@
       "Income from Buy down fees": "Ienākumi no akciju izpirkšanas komisijas maksām",
       "Buy down fee Expense": "Akciju izpirkšanas komisijas izdevumi",
       "Skip Interest Refund Transaction Posting": "Izlaist procentu atmaksas ierakstu",
-      "Available Disbursement Amount (with Over Applied)": "Pieejamā izmaksas summa (ar pārsniegumu)"
+      "Available Disbursement Amount (with Over Applied)": "Pieejamā izmaksas summa (ar pārsniegumu)",
+      "From date": "From date",
+      "Resource id": "Resource id",
+      "To date": "To date",
+      "Select action": "Izvēlēties darbību",
+      "Select entity": "Izvēlēties vienību"
     },
     "links": {
       "Community": "kopiena",
@@ -2781,7 +2790,8 @@
       "Apply Additional Shares": "Lietot papildu",
       "Redeem Shares": "Izpirkt Akcijas",
       "Approve Additional Shares": "Apstipriniet papildu akcijas",
-      "Reject Additional Shares": "Noraidīt papildu akcijas"
+      "Reject Additional Shares": "Noraidīt papildu akcijas",
+      "Tasks": "Tasks"
     },
     "placeholders": {
       "Add new server": "Pievienot jaunu serveri",

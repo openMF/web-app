@@ -50,6 +50,16 @@
 
     <span class="hide-lt-md">
       <a
+        #tasks
+        class="tab-link tasks-link"
+        [routerLink]="['/checker-inbox-and-tasks/checker-inbox']"
+        tabindex="0"
+        *mifosxHasPermission="'ALL_FUNCTIONS_READ'"
+      >
+        <fa-icon class="mr-05" icon="check" size="lg"></fa-icon>
+        {{ 'labels.menus.Tasks' | translate }}
+      </a>
+      <a
         #accounting
         class="tab-link accounting-link"
         [routerLink]="['/accounting']"

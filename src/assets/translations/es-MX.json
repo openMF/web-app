@@ -555,7 +555,10 @@
       "View Active Charges": "Ver Comisiones Activas",
       "View Inactive Charges": "Ver Comisiones inactivas",
       "Yes": "Sí",
-      "Is Self Service": "Es autoservicio"
+      "Is Self Service": "Es autoservicio",
+      "Advanced Search": "Búsqueda avanzada",
+      "Show advanced search": "Mostrar búsqueda avanzada",
+      "Hide advanced search": "Ocultar búsqueda avanzada"
     },
     "catalogs": {
       "Interest payment waiver": "Exención de pago de intereses",
@@ -870,9 +873,9 @@
       "Must be at least": "Debe ser al menos",
       "Must be less or equal to": "Debe ser menor o igual a",
       "must be after or equal to start date": "debe ser posterior o igual a la fecha de inicio",
-      "No classification data available": "No hay datos de clasificaci\u00f3n disponibles",
+      "No classification data available": "No hay datos de clasificación disponibles",
       "No": "No",
-      "Yes": "S\u00ed"
+      "Yes": "Sí"
     },
     "passwordPreferences": {
       "Password most be at least 1 character and not more that 50 characters long": "La contraseña debe tener al menos 1 carácter y no más de 50 caracteres",
@@ -1275,14 +1278,15 @@
       "Secure & Reliable": "Seguro y Confiable",
       "Community Driven": "Impulsado por la Comunidad",
       "Global Impact": "Impacto Global",
-      "Personal Information": "Informaci\u00f3n Personal",
-      "Account Information": "Informaci\u00f3n de la Cuenta",
+      "Personal Information": "Información Personal",
+      "Account Information": "Información de la Cuenta",
       "Entity Details": "Detalles de la Entidad",
-      "Group Membership": "Membres\u00eda del Grupo",
+      "Group Membership": "Membresía del Grupo",
       "Important Dates": "Fechas Importantes",
-      "Contact Information": "Informaci\u00f3n de Contacto",
-      "Classification": "Clasificaci\u00f3n",
-      "Status": "Estado"
+      "Contact Information": "Información de Contacto",
+      "Classification": "Clasificación",
+      "Status": "Estado",
+      "Pending Tasks": "Tareas pendientes"
     },
     "inputs": {
       "Terms": "Términos",
@@ -2651,7 +2655,12 @@
       "Incorporation Date": "Fecha de Constitución",
       "Available Disbursement Amount (with Over Applied)": "Monto disponible para desembolso (con sobreaplicación)",
       "Overdue": "Vencido",
-      "Overdue Fees": "Cargos vencidos"
+      "Overdue Fees": "Cargos vencidos",
+      "From date": "Desde fecha",
+      "Resource id": "ID de recurso",
+      "To date": "Hasta fecha",
+      "Select action": "Seleccionar acción",
+      "Select entity": "Seleccionar entidad"
     },
     "links": {
       "Community": "Comunidad",
@@ -2785,7 +2794,8 @@
       "Apply Additional Shares": "Adicionar Acciones",
       "Redeem Shares": "Canjear acciones",
       "Approve Additional Shares": "Aprobar acciones adicionales",
-      "Reject Additional Shares": "Rechazar acciones adicionales"
+      "Reject Additional Shares": "Rechazar acciones adicionales",
+      "Tasks": "Tareas"
     },
     "placeholders": {
       "Add new server": "Agregar nuevo servidor",

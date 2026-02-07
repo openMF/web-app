@@ -8,34 +8,33 @@
 
 @if (loans && loans.length > 0) {
   <div class="tab-container mat-typography">
-    <div class="layout-row align-start-center">
-      <div class="search-box flex-40">
-        <mat-form-field class="flex-90">
-          <input
-            matInput
-            placeholder="{{ 'labels.text.Filter by name' | translate }}"
-            (keyup)="applyFilter($event.target.value)"
-          />
-        </mat-form-field>
-      </div>
-      <div class="flex-60">
-        <button
-          mat-raised-button
-          color="success"
-          *mifosxHasPermission="'APPROVE_LOANRESCHEDULE'"
-          (click)="bulkLoanReschedule('Approve')"
-        >
-          <fa-icon icon="check" class="m-r-10"></fa-icon>{{ 'labels.buttons.Approve' | translate }}
-        </button>
-        <button
-          mat-raised-button
-          color="reject"
-          *mifosxHasPermission="'APPROVE_LOANRESCHEDULE'"
-          (click)="bulkLoanReschedule('Reject')"
-        >
-          <fa-icon icon="times" class="m-r-10"></fa-icon>{{ 'labels.buttons.Reject' | translate }}
-        </button>
-      </div>
+    <div class="tasks-header">
+      <mat-form-field class="tasks-search-field">
+        <input
+          #filterInput
+          matInput
+          placeholder="{{ 'labels.text.Filter by name' | translate }}"
+          (keyup)="applyFilter(filterInput.value)"
+        />
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="success"
+        *mifosxHasPermission="'APPROVE_LOANRESCHEDULE'"
+        (click)="bulkLoanReschedule('Approve')"
+        class="tasks-action-btn"
+      >
+        <fa-icon icon="check" class="m-r-10"></fa-icon>{{ 'labels.buttons.Approve' | translate }}
+      </button>
+      <button
+        mat-raised-button
+        color="reject"
+        *mifosxHasPermission="'APPROVE_LOANRESCHEDULE'"
+        (click)="bulkLoanReschedule('Reject')"
+        class="tasks-action-btn"
+      >
+        <fa-icon icon="times" class="m-r-10"></fa-icon>{{ 'labels.buttons.Reject' | translate }}
+      </button>
     </div>
     <table mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="select">
@@ -98,7 +97,7 @@
   </div>
 }
 
-@if (loans.length === 0) {
+@if (loans?.length === 0) {
   <div class="alert">
     <div class="message">
       <i class="fa fa-exclamation-circle alert-check"></i>

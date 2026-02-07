@@ -555,7 +555,10 @@
       "View Active Charges": "활성 요금 보기",
       "View Inactive Charges": "비활성 요금 보기",
       "Yes": "예",
-      "Is Self Service": "셀프 서비스입니다"
+      "Is Self Service": "셀프 서비스입니다",
+      "Advanced Search": "고급 검색",
+      "Show advanced search": "고급 검색 표시",
+      "Hide advanced search": "고급 검색 숨기기"
     },
     "catalogs": {
       "Interest payment waiver": "이자 지급 면제",
@@ -1284,7 +1287,8 @@
       "Important Dates": "중요한 날짜",
       "Contact Information": "연락처 정보",
       "Classification": "분류",
-      "Status": "상태"
+      "Status": "상태",
+      "Pending Tasks": "보류 중인 작업"
     },
     "inputs": {
       "Terms": "약관",
@@ -2648,7 +2652,12 @@
       "Income from Buy down fees": "매입 수수료 수입",
       "Buy down fee Expense": "매입 수수료 비용",
       "Skip Interest Refund Transaction Posting": "이자 환불 거래 게시 건너뛰기",
-      "Available Disbursement Amount (with Over Applied)": "초과 적용 금액을 포함한 사용 가능한 지급 금액"
+      "Available Disbursement Amount (with Over Applied)": "초과 적용 금액을 포함한 사용 가능한 지급 금액",
+      "From date": "시작일",
+      "Resource id": "리소스 ID",
+      "To date": "종료일",
+      "Select action": "작업 선택",
+      "Select entity": "엔티티 선택"
     },
     "links": {
       "Community": "지역 사회",
@@ -2781,7 +2790,8 @@
       "Apply Additional Shares": "추가 신청",
       "Redeem Shares": "주식 상환",
       "Approve Additional Shares": "추가 공유 승인",
-      "Reject Additional Shares": "추가 공유 거부"
+      "Reject Additional Shares": "추가 공유 거부",
+      "Tasks": "작업"
     },
     "placeholders": {
       "Add new server": "새 서버 추가",

@@ -9,6 +9,8 @@
 <div class="container">
   <mat-card class="tasks-card">
     <mat-card-content>
+      <div class="card-heading">{{ 'labels.heading.Pending Tasks' | translate }}</div>
+      <mat-divider></mat-divider>
       <nav mat-tab-nav-bar class="navigation-tabs" [tabPanel]="tabPanel">
         <a
           mat-tab-link

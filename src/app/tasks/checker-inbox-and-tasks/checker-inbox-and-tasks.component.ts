@@ -9,6 +9,7 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
 import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
+import { MatDivider } from '@angular/material/divider';
 import { RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -25,7 +26,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatTabLink,
     RouterLinkActive,
     MatTabNavPanel,
-    RouterOutlet
+    RouterOutlet,
+    MatDivider
   ]
 })
 export class CheckerInboxAndTasksComponent {

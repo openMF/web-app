@@ -25,6 +25,7 @@ import {
   MatRow
 } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
+import { MatIcon } from '@angular/material/icon';
 
 /** Custom Services */
 import { TasksService } from '../../tasks.service';
@@ -57,7 +58,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    DateFormatPipe
+    DateFormatPipe,
+    MatIcon
   ]
 })
 export class CheckerInboxComponent implements OnInit {
@@ -78,6 +80,8 @@ export class CheckerInboxComponent implements OnInit {
   noSearchedData = false;
   /** Checks if there is any checker data */
   checkerData = false;
+  /** Show/hide advanced search form */
+  showAdvancedSearch = false;
   /** Maker Checker Search Form */
   makerCheckerSearchForm: UntypedFormGroup;
   /** Minimum date allowed. */
@@ -136,6 +140,13 @@ export class CheckerInboxComponent implements OnInit {
       entityName: [''],
       resourceId: ['']
     });
+  }
+
+  /**
+   * Toggle advanced search form visibility.
+   */
+  toggleAdvancedSearch() {
+    this.showAdvancedSearch = !this.showAdvancedSearch;
   }
 
   search() {

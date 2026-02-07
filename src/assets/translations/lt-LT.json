@@ -555,7 +555,10 @@
       "View Active Charges": "Peržiūrėti aktyvius mokesčius",
       "View Inactive Charges": "Peržiūrėkite neaktyvius mokesčius",
       "Yes": "Taip",
-      "Is Self Service": "Savitarna"
+      "Is Self Service": "Savitarna",
+      "Advanced Search": "Išplėstinė paieška",
+      "Show advanced search": "Rodyti išplėstinę paiešką",
+      "Hide advanced search": "Slėpti išplėstinę paiešką"
     },
     "catalogs": {
       "Interest payment waiver": "Palūkanų mokėjimo atsisakymas",
@@ -1281,7 +1284,8 @@
       "Important Dates": "Svarbios datos",
       "Contact Information": "Kontaktinė informacija",
       "Classification": "Klasifikacija",
-      "Status": "Statusas"
+      "Status": "Statusas",
+      "Pending Tasks": "Laukiamos užduotys"
     },
     "inputs": {
       "Terms": "Sąlygos",
@@ -2647,7 +2651,12 @@
       "Available Disbursement Amount (with Over Applied)": "Galimas išmokėjimo kiekis (su pertekliumi)",
       "Waive Penalties": "Atsisakyti delspinigių",
       "Overdue": "Pradelstas",
-      "Overdue Fees": "Delspinigiai"
+      "Overdue Fees": "Vėluojantys mokesčiai",
+      "From date": "Nuo datos",
+      "Resource id": "Resurso identifikatorius",
+      "To date": "Iki datos",
+      "Select action": "Pasirinkite veiksmą",
+      "Select entity": "Pasirinkite objektą"
     },
     "links": {
       "Community": "bendruomenė",
@@ -2781,7 +2790,8 @@
       "Apply Additional Shares": "Taikyti Papildomą",
       "Redeem Shares": "Išpirkti akcijas",
       "Approve Additional Shares": "Patvirtinti papildomas akcijas",
-      "Reject Additional Shares": "Atmesti papildomas akcijas"
+      "Reject Additional Shares": "Atmesti papildomas akcijas",
+      "Tasks": "Užduotys"
     },
     "placeholders": {
       "Add new server": "Pridėti naują serverį",

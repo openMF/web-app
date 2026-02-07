@@ -554,7 +554,10 @@
       "Withdraw": "Ritirare",
       "View Active Charges": "Visualizza gli addebiti attivi",
       "View Inactive Charges": "Visualizza addebiti inattivi",
-      "Yes": "SÌ"
+      "Yes": "SÌ",
+      "Advanced Search": "Advanced Search",
+      "Show advanced search": "Mostra ricerca avanzata",
+      "Hide advanced search": "Nascondi ricerca avanzata"
     },
     "catalogs": {
       "Interest payment waiver": "Rinuncia al pagamento degli interessi",
@@ -1277,12 +1280,13 @@
       "Global Impact": "Impatto globale",
       "Personal Information": "Informazioni personali",
       "Account Information": "Informazioni sull'account",
-      "Entity Details": "Dettagli dell'entit\u00e0",
+      "Entity Details": "Dettagli dell'entità",
       "Group Membership": "Appartenenza al gruppo",
       "Important Dates": "Date importanti",
       "Contact Information": "Informazioni di contatto",
       "Classification": "Classificazione",
-      "Status": "Stato"
+      "Status": "Stato",
+      "Pending Tasks": "Pending Tasks"
     },
     "inputs": {
       "Terms": "Termini",
@@ -2646,7 +2650,12 @@
       "Income from Buy down fees": "Proventi da commissioni di buy down",
       "Buy down fee Expense": "Spese da commissioni di buy down",
       "Skip Interest Refund Transaction Posting": "Salta la registrazione del rimborso degli interessi",
-      "Available Disbursement Amount (with Over Applied)": "Importo di disbrigo disponibile (con sovraapplicazione)"
+      "Available Disbursement Amount (with Over Applied)": "Importo di disbrigo disponibile (con sovraapplicazione)",
+      "From date": "From date",
+      "Resource id": "Resource id",
+      "To date": "To date",
+      "Select action": "Seleziona azione",
+      "Select entity": "Seleziona entità"
     },
     "links": {
       "Community": "Comunità",
@@ -2780,7 +2789,8 @@
       "Apply Additional Shares": "Applicare aggiuntivo",
       "Redeem Shares": "Riscattare azioni",
       "Approve Additional Shares": "Approvare azioni aggiuntive",
-      "Reject Additional Shares": "Rifiutare condivisioni aggiuntive"
+      "Reject Additional Shares": "Rifiutare condivisioni aggiuntive",
+      "Tasks": "Tasks"
     },
     "placeholders": {
       "Add new server": "Aggiungi nuovo server",

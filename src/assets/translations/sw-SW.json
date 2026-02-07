@@ -555,7 +555,10 @@
       "View Active Charges": "Tazama Malipo Yanayotumika",
       "View Inactive Charges": "Tazama Gharama Isiyotumika",
       "Yes": "Ndiyo",
-      "Is Self Service": "Ni huduma binafsi"
+      "Is Self Service": "Ni huduma binafsi",
+      "Advanced Search": "Utafutaji wa Kina",
+      "Show advanced search": "Onyesha utafutaji wa kina",
+      "Hide advanced search": "Ficha utafutaji wa kina"
     },
     "catalogs": {
       "Interest payment waiver": "Msamaha wa Malipo ya Riba",
@@ -1279,7 +1282,8 @@
       "Important Dates": "Tarehe Muhimu",
       "Contact Information": "Maelezo ya Mawasiliano",
       "Classification": "Uainishaji",
-      "Status": "Hali"
+      "Status": "Hali",
+      "Pending Tasks": "Kazi Zinazongoja"
     },
     "inputs": {
       "Terms": "Masharti",
@@ -2643,7 +2647,12 @@
       "Income from Buy down fees": "Mapato kutoka kwa ada ya Kununua",
       "Buy down fee Expense": "Kununua ada ya chini Gharama",
       "Skip Interest Refund Transaction Posting": "Ruka uchapishaji wa muamala wa kurejesha riba",
-      "Available Disbursement Amount (with Over Applied)": "Tillgängligt utbetalningsbelopp (med överbetalning)"
+      "Available Disbursement Amount (with Over Applied)": "Kiasi cha Utoaji Kinachopatikana (pamoja na Matumizi Zaidi)",
+      "From date": "Kutoka tarehe",
+      "Resource id": "Kitambulisho cha rasilimali",
+      "To date": "Hadi tarehe",
+      "Select action": "Chagua kitendo",
+      "Select entity": "Chagua huluki"
     },
     "links": {
       "Community": "Jumuiya",
@@ -2777,7 +2786,8 @@
       "Apply Additional Shares": "Omba Ziada",
       "Redeem Shares": "Komboa Hisa",
       "Approve Additional Shares": "Idhinisha Hisa za Ziada",
-      "Reject Additional Shares": "Kataa Hisa za Ziada"
+      "Reject Additional Shares": "Kataa Hisa za Ziada",
+      "Tasks": "Kazi"
     },
     "placeholders": {
       "Add new server": "Ongeza seva mpya",
