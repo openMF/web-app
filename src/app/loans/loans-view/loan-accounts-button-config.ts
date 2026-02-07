@@ -133,6 +133,11 @@ export class LoansAccountButtonConfiguration {
             name: 'Credit Balance Refund',
             icon: 'coins',
             taskPermissionName: 'CREATE_CREDIT_BALANCE_REFUND'
+          },
+          {
+            name: 'Make Repayment',
+            icon: 'coins',
+            taskPermissionName: 'REPAYMENT_LOAN'
           }
         ];
         break;
