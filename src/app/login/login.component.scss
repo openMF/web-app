@@ -564,6 +564,20 @@
 .tenant-section {
   margin-bottom: 1rem;
   flex-shrink: 0;
+  width: 100%;
+
+  ::ng-deep mifosx-tenant-selector {
+    display: block;
+    width: 100%;
+
+    #tenant-selector {
+      width: 100%;
+
+      .mat-mdc-form-field-icon-prefix {
+        padding: 0 0.75rem 0 0.5rem;
+      }
+    }
+  }
 }
 
 // ===== Resources Section =====
