@@ -281,13 +281,14 @@ Available languages:
 
 #### UI Display Settings
 
-| Variable                           | Description                                | Default Value |
-| ---------------------------------- | ------------------------------------------ | ------------- |
-| MIFOS_DISPLAY_TENANT_SELECTOR      | Display tenant selector in Login view      | true          |
-| MIFOS_DISPLAY_BACKEND_INFO         | Display backend info in footer             | true          |
-| MIFOS_PRODUCTION_MODE              | Show minimal production hero on login page | false         |
-| MIFOS_ALLOW_SERVER_SWITCH_SELECTOR | Display DNS server list                    | true          |
-| MIFOS_COMPLIANCE_HIDE_CLIENT_DATA  | Hide client names in UI (mask with \*)     | false         |
+| Variable                           | Description                                        | Default Value |
+| ---------------------------------- | -------------------------------------------------- | ------------- |
+| MIFOS_DISPLAY_TENANT_SELECTOR      | Display tenant selector in Login view              | true          |
+| MIFOS_DISPLAY_BACKEND_INFO         | Display backend info in footer                     | true          |
+| MIFOS_PRODUCTION_MODE              | Show minimal production hero on login page         | false         |
+| MIFOS_ALLOW_SERVER_SWITCH_SELECTOR | Display DNS server list                            | true          |
+| MIFOS_COMPLIANCE_HIDE_CLIENT_DATA  | Hide client names in UI (mask with \*)             | false         |
+| MIFOS_PRODUCTION_MODE_ENABLE_RBAC  | Enable Role-Based Access Control for menus/buttons | false         |
 
 #### OAUTH Settings
 
@@ -331,6 +332,59 @@ This applies to client name display, e.g. in Institution/Clients list.
 ## Interbank Transfer Menu
 
 By default, the “Interbank Transfer” menu will be displayed in the hamburger menu of the Savings account.
+
+### Role-Based Access Control (RBAC)
+
+**What is RBAC?**
+Role-Based Access Control restricts system access and functionality based on user roles and permissions. When enabled, menus and buttons in the WebApp are shown/hidden based on the user's assigned permissions.
+
+**When to enable RBAC:**
+
+- **Production environments** where strict access control is required
+- **Multi-tenant systems** with different user roles (Teller, Field Officer, Loan Reviewer, etc.)
+- **Compliance requirements** that mandate role-based permissions
+
+**Default Behavior (RBAC Disabled):**
+By default, `MIFOS_PRODUCTION_MODE_ENABLE_RBAC=false` maintains **backward compatibility**:
+
+- All menus and buttons are visible to all logged-in users
+- Existing deployments continue to work without configuration changes
+- Suitable for development, testing, or single-user scenarios
+
+**When RBAC is Enabled:**
+Set `MIFOS_PRODUCTION_MODE_ENABLE_RBAC=true` to activate permission-based UI control:
+
+- Menus (Institution, Admin, Reports, Accounting) require specific READ permissions
+- Buttons (Create, Edit, Delete, Approve, etc.) require corresponding permissions
+- Users see only features they have permissions for
+- **Important:** You must configure roles in Apache Fineract® before enabling RBAC
+
+**How to enable RBAC:**
+
+1. **Configure environment variable:**
+
+   ```bash
+   MIFOS_PRODUCTION_MODE_ENABLE_RBAC=true
+   ```
+
+2. **Create roles in Fineract Admin Panel:**
+   - Navigate to: Admin → System → Manage Roles
+   - Create roles (e.g., Teller, Field Officer, Loan Reviewer, etc.)
+   - Assign appropriate permissions to each role
+
+3. **Assign roles to users:**
+   - Navigate to: Admin → Users → Edit User
+   - Select appropriate role for each user
+
+**Common role examples include:**
+
+- **Teller**: Cash operations (deposits, withdrawals, repayments)
+- **Field Officer**: Client onboarding, loan origination
+- **Loan Reviewer**: Credit analysis, loan approval/rejection
+- **Treasurer**: Disbursement, accounting, fund movements
+- **KYC Officer**: Client identity verification
+- **PLD Officer (AML)**: Anti-money laundering monitoring
+- **Product Owner**: Product and system configuration
 
 ## Releases
 

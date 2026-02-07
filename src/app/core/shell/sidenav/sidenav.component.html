@@ -86,6 +86,7 @@
           matTooltip="{{ 'tooltips.Navigation' | translate }}"
           routerLinkActive="active-menu"
           [routerLinkActiveOptions]="{ exact: false }"
+          *mifosxHasPermission="'READ_CLIENT'"
         >
           <mat-icon matListIcon>
             <fa-icon icon="location-arrow" size="sm"></fa-icon>
@@ -98,6 +99,7 @@
           matTooltip="{{ 'tooltips.Checker Inbox and Tasks' | translate }}"
           routerLinkActive="active-menu"
           [routerLinkActiveOptions]="{ exact: false }"
+          *mifosxHasPermission="'READ_MAKERCHECKER'"
         >
           <mat-icon matListIcon>
             <i class="fa fa-check"></i>
@@ -110,6 +112,7 @@
           matTooltip="{{ 'labels.menus.Collection Sheet' | translate }}"
           routerLinkActive="active-menu"
           [routerLinkActiveOptions]="{ exact: false }"
+          *mifosxHasPermission="'READ_COLLECTIONSHEET'"
         >
           <mat-icon matListIcon>
             <i class="fa fa-tasks"></i>
@@ -122,6 +125,7 @@
           matTooltip="{{ 'tooltips.Individual Collection Sheet' | translate }}"
           routerLinkActive="active-menu"
           [routerLinkActiveOptions]="{ exact: false }"
+          *mifosxHasPermission="'READ_COLLECTIONSHEET'"
         >
           <mat-icon matListIcon>
             <i class="fa fa-tasks"></i>
@@ -134,6 +138,7 @@
           matTooltip="{{ 'tooltips.Notifications' | translate }}"
           routerLinkActive="active-menu"
           [routerLinkActiveOptions]="{ exact: false }"
+          *mifosxHasPermission="'READ_NOTIFICATION'"
         >
           <mat-icon matListIcon>
             <fa-icon icon="bell" size="sm"></fa-icon>
@@ -146,6 +151,7 @@
           matTooltip="{{ 'tooltips.Frequent Postings' | translate }}"
           routerLinkActive="active-menu"
           [routerLinkActiveOptions]="{ exact: false }"
+          *mifosxHasPermission="'CREATE_JOURNALENTRY'"
         >
           <mat-icon matListIcon>
             <fa-icon icon="sync" size="sm"></fa-icon>
@@ -158,6 +164,7 @@
           matTooltip="{{ 'tooltips.Create Journal Entry' | translate }}"
           routerLinkActive="active-menu"
           [routerLinkActiveOptions]="{ exact: false }"
+          *mifosxHasPermission="'CREATE_JOURNALENTRY'"
         >
           <mat-icon matListIcon>
             <fa-icon icon="plus" size="sm"></fa-icon>
@@ -170,6 +177,7 @@
           matTooltip="{{ 'tooltips.Chart Of Accounts' | translate }}"
           routerLinkActive="active-menu"
           [routerLinkActiveOptions]="{ exact: false }"
+          *mifosxHasPermission="'READ_GLACCOUNT'"
         >
           <mat-icon matListIcon>
             <fa-icon icon="sitemap" size="sm"></fa-icon>

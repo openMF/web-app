@@ -94,6 +94,15 @@ export const environment = {
   complianceHideClientData:
     loadedEnv.complianceHideClientData === 'true' || loadedEnv.complianceHideClientData === true || false,
 
+  /**
+   * Enable Role-Based Access Control (RBAC) for menus and buttons
+   * When enabled, menus/buttons visibility is controlled by user permissions
+   * When disabled (default), shows all menus/buttons for backward compatibility
+   * Set via MIFOS_PRODUCTION_MODE_ENABLE_RBAC env var
+   */
+  productionModeEnableRBAC:
+    loadedEnv.productionModeEnableRBAC === 'true' || loadedEnv.productionModeEnableRBAC === true || false,
+
   OIDC: {
     // Support legacy FINERACT_PLUGIN_OIDC_* variable names for backward compatibility
     oidcServerEnabled:

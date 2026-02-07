@@ -99,6 +99,10 @@
   window['env']['mifosInterbankTransfersApiVersion'] = '$MIFOS_INTERBANK_TRANSFERS_API_VERSION';
   window['env']['mifosInterbankTransfersEnabled'] = '$MIFOS_INTERBANK_TRANSFERS_ENABLED';
 
+  // Enable Role-Based Access Control (RBAC) for menu/button permissions
+  // Set to 'true' to enable RBAC, 'false' (default) for backward compatibility
+  window['env']['productionModeEnableRBAC'] = '$MIFOS_PRODUCTION_MODE_ENABLE_RBAC';
+
   // OIDC Plugin Environment variables
   window['env']['oidcServerEnabled'] = '$FINERACT_PLUGIN_OIDC_ENABLED';
   window['env']['oidcBaseUrl'] = '$FINERACT_PLUGIN_OIDC_BASE_URL';

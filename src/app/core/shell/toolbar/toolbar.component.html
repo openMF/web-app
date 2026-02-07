@@ -130,9 +130,15 @@
 </mat-menu>
 
 <mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item routerLink="/clients" tabindex="0">{{ 'labels.menus.Clients' | translate }}</button>
-  <button mat-menu-item routerLink="/groups" tabindex="0">{{ 'labels.menus.Groups' | translate }}</button>
-  <button mat-menu-item routerLink="/centers" tabindex="0">{{ 'labels.menus.Centers' | translate }}</button>
+  <button mat-menu-item routerLink="/clients" tabindex="0" *mifosxHasPermission="'READ_CLIENT'">
+    {{ 'labels.menus.Clients' | translate }}
+  </button>
+  <button mat-menu-item routerLink="/groups" tabindex="0" *mifosxHasPermission="'READ_GROUP'">
+    {{ 'labels.menus.Groups' | translate }}
+  </button>
+  <button mat-menu-item routerLink="/centers" tabindex="0" *mifosxHasPermission="'READ_CENTER'">
+    {{ 'labels.menus.Centers' | translate }}
+  </button>
   <span class="hide-lt-md">
     <button mat-menu-item [routerLink]="['/accounting']" tabindex="0">
       {{ 'labels.menus.Accounting' | translate }}
@@ -146,28 +152,42 @@
 
 <!-- Toolbar Menus -->
 <mat-menu #reportsMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item [routerLink]="['/reports']" tabindex="0">{{ 'labels.menus.All' | translate }}</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Client']" tabindex="0">
+  <button mat-menu-item [routerLink]="['/reports']" tabindex="0" *mifosxHasPermission="'READ_REPORT'">
+    {{ 'labels.menus.All' | translate }}
+  </button>
+  <button mat-menu-item [routerLink]="['/reports', 'Client']" tabindex="0" *mifosxHasPermission="'READ_REPORT'">
     {{ 'labels.menus.Clients' | translate }}
   </button>
-  <button mat-menu-item [routerLink]="['/reports', 'Loan']" tabindex="0">{{ 'labels.menus.Loans' | translate }}</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Savings']" tabindex="0">
+  <button mat-menu-item [routerLink]="['/reports', 'Loan']" tabindex="0" *mifosxHasPermission="'READ_REPORT'">
+    {{ 'labels.menus.Loans' | translate }}
+  </button>
+  <button mat-menu-item [routerLink]="['/reports', 'Savings']" tabindex="0" *mifosxHasPermission="'READ_REPORT'">
     {{ 'labels.menus.Savings' | translate }}
   </button>
-  <button mat-menu-item [routerLink]="['/reports', 'Fund']" tabindex="0">{{ 'labels.menus.Funds' | translate }}</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Accounting']" tabindex="0">
+  <button mat-menu-item [routerLink]="['/reports', 'Fund']" tabindex="0" *mifosxHasPermission="'READ_REPORT'">
+    {{ 'labels.menus.Funds' | translate }}
+  </button>
+  <button mat-menu-item [routerLink]="['/reports', 'Accounting']" tabindex="0" *mifosxHasPermission="'READ_REPORT'">
     {{ 'labels.menus.Accounting' | translate }}
   </button>
 </mat-menu>
 
 <mat-menu #adminMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item (click)="navigateMenu('/appusers')" tabindex="0">{{ 'labels.menus.Users' | translate }}</button>
-  <button mat-menu-item [routerLink]="['/organization']" tabindex="0">
+  <button mat-menu-item [routerLink]="['/appusers']" tabindex="0" *mifosxHasPermission="'READ_USER'">
+    {{ 'labels.menus.Users' | translate }}
+  </button>
+  <button mat-menu-item [routerLink]="['/organization']" tabindex="0" *mifosxHasPermission="'READ_OFFICE'">
     {{ 'labels.menus.Organization' | translate }}
   </button>
-  <button mat-menu-item [routerLink]="['/system']" tabindex="0">{{ 'labels.menus.System' | translate }}</button>
-  <button mat-menu-item [routerLink]="['/products']" tabindex="0">{{ 'labels.menus.Products' | translate }}</button>
-  <button mat-menu-item routerLink="/templates" tabindex="0">{{ 'labels.menus.Templates' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/system']" tabindex="0" *mifosxHasPermission="'READ_CONFIGURATION'">
+    {{ 'labels.menus.System' | translate }}
+  </button>
+  <button mat-menu-item [routerLink]="['/products']" tabindex="0" *mifosxHasPermission="'READ_PRODUCT'">
+    {{ 'labels.menus.Products' | translate }}
+  </button>
+  <button mat-menu-item routerLink="/templates" tabindex="0" *mifosxHasPermission="'READ_TEMPLATE'">
+    {{ 'labels.menus.Templates' | translate }}
+  </button>
 </mat-menu>
 
 <!-- Application User Help Menu -->

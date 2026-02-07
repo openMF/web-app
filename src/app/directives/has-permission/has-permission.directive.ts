@@ -12,6 +12,9 @@ import { Directive, Input, TemplateRef, ViewContainerRef, inject } from '@angula
 /** Custom Services */
 import { AuthenticationService } from '../../core/authentication/authentication.service';
 
+/** Environment */
+import { environment } from '../../../environments/environment';
+
 /**
  * Has Permission Directive
  */
@@ -23,6 +26,9 @@ export class HasPermissionDirective {
 
   /** User Permissions */
   private userPermissions: any[];
+
+  /** RBAC Feature Flag */
+  private rbacEnabled: boolean = environment.productionModeEnableRBAC;
 
   /**
    * Extracts User Permissions from User Credentials
@@ -55,6 +61,7 @@ export class HasPermissionDirective {
    * Checks if user is permitted.
    * @param {string} permission Permission
    * @returns {true}
+   * - RBAC is disabled (backward compatibility mode)
    * -`ALL_FUNCTIONS`: user is a Super user.
    * -`ALL_FUNCTIONS_READ`: user has all read permissions and passed permission is 'read' type.
    * - User has special permission to access that feature.
@@ -63,6 +70,11 @@ export class HasPermissionDirective {
    * - No value was passed to the has permission directive.
    */
   private hasPermission(permission: string) {
+    // If RBAC is disabled, show all menus/buttons (backward compatibility)
+    if (!this.rbacEnabled) {
+      return true;
+    }
+
     permission = permission.trim();
     if (this.userPermissions.includes('ALL_FUNCTIONS')) {
       return true;
