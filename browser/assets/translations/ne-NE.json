@@ -555,7 +555,10 @@
       "View Active Charges": "सक्रिय शुल्कहरू हेर्नुहोस्",
       "View Inactive Charges": "निष्क्रिय शुल्कहरू हेर्नुहोस्",
       "Yes": "हो",
-      "Is Self Service": "आत्म सेवा हो"
+      "Is Self Service": "आत्म सेवा हो",
+      "Advanced Search": "उन्नत खोज",
+      "Show advanced search": "उन्नत खोज देखाउनुहोस्",
+      "Hide advanced search": "उन्नत खोज लुकाउनुहोस्"
     },
     "catalogs": {
       "Interest payment waiver": "ब्याज भुक्तानी माफी",
@@ -1281,7 +1284,8 @@
       "Important Dates": "महत्वपूर्ण मितिहरू",
       "Contact Information": "सम्पर्क जानकारी",
       "Classification": "वर्गीकरण",
-      "Status": "स्थिति"
+      "Status": "स्थिति",
+      "Pending Tasks": "बाँकी कार्यहरू"
     },
     "inputs": {
       "Terms": "सर्तहरू",
@@ -2645,7 +2649,12 @@
       "Income from Buy down fees": "खरिद शुल्कबाट हुने आम्दानी",
       "Buy down fee Expense": "खरीद शुल्क खर्च",
       "Skip Interest Refund Transaction Posting": "ब्याज फिर्ता पोस्टिङ्ग छोड्नुहोस्",
-      "Available Disbursement Amount (with Over Applied)": "उपलब्ध भुक्तानी रकम (अधिक लागू रकम सहित)"
+      "Available Disbursement Amount (with Over Applied)": "उपलब्ध भुक्तानी रकम (अधिक लागू रकम सहित)",
+      "From date": "मिति देखि",
+      "Resource id": "स्रोत आईडी",
+      "To date": "मिति सम्म",
+      "Select action": "कार्य चयन गर्नुहोस्",
+      "Select entity": "इकाई चयन गर्नुहोस्"
     },
     "links": {
       "Community": "समुदाय",
@@ -2779,7 +2788,8 @@
       "Apply Additional Shares": "अतिरिक्त लागू गर्नुहोस्",
       "Redeem Shares": "शेयरहरू रिडिम गर्नुहोस्",
       "Approve Additional Shares": "अतिरिक्त शेयरहरू स्वीकृत गर्नुहोस्",
-      "Reject Additional Shares": "अतिरिक्त शेयरहरू अस्वीकार गर्नुहोस्"
+      "Reject Additional Shares": "अतिरिक्त शेयरहरू अस्वीकार गर्नुहोस्",
+      "Tasks": "कार्यहरू"
     },
     "placeholders": {
       "Add new server": "नयाँ सर्भर थप्नुहोस्",

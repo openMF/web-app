@@ -555,7 +555,10 @@
       "View Active Charges": "Zobrazit aktivní poplatky",
       "View Inactive Charges": "Zobrazit neaktivní poplatky",
       "Yes": "Ano",
-      "Is Self Service": "Je samoobsluha"
+      "Is Self Service": "Je samoobsluha",
+      "Advanced Search": "Rozšířené vyhledávání",
+      "Show advanced search": "Zobrazit rozšířené vyhledávání",
+      "Hide advanced search": "Skrýt rozšířené vyhledávání"
     },
     "catalogs": {
       "Interest payment waiver": "Prominutí platby úroků",
@@ -1282,7 +1285,8 @@
       "Important Dates": "Důležitá data",
       "Contact Information": "Kontaktní informace",
       "Classification": "Klasifikace",
-      "Status": "Stav"
+      "Status": "Stav",
+      "Pending Tasks": "Čekající úkoly"
     },
     "inputs": {
       "Terms": "Podmínky",
@@ -2648,7 +2652,12 @@
       "Skip Interest Refund Transaction Posting": "Přeskočit zaúčtování vrácení úroků",
       "Available Disbursement Amount (with Over Applied)": "Dostupná částka k výplatě (s přeplatkem)",
       "Overdue": "Po splatnosti",
-      "Overdue Fees": "Poplatky po splatnosti"
+      "Overdue Fees": "Poplatky po splatnosti",
+      "From date": "Datum od",
+      "Resource id": "ID zdroje",
+      "To date": "Datum do",
+      "Select action": "Vybrat akci",
+      "Select entity": "Vybrat entitu"
     },
     "links": {
       "Community": "Společenství",
@@ -2782,7 +2791,8 @@
       "Apply Additional Shares": "Použít další",
       "Redeem Shares": "Uplatnit akcie",
       "Approve Additional Shares": "Schválit další akcie",
-      "Reject Additional Shares": "Odmítnout další akcie"
+      "Reject Additional Shares": "Odmítnout další akcie",
+      "Tasks": "Úkoly"
     },
     "placeholders": {
       "Add new server": "Přidat nový server",

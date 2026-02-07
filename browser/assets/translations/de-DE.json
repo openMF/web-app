@@ -555,7 +555,10 @@
       "View Active Charges": "Aktive Gebühren anzeigen",
       "View Inactive Charges": "Inaktive Gebühren anzeigen",
       "Yes": "Ja",
-      "Is Self Service": "Ist Selbstbedienung"
+      "Is Self Service": "Ist Selbstbedienung",
+      "Advanced Search": "Erweiterte Suche",
+      "Show advanced search": "Erweiterte Suche anzeigen",
+      "Hide advanced search": "Erweiterte Suche ausblenden"
     },
     "catalogs": {
       "Interest payment waiver": "Zinszahlungsverzicht",
@@ -1283,7 +1286,8 @@
       "Important Dates": "Wichtige Daten",
       "Contact Information": "Kontaktinformationen",
       "Classification": "Klassifizierung",
-      "Status": "Status"
+      "Status": "Status",
+      "Pending Tasks": "Ausstehende Aufgaben"
     },
     "inputs": {
       "Terms": "Bedingungen",
@@ -2649,7 +2653,12 @@
       "Skip Interest Refund Transaction Posting": "Buchung der Zinsrückerstattung überspringen",
       "Available Disbursement Amount (with Over Applied)": "Verfügbarer Auszahlungsbetrag (mit Überzahlung)",
       "Overdue": "Überfällig",
-      "Overdue Fees": "Überfällige Gebühren"
+      "Overdue Fees": "Überfällige Gebühren",
+      "From date": "Von Datum",
+      "Resource id": "Ressourcen-ID",
+      "To date": "Bis Datum",
+      "Select action": "Aktion auswählen",
+      "Select entity": "Entität auswählen"
     },
     "links": {
       "Community": "Gemeinschaft",
@@ -2783,7 +2792,8 @@
       "Apply Additional Shares": "Zusätzlich anwenden",
       "Redeem Shares": "Anteile zurückgeben",
       "Approve Additional Shares": "Genehmigen Sie zusätzliche Freigaben",
-      "Reject Additional Shares": "Zusätzliche Freigaben ablehnen"
+      "Reject Additional Shares": "Zusätzliche Freigaben ablehnen",
+      "Tasks": "Aufgaben"
     },
     "placeholders": {
       "Add new server": "Neuen Server hinzufügen",

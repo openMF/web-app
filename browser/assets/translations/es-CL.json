@@ -555,7 +555,10 @@
       "View Active Charges": "Ver Comisiones Activas",
       "View Inactive Charges": "Ver Comisiones inactivas",
       "Yes": "Sí",
-      "Is Self Service": "Es usuario de autoservicio"
+      "Is Self Service": "Es usuario de autoservicio",
+      "Advanced Search": "Advanced Search",
+      "Show advanced search": "Mostrar búsqueda avanzada",
+      "Hide advanced search": "Ocultar búsqueda avanzada"
     },
     "catalogs": {
       "Interest payment waiver": "Exención de pago de intereses",
@@ -1283,7 +1286,8 @@
       "Important Dates": "Fechas Importantes",
       "Contact Information": "Información de Contacto",
       "Classification": "Clasificación",
-      "Status": "Estado"
+      "Status": "Estado",
+      "Pending Tasks": "Pending Tasks"
     },
     "inputs": {
       "Terms": "Términos",
@@ -2648,7 +2652,12 @@
       "Income from Buy down fees": "Ingresos por comisiones de compra inicial",
       "Buy down fee Expense": "Gastos por comisiones de compra inicial",
       "Skip Interest Refund Transaction Posting": "Omitir el registro de la devolución de intereses",
-      "Available Disbursement Amount (with Over Applied)": "Monto disponible para desembolso (con sobreaplicación)"
+      "Available Disbursement Amount (with Over Applied)": "Monto disponible para desembolso (con sobreaplicación)",
+      "From date": "From date",
+      "Resource id": "Resource id",
+      "To date": "To date",
+      "Select action": "Seleccionar acción",
+      "Select entity": "Seleccionar entidad"
     },
     "links": {
       "Community": "Comunidad",
@@ -2782,7 +2791,8 @@
       "Apply Additional Shares": "Adicionar Acciones",
       "Redeem Shares": "Canjear acciones",
       "Approve Additional Shares": "Aprobar acciones adicionales",
-      "Reject Additional Shares": "Rechazar acciones adicionales"
+      "Reject Additional Shares": "Rechazar acciones adicionales",
+      "Tasks": "Tasks"
     },
     "placeholders": {
       "Add new server": "Agregar nuevo servidor",
