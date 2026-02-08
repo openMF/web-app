@@ -92,7 +92,63 @@
             }
           </mat-form-field>
 
-          <div class="space flex-48">
+          @if (!editCashierForm.value.isFullDay) {
+            <div class="flex-48 layout-row gap-10px">
+              <mat-form-field class="flex-50">
+                <mat-label
+                  >{{ 'labels.inputs.Start Time' | translate }} ({{ 'labels.inputs.Hour' | translate }})</mat-label
+                >
+                <mat-select formControlName="hourStartTime">
+                  @for (hour of hours; track hour) {
+                    <mat-option [value]="hour">{{ hour }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="flex-50">
+                <mat-label
+                  >{{ 'labels.inputs.Start Time' | translate }} ({{ 'labels.inputs.Minute' | translate }})</mat-label
+                >
+                <mat-select formControlName="minStartTime">
+                  @for (minute of minutes; track minute) {
+                    <mat-option [value]="minute">{{ minute }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="flex-48 layout-row gap-10px">
+              <mat-form-field class="flex-50">
+                <mat-label
+                  >{{ 'labels.inputs.End Time' | translate }} ({{ 'labels.inputs.Hour' | translate }})</mat-label
+                >
+                <mat-select formControlName="hourEndTime">
+                  @for (hour of hours; track hour) {
+                    <mat-option [value]="hour">{{ hour }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="flex-50">
+                <mat-label
+                  >{{ 'labels.inputs.End Time' | translate }} ({{ 'labels.inputs.Minute' | translate }})</mat-label
+                >
+                <mat-select formControlName="minEndTime">
+                  @for (minute of minutes; track minute) {
+                    <mat-option [value]="minute">{{ minute }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
+            @if (editCashierForm.hasError('invalidTimeRange')) {
+              <div class="flex-48">
+                <mat-error>
+                  {{ 'labels.inputs.End Time' | translate }} {{ 'labels.commons.must' | translate }}
+                  {{ 'labels.commons.be' | translate }} {{ 'labels.commons.greater than' | translate }}
+                  {{ 'labels.inputs.Start Time' | translate }}
+                </mat-error>
+              </div>
+            }
+          }
+
+          <div class="space flex-100">
             <mat-checkbox labelPosition="before" formControlName="isFullDay">
               {{ 'labels.inputs.Full Day' | translate }}?
             </mat-checkbox>

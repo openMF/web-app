@@ -46,6 +46,10 @@ export class CreateCashierComponent implements OnInit {
   cashierTemplate: any;
   /** Create cashier form. */
   createCashierForm: UntypedFormGroup;
+  /** Hours options for time selection (00-23). */
+  hours: string[] = Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0'));
+  /** Minutes options for time selection (00-59). */
+  minutes: string[] = Array.from({ length: 60 }, (_, i) => i.toString().padStart(2, '0'));
 
   /**
    * Fetches cashier template from `resolve`
@@ -85,7 +89,11 @@ export class CreateCashierComponent implements OnInit {
         '',
         Validators.required
       ],
-      isFullDay: [false]
+      isFullDay: [true],
+      hourStartTime: ['00'],
+      minStartTime: ['00'],
+      hourEndTime: ['00'],
+      minEndTime: ['00']
     });
   }
 
@@ -104,11 +112,40 @@ export class CreateCashierComponent implements OnInit {
     if (createCashierFormData.endDate instanceof Date) {
       createCashierFormData.endDate = this.dateUtils.formatDate(prevEndDate, dateFormat);
     }
-    const data = {
-      ...createCashierFormData,
+    const data: any = {
+      staffId: createCashierFormData.staffId,
+      description: createCashierFormData.description,
+      startDate: createCashierFormData.startDate,
+      endDate: createCashierFormData.endDate,
+      isFullDay: createCashierFormData.isFullDay,
       dateFormat,
       locale
     };
+    // Clear stale time-range errors before re-validating
+    if (this.createCashierForm.hasError('invalidTimeRange')) {
+      const { invalidTimeRange, ...rest } = this.createCashierForm.errors ?? {};
+      this.createCashierForm.setErrors(Object.keys(rest).length ? rest : null);
+    }
+    // Add time fields only when not full day
+    if (!createCashierFormData.isFullDay) {
+      const hourStart = createCashierFormData.hourStartTime;
+      const minStart = createCashierFormData.minStartTime;
+      const hourEnd = createCashierFormData.hourEndTime;
+      const minEnd = createCashierFormData.minEndTime;
+      // Validate that end time is after start time
+      const startMinutes = Number(hourStart) * 60 + Number(minStart);
+      const endMinutes = Number(hourEnd) * 60 + Number(minEnd);
+      if (Number.isNaN(startMinutes) || Number.isNaN(endMinutes) || endMinutes <= startMinutes) {
+        this.createCashierForm.setErrors({ invalidTimeRange: true });
+        return;
+      }
+      data.hourStartTime = hourStart;
+      data.minStartTime = minStart;
+      data.hourEndTime = hourEnd;
+      data.minEndTime = minEnd;
+      data.startTime = `${hourStart}:${minStart}`;
+      data.endTime = `${hourEnd}:${minEnd}`;
+    }
     this.organizationService.createCashier(this.cashierTemplate.tellerId, data).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });

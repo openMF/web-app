@@ -48,6 +48,10 @@ export class EditCashierComponent implements OnInit {
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
   maxDate = new Date();
+  /** Hours options for time selection (00-23). */
+  hours: string[] = Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0'));
+  /** Minutes options for time selection (00-59). */
+  minutes: string[] = Array.from({ length: 60 }, (_, i) => i.toString().padStart(2, '0'));
 
   /**
    *
@@ -70,28 +74,49 @@ export class EditCashierComponent implements OnInit {
 
   ngOnInit() {
     this.maxDate = this.settingsService.maxFutureDate;
-    this.setEditChargeForm();
+    this.setEditCashierForm();
   }
 
   /**
-   * Sets Edit Charge Form.
+   * Sets Edit Cashier Form.
    */
-  setEditChargeForm() {
+  setEditCashierForm() {
+    // Extract hours and minutes from existing time data with safe defaults
+    const startTime = this.cashierData.data.startTime || '09:00';
+    const endTime = this.cashierData.data.endTime || '17:00';
+    const [
+      hourStart = '09',
+      minStart = '00'
+    ] = startTime.includes(':') ? startTime.split(':') : [
+          '09',
+          '00'
+        ];
+    const [
+      hourEnd = '17',
+      minEnd = '00'
+    ] = endTime.includes(':') ? endTime.split(':') : [
+          '17',
+          '00'
+        ];
     this.editCashierForm = this.formBuilder.group({
       staffId: [{ value: this.cashierData.data.staffId, disabled: true }],
       description: [this.cashierData.data.description],
       startDate: [
-        this.cashierData.data.startDate && new Date(this.cashierData.data.startDate),
+        this.cashierData.data.startDate ? new Date(this.cashierData.data.startDate) : null,
         Validators.required
       ],
       endDate: [
-        this.cashierData.data.endDate && new Date(this.cashierData.data.endDate),
+        this.cashierData.data.endDate ? new Date(this.cashierData.data.endDate) : null,
         Validators.required
       ],
       isFullDay: [
         this.cashierData.data.isFullDay,
         Validators.required
-      ]
+      ],
+      hourStartTime: [hourStart.padStart(2, '0')],
+      minStartTime: [minStart.padStart(2, '0')],
+      hourEndTime: [hourEnd.padStart(2, '0')],
+      minEndTime: [minEnd.padStart(2, '0')]
     });
   }
 
@@ -110,12 +135,40 @@ export class EditCashierComponent implements OnInit {
     if (editCashierFormData.endDate instanceof Date) {
       editCashierFormData.endDate = this.dateUtils.formatDate(prevEndDate, dateFormat);
     }
-    const data = {
-      ...editCashierFormData,
+    const data: any = {
       staffId: this.cashierData.data.staffId,
+      description: editCashierFormData.description,
+      startDate: editCashierFormData.startDate,
+      endDate: editCashierFormData.endDate,
+      isFullDay: editCashierFormData.isFullDay,
       dateFormat,
       locale
     };
+    // Clear stale time-range errors before re-validating
+    if (this.editCashierForm.hasError('invalidTimeRange')) {
+      const { invalidTimeRange, ...rest } = this.editCashierForm.errors ?? {};
+      this.editCashierForm.setErrors(Object.keys(rest).length ? rest : null);
+    }
+    // Add time fields only when not full day
+    if (!editCashierFormData.isFullDay) {
+      const hourStart = editCashierFormData.hourStartTime;
+      const minStart = editCashierFormData.minStartTime;
+      const hourEnd = editCashierFormData.hourEndTime;
+      const minEnd = editCashierFormData.minEndTime;
+      // Validate that end time is after start time
+      const startMinutes = Number(hourStart) * 60 + Number(minStart);
+      const endMinutes = Number(hourEnd) * 60 + Number(minEnd);
+      if (Number.isNaN(startMinutes) || Number.isNaN(endMinutes) || endMinutes <= startMinutes) {
+        this.editCashierForm.setErrors({ invalidTimeRange: true });
+        return;
+      }
+      data.hourStartTime = hourStart;
+      data.minStartTime = minStart;
+      data.hourEndTime = hourEnd;
+      data.minEndTime = minEnd;
+      data.startTime = `${hourStart}:${minStart}`;
+      data.endTime = `${hourEnd}:${minEnd}`;
+    }
     this.organizationService
       .updateCashier(this.cashierData.data.tellerId, this.cashierData.data.id, data)
       .subscribe((response: any) => {
