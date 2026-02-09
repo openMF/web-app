@@ -155,7 +155,7 @@ export class CreateLoanProvisioningCriteriaComponent implements OnInit {
    */
   editDefinition(definition: any) {
     const data = {
-      title: this.translateService.instant('labels.heading.Edit Criteria Definition'),
+      title: this.translateService.instant('labels.buttons.Edit Criteria Definition'),
       formfields: this.getDefinitionFormFields(definition),
       layout: { addButtonText: 'Confirm' }
     };
