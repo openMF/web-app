@@ -3548,7 +3548,14 @@
         "REOPEN": "Fungua tena",
         "WITHDRAW": "Toa",
         "DEPOSIT": "Weka",
-        "TRANSFER": "Hamisha"
+        "TRANSFER": "Hamisha",
+        "POSTINTEREST": "Chapisha riba",
+        "CALCULATEINTEREST": "Hesabu riba",
+        "ASSIGNSTAFF": "Teua wafanyakazi",
+        "ACCEPTTRANSFER": "Kubali uhamishaji",
+        "PROPOSETRANSFER": "Pendekeza uhamishaji",
+        "REPAYMENT": "Malipo",
+        "DISBURSETOSAVINGS": "Toa kwenye akiba"
       },
       "entities": {
         "ROLE": "Jukumu",
@@ -3577,7 +3584,11 @@
         "GUARANTOR": "Mdhamini",
         "SHAREPRODUCT": "Bidhaa ya hisa",
         "FIXEDDEPOSITPRODUCT": "Bidhaa ya amana isiyobadilika",
-        "RECURRINGDEPOSITPRODUCT": "Bidhaa ya amana ya mara kwa mara"
+        "FIXEDDEPOSITACCOUNT": "Akaunti ya amana isiyobadilika",
+        "RECURRINGDEPOSITPRODUCT": "Bidhaa ya amana ya mara kwa mara",
+        "RECURRINGDEPOSITACCOUNT": "Akaunti ya amana ya mara kwa mara",
+        "ACCOUNTTRANSFER": "Uhamishaji wa akaunti",
+        "SSBENEFICIARYTPT": "Wapokeaji TPT Huduma ya Kujitegemea"
       }
     },
     "titles": {

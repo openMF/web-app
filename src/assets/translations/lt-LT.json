@@ -3551,7 +3551,14 @@
         "REOPEN": "Atidaryti iš naujo",
         "WITHDRAW": "Išimti",
         "DEPOSIT": "Įdėti",
-        "TRANSFER": "Perkelti"
+        "TRANSFER": "Perkelti",
+        "POSTINTEREST": "Paskelbti palūkanas",
+        "CALCULATEINTEREST": "Apskaičiuoti palūkanas",
+        "ASSIGNSTAFF": "Priskirti personalui",
+        "ACCEPTTRANSFER": "Priimti perkėlimą",
+        "PROPOSETRANSFER": "Siūlyti perkėlimą",
+        "REPAYMENT": "Grąžinimas",
+        "DISBURSETOSAVINGS": "Išmokėti į taupymą"
       },
       "entities": {
         "ROLE": "Vaidmuo",
@@ -3580,7 +3587,11 @@
         "GUARANTOR": "Garantas",
         "SHAREPRODUCT": "Akcijų produktas",
         "FIXEDDEPOSITPRODUCT": "Terminuoto indėlio produktas",
-        "RECURRINGDEPOSITPRODUCT": "Periodinio indėlio produktas"
+        "FIXEDDEPOSITACCOUNT": "Terminuoto indėlio sąskaita",
+        "RECURRINGDEPOSITPRODUCT": "Periodinio indėlio produktas",
+        "RECURRINGDEPOSITACCOUNT": "Periodinio indėlio sąskaita",
+        "ACCOUNTTRANSFER": "Sąskaitos pervedimas",
+        "SSBENEFICIARYTPT": "Gavėjai TPT Savitarna"
       }
     },
     "titles": {

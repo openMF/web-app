@@ -3661,7 +3661,14 @@
         "REOPEN": "Reopen",
         "WITHDRAW": "Withdraw",
         "DEPOSIT": "Deposit",
-        "TRANSFER": "Transfer"
+        "TRANSFER": "Transfer",
+        "POSTINTEREST": "Post Interest",
+        "CALCULATEINTEREST": "Calculate Interest",
+        "ASSIGNSTAFF": "Assign Staff",
+        "ACCEPTTRANSFER": "Accept Transfer",
+        "PROPOSETRANSFER": "Propose Transfer",
+        "REPAYMENT": "Repayment",
+        "DISBURSETOSAVINGS": "Disburse to Savings"
       },
       "entities": {
         "ROLE": "Role",
@@ -3690,7 +3697,11 @@
         "GUARANTOR": "Guarantor",
         "SHAREPRODUCT": "Share Product",
         "FIXEDDEPOSITPRODUCT": "Fixed Deposit Product",
-        "RECURRINGDEPOSITPRODUCT": "Recurring Deposit Product"
+        "FIXEDDEPOSITACCOUNT": "Fixed Deposit Account",
+        "RECURRINGDEPOSITPRODUCT": "Recurring Deposit Product",
+        "RECURRINGDEPOSITACCOUNT": "Recurring Deposit Account",
+        "ACCOUNTTRANSFER": "Account Transfer",
+        "SSBENEFICIARYTPT": "Self Service Beneficiaries TPT"
       }
     },
     "titles": {
