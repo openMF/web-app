@@ -24,6 +24,7 @@ import { CaptureImageDialogComponent } from './custom-dialogs/capture-image-dial
 
 /** Custom Services */
 import { ClientsService } from '../clients.service';
+import { LegalFormId } from '../models/legal-form.enum';
 import {
   MatCard,
   MatCardHeader,
@@ -144,9 +145,24 @@ export class ClientsViewComponent implements OnInit {
   constructor() {
     this.route.data.subscribe((data: { clientViewData: any; clientTemplateData: any; clientDatatables: any }) => {
       this.clientViewData = data.clientViewData;
-      this.clientDatatables = data.clientDatatables;
+      this.clientDatatables = this.filterDatatablesByClientSubtype(
+        data.clientDatatables,
+        data.clientViewData?.legalForm?.id
+      );
       this.clientTemplateData = data.clientTemplateData;
     });
+  }
+
+  /**
+   * Filters datatables based on the client's legal form (Person or Entity).
+   * Datatables without an entitySubType are kept visible for all client types.
+   */
+  private filterDatatablesByClientSubtype(datatables: any[], legalFormId: number): any[] {
+    if (!datatables || !legalFormId) {
+      return datatables || [];
+    }
+    const subtype = legalFormId === LegalFormId.PERSON ? 'person' : 'entity';
+    return datatables.filter((dt: any) => !dt.entitySubType || dt.entitySubType.toLowerCase() === subtype);
   }
 
   ngOnInit() {
