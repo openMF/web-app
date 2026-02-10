@@ -7,11 +7,13 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 
 /** Custom Service */
 import { SettingsService } from './settings.service';
-import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import {
   MatAccordion,
   MatExpansionPanel,
@@ -39,8 +41,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ThemePickerComponent
   ]
 })
-export class SettingsComponent implements OnInit {
+export class SettingsComponent implements OnInit, OnDestroy {
   private settingsService = inject(SettingsService);
+  private destroy$ = new Subject<void>();
 
   /** Placeholder for languages. update once translations are set up */
   languages: any[] = [
@@ -61,6 +64,28 @@ export class SettingsComponent implements OnInit {
     'MM-dd-yy',
     'yyyy-MM-dd'
   ];
+  datetimeFormats: string[] = [
+    // All date formats with HH:mm:ss (seconds)
+    'dd MMMM yyyy HH:mm:ss',
+    'dd/MMMM/yyyy HH:mm:ss',
+    'dd-MMMM-yyyy HH:mm:ss',
+    'dd-MM-yy HH:mm:ss',
+    'MMMM-dd-yyyy HH:mm:ss',
+    'MMMM dd yyyy HH:mm:ss',
+    'MMMM/dd/yyyy HH:mm:ss',
+    'MM-dd-yy HH:mm:ss',
+    'yyyy-MM-dd HH:mm:ss',
+    // All date formats with HH:mm (no seconds)
+    'dd MMMM yyyy HH:mm',
+    'dd/MMMM/yyyy HH:mm',
+    'dd-MMMM-yyyy HH:mm',
+    'dd-MM-yy HH:mm',
+    'MMMM-dd-yyyy HH:mm',
+    'MMMM dd yyyy HH:mm',
+    'MMMM/dd/yyyy HH:mm',
+    'MM-dd-yy HH:mm',
+    'yyyy-MM-dd HH:mm'
+  ];
   /** Decimals. */
   decimals: string[] = [
     '0',
@@ -77,15 +102,18 @@ export class SettingsComponent implements OnInit {
   fonts: any;
 
   /** Language Setting */
-  language = new UntypedFormControl('');
+  language = new FormControl('');
   /** Date Format Setting */
-  dateFormat = new UntypedFormControl('');
+  dateFormat = new FormControl('');
+  /** Datetime Format Setting */
+  datetimeFormat = new FormControl('');
   /** Decimals to Display Setting */
-  decimalsToDisplay = new UntypedFormControl('');
+  decimalsToDisplay = new FormControl('');
 
   ngOnInit() {
     this.language.patchValue(this.settingsService.language);
     this.dateFormat.patchValue(this.settingsService.dateFormat);
+    this.datetimeFormat.patchValue(this.settingsService.datetimeFormat);
     this.decimalsToDisplay.patchValue(this.settingsService.decimals);
     this.buildDependencies();
   }
@@ -94,15 +122,23 @@ export class SettingsComponent implements OnInit {
    * Subscribe to value changes.
    */
   buildDependencies() {
-    this.language.valueChanges.subscribe((language: any) => {
+    this.language.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((language: any) => {
       this.settingsService.setLanguage(language);
     });
-    this.dateFormat.valueChanges.subscribe((dateFormat: string) => {
+    this.dateFormat.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((dateFormat: string) => {
       this.settingsService.setDateFormat(dateFormat);
     });
-    this.decimalsToDisplay.valueChanges.subscribe((decimals: string) => {
+    this.datetimeFormat.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((datetimeFormat: string) => {
+      this.settingsService.setDatetimeFormat(datetimeFormat);
+    });
+    this.decimalsToDisplay.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((decimals: string) => {
       this.settingsService.setDecimalToDisplay(decimals);
     });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   /**

@@ -29,8 +29,19 @@ export class Dates {
   }
 
   public formatDateAsString(value: Date, dateFormat: string): string {
-    const momentFormat = dateFormat.replace(/y/g, 'Y').replace(/d/g, 'D').replace(/a/g, 'A');
+    const momentFormat = this.angularToMomentFormat(dateFormat);
     return moment(value).format(momentFormat);
+  }
+
+  public angularToMomentFormat(angularFormat: string): string {
+    return angularFormat.replace(/y/g, 'Y').replace(/d/g, 'D').replace(/a/g, 'A');
+  }
+
+  public getMomentLocale(language?: { code: string }): string {
+    const langCode = language?.code;
+    if (!langCode) return 'en';
+    if (langCode.includes('-')) return langCode.split('-')[0];
+    return langCode;
   }
 
   public parseDate(value: any): Date {
@@ -46,7 +57,7 @@ export class Dates {
   }
 
   public convertToDate(value: any, format: string): Date {
-    const momentFormat = format.replace(/y/g, 'Y').replace(/d/g, 'D').replace(/a/g, 'A');
+    const momentFormat = this.angularToMomentFormat(format);
     return moment(value, momentFormat).toDate();
   }
 

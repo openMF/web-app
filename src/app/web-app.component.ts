@@ -223,9 +223,6 @@ export class WebAppComponent implements OnInit, OnDestroy {
     if (!localStorage.getItem('mifosXLanguage')) {
       this.settingsService.setDefaultLanguage();
     }
-    if (!localStorage.getItem('mifosXDateFormat')) {
-      this.settingsService.setDateFormat('dd MMMM yyyy');
-    }
     // Set default max date picker as Today
     this.settingsService.setBusinessDate(this.dateUtils.formatDate(new Date(), SettingsService.businessDateFormat));
     // Set the server list from the env var FINERACT_API_URLS, but avoid overwriting "Add new server" user choice

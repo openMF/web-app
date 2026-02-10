@@ -32,6 +32,9 @@
 
   window['env']['supportedLanguages'] = '$MIFOS_SUPPORTED_LANGUAGES';
 
+  window['env']['defaultFormatDate'] = '$MIFOS_DEFAULT_FORMAT_DATE';
+  window['env']['defaultFormatDatetime'] = '$MIFOS_DEFAULT_FORMAT_DATETIME';
+
   window['env']['preloadClients'] = '$MIFOS_PRELOAD_CLIENTS';
 
   // Char delimiter to Export CSV options: ',' ';' '|' ' '
