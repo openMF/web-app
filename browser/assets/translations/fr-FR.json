@@ -3553,7 +3553,14 @@
         "REOPEN": "Rouvrir",
         "WITHDRAW": "Retirer",
         "DEPOSIT": "Déposer",
-        "TRANSFER": "Transférer"
+        "TRANSFER": "Transférer",
+        "POSTINTEREST": "Poster les intérêts",
+        "CALCULATEINTEREST": "Calculer les intérêts",
+        "ASSIGNSTAFF": "Affecter du personnel",
+        "ACCEPTTRANSFER": "Accepter le transfert",
+        "PROPOSETRANSFER": "Proposer un transfert",
+        "REPAYMENT": "Remboursement",
+        "DISBURSETOSAVINGS": "Décaissement vers épargne"
       },
       "entities": {
         "ROLE": "Rôle",
@@ -3582,7 +3589,11 @@
         "GUARANTOR": "Garant",
         "SHAREPRODUCT": "Produit d'actions",
         "FIXEDDEPOSITPRODUCT": "Produit de dépôt à terme",
-        "RECURRINGDEPOSITPRODUCT": "Produit de dépôt récurrent"
+        "FIXEDDEPOSITACCOUNT": "Compte de dépôt fixe",
+        "RECURRINGDEPOSITPRODUCT": "Produit de dépôt récurrent",
+        "RECURRINGDEPOSITACCOUNT": "Compte de dépôt récurrent",
+        "ACCOUNTTRANSFER": "Transfert de compte",
+        "SSBENEFICIARYTPT": "Bénéficiaires TPT Service Autoservice"
       }
     },
     "titles": {

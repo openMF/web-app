@@ -3550,7 +3550,14 @@
       "REOPEN": "Wiedereröffnen",
       "WITHDRAW": "Abheben",
       "DEPOSIT": "Einzahlen",
-      "TRANSFER": "Übertragen"
+      "TRANSFER": "Übertragen",
+      "POSTINTEREST": "Zinsen buchen",
+      "CALCULATEINTEREST": "Zinsen berechnen",
+      "ASSIGNSTAFF": "Personal zuweisen",
+      "ACCEPTTRANSFER": "Transfer akzeptieren",
+      "PROPOSETRANSFER": "Transfer vorschlagen",
+      "REPAYMENT": "Rückzahlung",
+      "DISBURSETOSAVINGS": "Auszahlung auf Sparkonto"
     },
     "entities": {
       "ROLE": "Rolle",
@@ -3579,7 +3586,11 @@
       "GUARANTOR": "Bürge",
       "SHAREPRODUCT": "Anteilsprodukt",
       "FIXEDDEPOSITPRODUCT": "Festgeldprodukt",
-      "RECURRINGDEPOSITPRODUCT": "Wiederkehrendes Einzahlungsprodukt"
+      "FIXEDDEPOSITACCOUNT": "Festgeldkonto",
+      "RECURRINGDEPOSITPRODUCT": "Wiederkehrendes Einzahlungsprodukt",
+      "RECURRINGDEPOSITACCOUNT": "Wiederkehrendes Einzahlungskonto",
+      "ACCOUNTTRANSFER": "Kontoübertragung",
+      "SSBENEFICIARYTPT": "Begünstigte TPT Selbstbedienung"
     }
   },
   "titles": {

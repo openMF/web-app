@@ -3549,7 +3549,14 @@
         "REOPEN": "पुन: खोल्नुहोस्",
         "WITHDRAW": "निकासी गर्नुहोस्",
         "DEPOSIT": "जम्मा गर्नुहोस्",
-        "TRANSFER": "सार्नुहोस्"
+        "TRANSFER": "सार्नुहोस्",
+        "POSTINTEREST": "ब्याज पोस्ट गर्नुहोस्",
+        "CALCULATEINTEREST": "ब्याज गणना गर्नुहोस्",
+        "ASSIGNSTAFF": "कर्मचारी तोक्नुहोस्",
+        "ACCEPTTRANSFER": "स्थानान्तरण स्वीकार गर्नुहोस्",
+        "PROPOSETRANSFER": "स्थानान्तरण प्रस्ताव गर्नुहोस्",
+        "REPAYMENT": "पुनर्भुक्तानी",
+        "DISBURSETOSAVINGS": "बचतमा वितरण गर्नुहोस्"
       },
       "entities": {
         "ROLE": "भूमिका",
@@ -3578,7 +3585,11 @@
         "GUARANTOR": "जामिन",
         "SHAREPRODUCT": "शेयर उत्पादन",
         "FIXEDDEPOSITPRODUCT": "स्थिर जम्मा उत्पादन",
-        "RECURRINGDEPOSITPRODUCT": "आवर्ती जम्मा उत्पादन"
+        "FIXEDDEPOSITACCOUNT": "स्थिर जम्मा खाता",
+        "RECURRINGDEPOSITPRODUCT": "आवर्ती जम्मा उत्पादन",
+        "RECURRINGDEPOSITACCOUNT": "आवर्ती जम्मा खाता",
+        "ACCOUNTTRANSFER": "खाता स्थानान्तरण",
+        "SSBENEFICIARYTPT": "स्व-सेवा लाभार्थी TPT"
       }
     },
     "titles": {

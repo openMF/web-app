@@ -3550,7 +3550,14 @@
       "REOPEN": "Znovu otevřít",
       "WITHDRAW": "Vybrat",
       "DEPOSIT": "Vložit",
-      "TRANSFER": "Převést"
+      "TRANSFER": "Převést",
+      "POSTINTEREST": "Zaúčtovat úrok",
+      "CALCULATEINTEREST": "Vypočítat úrok",
+      "ASSIGNSTAFF": "Přiřadit personál",
+      "ACCEPTTRANSFER": "Přijmout převod",
+      "PROPOSETRANSFER": "Navrhnout převod",
+      "REPAYMENT": "Splátka",
+      "DISBURSETOSAVINGS": "Vyplatit na účet úspor"
     },
     "entities": {
       "ROLE": "Role",
@@ -3579,7 +3586,11 @@
       "GUARANTOR": "Ručitel",
       "SHAREPRODUCT": "Produkt podílu",
       "FIXEDDEPOSITPRODUCT": "Produkt termínovaného vkladu",
-      "RECURRINGDEPOSITPRODUCT": "Produkt opakovaného vkladu"
+      "FIXEDDEPOSITACCOUNT": "Účet termínovaného vkladu",
+      "RECURRINGDEPOSITPRODUCT": "Produkt opakovaného vkladu",
+      "RECURRINGDEPOSITACCOUNT": "Účet opakovaného vkladu",
+      "ACCOUNTTRANSFER": "Převod účtu",
+      "SSBENEFICIARYTPT": "Příjemci TPT Samoobslužné Služby"
     }
   },
   "titles": {

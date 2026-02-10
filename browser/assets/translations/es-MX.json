@@ -3555,7 +3555,14 @@
         "REOPEN": "Reabrir",
         "WITHDRAW": "Retirar",
         "DEPOSIT": "Depositar",
-        "TRANSFER": "Transferir"
+        "TRANSFER": "Transferir",
+        "POSTINTEREST": "Publicar interés",
+        "CALCULATEINTEREST": "Calcular interés",
+        "ASSIGNSTAFF": "Asignar Asesor",
+        "ACCEPTTRANSFER": "Aceptar transferencia",
+        "PROPOSETRANSFER": "Proponer transferencia",
+        "REPAYMENT": "Reembolso",
+        "DISBURSETOSAVINGS": "Desembolsar a ahorros"
       },
       "entities": {
         "ROLE": "Rol",
@@ -3584,7 +3591,11 @@
         "GUARANTOR": "Garante",
         "SHAREPRODUCT": "Producto de acciones",
         "FIXEDDEPOSITPRODUCT": "Producto de depósito fijo",
-        "RECURRINGDEPOSITPRODUCT": "Producto de depósito recurrente"
+        "FIXEDDEPOSITACCOUNT": "Cuenta de depósito fijo",
+        "RECURRINGDEPOSITPRODUCT": "Producto de depósito recurrente",
+        "RECURRINGDEPOSITACCOUNT": "Cuenta de depósito recurrente",
+        "ACCOUNTTRANSFER": "Transferencia de cuenta",
+        "SSBENEFICIARYTPT": "Beneficiarios TPT Autoservicio"
       }
     },
     "titles": {

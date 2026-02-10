@@ -3551,7 +3551,14 @@
         "REOPEN": "다시 열기",
         "WITHDRAW": "인출",
         "DEPOSIT": "입금",
-        "TRANSFER": "이체"
+        "TRANSFER": "이체",
+        "POSTINTEREST": "이자 게시",
+        "CALCULATEINTEREST": "이자 계산",
+        "ASSIGNSTAFF": "직원 배정",
+        "ACCEPTTRANSFER": "이전 수락",
+        "PROPOSETRANSFER": "이전 제안",
+        "REPAYMENT": "상환",
+        "DISBURSETOSAVINGS": "저축으로 지급"
       },
       "entities": {
         "ROLE": "역할",
@@ -3580,7 +3587,11 @@
         "GUARANTOR": "보증인",
         "SHAREPRODUCT": "주식 상품",
         "FIXEDDEPOSITPRODUCT": "정기 예금 상품",
-        "RECURRINGDEPOSITPRODUCT": "적립 예금 상품"
+        "FIXEDDEPOSITACCOUNT": "정기 예금 계좌",
+        "RECURRINGDEPOSITPRODUCT": "적립 예금 상품",
+        "RECURRINGDEPOSITACCOUNT": "적립 예금 계좌",
+        "ACCOUNTTRANSFER": "계좌 이체",
+        "SSBENEFICIARYTPT": "셀프 서비스 수혜자 TPT"
       }
     },
     "titles": {

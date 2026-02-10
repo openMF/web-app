@@ -3551,7 +3551,14 @@
         "REOPEN": "Atvērt atkal",
         "WITHDRAW": "Izņemt",
         "DEPOSIT": "Iemaksāt",
-        "TRANSFER": "Pārsūtīt"
+        "TRANSFER": "Pārsūtīt",
+        "POSTINTEREST": "Iegrāmatot procentus",
+        "CALCULATEINTEREST": "Aprēķināt procentus",
+        "ASSIGNSTAFF": "Piešķirt personālu",
+        "ACCEPTTRANSFER": "Pieņemt pārskaitījumu",
+        "PROPOSETRANSFER": "Ierosināt pārskaitījumu",
+        "REPAYMENT": "Atmaksa",
+        "DISBURSETOSAVINGS": "Izmaksāt uz krājkontu"
       },
       "entities": {
         "ROLE": "Loma",
@@ -3580,7 +3587,11 @@
         "GUARANTOR": "Galvotājs",
         "SHAREPRODUCT": "Akciju produkts",
         "FIXEDDEPOSITPRODUCT": "Termiņnoguldījuma produkts",
-        "RECURRINGDEPOSITPRODUCT": "Periodiskā noguldījuma produkts"
+        "FIXEDDEPOSITACCOUNT": "Termiņnoguldījuma konts",
+        "RECURRINGDEPOSITPRODUCT": "Periodiskā noguldījuma produkts",
+        "RECURRINGDEPOSITACCOUNT": "Periodiskā noguldījuma konts",
+        "ACCOUNTTRANSFER": "Account Transfer",
+        "SSBENEFICIARYTPT": "Labuma Saņēmēji TPT Pašapkalpošanās"
       }
     },
     "titles": {
