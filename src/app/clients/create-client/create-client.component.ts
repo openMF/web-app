@@ -161,7 +161,9 @@ export class CreateClientComponent {
       this.clientDatatables.forEach((clientDatatable: ClientDatatableStepComponent) => {
         datatables.push(clientDatatable.payload);
       });
-      clientData['datatables'] = datatables;
+      if (datatables.length > 0) {
+        clientData['datatables'] = datatables;
+      }
     }
 
     this.clientsService.createClient(clientData).subscribe((response: any) => {
