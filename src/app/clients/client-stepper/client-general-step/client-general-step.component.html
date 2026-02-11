@@ -39,6 +39,12 @@
     <mat-form-field class="flex-fill flex-23">
       <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
       <input matInput formControlName="externalId" />
+      @if (externalIdLookupLoading) {
+        <mat-spinner matSuffix diameter="20"></mat-spinner>
+      }
+      @if (externalIdLookupError && externalIdLookupMessage) {
+        <mat-hint class="external-id-error">{{ externalIdLookupMessage | translate }}</mat-hint>
+      }
     </mat-form-field>
 
     @if (createClientForm.contains('fullname')) {
@@ -71,7 +77,7 @@
         @if (createClientForm.contains('firstname')) {
           <mat-form-field class="name-field first-name">
             <mat-label>{{ 'labels.inputs.First Name' | translate }}</mat-label>
-            <input matInput required formControlName="firstname" />
+            <input matInput required formControlName="firstname" [readonly]="externalIdFieldsDisabled" />
             @if (createClientForm.controls.firstname.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Client first name' | translate }} {{ 'labels.commons.is' | translate }}
@@ -90,7 +96,7 @@
         @if (createClientForm.contains('middlename')) {
           <mat-form-field class="name-field middle-name">
             <mat-label>{{ 'labels.inputs.Middle Name' | translate }}</mat-label>
-            <input matInput formControlName="middlename" />
+            <input matInput formControlName="middlename" [readonly]="externalIdFieldsDisabled" />
             @if (createClientForm.controls.middlename.hasError('pattern')) {
               <mat-error>
                 {{ 'labels.inputs.Client middle name' | translate }}
@@ -103,7 +109,7 @@
         @if (createClientForm.contains('lastname')) {
           <mat-form-field class="name-field last-name">
             <mat-label>{{ 'labels.inputs.Last Name' | translate }}</mat-label>
-            <input matInput required formControlName="lastname" />
+            <input matInput required formControlName="lastname" [readonly]="externalIdFieldsDisabled" />
             @if (createClientForm.controls.lastname.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Client last name' | translate }} {{ 'labels.commons.is' | translate }}
@@ -124,16 +130,26 @@
 
     <mat-divider></mat-divider>
 
-    <mat-form-field class="flex-48" (click)="dateOfBirthDatePicker.open()">
+    <mat-form-field class="flex-48" (click)="externalIdFieldsDisabled ? null : dateOfBirthDatePicker.open()">
       <mat-label>
         {{
           'labels.inputs.' + getDateLabel(createClientForm.value.legalFormId, ['Date of Birth', 'Incorporation Date'])
             | translate
         }}
       </mat-label>
-      <input matInput [max]="maxDate" [matDatepicker]="dateOfBirthDatePicker" formControlName="dateOfBirth" />
-      <mat-datepicker-toggle matSuffix [for]="dateOfBirthDatePicker"></mat-datepicker-toggle>
-      <mat-datepicker #dateOfBirthDatePicker></mat-datepicker>
+      <input
+        matInput
+        [max]="maxDate"
+        [matDatepicker]="dateOfBirthDatePicker"
+        formControlName="dateOfBirth"
+        [disabled]="externalIdFieldsDisabled"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="dateOfBirthDatePicker"
+        [disabled]="externalIdFieldsDisabled"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #dateOfBirthDatePicker [disabled]="externalIdFieldsDisabled"></mat-datepicker>
     </mat-form-field>
 
     @if (createClientForm.get('clientNonPersonDetails')) {
@@ -184,7 +200,7 @@
     @if (createClientForm.value.legalFormId === LegalFormId.PERSON) {
       <mat-form-field class="flex-48">
         <mat-label>{{ 'labels.inputs.Gender' | translate }}</mat-label>
-        <mat-select formControlName="genderId">
+        <mat-select formControlName="genderId" [disabled]="externalIdFieldsDisabled">
           @for (gender of genderOptions; track gender) {
             <mat-option [value]="gender.id">
               {{ gender.name }}

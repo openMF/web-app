@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LegalFormId } from 'app/clients/models/legal-form.enum';
 import {
@@ -17,15 +17,19 @@ import {
   UntypedFormControl,
   ReactiveFormsModule
 } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 /** Custom Services */
 import { ClientsService } from '../clients.service';
+import { ExternalNationalIdService, ExternalIdLookupState } from '../services/external-national-id.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatDivider } from '@angular/material/divider';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 /**
  * Edit Client Component
@@ -38,16 +42,21 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ...STANDALONE_SHARED_IMPORTS,
     MatDivider,
     CdkTextareaAutosize,
-    MatCheckbox
+    MatCheckbox,
+    MatProgressSpinner
   ]
 })
-export class EditClientComponent implements OnInit {
+export class EditClientComponent implements OnInit, OnDestroy {
   private formBuilder = inject(UntypedFormBuilder);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private clientsService = inject(ClientsService);
   private dateUtils = inject(Dates);
   private settingsService = inject(SettingsService);
+  private externalNationalIdService = inject(ExternalNationalIdService);
+
+  /** Subject to trigger unsubscription on destroy */
+  private destroy$ = new Subject<void>();
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -79,6 +88,17 @@ export class EditClientComponent implements OnInit {
 
   /** Expose enum to template */
   readonly LegalFormId = LegalFormId;
+
+  /** External National ID System */
+  externalNationalIdEnabled: boolean = this.externalNationalIdService.enabled;
+  /** Whether fields are locked due to external ID lookup */
+  externalIdFieldsDisabled = false;
+  /** Whether an external ID lookup is in progress */
+  externalIdLookupLoading = false;
+  /** Message from external ID lookup (e.g., not found, invalid) */
+  externalIdLookupMessage = '';
+  /** Whether the lookup result is an error */
+  externalIdLookupError = false;
 
   /**
    * Fetches client template data from `resolve`
@@ -125,6 +145,27 @@ export class EditClientComponent implements OnInit {
     });
     if (this.clientDataAndTemplate.legalForm) {
       this.legalFormId = this.clientDataAndTemplate.legalForm.id;
+    }
+
+    // Set up external National ID lookup after form is populated
+    if (this.externalNationalIdEnabled) {
+      this.externalNationalIdService.watchExternalId(
+        this.editClientForm,
+        this.destroy$,
+        (state: ExternalIdLookupState) => {
+          this.externalIdLookupLoading = state.loading;
+          this.externalIdLookupMessage = state.message;
+          this.externalIdLookupError = state.error;
+          this.externalIdFieldsDisabled = state.fieldsDisabled;
+        }
+      );
+      // If the client already has an external ID that matches the regex, lock the fields
+      if (
+        this.clientDataAndTemplate.externalId &&
+        this.externalNationalIdService.isValidExternalId(this.clientDataAndTemplate.externalId)
+      ) {
+        this.externalIdFieldsDisabled = true;
+      }
     }
   }
 
@@ -175,49 +216,52 @@ export class EditClientComponent implements OnInit {
    * Adds controls conditionally.
    */
   buildDependencies() {
-    this.editClientForm.get('legalFormId').valueChanges.subscribe((legalFormId: any) => {
-      if (legalFormId === LegalFormId.PERSON) {
-        this.editClientForm.removeControl('fullname');
-        this.editClientForm.removeControl('clientNonPersonDetails');
-        this.editClientForm.addControl(
-          'firstname',
-          new UntypedFormControl(this.clientDataAndTemplate.firstname, Validators.required)
-        );
-        this.editClientForm.addControl('middlename', new UntypedFormControl(this.clientDataAndTemplate.middlename));
-        this.editClientForm.addControl(
-          'lastname',
-          new UntypedFormControl(this.clientDataAndTemplate.lastname, Validators.required)
-        );
-      } else {
-        this.editClientForm.removeControl('firstname');
-        this.editClientForm.removeControl('middlename');
-        this.editClientForm.removeControl('lastname');
-        this.editClientForm.addControl(
-          'fullname',
-          new UntypedFormControl(this.clientDataAndTemplate.fullname, Validators.required)
-        );
-        this.editClientForm.addControl(
-          'clientNonPersonDetails',
-          this.formBuilder.group({
-            constitutionId: [
-              this.clientDataAndTemplate.clientNonPersonDetails.constitution &&
-                this.clientDataAndTemplate.clientNonPersonDetails.constitution.id,
-              Validators.required
-            ],
-            incorpValidityTillDate: [
-              this.clientDataAndTemplate.clientNonPersonDetails.incorpValidityTillDate &&
-                new Date(this.clientDataAndTemplate.clientNonPersonDetails.incorpValidityTillDate)
-            ],
-            incorpNumber: [this.clientDataAndTemplate.clientNonPersonDetails.incorpNumber],
-            mainBusinessLineId: [
-              this.clientDataAndTemplate.clientNonPersonDetails.mainBusinessLine &&
-                this.clientDataAndTemplate.clientNonPersonDetails.mainBusinessLine.id
-            ],
-            remarks: [this.clientDataAndTemplate.clientNonPersonDetails.remarks]
-          })
-        );
-      }
-    });
+    this.editClientForm
+      .get('legalFormId')
+      .valueChanges.pipe(takeUntil(this.destroy$))
+      .subscribe((legalFormId: any) => {
+        if (legalFormId === LegalFormId.PERSON) {
+          this.editClientForm.removeControl('fullname');
+          this.editClientForm.removeControl('clientNonPersonDetails');
+          this.editClientForm.addControl(
+            'firstname',
+            new UntypedFormControl(this.clientDataAndTemplate.firstname, Validators.required)
+          );
+          this.editClientForm.addControl('middlename', new UntypedFormControl(this.clientDataAndTemplate.middlename));
+          this.editClientForm.addControl(
+            'lastname',
+            new UntypedFormControl(this.clientDataAndTemplate.lastname, Validators.required)
+          );
+        } else {
+          this.editClientForm.removeControl('firstname');
+          this.editClientForm.removeControl('middlename');
+          this.editClientForm.removeControl('lastname');
+          this.editClientForm.addControl(
+            'fullname',
+            new UntypedFormControl(this.clientDataAndTemplate.fullname, Validators.required)
+          );
+          this.editClientForm.addControl(
+            'clientNonPersonDetails',
+            this.formBuilder.group({
+              constitutionId: [
+                this.clientDataAndTemplate.clientNonPersonDetails.constitution &&
+                  this.clientDataAndTemplate.clientNonPersonDetails.constitution.id,
+                Validators.required
+              ],
+              incorpValidityTillDate: [
+                this.clientDataAndTemplate.clientNonPersonDetails.incorpValidityTillDate &&
+                  new Date(this.clientDataAndTemplate.clientNonPersonDetails.incorpValidityTillDate)
+              ],
+              incorpNumber: [this.clientDataAndTemplate.clientNonPersonDetails.incorpNumber],
+              mainBusinessLineId: [
+                this.clientDataAndTemplate.clientNonPersonDetails.mainBusinessLine &&
+                  this.clientDataAndTemplate.clientNonPersonDetails.mainBusinessLine.id
+              ],
+              remarks: [this.clientDataAndTemplate.clientNonPersonDetails.remarks]
+            })
+          );
+        }
+      });
   }
 
   getDateLabel(legalFormId: number, values: string[]): string {
@@ -258,5 +302,10 @@ export class EditClientComponent implements OnInit {
     this.clientsService.updateClient(this.clientDataAndTemplate.id, clientData).subscribe(() => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

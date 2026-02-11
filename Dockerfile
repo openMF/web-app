@@ -41,9 +41,15 @@ RUN sh -c "ng build --output-path=/dist $BUILD_ENVIRONMENT_OPTIONS"
 ###############
 FROM $NGINX_IMAGE
 
+COPY nginx.conf.template /etc/nginx/templates/default.conf.template
 COPY --from=builder /dist/browser /usr/share/nginx/html
 
 EXPOSE 80
 
-# When the container starts, replace the env.js with values from environment variables
-CMD ["/bin/sh",  "-c",  "envsubst < /usr/share/nginx/html/assets/env.template.js > /usr/share/nginx/html/assets/env.js && exec nginx -g 'daemon off;'"]
+# Default value for the external National ID API URL (override via docker-compose/k8s)
+ENV EXTERNAL_NATIONALID_API_URL=https://apis.mifos.community/1.0/nationalid
+
+# When the container starts:
+# 1. Replace env.js with values from environment variables
+# 2. Process the nginx config template with envsubst
+CMD ["/bin/sh",  "-c",  "envsubst < /usr/share/nginx/html/assets/env.template.js > /usr/share/nginx/html/assets/env.js && envsubst '${EXTERNAL_NATIONALID_API_URL}' < /etc/nginx/templates/default.conf.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"]

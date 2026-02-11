@@ -43,6 +43,29 @@ const proxyConfig = [
         res.end('Proxy error: ' + (err && err.message ? err.message : 'Unknown error'));
       }
     }
+  },
+  /**
+   * External National ID API proxy.
+   * Avoids CORS issues when calling the external Gravitee API gateway.
+   * Requests to /external-nationalid are forwarded to the configured external API.
+   */
+  {
+    context: ['/external-nationalid'],
+    target: 'https://apis.mifos.community',
+    pathRewrite: { '^/external-nationalid': '/1.0/nationalid' },
+    changeOrigin: true,
+    secure: true,
+    logLevel: 'debug',
+    onProxyReq: function (proxyReq, req, res) {
+      console.log('[Proxy] External National ID:', req.method, req.url, '->', this.target + '/1.0/nationalid');
+    },
+    onError: function (err, req, res) {
+      console.error('[Proxy] External National ID error:', err && err.message);
+      if (res && !res.headersSent) {
+        res.writeHead(502, { 'Content-Type': 'text/plain' });
+        res.end('External National ID proxy error: ' + (err && err.message ? err.message : 'Unknown error'));
+      }
+    }
   }
   // For local development use `proxy.localhost.conf js` .
 ];

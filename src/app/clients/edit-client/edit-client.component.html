@@ -58,6 +58,12 @@
               [placeholder]="'labels.inputs.External Id' | translate"
               [title]="'labels.inputs.External Id' | translate"
             />
+            @if (externalIdLookupLoading) {
+              <mat-spinner matSuffix diameter="20"></mat-spinner>
+            }
+            @if (externalIdLookupError && externalIdLookupMessage) {
+              <mat-hint class="external-id-error">{{ externalIdLookupMessage | translate }}</mat-hint>
+            }
           </mat-form-field>
         </div>
 
@@ -93,6 +99,7 @@
                 formControlName="firstname"
                 [placeholder]="'labels.inputs.First Name' | translate"
                 [title]="'labels.inputs.First Name' | translate"
+                [readonly]="externalIdFieldsDisabled"
               />
               @if (editClientForm.controls.firstname.hasError('required')) {
                 <mat-error>
@@ -111,6 +118,7 @@
                 formControlName="middlename"
                 [placeholder]="'labels.inputs.Middle Name' | translate"
                 [title]="'labels.inputs.Middle Name' | translate"
+                [readonly]="externalIdFieldsDisabled"
               />
             </mat-form-field>
           }
@@ -124,6 +132,7 @@
                 formControlName="lastname"
                 [placeholder]="'labels.inputs.Last Name' | translate"
                 [title]="'labels.inputs.Last Name' | translate"
+                [readonly]="externalIdFieldsDisabled"
               />
               @if (editClientForm.controls.lastname.hasError('required')) {
                 <mat-error>
@@ -139,7 +148,7 @@
 
         <!-- Date of Birth and Gender Row -->
         <div class="responsive-row">
-          <mat-form-field class="flex-48" (click)="dateOfBirthDatePicker.open()">
+          <mat-form-field class="flex-48" (click)="externalIdFieldsDisabled ? null : dateOfBirthDatePicker.open()">
             <mat-label>{{
               'labels.inputs.' + getDateLabel(legalFormId, ['Date of Birth', 'Incorporation Date']) | translate
             }}</mat-label>
@@ -154,15 +163,20 @@
               [title]="
                 'labels.inputs.' + getDateLabel(legalFormId, ['Date of Birth', 'Incorporation Date']) | translate
               "
+              [disabled]="externalIdFieldsDisabled"
             />
-            <mat-datepicker-toggle matSuffix [for]="dateOfBirthDatePicker"></mat-datepicker-toggle>
-            <mat-datepicker #dateOfBirthDatePicker></mat-datepicker>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="dateOfBirthDatePicker"
+              [disabled]="externalIdFieldsDisabled"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #dateOfBirthDatePicker [disabled]="externalIdFieldsDisabled"></mat-datepicker>
           </mat-form-field>
 
           @if (legalFormId === LegalFormId.PERSON) {
             <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Gender' | translate }}</mat-label>
-              <mat-select formControlName="genderId">
+              <mat-select formControlName="genderId" [disabled]="externalIdFieldsDisabled">
                 @for (gender of genderOptions; track gender) {
                   <mat-option [value]="gender.id">
                     {{ gender.name }}

@@ -98,4 +98,13 @@
   window['env']['oidcApiUrl']        = '';
   window['env']['oidcFrontUrl']      = '';
 
+  // External National ID System Integration
+  // URL uses relative path '/external-nationalid' to go through the dev proxy and avoid CORS.
+  // The proxy rewrites this to https://apis.mifos.community/1.0/nationalid
+  window['env']['enableExternalNationalIdSystem'] = 'true';
+  window['env']['externalNationalIdSystemUrl'] = '/external-nationalid';
+  window['env']['externalNationalIdSystemApiHeader'] = 'X-Gravitee-Api-Key';
+  window['env']['externalNationalIdSystemApiKey'] = 'e115a927-35f7-4dfc-a285-b040dfd7f625';
+  window['env']['externalNationalIdRegex'] = '^([A-Z][AEIOUX][A-Z]{2}\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])[HM][A-Z]{2}[B-DF-HJ-NP-TV-Z]{3}[A-Z\\d])(\\d)$';
+
 })(this);

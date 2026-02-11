@@ -132,3 +132,8 @@ mat-checkbox {
     }
   }
 }
+
+.external-id-error {
+  color: var(--mdc-theme-error, #f44336) !important;
+  font-size: 12px;
+}

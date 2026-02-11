@@ -111,6 +111,22 @@ export const environment = {
     oidcClientId: loadedEnv['oidcClientId'] || loadedEnv['FINERACT_PLUGIN_OIDC_CLIENT_ID'] || '',
     oidcApiUrl: loadedEnv['oidcApiUrl'] || loadedEnv['FINERACT_PLUGIN_OIDC_API_URL'] || '',
     oidcFrontUrl: loadedEnv['oidcFrontUrl'] || loadedEnv['FINERACT_PLUGIN_OIDC_FRONTEND_URL'] || ''
+  },
+
+  /**
+   * External National ID System Integration
+   * When enabled, client creation/editing can auto-fill fields from an external National ID API
+   * Set via ENABLE_EXTERNAL_NATIONAL_ID_SYSTEM env var
+   */
+  externalNationalId: {
+    enabled:
+      loadedEnv['enableExternalNationalIdSystem'] === 'true' ||
+      loadedEnv['enableExternalNationalIdSystem'] === true ||
+      false,
+    url: loadedEnv['externalNationalIdSystemUrl'] || '',
+    apiHeader: loadedEnv['externalNationalIdSystemApiHeader'] || '',
+    apiKey: loadedEnv['externalNationalIdSystemApiKey'] || '',
+    regex: loadedEnv['externalNationalIdRegex'] || ''
   }
 };
 

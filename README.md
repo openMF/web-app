@@ -313,6 +313,23 @@ Available languages:
 | FINERACT_PLUGIN_OIDC_API_URL      | Set the Client API URL         |               |
 | FINERACT_PLUGIN_OIDC_FRONTEND_URL | Set the Front End URL callback |               |
 
+#### External National ID System Settings
+
+| Variable                               | Description                                                                | Default Value                               |
+| -------------------------------------- | -------------------------------------------------------------------------- | ------------------------------------------- |
+| ENABLE_EXTERNAL_NATIONAL_ID_SYSTEM     | Enable external National ID system integration for client creation/editing | false                                       |
+| EXTERNAL_NATIONAL_ID_SYSTEM_URL        | External National ID System API URL                                        | https://apis.mifos.community/1.0/nationalid |
+| EXTERNAL_NATIONAL_ID_SYSTEM_API_HEADER | API header name for authentication                                         | X-Gravitee-Api-Key                          |
+| EXTERNAL_NATIONAL_ID_SYSTEM_API_KEY    | API key value for authentication                                           |                                             |
+| EXTERNAL_NATIONAL_ID_REGEX             | Regex pattern to validate external IDs before calling the API              |                                             |
+
+When `ENABLE_EXTERNAL_NATIONAL_ID_SYSTEM=true`, the client creation and editing forms will:
+
+- Show an **External Id** field where users type a National ID
+- Validate the ID against `EXTERNAL_NATIONAL_ID_REGEX`
+- Call the external API at `EXTERNAL_NATIONAL_ID_SYSTEM_URL` when the ID matches the regex
+- Auto-fill and disable **First Name**, **Middle Name**, **Last Name**, **Date of Birth**, and **Gender** fields with data from the API response
+
 For more detailed configuration options, refer to the `env.sample` file in the root directory of the project.
 
 ### Client Data Masking Example

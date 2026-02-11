@@ -18,6 +18,7 @@ import {
 import { Subject } from 'rxjs';
 import { filter, switchMap, takeUntil } from 'rxjs/operators';
 import { ClientsService } from 'app/clients/clients.service';
+import { ExternalNationalIdService, ExternalIdLookupState } from 'app/clients/services/external-national-id.service';
 import { Dates } from 'app/core/utils/dates';
 import { LegalFormId } from 'app/clients/models/legal-form.enum';
 
@@ -29,6 +30,7 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 /**
  * Create Client Component
@@ -44,7 +46,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatCheckbox,
     MatStepperPrevious,
     FaIconComponent,
-    MatStepperNext
+    MatStepperNext,
+    MatProgressSpinner
   ]
 })
 export class ClientGeneralStepComponent implements OnInit, OnDestroy {
@@ -52,6 +55,7 @@ export class ClientGeneralStepComponent implements OnInit, OnDestroy {
   private dateUtils = inject(Dates);
   private settingsService = inject(SettingsService);
   private clientService = inject(ClientsService);
+  private externalNationalIdService = inject(ExternalNationalIdService);
 
   /** Subject to trigger unsubscription on destroy */
   private destroy$ = new Subject<void>();
@@ -89,6 +93,17 @@ export class ClientGeneralStepComponent implements OnInit, OnDestroy {
   genderOptions: any;
   /** Saving Product Options */
   savingProductOptions: any;
+
+  /** External National ID System */
+  externalNationalIdEnabled: boolean = this.externalNationalIdService.enabled;
+  /** Whether fields are locked due to external ID lookup */
+  externalIdFieldsDisabled = false;
+  /** Whether an external ID lookup is in progress */
+  externalIdLookupLoading = false;
+  /** Message from external ID lookup (e.g., not found, invalid) */
+  externalIdLookupMessage = '';
+  /** Whether the lookup result is an error */
+  externalIdLookupError = false;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
@@ -240,6 +255,20 @@ export class ClientGeneralStepComponent implements OnInit, OnDestroy {
       .subscribe((clientTemplate: any) => {
         this.staffOptions = clientTemplate.staffOptions;
       });
+
+    // External National ID System: watch externalId changes
+    if (this.externalNationalIdEnabled) {
+      this.externalNationalIdService.watchExternalId(
+        this.createClientForm,
+        this.destroy$,
+        (state: ExternalIdLookupState) => {
+          this.externalIdLookupLoading = state.loading;
+          this.externalIdLookupMessage = state.message;
+          this.externalIdLookupError = state.error;
+          this.externalIdFieldsDisabled = state.fieldsDisabled;
+        }
+      );
+    }
   }
 
   ngOnDestroy() {

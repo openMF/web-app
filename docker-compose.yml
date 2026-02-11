@@ -27,3 +27,9 @@ services:
       - MIFOS_DEFAULT_CHAR_DELIMITER=,
       # Production mode - set to true for minimal hero with only branding
       - MIFOS_PRODUCTION_MODE=false
+      # External National ID System Integration (disabled by default)
+      - ENABLE_EXTERNAL_NATIONAL_ID_SYSTEM=false
+      - EXTERNAL_NATIONAL_ID_SYSTEM_URL=/external-nationalid
+      - EXTERNAL_NATIONAL_ID_SYSTEM_API_HEADER=X-Gravitee-Api-Key
+      - EXTERNAL_NATIONAL_ID_SYSTEM_API_KEY=
+      - EXTERNAL_NATIONAL_ID_REGEX=^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM][A-Z]{2}[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$$

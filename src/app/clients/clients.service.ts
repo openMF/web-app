@@ -8,7 +8,8 @@
 
 /** Angular Imports */
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpBackend } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 /** rxjs Imports */
 import { Observable, of, throwError } from 'rxjs';
@@ -22,6 +23,9 @@ import { map, catchError } from 'rxjs/operators';
 })
 export class ClientsService {
   private http = inject(HttpClient);
+  /** Raw HttpClient that bypasses interceptors (no auth/tenant headers added) */
+  private httpBackend = inject(HttpBackend);
+  private externalHttp = new HttpClient(this.httpBackend);
 
   getFilteredClients(
     orderBy: string,
@@ -64,6 +68,19 @@ export class ClientsService {
 
   createClient(client: any) {
     return this.http.post(`/clients`, client);
+  }
+
+  /**
+   * Lookup external National ID from an external system.
+   * @param externalId The national ID to look up
+   * @returns Observable with the external ID lookup response
+   */
+  lookupExternalNationalId(externalId: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      [environment.externalNationalId.apiHeader]: environment.externalNationalId.apiKey
+    });
+    return this.externalHttp.post(environment.externalNationalId.url, { externalId }, { headers });
   }
 
   updateClient(clientId: string, client: any) {

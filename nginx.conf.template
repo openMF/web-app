@@ -1,0 +1,34 @@
+server {
+    listen 80;
+    server_name _;
+
+    root /usr/share/nginx/html;
+    index index.html;
+
+    # Serve the Angular SPA
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # Reverse proxy for External National ID API
+    # Avoids CORS issues by routing through the same origin
+    location /external-nationalid {
+        # Use Docker DNS resolver for upstream resolution
+        resolver 127.0.0.11 valid=30s;
+
+        # Read target from env var at runtime (set via envsubst on container start)
+        # Default: https://apis.mifos.community/1.0/nationalid
+        set $external_nationalid_target "${EXTERNAL_NATIONALID_API_URL}";
+
+        proxy_pass $external_nationalid_target;
+        proxy_set_header Host $proxy_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # Pass through the original headers from the client
+        proxy_pass_request_headers on;
+
+        # CORS is not needed since requests come from the same origin
+    }
+}

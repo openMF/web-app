@@ -109,4 +109,11 @@
   window['env']['oidcClientId'] = '$FINERACT_PLUGIN_OIDC_CLIENT_ID';
   window['env']['oidcApiUrl'] = '$FINERACT_PLUGIN_OIDC_API_URL';
   window['env']['oidcFrontUrl'] = '$FINERACT_PLUGIN_OIDC_FRONTEND_URL';
+
+  // External National ID System Integration
+  window['env']['enableExternalNationalIdSystem'] = '$ENABLE_EXTERNAL_NATIONAL_ID_SYSTEM';
+  window['env']['externalNationalIdSystemUrl'] = '$EXTERNAL_NATIONAL_ID_SYSTEM_URL';
+  window['env']['externalNationalIdSystemApiHeader'] = '$EXTERNAL_NATIONAL_ID_SYSTEM_API_HEADER';
+  window['env']['externalNationalIdSystemApiKey'] = '$EXTERNAL_NATIONAL_ID_SYSTEM_API_KEY';
+  window['env']['externalNationalIdRegex'] = '$EXTERNAL_NATIONAL_ID_REGEX';
 })(this);
