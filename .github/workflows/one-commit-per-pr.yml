@@ -1,0 +1,23 @@
+name: Enforce one commit per pull request
+
+on:
+  pull_request:
+
+jobs:
+  one-commit-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - run: |
+          git fetch origin ${{ github.base_ref }}
+          COUNT=$(git rev-list --count origin/${{ github.base_ref }}..HEAD)
+          echo "Commit count: $COUNT"
+
+          if [ "$COUNT" -ne 1 ]; then
+            echo "Pull requests must contain exactly one commit."
+            exit 1
+          fi
