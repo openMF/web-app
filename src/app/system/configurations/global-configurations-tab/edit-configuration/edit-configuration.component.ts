@@ -78,7 +78,10 @@ export class EditConfigurationComponent implements OnInit {
         Validators.required
       ],
       description: [{ value: this.configuration.description, disabled: true }],
-      value: [this.configuration.value],
+      value: [
+        this.configuration.value,
+        [Validators.min(0)]
+      ],
       stringValue: [this.configuration.stringValue],
       dateValue: [this.configuration.dateValue]
     });
