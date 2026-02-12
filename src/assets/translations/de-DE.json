@@ -1298,6 +1298,11 @@
       "Pending Tasks": "Ausstehende Aufgaben"
     },
     "inputs": {
+      "Floating rate": "Variabler Zinssatz",
+      "Differential rate": "Differenzzinssatz",
+      "Minimum interest rate": "Mindestzinssatz",
+      "Interest rate": "Zinssatz",
+      "Maximum interest rate": "Höchstzinssatz",
       "Terms": "Bedingungen",
       "Settings": "Einstellungen",
       "accounting": {

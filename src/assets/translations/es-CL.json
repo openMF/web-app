@@ -1298,6 +1298,11 @@
       "Pending Tasks": "Pending Tasks"
     },
     "inputs": {
+      "Floating rate": "Tasa flotante",
+      "Differential rate": "Tasa diferencial",
+      "Minimum interest rate": "Tasa de interés mínima",
+      "Interest rate": "Tasa de interés",
+      "Maximum interest rate": "Tasa de interés máxima",
       "Terms": "Términos",
       "Settings": "Configuración",
       "accounting": {

@@ -1297,6 +1297,11 @@
       "Pending Tasks": "Tarefas Pendentes"
     },
     "inputs": {
+      "Floating rate": "Taxa flutuante",
+      "Differential rate": "Taxa diferencial",
+      "Minimum interest rate": "Taxa de juro mínima",
+      "Interest rate": "Taxa de juro",
+      "Maximum interest rate": "Taxa de juro máxima",
       "Terms": "Termos",
       "Settings": "Configurações",
       "accounting": {

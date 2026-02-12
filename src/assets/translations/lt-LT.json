@@ -1296,6 +1296,11 @@
       "Pending Tasks": "Laukiamos užduotys"
     },
     "inputs": {
+      "Floating rate": "Slankioji norma",
+      "Differential rate": "Diferencinis tarifas",
+      "Minimum interest rate": "Minimali palūkanų norma",
+      "Interest rate": "Palūkanų norma",
+      "Maximum interest rate": "Maksimali palūkanų norma",
       "Terms": "Sąlygos",
       "Settings": "Nustatymai",
       "accounting": {
