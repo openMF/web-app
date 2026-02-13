@@ -47,7 +47,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     LoansAccountScheduleStepComponent,
     LoansAccountDatatableStepComponent,
     LoansAccountPreviewStepComponent
-  ]
+  ],
+  providers: [I18nService]
 })
 export class CreateGlimAccountComponent {
   private route = inject(ActivatedRoute);

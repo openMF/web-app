@@ -199,7 +199,7 @@ export class LoansAccountDetailsStepComponent implements OnInit, OnDestroy {
         this.loanOfficerOptions = response.loanOfficerOptions;
         this.loanPurposeOptions = response.loanPurposeOptions;
         this.fundOptions = response.fundOptions;
-        this.accountLinkingOptions = response.accountLinkingOptions;
+        this.accountLinkingOptions = (response.accountLinkingOptions ?? []).filter((acc: any) => !acc.clientId);
         this.loanProductSelected = true;
         if (response.createStandingInstructionAtDisbursement) {
           this.loansAccountDetailsForm
