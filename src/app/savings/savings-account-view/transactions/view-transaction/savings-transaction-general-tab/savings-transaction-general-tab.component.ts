@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 import { ReleaseAmountDialogComponent } from 'app/savings/savings-account-view/custom-dialogs/release-amount-dialog/release-amount-dialog.component';
 import { UndoTransactionDialogComponent } from 'app/savings/savings-account-view/custom-dialogs/undo-transaction-dialog/undo-transaction-dialog.component';
-import { SavingsService } from 'app/savings/savings.service';
+import { PostSavingsAccountBulkReversalTransactionsRequest, SavingsAccountTransactionsService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { NgIf, NgClass, CurrencyPipe } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -31,7 +31,7 @@ export class SavingsTransactionGeneralTabComponent {
   transactionData: any;
 
   constructor(
-    private savingsService: SavingsService,
+    private savingsAccountTransactionsService: SavingsAccountTransactionsService,
     private route: ActivatedRoute,
     private dateUtils: Dates,
     private router: Router,
@@ -55,12 +55,17 @@ export class SavingsTransactionGeneralTabComponent {
     const releaseAmountDialogRef = this.dialog.open(ReleaseAmountDialogComponent);
     releaseAmountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        const data = {};
-        this.savingsService
-          .executeSavingsAccountTransactionsCommand(this.accountId, 'releaseAmount', data, this.transactionData.id)
-          .subscribe(() => {
-            this.router.navigate(['../..'], { relativeTo: this.route });
-          });
+        const data = {} as PostSavingsAccountBulkReversalTransactionsRequest;
+        const requestParams = {
+          savingsId: parseInt(this.accountId),
+          transactionId: parseInt(this.transactionData.id),
+          postSavingsAccountBulkReversalTransactionsRequest: data,
+          command: 'releaseAmount'
+        };
+
+        this.savingsAccountTransactionsService.adjustTransaction1(requestParams).subscribe(() => {
+          this.router.navigate(['../..'], { relativeTo: this.route });
+        });
       }
     });
   }
@@ -79,12 +84,17 @@ export class SavingsTransactionGeneralTabComponent {
           transactionAmount: 0,
           dateFormat,
           locale
+        } as PostSavingsAccountBulkReversalTransactionsRequest;
+        const requestParams = {
+          savingsId: parseInt(this.accountId),
+          transactionId: parseInt(this.transactionData.id),
+          postSavingsAccountBulkReversalTransactionsRequest: data,
+          command: 'undo'
         };
-        this.savingsService
-          .executeSavingsAccountTransactionsCommand(this.accountId, 'undo', data, this.transactionData.id)
-          .subscribe(() => {
-            this.router.navigate(['../..'], { relativeTo: this.route });
-          });
+
+        this.savingsAccountTransactionsService.adjustTransaction1(requestParams).subscribe(() => {
+          this.router.navigate(['../..'], { relativeTo: this.route });
+        });
       }
     });
   }

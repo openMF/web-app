@@ -24,6 +24,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
  */
 @Component({
   selector: 'mifosx-client-trends-bar',
+  standalone: true,
   templateUrl: './client-trends-bar.component.html',
   styleUrls: ['./client-trends-bar.component.scss'],
   imports: [

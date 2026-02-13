@@ -14,7 +14,7 @@ import { FixedDepositsButtonsConfiguration } from './fixed-deposits-buttons.conf
 
 /** Custom Services */
 import { FixedDepositsService } from '../fixed-deposits.service';
-import { SavingsService } from 'app/savings/savings.service';
+import { SavingsAccountService } from '@fineract/client';
 import { Currency } from 'app/shared/models/general.model';
 import {
   MatCard,
@@ -83,14 +83,14 @@ export class FixedDepositAccountViewComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {FixedDepositsService} fixedDepositsService Fixed Deposits Service
-   * @param {SavingsService} savingsService Savings Service
+   * @param {SavingsAccountService} savingsAccountService Savings Account Service
    * @param {MatDialog} dialog Mat Dialog
    */
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private fixedDepositsService: FixedDepositsService,
-    private savingsService: SavingsService,
+    private savingsAccountService: SavingsAccountService,
     public dialog: MatDialog
   ) {
     this.route.data.subscribe((data: { fixedDepositsAccountData: any; savingsDatatables: any }) => {
@@ -240,9 +240,13 @@ export class FixedDepositAccountViewComponent implements OnInit {
     });
     deleteSavingsAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService
-          .executeSavingsAccountUpdateCommand(this.fixedDepositsAccountData.id, 'updateWithHoldTax', {
-            withHoldTax: true
+        this.savingsAccountService
+          .update20({
+            accountId: this.fixedDepositsAccountData.id,
+            command: 'updateWithHoldTax',
+            putSavingsAccountsAccountIdRequest: {
+              withHoldTax: true
+            } as any
           })
           .subscribe(() => {
             this.reload();
@@ -261,9 +265,13 @@ export class FixedDepositAccountViewComponent implements OnInit {
     });
     disableWithHoldTaxDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService
-          .executeSavingsAccountUpdateCommand(this.fixedDepositsAccountData.id, 'updateWithHoldTax', {
-            withHoldTax: false
+        this.savingsAccountService
+          .update20({
+            accountId: this.fixedDepositsAccountData.id,
+            command: 'updateWithHoldTax',
+            putSavingsAccountsAccountIdRequest: {
+              withHoldTax: false
+            } as any
           })
           .subscribe(() => {
             this.reload();

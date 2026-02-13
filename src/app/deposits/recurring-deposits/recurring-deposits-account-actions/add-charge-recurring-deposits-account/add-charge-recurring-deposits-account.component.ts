@@ -11,7 +11,7 @@ import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
-import { SavingsService } from 'app/savings/savings.service';
+import { ChargesService, SavingsAccountService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -47,14 +47,17 @@ export class AddChargeRecurringDepositsAccountComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {Dates} dateUtils Date Utils
-   * @param {SavingsService} savingsService Savings Service
+   * @param {ChargesService} chargesService Charges Service
+   * @param {SavingsAccountService} SavingsAccountService Saving acccount service
+   *
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
-    private savingsService: SavingsService,
+    private chargesService: ChargesService,
+    private savingAccountService: SavingsAccountService,
     private settingsService: SettingsService
   ) {
     this.route.data.subscribe((data: { recurringDepositsAccountActionData: any }) => {
@@ -74,7 +77,7 @@ export class AddChargeRecurringDepositsAccountComponent implements OnInit {
 
   buildDependencies() {
     this.recurringDepositsChargeForm.controls.chargeId.valueChanges.subscribe((chargeId) => {
-      this.savingsService.getChargeTemplate(chargeId).subscribe((data: any) => {
+      this.chargesService.retrieveCharge(chargeId).subscribe((data: any) => {
         this.chargeDetails = data;
         const chargeTimeType = data.chargeTimeType.id;
         if (data.chargeTimeType.value === 'Withdrawal Fee' || data.chargeTimeType.value === 'Saving No Activity Fee') {
@@ -154,8 +157,14 @@ export class AddChargeRecurringDepositsAccountComponent implements OnInit {
         }
       }
     }
-    this.savingsService.createSavingsCharge(this.recurringDepositAccountId, 'charges', savingsCharge).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.savingAccountService
+      .handleCommands6({
+        accountId: Number(this.recurringDepositAccountId),
+        postSavingsAccountsAccountIdRequest: savingsCharge,
+        command: 'charges'
+      })
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }

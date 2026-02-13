@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { UndoTransactionDialogComponent } from 'app/savings/savings-account-view/custom-dialogs/undo-transaction-dialog/undo-transaction-dialog.component';
 import { Dates } from 'app/core/utils/dates';
-import { SavingsService } from 'app/savings/savings.service';
+import { SavingsAccountTransactionsService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { NgIf, NgClass, CurrencyPipe } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -37,7 +37,7 @@ export class ViewTransactionComponent {
   /**
    */
   constructor(
-    private savingsService: SavingsService,
+    private savingsAccountTransactionsService: SavingsAccountTransactionsService,
     private route: ActivatedRoute,
     private dateUtils: Dates,
     private router: Router,
@@ -76,8 +76,13 @@ export class ViewTransactionComponent {
           dateFormat,
           locale
         };
-        this.savingsService
-          .executeSavingsAccountTransactionsCommand(this.accountId, 'undo', data, this.transactionData.id)
+        this.savingsAccountTransactionsService
+          .adjustTransaction1({
+            savingsId: Number(this.accountId),
+            transactionId: this.transactionData.id,
+            command: 'undo',
+            postSavingsAccountBulkReversalTransactionsRequest: data as any
+          })
           .subscribe(() => {
             this.router.navigate(['../'], { relativeTo: this.route });
           });

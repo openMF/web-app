@@ -18,6 +18,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
  */
 @Component({
   selector: 'mifosx-amount-collected-pie',
+  standalone: true,
   templateUrl: './amount-collected-pie.component.html',
   styleUrls: ['./amount-collected-pie.component.scss'],
   imports: [

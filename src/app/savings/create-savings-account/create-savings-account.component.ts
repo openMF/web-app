@@ -8,7 +8,7 @@ import { SavingsAccountTermsStepComponent } from '../savings-account-stepper/sav
 import { SavingsAccountChargesStepComponent } from '../savings-account-stepper/savings-account-charges-step/savings-account-charges-step.component';
 
 /** Custom Services */
-import { SavingsService } from '../savings.service';
+import { SavingsService } from 'app/customApis.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';

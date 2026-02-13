@@ -5,7 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
-import { SavingsService } from 'app/savings/savings.service';
+import { SavingsAccountTransactionsService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -32,7 +32,7 @@ export class PostInterestAsOnSavingsAccountComponent implements OnInit {
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
-   * @param {SavingsService} savingsService Savings Service
+   * @param {SavingsAccountTransactionsService} savingsAccountTransactionsService Savings Account Transactions Service
    * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
@@ -40,7 +40,7 @@ export class PostInterestAsOnSavingsAccountComponent implements OnInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private savingsService: SavingsService,
+    private savingsAccountTransactionsService: SavingsAccountTransactionsService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
     private router: Router,
@@ -87,8 +87,13 @@ export class PostInterestAsOnSavingsAccountComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.savingsService
-      .executeSavingsAccountTransactionsCommand(this.accountId, 'postInterestAsOn', data)
+    this.savingsAccountTransactionsService
+      .adjustTransaction1({
+        savingsId: this.accountId,
+        transactionId: 0,
+        command: 'postInterestAsOn',
+        postSavingsAccountBulkReversalTransactionsRequest: data
+      })
       .subscribe(() => {
         this.router.navigate(['../../transactions'], { relativeTo: this.route });
       });

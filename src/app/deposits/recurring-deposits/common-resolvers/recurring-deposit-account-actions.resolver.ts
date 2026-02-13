@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SavingsService } from 'app/savings/savings.service';
+import { SavingsChargesService } from '@fineract/client';
 import { RecurringDepositsService } from '../recurring-deposits.service';
 
 /**
@@ -15,11 +15,11 @@ import { RecurringDepositsService } from '../recurring-deposits.service';
 @Injectable()
 export class RecurringDepositsAccountActionsResolver {
   /**
-   * @param {SavingsService} SavingsService Savings service.
+   * @param {SavingsChargesService} SavingsChargesService Savings charges service.
    * @param {RecurringDepositsService} recurringDepositsService Recurring Deposits Service.
    */
   constructor(
-    private savingsService: SavingsService,
+    private savingsChargesService: SavingsChargesService,
     private recurringDepositsService: RecurringDepositsService
   ) {}
 
@@ -34,7 +34,7 @@ export class RecurringDepositsAccountActionsResolver {
       route.paramMap.get('recurringDepositAccountId') || route.parent.parent.paramMap.get('recurringDepositAccountId');
     switch (actionName) {
       case 'Add Charge':
-        return this.savingsService.getSavingsChargeTemplateResource(recurringDepositAccountId);
+        return this.savingsChargesService.retrieveTemplate18({ savingsAccountId: Number(recurringDepositAccountId) });
       case 'Close':
         return this.recurringDepositsService.getRecurringDepositAccountActionResource(
           recurringDepositAccountId,

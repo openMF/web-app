@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SavingsService } from '../savings.service';
+import { SavingsAccountTransactionsService } from '@fineract/client';
 
 /**
  * Savings Account Transaction Template data resolver.
@@ -14,9 +14,9 @@ import { SavingsService } from '../savings.service';
 @Injectable()
 export class SavingsAccountTransactionTemplateResolver {
   /**
-   * @param {SavingsService} SavingsService Savings service.
+   * @param SavingsAccountTransactionsService savingsAccountTransactionsService Savings Account Transactions Service
    */
-  constructor(private savingsService: SavingsService) {}
+  constructor(private savingsAccountTransactionsService: SavingsAccountTransactionsService) {}
 
   /**
    * Returns the Savings Account Transaction Template data.
@@ -26,6 +26,9 @@ export class SavingsAccountTransactionTemplateResolver {
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const savingAccountId = route.parent.paramMap.get('savingAccountId');
     const transactionId = route.paramMap.get('id');
-    return this.savingsService.getSavingsAccountTransactionTemplate(savingAccountId, transactionId);
+    return this.savingsAccountTransactionsService.retrieveOne24({
+      savingsId: Number(savingAccountId),
+      transactionId: Number(transactionId)
+    });
   }
 }
