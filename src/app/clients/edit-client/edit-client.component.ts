@@ -22,6 +22,7 @@ import {
 import { ClientsService } from '../clients.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { ExternalNationalIdService } from 'app/clients/services/external-national-id.service';
 import { MatDivider } from '@angular/material/divider';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -34,6 +35,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   selector: 'mifosx-edit-client',
   templateUrl: './edit-client.component.html',
   styleUrls: ['./edit-client.component.scss'],
+  providers: [ExternalNationalIdService],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     MatDivider,
@@ -48,6 +50,7 @@ export class EditClientComponent implements OnInit {
   private clientsService = inject(ClientsService);
   private dateUtils = inject(Dates);
   private settingsService = inject(SettingsService);
+  externalNationalIdService = inject(ExternalNationalIdService);
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -126,6 +129,8 @@ export class EditClientComponent implements OnInit {
     if (this.clientDataAndTemplate.legalForm) {
       this.legalFormId = this.clientDataAndTemplate.legalForm.id;
     }
+    // skipInitialValue=true: avoid re-fetching data for an already-saved external ID
+    this.externalNationalIdService.watchExternalId(this.editClientForm, this.genderOptions, true);
   }
 
   /**

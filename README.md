@@ -313,6 +313,35 @@ Available languages:
 | FINERACT_PLUGIN_OIDC_API_URL      | Set the Client API URL         |               |
 | FINERACT_PLUGIN_OIDC_FRONTEND_URL | Set the Front End URL callback |               |
 
+#### External National ID System Integration
+
+These variables enable automatic lookup and auto-fill of client data from an external National ID system (e.g., Mexico's CURP) during client creation and editing.
+
+| Variable                               | Description                                                                  | Default Value |
+| -------------------------------------- | ---------------------------------------------------------------------------- | ------------- |
+| ENABLE_EXTERNAL_NATIONAL_ID_SYSTEM     | Set to `true` to enable External National ID lookup                          | false         |
+| EXTERNAL_NATIONAL_ID_SYSTEM_URL        | URL of the external National ID API                                          |               |
+| EXTERNAL_NATIONAL_ID_SYSTEM_API_HEADER | Header name for the external API key (e.g., `X-Gravitee-Api-Key`)            |               |
+| EXTERNAL_NATIONAL_ID_SYSTEM_API_KEY    | API key value (injected server-side via nginx; keep empty in source control) |               |
+| EXTERNAL_NATIONAL_ID_REGEX             | Regex pattern to validate the external ID format (e.g., CURP)                |               |
+| EXTERNAL_NATIONALID_API_URL            | Full upstream URL for nginx proxy_pass                                       |               |
+
+When `ENABLE_EXTERNAL_NATIONAL_ID_SYSTEM` is set to `true`, the following fields are auto-filled and disabled during client creation/editing after a successful lookup:
+
+- First Name
+- Middle Name
+- Last Name
+- Date of Birth
+- Gender
+
+The user types the External ID value, and if it matches the configured regex, the system calls the external API to retrieve and auto-fill client information.
+
+**Docker Compose with External National ID:**
+
+```bash
+docker-compose -f docker-compose.yml -f docker-compose.external-nationalid.yml up -d
+```
+
 For more detailed configuration options, refer to the `env.sample` file in the root directory of the project.
 
 ### Client Data Masking Example

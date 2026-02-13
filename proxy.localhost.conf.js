@@ -40,5 +40,37 @@ module.exports = [
         res.end('Proxy error: ' + (err && err.message ? err.message : 'Unknown error'));
       }
     }
+  },
+  {
+    context: ['/external-nationalid'],
+    target: 'https://apis.mifos.community',
+    pathRewrite: { '^/external-nationalid': '/1.0/nationalid' },
+    changeOrigin: true,
+    secure: true,
+    logLevel: 'debug',
+    onProxyReq: function (proxyReq, req, res) {
+      // Inject API key server-side (same as nginx proxy_set_header in production)
+      const apiKey = process.env.EXTERNAL_NATIONAL_ID_SYSTEM_API_KEY || '';
+      if (apiKey) {
+        proxyReq.setHeader('X-Gravitee-Api-Key', apiKey);
+      }
+      const rewrittenPath = (req.url || '').replace(/^\/external-nationalid/, '/1.0/nationalid');
+      console.log('[Proxy] Proxying:', req.method, req.url, '->', this.target + rewrittenPath);
+    },
+    onError: function (err, req, res) {
+      console.error(
+        '[Proxy] Error while proxying request:',
+        req && req.method,
+        req && req.url,
+        '->',
+        this.target,
+        '-',
+        err && err.message
+      );
+      if (res && !res.headersSent) {
+        res.writeHead(502, { 'Content-Type': 'text/plain' });
+        res.end('Proxy error: ' + (err && err.message ? err.message : 'Unknown error'));
+      }
+    }
   }
 ];

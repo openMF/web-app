@@ -1,0 +1,59 @@
+# Rate limiting zone for external National ID API (2 requests/second per IP)
+limit_req_zone $binary_remote_addr zone=external_nationalid:10m rate=2r/s;
+
+server {
+    listen 80;
+    server_name _;
+
+    root /usr/share/nginx/html;
+    index index.html;
+
+    # Fineract API proxy
+    location /fineract-provider/ {
+        proxy_pass ${FINERACT_API_URL}/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # External National ID API proxy (only if configured)
+    location /external-nationalid {
+        # Use Docker DNS resolver for upstream resolution
+        resolver 127.0.0.11 valid=30s;
+
+        # Rate limit to prevent abuse of the upstream National ID API
+        limit_req zone=external_nationalid burst=5 nodelay;
+
+        # Read target from env var at runtime (set via envsubst on container start)
+        set $external_nationalid_target "${EXTERNAL_NATIONALID_API_URL}";
+
+        # Rewrite path: strip /external-nationalid prefix before proxying
+        rewrite ^/external-nationalid(.*)$ $1 break;
+
+        proxy_pass $external_nationalid_target;
+        proxy_set_header Host $proxy_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # Inject API key server-side so it is never exposed to the browser
+        proxy_set_header ${EXTERNAL_NATIONAL_ID_SYSTEM_API_HEADER} "${EXTERNAL_NATIONAL_ID_SYSTEM_API_KEY}";
+
+        # Pass through the original headers from the client
+        proxy_pass_request_headers on;
+
+        # CORS is not needed since requests come from the same origin
+    }
+
+    # Angular app - serve index.html for all routes
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # Cache static assets
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+}

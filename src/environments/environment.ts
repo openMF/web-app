@@ -85,6 +85,17 @@ export const environment = {
   mifosInterbankTransfersApiVersion: window.env?.mifosInterbankTransfersApiVersion || '/v1.0',
   mifosInterbankTransfersEnabled: window.env?.mifosInterbankTransfersEnabled ?? true,
 
+  /**
+   * External National ID System Integration
+   * When enabled, client creation/editing will lookup external National ID
+   * and auto-fill client details (name, DOB, gender) from the external system.
+   */
+  enableExternalNationalIdSystem: loadedEnv.enableExternalNationalIdSystem === 'true' || false,
+  externalNationalIdSystemUrl: loadedEnv.externalNationalIdSystemUrl || '',
+  externalNationalIdSystemApiHeader: loadedEnv.externalNationalIdSystemApiHeader || '',
+  externalNationalIdSystemApiKey: loadedEnv.externalNationalIdSystemApiKey || '',
+  externalNationalIdRegex: loadedEnv.externalNationalIdRegex || '',
+
   minPasswordLength: loadedEnv.minPasswordLength || 12,
 
   /**

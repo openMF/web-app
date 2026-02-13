@@ -1,0 +1,28 @@
+# Docker Compose override for External National ID System integration
+# Usage: docker-compose -f docker-compose.yml -f docker-compose.external-nationalid.yml up -d
+#
+# This file extends the base docker-compose.yml to add:
+# - External National ID environment variables
+# - Custom nginx configuration with API key injection and rate limiting
+#
+# The nginx.conf.template is mounted as a volume to configure:
+# - Server-side API key injection via proxy_set_header (never exposed to browser)
+# - Rate limiting (2 req/s per IP, burst=5) to protect upstream API
+# - Path rewriting for /external-nationalid → upstream API
+
+version: '3.5'
+
+services:
+  mifosx-web-app:
+    volumes:
+      - ./nginx.conf.template:/etc/nginx/templates/default.conf.template:ro
+    environment:
+      # External National ID System
+      - ENABLE_EXTERNAL_NATIONAL_ID_SYSTEM=true
+      - EXTERNAL_NATIONAL_ID_SYSTEM_URL=/external-nationalid
+      # API header/key are injected server-side via nginx proxy_set_header
+      - EXTERNAL_NATIONAL_ID_SYSTEM_API_HEADER=X-Gravitee-Api-Key
+      - EXTERNAL_NATIONAL_ID_SYSTEM_API_KEY=${EXTERNAL_NATIONAL_ID_SYSTEM_API_KEY:-}
+      - EXTERNAL_NATIONAL_ID_REGEX=^[A-Z]{4}[0-9]{6}[HM][A-Z]{5}[A-Z0-9]{2}$
+      # Full upstream URL for nginx proxy_pass
+      - EXTERNAL_NATIONALID_API_URL=${EXTERNAL_NATIONALID_API_URL:-https://apis.mifos.community/1.0/nationalid}
