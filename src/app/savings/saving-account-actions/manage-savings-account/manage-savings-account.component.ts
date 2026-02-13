@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
-import { SavingsService } from 'app/savings/savings.service';
+import { SavingsAccountTransactionsService, SavingsAccountService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Currency } from 'app/shared/models/general.model';
 import { SystemService } from 'app/system/system.service';
@@ -52,7 +52,8 @@ export class ManageSavingsAccountComponent implements OnInit {
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
-   * @param {SavingsService} savingsService Savings Service
+   * @param {SavingsAccountTransactionsService} savingsAccountTransactionsService Savings Account Transactions Service
+   * @param {SavingsAccountService} savingsAccountService Savings Account Service
    * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
@@ -60,7 +61,8 @@ export class ManageSavingsAccountComponent implements OnInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private savingsService: SavingsService,
+    private savingsAccountTransactionsService: SavingsAccountTransactionsService,
+    private savingsAccountService: SavingsAccountService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
     private router: Router,
@@ -160,8 +162,13 @@ export class ManageSavingsAccountComponent implements OnInit {
       command = 'holdAmount';
       payload['transactionAmount'] = payload['transactionAmount'] * 1;
 
-      this.savingsService
-        .executeSavingsAccountTransactionsCommand(this.savingAccountId, command, payload)
+      this.savingsAccountTransactionsService
+        .adjustTransaction1({
+          savingsId: parseInt(this.savingAccountId, 10),
+          transactionId: 0,
+          command: command,
+          postSavingsAccountBulkReversalTransactionsRequest: payload as any
+        })
         .subscribe((response: any) => {
           this.router.navigate(['../../transactions'], { relativeTo: this.route });
         });
@@ -176,8 +183,13 @@ export class ManageSavingsAccountComponent implements OnInit {
         command = 'blockDebit';
       }
 
-      this.savingsService
-        .executeSavingsAccountCommand(this.savingAccountId, command, payload)
+      this.savingsAccountService
+        .handleCommands6({
+          accountId: parseInt(this.savingAccountId, 10),
+          command: command,
+          postSavingsAccountsAccountIdRequest:
+            payload as unknown as import('@fineract/client').PostSavingsAccountsAccountIdRequest
+        })
         .subscribe((response: any) => {
           this.router.navigate(['../../transactions'], { relativeTo: this.route });
         });

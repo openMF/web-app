@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, forkJoin } from 'rxjs';
 
 /** Custom Services */
-import { SavingsService } from '../savings.service';
+import { SavingsAccountService, SavingsChargesService, SavingsAccountTransactionsService } from '@fineract/client';
 
 /**
  * Savings Account Actions data resolver.
@@ -14,9 +14,15 @@ import { SavingsService } from '../savings.service';
 @Injectable()
 export class SavingsAccountActionsResolver {
   /**
-   * @param {SavingsService} SavingsService Savings service.
+   * @param {SavingsAccountService} SavingsAccountService Savings account service.
+   * @param {SavingsChargesService} savingsChargesService Savings charges service.
+   * @param {SavingsAccountTransactionsService} savingsService Savings account transactions service.
    */
-  constructor(private savingsService: SavingsService) {}
+  constructor(
+    private savingsAccountService: SavingsAccountService,
+    private savingsChargesService: SavingsChargesService,
+    private savingsAccountTransactionsService: SavingsAccountTransactionsService
+  ) {}
 
   /**
    * Returns the Savings account actions data.
@@ -29,19 +35,34 @@ export class SavingsAccountActionsResolver {
       route.paramMap.get('savingAccountId') || route.parent.parent.paramMap.get('savingAccountId');
     switch (actionName) {
       case 'Assign Staff':
-        return this.savingsService.getSavingsAccountAndTemplate(savingAccountId, true);
+        return this.savingsAccountService.retrieveOne25({
+          accountId: parseInt(savingAccountId as string, 10),
+          staffInSelectedOfficeOnly: true
+        });
       case 'Add Charge':
-        return this.savingsService.getSavingsChargeTemplateResource(savingAccountId);
+        return this.savingsChargesService.retrieveTemplate18({
+          savingsAccountId: parseInt(savingAccountId as string, 10)
+        });
       case 'Withdrawal':
       case 'Deposit':
       case 'Hold Amount':
-        return this.savingsService.getSavingsTransactionTemplateResource(savingAccountId);
+        return this.savingsAccountTransactionsService.retrieveTemplate19({
+          savingsId: parseInt(savingAccountId as string, 10)
+        });
       case 'Close':
         return forkJoin([
-          this.savingsService.getSavingsTransactionTemplateResource(savingAccountId),
-          this.savingsService.getSavingsAccountData(savingAccountId)]);
+          this.savingsAccountTransactionsService.retrieveTemplate19({
+            savingsId: parseInt(savingAccountId as string, 10)
+          }),
+          this.savingsAccountService.retrieveOne25({
+            accountId: parseInt(savingAccountId as string, 10)
+          })
+
+        ]);
       case 'Apply Annual Fees':
-        return this.savingsService.getSavingsAccountData(savingAccountId);
+        return this.savingsAccountService.retrieveOne25({
+          accountId: parseInt(savingAccountId as string, 10)
+        });
       default:
         return undefined;
     }

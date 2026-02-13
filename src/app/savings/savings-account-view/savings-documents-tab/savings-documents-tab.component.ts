@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { SavingsService } from 'app/savings/savings.service';
+import { DocumentsService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { environment } from '../../../../environments/environment';
 import { EntityDocumentsTabComponent } from '../../../shared/tabs/entity-documents-tab/entity-documents-tab.component';
@@ -26,10 +26,11 @@ export class SavingsDocumentsTabComponent {
   /**
    * Retrieves the savings data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
+   * @param {DocumentsService} documentsService Documents Service.
    */
   constructor(
     private route: ActivatedRoute,
-    private savingsService: SavingsService,
+    private documentsService: DocumentsService,
     private settingsService: SettingsService,
     public dialog: MatDialog
   ) {
@@ -68,17 +69,37 @@ export class SavingsDocumentsTabComponent {
   }
 
   downloadDocument(documentId: string) {
-    this.savingsService.downloadSavingsDocument(this.entityId, documentId).subscribe((res) => {
-      const url = window.URL.createObjectURL(res);
-      window.open(url);
-    });
+    this.documentsService
+      .downloadFile({
+        entityType: this.entityType,
+        entityId: parseInt(this.entityId, 10),
+        documentId: parseInt(documentId, 10)
+      })
+      .subscribe((res) => {
+        const url = window.URL.createObjectURL(res);
+        window.open(url);
+      });
   }
 
   uploadDocument(formData: FormData): any {
-    return this.savingsService.loadSavingsDocument(this.entityId, formData);
+    return this.documentsService.createDocument({
+      entityType: this.entityType,
+      entityId: parseInt(this.entityId, 10),
+      uploadedInputStream: formData.get('file') as Blob,
+      name: formData.get('name') as string,
+      description: formData.get('description') as string
+    });
   }
 
   deleteDocument(documentId: any) {
-    this.savingsService.deleteSavingsDocument(this.entityId, documentId).subscribe((res: any) => {});
+    this.documentsService
+      .deleteDocument({
+        entityType: this.entityType,
+        entityId: parseInt(this.entityId, 10),
+        documentId: parseInt(documentId, 10)
+      })
+      .subscribe(() => {
+        this.entityDocuments = this.entityDocuments.filter((doc: any) => doc.id !== documentId);
+      });
   }
 }

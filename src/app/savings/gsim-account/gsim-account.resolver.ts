@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SavingsService } from '../savings.service';
+import { GroupsService } from '@fineract/client';
 
 /**
  * GSIM Account data resolver.
@@ -14,9 +14,9 @@ import { SavingsService } from '../savings.service';
 @Injectable()
 export class GSIMViewResolver {
   /**
-   * @param {SavingsService} savingsService Savings service.
+   * @param {GroupsService} groupsService Groups service.
    */
-  constructor(private savingsService: SavingsService) {}
+  constructor(private groupsService: GroupsService) {}
 
   /**
    * Returns the Savings Account data.
@@ -26,6 +26,9 @@ export class GSIMViewResolver {
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const groupId = route.paramMap.get('groupId');
     const savingAccountId = route.paramMap.get('savingAccountId');
-    return this.savingsService.getGSIMAccountData(savingAccountId, groupId);
+    return this.groupsService.retrieveGsimAccounts({
+      groupId: Number(groupId),
+      parentGSIMId: Number(savingAccountId)
+    });
   }
 }

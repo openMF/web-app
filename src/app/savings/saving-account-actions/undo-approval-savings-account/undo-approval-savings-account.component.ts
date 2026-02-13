@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angu
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { SavingsService } from 'app/savings/savings.service';
+import { SavingsAccountService } from '@fineract/client';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -28,13 +28,13 @@ export class UndoApprovalSavingsAccountComponent implements OnInit {
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
-   * @param {SavingsService} savingsService Savings Service
+   * @param {SavingsAccountService} savingsAccountService Savings Account Service
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private savingsService: SavingsService,
+    private savingsAccountService: SavingsAccountService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -65,8 +65,14 @@ export class UndoApprovalSavingsAccountComponent implements OnInit {
     const data = {
       ...this.undoApprovalSavingsAccountForm.value
     };
-    this.savingsService.executeSavingsAccountCommand(this.accountId, 'undoapproval', data).subscribe(() => {
-      this.router.navigate(['../../transactions'], { relativeTo: this.route });
-    });
+    this.savingsAccountService
+      .handleCommands6({
+        accountId: this.accountId,
+        command: 'undoapproval',
+        postSavingsAccountsAccountIdRequest: data
+      })
+      .subscribe(() => {
+        this.router.navigate(['../../transactions'], { relativeTo: this.route });
+      });
   }
 }

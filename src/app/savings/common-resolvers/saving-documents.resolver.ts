@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { SavingsService } from '../savings.service';
+import { DocumentsService } from '@fineract/client';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SavingDocumentsResolver {
   /**
-   * @param {SavingsService} savingsService Savings service.
+   * @param {DocumentsService} documentsService Documents service.
    */
-  constructor(private savingsService: SavingsService) {}
+  constructor(private documentsService: DocumentsService) {}
 
   /**
    * Returns the Savings data.
@@ -18,6 +18,9 @@ export class SavingDocumentsResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const savingAccountId = route.parent.paramMap.get('savingAccountId');
-    return this.savingsService.getSavingsDocuments(savingAccountId);
+    return this.documentsService.retrieveAllDocuments({
+      entityId: Number(savingAccountId),
+      entityType: 'savings'
+    });
   }
 }

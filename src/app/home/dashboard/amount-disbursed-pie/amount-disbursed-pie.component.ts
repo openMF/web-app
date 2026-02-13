@@ -18,6 +18,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
  */
 @Component({
   selector: 'mifosx-amount-disbursed-pie',
+  standalone: true,
   templateUrl: './amount-disbursed-pie.component.html',
   styleUrls: ['./amount-disbursed-pie.component.scss'],
   imports: [
