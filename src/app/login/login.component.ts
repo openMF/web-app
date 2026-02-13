@@ -73,6 +73,8 @@ import { VersionService } from '../system/version.service';
   ]
 })
 export class LoginComponent implements OnInit, OnDestroy {
+  /** Whether to show the tenant selector dropdown */
+  showTenantSelector = true;
   /** Show version info table if env allows */
   displayBackendInfo = environment.displayBackEndInfo !== 'false';
   /** Production mode - minimal hero with branding only */
@@ -115,6 +117,7 @@ export class LoginComponent implements OnInit, OnDestroy {
    * Subscribes to alert event of alert service and theme changes.
    */
   ngOnInit() {
+    this.showTenantSelector = this.calculateTenantSelectorVisibility();
     this.updateLogo();
     this.themeDarkEnabled = this.settingsService.themeDarkEnabled;
     // Subscribe to theme changes
@@ -193,12 +196,21 @@ export class LoginComponent implements OnInit, OnDestroy {
     window.location.reload();
   }
 
-  displayTenantSelector(): boolean {
-    // Hide tenant selector when OAuth2 is enabled (tenant is determined by OAuth server)
+  private calculateTenantSelectorVisibility(): boolean {
     if (environment.oauth.enabled) {
       return false;
     }
-    return environment.displayTenantSelector === 'false' ? false : true;
+    if (environment.displayTenantSelector === 'false') {
+      return false;
+    }
+    const tenantIds = environment.fineractPlatformTenantIds
+      .split(',')
+      .map((id) => id.trim())
+      .filter((id) => id.length > 0);
+    if (tenantIds.length === 0 || (tenantIds.length === 1 && tenantIds[0] === 'default')) {
+      return false;
+    }
+    return true;
   }
 
   allowServerSwitch(): boolean {
