@@ -69,7 +69,10 @@ export class FloatingRatePeriodDialogComponent implements OnInit {
       ],
       interestRate: [
         { value: this.data ? this.data.interestRate : '', disabled: rowDisabled },
-        Validators.required
+        [
+          Validators.required,
+          Validators.min(0)
+        ]
       ],
       isDifferentialToBaseLendingRate: [
         { value: this.data ? this.data.isDifferentialToBaseLendingRate : false, disabled: rowDisabled }]
