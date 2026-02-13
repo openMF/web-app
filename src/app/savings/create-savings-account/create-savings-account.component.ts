@@ -21,6 +21,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
  */
 @Component({
   selector: 'mifosx-create-savings-account',
+  standalone: true,
   templateUrl: './create-savings-account.component.html',
   styleUrls: ['./create-savings-account.component.scss'],
   imports: [

@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SharesService } from '../shares.service';
+import { ShareAccountService } from '@fineract/client';
 
 /**
  * Shares Account Template resolver.
@@ -14,9 +14,9 @@ import { SharesService } from '../shares.service';
 @Injectable()
 export class SharesAccountTemplateResolver {
   /**
-   * @param {SharesService} SharesService Shares service.
+   * @param {ShareAccountService} ShareAccountService Shares account service.
    */
-  constructor(private sharesService: SharesService) {}
+  constructor(private shareAccountService: ShareAccountService) {}
 
   /**
    * Returns the Shares Account Template.
@@ -25,6 +25,6 @@ export class SharesAccountTemplateResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const clientId = route.parent.parent.paramMap.get('clientId');
-    return this.sharesService.getSharesAccountTemplate(clientId);
+    return this.shareAccountService.template7({ type: 'client', clientId: clientId ? +clientId : undefined });
   }
 }

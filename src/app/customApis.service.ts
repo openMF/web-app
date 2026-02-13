@@ -231,6 +231,22 @@ export class OrganizationService {
     });
   }
 }
+
+@Injectable({
+  providedIn: 'root'
+})
+export class SharesService {
+  constructor(private http: HttpClient) {}
+
+  /**
+   * @param {string} accountId shares account Id
+   * @returns {Observable<any>}
+   */
+  deleteSharesAccount(accountId: string): Observable<any> {
+    return this.http.delete(`/accounts/share/${accountId}`);
+  }
+}
+
 /**
  * Savings Service
  */

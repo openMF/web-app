@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule }
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { SharesService } from 'app/shares/shares.service';
+import { ShareAccountService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
@@ -34,7 +34,7 @@ export class RejectSharesAccountComponent implements OnInit {
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
-   * @param {SharesService} sharesService Shares Service
+   * @param {ShareAccountService} shareAccountService Share Account Service
    * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
@@ -42,7 +42,7 @@ export class RejectSharesAccountComponent implements OnInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private sharesService: SharesService,
+    private shareAccountService: ShareAccountService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
     private router: Router,
@@ -89,7 +89,13 @@ export class RejectSharesAccountComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.sharesService.executeSharesAccountCommand(this.accountId, 'reject', data).subscribe(() => {
+    const requestParams = {
+      type: 'shares',
+      accountId: this.accountId,
+      postAccountsTypeAccountIdRequest: data,
+      command: 'reject'
+    };
+    this.shareAccountService.handleCommands2(requestParams).subscribe(() => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
