@@ -8,12 +8,14 @@
 
 /** Angular Imports */
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
-
-/** Custom Service */
-import { SettingsService } from './settings.service';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Subject, merge } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+/** Custom Services */
+import { SettingsService } from './settings.service';
+import { AlertService } from 'app/core/alert/alert.service';
+import { TranslateService } from '@ngx-translate/core';
 import {
   MatAccordion,
   MatExpansionPanel,
@@ -45,7 +47,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class SettingsComponent implements OnInit, OnDestroy {
   private settingsService = inject(SettingsService);
+  private alertService = inject(AlertService);
+  private translateService = inject(TranslateService);
   private destroy$ = new Subject<void>();
+
+  hasChanges = false;
 
   /** Date formats. */
   dateFormats: string[] = [
@@ -106,29 +112,57 @@ export class SettingsComponent implements OnInit, OnDestroy {
   /** Decimals to Display Setting */
   decimalsToDisplay = new FormControl('');
 
+  private initialValues: {
+    dateFormat: string;
+    datetimeFormat: string;
+    decimals: string;
+  };
+
   ngOnInit() {
-    this.dateFormat.patchValue(this.settingsService.dateFormat);
-    this.datetimeFormat.patchValue(this.settingsService.datetimeFormat);
-    this.decimalsToDisplay.patchValue(this.settingsService.decimals);
-    this.buildDependencies();
+    this.initialValues = {
+      dateFormat: this.settingsService.dateFormat,
+      datetimeFormat: this.settingsService.datetimeFormat,
+      decimals: this.settingsService.decimals
+    };
+    this.dateFormat.patchValue(this.initialValues.dateFormat, { emitEvent: false });
+    this.datetimeFormat.patchValue(this.initialValues.datetimeFormat, { emitEvent: false });
+    this.decimalsToDisplay.patchValue(this.initialValues.decimals, { emitEvent: false });
+    this.trackChanges();
   }
 
-  /**
-   * Subscribe to value changes.
-   */
-  buildDependencies() {
-    this.dateFormat.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((dateFormat: string) => {
-      this.settingsService.setDateFormat(dateFormat);
-    });
-    this.datetimeFormat.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((datetimeFormat: string) => {
-      this.settingsService.setDatetimeFormat(datetimeFormat);
-    });
-    this.decimalsToDisplay.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((decimals: string) => {
-      this.settingsService.setDecimalToDisplay(decimals);
+  trackChanges(): void {
+    merge(this.dateFormat.valueChanges, this.datetimeFormat.valueChanges, this.decimalsToDisplay.valueChanges)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.hasChanges = this.hasFormChanged();
+      });
+  }
+
+  private hasFormChanged(): boolean {
+    return (
+      (this.dateFormat.value ?? '') !== this.initialValues.dateFormat ||
+      (this.datetimeFormat.value ?? '') !== this.initialValues.datetimeFormat ||
+      (this.decimalsToDisplay.value ?? '') !== this.initialValues.decimals
+    );
+  }
+
+  submit(): void {
+    this.settingsService.setDateFormat(this.dateFormat.value ?? this.initialValues.dateFormat);
+    this.settingsService.setDatetimeFormat(this.datetimeFormat.value ?? this.initialValues.datetimeFormat);
+    this.settingsService.setDecimalToDisplay(this.decimalsToDisplay.value ?? this.initialValues.decimals);
+    this.initialValues = {
+      dateFormat: this.dateFormat.value ?? '',
+      datetimeFormat: this.datetimeFormat.value ?? '',
+      decimals: this.decimalsToDisplay.value ?? ''
+    };
+    this.hasChanges = false;
+    this.alertService.alert({
+      type: 'Settings Update',
+      message: this.translateService.instant('labels.text.Settings saved successfully')
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }

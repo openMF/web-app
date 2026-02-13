@@ -127,4 +127,10 @@
       </div>
     </mat-expansion-panel>
   </mat-accordion>
+
+  <div class="submit-actions">
+    <button mat-raised-button color="primary" [disabled]="!hasChanges" (click)="submit()">
+      {{ 'labels.buttons.Submit' | translate }}
+    </button>
+  </div>
 </div>
