@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
-import { SharesService } from '../shares.service';
 import { ApproveSharesAccountComponent } from './approve-shares-account/approve-shares-account.component';
 import { RejectSharesAccountComponent } from './reject-shares-account/reject-shares-account.component';
 import { CloseSharesAccountComponent } from './close-shares-account/close-shares-account.component';

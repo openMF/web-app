@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { SharesService } from 'app/shares/shares.service';
+import { ShareAccountService } from '@fineract/client';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -24,12 +24,12 @@ export class UndoApprovalSharesAccountComponent {
   accountId: any;
 
   /**
-   * @param {SharesService} sharesService Shares Service
+   * @param {ShareAccountService } ShareAccountService Shares Account Service
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
   constructor(
-    private sharesService: SharesService,
+    private shareAccountService: ShareAccountService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -41,8 +41,15 @@ export class UndoApprovalSharesAccountComponent {
    * if successful redirects to the share account.
    */
   submit() {
-    this.sharesService.executeSharesAccountCommand(this.accountId, 'undoapproval', {}).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.shareAccountService
+      .handleCommands2({
+        type: 'shares',
+        accountId: this.accountId,
+        postAccountsTypeAccountIdRequest: {},
+        command: 'undoapproval'
+      })
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }

@@ -11,7 +11,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
-import { SavingsService } from 'app/savings/savings.service';
+import { SavingsAccountService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
@@ -50,7 +50,7 @@ export class CloseSavingsAccountComponent implements OnInit {
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
-   * @param {SavingsService} savingsService Savings Service
+   * @param {SavingsAccountService} savingsAccountService Savings Account Service
    * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
@@ -58,7 +58,7 @@ export class CloseSavingsAccountComponent implements OnInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private savingsService: SavingsService,
+    private savingsAccountService: SavingsAccountService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
     private router: Router,
@@ -150,7 +150,12 @@ export class CloseSavingsAccountComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.savingsService.executeSavingsAccountCommand(this.accountId, 'close', data).subscribe(() => {
+    const requestParameters = {
+      accountId: this.accountId,
+      command: 'close',
+      postSavingsAccountsAccountIdRequest: data
+    };
+    this.savingsAccountService.handleCommands6(requestParameters).subscribe(() => {
       this.router.navigate(['../../transactions'], { relativeTo: this.route });
     });
   }

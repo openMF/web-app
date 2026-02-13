@@ -238,10 +238,42 @@ export class SystemService {
   constructor(private http: HttpClient) {}
   getExternalEventConfiguration(): Observable<any> {
     return this.http.get('/externalevents/configuration');
+  }
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class SharesService {
+  constructor(private http: HttpClient) {}
+
+  /**
+   * @param {string} accountId shares account Id
+   * @returns {Observable<any>}
+   */
+  deleteSharesAccount(accountId: string): Observable<any> {
+    return this.http.delete(`/accounts/share/${accountId}`);
+  }
+}
 
 /**
- * Home Service
+ * Savings Service
  */
+@Injectable({
+  providedIn: 'root'
+})
+export class SavingsService {
+  constructor(private http: HttpClient) {}
+
+  /**
+   * @param {any} savingsAccount Savings Account
+   * @returns {Observable<any>}
+   */
+  createSavingsAccount(savingsAccount: any): Observable<any> {
+    return this.http.post('/savingsaccounts', savingsAccount);
+  }
+}
+
 @Injectable({
   providedIn: 'root'
 })

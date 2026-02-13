@@ -3,7 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
-import { SavingsService } from 'app/savings/savings.service';
+import { SavingsAccountService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -48,12 +48,12 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
   /**
    * Sets share account details form.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {SavingsService} savingsService Savings Service.
+   * @param {SavingsAccountService} savingsAccountService Savings Account Service
    * @param {SettingsService} settingsService Setting service
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private savingsService: SavingsService,
+    private savingsAccountService: SavingsAccountService,
     private settingsService: SettingsService
   ) {
     this.createSavingsAccountDetailsForm();
@@ -104,8 +104,12 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
   buildDependencies() {
     const entityId = this.savingsAccountTemplate.groupId || this.savingsAccountTemplate.clientId;
     this.savingsAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
-      this.savingsService
-        .getSavingsAccountTemplate(entityId, productId, this.savingsAccountTemplate.groupId ? true : false)
+      this.savingsAccountService
+        .template14({
+          clientId: this.savingsAccountTemplate.groupId ? undefined : entityId ? Number(entityId) : undefined,
+          groupId: this.savingsAccountTemplate.groupId ? Number(entityId) : undefined,
+          productId: productId ? Number(productId) : undefined
+        })
         .subscribe((response: any) => {
           this.savingsAccountProductTemplate.emit(response);
           this.fieldOfficerData = response.fieldOfficerOptions;

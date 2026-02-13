@@ -8,7 +8,7 @@ import { SharesAccountTermsStepComponent } from '../shares-account-stepper/share
 import { SharesAccountChargesStepComponent } from '../shares-account-stepper/shares-account-charges-step/shares-account-charges-step.component';
 
 /** Custom Services */
-import { SharesService } from '../shares.service';
+import { ShareAccountService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
@@ -56,14 +56,14 @@ export class CreateSharesAccountComponent {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {Dates} dateUtils Date Utils
-   * @param {SharesService} sharesService Shares Service
+   * @param {ShareAccountService} ShareAccountService Shares Account Service
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
-    private sharesService: SharesService,
+    private shareAccountService: ShareAccountService,
     private settingsService: SettingsService
   ) {
     this.route.data.subscribe((data: { sharesAccountTemplate: any }) => {
@@ -121,14 +121,15 @@ export class CreateSharesAccountComponent {
     const sharesAccount = {
       ...this.sharesAccount,
       clientId: this.sharesAccountTemplate.clientId,
-      charges: this.sharesAccount.charges.map((charge: any) => ({ chargeId: charge.id, amount: charge.amount })),
+      charges: this.sharesAccount.charges?.map((charge: any) => ({ chargeId: charge.id, amount: charge.amount })) || [],
       applicationDate: this.dateUtils.formatDate(this.sharesAccount.applicationDate, dateFormat),
       submittedDate: this.dateUtils.formatDate(this.sharesAccount.submittedDate, dateFormat),
       unitPrice: this.sharesAccountTermsForm.get('unitPrice').value,
       dateFormat,
-      locale
+      locale,
+      type: this.sharesAccount.type || 'client'
     };
-    this.sharesService.createSharesAccount(sharesAccount).subscribe((response: any) => {
+    this.shareAccountService.createAccount(sharesAccount).subscribe((response: any) => {
       this.router.navigate(
         [
           '../',

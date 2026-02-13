@@ -22,7 +22,7 @@ import {
   SavingsAccountTransaction,
   SavingsAccountTransactionType
 } from 'app/savings/models/savings-account-transaction.model';
-import { SavingsService } from 'app/savings/savings.service';
+import { SavingsAccountTransactionsService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { UndoTransactionDialogComponent } from '../custom-dialogs/undo-transaction-dialog/undo-transaction-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -104,11 +104,12 @@ export class TransactionsTabComponent implements OnInit {
   /**
    * Retrieves savings account data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
+   * @param {SavingsAccountTransactionsService} SavingsAccountTransactionsService Savings Account Transactions Service
    */
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private savingsService: SavingsService,
+    private savingsAccountTransactionsService: SavingsAccountTransactionsService,
     private settingsService: SettingsService,
     private dialog: MatDialog,
     private dateUtils: Dates
@@ -240,8 +241,13 @@ export class TransactionsTabComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.savingsService
-          .executeSavingsAccountTransactionsCommand(this.accountId, 'undo', data, transactionData.id)
+        this.savingsAccountTransactionsService
+          .adjustTransaction1({
+            savingsId: Number(this.accountId),
+            transactionId: transactionData.id,
+            command: 'undo',
+            postSavingsAccountBulkReversalTransactionsRequest: data as any
+          })
           .subscribe(() => {
             this.reload();
           });

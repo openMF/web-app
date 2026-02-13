@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule }
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Services */
-import { SharesService } from 'app/shares/shares.service';
+import { ShareAccountService } from '@fineract/client';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -42,12 +42,12 @@ export class SharesAccountDetailsStepComponent implements OnInit {
   /**
    * Sets share account details form.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {SharesService} sharesService Shares Service.
+   * @param {ShareAccountService} shareAccountService Share Account Service.
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private sharesService: SharesService,
+    private shareAccountService: ShareAccountService,
     private settingsService: SettingsService
   ) {
     this.createSharesAccountDetailsForm();
@@ -93,9 +93,11 @@ export class SharesAccountDetailsStepComponent implements OnInit {
   buildDependencies() {
     const clientId = this.sharesAccountTemplate.clientId;
     this.sharesAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
-      this.sharesService.getSharesAccountTemplate(clientId, productId).subscribe((response: any) => {
-        this.sharesAccountProductTemplate.emit(response);
-      });
+      this.shareAccountService
+        .template7({ clientId: Number(clientId), productId: Number(productId), type: 'client' })
+        .subscribe((response: any) => {
+          this.sharesAccountProductTemplate.emit(response);
+        });
     });
   }
 

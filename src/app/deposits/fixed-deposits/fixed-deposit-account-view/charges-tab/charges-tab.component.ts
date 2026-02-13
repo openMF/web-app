@@ -17,7 +17,7 @@ import {
 } from '@angular/material/table';
 
 /** Custom Services */
-import { SavingsService } from 'app/savings/savings.service';
+import { SavingsAccountService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Dialogs */
@@ -90,7 +90,7 @@ export class ChargesTabComponent implements OnInit {
 
   /**
    * Retrieves the Fixed Deposits account data from `resolve`.
-   * @param {SavingsService} savingsService Savings Service
+   * @param {SavingsAccountService} savingsAccountService Savings Account Service
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
@@ -98,7 +98,7 @@ export class ChargesTabComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    */
   constructor(
-    private savingsService: SavingsService,
+    private savingsAccountService: SavingsAccountService,
     private route: ActivatedRoute,
     private dateUtils: Dates,
     private router: Router,
@@ -169,8 +169,12 @@ export class ChargesTabComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.savingsService
-          .executeSavingsAccountChargesCommand(this.fixedDepositsAccountData.id, 'paycharge', dataObject, chargeId)
+        this.savingsAccountService
+          .handleCommands6({
+            accountId: this.fixedDepositsAccountData.id,
+            postSavingsAccountsAccountIdRequest: dataObject,
+            command: 'paycharge'
+          })
           .subscribe(() => {
             this.reload();
           });
@@ -186,8 +190,18 @@ export class ChargesTabComponent implements OnInit {
     const waiveChargeDialogRef = this.dialog.open(WaiveChargeDialogComponent, { data: { id: chargeId } });
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService
-          .executeSavingsAccountChargesCommand(this.fixedDepositsAccountData.id, 'waive', {}, chargeId)
+        const locale = this.settingsService.language.code;
+        const dateFormat = this.settingsService.dateFormat;
+        const dataObject = {
+          dateFormat,
+          locale
+        };
+        this.savingsAccountService
+          .handleCommands6({
+            accountId: this.fixedDepositsAccountData.id,
+            postSavingsAccountsAccountIdRequest: dataObject,
+            command: 'waive'
+          })
           .subscribe(() => {
             this.reload();
           });
@@ -203,8 +217,18 @@ export class ChargesTabComponent implements OnInit {
     const inactivateChargeDialogRef = this.dialog.open(InactivateChargeDialogComponent, { data: { id: chargeId } });
     inactivateChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService
-          .executeSavingsAccountChargesCommand(this.fixedDepositsAccountData.id, 'inactivate', {}, chargeId)
+        const locale = this.settingsService.language.code;
+        const dateFormat = this.settingsService.dateFormat;
+        const dataObject = {
+          dateFormat,
+          locale
+        };
+        this.savingsAccountService
+          .handleCommands6({
+            accountId: this.fixedDepositsAccountData.id,
+            postSavingsAccountsAccountIdRequest: dataObject,
+            command: 'inactivate'
+          })
           .subscribe(() => {
             this.reload();
           });
@@ -242,8 +266,8 @@ export class ChargesTabComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.savingsService
-          .editSavingsAccountCharge(this.fixedDepositsAccountData.id, dataObject, charge.id)
+        this.savingsAccountService
+          .handleCommands6(this.fixedDepositsAccountData.id, dataObject, charge.id)
           .subscribe(() => {
             this.reload();
           });
@@ -261,7 +285,7 @@ export class ChargesTabComponent implements OnInit {
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.savingsService.deleteSavingsAccountCharge(this.fixedDepositsAccountData.id, chargeId).subscribe(() => {
+        this.savingsAccountService.delete18(this.fixedDepositsAccountData.id, chargeId).subscribe(() => {
           this.reload();
         });
       }

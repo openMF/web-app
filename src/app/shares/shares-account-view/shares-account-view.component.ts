@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 
 /** Custom Services */
-import { SharesService } from '../shares.service';
+import { SharesService } from 'app/customApis.service';
 
 /** Custom Buttons Configuration */
 import { SharesButtonsConfiguration } from './shares-buttons.config';
@@ -37,6 +37,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
  */
 @Component({
   selector: 'mifosx-shares-account-view',
+  standalone: true,
   templateUrl: './shares-account-view.component.html',
   styleUrls: ['./shares-account-view.component.scss'],
   imports: [

@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SavingsService } from '../savings.service';
+import { SavingsAccountService } from '@fineract/client';
 
 /**
  * Savings Account Charge data resolver.
@@ -14,9 +14,9 @@ import { SavingsService } from '../savings.service';
 @Injectable()
 export class SavingsAccountChargeResolver {
   /**
-   * @param {SavingsService} SavingsService Savings service.
+   * @param {SavingsAccountService} savingsAccountService Savings Account service.
    */
-  constructor(private savingsService: SavingsService) {}
+  constructor(private savingsAccountService: SavingsAccountService) {}
 
   /**
    * Returns the Savings Account Charge data.
@@ -26,6 +26,9 @@ export class SavingsAccountChargeResolver {
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const savingAccountId = route.parent.paramMap.get('savingAccountId');
     const chargeId = route.paramMap.get('id');
-    return this.savingsService.getSavingsAccountCharge(savingAccountId, chargeId);
+    return this.savingsAccountService.retrieveOne25({
+      accountId: Number(savingAccountId),
+      chargeStatus: 'all'
+    });
   }
 }
