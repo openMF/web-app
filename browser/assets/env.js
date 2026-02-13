@@ -91,6 +91,16 @@
   // Set to true to enable RBAC, false (default) for backward compatibility
   window['env']['productionModeEnableRBAC'] = false;
 
+  // External National ID System
+  // Set to 'true' to enable External National ID lookup during client creation/editing
+  // When enabled, set EXTERNAL_NATIONAL_ID_SYSTEM_URL, API_HEADER, API_KEY, and REGEX
+  // In production, API key is injected server-side via nginx proxy_set_header (never set here)
+  window['env']['enableExternalNationalIdSystem'] = 'false';
+  window['env']['externalNationalIdSystemUrl'] = '';
+  window['env']['externalNationalIdSystemApiHeader'] = '';
+  window['env']['externalNationalIdSystemApiKey'] = '';
+  window['env']['externalNationalIdRegex'] = '';
+
   // OIDC Plugin Environment variables
   window['env']['oidcServerEnabled'] = false;
   window['env']['oidcBaseUrl']       = '';
