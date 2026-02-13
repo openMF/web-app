@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../system.service';
+import { DataTablesService } from '@fineract/client';
 
 /**
  * Data Table data resolver.
@@ -14,9 +14,9 @@ import { SystemService } from '../system.service';
 @Injectable()
 export class DataTableResolver {
   /**
-   * @param {SystemService} systemService System service.
+   * @param {DataTablesService} dataTablesService Data Tables service.
    */
-  constructor(private systemService: SystemService) {}
+  constructor(private dataTablesService: DataTablesService) {}
 
   /**
    * Returns the Data Table data.
@@ -25,6 +25,17 @@ export class DataTableResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const dataTableName = route.paramMap.get('datatableName');
-    return this.systemService.getDataTable(dataTableName);
+    return new Observable((observer) => {
+      this.dataTablesService.getDatatables().subscribe((tables: any[]) => {
+        const table = tables.find(
+          (t) =>
+            t.registeredTableName === dataTableName ||
+            t.applicationTableName === dataTableName ||
+            t.datatableName === dataTableName
+        );
+        observer.next(table || {});
+        observer.complete();
+      });
+    });
   }
 }

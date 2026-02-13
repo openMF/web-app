@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../system.service';
+import { SpmSurveysService } from '@fineract/client';
 
 /**
  * System data resolver.
@@ -14,9 +14,9 @@ import { SystemService } from '../system.service';
 @Injectable()
 export class SurveyResolver {
   /**
-   * @param {SystemService} systemService System service.
+   * @param { SpmSurveysService } surveyService Survey service.
    */
-  constructor(private systemService: SystemService) {}
+  constructor(private spmSurveysService: SpmSurveysService) {}
 
   /**
    * Returns the Survey data.
@@ -24,6 +24,6 @@ export class SurveyResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const surveyId = route.paramMap.get('id');
-    return this.systemService.getSurvey(surveyId);
+    return this.spmSurveysService.fetchAllSurveys1({ isActive: surveyId === 'active' });
   }
 }

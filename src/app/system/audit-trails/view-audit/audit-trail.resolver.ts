@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { AuditsService } from '@fineract/client';
 
 /**
  * Audit Trail data resolver.
@@ -14,9 +14,9 @@ import { SystemService } from '../../system.service';
 @Injectable()
 export class AuditTrailResolver {
   /**
-   * @param {SystemService} systemService System service.
+   * @param {AuditsService} auditsService Audits service.
    */
-  constructor(private systemService: SystemService) {}
+  constructor(private auditsService: AuditsService) {}
 
   /**
    * Returns the Audit Trail data.
@@ -24,6 +24,6 @@ export class AuditTrailResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const auditTrailId = route.paramMap.get('id');
-    return this.systemService.getAuditTrail(auditTrailId);
+    return this.auditsService.retrieveAuditEntries({ resourceId: auditTrailId ? Number(auditTrailId) : undefined });
   }
 }

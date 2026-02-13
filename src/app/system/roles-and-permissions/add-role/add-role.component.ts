@@ -4,7 +4,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule }
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { RolesService } from '@fineract/client';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /** Custom Service Zitadel */
@@ -29,13 +29,13 @@ export class AddRoleComponent implements OnInit {
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {SystemService} systemService System Service.
+   * @param {RolesService} rolesService Roles Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private systemService: SystemService,
+    private rolesService: RolesService,
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService
@@ -69,9 +69,10 @@ export class AddRoleComponent implements OnInit {
    * if successful redirects back to roles and permission.
    */
   submit() {
-    this.systemService.createRole(this.roleForm.value).subscribe((response: any) => {
+    const postRolesRequest = this.roleForm.value;
+    this.rolesService.createRole({ postRolesRequest }).subscribe((response: any) => {
       if (environment.OIDC.oidcServerEnabled) {
-        this.authService.createRole(response.resourceId, this.roleForm.value.name, this.roleForm.value.description);
+        this.authService.createRole(response.resourceId, postRolesRequest.name, postRolesRequest.description);
       }
       this.router.navigate(['../'], { relativeTo: this.route });
     });

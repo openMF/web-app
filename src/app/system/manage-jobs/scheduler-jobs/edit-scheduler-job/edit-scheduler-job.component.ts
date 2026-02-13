@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
-import { SystemService } from 'app/system/system.service';
+import { SCHEDULERJOBService } from '@fineract/client';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -29,13 +29,13 @@ export class EditSchedulerJobComponent implements OnInit {
   /**
    * Retrieves the selected job data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {SystemService} systemService System Service.
+   * @param {SCHEDULERJOBService} schedulerJobService Scheduler Job Service.
    * @param {Router} router Router for navigation.
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(
     private route: ActivatedRoute,
-    private systemService: SystemService,
+    private schedulerJobService: SCHEDULERJOBService,
     private router: Router,
     private formBuilder: UntypedFormBuilder
   ) {
@@ -72,7 +72,7 @@ export class EditSchedulerJobComponent implements OnInit {
    * Submits the edit job form.
    */
   submit() {
-    this.systemService.updateScheduler(this.jobData.jobId, this.jobForm.value).subscribe(() => {
+    this.schedulerJobService.updateJobDetail(this.jobData.jobId, this.jobForm.value).subscribe(() => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

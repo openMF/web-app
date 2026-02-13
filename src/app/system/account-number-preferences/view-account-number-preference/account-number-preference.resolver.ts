@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { AccountNumberFormatService } from '@fineract/client';
 
 /**
  * Account Number Preference data resolver.
@@ -14,9 +14,9 @@ import { SystemService } from '../../system.service';
 @Injectable()
 export class AccountNumberPreferenceResolver {
   /**
-   * @param {SystemService} systemService System service.
+   * @param {AccountNumberFormatService} accountNumberFormatService Account Number Format service.
    */
-  constructor(private systemService: SystemService) {}
+  constructor(private accountNumberFormatService: AccountNumberFormatService) {}
 
   /**
    * Returns the Account Number Preference data.
@@ -24,6 +24,8 @@ export class AccountNumberPreferenceResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const accountNumberPreferenceId = route.paramMap.get('id');
-    return this.systemService.getAccountNumberPreference(accountNumberPreferenceId);
+    return this.accountNumberFormatService.retrieveOne({
+      accountNumberFormatId: Number(accountNumberPreferenceId)
+    });
   }
 }

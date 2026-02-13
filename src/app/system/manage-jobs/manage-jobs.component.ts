@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatTabChangeEvent, MatTabGroup, MatTab } from '@angular/material/tabs';
-import { SystemService } from '../system.service';
+import { LoanCOBCatchUpService } from '@fineract/client';
 import { TranslateService } from '@ngx-translate/core';
 import { ManageSchedulerJobsComponent } from './scheduler-jobs/manage-scheduler-jobs.component';
 import { WorkflowJobsComponent } from './workflow-jobs/workflow-jobs.component';
@@ -25,13 +25,13 @@ export class ManageJobsComponent {
   isCatchUpRunning = true;
 
   constructor(
-    private systemService: SystemService,
+    private loanCOBCatchUpService: LoanCOBCatchUpService,
     private translateService: TranslateService
   ) {}
 
   onJobTabChange(event: MatTabChangeEvent) {
     if (event.index === 2) {
-      this.systemService.getCOBCatchUpStatus().subscribe((response: any) => {
+      this.loanCOBCatchUpService.isCatchUpRunning().subscribe((response: any) => {
         this.isCatchUpRunning = response.isCatchUpRunning;
       });
     }

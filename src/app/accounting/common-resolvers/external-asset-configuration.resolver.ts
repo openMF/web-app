@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from 'app/system/system.service';
+import { GlobalConfigurationService } from '@fineract/client';
 
 /**
  * Offices data resolver.
@@ -13,15 +13,15 @@ import { SystemService } from 'app/system/system.service';
 @Injectable()
 export class ExternalAssetConfigurationResolver {
   /**
-   * @param {AccountingService} accountingService Accounting service.
+   * @param {GlobalConfigurationService} globalConfigurationService Global configuration service.
    */
-  constructor(private systemService: SystemService) {}
+  constructor(private globalConfigurationService: GlobalConfigurationService) {}
 
   /**
    * Returns the offices data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.systemService.getConfigurationByName(SystemService.CONFIG_ASSET_EXTERNALIZATION);
+    return this.globalConfigurationService.retrieveOneByName({ name: 'CONFIG_ASSET_EXTERNALIZATION' });
   }
 }

@@ -21,7 +21,14 @@ import { ActivatedRoute } from '@angular/router';
 /** Custom Services */
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
-import { SystemService } from 'app/system/system.service';
+import {
+  OfficesService,
+  LoanProductsService,
+  SavingsProductService,
+  ChargesService,
+  RolesService,
+  FineractEntityService
+} from '@fineract/client';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
@@ -122,11 +129,22 @@ export class EntityToEntityMappingComponent implements OnInit {
    * Retrieves the codes data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    * @param {TranslateService} translateService Translate Service.
+   * @param {OfficesService} officesService Offices Service.
+   * @param {LoanProductsService} loanProductsService Loan Products Service.
+   * @param {SavingsProductService} savingsProductService Savings Product Service.
+   * @param {ChargesService} chargesService Charges Service.
+   * @param {RolesService} rolesService Roles Service.
+   * @param {FineractEntityService} FineractEntityService Fineract Entity Service.
    */
   constructor(
     private route: ActivatedRoute,
     private formBuilder: UntypedFormBuilder,
-    private systemService: SystemService,
+    private officesService: OfficesService,
+    private loanProductsService: LoanProductsService,
+    private savingsProductService: SavingsProductService,
+    private chargesService: ChargesService,
+    private rolesService: RolesService,
+    private fineractEntityService: FineractEntityService,
     private dateUtils: Dates,
     private dialog: MatDialog,
     private settingsService: SettingsService,
@@ -182,51 +200,51 @@ export class EntityToEntityMappingComponent implements OnInit {
     this.createFilterPreferenceForm();
     switch (this.retrieveById) {
       case 1:
-        this.systemService.getOffices().subscribe((response: any) => {
+        this.officesService.retrieveOffices().subscribe((response: any) => {
           this.firstEntityData = response;
           this.firstMappingEntity = 'Office';
         });
-        this.systemService.getLoanProducts().subscribe((response: any) => {
+        this.loanProductsService.retrieveAllLoanProducts().subscribe((response: any) => {
           this.secondEntityData = response;
           this.secondMappingEntity = 'Loan Products';
         });
         break;
       case 2:
-        this.systemService.getOffices().subscribe((response: any) => {
+        this.officesService.retrieveOffices().subscribe((response: any) => {
           this.firstEntityData = response;
           this.firstMappingEntity = 'Office';
         });
-        this.systemService.getSavingProducts().subscribe((response: any) => {
+        this.savingsProductService.retrieveAll34().subscribe((response: any) => {
           this.secondEntityData = response;
           this.secondMappingEntity = 'Saving Products';
         });
         break;
       case 3:
-        this.systemService.getOffices().subscribe((response: any) => {
+        this.officesService.retrieveOffices().subscribe((response: any) => {
           this.firstEntityData = response;
           this.firstMappingEntity = 'Office';
         });
-        this.systemService.getCharges().subscribe((response: any) => {
+        this.chargesService.retrieveAllCharges().subscribe((response: any) => {
           this.secondEntityData = response;
           this.secondMappingEntity = 'Charges';
         });
         break;
       case 4:
-        this.systemService.getRoles().subscribe((response: any) => {
+        this.rolesService.retrieveAllRoles().subscribe((response: any) => {
           this.firstEntityData = response;
           this.firstMappingEntity = 'Role';
         });
-        this.systemService.getLoanProducts().subscribe((response: any) => {
+        this.loanProductsService.retrieveAllLoanProducts().subscribe((response: any) => {
           this.secondEntityData = response;
           this.secondMappingEntity = 'Loan Products';
         });
         break;
       case 5:
-        this.systemService.getRoles().subscribe((response: any) => {
+        this.rolesService.retrieveAllRoles().subscribe((response: any) => {
           this.firstEntityData = response;
           this.firstMappingEntity = 'Role';
         });
-        this.systemService.getSavingProducts().subscribe((response: any) => {
+        this.savingsProductService.retrieveAll34().subscribe((response: any) => {
           this.secondEntityData = response;
           this.secondMappingEntity = 'Saving Products';
         });
@@ -249,8 +267,10 @@ export class EntityToEntityMappingComponent implements OnInit {
 
     this.selectedFromId = this.filterPreference.mappingFirstParamId;
     this.selectedToId = this.filterPreference.mappingSecondParamId;
-    this.systemService
-      .getEntitytoEntityData(this.retrieveById, this.selectedFromId, this.selectedToId)
+    this.fineractEntityService
+      .retrieveOne4({
+        mapId: this.selectedMappingType
+      })
       .subscribe((response: any) => {
         this.entityMappingsListData = new MatTableDataSource(response);
         this.entityMappingsListData.paginator = this.paginator;
@@ -317,7 +337,7 @@ export class EntityToEntityMappingComponent implements OnInit {
     this.relId = selectedType;
     this.mapIdToEdit = selectedMap;
     this.fetchRelatedData(this.relId);
-    this.systemService.getMapIdData(selectedMap).subscribe((response: any) => {
+    this.fineractEntityService.retrieveOne4({ mapId: selectedMap }).subscribe((response: any) => {
       this.entityMap = response;
     });
     const formfields: FormfieldBase[] = [
@@ -385,7 +405,7 @@ export class EntityToEntityMappingComponent implements OnInit {
 
     newMappingData.dateFormat = dateFormat;
     newMappingData.locale = this.settingsService.language.code;
-    this.systemService.createMapping(this.relId, newMappingData).subscribe((response: any) => {
+    this.fineractEntityService.createMap({ relId: this.relId, body: newMappingData }).subscribe((response: any) => {
       this.showFilteredData();
     });
   }
@@ -406,7 +426,7 @@ export class EntityToEntityMappingComponent implements OnInit {
 
     newMappingData.dateFormat = dateFormat;
     newMappingData.locale = this.settingsService.language.code;
-    this.systemService.editMapping(this.mapIdToEdit, newMappingData).subscribe((response: any) => {
+    this.fineractEntityService.updateMap(this.mapIdToEdit, newMappingData).subscribe((response: any) => {
       this.showFilteredData();
     });
   }
@@ -421,7 +441,7 @@ export class EntityToEntityMappingComponent implements OnInit {
     });
     deleteNoteDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.systemService.deleteMapping(id).subscribe(() => {
+        this.fineractEntityService.delete4({ mapId: id }).subscribe(() => {
           this.showFilteredData();
         });
       }

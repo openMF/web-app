@@ -3,7 +3,7 @@ import { Alert } from 'app/core/alert/alert.model';
 import { AlertService } from 'app/core/alert/alert.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Subscription } from 'rxjs';
-import { SystemService } from '../system.service';
+import { GlobalConfigurationService } from '@fineract/client';
 import { MatTabGroup, MatTab } from '@angular/material/tabs';
 import { GlobalConfigurationsTabComponent } from './global-configurations-tab/global-configurations-tab.component';
 import { BusinessDateTabComponent } from './business-date-tab/business-date-tab.component';
@@ -29,7 +29,7 @@ export class ConfigurationsComponent implements OnInit {
 
   constructor(
     private alertService: AlertService,
-    private systemService: SystemService
+    private globalConfigurationService: GlobalConfigurationService
   ) {}
 
   ngOnInit(): void {
@@ -46,8 +46,8 @@ export class ConfigurationsComponent implements OnInit {
    * Get the Configuration and the Business Date data
    */
   getConfigurations(): void {
-    this.systemService
-      .getConfigurationByName(SettingsService.businessDateConfigName)
+    this.globalConfigurationService
+      .retrieveOneByName({ name: SettingsService.businessDateConfigName })
       .subscribe((configurationData: any) => {
         this.isBusinessDateEnabled = configurationData.enabled;
       });

@@ -7,7 +7,7 @@ import {
   MatDialogActions,
   MatDialogClose
 } from '@angular/material/dialog';
-import { SystemService } from 'app/system/system.service';
+import { SCHEDULERJOBService } from '@fineract/client';
 import { RunSelectedJobsTableComponent } from './run-selected-jobs-table/run-selected-jobs-table.component';
 import { CdkScrollable } from '@angular/cdk/scrolling';
 import { MatList, MatListItem } from '@angular/material/list';
@@ -68,7 +68,7 @@ export class RunSelectedJobsPopoverComponent implements OnInit {
   messages: { message: string; status: number }[] = [];
 
   constructor(
-    private systemService: SystemService,
+    private schedulerJobService: SCHEDULERJOBService,
     @Inject(MAT_DIALOG_DATA)
     public data: SelectedJobsDataType
   ) {}
@@ -87,7 +87,7 @@ export class RunSelectedJobsPopoverComponent implements OnInit {
     });
 
     tableData.forEach((job) => {
-      this.systemService.runSelectedJob(job.jobId.toString()).then((response) => {
+      this.schedulerJobService.executeJob({ jobId: job.jobId }).subscribe((response) => {
         this.messages.push({
           message: `${job.displayName}: ${response.statusText} (${response.status})`,
           status: response.ok

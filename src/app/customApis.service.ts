@@ -231,6 +231,15 @@ export class OrganizationService {
     });
   }
 }
+@Injectable({
+  providedIn: 'root'
+})
+export class SystemService {
+  constructor(private http: HttpClient) {}
+  getExternalEventConfiguration(): Observable<any> {
+    return this.http.get('/externalevents/configuration');
+  }
+}
 
 @Injectable({
   providedIn: 'root'

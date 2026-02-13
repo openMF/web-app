@@ -22,7 +22,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 /** Custom Services */
 import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
 import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
-import { SystemService } from '../../system.service';
+import { DataTablesService } from '@fineract/client';
 
 /** Data Imports */
 import { appTableData, entitySubTypeData, savingsSubTypeData } from '../app-table-data';
@@ -118,7 +118,7 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
   /**
    * Retrieves the column codes data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {SystemService} systemService System Service.
+   * @param {DataTablesService} dataTablesService Data Tables Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog Reference.
@@ -128,7 +128,7 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private systemService: SystemService,
+    private dataTablesService: DataTablesService,
     private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
@@ -270,6 +270,16 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
    * if successful redirects to view created data table.
    */
   submit() {
+    if (this.dataTableForm.invalid) {
+      this.dataTableForm.markAllAsTouched();
+      alert('Please fill all required fields.');
+      return;
+    }
+    // Validate columns
+    if (!this.columnData || this.columnData.length === 0) {
+      alert('Please add at least one column before submitting.');
+      return;
+    }
     const columns: any = [];
     this.columnData.forEach((column: DatatableColumn) => {
       columns.push({
@@ -282,23 +292,32 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
         indexed: column.isColumnIndexed
       });
     });
-    this.dataTableForm.value.columns = columns;
-    const payload = this.dataTableForm.value;
-    if (this.dataTableForm.value.entitySubType == null || this.dataTableForm.value.entitySubType === '') {
+    // Build payload
+    const payload = {
+      ...this.dataTableForm.value,
+      columns
+    };
+    if (payload.entitySubType == null || payload.entitySubType === '') {
       delete payload.entitySubType;
     }
-    this.systemService.createDataTable(payload).subscribe((response: any) => {
-      if (this.configurationWizardService.showDatatablesForm === true) {
-        this.configurationWizardService.showDatatablesForm = false;
-        this.openDialog();
-      } else {
-        this.router.navigate(
-          [
-            '../',
-            response.resourceIdentifier
-          ],
-          { relativeTo: this.route }
-        );
+    // Ensure payload is passed as postDataTablesRequest if required by the service
+    this.dataTablesService.createDatatable({ postDataTablesRequest: payload }).subscribe({
+      next: (response: any) => {
+        if (this.configurationWizardService.showDatatablesForm === true) {
+          this.configurationWizardService.showDatatablesForm = false;
+          this.openDialog();
+        } else {
+          this.router.navigate(
+            [
+              '../',
+              response.resourceIdentifier
+            ],
+            { relativeTo: this.route }
+          );
+        }
+      },
+      error: (err) => {
+        alert('Failed to create data table. Please check your input and try again.');
       }
     });
   }

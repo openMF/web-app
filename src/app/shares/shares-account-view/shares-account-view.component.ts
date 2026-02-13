@@ -37,6 +37,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
  */
 @Component({
   selector: 'mifosx-shares-account-view',
+  standalone: true,
   templateUrl: './shares-account-view.component.html',
   styleUrls: ['./shares-account-view.component.scss'],
   imports: [

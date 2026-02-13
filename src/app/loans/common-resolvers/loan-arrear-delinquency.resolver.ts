@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
-import { SystemService } from 'app/system/system.service';
+import { GlobalConfigurationService } from '@fineract/client';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -8,15 +8,15 @@ import { Observable } from 'rxjs';
 })
 export class LoanArrearDelinquencyResolver {
   /**
-   * @param {SystemService} systemService System service.
+   * @param {GlobalConfigurationService} globalConfigurationService Global configuration service.
    */
-  constructor(private systemService: SystemService) {}
+  constructor(private globalConfigurationService: GlobalConfigurationService) {}
 
   /**
    * Returns the loan-arrears-delinquency-display-data configuration data.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    return this.systemService.getConfigurationByName('loan-arrears-delinquency-display-data');
+    return this.globalConfigurationService.retrieveOneByName({ name: 'loan-arrears-delinquency-display-data' });
   }
 }

@@ -8,7 +8,7 @@ import {
   MatDialogClose
 } from '@angular/material/dialog';
 import { CustomParametersTableComponent } from './custom-parameters-table/custom-parameters-table.component';
-import { SystemService } from 'app/system/system.service';
+import { SCHEDULERJOBService } from '@fineract/client';
 import { CdkScrollable } from '@angular/cdk/scrolling';
 import { NgClass } from '@angular/common';
 import { MatList, MatListItem } from '@angular/material/list';
@@ -82,7 +82,7 @@ export class CustomParametersPopoverComponent implements OnInit {
   messages: { message: string; status: number }[] = [];
 
   constructor(
-    private systemService: SystemService,
+    private schedulerJobService: SCHEDULERJOBService,
     @Inject(MAT_DIALOG_DATA) public data: SelectedJobsDataType
   ) {}
 
@@ -104,9 +104,14 @@ export class CustomParametersPopoverComponent implements OnInit {
     });
 
     tableData.forEach((job) => {
-      this.systemService
-        .runSelectedJobWithParameters(job.jobId, { jobParameters: job.jobParameters })
-        .then((response) => {
+      this.schedulerJobService
+        .executeJob({
+          jobId: Number(job.jobId),
+          executeJobRequest: {
+            jobParameters: job.jobParameters
+          }
+        })
+        .subscribe((response) => {
           this.messages.push({
             message: `${job.displayName}: ${response.statusText} (${response.status})`,
             status: response.ok

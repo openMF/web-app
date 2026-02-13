@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { SystemService } from 'app/system/system.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatCard, MatCardHeader, MatCardTitle, MatCardContent } from '@angular/material/card';
 import { MatDivider } from '@angular/material/divider';
@@ -40,13 +39,11 @@ export class ViewSurveyComponent {
   /**
    * Retrieves the survey data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {SystemService} systemService System Service.
    * @param {MatDialog} dialog Dialog Reference.
    * @param {Router} router Router for navigation.
    */
   constructor(
     private route: ActivatedRoute,
-    private systemService: SystemService,
     private dialog: MatDialog,
     private router: Router
   ) {

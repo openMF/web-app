@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { SystemService } from 'app/system/system.service';
+import { ReportsService } from '@fineract/client';
 
 /** Custom Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
@@ -34,13 +34,13 @@ export class ViewReportComponent {
   /**
    * Retrieves the report data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {SystemService} systemService System Service.
+   * @param {ReportsService} reportsService Reports Service.
    * @param {MatDialog} dialog Dialog Reference.
    * @param {Router} router Router for navigation.
    */
   constructor(
     private route: ActivatedRoute,
-    private systemService: SystemService,
+    private reportsService: ReportsService,
     private dialog: MatDialog,
     private router: Router
   ) {
@@ -58,7 +58,7 @@ export class ViewReportComponent {
     });
     deleteReportDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.systemService.deleteReport(this.reportData.id).subscribe(() => {
+        this.reportsService.deleteReport(this.reportData.id).subscribe(() => {
           this.router.navigate(['/system/reports']);
         });
       }

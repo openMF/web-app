@@ -19,7 +19,7 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { DataTablesService } from '@fineract/client';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
@@ -80,14 +80,14 @@ export class ViewDataTableComponent implements OnInit {
   /**
    * Retrieves the data table data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {SystemService} systemService System Service.
+   * @param {DataTablesService} dataTablesService Data Tables Service.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    *  @param {TranslateService} translateService Translate Service.
    */
   constructor(
     private route: ActivatedRoute,
-    private systemService: SystemService,
+    private dataTablesService: DataTablesService,
     private router: Router,
     private dialog: MatDialog,
     private translateService: TranslateService
@@ -109,7 +109,9 @@ export class ViewDataTableComponent implements OnInit {
    * Initializes the data source, paginator and sorter for columns table.
    */
   setColumnsTable() {
-    this.columnsData.shift();
+    if (Array.isArray(this.columnsData) && this.columnsData.length > 0) {
+      this.columnsData.shift();
+    }
     // TODO: Figure out a better approach in order to pass only updated parameters instead of all of them.
     this.dataSource = new MatTableDataSource(this.columnsData);
     this.dataSource.paginator = this.paginator;
@@ -120,15 +122,23 @@ export class ViewDataTableComponent implements OnInit {
    * Deletes the current data table.
    */
   delete() {
+    const datatableName =
+      this.dataTableData?.registeredTableName ||
+      this.dataTableData?.applicationTableName ||
+      this.dataTableData?.datatableName;
+    console.log('Delete DataTable: datatableName =', datatableName, 'dataTableData =', this.dataTableData);
+    if (!datatableName) {
+      alert('Error: Data table name is missing. Cannot delete.');
+      return;
+    }
     const deleteDataTableDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: {
-        deleteContext:
-          this.translateService.instant('labels.inputs.Data Table') + ' ' + this.dataTableData.registeredTableName
+        deleteContext: this.translateService.instant('labels.inputs.Data Table') + ' ' + datatableName
       }
     });
     deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.systemService.deleteDataTable(this.dataTableData.registeredTableName).subscribe(() => {
+        this.dataTablesService.deleteDatatable({ datatableName }).subscribe(() => {
           this.router.navigate(['/system/data-tables'], { relativeTo: this.route });
         });
       }

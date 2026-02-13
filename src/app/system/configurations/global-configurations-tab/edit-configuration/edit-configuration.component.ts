@@ -5,7 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Services */
-import { SystemService } from '../../../system.service';
+import { GlobalConfigurationService } from '@fineract/client';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -35,14 +35,14 @@ export class EditConfigurationComponent implements OnInit {
   /**
    * Retrieves the configuration data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {SystemService} systemService System Service.
+   * @param {GlobalConfigurationService} globalConfigurationService Global Configuration Service.
    * @param {SettingsService} settingsService Setting Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private systemService: SystemService,
+    private globalConfigurationService: GlobalConfigurationService,
     private settingsService: SettingsService,
     private route: ActivatedRoute,
     private router: Router
@@ -99,9 +99,11 @@ export class EditConfigurationComponent implements OnInit {
         delete payload.dateValue;
       }
 
-      this.systemService.updateConfiguration(this.configuration.id, payload).subscribe((response: any) => {
-        this.router.navigate(['../../'], { relativeTo: this.route });
-      });
+      this.globalConfigurationService
+        .updateConfiguration1(this.configuration.id, payload)
+        .subscribe((response: any) => {
+          this.router.navigate(['../../'], { relativeTo: this.route });
+        });
     }
   }
 }

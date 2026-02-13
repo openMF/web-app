@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { GlobalConfigurationService } from '@fineract/client';
 
 /**
  * Configurations data resolver.
@@ -13,15 +13,15 @@ import { SystemService } from '../../system.service';
 @Injectable()
 export class GlobalConfigurationsResolver {
   /**
-   * @param {SystemService} systemService System service.
+   * @param {GlobalConfigurationService} globalConfigurationService Global Configuration Service.
    */
-  constructor(private systemService: SystemService) {}
+  constructor(private globalConfigurationService: GlobalConfigurationService) {}
 
   /**
    * Returns the configurations data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.systemService.getConfigurations();
+    return this.globalConfigurationService.retrieveConfiguration();
   }
 }

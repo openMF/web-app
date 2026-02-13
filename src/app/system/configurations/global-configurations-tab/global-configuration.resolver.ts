@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { GlobalConfigurationService } from '@fineract/client';
 
 /**
  * Configurations data resolver.
@@ -14,16 +14,16 @@ import { SystemService } from '../../system.service';
 @Injectable()
 export class GlobalConfigurationResolver {
   /**
-   * @param {SystemService} systemService System service.
+   * @param {GlobalConfigurationService} globalConfigurationService Global Configuration Service.
    */
-  constructor(private systemService: SystemService) {}
+  constructor(private globalConfigurationService: GlobalConfigurationService) {}
 
   /**
    * Returns the Configuration data.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const configurationId = route.paramMap.get('id');
-    return this.systemService.getConfiguration(configurationId);
+    const id = route.paramMap.get('id');
+    return this.globalConfigurationService.retrieveConfiguration({ survey: false });
   }
 }

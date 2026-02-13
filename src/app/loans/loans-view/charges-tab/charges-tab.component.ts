@@ -32,7 +32,7 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { Dates } from 'app/core/utils/dates';
-import { SystemService } from 'app/system/system.service';
+import { GlobalConfigurationService } from '@fineract/client';
 import { GlobalConfiguration } from 'app/system/configurations/global-configurations-tab/configuration.model';
 import { TranslateService } from '@ngx-translate/core';
 import { NgIf, CurrencyPipe } from '@angular/common';
@@ -98,6 +98,7 @@ export class ChargesTabComponent implements OnInit {
    * Retrieves the loans data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    * @param {SettingsService} settingsService Settings Service
+   * @param {GlobalConfigurationService} globalConfigurationService Global Configuration Service
    */
   constructor(
     private loanChargesService: LoanChargesService,
@@ -107,7 +108,7 @@ export class ChargesTabComponent implements OnInit {
     private translateService: TranslateService,
     public dialog: MatDialog,
     private settingsService: SettingsService,
-    private systemService: SystemService
+    private globalConfigurationService: GlobalConfigurationService
   ) {
     this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
       this.loanDetails = data.loanDetailsData;
@@ -115,9 +116,11 @@ export class ChargesTabComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.systemService.getConfigurationByName('charge-accrual-date').subscribe((config: GlobalConfiguration) => {
-      this.useDueDate = config.stringValue === 'due-date';
-    });
+    this.globalConfigurationService
+      .retrieveOneByName({ name: 'charge-accrual-date' })
+      .subscribe((config: GlobalConfiguration) => {
+        this.useDueDate = config.stringValue === 'due-date';
+      });
     this.chargesData = this.loanDetails.charges;
     this.status = this.loanDetails.status.value;
     let actionFlag;

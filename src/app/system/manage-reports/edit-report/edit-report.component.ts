@@ -20,7 +20,7 @@ import {
 } from '@angular/material/table';
 
 /** Custom Services */
-import { SystemService } from 'app/system/system.service';
+import { ReportsService } from '@fineract/client';
 
 /** Custom Components */
 import { ReportParameterDialogComponent } from '../report-parameter-dialog/report-parameter-dialog.component';
@@ -101,7 +101,7 @@ export class EditReportComponent implements OnInit {
   /**
    * Retrieves the report and report template data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {SystemService} systemService System Service.
+   * @param {ReportsService} reportsService Reports Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog Reference.
@@ -110,7 +110,7 @@ export class EditReportComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private systemService: SystemService,
+    private reportService: ReportsService,
     private dialog: MatDialog
   ) {
     this.route.data.subscribe((data: { report: any; reportTemplate: any }) => {
@@ -285,7 +285,7 @@ export class EditReportComponent implements OnInit {
         return reportParameter;
       });
     }
-    this.systemService.updateReport(this.reportData.id, this.reportForm.value).subscribe(() => {
+    this.reportService.updateReport(this.reportData.id, this.reportForm.value).subscribe(() => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

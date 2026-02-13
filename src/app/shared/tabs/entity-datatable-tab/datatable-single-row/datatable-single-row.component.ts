@@ -7,7 +7,7 @@ import { SettingsService } from 'app/settings/settings.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
-import { SystemService } from 'app/system/system.service';
+import { DataTablesService } from '@fineract/client';
 import { NgIf, NgFor, NgClass, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -50,7 +50,7 @@ export class DatatableSingleRowComponent implements OnInit {
   /**
    * @param {ActivatedRoute} route Activated Route.
    * @param {Dates} dateUtils Date Utils.
-   * @param {SystemService} systemService System Service.
+   * @param {DataTablesService} dataTablesService Data Tables Service.
    * @param {SettingsService} settingsService Settings Service
    * @param {Datatables} datatables Datatable utils
    */
@@ -60,7 +60,7 @@ export class DatatableSingleRowComponent implements OnInit {
     private dialog: MatDialog,
     private settingsService: SettingsService,
     private datatables: Datatables,
-    private systemService: SystemService
+    private dataTablesService: DataTablesService
   ) {}
 
   ngOnInit() {
@@ -94,12 +94,20 @@ export class DatatableSingleRowComponent implements OnInit {
           );
         });
         dataTableEntryObject = { ...response.data.value, ...dataTableEntryObject };
-        this.systemService
-          .addEntityDatatableEntry(this.entityId, this.datatableName, dataTableEntryObject)
+        this.dataTablesService
+          .createDatatableEntry({
+            datatable: this.datatableName,
+            apptableId: Number(this.entityId),
+            body: JSON.stringify(dataTableEntryObject)
+          })
           .subscribe(() => {
-            this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
-              this.dataObject = dataObject;
-            });
+            this.dataTablesService
+              .getDatatables({
+                apptable: String(this.entityId)
+              })
+              .subscribe((dataObject: any) => {
+                this.dataObject = dataObject;
+              });
           });
       }
     });
@@ -147,12 +155,20 @@ export class DatatableSingleRowComponent implements OnInit {
           );
         });
         dataTableEntryObject = { ...response.data.value, ...dataTableEntryObject };
-        this.systemService
-          .editEntityDatatableEntry(this.entityId, this.datatableName, dataTableEntryObject)
+        this.dataTablesService
+          .updateDatatableEntryOnetoOne({
+            apptableId: Number(this.entityId),
+            datatable: this.datatableName,
+            body: JSON.stringify(dataTableEntryObject)
+          })
           .subscribe(() => {
-            this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
-              this.dataObject = dataObject;
-            });
+            this.dataTablesService
+              .getDatatables({
+                apptable: String(this.entityId)
+              })
+              .subscribe((dataObject: any) => {
+                this.dataObject = dataObject;
+              });
           });
       }
     });
@@ -164,11 +180,20 @@ export class DatatableSingleRowComponent implements OnInit {
     });
     deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.systemService.deleteDatatableContent(this.entityId, this.datatableName).subscribe(() => {
-          this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
-            this.dataObject = dataObject;
+        this.dataTablesService
+          .deleteDatatableEntries({
+            apptableId: Number(this.entityId),
+            datatable: this.datatableName
+          })
+          .subscribe(() => {
+            this.dataTablesService
+              .getDatatables({
+                apptable: String(this.entityId)
+              })
+              .subscribe((dataObject: any) => {
+                this.dataObject = dataObject;
+              });
           });
-        });
       }
     });
   }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
-import { SystemService } from 'app/system/system.service';
+import { DataTablesService } from '@fineract/client';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -8,9 +8,9 @@ import { Observable } from 'rxjs';
 })
 export class SavingProductDatatableResolver {
   /**
-   * @param {SystemService} systemService Products service.
+   * @param {DataTablesService} dataTablesService Data Tables service.
    */
-  constructor(private systemService: SystemService) {}
+  constructor(private dataTablesService: DataTablesService) {}
 
   /**
    * Returns the loan product data.
@@ -19,6 +19,6 @@ export class SavingProductDatatableResolver {
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const productId = route.parent.parent.paramMap.get('productId');
     const datatableName = route.paramMap.get('datatableName');
-    return this.systemService.getEntityDatatable(productId, datatableName);
+    return this.dataTablesService.getDatatables({ apptable: datatableName ?? undefined });
   }
 }

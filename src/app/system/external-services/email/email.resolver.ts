@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { ExternalServicesService } from '@fineract/client';
 
 /**
  * Email Configuration data resolver.
@@ -13,15 +13,15 @@ import { SystemService } from '../../system.service';
 @Injectable()
 export class EmailConfigurationResolver {
   /**
-   * @param {SystemService} systemService System service.
+   * @param {ExternalServicesService} externalServicesService External Services service.
    */
-  constructor(private systemService: SystemService) {}
+  constructor(private externalServicesService: ExternalServicesService) {}
 
   /**
    * Returns the Email Configuration data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.systemService.getExternalConfiguration('SMTP');
+    return this.externalServicesService.retrieveOne2({ servicename: 'SMTP' });
   }
 }

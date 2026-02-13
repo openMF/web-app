@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
-import { SystemService } from 'app/system/system.service';
+import { ExternalServicesService } from '@fineract/client';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -27,13 +27,13 @@ export class EditSMSComponent implements OnInit {
   /**
    * Retrieves the SMS configuration data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {SystemService} systemService Accounting Service.
+   * @param {ExternalServicesService} externalServicesService External services service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private systemService: SystemService,
+    private externalServicesService: ExternalServicesService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -78,10 +78,12 @@ export class EditSMSComponent implements OnInit {
    * if successful redirects to view SMS configuration.
    */
   submit() {
-    this.systemService
-      .updateExternalConfiguration('SMS', this.smsConfigurationForm.value)
-      .subscribe((response: any) => {
-        this.router.navigate(['../'], { relativeTo: this.route });
-      });
+    const requestParams = {
+      servicename: 'SMS',
+      putExternalServiceRequest: this.smsConfigurationForm.value
+    };
+    this.externalServicesService.updateExternalServiceProperties(requestParams).subscribe((response: any) => {
+      this.router.navigate(['../'], { relativeTo: this.route });
+    });
   }
 }

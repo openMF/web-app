@@ -24,7 +24,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ChangeDetectorRef } from '@angular/core';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { HooksService } from '@fineract/client';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
@@ -97,7 +97,7 @@ export class EditHookComponent implements OnInit {
   /**
    * Retrieves the hooks template data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {SystemService} systemService System Service.
+   * @param {HooksService} hooksService Hooks Service.
    * @param {Router} router Router for navigation.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {MatDialog} dialog Dialog Reference.
@@ -105,7 +105,7 @@ export class EditHookComponent implements OnInit {
    */
   constructor(
     private route: ActivatedRoute,
-    private systemService: SystemService,
+    private hooksService: HooksService,
     private router: Router,
     private formBuilder: UntypedFormBuilder,
     private dialog: MatDialog,
@@ -253,37 +253,57 @@ export class EditHookComponent implements OnInit {
    * if successful redirects to view updated hook.
    */
   submit() {
-    const hook: {
-      name: string;
-      isActive: boolean;
-      displayName: string;
-      events: any;
-      config: {
-        'Payload URL': string;
-        'Content Type'?: string;
-        'SMS Provider'?: string;
-        'SMS Provider Account Id'?: string;
-        'SMS Provider Token'?: string;
-      };
-    } = {
+    const configFields: any[] = [];
+    if (this.hookData.name === 'Web') {
+      configFields.push(
+        {
+          fieldName: 'Content Type',
+          fieldValue: this.hookForm.get('contentType').value
+        },
+        {
+          fieldName: 'Payload URL',
+          fieldValue: this.hookForm.get('payloadUrl').value
+        }
+      );
+    }
+
+    // Add fields for SMS Bridge hook
+    if (this.hookData.name === 'SMS Bridge') {
+      configFields.push(
+        {
+          fieldName: 'Phone Number',
+          fieldValue: this.hookForm.get('phoneNumber').value
+        },
+        {
+          fieldName: 'SMS Provider',
+          fieldValue: this.hookForm.get('smsProvider').value
+        },
+        {
+          fieldName: 'SMS Provider Account Id',
+          fieldValue: this.hookForm.get('smsProviderAccountId').value
+        },
+        {
+          fieldName: 'SMS Provider Token',
+          fieldValue: this.hookForm.get('smsProviderToken').value
+        }
+      );
+    }
+
+    const hook = {
       name: this.hookForm.get('name').value,
       isActive: this.hookForm.get('isActive').value,
       displayName: this.hookForm.get('displayName').value,
       events: this.eventsData,
-      config: {
-        'Payload URL': this.hookForm.get('payloadUrl').value,
-        'Content Type': this.hookForm.get('contentType').enabled ? this.hookForm.get('contentType').value : undefined,
-        'SMS Provider': this.hookForm.get('smsProvider').enabled ? this.hookForm.get('smsProvider').value : undefined,
-        'SMS Provider Account Id': this.hookForm.get('smsProviderAccountId').enabled
-          ? this.hookForm.get('smsProviderAccountId').value
-          : undefined,
-        'SMS Provider Token': this.hookForm.get('smsProviderToken').enabled
-          ? this.hookForm.get('smsProviderToken').value
-          : undefined
-      }
+      config: configFields
     };
-    this.systemService.updateHook(this.hookData.id, hook).subscribe((response: any) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+
+    this.hooksService
+      .updateHook({
+        hookId: this.hookData.id,
+        putHookRequest: hook
+      })
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
 }

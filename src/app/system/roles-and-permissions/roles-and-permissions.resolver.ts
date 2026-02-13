@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../system.service';
+import { RolesService } from '@fineract/client';
 
 /**
  * Roles and Permissions data resolver.
@@ -13,15 +13,15 @@ import { SystemService } from '../system.service';
 @Injectable()
 export class RolesAndPermissionsResolver {
   /**
-   * @param {SystemService} systemService System service.
+   * @param {RolesService} rolesService Roles service.
    */
-  constructor(private systemService: SystemService) {}
+  constructor(private rolesService: RolesService) {}
 
   /**
    * Returns the roles and permissions data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.systemService.getRoles();
+    return this.rolesService.retrieveAllRoles();
   }
 }

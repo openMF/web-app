@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../system.service';
+import { AuditsService } from '@fineract/client';
 
 /**
  * Audit Trail Search Template data resolver.
@@ -13,15 +13,15 @@ import { SystemService } from '../system.service';
 @Injectable()
 export class AuditTrailSearchTemplateResolver {
   /**
-   * @param {SystemService} systemService System service.
+   * @param {AuditsService} auditsService Audits service.
    */
-  constructor(private systemService: SystemService) {}
+  constructor(private auditsService: AuditsService) {}
 
   /**
    * Returns the Audit Trail Search Template data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.systemService.getAuditTrailSearchTemplate();
+    return this.auditsService.retrieveAuditSearchTemplate();
   }
 }

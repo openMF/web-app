@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../system.service';
+import { DataTablesService } from '@fineract/client';
 
 /**
  * Manage data tables data resolver.
@@ -13,15 +13,15 @@ import { SystemService } from '../system.service';
 @Injectable()
 export class ManageDataTablesResolver {
   /**
-   * @param {SystemService} systemService System service.
+   * @param {DataTablesService} dataTablesService Data Tables service.
    */
-  constructor(private systemService: SystemService) {}
+  constructor(private dataTablesService: DataTablesService) {}
 
   /**
    * Returns the manage data tables data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.systemService.getDataTables();
+    return this.dataTablesService.getDatatables();
   }
 }

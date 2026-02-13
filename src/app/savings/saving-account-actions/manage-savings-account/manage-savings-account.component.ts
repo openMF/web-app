@@ -5,7 +5,7 @@ import { Dates } from 'app/core/utils/dates';
 import { SavingsAccountTransactionsService, SavingsAccountService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Currency } from 'app/shared/models/general.model';
-import { SystemService } from 'app/system/system.service';
+import { CodesService, CodeValuesService } from '@fineract/client';
 import { MatCard, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
 import { InputAmountComponent } from '../../../shared/input-amount/input-amount.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -58,6 +58,8 @@ export class ManageSavingsAccountComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
+   * @param {CodeValuesService} codeValuesService Code Values Service
+   * @param {CodesService} codesService Codes Service
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -66,8 +68,9 @@ export class ManageSavingsAccountComponent implements OnInit {
     private dateUtils: Dates,
     private route: ActivatedRoute,
     private router: Router,
-    private systemService: SystemService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private codeValuesService: CodeValuesService,
+    private codesService: CodesService
   ) {
     this.transactionCommand = this.route.snapshot.params['name'].toLowerCase().replaceAll(' ', '');
     this.transactionType[this.transactionCommand] = true;
@@ -100,10 +103,10 @@ export class ManageSavingsAccountComponent implements OnInit {
       codeName = 'DebitTransactionFreezeReasons';
     }
 
-    this.systemService.getCodes().subscribe((codes: any) => {
+    this.codesService.retrieveCodes().subscribe((codes: any) => {
       codes.some((code: any) => {
         if (code.name === codeName) {
-          this.systemService.getCodeValues(code.id).subscribe((codeValues: any) => {
+          this.codeValuesService.retrieveAllCodeValues(code.id).subscribe((codeValues: any) => {
             this.reasonOptions = codeValues;
             return true;
           });

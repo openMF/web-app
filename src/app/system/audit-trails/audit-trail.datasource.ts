@@ -5,7 +5,7 @@ import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { Observable, BehaviorSubject } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../system.service';
+import { AuditsService } from '@fineract/client';
 
 /**
  * Audit Trails custom data source to implement server side filtering, pagination and sorting.
@@ -20,9 +20,9 @@ export class AuditTrailsDataSource implements DataSource<any> {
   public records$ = this.recordsSubject.asObservable();
 
   /**
-   * @param {SystemService} systemService System Service.
+   * @param {AuditsService} auditsService Audits Service.
    */
-  constructor(private systemService: SystemService) {}
+  constructor(private auditsService: AuditsService) {}
 
   /**
    * Gets audit trails on the basis of provided parameters and emits the value.
@@ -40,8 +40,14 @@ export class AuditTrailsDataSource implements DataSource<any> {
     limit: number = 10
   ) {
     this.auditTrailsSubject.next([]);
-    this.systemService
-      .getAuditTrails(filterBy, orderBy, sortOrder, pageIndex * limit, limit)
+    this.auditsService
+      .retrieveAuditEntries({
+        ...filterBy,
+        orderBy: orderBy,
+        sortOrder: sortOrder,
+        offset: pageIndex * limit,
+        limit: limit
+      })
       .subscribe((auditTrails: any) => {
         this.recordsSubject.next(auditTrails.totalFilteredRecords);
         this.auditTrailsSubject.next(auditTrails.pageItems);

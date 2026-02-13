@@ -19,7 +19,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { LoansService } from '@fineract/client';
 import { ErrorDialogComponent } from 'app/shared/error-dialog/error-dialog.component';
-import { SystemService } from 'app/system/system.service';
+import { InlineJobService } from '@fineract/client';
 import { LoanAccountLockService } from '@fineract/client';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -95,12 +95,13 @@ export class LoanLockedComponent implements OnInit {
    * @param {MatDialog} dialog Dialog reference.
    * @param {TranslateService} translateService Translate Service.
    * @param {LoanAccountLockService} tasksService Loan Account Lock Service.
+   * @param {InlineJobService} inlineJobService Inline Job Service.
    */
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private loansService: LoansService,
-    private systemService: SystemService,
+    private inlineJobService: InlineJobService,
     private loanAccountLockService: LoanAccountLockService,
     private dialog: MatDialog,
     private translateService: TranslateService
@@ -185,9 +186,14 @@ export class LoanLockedComponent implements OnInit {
       const payload = {
         loanIds: loanIds
       };
-      this.systemService.runInlineCOB(this.jobName, payload).subscribe((data: any) => {
-        this.getLoansLocked(0);
-      });
+      this.inlineJobService
+        .executeInlineJob({
+          jobName: this.jobName as string,
+          inlineJobRequest: payload
+        })
+        .subscribe((data: any) => {
+          this.getLoansLocked(0);
+        });
     }
   }
 }

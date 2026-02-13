@@ -8,7 +8,7 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
 
 /** Custom Services */
 import { TranslateService } from '@ngx-translate/core';
-import { SystemService } from '../../system.service';
+import { HooksService } from '@fineract/client';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -34,14 +34,14 @@ export class ViewHookComponent {
    * Retrieves the hook data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    * @param {MatDialog} dialog Dialog Reference.
-   * @param {SystemService} systemService System Service.
+   * @param {HooksService} hooksService Hooks Service.
    * @param {Router} router Router for navigation.
    * @param {TranslateService} translateService Translate Service.
    */
   constructor(
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    private systemService: SystemService,
+    private hooksService: HooksService,
     private router: Router,
     private translateService: TranslateService
   ) {
@@ -59,7 +59,7 @@ export class ViewHookComponent {
     });
     deleteHookDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.systemService.deleteHook(this.hookData.id).subscribe(() => {
+        this.hooksService.deleteHook(this.hookData.id).subscribe(() => {
           this.router.navigate(['/system/hooks']);
         });
       }

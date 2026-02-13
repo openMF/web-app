@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../system.service';
+import { SurveyService } from '@fineract/client';
 
 /**
  * Surveys data resolver.
@@ -13,15 +13,15 @@ import { SystemService } from '../system.service';
 @Injectable()
 export class ManageSurveysResolver {
   /**
-   * @param {SystemService} systemService System service.
+   * @param {SurveyService} surveyService Survey service.
    */
-  constructor(private systemService: SystemService) {}
+  constructor(private surveyService: SurveyService) {}
 
   /**
    * Returns the Surveys data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.systemService.getSurveys();
+    return this.surveyService.retrieveSurveys();
   }
 }

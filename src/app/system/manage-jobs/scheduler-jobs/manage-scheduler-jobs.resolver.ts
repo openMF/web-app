@@ -6,7 +6,7 @@ import { Resolve } from '@angular/router';
 import { Observable, forkJoin } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../system.service';
+import { SCHEDULERJOBService, SchedulerService } from '@fineract/client';
 
 /**
  * Manage Scheduler Jobs data resolver.
@@ -14,9 +14,13 @@ import { SystemService } from '../system.service';
 @Injectable()
 export class ManageSchedulerJobsResolver implements Resolve<Object> {
   /**
-   * @param {SystemService} systemService System service.
+   * @param {SCHEDULERJOBService} schedulerJobService Scheduler Job service.
+   * @param {SchedulerService} schedulerService Scheduler service.
    */
-  constructor(private systemService: SystemService) {}
+  constructor(
+    private schedulerJobService: SCHEDULERJOBService,
+    private schedulerService: SchedulerService
+  ) {}
 
   /**
    * Returns the manage scheduler jobs data.
@@ -24,8 +28,8 @@ export class ManageSchedulerJobsResolver implements Resolve<Object> {
    */
   resolve() {
     return forkJoin([
-      this.systemService.getJobs(),
-      this.systemService.getScheduler()
+      this.schedulerJobService.retrieveAll8(),
+      this.schedulerService.retrieveStatus()
     ]);
   }
 }

@@ -4,7 +4,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule }
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { CodesService } from '@fineract/client';
 import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
 import { PopoverRef } from '../../../configuration-wizard/popover/popover-ref';
 import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
@@ -29,7 +29,7 @@ export class CreateCodeComponent implements OnInit, AfterViewInit {
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {SystemService} systemService Accounting Service.
+   * @param {CodeValuesService} codeValuesService Code Values Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
@@ -37,7 +37,7 @@ export class CreateCodeComponent implements OnInit, AfterViewInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private systemService: SystemService,
+    private codesService: CodesService,
     private route: ActivatedRoute,
     private router: Router,
     private configurationWizardService: ConfigurationWizardService,
@@ -68,7 +68,14 @@ export class CreateCodeComponent implements OnInit, AfterViewInit {
    * if successful redirects to view created code.
    */
   submit() {
-    this.systemService.createCode(this.codeForm.value).subscribe((response: any) => {
+    // Fix: Get codeId from route params, not from name field
+    // This is a create code page, so use the correct service method
+    const payload = {
+      postCodesRequest: {
+        name: this.codeForm.value.name
+      }
+    };
+    this.codesService.createCode(payload).subscribe((response: any) => {
       if (this.configurationWizardService.showSystemCodesForm === true) {
         this.configurationWizardService.showSystemCodesForm = false;
         this.configurationWizardService.showRolesandPermission = true;
