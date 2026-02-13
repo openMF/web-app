@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SharesService } from '../shares.service';
+import { ShareAccountService } from '@fineract/client';
 
 /**
  * Shares Account Actions data resolver.
@@ -14,9 +14,9 @@ import { SharesService } from '../shares.service';
 @Injectable()
 export class ShareAccountActionsResolver {
   /**
-   * @param {sharesService} SharesService Shares service.
+   * @param {ShareAccountService} ShareAccountService Shares account service.
    */
-  constructor(private sharesService: SharesService) {}
+  constructor(private shareAccountService: ShareAccountService) {}
 
   /**
    * Returns the Shares account actions data.
@@ -31,7 +31,10 @@ export class ShareAccountActionsResolver {
       case 'Redeem Shares':
       case 'Approve Additional Shares':
       case 'Reject Additional Shares':
-        return this.sharesService.getSharesAccountData(shareAccountId, true);
+        return this.shareAccountService.retrieveAccount({
+          accountId: Number(shareAccountId),
+          type: 'full'
+        });
       default:
         return undefined;
     }

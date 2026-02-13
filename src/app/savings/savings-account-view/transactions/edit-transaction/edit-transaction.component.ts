@@ -11,7 +11,7 @@ import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
-import { SavingsService } from 'app/savings/savings.service';
+import { SavingsAccountTransactionsService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Currency } from 'app/shared/models/general.model';
 import { InputAmountComponent } from '../../../../shared/input-amount/input-amount.component';
@@ -57,7 +57,7 @@ export class EditTransactionComponent implements OnInit {
   /**
    * Retrieves the Saving Account transaction template data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {SavingsService} savingsService Savings Service.
+   * @param {SavingsAccountTransactionsService} savingsAccountTransactionsService Savings Account Transactions Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Dates} dateUtils Date Utils.
    * @param {Router} router Router for navigation.
@@ -68,7 +68,7 @@ export class EditTransactionComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
-    private savingsService: SavingsService,
+    private savingsAccountTransactionsService: SavingsAccountTransactionsService,
     private settingsService: SettingsService
   ) {
     this.route.data.subscribe((data: { savingsAccountTransactionTemplate: any }) => {
@@ -147,8 +147,13 @@ export class EditTransactionComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.savingsService
-      .executeSavingsAccountTransactionsCommand(this.savingAccountId, 'modify', data, this.transactionTemplateData.id)
+    this.savingsAccountTransactionsService
+      .adjustTransaction1({
+        savingsId: Number(this.savingAccountId),
+        transactionId: Number(this.transactionTemplateData.id),
+        postSavingsAccountBulkReversalTransactionsRequest: data,
+        command: 'modify'
+      })
       .subscribe((res) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });

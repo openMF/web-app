@@ -17,7 +17,7 @@ import {
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
-import { SavingsService } from 'app/savings/savings.service';
+import { StandingInstructionsService } from '@fineract/client';
 import { AccountTransfersService } from 'app/customApis.service';
 import { SettingsService } from 'app/settings/settings.service';
 
@@ -74,11 +74,12 @@ export class StandingInstructionsTabComponent implements OnInit {
   /**
    * Retrieves Savings Account Data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {SettingsService} settingsService Setting service
+   * @param {SettingsService} settingsService Setting service.
+   * @param {StandingInstructionsService} standingInstructionsService Standing Instructions Service.
    */
   constructor(
     private route: ActivatedRoute,
-    private savingsService: SavingsService,
+    private standingsInstructionsService: StandingInstructionsService,
     private dialog: MatDialog,
     private accountTransfersService: AccountTransfersService,
     private settingsService: SettingsService
@@ -101,8 +102,13 @@ export class StandingInstructionsTabComponent implements OnInit {
     const accountId = this.savingsData.id;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    this.savingsService
-      .getStandingInstructions(clientId, clientName, accountId, locale, dateFormat)
+    this.standingsInstructionsService
+      .retrieveAll19({
+        clientId: clientId,
+        clientName: clientName,
+        fromAccountId: accountId,
+        limit: 1000
+      })
       .subscribe((response: any) => {
         this.instructionsData = response.pageItems;
         this.dataSource.data = this.instructionsData;

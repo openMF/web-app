@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angu
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { SavingsService } from 'app/savings/savings.service';
+import { SavingsAccountService } from '@fineract/client';
 import { FixedDepositsService } from '../../fixed-deposits.service';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -33,13 +33,13 @@ export class UndoApprovalFixedDepositsAccountComponent implements OnInit {
   /**
    * Fixed deposits endpoint is not supported so using Savings endpoint.
    * @param {FormBuilder} formBuilder Form Builder
-   * @param {SavingsService} savingsService Savings Service
+   * @param {SavingsAccountService } savingsAccountService Savings Account Service
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private savingsService: SavingsService,
+    private savingsAccountService: SavingsAccountService,
     private fixedDepositsService: FixedDepositsService,
     private route: ActivatedRoute,
     private router: Router
@@ -83,9 +83,15 @@ export class UndoApprovalFixedDepositsAccountComponent implements OnInit {
           this.router.navigate(['../../'], { relativeTo: this.route });
         });
     } else {
-      this.savingsService.executeSavingsAccountCommand(this.accountId, this.undoCommand, data).subscribe(() => {
-        this.router.navigate(['../../'], { relativeTo: this.route });
-      });
+      this.savingsAccountService
+        .handleCommands6({
+          accountId: this.accountId,
+          command: this.undoCommand,
+          postSavingsAccountsAccountIdRequest: data
+        })
+        .subscribe(() => {
+          this.router.navigate(['../../'], { relativeTo: this.route });
+        });
     }
   }
 }

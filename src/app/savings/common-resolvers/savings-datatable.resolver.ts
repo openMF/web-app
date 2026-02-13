@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SavingsService } from '../savings.service';
+import { DataTablesService } from '@fineract/client';
 
 /**
  * Savings Datatable data resolver.
@@ -14,9 +14,9 @@ import { SavingsService } from '../savings.service';
 @Injectable()
 export class SavingsDatatableResolver {
   /**
-   * @param {SavingsService} SavingsService Savings service.
+   * @param {DataTablesService} dataTablesService DataTables service.
    */
-  constructor(private savingsService: SavingsService) {}
+  constructor(private dataTablesService: DataTablesService) {}
 
   /**
    * Returns the Savings Account's Datatable data.
@@ -28,6 +28,8 @@ export class SavingsDatatableResolver {
       route.parent.parent.paramMap.get('fixedDepositAccountId') ||
       route.parent.parent.paramMap.get('recurringDepositAccountId');
     const datatableName = route.paramMap.get('datatableName');
-    return this.savingsService.getSavingsDatatable(accountId, datatableName);
+    return this.dataTablesService.getDatatables({
+      apptable: datatableName
+    });
   }
 }

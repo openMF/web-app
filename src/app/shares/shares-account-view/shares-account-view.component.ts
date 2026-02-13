@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 
 /** Custom Services */
-import { SharesService } from '../shares.service';
+import { SharesService } from 'app/customApis.service';
 
 /** Custom Buttons Configuration */
 import { SharesButtonsConfiguration } from './shares-buttons.config';

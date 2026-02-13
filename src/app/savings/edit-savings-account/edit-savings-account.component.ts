@@ -8,7 +8,7 @@ import { SavingsAccountTermsStepComponent } from '../savings-account-stepper/sav
 import { SavingsAccountChargesStepComponent } from '../savings-account-stepper/savings-account-charges-step/savings-account-charges-step.component';
 
 /** Custom Services */
-import { SavingsService } from '../savings.service';
+import { SavingsAccountService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
@@ -57,14 +57,14 @@ export class EditSavingsAccountComponent {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {Dates} dateUtils Date Utils
-   * @param {SavingsService} savingsService Savings Service
+   * @param {SavingsAccountService} savingsAccountService Savings Account Service
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
-    private savingsService: SavingsService,
+    private savingsAccountService: SavingsAccountService,
     private settingsService: SettingsService
   ) {
     this.route.data.subscribe((data: { savingsAccountAndTemplate: any }) => {
@@ -145,8 +145,8 @@ export class EditSavingsAccountComponent {
     } else {
       savingsAccount.groupId = this.savingsAccountAndTemplate.groupId;
     }
-    this.savingsService
-      .updateSavingsAccount(this.savingsAccountAndTemplate.id, savingsAccount)
+    this.savingsAccountService
+      .update20(this.savingsAccountAndTemplate.id, savingsAccount)
       .subscribe((response: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });

@@ -18,7 +18,6 @@ import {
 import { UploadDocumentDialogComponent } from 'app/clients/clients-view/custom-dialogs/upload-document-dialog/upload-document-dialog.component';
 import { ClientService } from '@fineract/client';
 import { LoansService } from '@fineract/client';
-import { SavingsService } from 'app/savings/savings.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { Observable } from 'rxjs';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -80,13 +79,11 @@ export class EntityDocumentsTabComponent implements OnInit {
   /**
    *
    * @param {MatDialog} dialog Dialog for Inputs.
-   * @param {SavingsService} savingsService Savings Account services.
    * @param {LoansService} loansService Loan Account services.
    * @param {ClientsService} clientsService Client services.
    */
   constructor(
     public dialog: MatDialog,
-    private savingsService: SavingsService,
     private loansService: LoansService,
     private clientsService: ClientService
   ) {}

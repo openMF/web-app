@@ -5,7 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
-import { SavingsService } from 'app/savings/savings.service';
+import { SavingsAccountService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -34,7 +34,7 @@ export class WithdrawByClientSavingsAccountComponent implements OnInit {
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
-   * @param {SavingsService} savingsService Savings Service
+   * @param {SavingsAccountService} savingsAccountService Savings Account Service
    * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
@@ -42,7 +42,7 @@ export class WithdrawByClientSavingsAccountComponent implements OnInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private savingsService: SavingsService,
+    private savingsAccountService: SavingsAccountService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
     private router: Router,
@@ -89,8 +89,19 @@ export class WithdrawByClientSavingsAccountComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.savingsService.executeSavingsAccountCommand(this.accountId, 'withdrawnByApplicant', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    const requestParams = {
+      savingsId: this.accountId,
+      command: 'withdrawnByApplicant',
+      body: data
+    };
+    this.savingsAccountService
+      .handleCommands6({
+        accountId: this.accountId,
+        postSavingsAccountsAccountIdRequest: data,
+        command: 'withdrawnByApplicant'
+      })
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }

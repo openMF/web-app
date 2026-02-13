@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
 import { RecurringDepositsService } from '../recurring-deposits.service';
-import { SavingsService } from 'app/savings/savings.service';
+import { SavingsAccountService } from '@fineract/client';
 
 /** Custom Buttons Configuration */
 import { RecurringDepositsButtonsConfiguration } from './recurring-deposits-buttons.config';
@@ -84,13 +84,15 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
    * Fetches recurringDeposits account data from `resolve`
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
-   * @param {RecurringDepositsService} recurringDepositsService RecurringDeposits Service
+   * @param {RecurringDepositsService} recurringDepositsService
+   * @param {SavingsAccountService} savingsAccountService
+   *  RecurringDeposits Service
    */
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private recurringDepositsService: RecurringDepositsService,
-    private savingsService: SavingsService,
+    private savingsAccountService: SavingsAccountService,
     public dialog: MatDialog,
     private translateService: TranslateService
   ) {
@@ -309,9 +311,13 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
     });
     deleteSavingsAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService
-          .executeSavingsAccountUpdateCommand(this.recurringDepositsAccountData.id, 'updateWithHoldTax', {
-            withHoldTax: true
+        this.savingsAccountService
+          .update20({
+            accountId: this.recurringDepositsAccountData.id,
+            putSavingsAccountsAccountIdRequest: {
+              changes: { withHoldTax: true }
+            } as any,
+            command: 'updateWithHoldTax'
           })
           .subscribe(() => {
             this.reload();
@@ -333,9 +339,13 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
     });
     disableWithHoldTaxDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService
-          .executeSavingsAccountUpdateCommand(this.recurringDepositsAccountData.id, 'updateWithHoldTax', {
-            withHoldTax: false
+        this.savingsAccountService
+          .update20({
+            accountId: this.recurringDepositsAccountData.id,
+            putSavingsAccountsAccountIdRequest: {
+              changes: { withHoldTax: false }
+            } as any,
+            command: 'updateWithHoldTax'
           })
           .subscribe(() => {
             this.reload();
