@@ -10,7 +10,7 @@ import {
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { SavingsService } from '../../savings.service';
+import { SavingsAccountTransactionsService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { Currency } from 'app/shared/models/general.model';
@@ -61,7 +61,7 @@ export class SavingsAccountTransactionsComponent implements OnInit {
   /**
    * Retrieves the Saving Account transaction template data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {SavingsService} savingsService Savings Service.
+   * @param {SavingsAccountTransactionsService} savingsAccountTransactionsService Savings Account Transactions Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Dates} dateUtils Date Utils.
    * @param {Router} router Router for navigation.
@@ -72,7 +72,7 @@ export class SavingsAccountTransactionsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
-    private savingsService: SavingsService,
+    private savingsAccountTransactionsService: SavingsAccountTransactionsService,
     private settingsService: SettingsService
   ) {
     this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
@@ -149,8 +149,13 @@ export class SavingsAccountTransactionsComponent implements OnInit {
       locale
     };
     data['transactionAmount'] = data['transactionAmount'] * 1;
-    this.savingsService
-      .executeSavingsAccountTransactionsCommand(this.savingAccountId, this.transactionCommand, data)
+    this.savingsAccountTransactionsService
+      .adjustTransaction1({
+        savingsId: Number(this.savingAccountId),
+        transactionId: 0,
+        postSavingsAccountBulkReversalTransactionsRequest: data,
+        command: this.transactionCommand
+      })
       .subscribe((res) => {
         this.router.navigate(['../../transactions'], { relativeTo: this.route });
       });

@@ -5,7 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
-import { SavingsService } from 'app/savings/savings.service';
+import { SavingsChargesService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -36,7 +36,7 @@ export class ApplyAnnualFeesSavingsAccountComponent implements OnInit {
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
-   * @param {SavingsService} savingsService Savings Service
+   * @param {SavingsChargesService} savingsChargesService Savings Charges Service
    * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
@@ -44,7 +44,7 @@ export class ApplyAnnualFeesSavingsAccountComponent implements OnInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private savingsService: SavingsService,
+    private savingsChargeService: SavingsChargesService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
     private router: Router,
@@ -108,8 +108,14 @@ export class ApplyAnnualFeesSavingsAccountComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.savingsService
-      .executeSavingsAccountChargesCommand(this.accountId, 'paycharge', data, this.chargeId)
+    this.savingsChargeService
+      .addSavingsAccountCharge({
+        savingsAccountId: this.accountId,
+        postSavingsAccountsSavingsAccountIdChargesRequest: {
+          ...data,
+          chargeId: this.chargeId
+        }
+      })
       .subscribe(() => {
         this.router.navigate(['../../'], { relativeTo: this.route });
       });

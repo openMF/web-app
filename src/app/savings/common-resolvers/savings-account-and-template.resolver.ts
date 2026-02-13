@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SavingsService } from '../savings.service';
+import { SavingsAccountService } from '@fineract/client';
 
 /**
  * Savings Account data and template resolver.
@@ -14,9 +14,9 @@ import { SavingsService } from '../savings.service';
 @Injectable()
 export class SavingsAccountAndTemplateResolver {
   /**
-   * @param {SavingsService} SavingsService Savings service.
+   * @param {SavingsAccountService} savingsAccountService Savings Account Service
    */
-  constructor(private savingsService: SavingsService) {}
+  constructor(private savingsAccountService: SavingsAccountService) {}
 
   /**
    * Returns the Savings Account data and template.
@@ -25,6 +25,9 @@ export class SavingsAccountAndTemplateResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const savingAccountId = route.paramMap.get('savingAccountId');
-    return this.savingsService.getSavingsAccountAndTemplate(savingAccountId, true);
+    return this.savingsAccountService.retrieveOne25({
+      accountId: savingAccountId ? parseInt(savingAccountId, 10) : 0,
+      staffInSelectedOfficeOnly: true
+    });
   }
 }

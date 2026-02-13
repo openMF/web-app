@@ -17,7 +17,7 @@ import {
 } from '@angular/material/table';
 
 /** Custom Services */
-import { SavingsService } from 'app/savings/savings.service';
+import { SavingsChargesService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Dialogs */
@@ -98,7 +98,7 @@ export class ChargesTabComponent implements OnInit {
    * @param {SettingsService} settingsService Setting service
    */
   constructor(
-    private savingsService: SavingsService,
+    private savingsChargeService: SavingsChargesService,
     private route: ActivatedRoute,
     private dateUtils: Dates,
     private router: Router,
@@ -170,8 +170,13 @@ export class ChargesTabComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.savingsService
-          .executeSavingsAccountChargesCommand(this.savingsAccountData.id, 'paycharge', dataObject, chargeId)
+        this.savingsChargeService
+          .payOrWaiveSavingsAccountCharge({
+            savingsAccountId: this.savingsAccountData.id,
+            savingsAccountChargeId: chargeId,
+            postSavingsAccountsSavingsAccountIdChargesSavingsAccountChargeIdRequest: dataObject,
+            command: 'paycharge'
+          })
           .subscribe(() => {
             this.reload();
           });
@@ -187,8 +192,13 @@ export class ChargesTabComponent implements OnInit {
     const waiveChargeDialogRef = this.dialog.open(WaiveChargeDialogComponent, { data: { id: chargeId } });
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService
-          .executeSavingsAccountChargesCommand(this.savingsAccountData.id, 'waive', {}, chargeId)
+        this.savingsChargeService
+          .payOrWaiveSavingsAccountCharge({
+            savingsAccountId: this.savingsAccountData.id,
+            savingsAccountChargeId: chargeId,
+            command: 'waive',
+            postSavingsAccountsSavingsAccountIdChargesSavingsAccountChargeIdRequest: {}
+          })
           .subscribe(() => {
             this.reload();
           });
@@ -204,8 +214,13 @@ export class ChargesTabComponent implements OnInit {
     const inactivateChargeDialogRef = this.dialog.open(InactivateChargeDialogComponent, { data: { id: chargeId } });
     inactivateChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService
-          .executeSavingsAccountChargesCommand(this.savingsAccountData.id, 'inactivate', {}, chargeId)
+        this.savingsChargeService
+          .payOrWaiveSavingsAccountCharge({
+            savingsAccountId: this.savingsAccountData.id,
+            savingsAccountChargeId: chargeId,
+            command: 'inactivate',
+            postSavingsAccountsSavingsAccountIdChargesSavingsAccountChargeIdRequest: {}
+          })
           .subscribe(() => {
             this.reload();
           });
@@ -243,8 +258,8 @@ export class ChargesTabComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.savingsService
-          .editSavingsAccountCharge(this.savingsAccountData.id, dataObject, charge.id)
+        this.savingsChargeService
+          .updateSavingsAccountCharge(this.savingsAccountData.id, dataObject, charge.id)
           .subscribe(() => {
             this.reload();
           });
@@ -262,7 +277,7 @@ export class ChargesTabComponent implements OnInit {
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.savingsService.deleteSavingsAccountCharge(this.savingsAccountData.id, chargeId).subscribe(() => {
+        this.savingsChargeService.deleteSavingsAccountCharge(this.savingsAccountData.id, chargeId).subscribe(() => {
           this.reload();
         });
       }
