@@ -28,6 +28,7 @@ export class LoanProductPreviewStepComponent implements OnInit, OnChanges {
   @Input() loanProductsTemplate: any;
   @Input() accountingRuleData: any;
   @Input() loanProduct: any;
+  @Input() isValid: boolean = true;
   @Output() submitEvent = new EventEmitter();
 
   isAdvancedPaymentAllocation = false;
