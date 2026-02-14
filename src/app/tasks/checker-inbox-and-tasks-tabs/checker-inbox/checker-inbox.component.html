@@ -28,13 +28,13 @@
     >
       <mat-icon>{{ showAdvancedSearch ? 'arrow_drop_up' : 'arrow_drop_down' }}</mat-icon>
     </button>
-    <button mat-raised-button class="action-button btn-success" (click)="approveChecker()">
+    <button mat-raised-button class="mat-success tasks-action-btn" (click)="approveChecker()">
       <fa-icon icon="check" class="m-r-10"></fa-icon>{{ 'labels.buttons.Approve' | translate }}
     </button>
     <button mat-raised-button color="warn" (click)="deleteChecker()" class="action-button">
       <fa-icon icon="trash" class="m-r-10"></fa-icon>{{ 'labels.buttons.Delete' | translate }}
     </button>
-    <button mat-raised-button class="action-button btn-reject" (click)="rejectChecker()">
+    <button mat-raised-button class="mat-reject tasks-action-btn" (click)="rejectChecker()">
       <fa-icon icon="times" class="m-r-10"></fa-icon>{{ 'labels.buttons.Reject' | translate }}
     </button>
   </div>

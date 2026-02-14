@@ -63,16 +63,37 @@
     width: 48px;
     height: 48px;
     padding: 0;
+    background: #232323 !important;
+    color: #fff !important;
+    border-radius: 4px;
+    box-shadow:
+      0 2px 2px 0 rgb(0 0 0 / 14%),
+      0 1px 5px 0 rgb(0 0 0 / 12%),
+      0 3px 1px -2px rgb(0 0 0 / 20%);
   }
 
-  button.mat-mdc-raised-button.btn-success {
-    color: #000 !important;
-    background-color: #fff !important;
+  .mat-mdc-raised-button.mat-success,
+  .mat-mdc-raised-button.mat-reject {
+    color: #fff;
+    background-color: #424242;
   }
 
-  button.mat-mdc-raised-button.btn-reject {
-    color: #000 !important;
-    background-color: #fff !important;
+  .tasks-action-btn {
+    margin: 0;
+  }
+
+  button.mat-mdc-raised-button.action-button {
+    box-shadow:
+      0 2px 2px 0 rgb(0 0 0 / 14%),
+      0 1px 5px 0 rgb(0 0 0 / 12%),
+      0 3px 1px -2px rgb(0 0 0 / 20%);
+    border-radius: 4px;
+    font-weight: 500;
+    font-family: Roboto, 'Helvetica Neue', sans-serif;
+    letter-spacing: 0.5px;
+    transition:
+      background 0.3s,
+      color 0.3s;
   }
 
   /* ---------- SEARCH & LAYOUT ---------- */
