@@ -344,6 +344,15 @@ docker-compose -f docker-compose.yml -f docker-compose.external-nationalid.yml u
 
 For more detailed configuration options, refer to the `env.sample` file in the root directory of the project.
 
+#### Interbank Transfers Settings
+
+| Variable                               | Description                         | Default Value                |
+| -------------------------------------- | ----------------------------------- | ---------------------------- |
+| MIFOS_INTERBANK_TRANSFERS_API_URL      | The Interbank server url            | https://apis.mifos.community |
+| MIFOS_INTERBANK_TRANSFERS_API_PROVIDER | The Interbank server endpoint       | /vnext2                      |
+| MIFOS_INTERBANK_TRANSFERS_API_VERSION  | The Interbank server api version    | /v1.0                        |
+| MIFOS_INTERBANK_TRANSFERS_ENABLED      | If the Interbank feature is enabled | true                         |
+
 ### Client Data Masking Example
 
 When `MIFOS_COMPLIANCE_HIDE_CLIENT_DATA=false` (default):
