@@ -47,6 +47,13 @@ export class Datatables {
       const colName = column.columnName ? column.columnName.toLowerCase().replace(/[_\s]+/g, '') : '';
       const isMinSavingsAmount = colName.includes('minimumsavingsamountpermeeting');
       const isPriceOneShare = colName.includes('priceofoneshare');
+      const isRestrictedField = [
+        'mtn',
+        'airtel',
+        'officephone',
+        'office_phone',
+        'office phone'
+      ].some((name) => colName.includes(name.replace(/[_\s]+/g, '')));
       switch (column.columnDisplayType) {
         case 'INTEGER':
         case 'STRING':
@@ -59,7 +66,7 @@ export class Datatables {
             type: column.columnDisplayType === 'INTEGER' || column.columnDisplayType === 'DECIMAL' ? 'number' : 'text',
             required: column.isColumnNullable ? false : true
           };
-          if (isMinSavingsAmount || isPriceOneShare) {
+          if (isMinSavingsAmount || isPriceOneShare || isRestrictedField) {
             inputOptions.min = 0;
           }
           return new InputBase(inputOptions);
