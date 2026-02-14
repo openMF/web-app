@@ -445,11 +445,7 @@ export class ClientsService {
 
   /**
    * Lookup external National ID from the configured external system.
-   * Uses a separate HttpClient (via HttpBackend) to bypass Angular interceptors
-   * so that Fineract auth headers are not sent to the external API.
-   *
-   * In development, requests go through the dev proxy (/external-nationalid).
-   * In production, requests go through the nginx reverse proxy.
+   * Uses HttpBackend to bypass interceptors (no Fineract auth headers sent to external API).
    *
    * @param externalId The National ID string (e.g. CURP)
    */

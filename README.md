@@ -315,16 +315,15 @@ Available languages:
 
 #### External National ID System Integration
 
-These variables enable automatic lookup and auto-fill of client data from an external National ID system (e.g., Mexico's CURP) during client creation and editing.
+These variables enable automatic lookup and auto-fill of client data from an external National ID system (e.g., Mexico's CURP) during client creation and editing. The Angular app calls the external API directly from the browser using a separate `HttpClient` that bypasses Fineract interceptors.
 
-| Variable                               | Description                                                                  | Default Value |
-| -------------------------------------- | ---------------------------------------------------------------------------- | ------------- |
-| ENABLE_EXTERNAL_NATIONAL_ID_SYSTEM     | Set to `true` to enable External National ID lookup                          | false         |
-| EXTERNAL_NATIONAL_ID_SYSTEM_URL        | URL of the external National ID API                                          |               |
-| EXTERNAL_NATIONAL_ID_SYSTEM_API_HEADER | Header name for the external API key (e.g., `X-Gravitee-Api-Key`)            |               |
-| EXTERNAL_NATIONAL_ID_SYSTEM_API_KEY    | API key value (injected server-side via nginx; keep empty in source control) |               |
-| EXTERNAL_NATIONAL_ID_REGEX             | Regex pattern to validate the external ID format (e.g., CURP)                |               |
-| EXTERNAL_NATIONALID_API_URL            | Full upstream URL for nginx proxy_pass                                       |               |
+| Variable                               | Description                                                       | Default Value |
+| -------------------------------------- | ----------------------------------------------------------------- | ------------- |
+| ENABLE_EXTERNAL_NATIONAL_ID_SYSTEM     | Set to `true` to enable External National ID lookup               | false         |
+| EXTERNAL_NATIONAL_ID_SYSTEM_URL        | Full URL of the external National ID API                          |               |
+| EXTERNAL_NATIONAL_ID_SYSTEM_API_HEADER | Header name for the external API key (e.g., `X-Gravitee-Api-Key`) |               |
+| EXTERNAL_NATIONAL_ID_SYSTEM_API_KEY    | API key value sent as a request header                            |               |
+| EXTERNAL_NATIONAL_ID_REGEX             | Regex pattern to validate the external ID format (e.g., CURP)     |               |
 
 When `ENABLE_EXTERNAL_NATIONAL_ID_SYSTEM` is set to `true`, the following fields are auto-filled and disabled during client creation/editing after a successful lookup:
 
@@ -339,6 +338,8 @@ The user types the External ID value, and if it matches the configured regex, th
 **Docker Compose with External National ID:**
 
 ```bash
+# Set the API key as an environment variable, then start with the override file:
+export EXTERNAL_NATIONAL_ID_SYSTEM_API_KEY=your-api-key-here
 docker-compose -f docker-compose.yml -f docker-compose.external-nationalid.yml up -d
 ```
 

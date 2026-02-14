@@ -94,12 +94,11 @@
   // External National ID System
   // Set to 'true' to enable External National ID lookup during client creation/editing
   // When enabled, set EXTERNAL_NATIONAL_ID_SYSTEM_URL, API_HEADER, API_KEY, and REGEX
-  // In production, API key is injected server-side via nginx proxy_set_header (never set here)
-  window['env']['enableExternalNationalIdSystem'] = 'false';
-  window['env']['externalNationalIdSystemUrl'] = '';
-  window['env']['externalNationalIdSystemApiHeader'] = '';
-  window['env']['externalNationalIdSystemApiKey'] = '';
-  window['env']['externalNationalIdRegex'] = '';
+  window['env']['enableExternalNationalIdSystem'] = 'true';
+  window['env']['externalNationalIdSystemUrl'] = 'https://apis.mifos.community/1.0/nationalid';
+  window['env']['externalNationalIdSystemApiHeader'] = 'X-Gravitee-Api-Key';
+  window['env']['externalNationalIdSystemApiKey'] = 'e115a927-35f7-4dfc-a285-b040dfd7f625';
+  window['env']['externalNationalIdRegex'] = '^[A-Z]{4}[0-9]{6}[HM][A-Z]{5}[A-Z0-9]{2}$';
 
   // OIDC Plugin Environment variables
   window['env']['oidcServerEnabled'] = false;

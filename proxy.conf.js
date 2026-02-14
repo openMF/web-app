@@ -52,11 +52,7 @@ const proxyConfig = [
     secure: true,
     logLevel: 'debug',
     onProxyReq: function (proxyReq, req, res) {
-      // Inject API key server-side (same as nginx proxy_set_header in production)
-      const apiKey = process.env.EXTERNAL_NATIONAL_ID_SYSTEM_API_KEY || '';
-      if (apiKey) {
-        proxyReq.setHeader('X-Gravitee-Api-Key', apiKey);
-      }
+      // API key is now sent by Angular as a header, proxy just forwards it
       const rewrittenPath = (req.url || '').replace(/^\/external-nationalid/, '/1.0/nationalid');
       console.log('[Proxy] Proxying:', req.method, req.url, '->', this.target + rewrittenPath);
     },
