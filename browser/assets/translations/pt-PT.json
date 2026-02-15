@@ -3613,7 +3613,19 @@
       "Login": "Conecte-se"
     },
     "messages": {
-      "No Data Found": "Nenhum dado encontrado"
+      "No Data Found": "Nenhum dado encontrado",
+      "No Upcoming Charges Available": "Nenhuma cobrança futura disponível",
+      "No Active Loan Accounts Available": "Nenhuma conta de empréstimo ativa disponível",
+      "No Closed Loan Accounts Available": "Nenhuma conta de empréstimo encerrada disponível",
+      "No Active Saving Accounts Available": "Nenhuma conta de poupança ativa disponível",
+      "No Closed Saving Accounts Available": "Nenhuma conta de poupança encerrada disponível",
+      "No Active Fixed Deposit Accounts Available": "Nenhuma conta de depósito fixo ativa disponível",
+      "No Closed Fixed Deposit Accounts Available": "Nenhuma conta de depósito fixo encerrada disponível",
+      "No Active Recurring Deposit Accounts Available": "Nenhuma conta de depósito recorrente ativa disponível",
+      "No Closed Recurring Deposit Accounts Available": "Nenhuma conta de depósito recorrente encerrada disponível",
+      "No Active Share Accounts Available": "Nenhuma conta de ações ativa disponível",
+      "No Closed Share Accounts Available": "Nenhuma conta de ações encerrada disponível",
+      "No Collateral Data Available": "Nenhum dado de garantia disponível"
     }
   },
   "languages": {

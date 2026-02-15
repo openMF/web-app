@@ -3614,7 +3614,19 @@
       "Login": "Pieslēgties"
     },
     "messages": {
-      "No Data Found": "Dati nav atrasti"
+      "No Data Found": "Dati nav atrasti",
+      "No Upcoming Charges Available": "Nav gaidāmo maksu",
+      "No Active Loan Accounts Available": "Nav aktīvu aizdevumu kontu",
+      "No Closed Loan Accounts Available": "Nav slēgtu aizdevumu kontu",
+      "No Active Saving Accounts Available": "Nav aktīvu krājkontu",
+      "No Closed Saving Accounts Available": "Nav slēgtu krājkontu",
+      "No Active Fixed Deposit Accounts Available": "Nav aktīvu termiņnoguldījumu kontu",
+      "No Closed Fixed Deposit Accounts Available": "Nav slēgtu termiņnoguldījumu kontu",
+      "No Active Recurring Deposit Accounts Available": "Nav aktīvu periodisku noguldījumu kontu",
+      "No Closed Recurring Deposit Accounts Available": "Nav slēgtu periodisku noguldījumu kontu",
+      "No Active Share Accounts Available": "Nav aktīvu akciju kontu",
+      "No Closed Share Accounts Available": "Nav slēgtu akciju kontu",
+      "No Collateral Data Available": "Nav pieejamu nodrošinājuma datu"
     }
   },
   "languages": {

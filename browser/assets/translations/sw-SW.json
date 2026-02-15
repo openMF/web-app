@@ -3611,7 +3611,19 @@
       "Login": "Ingia"
     },
     "messages": {
-      "No Data Found": "Hakuna Data Imepatikana"
+      "No Data Found": "Hakuna Data Imepatikana",
+      "No Upcoming Charges Available": "Hakuna malipo yanayokuja yanapatikana",
+      "No Active Loan Accounts Available": "Hakuna akaunti za mkopo zinazofanya kazi zinapatikana",
+      "No Closed Loan Accounts Available": "Hakuna akaunti za mkopo zilizofungwa zinapatikana",
+      "No Active Saving Accounts Available": "Hakuna akaunti za akiba zinazofanya kazi zinapatikana",
+      "No Closed Saving Accounts Available": "Hakuna akaunti za akiba zilizofungwa zinapatikana",
+      "No Active Fixed Deposit Accounts Available": "Hakuna akaunti za amana zisizohamishika zinazofanya kazi zinapatikana",
+      "No Closed Fixed Deposit Accounts Available": "Hakuna akaunti za amana zisizohamishika zilizofungwa zinapatikana",
+      "No Active Recurring Deposit Accounts Available": "Hakuna akaunti za amana za mara kwa mara zinazofanya kazi zinapatikana",
+      "No Closed Recurring Deposit Accounts Available": "Hakuna akaunti za amana za mara kwa mara zilizofungwa zinapatikana",
+      "No Active Share Accounts Available": "Hakuna akaunti za hisa zinazofanya kazi zinapatikana",
+      "No Closed Share Accounts Available": "Hakuna akaunti za hisa zilizofungwa zinapatikana",
+      "No Collateral Data Available": "Hakuna data ya dhamana inayopatikana"
     }
   },
   "languages": {

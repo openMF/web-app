@@ -3613,7 +3613,19 @@
     "Login": "Přihlásit se"
   },
   "messages": {
-    "No Data Found": "Nebyla nalezena žádná data"
+    "No Data Found": "Nebyla nalezena žádná data",
+    "No Upcoming Charges Available": "Žádné nadcházející poplatky k dispozici",
+    "No Active Loan Accounts Available": "Žádné aktivní úvěrové účty k dispozici",
+    "No Closed Loan Accounts Available": "Žádné uzavřené úvěrové účty k dispozici",
+    "No Active Saving Accounts Available": "Žádné aktivní spořicí účty k dispozici",
+    "No Closed Saving Accounts Available": "Žádné uzavřené spořicí účty k dispozici",
+    "No Active Fixed Deposit Accounts Available": "Žádné aktivní účty s pevným vkladem k dispozici",
+    "No Closed Fixed Deposit Accounts Available": "Žádné uzavřené účty s pevným vkladem k dispozici",
+    "No Active Recurring Deposit Accounts Available": "Žádné aktivní opakující se účty s vkladem k dispozici",
+    "No Closed Recurring Deposit Accounts Available": "Žádné uzavřené opakující se účty s vkladem k dispozici",
+    "No Active Share Accounts Available": "Žádné aktivní účty podílů k dispozici",
+    "No Closed Share Accounts Available": "Žádné uzavřené účty podílů k dispozici",
+    "No Collateral Data Available": "Žádná data o kolaterálu k dispozici"
   },
   "languages": {
     "cs-CS": "Čeština",

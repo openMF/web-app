@@ -3614,7 +3614,19 @@
       "Login": "로그인"
     },
     "messages": {
-      "No Data Found": "데이터를 찾을 수 없음"
+      "No Data Found": "데이터를 찾을 수 없음",
+      "No Upcoming Charges Available": "예정된 청구가 없습니다",
+      "No Active Loan Accounts Available": "활성 대출 계정이 없습니다",
+      "No Closed Loan Accounts Available": "해지된 대출 계정이 없습니다",
+      "No Active Saving Accounts Available": "활성 저축 계정이 없습니다",
+      "No Closed Saving Accounts Available": "해지된 저축 계정이 없습니다",
+      "No Active Fixed Deposit Accounts Available": "활성 정기 예금 계정이 없습니다",
+      "No Closed Fixed Deposit Accounts Available": "해지된 정기 예금 계정이 없습니다",
+      "No Active Recurring Deposit Accounts Available": "활성 적립식 예금 계정이 없습니다",
+      "No Closed Recurring Deposit Accounts Available": "해지된 적립식 예금 계정이 없습니다",
+      "No Active Share Accounts Available": "활성 주식 계정이 없습니다",
+      "No Closed Share Accounts Available": "해지된 주식 계정이 없습니다",
+      "No Collateral Data Available": "담보 데이터가 없습니다"
     }
   },
   "languages": {

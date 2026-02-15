@@ -3612,7 +3612,19 @@
       "Login": "लग - इन"
     },
     "messages": {
-      "No Data Found": "कुनै डाटा फेला परेन"
+      "No Data Found": "कुनै डाटा फेला परेन",
+      "No Upcoming Charges Available": "आउँदो शुल्कहरू उपलब्ध छैनन्",
+      "No Active Loan Accounts Available": "कुनै सक्रिय ऋण खाताहरू उपलब्ध छैनन्",
+      "No Closed Loan Accounts Available": "कुनै बन्द ऋण खाताहरू उपलब्ध छैनन्",
+      "No Active Saving Accounts Available": "कुनै सक्रिय बचत खाताहरू उपलब्ध छैनन्",
+      "No Closed Saving Accounts Available": "कुनै बन्द बचत खाताहरू उपलब्ध छैनन्",
+      "No Active Fixed Deposit Accounts Available": "कुनै सक्रिय फिक्स्ड डिपोजिट खाताहरू उपलब्ध छैनन्",
+      "No Closed Fixed Deposit Accounts Available": "कुनै बन्द फिक्स्ड डिपोजिट खाताहरू उपलब्ध छैनन्",
+      "No Active Recurring Deposit Accounts Available": "कुनै सक्रिय आवर्ती जम्मा खाताहरू उपलब्ध छैनन्",
+      "No Closed Recurring Deposit Accounts Available": "कुनै बन्द आवर्ती जम्मा खाताहरू उपलब्ध छैनन्",
+      "No Active Share Accounts Available": "कुनै सक्रिय शेयर खाताहरू उपलब्ध छैनन्",
+      "No Closed Share Accounts Available": "कुनै बन्द शेयर खाताहरू उपलब्ध छैनन्",
+      "No Collateral Data Available": "कुनै संपार्श्विक डाटा उपलब्ध छैन"
     }
   },
   "languages": {

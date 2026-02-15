@@ -3615,7 +3615,19 @@
       "Login": "Acceso"
     },
     "messages": {
-      "No Data Found": "No se encontraron datos"
+      "No Data Found": "No se encontraron datos",
+      "No Upcoming Charges Available": "No hay cargos próximos disponibles",
+      "No Active Loan Accounts Available": "No hay cuentas de crédito activas disponibles",
+      "No Closed Loan Accounts Available": "No hay cuentas de crédito cerradas disponibles",
+      "No Active Saving Accounts Available": "No hay cuentas de ahorro activas disponibles",
+      "No Closed Saving Accounts Available": "No hay cuentas de ahorro cerradas disponibles",
+      "No Active Fixed Deposit Accounts Available": "No hay cuentas de depósito fijo activas disponibles",
+      "No Closed Fixed Deposit Accounts Available": "No hay cuentas de depósito fijo cerradas disponibles",
+      "No Active Recurring Deposit Accounts Available": "No hay cuentas de depósito recurrente activas disponibles",
+      "No Closed Recurring Deposit Accounts Available": "No hay cuentas de depósito recurrente cerradas disponibles",
+      "No Active Share Accounts Available": "No hay cuentas de acciones activas disponibles",
+      "No Closed Share Accounts Available": "No hay cuentas de acciones cerradas disponibles",
+      "No Collateral Data Available": "No hay datos de garantía disponibles"
     }
   },
   "languages": {

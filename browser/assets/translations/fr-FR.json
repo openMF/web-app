@@ -3616,7 +3616,19 @@
       "Login": "Se connecter"
     },
     "messages": {
-      "No Data Found": "Aucune donnée trouvée"
+      "No Data Found": "Aucune donnée disponible",
+      "No Upcoming Charges Available": "Aucun frais à venir disponible",
+      "No Active Loan Accounts Available": "Aucun compte de prêt actif disponible",
+      "No Closed Loan Accounts Available": "Aucun compte de prêt fermé disponible",
+      "No Active Saving Accounts Available": "Aucun compte d'épargne actif disponible",
+      "No Closed Saving Accounts Available": "Aucun compte d'épargne fermé disponible",
+      "No Active Fixed Deposit Accounts Available": "Aucun compte de dépôt à terme actif disponible",
+      "No Closed Fixed Deposit Accounts Available": "Aucun compte de dépôt à terme fermé disponible",
+      "No Active Recurring Deposit Accounts Available": "Aucun compte de dépôt récurrent actif disponible",
+      "No Closed Recurring Deposit Accounts Available": "Aucun compte de dépôt récurrent fermé disponible",
+      "No Active Share Accounts Available": "Aucun compte d'actions actif disponible",
+      "No Closed Share Accounts Available": "Aucun compte d'actions fermé disponible",
+      "No Collateral Data Available": "Aucune donnée de garantie disponible"
     }
   },
   "languages": {

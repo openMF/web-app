@@ -3724,7 +3724,19 @@
       "Login": "Login"
     },
     "messages": {
-      "No Data Found": "No Data Found"
+      "No Data Found": "No Data Found",
+      "No Upcoming Charges Available": "No Upcoming Charges Available",
+      "No Active Loan Accounts Available": "No Active Loan Accounts Available",
+      "No Closed Loan Accounts Available": "No Closed Loan Accounts Available",
+      "No Active Saving Accounts Available": "No Active Saving Accounts Available",
+      "No Closed Saving Accounts Available": "No Closed Saving Accounts Available",
+      "No Active Fixed Deposit Accounts Available": "No Active Fixed Deposit Accounts Available",
+      "No Closed Fixed Deposit Accounts Available": "No Closed Fixed Deposit Accounts Available",
+      "No Active Recurring Deposit Accounts Available": "No Active Recurring Deposit Accounts Available",
+      "No Closed Recurring Deposit Accounts Available": "No Closed Recurring Deposit Accounts Available",
+      "No Active Share Accounts Available": "No Active Share Accounts Available",
+      "No Closed Share Accounts Available": "No Closed Share Accounts Available",
+      "No Collateral Data Available": "No Collateral Data Available"
     }
   },
   "languages": {

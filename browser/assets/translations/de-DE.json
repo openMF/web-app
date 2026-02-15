@@ -3613,7 +3613,19 @@
     "Login": "Anmeldung"
   },
   "messages": {
-    "No Data Found": "Keine Daten gefunden"
+    "No Data Found": "Keine Daten gefunden",
+    "No Upcoming Charges Available": "Keine bevorstehenden Gebühren verfügbar",
+    "No Active Loan Accounts Available": "Keine aktiven Darlehenskonten verfügbar",
+    "No Closed Loan Accounts Available": "Keine geschlossenen Darlehenskonten verfügbar",
+    "No Active Saving Accounts Available": "Keine aktiven Sparkonten verfügbar",
+    "No Closed Saving Accounts Available": "Keine geschlossenen Sparkonten verfügbar",
+    "No Active Fixed Deposit Accounts Available": "Keine aktiven Festgeldkonten verfügbar",
+    "No Closed Fixed Deposit Accounts Available": "Keine geschlossenen Festgeldkonten verfügbar",
+    "No Active Recurring Deposit Accounts Available": "Keine aktiven wiederkehrenden Einlagenkonten verfügbar",
+    "No Closed Recurring Deposit Accounts Available": "Keine geschlossenen wiederkehrenden Einlagenkonten verfügbar",
+    "No Active Share Accounts Available": "Keine aktiven Aktienkonten verfügbar",
+    "No Closed Share Accounts Available": "Keine geschlossenen Aktienkonten verfügbar",
+    "No Collateral Data Available": "Keine Sicherheiten verfügbar"
   },
   "languages": {
     "cs-CS": "Čeština (Tschechisch)",
