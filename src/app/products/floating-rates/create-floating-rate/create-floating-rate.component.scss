@@ -6,14 +6,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-@media (width >= 992px) {
+@media (width >=992px) {
   .checkbox-wrapper {
-    position: relative;
+    margin-top: 8px;
 
     .checkbox {
       padding: 0 0 17.5px;
-      position: absolute;
-      bottom: 0;
     }
   }
 }
