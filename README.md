@@ -250,6 +250,40 @@ All these environment variables can be set when using Docker or Docker Compose:
 | MIFOS_DEFAULT_LANGUAGE    | Default language            | en-US                                                                   |
 | MIFOS_SUPPORTED_LANGUAGES | List of supported languages | cs-CS,de-DE,en-US,es-MX,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,ne-NE,pt-PT,sw-SW |
 
+#### Date and Datetime Format Settings
+
+| Variable                      | Description                                 | Default Value         |
+| ----------------------------- | ------------------------------------------- | --------------------- |
+| MIFOS_DEFAULT_FORMAT_DATE     | Default date format for the application     | dd MMMM yyyy          |
+| MIFOS_DEFAULT_FORMAT_DATETIME | Default datetime format for the application | dd MMMM yyyy HH:mm:ss |
+
+These environment variables control the default date and datetime formats used throughout the Mifos® X Web App. They can be set in your Docker environment, in the `env.js`/`env.template.js` files, or in your deployment environment.
+
+- `MIFOS_DEFAULT_FORMAT_DATE` sets the default format for displaying dates (e.g., `15 February 2026`).
+- `MIFOS_DEFAULT_FORMAT_DATETIME` sets the default format for displaying date and time (e.g., `15 February 2026 14:30:00`).
+
+If a user does not select a custom format in the UI, these values are used as the fallback. You can override them per user in the Settings screen.
+
+**How to set:**
+
+In Docker Compose or Docker:
+
+```bash
+MIFOS_DEFAULT_FORMAT_DATE=yyyy-MM-dd
+MIFOS_DEFAULT_FORMAT_DATETIME=yyyy-MM-dd HH:mm
+```
+
+In `src/assets/env.template.js`:
+
+```js
+window['env']['defaultFormatDate'] = '$MIFOS_DEFAULT_FORMAT_DATE';
+window['env']['defaultFormatDatetime'] = '$MIFOS_DEFAULT_FORMAT_DATETIME';
+```
+
+**Where used:**
+
+These values are read by the application when it starts and are used as the default for date and datetime display in forms, tables, and reports.
+
 Available languages:
 
 | Language   | Code | File       |
