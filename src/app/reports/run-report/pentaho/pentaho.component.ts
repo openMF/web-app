@@ -3,7 +3,7 @@ import { Component, OnChanges, Input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 /** Custom Services */
-import { ReportsService } from '../../reports.service';
+import { ReportsService } from 'app/customApis.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { ProgressBarService } from 'app/core/progress-bar/progress-bar.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';

@@ -2,7 +2,7 @@
 import { Component, OnChanges, Input } from '@angular/core';
 
 /** Custom Services */
-import { ReportsService } from '../../reports.service';
+import { ReportsService } from 'app/customApis.service';
 
 /** Custom Models */
 import { ChartData } from '../../common-models/chart-data.model';

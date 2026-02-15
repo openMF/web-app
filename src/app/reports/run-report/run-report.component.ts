@@ -4,13 +4,15 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { UntypedFormControl, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
-import { ReportsService } from '../reports.service';
+import { ReportsService as CustomReportsService } from 'app/customApis.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { ReportsService } from '@fineract/client';
 
 /** Custom Models */
 import { ReportParameter } from '../common-models/report-parameter.model';
 import { SelectOption } from '../common-models/select-option.model';
 import { Dates } from 'app/core/utils/dates';
+import { map } from 'rxjs/operators';
 import { GlobalConfiguration } from 'app/system/configurations/global-configurations-tab/configuration.model';
 
 import * as ExcelJS from 'exceljs';
@@ -92,7 +94,8 @@ export class RunReportComponent implements OnInit {
     private reportsService: ReportsService,
     private settingsService: SettingsService,
     private alertService: AlertService,
-    private dateUtils: Dates
+    private dateUtils: Dates,
+    private customReportsService: CustomReportsService
   ) {
     this.report.name = this.route.snapshot.params['name'];
     this.route.queryParams.subscribe((queryParams: { type: any; id: any }) => {
@@ -198,12 +201,15 @@ export class RunReportComponent implements OnInit {
    * Maps pentaho specific names to form-control names.
    */
   mapPentahoParams() {
-    this.reportsService.getPentahoParams(this.report.id).subscribe((data: any) => {
-      data.forEach((entry: any) => {
-        const param: ReportParameter = this.paramData.find((_entry: any) => _entry.name === entry.parameterName);
-        param.pentahoName = `R_${entry.reportParameterName}`;
+    this.reportsService
+      .retrieveReport({ id: this.report.id })
+      .pipe(map((response: any) => response.reportParameters))
+      .subscribe((data: any) => {
+        data.forEach((entry: any) => {
+          const param: ReportParameter = this.paramData.find((_entry: any) => _entry.name === entry.parameterName);
+          param.pentahoName = `R_${entry.reportParameterName}`;
+        });
       });
-    });
   }
 
   /**
@@ -233,7 +239,7 @@ export class RunReportComponent implements OnInit {
    * @param {string} inputstring url substring for API call.
    */
   fetchSelectOptions(param: ReportParameter, inputstring: string) {
-    this.reportsService.getSelectOptions(inputstring).subscribe((options: SelectOption[]) => {
+    this.customReportsService.getSelectOptions(inputstring).subscribe((options: SelectOption[]) => {
       param.selectOptions = options;
       if (param.selectAll === 'Y') {
         param.selectOptions.push({ id: '-1', name: 'All' });
@@ -339,7 +345,7 @@ export class RunReportComponent implements OnInit {
       decimalChoice: this.decimalChoice.value
       // exportCSV: true
     };
-    this.reportsService.getRunReportData(reportName, payload).subscribe((res: any) => {
+    this.customReportsService.getRunReportData(reportName, payload).subscribe((res: any) => {
       if (res.data.length > 0) {
         this.alertService.alert({ type: 'Report generation', message: `Report: ${reportName} data generated` });
 

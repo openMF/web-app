@@ -17,7 +17,7 @@ import {
 import { DecimalPipe, NgIf, NgFor } from '@angular/common';
 
 /** Custom Servies */
-import { ReportsService } from '../../reports.service';
+import { ReportsService } from 'app/customApis.service';
 import { MatDialog } from '@angular/material/dialog';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';

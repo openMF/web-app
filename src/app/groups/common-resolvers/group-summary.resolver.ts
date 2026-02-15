@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { RunReportsService } from 'app/customApis.service';
+import { RunReportsService } from '@fineract/client';
 
 /**
  * Group Summary resolver.
@@ -25,6 +25,8 @@ export class GroupSummaryResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const groupId = route.parent.paramMap.get('groupId');
-    return this.runReportsService.getGroupSummary(groupId);
+    return this.runReportsService.runReport({
+      reportName: `GroupSummary?R_groupId=${groupId}&genericResultSet=false`
+    });
   }
 }

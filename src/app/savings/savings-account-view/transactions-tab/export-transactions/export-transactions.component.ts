@@ -5,7 +5,7 @@ import { UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/fo
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { ReportsService } from 'app/reports/reports.service';
+import { ReportsService } from 'app/customApis.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
