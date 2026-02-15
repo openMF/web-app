@@ -1296,6 +1296,11 @@
       "Pending Tasks": "बाँकी कार्यहरू"
     },
     "inputs": {
+      "Floating rate": "चल दर",
+      "Differential rate": "अन्तर दर",
+      "Minimum interest rate": "न्यूनतम ब्याज दर",
+      "Interest rate": "ब्याज दर",
+      "Maximum interest rate": "अधिकतम ब्याज दर",
       "Terms": "सर्तहरू",
       "Settings": "सेटिङहरू",
       "accounting": {

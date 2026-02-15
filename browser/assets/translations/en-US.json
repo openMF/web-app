@@ -1302,6 +1302,11 @@
       "Global Impact": "Global Impact"
     },
     "inputs": {
+      "Floating rate": "Floating Rate",
+      "Differential rate": "Differential Rate",
+      "Minimum interest rate": "Minimum Interest Rate",
+      "Interest rate": "Interest Rate",
+      "Maximum interest rate": "Maximum Interest Rate",
       "Terms": "Terms",
       "Settings": "Settings",
       "accounting": {

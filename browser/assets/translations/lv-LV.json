@@ -1298,6 +1298,11 @@
       "Pending Tasks": "Pending Tasks"
     },
     "inputs": {
+      "Floating rate": "Mainīgā likme",
+      "Differential rate": "Diferenciālā likme",
+      "Minimum interest rate": "Minimālā procentu likme",
+      "Interest rate": "Procentu likme",
+      "Maximum interest rate": "Maksimālā procentu likme",
       "Terms": "Noteikumi",
       "Settings": "Iestatījumi",
       "accounting": {

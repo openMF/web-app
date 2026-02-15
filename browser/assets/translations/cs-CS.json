@@ -1297,6 +1297,11 @@
       "Pending Tasks": "Čekající úkoly"
     },
     "inputs": {
+      "Floating rate": "Plovoucí sazba",
+      "Differential rate": "Diferenční sazba",
+      "Minimum interest rate": "Minimální úroková sazba",
+      "Interest rate": "Úroková sazba",
+      "Maximum interest rate": "Maximální úroková sazba",
       "Terms": "Podmínky",
       "Settings": "Nastavení",
       "accounting": {

@@ -1295,6 +1295,11 @@
       "Pending Tasks": "Kazi Zinazongoja"
     },
     "inputs": {
+      "Floating rate": "Kiwango cha Kuelea",
+      "Differential rate": "Kiwango cha Tofauti",
+      "Minimum interest rate": "Kiwango cha Riba cha Chini",
+      "Interest rate": "Kiwango cha Riba",
+      "Maximum interest rate": "Kiwango cha Riba cha Juu",
       "Terms": "Masharti",
       "Settings": "Mipangilio",
       "accounting": {

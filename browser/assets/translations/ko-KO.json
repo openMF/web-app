@@ -1299,6 +1299,11 @@
       "Pending Tasks": "보류 중인 작업"
     },
     "inputs": {
+      "Floating rate": "변동 금리",
+      "Differential rate": "차등 금리",
+      "Minimum interest rate": "최소 이자율",
+      "Interest rate": "이자율",
+      "Maximum interest rate": "최대 이자율",
       "Terms": "약관",
       "Settings": "설정",
       "accounting": {

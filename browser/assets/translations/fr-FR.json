@@ -1301,6 +1301,11 @@
       "Pending Tasks": "Tâches en attente"
     },
     "inputs": {
+      "Floating rate": "Taux flottant",
+      "Differential rate": "Taux différentiel",
+      "Minimum interest rate": "Taux d'intérêt minimum",
+      "Interest rate": "Taux d'intérêt",
+      "Maximum interest rate": "Taux d'intérêt maximum",
       "Terms": "Termes",
       "Settings": "Paramètres",
       "accounting": {
