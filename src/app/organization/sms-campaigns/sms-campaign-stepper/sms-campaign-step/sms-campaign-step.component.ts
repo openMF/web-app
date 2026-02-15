@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 
 /** Custom Services */
-import { ReportsService } from 'app/reports/reports.service';
+import { ReportsService } from 'app/customApis.service';
 
 /** Custom Models */
 import { ReportParameter } from 'app/reports/common-models/report-parameter.model';

@@ -1,8 +1,11 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, switchMap } from 'rxjs';
+import { map, Observable, switchMap } from 'rxjs';
 import { environment } from '../environments/environment';
+import { ChartData } from './reports/common-models/chart-data.model';
+import { ReportParameter } from './reports/common-models/report-parameter.model';
+import { SelectOption } from './reports/common-models/select-option.model';
 
 // loans.service.ts
 @Injectable({
@@ -89,18 +92,112 @@ export class LoansService {
   }
 }
 
+/**
+ * Reports service.
+ */
 @Injectable({
   providedIn: 'root'
 })
-export class RunReportsService {
+export class ReportsService {
+  /**
+   * @param {HttpClient} http Http Client to send requests.
+   */
   constructor(private http: HttpClient) {}
+
+  /**
+   * @param {string} reportName Report name for which parameters are needed.
+   * @returns {Observable<ReportParameter[]>}
+   */
+  getReportParams(reportName: string): Observable<ReportParameter[]> {
+    const httpParams = new HttpParams().set('R_reportListing', `'${reportName}'`).set('parameterType', 'true');
+    return this.http
+      .get(`/runreports/FullParameterList`, { params: httpParams })
+      .pipe(map((response: any) => response.data.map((entry: any) => new ReportParameter(entry.row))));
+  }
+
+  /**
+   * @param {string} inputString URL substring containing object details.
+   * @returns {Observable<SelectOption[]>}
+   */
+  getSelectOptions(inputString: string): Observable<SelectOption[]> {
+    const httpParams = new HttpParams().set('parameterType', 'true');
+    return this.http
+      .get(`/runreports/${inputString}`, { params: httpParams })
+      .pipe(map((response: any) => response.data.map((entry: any) => new SelectOption(entry.row))));
+  }
+
+  /**
+   * Run Report Data for Table and SMS.
+   * @param {any} reportName report name
+   * @param {object} formData Form Data.
+   * @returns {Observable<any>}
+   */
+  getRunReportData(reportName: string, formData: object): Observable<any> {
+    let httpParams = new HttpParams();
+    for (const [
+      key,
+      value
+    ] of Object.entries(formData)) {
+      httpParams = httpParams.set(key, value);
+    }
+    return this.http.get(`/runreports/${reportName}`, { params: httpParams });
+  }
+
+  /**
+   * Run Report Data for Charts.
+   * @param {any} reportName report name
+   * @param {object} formData Form Data.
+   * @returns {Observable<ChartData>}
+   */
+  getChartRunReportData(reportName: string, formData: object): Observable<ChartData> {
+    let httpParams = new HttpParams();
+    for (const [
+      key,
+      value
+    ] of Object.entries(formData)) {
+      httpParams = httpParams.set(key, value);
+    }
+    return this.http
+      .get(`/runreports/${reportName}`, { params: httpParams })
+      .pipe(map((response: any) => new ChartData(response)));
+  }
+
+  /**
+   * Run Report Data for Pentaho.
+   * @param {any} reportName report name
+   * @param {object} formData Form Data.
+   * @returns {Observable<any>}
+   */
+  getPentahoRunReportData(
+    reportName: string,
+    formData: object,
+    tenantIdentifier: string,
+    locale: string,
+    dateFormat: string
+  ): Observable<any> {
+    let httpParams = new HttpParams()
+      .set('tenantIdentifier', tenantIdentifier)
+      .set('locale', locale)
+      .set('dateFormat', dateFormat);
+    for (const [
+      key,
+      value
+    ] of Object.entries(formData)) {
+      httpParams = httpParams.set(key, value);
+    }
+    return this.http.get(`/runreports/${reportName}`, {
+      responseType: 'arraybuffer',
+      observe: 'response',
+      params: httpParams
+    });
+  }
 
   /**
    * @param {number} staffId Staff Id to get centers from.
    * @returns {Observable<any>} Centers
    */
   getCentersFromStaffId(staffId: number): Observable<any> {
-    const httpParams = new HttpParams().set('R_staffId', staffId.toString()).set('genericResultSet', false.toString());
+    const httpParams = new HttpParams().set('R_staffId', staffId.toString()).set('genericResultSet', 'false');
     return this.http.get('/runreports/GroupNamesByStaff', { params: httpParams });
   }
 
@@ -115,18 +212,14 @@ export class RunReportsService {
 
   /**
    * @param {number} centerId Center ID of center to retrieve summary of
-   * @returns {Observable<any>} Center Accounts
+   * @returns {Observable<any>} Center Summary
    */
   getCenterSummary(centerId: number): Observable<any> {
-    const httpParams = new HttpParams().set('R_groupId', centerId.toString()).set('genericResultSet', false.toString());
+    const httpParams = new HttpParams().set('R_groupId', centerId.toString()).set('genericResultSet', 'false');
     return this.http.get('/runreports/GroupSummaryCounts', { params: httpParams });
   }
-
-  getGroupSummary(groupId: string): Observable<any> {
-    const httpParams = new HttpParams().set('R_groupId', groupId).set('genericResultSet', 'false');
-    return this.http.get(`/runreports/GroupSummaryCounts`, { params: httpParams });
-  }
 }
+
 @Injectable({
   providedIn: 'root'
 })

@@ -4,8 +4,8 @@ import { Injectable } from '@angular/core';
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
-/** Custom Services */
-import { ReportsService } from '../reports.service';
+/** Auto-generated Fineract Client */
+import { ReportsService } from '@fineract/client';
 
 /**
  * Reports data resolver.
@@ -22,6 +22,6 @@ export class ReportsResolver {
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.reportsService.getReports();
+    return this.reportsService.retrieveReportList();
   }
 }

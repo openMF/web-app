@@ -3,7 +3,7 @@ import { Component, OnChanges, Input, Output, EventEmitter, OnInit } from '@angu
 import { Validators, UntypedFormGroup, UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
-import { ReportsService } from 'app/reports/reports.service';
+import { ReportsService } from 'app/customApis.service';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Models */

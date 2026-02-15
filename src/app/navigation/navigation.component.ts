@@ -5,7 +5,7 @@ import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { StaffService, CentersService, GroupsService, ClientService } from '@fineract/client';
-import { RunReportsService as CustomreportAPi } from 'app/customApis.service';
+import { ReportsService as CustomreportAPi } from 'app/customApis.service';
 
 /** Custom Components */
 import { OfficeNavigationComponent } from './office-navigation/office-navigation.component';
