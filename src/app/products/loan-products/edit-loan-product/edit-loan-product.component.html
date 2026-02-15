@@ -35,7 +35,9 @@
     </ng-template>
 
     <mat-step [stepControl]="loanProductDetailsForm" completed>
-      <ng-template matStepLabel>{{ 'labels.inputs.DETAILS' | translate }}</ng-template>
+      <ng-template matStepLabel
+        ><strong>{{ getProductTypeLabel(true) }} : </strong>{{ 'labels.inputs.DETAILS' | translate }}</ng-template
+      >
 
       <mifosx-loan-product-details-step
         [loanProductsTemplate]="loanProductAndTemplate"
@@ -43,7 +45,9 @@
     </mat-step>
 
     <mat-step [stepControl]="loanProductCurrencyForm" completed>
-      <ng-template matStepLabel>{{ 'labels.inputs.CURRENCY' | translate }}</ng-template>
+      <ng-template matStepLabel
+        ><strong>{{ getProductTypeLabel(true) }} : </strong>{{ 'labels.inputs.CURRENCY' | translate }}</ng-template
+      >
 
       <mifosx-loan-product-currency-step
         [loanProductsTemplate]="loanProductAndTemplate"
@@ -51,11 +55,15 @@
     </mat-step>
 
     <mat-step [stepControl]="loanProductSettingsForm" completed>
-      <ng-template matStepLabel>{{ 'labels.inputs.SETTINGS' | translate }}</ng-template>
+      <ng-template matStepLabel
+        ><strong>{{ getProductTypeLabel(true) }} : </strong>{{ 'labels.inputs.SETTINGS' | translate }}</ng-template
+      >
 
       <mifosx-loan-product-settings-step
         [loanProductsTemplate]="loanProductAndTemplate"
-        [isLinkedToFloatingInterestRates]="loanProductTermsForm.get('isLinkedToFloatingInterestRates')"
+        [isLinkedToFloatingInterestRates]="
+          loanProductService.isLoanProduct ? loanProductTermsForm.get('isLinkedToFloatingInterestRates') : null
+        "
         (advancePaymentStrategy)="advancePaymentStrategy($event)"
       >
       </mifosx-loan-product-settings-step>
@@ -63,7 +71,10 @@
 
     @if (isAdvancedPaymentStrategy) {
       <mat-step [stepControl]="loanProductInterestRefundForm" completed>
-        <ng-template matStepLabel>{{ 'labels.inputs.INTEREST REFUND' | translate }}</ng-template>
+        <ng-template matStepLabel
+          ><strong>{{ getProductTypeLabel(true) }} : </strong
+          >{{ 'labels.inputs.INTEREST REFUND' | translate }}</ng-template
+        >
         <mifosx-loan-product-interest-refund-step
           [loanProductsTemplate]="loanProductAndTemplate"
           (supportedInterestRefundTypes)="setSupportedInterestRefundTypes($event)"
@@ -73,9 +84,12 @@
       </mat-step>
     }
 
-    @if (isAdvancedPaymentStrategy) {
+    @if (loanProductService.isWorkingCapital || (loanProductService.isLoanProduct && isAdvancedPaymentStrategy)) {
       <mat-step completed>
-        <ng-template matStepLabel>{{ 'labels.inputs.PAYMENT ALLOCATION' | translate }}</ng-template>
+        <ng-template matStepLabel
+          ><strong>{{ getProductTypeLabel(true) }} : </strong
+          >{{ 'labels.inputs.PAYMENT ALLOCATION' | translate }}</ng-template
+        >
         <mifosx-loan-product-payment-strategy-step
           [advancedPaymentAllocations]="advancedPaymentAllocations"
           [advancedCreditAllocations]="advancedCreditAllocations"
@@ -92,25 +106,36 @@
     }
 
     <mat-step [stepControl]="loanProductTermsForm" completed>
-      <ng-template matStepLabel>{{ 'labels.inputs.TERMS' | translate }}</ng-template>
+      <ng-template matStepLabel
+        ><strong>{{ getProductTypeLabel(true) }} : </strong>{{ 'labels.inputs.TERMS' | translate }}</ng-template
+      >
 
       <mifosx-loan-product-terms-step [loanProductsTemplate]="loanProductAndTemplate"></mifosx-loan-product-terms-step>
     </mat-step>
 
-    <mat-step completed>
-      <ng-template matStepLabel>{{ 'labels.inputs.CHARGES' | translate }}</ng-template>
+    @if (loanProductService.isLoanProduct) {
+      <mat-step completed>
+        <ng-template matStepLabel
+          ><strong>{{ getProductTypeLabel(true) }} : </strong>{{ 'labels.inputs.CHARGES' | translate }}</ng-template
+        >
 
-      <mifosx-loan-product-charges-step
-        [loanProductsTemplate]="loanProductAndTemplate"
-        [currencyCode]="loanProductCurrencyForm.get('currencyCode')"
-        [multiDisburseLoan]="loanProductSettingsForm.get('multiDisburseLoan')"
-      >
-      </mifosx-loan-product-charges-step>
-    </mat-step>
+        <mifosx-loan-product-charges-step
+          [loanProductsTemplate]="loanProductAndTemplate"
+          [currencyCode]="loanProductCurrencyForm.get('currencyCode')"
+          [multiDisburseLoan]="
+            loanProductService.isLoanProduct ? loanProductSettingsForm.get('multiDisburseLoan') : null
+          "
+        >
+        </mifosx-loan-product-charges-step>
+      </mat-step>
+    }
 
     @if (isAdvancedPaymentStrategy) {
       <mat-step [stepControl]="loanIncomeCapitalizationForm" completed>
-        <ng-template matStepLabel>{{ 'labels.inputs.DEFERRED INCOME RECOGNITION' | translate }}</ng-template>
+        <ng-template matStepLabel
+          ><strong>{{ getProductTypeLabel(true) }} : </strong
+          >{{ 'labels.inputs.DEFERRED INCOME RECOGNITION' | translate }}</ng-template
+        >
         <mifosx-loan-product-capitalized-income-step
           [deferredIncomeRecognition]="deferredIncomeRecognition"
           [capitalizedIncomeCalculationTypeOptions]="loanProductAndTemplate.capitalizedIncomeCalculationTypeOptions"
@@ -126,28 +151,35 @@
       </mat-step>
     }
 
-    <mat-step [stepControl]="loanProductAccountingForm" completed>
-      <ng-template matStepLabel>{{ 'labels.inputs.ACCOUNTING' | translate }}</ng-template>
+    @if (loanProductService.isLoanProduct) {
+      <mat-step [stepControl]="loanProductAccountingForm" completed>
+        <ng-template matStepLabel
+          ><strong>{{ getProductTypeLabel(true) }} : </strong>{{ 'labels.inputs.ACCOUNTING' | translate }}</ng-template
+        >
 
-      <mifosx-loan-product-accounting-step
-        [loanProductsTemplate]="loanProductAndTemplate"
-        [accountingRuleData]="accountingRuleData"
-        [loanProductFormValid]="loanProductFormValidAndNotPristine"
-        [deferredIncomeRecognition]="deferredIncomeRecognition"
-      >
-      </mifosx-loan-product-accounting-step>
-    </mat-step>
+        <mifosx-loan-product-accounting-step
+          [loanProductsTemplate]="loanProductAndTemplate"
+          [accountingRuleData]="accountingRuleData"
+          [loanProductFormValid]="loanProductFormValidAndNotPristine"
+          [deferredIncomeRecognition]="deferredIncomeRecognition"
+        >
+        </mifosx-loan-product-accounting-step>
+      </mat-step>
+    }
 
-    <mat-step state="preview" completed>
-      <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
-      <mifosx-loan-product-preview-step
-        [loanProductsTemplate]="loanProductAndTemplate"
-        [accountingRuleData]="accountingRuleData"
-        [loanProduct]="loanProduct"
-        [isValid]="loanProductFormValid"
-        (submitEvent)="submit()"
-      >
-      </mifosx-loan-product-preview-step>
-    </mat-step>
+    @if (loanProductFormValidAndNotPristine) {
+      <mat-step state="preview" completed>
+        <ng-template matStepLabel
+          ><strong>{{ getProductTypeLabel(true) }} : </strong>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template
+        >
+        <mifosx-loan-product-preview-step
+          [loanProductsTemplate]="loanProductAndTemplate"
+          [accountingRuleData]="accountingRuleData"
+          [loanProduct]="loanProduct"
+          (submitEvent)="submit()"
+        >
+        </mifosx-loan-product-preview-step>
+      </mat-step>
+    }
   </mat-stepper>
 </div>

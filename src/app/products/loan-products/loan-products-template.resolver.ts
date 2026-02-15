@@ -14,16 +14,26 @@ import { Observable } from 'rxjs';
 
 /** Custom Services */
 import { ProductsService } from '../products.service';
+import { ActivatedRouteSnapshot } from '@angular/router';
+import { LOAN_PRODUCT_TYPE } from './models/loan-product.model';
+import { LoanProductService } from './services/loan-product.service';
 
 @Injectable()
 export class LoanProductsTemplateResolver {
   private productsService = inject(ProductsService);
+  private loanProductService = inject(LoanProductService);
 
   /**
    * Returns the loan products template data.
    * @returns {Observable<any>}
    */
-  resolve(): Observable<any> {
-    return this.productsService.getLoanProductsTemplate();
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const productType = route.queryParams['productType'] || '';
+    if (productType === '') {
+      this.loanProductService.initialize(LOAN_PRODUCT_TYPE.LOAN);
+    } else {
+      this.loanProductService.initialize(LOAN_PRODUCT_TYPE.WORKING_CAPITAL);
+    }
+    return this.productsService.getLoanProductsTemplate(this.loanProductService.loanProductPath);
   }
 }

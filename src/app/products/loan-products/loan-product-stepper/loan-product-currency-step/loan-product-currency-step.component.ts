@@ -7,12 +7,12 @@
  */
 
 import { Component, OnInit, Input, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
-import { MatCheckbox } from '@angular/material/checkbox';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanProductService } from '../../services/loan-product.service';
 
 @Component({
   selector: 'mifosx-loan-product-currency-step',
@@ -21,7 +21,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     MatTooltip,
-    MatCheckbox,
     MatStepperPrevious,
     FaIconComponent,
     MatStepperNext
@@ -29,6 +28,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class LoanProductCurrencyStepComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
+  protected loanProductService = inject(LoanProductService);
 
   @Input() loanProductsTemplate: any;
 
@@ -42,25 +42,15 @@ export class LoanProductCurrencyStepComponent implements OnInit {
 
   ngOnInit() {
     this.currencyData = this.loanProductsTemplate.currencyOptions;
+    const currency = this.loanProductsTemplate.currency ? this.loanProductsTemplate.currency : this.currencyData[0];
     this.loanProductCurrencyForm.patchValue({
-      currencyCode: this.loanProductsTemplate.currency.code || this.currencyData[0].code,
+      currencyCode: currency.code,
       digitsAfterDecimal:
-        this.loanProductsTemplate.currency.decimalPlaces === 0 ||
-        this.loanProductsTemplate.currency.decimalPlaces === undefined ||
-        this.loanProductsTemplate.currency.decimalPlaces === null
-          ? ''
-          : this.loanProductsTemplate.currency.decimalPlaces,
-      setMultiples: !!(
-        (this.loanProductsTemplate.currency.inMultiplesOf && this.loanProductsTemplate.currency.inMultiplesOf !== 0) ||
-        (this.loanProductsTemplate.installmentAmountInMultiplesOf &&
-          this.loanProductsTemplate.installmentAmountInMultiplesOf !== 0)
-      ),
+        currency.decimalPlaces === undefined || currency.decimalPlaces === null ? '' : currency.decimalPlaces,
       inMultiplesOf:
-        this.loanProductsTemplate.currency.inMultiplesOf === 0 ||
-        this.loanProductsTemplate.currency.inMultiplesOf === undefined ||
-        this.loanProductsTemplate.currency.inMultiplesOf === null
+        currency.inMultiplesOf === 0 || currency.inMultiplesOf === undefined || currency.inMultiplesOf === null
           ? ''
-          : this.loanProductsTemplate.currency.inMultiplesOf,
+          : currency.inMultiplesOf,
       installmentAmountInMultiplesOf:
         this.loanProductsTemplate.installmentAmountInMultiplesOf === 0 ||
         this.loanProductsTemplate.installmentAmountInMultiplesOf === undefined ||
@@ -68,50 +58,6 @@ export class LoanProductCurrencyStepComponent implements OnInit {
           ? ''
           : this.loanProductsTemplate.installmentAmountInMultiplesOf
     });
-
-    this.setupConditionalValidation();
-  }
-
-  setupConditionalValidation() {
-    this.loanProductCurrencyForm.get('setMultiples')?.valueChanges.subscribe((setMultiples: boolean) => {
-      const inMultiplesOfControl = this.loanProductCurrencyForm.get('inMultiplesOf');
-      const installmentControl = this.loanProductCurrencyForm.get('installmentAmountInMultiplesOf');
-
-      if (setMultiples) {
-        inMultiplesOfControl?.setValidators([
-          Validators.required,
-          Validators.min(1)
-        ]);
-        installmentControl?.setValidators([
-          Validators.required,
-          Validators.min(1)
-        ]);
-      } else {
-        inMultiplesOfControl?.clearValidators();
-        installmentControl?.clearValidators();
-        inMultiplesOfControl?.setValue('');
-        installmentControl?.setValue('');
-      }
-
-      inMultiplesOfControl?.updateValueAndValidity();
-      installmentControl?.updateValueAndValidity();
-    });
-
-    const initialSetMultiples = this.loanProductCurrencyForm.get('setMultiples')?.value;
-    if (initialSetMultiples) {
-      const inMultiplesOfControl = this.loanProductCurrencyForm.get('inMultiplesOf');
-      const installmentControl = this.loanProductCurrencyForm.get('installmentAmountInMultiplesOf');
-      inMultiplesOfControl?.setValidators([
-        Validators.required,
-        Validators.min(1)
-      ]);
-      installmentControl?.setValidators([
-        Validators.required,
-        Validators.min(1)
-      ]);
-      inMultiplesOfControl?.updateValueAndValidity();
-      installmentControl?.updateValueAndValidity();
-    }
   }
 
   createLoanProductCurrencyForm() {
@@ -127,32 +73,19 @@ export class LoanProductCurrencyStepComponent implements OnInit {
           Validators.min(0)
         ]
       ],
-      setMultiples: [false],
-      inMultiplesOf: [''],
-      installmentAmountInMultiplesOf: ['']
+      inMultiplesOf: ['']
     });
+
+    if (this.loanProductService.isLoanProduct) {
+      this.loanProductCurrencyForm.addControl('installmentAmountInMultiplesOf', new UntypedFormControl(''));
+    }
   }
 
   get loanProductCurrency() {
     const formValue = this.loanProductCurrencyForm.value;
     const result: any = {
-      currencyCode: formValue.currencyCode,
-      digitsAfterDecimal: formValue.digitsAfterDecimal
+      ...formValue
     };
-
-    if (formValue.setMultiples) {
-      if (formValue.inMultiplesOf !== '' && formValue.inMultiplesOf !== null && formValue.inMultiplesOf !== undefined) {
-        result.inMultiplesOf = formValue.inMultiplesOf;
-      }
-
-      if (
-        formValue.installmentAmountInMultiplesOf !== '' &&
-        formValue.installmentAmountInMultiplesOf !== null &&
-        formValue.installmentAmountInMultiplesOf !== undefined
-      ) {
-        result.installmentAmountInMultiplesOf = formValue.installmentAmountInMultiplesOf;
-      }
-    }
 
     return result;
   }

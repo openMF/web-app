@@ -9,7 +9,7 @@
 <div class="container">
   <mat-card>
     <div #currencyFormRef class="currency-form-container">
-      <form #formRef="ngForm" [formGroup]="currencyForm" class="layout-row gap-20px" (ngSubmit)="addCurrency()">
+      <form #formRef="ngForm" [formGroup]="currencyForm" class="layout-row gap-20px">
         <mat-form-field class="currency-search-field">
           <mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
           <mat-select required formControlName="currency">
@@ -38,6 +38,7 @@
           class="add-currency-button"
           color="primary"
           [disabled]="!currencyForm.valid"
+          (click)="addCurrency()"
           [attr.aria-label]="'labels.buttons.Add Currency' | translate"
           [title]="'labels.buttons.Add Currency' | translate"
           *mifosxHasPermission="'UPDATE_CURRENCY'"

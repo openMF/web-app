@@ -29,25 +29,25 @@ export class ProductsService {
   /**
    * @returns {Observable<any>} Loan products data
    */
-  getLoanProducts(): Observable<any> {
-    return this.http.get('/loanproducts');
+  getLoanProducts(productType: string): Observable<any> {
+    return this.http.get(`/${productType}`);
   }
 
-  createLoanProduct(loanProduct: string): Observable<any> {
-    return this.http.post('/loanproducts', loanProduct);
+  createLoanProduct(productType: string, loanProduct: any): Observable<any> {
+    return this.http.post(`/${productType}`, loanProduct);
   }
 
-  getLoanProductsTemplate(): Observable<any> {
-    return this.http.get('/loanproducts/template');
+  getLoanProductsTemplate(productType: string): Observable<any> {
+    return this.http.get(`/${productType}/template`);
   }
 
-  getLoanProduct(loanProductId: string, template: boolean = false): Observable<any> {
+  getLoanProduct(productType: string, loanProductId: string, template: boolean = false): Observable<any> {
     const httpParams = new HttpParams().set('template', template.toString());
-    return this.http.get(`/loanproducts/${loanProductId}`, { params: httpParams });
+    return this.http.get(`/${productType}/${loanProductId}`, { params: httpParams });
   }
 
-  updateLoanProduct(loanProductId: string, loanProduct: any): Observable<any> {
-    return this.http.put(`/loanproducts/${loanProductId}`, loanProduct);
+  updateLoanProduct(productType: string, loanProductId: string, loanProduct: any): Observable<any> {
+    return this.http.put(`/${productType}/${loanProductId}`, loanProduct);
   }
 
   /**

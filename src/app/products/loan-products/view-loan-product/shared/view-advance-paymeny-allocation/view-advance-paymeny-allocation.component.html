@@ -17,12 +17,14 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
     <div class="flex-fill">
-      <div class="flex-fill">
-        <span class="flex-40">{{ 'labels.inputs.Future Installment Allocation Rule' | translate }}:</span>
-        <span class="flex-60">{{
-          futureInstallmentRuleValue(paymentAllocation.futureInstallmentAllocationRule) | translateKey: 'catalogs'
-        }}</span>
-      </div>
+      @if (loanProductService.isLoanProduct) {
+        <div class="flex-fill">
+          <span class="flex-40">{{ 'labels.inputs.Future Installment Allocation Rule' | translate }}:</span>
+          <span class="flex-60">{{
+            futureInstallmentRuleValue(paymentAllocation.futureInstallmentAllocationRule) | translateKey: 'catalogs'
+          }}</span>
+        </div>
+      }
       <div class="flex-fill">
         <span class="flex-40">{{ 'labels.inputs.Payment Allocation Order' | translate }}</span>
         <span class="flex-60">
@@ -51,7 +53,7 @@
     </div>
   </mat-expansion-panel>
 }
-@if (creditAllocation) {
+@if (loanProductService.isLoanProduct && creditAllocation) {
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>

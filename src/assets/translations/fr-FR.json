@@ -425,6 +425,7 @@
       "Create Interest Refund": "Créer un remboursement d’intérêts",
       "Create Journal Entries": "Créer des entrées de journal",
       "Create Loan Product": "Créer un produit de prêt",
+      "Create Working Capital Product": "Créer un produit de fonds de roulement",
       "Create Office": "Créer un bureau",
       "Create Payment Type": "Créer un type de paiement",
       "Create Preference": "Créer une préférence",
@@ -1151,6 +1152,7 @@
       "Loan Originators": "Les courtiers en prêts",
       "Loan Product": "Produit de prêt",
       "Loan Products": "Produits de prêt",
+      "Working Capital Product": "Produit de fonds de roulement",
       "Loan Provisioning Criteria": "Critères de provisionnement du prêt",
       "Loan Purpose": "Objectif du prêt",
       "Loan Repayments": "Remboursements de prêts",
@@ -2326,6 +2328,7 @@
       "Percentage to Base": "Pourcentage à la base",
       "Period": "Période",
       "Period From": "Période de",
+      "Period Payment Rate": "Taux de paiement périodique",
       "Period To": "Période jusqu'à",
       "Period Type": "Type de période",
       "Amount Range From": "Fourchette de montant",
@@ -2718,7 +2721,9 @@
           "Is Equal Amortization?": "L’amortissement est-il égal ?",
           "amortizationType": {
             "Equal installments": "Versements égaux",
-            "Equal principal payments": "Paiements du principal égaux"
+            "Equal principal payments": "Paiements du principal égaux",
+            "Effective Interest Rate": "Taux d'intérêt effectif",
+            "Flat": "Plat"
           }
         }
       },
@@ -2784,7 +2789,14 @@
       "Enter first name (include middle name)": "Saisir le prénom (incluant le deuxième prénom)",
       "Enter last name": "Saisir le nom de famille",
       "Sender name": "Nom de l'expéditeur",
-      "Retry": "Réessayer"
+      "Retry": "Réessayer",
+      "Flat Percentage Amount": "Montant en pourcentage fixe",
+      "Delinquency Bucket Classification": "Classification des catégories de délinquance",
+      "Discount Default": "Remise par défaut",
+      "Period Payment Frequency": "Fréquence de paiement périodique",
+      "Period Payment Frequency Type": "Type de fréquence de paiement périodique",
+      "Payment Allocation Transactions": "Transactions d'affectation des paiements",
+      "Net Present Value day count": "Valeur actuelle nette nombre de jours"
     },
     "links": {
       "Community": "Communauté",

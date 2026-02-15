@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import {
   AdvancePaymentAllocationData,
   CreditAllocation,
@@ -14,6 +14,7 @@ import {
 } from 'app/products/loan-products/loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
 import { MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from '@angular/material/expansion';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanProductService } from 'app/products/loan-products/services/loan-product.service';
 
 @Component({
   selector: 'mifosx-view-advance-paymeny-allocation',
@@ -27,6 +28,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewAdvancePaymenyAllocationComponent {
+  protected loanProductService = inject(LoanProductService);
+
   @Input() paymentAllocation: PaymentAllocation | null;
   @Input() creditAllocation: CreditAllocation | null;
   @Input() advancePaymentAllocationData: AdvancePaymentAllocationData;

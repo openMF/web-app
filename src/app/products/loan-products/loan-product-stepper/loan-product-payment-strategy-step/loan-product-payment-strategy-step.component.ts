@@ -53,9 +53,9 @@ export class LoanProductPaymentStrategyStepComponent implements OnInit {
   @Input() advancedPaymentAllocations: AdvancedPaymentAllocation[] = [];
   @Input() advancedCreditAllocations: AdvancedCreditAllocation[] = [];
   @Input() advancedPaymentAllocationTransactionTypes: PaymentAllocationTransactionType[] = [];
-  @Input() paymentAllocationOrderDefault: PaymentAllocationOrder[];
+  @Input() paymentAllocationOrderDefault: PaymentAllocationOrder[] = [];
   @Input() advancedCreditAllocationTransactionTypes: PaymentAllocationTransactionType[] = [];
-  @Input() creditAllocationOrderDefault: CreditAllocationOrder[];
+  @Input() creditAllocationOrderDefault: CreditAllocationOrder[] = [];
 
   @Output() paymentAllocationChange = new EventEmitter<boolean>();
   @Output() setPaymentAllocation = new EventEmitter<PaymentAllocation[]>();

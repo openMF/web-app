@@ -135,7 +135,8 @@ import {
   faLightbulb,
   faCodeBranch,
   faHandHoldingHand,
-  faHandHoldingHeart
+  faHandHoldingHeart,
+  faCaretDown
 } from '@fortawesome/free-solid-svg-icons';
 
 /**
@@ -166,6 +167,7 @@ export class IconsModule {
       faCalendar,
       faCalendarAlt,
       faCalendarCheck,
+      faCaretDown,
       faChartBar,
       faCheck,
       faCheckCircle,

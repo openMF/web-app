@@ -57,14 +57,14 @@ export class EditRangeComponent implements OnInit {
         [
           Validators.required,
           Validators.pattern('^(0*[1-9][0-9]*?)$'),
-          Validators.max(1000)
+          Validators.min(1)
         ]
       ],
       maximumAgeDays: [
         this.delinquencyRangeData.maximumAgeDays,
         [
           Validators.pattern('^(0*[1-9][0-9]*?)$'),
-          Validators.max(10000)
+          Validators.min(1)
         ]
       ]
     });

@@ -425,6 +425,7 @@
       "Create Interest Refund": "이자 환불 생성",
       "Create Journal Entries": "분개 항목 만들기",
       "Create Loan Product": "대출상품 생성",
+      "Create Working Capital Product": "운전자본 상품 생성",
       "Create Office": "사무실 만들기",
       "Create Payment Type": "결제 유형 생성",
       "Create Preference": "환경설정 만들기",
@@ -1148,6 +1149,7 @@
       "Loan Originators": "대출 담당자",
       "Loan Product": "대출상품",
       "Loan Products": "대출상품",
+      "Working Capital Product": "운전자본 상품",
       "Loan Provisioning Criteria": "대출 준비 기준",
       "Loan Purpose": "대출목적",
       "Loan Repayments": "대출 상환",
@@ -2324,6 +2326,7 @@
       "Percentage to Base": "베이스에 대한 백분율",
       "Period": "기간",
       "Period From": "기간: 부터",
+      "Period Payment Rate": "기간별 지급률",
       "Period To": "기간: 까지",
       "Period Type": "기간 유형",
       "Amount Range From": "금액 범위: 부터",
@@ -2716,7 +2719,9 @@
           "Is Equal Amortization?": "균등상각인가?",
           "amortizationType": {
             "Equal installments": "균등할부",
-            "Equal principal payments": "동일 원금지급"
+            "Equal principal payments": "동일 원금지급",
+            "Effective Interest Rate": "실효이자율",
+            "Flat": "정액"
           }
         }
       },
@@ -2782,7 +2787,14 @@
       "Enter first name (include middle name)": "이름을 입력하세요 (중간 이름 포함)",
       "Enter last name": "성을 입력하세요",
       "Sender name": "송금인 이름",
-      "Retry": "재시도"
+      "Retry": "재시도",
+      "Flat Percentage Amount": "고정 비율 금액",
+      "Delinquency Bucket Classification": "연체 버킷 분류",
+      "Discount Default": "할인 기본값",
+      "Period Payment Frequency": "기간별 지급 빈도",
+      "Period Payment Frequency Type": "기간별 지급 빈도 유형",
+      "Payment Allocation Transactions": "지불 배분 거래",
+      "Net Present Value day count": "순현재가치 일수 계산"
     },
     "links": {
       "Community": "지역 사회",

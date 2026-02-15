@@ -9,15 +9,16 @@
 <form [formGroup]="loanProductDetailsForm">
   <div class="layout-row-wrap gap-2percent responsive-column align-start-center">
     <mat-form-field class="flex-98">
-      <mat-label>{{ 'labels.inputs.Product Name' | translate }}</mat-label>
+      <mat-label>{{ getProductTypeLabel(false) }} {{ 'labels.inputs.Name' | translate }}</mat-label>
       <input
         matInput
         formControlName="name"
+        maxlength="100"
         matTooltip="{{ 'tooltips.Product name is a unique identifier' | translate }}"
         required
       />
       <mat-error>
-        {{ 'labels.inputs.Product Name' | translate }} {{ 'labels.commons.is' | translate }}
+        {{ getProductTypeLabel(false) }} {{ 'labels.inputs.Name' | translate }} {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
@@ -42,29 +43,22 @@
       <input
         matInput
         formControlName="externalId"
+        maxlength="100"
         matTooltip="{{ 'tooltips.External Id is a unique identifier' | translate }}"
       />
     </mat-form-field>
 
-    <mat-form-field class="flex-48">
-      <mat-label>{{ 'labels.inputs.Fund' | translate }}</mat-label>
-      <mat-select matTooltip="{{ 'tooltips.Loan products may be assigned' | translate }}" formControlName="fundId">
-        @for (fund of fundData; track fund) {
-          <mat-option [value]="fund.id">
-            {{ fund.name }}
-          </mat-option>
-        }
-      </mat-select>
+    <mat-form-field class="flex-98">
+      <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
+      <textarea
+        matInput
+        matTooltip="{{ 'tooltips.Provide additional information' | translate }}"
+        formControlName="description"
+        maxlength="500"
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="4"
+      ></textarea>
     </mat-form-field>
-
-    <mat-checkbox
-      labelPosition="before"
-      matTooltip="{{ 'tooltips.A borrower loan counter (cycle)' | translate }}"
-      formControlName="includeInBorrowerCycle"
-      class="flex-48"
-    >
-      {{ 'labels.inputs.Include in Customer Loan Counter' | translate }}
-    </mat-checkbox>
 
     <mat-form-field class="flex-48" (click)="startDatePicker.open()">
       <mat-label>{{ 'labels.inputs.Start Date' | translate }}</mat-label>
@@ -94,19 +88,30 @@
       <mat-datepicker #closeDatePicker></mat-datepicker>
     </mat-form-field>
 
-    <mat-form-field class="flex-98">
-      <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
-      <textarea
-        matInput
-        matTooltip="{{ 'tooltips.Provide additional information' | translate }}"
-        formControlName="description"
-        cdkTextareaAutosize
-        cdkAutosizeMinRows="2"
-      ></textarea>
+    <mat-form-field class="flex-48">
+      <mat-label>{{ 'labels.inputs.Fund' | translate }}</mat-label>
+      <mat-select matTooltip="{{ 'tooltips.Loan products may be assigned' | translate }}" formControlName="fundId">
+        @for (fund of fundData; track fund) {
+          <mat-option [value]="fund.id">
+            {{ fund.name }}
+          </mat-option>
+        }
+      </mat-select>
     </mat-form-field>
+
+    @if (loanProductService.isLoanProduct) {
+      <mat-checkbox
+        labelPosition="before"
+        matTooltip="{{ 'tooltips.A borrower loan counter (cycle)' | translate }}"
+        formControlName="includeInBorrowerCycle"
+        class="flex-48"
+      >
+        {{ 'labels.inputs.Include in Customer Loan Counter' | translate }}
+      </mat-checkbox>
+    }
   </div>
 
-  <div class="layout-row align-center gap-2percent margin-t responsive-column">
+  <div class="layout-row align-center gap-2percent margin-t responsive-column stepper-buttons">
     <button mat-raised-button matStepperPrevious disabled>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Previous' | translate }}

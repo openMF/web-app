@@ -9,12 +9,14 @@
 import { Injectable, inject } from '@angular/core';
 import { SettingsService } from 'app/settings/settings.service';
 import { GlobalConfiguration } from 'app/system/configurations/global-configurations-tab/configuration.model';
+import { LoanProductService } from './services/loan-product.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoanProducts {
   private settingsService = inject(SettingsService);
+  private loanProductService = inject(LoanProductService);
 
   public static LOAN_SCHEDULE_TYPE_CUMULATIVE = 'CUMULATIVE';
   public static LOAN_SCHEDULE_TYPE_PROGRESSIVE = 'PROGRESSIVE';
@@ -71,12 +73,18 @@ export class LoanProducts {
     const dateFormat: string = this.settingsService.dateFormat;
     const locale: string = this.settingsService.language.code;
 
-    const loanProduct = {
-      ...loanProductData,
-      charges: loanProductData.charges.map((charge: any) => ({ id: charge.id })),
-      dateFormat,
-      locale
-    };
+    const loanProduct = this.loanProductService.isLoanProduct
+      ? {
+          ...loanProductData,
+          charges: loanProductData.charges.map((charge: any) => ({ id: charge.id })),
+          dateFormat,
+          locale
+        }
+      : {
+          ...loanProductData,
+          dateFormat,
+          locale
+        };
     // Remove unnecessary properties
     delete loanProduct.allowAttributeConfiguration;
     delete loanProduct.advancedAccountingRules;
@@ -87,14 +95,16 @@ export class LoanProducts {
     delete loanProduct.allowPartialPeriodInterestCalculation;
 
     // Set Default values If they were not set
-    itemsByDefault.forEach((config: GlobalConfiguration) => {
-      const propertyName = this.resolvePropertyName(config.name);
-      if (propertyName !== '') {
-        if (!loanProduct[propertyName] || loanProduct[propertyName] === '') {
-          loanProduct[propertyName] = config.value;
+    if (this.loanProductService.isLoanProduct) {
+      itemsByDefault.forEach((config: GlobalConfiguration) => {
+        const propertyName = this.resolvePropertyName(config.name);
+        if (propertyName !== '') {
+          if (!loanProduct[propertyName] || loanProduct[propertyName] === '') {
+            loanProduct[propertyName] = config.value;
+          }
         }
-      }
-    });
+      });
+    }
 
     return loanProduct;
   }

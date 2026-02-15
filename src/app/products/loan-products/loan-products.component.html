@@ -8,10 +8,35 @@
 
 <div class="container m-b-20 layout-row align-end gap-20px">
   <div #buttonCreateLoanProduct class="in-block">
-    <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_LOANPRODUCT'">
-      <fa-icon icon="plus" class="m-r-10"></fa-icon>
-      {{ 'labels.buttons.Create Loan Product' | translate }}
+    <button
+      mat-raised-button
+      color="primary"
+      [matMenuTriggerFor]="createMenu"
+      *mifosxHasPermission="'CREATE_LOANPRODUCT'"
+    >
+      {{ 'labels.buttons.Create' | translate }}
+      <fa-icon icon="caret-down" class="m-l-10"></fa-icon>
     </button>
+    <mat-menu #createMenu="matMenu">
+      <button
+        mat-menu-item
+        [routerLink]="['create']"
+        [queryParams]="{ productType: 'loan' }"
+        *mifosxHasPermission="'CREATE_LOANPRODUCT'"
+      >
+        <fa-icon icon="calendar-alt" class="m-r-10"></fa-icon>
+        {{ 'labels.buttons.Create Loan Product' | translate }}
+      </button>
+      <button
+        mat-menu-item
+        [routerLink]="['create']"
+        [queryParams]="{ productType: 'working-capital' }"
+        *mifosxHasPermission="'CREATE_LOANPRODUCT'"
+      >
+        <fa-icon icon="money-bill-alt" class="m-r-10"></fa-icon>
+        {{ 'labels.buttons.Create Working Capital Product' | translate }}
+      </button>
+    </mat-menu>
   </div>
   <div class="in-block">
     <button mat-raised-button color="primary" (click)="openImportDialog()" *mifosxHasPermission="'CREATE_LOANPRODUCT'">
@@ -22,10 +47,20 @@
 </div>
 
 <div class="container">
-  <div #filter class="layout-row">
-    <mat-form-field class="flex-fill">
+  <div #filter class="layout-row flex-fill form-container">
+    <mat-form-field class="flex-70">
       <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)" />
+    </mat-form-field>
+    <mat-form-field class="flex-28">
+      <mat-label>{{ 'labels.inputs.Product' | translate }}</mat-label>
+      <mat-select (selectionChange)="fetchProducts()" [formControl]="loanProductSelector">
+        @for (loanProduct of loanProductOptions; track loanProduct.type) {
+          <mat-option [value]="loanProduct.type">
+            {{ loanProduct.label | translateKey: 'catalogs' }}
+          </mat-option>
+        }
+      </mat-select>
     </mat-form-field>
   </div>
 
@@ -65,7 +100,13 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns" [routerLink]="[row.id]" class="select-row"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        [routerLink]="[row.id]"
+        [queryParams]="{ productType: loanProductService.productType.value }"
+        class="select-row"
+      ></tr>
     </table>
 
     <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>

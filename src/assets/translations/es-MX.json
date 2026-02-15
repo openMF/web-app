@@ -425,7 +425,8 @@
       "Create Interest Refund": "Crear reembolso de intereses",
       "Create Journal Entries": "Crear entradas de diario",
       "Create Loan Product": "Crear producto de Crédito",
-      "Create Office": "Crear Sucursal",
+      "Create Working Capital Product": "Crear Producto de Capital de Trabajo",
+      "Create Office": "Crear Oficina",
       "Create Payment Type": "Crear Tipo de Pago",
       "Create Preference": "Crear Preferencia",
       "Create Provisioning Criteria": "Crear criterios de aprovisionamiento",
@@ -1150,6 +1151,7 @@
       "Loan Originators": "Originadores de créditos",
       "Loan Product": "Producto de Crédito",
       "Loan Products": "Productos de Crédito",
+      "Working Capital Product": "Producto de Capital de Trabajo",
       "Loan Provisioning Criteria": "Criterios de concesión de Créditos",
       "Loan Purpose": "Propósito del Crédito",
       "Loan Repayments": "Pagos de Créditos",
@@ -2327,6 +2329,7 @@
       "Percentage to Base": "Porcentaje a la base",
       "Period": "Período",
       "Period From": "Periodo desde",
+      "Period Payment Rate": "Tasa de pago del período",
       "Period To": "Período hasta",
       "Period Type": "Tipo de período",
       "Amount Range From": "Monto desde",
@@ -2720,7 +2723,9 @@
           "Is Equal Amortization?": "¿Es igual la amortización?",
           "amortizationType": {
             "Equal installments": "Cuotas iguales",
-            "Equal principal payments": "Pagos iguales de capital"
+            "Equal principal payments": "Pagos iguales de capital",
+            "Effective Interest Rate": "Tasa de interés efectiva",
+            "Flat": "Tasa plana"
           }
         }
       },
@@ -2798,7 +2803,14 @@
       "Economic Activity": "Actividad Económica",
       "Entity Member": "Miembro de Entidad",
       "Search Client": "Buscar Cliente",
-      "Type client name or account number": "Escriba nombre del cliente o número de cuenta"
+      "Type client name or account number": "Escriba nombre del cliente o número de cuenta",
+      "Flat Percentage Amount": "Cantidad porcentual fija",
+      "Delinquency Bucket Classification": "Clasificación del segmento de morosidad",
+      "Discount Default": "Descuento predeterminado",
+      "Period Payment Frequency": "Frecuencia de pago por período",
+      "Period Payment Frequency Type": "Tipo de frecuencia de pago por período",
+      "Payment Allocation Transactions": "Transacciones de asignación de pagos",
+      "Net Present Value day count": "Recuento de días del valor presente neto"
     },
     "links": {
       "Community": "Comunidad",

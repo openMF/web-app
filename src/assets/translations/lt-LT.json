@@ -425,6 +425,7 @@
       "Create Interest Refund": "Sukurti palūkanų grąžinimą",
       "Create Journal Entries": "Kurti žurnalo įrašus",
       "Create Loan Product": "Sukurti paskolos produktą",
+      "Create Working Capital Product": "Sukurti apyvartinio kapitalo produktą",
       "Create Office": "Sukurkite biurą",
       "Create Payment Type": "Sukurti mokėjimo tipą",
       "Create Preference": "Sukurti pirmenybę",
@@ -1146,6 +1147,7 @@
       "Loan Originators": "Paskolų teikėjai",
       "Loan Product": "Paskolos produktas",
       "Loan Products": "Paskolos produktai",
+      "Working Capital Product": "Apyvartinio kapitalo produktas",
       "Loan Provisioning Criteria": "Paskolos suteikimo kriterijai",
       "Loan Purpose": "Paskolos tikslas",
       "Loan Repayments": "Paskolos grąžinimas",
@@ -2321,6 +2323,7 @@
       "Percentage to Base": "Procentai iki bazės",
       "Period": "Laikotarpis",
       "Period From": "Laikotarpis Nuo",
+      "Period Payment Rate": "Laikotarpio mokėjimo norma",
       "Period To": "Laikotarpis iki",
       "Period Type": "Laikotarpio tipas",
       "Amount Range From": "Sumos diapazonas nuo",
@@ -2712,7 +2715,9 @@
           "Is Equal Amortization?": "Ar vienoda amortizacija?",
           "amortizationType": {
             "Equal installments": "Lygiomis dalimis",
-            "Equal principal payments": "Vienodos pagrindinės išmokos"
+            "Equal principal payments": "Vienodos pagrindinės išmokos",
+            "Effective Interest Rate": "Efektyvi palūkanų norma",
+            "Flat": "Fiksuota"
           }
         }
       },
@@ -2781,7 +2786,14 @@
       "Enter first name (include middle name)": "Įveskite vardą (įskaitant antrą vardą)",
       "Enter last name": "Įveskite pavardę",
       "Sender name": "Siuntėjo vardas",
-      "Retry": "Bandyti dar kartą"
+      "Retry": "Bandyti dar kartą",
+      "Flat Percentage Amount": "Fiksuota procentinė suma",
+      "Delinquency Bucket Classification": "Nusikalstamų veikų grupės klasifikacija",
+      "Discount Default": "Numatytoji nuolaida",
+      "Period Payment Frequency": "Laikotarpis Mokėjimo dažnumas",
+      "Period Payment Frequency Type": "Laikotarpio mokėjimo dažnumo tipas",
+      "Payment Allocation Transactions": "Mokėjimų paskirstymo operacijos",
+      "Net Present Value day count": "Grynosios dabartinės vertės dienų skaičius"
     },
     "links": {
       "Community": "bendruomenė",

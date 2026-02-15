@@ -6,7 +6,7 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<div class="flex-fill layout-row-wrap gap-2percent layout-lt-md-column">
+<div class="flex-fill layout-row-wrap gap-2percent layout-lt-md-column m-b-10">
   <h4 class="m-b-15 right flex-90">
     {{ 'labels.heading.You can drag and drop the rows to set a Payment Allocations order' | translate }}
   </h4>
@@ -79,7 +79,11 @@
     </div>
   }
 
-  @if (advancedPaymentAllocation && advancedPaymentAllocation.futureInstallmentAllocationRules) {
+  @if (
+    loanProductService.isLoanProduct &&
+    advancedPaymentAllocation &&
+    advancedPaymentAllocation.futureInstallmentAllocationRules
+  ) {
     <mat-form-field class="m-t-20 flex-33">
       <mat-label>{{ 'labels.inputs.Future Installment Allocation Rule' | translate }}</mat-label>
       <mat-select [formControl]="futureInstallmentAllocationRule">

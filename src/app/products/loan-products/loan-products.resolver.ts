@@ -14,6 +14,7 @@ import { Observable } from 'rxjs';
 
 /** Custom Services */
 import { ProductsService } from '../products.service';
+import { LoanProductService } from './services/loan-product.service';
 
 /**
  * Loan products data resolver.
@@ -21,12 +22,13 @@ import { ProductsService } from '../products.service';
 @Injectable()
 export class LoanProductsResolver {
   private productsService = inject(ProductsService);
+  private loanProductService = inject(LoanProductService);
 
   /**
    * Returns the loan products data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.productsService.getLoanProducts();
+    return this.productsService.getLoanProducts(this.loanProductService.loanProductPath);
   }
 }

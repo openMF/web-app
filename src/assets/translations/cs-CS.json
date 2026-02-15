@@ -425,6 +425,7 @@
       "Create Interest Refund": "Vytvořit vrácení úroků",
       "Create Journal Entries": "Vytvářejte záznamy deníku",
       "Create Loan Product": "Vytvořte produkt půjčky",
+      "Create Working Capital Product": "Vytvořit produkt provozního kapitálu",
       "Create Office": "Vytvořit Office",
       "Create Payment Type": "Vytvořit typ platby",
       "Create Preference": "Vytvořit předvolbu",
@@ -1147,6 +1148,7 @@
       "Loan Originators": "Poskytovatelé úvěrů",
       "Loan Product": "Úvěrový produkt",
       "Loan Products": "Úvěrové produkty",
+      "Working Capital Product": "Produkt provozního kapitálu",
       "Loan Provisioning Criteria": "Kritéria pro poskytování úvěrů",
       "Loan Purpose": "Účel půjčky",
       "Loan Repayments": "Splátky půjček",
@@ -2322,6 +2324,7 @@
       "Percentage to Base": "Procento k základně",
       "Period": "Doba",
       "Period From": "Období od",
+      "Period Payment Rate": "Sazba splátek za období",
       "Period To": "Období do",
       "Period Type": "Typ období",
       "Amount Range From": "Rozsah částky Od",
@@ -2714,7 +2717,9 @@
           "Is Equal Amortization?": "Je rovná amortizace?",
           "amortizationType": {
             "Equal installments": "Stejné splátky",
-            "Equal principal payments": "Stejné splátky jistiny"
+            "Equal principal payments": "Stejné splátky jistiny",
+            "Effective Interest Rate": "Efektivní úroková sazba",
+            "Flat": "Paušální"
           }
         }
       },
@@ -2782,7 +2787,14 @@
       "Enter first name (include middle name)": "Zadejte jméno (včetně druhého jména)",
       "Enter last name": "Zadejte příjmení",
       "Sender name": "Jméno odesílatele",
-      "Retry": "Opakovat"
+      "Retry": "Opakovat",
+      "Flat Percentage Amount": "Paušální procentní částka",
+      "Delinquency Bucket Classification": "Klasifikace segmentů prodlení",
+      "Discount Default": "Výchozí sleva",
+      "Period Payment Frequency": "Frekvence plateb za období",
+      "Period Payment Frequency Type": "Typ frekvence plateb v období",
+      "Payment Allocation Transactions": "Transakce alokace plateb",
+      "Net Present Value day count": "Počet dní čisté současné hodnoty"
     },
     "links": {
       "Community": "Společenství",
