@@ -7,8 +7,13 @@
  */
 
 .container {
+  .layout-row {
+    gap: 16px;
+  }
+
   .action-button {
     margin-left: auto;
+    margin-top: 8px;
   }
 }
 
