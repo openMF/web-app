@@ -6,19 +6,19 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-(function(window) {
+(function (window) {
   window["env"] = window["env"] || {};
 
   // BackEnd Environment variables
   window["env"]["fineractApiUrls"] = '';
-  window["env"]["fineractApiUrl"]  = '';
+  window["env"]["fineractApiUrl"] = '';
 
   window["env"]["apiProvider"] = '';
-  window["env"]["apiVersion"]  = '';
-  window["env"]["apiActuator"]  = '';
+  window["env"]["apiVersion"] = '';
+  window["env"]["apiActuator"] = '';
 
-  window["env"]["fineractPlatformTenantId"]  = '';
-  window["env"]["fineractPlatformTenantIds"]  = '';
+  window["env"]["fineractPlatformTenantId"] = '';
+  window["env"]["fineractPlatformTenantIds"] = '';
 
   window['env']['tenantLogoUrl'] = '';
   window['env']['tenantLogoUrlDark'] = '';
@@ -27,6 +27,9 @@
   window["env"]["defaultLanguage"] = '';
   window["env"]["supportedLanguages"] = '';
 
+  window["env"]["defaultFormatDate"] = '';
+  window["env"]["defaultFormatDatetime"] = '';
+
   window['env']['preloadClients'] = '';
 
   // Char delimiter to Export CSV options: ',' ';' '|' ' '
@@ -34,7 +37,7 @@
 
   // Display or not the Server Selector
   window['env']['allowServerSwitch'] = '';
-  
+
   // Display or not the BackEnd Info
   window['env']['displayBackEndInfo'] = '';
 
@@ -81,12 +84,12 @@
   // Hide client data (mask names)
   window['env']['complianceHideClientData'] = '';
 
-   // Interbank Transfers Environment variables
+  // Interbank Transfers Environment variables
   window['env']['mifosInterbankTransfersApiUrl'] = '';
   window['env']['mifosInterbankTransfersApiProvider'] = '';
   window['env']['mifosInterbankTransfersApiVersion'] = '';
   window['env']['mifosInterbankTransfersEnabled'] = 'true';
-  
+
   // Enable Role-Based Access Control (RBAC) for menu/button permissions
   // Set to true to enable RBAC, false (default) for backward compatibility
   window['env']['productionModeEnableRBAC'] = false;
@@ -103,9 +106,9 @@
 
   // OIDC Plugin Environment variables
   window['env']['oidcServerEnabled'] = false;
-  window['env']['oidcBaseUrl']       = '';
-  window['env']['oidcClientId']      = '';
-  window['env']['oidcApiUrl']        = '';
-  window['env']['oidcFrontUrl']      = '';
+  window['env']['oidcBaseUrl'] = '';
+  window['env']['oidcClientId'] = '';
+  window['env']['oidcApiUrl'] = '';
+  window['env']['oidcFrontUrl'] = '';
 
 })(this);
