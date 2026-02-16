@@ -5,18 +5,14 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
-/** Custom Services */
-import { ProductsService } from 'app/products/products.service';
+import { ChargesService } from '@fineract/client';
 
 /**
  * Charge data resolver.
  */
 @Injectable()
 export class ChargeResolver {
-  /**
-   * @param {productsService} productsService Products service.
-   */
-  constructor(private productsService: ProductsService) {}
+  constructor(private chargesService: ChargesService) {}
 
   /**
    * Returns the charge data.
@@ -24,6 +20,6 @@ export class ChargeResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const chargeId = route.paramMap.get('id');
-    return this.productsService.getCharge(chargeId);
+    return this.chargesService.retrieveCharge({ chargeId: +chargeId });
   }
 }

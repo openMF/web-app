@@ -6,7 +6,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
-import { ProductsService } from '../../products.service';
+import { TaxGroupService } from '@fineract/client';
 
 /** Dialog Components */
 import { TranslateService } from '@ngx-translate/core';
@@ -95,7 +95,7 @@ export class EditTaxGroupComponent implements OnInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private productsService: ProductsService,
+    private taxGroupService: TaxGroupService,
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
@@ -105,7 +105,7 @@ export class EditTaxGroupComponent implements OnInit {
   ) {
     this.route.data.subscribe((data: { taxGroup: any }) => {
       this.taxGroupData = data.taxGroup;
-      this.taxComponentOptions = this.taxGroupData.taxComponents;
+      this.taxComponentOptions = (this.taxGroupData as any).taxComponents;
     });
   }
 
@@ -264,8 +264,10 @@ export class EditTaxGroupComponent implements OnInit {
       }
       delete taxComponent.isNew;
     }
-    this.productsService.updateTaxGroup(this.taxGroupData.id, taxGroup).subscribe((response: any) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.taxGroupService
+      .updateTaxGroup({ taxGroupId: this.taxGroupData.id, putTaxesGroupTaxGroupIdRequest: taxGroup as any })
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
 }

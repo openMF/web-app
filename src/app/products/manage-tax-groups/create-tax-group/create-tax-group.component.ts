@@ -12,7 +12,7 @@ import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { ProductsService } from '../../products.service';
+import { TaxGroupService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Dialog Components */
@@ -99,7 +99,7 @@ export class CreateTaxGroupComponent implements OnInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private productsService: ProductsService,
+    private taxGroupService: TaxGroupService,
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
@@ -234,7 +234,7 @@ export class CreateTaxGroupComponent implements OnInit {
     for (const taxComponent of taxGroup.taxComponents) {
       taxComponent.startDate = this.dateUtils.formatDate(taxComponent.startDate, dateFormat) || '';
     }
-    this.productsService.createTaxGroup(taxGroup).subscribe((response: any) => {
+    this.taxGroupService.createTaxGroup({ postTaxesGroupRequest: taxGroup }).subscribe((response: any) => {
       this.router.navigate(
         [
           '../',

@@ -5,18 +5,14 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
-/** Custom Services */
-import { ProductsService } from '../products.service';
+import { TaxGroupService } from '@fineract/client';
 
 /**
  * tax Group data resolver.
  */
 @Injectable()
 export class TaxGroupResolver {
-  /**
-   * @param {ProductsService} productsService Products service.
-   */
-  constructor(private productsService: ProductsService) {}
+  constructor(private taxGroupService: TaxGroupService) {}
 
   /**
    * Returns the tax Group data.
@@ -24,6 +20,6 @@ export class TaxGroupResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const taxGroupId = route.paramMap.get('id');
-    return this.productsService.getTaxGroup(taxGroupId, 'false');
+    return this.taxGroupService.retrieveTaxGroup({ taxGroupId: +taxGroupId });
   }
 }

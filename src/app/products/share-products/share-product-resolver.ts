@@ -5,17 +5,13 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
-/** Custom Services */
-import { ProductsService } from '../products.service';
+import { ProductsService } from '@fineract/client';
 
 /**
  * Share Product data resolver.
  */
 @Injectable()
 export class ShareProductResolver {
-  /**
-   * @param {ProductsService} productsService Products service.
-   */
   constructor(private productsService: ProductsService) {}
 
   /**
@@ -24,6 +20,6 @@ export class ShareProductResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const productId = route.parent.paramMap.get('productId');
-    return this.productsService.getShareProduct(productId);
+    return this.productsService.retrieveProduct({ productId: +productId, type: 'share' });
   }
 }

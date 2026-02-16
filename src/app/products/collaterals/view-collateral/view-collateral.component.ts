@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { ProductsService } from 'app/products/products.service';
+import { CollateralManagementService } from '@fineract/client';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
@@ -36,7 +36,7 @@ export class ViewCollateralComponent {
    * @param {TranslateService} translateService Translate Service.
    */
   constructor(
-    private productsService: ProductsService,
+    private collateralManagementService: CollateralManagementService,
     private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
@@ -56,7 +56,7 @@ export class ViewCollateralComponent {
     });
     deleteCollateralDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.productsService.deleteCollateral(this.collateralData.id).subscribe(() => {
+        this.collateralManagementService.deleteCollateral2({ collateralId: this.collateralData.id }).subscribe(() => {
           this.router.navigate(['/products/collaterals']);
         });
       }

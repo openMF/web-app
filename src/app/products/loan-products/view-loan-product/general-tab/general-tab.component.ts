@@ -6,7 +6,7 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { TranslateService } from '@ngx-translate/core';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ProductsService } from 'app/products/products.service';
+import { LoanProductsService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { LoanProductSummaryComponent } from '../../common/loan-product-summary/loan-product-summary.component';
@@ -30,7 +30,7 @@ export class GeneralTabComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
-    private productsService: ProductsService,
+    private loanProductsService: LoanProductsService,
     private settingsService: SettingsService,
     private translateService: TranslateService
   ) {
@@ -124,15 +124,17 @@ export class GeneralTabComponent implements OnInit {
         delete productCopy['allowPartialPeriodInterestCalculation'];
         delete productCopy['advancedPaymentAllocationFutureInstallmentAllocationRules'];
 
-        this.productsService.createLoanProduct(productCopy).subscribe((response: any) => {
-          this.router.navigate(
-            [
-              '../',
-              response.resourceId
-            ],
-            { relativeTo: this.route }
-          );
-        });
+        this.loanProductsService
+          .createLoanProduct({ postLoanProductsRequest: productCopy })
+          .subscribe((response: any) => {
+            this.router.navigate(
+              [
+                '../',
+                response.resourceId
+              ],
+              { relativeTo: this.route }
+            );
+          });
       }
     });
   }

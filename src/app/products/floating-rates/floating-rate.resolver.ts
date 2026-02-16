@@ -5,18 +5,14 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
-/** Custom Services */
-import { ProductsService } from '../products.service';
+import { FloatingRatesService } from '@fineract/client';
 
 /**
  * Floating Rate data resolver.
  */
 @Injectable()
 export class FloatingRateResolver {
-  /**
-   * @param {ProductsService} productsService Products service.
-   */
-  constructor(private productsService: ProductsService) {}
+  constructor(private floatingRatesService: FloatingRatesService) {}
 
   /**
    * Returns the floating rate data.
@@ -24,6 +20,6 @@ export class FloatingRateResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const floatingRateId = route.paramMap.get('id');
-    return this.productsService.getFloatingRate(floatingRateId);
+    return this.floatingRatesService.retrieveOne13({ floatingRateId: +floatingRateId });
   }
 }

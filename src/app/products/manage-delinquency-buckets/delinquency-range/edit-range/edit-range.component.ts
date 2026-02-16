@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { ProductsService } from 'app/products/products.service';
+import { DelinquencyRangeAndBucketsManagementService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -21,7 +21,7 @@ export class EditRangeComponent implements OnInit {
 
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private productsService: ProductsService,
+    private delinquencyService: DelinquencyRangeAndBucketsManagementService,
     private route: ActivatedRoute,
     private router: Router,
     private settingsService: SettingsService
@@ -67,14 +67,16 @@ export class EditRangeComponent implements OnInit {
       ...delinquencyRangeFormData,
       locale
     };
-    this.productsService.updateDelinquencyRange(this.delinquencyRangeData.id, data).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          '../../',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.delinquencyService
+      .updateDelinquencyRange({ delinquencyRangeId: this.delinquencyRangeData.id, delinquencyRangeRequest: data })
+      .subscribe((response: any) => {
+        this.router.navigate(
+          [
+            '../../',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      });
   }
 }

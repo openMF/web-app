@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { ProductsService } from '../products.service';
+import { ProductsService } from '@fineract/client';
 
 @Injectable()
 export class ShareProductsTemplateResolver {
@@ -16,6 +16,6 @@ export class ShareProductsTemplateResolver {
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.productsService.getShareProductsTemplate();
+    return this.productsService.retrieveTemplate13({ type: 'share' });
   }
 }

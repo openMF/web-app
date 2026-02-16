@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { ProductsService } from 'app/products/products.service';
+import { DelinquencyRangeAndBucketsManagementService } from '@fineract/client';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -23,7 +23,7 @@ export class ViewBucketComponent {
     private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
-    private productsService: ProductsService
+    private delinquencyService: DelinquencyRangeAndBucketsManagementService
   ) {
     this.route.data.subscribe((data: { delinquencyBucket: any }) => {
       this.delinquencyBucketData = data.delinquencyBucket;
@@ -39,9 +39,11 @@ export class ViewBucketComponent {
     });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.productsService.deleteDelinquencyBucket(this.delinquencyBucketData.id).subscribe(() => {
-          this.router.navigate(['../'], { relativeTo: this.route });
-        });
+        this.delinquencyService
+          .deleteDelinquencyBucket({ delinquencyBucketId: this.delinquencyBucketData.id })
+          .subscribe(() => {
+            this.router.navigate(['../'], { relativeTo: this.route });
+          });
       }
     });
   }

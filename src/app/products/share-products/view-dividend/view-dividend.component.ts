@@ -15,7 +15,7 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { ProductsService } from 'app/products/products.service';
+import { ProductsService } from 'app/customApis.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 

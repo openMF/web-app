@@ -5,12 +5,11 @@ import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
-/** Custom Services */
-import { ProductsService } from '../products.service';
+import { ChargesService } from '@fineract/client';
 
 @Injectable()
 export class ChargesTemplateAndResolver {
-  constructor(private productsService: ProductsService) {}
+  constructor(private chargesService: ChargesService) {}
 
   /**
    * Returns the changes template and data.
@@ -18,6 +17,6 @@ export class ChargesTemplateAndResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const savingProductId = route.paramMap.get('id');
-    return this.productsService.getCharge(savingProductId, true);
+    return this.chargesService.retrieveCharge({ chargeId: +savingProductId });
   }
 }

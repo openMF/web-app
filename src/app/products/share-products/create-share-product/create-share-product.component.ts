@@ -12,7 +12,7 @@ import { ShareProductChargesStepComponent } from '../share-product-stepper/share
 import { ShareProductAccountingStepComponent } from '../share-product-stepper/share-product-accounting-step/share-product-accounting-step.component';
 
 /** Custom Services */
-import { ProductsService } from 'app/products/products.service';
+import { ProductsService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Accounting } from 'app/core/utils/accounting';
 import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
@@ -133,14 +133,16 @@ export class CreateShareProductComponent {
       chargesSelected: this.shareProduct.chargesSelected.map((charge: any) => ({ id: charge.id })),
       locale: this.settingsService.language.code // locale required for digitsAfterDecimal
     };
-    this.productsService.createShareProduct(shareProduct).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          '../',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.productsService
+      .createProduct({ type: 'share', postProductsTypeRequest: shareProduct })
+      .subscribe((response: any) => {
+        this.router.navigate(
+          [
+            '../',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      });
   }
 }

@@ -4,25 +4,20 @@ import { Injectable } from '@angular/core';
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
-/** Custom Services */
-import { ProductsService } from '../products.service';
+import { LoanProductsService } from '@fineract/client';
 
 /**
  * Loan products data resolver.
  */
 @Injectable()
 export class LoanProductsResolver {
-  /**
-   *
-   * @param {ProductsService} productsService Products service.
-   */
-  constructor(private productsService: ProductsService) {}
+  constructor(private loanProductsService: LoanProductsService) {}
 
   /**
    * Returns the loan products data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.productsService.getLoanProducts();
+    return this.loanProductsService.retrieveAllLoanProducts();
   }
 }

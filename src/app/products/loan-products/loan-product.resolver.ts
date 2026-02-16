@@ -5,18 +5,14 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
-/** Custom Services */
-import { ProductsService } from '../products.service';
+import { LoanProductsService } from '@fineract/client';
 
 /**
  * Loan Product data resolver.
  */
 @Injectable()
 export class LoanProductResolver {
-  /**
-   * @param {ProductsService} productsService Products service.
-   */
-  constructor(private productsService: ProductsService) {}
+  constructor(private loanProductsService: LoanProductsService) {}
 
   /**
    * Returns the loan product data.
@@ -24,6 +20,6 @@ export class LoanProductResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const productId = route.parent.paramMap.get('productId');
-    return this.productsService.getLoanProduct(productId);
+    return this.loanProductsService.retrieveLoanProductDetails({ productId: +productId });
   }
 }

@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { ProductsService } from 'app/products/products.service';
+import { ChargesService } from '@fineract/client';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
@@ -43,7 +43,7 @@ export class ViewChargeComponent {
    * @param {TranslateService} translateService Translate Service.
    */
   constructor(
-    private productsService: ProductsService,
+    private chargesService: ChargesService,
     private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
@@ -69,7 +69,7 @@ export class ViewChargeComponent {
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.productsService.deleteCharge(this.chargeData.id).subscribe(() => {
+        this.chargesService.deleteCharge({ chargeId: this.chargeData.id }).subscribe(() => {
           this.router.navigate(['/products/charges']);
         });
       }

@@ -4,18 +4,17 @@ import { Injectable } from '@angular/core';
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
-/** Custom Services */
-import { ProductsService } from '../products.service';
+import { SavingsProductService } from '@fineract/client';
 
 @Injectable()
 export class SavingProductsTemplateResolver {
-  constructor(private productsService: ProductsService) {}
+  constructor(private savingsProductService: SavingsProductService) {}
 
   /**
    * Returns the saving products template data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.productsService.getSavingProductsTemplate();
+    return this.savingsProductService.retrieveTemplate20();
   }
 }

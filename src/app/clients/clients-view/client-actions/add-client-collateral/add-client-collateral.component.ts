@@ -6,8 +6,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 /**
  * Custom Services
  */
-import { ClientCollateralManagementService } from '@fineract/client';
-import { ProductsService } from 'app/products/products.service';
+import { ClientCollateralManagementService, CollateralManagementService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -40,7 +39,7 @@ export class AddClientCollateralComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private productsService: ProductsService,
+    private collateralManagementService: CollateralManagementService,
     private clientCollateralManagementService: ClientCollateralManagementService,
     private settingsService: SettingsService
   ) {
@@ -60,7 +59,7 @@ export class AddClientCollateralComponent implements OnInit {
    */
   buildDependencies() {
     this.clientCollateralForm.controls.collateralId.valueChanges.subscribe((collateralId) => {
-      this.productsService.getCollateral(collateralId).subscribe((data: any) => {
+      this.collateralManagementService.getCollateral({ collateralId }).subscribe((data: any) => {
         this.collateralDetails = data;
         this.clientCollateralForm.patchValue({
           name: data.name,

@@ -21,7 +21,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
-import { ProductsService } from '../../products.service';
+import { FloatingRatesService } from '@fineract/client';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
@@ -99,7 +99,7 @@ export class EditFloatingRateComponent implements OnInit {
    * Retrieves the floating rate data from `resolve`.
    * @param {Router} router Router for navigation.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {ProductsService} productsService Product Service.
+   * @param {FloatingRatesService} floatingRatesService Floating Rates Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Dates} dateUtils Date Utils.
    * @param {MatDialog} dialog Dialog reference.
@@ -109,7 +109,7 @@ export class EditFloatingRateComponent implements OnInit {
   constructor(
     private router: Router,
     private formBuilder: UntypedFormBuilder,
-    private productsService: ProductsService,
+    private floatingRatesService: FloatingRatesService,
     private route: ActivatedRoute,
     private dateUtils: Dates,
     private dialog: MatDialog,
@@ -242,8 +242,11 @@ export class EditFloatingRateComponent implements OnInit {
     });
     this.floatingRateForm.value.ratePeriods =
       this.floatingRatePeriodsData.length > 0 ? this.floatingRatePeriodsData : undefined;
-    this.productsService
-      .updateFloatingRate(this.route.snapshot.paramMap.get('id'), this.floatingRateForm.value)
+    this.floatingRatesService
+      .updateFloatingRate({
+        floatingRateId: +this.route.snapshot.paramMap.get('id'),
+        floatingRateRequest: this.floatingRateForm.value
+      })
       .subscribe((response: any) => {
         this.router.navigate(
           [

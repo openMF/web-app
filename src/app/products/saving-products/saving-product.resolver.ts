@@ -5,18 +5,14 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
-/** Custom Services */
-import { ProductsService } from '../products.service';
+import { SavingsProductService } from '@fineract/client';
 
 /**
  * Saving Product data resolver.
  */
 @Injectable()
 export class SavingProductResolver {
-  /**
-   * @param {ProductsService} productsService Products service.
-   */
-  constructor(private productsService: ProductsService) {}
+  constructor(private savingsProductService: SavingsProductService) {}
 
   /**
    * Returns the saving product data.
@@ -24,6 +20,6 @@ export class SavingProductResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const productId = route.parent.paramMap.get('productId');
-    return this.productsService.getSavingProduct(productId);
+    return this.savingsProductService.retrieveOne27({ productId: +productId });
   }
 }

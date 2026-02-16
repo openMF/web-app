@@ -10,7 +10,7 @@ import {
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { ProductsService } from '../../products.service';
+import { TaxComponentsService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { GlAccountSelectorComponent } from '../../../shared/accounting/gl-account-selector/gl-account-selector.component';
@@ -57,7 +57,7 @@ export class CreateTaxComponentComponent implements OnInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private productsService: ProductsService,
+    private taxComponentsService: TaxComponentsService,
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
@@ -154,7 +154,7 @@ export class CreateTaxComponentComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.productsService.createTaxComponent(data).subscribe((response: any) => {
+    this.taxComponentsService.createTaxComponent({ postTaxesComponentsRequest: data }).subscribe((response: any) => {
       this.router.navigate(
         [
           '../',

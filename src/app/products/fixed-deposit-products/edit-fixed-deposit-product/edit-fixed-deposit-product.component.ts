@@ -12,7 +12,7 @@ import { FixedDepositProductChargesStepComponent } from '../fixed-deposit-produc
 import { FixedDepositProductAccountingStepComponent } from '../fixed-deposit-product-stepper/fixed-deposit-product-accounting-step/fixed-deposit-product-accounting-step.component';
 
 /** Custom Services */
-import { ProductsService } from 'app/products/products.service';
+import { FixedDepositProductService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Accounting } from 'app/core/utils/accounting';
 import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
@@ -69,7 +69,7 @@ export class EditFixedDepositProductComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private productsService: ProductsService,
+    private fixedDepositProductService: FixedDepositProductService,
     private router: Router,
     private settingsService: SettingsService,
     private accounting: Accounting
@@ -155,8 +155,11 @@ export class EditFixedDepositProductComponent {
     fixedDepositProduct.charts = charts;
 
     delete fixedDepositProduct.advancedAccountingRules;
-    this.productsService
-      .updateFixedDepositProduct(this.fixedDepositProductsTemplate.id, fixedDepositProduct)
+    this.fixedDepositProductService
+      .update17({
+        productId: this.fixedDepositProductsTemplate.id,
+        putFixedDepositProductsProductIdRequest: fixedDepositProduct
+      })
       .subscribe((response: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });

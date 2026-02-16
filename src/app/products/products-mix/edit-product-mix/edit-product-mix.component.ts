@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl, Reactive
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { ProductsService } from '../../products.service';
+import { ProductMixService } from '@fineract/client';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -37,7 +37,7 @@ export class EditProductMixComponent implements OnInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private productsService: ProductsService,
+    private productMixService: ProductMixService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -90,8 +90,10 @@ export class EditProductMixComponent implements OnInit {
       restrictedProducts: this.productMixForm.value.restrictedProducts
     };
     const productMixId = this.productMixData.productId;
-    this.productsService.updateProductMix(productMix, productMixId).subscribe((response: any) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.productMixService
+      .updateProductMix({ productId: productMixId, productMixRequest: productMix })
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
 }

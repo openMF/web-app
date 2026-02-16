@@ -6,6 +6,7 @@ import { environment } from '../environments/environment';
 import { ChartData } from './reports/common-models/chart-data.model';
 import { ReportParameter } from './reports/common-models/report-parameter.model';
 import { SelectOption } from './reports/common-models/select-option.model';
+import { SettingsService } from './settings/settings.service';
 
 // loans.service.ts
 @Injectable({
@@ -423,5 +424,80 @@ export class HomeService {
   getLoanTrendsByMonth(officeId: number): Observable<any> {
     const httpParams = new HttpParams().set('R_officeId', officeId.toString()).set('genericResultSet', 'false');
     return this.http.get('/runreports/LoanTrendsByMonth', { params: httpParams });
+  }
+}
+
+// products service
+@Injectable({
+  providedIn: 'root'
+})
+export class ProductsService {
+  /**
+   * @param {HttpClient} http Http Client to send requests.
+   * @param {SettingsService} settingsService Settings Service.
+   */
+  constructor(
+    private http: HttpClient,
+    private settingsService: SettingsService
+  ) {}
+
+  /**
+   * @returns {Observable<any>} Product mixes data
+   */
+  getProductMixes(): Observable<any> {
+    let httpParams = new HttpParams();
+    httpParams = httpParams.set('associations', 'productMixes');
+    return this.http.get('/loanproducts', { params: httpParams });
+  }
+
+  /**
+   * @param {string} productMixId product mix ID of product mix.
+   * @returns {Observable<any>} Product mix Template data
+   */
+  getProductMixTemplate(productMixId: string): Observable<any> {
+    let httpParams = new HttpParams();
+    httpParams = httpParams.set('template', 'true');
+    return this.http.get(`/loanproducts/${productMixId}/productmix`, { params: httpParams });
+  }
+
+  /**
+   * @param {string} productId Id of the product.
+   * @returns {Observable<any>} Product.
+   */
+  getProductMix(productId: string): Observable<any> {
+    return this.http.get(`/loanproducts/${productId}/productmix`);
+  }
+
+  /**
+   * Create Dividend.
+   * @param shareProductId Share Product Id.
+   * @param dividendData Dividend Data.
+   * @returns {Observable<any>}
+   */
+  createDividend(shareProductId: string, dividendData: any): Observable<any> {
+    return this.http.post(`/shareproduct/${shareProductId}/dividend`, dividendData);
+  }
+
+  getDividends(shareProductId: string): Observable<any> {
+    return this.http.get(`/shareproduct/${shareProductId}/dividend`);
+  }
+
+  approveDividend(shareProductId: any, dividendId: any, data: any): Observable<any> {
+    const httpParams = new HttpParams().set('command', 'approve');
+    return this.http.put(`/shareproduct/${shareProductId}/dividend/${dividendId}`, data, { params: httpParams });
+  }
+
+  getShareProduct(shareProductId: string, template: boolean = false): Observable<any> {
+    const httpParams = new HttpParams().set('template', template.toString());
+    return this.http.get(`/products/share/${shareProductId}`, { params: httpParams });
+  }
+
+  getDividendData(shareProductId: any, dividendId: any): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('dateFormat', this.settingsService.dateFormat)
+      .set('limit', '10')
+      .set('locale', this.settingsService.language.code)
+      .set('offset', '0');
+    return this.http.get(`/shareproduct/${shareProductId}/dividend/${dividendId}`, { params: httpParams });
   }
 }

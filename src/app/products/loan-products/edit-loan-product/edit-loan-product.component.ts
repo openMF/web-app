@@ -11,7 +11,7 @@ import { LoanProductChargesStepComponent } from '../loan-product-stepper/loan-pr
 import { LoanProductAccountingStepComponent } from '../loan-product-stepper/loan-product-accounting-step/loan-product-accounting-step.component';
 
 /** Custom Services */
-import { ProductsService } from 'app/products/products.service';
+import { LoanProductsService } from '@fineract/client';
 import { GlobalConfiguration } from 'app/system/configurations/global-configurations-tab/configuration.model';
 import { LoanProducts } from '../loan-products';
 import {
@@ -99,7 +99,7 @@ export class EditLoanProductComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private productsService: ProductsService,
+    private loanProductsService: LoanProductsService,
     private loanProducts: LoanProducts,
     private router: Router,
     private accounting: Accounting,
@@ -343,15 +343,17 @@ export class EditLoanProductComponent implements OnInit {
     }
     delete loanProduct['useDueForRepaymentsConfigurations'];
 
-    this.productsService.updateLoanProduct(this.loanProductAndTemplate.id, loanProduct).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          '../../',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.loanProductsService
+      .updateLoanProduct({ productId: this.loanProductAndTemplate.id, putLoanProductsProductIdRequest: loanProduct })
+      .subscribe((response: any) => {
+        this.router.navigate(
+          [
+            '../../',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      });
   }
 
   mapStringEnumOptionToIdList(incomingValues: StringEnumOptionData[]): string[] {

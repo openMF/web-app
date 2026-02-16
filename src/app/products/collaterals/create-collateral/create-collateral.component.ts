@@ -5,7 +5,7 @@ import { UntypedFormGroup, UntypedFormBuilder, FormControl, Validators, Reactive
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { ProductsService } from '../../products.service';
+import { CollateralManagementService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -37,7 +37,7 @@ export class CreateCollateralComponent implements OnInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private productsService: ProductsService,
+    private collateralManagementService: CollateralManagementService,
     private route: ActivatedRoute,
     private router: Router,
     private settingsService: SettingsService,
@@ -104,8 +104,10 @@ export class CreateCollateralComponent implements OnInit {
       ...collateralFormData,
       locale
     };
-    this.productsService.createCollateral(data).subscribe((response: any) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.collateralManagementService
+      .createCollateral1({ collateralManagementProductRequest: data })
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
 }

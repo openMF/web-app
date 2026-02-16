@@ -4,24 +4,20 @@ import { Injectable } from '@angular/core';
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
-/** Custom services */
-import { ProductsService } from '../products.service';
+import { CollateralManagementService } from '@fineract/client';
 
 /**
  * Collaterals Template Resolver
  */
 @Injectable()
 export class CollateralTemplateResolver {
-  /**
-   * @param {ProductsService} productsService products Service
-   */
-  constructor(private productsService: ProductsService) {}
+  constructor(private collateralManagementService: CollateralManagementService) {}
 
   /**
    * Returns the product Data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.productsService.getCollateralTemplate();
+    return this.collateralManagementService.getCollateralTemplate();
   }
 }

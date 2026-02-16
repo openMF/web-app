@@ -3,7 +3,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule }
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { ProductsService } from 'app/products/products.service';
+import { DelinquencyRangeAndBucketsManagementService } from '@fineract/client';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
@@ -75,7 +75,7 @@ export class EditBucketComponent implements OnInit {
 
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private productsService: ProductsService,
+    private delinquencyService: DelinquencyRangeAndBucketsManagementService,
     private router: Router,
     private route: ActivatedRoute,
     public dialog: MatDialog,
@@ -184,9 +184,11 @@ export class EditBucketComponent implements OnInit {
         ranges: ranges
       };
 
-      this.productsService.updateDelinquencyBucket(this.delinquencyBucketId, data).subscribe(() => {
-        this.router.navigate(['../'], { relativeTo: this.route });
-      });
+      this.delinquencyService
+        .updateDelinquencyBucket({ delinquencyBucketId: this.delinquencyBucketId, delinquencyBucketRequest: data })
+        .subscribe(() => {
+          this.router.navigate(['../'], { relativeTo: this.route });
+        });
     }
   }
 }
