@@ -6,25 +6,29 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { CentersService } from '../centers.service';
+import { DataTablesService } from '@fineract/client';
 
 /**
- * Centers notes data resolver.
+ * Center datatable resolver.
  */
 @Injectable()
 export class CenterDatatableResolver {
   /**
-   * @param {CentersService} CentersService Centers service.
+   * @param {DataTablesService} dataTablesService DataTables service.
    */
-  constructor(private centersService: CentersService) {}
+  constructor(private dataTablesService: DataTablesService) {}
 
   /**
-   * Returns the Centers Notes Data.
+   * Returns the Center datatable data.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const centerId = route.parent.parent.paramMap.get('centerId');
     const datatableName = route.paramMap.get('datatableName');
-    return this.centersService.getCenterDatatable(centerId, datatableName);
+    const centerId = route.parent.parent.paramMap.get('centerId');
+    return this.dataTablesService.advancedQuery({
+      datatable: datatableName,
+      apptableId: parseInt(centerId, 10),
+      genericResultSet: true
+    } as any);
   }
 }

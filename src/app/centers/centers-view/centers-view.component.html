@@ -17,12 +17,12 @@
           <h3 class="flex-95">
             <i
               class="fa fa-stop"
-              matTooltip="{{ centerViewData.status.value }}"
-              [ngClass]="centerViewData.status.code | statusLookup"
+              matTooltip="{{ centerViewData?.status?.value }}"
+              [ngClass]="centerViewData?.status?.code | statusLookup"
             ></i>
             <b>{{ 'labels.heading.Center Name' | translate }} :</b> {{ centerViewData.name }}
           </h3>
-          <div *ngIf="!(centerViewData.status.value === 'Closed')">
+          <div *ngIf="!(centerViewData?.status?.value === 'Closed')">
             <button mat-icon-button [matMenuTriggerFor]="centerMenu" aria-label="Center actions" yPosition="below">
               <mat-icon matListIcon class="actions-menu">
                 <fa-icon icon="bars" size="sm"></fa-icon>
@@ -77,7 +77,7 @@
       </div>
 
       <mat-menu #centerMenu="matMenu">
-        <span *ngIf="!(centerViewData.status.value === 'Active')">
+        <span *ngIf="!(centerViewData?.status?.value === 'Active')">
           <button mat-menu-item *mifosxHasPermission="'ACTIVATE_CENTER'" (click)="doAction('Activate')">
             <mat-icon matListIcon>
               <fa-icon icon="check" size="sm"></fa-icon>
@@ -137,7 +137,7 @@
               {{ 'labels.buttons.Unassign Staff' | translate }}
             </button>
           </span>
-          <span *ngIf="centerViewData.status.value === 'Active'">
+          <span *ngIf="centerViewData?.status?.value === 'Pending'">
             <button mat-menu-item *mifosxHasPermission="'DELETE_CENTER'" (click)="doAction('Delete')">
               {{ 'labels.buttons.Delete' | translate }}
             </button>
@@ -145,7 +145,7 @@
           <button mat-menu-item *mifosxHasPermission="'CLOSE_CENTER'" (click)="doAction('Close')">
             {{ 'labels.buttons.Close' | translate }}
           </button>
-          <span *ngIf="centerViewData.status.value === 'Active' && !centerViewData.collectionMeetingCalendar">
+          <span *ngIf="centerViewData?.status?.value === 'Active' && !centerViewData.collectionMeetingCalendar">
             <button mat-menu-item *mifosxHasPermission="'CREATE_MEETING'" (click)="doAction('Attach Meeting')">
               {{ 'labels.buttons.Attach Meeting' | translate }}
             </button>

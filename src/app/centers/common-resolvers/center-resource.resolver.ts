@@ -3,27 +3,33 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 /** Custom Services */
-import { CentersService } from '../centers.service';
+import { CentersService } from '@fineract/client';
 
 /**
- * Centers data resolver.
+ * Center resource resolver.
  */
 @Injectable()
 export class CenterResourceResolver {
   /**
-   * @param {CentersService} CentersService Centers service.
+   * @param {CentersService} centersService Centers service.
    */
   constructor(private centersService: CentersService) {}
 
   /**
-   * Returns the Centers data for General Tab.
+   * Returns the Center data.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const centerId = route.parent.paramMap.get('centerId');
-    return this.centersService.getCenterData(centerId);
+    const centerId = route.paramMap.get('centerId');
+    return this.centersService
+      .retrieveOne14({
+        centerId: parseInt(centerId, 10),
+        associations: 'groupMembers,collectionMeetingCalendar'
+      } as any)
+      .pipe(catchError(() => of({})));
   }
 }

@@ -12,7 +12,7 @@ import { merge } from 'rxjs';
 import { tap, startWith, map, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 
 /** Custom Services */
-import { CentersService } from './centers.service';
+import { CentersService } from '@fineract/client';
 
 /** Custom Data Source */
 import { CentersDataSource } from './centers.datasource';

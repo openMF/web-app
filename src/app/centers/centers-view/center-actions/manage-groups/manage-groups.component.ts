@@ -7,8 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 
 /** Custom Services */
-import { CentersService } from 'app/centers/centers.service';
-import { GroupsService } from '@fineract/client';
+import { CentersService, GroupsService } from '@fineract/client';
 import { MatDialog } from '@angular/material/dialog';
 import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
 import { MatIconButton } from '@angular/material/button';
@@ -88,8 +87,10 @@ export class ManageGroupsComponent implements AfterViewInit {
     if (this.groupMembers !== null && this.groupMembers !== undefined) {
       if (!this.groupMembers.includes(this.groupChoice.value)) {
         this.centersService
-          .executeCenterActionCommand(this.centerData.id, 'associateGroups', {
-            groupMembers: [this.groupChoice.value.id]
+          .activate2({
+            centerId: this.centerData.id,
+            command: 'associateGroups',
+            postCentersCenterIdRequest: { groupMembers: [this.groupChoice.value.id] } as any
           })
           .subscribe(() => {
             this.groupMembers.push(this.groupChoice.value);
@@ -97,8 +98,10 @@ export class ManageGroupsComponent implements AfterViewInit {
       }
     } else {
       this.centersService
-        .executeCenterActionCommand(this.centerData.id, 'associateGroups', {
-          groupMembers: [this.groupChoice.value.id]
+        .activate2({
+          centerId: this.centerData.id,
+          command: 'associateGroups',
+          postCentersCenterIdRequest: { groupMembers: [this.groupChoice.value.id] } as any
         })
         .subscribe(() => {
           this.groupMembers.push(this.groupChoice.value);
@@ -117,7 +120,11 @@ export class ManageGroupsComponent implements AfterViewInit {
     removeMemberDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
         this.centersService
-          .executeCenterActionCommand(this.centerData.id, 'disassociateGroups', { groupMembers: [group.id] })
+          .activate2({
+            centerId: this.centerData.id,
+            command: 'disassociateGroups',
+            postCentersCenterIdRequest: { groupMembers: [group.id] } as any
+          })
           .subscribe(() => {
             this.groupMembers.splice(index, 1);
           });

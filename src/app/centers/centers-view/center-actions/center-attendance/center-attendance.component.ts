@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { CentersService } from 'app/centers/centers.service';
+import { CentersService } from 'app/customApis.service';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Dialogs */

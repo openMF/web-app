@@ -10,7 +10,7 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { CentersService } from 'app/centers/centers.service';
+import { CalendarService } from '@fineract/client';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -57,7 +57,7 @@ export class AttachCenterMeetingComponent implements OnInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private centersService: CentersService,
+    private calendarService: CalendarService,
     private settingsService: SettingsService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
@@ -173,8 +173,10 @@ export class AttachCenterMeetingComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.centersService.createCenterMeeting(this.centerId, data).subscribe((response: any) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
-    });
+    this.calendarService
+      .createCalendar({ entityType: 'centers', entityId: this.centerId, calendarRequest: data as any })
+      .subscribe((response: any) => {
+        this.router.navigate(['../../general'], { relativeTo: this.route });
+      });
   }
 }

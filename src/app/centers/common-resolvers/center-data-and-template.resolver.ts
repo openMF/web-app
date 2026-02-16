@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { CentersService } from '../centers.service';
+import { CentersService } from '@fineract/client';
 
 /**
  * Centers data and template resolver.
@@ -14,17 +14,20 @@ import { CentersService } from '../centers.service';
 @Injectable()
 export class CenterDataAndTemplateResolver {
   /**
-   * @param {CentersService} CentersService Centers service.
+   * @param {CentersService} centersService Centers service.
    */
   constructor(private centersService: CentersService) {}
 
   /**
-   * Returns the Centers and template data.
-   * @param {ActivatedRouteSnapshot} route Route Snapshot
+   * Returns the Center data and template.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const centerId = route.parent.paramMap.get('centerId');
-    return this.centersService.getCenterAndTemplateData(centerId);
+    const centerId = route.paramMap.get('centerId');
+    return this.centersService.retrieveOne14({
+      centerId: parseInt(centerId, 10),
+      staffInSelectedOfficeOnly: true,
+      template: 'true'
+    } as any);
   }
 }

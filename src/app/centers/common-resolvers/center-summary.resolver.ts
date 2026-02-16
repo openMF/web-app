@@ -3,27 +3,30 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 /** Custom Services */
-import { CentersService } from '../centers.service';
+import { RunReportsService } from '@fineract/client';
 
 /**
- * Centers data resolver.
+ * Center summary resolver.
  */
 @Injectable()
 export class CenterSummaryResolver {
   /**
-   * @param {CentersService} CentersService Centers service.
+   * @param {RunReportsService} runReportsService RunReports service.
    */
-  constructor(private centersService: CentersService) {}
+  constructor(private runReportsService: RunReportsService) {}
 
   /**
-   * Returns the Centers Summary Data.
+   * Returns the Center summary data.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const centerId = route.parent.paramMap.get('centerId');
-    return this.centersService.getCenterSummary(centerId);
+    const centerId = route.parent.parent.paramMap.get('centerId');
+    return this.runReportsService
+      .runReport({ reportName: 'GroupSummaryCounts', R_groupId: centerId, genericResultSet: 'false' } as any)
+      .pipe(catchError(() => of([{}])));
   }
 }
