@@ -5,7 +5,7 @@ import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { Observable, BehaviorSubject } from 'rxjs';
 
 /** Custom Services */
-import { CentersService } from './centers.service';
+import { CentersService } from '@fineract/client';
 
 /**
  * Centers custom data source to implement server side filtering, pagination and sorting.
@@ -41,11 +41,23 @@ export class CentersDataSource implements DataSource<any> {
     centerActive: boolean = true
   ) {
     this.centersSubject.next([]);
-    this.centersService.getCenters(filterBy, orderBy, sortOrder, pageIndex * limit, limit).subscribe((centers: any) => {
-      centers.pageItems = centerActive ? centers.pageItems.filter((center: any) => center.active) : centers.pageItems;
-      this.recordsSubject.next(centers.totalFilteredRecords);
-      this.centersSubject.next(centers.pageItems);
-    });
+    this.centersService
+      .retrieveAll23({
+        paged: true,
+        orderBy: orderBy,
+        sortOrder: sortOrder,
+        offset: pageIndex * limit,
+        limit: limit,
+        // Filtering not directly supported by generated service in the same way, might need adjust
+        name: filterBy.find((f: any) => f.type === 'name' && f.value !== '')?.value,
+        externalId: filterBy.find((f: any) => f.type === 'externalId' && f.value !== '')?.value
+      } as any)
+      .subscribe((centers: any) => {
+        const pageItems = centers.pageItems || [];
+        const filteredItems = centerActive ? pageItems.filter((center: any) => center.active) : pageItems;
+        this.recordsSubject.next(centers.totalFilteredRecords || 0);
+        this.centersSubject.next(filteredItems);
+      });
   }
 
   /**

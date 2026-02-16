@@ -5,23 +5,23 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { CentersService } from '../centers.service';
+import { DataTablesService } from '@fineract/client';
 
 /**
- * center datatables resolver.
+ * Center datatables resolver.
  */
 @Injectable()
 export class CenterDatatablesResolver {
   /**
-   * @param {centersService} centersService centers service.
+   * @param {DataTablesService} dataTablesService DataTables service.
    */
-  constructor(private centersService: CentersService) {}
+  constructor(private dataTablesService: DataTablesService) {}
 
   /**
-   * Returns the center datatables.
+   * Returns the Center datatables data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.centersService.getcenterDatatables();
+    return this.dataTablesService.getDatatables({ apptable: 'm_center' });
   }
 }

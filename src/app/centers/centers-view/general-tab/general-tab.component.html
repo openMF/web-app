@@ -1,5 +1,5 @@
 <div class="tab-container mat-typography">
-  <div *ngIf="centerViewData.status.value === 'Closed'">
+  <div *ngIf="centerViewData?.status?.value === 'Closed'">
     <h3 class="closedCenter">{{ 'labels.heading.Center Closed' | translate }}</h3>
   </div>
   <h3>{{ 'labels.heading.Summary Details' | translate }}</h3>

@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 
 /** Custom Services */
-import { CentersService } from '../centers.service';
+import { CentersService } from '@fineract/client';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -89,7 +89,7 @@ export class CentersViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.centerViewData.collectionMeetingCalendar) {
+    if (this.centerViewData?.collectionMeetingCalendar) {
       this.meetingData = true;
     } else {
       this.meetingData = false;
@@ -152,7 +152,11 @@ export class CentersViewComponent implements OnInit {
     unAssignStaffDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
         this.centersService
-          .executeGroupActionCommand(this.centerViewData.id, 'unassignStaff', { staffId: this.centerViewData.staffId })
+          .activate2({
+            centerId: this.centerViewData.id,
+            command: 'unassignStaff',
+            postCentersCenterIdRequest: { staffId: this.centerViewData.staffId } as any
+          })
           .subscribe(() => {
             this.reload();
           });
@@ -169,7 +173,7 @@ export class CentersViewComponent implements OnInit {
     });
     deleteGroupDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.centersService.deleteCenter(this.centerViewData.id).subscribe(() => {
+        this.centersService.delete10({ centerId: this.centerViewData.id }).subscribe(() => {
           this.router.navigate(['/centers'], { relativeTo: this.route });
         });
       }

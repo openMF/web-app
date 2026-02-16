@@ -76,10 +76,10 @@ export class GeneralTabComponent {
    */
   constructor(private route: ActivatedRoute) {
     this.route.data.subscribe((data: { centerSummaryData: any; centerViewData: any; savingsAccountData: any }) => {
-      this.centerSummaryData = data.centerSummaryData[0];
-      this.centerViewData = data.centerViewData;
-      this.savingsAccountData = data.savingsAccountData.savingsAccounts;
-      this.groupResourceData = data.centerViewData.groupMembers;
+      this.centerSummaryData = data.centerSummaryData?.[0] || {};
+      this.centerViewData = data.centerViewData || {};
+      this.savingsAccountData = data.savingsAccountData?.savingsAccounts || [];
+      this.groupResourceData = data.centerViewData?.groupMembers || [];
     });
   }
 

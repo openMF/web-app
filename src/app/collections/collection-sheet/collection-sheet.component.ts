@@ -6,7 +6,7 @@ import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { OrganizationService } from 'app/organization/organization.service';
-import { CentersService } from 'app/centers/centers.service';
+import { CentersService } from 'app/customApis.service';
 import { Dates } from 'app/core/utils/dates';
 import { CollectionSheetData, JLGGroupData, MeetingFallCenter } from '../models/collection-sheet-data.model';
 

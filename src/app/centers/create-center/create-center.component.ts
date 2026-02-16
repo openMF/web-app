@@ -11,7 +11,7 @@ import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { GroupsService } from '@fineract/client';
-import { CentersService } from '../centers.service';
+import { CentersService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -120,7 +120,7 @@ export class CreateCenterComponent implements OnInit {
    */
   buildDependencies() {
     this.centerForm.get('officeId').valueChanges.subscribe((option: any) => {
-      this.groupService.retrieveAll24(option).subscribe((data: any) => {
+      this.groupService.retrieveAll24({ officeId: option }).subscribe((data: any) => {
         this.groupsData = data;
         if (!this.groupsData.length) {
           this.groupChoice.disable();
@@ -128,14 +128,16 @@ export class CreateCenterComponent implements OnInit {
           this.groupChoice.enable();
         }
       });
-      this.centerService.getStaff(option).subscribe((data: any) => {
-        this.staffData = data['staffOptions'];
-        if (this.staffData === undefined) {
-          this.centerForm.controls['staffId'].disable();
-        } else {
-          this.centerForm.controls['staffId'].enable();
-        }
-      });
+      this.centerService
+        .retrieveTemplate6({ officeId: option, staffInSelectedOfficeOnly: true })
+        .subscribe((data: any) => {
+          this.staffData = data['staffOptions'];
+          if (this.staffData === undefined) {
+            this.centerForm.controls['staffId'].disable();
+          } else {
+            this.centerForm.controls['staffId'].enable();
+          }
+        });
     });
     this.centerForm.get('active').valueChanges.subscribe((bool: boolean) => {
       if (bool) {
@@ -185,7 +187,7 @@ export class CreateCenterComponent implements OnInit {
     };
     data.groupMembers = [];
     this.groupMembers.forEach((group: any) => data.groupMembers.push(group.id));
-    this.centerService.createCenter(data).subscribe((response: any) => {
+    this.centerService.create7({ postCentersRequest: data } as any).subscribe((response: any) => {
       this.router.navigate(['../centers']);
     });
   }

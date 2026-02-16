@@ -501,3 +501,35 @@ export class ProductsService {
     return this.http.get(`/shareproduct/${shareProductId}/dividend/${dividendId}`, { params: httpParams });
   }
 }
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CentersService {
+  constructor(private http: HttpClient) {}
+
+  getMeetingsTemplate(centerId: any, calendarId: any): Observable<any> {
+    const httpParams = new HttpParams().set('calenderId', calendarId);
+    return this.http.get(`/centers/${centerId}/meetings/template`);
+  }
+  assignCenterAttendance(centerId: any, calendarId: any, data: any): Observable<any> {
+    const httpParams = new HttpParams().set('calenderId', calendarId);
+    return this.http.post(`/centers/${centerId}/meetings`, data, { params: httpParams });
+  }
+
+  getAllMeetingFallCenters(
+    officeId: number,
+    staffId: number,
+    meetingDate: string,
+    dateFormat: string,
+    locale: string
+  ): Observable<any> {
+    return this.http.get(
+      `/centers?dateFormat=${dateFormat}&locale=${locale}&meetingDate=${meetingDate}&officeId=${officeId}&staffId=${staffId}`
+    );
+  }
+
+  getCalendarTemplate(centerId: any): Observable<any> {
+    return this.http.get(`/centers/${centerId}/calendars/template`);
+  }
+}

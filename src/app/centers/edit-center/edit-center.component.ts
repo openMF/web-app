@@ -10,7 +10,7 @@ import {
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { CentersService } from '../centers.service';
+import { CentersService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -115,8 +115,10 @@ export class EditCenterComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.centersService.executeEditCenter(this.centerData.id, data).subscribe(() => {
-      this.router.navigate(['../general'], { relativeTo: this.route });
-    });
+    this.centersService
+      .update12({ centerId: this.centerData.id, putCentersCenterIdRequest: data } as any)
+      .subscribe(() => {
+        this.router.navigate(['../general'], { relativeTo: this.route });
+      });
   }
 }
