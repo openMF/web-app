@@ -165,7 +165,12 @@
   .ispenalty fa-icon,
   .nopenalty fa-icon,
   .enabled fa-icon,
-  .disabled fa-icon {
+  .disabled fa-icon,
+  .currently-running fa-icon,
+  .not-currently-running fa-icon,
+  .success fa-icon,
+  .fail fa-icon,
+  .errorlog fa-icon {
     color: inherit !important;
   }
 }
