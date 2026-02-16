@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule }
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { ProductsService } from '../../products.service';
+import { TaxComponentsService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { TranslateService } from '@ngx-translate/core';
@@ -42,7 +42,7 @@ export class EditTaxComponentComponent implements OnInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private productsService: ProductsService,
+    private taxComponentsService: TaxComponentsService,
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
@@ -113,14 +113,16 @@ export class EditTaxComponentComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.productsService.updateTaxComponent(this.taxComponentData.id, data).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          '../../',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.taxComponentsService
+      .updateTaxCompoent({ taxComponentId: this.taxComponentData.id, putTaxesComponentsTaxComponentIdRequest: data })
+      .subscribe((response: any) => {
+        this.router.navigate(
+          [
+            '../../',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      });
   }
 }

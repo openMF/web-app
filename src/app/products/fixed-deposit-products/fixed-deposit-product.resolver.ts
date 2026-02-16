@@ -5,18 +5,14 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
-/** Custom Services */
-import { ProductsService } from '../products.service';
+import { FixedDepositProductService } from '@fineract/client';
 
 /**
  * Fixed Deposit Product data resolver.
  */
 @Injectable()
 export class FixedDepositProductResolver {
-  /**
-   * @param {ProductsService} productsService Products service.
-   */
-  constructor(private productsService: ProductsService) {}
+  constructor(private fixedDepositProductService: FixedDepositProductService) {}
 
   /**
    * Returns the fixed deposit product data.
@@ -24,6 +20,6 @@ export class FixedDepositProductResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const productId = route.parent.paramMap.get('productId');
-    return this.productsService.getFixedDepositProduct(productId);
+    return this.fixedDepositProductService.retrieveOne20({ productId: +productId });
   }
 }

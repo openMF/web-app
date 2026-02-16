@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { ProductsService } from '../products.service';
+import { ProductsService } from 'app/customApis.service';
 
 /**
  * Products Mix data resolver.

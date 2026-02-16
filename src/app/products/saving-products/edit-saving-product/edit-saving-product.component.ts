@@ -11,7 +11,7 @@ import { SavingProductChargesStepComponent } from '../saving-product-stepper/sav
 import { SavingProductAccountingStepComponent } from '../saving-product-stepper/saving-product-accounting-step/saving-product-accounting-step.component';
 
 /** Custom Services */
-import { ProductsService } from 'app/products/products.service';
+import { SavingsProductService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Accounting } from 'app/core/utils/accounting';
 import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
@@ -64,7 +64,7 @@ export class EditSavingProductComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private productsService: ProductsService,
+    private savingsProductService: SavingsProductService,
     private router: Router,
     private settingsService: SettingsService,
     private accounting: Accounting
@@ -130,8 +130,8 @@ export class EditSavingProductComponent {
       locale: this.settingsService.language.code // locale required for nominalAnnualInterestRate
     };
     delete savingProduct.advancedAccountingRules;
-    this.productsService
-      .updateSavingProduct(this.savingProductAndTemplate.id, savingProduct)
+    this.savingsProductService
+      .update22({ productId: this.savingProductAndTemplate.id, putSavingsProductsProductIdRequest: savingProduct })
       .subscribe((response: any) => {
         this.router.navigate(
           [

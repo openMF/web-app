@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { ProductsService } from '../../products.service';
+import { ProductsService } from 'app/customApis.service';
 
 /**
  * View product mix data resolver.

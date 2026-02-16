@@ -12,7 +12,7 @@ import { LoanProductAccountingStepComponent } from '../loan-product-stepper/loan
 import { LoanProductInterestRefundStepComponent } from '../loan-product-stepper/loan-product-interest-refund-step/loan-product-interest-refund-step.component';
 
 /** Custom Services */
-import { ProductsService } from 'app/products/products.service';
+import { LoanProductsService } from '@fineract/client';
 import { LoanProducts } from '../loan-products';
 import {
   AdvancedPaymentAllocation,
@@ -94,7 +94,7 @@ export class CreateLoanProductComponent implements OnInit {
    */
   constructor(
     private route: ActivatedRoute,
-    private productsService: ProductsService,
+    private loanProductsService: LoanProductsService,
     private loanProducts: LoanProducts,
     private router: Router,
     private accounting: Accounting,
@@ -305,7 +305,7 @@ export class CreateLoanProductComponent implements OnInit {
     }
     delete loanProduct['useDueForRepaymentsConfigurations'];
 
-    this.productsService.createLoanProduct(loanProduct).subscribe((response: any) => {
+    this.loanProductsService.createLoanProduct({ postLoanProductsRequest: loanProduct }).subscribe((response: any) => {
       this.router.navigate(
         [
           '../',

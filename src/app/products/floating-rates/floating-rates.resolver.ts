@@ -4,24 +4,20 @@ import { Injectable } from '@angular/core';
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
-/** Custom Services */
-import { ProductsService } from '../products.service';
+import { FloatingRatesService } from '@fineract/client';
 
 /**
  * Floating Rates data resolver.
  */
 @Injectable()
 export class FloatingRatesResolver {
-  /**
-   * @param {ProductsService} productsService Products service.
-   */
-  constructor(private productsService: ProductsService) {}
+  constructor(private floatingRatesService: FloatingRatesService) {}
 
   /**
    * Returns the floating rates data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.productsService.getFloatingRates();
+    return this.floatingRatesService.retrieveAll22();
   }
 }

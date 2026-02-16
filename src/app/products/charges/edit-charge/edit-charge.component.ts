@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule }
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { ProductsService } from 'app/products/products.service';
+import { ChargesService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { maxNumberValueValidator } from 'app/shared/validators/max-number-value.validator';
 import { minNumberValueValidator } from 'app/shared/validators/min-number-value.validator';
@@ -64,7 +64,7 @@ export class EditChargeComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(
-    private productsService: ProductsService,
+    private chargesService: ChargesService,
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
@@ -205,8 +205,10 @@ export class EditChargeComponent implements OnInit {
     if (!charges.maxCap) {
       delete charges.maxCap;
     }
-    this.productsService.updateCharge(this.chargeData.id.toString(), charges).subscribe((response: any) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.chargesService
+      .updateCharge({ chargeId: this.chargeData.id, chargeRequest: charges })
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
 }

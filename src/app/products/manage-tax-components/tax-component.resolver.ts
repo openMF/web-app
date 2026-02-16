@@ -5,18 +5,14 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
-/** Custom Services */
-import { ProductsService } from '../products.service';
+import { TaxComponentsService } from '@fineract/client';
 
 /**
  * tax Component data resolver.
  */
 @Injectable()
 export class TaxComponentResolver {
-  /**
-   * @param {ProductsService} productsService Products service.
-   */
-  constructor(private productsService: ProductsService) {}
+  constructor(private taxComponentsService: TaxComponentsService) {}
 
   /**
    * Returns the tax Component data.
@@ -24,6 +20,6 @@ export class TaxComponentResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const taxComponentId = route.paramMap.get('id');
-    return this.productsService.getTaxComponent(taxComponentId);
+    return this.taxComponentsService.retrieveTaxComponent({ taxComponentId: +taxComponentId });
   }
 }

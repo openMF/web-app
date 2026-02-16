@@ -4,18 +4,17 @@ import { Injectable } from '@angular/core';
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
-/** Custom Services */
-import { ProductsService } from '../products.service';
+import { RecurringDepositProductService } from '@fineract/client';
 
 @Injectable()
 export class RecurringDepositProductsTemplateResolver {
-  constructor(private productsService: ProductsService) {}
+  constructor(private recurringDepositProductService: RecurringDepositProductService) {}
 
   /**
    * Returns the recurring deposit products template data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.productsService.getRecurringDepositProductsTemplate();
+    return this.recurringDepositProductService.retrieveOne23({ productId: 0 });
   }
 }

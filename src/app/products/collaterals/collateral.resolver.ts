@@ -5,18 +5,14 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
-/** Custom Services */
-import { ProductsService } from '../products.service';
+import { CollateralManagementService } from '@fineract/client';
 
 /**
  * Charges data resolver.
  */
 @Injectable()
 export class CollateralResolver {
-  /**
-   * @param {ProductsService} productsService Products service.
-   */
-  constructor(private productsService: ProductsService) {}
+  constructor(private collateralManagementService: CollateralManagementService) {}
 
   /**
    * Returns the products data.
@@ -24,6 +20,6 @@ export class CollateralResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const collateralId = route.paramMap.get('id');
-    return this.productsService.getCollateral(collateralId);
+    return this.collateralManagementService.getCollateral({ collateralId: +collateralId });
   }
 }

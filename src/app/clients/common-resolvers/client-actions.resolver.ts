@@ -12,9 +12,9 @@ import {
   SelfSpmService,
   OfficesService,
   ClientChargesService,
-  UserGeneratedDocumentsService
+  UserGeneratedDocumentsService,
+  CollateralManagementService
 } from '@fineract/client';
-import { ProductsService } from 'app/products/products.service';
 
 /**
  * Client Actions data resolver.
@@ -23,7 +23,7 @@ import { ProductsService } from 'app/products/products.service';
 export class ClientActionsResolver {
   /**
    * @param {ClientsService} clientsService Clients service.
-   * @param {ProductsService} productsService Products Service
+   * @param {CollateralManagementService} collateralManagementService Collateral Management Service
    */
   constructor(
     private clientsService: ClientService,
@@ -32,7 +32,7 @@ export class ClientActionsResolver {
     private officesService: OfficesService,
     private clientChargesService: ClientChargesService,
     private userGeneratedDocumentsService: UserGeneratedDocumentsService,
-    private productsService: ProductsService
+    private collateralManagementService: CollateralManagementService
   ) {}
 
   /**
@@ -59,7 +59,7 @@ export class ClientActionsResolver {
       case 'Add Charge':
         return this.clientChargesService.retrieveTemplate4({ clientId: Number(clientId) });
       case 'Create Collateral':
-        return this.productsService.getCollaterals();
+        return this.collateralManagementService.getAllCollaterals();
       case 'Client Screen Reports':
         return this.userGeneratedDocumentsService.retrieveAll40();
       case 'Assign Staff':

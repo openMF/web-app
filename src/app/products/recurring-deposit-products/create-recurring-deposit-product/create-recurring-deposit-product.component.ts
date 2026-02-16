@@ -12,7 +12,7 @@ import { RecurringDepositProductChargesStepComponent } from '../recurring-deposi
 import { RecurringDepositProductAccountingStepComponent } from '../recurring-deposit-product-stepper/recurring-deposit-product-accounting-step/recurring-deposit-product-accounting-step.component';
 
 /** Custom Services */
-import { ProductsService } from 'app/products/products.service';
+import { RecurringDepositProductService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Accounting } from 'app/core/utils/accounting';
 import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
@@ -69,7 +69,7 @@ export class CreateRecurringDepositProductComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private productsService: ProductsService,
+    private recurringDepositProductService: RecurringDepositProductService,
     private router: Router,
     private settingsService: SettingsService,
     private accounting: Accounting
@@ -138,14 +138,16 @@ export class CreateRecurringDepositProductComponent {
       recurringDepositProduct.description = '';
     }
     delete recurringDepositProduct.advancedAccountingRules;
-    this.productsService.createRecurringDepositProduct(recurringDepositProduct).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          '../',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.recurringDepositProductService
+      .create12({ postRecurringDepositProductsRequest: recurringDepositProduct })
+      .subscribe((response: any) => {
+        this.router.navigate(
+          [
+            '../',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      });
   }
 }

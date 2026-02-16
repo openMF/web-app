@@ -21,7 +21,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 
 /** Custom Services */
 import { TranslateService } from '@ngx-translate/core';
-import { ProductsService } from 'app/products/products.service';
+import { ProductMixService } from '@fineract/client';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgClass } from '@angular/common';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -81,7 +81,7 @@ export class ViewProductMixComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    private productsService: ProductsService,
+    private productMixService: ProductMixService,
     private router: Router,
     private translateService: TranslateService
   ) {
@@ -130,7 +130,7 @@ export class ViewProductMixComponent implements OnInit {
     });
     deleteProductMixDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.productsService.deleteProductMix(this.productMixData.productId).subscribe(() => {
+        this.productMixService.deleteProductMix({ productId: this.productMixData.productId }).subscribe(() => {
           this.router.navigate(['../'], { relativeTo: this.route });
         });
       }

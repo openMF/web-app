@@ -4,18 +4,13 @@ import { Injectable } from '@angular/core';
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
-/** Custom Services */
-import { ProductsService } from '../products.service';
+import { ProductsService } from '@fineract/client';
 
 /**
  * Share products data resolver.
  */
 @Injectable()
 export class ShareProductsResolver {
-  /**
-   *
-   * @param {ProductsService} productsService Products service.
-   */
   constructor(private productsService: ProductsService) {}
 
   /**
@@ -23,6 +18,6 @@ export class ShareProductsResolver {
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.productsService.getShareProducts();
+    return this.productsService.retrieveAllProducts({ type: 'share' });
   }
 }

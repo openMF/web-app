@@ -5,18 +5,14 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
-/** Custom Services */
-import { ProductsService } from '../../products.service';
+import { DelinquencyRangeAndBucketsManagementService } from '@fineract/client';
 
 /**
  * Delinquency Range Component data resolver.
  */
 @Injectable()
 export class DelinquencyRangeComponentsResolver {
-  /**
-   * @param {ProductsService} productsService Products service.
-   */
-  constructor(private productsService: ProductsService) {}
+  constructor(private delinquencyService: DelinquencyRangeAndBucketsManagementService) {}
 
   /**
    * Returns the delinquency ranges data.
@@ -25,9 +21,9 @@ export class DelinquencyRangeComponentsResolver {
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const delinquentcyRangeId = route.paramMap.get('rangeId');
     if (delinquentcyRangeId === null) {
-      return this.productsService.getDelinquencyRanges();
+      return this.delinquencyService.getDelinquencyRanges();
     } else {
-      return this.productsService.getDelinquencyRange(delinquentcyRangeId);
+      return this.delinquencyService.getDelinquencyRange({ delinquencyRangeId: +delinquentcyRangeId });
     }
   }
 }

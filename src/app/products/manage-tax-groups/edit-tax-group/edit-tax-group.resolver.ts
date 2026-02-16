@@ -3,20 +3,17 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-/** Custom Services */
-import { ProductsService } from '../../products.service';
+import { TaxGroupService } from '@fineract/client';
 
 /**
  * tax Group data resolver.
  */
 @Injectable()
 export class EditTaxGroupResolver {
-  /**
-   * @param {ProductsService} productsService Products service.
-   */
-  constructor(private productsService: ProductsService) {}
+  constructor(private taxGroupService: TaxGroupService) {}
 
   /**
    * Returns the tax Group data.
@@ -24,6 +21,18 @@ export class EditTaxGroupResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const taxGroupId = route.parent.paramMap.get('id');
-    return this.productsService.getTaxGroup(taxGroupId, 'true');
+    return forkJoin([
+      this.taxGroupService.retrieveTaxGroup({ taxGroupId: +taxGroupId }),
+      this.taxGroupService.retrieveTemplate22()
+    ]).pipe(
+      map(
+        ([
+          taxGroup,
+          template
+        ]) => {
+          return { ...taxGroup, taxComponents: (template as any).taxComponents };
+        }
+      )
+    );
   }
 }

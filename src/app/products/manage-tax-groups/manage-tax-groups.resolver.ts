@@ -4,24 +4,20 @@ import { Injectable } from '@angular/core';
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
-/** Custom Services */
-import { ProductsService } from '../products.service';
+import { TaxGroupService } from '@fineract/client';
 
 /**
  * Manage Tax Groups data resolver.
  */
 @Injectable()
 export class ManageTaxGroupsResolver {
-  /**
-   * @param {ProductsService} productsService Products service.
-   */
-  constructor(private productsService: ProductsService) {}
+  constructor(private taxGroupService: TaxGroupService) {}
 
   /**
    * Returns the tax groups data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.productsService.getTaxGroups();
+    return this.taxGroupService.retrieveAllTaxGroups();
   }
 }

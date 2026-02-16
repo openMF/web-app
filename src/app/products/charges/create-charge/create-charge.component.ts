@@ -10,7 +10,7 @@ import {
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { ProductsService } from '../../products.service';
+import { ChargesService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { minNumberValueValidator } from 'app/shared/validators/min-number-value.validator';
@@ -67,7 +67,7 @@ export class CreateChargeComponent implements OnInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private productsService: ProductsService,
+    private chargesService: ChargesService,
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
@@ -331,7 +331,7 @@ export class CreateChargeComponent implements OnInit {
     if (!data.maxCap) {
       delete data.maxCap;
     }
-    this.productsService.createCharge(data).subscribe((response: any) => {
+    this.chargesService.createCharge({ chargeRequest: data }).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
