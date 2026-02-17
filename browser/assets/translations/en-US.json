@@ -2707,6 +2707,7 @@
       "Working with Code": "Working with Code"
     },
     "menus": {
+      "Unassign Staff": "Unassign Staff",
       "Accounting": "Accounting",
       "Account Overview": "Account Overview",
       "Activate": "Activate",

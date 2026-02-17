@@ -2700,6 +2700,7 @@
       "Working with Code": "Trabajar con código"
     },
     "menus": {
+      "Unassign Staff": "Desasignar Asesor",
       "Accounting": "Contabilidad",
       "Account Overview": "Descripción de cuenta",
       "Activate": "Activar",

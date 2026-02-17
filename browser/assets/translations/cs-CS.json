@@ -2697,6 +2697,7 @@
       "Working with Code": "Práce s kódem"
     },
     "menus": {
+      "Unassign Staff": "Zrušit přidělení personálu",
       "Accounting": "Účetnictví",
       "Account Overview": "Přehled účtu",
       "Activate": "aktivovat",

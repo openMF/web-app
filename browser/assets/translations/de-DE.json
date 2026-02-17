@@ -2698,6 +2698,7 @@
       "Working with Code": "Arbeiten mit Code"
     },
     "menus": {
+      "Unassign Staff": "Personalzuweisung aufheben",
       "Accounting": "Buchhaltung",
       "Account Overview": "Kontoübersicht",
       "Activate": "aktivieren Sie",

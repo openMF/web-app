@@ -2695,6 +2695,7 @@
       "Working with Code": "Trabalhando com código"
     },
     "menus": {
+      "Unassign Staff": "Cancelar atribuição de equipe",
       "Accounting": "Contabilidade",
       "Account Overview": "visão geral da conta",
       "Activate": "Ativar",

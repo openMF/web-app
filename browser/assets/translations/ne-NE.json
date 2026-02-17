@@ -2694,6 +2694,7 @@
       "Working with Code": "Code मा काम गर्नुहुन्छ"
     },
     "menus": {
+      "Unassign Staff": "कर्मचारी नियुक्ति रद्द गर्नुहोस्",
       "Accounting": "लेखा",
       "Account Overview": "खाता अवलोकन",
       "Activate": "अलग गर्नु",
