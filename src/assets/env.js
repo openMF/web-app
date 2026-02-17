@@ -111,4 +111,7 @@
   window['env']['oidcApiUrl'] = '';
   window['env']['oidcFrontUrl'] = '';
 
+  // External Email Validation Regex (optional override)
+  window['env']['EXTERNAL_EMAIL_REGEX'] = '';
+  
 })(this);

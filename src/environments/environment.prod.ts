@@ -16,6 +16,7 @@ const provider = loadedEnv['apiProvider'];
 
 export const environment = {
   production: true,
+  EXTERNAL_EMAIL_REGEX: loadedEnv.EXTERNAL_EMAIL_REGEX || '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$',
   version: env.mifos_x.version,
   hash: env.mifos_x.hash,
   // For connecting to server running elsewhere update the tenant identifier

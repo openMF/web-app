@@ -19,6 +19,7 @@ const loadedEnv = window.env || {};
 
 export const environment = {
   production: false,
+  EXTERNAL_EMAIL_REGEX: loadedEnv.EXTERNAL_EMAIL_REGEX || '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$',
   version: env.mifos_x.version,
   hash: env.mifos_x.hash,
   // For connecting to server running elsewhere update the tenant identifier

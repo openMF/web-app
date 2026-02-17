@@ -7,6 +7,7 @@
  */
 
 /** Angular Imports */
+import { environment } from '../../../../environments/environment';
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, inject } from '@angular/core';
 import {
   UntypedFormBuilder,
@@ -114,6 +115,7 @@ export class ClientGeneralStepComponent implements OnInit, OnDestroy {
    * Creates the client form.
    */
   setClientForm() {
+    const emailRegex = environment.EXTERNAL_EMAIL_REGEX?.trim();
     this.createClientForm = this.formBuilder.group({
       officeId: [
         '',
@@ -133,7 +135,7 @@ export class ClientGeneralStepComponent implements OnInit, OnDestroy {
       mobileNo: [''],
       emailAddress: [
         '',
-        Validators.email
+        [Validators.pattern(emailRegex)]
       ],
       dateOfBirth: [''],
       clientTypeId: [''],

@@ -230,9 +230,10 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Email Address' | translate }}</mat-label>
       <input matInput formControlName="emailAddress" />
-      @if (createClientForm.controls.emailAddress.errors?.email) {
+
+      @if (createClientForm.controls.emailAddress.hasError('pattern') && createClientForm.controls.emailAddress.value) {
         <mat-error>
-          {{ 'error.Email not valid' | translate }}
+          {{ 'errors.Email not valid' | translate }}
         </mat-error>
       }
     </mat-form-field>

@@ -120,4 +120,7 @@
   window['env']['oidcClientId'] = '$FINERACT_PLUGIN_OIDC_CLIENT_ID';
   window['env']['oidcApiUrl'] = '$FINERACT_PLUGIN_OIDC_API_URL';
   window['env']['oidcFrontUrl'] = '$FINERACT_PLUGIN_OIDC_FRONTEND_URL';
+
+  // External Email Validation Regex (optional override)
+  window['env']['EXTERNAL_EMAIL_REGEX'] = '$EXTERNAL_EMAIL_REGEX';
 })(this);

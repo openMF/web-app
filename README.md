@@ -370,6 +370,20 @@ When `ENABLE_EXTERNAL_NATIONAL_ID_SYSTEM` is set to `true`, the following fields
 
 The user types the External ID value, and if it matches the configured regex, the system calls the external API to retrieve and auto-fill client information.
 
+#### External Email Validation Configuration
+
+The email validation regex can be customized using the `EXTERNAL_EMAIL_REGEX` environment variable.
+
+If not provided, the application falls back to the default built-in validation pattern.
+
+This allows deployments to enforce stricter or region-specific email validation rules without modifying source code.
+
+Example:
+
+```bash
+EXTERNAL_EMAIL_REGEX=^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$
+```
+
 **Docker Compose with External National ID:**
 
 ```bash
