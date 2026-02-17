@@ -20,6 +20,12 @@
                 </mat-option>
               }
             </mat-select>
+            @if (savingsAssignStaffForm.controls.toSavingsOfficerId.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.To Savings Officer' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field (click)="assignmentDatePicker.open()">

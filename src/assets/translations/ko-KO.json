@@ -2697,6 +2697,7 @@
       "Working with Code": "코드 작업"
     },
     "menus": {
+      "Unassign Staff": "직원 할당 해제",
       "Accounting": "회계",
       "Account Overview": "계정 개요",
       "Activate": "활성화",

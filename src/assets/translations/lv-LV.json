@@ -2696,6 +2696,7 @@
       "Working with Code": "Darbs ar kodu"
     },
     "menus": {
+      "Unassign Staff": "Atcelt personāla piešķiršanu",
       "Accounting": "Grāmatvedība",
       "Account Overview": "Konta pārskats",
       "Activate": "Aktivizēt",

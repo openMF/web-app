@@ -2696,6 +2696,7 @@
       "Working with Code": "Darbas su kodu"
     },
     "menus": {
+      "Unassign Staff": "Atšaukti personalo priskyrimą",
       "Accounting": "Apskaita",
       "Account Overview": "Sąskaitos apžvalga",
       "Activate": "Suaktyvinti",
