@@ -204,6 +204,17 @@ export class AddressTabComponent {
       );
     }
     formfields.push(
+      this.isFieldEnabled('postalCode')
+        ? new InputBase({
+            controlName: 'postalCode',
+            label: this.translateService.instant('labels.inputs.Postal Code'),
+            value: address ? address.postalCode : '',
+            type: 'text',
+            order: 2
+          })
+        : null
+    );
+    formfields.push(
       this.isFieldEnabled('street')
         ? new InputBase({
             controlName: 'street',
@@ -211,7 +222,7 @@ export class AddressTabComponent {
             value: address ? address.street : '',
             type: 'text',
             required: false,
-            order: 2
+            order: 3
           })
         : null
     );
@@ -300,17 +311,6 @@ export class AddressTabComponent {
             value: address ? address.countryId : '',
             options: { label: 'name', value: 'id', data: this.clientAddressTemplate.countryIdOptions },
             order: 10
-          })
-        : null
-    );
-    formfields.push(
-      this.isFieldEnabled('postalCode')
-        ? new InputBase({
-            controlName: 'postalCode',
-            label: this.translateService.instant('labels.inputs.Postal Code'),
-            value: address ? address.postalCode : '',
-            type: 'text',
-            order: 11
           })
         : null
     );
