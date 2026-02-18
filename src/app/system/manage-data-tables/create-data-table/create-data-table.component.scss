@@ -19,6 +19,58 @@
   }
 }
 
-table {
+.mat-mdc-table {
   width: 100%;
+  overflow-x: auto;
+  display: block;
+}
+
+.mat-mdc-header-row,
+.mat-mdc-row {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  min-width: 800px;
+}
+
+.actions-column {
+  width: 100px !important;
+  min-width: 100px !important;
+  max-width: 100px !important;
+  text-align: center;
+  position: sticky;
+  right: 0;
+  background: #fff;
+  z-index: 1;
+}
+
+.actions-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.actions-wrapper .mat-mdc-icon-button {
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+}
+
+.actions-wrapper fa-icon {
+  font-size: 14px;
+}
+
+th.mat-mdc-header-cell:first-child,
+td.mat-mdc-cell:first-child {
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+th.mat-mdc-header-cell:not(.actions-column, :first-child),
+td.mat-mdc-cell:not(.actions-column, :first-child) {
+  width: 80px;
+  min-width: 80px;
 }
