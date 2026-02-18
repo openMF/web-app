@@ -10,6 +10,45 @@
   <div class="content-container">
     <h2>{{ 'labels.heading.GSIM Account Overview' | translate }}</h2>
 
+    <!-- Group Summary Card -->
+    @if (savingAccountData) {
+      <mat-card class="m-b-20">
+        <mat-card-header>
+          <mat-card-title>{{ 'labels.heading.Group Summary' | translate }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="layout-row layout-wrap">
+            <div class="flex-50 m-b-10">
+              <strong>{{ 'labels.inputs.Group' | translate }}:</strong>
+              {{ groupsData?.groupName || ('labels.inputs.N/A' | translate) }}
+            </div>
+            <div class="flex-50 m-b-10">
+              <strong>{{ 'labels.inputs.Account Number' | translate }}:</strong>
+              {{ savingAccountData.accountNo }}
+            </div>
+            <div class="flex-50 m-b-10">
+              <strong>{{ 'labels.inputs.Product' | translate }}:</strong>
+              {{ savingAccountData.savingsProductName }}
+            </div>
+            <div class="flex-50 m-b-10">
+              <strong>{{ 'labels.inputs.Status' | translate }}:</strong>
+              <span [ngClass]="savingAccountData.status.code | statusLookup">
+                {{ savingAccountData.status.value }}
+              </span>
+            </div>
+            @if (savingAccountData.summary) {
+              <div class="flex-50 m-b-10">
+                <strong>{{ 'labels.inputs.Total Balance' | translate }}:</strong>
+                {{ savingAccountData.summary.accountBalance | number: '1.2-2' }}
+              </div>
+            }
+          </div>
+        </mat-card-content>
+      </mat-card>
+    }
+
+    <h3>{{ 'labels.heading.Member Accounts' | translate }}</h3>
+
     <table mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="clientDetails">
         <th mat-header-cell *matHeaderCellDef>
@@ -47,7 +86,7 @@
               mat-raised-button
               color="primary"
               (click)="routeEdit($event)"
-              [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Deposit']"
+              [routerLink]="['/savings-accounts', element.id, 'actions', 'Deposit']"
             >
               <i class="fa fa-arrow-up" matTooltip="{{ 'tooltips.Deposit' | translate }}"></i>
             </button>
@@ -58,7 +97,7 @@
               mat-raised-button
               color="primary"
               (click)="routeEdit($event)"
-              [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Withdrawal']"
+              [routerLink]="['/savings-accounts', element.id, 'actions', 'Withdrawal']"
             >
               <i class="fa fa-arrow-down" matTooltip="{{ 'tooltips.Withdraw' | translate }}"></i>
             </button>
@@ -69,31 +108,31 @@
               mat-raised-button
               color="primary"
               (click)="routeEdit($event)"
-              [routerLink]="['../../../', 'savings-accounts', element.id, 'actions', 'Approve']"
+              [routerLink]="['/savings-accounts', element.id, 'actions', 'Approve']"
             >
               <i class="fa fa-check" matTooltip="{{ 'tooltips.Approve' | translate }}"></i>
             </button>
           }
-          @if (!element.status.submittedAndPendingApproval && !element.status.active) {
+          @if (element.status.approved && !element.status.active) {
             <button
               class="account-action-button"
               mat-raised-button
               color="primary"
               (click)="routeEdit($event)"
-              [routerLink]="['../../../', 'savings-accounts', element.id, 'actions', 'Undo Approval']"
-            >
-              <i class="fa fa-undo" matTooltip="{{ 'tooltips.Undo Approval' | translate }}"></i>
-            </button>
-          }
-          @if (!element.status.submittedAndPendingApproval && !element.status.active) {
-            <button
-              class="account-action-button"
-              mat-raised-button
-              color="primary"
-              (click)="routeEdit($event)"
-              [routerLink]="['../../', element.id, 'actions', 'Activate']"
+              [routerLink]="['/savings-accounts', element.id, 'actions', 'Activate']"
             >
               <i class="fa fa-check-circle" matTooltip="{{ 'tooltips.Activate' | translate }}"></i>
+            </button>
+          }
+          @if (element.status.approved && !element.status.active) {
+            <button
+              class="account-action-button"
+              mat-raised-button
+              color="primary"
+              (click)="routeEdit($event)"
+              [routerLink]="['/savings-accounts', element.id, 'actions', 'Undo Approval']"
+            >
+              <i class="fa fa-undo" matTooltip="{{ 'tooltips.Undo Approval' | translate }}"></i>
             </button>
           }
         </td>
@@ -102,7 +141,7 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr
         mat-row
-        [routerLink]="['../../', row.id, 'transactions']"
+        [routerLink]="['/savings-accounts', row.id, 'transactions']"
         *matRowDef="let row; columns: displayedColumns"
       ></tr>
     </table>

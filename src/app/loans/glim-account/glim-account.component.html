@@ -43,10 +43,47 @@
         <td mat-cell *matCellDef="let element">{{ element.parentPrincipalAmount }}</td>
       </ng-container>
 
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Status' | translate }}</th>
+        <td mat-cell *matCellDef="let element">
+          @if (element.status) {
+            <span [ngClass]="element.status.code | statusLookup">
+              {{ element.status.value }}
+            </span>
+          }
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
+        <td mat-cell *matCellDef="let element">
+          @if (element.status?.submittedAndPendingApproval) {
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="routeEdit($event)"
+              [routerLink]="['/loans-accounts', element.childLoanId, 'actions', 'Approve']"
+            >
+              <i class="fa fa-check"></i> {{ 'buttons.Approve' | translate }}
+            </button>
+          }
+          @if (element.status?.waitingForDisbursal) {
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="routeEdit($event)"
+              [routerLink]="['/loans-accounts', element.childLoanId, 'actions', 'Disburse']"
+            >
+              <i class="fa fa-flag"></i> {{ 'buttons.Disburse' | translate }}
+            </button>
+          }
+        </td>
+      </ng-container>
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr
         mat-row
-        [routerLink]="['../../', row.childLoanId, 'general']"
+        [routerLink]="['/loans-accounts', row.childLoanId, 'general']"
         *matRowDef="let row; columns: displayedColumns"
       ></tr>
     </table>
