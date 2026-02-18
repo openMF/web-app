@@ -257,4 +257,25 @@ export class Datatables {
       return false;
     }
   }
+
+  public isPhoneNumberField(columnName: string): boolean {
+    if (!columnName) {
+      return false;
+    }
+    const normalizedName = columnName.toLowerCase().replace(/[_\s]+/g, '');
+    const phonePatterns = [
+      /\bphone\b/,
+      /\btelefono\b/,
+      /\bcelular\b/,
+      /\bmobile(?:phone|no|num|number)?\b/,
+      /\bfijo\b/,
+      /\blandline\b/,
+      /\bcellphone\b/,
+      /\bofficephone\b/,
+      /\bhomephone\b/,
+      /\bmtn\b/,
+      /\bairtel\b/
+    ];
+    return phonePatterns.some((pattern) => pattern.test(normalizedName));
+  }
 }
