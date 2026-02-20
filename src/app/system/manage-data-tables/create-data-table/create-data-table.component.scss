@@ -76,5 +76,7 @@ td.mat-mdc-cell:not(.actions-column, :first-child) {
 }
 
 :host-context(.dark-theme) {
-  --card-background: #2d2d2d;
+  .actions-column {
+    background: #424242 !important;
+  }
 }
