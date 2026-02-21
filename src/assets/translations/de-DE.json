@@ -3629,7 +3629,8 @@
     "No Closed Recurring Deposit Accounts Available": "Keine geschlossenen wiederkehrenden Einlagenkonten verfügbar",
     "No Active Share Accounts Available": "Keine aktiven Aktienkonten verfügbar",
     "No Closed Share Accounts Available": "Keine geschlossenen Aktienkonten verfügbar",
-    "No Collateral Data Available": "Keine Sicherheiten verfügbar"
+    "No Collateral Data Available": "Keine Sicherheiten verfügbar",
+    "No Identities Available": "Keine Identitäten verfügbar"
   },
   "languages": {
     "cs-CS": "Čeština (Tschechisch)",

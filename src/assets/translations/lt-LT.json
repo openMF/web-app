@@ -3630,7 +3630,8 @@
       "No Closed Recurring Deposit Accounts Available": "Nėra uždarytų pasikartojančių indėlių sąskaitų",
       "No Active Share Accounts Available": "Nėra aktyvių akcijų sąskaitų",
       "No Closed Share Accounts Available": "Nėra uždarytų akcijų sąskaitų",
-      "No Collateral Data Available": "Nėra užstato duomenų"
+      "No Collateral Data Available": "Nėra užstato duomenų",
+      "No Identities Available": "Nėra galimų tapatybių"
     }
   },
   "languages": {

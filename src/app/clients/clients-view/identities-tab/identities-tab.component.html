@@ -120,8 +120,19 @@
       </td>
     </ng-container>
 
+    <ng-container matColumnDef="no-data">
+      <td mat-footer-cell *matFooterCellDef [attr.colspan]="identitiesColumns.length">
+        <div class="table-empty-state">
+          <p>{{ 'labels.messages.No Identities Available' | translate }}</p>
+        </div>
+      </td>
+    </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="identitiesColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: identitiesColumns"></tr>
+    @if (clientIdentities?.length === 0) {
+      <tr mat-footer-row *matFooterRowDef="['no-data']"></tr>
+    }
   </table>
 </div>
 

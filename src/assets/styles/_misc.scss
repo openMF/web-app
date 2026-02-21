@@ -87,3 +87,15 @@ mat-card-title {
   padding-left: 20px;
   padding-top: 20px;
 }
+
+.table-empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--mdc-theme-text-secondary-on-background, #666);
+  font-size: 14px;
+  cursor: auto;
+
+  p {
+    margin: 0;
+  }
+}

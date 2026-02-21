@@ -3630,7 +3630,8 @@
       "No Closed Recurring Deposit Accounts Available": "Nav slēgtu periodisku noguldījumu kontu",
       "No Active Share Accounts Available": "Nav aktīvu akciju kontu",
       "No Closed Share Accounts Available": "Nav slēgtu akciju kontu",
-      "No Collateral Data Available": "Nav pieejamu nodrošinājuma datu"
+      "No Collateral Data Available": "Nav pieejamu nodrošinājuma datu",
+      "No Identities Available": "Nav pieejamu identitāšu"
     }
   },
   "languages": {

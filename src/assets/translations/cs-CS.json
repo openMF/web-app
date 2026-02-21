@@ -3629,7 +3629,8 @@
     "No Closed Recurring Deposit Accounts Available": "Žádné uzavřené opakující se účty s vkladem k dispozici",
     "No Active Share Accounts Available": "Žádné aktivní účty podílů k dispozici",
     "No Closed Share Accounts Available": "Žádné uzavřené účty podílů k dispozici",
-    "No Collateral Data Available": "Žádná data o kolaterálu k dispozici"
+    "No Collateral Data Available": "Žádná data o kolaterálu k dispozici",
+    "No Identities Available": "Žádné identity k dispozici"
   },
   "languages": {
     "cs-CS": "Čeština",
