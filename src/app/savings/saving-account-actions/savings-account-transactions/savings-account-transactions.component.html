@@ -59,6 +59,12 @@
                 </mat-option>
               }
             </mat-select>
+            @if (savingAccountTransactionForm.controls.paymentTypeId.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Payment Type' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <div class="flex-fill">
