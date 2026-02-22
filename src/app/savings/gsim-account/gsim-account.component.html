@@ -47,7 +47,7 @@
               mat-raised-button
               color="primary"
               (click)="routeEdit($event)"
-              [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Deposit']"
+              [routerLink]="['/groups', groupId, 'savings-accounts', element.id, 'actions', 'Deposit']"
             >
               <i class="fa fa-arrow-up" matTooltip="{{ 'tooltips.Deposit' | translate }}"></i>
             </button>
@@ -58,7 +58,7 @@
               mat-raised-button
               color="primary"
               (click)="routeEdit($event)"
-              [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Withdrawal']"
+              [routerLink]="['/groups', groupId, 'savings-accounts', element.id, 'actions', 'Withdrawal']"
             >
               <i class="fa fa-arrow-down" matTooltip="{{ 'tooltips.Withdraw' | translate }}"></i>
             </button>
