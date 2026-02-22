@@ -12,7 +12,7 @@ Mifos® X Web App is a modern single-page application (SPA) built on top of the 
 
 ## Quick Links
 
-- [Live Demo](https://sandbox.mifos.community/#/login) (Updated nightly — sandbox data is reset every 6 hours; test data and transient state may be cleared.)
+- [Live Demo](https://demo.mifos.community/#/login) (Updated nightly — sandbox data is reset every 6 hours; test data and transient state may be cleared.)
 - [GitHub Repository](https://github.com/openMF/web-app)
 - [Slack Channel](https://app.slack.com/client/T0F5GHE8Y/CJJGJLN10)
 - [Jira Board of Mifos](https://mifosforge.jira.com/jira/your-work)
@@ -31,8 +31,7 @@ Before installing the web app, you need to set up the Apache Fineract® backend 
 
 1. **Choose ONE of these backend options:**
    - **Option A: Use existing remote server**
-   - Use the [sandbox (MariaDB)](https://sandbox.mifos.community) — sandbox data is reset every 6 hours; test data and transient state may be cleared.
-   - Use the [demo (MariaDB)](https://demo.mifos.community)
+   - Use the [demo (MariaDB)](https://demo.mifos.community) — sandbox data is reset every 6 hours; test data and transient state may be cleared.
    - Use the [demo (Keycloak)](https://oauth.mifos.community)
    - Use the [demo (2FA)](https://2fa.mifos.community)
    - Use the [demo (Oidc)](https://oidc.mifos.community)
@@ -140,9 +139,9 @@ The web app includes a proxy configuration (`proxy.conf.js`) that allows you to 
 
 By default, the proxy forwards `/fineract-provider` requests to the Mifos sandbox environment:
 
-- **Target:** `https://sandbox.mifos.community`
-- **API Endpoint:** `https://apis.mifos.community` (exposed in the sandbox)
-- **System Reset:** Sandbox test data and transient state are reset every 6 hours (expect data to be periodically cleared).
+- **Target:** `https://demo.mifos.community`
+- **API Endpoint:** `https://apis.mifos.community` (exposed in the demo environment)
+- **System Reset:** Demo test data and transient state are reset every 6 hours (expect data to be periodically cleared).
 
 **Sandbox Environment Variables:**
 
@@ -197,10 +196,10 @@ To verify the proxy is working correctly, start the development server (`ng serv
 curl -i "http://localhost:4200/fineract-provider/api/v1/runreports/FullClientReport?R_officeId=1&output-type=HTML&R_loanOfficerId=-1"
 ```
 
-Expected: HTTP 200 response with proxied data from the sandbox. Server console shows:
+Expected: HTTP 200 response with proxied data from the demo environment. Server console shows:
 
 ```text
-[Proxy] Proxying: GET /fineract-provider/api/v1/runreports/... -> https://sandbox.mifos.community/api/v1/runreports/...
+[Proxy] Proxying: GET /fineract-provider/api/v1/runreports/... -> https://demo.mifos.community/api/v1/runreports/...
 ```
 
 **Simulated proxy error (backend unreachable):**
@@ -215,7 +214,7 @@ If the backend is unreachable or returns an error, the proxy returns HTTP 502:
 Server console (example):
 
 ```text
-[Proxy] Error while proxying request: GET /fineract-provider/... -> https://sandbox.mifos.community - ECONNREFUSED
+[Proxy] Error while proxying request: GET /fineract-provider/... -> https://demo.mifos.community - ECONNREFUSED
 ```
 
 HTTP response:
@@ -235,13 +234,13 @@ All these environment variables can be set when using Docker or Docker Compose:
 
 #### Fineract Backend Settings
 
-| Variable                             | Description                                                          | Default Value                                                                       |
-| ------------------------------------ | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| FINERACT_API_URLS                    | Fineract server list                                                 | https://sandbox.mifos.community,https://demo.mifos.community,https://localhost:8443 |
-| FINERACT_API_URL                     | Default Fineract server                                              | https://localhost:8443                                                              |
-| FINERACT_API_ACTUATOR                | Default Fineract Actuator endpoint                                   | /fineract-provider                                                                  |
-| FINERACT_PLATFORM_TENANT_IDENTIFIER  | Default tenant identifier (must align with Fineract `tenants` table) | default                                                                             |
-| FINERACT_PLATFORM_TENANTS_IDENTIFIER | Tenant identifier list (must align with Fineract `tenants` table)    | -                                                                                   |
+| Variable                             | Description                                                          | Default Value                                       |
+| ------------------------------------ | -------------------------------------------------------------------- | --------------------------------------------------- |
+| FINERACT_API_URLS                    | Fineract server list                                                 | https://demo.mifos.community,https://localhost:8443 |
+| FINERACT_API_URL                     | Default Fineract server                                              | https://localhost:8443                              |
+| FINERACT_API_ACTUATOR                | Default Fineract Actuator endpoint                                   | /fineract-provider                                  |
+| FINERACT_PLATFORM_TENANT_IDENTIFIER  | Default tenant identifier (must align with Fineract `tenants` table) | default                                             |
+| FINERACT_PLATFORM_TENANTS_IDENTIFIER | Tenant identifier list (must align with Fineract `tenants` table)    | -                                                   |
 
 #### Language Settings (i18n)
 

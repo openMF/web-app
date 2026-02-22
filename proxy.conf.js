@@ -19,7 +19,7 @@ const { HttpsProxyAgent } = require('https-proxy-agent');
 const proxyConfig = [
   {
     context: ['/fineract-provider'],
-    target: 'https://sandbox.mifos.community',
+    target: 'https://demo.mifos.community',
     pathRewrite: { '^/fineract-provider': '' },
     changeOrigin: true,
     secure: true,

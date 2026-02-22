@@ -19,7 +19,7 @@ The interesting part is there:
 const proxyConfig = [
   {
     context: ['/fineract-provider'],
-    target: 'https://sandbox.mifos.community',
+    target: 'https://demo.mifos.community',
     pathRewrite: { '^/fineract-provider': '' },
     changeOrigin: true,
     secure: true,
@@ -42,8 +42,8 @@ const proxyConfig = [
 ```
 
 This forwards requests sent to `/fineract-provider/...` on the dev server to the Fineract backend root (for example,
-`/fineract-provider/1.0/...` becomes `https://sandbox.mifos.community/1.0/...`). Use `pathRewrite` to strip the prefix
-because the sandbox exposes Fineract APIs at the root path.
+`/fineract-provider/1.0/...` becomes `https://demo.mifos.community/1.0/...`). Use `pathRewrite` to strip the prefix
+because the demo exposes Fineract APIs at the root path.
 
 **Error Handling:**
 
@@ -55,7 +55,7 @@ The `onError` handler captures proxy failures (network errors, backend unreachab
 Example server console output when proxy fails:
 
 ```text
-[Proxy] Error while proxying request: GET /fineract-provider/api/v1/clients -> https://sandbox.mifos.community - ECONNREFUSED
+[Proxy] Error while proxying request: GET /fineract-provider/api/v1/clients -> https://demo.mifos.community - ECONNREFUSED
 ```
 
 Example client response:
@@ -81,7 +81,7 @@ the dev server forward requests through a corporate proxy when required.
 **Behavior:**
 
 - **When `HTTP_PROXY` is set:** Logs `"Using proxy server: <url>"` and configures the agent for corporate proxy forwarding
-- **When `HTTP_PROXY` is not set:** Logs `"No proxy server configured. API requests will not be proxied."` — note that this refers only to corporate proxy forwarding; the Angular dev server proxy (forwarding `/fineract-provider` to the sandbox) still works normally
+- **When `HTTP_PROXY` is not set:** Logs `"No proxy server configured. API requests will not be proxied."` — note that this refers only to corporate proxy forwarding; the Angular dev server proxy (forwarding `/fineract-provider` to the demo) still works normally
 
 See `proxy.conf.js` for the exact implementation.
 
