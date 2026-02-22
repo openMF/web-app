@@ -290,6 +290,40 @@
               </div>
             </div>
           </mat-list-item>
+
+          <mat-list-item [routerLink]="['system-information']">
+            <div class="menu-list-item-content">
+              <div class="menu-left-section" [routerLink]="['system-information']">
+                <mat-icon matListIcon>
+                  <fa-icon icon="info-circle" size="sm"></fa-icon>
+                </mat-icon>
+                <div matLine>
+                  {{ 'labels.heading.System Information' | translate }}
+                  @if (arrowBooleans[15]) {
+                    <p matLine [routerLink]="['system-information']" class="menu-explanation">
+                      {{ 'labels.text.View system version, server and licensing information' | translate }}
+                    </p>
+                  }
+                </div>
+              </div>
+              <div class="menu-right-section">
+                @if (!arrowBooleans[15]) {
+                  <fa-icon
+                    (click)="arrowBooleansToggle(15); $event.stopPropagation()"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                }
+                @if (arrowBooleans[15]) {
+                  <fa-icon
+                    (click)="arrowBooleansToggle(15); $event.stopPropagation()"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
+                }
+              </div>
+            </div>
+          </mat-list-item>
         </mat-nav-list>
       </div>
 
