@@ -3628,7 +3628,8 @@
       "No Closed Recurring Deposit Accounts Available": "कुनै बन्द आवर्ती जम्मा खाताहरू उपलब्ध छैनन्",
       "No Active Share Accounts Available": "कुनै सक्रिय शेयर खाताहरू उपलब्ध छैनन्",
       "No Closed Share Accounts Available": "कुनै बन्द शेयर खाताहरू उपलब्ध छैनन्",
-      "No Collateral Data Available": "कुनै संपार्श्विक डाटा उपलब्ध छैन"
+      "No Collateral Data Available": "कुनै संपार्श्विक डाटा उपलब्ध छैन",
+      "No Identities Available": "कुनै पहिचान उपलब्ध छैन"
     }
   },
   "languages": {

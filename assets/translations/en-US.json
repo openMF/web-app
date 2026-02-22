@@ -3846,7 +3846,8 @@
       "No Closed Recurring Deposit Accounts Available": "No Closed Recurring Deposit Accounts Available",
       "No Active Share Accounts Available": "No Active Share Accounts Available",
       "No Closed Share Accounts Available": "No Closed Share Accounts Available",
-      "No Collateral Data Available": "No Collateral Data Available"
+      "No Collateral Data Available": "No Collateral Data Available",
+      "No Identities Available": "No Identities Available"
     }
   },
   "languages": {

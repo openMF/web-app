@@ -3627,7 +3627,8 @@
       "No Closed Recurring Deposit Accounts Available": "Hakuna akaunti za amana za mara kwa mara zilizofungwa zinapatikana",
       "No Active Share Accounts Available": "Hakuna akaunti za hisa zinazofanya kazi zinapatikana",
       "No Closed Share Accounts Available": "Hakuna akaunti za hisa zilizofungwa zinapatikana",
-      "No Collateral Data Available": "Hakuna data ya dhamana inayopatikana"
+      "No Collateral Data Available": "Hakuna data ya dhamana inayopatikana",
+      "No Identities Available": "Hakuna Vitambulisho Vinavyopatikana"
     }
   },
   "languages": {

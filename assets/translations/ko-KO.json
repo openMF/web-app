@@ -3630,7 +3630,8 @@
       "No Closed Recurring Deposit Accounts Available": "해지된 적립식 예금 계정이 없습니다",
       "No Active Share Accounts Available": "활성 주식 계정이 없습니다",
       "No Closed Share Accounts Available": "해지된 주식 계정이 없습니다",
-      "No Collateral Data Available": "담보 데이터가 없습니다"
+      "No Collateral Data Available": "담보 데이터가 없습니다",
+      "No Identities Available": "신원이 없습니다"
     }
   },
   "languages": {

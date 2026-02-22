@@ -3632,7 +3632,8 @@
       "No Closed Recurring Deposit Accounts Available": "Aucun compte de dépôt récurrent fermé disponible",
       "No Active Share Accounts Available": "Aucun compte d'actions actif disponible",
       "No Closed Share Accounts Available": "Aucun compte d'actions fermé disponible",
-      "No Collateral Data Available": "Aucune donnée de garantie disponible"
+      "No Collateral Data Available": "Aucune donnée de garantie disponible",
+      "No Identities Available": "Aucune identité disponible"
     }
   },
   "languages": {
