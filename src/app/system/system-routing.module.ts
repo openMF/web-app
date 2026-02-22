@@ -55,6 +55,7 @@ import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-
 import { ViewRoleComponent } from './roles-and-permissions/view-role/view-role.component';
 import { SystemComponent } from './system.component';
 import { SystemInformationComponent } from './system-information/system-information.component';
+import { AboutUsComponent } from './about-us/about-us.component';
 
 /** Custom Resolvers */
 import { AccountNumberPreferencesResolver } from './account-number-preferences/account-number-preferences.resolver';
@@ -587,6 +588,11 @@ const routes: Routes = [
           path: 'system-information',
           component: SystemInformationComponent,
           data: { title: 'System Information', breadcrumb: 'System Information' }
+        },
+        {
+          path: 'about-us',
+          component: AboutUsComponent,
+          data: { title: 'About Us', breadcrumb: 'About Us' }
         },
         {
           path: 'audit-trails',

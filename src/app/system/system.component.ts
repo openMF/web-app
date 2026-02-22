@@ -67,9 +67,9 @@ export class SystemComponent implements AfterViewInit {
   @ViewChild('manageReports') manageReports: ElementRef<any>;
   /* Template for popover on manage reports */
   @ViewChild('templateManageReports') templateManageReports: TemplateRef<any>;
-  // Initialize an array of 15 boolean values, all set to false
+  // Initialize an array of 17 boolean values, all set to false
   isDisabled: boolean = true;
-  arrowBooleans: boolean[] = new Array(16).fill(false);
+  arrowBooleans: boolean[] = new Array(17).fill(false);
 
   /**
    * Popover function

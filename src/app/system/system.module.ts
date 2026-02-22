@@ -86,6 +86,7 @@ import { ErrorLogPopoverComponent } from './manage-jobs/scheduler-jobs/error-log
 import { RunSelectedJobsPopoverComponent } from './manage-jobs/scheduler-jobs/run-selected-jobs-popover/run-selected-jobs-popover.component';
 import { RunSelectedJobsTableComponent } from './manage-jobs/scheduler-jobs/run-selected-jobs-popover/run-selected-jobs-table/run-selected-jobs-table.component';
 import { SystemInformationComponent } from './system-information/system-information.component';
+import { AboutUsComponent } from './about-us/about-us.component';
 
 @NgModule({
   imports: [
@@ -161,7 +162,8 @@ import { SystemInformationComponent } from './system-information/system-informat
     ErrorLogPopoverComponent,
     RunSelectedJobsPopoverComponent,
     RunSelectedJobsTableComponent,
-    SystemInformationComponent
+    SystemInformationComponent,
+    AboutUsComponent
   ]
 })
 export class SystemModule {}

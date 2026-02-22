@@ -568,6 +568,40 @@
               </div>
             </div>
           </mat-list-item>
+
+          <mat-list-item [routerLink]="['about-us']">
+            <div class="menu-list-item-content">
+              <div class="menu-left-section" [routerLink]="['about-us']">
+                <mat-icon matListIcon>
+                  <fa-icon icon="users" size="sm"></fa-icon>
+                </mat-icon>
+                <div matLine>
+                  {{ 'labels.heading.About Us' | translate }}
+                  @if (arrowBooleans[16]) {
+                    <p matLine [routerLink]="['about-us']" class="menu-explanation">
+                      {{ 'labels.text.Learn about the Mifos Initiative and our mission' | translate }}
+                    </p>
+                  }
+                </div>
+              </div>
+              <div class="menu-right-section">
+                @if (!arrowBooleans[16]) {
+                  <fa-icon
+                    (click)="arrowBooleansToggle(16); $event.stopPropagation()"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                }
+                @if (arrowBooleans[16]) {
+                  <fa-icon
+                    (click)="arrowBooleansToggle(16); $event.stopPropagation()"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
+                }
+              </div>
+            </div>
+          </mat-list-item>
         </mat-nav-list>
       </div>
     </div>
