@@ -20,7 +20,7 @@
                 </mat-option>
               }
             </mat-select>
-            @if (groupEditMeetingScheduleForm.controls.presentMeetingDate.hasError('repeatsOnDay')) {
+            @if (groupEditMeetingScheduleForm.controls.presentMeetingDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Existing Meeting Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
