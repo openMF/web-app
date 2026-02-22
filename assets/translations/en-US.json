@@ -294,6 +294,16 @@
       "Name": "Name",
       "Render Time": "Render Time"
     },
+    "licensing": {
+      "Apache Fineract Description": "The <a href=\"https://fineract.apache.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Apache Fineract</a> platform is licensed under the <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Apache License, Version 2.0</a>. The Mifos Initiative was the guiding force behind Apache Fineract, launching it as Mifos X in 2011 and contributing to Apache in 2016 with graduation to a top-level project of the Apache Software Foundation in 2017.",
+      "Mifos X Distribution": "The open source Mifos X distribution powered by Apache Fineract (including web apps, mobile apps, and business intelligence engine) is licensed under the <a href=\"https://www.mozilla.org/en-US/MPL/2.0/\" target=\"_blank\" rel=\"noopener noreferrer\">Mozilla Public License, v2.0</a>.",
+      "Legacy Codebase": "Our legacy codebase (Mifos 2) is governed by the <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Apache 2.0 License</a>. Please read the following to learn how to correctly adhere to the terms of the license.",
+      "How to License Code": "<a href=\"https://mifosforge.jira.com/wiki/spaces/RES/pages/174456833/How+to+properly+license+Mifos+code+that+you+are+contributing\" target=\"_blank\" rel=\"noopener noreferrer\">How to properly license Mifos code that you are contributing.</a>",
+      "Contributor Agreement": "<a href=\"https://mifos.org/resources/community/contributor-agreement/\" target=\"_blank\" rel=\"noopener noreferrer\">Mifos Contributor Agreement</a>",
+      "License FAQs": "Implications of what this means when modifying the source code can be found in the <a href=\"https://www.apache.org/foundation/license-faq.html\" target=\"_blank\" rel=\"noopener noreferrer\">Apache License FAQs</a>",
+      "Adding External Software": "Considerations to factor in when <a href=\"https://mifosforge.jira.com/wiki/spaces/RES/pages/174456843/Adding+External+Software+to+Mifos\" target=\"_blank\" rel=\"noopener noreferrer\">adding external software to Mifos</a>.",
+      "Code of Conduct": "Mifos <a href=\"https://mifos.org/resources/community/code-of-conduct/\" target=\"_blank\" rel=\"noopener noreferrer\">Code of Conduct</a> to abide by when collaborating in the community."
+    },
     "accounting": {
       "Accrual (periodic)": "Accrual (periodic)",
       "Accrual (upfront)": "Accrual (upfront)",
@@ -1245,6 +1255,8 @@
       "Success!": "Success!",
       "Successfully completed": "You have successfully completed the setup of",
       "Summary Details": "Summary Details",
+      "System Information": "System Information",
+      "Software Licensing": "Software Licensing",
       "Tax Components": "Tax Components",
       "Tax Group": "Tax Group",
       "Teller / Cashier Management": "Teller / Cashier Management",
@@ -3623,6 +3635,9 @@
       "Step": "Step",
       "Supports Loan charges, Savings & deposits": "This option allows you to create new charges. It supports Loan charges, Savings and deposits charges and Client charges.",
       "System": "System",
+      "System Information": "System Information",
+      "Software Licensing": "Software Licensing",
+      "View system version, server and licensing information": "View system version, server and licensing information",
       "Table": "Table",
       "Tax Components": "Tax Components",
       "tenant_app_key": "tenant_app_key",
