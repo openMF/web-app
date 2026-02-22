@@ -387,6 +387,29 @@ For more detailed configuration options, refer to the `env.sample` file in the r
 | MIFOS_INTERBANK_TRANSFERS_API_VERSION  | The Interbank server api version    | /v1.0                        |
 | MIFOS_INTERBANK_TRANSFERS_ENABLED      | If the Interbank feature is enabled | true                         |
 
+#### Remittance Module Settings
+
+These variables configure the Remittance Module, which provides a 7-step wizard for processing remittance payouts (search, validate recipient, assign payout, confirm payment, and generate receipt).
+
+| Variable                      | Description                            | Default Value                |
+| ----------------------------- | -------------------------------------- | ---------------------------- |
+| MIFOS_REMITTANCE_API_URL      | The Remittance Microservice server URL | https://apis.mifos.community |
+| MIFOS_REMITTANCE_API_PROVIDER | The Remittance server endpoint         | /1.0/remittance              |
+| MIFOS_REMITTANCE_API_VERSION  | The Remittance server API version      | /v1                          |
+| MIFOS_REMITTANCE_ENABLED      | If the Remittance feature is enabled   | false                        |
+| MIFOS_REMITTANCE_API_HEADER   | API gateway auth header name           | X-Gravitee-Api-Key           |
+| MIFOS_REMITTANCE_API_KEY      | API key for the Remittance gateway     |                              |
+
+When `MIFOS_REMITTANCE_ENABLED` is set to `true`, a "Remittances" menu item appears in the sidenav and the `/remittances` route becomes accessible. The module supports the following workflow:
+
+1. **Search Remittance** — Look up a transaction by vendor and external reference ID
+2. **Remittance Details** — Review transaction details and status
+3. **Search Beneficiary** — Validate the recipient's identity documents
+4. **Beneficiary Details** — Review validated recipient info and assign to a Mifos client
+5. **Transactional Profile** — Register the transactional profile and assign payout
+6. **Confirm Payment** — Final confirmation before payout
+7. **Payment Receipt** — View and print the payment receipt
+
 ### Client Data Masking Example
 
 When `MIFOS_COMPLIANCE_HIDE_CLIENT_DATA=false` (default):

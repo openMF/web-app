@@ -1,0 +1,107 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="step-content">
+  <h3>{{ 'labels.heading.Confirm Payout' | translate }}</h3>
+  <p class="description">
+    {{ 'labels.text.Please review the details carefully before confirming the payment.' | translate }}
+  </p>
+
+  <div class="confirmation-card">
+    <!-- Transaction info -->
+    @if (remittanceData) {
+      <div class="card-section">
+        <h4>{{ 'labels.heading.Transaction' | translate }}</h4>
+        @if (officeName) {
+          <div class="info-row">
+            <span class="label">{{ 'labels.inputs.Office' | translate }}</span>
+            <span class="value">{{ officeName }}</span>
+          </div>
+        }
+        <div class="info-row">
+          <span class="label">{{ 'labels.inputs.Code' | translate }}</span>
+          <span class="value">{{ remittanceData.pin }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">{{ 'labels.inputs.Date' | translate }}</span>
+          <span class="value">{{ remittanceData.created | date: 'medium' }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">{{ 'labels.inputs.Payout Amount' | translate }}</span>
+          <span class="value amount">{{
+            remittanceData.receivingAmount | currency: remittanceData.receivingCurrency
+          }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">{{ 'labels.inputs.Sender' | translate }}</span>
+          <span class="value">{{ remittanceData.senderName }}</span>
+        </div>
+      </div>
+    }
+
+    <mat-divider></mat-divider>
+
+    <!-- Recipient info -->
+    <div class="card-section">
+      <h4>{{ 'labels.heading.Recipient' | translate }}</h4>
+      <div class="info-row">
+        <span class="label">{{ 'labels.inputs.Name' | translate }}</span>
+        @if (recipientData?.givenName) {
+          <span class="value">{{ recipientData.givenName }} {{ recipientData.lastName }}</span>
+        } @else {
+          <span class="value">{{ remittanceData?.recipientName }}</span>
+        }
+      </div>
+      @if (recipientData?.primaryDocument?.documentType) {
+        <div class="info-row">
+          <span class="label">{{ 'labels.inputs.Document' | translate }}</span>
+          <span class="value"
+            >{{ recipientData.primaryDocument?.documentType }} -
+            {{ recipientData.primaryDocument?.documentNumber }}</span
+          >
+        </div>
+      }
+    </div>
+
+    @if (payoutAssignment) {
+      <mat-divider></mat-divider>
+
+      <!-- Assignment info -->
+      <div class="card-section">
+        <h4>{{ 'labels.heading.Payout Assignment' | translate }}</h4>
+        <div class="info-row">
+          <span class="label">{{ 'labels.inputs.Status' | translate }}</span>
+          <span class="value">{{ payoutAssignment.status }}</span>
+        </div>
+        @if (payoutAssignment?.trackingNumber) {
+          <div class="info-row">
+            <span class="label">{{ 'labels.inputs.Reference Number' | translate }}</span>
+            <span class="value mono">{{ payoutAssignment.trackingNumber }}</span>
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  @if (errorMessage) {
+    <div class="error-banner">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ errorMessage }}</span>
+    </div>
+  }
+
+  <div class="step-actions">
+    <button mat-raised-button color="warn" (click)="confirmPayout()" [disabled]="isLoading || !vendor">
+      @if (isLoading) {
+        <mat-spinner diameter="20"></mat-spinner>
+      } @else {
+        <span><mat-icon>check_circle</mat-icon> {{ 'labels.buttons.Confirm Payment' | translate }}</span>
+      }
+    </button>
+  </div>
+</div>

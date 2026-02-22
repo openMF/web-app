@@ -102,6 +102,14 @@
   window['env']['mifosInterbankTransfersApiVersion'] = '$MIFOS_INTERBANK_TRANSFERS_API_VERSION';
   window['env']['mifosInterbankTransfersEnabled'] = '$MIFOS_INTERBANK_TRANSFERS_ENABLED';
 
+  // Remittance Module Environment variables
+  window['env']['mifosRemittanceApiUrl'] = '$MIFOS_REMITTANCE_API_URL';
+  window['env']['mifosRemittanceApiProvider'] = '$MIFOS_REMITTANCE_API_PROVIDER';
+  window['env']['mifosRemittanceApiVersion'] = '$MIFOS_REMITTANCE_API_VERSION';
+  window['env']['mifosRemittanceEnabled'] = '$MIFOS_REMITTANCE_ENABLED';
+  window['env']['mifosRemittanceApiHeader'] = '$MIFOS_REMITTANCE_API_HEADER';
+  window['env']['mifosRemittanceApiKey'] = '$MIFOS_REMITTANCE_API_KEY';
+
   // Enable Role-Based Access Control (RBAC) for menu/button permissions
   // Set to 'true' to enable RBAC, 'false' (default) for backward compatibility
   window['env']['productionModeEnableRBAC'] = '$MIFOS_PRODUCTION_MODE_ENABLE_RBAC';

@@ -133,6 +133,19 @@
           <a matLine>{{ 'labels.menus.Individual Collection Sheet' | translate }}</a>
         </mat-list-item>
         <mat-list-item
+          *ngIf="mifosRemittanceEnabled"
+          [routerLink]="['/remittances/process']"
+          [matTooltipPosition]="tooltipPosition"
+          matTooltip="{{ 'tooltips.Process Remittance' | translate }}"
+          routerLinkActive="active-menu"
+          [routerLinkActiveOptions]="{ exact: false }"
+        >
+          <mat-icon matListIcon>
+            <fa-icon icon="money-bill-wave" size="sm"></fa-icon>
+          </mat-icon>
+          <a matLine>{{ 'labels.menus.Remittances' | translate }}</a>
+        </mat-list-item>
+        <mat-list-item
           [routerLink]="['/notifications']"
           [matTooltipPosition]="tooltipPosition"
           matTooltip="{{ 'tooltips.Notifications' | translate }}"

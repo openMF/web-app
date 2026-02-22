@@ -1,0 +1,150 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.step-content {
+  padding: 16px 0;
+
+  h3 {
+    margin: 0 0 8px;
+    font-weight: 500;
+  }
+
+  .description {
+    margin: 0 0 24px;
+    font-size: 14px;
+  }
+}
+
+.entity-type-toggle {
+  margin-bottom: 20px;
+
+  mat-button-toggle-group {
+    border-radius: 8px;
+  }
+
+  mat-icon {
+    margin-right: 4px;
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    vertical-align: middle;
+  }
+}
+
+.table-section {
+  margin-bottom: 24px;
+
+  .profile-table {
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+
+    th.mat-mdc-header-cell {
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    td.mat-mdc-cell {
+      font-size: 14px;
+    }
+
+    .clickable-row {
+      cursor: pointer;
+
+      &:hover {
+        background-color: #fff3f3;
+      }
+    }
+  }
+
+  .empty-table {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 16px;
+    background-color: #fafafa;
+    border: 1px dashed #e0e0e0;
+    border-radius: 8px;
+
+    mat-icon {
+      font-size: 40px;
+      width: 40px;
+      height: 40px;
+      margin-bottom: 8px;
+    }
+
+    p {
+      margin: 0;
+      font-size: 14px;
+    }
+  }
+}
+
+.add-entry-section {
+  margin-bottom: 24px;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+
+  h4 {
+    margin: 0 0 12px;
+    font-weight: 500;
+    font-size: 14px;
+  }
+
+  .entry-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: flex-end;
+
+    mat-form-field {
+      flex: 1 1 180px;
+      min-width: 160px;
+    }
+
+    button {
+      margin-bottom: 3.5em;
+      margin-left: auto;
+      white-space: nowrap;
+    }
+  }
+}
+
+.error-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  margin: 8px 0;
+  background-color: #fdecea;
+  border-radius: 4px;
+  color: #611a15;
+
+  mat-icon {
+    color: #f44336;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.step-actions {
+  margin-top: 16px;
+
+  button {
+    mat-spinner {
+      display: inline-block;
+      margin-right: 8px;
+    }
+  }
+}

@@ -85,6 +85,15 @@ export const environment = {
   mifosInterbankTransfersApiVersion: loadedEnv['mifosInterbankTransfersApiVersion'] || '/v1.0',
   mifosInterbankTransfersEnabled: loadedEnv['mifosInterbankTransfersEnabled'] ?? true,
 
+  /** Remittance Module Integration */
+  mifosRemittanceApiUrl: loadedEnv['mifosRemittanceApiUrl'] || '',
+  mifosRemittanceApiProvider: loadedEnv['mifosRemittanceApiProvider'] || '/remittance-api',
+  mifosRemittanceApiVersion: loadedEnv['mifosRemittanceApiVersion'] || '/v1',
+  mifosRemittanceEnabled:
+    loadedEnv['mifosRemittanceEnabled'] === true || loadedEnv['mifosRemittanceEnabled'] === 'true',
+  mifosRemittanceApiHeader: loadedEnv['mifosRemittanceApiHeader'] || 'X-Gravitee-Api-Key',
+  mifosRemittanceApiKey: loadedEnv['mifosRemittanceApiKey'] || '',
+
   minPasswordLength: loadedEnv['minPasswordLength'] || 12,
 
   /** External National ID System integration */

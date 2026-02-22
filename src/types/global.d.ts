@@ -24,6 +24,11 @@ interface Window {
     mifosInterbankTransfersApiProvider?: string;
     mifosInterbankTransfersApiVersion?: string;
     mifosInterbankTransfersEnabled?: boolean;
+    mifosRemittanceApiUrl?: string;
+    mifosRemittanceApiProvider?: string;
+    mifosRemittanceApiVersion?: string;
+    mifosRemittanceEnabled?: boolean;
+    mifosRemittanceApiKey?: string;
     minPasswordLength?: number;
   };
 }

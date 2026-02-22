@@ -719,6 +719,24 @@ mifosx-notifications-page td {
   color: inherit !important;
 }
 
+// ===== Global Button Icon Alignment =====
+// Handles the span + mat-icon pattern used throughout the application
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-outlined-button {
+  span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    mat-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
 .full-width-flex {
   display: flex;
   justify-content: flex-start;
@@ -852,5 +870,33 @@ mat-card {
         text-align: center;
       }
     }
+  }
+}
+
+/* Print styles — hide app shell, show only receipt content */
+@media print {
+  mat-sidenav,
+  mifosx-toolbar,
+  mifosx-breadcrumb,
+  mifosx-footer,
+  .sidebar-panel,
+  .mat-mdc-tab-header,
+  .mat-stepper-vertical-line,
+  .mat-step-header {
+    display: none !important;
+  }
+
+  mat-sidenav-content.sidenav {
+    margin-left: 0 !important;
+  }
+
+  body,
+  html {
+    background: #fff !important;
+  }
+
+  @page {
+    /* stylelint-disable-next-line unit-allowed-list */
+    margin: 1.5cm;
   }
 }

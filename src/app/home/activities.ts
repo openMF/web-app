@@ -58,6 +58,7 @@ const activities: any[] = [
   { activity: 'audit', path: '/products/audit-trails' },
   { activity: 'create accounting closure', path: '' },
   { activity: 'navigation', path: '/navigation' },
+  { activity: 'remittances', path: '/remittances/process' },
   { activity: '', path: 'home' }
 ];
 
