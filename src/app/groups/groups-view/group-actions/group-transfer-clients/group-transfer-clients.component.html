@@ -20,6 +20,13 @@
                 </mat-option>
               }
             </mat-select>
+            @if (transferClientsForm.controls.clients.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Select Client Members for Transfer' | translate }}
+                {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-checkbox
