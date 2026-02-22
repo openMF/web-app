@@ -12,6 +12,7 @@ import { startWith } from 'rxjs/operators';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { MatCheckbox } from '@angular/material/checkbox';
+import { MatTooltip } from '@angular/material/tooltip';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -21,6 +22,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./fixed-deposit-product-currency-step.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    MatTooltip,
     MatStepperPrevious,
     FaIconComponent,
     MatStepperNext,
