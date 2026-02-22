@@ -560,7 +560,15 @@
       "Is Self Service": "Ni huduma binafsi",
       "Advanced Search": "Utafutaji wa Kina",
       "Show advanced search": "Onyesha utafutaji wa kina",
-      "Hide advanced search": "Ficha utafutaji wa kina"
+      "Hide advanced search": "Ficha utafutaji wa kina",
+      "Assign Payout": "Weka malipo",
+      "Confirm Payment": "Thibitisha malipo",
+      "New Remittance": "Uhawilishaji mpya",
+      "Print Receipt": "Chapisha risiti",
+      "Validate Recipient": "Thibitisha mpokeaji",
+      "View Receipt": "Angalia risiti",
+      "Add Entry": "Ongeza ingizo",
+      "Retry": "Jaribu tena"
     },
     "catalogs": {
       "Interest payment waiver": "Msamaha wa Malipo ya Riba",
@@ -1294,7 +1302,30 @@
       "Contact Information": "Maelezo ya Mawasiliano",
       "Classification": "Uainishaji",
       "Status": "Hali",
-      "Pending Tasks": "Kazi Zinazongoja"
+      "Pending Tasks": "Kazi Zinazongoja",
+      "Assign Payout": "Weka malipo",
+      "Assign to Mifos Client": "Weka kwa mteja wa Mifos",
+      "Beneficiary Details": "Maelezo ya mpokeaji",
+      "Confirm Payment": "Thibitisha malipo",
+      "Confirm Payout": "Thibitisha malipo",
+      "Confirmation Details": "Maelezo ya uthibitisho",
+      "Payment Receipt": "Risiti ya malipo",
+      "Payment Successful": "Malipo yamefanikiwa",
+      "Process Remittance": "Chakata uhawilishaji",
+      "Recipient Details": "Maelezo ya mpokeaji",
+      "Remittance Details": "Maelezo ya uhawilishaji",
+      "Search Beneficiary": "Tafuta mpokeaji",
+      "Search Remittance": "Tafuta uhawilishaji",
+      "Transaction": "Muamala",
+      "Transaction Status": "Hali ya muamala",
+      "Transaction Summary": "Muhtasari wa muamala",
+      "Transactional Profile": "Wasifu wa muamala",
+      "Validated Recipient Information": "Taarifa za mpokeaji zilizothibitishwa",
+      "Recipient": "Mpokeaji",
+      "Payout Assignment": "Ugawaji wa malipo",
+      "Identification": "Utambulisho",
+      "Professional Information": "Taarifa za kitaaluma",
+      "Add Profile Entry": "Ongeza ingizo la wasifu"
     },
     "inputs": {
       "Floating rate": "Kiwango cha Kuelea",
@@ -2678,7 +2709,32 @@
       "Resource id": "Kitambulisho cha rasilimali",
       "To date": "Hadi tarehe",
       "Select action": "Chagua kitendo",
-      "Select entity": "Chagua huluki"
+      "Select entity": "Chagua huluki",
+      "Reference ID is required": "Kitambulisho cha kumbukumbu kinahitajika",
+      "Vendor": "Muuzaji",
+      "Vendor is required": "Muuzaji anahitajika",
+      "Voter ID": "Kitambulisho cha mpiga kura",
+      "National Identity Card Number": "Nambari ya kitambulisho cha taifa",
+      "State": "Jimbo",
+      "Municipality": "Manispaa",
+      "Locality": "Eneo",
+      "New Locality": "Eneo jipya",
+      "Occupation": "Kazi",
+      "Economic Activity": "Shughuli za kiuchumi",
+      "Entity Member": "Mwanachama wa taasisi",
+      "# Remittance": "# Uhawilishaji",
+      "Avg Amount/Transaction": "Wastani wa kiasi/Muamala",
+      "# Senders": "# Watumaji",
+      "Sender Registry": "Daftari la watumaji",
+      "Individual": "Mtu binafsi",
+      "Legal Entity": "Taasisi ya kisheria",
+      "External Reference ID": "Kitambulisho cha kumbukumbu ya nje",
+      "Enter remittance reference number": "Ingiza nambari ya kumbukumbu ya uhawilishaji",
+      "Enter document number": "Ingiza nambari ya hati",
+      "Enter first name (include middle name)": "Ingiza jina la kwanza (pamoja na jina la kati)",
+      "Enter last name": "Ingiza jina la mwisho",
+      "Sender name": "Jina la mtumaji",
+      "Retry": "Jaribu tena"
     },
     "links": {
       "Community": "Jumuiya",
@@ -2814,13 +2870,22 @@
       "Redeem Shares": "Komboa Hisa",
       "Approve Additional Shares": "Idhinisha Hisa za Ziada",
       "Reject Additional Shares": "Kataa Hisa za Ziada",
-      "Tasks": "Kazi"
+      "Tasks": "Kazi",
+      "Remittances": "Uhawilishaji",
+      "Process Remittance": "Chakata uhawilishaji"
     },
     "placeholders": {
       "Add new server": "Ongeza seva mpya",
       "Search Activity": "Shughuli ya Utafutaji",
       "Enter your username": "Ingiza jina lako la mtumiaji",
-      "Enter your password": "Ingiza nenosiri lako"
+      "Enter your password": "Ingiza nenosiri lako",
+      "# Remittance": "# Uhawilishaji",
+      "Enter document number": "Ingiza nambari ya hati",
+      "Enter first name (include middle name)": "Ingiza jina la kwanza (pamoja na jina la kati)",
+      "Enter last name": "Ingiza jina la mwisho",
+      "Enter remittance reference number": "Ingiza nambari ya kumbukumbu ya uhawilishaji",
+      "Sender name": "Jina la mtumaji",
+      "Loading vendors...": "Inapakia wauzaji..."
     },
     "status": {
       "Active": "Inayotumika",
@@ -3548,7 +3613,24 @@
       "To": "Kwa",
       "“Maker-Checker” principle requires every tasks": "Kanuni ya \"Mtengenezaji-Kikagua\" inahitaji kila kazi kukamilishwa na watu wawili ili kupunguza uwezekano wa makosa na matumizi mabaya. Mtu mmoja anaanzisha mchakato na wa pili anakamilisha.",
       "Buy Down Fees": "Ada za Ununuzi",
-      "UploadDocumentHint": "Pakia PDF au picha ili kutoa hakikisho."
+      "UploadDocumentHint": "Pakia PDF au picha ili kutoa hakikisho.",
+      "This remittance has a terminal status and cannot be processed further.": "Uhawilishaji huu una hali ya mwisho na hauwezi kuchakatwa zaidi.",
+      "This remittance has already been paid successfully.": "Uhawilishaji huu tayari umelipwa kwa mafanikio.",
+      "Review the transaction and recipient details below, then assign the payout.": "Pitia maelezo ya muamala na mpokeaji hapa chini, kisha uweke malipo.",
+      "Please review the details carefully before confirming the payment.": "Tafadhali angalia maelezo kwa makini kabla ya kuthibitisha malipo.",
+      "Register the transactional profile for the beneficiary. Add entries for individuals or legal entities.": "Sajili wasifu wa muamala wa mpokeaji. Ongeza maingizo kwa watu binafsi au taasisi za kisheria.",
+      "No transactional profile entries yet. Add one below.": "Bado hakuna maingizo ya wasifu wa muamala. Ongeza moja hapa chini.",
+      "Click to remove": "Bofya kuondoa",
+      "Recipient is not valid for this transaction. Please check the details.": "Mpokeaji si halali kwa muamala huu. Tafadhali angalia maelezo.",
+      "Recipient validation failed. Please check the document details and try again.": "Uthibitishaji wa mpokeaji umeshindwa. Angalia maelezo ya hati na ujaribu tena.",
+      "Missing required information. Please try again.": "Taarifa zinazohitajika hazipo. Tafadhali jaribu tena.",
+      "Failed to confirm payment. Please try again or contact support.": "Imeshindwa kuthibitisha malipo. Jaribu tena au wasiliana na msaada.",
+      "Failed to assign payout. Please try again.": "Imeshindwa kuweka malipo. Tafadhali jaribu tena.",
+      "Remittance not found. Please check the reference number and try again.": "Uhawilishaji haujapatikana. Angalia nambari ya kumbukumbu na ujaribu tena.",
+      "Unable to load vendors. Please check your connection and try again.": "Haiwezi kupakia wauzaji. Angalia muunganisho wako na ujaribu tena.",
+      "Search and assign this beneficiary to an existing Mifos client account": "Tafuta na uweke mpokeaji huyu kwenye akaunti ya mteja wa Mifos iliyopo",
+      "Failed to search clients. Please try again.": "Imeshindwa kutafuta wateja. Tafadhali jaribu tena.",
+      "Process Remittance": "Chakata uhawilishaji"
     },
     "auditTrail": {
       "actions": {
@@ -3846,7 +3928,8 @@
     "Create Interest Refund": "Unda Marejesho ya Riba",
     "ACTIVE": "INAYOENDELEA",
     "PENDING": "INAKARIBISHWA",
-    "INACTIVE": "HAITUMIKI"
+    "INACTIVE": "HAITUMIKI",
+    "Process Remittance": "Chakata uhawilishaji"
   },
   "countries": {
     "AF": "Afghanistani",

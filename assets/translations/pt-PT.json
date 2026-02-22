@@ -560,7 +560,15 @@
       "Is Self Service": "É autoatendimento",
       "Advanced Search": "Pesquisa avançada",
       "Show advanced search": "Mostrar pesquisa avançada",
-      "Hide advanced search": "Ocultar pesquisa avançada"
+      "Hide advanced search": "Ocultar pesquisa avançada",
+      "Assign Payout": "Atribuir pagamento",
+      "Confirm Payment": "Confirmar pagamento",
+      "New Remittance": "Nova remessa",
+      "Print Receipt": "Imprimir recibo",
+      "Validate Recipient": "Validar destinatário",
+      "View Receipt": "Ver recibo",
+      "Add Entry": "Adicionar entrada",
+      "Retry": "Tentar novamente"
     },
     "catalogs": {
       "Interest payment waiver": "Isenção de pagamento de juros",
@@ -1296,7 +1304,30 @@
       "Contact Information": "Informações de Contato",
       "Classification": "Classificação",
       "Status": "Status",
-      "Pending Tasks": "Tarefas Pendentes"
+      "Pending Tasks": "Tarefas Pendentes",
+      "Assign Payout": "Atribuir pagamento",
+      "Assign to Mifos Client": "Atribuir ao cliente Mifos",
+      "Beneficiary Details": "Detalhes do beneficiário",
+      "Confirm Payment": "Confirmar pagamento",
+      "Confirm Payout": "Confirmar desembolso",
+      "Confirmation Details": "Detalhes de confirmação",
+      "Payment Receipt": "Recibo de pagamento",
+      "Payment Successful": "Pagamento bem-sucedido",
+      "Process Remittance": "Processar remessa",
+      "Recipient Details": "Detalhes do destinatário",
+      "Remittance Details": "Detalhes da remessa",
+      "Search Beneficiary": "Pesquisar beneficiário",
+      "Search Remittance": "Pesquisar remessa",
+      "Transaction": "Transação",
+      "Transaction Status": "Estado da transação",
+      "Transaction Summary": "Resumo da transação",
+      "Transactional Profile": "Perfil transacional",
+      "Validated Recipient Information": "Informações do destinatário validadas",
+      "Recipient": "Destinatário",
+      "Payout Assignment": "Atribuição de pagamento",
+      "Identification": "Identificação",
+      "Professional Information": "Informações profissionais",
+      "Add Profile Entry": "Adicionar entrada de perfil"
     },
     "inputs": {
       "Floating rate": "Taxa flutuante",
@@ -2680,7 +2711,32 @@
       "Resource id": "ID do recurso",
       "To date": "Data de fim",
       "Select action": "Selecionar ação",
-      "Select entity": "Selecionar entidade"
+      "Select entity": "Selecionar entidade",
+      "Reference ID is required": "O ID de referência é obrigatório",
+      "Vendor": "Fornecedor",
+      "Vendor is required": "O fornecedor é obrigatório",
+      "Voter ID": "Cartão de eleitor",
+      "National Identity Card Number": "Número do bilhete de identidade",
+      "State": "Estado",
+      "Municipality": "Município",
+      "Locality": "Localidade",
+      "New Locality": "Nova localidade",
+      "Occupation": "Profissão",
+      "Economic Activity": "Atividade económica",
+      "Entity Member": "Membro da entidade",
+      "# Remittance": "# Remessa",
+      "Avg Amount/Transaction": "Valor médio/Transação",
+      "# Senders": "# Remetentes",
+      "Sender Registry": "Registo de remetentes",
+      "Individual": "Individual",
+      "Legal Entity": "Pessoa coletiva",
+      "External Reference ID": "ID de referência externa",
+      "Enter remittance reference number": "Introduza o número de referência da remessa",
+      "Enter document number": "Introduza o número do documento",
+      "Enter first name (include middle name)": "Introduza o primeiro nome (incluindo nome do meio)",
+      "Enter last name": "Introduza o apelido",
+      "Sender name": "Nome do remetente",
+      "Retry": "Tentar novamente"
     },
     "links": {
       "Community": "Comunidade",
@@ -2816,13 +2872,22 @@
       "Redeem Shares": "Resgatar Ações",
       "Approve Additional Shares": "Aprovar ações adicionais",
       "Reject Additional Shares": "Rejeitar compartilhamentos adicionais",
-      "Tasks": "Tarefas"
+      "Tasks": "Tarefas",
+      "Remittances": "Remessas",
+      "Process Remittance": "Processar remessa"
     },
     "placeholders": {
       "Add new server": "Adicionar novo servidor",
       "Search Activity": "Atividade de pesquisa",
       "Enter your username": "Digite seu nome de usuário",
-      "Enter your password": "Digite sua senha"
+      "Enter your password": "Introduza a sua palavra-passe",
+      "# Remittance": "# Remessa",
+      "Enter document number": "Introduza o número do documento",
+      "Enter first name (include middle name)": "Introduza o primeiro nome (incluindo nome do meio)",
+      "Enter last name": "Introduza o apelido",
+      "Enter remittance reference number": "Introduza o número de referência da remessa",
+      "Sender name": "Nome do remetente",
+      "Loading vendors...": "A carregar fornecedores..."
     },
     "status": {
       "Active": "Ativo",
@@ -3550,7 +3615,24 @@
       "To": "Para",
       "“Maker-Checker” principle requires every tasks": "O princípio “Maker-Checker” exige que todas as tarefas sejam concluídas por duas pessoas para reduzir a chance de erros e uso indevido. Uma pessoa inicia o processo e a segunda o conclui.",
       "Buy Down Fees": "Taxas de compra",
-      "UploadDocumentHint": "Carregue um PDF ou imagem para gerar uma pré-visualização."
+      "UploadDocumentHint": "Carregue um PDF ou imagem para gerar uma pré-visualização.",
+      "This remittance has a terminal status and cannot be processed further.": "Esta remessa tem um estado final e não pode ser processada.",
+      "This remittance has already been paid successfully.": "Esta remessa já foi paga com sucesso.",
+      "Review the transaction and recipient details below, then assign the payout.": "Reveja os detalhes da transação e do destinatário abaixo e depois atribua o pagamento.",
+      "Please review the details carefully before confirming the payment.": "Reveja cuidadosamente os detalhes antes de confirmar o pagamento.",
+      "Register the transactional profile for the beneficiary. Add entries for individuals or legal entities.": "Registe o perfil transacional do beneficiário. Adicione entradas para indivíduos ou pessoas coletivas.",
+      "No transactional profile entries yet. Add one below.": "Ainda não existem entradas de perfil transacional. Adicione uma abaixo.",
+      "Click to remove": "Clique para remover",
+      "Recipient is not valid for this transaction. Please check the details.": "O destinatário não é válido para esta transação. Verifique os detalhes.",
+      "Recipient validation failed. Please check the document details and try again.": "A validação do destinatário falhou. Verifique os detalhes do documento e tente novamente.",
+      "Missing required information. Please try again.": "Informações obrigatórias em falta. Tente novamente.",
+      "Failed to confirm payment. Please try again or contact support.": "Falha ao confirmar o pagamento. Tente novamente ou contacte o suporte.",
+      "Failed to assign payout. Please try again.": "Falha ao atribuir o pagamento. Tente novamente.",
+      "Remittance not found. Please check the reference number and try again.": "Remessa não encontrada. Verifique o número de referência e tente novamente.",
+      "Unable to load vendors. Please check your connection and try again.": "Não foi possível carregar os fornecedores. Verifique a ligação e tente novamente.",
+      "Search and assign this beneficiary to an existing Mifos client account": "Pesquise e atribua este beneficiário a uma conta de cliente Mifos existente",
+      "Failed to search clients. Please try again.": "Falha ao pesquisar clientes. Tente novamente.",
+      "Process Remittance": "Processar remessa"
     },
     "auditTrail": {
       "actions": {
@@ -3848,7 +3930,8 @@
     "Create Interest Refund": "Criar reembolso de juros",
     "ACTIVE": "ATIVO",
     "PENDING": "PENDENTE",
-    "INACTIVE": "INATIVO"
+    "INACTIVE": "INATIVO",
+    "Process Remittance": "Processar remessa"
   },
   "countries": {
     "AF": "Afeganistão",

@@ -2823,6 +2823,7 @@
       "Recovery Payment": "Pago de recuperación",
       "Reject": "Rechazar",
       "Reports": "Reportes",
+      "Remittances": "Remesas",
       "Reschedule": "Reprogramar",
       "Savings": "Ahorros",
       "Self Service": "Autoservicio",
@@ -3630,7 +3631,8 @@
       "To": "a",
       "“Maker-Checker” principle requires every tasks": "El principio \"Maker-Checker\" requiere que dos personas completen cada tarea para reducir la posibilidad de errores y uso indebido. Una persona inicia el proceso y la segunda lo completa.",
       "Buy Down Fees": "Tarifas de compra",
-      "UploadDocumentHint": "Sube un PDF o imagen para generar una vista previa."
+      "UploadDocumentHint": "Suba un PDF o imagen para generar una vista previa.",
+      "Process Remittance": "Procesar Remesa"
     },
     "auditTrail": {
       "actions": {
@@ -3740,6 +3742,7 @@
     "Add": "Agregar",
     "Add Filters": "Agregar filtros",
     "Print Loan Application": "Imprimir solicitud de crédito",
+    "Process Remittance": "Procesar Remesa",
     "Adjust Charge": "Ajustar Comisión",
     "After the minimum deposit term has passed": "Una vez transcurrido el plazo mínimo de depósito, se pueden especificar duraciones de depósito adicionales.",
     "Allocate Cash": "Asignar efectivo",

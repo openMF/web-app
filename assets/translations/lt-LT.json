@@ -560,7 +560,15 @@
       "Is Self Service": "Savitarna",
       "Advanced Search": "Išplėstinė paieška",
       "Show advanced search": "Rodyti išplėstinę paiešką",
-      "Hide advanced search": "Slėpti išplėstinę paiešką"
+      "Hide advanced search": "Slėpti išplėstinę paiešką",
+      "Assign Payout": "Priskirti išmoką",
+      "Confirm Payment": "Patvirtinti mokėjimą",
+      "New Remittance": "Naujas pervedimas",
+      "Print Receipt": "Spausdinti kvitą",
+      "Validate Recipient": "Patvirtinti gavėją",
+      "View Receipt": "Peržiūrėti kvitą",
+      "Add Entry": "Pridėti įrašą",
+      "Retry": "Bandyti dar kartą"
     },
     "catalogs": {
       "Interest payment waiver": "Palūkanų mokėjimo atsisakymas",
@@ -1295,7 +1303,30 @@
       "Contact Information": "Kontaktinė informacija",
       "Classification": "Klasifikacija",
       "Status": "Statusas",
-      "Pending Tasks": "Laukiamos užduotys"
+      "Pending Tasks": "Laukiamos užduotys",
+      "Assign Payout": "Priskirti išmoką",
+      "Assign to Mifos Client": "Priskirti Mifos klientui",
+      "Beneficiary Details": "Gavėjo informacija",
+      "Confirm Payment": "Patvirtinti mokėjimą",
+      "Confirm Payout": "Patvirtinti išmoką",
+      "Confirmation Details": "Patvirtinimo informacija",
+      "Payment Receipt": "Mokėjimo kvitas",
+      "Payment Successful": "Mokėjimas sėkmingas",
+      "Process Remittance": "Apdoroti pervedimą",
+      "Recipient Details": "Gavėjo informacija",
+      "Remittance Details": "Pervedimo informacija",
+      "Search Beneficiary": "Ieškoti gavėjo",
+      "Search Remittance": "Ieškoti pervedimo",
+      "Transaction": "Sandoris",
+      "Transaction Status": "Sandorio būsena",
+      "Transaction Summary": "Sandorio suvestinė",
+      "Transactional Profile": "Sandorio profilis",
+      "Validated Recipient Information": "Patvirtinta gavėjo informacija",
+      "Recipient": "Gavėjas",
+      "Payout Assignment": "Išmokos priskyrimas",
+      "Identification": "Identifikacija",
+      "Professional Information": "Profesinė informacija",
+      "Add Profile Entry": "Pridėti profilio įrašą"
     },
     "inputs": {
       "Floating rate": "Slankioji norma",
@@ -2681,7 +2712,32 @@
       "Resource id": "Resurso identifikatorius",
       "To date": "Iki datos",
       "Select action": "Pasirinkite veiksmą",
-      "Select entity": "Pasirinkite objektą"
+      "Select entity": "Pasirinkite objektą",
+      "Reference ID is required": "Nuorodos ID yra privalomas",
+      "Vendor": "Tiekėjas",
+      "Vendor is required": "Tiekėjas yra privalomas",
+      "Voter ID": "Rinkėjo ID",
+      "National Identity Card Number": "Asmens tapatybės kortelės numeris",
+      "State": "Valstija",
+      "Municipality": "Savivaldybė",
+      "Locality": "Vietovė",
+      "New Locality": "Nauja vietovė",
+      "Occupation": "Profesija",
+      "Economic Activity": "Ekonominė veikla",
+      "Entity Member": "Subjekto narys",
+      "# Remittance": "# Pervedimas",
+      "Avg Amount/Transaction": "Vid. suma/Sandoris",
+      "# Senders": "# Siuntėjai",
+      "Sender Registry": "Siuntėjų registras",
+      "Individual": "Fizinis asmuo",
+      "Legal Entity": "Juridinis asmuo",
+      "External Reference ID": "Išorinis nuorodos ID",
+      "Enter remittance reference number": "Įveskite pervedimo nuorodos numerį",
+      "Enter document number": "Įveskite dokumento numerį",
+      "Enter first name (include middle name)": "Įveskite vardą (įskaitant antrą vardą)",
+      "Enter last name": "Įveskite pavardę",
+      "Sender name": "Siuntėjo vardas",
+      "Retry": "Bandyti dar kartą"
     },
     "links": {
       "Community": "bendruomenė",
@@ -2817,13 +2873,22 @@
       "Redeem Shares": "Išpirkti akcijas",
       "Approve Additional Shares": "Patvirtinti papildomas akcijas",
       "Reject Additional Shares": "Atmesti papildomas akcijas",
-      "Tasks": "Užduotys"
+      "Tasks": "Užduotys",
+      "Remittances": "Pervedimai",
+      "Process Remittance": "Apdoroti pervedimą"
     },
     "placeholders": {
       "Add new server": "Pridėti naują serverį",
       "Search Activity": "Paieškos veikla",
       "Enter your username": "Įveskite savo vartotojo vardą",
-      "Enter your password": "Įveskite slaptažodį"
+      "Enter your password": "Įveskite slaptažodį",
+      "# Remittance": "# Pervedimas",
+      "Enter document number": "Įveskite dokumento numerį",
+      "Enter first name (include middle name)": "Įveskite vardą (įskaitant antrą vardą)",
+      "Enter last name": "Įveskite pavardę",
+      "Enter remittance reference number": "Įveskite pervedimo nuorodos numerį",
+      "Sender name": "Siuntėjo vardas",
+      "Loading vendors...": "Kraunami tiekėjai..."
     },
     "status": {
       "Active": "Aktyvus",
@@ -3551,7 +3616,24 @@
       "To": "Kam",
       "“Maker-Checker” principle requires every tasks": "„Maker-Checker“ principas reikalauja, kad kiekvieną užduotį atliktų du žmonės, kad būtų sumažinta klaidų ir netinkamo naudojimo galimybė. Vienas asmuo pradeda procesą, o antrasis jį užbaigia.",
       "Buy Down Fees": "Išpirkimo mokesčiai",
-      "UploadDocumentHint": "Įkelkite PDF arba vaizdą, kad sugeneruotumėte peržiūrą."
+      "UploadDocumentHint": "Įkelkite PDF arba vaizdą, kad sugeneruotumėte peržiūrą.",
+      "This remittance has a terminal status and cannot be processed further.": "Šis pervedimas turi galutinę būseną ir negali būti toliau apdorotas.",
+      "This remittance has already been paid successfully.": "Šis pervedimas jau buvo sėkmingai apmokėtas.",
+      "Review the transaction and recipient details below, then assign the payout.": "Peržiūrėkite sandorio ir gavėjo informaciją žemiau, tada priskirkite išmoką.",
+      "Please review the details carefully before confirming the payment.": "Prieš patvirtindami mokėjimą, atidžiai peržiūrėkite informaciją.",
+      "Register the transactional profile for the beneficiary. Add entries for individuals or legal entities.": "Užregistruokite gavėjo sandorio profilį. Pridėkite įrašus fiziniams arba juridiniams asmenims.",
+      "No transactional profile entries yet. Add one below.": "Dar nėra sandorio profilio įrašų. Pridėkite žemiau.",
+      "Click to remove": "Spustelėkite, kad pašalintumėte",
+      "Recipient is not valid for this transaction. Please check the details.": "Gavėjas netinkamas šiam sandoriui. Patikrinkite informaciją.",
+      "Recipient validation failed. Please check the document details and try again.": "Gavėjo patvirtinimas nepavyko. Patikrinkite dokumento duomenis ir bandykite dar kartą.",
+      "Missing required information. Please try again.": "Trūksta privalomos informacijos. Bandykite dar kartą.",
+      "Failed to confirm payment. Please try again or contact support.": "Nepavyko patvirtinti mokėjimo. Bandykite dar kartą arba susisiekite su palaikymu.",
+      "Failed to assign payout. Please try again.": "Nepavyko priskirti išmokos. Bandykite dar kartą.",
+      "Remittance not found. Please check the reference number and try again.": "Pervedimas nerastas. Patikrinkite nuorodos numerį ir bandykite dar kartą.",
+      "Unable to load vendors. Please check your connection and try again.": "Nepavyko įkelti tiekėjų. Patikrinkite ryšį ir bandykite dar kartą.",
+      "Search and assign this beneficiary to an existing Mifos client account": "Ieškokite ir priskirkite šį gavėją esamai Mifos kliento paskyrai",
+      "Failed to search clients. Please try again.": "Nepavyko ieškoti klientų. Bandykite dar kartą.",
+      "Process Remittance": "Apdoroti pervedimą"
     },
     "auditTrail": {
       "actions": {
@@ -3849,7 +3931,8 @@
     "Create Interest Refund": "Sukurti palūkanų grąžinimą",
     "ACTIVE": "AKTYVUS",
     "PENDING": "LAUKIAMA",
-    "INACTIVE": "NEAKTYVUS"
+    "INACTIVE": "NEAKTYVUS",
+    "Process Remittance": "Apdoroti pervedimą"
   },
   "countries": {
     "AF": "Afganistanas",

@@ -560,7 +560,15 @@
       "Is Self Service": "Ir pašapkalpošanās",
       "Advanced Search": "Advanced Search",
       "Show advanced search": "Rādīt paplašinātu meklēšanu",
-      "Hide advanced search": "Paslēpt paplašinātu meklēšanu"
+      "Hide advanced search": "Paslēpt paplašinātu meklēšanu",
+      "Assign Payout": "Piešķirt izmaksu",
+      "Confirm Payment": "Apstiprināt maksājumu",
+      "New Remittance": "Jauns pārvedums",
+      "Print Receipt": "Drukāt kvīti",
+      "Validate Recipient": "Pārbaudīt saņēmēju",
+      "View Receipt": "Skatīt kvīti",
+      "Add Entry": "Pievienot ierakstu",
+      "Retry": "Mēģināt vēlreiz"
     },
     "catalogs": {
       "Interest payment waiver": "Atteikšanās no procentu maksājumiem",
@@ -1297,7 +1305,30 @@
       "Contact Information": "Kontaktinformācija",
       "Classification": "Klasifikācija",
       "Status": "Statuss",
-      "Pending Tasks": "Pending Tasks"
+      "Pending Tasks": "Nepabeigti uzdevumi",
+      "Assign Payout": "Piešķirt izmaksu",
+      "Assign to Mifos Client": "Piešķirt Mifos klientam",
+      "Beneficiary Details": "Saņēmēja detaļas",
+      "Confirm Payment": "Apstiprināt maksājumu",
+      "Confirm Payout": "Apstiprināt izmaksu",
+      "Confirmation Details": "Apstiprinājuma detaļas",
+      "Payment Receipt": "Maksājuma kvīts",
+      "Payment Successful": "Maksājums veiksmīgs",
+      "Process Remittance": "Apstrādāt pārvedumu",
+      "Recipient Details": "Saņēmēja detaļas",
+      "Remittance Details": "Pārveduma detaļas",
+      "Search Beneficiary": "Meklēt saņēmēju",
+      "Search Remittance": "Meklēt pārvedumu",
+      "Transaction": "Darījums",
+      "Transaction Status": "Darījuma statuss",
+      "Transaction Summary": "Darījuma kopsavilkums",
+      "Transactional Profile": "Darījuma profils",
+      "Validated Recipient Information": "Pārbaudīta saņēmēja informācija",
+      "Recipient": "Saņēmējs",
+      "Payout Assignment": "Izmaksas piešķiršana",
+      "Identification": "Identifikācija",
+      "Professional Information": "Profesionālā informācija",
+      "Add Profile Entry": "Pievienot profila ierakstu"
     },
     "inputs": {
       "Floating rate": "Mainīgā likme",
@@ -2681,7 +2712,32 @@
       "Resource id": "Resource id",
       "To date": "To date",
       "Select action": "Izvēlēties darbību",
-      "Select entity": "Izvēlēties vienību"
+      "Select entity": "Izvēlēties vienību",
+      "Reference ID is required": "Atsauces ID ir obligāts",
+      "Vendor": "Pakalpojumu sniedzējs",
+      "Vendor is required": "Pakalpojumu sniedzējs ir obligāts",
+      "Voter ID": "Vēlētāja ID",
+      "National Identity Card Number": "Personas apliecības numurs",
+      "State": "Valsts",
+      "Municipality": "Pašvaldība",
+      "Locality": "Apdzīvota vieta",
+      "New Locality": "Jauna apdzīvota vieta",
+      "Occupation": "Nodarbošanās",
+      "Economic Activity": "Saimnieciskā darbība",
+      "Entity Member": "Vienības dalībnieks",
+      "# Remittance": "# Pārvedums",
+      "Avg Amount/Transaction": "Vid. summa/Darījums",
+      "# Senders": "# Sūtītāji",
+      "Sender Registry": "Sūtītāju reģistrs",
+      "Individual": "Fiziska persona",
+      "Legal Entity": "Juridiska persona",
+      "External Reference ID": "Ārējais atsauces ID",
+      "Enter remittance reference number": "Ievadiet pārveduma atsauces numuru",
+      "Enter document number": "Ievadiet dokumenta numuru",
+      "Enter first name (include middle name)": "Ievadiet vārdu (ieskaitot otro vārdu)",
+      "Enter last name": "Ievadiet uzvārdu",
+      "Sender name": "Sūtītāja vārds",
+      "Retry": "Mēģināt vēlreiz"
     },
     "links": {
       "Community": "kopiena",
@@ -2817,13 +2873,22 @@
       "Redeem Shares": "Izpirkt Akcijas",
       "Approve Additional Shares": "Apstipriniet papildu akcijas",
       "Reject Additional Shares": "Noraidīt papildu akcijas",
-      "Tasks": "Tasks"
+      "Tasks": "Uzdevumi",
+      "Remittances": "Pārvedumi",
+      "Process Remittance": "Apstrādāt pārvedumu"
     },
     "placeholders": {
       "Add new server": "Pievienot jaunu serveri",
       "Search Activity": "Meklēšanas darbība",
       "Enter your username": "Ievadiet savu lietotājvārdu",
-      "Enter your password": "Ievadiet savu paroli"
+      "Enter your password": "Ievadiet savu paroli",
+      "# Remittance": "# Pārvedums",
+      "Enter document number": "Ievadiet dokumenta numuru",
+      "Enter first name (include middle name)": "Ievadiet vārdu (ieskaitot otro vārdu)",
+      "Enter last name": "Ievadiet uzvārdu",
+      "Enter remittance reference number": "Ievadiet pārveduma atsauces numuru",
+      "Sender name": "Sūtītāja vārds",
+      "Loading vendors...": "Ielādē pakalpojumu sniedzējus..."
     },
     "status": {
       "Active": "Aktīvs",
@@ -3551,7 +3616,24 @@
       "To": "Līdz",
       "“Maker-Checker” principle requires every tasks": "“Maker-Checker” princips paredz, ka katrs uzdevums ir jāveic diviem cilvēkiem, lai samazinātu kļūdu un nepareizas lietošanas iespējamību. Viens cilvēks uzsāk procesu, bet otrs to pabeidz.",
       "Buy Down Fees": "Izpirkšanas maksas",
-      "UploadDocumentHint": "Augšupielādējiet PDF vai attēlu, lai izveidotu priekšskatījumu."
+      "UploadDocumentHint": "Augšupielādējiet PDF vai attēlu, lai izveidotu priekšskatījumu.",
+      "This remittance has a terminal status and cannot be processed further.": "Šim pārvedumam ir galīgs statuss, un to nevar tālāk apstrādāt.",
+      "This remittance has already been paid successfully.": "Šis pārvedums jau ir veiksmīgi apmaksāts.",
+      "Review the transaction and recipient details below, then assign the payout.": "Pārskatiet darījuma un saņēmēja detaļas zemāk, pēc tam piešķiriet izmaksu.",
+      "Please review the details carefully before confirming the payment.": "Lūdzu, rūpīgi pārskatiet detaļas pirms maksājuma apstiprināšanas.",
+      "Register the transactional profile for the beneficiary. Add entries for individuals or legal entities.": "Reģistrējiet saņēmēja darījumu profilu. Pievienojiet ierakstus fiziskām vai juridiskām personām.",
+      "No transactional profile entries yet. Add one below.": "Vēl nav darījumu profila ierakstu. Pievienojiet vienu zemāk.",
+      "Click to remove": "Noklikšķiniet, lai noņemtu",
+      "Recipient is not valid for this transaction. Please check the details.": "Saņēmējs nav derīgs šim darījumam. Lūdzu, pārbaudiet detaļas.",
+      "Recipient validation failed. Please check the document details and try again.": "Saņēmēja pārbaude neizdevās. Pārbaudiet dokumenta detaļas un mēģiniet vēlreiz.",
+      "Missing required information. Please try again.": "Trūkst obligātās informācijas. Lūdzu, mēģiniet vēlreiz.",
+      "Failed to confirm payment. Please try again or contact support.": "Neizdevās apstiprināt maksājumu. Mēģiniet vēlreiz vai sazinieties ar atbalstu.",
+      "Failed to assign payout. Please try again.": "Neizdevās piešķirt izmaksu. Lūdzu, mēģiniet vēlreiz.",
+      "Remittance not found. Please check the reference number and try again.": "Pārvedums nav atrasts. Pārbaudiet atsauces numuru un mēģiniet vēlreiz.",
+      "Unable to load vendors. Please check your connection and try again.": "Nevar ielādēt pakalpojumu sniedzējus. Pārbaudiet savienojumu un mēģiniet vēlreiz.",
+      "Search and assign this beneficiary to an existing Mifos client account": "Meklējiet un piešķiriet šo saņēmēju esošam Mifos klienta kontam",
+      "Failed to search clients. Please try again.": "Neizdevās meklēt klientus. Lūdzu, mēģiniet vēlreiz.",
+      "Process Remittance": "Apstrādāt pārvedumu"
     },
     "auditTrail": {
       "actions": {
@@ -3849,7 +3931,8 @@
     "Create Interest Refund": "Izveidot procentu atmaksu",
     "ACTIVE": "AKTĪVS",
     "PENDING": "NEAPSTRĀDĀTS",
-    "INACTIVE": "NEAKTIVS"
+    "INACTIVE": "NEAKTIVS",
+    "Process Remittance": "Apstrādāt pārvedumu"
   },
   "countries": {
     "AF": "Afganistāna",

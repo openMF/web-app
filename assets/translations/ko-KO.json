@@ -560,7 +560,15 @@
       "Is Self Service": "셀프 서비스입니다",
       "Advanced Search": "고급 검색",
       "Show advanced search": "고급 검색 표시",
-      "Hide advanced search": "고급 검색 숨기기"
+      "Hide advanced search": "고급 검색 숨기기",
+      "Assign Payout": "지급 배정",
+      "Confirm Payment": "결제 확인",
+      "New Remittance": "새 송금",
+      "Print Receipt": "영수증 인쇄",
+      "Validate Recipient": "수취인 확인",
+      "View Receipt": "영수증 보기",
+      "Add Entry": "항목 추가",
+      "Retry": "재시도"
     },
     "catalogs": {
       "Interest payment waiver": "이자 지급 면제",
@@ -1298,7 +1306,30 @@
       "Contact Information": "연락처 정보",
       "Classification": "분류",
       "Status": "상태",
-      "Pending Tasks": "보류 중인 작업"
+      "Pending Tasks": "보류 중인 작업",
+      "Assign Payout": "지급 배정",
+      "Assign to Mifos Client": "Mifos 고객에게 배정",
+      "Beneficiary Details": "수취인 상세정보",
+      "Confirm Payment": "결제 확인",
+      "Confirm Payout": "지급 확인",
+      "Confirmation Details": "확인 상세정보",
+      "Payment Receipt": "결제 영수증",
+      "Payment Successful": "결제 완료",
+      "Process Remittance": "송금 처리",
+      "Recipient Details": "수신자 상세정보",
+      "Remittance Details": "송금 상세정보",
+      "Search Beneficiary": "수취인 검색",
+      "Search Remittance": "송금 검색",
+      "Transaction": "거래",
+      "Transaction Status": "거래 상태",
+      "Transaction Summary": "거래 요약",
+      "Transactional Profile": "거래 프로필",
+      "Validated Recipient Information": "확인된 수취인 정보",
+      "Recipient": "수취인",
+      "Payout Assignment": "지급 배정 정보",
+      "Identification": "신원 확인",
+      "Professional Information": "직업 정보",
+      "Add Profile Entry": "프로필 항목 추가"
     },
     "inputs": {
       "Floating rate": "변동 금리",
@@ -2682,7 +2713,32 @@
       "Resource id": "리소스 ID",
       "To date": "종료일",
       "Select action": "작업 선택",
-      "Select entity": "엔티티 선택"
+      "Select entity": "엔티티 선택",
+      "Reference ID is required": "참조 ID는 필수입니다",
+      "Vendor": "제공업체",
+      "Vendor is required": "제공업체는 필수입니다",
+      "Voter ID": "선거인 ID",
+      "National Identity Card Number": "주민등록번호",
+      "State": "도/주",
+      "Municipality": "시/군/구",
+      "Locality": "지역",
+      "New Locality": "새 지역",
+      "Occupation": "직업",
+      "Economic Activity": "경제 활동",
+      "Entity Member": "법인 구성원",
+      "# Remittance": "# 송금",
+      "Avg Amount/Transaction": "평균 금액/거래",
+      "# Senders": "# 송금인",
+      "Sender Registry": "송금인 등록부",
+      "Individual": "개인",
+      "Legal Entity": "법인",
+      "External Reference ID": "외부 참조 ID",
+      "Enter remittance reference number": "송금 참조 번호를 입력하세요",
+      "Enter document number": "문서 번호를 입력하세요",
+      "Enter first name (include middle name)": "이름을 입력하세요 (중간 이름 포함)",
+      "Enter last name": "성을 입력하세요",
+      "Sender name": "송금인 이름",
+      "Retry": "재시도"
     },
     "links": {
       "Community": "지역 사회",
@@ -2817,13 +2873,22 @@
       "Redeem Shares": "주식 상환",
       "Approve Additional Shares": "추가 공유 승인",
       "Reject Additional Shares": "추가 공유 거부",
-      "Tasks": "작업"
+      "Tasks": "작업",
+      "Remittances": "송금",
+      "Process Remittance": "송금 처리"
     },
     "placeholders": {
       "Add new server": "새 서버 추가",
       "Search Activity": "검색 활동",
       "Enter your username": "사용자 이름을 입력하세요",
-      "Enter your password": "비밀번호를 입력하세요"
+      "Enter your password": "비밀번호를 입력하세요",
+      "# Remittance": "# 송금",
+      "Enter document number": "문서 번호를 입력하세요",
+      "Enter first name (include middle name)": "이름을 입력하세요 (중간 이름 포함)",
+      "Enter last name": "성을 입력하세요",
+      "Enter remittance reference number": "송금 참조 번호를 입력하세요",
+      "Sender name": "송금인 이름",
+      "Loading vendors...": "제공업체 로딩 중..."
     },
     "status": {
       "Active": "활동적인",
@@ -3551,7 +3616,24 @@
       "To": "에게",
       "“Maker-Checker” principle requires every tasks": "\"Maker-Checker\" 원칙은 오류와 오용 가능성을 줄이기 위해 모든 작업을 두 사람이 완료하도록 요구합니다. 한 사람이 프로세스를 시작하고 두 번째 사람이 프로세스를 완료합니다.",
       "Buy Down Fees": "매입 수수료",
-      "UploadDocumentHint": "미리보기를 생성하려면 PDF 또는 이미지를 업로드하세요."
+      "UploadDocumentHint": "미리보기를 생성하려면 PDF 또는 이미지를 업로드하세요.",
+      "This remittance has a terminal status and cannot be processed further.": "이 송금은 최종 상태이며 더 이상 처리할 수 없습니다.",
+      "This remittance has already been paid successfully.": "이 송금은 이미 성공적으로 지급되었습니다.",
+      "Review the transaction and recipient details below, then assign the payout.": "아래의 거래 및 수취인 세부정보를 확인한 후 지급을 배정하세요.",
+      "Please review the details carefully before confirming the payment.": "결제를 확인하기 전에 세부정보를 꼼꼼히 확인하세요.",
+      "Register the transactional profile for the beneficiary. Add entries for individuals or legal entities.": "수취인의 거래 프로필을 등록하세요. 개인 또는 법인에 대한 항목을 추가하세요.",
+      "No transactional profile entries yet. Add one below.": "아직 거래 프로필 항목이 없습니다. 아래에 추가하세요.",
+      "Click to remove": "클릭하여 제거",
+      "Recipient is not valid for this transaction. Please check the details.": "이 거래의 수취인이 유효하지 않습니다. 세부정보를 확인하세요.",
+      "Recipient validation failed. Please check the document details and try again.": "수취인 확인에 실패했습니다. 문서 세부정보를 확인하고 다시 시도하세요.",
+      "Missing required information. Please try again.": "필수 정보가 누락되었습니다. 다시 시도하세요.",
+      "Failed to confirm payment. Please try again or contact support.": "결제 확인에 실패했습니다. 다시 시도하거나 지원팀에 문의하세요.",
+      "Failed to assign payout. Please try again.": "지급 배정에 실패했습니다. 다시 시도하세요.",
+      "Remittance not found. Please check the reference number and try again.": "송금을 찾을 수 없습니다. 참조 번호를 확인하고 다시 시도하세요.",
+      "Unable to load vendors. Please check your connection and try again.": "제공업체를 로드할 수 없습니다. 연결을 확인하고 다시 시도하세요.",
+      "Search and assign this beneficiary to an existing Mifos client account": "이 수취인을 검색하여 기존 Mifos 고객 계정에 배정하세요",
+      "Failed to search clients. Please try again.": "고객 검색에 실패했습니다. 다시 시도하세요.",
+      "Process Remittance": "송금 처리"
     },
     "auditTrail": {
       "actions": {
@@ -3849,7 +3931,8 @@
     "Create Interest Refund": "이자 환불 생성",
     "ACTIVE": "활동적인",
     "PENDING": "보류 중",
-    "INACTIVE": "비활성"
+    "INACTIVE": "비활성",
+    "Process Remittance": "송금 처리"
   },
   "countries": {
     "AF": "아프가니스탄",

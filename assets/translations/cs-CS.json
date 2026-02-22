@@ -560,7 +560,15 @@
       "Is Self Service": "Je samoobsluha",
       "Advanced Search": "Rozšířené vyhledávání",
       "Show advanced search": "Zobrazit rozšířené vyhledávání",
-      "Hide advanced search": "Skrýt rozšířené vyhledávání"
+      "Hide advanced search": "Skrýt rozšířené vyhledávání",
+      "Assign Payout": "Přiřadit výplatu",
+      "Confirm Payment": "Potvrdit platbu",
+      "New Remittance": "Nová remitence",
+      "Print Receipt": "Tisknout účtenku",
+      "Validate Recipient": "Ověřit příjemce",
+      "View Receipt": "Zobrazit účtenku",
+      "Add Entry": "Přidat záznam",
+      "Retry": "Opakovat"
     },
     "catalogs": {
       "Interest payment waiver": "Prominutí platby úroků",
@@ -1296,7 +1304,30 @@
       "Contact Information": "Kontaktní informace",
       "Classification": "Klasifikace",
       "Status": "Stav",
-      "Pending Tasks": "Čekající úkoly"
+      "Pending Tasks": "Čekající úkoly",
+      "Assign Payout": "Přiřadit výplatu",
+      "Assign to Mifos Client": "Přiřadit klientovi Mifos",
+      "Beneficiary Details": "Podrobnosti příjemce",
+      "Confirm Payment": "Potvrdit platbu",
+      "Confirm Payout": "Potvrdit výplatu",
+      "Confirmation Details": "Podrobnosti potvrzení",
+      "Payment Receipt": "Potvrzení o platbě",
+      "Payment Successful": "Platba úspěšná",
+      "Process Remittance": "Zpracovat remitenci",
+      "Recipient Details": "Podrobnosti příjemce",
+      "Remittance Details": "Podrobnosti remitence",
+      "Search Beneficiary": "Hledat příjemce",
+      "Search Remittance": "Hledat remitenci",
+      "Transaction": "Transakce",
+      "Transaction Status": "Stav transakce",
+      "Transaction Summary": "Souhrn transakce",
+      "Transactional Profile": "Transakční profil",
+      "Validated Recipient Information": "Ověřené informace o příjemci",
+      "Recipient": "Příjemce",
+      "Payout Assignment": "Přiřazení výplaty",
+      "Identification": "Identifikace",
+      "Professional Information": "Profesní informace",
+      "Add Profile Entry": "Přidat záznam profilu"
     },
     "inputs": {
       "Floating rate": "Plovoucí sazba",
@@ -2682,7 +2713,32 @@
       "Resource id": "ID zdroje",
       "To date": "Datum do",
       "Select action": "Vybrat akci",
-      "Select entity": "Vybrat entitu"
+      "Select entity": "Vybrat entitu",
+      "Reference ID is required": "Referenční ID je povinné",
+      "Vendor": "Dodavatel",
+      "Vendor is required": "Dodavatel je povinný",
+      "Voter ID": "ID voliče",
+      "National Identity Card Number": "Číslo občanského průkazu",
+      "State": "Stát",
+      "Municipality": "Obec",
+      "Locality": "Lokalita",
+      "New Locality": "Nová lokalita",
+      "Occupation": "Povolání",
+      "Economic Activity": "Ekonomická činnost",
+      "Entity Member": "Člen entity",
+      "# Remittance": "# Remitence",
+      "Avg Amount/Transaction": "Průměrná částka/transakce",
+      "# Senders": "# Odesílatelé",
+      "Sender Registry": "Registr odesílatelů",
+      "Individual": "Fyzická osoba",
+      "Legal Entity": "Právnická osoba",
+      "External Reference ID": "Externí referenční ID",
+      "Enter remittance reference number": "Zadejte referenční číslo remitence",
+      "Enter document number": "Zadejte číslo dokumentu",
+      "Enter first name (include middle name)": "Zadejte jméno (včetně druhého jména)",
+      "Enter last name": "Zadejte příjmení",
+      "Sender name": "Jméno odesílatele",
+      "Retry": "Opakovat"
     },
     "links": {
       "Community": "Společenství",
@@ -2818,13 +2874,22 @@
       "Redeem Shares": "Uplatnit akcie",
       "Approve Additional Shares": "Schválit další akcie",
       "Reject Additional Shares": "Odmítnout další akcie",
-      "Tasks": "Úkoly"
+      "Tasks": "Úkoly",
+      "Remittances": "Remitence",
+      "Process Remittance": "Zpracovat remitenci"
     },
     "placeholders": {
       "Add new server": "Přidat nový server",
       "Search Activity": "Aktivita vyhledávání",
       "Enter your username": "Zadejte své uživatelské jméno",
-      "Enter your password": "Zadejte své heslo"
+      "Enter your password": "Zadejte své heslo",
+      "# Remittance": "# Remitence",
+      "Enter document number": "Zadejte číslo dokumentu",
+      "Enter first name (include middle name)": "Zadejte jméno (včetně druhého jména)",
+      "Enter last name": "Zadejte příjmení",
+      "Enter remittance reference number": "Zadejte referenční číslo remitence",
+      "Sender name": "Jméno odesílatele",
+      "Loading vendors...": "Načítání dodavatelů..."
     },
     "status": {
       "Active": "Aktivní",
@@ -3549,7 +3614,24 @@
       "Write a note": "Napište poznámku",
       "“Maker-Checker” principle requires every tasks": "Princip „Maker-Checker“ vyžaduje, aby každý úkol prováděli dva lidé, aby se snížila pravděpodobnost chyb a zneužití. Jedna osoba proces iniciuje a druhá jej dokončí.",
       "Buy Down Fees": "Poplatky za odkup",
-      "UploadDocumentHint": "Nahrajte PDF nebo obrázek pro vygenerování náhledu."
+      "UploadDocumentHint": "Nahrajte PDF nebo obrázek pro vygenerování náhledu.",
+      "This remittance has a terminal status and cannot be processed further.": "Tato remitence má konečný stav a nelze ji dále zpracovat.",
+      "This remittance has already been paid successfully.": "Tato remitence již byla úspěšně zaplacena.",
+      "Review the transaction and recipient details below, then assign the payout.": "Zkontrolujte níže uvedené údaje o transakci a příjemci a poté přiřaďte výplatu.",
+      "Please review the details carefully before confirming the payment.": "Před potvrzením platby pečlivě zkontrolujte údaje.",
+      "Register the transactional profile for the beneficiary. Add entries for individuals or legal entities.": "Zaregistrujte transakční profil příjemce. Přidejte záznamy pro fyzické nebo právnické osoby.",
+      "No transactional profile entries yet. Add one below.": "Zatím žádné záznamy transakčního profilu. Přidejte jeden níže.",
+      "Click to remove": "Kliknutím odstraníte",
+      "Recipient is not valid for this transaction. Please check the details.": "Příjemce není platný pro tuto transakci. Zkontrolujte prosím údaje.",
+      "Recipient validation failed. Please check the document details and try again.": "Ověření příjemce se nezdařilo. Zkontrolujte údaje dokumentu a zkuste to znovu.",
+      "Missing required information. Please try again.": "Chybí povinné informace. Zkuste to prosím znovu.",
+      "Failed to confirm payment. Please try again or contact support.": "Potvrzení platby se nezdařilo. Zkuste to znovu nebo kontaktujte podporu.",
+      "Failed to assign payout. Please try again.": "Přiřazení výplaty se nezdařilo. Zkuste to prosím znovu.",
+      "Remittance not found. Please check the reference number and try again.": "Remitence nenalezena. Zkontrolujte referenční číslo a zkuste to znovu.",
+      "Unable to load vendors. Please check your connection and try again.": "Nepodařilo se načíst dodavatele. Zkontrolujte připojení a zkuste to znovu.",
+      "Search and assign this beneficiary to an existing Mifos client account": "Vyhledejte a přiřaďte tohoto příjemce k existujícímu účtu klienta Mifos",
+      "Failed to search clients. Please try again.": "Hledání klientů se nezdařilo. Zkuste to prosím znovu.",
+      "Process Remittance": "Zpracovat remitenci"
     }
   },
   "auditTrail": {
@@ -3849,7 +3931,8 @@
     "Create Interest Refund": "Vytvořit vrácení úroků",
     "ACTIVE": "AKTIVNÍ",
     "PENDING": "ČEKÁ NA VYŘÍZENÍ",
-    "INACTIVE": "NEAKTIVNÍ"
+    "INACTIVE": "NEAKTIVNÍ",
+    "Process Remittance": "Zpracovat remitenci"
   },
   "countries": {
     "AF": "Afghánistán",
