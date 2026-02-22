@@ -90,6 +90,14 @@
   window['env']['mifosInterbankTransfersApiVersion'] = '';
   window['env']['mifosInterbankTransfersEnabled'] = 'true';
 
+  // Remittance Module Environment variables
+  window['env']['mifosRemittanceApiUrl'] = '';
+  window['env']['mifosRemittanceApiProvider'] = '/remittance-api';
+  window['env']['mifosRemittanceApiVersion'] = '/v1';
+  window['env']['mifosRemittanceEnabled'] = false;
+  window['env']['mifosRemittanceApiHeader'] = 'X-Gravitee-Api-Key';
+  window['env']['mifosRemittanceApiKey'] = '';
+
   // Enable Role-Based Access Control (RBAC) for menu/button permissions
   // Set to true to enable RBAC, false (default) for backward compatibility
   window['env']['productionModeEnableRBAC'] = false;
