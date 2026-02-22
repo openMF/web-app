@@ -113,7 +113,7 @@
 }
 
 // ===== Responsive for Compact Mode =====
-@media (width <= 480px) {
+@media (width <=480px) {
   .footer-compact {
     font-size: 0.7rem;
 
@@ -124,5 +124,18 @@
     .footer-copyright {
       font-size: 0.8rem;
     }
+  }
+}
+
+// ===== Responsive for Default Mode (Shell) =====
+@media (width <=599px) {
+  #footer {
+    min-width: 100%;
+  }
+
+  .main-page {
+    max-width: 100%;
+    min-width: 100%;
+    padding-left: 2%;
   }
 }

@@ -175,6 +175,7 @@ export class ShareProductMarketPriceStepComponent implements OnInit {
         value: values ? values.shareValue : undefined,
         type: 'number',
         required: true,
+        min: 1,
         order: 2
       })
     ];

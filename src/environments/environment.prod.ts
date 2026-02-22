@@ -56,6 +56,8 @@ export const environment = {
   defaultLanguage: loadedEnv['defaultLanguage'] || 'en-US',
   supportedLanguages:
     loadedEnv['supportedLanguages'] || 'cs-CS,de-DE,en-US,es-MX,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,ne-NE,pt-PT,sw-SW',
+  defaultFormatDate: loadedEnv['defaultFormatDate'] || '',
+  defaultFormatDatetime: loadedEnv['defaultFormatDatetime'] || '',
   preloadClients: loadedEnv['preloadClients'] || true,
 
   defaultCharDelimiter: loadedEnv['defaultCharDelimiter'] || ',',
@@ -83,7 +85,23 @@ export const environment = {
   mifosInterbankTransfersApiVersion: loadedEnv['mifosInterbankTransfersApiVersion'] || '/v1.0',
   mifosInterbankTransfersEnabled: loadedEnv['mifosInterbankTransfersEnabled'] ?? true,
 
+  /** Remittance Module Integration */
+  mifosRemittanceApiUrl: loadedEnv['mifosRemittanceApiUrl'] || '',
+  mifosRemittanceApiProvider: loadedEnv['mifosRemittanceApiProvider'] || '/remittance-api',
+  mifosRemittanceApiVersion: loadedEnv['mifosRemittanceApiVersion'] || '/v1',
+  mifosRemittanceEnabled:
+    loadedEnv['mifosRemittanceEnabled'] === true || loadedEnv['mifosRemittanceEnabled'] === 'true',
+  mifosRemittanceApiHeader: loadedEnv['mifosRemittanceApiHeader'] || 'X-Gravitee-Api-Key',
+  mifosRemittanceApiKey: loadedEnv['mifosRemittanceApiKey'] || '',
+
   minPasswordLength: loadedEnv['minPasswordLength'] || 12,
+
+  /** External National ID System integration */
+  enableExternalNationalIdSystem: loadedEnv['enableExternalNationalIdSystem'] === 'true' || false,
+  externalNationalIdSystemUrl: loadedEnv['externalNationalIdSystemUrl'] || '',
+  externalNationalIdSystemApiHeader: loadedEnv['externalNationalIdSystemApiHeader'] || '',
+  externalNationalIdSystemApiKey: loadedEnv['externalNationalIdSystemApiKey'] || '',
+  externalNationalIdRegex: loadedEnv['externalNationalIdRegex'] || '',
 
   /**
    * Hide client data information (mask client names with *)

@@ -142,11 +142,11 @@ export class LoanDisbursalComponent {
 
   bulkLoanDisbursal() {
     const dateFormat = this.settingsService.dateFormat;
-    const approvedOnDate = this.dateUtils.formatDate(new Date(), dateFormat);
+    const actualDisbursementDate = this.dateUtils.formatDate(new Date(), dateFormat);
     const locale = this.settingsService.language.code;
     const formData = {
       dateFormat,
-      approvedOnDate,
+      actualDisbursementDate,
       locale
     };
     const selectedAccounts = this.selection.selected.length;

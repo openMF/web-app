@@ -64,7 +64,7 @@
     "d3": "^7.9.0",
     "exceljs": "^4.4.0",
     "html2canvas": "^1.4.1",
-    "jspdf": "^3.0.1",
+    "jspdf": "^4.1.0",
     "jspdf-autotable": "^5.0.2",
     "lightgallery": "^2.9.0",
     "lodash": "4.17.23",

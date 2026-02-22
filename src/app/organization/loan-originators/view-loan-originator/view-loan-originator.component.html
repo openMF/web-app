@@ -46,7 +46,7 @@
         </div>
 
         <div class="flex-50">
-          {{ loanOriginatorData.originatorType.name }}
+          {{ loanOriginatorData.originatorType?.name }}
         </div>
 
         <div class="flex-50 mat-body-strong">
@@ -54,9 +54,15 @@
         </div>
 
         <div class="flex-50">
-          {{ loanOriginatorData.channelType.name }}
+          {{ loanOriginatorData.channelType?.name }}
         </div>
       </div>
     </mat-card-content>
+
+    <mat-card-actions class="layout-row align-center gap-5px responsive-column">
+      <button type="button" mat-raised-button [routerLink]="['../']">
+        {{ 'labels.buttons.Back' | translate }}
+      </button>
+    </mat-card-actions>
   </mat-card>
 </div>

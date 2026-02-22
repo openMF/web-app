@@ -255,7 +255,7 @@ export class EditLoanProductComponent implements OnInit {
     return this.loanProductAccountingStep.loanProductAccountingForm;
   }
 
-  get loanProductFormValidAndNotPristine() {
+  get loanProductFormValid(): boolean {
     if (this.isAdvancedPaymentStrategy) {
       return (
         this.loanProductDetailsForm.valid &&
@@ -264,15 +264,7 @@ export class EditLoanProductComponent implements OnInit {
         this.loanProductSettingsForm.valid &&
         this.loanProductAccountingForm.valid &&
         this.loanIncomeCapitalizationForm != null &&
-        this.loanIncomeCapitalizationForm.valid &&
-        (!this.loanProductDetailsForm.pristine ||
-          !this.loanProductCurrencyForm.pristine ||
-          !this.loanProductTermsForm.pristine ||
-          !this.loanProductSettingsForm.pristine ||
-          !this.loanProductChargesStep.pristine ||
-          !this.loanProductAccountingForm.pristine ||
-          !this.loanIncomeCapitalizationForm.pristine ||
-          this.wasPaymentAllocationChanged)
+        this.loanIncomeCapitalizationForm.valid
       );
     } else {
       return (
@@ -280,16 +272,38 @@ export class EditLoanProductComponent implements OnInit {
         this.loanProductCurrencyForm.valid &&
         this.loanProductTermsForm.valid &&
         this.loanProductSettingsForm.valid &&
-        this.loanProductAccountingForm.valid &&
-        (!this.loanProductDetailsForm.pristine ||
-          !this.loanProductCurrencyForm.pristine ||
-          !this.loanProductTermsForm.pristine ||
-          !this.loanProductSettingsForm.pristine ||
-          !this.loanProductChargesStep.pristine ||
-          !this.loanProductAccountingForm.pristine ||
-          this.wasPaymentAllocationChanged)
+        this.loanProductAccountingForm.valid
       );
     }
+  }
+
+  get loanProductFormDirty(): boolean {
+    if (this.isAdvancedPaymentStrategy) {
+      return (
+        !this.loanProductDetailsForm.pristine ||
+        !this.loanProductCurrencyForm.pristine ||
+        !this.loanProductTermsForm.pristine ||
+        !this.loanProductSettingsForm.pristine ||
+        !this.loanProductChargesStep.pristine ||
+        !this.loanProductAccountingForm.pristine ||
+        !(this.loanIncomeCapitalizationForm?.pristine ?? true) ||
+        this.wasPaymentAllocationChanged
+      );
+    } else {
+      return (
+        !this.loanProductDetailsForm.pristine ||
+        !this.loanProductCurrencyForm.pristine ||
+        !this.loanProductTermsForm.pristine ||
+        !this.loanProductSettingsForm.pristine ||
+        !this.loanProductChargesStep.pristine ||
+        !this.loanProductAccountingForm.pristine ||
+        this.wasPaymentAllocationChanged
+      );
+    }
+  }
+
+  get loanProductFormValidAndNotPristine(): boolean {
+    return this.loanProductFormValid && this.loanProductFormDirty;
   }
 
   get loanProduct() {

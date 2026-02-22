@@ -56,7 +56,11 @@
                   }
                   @case ('DECIMAL') {
                     <span>
-                      {{ dataObject.data[0].row[i] | formatNumber }}
+                      @if (datatables.isPhoneNumberField(columnHeader.columnName)) {
+                        {{ dataObject.data[0].row[i] }}
+                      } @else {
+                        {{ dataObject.data[0].row[i] | formatNumber }}
+                      }
                     </span>
                   }
                   @case ('CODELOOKUP') {

@@ -24,6 +24,8 @@ import {
 } from '@angular/material/table';
 
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { NgClass } from '@angular/common';
+import { StatusLookupPipe } from 'app/pipes/status-lookup.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -44,7 +46,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
-    MatRow
+    MatRow,
+    NgClass,
+    StatusLookupPipe
   ]
 })
 export class GlimAccountComponent implements OnInit {
@@ -58,7 +62,9 @@ export class GlimAccountComponent implements OnInit {
     'clientName',
     'loanAccountNumber',
     'clientPrincipalLoan',
-    'groupPrincipalLoan'
+    'groupPrincipalLoan',
+    'status',
+    'actions'
   ];
   /** Data source for charge overview table. */
   dataSource: MatTableDataSource<any>;
@@ -88,5 +94,13 @@ export class GlimAccountComponent implements OnInit {
    */
   setLoanClientChargeOverview() {
     this.dataSource = new MatTableDataSource(this.glimOverviewData);
+  }
+
+  /**
+   * Stops the propagation to view pages.
+   * @param $event
+   */
+  routeEdit($event: MouseEvent) {
+    $event.stopPropagation();
   }
 }

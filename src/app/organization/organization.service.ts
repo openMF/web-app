@@ -720,12 +720,16 @@ export class OrganizationService {
     return this.http.get(`/groups`, { params: httpParams });
   }
 
-  /*
-   * @param {any} officeId ID of office to retrieve staff from.
+  /**
+   * @param {number | string} officeId ID of office to retrieve staff from.
+   * @param {boolean} [isLoanOfficer] Optional flag to filter by loan officer status.
    * @returns {Observable<any>} Staff data.
    */
-  getStaff(officeId: any): Observable<any> {
-    const httpParams = new HttpParams().set('officeId', officeId.toString());
+  getStaff(officeId: number | string, isLoanOfficer?: boolean): Observable<any> {
+    let httpParams = new HttpParams().set('officeId', officeId.toString()).set('status', 'active');
+    if (isLoanOfficer !== undefined) {
+      httpParams = httpParams.set('isLoanOfficer', isLoanOfficer.toString());
+    }
     return this.http.get('/staff', { params: httpParams });
   }
 

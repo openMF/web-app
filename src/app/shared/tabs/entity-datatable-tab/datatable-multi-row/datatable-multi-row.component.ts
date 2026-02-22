@@ -250,7 +250,9 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
             value = this.dateTimeFormat.transform(value);
           } else if (columnDisplayType === 'INTEGER' || columnDisplayType === 'DECIMAL') {
             if (typeof value === 'number') {
-              value = this.numberFormat.transform(value);
+              if (!this.datatables.isPhoneNumberField(columnName)) {
+                value = this.numberFormat.transform(value);
+              }
             }
           } else if (columnDisplayType === 'CODELOOKUP') {
             if (columnHeader.columnValues && value !== null && value !== undefined) {

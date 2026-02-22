@@ -16,6 +16,9 @@
         </mat-option>
       }
     </mat-select>
+    <mat-error *ngIf="jobName.hasError('required')">
+      {{ 'labels.inputs.Job Name' | translate }} {{ 'labels.commons.is required' | translate }}
+    </mat-error>
   </mat-form-field>
 
   @if (jobStepName) {

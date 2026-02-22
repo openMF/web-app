@@ -123,6 +123,23 @@ mat-checkbox {
   }
 }
 
+.external-id-status {
+  font-size: 12px;
+  font-weight: 500;
+
+  &.loading {
+    color: #1976d2;
+  }
+
+  &.success {
+    color: #388e3c;
+  }
+
+  &.error {
+    color: #d32f2f;
+  }
+}
+
 @media (width <= 480px) {
   form {
     padding: 8px 0;

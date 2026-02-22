@@ -165,7 +165,7 @@ export class EditLoanProvisioningCriteriaComponent implements OnInit {
    */
   editDefinition(definition: any) {
     const data = {
-      title: this.translateService.instant('labels.heading.Edit Criteria Definition'),
+      title: this.translateService.instant('labels.buttons.Edit Criteria Definition'),
       formfields: this.getDefinitionFormFields(definition),
       layout: { addButtonText: 'Confirm' }
     };
@@ -195,6 +195,7 @@ export class EditLoanProvisioningCriteriaComponent implements OnInit {
         value: definition ? definition.minAge : '',
         type: 'number',
         required: true,
+        min: 0,
         order: 1
       })
     );
@@ -205,6 +206,7 @@ export class EditLoanProvisioningCriteriaComponent implements OnInit {
         value: definition ? definition.maxAge : '',
         type: 'number',
         required: true,
+        min: 0,
         order: 2
       })
     );
@@ -215,6 +217,7 @@ export class EditLoanProvisioningCriteriaComponent implements OnInit {
         value: definition ? definition.provisioningPercentage : '',
         type: 'number',
         required: true,
+        min: 0,
         order: 3
       })
     );

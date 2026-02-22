@@ -25,5 +25,3 @@ services:
       - MIFOS_SESSION_IDLE_TIMEOUT=300000
       - MIFOS_PRELOAD_CLIENTS=true
       - MIFOS_DEFAULT_CHAR_DELIMITER=,
-      # Production mode - set to true for minimal hero with only branding
-      - MIFOS_PRODUCTION_MODE=false

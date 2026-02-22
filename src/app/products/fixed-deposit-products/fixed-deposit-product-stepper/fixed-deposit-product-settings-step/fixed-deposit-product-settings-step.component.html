@@ -18,7 +18,7 @@
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
-      <input type="number" matInput formControlName="lockinPeriodFrequency" />
+      <input type="number" min="0" matInput formControlName="lockinPeriodFrequency" />
     </mat-form-field>
 
     <mat-form-field class="flex-48">
@@ -39,7 +39,7 @@
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
-      <input type="number" matInput formControlName="minDepositTerm" required />
+      <input type="number" min="0" matInput formControlName="minDepositTerm" required />
       <mat-error>
         {{ 'labels.inputs.Minimum Deposit Term Frequency' | translate }} {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -71,7 +71,7 @@
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
-      <input type="number" matInput formControlName="inMultiplesOfDepositTerm" />
+      <input type="number" min="0" matInput formControlName="inMultiplesOfDepositTerm" />
     </mat-form-field>
 
     <mat-form-field class="flex-48">
@@ -92,7 +92,7 @@
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
-      <input type="number" matInput formControlName="maxDepositTerm" />
+      <input type="number" min="0" matInput formControlName="maxDepositTerm" />
     </mat-form-field>
 
     <mat-form-field class="flex-48">
@@ -122,7 +122,7 @@
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Penal Interest' | translate }} (%)</mat-label>
-      <input type="number" matInput formControlName="preClosurePenalInterest" />
+      <input type="number" min="0" matInput formControlName="preClosurePenalInterest" />
     </mat-form-field>
 
     <mat-form-field class="flex-48">

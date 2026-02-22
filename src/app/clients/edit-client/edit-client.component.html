@@ -58,12 +58,25 @@
               [placeholder]="'labels.inputs.External Id' | translate"
               [title]="'labels.inputs.External Id' | translate"
             />
+            @if (!externalNationalIdService.isLoading && externalNationalIdService.statusMessageKey) {
+              <mat-hint>
+                <span
+                  class="external-id-status"
+                  [ngClass]="{
+                    success: externalNationalIdService.statusMessageKey === 'External ID verified successfully',
+                    error: externalNationalIdService.statusMessageKey !== 'External ID verified successfully'
+                  }"
+                >
+                  {{ 'labels.inputs.' + externalNationalIdService.statusMessageKey | translate }}
+                </span>
+              </mat-hint>
+            }
           </mat-form-field>
         </div>
 
         <!-- Name fields section -->
         <div class="responsive-row">
-          @if (editClientForm.contains('fullname')) {
+          @if (editClientForm.get('fullname')) {
             <mat-form-field class="flex-48">
               <mat-label>{{
                 'labels.inputs.' + getDateLabel(legalFormId, ['Name', 'Entity Name']) | translate
@@ -84,7 +97,7 @@
             </mat-form-field>
           }
 
-          @if (editClientForm.contains('firstname')) {
+          @if (editClientForm.get('firstname')) {
             <mat-form-field class="flex-32">
               <mat-label>{{ 'labels.inputs.First Name' | translate }}</mat-label>
               <input
@@ -103,7 +116,7 @@
             </mat-form-field>
           }
 
-          @if (editClientForm.contains('middlename')) {
+          @if (editClientForm.get('middlename')) {
             <mat-form-field class="flex-32">
               <mat-label>{{ 'labels.inputs.Middle Name' | translate }}</mat-label>
               <input
@@ -115,7 +128,7 @@
             </mat-form-field>
           }
 
-          @if (editClientForm.contains('lastname')) {
+          @if (editClientForm.get('lastname')) {
             <mat-form-field class="flex-32">
               <mat-label>{{ 'labels.inputs.Last Name' | translate }}</mat-label>
               <input

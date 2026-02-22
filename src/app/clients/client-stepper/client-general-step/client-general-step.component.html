@@ -39,9 +39,22 @@
     <mat-form-field class="flex-fill flex-23">
       <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
       <input matInput formControlName="externalId" />
+      @if (!externalNationalIdService.isLoading && externalNationalIdService.statusMessageKey) {
+        <mat-hint>
+          <span
+            class="external-id-status"
+            [ngClass]="{
+              success: externalNationalIdService.statusMessageKey === 'External ID verified successfully',
+              error: externalNationalIdService.statusMessageKey !== 'External ID verified successfully'
+            }"
+          >
+            {{ 'labels.inputs.' + externalNationalIdService.statusMessageKey | translate }}
+          </span>
+        </mat-hint>
+      }
     </mat-form-field>
 
-    @if (createClientForm.contains('fullname')) {
+    @if (createClientForm.get('fullname')) {
       <mat-form-field class="flex-48">
         <mat-label>
           {{ 'labels.inputs.' + getDateLabel(createClientForm.value.legalFormId, ['Name', 'Entity Name']) | translate }}
@@ -62,13 +75,9 @@
       </mat-form-field>
     }
 
-    @if (
-      createClientForm.contains('firstname') ||
-      createClientForm.contains('middlename') ||
-      createClientForm.contains('lastname')
-    ) {
+    @if (createClientForm.get('firstname') || createClientForm.get('middlename') || createClientForm.get('lastname')) {
       <div class="name-fields-row">
-        @if (createClientForm.contains('firstname')) {
+        @if (createClientForm.get('firstname')) {
           <mat-form-field class="name-field first-name">
             <mat-label>{{ 'labels.inputs.First Name' | translate }}</mat-label>
             <input matInput required formControlName="firstname" />
@@ -87,7 +96,7 @@
             }
           </mat-form-field>
         }
-        @if (createClientForm.contains('middlename')) {
+        @if (createClientForm.get('middlename')) {
           <mat-form-field class="name-field middle-name">
             <mat-label>{{ 'labels.inputs.Middle Name' | translate }}</mat-label>
             <input matInput formControlName="middlename" />
@@ -100,7 +109,7 @@
             }
           </mat-form-field>
         }
-        @if (createClientForm.contains('lastname')) {
+        @if (createClientForm.get('lastname')) {
           <mat-form-field class="name-field last-name">
             <mat-label>{{ 'labels.inputs.Last Name' | translate }}</mat-label>
             <input matInput required formControlName="lastname" />

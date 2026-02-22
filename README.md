@@ -250,6 +250,40 @@ All these environment variables can be set when using Docker or Docker Compose:
 | MIFOS_DEFAULT_LANGUAGE    | Default language            | en-US                                                                   |
 | MIFOS_SUPPORTED_LANGUAGES | List of supported languages | cs-CS,de-DE,en-US,es-MX,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,ne-NE,pt-PT,sw-SW |
 
+#### Date and Datetime Format Settings
+
+| Variable                      | Description                                 | Default Value         |
+| ----------------------------- | ------------------------------------------- | --------------------- |
+| MIFOS_DEFAULT_FORMAT_DATE     | Default date format for the application     | dd MMMM yyyy          |
+| MIFOS_DEFAULT_FORMAT_DATETIME | Default datetime format for the application | dd MMMM yyyy HH:mm:ss |
+
+These environment variables control the default date and datetime formats used throughout the Mifos® X Web App. They can be set in your Docker environment, in the `env.js`/`env.template.js` files, or in your deployment environment.
+
+- `MIFOS_DEFAULT_FORMAT_DATE` sets the default format for displaying dates (e.g., `15 February 2026`).
+- `MIFOS_DEFAULT_FORMAT_DATETIME` sets the default format for displaying date and time (e.g., `15 February 2026 14:30:00`).
+
+If a user does not select a custom format in the UI, these values are used as the fallback. You can override them per user in the Settings screen.
+
+**How to set:**
+
+In Docker Compose or Docker:
+
+```bash
+MIFOS_DEFAULT_FORMAT_DATE=yyyy-MM-dd
+MIFOS_DEFAULT_FORMAT_DATETIME=yyyy-MM-dd HH:mm
+```
+
+In `src/assets/env.template.js`:
+
+```js
+window['env']['defaultFormatDate'] = '$MIFOS_DEFAULT_FORMAT_DATE';
+window['env']['defaultFormatDatetime'] = '$MIFOS_DEFAULT_FORMAT_DATETIME';
+```
+
+**Where used:**
+
+These values are read by the application when it starts and are used as the default for date and datetime display in forms, tables, and reports.
+
 Available languages:
 
 | Language   | Code | File       |
@@ -313,7 +347,68 @@ Available languages:
 | FINERACT_PLUGIN_OIDC_API_URL      | Set the Client API URL         |               |
 | FINERACT_PLUGIN_OIDC_FRONTEND_URL | Set the Front End URL callback |               |
 
+#### External National ID System Integration
+
+These variables enable automatic lookup and auto-fill of client data from an external National ID system (e.g., Mexico's CURP) during client creation and editing.
+
+| Variable                               | Description                                                                  | Default Value |
+| -------------------------------------- | ---------------------------------------------------------------------------- | ------------- |
+| ENABLE_EXTERNAL_NATIONAL_ID_SYSTEM     | Set to `true` to enable External National ID lookup                          | false         |
+| EXTERNAL_NATIONAL_ID_SYSTEM_URL        | URL of the external National ID API                                          |               |
+| EXTERNAL_NATIONAL_ID_SYSTEM_API_HEADER | Header name for the external API key (e.g., `X-Gravitee-Api-Key`)            |               |
+| EXTERNAL_NATIONAL_ID_SYSTEM_API_KEY    | API key value (injected server-side via nginx; keep empty in source control) |               |
+| EXTERNAL_NATIONAL_ID_REGEX             | Regex pattern to validate the external ID format (e.g., CURP)                |               |
+| EXTERNAL_NATIONALID_API_URL            | Full upstream URL for nginx proxy_pass                                       |               |
+
+When `ENABLE_EXTERNAL_NATIONAL_ID_SYSTEM` is set to `true`, the following fields are auto-filled and disabled during client creation/editing after a successful lookup:
+
+- First Name
+- Middle Name
+- Last Name
+- Date of Birth
+- Gender
+
+The user types the External ID value, and if it matches the configured regex, the system calls the external API to retrieve and auto-fill client information.
+
+**Docker Compose with External National ID:**
+
+```bash
+docker-compose -f docker-compose.yml -f docker-compose.external-nationalid.yml up -d
+```
+
 For more detailed configuration options, refer to the `env.sample` file in the root directory of the project.
+
+#### Interbank Transfers Settings
+
+| Variable                               | Description                         | Default Value                |
+| -------------------------------------- | ----------------------------------- | ---------------------------- |
+| MIFOS_INTERBANK_TRANSFERS_API_URL      | The Interbank server url            | https://apis.mifos.community |
+| MIFOS_INTERBANK_TRANSFERS_API_PROVIDER | The Interbank server endpoint       | /vnext2                      |
+| MIFOS_INTERBANK_TRANSFERS_API_VERSION  | The Interbank server api version    | /v1.0                        |
+| MIFOS_INTERBANK_TRANSFERS_ENABLED      | If the Interbank feature is enabled | true                         |
+
+#### Remittance Module Settings
+
+These variables configure the Remittance Module, which provides a 7-step wizard for processing remittance payouts (search, validate recipient, assign payout, confirm payment, and generate receipt).
+
+| Variable                      | Description                            | Default Value                |
+| ----------------------------- | -------------------------------------- | ---------------------------- |
+| MIFOS_REMITTANCE_API_URL      | The Remittance Microservice server URL | https://apis.mifos.community |
+| MIFOS_REMITTANCE_API_PROVIDER | The Remittance server endpoint         | /1.0/remittance              |
+| MIFOS_REMITTANCE_API_VERSION  | The Remittance server API version      | /v1                          |
+| MIFOS_REMITTANCE_ENABLED      | If the Remittance feature is enabled   | false                        |
+| MIFOS_REMITTANCE_API_HEADER   | API gateway auth header name           | X-Gravitee-Api-Key           |
+| MIFOS_REMITTANCE_API_KEY      | API key for the Remittance gateway     |                              |
+
+When `MIFOS_REMITTANCE_ENABLED` is set to `true`, a "Remittances" menu item appears in the sidenav and the `/remittances` route becomes accessible. The module supports the following workflow:
+
+1. **Search Remittance** — Look up a transaction by vendor and external reference ID
+2. **Remittance Details** — Review transaction details and status
+3. **Search Beneficiary** — Validate the recipient's identity documents
+4. **Beneficiary Details** — Review validated recipient info and assign to a Mifos client
+5. **Transactional Profile** — Register the transactional profile and assign payout
+6. **Confirm Payment** — Final confirmation before payout
+7. **Payment Receipt** — View and print the payment receipt
 
 ### Client Data Masking Example
 

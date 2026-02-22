@@ -92,7 +92,7 @@ export class BulkLoanReassignmnetComponent implements OnInit {
         Validators.required
       ],
       assignmentDate: [
-        this.settingsService.businessDate,
+        '',
         Validators.required
       ],
       toLoanOfficerId: [

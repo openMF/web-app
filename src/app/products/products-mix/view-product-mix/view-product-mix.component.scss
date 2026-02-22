@@ -6,50 +6,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-.allowed-products-align {
-  margin-top: 19px;
-}
-
-.product-mix-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 32px;
-  justify-content: center;
+table {
   width: 100%;
-}
-
-.restricted-products-col {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  min-width: 340px;
-  justify-content: flex-start;
-}
-
-.action-buttons-wrapper {
-  width: 45%;
-  margin-left: auto;
-  margin-bottom: 8px;
-}
-
-.restricted-products-box {
-  position: relative;
-}
-
-.action-buttons {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  margin-bottom: 16px;
-}
-
-.container {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-evenly;
-
-  .inline-table {
-    display: inline-block;
-    width: 45%;
-  }
 }

@@ -7,9 +7,9 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Input, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
@@ -78,7 +78,10 @@ export class SavingsAccountAssignStaffComponent implements OnInit {
    */
   createSavingsAssignStaffForm() {
     this.savingsAssignStaffForm = this.formBuilder.group({
-      toSavingsOfficerId: [''],
+      toSavingsOfficerId: [
+        '',
+        Validators.required
+      ],
       assignmentDate: [
         '',
         Validators.required
@@ -91,16 +94,16 @@ export class SavingsAccountAssignStaffComponent implements OnInit {
    * if successful redirects to the saving account.
    */
   submit() {
-    const savingsAssignStaffFormData = this.savingsAssignStaffForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    const prevAssignmentDate: Date = this.savingsAssignStaffForm.value.assignmentDate;
-    if (savingsAssignStaffFormData.assignmentDate instanceof Date) {
-      savingsAssignStaffFormData.assignmentDate = this.dateUtils.formatDate(prevAssignmentDate, dateFormat);
-    }
+    const formValue = this.savingsAssignStaffForm.value;
+    const assignmentDate =
+      formValue.assignmentDate instanceof Date
+        ? this.dateUtils.formatDate(formValue.assignmentDate, dateFormat)
+        : formValue.assignmentDate;
     const data = {
-      ...savingsAssignStaffFormData,
-      fromSavingsOfficerId: '',
+      toSavingsOfficerId: formValue.toSavingsOfficerId,
+      assignmentDate,
       dateFormat,
       locale
     };

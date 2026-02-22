@@ -8,11 +8,13 @@
 
 /** Angular Imports */
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpBackend, HttpHeaders } from '@angular/common/http';
 
 /** rxjs Imports */
 import { Observable, of, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+
+import { environment } from 'environments/environment';
 
 /**
  * Clients service.
@@ -22,6 +24,10 @@ import { map, catchError } from 'rxjs/operators';
 })
 export class ClientsService {
   private http = inject(HttpClient);
+  private httpBackend = inject(HttpBackend);
+
+  /** Separate HttpClient that bypasses interceptors (for external API calls) */
+  private externalHttp = new HttpClient(this.httpBackend);
 
   getFilteredClients(
     orderBy: string,
@@ -435,5 +441,35 @@ export class ClientsService {
       };
     }
     return this.http.post(`/v2/clients/search`, request);
+  }
+
+  /**
+   * Lookup external National ID from the configured external system.
+   * Uses a separate HttpClient (via HttpBackend) to bypass Angular interceptors
+   * so that Fineract auth headers are not sent to the external API.
+   *
+   * In development, requests go through the dev proxy (/external-nationalid).
+   * In production, requests go through the nginx reverse proxy.
+   *
+   * @param externalId The National ID string (e.g. CURP)
+   */
+  lookupExternalNationalId(externalId: string): Observable<any> {
+    const apiUrl = environment.externalNationalIdSystemUrl;
+    if (!apiUrl) {
+      return throwError(() => new Error('External National ID System URL is not configured'));
+    }
+
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const apiHeader = environment.externalNationalIdSystemApiHeader;
+    const apiKey = environment.externalNationalIdSystemApiKey;
+    if (apiHeader && apiKey) {
+      // Validate header name to prevent Angular from throwing on invalid header
+      if (!/^[a-zA-Z][a-zA-Z0-9-]*$/.test(apiHeader)) {
+        return throwError(() => new Error(`Invalid API header name: '${apiHeader}'`));
+      }
+      headers = headers.set(apiHeader, apiKey);
+    }
+
+    return this.externalHttp.post(apiUrl, { externalId }, { headers });
   }
 }

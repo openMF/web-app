@@ -41,6 +41,10 @@ export class AuthenticationInterceptor implements HttpInterceptor {
    * Intercepts a Http request and sets the request headers.
    */
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // Skip Fineract auth headers for external API calls (e.g. remittance, national ID)
+    if (request.url.startsWith('http://') || request.url.startsWith('https://')) {
+      return next.handle(request);
+    }
     if (this.settingsService.tenantIdentifier) {
       httpOptions.headers['Fineract-Platform-TenantId'] = this.settingsService.tenantIdentifier;
     }

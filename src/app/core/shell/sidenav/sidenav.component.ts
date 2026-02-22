@@ -32,6 +32,7 @@ import { MatNavList, MatListItem } from '@angular/material/list';
 import { MatIcon } from '@angular/material/icon';
 import { MatLine } from '@angular/material/grid-list';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { remittanceConfig } from '../../../remittances/remittance.config';
 
 import { catchError, finalize, of, take } from 'rxjs';
 
@@ -77,6 +78,8 @@ export class SidenavComponent implements OnInit, AfterViewInit {
   mappedActivities: any[] = [];
   /** Collection of possible frequent activities */
   frequentActivities: any[] = frequentActivities;
+  /** Whether remittance feature is enabled */
+  mifosRemittanceEnabled = remittanceConfig.isRemittanceEnabled;
 
   /* Refernce of logo */
   @ViewChild('logo') logo: ElementRef<any>;

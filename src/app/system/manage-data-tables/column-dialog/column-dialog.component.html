@@ -49,9 +49,16 @@
             matInput
             required
             type="number"
+            min="1"
             formControlName="length"
             placeholder="{{ 'labels.inputs.Column Length' | translate }}"
           />
+          @if (columnForm.controls.length.hasError('required')) {
+            <mat-error>
+              {{ 'labels.inputs.Column Length' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          }
         </mat-form-field>
       }
 
@@ -65,6 +72,12 @@
               </mat-option>
             }
           </mat-select>
+          @if (columnForm.controls.code.hasError('required')) {
+            <mat-error>
+              {{ 'labels.inputs.Column Code' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          }
         </mat-form-field>
       }
 

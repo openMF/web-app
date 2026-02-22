@@ -7,384 +7,471 @@
 -->
 
 <div class="container">
-  @if (isLoading) {
-    <div class="loader-wrapper">
-      <div class="bottom triangle"></div>
-      <div class="top triangle"></div>
-      <div class="left triangle"></div>
-      <div class="right triangle"></div>
-    </div>
-  }
+  <mat-stepper orientation="vertical" [linear]="true" class="mat-elevation-z8" labelPosition="bottom" #transferStepper>
+    <!-- Custom Step Icons -->
+    <ng-template matStepperIcon="number">
+      <fa-icon icon="pencil-alt" size="sm"></fa-icon>
+    </ng-template>
+    <ng-template matStepperIcon="edit">
+      <fa-icon icon="pencil-alt" size="sm"></fa-icon>
+    </ng-template>
+    <ng-template matStepperIcon="done">
+      <fa-icon icon="check" size="sm"></fa-icon>
+    </ng-template>
+    <ng-template matStepperIcon="error">
+      <fa-icon icon="exclamation-triangle" size="lg"></fa-icon>
+    </ng-template>
 
-  @if (!isLoading) {
-    <mat-card class="transfer-card">
-      <mat-card-content>
-        <!-- Source Account Details Section -->
-        <div class="section-container">
-          <h3 class="section-title transfer-heading">{{ 'labels.heading.Transferring From Details' | translate }}</h3>
-          <mat-divider></mat-divider>
-          <div class="info-grid">
-            <div class="info-row">
-              <div class="info-label">{{ 'labels.inputs.Applicant' | translate }}</div>
-              <div class="info-value">{{ accountTransferTemplateData.fromClient.displayName }}</div>
-            </div>
-            <div class="info-row">
-              <div class="info-label">{{ 'labels.inputs.Office' | translate }}</div>
-              <div class="info-value">{{ accountTransferTemplateData.fromOffice.name }}</div>
-            </div>
-            <div class="info-row">
-              <div class="info-label">{{ 'labels.inputs.From Account' | translate }}</div>
-              <div class="info-value">
-                {{ accountTransferTemplateData.fromAccount.productName }}&nbsp;-&nbsp;#{{
-                  accountTransferTemplateData.fromAccount.accountNo
-                }}
-              </div>
-            </div>
-            <div class="info-row">
-              <div class="info-label">{{ 'labels.inputs.From Account Type' | translate }}</div>
-              <div class="info-value">{{ accountTransferTemplateData.fromAccountType.value }}</div>
-            </div>
-            <div class="info-row">
-              <div class="info-label">{{ 'labels.inputs.Currency' | translate }}</div>
-              <div class="info-value">{{ accountTransferTemplateData.currency.name }}</div>
+    <!-- ==================== STEP 1: Beneficiary Selection ==================== -->
+    <mat-step [stepControl]="beneficiaryForm" [editable]="!transferComplete">
+      <ng-template matStepLabel>{{ 'labels.heading.Beneficiary Selection' | translate }}</ng-template>
+
+      <!-- Source Account Details (Read-Only) -->
+      <div class="section-container">
+        <h3 class="section-title transfer-heading">{{ 'labels.heading.Transferring From Details' | translate }}</h3>
+        <mat-divider></mat-divider>
+        <div class="info-grid">
+          <div class="info-row">
+            <div class="info-label">{{ 'labels.inputs.Applicant' | translate }}</div>
+            <div class="info-value">{{ accountTransferTemplateData.fromClient.displayName }}</div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">{{ 'labels.inputs.Office' | translate }}</div>
+            <div class="info-value">{{ accountTransferTemplateData.fromOffice.name }}</div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">{{ 'labels.inputs.From Account' | translate }}</div>
+            <div class="info-value">
+              {{ accountTransferTemplateData.fromAccount.productName }}&nbsp;-&nbsp;#{{
+                accountTransferTemplateData.fromAccount.accountNo
+              }}
             </div>
           </div>
+          <div class="info-row">
+            <div class="info-label">{{ 'labels.inputs.From Account Type' | translate }}</div>
+            <div class="info-value">{{ accountTransferTemplateData.fromAccountType.value }}</div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">{{ 'labels.inputs.Currency' | translate }}</div>
+            <div class="info-value">{{ accountTransferTemplateData.currency.name }}</div>
+          </div>
         </div>
-        <!-- Interbank Section -->
-        @if (interbank) {
-          <div class="section-container">
-            <div class="interbank-section">
-              <h3 class="section-title transfer-heading">{{ 'labels.heading.Transferred To' | translate }}</h3>
-              <mat-form-field class="full-width">
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <!-- Beneficiary Form -->
+      @if (interbank) {
+        <!-- Interbank: Phone Number Search -->
+        <div class="section-container">
+          <h3 class="section-title transfer-heading">{{ 'labels.heading.Transferred To' | translate }}</h3>
+          <form [formGroup]="beneficiaryForm" class="transfer-form">
+            <div class="form-grid">
+              <mat-form-field class="form-field">
                 <mat-label>{{ 'labels.inputs.Phone Number' | translate }}</mat-label>
                 <input
                   matInput
                   [readonly]="interbankTransferForm"
                   type="tel"
-                  #input
-                  [(ngModel)]="phoneAccount"
+                  formControlName="phoneNumber"
                   maxlength="10"
                   required
                   placeholder="{{ 'labels.text.EnterPhoneNumber' | translate }}"
                   title="Phone number"
                 />
-                <mat-hint align="end">{{ phoneAccount.length || 0 }}/10</mat-hint>
+                <mat-hint align="end">{{ beneficiaryForm.get('phoneNumber')?.value?.length || 0 }}/10</mat-hint>
               </mat-form-field>
             </div>
-            <!--interbank -->
             @if (!interbankTransferForm) {
-              <mat-card-actions class="action-buttons">
+              <div class="action-buttons step-actions">
                 <ng-container *mifosxHasPermission="'CREATE_ACCOUNTTRANSFER'">
                   <button
                     mat-raised-button
                     color="primary"
-                    [disabled]="phoneAccount.length !== 10"
+                    [disabled]="beneficiaryForm.get('phoneNumber')?.value?.length !== 10"
                     (click)="searchAccountByNumber()"
-                    id="search-button"
                     class="primary-button"
                   >
                     {{ 'labels.buttons.Search' | translate }}
                   </button>
                 </ng-container>
-              </mat-card-actions>
+              </div>
+            }
+
+            <!-- Interbank Beneficiary Preview (Read-Only) -->
+            @if (interbankTransferForm) {
+              <div class="info-grid beneficiary-preview">
+                <div class="info-row">
+                  <div class="info-label">{{ 'labels.inputs.Bank' | translate }}</div>
+                  <div class="info-value">{{ beneficiaryForm.get('toBank')?.value }}</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">{{ 'labels.inputs.Client' | translate }}</div>
+                  <div class="info-value">{{ beneficiaryForm.get('toClientId')?.value }}</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">{{ 'labels.inputs.Account Type' | translate }}</div>
+                  <div class="info-value">{{ beneficiaryForm.get('toAccountType')?.value }}</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">{{ 'labels.inputs.Account' | translate }}</div>
+                  <div class="info-value">{{ beneficiaryForm.get('toAccountId')?.value }}</div>
+                </div>
+              </div>
+            }
+          </form>
+        </div>
+      } @else {
+        <!-- Normal Transfer: Office/Client/Account Selection -->
+        <form [formGroup]="beneficiaryForm" class="transfer-form">
+          <h3 class="section-title transfer-heading">{{ 'labels.heading.Transferred To' | translate }}</h3>
+          <div class="form-grid">
+            <mat-form-field class="form-field">
+              <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
+              <mat-select required formControlName="toOfficeId" (selectionChange)="changeEvent()">
+                @for (toOfficeType of toOfficeTypeData; track toOfficeType) {
+                  <mat-option [value]="toOfficeType.id">
+                    {{ toOfficeType.name }}
+                  </mat-option>
+                }
+              </mat-select>
+              @if (beneficiaryForm.controls['toOfficeId'].hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+            <mat-form-field class="form-field">
+              <mat-label>{{ 'labels.inputs.Client' | translate }}</mat-label>
+              <input
+                matInput
+                formControlName="toClientId"
+                [matAutocomplete]="clientsAutocomplete"
+                placeholder="{{ 'labels.text.SelectOrTypeClientName' | translate }}"
+                title="Client name"
+              />
+              @if (beneficiaryForm.controls['toClientId'].hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Client' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+            <mat-autocomplete
+              autoActiveFirstOption
+              #clientsAutocomplete="matAutocomplete"
+              [displayWith]="displayClient"
+            >
+              @for (client of clientsData; track client) {
+                <mat-option [value]="client"> {{ client.id }} - {{ client.displayName }} </mat-option>
+              }
+            </mat-autocomplete>
+            <mat-form-field class="form-field">
+              <mat-label>{{ 'labels.inputs.Account Type' | translate }}</mat-label>
+              <mat-select required formControlName="toAccountType" (selectionChange)="changeEvent()">
+                @for (toAccountType of toAccountTypeData; track toAccountType) {
+                  <mat-option [value]="toAccountType.id">
+                    {{ toAccountType.value }}
+                  </mat-option>
+                }
+              </mat-select>
+              @if (beneficiaryForm.controls['toAccountType'].hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Account Type' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+            <mat-form-field class="form-field">
+              <mat-label>{{ 'labels.inputs.Account' | translate }}</mat-label>
+              <mat-select required formControlName="toAccountId" (selectionChange)="changeEvent()">
+                @for (toAccount of toAccountData; track toAccount) {
+                  <mat-option [value]="toAccount.id">
+                    {{ toAccount.productName }} - {{ toAccount.accountNo }}
+                  </mat-option>
+                }
+              </mat-select>
+              @if (beneficiaryForm.controls['toAccountId'].hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Account' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </form>
+      }
+
+      <!-- Step 1 Navigation -->
+      <div class="layout-row align-center gap-2percent margin-t responsive-column">
+        <button mat-raised-button matStepperPrevious disabled>
+          <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
+          {{ 'labels.buttons.Previous' | translate }}
+        </button>
+        <button
+          mat-raised-button
+          matStepperNext
+          [disabled]="interbank ? !interbankTransferForm : !beneficiaryForm.valid"
+        >
+          {{ 'labels.buttons.Next' | translate }}
+          <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
+        </button>
+        <button mat-raised-button [routerLink]="['../..']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+      </div>
+    </mat-step>
+
+    <!-- ==================== STEP 2: Transfer Details ==================== -->
+    <mat-step [stepControl]="transferDetailsForm" [editable]="!transferComplete">
+      <ng-template matStepLabel>{{ 'labels.heading.Transfer Details' | translate }}</ng-template>
+
+      @if (isLoading) {
+        <div class="loader-wrapper">
+          <div class="bottom triangle"></div>
+          <div class="top triangle"></div>
+          <div class="left triangle"></div>
+          <div class="right triangle"></div>
+        </div>
+      }
+
+      @if (!isLoading) {
+        <!-- Beneficiary Summary (Read-Only) -->
+        <div class="section-container beneficiary-summary">
+          <h3 class="section-title transfer-heading">{{ 'labels.heading.Beneficiary' | translate }}</h3>
+          <div class="info-grid">
+            @if (interbank && interbankTransferForm) {
+              <div class="info-row">
+                <div class="info-label">{{ 'labels.inputs.Bank' | translate }}</div>
+                <div class="info-value">{{ beneficiaryForm.get('toBank')?.value }}</div>
+              </div>
+              <div class="info-row">
+                <div class="info-label">{{ 'labels.inputs.Client' | translate }}</div>
+                <div class="info-value">{{ beneficiaryForm.get('toClientId')?.value }}</div>
+              </div>
+              <div class="info-row">
+                <div class="info-label">{{ 'labels.inputs.Account' | translate }}</div>
+                <div class="info-value">{{ beneficiaryForm.get('toAccountId')?.value }}</div>
+              </div>
+            } @else {
+              <div class="info-row">
+                <div class="info-label">{{ 'labels.inputs.Office' | translate }}</div>
+                <div class="info-value">{{ getSelectedOfficeName() }}</div>
+              </div>
+              <div class="info-row">
+                <div class="info-label">{{ 'labels.inputs.Client' | translate }}</div>
+                <div class="info-value">{{ getSelectedClientName() }}</div>
+              </div>
+              <div class="info-row">
+                <div class="info-label">{{ 'labels.inputs.Account Type' | translate }}</div>
+                <div class="info-value">{{ getSelectedAccountTypeName() }}</div>
+              </div>
+              <div class="info-row">
+                <div class="info-label">{{ 'labels.inputs.Account' | translate }}</div>
+                <div class="info-value">{{ getSelectedAccountName() }}</div>
+              </div>
             }
           </div>
-        }
-        @if (!interbank) {
-          <mat-divider></mat-divider>
-        }
-        <!-- Transfer Form Section (Normal) -->
-        @if (!interbank && makeAccountTransferForm) {
-          <form [formGroup]="makeAccountTransferForm" class="transfer-form">
-            <h3 class="section-title transfer-heading">{{ 'labels.heading.Transfer Details' | translate }}</h3>
-            <div class="form-grid">
-              <mat-form-field class="form-field" (click)="transferDatePicker.open()">
-                <mat-label>{{ 'labels.inputs.Transaction Date' | translate }}</mat-label>
-                <input
-                  matInput
-                  [min]="minDate"
-                  [max]="maxDate"
-                  [matDatepicker]="transferDatePicker"
-                  required
-                  formControlName="transferDate"
-                  placeholder="{{ 'labels.text.SelectDate' | translate }}"
-                  title="Transaction Date"
-                />
-                <mat-datepicker-toggle matSuffix [for]="transferDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #transferDatePicker></mat-datepicker>
-                @if (makeAccountTransferForm.controls.transferDate.hasError('required')) {
-                  <mat-error>
-                    {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
-                    <strong>{{ 'labels.commons.required' | translate }}</strong>
-                  </mat-error>
-                }
-              </mat-form-field>
-              <mat-form-field class="form-field">
-                <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
-                <mat-select required formControlName="toOfficeId" (selectionChange)="changeEvent()">
-                  @for (toOfficeType of toOfficeTypeData; track toOfficeType) {
-                    <mat-option [value]="toOfficeType.id">
-                      {{ toOfficeType.name }}
-                    </mat-option>
-                  }
-                </mat-select>
-                @if (makeAccountTransferForm.controls.toOfficeId.hasError('required')) {
-                  <mat-error>
-                    {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
-                    <strong>{{ 'labels.commons.required' | translate }}</strong>
-                  </mat-error>
-                }
-              </mat-form-field>
-              <mat-form-field class="form-field">
-                <mat-label>{{ 'labels.inputs.Client' | translate }}</mat-label>
-                <input
-                  matInput
-                  formControlName="toClientId"
-                  [matAutocomplete]="clientsAutocomplete"
-                  placeholder="{{ 'labels.text.SelectOrTypeClientName' | translate }}"
-                  title="Client name"
-                />
-                @if (makeAccountTransferForm.controls.toClientId.hasError('required')) {
-                  <mat-error>
-                    {{ 'labels.inputs.Client' | translate }} {{ 'labels.commons.is' | translate }}
-                    <strong>{{ 'labels.commons.required' | translate }}</strong>
-                  </mat-error>
-                }
-              </mat-form-field>
-              <mat-autocomplete
-                autoActiveFirstOption
-                #clientsAutocomplete="matAutocomplete"
-                [displayWith]="displayClient"
-              >
-                @for (client of clientsData; track client) {
-                  <mat-option [value]="client"> {{ client.id }} - {{ client.displayName }} </mat-option>
-                }
-              </mat-autocomplete>
-              <mat-form-field class="form-field">
-                <mat-label>{{ 'labels.inputs.Account Type' | translate }}</mat-label>
-                <mat-select required formControlName="toAccountType" (selectionChange)="changeEvent()">
-                  @for (toAccountType of toAccountTypeData; track toAccountType) {
-                    <mat-option [value]="toAccountType.id">
-                      {{ toAccountType.value }}
-                    </mat-option>
-                  }
-                </mat-select>
-                @if (makeAccountTransferForm.controls.toAccountType.hasError('required')) {
-                  <mat-error>
-                    {{ 'labels.inputs.Account Type' | translate }} {{ 'labels.commons.is' | translate }}
-                    <strong>{{ 'labels.commons.required' | translate }}</strong>
-                  </mat-error>
-                }
-              </mat-form-field>
-              <mat-form-field class="form-field">
-                <mat-label>{{ 'labels.inputs.Account' | translate }}</mat-label>
-                <mat-select required formControlName="toAccountId" (selectionChange)="changeEvent()">
-                  @for (toAccount of toAccountData; track toAccount) {
-                    <mat-option [value]="toAccount.id">
-                      {{ toAccount.productName }} - {{ toAccount.accountNo }}
-                    </mat-option>
-                  }
-                </mat-select>
-                @if (makeAccountTransferForm.controls.toAccountId.hasError('required')) {
-                  <mat-error>
-                    {{ 'labels.inputs.Account' | translate }} {{ 'labels.commons.is' | translate }}
-                    <strong>{{ 'labels.commons.required' | translate }}</strong>
-                  </mat-error>
-                }
-              </mat-form-field>
-              <mat-form-field class="form-field">
-                <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
-                <input
-                  type="number"
-                  matInput
-                  required
-                  formControlName="transferAmount"
-                  placeholder="{{ 'labels.text.EnterAmount' | translate }}"
-                  title="Transfer amount"
-                  min="0.01"
-                  step="0.01"
-                />
-                @if (makeAccountTransferForm.controls.transferAmount.hasError('required')) {
-                  <mat-error>
-                    {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
-                    <strong>{{ 'labels.commons.required' | translate }}</strong>
-                  </mat-error>
-                }
-                @if (makeAccountTransferForm.get('transferAmount')?.hasError('amountExceedsBalance')) {
-                  <mat-error>
-                    <fa-icon icon="exclamation-triangle" size="md"></fa-icon>
-                    {{ 'errors.validation.msg.savingsproduct.insufficient.balance' | translate: { balance } }}
-                  </mat-error>
-                }
-              </mat-form-field>
-              <mat-form-field class="form-field description-field">
-                <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
-                <textarea
-                  matInput
-                  formControlName="transferDescription"
-                  cdkTextareaAutosize
-                  cdkAutosizeMinRows="2"
-                  placeholder="{{ 'labels.text.EnterTransferDescription' | translate }}"
-                  title="Transfer description"
-                ></textarea>
-                @if (makeAccountTransferForm.controls.transferDescription.hasError('required')) {
-                  <mat-error>
-                    {{ 'labels.inputs.Transfer Description' | translate }} {{ 'labels.commons.is' | translate }}
-                    <strong>{{ 'labels.commons.required' | translate }}</strong>
-                  </mat-error>
-                }
-              </mat-form-field>
-            </div>
-          </form>
-        }
-        <!-- Interbank Transfer Form Section -->
-        @if (interbank && interbankTransferForm && makeAccountTransferForm) {
-          <form [formGroup]="makeAccountTransferForm" class="transfer-form">
-            <h3 class="section-title transfer-heading">{{ 'labels.heading.Transfer Details' | translate }}</h3>
-            <div class="form-grid">
-              <mat-form-field class="form-field" (click)="transferDatePicker.open()">
-                <mat-label>{{ 'labels.inputs.Transaction Date' | translate }}</mat-label>
-                <input
-                  matInput
-                  [min]="minDate"
-                  [max]="maxDate"
-                  [matDatepicker]="transferDatePicker"
-                  required
-                  formControlName="transferDate"
-                  placeholder="{{ 'labels.text.SelectDate' | translate }}"
-                  title="Transaction Date"
-                />
-                <mat-datepicker-toggle matSuffix [for]="transferDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #transferDatePicker></mat-datepicker>
-                @if (makeAccountTransferForm.controls.transferDate.hasError('required')) {
-                  <mat-error>
-                    {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
-                    <strong>{{ 'labels.commons.required' | translate }}</strong>
-                  </mat-error>
-                }
-              </mat-form-field>
-              <mat-form-field class="form-field">
-                <mat-label>{{ 'labels.inputs.Bank' | translate }}</mat-label>
-                <input
-                  matInput
-                  formControlName="toBank"
-                  [readonly]="true"
-                  placeholder="{{ 'labels.inputs.Bank' | translate }}"
-                  title="Bank"
-                />
-              </mat-form-field>
-              <mat-form-field class="form-field">
-                <mat-label>{{ 'labels.inputs.Client' | translate }}</mat-label>
-                <input
-                  matInput
-                  formControlName="toClientId"
-                  [readonly]="true"
-                  placeholder="{{ 'labels.inputs.Client' | translate }}"
-                  title="Client"
-                />
-              </mat-form-field>
-              <mat-form-field class="form-field">
-                <mat-label>{{ 'labels.inputs.Account Type' | translate }}</mat-label>
-                <input
-                  matInput
-                  formControlName="toAccountType"
-                  [readonly]="true"
-                  placeholder="{{ 'labels.inputs.Account Type' | translate }}"
-                  title="Account Type"
-                />
-              </mat-form-field>
-              <mat-form-field class="form-field">
-                <mat-label>{{ 'labels.inputs.Account' | translate }}</mat-label>
-                <input
-                  matInput
-                  formControlName="toAccountId"
-                  [readonly]="true"
-                  placeholder="{{ 'labels.inputs.Account' | translate }}"
-                  title="Account"
-                />
-              </mat-form-field>
-              <mat-form-field class="form-field">
-                <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
-                <input
-                  type="number"
-                  matInput
-                  required
-                  formControlName="transferAmount"
-                  placeholder="{{ 'labels.text.EnterAmount' | translate }}"
-                  title="Transfer amount"
-                  min="0.01"
-                  step="0.01"
-                />
-                @if (makeAccountTransferForm.controls.transferAmount.hasError('required')) {
-                  <mat-error>
-                    {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
-                    <strong>{{ 'labels.commons.required' | translate }}</strong>
-                  </mat-error>
-                }
-                @if (makeAccountTransferForm.controls.transferAmount.hasError('min')) {
-                  <mat-error>
-                    {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.mustBeAtLeast' | translate }} 0.01
-                  </mat-error>
-                }
-                @if (makeAccountTransferForm.get('transferAmount')?.hasError('amountExceedsBalance')) {
-                  <mat-error>
-                    <fa-icon icon="exclamation-triangle" size="md"></fa-icon>
-                    {{ 'errors.validation.msg.savingsproduct.insufficient.balance' | translate: { balance } }}
-                  </mat-error>
-                }
-              </mat-form-field>
-              <mat-form-field class="form-field description-field">
-                <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
-                <textarea
-                  matInput
-                  formControlName="transferDescription"
-                  cdkTextareaAutosize
-                  cdkAutosizeMinRows="2"
-                  placeholder="{{ 'labels.text.EnterTransferDescription' | translate }}"
-                  title="Transfer description"
-                ></textarea>
-                @if (makeAccountTransferForm.controls.transferDescription.hasError('required')) {
-                  <mat-error>
-                    {{ 'labels.inputs.Transfer Description' | translate }} {{ 'labels.commons.is' | translate }}
-                    <strong>{{ 'labels.commons.required' | translate }}</strong>
-                  </mat-error>
-                }
-              </mat-form-field>
-            </div>
-          </form>
-        }
-      </mat-card-content>
-      @if (!isLoading && makeAccountTransferForm) {
-        <mat-card-actions class="action-buttons">
-          <button type="button" mat-raised-button [routerLink]="['../..']" class="cancel-button">
-            {{ 'labels.buttons.Cancel' | translate }}
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!-- Transfer Details Form -->
+        <form [formGroup]="transferDetailsForm" class="transfer-form">
+          <h3 class="section-title transfer-heading">{{ 'labels.heading.Transfer Details' | translate }}</h3>
+          <div class="form-grid">
+            <mat-form-field class="form-field" (click)="transferDatePicker.open()">
+              <mat-label>{{ 'labels.inputs.Transaction Date' | translate }}</mat-label>
+              <input
+                matInput
+                [min]="minDate"
+                [max]="maxDate"
+                [matDatepicker]="transferDatePicker"
+                required
+                formControlName="transferDate"
+                placeholder="{{ 'labels.text.SelectDate' | translate }}"
+                title="Transaction Date"
+              />
+              <mat-datepicker-toggle matSuffix [for]="transferDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #transferDatePicker></mat-datepicker>
+              @if (transferDetailsForm.controls['transferDate'].hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+            <mat-form-field class="form-field">
+              <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
+              <input
+                type="number"
+                matInput
+                required
+                formControlName="transferAmount"
+                placeholder="{{ 'labels.text.EnterAmount' | translate }}"
+                title="Transfer amount"
+                min="0.01"
+                step="0.01"
+              />
+              @if (transferDetailsForm.controls['transferAmount'].hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+              @if (transferDetailsForm.get('transferAmount')?.hasError('amountExceedsBalance')) {
+                <mat-error>
+                  <fa-icon icon="exclamation-triangle" size="md"></fa-icon>
+                  {{ 'errors.validation.msg.savingsproduct.insufficient.balance' | translate: { balance } }}
+                </mat-error>
+              }
+            </mat-form-field>
+            <mat-form-field class="form-field description-field">
+              <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
+              <textarea
+                matInput
+                formControlName="transferDescription"
+                cdkTextareaAutosize
+                cdkAutosizeMinRows="2"
+                placeholder="{{ 'labels.text.EnterTransferDescription' | translate }}"
+                title="Transfer description"
+              ></textarea>
+              @if (transferDetailsForm.controls['transferDescription'].hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Transfer Description' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </form>
+
+        <!-- Step 2 Navigation -->
+        <div class="layout-row align-center gap-2percent margin-t responsive-column">
+          <button mat-raised-button matStepperPrevious>
+            <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
+            {{ 'labels.buttons.Previous' | translate }}
           </button>
           <ng-container *mifosxHasPermission="'CREATE_ACCOUNTTRANSFER'">
-            @if (interbank && interbankTransferForm) {
-              <button
-                mat-raised-button
-                color="primary"
-                [disabled]="!makeAccountTransferForm.valid"
-                (click)="submit()"
-                class="primary-button"
-              >
-                {{ 'labels.buttons.Submit' | translate }}
-              </button>
-            }
-            @if (!interbank) {
-              <button
-                mat-raised-button
-                color="primary"
-                [disabled]="!makeAccountTransferForm.valid"
-                (click)="submit()"
-                class="primary-button"
-              >
-                {{ 'labels.buttons.Submit' | translate }}
-              </button>
-            }
+            <button mat-raised-button color="primary" [disabled]="!transferDetailsForm.valid" (click)="submit()">
+              {{ 'labels.buttons.Submit' | translate }}
+            </button>
           </ng-container>
-        </mat-card-actions>
+          <button mat-raised-button [routerLink]="['../..']">
+            {{ 'labels.buttons.Cancel' | translate }}
+          </button>
+        </div>
       }
-    </mat-card>
-  }
+    </mat-step>
+
+    <!-- ==================== STEP 3: Transfer Status ==================== -->
+    <mat-step [editable]="false">
+      <ng-template matStepLabel>{{ 'labels.heading.Transfer Status' | translate }}</ng-template>
+
+      @if (isLoading) {
+        <div class="loader-wrapper">
+          <div class="bottom triangle"></div>
+          <div class="top triangle"></div>
+          <div class="left triangle"></div>
+          <div class="right triangle"></div>
+        </div>
+      }
+
+      @if (!isLoading && transferComplete) {
+        <div class="transfer-status-container">
+          @if (transferSuccess) {
+            <div class="status-icon success">
+              <fa-icon icon="check-circle" size="3x"></fa-icon>
+            </div>
+            <h3 class="status-title success-text">{{ 'labels.heading.Transfer Successful' | translate }}</h3>
+          } @else {
+            <div class="status-icon error">
+              <fa-icon icon="times-circle" size="3x"></fa-icon>
+            </div>
+            <h3 class="status-title error-text">{{ 'labels.heading.Transfer Failed' | translate }}</h3>
+            @if (transferErrorMessage) {
+              <p class="status-message error-text">{{ transferErrorMessage }}</p>
+            }
+          }
+
+          <!-- Transfer Summary -->
+          <div class="section-container transfer-summary">
+            <h3 class="section-title transfer-heading">{{ 'labels.heading.Transfer Summary' | translate }}</h3>
+            <mat-divider></mat-divider>
+            <div class="info-grid">
+              <div class="info-row">
+                <div class="info-label">{{ 'labels.inputs.From Account' | translate }}</div>
+                <div class="info-value">
+                  {{ accountTransferTemplateData.fromAccount.productName }}&nbsp;-&nbsp;#{{
+                    accountTransferTemplateData.fromAccount.accountNo
+                  }}
+                </div>
+              </div>
+              @if (interbank && interbankTransferForm) {
+                <div class="info-row">
+                  <div class="info-label">{{ 'labels.inputs.Bank' | translate }}</div>
+                  <div class="info-value">{{ beneficiaryForm.get('toBank')?.value }}</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">{{ 'labels.inputs.Client' | translate }}</div>
+                  <div class="info-value">{{ beneficiaryForm.get('toClientId')?.value }}</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">{{ 'labels.inputs.Account' | translate }}</div>
+                  <div class="info-value">{{ beneficiaryForm.get('toAccountId')?.value }}</div>
+                </div>
+              } @else {
+                <div class="info-row">
+                  <div class="info-label">{{ 'labels.inputs.Office' | translate }}</div>
+                  <div class="info-value">{{ getSelectedOfficeName() }}</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">{{ 'labels.inputs.Client' | translate }}</div>
+                  <div class="info-value">{{ getSelectedClientName() }}</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">{{ 'labels.inputs.Account' | translate }}</div>
+                  <div class="info-value">{{ getSelectedAccountName() }}</div>
+                </div>
+              }
+              <div class="info-row">
+                <div class="info-label">{{ 'labels.inputs.Amount' | translate }}</div>
+                <div class="info-value">
+                  {{ transferDetailsForm.get('transferAmount')?.value }} {{ accountTransferTemplateData.currency.code }}
+                </div>
+              </div>
+              <div class="info-row">
+                <div class="info-label">{{ 'labels.inputs.Transaction Date' | translate }}</div>
+                <div class="info-value">{{ transferDetailsForm.get('transferDate')?.value | date }}</div>
+              </div>
+              @if (transferDetailsForm.get('transferDescription')?.value) {
+                <div class="info-row">
+                  <div class="info-label">{{ 'labels.inputs.Description' | translate }}</div>
+                  <div class="info-value">{{ transferDetailsForm.get('transferDescription')?.value }}</div>
+                </div>
+              }
+              @if (transferReferenceId) {
+                <div class="info-row">
+                  <div class="info-label">{{ 'labels.inputs.Transaction ID' | translate }}</div>
+                  <div class="info-value">{{ transferReferenceId }}</div>
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Step 3 Navigation -->
+          <div class="layout-row align-center gap-2percent margin-t responsive-column">
+            <button mat-raised-button [routerLink]="['../../transactions']">
+              <fa-icon icon="list" class="m-r-10"></fa-icon>
+              {{ 'labels.buttons.View Transactions' | translate }}
+            </button>
+            <button mat-raised-button [routerLink]="['../..']">
+              {{ 'labels.buttons.Back to Account' | translate }}
+            </button>
+          </div>
+        </div>
+      }
+    </mat-step>
+  </mat-stepper>
 </div>

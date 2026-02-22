@@ -20,6 +20,7 @@ import { filter, switchMap, takeUntil } from 'rxjs/operators';
 import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
 import { LegalFormId } from 'app/clients/models/legal-form.enum';
+import { ExternalNationalIdService } from 'app/clients/services/external-national-id.service';
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
@@ -37,6 +38,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   selector: 'mifosx-client-general-step',
   templateUrl: './client-general-step.component.html',
   styleUrls: ['./client-general-step.component.scss'],
+  providers: [ExternalNationalIdService],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     MatDivider,
@@ -52,6 +54,7 @@ export class ClientGeneralStepComponent implements OnInit, OnDestroy {
   private dateUtils = inject(Dates);
   private settingsService = inject(SettingsService);
   private clientService = inject(ClientsService);
+  externalNationalIdService = inject(ExternalNationalIdService);
 
   /** Subject to trigger unsubscription on destroy */
   private destroy$ = new Subject<void>();
@@ -104,6 +107,7 @@ export class ClientGeneralStepComponent implements OnInit, OnDestroy {
     this.maxDate = this.settingsService.businessDate;
     this.setOptions();
     this.buildDependencies();
+    this.externalNationalIdService.watchExternalId(this.createClientForm, this.genderOptions);
   }
 
   /**

@@ -67,6 +67,7 @@
                   matInput
                   formControlName="position"
                   type="number"
+                  min="0"
                   placeholder="{{ 'labels.inputs.Position' | translate }}"
                 />
                 @if (codeValues.at(i).controls.position.hasError('required')) {

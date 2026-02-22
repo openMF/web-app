@@ -138,17 +138,16 @@
       </mifosx-loan-product-accounting-step>
     </mat-step>
 
-    @if (loanProductFormValidAndNotPristine) {
-      <mat-step state="preview" completed>
-        <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
-        <mifosx-loan-product-preview-step
-          [loanProductsTemplate]="loanProductAndTemplate"
-          [accountingRuleData]="accountingRuleData"
-          [loanProduct]="loanProduct"
-          (submitEvent)="submit()"
-        >
-        </mifosx-loan-product-preview-step>
-      </mat-step>
-    }
+    <mat-step state="preview" completed>
+      <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
+      <mifosx-loan-product-preview-step
+        [loanProductsTemplate]="loanProductAndTemplate"
+        [accountingRuleData]="accountingRuleData"
+        [loanProduct]="loanProduct"
+        [isValid]="loanProductFormValid"
+        (submitEvent)="submit()"
+      >
+      </mifosx-loan-product-preview-step>
+    </mat-step>
   </mat-stepper>
 </div>

@@ -48,7 +48,6 @@ export class AttachOriginatorComponent implements OnInit {
 
   ngOnInit() {
     this.setAttachLoanOriginatorForm();
-    console.log(this.dataObject);
     this.loanOriginators = [];
     this.dataObject.forEach((loanOriginator: LoanOriginator) => {
       if (loanOriginator.status === 'ACTIVE') {

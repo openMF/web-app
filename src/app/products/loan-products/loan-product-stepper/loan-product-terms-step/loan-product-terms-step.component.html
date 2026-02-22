@@ -28,6 +28,15 @@
     <mat-form-field class="flex-31">
       <mat-label>{{ 'labels.inputs.Default' | translate }}</mat-label>
       <input type="number" matInput formControlName="principal" required [min]="1" step="0.01" />
+      <mat-error
+        *ngIf="
+          loanProductTermsForm.get('principal')?.hasError('required') &&
+          (loanProductTermsForm.get('principal')?.touched || loanProductTermsForm.get('principal')?.dirty)
+        "
+      >
+        {{ 'labels.catalogs.Default' | translate }} {{ 'labels.inputs.Principal' | translate }}
+        {{ 'labels.commons.is required' | translate }}
+      </mat-error>
       <mat-error *ngIf="loanProductTermsForm.get('principal')?.hasError('min')">
         {{ 'labels.catalogs.Default' | translate }} {{ 'labels.inputs.Principal' | translate }}
         {{ 'labels.commons.is' | translate }}
@@ -59,6 +68,16 @@
               </mat-option>
             }
           </mat-select>
+          <mat-error
+            *ngIf="
+              loanProductTermsForm.get('overAppliedCalculationType')?.hasError('required') &&
+              (loanProductTermsForm.get('overAppliedCalculationType')?.touched ||
+                loanProductTermsForm.get('overAppliedCalculationType')?.dirty)
+            "
+          >
+            {{ 'labels.inputs.Over Amount Calculation Type' | translate }}
+            {{ 'labels.commons.is required' | translate }}
+          </mat-error>
         </mat-form-field>
       }
 
@@ -66,6 +85,15 @@
         <mat-form-field class="flex-fill flex-32">
           <mat-label>{{ 'labels.inputs.Over Amount' | translate }}</mat-label>
           <input type="number" matInput formControlName="overAppliedNumber" required />
+          <mat-error
+            *ngIf="
+              loanProductTermsForm.get('overAppliedNumber')?.hasError('required') &&
+              (loanProductTermsForm.get('overAppliedNumber')?.touched ||
+                loanProductTermsForm.get('overAppliedNumber')?.dirty)
+            "
+          >
+            {{ 'labels.inputs.Over Amount' | translate }} {{ 'labels.commons.is required' | translate }}
+          </mat-error>
         </mat-form-field>
       }
     </div>
@@ -258,16 +286,14 @@
             }
           </mat-select>
           <mat-error>
-            {{ 'labels.inputs.Floating rate' | translate }} {{ 'labels.commons.is' | translate }}
-            <strong>{{ 'labels.commons.required' | translate }}</strong>
+            {{ 'labels.inputs.Floating rate' | translate }} {{ 'labels.commons.is required' | translate }}
           </mat-error>
         </mat-form-field>
         <mat-form-field class="flex-31">
           <mat-label>{{ 'labels.inputs.Differential Rate' | translate }}</mat-label>
           <input type="number" matInput formControlName="interestRateDifferential" required />
           <mat-error>
-            {{ 'labels.inputs.Differential rate' | translate }} {{ 'labels.commons.is' | translate }}
-            <strong>{{ 'labels.commons.required' | translate }}</strong>
+            {{ 'labels.inputs.Differential rate' | translate }} {{ 'labels.commons.is required' | translate }}
           </mat-error>
         </mat-form-field>
         <mat-checkbox class="flex-31" labelPosition="before" formControlName="isFloatingInterestRateCalculationAllowed">
@@ -277,8 +303,7 @@
           <mat-label>{{ 'labels.inputs.Minimum' | translate }}</mat-label>
           <input type="number" matInput formControlName="minDifferentialLendingRate" [min]="0" required />
           <mat-error>
-            {{ 'labels.inputs.Minimum interest rate' | translate }} {{ 'labels.commons.is' | translate }}
-            <strong>{{ 'labels.commons.required' | translate }}</strong>
+            {{ 'labels.inputs.Minimum interest rate' | translate }} {{ 'labels.commons.is required' | translate }}
           </mat-error>
         </mat-form-field>
         <mat-form-field class="flex-31">
@@ -286,16 +311,14 @@
           <input type="number" matInput formControlName="defaultDifferentialLendingRate" required />
           <mat-error>
             {{ 'labels.catalogs.Default' | translate }} {{ 'labels.inputs.Interest rate' | translate }}
-            {{ 'labels.commons.is' | translate }}
-            <strong>{{ 'labels.commons.required' | translate }}</strong>
+            {{ 'labels.commons.is required' | translate }}
           </mat-error>
         </mat-form-field>
         <mat-form-field class="flex-31">
           <mat-label>{{ 'labels.inputs.Maximum' | translate }}</mat-label>
           <input type="number" matInput formControlName="maxDifferentialLendingRate" required />
           <mat-error>
-            {{ 'labels.inputs.Maximum interest rate' | translate }} {{ 'labels.commons.is' | translate }}
-            <strong>{{ 'labels.commons.required' | translate }}</strong>
+            {{ 'labels.inputs.Maximum interest rate' | translate }} {{ 'labels.commons.is required' | translate }}
           </mat-error>
         </mat-form-field>
       </div>

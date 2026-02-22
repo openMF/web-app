@@ -1,0 +1,192 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.step-content {
+  padding: 16px 0;
+}
+
+.receipt-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+  margin-bottom: 24px;
+  border-radius: 8px;
+  text-align: center;
+
+  &.success {
+    background-color: #e8f5e9;
+
+    .receipt-icon {
+      color: #2e7d32;
+    }
+
+    h3 {
+      color: #2e7d32;
+    }
+  }
+
+  &.terminal {
+    background-color: #fff3e0;
+
+    .receipt-icon {
+      color: #e65100;
+    }
+
+    h3 {
+      color: #e65100;
+    }
+  }
+
+  .receipt-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 8px;
+  }
+
+  h3 {
+    margin: 0;
+    font-weight: 500;
+  }
+}
+
+.receipt-body {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.receipt-section {
+  padding: 16px;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  h4 {
+    margin: 0 0 12px;
+    font-weight: 500;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}
+
+.receipt-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+
+  .label {
+    font-size: 13px;
+  }
+
+  .value {
+    font-size: 14px;
+    font-weight: 500;
+
+    &.amount {
+      font-size: 18px;
+      font-weight: 700;
+      color: #2e7d32;
+    }
+
+    &.status-text {
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    &.mono {
+      font-family: monospace;
+      font-size: 12px;
+      background: #f5f5f5;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+  }
+}
+
+.step-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+@media print {
+  .step-actions {
+    display: none;
+  }
+
+  .step-content {
+    padding: 0;
+  }
+
+  .receipt-header {
+    border: none;
+    padding: 16px;
+    margin-bottom: 16px;
+
+    &.success {
+      background-color: transparent;
+      border-bottom: 2px solid #000;
+
+      .receipt-icon {
+        color: #000;
+      }
+
+      h3 {
+        color: #000;
+      }
+    }
+
+    &.terminal {
+      background-color: transparent;
+      border-bottom: 2px solid #000;
+
+      .receipt-icon {
+        color: #000;
+      }
+
+      h3 {
+        color: #000;
+      }
+    }
+  }
+
+  .receipt-body {
+    border: 1px solid #000;
+  }
+
+  .receipt-section {
+    border-color: #000 !important;
+
+    h4 {
+      color: #000;
+    }
+  }
+
+  .receipt-row {
+    .label,
+    .value {
+      color: #000;
+    }
+
+    .value.amount {
+      color: #000;
+    }
+
+    .value.mono {
+      background: transparent;
+      border: 1px solid #ccc;
+    }
+  }
+}

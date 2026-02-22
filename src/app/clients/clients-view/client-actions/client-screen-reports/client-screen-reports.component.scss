@@ -24,7 +24,6 @@
   transition:
     background-color 0.3s ease,
     border-color 0.3s ease;
-  height: 10rem;
 }
 
 ::ng-deep .container.m-t-20 mat-card p {
@@ -32,10 +31,7 @@
   margin-top: -1.9rem;
 }
 
-.m-b-20 form {
-  margin-top: -1.5rem;
-}
-
 .actions-spacing {
-  margin-top: 24px;
+  margin-top: 1rem;
+  padding: 0 1rem;
 }

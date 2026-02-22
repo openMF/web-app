@@ -17,6 +17,8 @@
             matInput
             [formControlName]="formfield.controlName"
             [required]="formfield.required"
+            [attr.min]="formfield.min"
+            [attr.max]="formfield.max"
           />
         }
         @if (form.controls[formfield.controlName].hasError('max')) {

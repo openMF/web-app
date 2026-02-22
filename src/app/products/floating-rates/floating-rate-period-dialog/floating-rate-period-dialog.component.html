@@ -26,7 +26,7 @@
 
       <mat-form-field>
         <mat-label>{{ 'labels.inputs.Interest Rate' | translate }}</mat-label>
-        <input matInput type="number" required formControlName="interestRate" />
+        <input matInput type="number" required formControlName="interestRate" min="0" />
         @if (floatingRatePeriodForm.controls.interestRate.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.Interest Rate' | translate }} {{ 'labels.commons.is' | translate }}

@@ -161,11 +161,6 @@
         border: none;
         color: var(--md-sys-color-on-surface-variant, #44474e);
         transition: all 0.2s ease;
-
-        &:hover {
-          color: var(--md-sys-color-primary, #1074b9);
-          background: #1074b914;
-        }
       }
     }
 
@@ -341,11 +336,6 @@
 
       .mat-mdc-form-field-icon-suffix button {
         color: var(--md-sys-color-on-surface-variant, #c4c6d0);
-
-        &:hover {
-          color: var(--md-sys-color-primary, #5ba2ec);
-          background: #5ba2ec1f;
-        }
       }
     }
   }

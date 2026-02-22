@@ -45,7 +45,7 @@ export class CreateRangeComponent implements OnInit {
         [Validators.required]
       ],
       minimumAgeDays: [
-        0,
+        '',
         [
           Validators.required,
           Validators.pattern('^(0|[1-9][0-9]*)$'),

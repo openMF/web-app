@@ -44,18 +44,33 @@ export class Datatables {
   public getFormfields(columns: any, dateTransformColumns: string[], dataTableEntryObject: any) {
     return columns.map((column: any) => {
       const displayLabel = this.toDisplayLabel(column.columnName);
+      const colName = column.columnName ? column.columnName.toLowerCase().replace(/[_\s]+/g, '') : '';
+      const isMinSavingsAmount = colName.includes('minimumsavingsamountpermeeting');
+      const isPriceOneShare = colName.includes('priceofoneshare');
+      const isRestrictedField = [
+        'mtn',
+        'airtel',
+        'officephone',
+        'office_phone',
+        'office phone'
+      ].some((name) => colName.includes(name.replace(/[_\s]+/g, '')));
       switch (column.columnDisplayType) {
         case 'INTEGER':
         case 'STRING':
         case 'DECIMAL':
-        case 'TEXT':
-          return new InputBase({
+        case 'TEXT': {
+          const inputOptions: any = {
             controlName: column.columnName,
             label: displayLabel,
             value: '',
             type: column.columnDisplayType === 'INTEGER' || column.columnDisplayType === 'DECIMAL' ? 'number' : 'text',
             required: column.isColumnNullable ? false : true
-          });
+          };
+          if (isMinSavingsAmount || isPriceOneShare || isRestrictedField) {
+            inputOptions.min = 0;
+          }
+          return new InputBase(inputOptions);
+        }
         case 'BOOLEAN':
           return new CheckboxBase({
             controlName: column.columnName,
@@ -241,5 +256,26 @@ export class Datatables {
     } catch (e) {
       return false;
     }
+  }
+
+  public isPhoneNumberField(columnName: string): boolean {
+    if (!columnName) {
+      return false;
+    }
+    const normalizedName = columnName.toLowerCase().replace(/[_\s]+/g, '');
+    const phonePatterns = [
+      /\bphone\b/,
+      /\btelefono\b/,
+      /\bcelular\b/,
+      /\bmobile(?:phone|no|num|number)?\b/,
+      /\bfijo\b/,
+      /\blandline\b/,
+      /\bcellphone\b/,
+      /\bofficephone\b/,
+      /\bhomephone\b/,
+      /\bmtn\b/,
+      /\bairtel\b/
+    ];
+    return phonePatterns.some((pattern) => pattern.test(normalizedName));
   }
 }

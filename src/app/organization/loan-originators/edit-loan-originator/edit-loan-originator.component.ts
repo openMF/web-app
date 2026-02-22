@@ -35,7 +35,7 @@ export class EditLoanOriginatorComponent implements OnInit {
   private router = inject(Router);
 
   /** Loan Originator form. */
-  loanOriginatorForm: UntypedFormGroup;
+  loanOriginatorForm: UntypedFormGroup | null = null;
   /** Form data. */
   loanOriginatorsData: LoanOriginator;
   loanOriginatorsTemplateData: any;
@@ -88,10 +88,10 @@ export class EditLoanOriginatorComponent implements OnInit {
         Validators.required
       ],
       originatorTypeId: [
-        this.loanOriginatorsData.originatorType.id
+        this.loanOriginatorsData.originatorType?.id
       ],
       channelTypeId: [
-        this.loanOriginatorsData.channelType.id
+        this.loanOriginatorsData.channelType?.id
       ]
     });
   }

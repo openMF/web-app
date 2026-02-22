@@ -42,6 +42,17 @@
         </mat-form-field>
 
         <mat-form-field>
+          <mat-label>{{ 'labels.inputs.Default Datetime Format' | translate }}</mat-label>
+          <mat-select [formControl]="datetimeFormat">
+            @for (datetimeFormat of datetimeFormats; track datetimeFormat) {
+              <mat-option [value]="datetimeFormat">
+                {{ datetimeFormat }}
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
           <mat-label>{{ 'labels.inputs.Decimals to Display' | translate }}</mat-label>
           <mat-select [formControl]="decimalsToDisplay">
             @for (decimalOpt of decimals; track decimalOpt) {

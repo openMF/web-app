@@ -76,7 +76,10 @@ export class ColumnDialogComponent implements OnInit {
           value: this.data ? +this.data.columnLength : '',
           disabled: this.getColumnType(this.data.columnDisplayType) !== 'String' || this.data.type === 'existing'
         },
-        Validators.required
+        [
+          Validators.required,
+          Validators.min(1)
+        ]
       ],
       mandatory: [{ value: this.data.isColumnNullable, disabled: this.data.type === 'existing' }],
       unique: [

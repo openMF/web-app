@@ -20,7 +20,11 @@ import {
   MatHeaderRowDef,
   MatHeaderRow,
   MatRowDef,
-  MatRow
+  MatRow,
+  MatFooterCellDef,
+  MatFooterCell,
+  MatFooterRowDef,
+  MatFooterRow
 } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 
@@ -60,7 +64,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
-    MatRow
+    MatRow,
+    MatFooterCellDef,
+    MatFooterCell,
+    MatFooterRowDef,
+    MatFooterRow
   ]
 })
 export class IdentitiesTabComponent implements OnDestroy {

@@ -41,6 +41,11 @@ interface Window {
     mifosInterbankTransfersApiVersion?: string;
     mifosInterbankTransfersEnabled?: boolean;
     minPasswordLength?: number;
+    enableExternalNationalIdSystem?: string;
+    externalNationalIdSystemUrl?: string;
+    externalNationalIdSystemApiHeader?: string;
+    externalNationalIdSystemApiKey?: string;
+    externalNationalIdRegex?: string;
   };
 }
 

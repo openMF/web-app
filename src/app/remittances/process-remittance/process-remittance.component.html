@@ -1,0 +1,103 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container">
+  <mat-card>
+    <mat-card-content>
+      <div class="header">
+        <h2>{{ 'labels.heading.Process Remittance' | translate }}</h2>
+      </div>
+
+      <mat-stepper #stepper orientation="vertical" [linear]="true">
+        <!-- Step 1: Search Remittance -->
+        <mat-step [editable]="!remittanceData" [completed]="!!remittanceData">
+          <ng-template matStepLabel>{{ 'labels.heading.Search Remittance' | translate }}</ng-template>
+          <mifosx-search-remittance-step (remittanceFound)="onRemittanceFound($event)"> </mifosx-search-remittance-step>
+        </mat-step>
+
+        <!-- Step 2: Remittance Details -->
+        <mat-step [editable]="false" [completed]="detailsReviewed">
+          <ng-template matStepLabel>{{ 'labels.heading.Remittance Details' | translate }}</ng-template>
+          <mifosx-remittance-details-step
+            [remittanceData]="remittanceData"
+            [parsedStatus]="parsedStatus"
+            (detailsNext)="onDetailsNext()"
+          >
+          </mifosx-remittance-details-step>
+        </mat-step>
+
+        <!-- Step 3: Search Beneficiary (only for PENDING) -->
+        @if (showBeneficiarySteps) {
+          <mat-step [editable]="false" [completed]="!!recipientData">
+            <ng-template matStepLabel>{{ 'labels.heading.Search Beneficiary' | translate }}</ng-template>
+            <mifosx-search-beneficiary-step
+              [vendor]="selectedVendor"
+              [transactionId]="transactionId"
+              (recipientValidated)="onRecipientValidated($event)"
+            >
+            </mifosx-search-beneficiary-step>
+          </mat-step>
+
+          <!-- Step 4: Beneficiary Details -->
+          <mat-step [editable]="false" [completed]="beneficiaryReviewed">
+            <ng-template matStepLabel>{{ 'labels.heading.Beneficiary Details' | translate }}</ng-template>
+            <mifosx-beneficiary-details-step
+              [recipientData]="recipientData"
+              (beneficiaryNext)="onBeneficiaryDetailsNext($event)"
+            >
+            </mifosx-beneficiary-details-step>
+          </mat-step>
+
+          <!-- Step 5: Transactional Profile / Assign Payout -->
+          <mat-step [editable]="false" [completed]="!!payoutAssignment">
+            <ng-template matStepLabel>{{ 'labels.heading.Transactional Profile' | translate }}</ng-template>
+            <mifosx-transactional-profile-step
+              [vendor]="selectedVendor"
+              [transactionId]="transactionId"
+              [remittanceData]="remittanceData"
+              [recipientData]="recipientData"
+              (payoutAssigned)="onPayoutAssigned($event)"
+            >
+            </mifosx-transactional-profile-step>
+          </mat-step>
+        }
+
+        <!-- Step 6: Confirm Payment -->
+        @if (showConfirmStep) {
+          <mat-step [editable]="false" [completed]="!!payoutConfirmation">
+            <ng-template matStepLabel>{{ 'labels.heading.Confirm Payment' | translate }}</ng-template>
+            <mifosx-confirm-payment-step
+              [vendor]="selectedVendor"
+              [transactionId]="transactionId"
+              [remittanceData]="remittanceData"
+              [recipientData]="recipientData"
+              [payoutAssignment]="payoutAssignment"
+              [clientId]="selectedClientId"
+              (payoutConfirmed)="onPayoutConfirmed($event)"
+            >
+            </mifosx-confirm-payment-step>
+          </mat-step>
+        }
+
+        <!-- Step 7: Payment Receipt (always shown) -->
+        <mat-step [editable]="false">
+          <ng-template matStepLabel>{{ 'labels.heading.Payment Receipt' | translate }}</ng-template>
+          <mifosx-payment-receipt-step
+            [remittanceData]="remittanceData"
+            [recipientData]="recipientData"
+            [payoutConfirmation]="payoutConfirmation"
+            [payoutAssignment]="payoutAssignment"
+            [parsedStatus]="parsedStatus"
+            (resetWorkflow)="resetWorkflow()"
+          >
+          </mifosx-payment-receipt-step>
+        </mat-step>
+      </mat-stepper>
+    </mat-card-content>
+  </mat-card>
+</div>

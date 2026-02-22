@@ -1,0 +1,161 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.step-content {
+  padding: 16px 0;
+
+  h3 {
+    margin: 0 0 16px;
+    font-weight: 500;
+  }
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 20px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e0e0e0;
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+
+  h4 {
+    margin: 0;
+    font-weight: 500;
+    font-size: 14px;
+  }
+
+  &:first-of-type {
+    margin-top: 0;
+  }
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 100%));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  .label {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .value {
+    font-size: 14px;
+  }
+}
+
+.step-actions {
+  margin-top: 16px;
+}
+
+.client-search-section {
+  margin: 16px 0;
+  padding: 16px;
+  border-radius: 8px;
+  background-color: var(--mdc-theme-surface, rgb(0 0 0 / 4%));
+
+  .search-instruction {
+    margin: 0 0 12px;
+    font-size: 13px;
+    opacity: 0.7;
+  }
+
+  .client-search-field {
+    width: 100%;
+  }
+
+  .error-message {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    padding: 8px 12px;
+    background-color: var(--mdc-theme-error-container, #ffebee);
+    border-radius: 4px;
+    color: var(--mdc-theme-on-error-container, #c62828);
+    font-size: 13px;
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  .selected-client-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+    padding: 12px;
+    background-color: var(--mdc-theme-primary-container, rgb(76 175 80 / 12%));
+    border-radius: 4px;
+    border: 1px solid var(--mdc-theme-primary, rgb(76 175 80 / 30%));
+
+    mat-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+      color: var(--mdc-theme-primary, #4caf50);
+    }
+
+    .client-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      strong {
+        font-size: 14px;
+      }
+
+      .subdued {
+        font-size: 12px;
+        opacity: 0.7;
+      }
+    }
+  }
+}
+
+.client-option {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px 0;
+
+  .client-name {
+    font-weight: 500;
+  }
+
+  .client-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 12px;
+    color: #666;
+
+    .account-no,
+    .external-id {
+      white-space: nowrap;
+    }
+  }
+}

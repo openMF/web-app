@@ -34,6 +34,12 @@ export class FormGroupService {
     if (formfield.required) {
       validators.push(Validators.required);
     }
+    if (formfield.min !== null && formfield.min !== undefined) {
+      validators.push(Validators.min(formfield.min));
+    }
+    if (formfield.max !== null && formfield.max !== undefined) {
+      validators.push(Validators.max(formfield.max));
+    }
     if (formfield.validators) {
       formfield.validators.forEach((validator: ValidatorFn) => validators.push(validator));
     }

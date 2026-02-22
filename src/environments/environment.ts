@@ -58,6 +58,8 @@ export const environment = {
   defaultLanguage: loadedEnv.defaultLanguage || 'en-US',
   supportedLanguages:
     loadedEnv.supportedLanguages || 'cs-CS,de-DE,en-US,es-MX,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,ne-NE,pt-PT,sw-SW',
+  defaultFormatDate: loadedEnv.defaultFormatDate || '',
+  defaultFormatDatetime: loadedEnv.defaultFormatDatetime || '',
   preloadClients: loadedEnv['preloadClients'] || true,
 
   defaultCharDelimiter: loadedEnv.defaultCharDelimiter || ',',
@@ -84,6 +86,25 @@ export const environment = {
   mifosInterbankTransfersApiProvider: window.env?.mifosInterbankTransfersApiProvider || '/vnext1',
   mifosInterbankTransfersApiVersion: window.env?.mifosInterbankTransfersApiVersion || '/v1.0',
   mifosInterbankTransfersEnabled: window.env?.mifosInterbankTransfersEnabled ?? true,
+
+  /** Remittance Module Integration */
+  mifosRemittanceApiUrl: window.env?.mifosRemittanceApiUrl || '',
+  mifosRemittanceApiProvider: window.env?.mifosRemittanceApiProvider || '/remittance-api',
+  mifosRemittanceApiVersion: window.env?.mifosRemittanceApiVersion || '/v1',
+  mifosRemittanceEnabled: window.env?.mifosRemittanceEnabled === true || window.env?.mifosRemittanceEnabled === 'true',
+  mifosRemittanceApiHeader: window.env?.mifosRemittanceApiHeader || 'X-Gravitee-Api-Key',
+  mifosRemittanceApiKey: window.env?.mifosRemittanceApiKey || '',
+
+  /**
+   * External National ID System Integration
+   * When enabled, client creation/editing will lookup external National ID
+   * and auto-fill client details (name, DOB, gender) from the external system.
+   */
+  enableExternalNationalIdSystem: loadedEnv.enableExternalNationalIdSystem === 'true' || false,
+  externalNationalIdSystemUrl: loadedEnv.externalNationalIdSystemUrl || '',
+  externalNationalIdSystemApiHeader: loadedEnv.externalNationalIdSystemApiHeader || '',
+  externalNationalIdSystemApiKey: loadedEnv.externalNationalIdSystemApiKey || '',
+  externalNationalIdRegex: loadedEnv.externalNationalIdRegex || '',
 
   minPasswordLength: loadedEnv.minPasswordLength || 12,
 

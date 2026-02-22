@@ -104,7 +104,8 @@
         "serve": {
           "builder": "@angular/build:dev-server",
           "options": {
-            "buildTarget": "mifosx-web-app:build"
+            "buildTarget": "mifosx-web-app:build",
+            "proxyConfig": "proxy.conf.js"
           },
           "configurations": {
             "development": {

@@ -88,7 +88,7 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: dist/web-app
+          FOLDER: dist/web-app/browser
           #without preserve it only builds if you have untracked files
           PRESERVE: true
           # github user name and email shows up in the logs,
