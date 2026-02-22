@@ -132,9 +132,15 @@ export class SavingProductSettingsStepComponent implements OnInit {
 
     this.savingProductSettingsForm.get('allowOverdraft').valueChanges.subscribe((allowOverdraft: any) => {
       if (allowOverdraft) {
-        this.savingProductSettingsForm.addControl('minOverdraftForInterestCalculation', new UntypedFormControl(''));
-        this.savingProductSettingsForm.addControl('nominalAnnualInterestRateOverdraft', new UntypedFormControl(''));
-        this.savingProductSettingsForm.addControl('overdraftLimit', new UntypedFormControl(''));
+        this.savingProductSettingsForm.addControl(
+          'minOverdraftForInterestCalculation',
+          new UntypedFormControl('', [Validators.min(0)])
+        );
+        this.savingProductSettingsForm.addControl(
+          'nominalAnnualInterestRateOverdraft',
+          new UntypedFormControl('', [Validators.min(0)])
+        );
+        this.savingProductSettingsForm.addControl('overdraftLimit', new UntypedFormControl('', [Validators.min(0)]));
       } else {
         this.savingProductSettingsForm.removeControl('minOverdraftForInterestCalculation');
         this.savingProductSettingsForm.removeControl('nominalAnnualInterestRateOverdraft');
@@ -154,9 +160,27 @@ export class SavingProductSettingsStepComponent implements OnInit {
       .get('isDormancyTrackingActive')
       .valueChanges.subscribe((isDormancyTrackingActive: any) => {
         if (isDormancyTrackingActive) {
-          this.savingProductSettingsForm.addControl('daysToInactive', new UntypedFormControl('', Validators.required));
-          this.savingProductSettingsForm.addControl('daysToDormancy', new UntypedFormControl('', Validators.required));
-          this.savingProductSettingsForm.addControl('daysToEscheat', new UntypedFormControl('', Validators.required));
+          this.savingProductSettingsForm.addControl(
+            'daysToInactive',
+            new UntypedFormControl('', [
+              Validators.required,
+              Validators.min(0)
+            ])
+          );
+          this.savingProductSettingsForm.addControl(
+            'daysToDormancy',
+            new UntypedFormControl('', [
+              Validators.required,
+              Validators.min(0)
+            ])
+          );
+          this.savingProductSettingsForm.addControl(
+            'daysToEscheat',
+            new UntypedFormControl('', [
+              Validators.required,
+              Validators.min(0)
+            ])
+          );
         } else {
           this.savingProductSettingsForm.removeControl('daysToInactive');
           this.savingProductSettingsForm.removeControl('daysToDormancy');

@@ -180,6 +180,8 @@
             matInput
             matTooltip="{{ 'tooltips.Sets the overdraft required for interest calculation' | translate }}"
             formControlName="minOverdraftForInterestCalculation"
+            min="0"
+            step="0.01"
           />
         </mat-form-field>
         <mat-form-field class="flex-31">
@@ -189,6 +191,8 @@
             matInput
             matTooltip="{{ 'tooltips.Default interest rate on overdraft' | translate }}"
             formControlName="nominalAnnualInterestRateOverdraft"
+            min="0"
+            step="0.01"
           />
         </mat-form-field>
         <mat-form-field class="flex-31">
@@ -198,6 +202,8 @@
             matInput
             matTooltip="{{ 'tooltips.Sets the maximum allowed overdraft amount' | translate }}"
             formControlName="overdraftLimit"
+            min="0"
+            step="0.01"
           />
         </mat-form-field>
       </div>
@@ -225,6 +231,8 @@
             matInput
             matTooltip="{{ 'tooltips.Inactive period to mark an account as Inactive' | translate }}"
             formControlName="daysToInactive"
+            min="0"
+            step="1"
             required
           />
           <mat-error>
@@ -240,6 +248,8 @@
             matInput
             matTooltip="{{ 'tooltips.Inactive period to mark an account as Dormant' | translate }}"
             formControlName="daysToDormancy"
+            min="0"
+            step="1"
             required
           />
           <mat-error>
@@ -254,6 +264,8 @@
             matInput
             matTooltip="{{ 'tooltips.Inactive period to mark an account as Escheat' | translate }}"
             formControlName="daysToEscheat"
+            min="0"
+            step="1"
             required
           />
           <mat-error>
