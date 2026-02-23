@@ -7,7 +7,7 @@
 -->
 
 @if (isRequired) {
-  <mat-form-field appearance="fill" class="flex-100 input-container">
+  <mat-form-field appearance="fill" class="flex-100 input-container" floatLabel="always">
     <mat-label>{{ 'labels.inputs.' + inputLabel | translate }}</mat-label>
     <div class="input-group">
       <span>{{ currency.code }}</span>
@@ -47,7 +47,7 @@
   </mat-form-field>
 }
 @if (!isRequired) {
-  <mat-form-field appearance="fill" class="flex-100">
+  <mat-form-field appearance="fill" class="flex-100" floatLabel="always">
     <mat-label>{{ 'labels.inputs.' + inputLabel | translate }}</mat-label>
     <span matTextSuffix class="m-l-10">{{ currency.code }}</span>
     <span class="flex-auto"></span>
