@@ -54,6 +54,7 @@ export class Datatables {
         'office_phone',
         'office phone'
       ].some((name) => colName.includes(name.replace(/[_\s]+/g, '')));
+      const isNumericField = column.columnDisplayType === 'INTEGER' || column.columnDisplayType === 'DECIMAL';
       switch (column.columnDisplayType) {
         case 'INTEGER':
         case 'STRING':
@@ -66,7 +67,7 @@ export class Datatables {
             type: column.columnDisplayType === 'INTEGER' || column.columnDisplayType === 'DECIMAL' ? 'number' : 'text',
             required: column.isColumnNullable ? false : true
           };
-          if (isMinSavingsAmount || isPriceOneShare || isRestrictedField) {
+          if (isMinSavingsAmount || isPriceOneShare || isRestrictedField || isNumericField) {
             inputOptions.min = 0;
           }
           return new InputBase(inputOptions);
