@@ -293,6 +293,16 @@
       "Name": "नाम",
       "Render Time": "प्रस्तुति समय"
     },
+    "licensing": {
+      "Apache Fineract Description": "<a href=\"https://fineract.apache.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Apache Fineract</a> प्लेटफर्म <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Apache इजाजतपत्र, संस्करण 2.0</a> अन्तर्गत इजाजतपत्र प्राप्त छ। Mifos पहल Apache Fineract पछाडिको मार्गदर्शक शक्ति थियो, यसलाई 2011 मा Mifos X को रूपमा सुरु गर्दै र 2016 मा Apache मा योगदान गर्दै 2017 मा Apache Software Foundation को शीर्ष-स्तर परियोजनामा स्नातक भयो।",
+      "Mifos X Distribution": "Apache Fineract द्वारा संचालित ओपन सोर्स Mifos X वितरण (वेब एप, मोबाइल एप र बिजनेस इन्टेलिजेन्स इञ्जिन समावेश) <a href=\"https://www.mozilla.org/en-US/MPL/2.0/\" target=\"_blank\" rel=\"noopener noreferrer\">Mozilla Public License, v2.0</a> अन्तर्गत इजाजतपत्र प्राप्त छ।",
+      "Legacy Codebase": "हाम्रो लेगेसी कोडबेस (Mifos 2) <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Apache 2.0 इजाजतपत्र</a> द्वारा शासित छ। इजाजतपत्रका सर्तहरूमा सही रूपमा पालना गर्न जान्नको लागि कृपया निम्न पढ्नुहोस्।",
+      "How to License Code": "<a href=\"https://mifosforge.jira.com/wiki/spaces/RES/pages/174456833/How+to+properly+license+Mifos+code+that+you+are+contributing\" target=\"_blank\" rel=\"noopener noreferrer\">तपाईंले योगदान गर्दै हुनुभएको Mifos कोडलाई कसरी सही रूपमा इजाजतपत्र दिनुहुन्छ।</a>",
+      "Contributor Agreement": "<a href=\"https://mifos.org/resources/community/contributor-agreement/\" target=\"_blank\" rel=\"noopener noreferrer\">Mifos योगदानकर्ता समझौता</a>",
+      "License FAQs": "स्रोत कोड परिमार्जन गर्दा यसको अर्थ के हो भन्ने प्रभावहरू <a href=\"https://www.apache.org/foundation/license-faq.html\" target=\"_blank\" rel=\"noopener noreferrer\">Apache इजाजतपत्र FAQ</a> मा पाउन सकिन्छ",
+      "Adding External Software": "<a href=\"https://mifosforge.jira.com/wiki/spaces/RES/pages/174456843/Adding+External+Software+to+Mifos\" target=\"_blank\" rel=\"noopener noreferrer\">Mifos मा बाह्य सफ्टवेयर थप्दा</a> विचार गर्नुपर्ने कुराहरू।",
+      "Code of Conduct": "समुदायमा सहयोग गर्दा पालना गर्नुपर्ने Mifos <a href=\"https://mifos.org/resources/community/code-of-conduct/\" target=\"_blank\" rel=\"noopener noreferrer\">आचरण संहिता</a>।"
+    },
     "aboutUs": {
       "Introduction": "Mifos पहल एक 501(c)(3) गैर-नाफामूलक संस्था र विकासकर्ताहरू, वित्तीय संस्थाहरू र सामाजिक उद्यमीहरूको विश्वव्यापी समुदाय हो। हामी विश्वास गर्छौं कि वित्तीय सेवाहरूमा पहुँच एक आधारभूत मानव अधिकार हो, तर अरबौं मानिसहरू अझै पनि औपचारिक वित्तीय प्रणालीबाट बाहिर छन्।",
       "Platform Description": "हामी <a href=\"https://mifos.org\" target=\"_blank\" rel=\"noopener noreferrer\">Mifos X प्लेटफर्म</a>\u2014विश्वको अग्रणी ओपन-सोर्स कोर बैंकिङ प्रणाली प्रदान गरेर यो अन्तर पूरा गर्छौं। इन्टरप्राइज-ग्रेड बैंकिङ प्रविधिलाई निःशुल्क र सुलभ बनाएर, हामी माइक्रोफाइनान्स संस्थाहरू (MFIs), फिनटेकहरू र गैर-सरकारी संस्थाहरूको लागि प्रवेश अवरोधहरू कम गर्छौं, जसले तिनीहरूलाई आफ्नो प्रभाव विस्तार गर्न र \"अन्तिम माइल\" कुशलतापूर्वक सेवा गर्न अनुमति दिन्छ।",
@@ -1260,6 +1270,8 @@
       "Success!": "सफलता!",
       "Successfully completed": "तपाईंले सफलतापूर्वक सेटअप पूरा गर्नुभयो",
       "Summary Details": "सारांश विवरण",
+      "System Information": "प्रणाली जानकारी",
+      "Software Licensing": "सफ्टवेयर इजाजतपत्र",
       "Tax Components": "कर अवयवहरू",
       "Tax Group": "कर समूह",
       "Teller / Cashier Management": "टेलर / क्यासियर व्यवस्थापन",
@@ -3520,6 +3532,9 @@
       "Step": "चरण",
       "Supports Loan charges, Savings & deposits": "यो विकल्पले तपाईंलाई नयाँ शुल्कहरू सिर्जना गर्न अनुमति दिन्छ। यसले ऋण शुल्क, बचत र निक्षेप शुल्क र ग्राहक शुल्कहरू समर्थन गर्दछ।",
       "System": "प्रणाली",
+      "System Information": "प्रणाली जानकारी",
+      "Software Licensing": "सफ्टवेयर इजाजतपत्र",
+      "View system version, server and licensing information": "प्रणाली संस्करण, सर्भर र इजाजतपत्र जानकारी हेर्नुहोस्",
       "Table": "तालिका",
       "Tax Components": "कर अवयवहरू",
       "tenant_app_key": "tenant_app_key",

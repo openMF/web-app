@@ -293,6 +293,16 @@
       "Name": "Jina",
       "Render Time": "Muda wa uwasilishaji"
     },
+    "licensing": {
+      "Apache Fineract Description": "Jukwaa la <a href=\"https://fineract.apache.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Apache Fineract</a> limetengenezwa chini ya <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Leseni ya Apache, Toleo la 2.0</a>. Mpango wa Mifos ulikuwa nguvu inayoongoza nyuma ya Apache Fineract, ukianzisha kama Mifos X mnamo 2011 na kuchangia Apache mnamo 2016 na kuhitimu kuwa mradi wa kiwango cha juu wa Apache Software Foundation mnamo 2017.",
+      "Mifos X Distribution": "Usambazaji wa chanzo wazi wa Mifos X unaoendesha Apache Fineract (ikijumuisha programu za wavuti, programu za rununu na injini ya akili ya biashara) umetengenezwa chini ya <a href=\"https://www.mozilla.org/en-US/MPL/2.0/\" target=\"_blank\" rel=\"noopener noreferrer\">Leseni ya Umma ya Mozilla, v2.0</a>.",
+      "Legacy Codebase": "Msingi wetu wa kanuni ya urithi (Mifos 2) unasimamiwa na <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Leseni ya Apache 2.0</a>. Tafadhali soma yafuatayo kujifunza jinsi ya kuzingatia vizuri masharti ya leseni.",
+      "How to License Code": "<a href=\"https://mifosforge.jira.com/wiki/spaces/RES/pages/174456833/How+to+properly+license+Mifos+code+that+you+are+contributing\" target=\"_blank\" rel=\"noopener noreferrer\">Jinsi ya kutoa leseni vizuri kanuni ya Mifos unayochangia.</a>",
+      "Contributor Agreement": "<a href=\"https://mifos.org/resources/community/contributor-agreement/\" target=\"_blank\" rel=\"noopener noreferrer\">Mkataba wa Mchangiaji wa Mifos</a>",
+      "License FAQs": "Athari za hii inamaanisha nini wakati wa kurekebisha kanuni chanzo zinaweza kupatikana katika <a href=\"https://www.apache.org/foundation/license-faq.html\" target=\"_blank\" rel=\"noopener noreferrer\">Maswali Yanayoulizwa Mara kwa Mara ya Leseni ya Apache</a>",
+      "Adding External Software": "Mambo ya kuzingatia wakati wa <a href=\"https://mifosforge.jira.com/wiki/spaces/RES/pages/174456843/Adding+External+Software+to+Mifos\" target=\"_blank\" rel=\"noopener noreferrer\">kuongeza programu za nje kwa Mifos</a>.",
+      "Code of Conduct": "<a href=\"https://mifos.org/resources/community/code-of-conduct/\" target=\"_blank\" rel=\"noopener noreferrer\">Kanuni za Maadili</a> za Mifos za kuzingatia wakati wa kushirikiana katika jamii."
+    },
     "aboutUs": {
       "Introduction": "Mpango wa Mifos ni shirika lisilo la faida la 501(c)(3) na jumuiya ya kimataifa ya wasanidi programu, taasisi za kifedha na wajasiriamali wa kijamii. Tunaamini kuwa ufikiaji wa huduma za kifedha ni haki ya msingi ya binadamu, lakini mabilioni ya watu bado wametengwa na mfumo rasmi wa kifedha.",
       "Platform Description": "Tunaziba pengo hili kwa kutoa <a href=\"https://mifos.org\" target=\"_blank\" rel=\"noopener noreferrer\">Jukwaa la Mifos X</a>\u2014mfumo mkuu wa benki wa chanzo huria duniani. Kwa kufanya teknolojia ya benki ya kiwango cha biashara kuwa bure na inayopatikana, tunapunguza vikwazo vya kuingia kwa Taasisi za Fedha Ndogo (MFIs), Fintech na Mashirika Yasiyo ya Kiserikali, kuwawezesha kupanua athari zao na kuhudumia \"maili ya mwisho\" kwa ufanisi.",
@@ -1259,6 +1269,8 @@
       "Success!": "Mafanikio!",
       "Successfully completed": "Umekamilisha usanidi wa",
       "Summary Details": "Maelezo ya Muhtasari",
+      "System Information": "Taarifa za Mfumo",
+      "Software Licensing": "Leseni ya Programu",
       "Tax Components": "Vipengele vya Ushuru",
       "Tax Group": "Kikundi cha Ushuru",
       "Teller / Cashier Management": "Usimamizi wa Teller / Cashier",
@@ -3519,6 +3531,9 @@
       "Step": "Hatua",
       "Supports Loan charges, Savings & deposits": "Chaguo hili hukuruhusu kuunda gharama mpya. Inaauni ada za Mikopo, Ada za Akiba na amana na ada za Mteja.",
       "System": "Mfumo",
+      "System Information": "Taarifa za Mfumo",
+      "Software Licensing": "Leseni ya Programu",
+      "View system version, server and licensing information": "Tazama toleo la mfumo, seva na maelezo ya leseni",
       "Table": "Meza",
       "Tax Components": "Vipengele vya Ushuru",
       "tenant_app_key": "ufunguo_wa_programu_ya_mpangaji",

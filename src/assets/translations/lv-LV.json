@@ -293,6 +293,16 @@
       "Name": "Vārds",
       "Render Time": "Attēlošanas laiks"
     },
+    "licensing": {
+      "Apache Fineract Description": "<a href=\"https://fineract.apache.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Apache Fineract</a> platforma ir licencēta saskaņā ar <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Apache licenci, versiju 2.0</a>. Mifos iniciatīva bija virzītājspēks aiz Apache Fineract, uzsākot to kā Mifos X 2011. gadā un veicinot Apache 2016. gadā ar izlaišanos augstākā līmeņa projektā Apache Software Foundation 2017. gadā.",
+      "Mifos X Distribution": "Atvērtā pirmkoda Mifos X izplatīšana, ko darbīna Apache Fineract (ieskaitot tīmekļa lietotnes, mobilās lietotnes un biznes analītikas dzinēju), ir licencēta saskaņā ar <a href=\"https://www.mozilla.org/en-US/MPL/2.0/\" target=\"_blank\" rel=\"noopener noreferrer\">Mozilla Public License, v2.0</a>.",
+      "Legacy Codebase": "Mūsu mantotā koda bāze (Mifos 2) tiek pārvaldīta saskaņā ar <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Apache 2.0 licenci</a>. Lūdzu, izlasiet turpinājumu, lai uzzinātu, kā pareizi ievērot licences noteikumus.",
+      "How to License Code": "<a href=\"https://mifosforge.jira.com/wiki/spaces/RES/pages/174456833/How+to+properly+license+Mifos+code+that+you+are+contributing\" target=\"_blank\" rel=\"noopener noreferrer\">Kā pareizi licencēt Mifos kodu, ko jūs iesniedzat.</a>",
+      "Contributor Agreement": "<a href=\"https://mifos.org/resources/community/contributor-agreement/\" target=\"_blank\" rel=\"noopener noreferrer\">Mifos līdzstrādnieka līgums</a>",
+      "License FAQs": "Sekām, ko tas nozīmē, modificējot pirmkodu, var atrast <a href=\"https://www.apache.org/foundation/license-faq.html\" target=\"_blank\" rel=\"noopener noreferrer\">Apache licences BUJ</a>",
+      "Adding External Software": "Apsvērumi, kas jāņem vērā, <a href=\"https://mifosforge.jira.com/wiki/spaces/RES/pages/174456843/Adding+External+Software+to+Mifos\" target=\"_blank\" rel=\"noopener noreferrer\">pievienojot ārējo programmatūru Mifos</a>.",
+      "Code of Conduct": "Mifos <a href=\"https://mifos.org/resources/community/code-of-conduct/\" target=\"_blank\" rel=\"noopener noreferrer\">uzņemšanās kodekss</a>, kas jāievēro, sadarbojoties kopiena."
+    },
     "aboutUs": {
       "Introduction": "Mifos iniciatīva ir 501(c)(3) bezpeļņas organizācija un globāla izstrādātāju, finanšu iestāžu un sociālo uzņēmēju kopiena. Mēs ticam, ka piekļuve finanšu pakalpojumiem ir pamata cilvēktiesības, tomēr miljardiem cilvēku joprojām ir izslēgti no formālās finanšu sistēmas.",
       "Platform Description": "Mēs pārvaramam šo plaisu, nodrošinot <a href=\"https://mifos.org\" target=\"_blank\" rel=\"noopener noreferrer\">Mifos X platformu</a>\u2014pasaulē vadošo atvērtā koda pamata banku sistēmu. Padarot uzņēmuma līmeņa banku tehnoloģiju bezmaksas un pieejamu, mēs samazinām ieejas barjeras Mikrofinanšu iestādēm (MFI), Fintech un NVO, ļaujot tām paplašināt savu ietekmi un efektīvi apkalpot \"pēdējo jūdzi\".",
@@ -1262,6 +1272,8 @@
       "Success!": "Veiksmi!",
       "Successfully completed": "Jūs esat veiksmīgi pabeidzis iestatīšanu",
       "Summary Details": "Kopsavilkuma detaļas",
+      "System Information": "Sistēmas Informācija",
+      "Software Licensing": "Programmatūras Licencēšana",
       "Tax Components": "Nodokļu sastāvdaļas",
       "Tax Group": "Nodokļu grupa",
       "Teller / Cashier Management": "Kases/kases vadība",
@@ -3522,6 +3534,9 @@
       "Step": "Solis",
       "Supports Loan charges, Savings & deposits": "Šī opcija ļauj izveidot jaunas maksas. Tā atbalsta aizdevuma maksas, uzkrājumu un noguldījumu maksas un klientu maksas.",
       "System": "Sistēma",
+      "System Information": "Sistēmas Informācija",
+      "Software Licensing": "Programmatūras Licencēšana",
+      "View system version, server and licensing information": "Skatīt sistēmas versiju, servera un licencēšanas informāciju",
       "Table": "Tabula",
       "Tax Components": "Nodokļu sastāvdaļas",
       "tenant_app_key": "rentant_app_key",
