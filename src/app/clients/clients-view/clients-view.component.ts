@@ -18,6 +18,7 @@ import { UnassignStaffDialogComponent } from './custom-dialogs/unassign-staff-di
 import { UploadSignatureDialogComponent } from './custom-dialogs/upload-signature-dialog/upload-signature-dialog.component';
 import { ViewSignatureDialogComponent } from './custom-dialogs/view-signature-dialog/view-signature-dialog.component';
 import { DeleteSignatureDialogComponent } from './custom-dialogs/delete-signature-dialog/delete-signature-dialog.component';
+import { DrawSignatureDialogComponent } from './custom-dialogs/draw-signature-dialog/draw-signature-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { UploadImageDialogComponent } from './custom-dialogs/upload-image-dialog/upload-image-dialog.component';
 import { CaptureImageDialogComponent } from './custom-dialogs/capture-image-dialog/capture-image-dialog.component';
@@ -313,6 +314,8 @@ export class ClientsViewComponent implements OnInit {
       viewSignatureDialogRef.afterClosed().subscribe((response: any) => {
         if (response.upload) {
           this.uploadSignature();
+        } else if (response.draw) {
+          this.drawSignature();
         } else if (response.delete) {
           this.deleteSignature();
         }
@@ -326,6 +329,20 @@ export class ClientsViewComponent implements OnInit {
   private uploadSignature() {
     const uploadSignatureDialogRef = this.dialog.open(UploadSignatureDialogComponent);
     uploadSignatureDialogRef.afterClosed().subscribe((signature: File) => {
+      if (signature) {
+        this.clientsService.uploadClientSignatureImage(this.clientViewData.id, signature).subscribe(() => {
+          this.reload();
+        });
+      }
+    });
+  }
+
+  /**
+   * Opens draw pad for client signature
+   */
+  private drawSignature() {
+    const drawSignatureDialogRef = this.dialog.open(DrawSignatureDialogComponent);
+    drawSignatureDialogRef.afterClosed().subscribe((signature: File) => {
       if (signature) {
         this.clientsService.uploadClientSignatureImage(this.clientViewData.id, signature).subscribe(() => {
           this.reload();

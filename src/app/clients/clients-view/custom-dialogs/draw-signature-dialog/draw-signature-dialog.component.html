@@ -1,0 +1,28 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="layout-column gap-2px">
+  <h1 mat-dialog-title>{{ 'labels.heading.Draw Client Signature' | translate }}</h1>
+
+  <div class="signature-canvas-container">
+    <canvas #signatureCanvas class="signature-canvas"></canvas>
+  </div>
+
+  <div align="center">
+    <button mat-stroked-button color="primary" (click)="clear()">
+      {{ 'labels.buttons.Clear' | translate }}
+    </button>
+  </div>
+
+  <mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
+    <button mat-raised-button color="primary" [disabled]="isEmpty" (click)="confirm()">
+      {{ 'labels.buttons.Confirm' | translate }}
+    </button>
+  </mat-dialog-actions>
+</div>
