@@ -707,17 +707,17 @@
     </div>
     @if (loanProduct.holdGuaranteeFunds) {
       <div class="flex-fill layout-row-wrap responsive-column">
-        <span class="flex-40">{{ 'labels.inputs.Mandatory Guarantee' | translate }} (%):</span>
+        <span class="flex-40">{{ 'labels.inputs.Mandatory Guarantee(%)' | translate }}:</span>
         <span class="flex-60">{{ loanProduct.productGuaranteeData.mandatoryGuarantee }}</span>
         @if (loanProduct.productGuaranteeData.minimumGuaranteeFromOwnFunds) {
           <div class="flex-fill layout-row">
-            <span class="flex-40">{{ 'labels.inputs.Minimum Guarantee from Own Funds' | translate }} (%):</span>
+            <span class="flex-40">{{ 'labels.inputs.Minimum Guarantee from Own Funds(%)' | translate }}:</span>
             <span class="flex-60">{{ loanProduct.productGuaranteeData.minimumGuaranteeFromOwnFunds }}</span>
           </div>
         }
         @if (loanProduct.productGuaranteeData.minimumGuaranteeFromGuarantor) {
           <div class="flex-fill layout-row">
-            <span class="flex-40">{{ 'labels.inputs.Minimum Guarantee from Guarantor Funds' | translate }} (%):</span>
+            <span class="flex-40">{{ 'labels.inputs.Minimum Guarantee from Guarantor Funds(%)' | translate }}:</span>
             <span class="flex-60">{{ loanProduct.productGuaranteeData.minimumGuaranteeFromGuarantor }}</span>
           </div>
         }
