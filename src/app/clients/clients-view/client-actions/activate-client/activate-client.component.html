@@ -10,25 +10,27 @@
   <mat-card>
     <form [formGroup]="activateClientForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <mat-form-field class="flex-fill" (click)="activationDatePicker.open()">
-          <mat-label>{{ 'labels.inputs.Activated On Date' | translate }}</mat-label>
-          <input
-            matInput
-            [min]="minDate"
-            [max]="maxDate"
-            [matDatepicker]="activationDatePicker"
-            required
-            formControlName="activationDate"
-          />
-          <mat-datepicker-toggle matSuffix [for]="activationDatePicker"></mat-datepicker-toggle>
-          <mat-datepicker #activationDatePicker></mat-datepicker>
-          @if (activateClientForm.controls.activationDate.hasError('required')) {
-            <mat-error>
-              {{ 'labels.inputs.Activated On Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
-          }
-        </mat-form-field>
+        <div class="layout-column">
+          <mat-form-field (click)="activationDatePicker.open()">
+            <mat-label>{{ 'labels.inputs.Activated On Date' | translate }}</mat-label>
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="activationDatePicker"
+              required
+              formControlName="activationDate"
+            />
+            <mat-datepicker-toggle matSuffix [for]="activationDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #activationDatePicker></mat-datepicker>
+            @if (activateClientForm.controls.activationDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Activated On Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
+          </mat-form-field>
+        </div>
       </mat-card-content>
 
       <mat-card-actions class="layout-row align-center gap-5px responsive-column">
