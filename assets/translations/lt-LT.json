@@ -293,6 +293,16 @@
       "Name": "Vardas",
       "Render Time": "Atvaizdavimo laikas"
     },
+    "licensing": {
+      "Apache Fineract Description": "<a href=\"https://fineract.apache.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Apache Fineract</a> platforma yra licencijuota pagal <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Apache licenciją, 2.0 versiją</a>. \"Mifos\" iniciatyva buvo varomoji jėga už Apache Fineract, paleidusi ją kaip Mifos X 2011 m. ir prisidėdama prie Apache 2016 m., o 2017 m. ji tapo aukščiausio lygio Apache Software Foundation projektu.",
+      "Mifos X Distribution": "Atvirojo kodo Mifos X platinimas, veiksmo Apache Fineract (įskaitant žiniatinklio programas, mobiliąsias programas ir verslo žinių variklį), yra licencijuotas pagal <a href=\"https://www.mozilla.org/en-US/MPL/2.0/\" target=\"_blank\" rel=\"noopener noreferrer\">Mozilla viešąją licenciją, v2.0</a>.",
+      "Legacy Codebase": "Mūsų senesnė kodo bazė (Mifos 2) yra valdoma pagal <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Apache 2.0 licenciją</a>. Prašome perskaityti toliau pateiktą informaciją, kad sužinotumėte, kaip tinkamai laikytis licencijos sąlygų.",
+      "How to License Code": "<a href=\"https://mifosforge.jira.com/wiki/spaces/RES/pages/174456833/How+to+properly+license+Mifos+code+that+you+are+contributing\" target=\"_blank\" rel=\"noopener noreferrer\">Kaip tinkamai licencijuoti Mifos kodą, kurį prisidedate.</a>",
+      "Contributor Agreement": "<a href=\"https://mifos.org/resources/community/contributor-agreement/\" target=\"_blank\" rel=\"noopener noreferrer\">Mifos prisidėjimo sutartis</a>",
+      "License FAQs": "Poveikis, ką tai reiškia modifikuojant šaltinio kodą, galima rasti <a href=\"https://www.apache.org/foundation/license-faq.html\" target=\"_blank\" rel=\"noopener noreferrer\">Apache licencijos DUK</a>",
+      "Adding External Software": "Svarstymai, į kuriuos reikia atsižvelgti, kai <a href=\"https://mifosforge.jira.com/wiki/spaces/RES/pages/174456843/Adding+External+Software+to+Mifos\" target=\"_blank\" rel=\"noopener noreferrer\">pridėti išorinę programinę įrangą prie Mifos</a>.",
+      "Code of Conduct": "Mifos <a href=\"https://mifos.org/resources/community/code-of-conduct/\" target=\"_blank\" rel=\"noopener noreferrer\">elgesio kodeksas</a>, kurį reikia laikytis bendradarbiaujant bendruomenėje."
+    },
     "aboutUs": {
       "Introduction": "\\\"Mifos\\\" iniciatyva yra 501(c)(3) ne pelno organizacija ir pasauline kurejų, finansų institucijų ir socialinių verslininkų bendruomene. Tikime, kad prieiga prie finansinių paslaugų yra pagrindinė žmogaus teise, tačiau milijardai žmonių vis dar yra atskirti nuo formalios finansų sistemos.",
       "Platform Description": "Mes užpildome šią spragą teikdami <a href=\"https://mifos.org\" target=\"_blank\" rel=\"noopener noreferrer\">Mifos X platformą</a>\u2014pasaulyje pirmaujančią atvirojo kodo pagrindinę bankininkystės sistemą. Padarydami įmonės lygio bankininkystės technologiją nemokamą ir prieinamą, sumažiname patekimo barjerus Mikrofinansų institucijoms (MFI), Fintech įmonėms ir NVO, leisdami joms plėsti savo poveikį ir efektyviai aptarnauti \\\"paskutinę mylią\\\".",
@@ -1260,6 +1270,8 @@
       "Success!": "Sėkmė!",
       "Successfully completed": "Sėkmingai baigėte sąranką",
       "Summary Details": "Santraukos detalės",
+      "System Information": "Sistemos Informacija",
+      "Software Licensing": "Programinės įrangos Licencijavimas",
       "Tax Components": "Mokesčių komponentai",
       "Tax Group": "Mokesčių grupė",
       "Teller / Cashier Management": "Kasos / kasos valdymas",
@@ -3522,6 +3534,9 @@
       "Step": "Žingsnis",
       "Supports Loan charges, Savings & deposits": "Ši parinktis leidžia sukurti naujus mokesčius. Tai palaiko paskolos mokesčius, taupymo ir indėlių mokesčius ir klientų mokesčius.",
       "System": "Sistema",
+      "System Information": "Sistemos Informacija",
+      "Software Licensing": "Programinės Įrangos Licencijavimas",
+      "View system version, server and licensing information": "Peržiūrėti sistemos versiją, serverio ir licencijavimo informaciją",
       "Table": "Lentelė",
       "Tax Components": "Mokesčių komponentai",
       "tenant_app_key": "nuomininko_programos_raktas",

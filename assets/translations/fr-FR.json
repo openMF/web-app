@@ -293,6 +293,16 @@
       "Name": "Nom",
       "Render Time": "Temps de rendu"
     },
+    "licensing": {
+      "Apache Fineract Description": "La plateforme <a href=\"https://fineract.apache.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Apache Fineract</a> est sous licence <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Licence Apache, Version 2.0</a>. L'Initiative Mifos a été la force motrice derrière Apache Fineract, le lançant sous le nom de Mifos X en 2011 et contribuant à Apache en 2016 avec l'obtention du statut de projet de premier niveau de l'Apache Software Foundation en 2017.",
+      "Mifos X Distribution": "La distribution open source Mifos X alimentée par Apache Fineract (y compris les applications web, les applications mobiles et le moteur de business intelligence) est sous licence <a href=\"https://www.mozilla.org/en-US/MPL/2.0/\" target=\"_blank\" rel=\"noopener noreferrer\">Licence Publique Mozilla, v2.0</a>.",
+      "Legacy Codebase": "Notre base de code héritée (Mifos 2) est régie par la <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Licence Apache 2.0</a>. Veuillez lire ce qui suit pour apprendre comment adhérer correctement aux termes de la licence.",
+      "How to License Code": "<a href=\"https://mifosforge.jira.com/wiki/spaces/RES/pages/174456833/How+to+properly+license+Mifos+code+that+you+are+contributing\" target=\"_blank\" rel=\"noopener noreferrer\">Comment licencier correctement le code Mifos que vous contribuez.</a>",
+      "Contributor Agreement": "<a href=\"https://mifos.org/resources/community/contributor-agreement/\" target=\"_blank\" rel=\"noopener noreferrer\">Accord de Contributeur Mifos</a>",
+      "License FAQs": "Les implications de ce que cela signifie lors de la modification du code source peuvent être trouvées dans les <a href=\"https://www.apache.org/foundation/license-faq.html\" target=\"_blank\" rel=\"noopener noreferrer\">FAQ sur la Licence Apache</a>",
+      "Adding External Software": "Considérations à prendre en compte lors de l'<a href=\"https://mifosforge.jira.com/wiki/spaces/RES/pages/174456843/Adding+External+Software+to+Mifos\" target=\"_blank\" rel=\"noopener noreferrer\">ajout de logiciels externes à Mifos</a>.",
+      "Code of Conduct": "<a href=\"https://mifos.org/resources/community/code-of-conduct/\" target=\"_blank\" rel=\"noopener noreferrer\">Code de Conduite</a> de Mifos à respecter lors de la collaboration dans la communauté."
+    },
     "aboutUs": {
       "Introduction": "L'Initiative Mifos est une organisation à but non lucratif 501(c)(3) et une communauté mondiale de développeurs, d'institutions financières et d'entrepreneurs sociaux. Nous croyons que l'accès aux services financiers est un droit humain fondamental, mais des milliards de personnes restent exclues du système financier formel.",
       "Platform Description": "Nous comblons cette lacune en fournissant la <a href=\"https://mifos.org\" target=\"_blank\" rel=\"noopener noreferrer\">Plateforme Mifos X</a>\u2014le système bancaire de base open source le plus avancé au monde. En rendant la technologie bancaire de niveau entreprise gratuite et accessible, nous abaissons les barrières à l'entrée pour les Institutions de Microfinance (IMF), les Fintechs et les ONG, leur permettant d'augmenter leur impact et de servir le \"dernier kilomètre\" efficacement.",
@@ -1265,6 +1275,8 @@
       "Success!": "Succès!",
       "Successfully completed": "Vous avez terminé avec succès la configuration de",
       "Summary Details": "Détails du résumé",
+      "System Information": "Informations Système",
+      "Software Licensing": "Licence de Logiciels",
       "Tax Components": "Composantes fiscales",
       "Tax Group": "Groupe fiscal",
       "Teller / Cashier Management": "Gestion de caissier/caissier",
@@ -3524,6 +3536,9 @@
       "Step": "Étape",
       "Supports Loan charges, Savings & deposits": "Cette option vous permet de créer de nouveaux frais. Il prend en charge les frais de prêt, les frais d'épargne et de dépôt et les frais du client.",
       "System": "Système",
+      "System Information": "Informations Système",
+      "Software Licensing": "Licence de Logiciels",
+      "View system version, server and licensing information": "Afficher les informations de version du système, du serveur et de licence",
       "Table": "Tableau",
       "Tax Components": "Composantes fiscales",
       "tenant_app_key": "clé_app_tenant",

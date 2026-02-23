@@ -293,6 +293,16 @@
       "Name": "Jméno",
       "Render Time": "Doba vykreslování"
     },
+    "licensing": {
+      "Apache Fineract Description": "Platforma <a href=\"https://fineract.apache.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Apache Fineract</a> je licencována pod <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Licencí Apache, verze 2.0</a>. Iniciativa Mifos byla hnácí silou za Apache Fineract, když ji spustila jako Mifos X v roce 2011 a přispěla do Apache v roce 2016 s absolvováním na projekt nejvyšší úrovně Apache Software Foundation v roce 2017.",
+      "Mifos X Distribution": "Distribuce open source Mifos X poháněná Apache Fineract (včetně webových aplikací, mobilních aplikací a enginu business intelligence) je licencována pod <a href=\"https://www.mozilla.org/en-US/MPL/2.0/\" target=\"_blank\" rel=\"noopener noreferrer\">Mozilla Public License, v2.0</a>.",
+      "Legacy Codebase": "Naše starší kódová základna (Mifos 2) se řídí <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Licencí Apache 2.0</a>. Přečtěte si prosím následující informace, abyste se naučili, jak správně dodržovat podmínky licence.",
+      "How to License Code": "<a href=\"https://mifosforge.jira.com/wiki/spaces/RES/pages/174456833/How+to+properly+license+Mifos+code+that+you+are+contributing\" target=\"_blank\" rel=\"noopener noreferrer\">Jak správně licencovat kód Mifos, který přispíváte.</a>",
+      "Contributor Agreement": "<a href=\"https://mifos.org/resources/community/contributor-agreement/\" target=\"_blank\" rel=\"noopener noreferrer\">Dohoda přispěvatele Mifos</a>",
+      "License FAQs": "Dopady toho, co to znamená při úpravě zdrojového kódu, naleznete v <a href=\"https://www.apache.org/foundation/license-faq.html\" target=\"_blank\" rel=\"noopener noreferrer\">FAQ k licenci Apache</a>",
+      "Adding External Software": "Úvahy, které je třeba zvážit při <a href=\"https://mifosforge.jira.com/wiki/spaces/RES/pages/174456843/Adding+External+Software+to+Mifos\" target=\"_blank\" rel=\"noopener noreferrer\">přidávání externího softwaru do Mifos</a>.",
+      "Code of Conduct": "<a href=\"https://mifos.org/resources/community/code-of-conduct/\" target=\"_blank\" rel=\"noopener noreferrer\">Kodex chování</a> Mifos, kterého se je třeba držet při spolupráci v komunitě."
+    },
     "aboutUs": {
       "Introduction": "Iniciativa Mifos je nezisková organizace 501(c)(3) a globální komunita vývojářů, finančních institucí a sociálních podnikatelů. Věříme, že přístup k finančním službám je základní lidské právo, přesto miliardy lidí zůstávají vyloučeny z formálního finančního systému.",
       "Platform Description": "Tuto mezeru překlenujeme poskytováním <a href=\"https://mifos.org\" target=\"_blank\" rel=\"noopener noreferrer\">Platformy Mifos X</a>\u2014světově vedoucího open-source bankovního systému. Tím, že zpřístupňujeme podnikovou bankovní technologii zdarma, snižujeme bariéry vstupu pro Mikrofinanční instituce (MFI), Fintechy a nevládní organizace, což jim umožňuje rozšířit svůj dopad a efektivně obsluhovat \"poslední míli\".",
@@ -1261,6 +1271,8 @@
       "Success!": "Úspěch!",
       "Successfully completed": "Úspěšně jste dokončili nastavení",
       "Summary Details": "Souhrn Podrobnosti",
+      "System Information": "Systémové Informace",
+      "Software Licensing": "Licencování Softwaru",
       "Tax Components": "Složky daně",
       "Tax Group": "Daňová skupina",
       "Teller / Cashier Management": "Správa pokladníka / pokladny",
@@ -3522,6 +3534,9 @@
       "Step": "Krok",
       "Supports Loan charges, Savings & deposits": "Tato možnost umožňuje vytvářet nové poplatky. Podporuje poplatky za úvěr, poplatky za spoření a vklady a poplatky za klienty.",
       "System": "Systém",
+      "System Information": "Systémové Informace",
+      "Software Licensing": "Licencování Softwaru",
+      "View system version, server and licensing information": "Zobrazit informace o verzi systému, serveru a licenci",
       "Table": "Stůl",
       "Tax Components": "Složky daně",
       "tenant_app_key": "tenant_app_key",

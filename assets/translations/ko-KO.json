@@ -293,6 +293,16 @@
       "Name": "이름",
       "Render Time": "렌더링 시간"
     },
+    "licensing": {
+      "Apache Fineract Description": "<a href=\"https://fineract.apache.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Apache Fineract</a> 플랫폼은 <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Apache 라이선스, 버전 2.0</a>에 따라 라이선스가 부여됩니다. Mifos 이니셔티브는 Apache Fineract를 뒤에서 주도하는 세력으로, 2011년에 Mifos X로 출시하고 2016년에 Apache에 기여하여 2017년에 Apache Software Foundation의 최상위 프로젝트로 졸업했습니다.",
+      "Mifos X Distribution": "Apache Fineract로 구동되는 오픈 소스 Mifos X 배포판(웹 앱, 모바일 앱 및 비즈니스 인텔리전스 엔진 포함)은 <a href=\"https://www.mozilla.org/en-US/MPL/2.0/\" target=\"_blank\" rel=\"noopener noreferrer\">Mozilla Public License, v2.0</a>에 따라 라이선스가 부여됩니다.",
+      "Legacy Codebase": "우리의 레거시 코드베이스(Mifos 2)는 <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Apache 2.0 라이선스</a>에 의해 규율됩니다. 라이선스 조건을 올바르게 준수하는 방법을 알아보려면 다음을 읽어보십시오.",
+      "How to License Code": "<a href=\"https://mifosforge.jira.com/wiki/spaces/RES/pages/174456833/How+to+properly+license+Mifos+code+that+you+are+contributing\" target=\"_blank\" rel=\"noopener noreferrer\">기여하는 Mifos 코드를 올바르게 라이선스하는 방법.</a>",
+      "Contributor Agreement": "<a href=\"https://mifos.org/resources/community/contributor-agreement/\" target=\"_blank\" rel=\"noopener noreferrer\">Mifos 기여자 계약</a>",
+      "License FAQs": "소스 코드를 수정할 때 이것이 무엇을 의미하는지의 함의는 <a href=\"https://www.apache.org/foundation/license-faq.html\" target=\"_blank\" rel=\"noopener noreferrer\">Apache 라이선스 FAQ</a>에서 확인할 수 있습니다",
+      "Adding External Software": "<a href=\"https://mifosforge.jira.com/wiki/spaces/RES/pages/174456843/Adding+External+Software+to+Mifos\" target=\"_blank\" rel=\"noopener noreferrer\">Mifos에 외부 소프트웨어를 추가할 때</a> 고려해야 할 사항.",
+      "Code of Conduct": "커뮤니티에서 협업할 때 준수해야 하는 Mifos <a href=\"https://mifos.org/resources/community/code-of-conduct/\" target=\"_blank\" rel=\"noopener noreferrer\">행동 강령</a>."
+    },
     "aboutUs": {
       "Introduction": "Mifos 이니셔티브는 501(c)(3) 비영리 단체이자 개발자, 금융 기관 및 사회적 기업가들의 글로벌 커뮤니티입니다. 우리는 금융 서비스에 대한 접근이 기본적인 인권이라고 믿지만, 수십억 명의 사람들이 여전히 공식 금융 시스템에서 배제되어 있습니다.",
       "Platform Description": "우리는 <a href=\"https://mifos.org\" target=\"_blank\" rel=\"noopener noreferrer\">Mifos X 플랫폼</a>\u2014세계 최고의 오픈소스 핵심 뱅킹 시스템을 제공하여 이 격차를 해소합니다. 엔터프라이즈급 뱅킹 기술을 무료로 접근 가능하게 함으로써, 소액금융기관(MFI), 핀테크 및 NGO의 진입 장벽을 낮추어 그들이 영향력을 확대하고 \"라스트 마일\"을 효율적으로 서비스할 수 있도록 합니다.",
@@ -1263,6 +1273,8 @@
       "Success!": "성공!",
       "Successfully completed": "성공적으로 설정을 완료했습니다.",
       "Summary Details": "요약 세부정보",
+      "System Information": "시스템 정보",
+      "Software Licensing": "소프트웨어 라이선싱",
       "Tax Components": "세금 구성요소",
       "Tax Group": "세금 그룹",
       "Teller / Cashier Management": "창구/출납원 관리",
@@ -3522,6 +3534,9 @@
       "Step": "단계",
       "Supports Loan charges, Savings & deposits": "이 옵션을 사용하면 새 요금을 생성할 수 있습니다. 대출 수수료, 예금 수수료, 고객 수수료를 지원합니다.",
       "System": "체계",
+      "System Information": "시스템 정보",
+      "Software Licensing": "소프트웨어 라이선싱",
+      "View system version, server and licensing information": "시스템 버전, 서버 및 라이선싱 정보 보기",
       "Table": "테이블",
       "Tax Components": "세금 구성요소",
       "tenant_app_key": "테넌트_앱_키",

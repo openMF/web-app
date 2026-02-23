@@ -293,6 +293,16 @@
       "Name": "Nome",
       "Render Time": "Tempo de renderização"
     },
+    "licensing": {
+      "Apache Fineract Description": "A plataforma <a href=\"https://fineract.apache.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Apache Fineract</a> é licenciada sob a <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Licença Apache, Versão 2.0</a>. A Iniciativa Mifos foi a força motriz por trás do Apache Fineract, lançando-o como Mifos X em 2011 e contribuindo para o Apache em 2016 com graduação para um projeto de nível superior da Apache Software Foundation em 2017.",
+      "Mifos X Distribution": "A distribuição de código aberto Mifos X alimentada pelo Apache Fineract (incluindo aplicativos web, aplicativos móveis e mecanismo de business intelligence) é licenciada sob a <a href=\"https://www.mozilla.org/en-US/MPL/2.0/\" target=\"_blank\" rel=\"noopener noreferrer\">Licença Pública Mozilla, v2.0</a>.",
+      "Legacy Codebase": "Nossa base de código legada (Mifos 2) é regida pela <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Licença Apache 2.0</a>. Por favor, leia o seguinte para aprender como aderir corretamente aos termos da licença.",
+      "How to License Code": "<a href=\"https://mifosforge.jira.com/wiki/spaces/RES/pages/174456833/How+to+properly+license+Mifos+code+that+you+are+contributing\" target=\"_blank\" rel=\"noopener noreferrer\">Como licenciar corretamente o código Mifos que você está contribuindo.</a>",
+      "Contributor Agreement": "<a href=\"https://mifos.org/resources/community/contributor-agreement/\" target=\"_blank\" rel=\"noopener noreferrer\">Acordo de Contribuidor Mifos</a>",
+      "License FAQs": "As implicações do que isso significa ao modificar o código-fonte podem ser encontradas nas <a href=\"https://www.apache.org/foundation/license-faq.html\" target=\"_blank\" rel=\"noopener noreferrer\">Perguntas Frequentes da Licença Apache</a>",
+      "Adding External Software": "Considerações a serem levadas em conta ao <a href=\"https://mifosforge.jira.com/wiki/spaces/RES/pages/174456843/Adding+External+Software+to+Mifos\" target=\"_blank\" rel=\"noopener noreferrer\">adicionar software externo ao Mifos</a>.",
+      "Code of Conduct": "<a href=\"https://mifos.org/resources/community/code-of-conduct/\" target=\"_blank\" rel=\"noopener noreferrer\">Código de Conduta</a> do Mifos a ser seguido ao colaborar na comunidade."
+    },
     "aboutUs": {
       "Introduction": "A Iniciativa Mifos é uma organização sem fins lucrativos 501(c)(3) e uma comunidade global de desenvolvedores, instituições financeiras e empreendedores sociais. Acreditamos que o acesso a serviços financeiros é um direito humano fundamental, mas bilhões de pessoas permanecem excluídas do sistema financeiro formal.",
       "Platform Description": "Preenchemos esta lacuna fornecendo a <a href=\"https://mifos.org\" target=\"_blank\" rel=\"noopener noreferrer\">Plataforma Mifos X</a>\u2014o principal sistema bancário central de código aberto do mundo. Ao tornar a tecnologia bancária de nível empresarial gratuita e acessível, reduzimos as barreiras de entrada para Instituições de Microfinanças (IMFs), Fintechs e ONGs, permitindo que ampliem seu impacto e atendam a \"última milha\" de forma eficiente.",
@@ -1261,6 +1271,8 @@
       "Success!": "Sucesso!",
       "Successfully completed": "Você concluiu com êxito a configuração do",
       "Summary Details": "Detalhes do resumo",
+      "System Information": "Informações do Sistema",
+      "Software Licensing": "Licenciamento de Software",
       "Tax Components": "Componentes fiscais",
       "Tax Group": "Grupo Fiscal",
       "Teller / Cashier Management": "Gestão de Caixa / Caixa",
@@ -3521,6 +3533,9 @@
       "Step": "Etapa",
       "Supports Loan charges, Savings & deposits": "Esta opção permite criar novas cobranças. Suporta encargos de empréstimos, encargos de poupança e depósitos e encargos de clientes.",
       "System": "Sistema",
+      "System Information": "Informações do Sistema",
+      "Software Licensing": "Licenciamento de Software",
+      "View system version, server and licensing information": "Ver informações de versão do sistema, servidor e licenciamento",
       "Table": "Mesa",
       "Tax Components": "Componentes fiscais",
       "tenant_app_key": "locatário_app_key",
