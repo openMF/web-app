@@ -135,13 +135,36 @@ We maintain a linear, meaningful git history.
   - ❌ **Bad History:** `init`, `wip`, `typo`, `fix`, `fix again`
   - ✅ **Good History:** `WEB-123: Implement client search functionality`
 
-**How to Squash:**
+**How to Squash (Step-by-Step Example):**
 
-```bash
-git rebase -i HEAD~N  # Replace N with the number of commits
-# Mark the first commit as 'pick' and subsequent commits as 'squash'
-git push --force-with-lease
-```
+1. **Start Interactive Rebase:** Run the following command (replace `2` with the number of commits you want to combine):
+
+   ```bash
+   git rebase -i HEAD~2
+   ```
+
+2. **Edit the Rebase File:** An editor will open listing your recent commits. It will look like this:
+
+   ```text
+   pick a1b2c3d Message of the older commit
+   pick e4f5g6h Message of the newer commit
+   ```
+
+3. **Squash the Commits:** Change `pick` to `squash` (or `s`) for all commits except the first one:
+
+   ```text
+   pick a1b2c3d Message of the older commit
+   s e4f5g6h Message of the newer commit
+   ```
+
+4. **Save and Close:** Save the file and close the editor.
+
+5. **Finalize Message:** A new editor window will appear. Combine or edit the commit messages into a single, meaningful title (e.g., `WEB-123: Feature description`). Save and close.
+
+6. **Force Push:** Send the changes to your remote repository.
+   ```bash
+   git push origin branch-name --force-with-lease
+   ```
 
 ---
 
@@ -225,9 +248,9 @@ git push --set-upstream origin branch-name
 
 - If any of the squashed commits have already been pushed to your remote repository, you need to do a force push.
 
-```
-git push origin remote-branch-name --force
-```
+  ```bash
+  git push origin branch-name --force-with-lease
+  ```
 
 - Follow the Pull request template and submit a pull request with a motive for your change and the method you used to achieve it to be merged with the `dev` branch.
 - If possible, please submit the pull request along with tests.
