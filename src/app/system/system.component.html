@@ -535,40 +535,6 @@
             </div>
           </mat-list-item>
 
-          <mat-list-item [ngClass]="{ 'disabled-item': isDisabled }">
-            <div class="menu-list-item-content">
-              <div class="menu-left-section">
-                <mat-icon matListIcon>
-                  <fa-icon icon="key" size="sm"></fa-icon>
-                </mat-icon>
-                <div matLine>
-                  {{ 'labels.heading.Two-Factor Authentication' | translate }}
-                  @if (arrowBooleans[14]) {
-                    <p matLine class="menu-explanation">
-                      {{ 'labels.text.Two-factor authentication configuration' | translate }}
-                    </p>
-                  }
-                </div>
-              </div>
-              <div class="menu-right-section">
-                @if (!arrowBooleans[14]) {
-                  <fa-icon
-                    (click)="arrowBooleansToggle(14); $event.stopPropagation()"
-                    icon="arrow-down"
-                    size="md"
-                  ></fa-icon>
-                }
-                @if (arrowBooleans[14]) {
-                  <fa-icon
-                    (click)="arrowBooleansToggle(14); $event.stopPropagation()"
-                    icon="arrow-up"
-                    size="md"
-                  ></fa-icon>
-                }
-              </div>
-            </div>
-          </mat-list-item>
-
           <mat-list-item [routerLink]="['about-us']">
             <div class="menu-list-item-content">
               <div class="menu-left-section" [routerLink]="['about-us']">
