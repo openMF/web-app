@@ -84,13 +84,15 @@ export const environment = {
   mifosInterbankTransfersApiUrl: window.env?.mifosInterbankTransfersApiUrl || 'https://apis.mifos.community',
   mifosInterbankTransfersApiProvider: window.env?.mifosInterbankTransfersApiProvider || '/vnext1',
   mifosInterbankTransfersApiVersion: window.env?.mifosInterbankTransfersApiVersion || '/v1.0',
-  mifosInterbankTransfersEnabled: window.env?.mifosInterbankTransfersEnabled ?? true,
+  mifosInterbankTransfersEnabled:
+    window.env?.mifosInterbankTransfersEnabled !== 'false' && window.env?.mifosInterbankTransfersEnabled !== false,
 
   /** Remittance Module Integration */
   mifosRemittanceApiUrl: window.env?.mifosRemittanceApiClientUrl || '',
   mifosRemittanceApiProvider: window.env?.mifosRemittanceApiProvider || '',
   mifosRemittanceApiVersion: window.env?.mifosRemittanceApiVersion || '',
-  mifosRemittanceEnabled: window.env?.mifosRemittanceEnabled === true || false,
+  mifosRemittanceEnabled:
+    loadedEnv['mifosRemittanceEnabled'] !== 'false' && loadedEnv['mifosRemittanceEnabled'] !== false,
   mifosRemittanceApiHeader: window.env?.mifosRemittanceApiClientHeader || '',
   mifosRemittanceApiKey: window.env?.mifosRemittanceApiClientKey || '',
 
@@ -99,7 +101,8 @@ export const environment = {
    * When enabled, client creation/editing will lookup external National ID
    * and auto-fill client details (name, DOB, gender) from the external system.
    */
-  enableExternalNationalIdSystem: loadedEnv.enableExternalNationalIdSystem === 'true' || false,
+  enableExternalNationalIdSystem:
+    loadedEnv.enableExternalNationalIdSystem === 'true' || loadedEnv.enableExternalNationalIdSystem === true || false,
   externalNationalIdSystemUrl: loadedEnv.externalNationalIdSystemUrl || '',
   externalNationalIdSystemApiHeader: loadedEnv.externalNationalIdSystemApiHeader || '',
   externalNationalIdSystemApiKey: loadedEnv.externalNationalIdSystemApiKey || '',

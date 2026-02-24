@@ -39,9 +39,9 @@ interface Window {
     mifosInterbankTransfersApiUrl?: string;
     mifosInterbankTransfersApiProvider?: string;
     mifosInterbankTransfersApiVersion?: string;
-    mifosInterbankTransfersEnabled?: boolean;
+    mifosInterbankTransfersEnabled?: string | boolean;
     minPasswordLength?: number;
-    enableExternalNationalIdSystem?: string;
+    enableExternalNationalIdSystem?: string | boolean;
     externalNationalIdSystemUrl?: string;
     externalNationalIdSystemApiHeader?: string;
     externalNationalIdSystemApiKey?: string;
@@ -49,7 +49,7 @@ interface Window {
     mifosRemittanceApiUrl?: string;
     mifosRemittanceApiProvider?: string;
     mifosRemittanceApiVersion?: string;
-    mifosRemittanceEnabled?: boolean;
+    mifosRemittanceEnabled?: string | boolean;
     mifosRemittanceApiKey?: string;
   };
 }

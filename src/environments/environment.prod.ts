@@ -82,20 +82,25 @@ export const environment = {
   mifosInterbankTransfersApiUrl: loadedEnv['mifosInterbankTransfersApiUrl'] || 'https://apis.mifos.community',
   mifosInterbankTransfersApiProvider: loadedEnv['mifosInterbankTransfersApiProvider'] || '/vnext1',
   mifosInterbankTransfersApiVersion: loadedEnv['mifosInterbankTransfersApiVersion'] || '/v1.0',
-  mifosInterbankTransfersEnabled: loadedEnv['mifosInterbankTransfersEnabled'] ?? true,
+  mifosInterbankTransfersEnabled:
+    loadedEnv['mifosInterbankTransfersEnabled'] !== 'false' && loadedEnv['mifosInterbankTransfersEnabled'] !== false,
 
   /** Remittance Module Integration */
   mifosRemittanceApiUrl: loadedEnv['mifosRemittanceApiClientUrl'] || '',
   mifosRemittanceApiProvider: loadedEnv['mifosRemittanceApiProvider'] || '',
   mifosRemittanceApiVersion: loadedEnv['mifosRemittanceApiVersion'] || '',
-  mifosRemittanceEnabled: loadedEnv['mifosRemittanceEnabled'] === true || false,
+  mifosRemittanceEnabled:
+    loadedEnv['mifosRemittanceEnabled'] !== 'false' && loadedEnv['mifosRemittanceEnabled'] !== false,
   mifosRemittanceApiHeader: loadedEnv['mifosRemittanceApiClientHeader'] || '',
   mifosRemittanceApiKey: loadedEnv['mifosRemittanceApiClientKey'] || '',
 
   minPasswordLength: loadedEnv['minPasswordLength'] || 12,
 
   /** External National ID System integration */
-  enableExternalNationalIdSystem: loadedEnv['enableExternalNationalIdSystem'] === 'true' || false,
+  enableExternalNationalIdSystem:
+    loadedEnv['enableExternalNationalIdSystem'] === 'true' ||
+    loadedEnv['enableExternalNationalIdSystem'] === true ||
+    false,
   externalNationalIdSystemUrl: loadedEnv['externalNationalIdSystemUrl'] || '',
   externalNationalIdSystemApiHeader: loadedEnv['externalNationalIdSystemApiHeader'] || '',
   externalNationalIdSystemApiKey: loadedEnv['externalNationalIdSystemApiKey'] || '',
