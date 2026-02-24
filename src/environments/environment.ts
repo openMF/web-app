@@ -87,12 +87,12 @@ export const environment = {
   mifosInterbankTransfersEnabled: window.env?.mifosInterbankTransfersEnabled ?? true,
 
   /** Remittance Module Integration */
-  mifosRemittanceApiUrl: window.env?.mifosRemittanceApiUrl || '',
+  mifosRemittanceApiUrl: window.env?.mifosRemittanceApiClientUrl || '',
   mifosRemittanceApiProvider: window.env?.mifosRemittanceApiProvider || '/remittance-api',
   mifosRemittanceApiVersion: window.env?.mifosRemittanceApiVersion || '/v1',
   mifosRemittanceEnabled: window.env?.mifosRemittanceEnabled === true || window.env?.mifosRemittanceEnabled === 'true',
-  mifosRemittanceApiHeader: window.env?.mifosRemittanceApiHeader || 'X-Gravitee-Api-Key',
-  mifosRemittanceApiKey: window.env?.mifosRemittanceApiKey || '',
+  mifosRemittanceApiHeader: window.env?.mifosRemittanceApiClientHeader || 'X-Gravitee-Api-Key',
+  mifosRemittanceApiKey: window.env?.mifosRemittanceApiClientKey || '',
 
   /**
    * External National ID System Integration
