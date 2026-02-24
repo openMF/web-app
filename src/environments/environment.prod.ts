@@ -86,11 +86,10 @@ export const environment = {
 
   /** Remittance Module Integration */
   mifosRemittanceApiUrl: loadedEnv['mifosRemittanceApiClientUrl'] || '',
-  mifosRemittanceApiProvider: loadedEnv['mifosRemittanceApiProvider'] || '/remittance-api',
-  mifosRemittanceApiVersion: loadedEnv['mifosRemittanceApiVersion'] || '/v1',
-  mifosRemittanceEnabled:
-    loadedEnv['mifosRemittanceEnabled'] === true || loadedEnv['mifosRemittanceEnabled'] === 'true',
-  mifosRemittanceApiHeader: loadedEnv['mifosRemittanceApiClientHeader'] || 'X-Gravitee-Api-Key',
+  mifosRemittanceApiProvider: loadedEnv['mifosRemittanceApiProvider'] || '',
+  mifosRemittanceApiVersion: loadedEnv['mifosRemittanceApiVersion'] || '',
+  mifosRemittanceEnabled: loadedEnv['mifosRemittanceEnabled'] === true || false,
+  mifosRemittanceApiHeader: loadedEnv['mifosRemittanceApiClientHeader'] || '',
   mifosRemittanceApiKey: loadedEnv['mifosRemittanceApiClientKey'] || '',
 
   minPasswordLength: loadedEnv['minPasswordLength'] || 12,

@@ -46,6 +46,11 @@ interface Window {
     externalNationalIdSystemApiHeader?: string;
     externalNationalIdSystemApiKey?: string;
     externalNationalIdRegex?: string;
+    mifosRemittanceApiUrl?: string;
+    mifosRemittanceApiProvider?: string;
+    mifosRemittanceApiVersion?: string;
+    mifosRemittanceEnabled?: boolean;
+    mifosRemittanceApiKey?: string;
   };
 }
 

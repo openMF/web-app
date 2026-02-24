@@ -92,10 +92,10 @@
 
   // Remittance Module Environment variables
   window['env']['mifosRemittanceApiClientUrl'] = '';
-  window['env']['mifosRemittanceApiProvider'] = '/remittance-api';
-  window['env']['mifosRemittanceApiVersion'] = '/v1';
+  window['env']['mifosRemittanceApiProvider'] = '';
+  window['env']['mifosRemittanceApiVersion'] = '';
   window['env']['mifosRemittanceEnabled'] = false;
-  window['env']['mifosRemittanceApiClientHeader'] = 'X-Gravitee-Api-Key';
+  window['env']['mifosRemittanceApiClientHeader'] = '';
   window['env']['mifosRemittanceApiClientKey'] = '';
 
   // Enable Role-Based Access Control (RBAC) for menu/button permissions
