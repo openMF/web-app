@@ -81,17 +81,17 @@ export const environment = {
   },
   httpCacheEnabled: loadedEnv.httpCacheEnabled || false,
 
-  mifosInterbankTransfersApiUrl: window.env?.mifosInterbankTransfersApiUrl || 'https://apis.flexcore.mx',
+  mifosInterbankTransfersApiUrl: window.env?.mifosInterbankTransfersApiUrl || 'https://apis.mifos.community',
   mifosInterbankTransfersApiProvider: window.env?.mifosInterbankTransfersApiProvider || '/vnext1',
   mifosInterbankTransfersApiVersion: window.env?.mifosInterbankTransfersApiVersion || '/v1.0',
   mifosInterbankTransfersEnabled: window.env?.mifosInterbankTransfersEnabled ?? true,
 
   /** Remittance Module Integration */
   mifosRemittanceApiUrl: window.env?.mifosRemittanceApiClientUrl || '',
-  mifosRemittanceApiProvider: window.env?.mifosRemittanceApiProvider || '/remittance-api',
-  mifosRemittanceApiVersion: window.env?.mifosRemittanceApiVersion || '/v1',
-  mifosRemittanceEnabled: window.env?.mifosRemittanceEnabled === true || window.env?.mifosRemittanceEnabled === 'true',
-  mifosRemittanceApiHeader: window.env?.mifosRemittanceApiClientHeader || 'X-Gravitee-Api-Key',
+  mifosRemittanceApiProvider: window.env?.mifosRemittanceApiProvider || '',
+  mifosRemittanceApiVersion: window.env?.mifosRemittanceApiVersion || '',
+  mifosRemittanceEnabled: window.env?.mifosRemittanceEnabled === true || false,
+  mifosRemittanceApiHeader: window.env?.mifosRemittanceApiClientHeader || '',
   mifosRemittanceApiKey: window.env?.mifosRemittanceApiClientKey || '',
 
   /**

@@ -47,7 +47,11 @@ export class RemittancesService {
   }
 
   private getHeaders(): HttpHeaders {
-    return new HttpHeaders({ 'Content-Type': 'application/json' });
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const apiHeader = environment.mifosRemittanceApiHeader;
+    const apiKey = environment.mifosRemittanceApiKey;
+    headers = headers.set(apiHeader, apiKey);
+    return headers;
   }
 
   /**
