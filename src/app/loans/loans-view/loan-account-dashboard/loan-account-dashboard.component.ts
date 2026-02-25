@@ -221,19 +221,19 @@ export class LoanAccountDashboardComponent implements OnInit, AfterViewInit, OnD
     repaymentSchedule.forEach((period: any) => {
       if (period.period && period.period > 0) {
         labels.push(`${this.translate.instant('labels.inputs.Period')} ${period.period}`);
-        principalData.push(period.principalDue || 0);
-        interestData.push(period.interestDue || 0);
+        principalData.push(period.principalDue ?? period.principalOriginalDue ?? 0);
+        interestData.push(period.interestDue ?? period.interestOriginalDue ?? 0);
       }
     });
 
     this.paymentsChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: labels.slice(0, 10),
+        labels: labels,
         datasets: [
           {
             label: this.translate.instant('labels.inputs.Principal'),
-            data: principalData.slice(0, 10),
+            data: principalData,
             backgroundColor: '#2196F3',
             borderWidth: 0,
             borderRadius: 8,
@@ -241,7 +241,7 @@ export class LoanAccountDashboardComponent implements OnInit, AfterViewInit, OnD
           },
           {
             label: this.translate.instant('labels.inputs.Interest'),
-            data: interestData.slice(0, 10),
+            data: interestData,
             backgroundColor: '#FFC107',
             borderWidth: 0,
             borderRadius: 8,
@@ -293,8 +293,11 @@ export class LoanAccountDashboardComponent implements OnInit, AfterViewInit, OnD
             },
             ticks: {
               font: {
-                size: 11
-              }
+                size: 10
+              },
+              maxRotation: 45,
+              minRotation: 45,
+              autoSkip: false
             }
           },
           y: {
