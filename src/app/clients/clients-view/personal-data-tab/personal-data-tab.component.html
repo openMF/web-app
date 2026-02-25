@@ -7,6 +7,14 @@
 -->
 
 <div class="tab-container mat-typography">
+  <!-- Export KYC Button -->
+  <div class="button-header">
+    <button mat-raised-button class="export-kyc-button" (click)="exportKYC()">
+      <mat-icon>download</mat-icon>
+      {{ 'labels.buttons.Export KYC' | translate }}
+    </button>
+  </div>
+
   <!-- Personal Information Section -->
   <div class="section">
     <h3>{{ 'labels.heading.Personal Information' | translate }}</h3>
@@ -242,6 +250,28 @@
           <span class="value">{{ clientViewData.subStatus.name }}</span>
         </div>
       }
+    </div>
+  </div>
+
+  <!-- PDF Viewer Modal -->
+  <div
+    *ngIf="showPdf"
+    class="pdf-modal-overlay"
+    role="dialog"
+    aria-modal="true"
+    tabindex="-1"
+    (keydown)="onModalKeydown($event)"
+  >
+    <div class="pdf-modal-content">
+      <button
+        mat-icon-button
+        class="pdf-modal-close"
+        (click)="closePdf()"
+        [attr.aria-label]="'labels.buttons.Close' | translate"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <embed [src]="pdfUrl" type="application/pdf" width="100%" height="600px" />
     </div>
   </div>
 </div>
