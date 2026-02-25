@@ -41,7 +41,12 @@
       </mat-autocomplete>
     </mat-card-content>
 
-    <img mat-card-image src="assets/images/{{ tenant }}_home.png" alt="Mifos X" />
+    <img
+      mat-card-image
+      [src]="'assets/images/' + tenant + '_home.png'"
+      (error)="onImageMissing($event)"
+      alt="Mifos X"
+    />
   </mat-card>
 </div>
 
