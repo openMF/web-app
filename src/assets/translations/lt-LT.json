@@ -16,7 +16,7 @@
     "Buy Down Fee Adjustment amount must be lower or equal to": "Išpirkimo mokesčio koregavimo suma turi būti mažesnė arba lygi",
     "Email not valid": "El. pašto adresas negalioja",
     "Filling Details": "Spustelėkite norėdami pradėti pildyti išsamią informaciją. * žymėjimo laukai yra būtini. Norėdami gauti daugiau informacijos, spustelėkite:",
-    "Password is required": "reikalingas slaptazodis",
+    "Password is required": "reikalingas slaptazodis (minimali trukmė {{min}})",
     "Searched query resulted more than 200 records": "Atlikus paiešką buvo gauta daugiau nei 200 įrašų, o pirmieji 200 įrašų.",
     "Username is required": "Reikalingas vartotojo vardas",
     "Username or password incorrect.": "Neteisingas vartotojo vardas arba slaptažodis",

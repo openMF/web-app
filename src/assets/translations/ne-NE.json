@@ -16,7 +16,7 @@
     "Buy Down Fee Adjustment amount must be lower or equal to": "खरिद शुल्क समायोजन रकम निम्न भन्दा कम वा बराबर हुनुपर्छ:",
     "Email not valid": "इमेल मान्य छैन",
     "Filling Details": "विवरणहरू भर्न सुरु गर्न क्लिक गर्नुहोस्। * मार्क क्षेत्रहरू आवश्यक छन्। थप विवरणहरूको लागि क्लिक गर्नुहोस्:",
-    "Password is required": "पासवर्ड आवश्यक छ",
+    "Password is required": "पासवर्ड आवश्यक छ (न्यूनतम लम्बाइ {{min}})",
     "Searched query resulted more than 200 records": "खोजी गरिएको क्वेरीको परिणाम 200 भन्दा बढी रेकर्डहरू, पहिलो 200 रेकर्डहरू देखाउँदै।",
     "Username is required": "प्रयोगकर्ता नाम आवश्यक छ",
     "Username or password incorrect.": "प्रयोगकर्ता नाम वा पासवर्ड गलत",

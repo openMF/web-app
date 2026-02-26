@@ -14,6 +14,9 @@ const loadedEnv = window['env'] || {};
 const base = loadedEnv['fineractApiUrl'];
 const provider = loadedEnv['apiProvider'];
 
+const parsedMinLength = Number(loadedEnv.minPasswordLength);
+const resolvedMinPasswordLength = Number.isInteger(parsedMinLength) && parsedMinLength > 0 ? parsedMinLength : 8;
+
 export const environment = {
   production: true,
   version: env.mifos_x.version,
@@ -94,7 +97,10 @@ export const environment = {
   mifosRemittanceApiHeader: loadedEnv['mifosRemittanceApiClientHeader'] || '',
   mifosRemittanceApiKey: loadedEnv['mifosRemittanceApiClientKey'] || '',
 
-  minPasswordLength: loadedEnv['minPasswordLength'] || 12,
+  minPasswordLength: resolvedMinPasswordLength,
+  passwordRegex:
+    loadedEnv.passwordRegex ||
+    `^(?!.*(.)\\1)(?!.*\\s)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^\\w\\s]).{${resolvedMinPasswordLength},50}$`,
 
   /** External National ID System integration */
   enableExternalNationalIdSystem:

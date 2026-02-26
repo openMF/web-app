@@ -16,11 +16,11 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class PasswordsUtility {
-  minPasswordLength: number = environment.minPasswordLength || 12;
-  public static PASSWORD_REGEX =
-    '^(?!.*(.)\\1)(?!.*\\s)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^\\w\\s]).{' +
-    (environment.minPasswordLength || 12) +
-    ',50}$';
+  minPasswordLength: number = environment.minPasswordLength;
+  private static readonly DEFAULT_PASSWORD_REGEX =
+    '^(?!.*(.)\\1)(?!.*\\s)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^\\w\\s]).{8,50}$';
+
+  public static PASSWORD_REGEX = environment.passwordRegex || PasswordsUtility.DEFAULT_PASSWORD_REGEX;
 
   public getPasswordValidators(): ValidatorFn[] {
     return [

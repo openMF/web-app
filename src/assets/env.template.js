@@ -91,6 +91,9 @@
   // Min Password length
   window['env']['minPasswordLength'] = '$MIFOS_MIN_PASSWORD_LENGTH';
 
+  // Password Regex
+  window['env']['minPasswordLength'] = '$MIFOS_MIN_PASSWORD_LENGTH';
+
   // Enable or Disable HTTP Cache
   window['env']['httpCacheEnabled'] = '$MIFOS_HTTP_CACHE_ENABLED';
 

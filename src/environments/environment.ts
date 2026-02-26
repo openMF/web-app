@@ -17,6 +17,9 @@ import env from './.env';
 // The `window.env` object is loaded in the `index.html` file
 const loadedEnv = window.env || {};
 
+const parsedMinLength = Number(loadedEnv.minPasswordLength);
+const resolvedMinPasswordLength = Number.isInteger(parsedMinLength) && parsedMinLength > 0 ? parsedMinLength : 8;
+
 export const environment = {
   production: false,
   version: env.mifos_x.version,
@@ -108,7 +111,10 @@ export const environment = {
   externalNationalIdSystemApiKey: loadedEnv.externalNationalIdSystemApiKey || '',
   externalNationalIdRegex: loadedEnv.externalNationalIdRegex || '',
 
-  minPasswordLength: loadedEnv.minPasswordLength || 12,
+  minPasswordLength: resolvedMinPasswordLength,
+  passwordRegex:
+    loadedEnv.passwordRegex ||
+    `^(?!.*(.)\\1)(?!.*\\s)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^\\w\\s]).{${resolvedMinPasswordLength},50}$`,
 
   /**
    * Hide client data information (mask client names with *)

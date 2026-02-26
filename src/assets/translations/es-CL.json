@@ -16,7 +16,7 @@
     "Buy Down Fee Adjustment amount must be lower or equal to": "El importe del ajuste de la cuota de readquisición debe ser igual o inferior a",
     "Email not valid": "Correo electrónico no válido",
     "Filling Details": "Haga clic para comenzar a completar los detalles. * Los campos de marca son necesarios. Para más detalles haga clic en:",
-    "Password is required": "se requiere contraseña",
+    "Password is required": "se requiere contraseña (longitud mínima {{min}})",
     "Searched query resulted more than 200 records": "La consulta buscada resultó en más de 200 registros, mostrando los primeros 200 registros.",
     "Username is required": "Se requiere nombre de usuario",
     "Username or password incorrect.": "Usuario o contraseña incorrectos",

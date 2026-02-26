@@ -112,6 +112,9 @@
   window['env']['externalNationalIdSystemApiKey'] = '';
   window['env']['externalNationalIdRegex'] = '';
 
+  // Password Configuration
+  window['env']['minPasswordLength'] = 8;
+
   // OIDC Plugin Environment variables
   window['env']['oidcServerEnabled'] = false;
   window['env']['oidcBaseUrl'] = '';

@@ -16,7 +16,7 @@
     "Buy Down Fee Adjustment amount must be lower or equal to": "Le montant de l'ajustement de la commission de rachat doit être inférieur ou égal à",
     "Email not valid": "E-mail non valide",
     "Filling Details": "Cliquez pour commencer à remplir les détails. * Les champs de marque sont nécessaires. Pour plus de détails, cliquez sur :",
-    "Password is required": "Mot de passe requis",
+    "Password is required": "Mot de passe requis (longueur minimale {{min}})",
     "Searched query resulted more than 200 records": "La requête recherchée a donné lieu à plus de 200 enregistrements, affichant les 200 premiers enregistrements.",
     "Username is required": "Nom d'utilisateur est nécessaire",
     "Username or password incorrect.": "Nom d'utilisateur ou mot de passe incorrect",

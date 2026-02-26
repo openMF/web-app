@@ -43,6 +43,7 @@ import { environment } from '../../../environments/environment';
 export class LoginFormComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
   private authenticationService = inject(AuthenticationService);
+  minPasswordLength = environment.minPasswordLength;
 
   /** Login form group. */
   loginForm: FormGroup;
@@ -126,7 +127,7 @@ export class LoginFormComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.minLength(8)
+          Validators.minLength(environment.minPasswordLength)
         ]
       ],
       remember: false
@@ -144,9 +145,12 @@ export class LoginFormComponent implements OnInit {
     const control = this.loginForm.get(controlName);
     if (control?.hasError('required')) {
       return 'This field is required';
-    } else if (control?.hasError('minlength')) {
-      return `Minimum length is ${control.errors?.minlength.requiredLength}`;
     }
+    if (control?.hasError('minlength')) {
+      const requiredLength = control.errors?.['minlength']?.requiredLength;
+      return `Minimum length is ${requiredLength}`;
+    }
+
     return '';
   }
 }

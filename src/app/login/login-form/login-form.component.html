@@ -57,7 +57,19 @@
         @if (loginForm.controls.password.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.Password' | translate }}
-            <strong>{{ 'labels.commons.pass is required' | translate }}</strong>
+            <strong>
+              {{ 'labels.commons.pass is required' | translate: { min: minPasswordLength } }}
+            </strong>
+          </mat-error>
+        } @else if (loginForm.controls.password.hasError('minlength')) {
+          <mat-error>
+            {{
+              'Password is required'
+                | translate
+                  : {
+                      min: loginForm.controls.password.errors?.minlength?.requiredLength
+                    }
+            }}
           </mat-error>
         }
       </mat-form-field>

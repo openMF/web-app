@@ -16,7 +16,7 @@
     "Buy Down Fee Adjustment amount must be lower or equal to": "Izpirkšanas maksas korekcijas summai jābūt mazākai vai vienādai ar",
     "Email not valid": "E-pasts nav derīgs",
     "Filling Details": "Noklikšķiniet, lai sāktu aizpildīt informāciju. * ir nepieciešami atzīmju lauki. Lai iegūtu sīkāku informāciju, noklikšķiniet:",
-    "Password is required": "nepieciešama parole",
+    "Password is required": "nepieciešama parole (minimālais garums {{min}})",
     "Searched query resulted more than 200 records": "Meklētais vaicājums radīja vairāk nekā 200 ierakstus, parādot pirmos 200 ierakstus.",
     "Username is required": "Nepieciešams lietotājvārds",
     "Username or password incorrect.": "Lietotājvārds vai parole ir nepareiza",
