@@ -1376,6 +1376,7 @@
       "Add Profile Entry": "Aggiungi voce di profilo"
     },
     "inputs": {
+      "Loan Account Status": "Stato del conto di prestito",
       "Floating rate": "Tasso variabile",
       "Differential rate": "Tasso differenziale",
       "Minimum interest rate": "Tasso di interesse minimo",

@@ -32,6 +32,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { NgClass, CurrencyPipe } from '@angular/common';
 import { LongTextComponent } from '../../shared/long-text/long-text.component';
 import { AccountNumberComponent } from '../../shared/account-number/account-number.component';
+import { ExternalIdentifierComponent } from '../../shared/external-identifier/external-identifier.component';
 import { MatIconButton } from '@angular/material/button';
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { MatIcon } from '@angular/material/icon';
@@ -57,6 +58,7 @@ import { LoanProducts } from 'app/products/loan-products/loan-products';
     NgClass,
     LongTextComponent,
     AccountNumberComponent,
+    ExternalIdentifierComponent,
     MatIconButton,
     MatMenuTrigger,
     MatIcon,

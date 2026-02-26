@@ -1382,6 +1382,7 @@
       "Add Profile Entry": "Add Profile Entry"
     },
     "inputs": {
+      "Loan Account Status": "Loan Account Status",
       "Floating rate": "Floating Rate",
       "Differential rate": "Differential Rate",
       "Minimum interest rate": "Minimum Interest Rate",

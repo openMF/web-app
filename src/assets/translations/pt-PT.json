@@ -1376,6 +1376,7 @@
       "Add Profile Entry": "Adicionar entrada de perfil"
     },
     "inputs": {
+      "Loan Account Status": "Estado da conta do empréstimo",
       "Floating rate": "Taxa flutuante",
       "Differential rate": "Taxa diferencial",
       "Minimum interest rate": "Taxa de juro mínima",
@@ -2072,6 +2073,7 @@
       "Loan Account Classification": "Classificação da conta de empréstimo",
       "Loan Account Number": "Número da conta do empréstimo",
       "Loan Account OverView": "Visão geral da conta de empréstimo",
+
       "Loan Amount and Balance": "Valor e saldo do empréstimo",
       "Loan Approval": "Aprovação de empréstimo",
       "Loan Balance": "Saldo do empréstimo",

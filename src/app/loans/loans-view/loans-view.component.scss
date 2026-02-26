@@ -19,3 +19,25 @@
   width: 100%;
   overflow-x: auto;
 }
+
+.loan-information-table {
+  margin-bottom: 10px;
+
+  table {
+    width: 100%;
+
+    td {
+      padding: 4px 0;
+      vertical-align: middle;
+
+      &:first-child {
+        font-weight: 500;
+        width: 180px;
+      }
+
+      i.fa-stop {
+        font-size: 14px;
+      }
+    }
+  }
+}

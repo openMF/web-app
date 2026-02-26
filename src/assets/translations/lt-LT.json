@@ -1375,6 +1375,7 @@
       "Add Profile Entry": "Pridėti profilio įrašą"
     },
     "inputs": {
+      "Loan Account Status": "Paskolos sąskaitos būsena",
       "Floating rate": "Slankioji norma",
       "Differential rate": "Diferencinis tarifas",
       "Minimum interest rate": "Minimali palūkanų norma",

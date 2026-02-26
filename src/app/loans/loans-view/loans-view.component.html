@@ -26,29 +26,53 @@
         <mat-card-title>
           <div class="layout-row responsive-column">
             <div class="flex-60">
-              <h3>
-                <i
-                  class="fa fa-stop"
-                  matTooltip="{{ 'labels.status.' + loanDetailsData.status.value | translate }}"
-                  [ngClass]="iconLoanStatusColor() | statusLookup"
-                ></i>
-                <span class="m-l-5 m-r-5">{{ 'labels.heading.Loan Product' | translate }} :</span>
-                <span class="m-r-5"
-                  ><mifosx-long-text textValue="{{ loanDetailsData.loanProductName }}"></mifosx-long-text
-                ></span>
-                <mifosx-account-number
-                  accountNo="{{ loanDetailsData.accountNo }}"
-                  display="left"
-                ></mifosx-account-number>
-              </h3>
-              <span class="loans-overview">
-                <span class="m-r-10"
-                  >{{ 'labels.text.' + entityType | translate }} {{ 'labels.inputs.name' | translate }} :</span
-                >
-                {{ loanDetailsData.clientName || loanDetailsData.group.name
-                }}<span class="m-l-5">({{ loanDetailsData.clientAccountNo || loanDetailsData.group.accountNo }})</span
-                ><br />
-              </span>
+              <div class="loan-information-table">
+                <table class="account-overview">
+                  <tbody>
+                    <tr>
+                      <td>{{ 'labels.inputs.Loan Account Status' | translate }}:</td>
+                      <td>
+                        <i
+                          class="fa fa-stop m-r-5"
+                          matTooltip="{{ 'labels.status.' + loanDetailsData.status.value | translate }}"
+                          [ngClass]="iconLoanStatusColor() | statusLookup"
+                        ></i>
+                        {{ 'labels.status.' + loanDetailsData.status.value | translate }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>{{ 'labels.inputs.Product Name' | translate }}:</td>
+                      <td>
+                        <mifosx-long-text [textValue]="loanDetailsData.loanProductName"></mifosx-long-text>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>{{ 'labels.inputs.Loan Id' | translate }}:</td>
+                      <td>
+                        <mifosx-account-number [accountNo]="loanDetailsData.accountNo"></mifosx-account-number>
+                      </td>
+                    </tr>
+                    @if (loanDetailsData.externalId) {
+                      <tr>
+                        <td>{{ 'labels.inputs.External Loan ID' | translate }}:</td>
+                        <td>
+                          <mifosx-external-identifier
+                            [externalId]="loanDetailsData.externalId"
+                            [completed]="true"
+                          ></mifosx-external-identifier>
+                        </td>
+                      </tr>
+                    }
+                    <tr>
+                      <td>{{ 'labels.inputs.Client Name' | translate }}:</td>
+                      <td>
+                        {{ loanDetailsData.clientName || loanDetailsData.group.name }}
+                        ({{ loanDetailsData.clientAccountNo || loanDetailsData.group.accountNo }})
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
               @if (loanDisplayArrearsDelinquency !== 1) {
                 <div>
                   <table class="account-overview">

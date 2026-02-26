@@ -1379,6 +1379,7 @@
       "Transaction Summary": "Resumen de la Transacción"
     },
     "inputs": {
+      "Loan Account Status": "Estado de la cuenta",
       "Floating rate": "Tasa flotante",
       "Differential rate": "Tasa diferencial",
       "Minimum interest rate": "Tasa de interés mínima",
@@ -2076,6 +2077,7 @@
       "Loan Account Classification": "Clasificación de cuentas de Créditos",
       "Loan Account Number": "Número de cuenta del Crédito",
       "Loan Account OverView": "Resumen cuenta de Crédito",
+
       "Loan Amount and Balance": "Monto y saldo del Crédito",
       "Loan Approval": "Aprobación de Crédito",
       "Loan Balance": "Balance de Crédito",

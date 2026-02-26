@@ -1377,6 +1377,7 @@
       "Add Profile Entry": "Pievienot profila ierakstu"
     },
     "inputs": {
+      "Loan Account Status": "Aizdevuma konta statuss",
       "Floating rate": "Mainīgā likme",
       "Differential rate": "Diferenciālā likme",
       "Minimum interest rate": "Minimālā procentu likme",
