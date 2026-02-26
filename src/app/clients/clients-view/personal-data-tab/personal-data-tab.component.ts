@@ -44,7 +44,7 @@ interface ClientViewData {
   gender?: { id: number; name: string; active?: boolean };
   clientType?: { id: number; name: string; active?: boolean };
   clientClassification?: { id: number; name: string; active?: boolean };
-  legalForm?: { id: number; name: string };
+  legalForm?: { id: number; code: string; name: string };
   officeId?: number;
   officeName?: string;
   staffId?: number;
@@ -119,13 +119,22 @@ export class PersonalDataTabComponent implements OnDestroy {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
 
+    // Determine report name dynamically based on legalForm.code
+    let reportName = 'KYCReport';
+    const legalFormCode = this.clientViewData?.legalForm?.code;
+    if (legalFormCode === 'legalFormType.person') {
+      reportName = 'KYCNaturalPerson';
+    } else if (legalFormCode === 'legalFormType.entity') {
+      reportName = 'KYCLegalPerson';
+    }
+
     const formData = {
       'output-type': 'PDF',
       R_clientId: clientId
     };
 
     this.reportsService
-      .getPentahoRunReportData('KYCReport', formData, tenantIdentifier, locale, dateFormat)
+      .getPentahoRunReportData(reportName, formData, tenantIdentifier, locale, dateFormat)
       .pipe(
         takeUntil(this.destroy$),
         catchError((error): any => {
