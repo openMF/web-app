@@ -1377,6 +1377,7 @@
       "Add Profile Entry": "Profileintrag hinzufügen"
     },
     "inputs": {
+      "Loan Account Status": "Kreditkontostatus",
       "Floating rate": "Variabler Zinssatz",
       "Differential rate": "Differenzzinssatz",
       "Minimum interest rate": "Mindestzinssatz",

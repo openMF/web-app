@@ -1374,6 +1374,7 @@
       "Add Profile Entry": "Ongeza ingizo la wasifu"
     },
     "inputs": {
+      "Loan Account Status": "Hali ya akaunti ya mkopo",
       "Floating rate": "Kiwango cha Kuelea",
       "Differential rate": "Kiwango cha Tofauti",
       "Minimum interest rate": "Kiwango cha Riba cha Chini",
@@ -2070,6 +2071,7 @@
       "Loan Account Classification": "Uainishaji wa Akaunti ya Mkopo",
       "Loan Account Number": "Nambari ya Akaunti ya Mkopo",
       "Loan Account OverView": "Muhtasari wa Akaunti ya Mkopo",
+
       "Loan Amount and Balance": "Kiasi cha Mkopo na Salio",
       "Loan Approval": "Idhini ya Mkopo",
       "Loan Balance": "Salio la Mkopo",

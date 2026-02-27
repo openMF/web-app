@@ -1377,6 +1377,7 @@
       "Add Profile Entry": "Agregar Entrada de Perfil"
     },
     "inputs": {
+      "Loan Account Status": "Estado de la cuenta",
       "Floating rate": "Tasa flotante",
       "Differential rate": "Tasa diferencial",
       "Minimum interest rate": "Tasa de interés mínima",

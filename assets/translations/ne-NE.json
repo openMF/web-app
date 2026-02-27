@@ -1375,6 +1375,7 @@
       "Add Profile Entry": "प्रोफाइल प्रविष्टि थप्नुहोस्"
     },
     "inputs": {
+      "Loan Account Status": "ऋण खाता स्थिति",
       "Floating rate": "चल दर",
       "Differential rate": "अन्तर दर",
       "Minimum interest rate": "न्यूनतम ब्याज दर",

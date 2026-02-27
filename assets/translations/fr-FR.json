@@ -1380,6 +1380,7 @@
       "Add Profile Entry": "Ajouter une entrée de profil"
     },
     "inputs": {
+      "Loan Account Status": "Statut du compte de prêt",
       "Floating rate": "Taux flottant",
       "Differential rate": "Taux différentiel",
       "Minimum interest rate": "Taux d'intérêt minimum",
