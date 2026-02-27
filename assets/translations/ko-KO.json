@@ -16,7 +16,7 @@
     "Buy Down Fee Adjustment amount must be lower or equal to": "바이 다운 수수료 조정 금액은 다음보다 낮거나 같아야 합니다.",
     "Email not valid": "이메일이 유효하지 않습니다",
     "Filling Details": "세부정보 작성을 시작하려면 클릭하세요. * 표시 필드가 필요합니다. 자세한 내용을 보려면 다음을 클릭하세요.",
-    "Password is required": "비밀번호가 필요합니다",
+    "Password is required": "비밀번호가 필요합니다 (최소 길이 {{min}})",
     "Searched query resulted more than 200 records": "검색된 쿼리로 200개 이상의 레코드가 검색되었으며 처음 200개 레코드가 표시되었습니다.",
     "Username is required": "사용자 이름이 필요합니다",
     "Username or password incorrect.": "사용자 이름 또는 비밀번호가 잘못되었습니다.",

@@ -16,7 +16,7 @@
     "Buy Down Fee Adjustment amount must be lower or equal to": "Der Anpassungsbetrag der Ankaufsgebühr muss niedriger oder gleich sein als",
     "Email not valid": "E-Mail ungültig",
     "Filling Details": "Klicken Sie hier, um mit dem Ausfüllen der Details zu beginnen. * Markierungsfelder sind erforderlich. Für weitere Details klicken Sie:",
-    "Password is required": "Passwort wird benötigt",
+    "Password is required": "Passwort wird benötigt (Mindestlänge {{min}} Zeichen)",
     "Searched query resulted more than 200 records": "Die Suchanfrage ergab mehr als 200 Datensätze, wobei die ersten 200 Datensätze angezeigt wurden.",
     "Username is required": "Benutzername wird benötigt",
     "Username or password incorrect.": "Benutzername oder Passwort falsch",

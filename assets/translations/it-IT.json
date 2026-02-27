@@ -16,7 +16,7 @@
     "Buy Down Fee Adjustment amount must be lower or equal to": "L'importo della Buy Down Fee Adjustment deve essere inferiore o uguale a",
     "Email not valid": "E-mail non valida",
     "Filling Details": "Fare clic per iniziare a compilare i dettagli. *I campi contrassegnati sono obbligatori. Per maggiori dettagli clicca:",
-    "Password is required": "E 'richiesta la password",
+    "Password is required": "E 'richiesta la password (lunghezza minima {{min}})",
     "Searched query resulted more than 200 records": "La query cercata ha prodotto più di 200 record, mostrando i primi 200 record.",
     "Username is required": "è richiesto il nome utente",
     "Username or password incorrect.": "Nome utente o password errati",

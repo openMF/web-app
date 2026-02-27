@@ -16,7 +16,7 @@
     "Buy Down Fee Adjustment amount must be lower or equal to": "Výše úpravy poplatku za odkoupení musí být nižší nebo rovna",
     "Email not valid": "Email není platný",
     "Filling Details": "Kliknutím začněte vyplňovat podrobnosti. * pole označení jsou nezbytná. Pro více podrobností klikněte na:",
-    "Password is required": "Je vyžadováno heslo",
+    "Password is required": "Je vyžadováno heslo (minimální délka {{min}} znaků)",
     "Searched query resulted more than 200 records": "Výsledkem hledaného dotazu bylo více než 200 záznamů, přičemž prvních 200 záznamů bylo zobrazeno.",
     "Username is required": "Uživatelské jméno je povinné",
     "Username or password incorrect.": "Nesprávné uživatelské jméno nebo heslo",

@@ -16,7 +16,7 @@
     "Buy Down Fee Adjustment amount must be lower or equal to": "Kiasi cha Marekebisho ya Ada ya Kununua Chini lazima kiwe cha chini au sawa na",
     "Email not valid": "Barua pepe si halali",
     "Filling Details": "Bofya ili kuanza kujaza maelezo. * maeneo ya alama ni muhimu. Kwa maelezo zaidi bofya:",
-    "Password is required": "Nenosiri linahitajika",
+    "Password is required": "Nenosiri linahitajika (urefu wa chini {{min}})",
     "Searched query resulted more than 200 records": "Hoja iliyotafutwa ilisababisha zaidi ya rekodi 200, kuonyesha rekodi 200 za kwanza.",
     "Username is required": "Jina la mtumiaji linahitajika",
     "Username or password incorrect.": "Jina la mtumiaji au nenosiri sio sahihi",
