@@ -426,6 +426,7 @@
       "Create Interest Refund": "Unda Marejesho ya Riba",
       "Create Journal Entries": "Unda Maingizo ya Jarida",
       "Create Loan Product": "Tengeneza Bidhaa ya Mkopo",
+      "Create Working Capital Product": "Unda Bidhaa ya Mtaji wa Kufanya Kazi",
       "Create Office": "Unda Ofisi",
       "Create Payment Type": "Unda Aina ya Malipo",
       "Create Preference": "Tengeneza Upendeleo",
@@ -1147,6 +1148,7 @@
       "Loan Originators": "Waanzilishi wa Mikopo",
       "Loan Product": "Bidhaa ya Mkopo",
       "Loan Products": "Bidhaa za Mkopo",
+      "Working Capital Product": "Bidhaa ya Mtaji wa Kufanya Kazi",
       "Loan Provisioning Criteria": "Vigezo vya Utoaji wa Mkopo",
       "Loan Purpose": "Madhumuni ya Mkopo",
       "Loan Repayments": "Marejesho ya Mikopo",
@@ -1447,6 +1449,7 @@
       "Adjust interest rates for remainder of loan": "Rekebisha viwango vya riba kwa salio la mkopo",
       "Adjustment Amount": "Kiasi cha Marekebisho",
       "Advance payments adjustment type": "Aina ya marekebisho ya malipo ya mapema",
+      "Advanced Credit Allocation Transactions": "Miamala ya Ugawaji wa Mikopo ya Kina",
       "Advanced Payment Allocation Transactions": "Miamala ya Kina ya Ugawaji wa Malipo",
       "Advanced Payment Allocation Transaction Type": "Aina ya ununuzi wa ugawaji wa malipo ya hali ya juu",
       "Affected GL Entry (Credit)": "Ingizo la GL lililoathiriwa (Mikopo)",
@@ -2324,6 +2327,7 @@
       "Percentage to Base": "Asilimia kwa Msingi",
       "Period": "Kipindi",
       "Period From": "Kipindi Kutoka",
+      "Period Payment Rate": "Kiwango cha Malipo ya Kipindi",
       "Period To": "Kipindi Kwa",
       "Period Type": "Aina ya Kipindi",
       "Amount Range From": "Kiwango cha kuanzia",
@@ -2716,7 +2720,9 @@
           "Is Equal Amortization?": "Je, Ulipaji Mapato Sawa?",
           "amortizationType": {
             "Equal installments": "Awamu sawa",
-            "Equal principal payments": "Malipo ya msingi sawa"
+            "Equal principal payments": "Malipo ya msingi sawa",
+            "Effective Interest Rate": "Kiwango cha Riba Kinachofaa",
+            "Flat": "Gorofa"
           }
         }
       },
@@ -2782,7 +2788,14 @@
       "Enter first name (include middle name)": "Ingiza jina la kwanza (pamoja na jina la kati)",
       "Enter last name": "Ingiza jina la mwisho",
       "Sender name": "Jina la mtumaji",
-      "Retry": "Jaribu tena"
+      "Retry": "Jaribu tena",
+      "Flat Percentage Amount": "Kiasi cha Asilimia Tawanyiko",
+      "Delinquency Bucket Classification": "Uainishaji wa Ndoo ya Uhalifu",
+      "Discount Default": "Punguzo Chaguomsingi",
+      "Period Payment Frequency": "Mara kwa Mara za Malipo ya Kipindi",
+      "Period Payment Frequency Type": "Aina ya Mara kwa Mara za Malipo ya Kipindi",
+      "Payment Allocation Transactions": "Miamala ya Ugawaji wa Malipo",
+      "Net Present Value day count": "Idadi halisi ya siku za Thamani ya Sasa"
     },
     "links": {
       "Community": "Jumuiya",

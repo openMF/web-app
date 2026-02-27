@@ -426,6 +426,7 @@
       "Create Interest Refund": "Crea rimborso interessi",
       "Create Journal Entries": "Crea voci di diario",
       "Create Loan Product": "Crea prodotto di prestito",
+      "Create Working Capital Product": "Crea Prodotto Capitale Circolante",
       "Create Office": "Crea ufficio",
       "Create Payment Type": "Crea tipo di pagamento",
       "Create Preference": "Crea preferenza",
@@ -1149,6 +1150,7 @@
       "Loan Originators": "Originatori di prestiti",
       "Loan Product": "Prodotto di prestito",
       "Loan Products": "Prodotti di prestito",
+      "Working Capital Product": "Prodotto Capitale Circolante",
       "Loan Provisioning Criteria": "Criteri di erogazione del prestito",
       "Loan Purpose": "Scopo del prestito",
       "Loan Repayments": "Rimborsi del prestito",
@@ -1449,6 +1451,7 @@
       "Adjust interest rates for remainder of loan": "Adeguare i tassi di interesse per il resto del prestito",
       "Adjustment Amount": "Importo di adeguamento",
       "Advance payments adjustment type": "Tipo di aggiustamento dei pagamenti anticipati",
+      "Advanced Credit Allocation Transactions": "Transazioni di allocazione del credito anticipato",
       "Advanced Payment Allocation Transactions": "Transazioni di assegnazione anticipata dei pagamenti",
       "Advanced Payment Allocation Transaction Type": "Tipo di transazione di allocazione dei pagamenti avanzati",
       "Affected GL Entry (Credit)": "Voce GL interessata (credito)",
@@ -2325,6 +2328,7 @@
       "Percentage to Base": "Percentuale rispetto alla base",
       "Period": "Periodo",
       "Period From": "Periodo da",
+      "Period Payment Rate": "Tasso di pagamento del periodo",
       "Period To": "Periodo a",
       "Period Type": "Tipo di periodo",
       "Amount Range From": "Intervallo di importo da",
@@ -2717,7 +2721,9 @@
           "Is Equal Amortization?": "L'ammortamento è uguale?",
           "amortizationType": {
             "Equal installments": "Rate uguali",
-            "Equal principal payments": "Parità di capitale"
+            "Equal principal payments": "Parità di capitale",
+            "Effective Interest Rate": "Tasso di interesse effettivo",
+            "Flat": "Piatto"
           }
         }
       },
@@ -2783,7 +2789,14 @@
       "Enter first name (include middle name)": "Inserire il nome (incluso il secondo nome)",
       "Enter last name": "Inserire il cognome",
       "Sender name": "Nome del mittente",
-      "Retry": "Riprova"
+      "Retry": "Riprova",
+      "Flat Percentage Amount": "Importo percentuale fisso",
+      "Delinquency Bucket Classification": "Classificazione della categoria di delinquenza",
+      "Discount Default": "Sconto predefinito",
+      "Period Payment Frequency": "Frequenza di pagamento del periodo",
+      "Period Payment Frequency Type": "Periodo Frequenza di pagamento Tipo",
+      "Payment Allocation Transactions": "Transazioni di allocazione dei pagamenti",
+      "Net Present Value day count": "Conteggio dei giorni del valore attuale netto"
     },
     "links": {
       "Community": "Comunità",

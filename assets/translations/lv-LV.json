@@ -426,6 +426,7 @@
       "Create Interest Refund": "Izveidot procentu atmaksu",
       "Create Journal Entries": "Izveidojiet žurnāla ierakstus",
       "Create Loan Product": "Izveidojiet aizdevuma produktu",
+      "Create Working Capital Product": "Izveidot apgrozāmā kapitāla produktu",
       "Create Office": "Izveidojiet biroju",
       "Create Payment Type": "Izveidojiet maksājuma veidu",
       "Create Preference": "Izveidot preferenci",
@@ -1150,6 +1151,7 @@
       "Loan Originators": "Aizdevumu izsniedzēji",
       "Loan Product": "Aizdevuma produkts",
       "Loan Products": "Aizdevuma produkti",
+      "Working Capital Product": "Apgrozāmā kapitāla produkts",
       "Loan Provisioning Criteria": "Aizdevuma piešķiršanas kritēriji",
       "Loan Purpose": "Aizdevuma mērķis",
       "Loan Repayments": "Kredīta atmaksas",
@@ -1450,6 +1452,7 @@
       "Adjust interest rates for remainder of loan": "Pielāgojiet procentu likmes atlikušajai aizdevuma daļai",
       "Adjustment Amount": "Korekcijas summa",
       "Advance payments adjustment type": "Avansa maksājumu korekcijas veids",
+      "Advanced Credit Allocation Transactions": "Uzlabotas kredīta sadales transakcijas",
       "Advanced Payment Allocation Transactions": "Papildu maksājumu piešķiršanas darījumi",
       "Advanced Payment Allocation Transaction Type": "Papildu maksājuma sadales darījuma veids",
       "Affected GL Entry (Credit)": "Ietekmētā GL ieeja (kredīts)",
@@ -2326,6 +2329,7 @@
       "Percentage to Base": "Procenti līdz bāzei",
       "Period": "Periods",
       "Period From": "Periods No",
+      "Period Payment Rate": "Perioda maksājuma likme",
       "Period To": "Periods līdz",
       "Period Type": "Perioda veids",
       "Amount Range From": "Summa diapazons no",
@@ -2718,7 +2722,9 @@
           "Is Equal Amortization?": "Vai amortizācija ir vienāda?",
           "amortizationType": {
             "Equal installments": "Vienādas iemaksas",
-            "Equal principal payments": "Vienlīdzīgi pamatsummas maksājumi"
+            "Equal principal payments": "Vienlīdzīgi pamatsummas maksājumi",
+            "Effective Interest Rate": "Efektīvā procentu likme",
+            "Flat": "Plakans"
           }
         }
       },
@@ -2784,7 +2790,14 @@
       "Enter first name (include middle name)": "Ievadiet vārdu (ieskaitot otro vārdu)",
       "Enter last name": "Ievadiet uzvārdu",
       "Sender name": "Sūtītāja vārds",
-      "Retry": "Mēģināt vēlreiz"
+      "Retry": "Mēģināt vēlreiz",
+      "Flat Percentage Amount": "Fiksēta procentuālā summa",
+      "Delinquency Bucket Classification": "Kavējumu grupas klasifikācija",
+      "Discount Default": "Atlaides noklusējuma vērtība",
+      "Period Payment Frequency": "Perioda maksājumu biežums",
+      "Period Payment Frequency Type": "Perioda maksājumu biežuma veids",
+      "Payment Allocation Transactions": "Maksājumu sadales darījumi",
+      "Net Present Value day count": "Neto pašreizējās vērtības dienu skaits"
     },
     "links": {
       "Community": "kopiena",

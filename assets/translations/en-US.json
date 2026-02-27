@@ -430,6 +430,7 @@
       "Create Interest Refund": "Create Interest Refund",
       "Create Journal Entries": "Create Journal Entries",
       "Create Loan Product": "Create Loan Product",
+      "Create Working Capital Product": "Create Working Capital Product",
       "Create Office": "Create Office",
       "Create Payment Type": "Create Payment Type",
       "Create Preference": "Create Preference",
@@ -1163,6 +1164,7 @@
       "Loan Originators": "Loan Originators",
       "Loan Product": "Loan Product",
       "Loan Products": "Loan Products",
+      "Working Capital Product": "Working Capital Product",
       "Loan Provisioning Criteria": "Loan Provisioning Criteria",
       "Loan Purpose": "Loan Purpose",
       "Loan Repayments": "Loan Repayments",
@@ -1455,6 +1457,7 @@
       "Adjust interest rates for remainder of loan": "Adjust interest rates for remainder of loan",
       "Adjustment Amount": "Adjustment Amount",
       "Advance payments adjustment type": "Advance payments adjustment type",
+      "Advanced Credit Allocation Transactions": "Advanced Credit Allocation Transactions",
       "Advanced Payment Allocation Transactions": "Advanced Payment Allocation Transactions",
       "Advanced Payment Allocation Transaction Type": "Advanced Payment Allocation Transaction Type",
       "Affected GL Entry (Credit)": "Affected GL Entry (Credit)",
@@ -2082,7 +2085,6 @@
       "Liability Account": "Liability Account",
       "Liability Account (CR)": "Liability Account (CR)",
       "Lifted On": "Lifted On",
-      "Loading vendors...": "Loading vendors...",
       "Link savings": "Link savings",
       "Linked Savings Account": "Linked Savings Account",
       "Linked Savings Account(Dividend Posting)": "Linked Savings Account(Dividend Posting)",
@@ -2345,6 +2347,7 @@
       "Percentage to Base": "Percentage to Base",
       "Period": "Period",
       "Period From": "Period From",
+      "Period Payment Rate": "Period Payment Rate",
       "Period To": "Period To",
       "Period Type": "Period Type",
       "Amount Range From": "Amount Range From",
@@ -2741,7 +2744,9 @@
           "Is Equal Amortization?": "Is Equal Amortization?",
           "amortizationType": {
             "Equal installments": "Equal installments",
-            "Equal principal payments": "Equal principal payments"
+            "Equal principal payments": "Equal principal payments",
+            "Effective Interest Rate": "Effective Interest Rate",
+            "Flat": "Flat"
           }
         }
       },
@@ -2814,13 +2819,19 @@
       "Occupation": "Occupation",
       "Economic Activity": "Economic Activity",
       "Entity Member": "Entity Member",
-      "Country": "Country",
       "# Remittance": "# Remittance",
       "Avg Amount/Transaction": "Avg Amount/Transaction",
       "# Senders": "# Senders",
       "Sender Registry": "Sender Registry",
       "Individual": "Individual",
-      "Legal Entity": "Legal Entity"
+      "Legal Entity": "Legal Entity",
+      "Flat Percentage Amount": "Flat Percentage Amount",
+      "Delinquency Bucket Classification": "Delinquency Bucket Classification",
+      "Discount Default": "Discount Default",
+      "Period Payment Frequency": "Period Payment Frequency",
+      "Period Payment Frequency Type": "Period Payment Frequency Type",
+      "Payment Allocation Transactions": "Payment Allocation Transactions",
+      "Net Present Value day count": "Net Present Value Day Count"
     },
     "links": {
       "Community": "Community",
