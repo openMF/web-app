@@ -309,8 +309,30 @@ Available languages:
 | MIFOS_DEFAULT_CHAR_DELIMITER      | Character delimiter for CSV exports                  | ,             |
 | MIFOS_WAIT_TIME_FOR_NOTIFICATIONS | Wait time in seconds for reading notifications       | 60            |
 | MIFOS_WAIT_TIME_FOR_CATCHUP       | Wait time in seconds for reading COB Catch-Up status | 30            |
-| MIFOS_MIN_PASSWORD_LENGTH         | Minimum length for user passwords                    | 12            |
 | MIFOS_HTTP_CACHE_ENABLED          | whether to use HTTP Get calls with cache             | false         |
+
+#### Password Policy Settings
+
+Password validation for Basic Authentication can be configured via environment variables.
+
+| Variable                  | Description                                      | Default Value  |
+| ------------------------- | ------------------------------------------------ | -------------- |
+| MIFOS_MIN_PASSWORD_LENGTH | Minimum required password length                 | 8              |
+| MIFOS_PASSWORD_REGEX      | Regex pattern used to validate password strength | Default policy |
+
+**Behavior:**
+
+- If `MIFOS_MIN_PASSWORD_LENGTH` is not set, it defaults to `8`.
+- If `MIFOS_PASSWORD_REGEX` is not set, the application falls back to the built-in password validation policy.
+- These settings apply only to Basic Authentication login and user password validation.
+- OAuth/OIDC flows are not affected.
+
+**Docker Example:**
+
+```bash
+MIFOS_MIN_PASSWORD_LENGTH=8
+MIFOS_PASSWORD_REGEX=^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,50}$
+```
 
 #### UI Display Settings
 
