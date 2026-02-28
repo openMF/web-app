@@ -25,9 +25,10 @@
 
 .data-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 100%));
   gap: 20px;
   padding: 12px 0;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(220px, 220px);
 }
 
 .data-item {
@@ -120,5 +121,12 @@
   .data-grid {
     grid-template-columns: 100%;
     gap: 16px;
+    grid-auto-flow: initial;
+    grid-auto-columns: initial;
   }
+}
+
+.table-scroll-wrapper {
+  overflow-x: auto;
+  width: 100%;
 }
