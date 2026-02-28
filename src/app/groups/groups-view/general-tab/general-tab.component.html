@@ -50,10 +50,16 @@
         <ng-container matColumnDef="JLG Loan Application">
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.JLG Loan Application' | translate }}</th>
           <td mat-cell *matCellDef="let element">
-            @if (element.status.code !== 'clientStatusType.closed') {
+            @if (element.status.code === 'clientStatusType.active') {
               <div class="m-l-30">
-                <button class="account-action-button" mat-raised-button color="primary" disabled>
-                  <i class="fa fa-plus" matTooltip="{{ 'tooltips.New Loan Application' | translate }}"></i>
+                <button
+                  class="account-action-button"
+                  mat-raised-button
+                  color="primary"
+                  (click)="openJlgLoan($event, element)"
+                  matTooltip="{{ 'tooltips.New Loan Application' | translate }}"
+                >
+                  <i class="fa fa-plus"></i>
                 </button>
               </div>
             }

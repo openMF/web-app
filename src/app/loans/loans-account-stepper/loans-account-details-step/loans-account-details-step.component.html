@@ -120,6 +120,27 @@
           </mat-error>
         }
       </mat-form-field>
+
+      @if (calendarOptions.length > 0) {
+        <mat-divider class="flex-98"></mat-divider>
+        <h3 class="mat-h3 flex-fill">Meeting Schedule</h3>
+        <div class="layout-row-wrap layout-lt-md-column gap-2percent flex-fill">
+          <div class="flex-48">
+            <p>
+              <strong>Next Meeting Date:</strong>
+              {{ nextMeetingDate | date: 'dd MMMM yyyy' }}
+            </p>
+          </div>
+          <div class="flex-48"></div>
+          <mat-checkbox class="flex-48" formControlName="syncDisbursementWithMeeting">
+            <p>Sync disbursement with meeting</p>
+          </mat-checkbox>
+          <mat-checkbox class="flex-48" formControlName="syncRepaymentsWithMeeting">
+            <p>Sync repayments with meeting</p>
+          </mat-checkbox>
+        </div>
+      }
+
       <mat-divider class="flex-98"></mat-divider>
       <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Savings Linkage' | translate }}</h3>
       <mat-form-field class="flex-48">

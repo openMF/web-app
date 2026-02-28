@@ -21,6 +21,8 @@ import { MatOption } from '@angular/material/core';
 import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
 import { MatButton } from '@angular/material/button';
 import { MatCheckbox } from '@angular/material/checkbox';
+import { MatProgressBar } from '@angular/material/progress-bar';
+import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
 import { DateFormatPipe } from '@pipes/date-format.pipe';
 import { DocumentationLinkPipe } from '@pipes/documentation-link.pipe';
 import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
@@ -51,6 +53,9 @@ export const STANDALONE_SHARED_IMPORTS = [
   MatDatepicker,
   MatButton,
   MatCheckbox,
+  MatProgressBar,
+  MatButtonToggleGroup,
+  MatButtonToggle,
   DateFormatPipe,
   DocumentationLinkPipe,
   HasPermissionDirective,

@@ -8,7 +8,7 @@
 
 /** Angular Imports */
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
 import {
   MatTable,
@@ -57,7 +57,11 @@ import { GroupsService } from '../../groups.service';
 })
 export class GeneralTabComponent {
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
   private groupsService = inject(GroupsService);
+
+  /** Group ID from route */
+  groupId: number;
 
   /** Group's all accounts data */
   groupAccountData: any;
@@ -148,6 +152,7 @@ export class GeneralTabComponent {
     );
     this.route.parent.data.subscribe((data: { groupViewData: any }) => {
       this.groupClientMembers = data.groupViewData.clientMembers;
+      this.groupId = data.groupViewData.id;
     });
   }
 
@@ -183,5 +188,21 @@ export class GeneralTabComponent {
    */
   routeEdit($event: MouseEvent) {
     $event.stopPropagation();
+  }
+
+  /**
+   * Opens JLG Loan Application for a specific client.
+   */
+  openJlgLoan($event: MouseEvent, client: any) {
+    $event.stopPropagation();
+    this.router.navigate(
+      [
+        'groups',
+        this.groupId,
+        'loans-accounts',
+        'create'
+      ],
+      { queryParams: { clientId: client.id, templateType: 'jlg' } }
+    );
   }
 }

@@ -1,0 +1,251 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container" style="padding: 20px">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px">
+    <h2 style="margin: 0">Collection Sheet #{{ sheetId }} — Transaction Details</h2>
+    <div>
+      <button mat-raised-button (click)="fetchDetails()" style="margin-right: 10px">
+        <mat-icon>refresh</mat-icon> Refresh
+      </button>
+      <button mat-raised-button color="primary" (click)="goBack()"><mat-icon>arrow_back</mat-icon> Back to List</button>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading" style="text-align: center; padding: 40px">
+    <mat-progress-spinner mode="indeterminate" diameter="40" style="margin: 0 auto"></mat-progress-spinner>
+    <p style="margin-top: 10px">Loading transactions...</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="!isLoading && errorMessage" style="text-align: center; padding: 40px; color: #d32f2f">
+    <mat-icon style="font-size: 48px; width: 48px; height: 48px">error_outline</mat-icon>
+    <p>{{ errorMessage }}</p>
+    <button mat-raised-button color="primary" (click)="fetchDetails()">Retry</button>
+  </div>
+
+  <!-- Data Loaded -->
+  <div *ngIf="!isLoading && collectionSheet">
+    <!-- Summary Cards Row 1: Branch, Center, Loan Officer, Meeting Date -->
+    <div style="display: flex; gap: 16px; margin-bottom: 12px; flex-wrap: wrap">
+      <mat-card style="flex: 1; min-width: 150px; text-align: center">
+        <mat-card-content>
+          <div style="font-size: 12px; color: #666">Branch</div>
+          <div style="font-size: 18px; font-weight: bold">{{ collectionSheet.officeName || '-' }}</div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card style="flex: 1; min-width: 150px; text-align: center">
+        <mat-card-content>
+          <div style="font-size: 12px; color: #666">Center</div>
+          <div style="font-size: 18px; font-weight: bold">{{ collectionSheet.centerName || '-' }}</div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card style="flex: 1; min-width: 150px; text-align: center">
+        <mat-card-content>
+          <div style="font-size: 12px; color: #666">Loan Officer</div>
+          <div style="font-size: 18px; font-weight: bold">{{ collectionSheet.loanOfficerName || '-' }}</div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card style="flex: 1; min-width: 150px; text-align: center">
+        <mat-card-content>
+          <div style="font-size: 12px; color: #666">Meeting Date</div>
+          <div style="font-size: 18px; font-weight: bold">{{ collectionSheet.meetingDate }}</div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Summary Cards Row 2: Totals + Counts -->
+    <div style="display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap">
+      <mat-card style="flex: 1; min-width: 140px; text-align: center; background: #e3f2fd">
+        <mat-card-content>
+          <div style="font-size: 12px; color: #1565c0">Center Total</div>
+          <div style="font-size: 20px; font-weight: bold; color: #1565c0">{{ centerTotal | number: '1.2-2' }}</div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card style="flex: 1; min-width: 120px; text-align: center">
+        <mat-card-content>
+          <div style="font-size: 12px; color: #666">Total Clients</div>
+          <div style="font-size: 20px; font-weight: bold">{{ summary.total }}</div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card style="flex: 1; min-width: 120px; text-align: center; background: #e8f5e9">
+        <mat-card-content>
+          <div style="font-size: 12px; color: #2e7d32">Success</div>
+          <div style="font-size: 20px; font-weight: bold; color: #2e7d32">{{ summary.success }}</div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card style="flex: 1; min-width: 120px; text-align: center; background: #fff3e0" *ngIf="summary.partial > 0">
+        <mat-card-content>
+          <div style="font-size: 12px; color: #e65100">Partial</div>
+          <div style="font-size: 20px; font-weight: bold; color: #e65100">{{ summary.partial }}</div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card style="flex: 1; min-width: 120px; text-align: center; background: #ffebee" *ngIf="summary.failed > 0">
+        <mat-card-content>
+          <div style="font-size: 12px; color: #c62828">Failed</div>
+          <div style="font-size: 20px; font-weight: bold; color: #c62828">{{ summary.failed }}</div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card style="flex: 1; min-width: 120px; text-align: center; background: #fff3e0" *ngIf="summary.pending > 0">
+        <mat-card-content>
+          <div style="font-size: 12px; color: #e65100">Pending</div>
+          <div style="font-size: 20px; font-weight: bold; color: #e65100">{{ summary.pending }}</div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Retry button for failed -->
+    <div *ngIf="summary.failed > 0" style="margin-bottom: 16px">
+      <button mat-raised-button color="warn" (click)="retryAllFailed()" [disabled]="isRetrying">
+        <mat-icon>refresh</mat-icon> Retry All Failed
+      </button>
+    </div>
+
+    <!-- Group-wise Breakdown -->
+    <div *ngFor="let group of groups" style="margin-bottom: 24px">
+      <!-- Group Header -->
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          padding: 10px 16px;
+          background: #f5f5f5;
+          border-left: 4px solid #1565c0;
+          border-radius: 4px;
+          margin-bottom: 8px;
+        "
+      >
+        <mat-icon style="margin-right: 8px; color: #1565c0">group</mat-icon>
+        <span style="font-weight: bold; font-size: 16px; flex: 1">{{ group.groupName }}</span>
+        <span style="font-size: 14px; color: #1565c0; font-weight: bold; margin-right: 16px">
+          Total: {{ group.groupTotal | number: '1.2-2' }}
+        </span>
+        <span style="font-size: 13px; color: #666">{{ group.clients.length }} client(s)</span>
+      </div>
+
+      <!-- Clients within Group -->
+      <div *ngFor="let client of group.clients" style="margin-bottom: 8px; margin-left: 16px">
+        <!-- Client Header -->
+        <div
+          style="display: flex; align-items: center; padding: 8px 12px; border-radius: 4px 4px 0 0; cursor: pointer"
+          [style.background]="
+            client.status === 'SUCCESS'
+              ? '#e8f5e9'
+              : client.status === 'FAILED' || client.status === 'PARTIAL_FAILURE'
+                ? '#ffebee'
+                : '#fff3e0'
+          "
+          (click)="toggleClient(client.clientEntryId)"
+        >
+          <mat-icon style="margin-right: 8px; font-size: 18px">
+            {{ expandedClients[client.clientEntryId] ? 'expand_more' : 'chevron_right' }}
+          </mat-icon>
+          <span style="font-weight: bold; flex: 1">{{ client.clientName || 'Client #' + client.clientId }}</span>
+          <span style="margin-right: 16px; font-size: 13px; color: #1565c0; font-weight: bold">
+            {{ client.clientTotal | number: '1.2-2' }}
+          </span>
+          <span style="margin-right: 16px; font-size: 12px; color: #666">
+            {{ client.transactions?.length || 0 }} txn(s)
+          </span>
+          <span
+            [style.color]="
+              client.status === 'SUCCESS'
+                ? '#2e7d32'
+                : client.status === 'FAILED' || client.status === 'PARTIAL_FAILURE'
+                  ? '#c62828'
+                  : '#e65100'
+            "
+            style="font-weight: bold; font-size: 13px"
+          >
+            {{ client.status }}
+          </span>
+        </div>
+
+        <!-- Client Error Summary -->
+        <div
+          *ngIf="expandedClients[client.clientEntryId] && client.errorSummary"
+          style="
+            padding: 6px 12px;
+            background: #fff3e0;
+            border-left: 3px solid #e65100;
+            font-size: 12px;
+            color: #e65100;
+          "
+        >
+          <strong>Error:</strong> {{ client.errorSummary }}
+        </div>
+
+        <!-- Transactions Table (expanded) -->
+        <table
+          *ngIf="expandedClients[client.clientEntryId]"
+          mat-table
+          [dataSource]="client.transactions"
+          class="mat-elevation-z1"
+          style="width: 100%; border-radius: 0 0 4px 4px"
+        >
+          <ng-container matColumnDef="transactionType">
+            <th mat-header-cell *matHeaderCellDef style="width: 130px">Transaction</th>
+            <td mat-cell *matCellDef="let txn">{{ txn.transactionType }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="productName">
+            <th mat-header-cell *matHeaderCellDef>Product / Charge</th>
+            <td mat-cell *matCellDef="let txn">{{ txn.productName || '-' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="accountNo">
+            <th mat-header-cell *matHeaderCellDef style="width: 140px">Account No</th>
+            <td mat-cell *matCellDef="let txn">{{ txn.accountNo || '-' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef style="width: 100px; text-align: right">Amount</th>
+            <td mat-cell *matCellDef="let txn" style="text-align: right">{{ txn.amount | number: '1.2-2' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef style="width: 80px">Status</th>
+            <td mat-cell *matCellDef="let txn">
+              <span
+                [style.color]="txn.status === 'SUCCESS' ? '#2e7d32' : txn.status === 'FAILED' ? '#c62828' : '#e65100'"
+                style="font-weight: bold; font-size: 12px"
+              >
+                {{ txn.status }}
+              </span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="transactionId">
+            <th mat-header-cell *matHeaderCellDef style="width: 80px">Txn ID</th>
+            <td mat-cell *matCellDef="let txn" style="font-size: 12px">{{ txn.transactionId || '-' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="errorMessage">
+            <th mat-header-cell *matHeaderCellDef>Error</th>
+            <td mat-cell *matCellDef="let txn" style="color: #c62828; font-size: 12px">
+              {{ txn.errorMessage || '' }}
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="txnColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: txnColumns"></tr>
+        </table>
+      </div>
+    </div>
+
+    <div *ngIf="groups.length === 0" style="padding: 20px; text-align: center; color: #999">
+      No client entries found for this collection sheet.
+    </div>
+  </div>
+
+  <!-- Not Found -->
+  <div *ngIf="!isLoading && !collectionSheet && !errorMessage" style="text-align: center; padding: 40px">
+    <p>Collection sheet not found.</p>
+  </div>
+</div>

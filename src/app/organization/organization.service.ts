@@ -710,13 +710,19 @@ export class OrganizationService {
     return this.http.get(`/staff`, { params: httpParams });
   }
 
-  getCenters(officeId: any): Observable<any> {
-    const httpParams = new HttpParams().set('officeId', officeId).set('status', 'all');
+  getCenters(officeId: any, staffId?: string | number): Observable<any> {
+    let httpParams = new HttpParams().set('officeId', officeId).set('status', 'all');
+    if (staffId) {
+      httpParams = httpParams.set('staffId', staffId.toString());
+    }
     return this.http.get(`/centers`, { params: httpParams });
   }
 
-  getGroups(officeId: any): Observable<any> {
-    const httpParams = new HttpParams().set('officeId', officeId).set('status', 'all');
+  getGroups(officeId: any, staffId?: string | number): Observable<any> {
+    let httpParams = new HttpParams().set('officeId', officeId).set('status', 'all');
+    if (staffId) {
+      httpParams = httpParams.set('staffId', staffId.toString());
+    }
     return this.http.get(`/groups`, { params: httpParams });
   }
 

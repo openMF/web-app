@@ -16,6 +16,7 @@ import { Route } from '../core/route/route.service';
 import { IndividualCollectionSheetComponent } from './individual-collection-sheet/individual-collection-sheet.component';
 import { OfficesResolver } from 'app/organization/offices/common-resolvers/offices.resolver';
 import { CollectionSheetComponent } from './collection-sheet/collection-sheet.component';
+import { SubmittedCollectionSheetsComponent } from './submitted-collection-sheets/submitted-collection-sheets.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -35,6 +36,15 @@ const routes: Routes = [
           }
         },
         {
+          path: 'submitted-collection-sheets',
+          data: {
+            title: 'Submitted Collection Sheets',
+            breadcrumb: 'Submitted Collection Sheets',
+            routeParamBreadcrumb: false
+          },
+          component: SubmittedCollectionSheetsComponent
+        },
+        {
           path: 'collection-sheet',
           data: {
             title: 'Collection Sheet',
@@ -45,6 +55,18 @@ const routes: Routes = [
           resolve: {
             officesData: OfficesResolver
           }
+        },
+        {
+          path: 'sheet-status/:id',
+          data: {
+            title: 'Collection Sheet Status',
+            breadcrumb: 'Processing Status',
+            routeParamBreadcrumb: false
+          },
+          loadComponent: () =>
+            import('./collection-sheet-status/collection-sheet-status.component').then(
+              (m) => m.CollectionSheetStatusComponent
+            )
         }
       ]
     }

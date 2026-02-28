@@ -6,19 +6,898 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-.container {
-  max-width: 37em;
+// ═══════════════════════════════════════════════════════════════
+//  Collection Sheet — Stitch Design (Pixel-Perfect)
+//  Ref: Stitch project 17481033880196231584
+// ═══════════════════════════════════════════════════════════════
+
+// Design tokens (from Stitch tailwind config)
+$primary: #1565c1;
+$success: #2e7d32;
+$warning: #e65100;
+$accent: #4527a0;
+$danger: #c62828;
+$slate-50: #f8fafc;
+$slate-100: #f1f5f9;
+$slate-200: #e2e8f0;
+$slate-300: #cbd5e1;
+$slate-400: #94a3b8;
+$slate-500: #64748b;
+$slate-600: #475569;
+$slate-700: #334155;
+$slate-800: #1e293b;
+$slate-900: #0f172a;
+
+// ────────── Page Container ──────────
+.cs-page {
+  font-family:
+    Manrope,
+    Inter,
+    -apple-system,
+    sans-serif;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+// ────────── Title Row ──────────
+.cs-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.cs-page-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: $slate-900;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.cs-generate-btn {
+  height: 40px !important;
+  border-radius: 8px !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  letter-spacing: 0;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 10%) !important;
+}
+
+// ────────── Filter Card ──────────
+.cs-filter-card {
+  background: white;
   padding: 20px;
+  border-radius: 12px;
+  border: 1px solid $slate-200;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 4%);
+}
 
-  .margin-v {
-    margin: 1em 0;
+.cs-filter-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+
+  @media (width <= 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cs-filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cs-filter-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: $slate-500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cs-compact-field {
+  width: 100%;
+
+  ::ng-deep .mat-mdc-text-field-wrapper {
+    height: 40px !important;
+    padding: 0 12px !important;
   }
 
-  .margin-b {
-    margin: 0 0 1em;
+  ::ng-deep .mat-mdc-form-field-infix {
+    min-height: 40px !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
   }
 
-  .margin-t {
-    margin-top: 1em;
+  ::ng-deep .mat-mdc-select-value-text {
+    font-size: 13px;
+    font-family: Manrope, sans-serif;
   }
+
+  ::ng-deep .mdc-notched-outline > * {
+    border-color: $slate-200 !important;
+  }
+
+  ::ng-deep .mat-mdc-form-field-flex {
+    height: 40px;
+  }
+
+  ::ng-deep input.mat-mdc-input-element {
+    font-size: 13px;
+    font-family: Manrope, sans-serif;
+  }
+}
+
+// ────────── Table Card ──────────
+.cs-table-card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid $slate-200;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 4%);
+  overflow: hidden;
+  margin-bottom: 0;
+}
+
+.cs-table-scroll {
+  overflow-x: auto;
+}
+
+// ────────── Main Table ──────────
+.cs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  font-family: Manrope, Inter, sans-serif;
+
+  th,
+  td {
+    padding: 8px 10px;
+    border: 1px solid $slate-200;
+    text-align: center;
+    white-space: nowrap;
+  }
+}
+
+// ────────── Section Header Row (Stitch pill row) ──────────
+.cs-section-row {
+  th {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: white;
+    padding: 10px 12px;
+    border-color: rgb(255 255 255 / 15%);
+  }
+}
+
+.cs-th-dark {
+  background: $slate-800;
+}
+
+.cs-th-primary {
+  background: $primary;
+}
+
+.cs-th-success {
+  background: $success;
+}
+
+.cs-th-warning {
+  background: $warning;
+}
+
+.cs-th-accent {
+  background: $accent;
+}
+
+// Sticky client column
+.cs-sticky-col {
+  position: sticky;
+  left: 0;
+  z-index: 5;
+  background-color: inherit;
+  border-right: 2px solid $slate-200 !important;
+  text-align: left !important;
+  min-width: 180px;
+}
+
+// ────────── Sub-header Row ──────────
+.cs-sub-row {
+  th {
+    background: $slate-50;
+    font-size: 11px;
+    font-weight: 600;
+    color: $slate-500;
+    padding: 6px 8px;
+  }
+}
+
+.cs-sub-label {
+  background: $slate-50 !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: $slate-500 !important;
+}
+
+.cs-sub-cell {
+  font-size: 10px !important;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.cs-sub-accent {
+  background: rgba($accent, 0.04) !important;
+  color: $accent !important;
+}
+
+// ────────── Group Row (colored band) ──────────
+.cs-group-row {
+  background: $slate-100;
+  border-top: 1px solid $slate-200;
+  border-bottom: 1px solid $slate-200;
+}
+
+.cs-group-label {
+  padding: 8px 16px !important;
+  font-weight: 700;
+  font-style: italic;
+  color: $primary;
+  font-size: 13px;
+  text-align: left !important;
+  white-space: nowrap;
+}
+
+// ────────── Data Rows ──────────
+.cs-data-row {
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background-color: rgba($primary, 0.02);
+  }
+}
+
+.cs-multi-row {
+  background: rgba($slate-50, 0.5);
+}
+
+.cs-cell {
+  padding: 6px 8px;
+  font-size: 13px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.cs-due-val {
+  color: $slate-400;
+}
+
+// Client name
+.cs-client-name {
+  padding: 8px 12px !important;
+  background: white;
+}
+
+.cs-name {
+  display: block;
+  font-weight: 600;
+  font-size: 13px;
+  color: $slate-900;
+}
+
+.cs-client-id {
+  display: block;
+  font-size: 10px;
+  color: $slate-400;
+  font-weight: 400;
+  margin-top: 1px;
+}
+
+.cs-loan-tag {
+  display: block;
+  font-size: 9px;
+  color: $slate-400;
+  font-weight: 400;
+}
+
+// ────────── Inputs ──────────
+.cs-input {
+  width: 72px;
+  padding: 4px 6px;
+  text-align: center;
+  border: 1px solid $slate-200;
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: Manrope, sans-serif;
+  font-variant-numeric: tabular-nums;
+  background: white;
+  appearance: textfield;
+
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+
+  &:focus {
+    border-color: $primary;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba($primary, 0.12);
+  }
+}
+
+// ────────── Savings Dep/Wdl ──────────
+.cs-savings-cell {
+  padding: 6px 8px !important;
+}
+
+.cs-savings-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cs-dep-row,
+.cs-wdl-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cs-dep-label {
+  font-size: 9px;
+  font-weight: 700;
+  color: $success;
+  min-width: 24px;
+  text-align: left;
+}
+
+.cs-wdl-label {
+  font-size: 9px;
+  font-weight: 700;
+  color: $danger;
+  min-width: 24px;
+  text-align: left;
+}
+
+.cs-dep-input {
+  border-color: rgba($success, 0.3) !important;
+  background: rgba($success, 0.04) !important;
+  text-align: right !important;
+  flex: 1;
+
+  &:focus {
+    border-color: $success !important;
+    box-shadow: 0 0 0 2px rgba($success, 0.12) !important;
+  }
+}
+
+.cs-wdl-input {
+  border-color: rgba($danger, 0.2) !important;
+  background: rgba($danger, 0.02) !important;
+  text-align: right !important;
+  flex: 1;
+
+  &:focus {
+    border-color: $danger !important;
+    box-shadow: 0 0 0 2px rgba($danger, 0.12) !important;
+  }
+}
+
+// ────────── Client Total ──────────
+.cs-total-due {
+  background: rgba($slate-50, 0.7) !important;
+  font-weight: 600;
+  color: $slate-500;
+}
+
+.cs-total-collected {
+  background: rgba($success, 0.04) !important;
+  font-weight: 700;
+  color: $success;
+}
+
+// ────────── Attendance (custom toggle, no Material) ──────────
+.cs-att-cell {
+  vertical-align: middle;
+}
+
+.cs-att-toggle {
+  display: inline-flex;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid $slate-200;
+}
+
+.cs-att-btn {
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: Manrope, sans-serif;
+  border: none;
+  cursor: pointer;
+  background: white;
+  color: $slate-400;
+  transition: all 0.15s;
+  line-height: 18px;
+}
+
+.cs-att-present {
+  background: $primary !important;
+  color: white !important;
+}
+
+.cs-att-absent {
+  background: $danger !important;
+  color: white !important;
+}
+
+// ────────── Group Total Row ──────────
+.cs-group-total-row {
+  background: rgba($primary, 0.04);
+  font-weight: 700;
+
+  td {
+    border-top: 2px solid rgba($primary, 0.2);
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  .cs-sticky-col {
+    background: rgba($primary, 0.04) !important;
+    font-weight: 700;
+    text-align: left !important;
+  }
+}
+
+// ────────── Group Total Cell Colors ──────────
+.cs-group-total-loan {
+  color: $primary;
+  font-weight: 700;
+}
+
+.cs-group-total-savings {
+  color: $success;
+  font-weight: 700;
+}
+
+.cs-group-total-charge {
+  color: $warning;
+  font-weight: 700;
+}
+
+// ────────── Utility Classes ──────────
+.cs-mt-8 {
+  margin-top: 8px;
+}
+
+.cs-att-empty {
+  font-size: 10px;
+  text-align: center;
+}
+
+// ────────── Summary Section (Stitch Design) ──────────
+.cs-summary-section {
+  margin-top: 32px;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid $slate-200;
+  box-shadow: 0 4px 24px rgb(0 0 0 / 6%);
+  overflow: hidden;
+}
+
+// Header
+.cs-summary-header {
+  background: linear-gradient(to right, $primary, #0d47a1);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.cs-summary-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cs-summary-icon {
+  color: white;
+  font-size: 24px;
+}
+
+.cs-summary-title {
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.cs-summary-date {
+  color: rgb(255 255 255 / 90%);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+// Two-panel content
+.cs-summary-content {
+  display: flex;
+  flex-direction: row;
+
+  @media (width <= 768px) {
+    flex-direction: column;
+  }
+}
+
+// Section title (icon + label)
+.cs-summary-section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.cs-section-icon {
+  color: $slate-400;
+  font-size: 20px;
+}
+
+.cs-summary-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: $slate-400;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0;
+}
+
+// Left panel
+.cs-summary-left {
+  flex: 1;
+  padding: 24px 32px;
+  border-right: 1px solid $slate-200;
+
+  @media (width <= 768px) {
+    border-right: none;
+    border-bottom: 1px solid $slate-200;
+  }
+}
+
+.cs-summary-group-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 8px;
+  border-bottom: 1px solid $slate-100;
+  border-radius: 8px;
+  transition: background-color 0.15s;
+
+  &:hover {
+    background-color: $slate-50;
+  }
+}
+
+.cs-group-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.cs-summary-group-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: $slate-900;
+}
+
+.cs-group-efficiency {
+  font-size: 11px;
+  color: $success;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.cs-summary-group-amount {
+  font-size: 18px;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', 'SF Mono', monospace;
+  font-variant-numeric: tabular-nums;
+  color: $slate-700;
+}
+
+// Right panel
+.cs-summary-right {
+  flex: 1.4;
+  padding: 24px 32px;
+  background: $slate-50;
+}
+
+// ────────── Performance Cards (Stitch Screenshot) ──────────
+.cs-perf-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 20px;
+
+  @media (width <= 900px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (width <= 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cs-perf-card {
+  background: white;
+  border-radius: 8px;
+  border: 1px solid $slate-200;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 4%);
+}
+
+.cs-perf-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.cs-perf-card-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: $slate-400;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.cs-perf-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+
+.cs-badge-blue {
+  background: rgba($primary, 0.1);
+  color: $primary;
+}
+
+.cs-badge-green {
+  background: rgba($success, 0.1);
+  color: $success;
+}
+
+.cs-badge-orange {
+  background: rgba($warning, 0.1);
+  color: $warning;
+}
+
+.cs-perf-amounts {
+  display: flex;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: 12px;
+}
+
+.cs-perf-collected,
+.cs-perf-target {
+  display: flex;
+  flex-direction: column;
+}
+
+.cs-perf-amount-value {
+  font-size: 18px;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', 'SF Mono', monospace;
+  font-variant-numeric: tabular-nums;
+  color: $slate-700;
+  line-height: 1.2;
+}
+
+.cs-val-blue {
+  color: $primary;
+}
+
+.cs-val-green {
+  color: $success;
+}
+
+.cs-val-orange {
+  color: $warning;
+}
+
+.cs-val-muted {
+  font-size: 14px;
+  color: $slate-400;
+  font-weight: 600;
+}
+
+.cs-perf-amount-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: $slate-400;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 2px;
+}
+
+.cs-perf-no-target {
+  font-size: 12px;
+  color: $slate-400;
+  font-style: italic;
+  align-self: flex-end;
+}
+
+// Progress bar
+.cs-progress-track {
+  height: 6px;
+  background: $slate-100;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.cs-progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.cs-fill-blue {
+  background: linear-gradient(to right, #1565c1, #1e88e5);
+}
+
+.cs-fill-green {
+  background: linear-gradient(to right, #2e7d32, #43a047);
+}
+
+.cs-fill-orange {
+  background: linear-gradient(to right, #e65100, #f57c00);
+}
+
+// ────────── Grand Total Card (Stitch dark card) ──────────
+.cs-grand-total-card {
+  background: linear-gradient(135deg, #1565c1, #0d47a1);
+  border-radius: 8px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 12px rgba(#1565c1, 0.3);
+}
+
+.cs-grand-total-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.cs-grand-total-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgb(255 255 255 / 60%);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.cs-grand-total-value {
+  font-size: 32px;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', 'SF Mono', monospace;
+  font-variant-numeric: tabular-nums;
+  color: white;
+  margin-top: 4px;
+}
+
+.cs-grand-total-meta {
+  font-size: 12px;
+  color: rgb(255 255 255 / 50%);
+  margin-top: 4px;
+}
+
+.cs-grand-total-right {
+  display: flex;
+  align-items: center;
+}
+
+.cs-achievement-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba($success, 0.15);
+  border: 3px solid $success;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.cs-achievement-pct {
+  font-size: 20px;
+  font-weight: 800;
+  color: $success;
+  line-height: 1;
+}
+
+.cs-achievement-text {
+  font-size: 8px;
+  font-weight: 700;
+  color: rgb(255 255 255 / 60%);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 2px;
+}
+
+// ────────── Footer ──────────
+.cs-summary-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 16px 24px;
+  background: $slate-50;
+  border-top: 1px solid $slate-200;
+}
+
+.cs-footer-note {
+  font-size: 12px;
+  color: $slate-400;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cs-summary-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.cs-btn-secondary {
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+}
+
+.cs-btn-primary {
+  border-radius: 8px !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+}
+
+// ────────── Empty State ──────────
+.cs-empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: $slate-400;
+  font-size: 15px;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid $slate-200;
+}
+
+// ────────── Hide mat-card wrapper styling ──────────
+:host ::ng-deep mat-card {
+  box-shadow: none !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+:host ::ng-deep mat-card-header {
+  display: none !important;
+}
+
+:host ::ng-deep mat-card-content {
+  padding: 0 !important;
+}
+
+:host ::ng-deep mat-card-actions {
+  display: none !important;
 }

@@ -102,8 +102,8 @@ export class ClientsComponent implements OnInit {
   currentPage = 0;
   filterText = '';
 
-  sortAttribute = '';
-  sortDirection = '';
+  sortAttribute = 'id';
+  sortDirection = 'DESC';
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

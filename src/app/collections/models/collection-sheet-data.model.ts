@@ -49,11 +49,50 @@ export interface Status {
   value: string;
 }
 
+export interface CollectionLoan {
+  loanId: number;
+  productId: number;
+  productName?: string;
+  accountNo?: string;
+  totalDue: number;
+  chargesDue?: number;
+  installmentDue?: number;
+}
+
+export interface CollectionSavings {
+  savingsId: number;
+  productId: number;
+  productName?: string;
+  accountNo?: string;
+  dueAmount: number;
+}
+
+export interface CollectionCharge {
+  chargeId: number;
+  chargeName: string;
+  amount: number;
+}
+
+export interface CollectionClient {
+  clientId: number;
+  clientName?: string;
+  attendanceType?: AttendanceTypeOption;
+  loans?: CollectionLoan[];
+  savings?: CollectionSavings[];
+  clientCharges?: CollectionCharge[];
+}
+
+export interface CollectionGroup {
+  groupId: number;
+  groupName?: string;
+  clients: CollectionClient[];
+}
+
 export interface JLGGroupData {
   dueDate: number[];
-  loanProducts: any[];
-  savingsProducts: any[];
-  groups: any[];
+  loanProducts: { id: number; name: string }[];
+  savingsProducts: { id: number; name: string }[];
+  groups: CollectionGroup[];
   attendanceTypeOptions: AttendanceTypeOption[];
   paymentTypeOptions: PaymentTypeOption[];
 }
@@ -63,3 +102,11 @@ export interface AttendanceTypeOption {
   code: string;
   value: string;
 }
+
+/** Attendance type constants matching Fineract backend enum values */
+export const AttendanceType = {
+  PRESENT: 1,
+  ABSENT: 2,
+  APPROVED_LEAVE: 3,
+  LATE: 4
+} as const;

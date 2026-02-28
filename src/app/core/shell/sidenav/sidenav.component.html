@@ -146,6 +146,19 @@
           <a matLine>{{ 'labels.menus.Remittances' | translate }}</a>
         </mat-list-item>
         <mat-list-item
+          [routerLink]="['/collections/submitted-collection-sheets']"
+          [matTooltipPosition]="tooltipPosition"
+          matTooltip="{{ 'labels.menus.Submitted Collection Sheets' | translate }}"
+          routerLinkActive="active-menu"
+          [routerLinkActiveOptions]="{ exact: false }"
+          *mifosxHasPermission="'READ_COLLECTIONSHEET'"
+        >
+          <mat-icon matListIcon>
+            <i class="fa fa-history"></i>
+          </mat-icon>
+          <a matLine>{{ 'labels.menus.Submitted Collection Sheets' | translate }}</a>
+        </mat-list-item>
+        <mat-list-item
           [routerLink]="['/notifications']"
           [matTooltipPosition]="tooltipPosition"
           matTooltip="{{ 'tooltips.Notifications' | translate }}"

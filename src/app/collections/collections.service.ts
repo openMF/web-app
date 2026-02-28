@@ -44,4 +44,26 @@ export class CollectionsService {
     const httpParams = new HttpParams().set('command', 'saveCollectionSheet');
     return this.http.post(`/collectionsheet`, data, { params: httpParams });
   }
+
+  saveCollectionSheetForCenter(centerId: number, data: any): Observable<any> {
+    // New async API for processing collection sheets, replacing synchronous /centers/{id} command
+    return this.http.post(`/collectionsheet/custom`, data);
+  }
+
+  getCollectionSheetDetails(sheetId: number): Observable<any> {
+    return this.http.get(`/collectionsheet/custom/${sheetId}`);
+  }
+
+  retryCollectionSheet(sheetId: number): Observable<any> {
+    return this.http.post(`/collectionsheet/custom/${sheetId}/retry`, {});
+  }
+
+  getCollectionSheets(offset: number = 0, limit: number = 25): Observable<any> {
+    let params = new HttpParams().set('offset', offset.toString()).set('limit', limit.toString());
+    return this.http.get(`/collectionsheet/custom`, { params });
+  }
+
+  retryClientEntry(sheetId: number, clientEntryId: number): Observable<any> {
+    return this.http.post(`/collectionsheet/custom/client/${clientEntryId}/retry`, {});
+  }
 }

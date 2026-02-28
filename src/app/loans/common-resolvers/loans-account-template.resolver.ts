@@ -25,9 +25,18 @@ export class LoansAccountTemplateResolver {
 
   /**
    * Returns the loan account template data.
+   * For JLG loans, reads clientId and templateType from query params.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const templateType = route.queryParamMap.get('templateType');
+    const jlgClientId = route.queryParamMap.get('clientId');
+
+    if (templateType === 'jlg' && jlgClientId) {
+      const groupId = route.parent.parent.paramMap.get('groupId');
+      return this.loansService.getJlgLoanTemplate(jlgClientId, groupId);
+    }
+
     const entityId = route.parent.parent.paramMap.get('clientId') || route.parent.parent.paramMap.get('groupId');
     const isGroup = route.parent.parent.paramMap.get('groupId') ? true : false;
     return this.loansService.getLoansAccountTemplateResource(entityId, isGroup);

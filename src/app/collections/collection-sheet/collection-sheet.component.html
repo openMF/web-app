@@ -6,94 +6,539 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<mat-card class="container">
-  <form [formGroup]="collectionSheetForm" (ngSubmit)="previewCollectionSheet()">
-    <div class="layout-row-wrap gap-2percent responsive-column align-start-center">
-      <mat-form-field class="flex-98">
-        <mat-label>{{ 'labels.inputs.Branch Office' | translate }}</mat-label>
-        <mat-select formControlName="officeId" required>
-          @for (office of officesData; track office) {
-            <mat-option [value]="office.id">
-              {{ office.name }}
-            </mat-option>
-          }
-        </mat-select>
-        @if (collectionSheetForm.controls.officeId.hasError('required')) {
-          <mat-error>
-            {{ 'labels.inputs.Branch Office' | translate }} {{ 'labels.commons.is' | translate }}
-            <strong>{{ 'labels.commons.required' | translate }}</strong>
-          </mat-error>
+<!-- Selection Form - shown when no data loaded -->
+@if (!jlgGroupData) {
+  <div class="cs-page">
+    <!-- Title + Generate button row -->
+    <div class="cs-title-row">
+      <h2 class="cs-page-title">Collection Sheet Entry</h2>
+      <button
+        mat-raised-button
+        color="primary"
+        class="cs-generate-btn"
+        [disabled]="!collectionSheetForm.valid || isLoading"
+        (click)="previewCollectionSheet()"
+      >
+        @if (isLoading) {
+          <mat-spinner diameter="18" class="m-r-10"></mat-spinner>
+        } @else {
+          <fa-icon icon="table" class="m-r-10"></fa-icon>
         }
-      </mat-form-field>
-
-      @if (officeId !== null) {
-        <mat-form-field class="flex-98" (click)="meetingDatePicker.open()">
-          <mat-label>{{ 'labels.inputs.Meeting Date' | translate }}</mat-label>
-          <input
-            matInput
-            [min]="minDate"
-            [max]="maxDate"
-            [matDatepicker]="meetingDatePicker"
-            required
-            formControlName="meetingDate"
-          />
-          <mat-datepicker-toggle matSuffix [for]="meetingDatePicker"></mat-datepicker-toggle>
-          <mat-datepicker #meetingDatePicker></mat-datepicker>
-          @if (collectionSheetForm.controls.meetingDate.hasError('required')) {
-            <mat-error>
-              {{ 'labels.inputs.Meeting Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
-          }
-        </mat-form-field>
-      }
-
-      @if (officeId !== null) {
-        <mat-form-field class="flex-98">
-          <mat-label>{{ 'labels.inputs.Staff' | translate }}</mat-label>
-          <mat-select formControlName="staffId">
-            @for (loanOfficer of loanOfficerData; track loanOfficer) {
-              <mat-option [value]="loanOfficer.id">
-                {{ loanOfficer.displayName }}
-              </mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
-      }
-
-      @if (officeId !== null) {
-        <mat-form-field class="flex-98">
-          <mat-label>{{ 'labels.inputs.Group' | translate }}</mat-label>
-          <mat-select formControlName="groupId">
-            @for (group of groupsData; track group) {
-              <mat-option [value]="group.id">
-                {{ group.name }}
-              </mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
-      }
-
-      @if (officeId !== null) {
-        <mat-form-field class="flex-98">
-          <mat-label>{{ 'labels.inputs.Center' | translate }}</mat-label>
-          <mat-select formControlName="centerId">
-            @for (center of centersData; track center) {
-              <mat-option [value]="center.id">
-                {{ center.name }}
-              </mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
-      }
+        Generate Collection Sheet
+      </button>
     </div>
 
-    <mat-card-actions class="layout-row align-center gap-5px responsive-column">
-      <button type="button" mat-raised-button [routerLink]="['../']">{{ 'labels.buttons.Cancel' | translate }}</button>
-      <button mat-raised-button color="primary" [disabled]="!collectionSheetForm.valid">
-        <fa-icon icon="download" class="m-r-10"></fa-icon>
-        {{ 'labels.buttons.Productive Collection Sheet' | translate }}
+    <!-- Filter bar card -->
+    <div class="cs-filter-card">
+      <form [formGroup]="collectionSheetForm">
+        <div class="cs-filter-grid">
+          <div class="cs-filter-field">
+            <label class="cs-filter-label">Branch Office</label>
+            <mat-form-field appearance="outline" class="cs-compact-field">
+              <mat-select formControlName="officeId" required>
+                @for (office of officesData; track office) {
+                  <mat-option [value]="office.id">{{ office.name }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          @if (officeId !== null) {
+            <div class="cs-filter-field">
+              <label class="cs-filter-label">Meeting Date</label>
+              <mat-form-field appearance="outline" class="cs-compact-field" (click)="meetingDatePicker.open()">
+                <input
+                  matInput
+                  [min]="minDate"
+                  [max]="maxDate"
+                  [matDatepicker]="meetingDatePicker"
+                  required
+                  formControlName="meetingDate"
+                />
+                <mat-datepicker-toggle matSuffix [for]="meetingDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #meetingDatePicker></mat-datepicker>
+              </mat-form-field>
+            </div>
+
+            <div class="cs-filter-field">
+              <label class="cs-filter-label">Staff / Loan Officer</label>
+              <mat-form-field appearance="outline" class="cs-compact-field">
+                <mat-select formControlName="staffId">
+                  @for (loanOfficer of loanOfficerData; track loanOfficer) {
+                    <mat-option [value]="loanOfficer.id">{{ loanOfficer.displayName }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="cs-filter-field">
+              <label class="cs-filter-label">Center</label>
+              <mat-form-field appearance="outline" class="cs-compact-field">
+                <mat-select formControlName="centerId">
+                  @for (center of centersData; track center) {
+                    <mat-option [value]="center.id">{{ center.name }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
+          }
+        </div>
+
+        @if (officeId !== null) {
+          <div class="cs-filter-grid cs-mt-8">
+            <div class="cs-filter-field">
+              <label class="cs-filter-label">Group</label>
+              <mat-form-field appearance="outline" class="cs-compact-field">
+                <mat-select formControlName="groupId">
+                  @for (group of groupsData; track group) {
+                    <mat-option [value]="group.id">{{ group.name }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        }
+      </form>
+      @if (isLoading) {
+        <mat-progress-bar mode="indeterminate" class="cs-mt-8"></mat-progress-bar>
+      }
+    </div>
+  </div>
+}
+
+<!-- Collection Sheet Data Table - shown after data is loaded -->
+@if (jlgGroupData) {
+  <div class="cs-page">
+    <!-- Title row -->
+    <div class="cs-title-row">
+      <h2 class="cs-page-title">Collection Sheet - {{ selectedCenterName }}</h2>
+      <button
+        mat-raised-button
+        color="primary"
+        class="cs-generate-btn"
+        (click)="submitCollectionSheet()"
+        [disabled]="isSaving"
+      >
+        @if (isSaving) {
+          <mat-spinner diameter="18" class="m-r-10"></mat-spinner>
+        } @else {
+          <fa-icon icon="save" class="m-r-10"></fa-icon>
+        }
+        Submit Final Data
       </button>
-    </mat-card-actions>
-  </form>
-</mat-card>
+    </div>
+
+    <!-- Single table card for ALL groups -->
+    <div class="cs-table-card">
+      <div class="cs-table-scroll">
+        <table class="cs-table">
+          <tbody>
+            @for (group of jlgGroupData.groups; track group; let gi = $index) {
+              <!-- Group section headers (repeat per group) -->
+              <tr class="cs-section-row">
+                <th class="cs-sticky-col cs-th-dark">Client Info</th>
+                @if (jlgGroupData.loanProducts?.length > 0) {
+                  <th class="cs-th-primary" [attr.colspan]="jlgGroupData.loanProducts.length * 2">
+                    Loan Due Collections
+                  </th>
+                }
+                @if (jlgGroupData.savingsProducts?.length > 0) {
+                  <th class="cs-th-success" [attr.colspan]="jlgGroupData.savingsProducts?.length || 0">
+                    Savings Collection
+                  </th>
+                }
+                @if (uniqueChargeNames.length > 0) {
+                  <th class="cs-th-warning" [attr.colspan]="uniqueChargeNames.length">Client Charges</th>
+                }
+                <th class="cs-th-accent" colspan="2">Client Total</th>
+                <th class="cs-th-dark" style="width: 70px">Status</th>
+              </tr>
+              <!-- Sub-headers: Product names + Due/Paid -->
+              <tr class="cs-sub-row">
+                <th class="cs-sticky-col cs-sub-label">Name / ID</th>
+                @for (product of jlgGroupData.loanProducts; track product) {
+                  <th class="cs-sub-cell" style="min-width: 80px">{{ product.name }} (Due)</th>
+                  <th class="cs-sub-cell" style="min-width: 80px">{{ product.name }} (Paid)</th>
+                }
+                @for (product of jlgGroupData.savingsProducts || []; track product) {
+                  <th class="cs-sub-cell" style="min-width: 110px">{{ product.name }} (Dep/Wdl)</th>
+                }
+                @for (chargeName of uniqueChargeNames; track chargeName) {
+                  <th class="cs-sub-cell" style="min-width: 80px">{{ chargeName }}</th>
+                }
+                <th class="cs-sub-cell cs-sub-accent" style="min-width: 80px">Due Total</th>
+                <th class="cs-sub-cell cs-sub-accent" style="min-width: 80px">Collected</th>
+                <th class="cs-sub-cell">Att.</th>
+              </tr>
+              <!-- Group name row (colored band) -->
+              <tr class="cs-group-row">
+                <td [attr.colspan]="getFullColspan()" class="cs-group-label">{{ group.groupName }}</td>
+              </tr>
+              <!-- Client rows -->
+              @for (client of group.clients; track client; let ci = $index) {
+                <tr class="cs-data-row">
+                  <!-- Client name + ID -->
+                  <td class="cs-sticky-col cs-client-name" [attr.rowspan]="getClientRowSpan(client)">
+                    <span class="cs-name">{{ client.clientName }}</span>
+                    <span class="cs-client-id">ID: {{ client.clientId }}</span>
+                  </td>
+                  <!-- Loans -->
+                  @for (product of jlgGroupData.loanProducts; track product) {
+                    @let loans = getLoansForProduct(client, product.id);
+                    @if (loans.length > 0) {
+                      <td class="cs-cell cs-due-val">{{ loans[0].totalDue | number: '1.2-2' }}</td>
+                      <td class="cs-cell">
+                        <input
+                          type="number"
+                          class="cs-input"
+                          [value]="loans[0].totalDue"
+                          (change)="setLoanPayment(gi, ci, loans[0].loanId, $event)"
+                        />
+                      </td>
+                    } @else {
+                      <td class="cs-cell cs-due-val">-</td>
+                      <td class="cs-cell">-</td>
+                    }
+                  }
+                  <!-- Savings (stacked Dep + Wdl) -->
+                  @for (product of jlgGroupData.savingsProducts || []; track product) {
+                    @if (getSavingsForProduct(client, product.id); as savings) {
+                      <td class="cs-cell cs-savings-cell" [attr.rowspan]="getClientRowSpan(client)">
+                        <div class="cs-savings-stack">
+                          <div class="cs-dep-row">
+                            <span class="cs-dep-label">DEP</span>
+                            <input
+                              type="number"
+                              class="cs-input cs-dep-input"
+                              [value]="savings.dueAmount"
+                              (change)="setSavingsDeposit(gi, ci, product.id, $event)"
+                            />
+                          </div>
+                          <div class="cs-wdl-row">
+                            <span class="cs-wdl-label">WDL</span>
+                            <input
+                              type="number"
+                              class="cs-input cs-wdl-input"
+                              [value]="0"
+                              (change)="setSavingsWithdrawal(gi, ci, product.id, $event)"
+                            />
+                          </div>
+                        </div>
+                      </td>
+                    } @else {
+                      <td class="cs-cell" [attr.rowspan]="getClientRowSpan(client)">-</td>
+                    }
+                  }
+                  <!-- Client Charges -->
+                  @for (chargeName of uniqueChargeNames; track chargeName) {
+                    <td class="cs-cell" [attr.rowspan]="getClientRowSpan(client)">
+                      <input
+                        type="number"
+                        class="cs-input"
+                        [value]="getClientChargeByName(client, chargeName)"
+                        (change)="setChargeOverride(gi, ci, chargeName, $event)"
+                      />
+                    </td>
+                  }
+                  <!-- Client Total: Due -->
+                  <td class="cs-cell cs-total-due" [attr.rowspan]="getClientRowSpan(client)">
+                    {{ getClientTotalDue(client) | number: '1.2-2' }}
+                  </td>
+                  <!-- Client Total: Collected -->
+                  <td class="cs-cell cs-total-collected" [attr.rowspan]="getClientRowSpan(client)">
+                    {{ getClientTotalCollected(gi, ci, client) | number: '1.2-2' }}
+                  </td>
+                  <!-- Attendance -->
+                  <td class="cs-cell cs-att-cell" [attr.rowspan]="getClientRowSpan(client)">
+                    <div class="cs-att-toggle">
+                      <button
+                        class="cs-att-btn"
+                        [class.cs-att-present]="getAttendanceValue(client, gi, ci) === AttendanceType.PRESENT"
+                        (click)="setAttendanceToggle(gi, ci, AttendanceType.PRESENT)"
+                      >
+                        P
+                      </button>
+                      <button
+                        class="cs-att-btn"
+                        [class.cs-att-absent]="getAttendanceValue(client, gi, ci) === AttendanceType.ABSENT"
+                        (click)="setAttendanceToggle(gi, ci, AttendanceType.ABSENT)"
+                      >
+                        A
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <!-- Additional rows for 2nd, 3rd... loans under same product -->
+                @for (extraRow of [].constructor(getClientRowSpan(client) - 1); track $index; let ri = $index) {
+                  <tr class="cs-data-row cs-multi-row">
+                    @for (product of jlgGroupData.loanProducts; track product) {
+                      @let loans = getLoansForProduct(client, product.id);
+                      @if (loans.length > ri + 1) {
+                        <td class="cs-cell cs-due-val">
+                          <span class="cs-loan-tag">Loan #{{ loans[ri + 1].loanId }}</span>
+                          {{ loans[ri + 1].totalDue | number: '1.2-2' }}
+                        </td>
+                        <td class="cs-cell">
+                          <input
+                            type="number"
+                            class="cs-input"
+                            [value]="loans[ri + 1].totalDue"
+                            (change)="setLoanPayment(gi, ci, loans[ri + 1].loanId, $event)"
+                          />
+                        </td>
+                      } @else {
+                        <td class="cs-cell">-</td>
+                        <td class="cs-cell">-</td>
+                      }
+                    }
+                  </tr>
+                }
+              }
+              <!-- Group Total Row -->
+              <tr class="cs-group-total-row">
+                <td class="cs-sticky-col">{{ group.groupName }} Total</td>
+                @for (product of jlgGroupData.loanProducts; track product) {
+                  <td class="cs-cell cs-due-val">
+                    {{ getGroupLoanTotal(group, product.id, 'totalDue') | number: '1.2-2' }}
+                  </td>
+                  <td class="cs-cell cs-group-total-loan">
+                    {{ getGroupLoanTotal(group, product.id, 'totalDue') | number: '1.2-2' }}
+                  </td>
+                }
+                @for (product of jlgGroupData.savingsProducts || []; track product) {
+                  <td class="cs-cell cs-group-total-savings">
+                    {{ getGroupSavingsTotal(group, product.id, gi) | number: '1.2-2' }}
+                  </td>
+                }
+                @for (chargeName of uniqueChargeNames; track chargeName) {
+                  <td class="cs-cell cs-group-total-charge">
+                    {{ getGroupChargeTotalByName(group, chargeName) | number: '1.2-2' }}
+                  </td>
+                }
+                <td class="cs-cell cs-total-due">{{ getGroupTotalDue(group) | number: '1.2-2' }}</td>
+                <td class="cs-cell cs-total-collected">{{ getGroupTotalCollected(group, gi) | number: '1.2-2' }}</td>
+                <td class="cs-cell cs-att-empty"></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Collection Summary (Stitch Screenshot Design) -->
+    @if (jlgGroupData.groups?.length > 0) {
+      <div class="cs-summary-section">
+        <!-- Gradient Header -->
+        <div class="cs-summary-header">
+          <div class="cs-summary-header-left">
+            <span class="material-symbols-outlined cs-summary-icon">grid_view</span>
+            <h2 class="cs-summary-title">Collection Summary - {{ selectedCenterName }}</h2>
+          </div>
+          <p class="cs-summary-date">{{ meetingDate }}</p>
+        </div>
+
+        <!-- Two-Panel Content -->
+        <div class="cs-summary-content">
+          <!-- Left Panel: Breakdown By Group Efficiency -->
+          <div class="cs-summary-left">
+            <div class="cs-summary-section-title">
+              <span class="material-symbols-outlined cs-section-icon">group_work</span>
+              <h3 class="cs-summary-label">Breakdown by Group Efficiency</h3>
+            </div>
+            @for (group of jlgGroupData.groups; track group; let gi = $index) {
+              <div class="cs-summary-group-row">
+                <div class="cs-group-info">
+                  <span class="cs-summary-group-name"
+                    >Group {{ (gi + 1).toString().padStart(2, '0') }}: {{ group.groupName }}</span
+                  >
+                  <span class="cs-group-efficiency">
+                    @if (getGroupTotalDue(group) > 0) {
+                      {{ (getGroupTotalCollected(group, gi) / getGroupTotalDue(group)) * 100 | number: '1.0-0' }}%
+                      Efficiency
+                    } @else {
+                      100% Efficiency
+                    }
+                  </span>
+                </div>
+                <span class="cs-summary-group-amount">{{ getGroupTotalCollected(group, gi) | number: '1.2-2' }}</span>
+              </div>
+            }
+          </div>
+
+          <!-- Right Panel: Performance Comparison -->
+          <div class="cs-summary-right">
+            <div class="cs-summary-section-title">
+              <span class="material-symbols-outlined cs-section-icon">analytics</span>
+              <h3 class="cs-summary-label">Performance Comparison</h3>
+            </div>
+
+            <!-- 3-column card row: Loan | Savings | Charges -->
+            <div class="cs-perf-grid">
+              <!-- Loan Collection Card -->
+              <div class="cs-perf-card">
+                <div class="cs-perf-card-header">
+                  <span class="cs-perf-card-title">LOAN COLLECTION</span>
+                  <span class="cs-perf-badge cs-badge-blue">
+                    @if (getCenterLoanTotalDue() > 0) {
+                      {{ (getCenterLoanTotalCollected() / getCenterLoanTotalDue()) * 100 | number: '1.1-1' }}%
+                    } @else {
+                      100%
+                    }
+                  </span>
+                </div>
+                <div class="cs-perf-amounts">
+                  <div class="cs-perf-collected">
+                    <span class="cs-perf-amount-value cs-val-blue">{{
+                      getCenterLoanTotalCollected() | number: '1.2-2'
+                    }}</span>
+                    <span class="cs-perf-amount-label">Collected</span>
+                  </div>
+                  <div class="cs-perf-target">
+                    <span class="cs-perf-amount-value cs-val-muted">{{
+                      getCenterLoanTotalDue() | number: '1.2-2'
+                    }}</span>
+                    <span class="cs-perf-amount-label">Target</span>
+                  </div>
+                </div>
+                <div class="cs-progress-track">
+                  <div
+                    class="cs-progress-fill cs-fill-blue"
+                    [style.width.%]="getPercentage(getCenterLoanTotalCollected(), getCenterLoanTotalDue())"
+                  ></div>
+                </div>
+              </div>
+
+              <!-- Savings / Deposits Card -->
+              <div class="cs-perf-card">
+                <div class="cs-perf-card-header">
+                  <span class="cs-perf-card-title">SAVINGS/DEPOSITS</span>
+                  @if (getCenterSavingsTotalDue() > 0) {
+                    <span class="cs-perf-badge cs-badge-green">
+                      {{ (getCenterSavingsTotalCollected() / getCenterSavingsTotalDue()) * 100 | number: '1.1-1' }}%
+                    </span>
+                  }
+                </div>
+                <div class="cs-perf-amounts">
+                  <div class="cs-perf-collected">
+                    <span class="cs-perf-amount-value cs-val-green">{{
+                      getCenterSavingsTotalCollected() | number: '1.2-2'
+                    }}</span>
+                    <span class="cs-perf-amount-label">Collected</span>
+                  </div>
+                  @if (getCenterSavingsTotalDue() > 0) {
+                    <div class="cs-perf-target">
+                      <span class="cs-perf-amount-value cs-val-muted">{{
+                        getCenterSavingsTotalDue() | number: '1.2-2'
+                      }}</span>
+                      <span class="cs-perf-amount-label">Target</span>
+                    </div>
+                  } @else {
+                    <span class="cs-perf-no-target">No savings target</span>
+                  }
+                </div>
+                <div class="cs-progress-track">
+                  <div
+                    class="cs-progress-fill cs-fill-green"
+                    [style.width.%]="getPercentage(getCenterSavingsTotalCollected(), getCenterSavingsTotalDue())"
+                  ></div>
+                </div>
+              </div>
+
+              <!-- Charges Card -->
+              <div class="cs-perf-card">
+                <div class="cs-perf-card-header">
+                  <span class="cs-perf-card-title">CHARGES</span>
+                  @if (getCenterChargeTotalDue() > 0) {
+                    <span class="cs-perf-badge cs-badge-orange">
+                      {{ (getCenterChargeTotalCollected() / getCenterChargeTotalDue()) * 100 | number: '1.1-1' }}%
+                    </span>
+                  }
+                </div>
+                <div class="cs-perf-amounts">
+                  <div class="cs-perf-collected">
+                    <span class="cs-perf-amount-value cs-val-orange">{{
+                      getCenterChargeTotalCollected() | number: '1.2-2'
+                    }}</span>
+                    <span class="cs-perf-amount-label">Collected</span>
+                  </div>
+                  <div class="cs-perf-target">
+                    <span class="cs-perf-amount-value cs-val-muted">{{
+                      getCenterChargeTotalDue() | number: '1.2-2'
+                    }}</span>
+                    <span class="cs-perf-amount-label">Due</span>
+                  </div>
+                </div>
+                <div class="cs-progress-track">
+                  <div
+                    class="cs-progress-fill cs-fill-orange"
+                    [style.width.%]="getPercentage(getCenterChargeTotalCollected(), getCenterChargeTotalDue())"
+                  ></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Grand Total Collection (full-width below cards) -->
+            <div class="cs-grand-total-card">
+              <div class="cs-grand-total-left">
+                <span class="cs-grand-total-label">GRAND TOTAL COLLECTION</span>
+                <span class="cs-grand-total-value">{{ getCenterTotalCollected() | number: '1.2-2' }}</span>
+                <span class="cs-grand-total-meta">
+                  Target: {{ getCenterTotalDue() | number: '1.2-2' }}
+                  @if (getCenterTotalDue() - getCenterTotalCollected(); as gap) {
+                    @if (gap > 0) {
+                      · Gap: {{ gap | number: '1.2-2' }}
+                    }
+                  }
+                </span>
+              </div>
+              <div class="cs-grand-total-right">
+                <div class="cs-achievement-circle">
+                  <span class="cs-achievement-pct">
+                    @if (getCenterTotalDue() > 0) {
+                      {{ (getCenterTotalCollected() / getCenterTotalDue()) * 100 | number: '1.0-0' }}%
+                    } @else {
+                      100%
+                    }
+                  </span>
+                  <span class="cs-achievement-text">Achievement</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="cs-summary-footer">
+          <div class="cs-summary-actions">
+            <button mat-raised-button (click)="backToForm()" class="cs-btn-secondary">Save Draft</button>
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="submitCollectionSheet()"
+              [disabled]="isSaving"
+              class="cs-btn-primary"
+            >
+              @if (isSaving) {
+                <mat-spinner diameter="18" class="m-r-10"></mat-spinner>
+              } @else {
+                <fa-icon icon="save" class="m-r-10"></fa-icon>
+              }
+              Submit Final Data
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+
+    @if (jlgGroupData.groups?.length === 0) {
+      <div class="cs-empty-state">
+        <fa-icon icon="folder-open" style="font-size: 48px; color: #94a3b8; margin-bottom: 12px"></fa-icon>
+        <p>No collection data found for the selected center and date.</p>
+        <button mat-raised-button (click)="backToForm()" style="margin-top: 12px">
+          <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
+          Back
+        </button>
+      </div>
+    }
+  </div>
+}

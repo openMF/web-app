@@ -32,6 +32,7 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { DatePipe } from '@angular/common';
 
 /**
  * Loans Account Details Step
@@ -49,7 +50,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatStepperPrevious,
     FaIconComponent,
     MatStepperNext,
-    AsyncPipe
+    AsyncPipe,
+    DatePipe
   ]
 })
 export class LoansAccountDetailsStepComponent implements OnInit, OnDestroy {
@@ -89,6 +91,12 @@ export class LoansAccountDetailsStepComponent implements OnInit, OnDestroy {
   loanId: any = null;
 
   loanProductSelected = false;
+  /** Calendar/meeting options from JLG template */
+  calendarOptions: any[] = [];
+  /** Next meeting date (formatted) */
+  nextMeetingDate: string | null = null;
+  /** Whether this is a JLG loan (has calendar options) */
+  isJlgLoan = false;
   /** Currency data. */
   protected productData: ReplaySubject<string[]> = new ReplaySubject<string[]>(1);
   /** control for the filter select */
@@ -181,7 +189,9 @@ export class LoansAccountDetailsStepComponent implements OnInit, OnDestroy {
       ],
       externalId: [''],
       linkAccountId: [''],
-      createStandingInstructionAtDisbursement: ['']
+      createStandingInstructionAtDisbursement: [''],
+      syncDisbursementWithMeeting: [false],
+      syncRepaymentsWithMeeting: [false]
     });
   }
 
@@ -189,18 +199,27 @@ export class LoansAccountDetailsStepComponent implements OnInit, OnDestroy {
    * Fetches loans account product template on productId value changes
    */
   buildDependencies() {
-    const entityId = this.loansAccountTemplate.clientId
-      ? this.loansAccountTemplate.clientId
-      : this.loansAccountTemplate.group.id;
-    const isGroup = this.loansAccountTemplate.clientId ? false : true;
+    const clientId = this.loansAccountTemplate.clientId;
+    const groupId = this.loansAccountTemplate.group?.id;
+    // Determine if this is a JLG loan (has both clientId and groupId)
+    this.isJlgLoan = !!(clientId && groupId);
+    this.extractCalendarOptions(this.loansAccountTemplate);
+
+    const entityId = clientId || groupId;
+    const isGroup = !clientId;
     this.loansAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
-      this.loansService.getLoansAccountTemplateResource(entityId, isGroup, productId).subscribe((response: any) => {
+      const fetchTemplate$ = this.isJlgLoan
+        ? this.loansService.getJlgLoanTemplate(clientId, groupId, productId)
+        : this.loansService.getLoansAccountTemplateResource(entityId, isGroup, productId);
+
+      fetchTemplate$.subscribe((response: any) => {
         this.loansAccountProductTemplate.emit(response);
         this.loanOfficerOptions = response.loanOfficerOptions;
         this.loanPurposeOptions = response.loanPurposeOptions;
         this.fundOptions = response.fundOptions;
         this.accountLinkingOptions = response.accountLinkingOptions;
         this.loanProductSelected = true;
+        this.extractCalendarOptions(response);
         if (response.createStandingInstructionAtDisbursement) {
           this.loansAccountDetailsForm
             .get('createStandingInstructionAtDisbursement')
@@ -208,6 +227,28 @@ export class LoansAccountDetailsStepComponent implements OnInit, OnDestroy {
         }
       });
     });
+
+    // When sync disbursement is toggled, auto-set disbursement date to next meeting
+    this.loansAccountDetailsForm.get('syncDisbursementWithMeeting').valueChanges.subscribe((sync: boolean) => {
+      if (sync && this.nextMeetingDate) {
+        this.loansAccountDetailsForm.get('expectedDisbursementDate').patchValue(new Date(this.nextMeetingDate));
+      }
+    });
+  }
+
+  /**
+   * Extracts calendar/meeting options from API response
+   */
+  private extractCalendarOptions(template: any) {
+    if (template.calendarOptions && template.calendarOptions.length > 0) {
+      this.calendarOptions = template.calendarOptions;
+      const dates = template.calendarOptions[0].nextTenRecurringDates;
+      if (dates && dates.length > 0) {
+        // dates come as [year, month, day] arrays
+        const d = dates[0];
+        this.nextMeetingDate = new Date(d[0], d[1] - 1, d[2]).toISOString();
+      }
+    }
   }
 
   /**

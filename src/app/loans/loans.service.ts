@@ -441,6 +441,20 @@ export class LoansService {
     return this.http.get('/loans/template', { params: httpParams });
   }
 
+  /**
+   * Gets JLG Loan Account Template (requires both clientId and groupId)
+   */
+  getJlgLoanTemplate(clientId: any, groupId: any, productId?: any): Observable<any> {
+    let httpParams = new HttpParams()
+      .set('activeOnly', 'true')
+      .set('staffInSelectedOfficeOnly', 'true')
+      .set('clientId', clientId)
+      .set('groupId', groupId)
+      .set('templateType', 'jlg');
+    httpParams = productId ? httpParams.set('productId', productId) : httpParams;
+    return this.http.get('/loans/template', { params: httpParams });
+  }
+
   getLoansAccountAndTemplateResource(loanId: any): Observable<any> {
     const httpParams = new HttpParams()
       .set('associations', 'charges,collateral,meeting,multiDisburseDetails')
@@ -732,13 +746,17 @@ export class LoansService {
     if (loansAccountTemplate.clientId && loansAccountTemplate.group?.id) {
       loansAccountData.clientId = loansAccountTemplate.clientId;
       loansAccountData.groupId = loansAccountTemplate.group.id;
-      loansAccountData.loanType = 'glim';
+      loansAccountData.loanType = 'jlg';
     } else if (loansAccountTemplate.clientId) {
       loansAccountData.clientId = loansAccountTemplate.clientId;
       loansAccountData.loanType = 'individual';
     } else {
       loansAccountData.groupId = loansAccountTemplate.group.id;
       loansAccountData.loanType = 'group';
+    }
+
+    if (!loansAccountData.syncDisbursementWithMeeting) {
+      delete loansAccountData.syncDisbursementWithMeeting;
     }
 
     if (loansAccountData.syncRepaymentsWithMeeting) {
