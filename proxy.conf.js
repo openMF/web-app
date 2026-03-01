@@ -20,13 +20,11 @@ const proxyConfig = [
   {
     context: ['/fineract-provider'],
     target: 'https://demo.mifos.community',
-    pathRewrite: { '^/fineract-provider': '' },
     changeOrigin: true,
     secure: true,
     logLevel: 'debug',
     onProxyReq: function (proxyReq, req, res) {
-      const rewrittenPath = (req.url || '').replace(/^\/fineract-provider/, '');
-      console.log('[Proxy] Proxying:', req.method, req.url, '->', this.target + rewrittenPath);
+      console.log('[Proxy] Proxying:', req.method, req.url, '->', this.target + req.url);
     },
     onError: function (err, req, res) {
       console.error(
