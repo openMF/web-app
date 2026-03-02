@@ -103,7 +103,7 @@
     "@types/jasminewd2": "2.0.6",
     "@types/jest": "^29.5.14",
     "@types/lodash": "4.14.132",
-    "@types/node": "22.15.29",
+    "@types/node": "22.19.13",
     "@types/vkbeautify": "^0.99.2",
     "@typescript-eslint/eslint-plugin": "^8.48.1",
     "@typescript-eslint/parser": "^8.48.1",
