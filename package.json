@@ -100,7 +100,7 @@
     "@types/d3-scale": "^3.2.2",
     "@types/d3-shape": "^3.1.0",
     "@types/d3-timer": "^3.0.0",
-    "@types/jasminewd2": "2.0.6",
+    "@types/jasminewd2": "2.0.13",
     "@types/jest": "^29.5.14",
     "@types/lodash": "4.14.132",
     "@types/node": "22.15.29",
