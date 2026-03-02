@@ -18,8 +18,9 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatNativeDateModule } from '@angular/material/core';
+import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { CustomDateAdapter } from 'app/core/utils/custom-date-adapter';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -103,6 +104,10 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
         showError: true,
         displayDefaultIndicatorType: false
       }
+    },
+    {
+      provide: DateAdapter,
+      useClass: CustomDateAdapter
     }
   ]
 })

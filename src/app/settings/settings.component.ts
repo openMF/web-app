@@ -55,9 +55,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
   /** Date formats. */
   dateFormats: string[] = [
     'dd MMMM yyyy',
+    'dd/MM/yyyy',
     'dd/MMMM/yyyy',
+    'dd-MM-yyyy',
     'dd-MMMM-yyyy',
     'dd-MM-yy',
+    'MM/dd/yyyy',
     'MMMM-dd-yyyy',
     'MMMM dd yyyy',
     'MMMM/dd/yyyy',
