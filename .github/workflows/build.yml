@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Use Node.js 22
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
           # no support for lts as of now with github actions.
           # issue link : https://github.com/actions/setup-node/issues/26
