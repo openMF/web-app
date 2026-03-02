@@ -29,7 +29,7 @@
   xPosition="before"
   yPosition="below"
 >
-  <div class="notifications-container">
+  <div class="notifications-container" (mouseenter)="pauseTimer()" (mouseleave)="resumeTimer()">
     @if (unreadNotifications.length === 0 && displayedReadNotifications.length === 0) {
       <div class="no-notifications">
         <mat-icon class="no-notifications-icon">notifications_none</mat-icon>

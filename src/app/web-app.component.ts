@@ -11,7 +11,7 @@
 import { Component, OnInit, HostListener, HostBinding, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 
 /** rxjs Imports */
@@ -59,6 +59,7 @@ import localeNE from '@angular/common/locales/ne';
 import localePT from '@angular/common/locales/pt';
 import localeSW from '@angular/common/locales/sw';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+
 registerLocaleData(localeCS);
 registerLocaleData(localeEN);
 registerLocaleData(localeES);
@@ -209,14 +210,17 @@ export class WebAppComponent implements OnInit, OnDestroy {
       localStorage.setItem('mifosXLocation', JSON.stringify(activities));
     });
 
-    // Setup alerts
+    // Setup alerts with hover behavior
     this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
-      this.snackBar.open(`${alertEvent.message}`, 'Close', {
-        duration: 2000,
+      const snackBarRef = this.snackBar.open(`${alertEvent.message}`, 'Close', {
+        duration: 0, // Set to 0 - no auto-dismiss initially
         horizontalPosition: 'right',
         verticalPosition: 'top'
       });
+      // Handle hover behavior
+      this.handleSnackbarHover(snackBarRef, 2000);
     });
+
     this.buttonConfig = new KeyboardShortcutsConfiguration();
 
     // initialize language and date format if they are null.
@@ -256,6 +260,49 @@ export class WebAppComponent implements OnInit, OnDestroy {
         }, 1000);
       });
     }
+  }
+
+  /**
+   * Handle snackbar hover behavior - pause dismiss on hover, resume on leave
+   * @param snackBarRef Reference to the snackbar
+   * @param defaultDuration Default duration in milliseconds before auto-dismiss
+   */
+  private handleSnackbarHover(snackBarRef: MatSnackBarRef<any>, defaultDuration: number): void {
+    snackBarRef
+      .afterOpened()
+      .pipe(take(1))
+      .subscribe(() => {
+        const snackbarContainer = document.querySelector('.mat-mdc-snack-bar-container');
+        if (!snackbarContainer) {
+          snackBarRef.dismiss();
+          return;
+        }
+
+        let dismissTimer: any;
+
+        // Start the auto-dismiss timer
+        const startDismissTimer = () => {
+          dismissTimer = setTimeout(() => {
+            snackBarRef.dismiss();
+          }, defaultDuration);
+        };
+
+        // Pause auto-dismiss on hover (mouseenter)
+        snackbarContainer.addEventListener('mouseenter', () => {
+          if (dismissTimer) {
+            clearTimeout(dismissTimer);
+            dismissTimer = null;
+          }
+        });
+
+        // Resume auto-dismiss when cursor leaves (mouseleave)
+        snackbarContainer.addEventListener('mouseleave', () => {
+          startDismissTimer();
+        });
+
+        // Start initial timer
+        startDismissTimer();
+      });
   }
 
   ngOnDestroy() {

@@ -59,10 +59,9 @@ export class NotificationsTrayComponent implements OnInit, OnDestroy {
   /** Timer to refetch notifications every 60 seconds */
   timer: any;
 
-  /**
-   * Gets router link prefix from notification's objectType attribute
-   * Shares, Savings, Deposits, Loans routes inaccessible because of dependency on entity ID.
-   */
+  /** track if timer is paused */
+  private timerPaused = false;
+
   routeMap: any = {
     client: '/clients/',
     group: '/groups/',
@@ -102,9 +101,6 @@ export class NotificationsTrayComponent implements OnInit, OnDestroy {
     clearTimeout(this.timer);
   }
 
-  /**
-   * Restructures displayed read notifications vis-a-vis unread notifications.
-   */
   setNotifications() {
     const length = this.unreadNotifications.length;
     this.displayedReadNotifications = length < 9 ? this.readNotifications.slice(0, 9 - length) : [];
@@ -114,16 +110,34 @@ export class NotificationsTrayComponent implements OnInit, OnDestroy {
    * Recursively fetch unread notifications.
    */
   fetchUnreadNotifications() {
+    // Clear any existing timer
+    if (this.timer) {
+      clearTimeout(this.timer);
+      this.timer = null;
+    }
+
     this.notificationsService.getNotifications(false, 9).subscribe((response: any) => {
-      this.unreadNotifications = this.unreadNotifications.concat(response.pageItems);
+      this.unreadNotifications = response.pageItems; // Avoid concat duplication
       this.setNotifications();
     });
-    // this.mockNotifications(); // Uncomment for Testing.
-    this.timer = setTimeout(() => {
-      this.fetchUnreadNotifications();
-    }, this.waitTime * 1000);
+
+    // Schedule next poll ONLY if not paused
+    if (!this.timerPaused) {
+      this.timer = setTimeout(() => {
+        this.fetchUnreadNotifications();
+      }, this.waitTime * 1000);
+    }
   }
 
+  pauseTimer = () => {
+    this.timerPaused = true;
+    clearTimeout(this.timer);
+  };
+
+  resumeTimer = () => {
+    this.timerPaused = false;
+    this.fetchUnreadNotifications();
+  };
   /**
    * Update read/unread notifications.
    */
