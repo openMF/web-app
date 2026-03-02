@@ -15,7 +15,7 @@ jobs:
       LOCALHOST_URL: ${{secrets.LOCALHOST_URL}}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v6
 
       - name: Use Node.js 22
         uses: actions/setup-node@v1
