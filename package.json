@@ -102,7 +102,7 @@
     "@types/d3-timer": "^3.0.0",
     "@types/jasminewd2": "2.0.6",
     "@types/jest": "^29.5.14",
-    "@types/lodash": "4.14.132",
+    "@types/lodash": "4.17.24",
     "@types/node": "22.19.13",
     "@types/vkbeautify": "^0.99.2",
     "@typescript-eslint/eslint-plugin": "^8.48.1",
