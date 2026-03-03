@@ -68,7 +68,7 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field class="form-field" *ngIf="isPentahoReport()">
+        <mat-form-field class="form-field" *ngIf="isPentahoReport() || isBirtReport()">
           <mat-label>{{ 'labels.inputs.Output Type' | translate }}</mat-label>
           <mat-select required formControlName="outputType">
             <mat-option *ngFor="let option of outputTypeOptions" [value]="option.value">
@@ -129,6 +129,7 @@
       <mifosx-table-and-sms *ngIf="!hideTable" [dataObject]="dataObject"></mifosx-table-and-sms>
       <mifosx-chart *ngIf="!hideChart" [dataObject]="dataObject"></mifosx-chart>
       <mifosx-pentaho *ngIf="!hidePentaho" [dataObject]="dataObject"></mifosx-pentaho>
+      <mifosx-birt *ngIf="!hideBirt" [dataObject]="dataObject"></mifosx-birt>
     </div>
   </mat-card>
 </div>

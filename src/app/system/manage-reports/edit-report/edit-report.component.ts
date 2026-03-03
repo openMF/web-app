@@ -182,7 +182,10 @@ export class EditReportComponent implements OnInit {
       reportSql: [
         {
           value: this.reportData.reportSql,
-          disabled: this.reportData.coreReport || this.reportData.reportType === 'Pentaho'
+          disabled:
+            this.reportData.coreReport ||
+            this.reportData.reportType === 'Pentaho' ||
+            this.reportData.reportType === 'BIRT'
         },
         Validators.required
       ]
@@ -268,6 +271,7 @@ export class EditReportComponent implements OnInit {
           this.reportForm.get('reportSql').enable();
           break;
         case 'Pentaho':
+        case 'BIRT':
           this.reportForm.get('reportSql').disable();
           this.reportForm.get('reportSubType').disable();
           break;

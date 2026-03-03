@@ -36,6 +36,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TableAndSmsComponent } from './table-and-sms/table-and-sms.component';
 import { ChartComponent } from './chart/chart.component';
 import { PentahoComponent } from './pentaho/pentaho.component';
+import { BirtComponent } from './birt/birt.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -53,7 +54,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     FaIconComponent,
     TableAndSmsComponent,
     ChartComponent,
-    PentahoComponent
+    PentahoComponent,
+    BirtComponent
   ]
 })
 export class RunReportComponent implements OnInit {
@@ -92,6 +94,8 @@ export class RunReportComponent implements OnInit {
   hideChart = true;
   /** Toggles Pentaho output */
   hidePentaho = true;
+  /** Toggles BIRT output */
+  hideBirt = true;
   /** Report uses dates */
   reportUsesDates = false;
   exportToS3Allowed = false;
@@ -146,6 +150,10 @@ export class RunReportComponent implements OnInit {
     return this.report.type === 'Pentaho';
   }
 
+  isBirtReport(): boolean {
+    return this.report.type === 'BIRT';
+  }
+
   /**
    * Creates and sets the run report form.
    */
@@ -186,6 +194,17 @@ export class RunReportComponent implements OnInit {
       ];
       this.mapPentahoParams();
     }
+    if (this.isBirtReport()) {
+      this.reportForm.addControl('outputType', new UntypedFormControl('', Validators.required));
+      this.outputTypeOptions = [
+        { name: 'PDF format', value: 'PDF' },
+        { name: 'Normal format', value: 'HTML' },
+        { name: 'Excel format', value: 'XLS' },
+        { name: 'Excel 2007 format', value: 'XLSX' },
+        { name: 'CSV format', value: 'CSV' }
+      ];
+      this.mapBirtParams();
+    }
     if (this.exportToS3Allowed) {
       this.reportForm.addControl('exportOutputToS3', new UntypedFormControl(false));
     }
@@ -217,7 +236,27 @@ export class RunReportComponent implements OnInit {
     this.reportsService.getPentahoParams(this.report.id).subscribe((data: any) => {
       data.forEach((entry: any) => {
         const param: ReportParameter = this.paramData.find((_entry: any) => _entry.name === entry.parameterName);
-        param.pentahoName = `R_${entry.reportParameterName}`;
+        if (param && entry.reportParameterName) {
+          param.pentahoName = `R_${entry.reportParameterName}`;
+        } else if (!param) {
+          console.warn('Pentaho parameter not found in paramData:', entry.parameterName);
+        }
+      });
+    });
+  }
+
+  /**
+   * Maps BIRT specific names to form-control names.
+   */
+  mapBirtParams() {
+    this.reportsService.getBirtParams(this.report.id).subscribe((data: any) => {
+      data.forEach((entry: any) => {
+        const param: ReportParameter = this.paramData.find((_entry: any) => _entry.name === entry.parameterName);
+        if (param && entry.reportParameterName) {
+          param.pentahoName = `R_${entry.reportParameterName}`;
+        } else if (!param) {
+          console.warn('BIRT parameter not found in paramData:', entry.parameterName);
+        }
       });
     });
   }
@@ -334,7 +373,12 @@ export class RunReportComponent implements OnInit {
       }
 
       const param: ReportParameter = this.paramData.find((_entry: any) => _entry.name === key);
-      newKey = this.isPentahoReport() ? param.pentahoName : param.inputName;
+      if (!param) {
+        console.warn('Parameter not found in paramData:', key);
+        continue;
+      }
+      newKey =
+        (this.isPentahoReport() || this.isBirtReport()) && param.pentahoName ? param.pentahoName : param.inputName;
       switch (param.displayType) {
         case 'text':
           formattedResponse[newKey] = value;
@@ -396,6 +440,9 @@ export class RunReportComponent implements OnInit {
         break;
       case 'Pentaho':
         this.hidePentaho = false;
+        break;
+      case 'BIRT':
+        this.hideBirt = false;
         break;
     }
   }

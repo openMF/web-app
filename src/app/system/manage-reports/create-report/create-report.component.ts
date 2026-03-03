@@ -247,6 +247,7 @@ export class CreateReportComponent implements OnInit {
           this.reportForm.get('reportSql').enable();
           break;
         case 'Pentaho':
+        case 'BIRT':
           this.reportForm.get('reportSql').disable();
           this.reportForm.get('reportSubType').disable();
           break;
