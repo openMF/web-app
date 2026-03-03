@@ -124,7 +124,7 @@
     "puppeteer": "^24.4.0",
     "stylelint": "^16.10.0",
     "stylelint-config-recommended-scss": "^14.1.0",
-    "stylelint-config-standard": "^36.0.1",
+    "stylelint-config-standard": "^40.0.0",
     "stylelint-scss": "^6.8.1",
     "tailwindcss": "^3.3.3",
     "ts-node": "^10.9.2",
