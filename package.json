@@ -97,7 +97,7 @@
     "@playwright/test": "^1.57.0",
     "@types/d3-dispatch": "^3.0.1",
     "@types/d3-drag": "^3.0.1",
-    "@types/d3-scale": "^3.2.2",
+    "@types/d3-scale": "^4.0.0",
     "@types/d3-shape": "^3.1.0",
     "@types/d3-timer": "^3.0.0",
     "@types/jasminewd2": "2.0.13",
