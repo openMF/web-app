@@ -2295,6 +2295,7 @@
       "Paid Date": "지급일",
       "Parameter": "매개변수",
       "Parameter Name Passed to Pentaho": "보고서 매개변수 이름",
+      "Parameter Name Passed to Report Engine": "보고서 매개변수 이름",
       "Parent": "부모의",
       "Parent Account Name": "상위 계정 이름",
       "Parent Name": "부모님 성함",
