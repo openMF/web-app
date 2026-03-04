@@ -435,7 +435,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
         this.isLoading = false;
         this.transferComplete = true;
         this.transferSuccess = true;
-        this.transferReferenceId = trnsfr?.systemMessage || '';
+        this.transferReferenceId = trnsfr?.transactionId || trnsfr?.homeTransactionId || '';
         this.transferStepper.next();
       },
       (error) => {
@@ -444,7 +444,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
         this.transferComplete = true;
         this.transferSuccess = false;
         this.transferErrorMessage =
-          error?.error?.defaultUserMessage || error?.message || 'An unexpected error occurred.';
+          error?.error?.defaultUserMessage || 'An unexpected error occurred. Please try again.';
         this.transferStepper.next();
       }
     );
