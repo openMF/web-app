@@ -70,7 +70,7 @@
     "jspdf-autotable": "^5.0.2",
     "lightgallery": "^2.9.0",
     "lodash": "4.17.23",
-    "minimatch": "^3.1.4",
+    "minimatch": "^10.0.0",
     "moment": "^2.29.4",
     "ngx-mat-select-search": "^8.0.2",
     "qs": "^6.14.2",
