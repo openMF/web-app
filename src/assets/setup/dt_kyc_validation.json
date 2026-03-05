@@ -1,0 +1,29 @@
+{
+  "datatableName": "dt_kyc_validation",
+  "apptableName": "m_client",
+  "entitySubType": "",
+  "multiRow": false,
+  "columns": [
+    { "name": "nid_selected", "type": "Integer", "mandatory": false },
+    { "name": "nid_missing", "type": "Integer", "mandatory": false },
+    { "name": "nid_illegible", "type": "Integer", "mandatory": false },
+    { "name": "nid_invalid", "type": "Integer", "mandatory": false },
+    { "name": "nid_expired", "type": "Integer", "mandatory": false },
+    { "name": "legal_id_selected", "type": "Integer", "mandatory": false },
+    { "name": "legal_id_missing", "type": "Integer", "mandatory": false },
+    { "name": "legal_id_illegible", "type": "Integer", "mandatory": false },
+    { "name": "legal_id_invalid", "type": "Integer", "mandatory": false },
+    { "name": "legal_id_expired", "type": "Integer", "mandatory": false },
+    { "name": "proof_selected", "type": "Integer", "mandatory": false },
+    { "name": "proof_missing", "type": "Integer", "mandatory": false },
+    { "name": "proof_illegible", "type": "Integer", "mandatory": false },
+    { "name": "proof_invalid", "type": "Integer", "mandatory": false },
+    { "name": "proof_expired", "type": "Integer", "mandatory": false },
+    { "name": "score_selected", "type": "Integer", "mandatory": false },
+    { "name": "score_missing", "type": "Integer", "mandatory": false },
+    { "name": "score_illegible", "type": "Integer", "mandatory": false },
+    { "name": "score_invalid", "type": "Integer", "mandatory": false },
+    { "name": "score_expired", "type": "Integer", "mandatory": false },
+    { "name": "validation_status", "type": "String", "length": 20, "mandatory": false }
+  ]
+}
