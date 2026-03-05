@@ -90,7 +90,7 @@
     "@angular-eslint/schematics": "^20.7.0",
     "@angular-eslint/template-parser": "^20.7.0",
     "@angular/build": "^20.3.17",
-    "@angular/cli": "20.3.17",
+    "@angular/cli": "20.3.19",
     "@angular/compiler-cli": "20.3.17",
     "@angular/language-service": "20.3.17",
     "@cypress/schematic": "^2.5.2",
