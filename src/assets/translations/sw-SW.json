@@ -607,7 +607,10 @@
       "Validate Recipient": "Thibitisha mpokeaji",
       "View Receipt": "Angalia risiti",
       "Add Entry": "Ongeza ingizo",
-      "Retry": "Jaribu tena"
+      "Retry": "Jaribu tena",
+      "PRINT": "Chapisha",
+      "DONE": "Imekamilika",
+      "Submitting": "Inatuma"
     },
     "catalogs": {
       "Interest payment waiver": "Msamaha wa Malipo ya Riba",
@@ -1286,7 +1289,6 @@
       "Term Variations": "Tofauti za Muda",
       "The Ecosystem": "Mfumo Ikolojia",
       "Total Withdrawals": "Jumla ya Pesa",
-      "Transaction Details": "Maelezo ya Muamala",
       "Transaction Reverted": "Muamala Umerejeshwa",
       "Transactions": "Shughuli",
       "Transfer Details": "Maelezo ya Uhamisho",
@@ -1322,6 +1324,10 @@
       "You can drag and drop the rows to set a Payment Allocations order": "Unaweza kuburuta na kudondosha safu mlalo ili kuweka agizo la Ugawaji wa Malipo",
       "successfully select option": "kwa mafanikio. Tafadhali chagua kutoka kwa chaguo zilizo hapa chini ili kuendelea zaidi.",
       "Map Charge-off reasons to Expense accounts": "Sababu za Kutozwa kwa Ramani kwa akaunti za Gharama",
+      "Transaction Details": "Maelezo ya Muamala",
+      "Confirm Transaction Details": "Thibitisha Maelezo ya Muamala",
+      "Transaction Complete": "Muamala Umekamilika",
+      "Transaction Successful": "Muamala Umefanikiwa",
       "Interest Rate From Installment": "Kiwango cha Riba Kutoka kwa Awamu",
       "Due Date": "Tarehe ya Mwisho",
       "Delete Installment": "Futa Ufungaji",

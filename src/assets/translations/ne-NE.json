@@ -607,7 +607,10 @@
       "Validate Recipient": "प्राप्तकर्ता प्रमाणित गर्नुहोस्",
       "View Receipt": "रसिद हेर्नुहोस्",
       "Add Entry": "प्रविष्टि थप्नुहोस्",
-      "Retry": "पुनः प्रयास गर्नुहोस्"
+      "Retry": "पुनः प्रयास गर्नुहोस्",
+      "PRINT": "छाप्नुहोस्",
+      "DONE": "सम्पन्न",
+      "Submitting": "पेश गर्दै"
     },
     "catalogs": {
       "Interest payment waiver": "ब्याज भुक्तानी माफी",
@@ -1287,7 +1290,6 @@
       "Term Variations": "अवधि भिन्नताहरू",
       "The Ecosystem": "इकोसिस्टम",
       "Total Withdrawals": "कुल निकासी",
-      "Transaction Details": "लेनदेन विवरण",
       "Transaction Reverted": "कारोबार फिर्ता गरियो",
       "Transactions": "लेनदेन",
       "Transfer Details": "स्थानान्तरण विवरणहरू",
@@ -1323,6 +1325,10 @@
       "You can drag and drop the rows to set a Payment Allocations order": "तपाईंले भुक्तानी आवंटन आदेश सेट गर्न पङ्क्तिहरू तान्नुहोस् र छोड्न सक्नुहुन्छ",
       "successfully select option": "सफलतापूर्वक। अगाडि बढ्नको लागि कृपया तलका विकल्पहरूबाट चयन गर्नुहोस्।",
       "Map Charge-off reasons to Expense accounts": "खर्च खाताहरूमा चार्ज-अफ कारणहरू नक्सा गर्नुहोस्",
+      "Transaction Details": "लेनदेन विवरण",
+      "Confirm Transaction Details": "लेनदेन विवरण पुष्टि गर्नुहोस्",
+      "Transaction Complete": "लेनदेन पूर्ण",
+      "Transaction Successful": "लेनदेन सफल",
       "Interest Rate From Installment": "किस्ताबाट ब्याज दर",
       "Due Date": "अन्तिम मिति",
       "Delete Installment": "किस्ता मेटाउनुहोस्",

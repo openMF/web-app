@@ -607,7 +607,10 @@
       "Validate Recipient": "Pārbaudīt saņēmēju",
       "View Receipt": "Skatīt kvīti",
       "Add Entry": "Pievienot ierakstu",
-      "Retry": "Mēģināt vēlreiz"
+      "Retry": "Mēģināt vēlreiz",
+      "PRINT": "Drukāt",
+      "DONE": "Gatavs",
+      "Submitting": "Iesniedz"
     },
     "catalogs": {
       "Interest payment waiver": "Atteikšanās no procentu maksājumiem",
@@ -1289,7 +1292,6 @@
       "Term Variations": "Terminu variācijas",
       "The Ecosystem": "Ekosistēma",
       "Total Withdrawals": "Kopējā izņemšana",
-      "Transaction Details": "Darījuma informācija",
       "Transaction Reverted": "Darījums ir atsaukts",
       "Transactions": "Darījumi",
       "Transfer Details": "Pārskaitījuma informācija",
@@ -1325,6 +1327,11 @@
       "You can drag and drop the rows to set a Payment Allocations order": "Varat vilkt un nomest rindas, lai iestatītu maksājumu piešķiršanas pasūtījumu",
       "successfully select option": "veiksmīgi. Lūdzu, atlasiet kādu no tālāk norādītajām opcijām, lai turpinātu.",
       "Map Charge-off reasons to Expense accounts": "Izmaksas iemeslu kartēšana izdevumu kontiem",
+      "Transaction Details": "Darījuma detaļas",
+      "Confirm Transaction Details": "Apstiprināt darījuma detaļas",
+      "Transaction Complete": "Darījums Pabeigts",
+      "Transaction Successful": "Darījums Veiksmīgs",
+      "Id": "Id",
       "Interest Rate From Installment": "Procentu likme no nomaksas",
       "Due Date": "Izpildes datums",
       "Delete Installment": "Dzēst iemaksu",

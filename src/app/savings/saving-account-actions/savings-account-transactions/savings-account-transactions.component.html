@@ -19,114 +19,295 @@
       </mat-card-title>
     }
 
-    <form [formGroup]="savingAccountTransactionForm" (ngSubmit)="submit()">
-      <mat-card-content>
-        <div class="layout-column">
-          <mat-form-field (click)="dueDatePicker.open()">
-            <mat-label>{{ 'labels.inputs.Transaction Date' | translate }}</mat-label>
-            <input
-              matInput
-              [min]="minDate"
-              [max]="maxDate"
-              [matDatepicker]="dueDatePicker"
-              formControlName="transactionDate"
-              required
-            />
-            <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
-            <mat-datepicker #dueDatePicker></mat-datepicker>
-            @if (savingAccountTransactionForm.controls.transactionDate.hasError('required')) {
-              <mat-error>
-                {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
-                <strong>{{ 'labels.commons.required' | translate }}</strong>
-              </mat-error>
-            }
-          </mat-form-field>
+    <mat-stepper #stepper linear orientation="vertical">
+      <!-- Step 1: Transaction Details -->
+      <mat-step [stepControl]="savingAccountTransactionForm">
+        <ng-template matStepLabel>{{ 'labels.heading.Transaction Details' | translate }}</ng-template>
 
-          <mifosx-input-amount
-            [currency]="currency"
-            [isRequired]="true"
-            [inputFormControl]="savingAccountTransactionForm.controls.transactionAmount"
-            [inputLabel]="'Transaction Amount'"
-          >
-          </mifosx-input-amount>
+        <form [formGroup]="savingAccountTransactionForm">
+          <mat-card-content>
+            <div class="layout-column">
+              <mat-form-field (click)="dueDatePicker.open()">
+                <mat-label>{{ 'labels.inputs.Transaction Date' | translate }}</mat-label>
+                <input
+                  matInput
+                  [min]="minDate"
+                  [max]="maxDate"
+                  [matDatepicker]="dueDatePicker"
+                  formControlName="transactionDate"
+                  required
+                />
+                <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #dueDatePicker></mat-datepicker>
+                @if (savingAccountTransactionForm.controls.transactionDate.hasError('required')) {
+                  <mat-error>
+                    {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
+                    <strong>{{ 'labels.commons.required' | translate }}</strong>
+                  </mat-error>
+                }
+              </mat-form-field>
 
-          <mat-form-field>
-            <mat-label>{{ 'labels.inputs.Payment Type' | translate }}</mat-label>
-            <mat-select required formControlName="paymentTypeId">
-              @for (paymentType of paymentTypeOptions; track paymentType) {
-                <mat-option [value]="paymentType.id">
-                  {{ paymentType.name }}
-                </mat-option>
+              <mifosx-input-amount
+                [currency]="currency"
+                [isRequired]="true"
+                [inputFormControl]="savingAccountTransactionForm.controls.transactionAmount"
+                [inputLabel]="'Transaction Amount'"
+              >
+              </mifosx-input-amount>
+
+              <mat-form-field>
+                <mat-label>{{ 'labels.inputs.Payment Type' | translate }}</mat-label>
+                <mat-select required formControlName="paymentTypeId">
+                  @for (paymentType of paymentTypeOptions; track paymentType) {
+                    <mat-option [value]="paymentType.id">
+                      {{ paymentType.name }}
+                    </mat-option>
+                  }
+                </mat-select>
+                @if (savingAccountTransactionForm.controls.paymentTypeId.hasError('required')) {
+                  <mat-error>
+                    {{ 'labels.inputs.Payment Type' | translate }} {{ 'labels.commons.is' | translate }}
+                    <strong>{{ 'labels.commons.required' | translate }}</strong>
+                  </mat-error>
+                }
+              </mat-form-field>
+
+              <div class="flex-fill">
+                <span class="expandcollapsebutton m-l-10 m-t-40 flex-75">
+                  <mat-slide-toggle [checked]="addPaymentDetailsFlag" (change)="addPaymentDetails()">
+                    <div [className]="addPaymentDetailsFlag ? 'enabled' : 'disabled'">
+                      <span class="m-l-10">{{ 'labels.inputs.Show Payment Details' | translate }}</span>
+                    </div>
+                  </mat-slide-toggle>
+                </span>
+              </div>
+
+              @if (addPaymentDetailsFlag) {
+                <mat-form-field>
+                  <mat-label>{{ 'labels.inputs.Account Number' | translate }}</mat-label>
+                  <input type="text" formControlName="accountNumber" matInput />
+                </mat-form-field>
               }
-            </mat-select>
-            @if (savingAccountTransactionForm.controls.paymentTypeId.hasError('required')) {
-              <mat-error>
-                {{ 'labels.inputs.Payment Type' | translate }} {{ 'labels.commons.is' | translate }}
-                <strong>{{ 'labels.commons.required' | translate }}</strong>
-              </mat-error>
-            }
-          </mat-form-field>
 
-          <div class="flex-fill">
-            <span class="expandcollapsebutton m-l-10 m-t-40 flex-75" (click)="addPaymentDetails()">
-              <mat-slide-toggle>
-                <div [className]="addPaymentDetailsFlag ? 'enabled' : 'disabled'">
-                  <span class="m-l-10">{{ 'labels.inputs.Show Payment Details' | translate }}</span>
+              @if (addPaymentDetailsFlag) {
+                <mat-form-field>
+                  <mat-label>{{ 'labels.inputs.Cheque' | translate }}</mat-label>
+                  <input type="number" formControlName="checkNumber" matInput />
+                </mat-form-field>
+              }
+
+              @if (addPaymentDetailsFlag) {
+                <mat-form-field>
+                  <mat-label>{{ 'labels.inputs.Routing Code' | translate }}</mat-label>
+                  <input formControlName="routingCode" matInput />
+                </mat-form-field>
+              }
+
+              @if (addPaymentDetailsFlag) {
+                <mat-form-field>
+                  <mat-label>{{ 'labels.inputs.Receipt Number' | translate }}</mat-label>
+                  <input formControlName="receiptNumber" matInput />
+                </mat-form-field>
+              }
+
+              @if (addPaymentDetailsFlag) {
+                <mat-form-field>
+                  <mat-label>{{ 'labels.inputs.Bank' | translate }}</mat-label>
+                  <input formControlName="bankNumber" matInput />
+                </mat-form-field>
+              }
+
+              <mat-form-field>
+                <mat-label>{{ 'labels.inputs.Notes' | translate }}</mat-label>
+                <textarea formControlName="note" matInput cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+              </mat-form-field>
+
+              <mat-card-actions class="layout-row layout-xs-column layout-align-center gap-5px">
+                <button type="button" mat-raised-button [routerLink]="['../../transactions']">
+                  {{ 'labels.buttons.Cancel' | translate }}
+                </button>
+                <button
+                  type="button"
+                  mat-raised-button
+                  color="primary"
+                  [disabled]="!savingAccountTransactionForm.valid"
+                  (click)="proceedToConfirmation()"
+                >
+                  {{ 'labels.buttons.Next' | translate }}
+                </button>
+              </mat-card-actions>
+            </div>
+          </mat-card-content>
+        </form>
+      </mat-step>
+
+      <!-- Step 2: Confirm Transaction Details -->
+      <mat-step>
+        <ng-template matStepLabel>{{ 'labels.heading.Confirm Transaction Details' | translate }}</ng-template>
+
+        <mat-card-content>
+          <div class="confirmation-container">
+            <h3 class="confirmation-title">{{ 'labels.heading.Confirm Transaction Details' | translate }}</h3>
+
+            <div class="confirmation-details">
+              <div class="detail-row">
+                <span class="detail-label">{{ 'labels.inputs.Transaction Date' | translate }}</span>
+                <span class="detail-value">{{ savingAccountTransactionForm.value.transactionDate | date }}</span>
+              </div>
+
+              <div class="detail-row">
+                <span class="detail-label">{{ 'labels.inputs.Transaction Amount' | translate }}</span>
+                <span class="detail-value">
+                  {{ currency?.displaySymbol || '' }}
+                  {{ savingAccountTransactionForm.value.transactionAmount | number: '1.2-2' }}
+                </span>
+              </div>
+
+              <div class="detail-row">
+                <span class="detail-label">{{ 'labels.inputs.Payment Type' | translate }}</span>
+                <span class="detail-value">{{ getPaymentTypeName() }}</span>
+              </div>
+
+              @if (addPaymentDetailsFlag && savingAccountTransactionForm.value.accountNumber) {
+                <div class="detail-row">
+                  <span class="detail-label">{{ 'labels.inputs.Account Number' | translate }}</span>
+                  <span class="detail-value">{{ savingAccountTransactionForm.value.accountNumber }}</span>
                 </div>
-              </mat-slide-toggle>
-            </span>
+              }
+
+              @if (addPaymentDetailsFlag && savingAccountTransactionForm.value.checkNumber) {
+                <div class="detail-row">
+                  <span class="detail-label">{{ 'labels.inputs.Cheque' | translate }}</span>
+                  <span class="detail-value">{{ savingAccountTransactionForm.value.checkNumber }}</span>
+                </div>
+              }
+
+              @if (addPaymentDetailsFlag && savingAccountTransactionForm.value.routingCode) {
+                <div class="detail-row">
+                  <span class="detail-label">{{ 'labels.inputs.Routing Code' | translate }}</span>
+                  <span class="detail-value">{{ savingAccountTransactionForm.value.routingCode }}</span>
+                </div>
+              }
+
+              @if (addPaymentDetailsFlag && savingAccountTransactionForm.value.receiptNumber) {
+                <div class="detail-row">
+                  <span class="detail-label">{{ 'labels.inputs.Receipt Number' | translate }}</span>
+                  <span class="detail-value">{{ savingAccountTransactionForm.value.receiptNumber }}</span>
+                </div>
+              }
+
+              @if (addPaymentDetailsFlag && savingAccountTransactionForm.value.bankNumber) {
+                <div class="detail-row">
+                  <span class="detail-label">{{ 'labels.inputs.Bank' | translate }}</span>
+                  <span class="detail-value">{{ savingAccountTransactionForm.value.bankNumber }}</span>
+                </div>
+              }
+
+              @if (savingAccountTransactionForm.value.note) {
+                <div class="detail-row">
+                  <span class="detail-label">{{ 'labels.inputs.Notes' | translate }}</span>
+                  <span class="detail-value">{{ savingAccountTransactionForm.value.note }}</span>
+                </div>
+              }
+            </div>
+
+            <mat-card-actions class="layout-row layout-xs-column layout-align-center gap-5px">
+              <button type="button" mat-raised-button (click)="goBack()">
+                {{ 'labels.buttons.Cancel' | translate }}
+              </button>
+              <button
+                type="button"
+                mat-raised-button
+                color="primary"
+                [disabled]="isSubmitting"
+                (click)="confirmTransaction()"
+              >
+                @if (isSubmitting) {
+                  <span>{{ 'labels.buttons.Submitting' | translate }}...</span>
+                }
+                @if (!isSubmitting) {
+                  <span>{{ 'labels.buttons.Submit' | translate }}</span>
+                }
+              </button>
+            </mat-card-actions>
           </div>
+        </mat-card-content>
+      </mat-step>
 
-          @if (addPaymentDetailsFlag) {
-            <mat-form-field>
-              <mat-label>{{ 'labels.inputs.Account Number' | translate }}</mat-label>
-              <input type="number" formControlName="accountNumber" matInput />
-            </mat-form-field>
+      <!-- Step 3: Transaction Complete -->
+      <mat-step>
+        <ng-template matStepLabel>{{ 'labels.heading.Transaction Complete' | translate }}</ng-template>
+
+        <mat-card-content>
+          @if (transactionResponse) {
+            <div class="success-container">
+              <div class="success-header">
+                <fa-icon [icon]="['fas', 'check-circle']" size="4x" class="success-icon"></fa-icon>
+                <h3 class="success-title">{{ 'labels.heading.Transaction Successful' | translate }}</h3>
+              </div>
+
+              <div class="transaction-details">
+                <div class="detail-row">
+                  <span class="detail-label">{{ 'labels.heading.Id' | translate }}</span>
+                  <span class="detail-value">{{
+                    transactionResponse.resourceId || transactionResponse.savingsId
+                  }}</span>
+                </div>
+
+                <div class="detail-row">
+                  <span class="detail-label">{{ 'labels.inputs.Transaction Type' | translate }}</span>
+                  <span class="detail-value">{{
+                    (transactionType.withdrawal ? 'labels.catalogs.Withdrawal' : 'labels.catalogs.Deposit') | translate
+                  }}</span>
+                </div>
+
+                <div class="detail-row">
+                  <span class="detail-label">{{ 'labels.inputs.Transaction Date' | translate }}</span>
+                  <span class="detail-value">{{
+                    savingAccountTransactionForm.value.transactionDate | date: 'dd MMMM yyyy'
+                  }}</span>
+                </div>
+
+                <div class="detail-row">
+                  <span class="detail-label">{{ 'labels.inputs.Currency' | translate }}</span>
+                  <span class="detail-value"
+                    >{{ currency?.name }}{{ currency?.displaySymbol ? ' (' + currency?.displaySymbol + ')' : '' }}</span
+                  >
+                </div>
+
+                <div class="detail-row highlight">
+                  <span class="detail-label">{{ 'labels.inputs.Amount' | translate }}</span>
+                  <span class="detail-value amount">
+                    {{ currency?.displaySymbol || ''
+                    }}{{ savingAccountTransactionForm.value.transactionAmount | number: '1.2-2' }}
+                  </span>
+                </div>
+
+                @if (savingAccountTransactionForm.value.note) {
+                  <div class="detail-row">
+                    <span class="detail-label">{{ 'labels.inputs.Note' | translate }}</span>
+                    <span class="detail-value">{{ savingAccountTransactionForm.value.note }}</span>
+                  </div>
+                }
+
+                <div class="detail-row">
+                  <span class="detail-label">{{ 'labels.inputs.Payment Type' | translate }}</span>
+                  <span class="detail-value">{{ getPaymentTypeName() }}</span>
+                </div>
+              </div>
+
+              <mat-card-actions class="layout-row layout-xs-column layout-align-center gap-5px">
+                <button type="button" mat-raised-button (click)="printReceipt()">
+                  {{ 'labels.buttons.PRINT' | translate }}
+                </button>
+                <button type="button" mat-raised-button color="primary" (click)="done()">
+                  {{ 'labels.buttons.DONE' | translate }}
+                </button>
+              </mat-card-actions>
+            </div>
           }
-
-          @if (addPaymentDetailsFlag) {
-            <mat-form-field>
-              <mat-label>{{ 'labels.inputs.Cheque' | translate }}</mat-label>
-              <input type="number" formControlName="checkNumber" matInput />
-            </mat-form-field>
-          }
-
-          @if (addPaymentDetailsFlag) {
-            <mat-form-field>
-              <mat-label>{{ 'labels.inputs.Routing Code' | translate }}</mat-label>
-              <input formControlName="routingCode" matInput />
-            </mat-form-field>
-          }
-
-          @if (addPaymentDetailsFlag) {
-            <mat-form-field>
-              <mat-label>{{ 'labels.inputs.Receipt Number' | translate }}</mat-label>
-              <input formControlName="receiptNumber" matInput />
-            </mat-form-field>
-          }
-
-          @if (addPaymentDetailsFlag) {
-            <mat-form-field>
-              <mat-label>{{ 'labels.inputs.Bank' | translate }}</mat-label>
-              <input formControlName="bankNumber" matInput />
-            </mat-form-field>
-          }
-
-          <mat-form-field>
-            <mat-label>{{ 'labels.inputs.Notes' | translate }}</mat-label>
-            <textarea formControlName="note" matInput cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
-          </mat-form-field>
-
-          <mat-card-actions class="layout-row layout-xs-column layout-align-center gap-5px">
-            <button type="button" mat-raised-button [routerLink]="['../../transactions']">
-              {{ 'labels.buttons.Cancel' | translate }}
-            </button>
-            <button mat-raised-button color="primary" [disabled]="!savingAccountTransactionForm.valid">
-              {{ 'labels.buttons.Submit' | translate }}
-            </button>
-          </mat-card-actions>
-        </div>
-      </mat-card-content>
-    </form>
+        </mat-card-content>
+      </mat-step>
+    </mat-stepper>
   </mat-card>
 </div>
