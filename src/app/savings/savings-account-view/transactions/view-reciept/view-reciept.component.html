@@ -9,7 +9,7 @@
 <mat-card class="container">
   <div class="back-button">
     <button type="button" color="primary" mat-raised-button [routerLink]="['../../']">
-      <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>Back
+      <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>{{ 'labels.buttons.Back' | translate }}
     </button>
   </div>
 
@@ -19,15 +19,15 @@
 
   <ng-template #noData>
     <div class="error-message">
-      <h3>Unable to Load Receipt</h3>
-      <p>The transaction receipt could not be loaded. This may be due to:</p>
+      <h3>{{ 'labels.heading.Unable to Load Receipt' | translate }}</h3>
+      <p>{{ 'labels.text.The transaction receipt could not be loaded. This may be due to:' | translate }}</p>
       <ul>
-        <li>Missing or incomplete report configuration</li>
-        <li>Report generation service unavailable</li>
-        <li>Invalid transaction data</li>
+        <li>{{ 'labels.text.Missing or incomplete report configuration' | translate }}</li>
+        <li>{{ 'labels.text.Report generation service unavailable' | translate }}</li>
+        <li>{{ 'labels.text.Invalid transaction data' | translate }}</li>
       </ul>
-      <p><strong>Please contact your system administrator for assistance.</strong></p>
-      <p class="console-hint">Technical details may be available in the browser console (F12).</p>
+      <p><strong>{{ 'labels.text.Please contact your system administrator for assistance.' | translate }}</strong></p>
+      <p class="console-hint">{{ 'labels.text.Technical details may be available in the browser console (F12).' | translate }}</p>
     </div>
   </ng-template>
 </mat-card>
