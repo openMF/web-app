@@ -6,6 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+@use 'assets/styles/colours' as c;
+
 .tab-container {
   padding: 1%;
   margin: 1%;
@@ -18,22 +20,60 @@
 .button-header {
   display: flex;
   justify-content: flex-end;
+  gap: 8px;
   margin-bottom: 0.5%;
   padding-bottom: 0;
 
-  .export-kyc-button {
-    background-color: #1976d2 !important;
-    color: white !important;
+  button.export-kyc-button {
+    background-color: c.$belize-hole;
+    color: c.$white;
     font-weight: 500;
     padding: 0 16px;
 
     &:hover {
-      background-color: #1565c0 !important;
+      background-color: c.$peter-river;
     }
 
     mat-icon {
       margin-right: 8px;
     }
+  }
+
+  .validate-docs-button {
+    font-weight: 500;
+    padding: 0 16px;
+
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
+}
+
+.validation-status-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  font-size: 14px;
+
+  mat-icon {
+    font-size: 20px;
+    height: 20px;
+    width: 20px;
+  }
+
+  &.status-complete {
+    background-color: rgba(c.$msg-success, 0.15);
+    color: c.$nephritis;
+    border: 1px solid c.$msg-success;
+  }
+
+  &.status-incomplete {
+    background-color: rgba(c.$msg-warning, 0.15);
+    color: c.$pumpkin;
+    border: 1px solid c.$msg-warning;
   }
 }
 
