@@ -10,9 +10,11 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 /** Custom Services */
 import { OrganizationService } from 'app/organization/organization.service';
+import { AlertService } from 'app/core/alert/alert.service';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -33,6 +35,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 export class EditPaymentTypeComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   private organizationService = inject(OrganizationService);
+  private alertService = inject(AlertService);
+  private translateService = inject(TranslateService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
@@ -40,6 +44,8 @@ export class EditPaymentTypeComponent implements OnInit {
   paymentTypeForm: UntypedFormGroup;
   /** Payment Type Data. */
   paymentTypeData: any;
+  /** Flag to check if payment type is system defined. */
+  isSystemDefined: boolean;
 
   /**
    * Retrieves the payment type data from `resolve`.
@@ -51,6 +57,7 @@ export class EditPaymentTypeComponent implements OnInit {
   constructor() {
     this.route.data.subscribe((data: { paymentType: any }) => {
       this.paymentTypeData = data.paymentType;
+      this.isSystemDefined = data.paymentType.isSystemDefined;
     });
   }
 
@@ -71,9 +78,10 @@ export class EditPaymentTypeComponent implements OnInit {
         Validators.required
       ],
       description: [this.paymentTypeData.description],
-      isCashPayment: [this.paymentTypeData.isCashPayment],
+      isCashPayment: [
+        { value: this.paymentTypeData.isCashPayment, disabled: this.isSystemDefined }],
       position: [
-        this.paymentTypeData.position,
+        { value: this.paymentTypeData.position, disabled: this.isSystemDefined },
         [
           Validators.required,
           Validators.min(1)
@@ -88,8 +96,38 @@ export class EditPaymentTypeComponent implements OnInit {
    */
   submit() {
     const paymentType = this.paymentTypeForm.value;
-    this.organizationService.updatePaymentType(this.paymentTypeData.id, paymentType).subscribe((response) => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    if (this.isSystemDefined) {
+      const systemDefinedPayload = {
+        name: paymentType.name,
+        description: paymentType.description
+      };
+      this.organizationService.updatePaymentType(this.paymentTypeData.id, systemDefinedPayload).subscribe({
+        next: (response) => {
+          this.router.navigate(['../../'], { relativeTo: this.route });
+        },
+        error: (error) => {
+          this.alertService.alert({
+            type: 'Error',
+            message:
+              error.error?.defaultUserMessage ||
+              this.translateService.instant('labels.text.Failed to update payment type. Please try again.')
+          });
+        }
+      });
+    } else {
+      this.organizationService.updatePaymentType(this.paymentTypeData.id, paymentType).subscribe({
+        next: (response) => {
+          this.router.navigate(['../../'], { relativeTo: this.route });
+        },
+        error: (error) => {
+          this.alertService.alert({
+            type: 'Error',
+            message:
+              error.error?.defaultUserMessage ||
+              this.translateService.instant('labels.text.Failed to update payment type. Please try again.')
+          });
+        }
+      });
+    }
   }
 }
