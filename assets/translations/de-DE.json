@@ -3702,6 +3702,7 @@
       "Failed to assign payout. Please try again.": "Auszahlung konnte nicht zugewiesen werden. Bitte versuchen Sie es erneut.",
       "Remittance not found. Please check the reference number and try again.": "Überweisung nicht gefunden. Bitte überprüfen Sie die Referenznummer und versuchen Sie es erneut.",
       "Unable to load vendors. Please check your connection and try again.": "Anbieter konnten nicht geladen werden. Bitte überprüfen Sie Ihre Verbindung und versuchen Sie es erneut.",
+      "Failed to update payment type. Please try again.": "Aktualisierung des Zahlungstyps fehlgeschlagen. Bitte versuchen Sie es erneut.",
       "Search and assign this beneficiary to an existing Mifos client account": "Suchen und weisen Sie diesen Begünstigten einem bestehenden Mifos-Kundenkonto zu",
       "Failed to search clients. Please try again.": "Kundensuche fehlgeschlagen. Bitte versuchen Sie es erneut.",
       "Process Remittance": "Überweisung bearbeiten"

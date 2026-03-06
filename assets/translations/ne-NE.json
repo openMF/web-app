@@ -3701,6 +3701,7 @@
       "Failed to assign payout. Please try again.": "भुक्तानी तोक्न असफल भयो। कृपया पुनः प्रयास गर्नुहोस्।",
       "Remittance not found. Please check the reference number and try again.": "रेमिट्यान्स फेला परेन। सन्दर्भ नम्बर जाँच गरेर पुनः प्रयास गर्नुहोस्।",
       "Unable to load vendors. Please check your connection and try again.": "विक्रेताहरू लोड गर्न असमर्थ। कृपया जडान जाँच गरेर पुनः प्रयास गर्नुहोस्।",
+      "Failed to update payment type. Please try again.": "भुक्तानी प्रकार अद्यावधिक गर्न असफल भयो। कृपया पुनः प्रयास गर्नुहोस्।",
       "Search and assign this beneficiary to an existing Mifos client account": "यो लाभग्राहीलाई खोजेर अवस्थित Mifos ग्राहक खातामा तोक्नुहोस्",
       "Failed to search clients. Please try again.": "ग्राहकहरू खोज्न असफल भयो। कृपया पुनः प्रयास गर्नुहोस्।",
       "Process Remittance": "रेमिट्यान्स प्रक्रिया गर्नुहोस्"

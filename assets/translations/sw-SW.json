@@ -3701,6 +3701,7 @@
       "Failed to assign payout. Please try again.": "Imeshindwa kuweka malipo. Tafadhali jaribu tena.",
       "Remittance not found. Please check the reference number and try again.": "Uhawilishaji haujapatikana. Angalia nambari ya kumbukumbu na ujaribu tena.",
       "Unable to load vendors. Please check your connection and try again.": "Haiwezi kupakia wauzaji. Angalia muunganisho wako na ujaribu tena.",
+      "Failed to update payment type. Please try again.": "Imeshindwa kusasisha aina ya malipo. Tafadhali jaribu tena.",
       "Search and assign this beneficiary to an existing Mifos client account": "Tafuta na uweke mpokeaji huyu kwenye akaunti ya mteja wa Mifos iliyopo",
       "Failed to search clients. Please try again.": "Imeshindwa kutafuta wateja. Tafadhali jaribu tena.",
       "Process Remittance": "Chakata uhawilishaji"

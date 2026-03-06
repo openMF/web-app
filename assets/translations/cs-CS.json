@@ -3702,6 +3702,7 @@
       "Failed to assign payout. Please try again.": "Přiřazení výplaty se nezdařilo. Zkuste to prosím znovu.",
       "Remittance not found. Please check the reference number and try again.": "Remitence nenalezena. Zkontrolujte referenční číslo a zkuste to znovu.",
       "Unable to load vendors. Please check your connection and try again.": "Nepodařilo se načíst dodavatele. Zkontrolujte připojení a zkuste to znovu.",
+      "Failed to update payment type. Please try again.": "Aktualizace typu platby se nezdařila. Zkuste to prosím znovu.",
       "Search and assign this beneficiary to an existing Mifos client account": "Vyhledejte a přiřaďte tohoto příjemce k existujícímu účtu klienta Mifos",
       "Failed to search clients. Please try again.": "Hledání klientů se nezdařilo. Zkuste to prosím znovu.",
       "Process Remittance": "Zpracovat remitenci"

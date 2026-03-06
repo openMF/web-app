@@ -3704,6 +3704,7 @@
       "Failed to assign payout. Please try again.": "Neizdevās piešķirt izmaksu. Lūdzu, mēģiniet vēlreiz.",
       "Remittance not found. Please check the reference number and try again.": "Pārvedums nav atrasts. Pārbaudiet atsauces numuru un mēģiniet vēlreiz.",
       "Unable to load vendors. Please check your connection and try again.": "Nevar ielādēt pakalpojumu sniedzējus. Pārbaudiet savienojumu un mēģiniet vēlreiz.",
+      "Failed to update payment type. Please try again.": "Neizdevās atjaunināt maksājuma veidu. Lūdzu, mēģiniet vēlreiz.",
       "Search and assign this beneficiary to an existing Mifos client account": "Meklējiet un piešķiriet šo saņēmēju esošam Mifos klienta kontam",
       "Failed to search clients. Please try again.": "Neizdevās meklēt klientus. Lūdzu, mēģiniet vēlreiz.",
       "Process Remittance": "Apstrādāt pārvedumu"

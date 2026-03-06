@@ -3034,6 +3034,7 @@
       "Failed to confirm payment. Please try again or contact support.": "Error al confirmar el pago. Intente de nuevo o contacte al soporte.",
       "Failed to assign payout. Please try again.": "Error al asignar el pago. Intente de nuevo.",
       "Remittance not found. Please check the reference number and try again.": "Remesa no encontrada. Verifique el número de referencia e intente de nuevo.",
+      "Failed to update payment type. Please try again.": "Error al actualizar el tipo de pago. Intente de nuevo.",
       "Review the transaction and recipient details below, then assign the payout.": "Revise los detalles de la transacción y del beneficiario a continuación, luego asigne el pago.",
       "Loading data": "Cargando datos",
       "No repayment schedule available": "No hay calendario de pagos disponible",

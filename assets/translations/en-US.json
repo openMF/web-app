@@ -3839,7 +3839,8 @@
       "Failed to confirm payment. Please try again or contact support.": "Failed to confirm payment. Please try again or contact support.",
       "Failed to assign payout. Please try again.": "Failed to assign payout. Please try again.",
       "Remittance not found. Please check the reference number and try again.": "Remittance not found. Please check the reference number and try again.",
-      "Unable to load vendors. Please check your connection and try again.": "Unable to load vendors. Please check your connection and try again."
+      "Unable to load vendors. Please check your connection and try again.": "Unable to load vendors. Please check your connection and try again.",
+      "Failed to update payment type. Please try again.": "Failed to update payment type. Please try again."
     },
     "auditTrail": {
       "actions": {
