@@ -607,7 +607,10 @@
       "Validate Recipient": "Patvirtinti gavėją",
       "View Receipt": "Peržiūrėti kvitą",
       "Add Entry": "Pridėti įrašą",
-      "Retry": "Bandyti dar kartą"
+      "Retry": "Bandyti dar kartą",
+      "PRINT": "Spausdinti",
+      "DONE": "Atlikta",
+      "Submitting": "Pateikiama"
     },
     "catalogs": {
       "Interest payment waiver": "Palūkanų mokėjimo atsisakymas",
@@ -1287,7 +1290,6 @@
       "Term Variations": "Terminų variacijos",
       "The Ecosystem": "Ekosistema",
       "Total Withdrawals": "Bendras išėmimas",
-      "Transaction Details": "Pervedimo duomenys",
       "Transaction Reverted": "Sandoris grąžintas",
       "Transactions": "Sandoriai",
       "Transfer Details": "Pervedimo informacija",
@@ -1323,6 +1325,11 @@
       "You can drag and drop the rows to set a Payment Allocations order": "Galite nuvilkti eilutes, kad nustatytumėte mokėjimo paskirstymo tvarką",
       "successfully select option": "sėkmingai. Jei norite tęsti, pasirinkite iš toliau pateiktų parinkčių.",
       "Map Charge-off reasons to Expense accounts": "Nurodykite nurašymo priežastis išlaidų sąskaitoms",
+      "Transaction Details": "Sandorio detalės",
+      "Confirm Transaction Details": "Patvirtinti sandorio detales",
+      "Transaction Complete": "Sandoris baigtas",
+      "Transaction Successful": "Sandoris sėkmingas",
+      "Id": "Id",
       "Interest Rate From Installment": "Palūkanų norma nuo įmokos",
       "Due Date": "Terminas",
       "Delete Installment": "Ištrinti įmoką",

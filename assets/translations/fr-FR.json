@@ -607,7 +607,10 @@
       "Validate Recipient": "Valider le bénéficiaire",
       "View Receipt": "Voir le reçu",
       "Add Entry": "Ajouter une entrée",
-      "Retry": "Réessayer"
+      "Retry": "Réessayer",
+      "PRINT": "Imprimer",
+      "DONE": "Terminer",
+      "Submitting": "Envoi en cours"
     },
     "catalogs": {
       "Interest payment waiver": "Renonciation au paiement des intérêts",
@@ -1292,7 +1295,6 @@
       "Term Variations": "Variations de durée",
       "The Ecosystem": "L'Écosystème",
       "Total Withdrawals": "Retraits totaux",
-      "Transaction Details": "détails de la transaction",
       "Transaction Reverted": "Transaction annulée",
       "Transactions": "Transactions",
       "Transfer Details": "Détails du transfert",
@@ -1328,6 +1330,11 @@
       "You can drag and drop the rows to set a Payment Allocations order": "Vous pouvez faire glisser et déposer les lignes pour définir un ordre de répartition des paiements",
       "successfully select option": "avec succès. Veuillez sélectionner parmi les options ci-dessous pour continuer.",
       "Map Charge-off reasons to Expense accounts": "Cartographier les motifs de radiation sur les comptes de dépenses",
+      "Transaction Details": "Détails de la transaction",
+      "Confirm Transaction Details": "Confirmation des détails de la transaction",
+      "Transaction Complete": "Transaction Terminée",
+      "Transaction Successful": "Transaction Réussie",
+      "Id": "Identifiant",
       "Interest Rate From Installment": "Taux d'intérêt à partir du versement",
       "Due Date": "Date d'échéance",
       "Delete Installment": "Supprimer le versement",

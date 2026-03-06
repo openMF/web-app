@@ -608,7 +608,10 @@
       "Print Receipt": "Print Receipt",
       "Validate Recipient": "Validate Recipient",
       "View Receipt": "View Receipt",
-      "Add Entry": "Add Entry"
+      "Add Entry": "Add Entry",
+      "PRINT": "Print",
+      "DONE": "Done",
+      "Submitting": "Submitting"
     },
     "catalogs": {
       "Interest payment waiver": "Interest Payment Waiver",
@@ -1302,7 +1305,6 @@
       "Term Variations": "Term Variations",
       "The Ecosystem": "The Ecosystem",
       "Total Withdrawals": "Total Withdrawals",
-      "Transaction Details": "Transaction Details",
       "Transaction Reverted": "Transaction Reverted",
       "Transactions": "Transactions",
       "Transfer Details": "Transfer Details",
@@ -1338,6 +1340,11 @@
       "You can drag and drop the rows to set a Payment Allocations order": "You can drag and drop the rows to set a Payment Allocations order",
       "successfully select option": "successfully. Please select from the options below to proceed further.",
       "Map Charge-off reasons to Expense accounts": "Map Charge-off reasons to Expense accounts",
+      "Transaction Details": "Transaction Details",
+      "Confirm Transaction Details": "Confirm Transaction Details",
+      "Transaction Complete": "Transaction Complete",
+      "Transaction Successful": "Transaction Successful",
+      "Id": "Id",
       "Interest Rate From Installment": "Interest Rate From Installment",
       "Due Date": "Due Date",
       "Delete Installment": "Delete Installment",

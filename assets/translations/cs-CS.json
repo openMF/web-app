@@ -607,7 +607,10 @@
       "Validate Recipient": "Ověřit příjemce",
       "View Receipt": "Zobrazit účtenku",
       "Add Entry": "Přidat záznam",
-      "Retry": "Opakovat"
+      "Retry": "Opakovat",
+      "PRINT": "Tisk",
+      "DONE": "Hotovo",
+      "Submitting": "Odesílání"
     },
     "catalogs": {
       "Interest payment waiver": "Prominutí platby úroků",
@@ -1288,7 +1291,6 @@
       "Term Variations": "Termínové variace",
       "The Ecosystem": "Ekosystém",
       "Total Withdrawals": "Celkové výběry",
-      "Transaction Details": "Detaily transakce",
       "Transaction Reverted": "Transakce vrácena",
       "Transactions": "Transakce",
       "Transfer Details": "Podrobnosti o převodu",
@@ -1324,6 +1326,11 @@
       "You can drag and drop the rows to set a Payment Allocations order": "Řádky můžete přetáhnout a nastavit tak příkaz přidělení plateb",
       "successfully select option": "úspěšně. Chcete-li pokračovat dále, vyberte si z níže uvedených možností.",
       "Map Charge-off reasons to Expense accounts": "Mapujte důvody pro zúčtování na výdajové účty",
+      "Transaction Details": "Podrobnosti transakce",
+      "Confirm Transaction Details": "Potvrdit podrobnosti transakce",
+      "Transaction Complete": "Transakce Dokončena",
+      "Transaction Successful": "Transakce Úspěšná",
+      "Id": "Id",
       "Interest Rate From Installment": "Úroková sazba ze splátky",
       "Due Date": "Datum splatnosti",
       "Delete Installment": "Smazat splátku",
