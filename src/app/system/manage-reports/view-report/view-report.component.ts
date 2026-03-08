@@ -65,7 +65,7 @@ export class ViewReportComponent {
       data: { deleteContext: `report ${this.reportData.id}` }
     });
     deleteReportDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
+      if (response?.delete) {
         this.systemService.deleteReport(this.reportData.id).subscribe(() => {
           this.router.navigate(['/system/reports']);
         });

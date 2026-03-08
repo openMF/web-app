@@ -12,6 +12,9 @@ import * as vkbeautify from 'vkbeautify';
 @Pipe({ name: 'prettyPrint' })
 export class PrettyPrintPipe implements PipeTransform {
   transform(value: any) {
+    if (value == null || typeof value !== 'string') {
+      return '';
+    }
     if (value.charAt(0) === '{' && value.charAt(value.length - 1) === '}') {
       try {
         return vkbeautify.json(value);

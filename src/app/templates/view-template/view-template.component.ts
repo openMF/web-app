@@ -61,7 +61,7 @@ export class ViewTemplateComponent {
       data: { deleteContext: `template ${this.templateData.id}` }
     });
     deleteTemplateDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
+      if (response?.delete) {
         this.templatesService.deleteTemplate(this.templateData.id).subscribe(() => {
           this.router.navigate(['/templates']);
         });
