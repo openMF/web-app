@@ -99,8 +99,8 @@ export class LoginFormComponent implements OnInit {
         })
       )
       .subscribe({
-        error: () => {
-          // Error handling is managed by the authentication service
+        error: (err) => {
+          console.error('OAuth/OIDC login failed:', err);
         }
       });
   }

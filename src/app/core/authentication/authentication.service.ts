@@ -10,8 +10,8 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 /** rxjs Imports */
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of, from } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 /** 3rd party Imports */
 import { OAuthService } from 'angular-oauth2-oidc';
@@ -67,6 +67,9 @@ export class AuthenticationService {
   private dialogShown = false;
   private authMode: AuthMode = AuthMode.Basic;
 
+  /** Promise that resolves once the OIDC discovery document has been loaded. */
+  private discoveryDocumentLoaded: Promise<boolean> = Promise.resolve(false);
+
   /** Key to store credentials in storage. */
   private readonly credentialsStorageKey = 'mifosXCredentials';
   /** Key to store two factor authentication token in storage. */
@@ -97,7 +100,19 @@ export class AuthenticationService {
     this.oauthService.configure(getOAuthConfig());
     const oauthStorage = environment.enableRememberMe ? localStorage : sessionStorage;
     this.oauthService.setStorage(oauthStorage);
-    this.oauthService.setupAutomaticSilentRefresh();
+
+    // Load the OIDC discovery document so the library knows the authorization/token endpoints.
+    // This must complete before initCodeFlow() or tryLoginCodeFlow() can work.
+    this.discoveryDocumentLoaded = this.oauthService
+      .loadDiscoveryDocumentAndTryLogin()
+      .then(() => {
+        this.oauthService.setupAutomaticSilentRefresh();
+        return true;
+      })
+      .catch((err) => {
+        console.error('Failed to load OIDC discovery document:', err);
+        return false;
+      });
 
     this.oauthService.events.subscribe((event) => {
       if (event.type === 'token_received' || event.type === 'token_refreshed') {
@@ -180,9 +195,16 @@ export class AuthenticationService {
     this.alertService.alert({ type: 'Authentication Start', message: 'Please wait...' });
 
     if (this.authMode !== AuthMode.Basic) {
-      // OAuth2/OIDC: Redirect to authorization server with PKCE
-      this.oauthService.initCodeFlow();
-      return of(true);
+      // OAuth2/OIDC: Wait for the discovery document, then redirect to authorization server with PKCE
+      return from(
+        this.discoveryDocumentLoaded.then((loaded) => {
+          if (!loaded) {
+            throw new Error('OIDC discovery document failed to load. Cannot redirect to login.');
+          }
+          this.oauthService.initCodeFlow();
+          return true;
+        })
+      );
     }
 
     if (!loginContext) {
@@ -297,6 +319,9 @@ export class AuthenticationService {
    */
   async handleOAuthCallback(): Promise<boolean> {
     try {
+      // Ensure the discovery document is loaded so the library knows the token endpoint
+      await this.discoveryDocumentLoaded;
+
       // index.html preserves the OAuth callback query string in sessionStorage before redirecting to /#/callback, since Angular routing consumes query params before the OAuth library can process them.
       let queryString = sessionStorage.getItem('oauth_callback_query');
 
