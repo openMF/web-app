@@ -134,7 +134,7 @@ export const environment = {
       loadedEnv['oidcServerEnabled'] === true ||
       loadedEnv['oidcServerEnabled'] === 'true' ||
       loadedEnv['FINERACT_PLUGIN_OIDC_ENABLED'] === 'true',
-    oidcBaseUrl: (loadedEnv['oidcBaseUrl'] || loadedEnv['FINERACT_PLUGIN_OIDC_BASE_URL'] || '').replace(/\/+$/, ''),
+    oidcBaseUrl: loadedEnv['oidcBaseUrl'] || loadedEnv['FINERACT_PLUGIN_OIDC_BASE_URL'] || '',
     oidcClientId: loadedEnv['oidcClientId'] || loadedEnv['FINERACT_PLUGIN_OIDC_CLIENT_ID'] || '',
     oidcApiUrl: loadedEnv['oidcApiUrl'] || loadedEnv['FINERACT_PLUGIN_OIDC_API_URL'] || '',
     oidcFrontUrl: loadedEnv['oidcFrontUrl'] || loadedEnv['FINERACT_PLUGIN_OIDC_FRONTEND_URL'] || ''

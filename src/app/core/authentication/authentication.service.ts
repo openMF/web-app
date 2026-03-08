@@ -137,16 +137,19 @@ export class AuthenticationService {
     }
 
     if (this.authMode !== AuthMode.Basic) {
-      // OAuth2/OIDC: Use angular-oauth2-oidc library for token management
-      if (this.oauthService.hasValidAccessToken()) {
-        this.authenticationInterceptor.setAuthorizationToken(this.oauthService.getAccessToken());
-        this.userLoggedIn$.next(true);
-      } else if (this.oauthService.getRefreshToken()) {
-        this.oauthService
-          .refreshToken()
-          .then(() => this.userLoggedIn$.next(true))
-          .catch(() => this.logout().subscribe());
-      }
+      // OAuth2/OIDC: Wait for discovery document before attempting token refresh
+      this.discoveryDocumentLoaded.then((loaded) => {
+        if (!loaded) return;
+        if (this.oauthService.hasValidAccessToken()) {
+          this.authenticationInterceptor.setAuthorizationToken(this.oauthService.getAccessToken());
+          this.userLoggedIn$.next(true);
+        } else if (this.oauthService.getRefreshToken()) {
+          this.oauthService
+            .refreshToken()
+            .then(() => this.userLoggedIn$.next(true))
+            .catch(() => this.logout().subscribe());
+        }
+      });
     } else {
       // Basic Auth
       this.authenticationInterceptor.setAuthorizationToken(savedCredentials.base64EncodedAuthenticationKey);
@@ -320,7 +323,11 @@ export class AuthenticationService {
   async handleOAuthCallback(): Promise<boolean> {
     try {
       // Ensure the discovery document is loaded so the library knows the token endpoint
-      await this.discoveryDocumentLoaded;
+      const discoveryLoaded = await this.discoveryDocumentLoaded;
+      if (!discoveryLoaded) {
+        console.error('OIDC discovery document not loaded. Cannot process OAuth callback.');
+        return false;
+      }
 
       // index.html preserves the OAuth callback query string in sessionStorage before redirecting to /#/callback, since Angular routing consumes query params before the OAuth library can process them.
       let queryString = sessionStorage.getItem('oauth_callback_query');
