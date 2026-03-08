@@ -28,6 +28,7 @@ import { Dates } from 'app/core/utils/dates';
 import { environment } from '../../../environments/environment';
 import { MatDivider } from '@angular/material/divider';
 import { MatHint } from '@angular/material/form-field';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
 import {
   MatStepper,
@@ -62,7 +63,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatStepperNext,
     MatStepperPrevious,
     FaIconComponent,
-    CdkTextareaAutosize
+    CdkTextareaAutosize,
+    MatProgressSpinner
   ]
 })
 export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
@@ -384,19 +386,19 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
 
     this.accountTransfersService.createAccountTransfer(makeAccountTransferData).subscribe(
       (response: any) => {
-        this.isLoading = false;
         this.transferComplete = true;
         this.transferSuccess = true;
         this.transferReferenceId = response?.resourceId || response?.transactionId || '';
         this.transferStepper.next();
+        this.isLoading = false;
       },
       (error: any) => {
-        this.isLoading = false;
         this.transferComplete = true;
         this.transferSuccess = false;
         this.transferErrorMessage =
           error?.error?.defaultUserMessage || error?.message || 'An unexpected error occurred.';
         this.transferStepper.next();
+        this.isLoading = false;
       }
     );
   }
@@ -432,20 +434,20 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
 
     this.accountTransfersService.sendInterbankTransfer(JSON.stringify(payload)).subscribe(
       (trnsfr) => {
-        this.isLoading = false;
         this.transferComplete = true;
         this.transferSuccess = true;
         this.transferReferenceId = trnsfr?.transactionId || trnsfr?.homeTransactionId || '';
         this.transferStepper.next();
+        this.isLoading = false;
       },
       (error) => {
         console.error('Interbank transfer error:', error);
-        this.isLoading = false;
         this.transferComplete = true;
         this.transferSuccess = false;
         this.transferErrorMessage =
           error?.error?.defaultUserMessage || 'An unexpected error occurred. Please try again.';
         this.transferStepper.next();
+        this.isLoading = false;
       }
     );
   }

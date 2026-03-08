@@ -87,12 +87,17 @@
                 <ng-container *mifosxHasPermission="'CREATE_ACCOUNTTRANSFER'">
                   <button
                     mat-raised-button
+                    type="button"
                     color="primary"
-                    [disabled]="beneficiaryForm.get('phoneNumber')?.value?.length !== 10"
+                    [disabled]="isLoading || beneficiaryForm.get('phoneNumber')?.value?.length !== 10"
                     (click)="searchAccountByNumber()"
                     class="primary-button"
                   >
-                    {{ 'labels.buttons.Search' | translate }}
+                    @if (isLoading) {
+                      <mat-spinner diameter="20"></mat-spinner>
+                    } @else {
+                      {{ 'labels.buttons.Search' | translate }}
+                    }
                   </button>
                 </ng-container>
               </div>
@@ -228,11 +233,8 @@
       <ng-template matStepLabel>{{ 'labels.heading.Transfer Details' | translate }}</ng-template>
 
       @if (isLoading) {
-        <div class="loader-wrapper">
-          <div class="bottom triangle"></div>
-          <div class="top triangle"></div>
-          <div class="left triangle"></div>
-          <div class="right triangle"></div>
+        <div class="spinner-center">
+          <mat-spinner diameter="60"></mat-spinner>
         </div>
       }
 
@@ -354,7 +356,12 @@
             {{ 'labels.buttons.Previous' | translate }}
           </button>
           <ng-container *mifosxHasPermission="'CREATE_ACCOUNTTRANSFER'">
-            <button mat-raised-button color="primary" [disabled]="!transferDetailsForm.valid" (click)="submit()">
+            <button
+              mat-raised-button
+              color="primary"
+              [disabled]="isLoading || !transferDetailsForm.valid"
+              (click)="submit()"
+            >
               {{ 'labels.buttons.Submit' | translate }}
             </button>
           </ng-container>
@@ -370,11 +377,8 @@
       <ng-template matStepLabel>{{ 'labels.heading.Transfer Status' | translate }}</ng-template>
 
       @if (isLoading) {
-        <div class="loader-wrapper">
-          <div class="bottom triangle"></div>
-          <div class="top triangle"></div>
-          <div class="left triangle"></div>
-          <div class="right triangle"></div>
+        <div class="spinner-center">
+          <mat-spinner diameter="60"></mat-spinner>
         </div>
       }
 

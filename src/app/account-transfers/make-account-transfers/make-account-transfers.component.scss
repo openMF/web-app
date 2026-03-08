@@ -223,37 +223,12 @@ mat-divider {
   margin-top: 1.5rem;
 }
 
-// Loader styling
-.loader-wrapper {
+// Spinner centering
+.spinner-center {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 300px;
-  position: relative;
-}
-
-@keyframes rotate-triangle {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.triangle {
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-left: 20px solid transparent;
-  border-right: 20px solid transparent;
-  border-bottom: 34px solid rgb(0 0 0 / 5%);
-  animation: rotate-triangle 1.5s infinite linear;
-
-  &:hover {
-    border-bottom-color: rgb(0 0 0 / 8%);
-  }
 }
 
 // Dark theme
