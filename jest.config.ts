@@ -35,7 +35,8 @@ const config: Config = {
   moduleNameMapper: {
     '^app/(.*)$': '<rootDir>/src/app/$1',
     '^@/(.*)$': '<rootDir>/src/$1',
-    '^@pipes/(.*)$': '<rootDir>/src/app/pipes/$1'
+    '^@pipes/(.*)$': '<rootDir>/src/app/pipes/$1',
+    '^environments/(.*)$': '<rootDir>/src/environments/$1'
   },
 
   // An array of directory names to be searched recursively up from the requiring module's location
