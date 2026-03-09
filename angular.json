@@ -34,6 +34,7 @@
               "src/favicon.ico",
               "src/robots.txt",
               "src/manifest.json",
+              "src/llms.txt",
               "src/assets",
               {
                 "glob": "**/*",
