@@ -233,6 +233,6 @@ export class DatatableSingleRowComponent implements OnInit {
   }
 
   openSite(siteUrl: string) {
-    window.open(siteUrl, '_blank');
+    window.open(siteUrl, '_blank', 'noopener,noreferrer');
   }
 }
