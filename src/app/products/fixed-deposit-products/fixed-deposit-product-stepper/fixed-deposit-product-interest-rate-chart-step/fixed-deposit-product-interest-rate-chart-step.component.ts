@@ -380,7 +380,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
   }
 
   addChartSlab(chartSlabs: UntypedFormArray) {
-    const data = { ...this.getData('Slab') };
+    const data = { ...this.getData('Range') };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
@@ -402,8 +402,8 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
 
   editChartSlab(chartSlabs: UntypedFormArray, chartSlabIndex: number) {
     const data = {
-      ...this.getData('Slab', chartSlabs.at(chartSlabIndex).value),
-      layout: { addButtonText: this.translateService.instant('labels.text.this') }
+      ...this.getData('Range', chartSlabs.at(chartSlabIndex).value),
+      layout: { addButtonText: 'Submit' }
     };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
@@ -416,7 +416,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
   editIncentive(incentives: UntypedFormArray, incentiveIndex: number) {
     const data = {
       ...this.getData('Incentive', incentives.at(incentiveIndex).value),
-      layout: { addButtonText: this.translateService.instant('labels.text.this') }
+      layout: { addButtonText: 'Submit' }
     };
     const dialogRef = this.dialog.open(DepositProductIncentiveFormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
@@ -439,9 +439,9 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
 
   getData(formType: string, values?: any) {
     switch (formType) {
-      case 'Slab':
+      case 'Range':
         return {
-          title: this.translateService.instant('labels.inputs.Slab'),
+          title: this.translateService.instant('labels.inputs.Range'),
           formfields: this.getSlabFormfields(values)
         };
       case 'Incentive':
