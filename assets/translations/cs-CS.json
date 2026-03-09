@@ -83,6 +83,8 @@
     "validation.msg.loan.principal.is.greater.than.max": "Částka jistiny {{params[0].value}} je neplatná. Musí být částka menší nebo rovna maximální částce jistiny {{params[1].value}}.",
     "validation.msg.loan.principal.is.less.than.min": "Částka jistiny {{params[0].value}} je neplatná. Musí být částka větší nebo rovna minimální částce jistiny {{params[1].value}}.",
     "validation.msg.loanproduct.accountingType.cannot.be.blank": "Typ účetnictví je povinný.",
+    "labels.alt.Center profile placeholder": "Zástupný symbol profilu střediska",
+    "labels.alt.Group profile placeholder": "Zástupný symbol profilu skupiny",
     "labels.commons.Only up to 6 decimal places allowed": "Povoleno je maximálně 6 desetinných míst.",
     "validation.msg.loanproduct.accountingType.is.not.within.expected.range": "Účetní typ je neplatný. Musí to být číslo mezi {{params[1].value}} a {{params[2].value}} včetně.",
     "validation.msg.loanproduct.allowPartialPeriodInterestCalculation.not.supported.for.daily.calculations": "Povolit výpočet částečných splátek nelze pro denní výpočet nastavit jako true",

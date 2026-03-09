@@ -83,6 +83,8 @@
     "validation.msg.loan.principal.is.greater.than.max": "El importe del capital {{params[0].value}} no es válido. Debe ser un monto menor o igual al monto del capital máximo {{params[1].value}}.",
     "validation.msg.loan.principal.is.less.than.min": "El importe del capital {{params[0].value}} no es válido. Debe ser un monto mayor o igual al monto mínimo del capital {{params[1].value}}.",
     "validation.msg.loanproduct.accountingType.cannot.be.blank": "El tipo de contabilidad es obligatorio.",
+    "labels.alt.Center profile placeholder": "Marcador de posición de perfil de centro",
+    "labels.alt.Group profile placeholder": "Marcador de posición de perfil de grupo",
     "labels.commons.Only up to 6 decimal places allowed": "Solo se permiten hasta 6 decimales.",
     "validation.msg.loanproduct.accountingType.is.not.within.expected.range": "El tipo de contabilidad no es válido. Debe ser un número entre {{params[1].value}} y {{params[2].value}} inclusive.",
     "validation.msg.loanproduct.allowPartialPeriodInterestCalculation.not.supported.for.daily.calculations": "Permitir el cálculo de cuotas parciales no se puede establecer como verdadero para el cálculo diario",
