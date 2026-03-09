@@ -1,0 +1,23 @@
+# Mifos X Web App
+
+> Mifos® X Web App is the default web application built on top of the Apache Fineract® platform for the Mifos® user community leveraging the popular Angular framework.
+
+Important notes:
+
+- It is a single-page application (SPA) focused heavily on financial inclusion.
+- The UI exclusively interacts with the backend over REST via the `proxy.conf.js` or directly if configured in `environments/`.
+- It utilizes `@angular/material` for its component library.
+
+## Docs
+
+- [Mifos Web App README](https://github.com/openMF/web-app/blob/dev/README.md): The official README detailing installation methods, environments (Docker/Local), and basic proxy setup.
+- [Mifos Web App Contribution Guidelines](https://github.com/openMF/web-app/blob/dev/CONTRIBUTING.md): Details the strict 7-Step Contribution Workflow (Slack discussion, Jira tickets, PR conventions).
+- [Apache Fineract API Docs](https://demo.mifos.community/fineract-provider/api-docs/apiLive.htm): The live API documentation of the backend Fineract server used by this web app.
+
+## Examples
+
+- [Mifos Demo](https://demo.mifos.community): Live deployment of the frontend (Nightly build).
+
+## Optional
+
+- [Mifos System Architecture](https://mifosforge.jira.com/wiki/spaces/docs/pages/10289191/System+Architecture): Historical/high-level architectural guide of the Mifos/Fineract stack.
