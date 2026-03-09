@@ -168,7 +168,7 @@ export class DatatableSingleRowComponent implements OnInit {
       data: { deleteContext: ` the contents of ${formatTabLabel(this.datatableName)}` }
     });
     deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
+      if (response?.delete) {
         this.systemService.deleteDatatableContent(this.entityId, this.datatableName).subscribe(() => {
           this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
             this.dataObject = dataObject;
@@ -233,6 +233,6 @@ export class DatatableSingleRowComponent implements OnInit {
   }
 
   openSite(siteUrl: string) {
-    window.open(siteUrl, '_blank');
+    window.open(siteUrl, '_blank', 'noopener,noreferrer');
   }
 }

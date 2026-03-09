@@ -63,7 +63,7 @@ export class ViewHolidaysComponent {
       data: { deleteContext: `holiday ${this.holidayData.id}` }
     });
     deleteHolidayDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
+      if (response?.delete) {
         this.organizationService.deleteHoliday(this.holidayData.id).subscribe(() => {
           this.router.navigate(['../'], { relativeTo: this.route });
         });
@@ -85,7 +85,7 @@ export class ViewHolidaysComponent {
       }
     });
     unAssignStaffDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
-      if (response.confirm) {
+      if (response?.confirm) {
         this.organizationService.activateHoliday(this.holidayData.id).subscribe(() => {
           this.router.navigate(['/organization/holidays']);
         });

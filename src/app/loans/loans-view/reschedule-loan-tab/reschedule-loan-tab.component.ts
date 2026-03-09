@@ -97,7 +97,7 @@ export class RescheduleLoanTabComponent {
       }
     });
     approveLoanRescheduleDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
-      if (response.confirm) {
+      if (response?.confirm) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
         const payload: {
