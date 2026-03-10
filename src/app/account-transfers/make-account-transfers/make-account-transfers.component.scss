@@ -45,7 +45,6 @@
   display: flex;
   align-items: center;
   padding: 0.5rem;
-  background-color: rgb(0 0 0 / 2%);
   border-radius: 4px;
 
   &:hover {
@@ -55,13 +54,11 @@
 
 .info-label {
   flex: 0 0 40%;
-  color: rgb(0 0 0 / 70%);
   font-weight: 500;
 }
 
 .info-value {
   flex: 1;
-  color: rgb(0 0 0 / 87%);
 }
 
 // Divider styling
