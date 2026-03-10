@@ -1,0 +1,146 @@
+##
+# Single Commit Per PR Check
+# ─────────────────────────────────────────────────────────────────────────────
+# Enforces: every PR must contain exactly ONE commit.
+#
+# If a PR has more than 1 commit, this check FAILS and posts a comment
+# explaining how to squash. Once the contributor squashes and force-pushes,
+# the check re-runs automatically and passes.
+#
+# Enforce via branch protection:
+#   Settings → Branches → "Require status checks" → add "Single Commit Check"
+##
+
+name: Single Commit Check
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+    branches:
+      - main
+      - dev
+      - dev-angular-19
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  single-commit:
+    name: Single Commit Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+
+    steps:
+      - name: Count commits in PR
+        id: count
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { data: commits } = await github.rest.pulls.listCommits({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              per_page: 100,
+            });
+
+            const count = commits.length;
+            core.setOutput('count', count);
+            console.log(`PR has ${count} commit(s)`);
+
+            if (count > 1) {
+              core.setFailed(`PR has ${count} commits — please squash into 1.`);
+            }
+
+      - name: Post squash instructions
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const count = '${{ steps.count.outputs.count }}';
+
+            const body = [
+              '## ❌ Too many commits',
+              '',
+              `This PR has **${count} commits** — it must have exactly **1**.`,
+              '',
+              '### How to squash',
+              '```bash',
+              '# From your PR branch:',
+              `git rebase -i HEAD~${count}`,
+              '',
+              '# In the editor that opens, keep the FIRST commit as "pick"',
+              '# and change all others to "squash" (or "s"):',
+              '#   pick   abc1234  Your first commit message',
+              '#   squash def5678  Your second commit',
+              '#   squash ghi9012  Your third commit',
+              '',
+              '# Save, then edit the combined commit message.',
+              '# Finally, force-push:',
+              'git push --force-with-lease',
+              '```',
+              '',
+              '> This CI check will re-run automatically after you push.',
+              '',
+              '> 📖 See the [Contributing Guide](https://github.com/openMF/web-app/blob/dev/CONTRIBUTING.md#step-6-commit-hygiene-squash) for details.',
+            ].join('\n');
+
+            // Avoid duplicate comments — update existing one if present.
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const botComment = comments.find(
+              (c) =>
+                c.user.type === 'Bot' &&
+                c.body.includes('Too many commits')
+            );
+
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }
+
+      - name: Clean up comment on success
+        if: success()
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const botComment = comments.find(
+              (c) =>
+                c.user.type === 'Bot' &&
+                c.body.includes('Too many commits')
+            );
+
+            if (botComment) {
+              await github.rest.issues.deleteComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+              });
+            }
