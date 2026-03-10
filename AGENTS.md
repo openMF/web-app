@@ -12,6 +12,7 @@ This is a large-scale financial application. It contains many domain modules (e.
 - **`src/assets/`**: Contains static assets, i18n translation files (`.json`), and customizable environment templates.
 - **`src/environments/`**: Contains build-time environment flags.
 - **`src/theme/`**: Contains global SCSS and Angular Material custom thematic overrides.
+- **`skills/SKILL.md`**: Contains MUST-FOLLOW procedural constraints for AI UI generation (Material UI, i18n variables, file headers). ALWAYS read this before generating components.
 - **Domain Context**: Mifos/Fineract handles financial objects. "Clients" have "Savings" and "Loans". "Offices" are branches. "Centers" and "Groups" are for microfinance group-lending methodologies.
 - **Data Flow**: The UI interacts with Apache Fineract almost exclusively via REST. Expect payload structures to be strictly defined by the Fineract API specification.
 - **State Management**: The app relies heavily on RxJS Observables and route resolvers to fetch and pass data rather than a unified predictable state container like NgRx.

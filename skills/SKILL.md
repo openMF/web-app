@@ -15,7 +15,7 @@ This file defines the procedural knowledge required for AI agents to successfull
 
 - Prefer Angular Material components/directives for interactive UI.
 - Use Material components where they exist (`<mat-table>`, `<mat-select>`) and Material directives on native controls where required (`<button mat-button>`, `<input matInput>`).
-- Use the 8px grid system for margins and padding (e.g., `margin-bottom: 16px;`, NOT `10px` or `15px`).
+- Use the 8px grid system for margins and padding using either utility classes (e.g., `class="m-b-16"`) or inline CSS (e.g., `margin-bottom: 16px;`). Arbitrary values like `10px` or `15px` are strictly prohibited.
 
 **Correct Example:**
 
