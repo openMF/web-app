@@ -46,7 +46,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   private handleError(response: HttpErrorResponse, request: HttpRequest<any>): Observable<HttpEvent<any>> {
     const status = response.status;
     const error = response?.error;
-    let errorMessage = error?.defaultUserMessage || error?.developerMessage || response?.message || 'Unknown error';
+    let errorMessage = error?.defaultUserMessage || error?.developerMessage || 'Unknown error';
     if (error?.errors?.[0]) {
       errorMessage = error.errors[0].defaultUserMessage || error.errors[0].developerMessage || errorMessage;
     }
@@ -54,7 +54,8 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     const isClientImage404 = status === 404 && request.url.includes('/clients/') && request.url.includes('/images');
 
     if (!environment.production && !isClientImage404) {
-      log.error(`Request Error: ${errorMessage}`);
+      const logMessage = response?.message || errorMessage;
+      log.error(`Request Error: ${logMessage}`);
     }
 
     if (status === 401 || (environment.oauth.enabled && status === 400)) {
