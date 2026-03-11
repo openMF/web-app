@@ -45,9 +45,9 @@ export class HasPermissionDirective {
    * Evaluates the condition to show template.
    */
   @Input()
-  set mifosxHasPermission(permission: any) {
-    if (typeof permission !== 'string') {
-      throw new Error('hasPermission value must be a string');
+  set mifosxHasPermission(permission: string | string[]) {
+    if (typeof permission !== 'string' && !Array.isArray(permission)) {
+      throw new Error('hasPermission value must be a string or an array of strings');
     }
     /** Clear the template beforehand to prevent overlap OnChanges. */
     this.viewContainer.clear();
@@ -59,7 +59,7 @@ export class HasPermissionDirective {
 
   /**
    * Checks if user is permitted.
-   * @param {string} permission Permission
+   * @param {string | string[]} permission Permission(s) to check
    * @returns {true}
    * - RBAC is disabled (backward compatibility mode)
    * -`ALL_FUNCTIONS`: user is a Super user.
@@ -69,16 +69,34 @@ export class HasPermissionDirective {
    * - Passed permission doesn't fall under either of above given permission grants.
    * - No value was passed to the has permission directive.
    */
-  private hasPermission(permission: string) {
+  private hasPermission(permission: string | string[]): boolean {
     // If RBAC is disabled, show all menus/buttons (backward compatibility)
     if (!this.rbacEnabled) {
       return true;
     }
 
-    permission = permission.trim();
     if (this.userPermissions.includes('ALL_FUNCTIONS')) {
       return true;
-    } else if (permission !== '') {
+    }
+
+    if (typeof permission === 'string') {
+      return this.checkSinglePermission(permission);
+    } else if (Array.isArray(permission)) {
+      // Return true if at least one permission in the array is granted
+      return permission.some((p) => this.checkSinglePermission(p));
+    }
+
+    return false;
+  }
+
+  /**
+   * Checks if user has a single specific permission.
+   * @param {string} permission Single permission string
+   * @returns {boolean} True if permitted, false otherwise
+   */
+  private checkSinglePermission(permission: string): boolean {
+    permission = permission.trim();
+    if (permission !== '') {
       if (permission.substring(0, 5) === 'READ_' && this.userPermissions.includes('ALL_FUNCTIONS_READ')) {
         return true;
       } else if (this.userPermissions.includes(permission)) {

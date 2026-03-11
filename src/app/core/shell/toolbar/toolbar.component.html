@@ -42,7 +42,7 @@
       [matMenuTriggerFor]="institutionMenu"
       #institutionMenuTrigger="matMenuTrigger"
       tabindex="0"
-      *mifosxHasPermission="'READ_INSTITUTION'"
+      *mifosxHasPermission="['READ_CLIENT', 'READ_GROUP', 'READ_CENTER']"
     >
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
       {{ 'labels.menus.Institution' | translate }}
@@ -54,7 +54,13 @@
         class="tab-link accounting-link"
         [routerLink]="['/accounting']"
         tabindex="0"
-        *mifosxHasPermission="'READ_ACCOUNTING'"
+        *mifosxHasPermission="[
+          'READ_JOURNALENTRY',
+          'READ_GLACCOUNT',
+          'READ_GLCLOSURE',
+          'READ_ACCOUNTINGRULE',
+          'READ_PROVISIONINGCRITERIA'
+        ]"
       >
         <fa-icon class="mr-05" icon="money-bill-alt" size="lg"></fa-icon>
         {{ 'labels.menus.Accounting' | translate }}
@@ -65,7 +71,7 @@
         [matMenuTriggerFor]="reportsMenu"
         #reportsMenuTrigger="matMenuTrigger"
         tabindex="0"
-        *mifosxHasPermission="'READ_REPORTS'"
+        *mifosxHasPermission="'READ_REPORT'"
       >
         <fa-icon class="mr-05" icon="chart-bar" size="lg"></fa-icon>
         {{ 'labels.menus.Reports' | translate }}
@@ -76,7 +82,7 @@
         [matMenuTriggerFor]="adminMenu"
         #adminMenuTrigger="matMenuTrigger"
         tabindex="0"
-        *mifosxHasPermission="'READ_ADMIN'"
+        *mifosxHasPermission="['READ_USER', 'READ_ROLE']"
       >
         <fa-icon class="mr-05" icon="shield-alt" size="lg"></fa-icon>
         {{ 'labels.menus.Admin' | translate }}
@@ -140,13 +146,31 @@
     {{ 'labels.menus.Centers' | translate }}
   </button>
   <span class="hide-lt-md">
-    <button mat-menu-item [routerLink]="['/accounting']" tabindex="0">
+    <button
+      mat-menu-item
+      [routerLink]="['/accounting']"
+      tabindex="0"
+      *mifosxHasPermission="[
+        'READ_JOURNALENTRY',
+        'READ_GLACCOUNT',
+        'READ_GLCLOSURE',
+        'READ_ACCOUNTINGRULE',
+        'READ_PROVISIONINGCRITERIA'
+      ]"
+    >
       {{ 'labels.menus.Accounting' | translate }}
     </button>
-    <button mat-menu-item [matMenuTriggerFor]="reportsMenu" tabindex="0">
+    <button mat-menu-item [matMenuTriggerFor]="reportsMenu" tabindex="0" *mifosxHasPermission="'READ_REPORT'">
       {{ 'labels.menus.Reports' | translate }}
     </button>
-    <button mat-menu-item [matMenuTriggerFor]="adminMenu" tabindex="0">{{ 'labels.menus.Admin' | translate }}</button>
+    <button
+      mat-menu-item
+      [matMenuTriggerFor]="adminMenu"
+      tabindex="0"
+      *mifosxHasPermission="['READ_USER', 'READ_ROLE']"
+    >
+      {{ 'labels.menus.Admin' | translate }}
+    </button>
   </span>
 </mat-menu>
 
