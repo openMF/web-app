@@ -350,6 +350,7 @@
       "Home": "Inicio"
     },
     "buttons": {
+      "Create Your First Group": "Crea tu primer grupo",
       "Accept Transfer": "Aceptar transferencia",
       "Actions": "Acciones",
       "Activate": "Activar",
@@ -3040,6 +3041,8 @@
       "the Transaction Type": "el tipo de transacción"
     },
     "text": {
+      "No Groups Found": "No se encontraron grupos",
+      "No Groups Found Description": "No pudimos encontrar ningún grupo. Intente una búsqueda diferente o cree uno ahora.",
       "Unable to load vendors. Please check your connection and try again.": "No se pudieron cargar los proveedores. Verifique su conexión e intente de nuevo.",
       "This remittance has a terminal status and cannot be processed further.": "Esta remesa tiene un estado terminal y no puede ser procesada.",
       "This remittance has already been paid successfully.": "Esta remesa ya ha sido pagada exitosamente.",

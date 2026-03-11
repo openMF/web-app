@@ -350,6 +350,7 @@
       "Home": "Mājas"
     },
     "buttons": {
+      "Create Your First Group": "Izveidot savu pirmo grupu",
       "Accept Transfer": "Pieņemt pārsūtīšanu",
       "Actions": "Darbības",
       "Activate": "Aktivizēt",
@@ -3024,6 +3025,8 @@
       "the Transaction Type": "Darījuma veids"
     },
     "text": {
+      "No Groups Found": "Nav atrasta neviena grupa",
+      "No Groups Found Description": "Mēs nevarējām atrast nevienu grupu. Mēģiniet citu meklēšanu vai izveidojiet jaunu tagad.",
       "Loading data": "Ielādē datus",
       "No repayment schedule available": "Nav pieejams atmaksas grafiks",
       "About Us": "Par Mums",

@@ -350,6 +350,7 @@
       "Home": "Heim"
     },
     "buttons": {
+      "Create Your First Group": "Erstellen Sie Ihre erste Gruppe",
       "Accept Transfer": "Akzeptieren Sie die Übertragung",
       "Actions": "Aktionen",
       "Activate": "aktivieren Sie",
@@ -3026,6 +3027,8 @@
       "the Transaction Type": "der Transaktionstyp"
     },
     "text": {
+      "No Groups Found": "Keine Gruppen gefunden",
+      "No Groups Found Description": "Wir konnten keine Gruppen finden. Versuchen Sie eine andere Suche oder erstellen Sie jetzt eine.",
       "Loading data": "Daten werden geladen",
       "No repayment schedule available": "Kein Rückzahlungsplan verfügbar",
       "About Us": "Über Uns",

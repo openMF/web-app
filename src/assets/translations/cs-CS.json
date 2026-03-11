@@ -350,6 +350,7 @@
       "Home": "Domov"
     },
     "buttons": {
+      "Create Your First Group": "Create Your First Group",
       "Accept Transfer": "Přijmout převod",
       "Actions": "Akce",
       "Activate": "aktivovat",
@@ -3025,6 +3026,8 @@
       "the Transaction Type": "typ transakce"
     },
     "text": {
+      "No Groups Found": "No Groups Found",
+      "No Groups Found Description": "We couldn't find any groups. Try a different search or create one now.",
       "Loading data": "Načítání dat",
       "No repayment schedule available": "Není k dispozici žádný splátkový kalendář",
       "About Us": "O Nás",

@@ -350,6 +350,7 @@
       "Home": "집"
     },
     "buttons": {
+      "Create Your First Group": "첫 번째 그룹 생성",
       "Accept Transfer": "전송 수락",
       "Actions": "행위",
       "Activate": "활성화",
@@ -3023,6 +3024,8 @@
       "the Transaction Type": "거래 유형"
     },
     "text": {
+      "No Groups Found": "그룹을 찾을 수 없습니다",
+      "No Groups Found Description": "그룹을 찾을 수 없습니다. 다른 검색을 시도하거나 지금 하나를 생성하십시오.",
       "Loading data": "데이터 로딩 중",
       "No repayment schedule available": "상환 일정을 사용할 수 없습니다",
       "About Us": "회사 소개",

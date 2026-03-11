@@ -7,3 +7,31 @@
  */
 
 @use '../shared/styles/list-layout' as *;
+@use '../../assets/styles/colours' as *;
+
+.empty-state-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  background-color: $light-grey;
+  border: 2px dashed $silver;
+  border-radius: 8px;
+  margin: 24px 0;
+
+  .gray-text {
+    color: $asbestos;
+    font-size: 1.1rem;
+    margin-bottom: 24px;
+  }
+
+  fa-icon {
+    color: $silver;
+  }
+
+  h2 {
+    margin-top: 8px;
+    font-weight: 500;
+  }
+}

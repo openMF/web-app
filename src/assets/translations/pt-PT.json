@@ -350,6 +350,7 @@
       "Home": "Lar"
     },
     "buttons": {
+      "Create Your First Group": "Crie seu primeiro grupo",
       "Accept Transfer": "Aceitar transferência",
       "Actions": "Ações",
       "Activate": "Ativar",
@@ -3024,6 +3025,8 @@
       "the Transaction Type": "o tipo de transação"
     },
     "text": {
+      "No Groups Found": "Nenhum grupo encontrado",
+      "No Groups Found Description": "Não conseguimos encontrar nenhum grupo. Tente uma busca diferente ou crie um agora.",
       "Loading data": "Carregando dados",
       "No repayment schedule available": "Nenhum cronograma de reembolso disponível",
       "About Us": "Sobre Nós",

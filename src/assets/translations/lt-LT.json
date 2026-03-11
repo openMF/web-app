@@ -350,6 +350,7 @@
       "Home": "Namai"
     },
     "buttons": {
+      "Create Your First Group": "Sukurkite savo pirmąją grupę",
       "Accept Transfer": "Priimti perkėlimą",
       "Actions": "Veiksmai",
       "Activate": "Suaktyvinti",
@@ -3024,6 +3025,8 @@
       "the Transaction Type": "operacijos tipas"
     },
     "text": {
+      "No Groups Found": "Nerasta grupių",
+      "No Groups Found Description": "Nepavyko rasti jokių grupių. Pabandykite kitą paiešką arba sukurkite vieną dabar.",
       "Loading data": "Duomenų įkėlimas",
       "No repayment schedule available": "Nėra galimo grąžinimo grafiko",
       "About Us": "Apie Mus",
