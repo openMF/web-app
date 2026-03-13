@@ -719,22 +719,9 @@ mifosx-notifications-page td {
   color: inherit !important;
 }
 
-// ===== Global Button Icon Alignment =====
-// Handles the span + mat-icon pattern used throughout the application
-.mat-mdc-button,
-.mat-mdc-raised-button,
-.mat-mdc-outlined-button {
-  span {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-
-    mat-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-  }
+// Keep tighter icon spacing only inside Material buttons
+.mat-mdc-button-base .m-r-10 {
+  margin-right: 4px;
 }
 
 .full-width-flex {
