@@ -13,7 +13,9 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class I18nService {
   // eslint-disable-next-line @angular-eslint/prefer-inject
   constructor(private translateService: TranslateService) {}
