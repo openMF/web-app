@@ -13,11 +13,9 @@
     <!-- Group Summary Card -->
     @if (savingAccountData) {
       <mat-card class="m-b-20">
-        <mat-card-header>
-          <mat-card-title>{{ 'labels.heading.Group Summary' | translate }}</mat-card-title>
-        </mat-card-header>
         <mat-card-content>
-          <div class="layout-row layout-wrap">
+          <h3>{{ 'labels.heading.Group Summary' | translate }}</h3>
+          <div class="layout-row-wrap">
             <div class="flex-50 m-b-10">
               <strong>{{ 'labels.inputs.Group' | translate }}:</strong>
               {{ groupsData?.groupName || ('labels.inputs.N/A' | translate) }}

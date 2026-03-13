@@ -25,7 +25,7 @@ import {
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { MatTooltip } from '@angular/material/tooltip';
-import { MatCard, MatCardHeader, MatCardTitle, MatCardContent } from '@angular/material/card';
+import { MatCard, MatCardContent } from '@angular/material/card';
 import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -68,8 +68,6 @@ interface GroupData {
     MatRow,
     MatPaginator,
     MatCard,
-    MatCardHeader,
-    MatCardTitle,
     MatCardContent,
     StatusLookupPipe
   ]
