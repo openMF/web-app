@@ -79,6 +79,10 @@ export class LoansService {
     return this.http.get(`/loans/${loanId}`, { params: httpParams });
   }
 
+  getGuarantors(loanId: string): Observable<any> {
+    return this.http.get(`/loans/${loanId}/guarantors`);
+  }
+
   getGuarantorTemplate(loanId: string): Observable<any> {
     return this.http.get(`/loans/${loanId}/guarantors/template`);
   }
@@ -89,6 +93,10 @@ export class LoansService {
 
   deleteGuarantor(loanId: any, guarantorId: any): Observable<any> {
     return this.http.delete(`/loans/${loanId}/guarantors/${guarantorId}`);
+  }
+
+  updateGuarantor(loanId: string, guarantorId: any, data: any): Observable<any> {
+    return this.http.put(`/loans/${loanId}/guarantors/${guarantorId}`, data);
   }
 
   deleteLoanAccount(loanId: any): Observable<any> {

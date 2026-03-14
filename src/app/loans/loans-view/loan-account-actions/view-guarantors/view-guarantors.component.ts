@@ -8,7 +8,6 @@
 
 /** Angular Imports */
 import { Component, OnInit, Input, inject } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -18,6 +17,7 @@ import { LoansService } from 'app/loans/loans.service';
 /** Dialog Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { LoansAccountViewGuarantorDetailsDialogComponent } from 'app/loans/custom-dialog/loans-account-view-guarantor-details-dialog/loans-account-view-guarantor-details-dialog.component';
+import { EditGuarantorDialogComponent } from 'app/loans/custom-dialog/edit-guarantor-dialog/edit-guarantor-dialog.component';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { ExternalIdentifierComponent } from '../../../../shared/external-identifier/external-identifier.component';
 import {
@@ -68,6 +68,7 @@ export class ViewGuarantorsComponent implements OnInit {
   private router = inject(Router);
 
   @Input() dataObject: any;
+  loanData: any = {};
   guarantorDetails: any;
   showDeletedGuarantorsAccounts = false;
   loanId: any;
@@ -82,31 +83,22 @@ export class ViewGuarantorsComponent implements OnInit {
     'action'
   ];
 
-  /** View and perform various action on existing list of guarantors
-   * @param {MatDialog} dialog Dialog
-   * @param {LoansService} loansService Loans Service
-   * @param {route} Route Route
-   * @param {router} Router Router
-   */
   constructor() {
     this.loanId = this.route.snapshot.params['loanId'];
+    // Get loan data from navigation state (passed by LoansViewComponent)
+    const navData = this.router.getCurrentNavigation()?.extras?.state?.data;
+    if (navData) {
+      this.loanData = navData;
+    } else {
+      // Fallback: fetch from API (e.g. on page refresh)
+      this.loansService.getLoanAccountAssociationDetails(this.loanId).subscribe((data: any) => {
+        this.loanData = data || {};
+      });
+    }
   }
 
   ngOnInit() {
-    this.guarantorDetails = this.dataObject.guarantors;
-
-    // Get delinquency data for available disbursement amount with over applied
-    this.loansService.getLoanDelinquencyDataForTemplate(this.loanId).subscribe((delinquencyData: any) => {
-      // Check if the field is at root level
-      if (delinquencyData.availableDisbursementAmountWithOverApplied !== undefined) {
-        this.dataObject.availableDisbursementAmountWithOverApplied =
-          delinquencyData.availableDisbursementAmountWithOverApplied;
-      }
-      // Also check if it's in delinquent object
-      if (delinquencyData.delinquent) {
-        this.dataObject.delinquent = delinquencyData.delinquent;
-      }
-    });
+    this.guarantorDetails = this.dataObject;
   }
 
   toggleGuarantorsDetailsOverview() {
@@ -118,9 +110,9 @@ export class ViewGuarantorsComponent implements OnInit {
       data: { deleteContext: `the guarantor id: ${id}` }
     });
     deleteGuarantorDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
+      if (response?.delete) {
         this.loansService.deleteGuarantor(this.loanId, id).subscribe(() => {
-          this.reload();
+          this.refreshGuarantors();
         });
       }
     });
@@ -128,20 +120,44 @@ export class ViewGuarantorsComponent implements OnInit {
 
   viewGuarantorDetails(guarantorData: any) {
     const viewGuarantorDetailsDialogRef = this.dialog.open(LoansAccountViewGuarantorDetailsDialogComponent, {
-      data: { guarantorData: guarantorData }
+      data: { guarantorData: guarantorData, loanData: this.loanData }
     });
     viewGuarantorDetailsDialogRef.afterClosed().subscribe(() => {});
   }
 
+  editGuarantor(guarantorData: any) {
+    this.loansService.getGuarantorTemplate(this.loanId).subscribe((templateData: any) => {
+      const editDialogRef = this.dialog.open(EditGuarantorDialogComponent, {
+        data: {
+          guarantorData: guarantorData,
+          relationTypes: templateData.allowedClientRelationshipTypes
+        }
+      });
+      editDialogRef.afterClosed().subscribe((result: any) => {
+        if (result) {
+          const payload = {
+            ...result,
+            guarantorTypeId: guarantorData.guarantorType.id
+          };
+          Object.keys(payload).forEach((key) => {
+            if (payload[key] === '' || payload[key] === null || payload[key] === undefined) {
+              delete payload[key];
+            }
+          });
+          this.loansService.updateGuarantor(this.loanId, guarantorData.id, payload).subscribe(() => {
+            this.refreshGuarantors();
+          });
+        }
+      });
+    });
+  }
+
   /**
-   * Refetches data for the component
-   * TODO: Replace by a custom reload component instead of hard-coded back-routing.
+   * Re-fetches guarantor data in place without navigating away.
    */
-  private reload() {
-    const clientId = this.dataObject.clientId;
-    const url: string = this.router.url;
-    this.router
-      .navigateByUrl(`/clients/${clientId}/loans-accounts`, { skipLocationChange: true })
-      .then(() => this.router.navigate([url]));
+  private refreshGuarantors() {
+    this.loansService.getGuarantors(this.loanId).subscribe((data: any) => {
+      this.guarantorDetails = data;
+    });
   }
 }

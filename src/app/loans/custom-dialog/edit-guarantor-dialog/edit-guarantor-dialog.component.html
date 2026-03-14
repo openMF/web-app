@@ -1,0 +1,61 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h1 mat-dialog-title>{{ 'labels.heading.Edit Guarantor' | translate }}</h1>
+
+<div mat-dialog-content>
+  <form [formGroup]="editGuarantorForm" class="layout-column">
+    <mat-form-field>
+      <mat-label>{{ 'labels.inputs.First Name' | translate }}</mat-label>
+      <input matInput formControlName="firstname" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'labels.inputs.Last Name' | translate }}</mat-label>
+      <input matInput formControlName="lastname" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'labels.inputs.Relationship' | translate }}</mat-label>
+      <mat-select formControlName="clientRelationshipTypeId">
+        @for (relationType of relationTypes; track relationType) {
+          <mat-option [value]="relationType.id">
+            {{ relationType.name }}
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'labels.inputs.Address Line' | translate }} 1</mat-label>
+      <input matInput formControlName="addressLine1" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'labels.inputs.Address Line' | translate }} 2</mat-label>
+      <input matInput formControlName="addressLine2" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'labels.inputs.City' | translate }}</mat-label>
+      <input matInput formControlName="city" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'labels.inputs.Zip' | translate }}</mat-label>
+      <input matInput formControlName="zip" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'labels.inputs.Mobile' | translate }}</mat-label>
+      <input type="tel" matInput formControlName="mobileNumber" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'labels.inputs.Residence Phone' | translate }} #</mat-label>
+      <input type="tel" matInput formControlName="housePhoneNumber" />
+    </mat-form-field>
+  </form>
+</div>
+
+<mat-dialog-actions class="layout-row layout-xs-column layout-align-center gap-2percent">
+  <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
+  <button mat-raised-button color="primary" (click)="submit()">{{ 'labels.buttons.Submit' | translate }}</button>
+</mat-dialog-actions>

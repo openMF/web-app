@@ -199,6 +199,23 @@ export class BreadcrumbComponent implements AfterViewInit, OnDestroy {
               } else {
                 url = currentUrl;
               }
+
+              // For module root breadcrumbs (e.g. "Loans", "Savings") whose URL has no entity child,
+              // extract the correct URL from the full router URL to build a navigable link.
+              if (url && typeof url === 'string') {
+                const accountPathMatch = url
+                  .replace(/\/+/g, '/')
+                  .match(/\/(loans-accounts|savings-accounts|shares-accounts)\/$/);
+                if (accountPathMatch) {
+                  const fullUrl = this.router.url.replace(/\/+/g, '/');
+                  const entityUrlMatch = fullUrl.match(new RegExp(`(.*/${accountPathMatch[1]}/\\d+)`));
+                  if (entityUrlMatch) {
+                    url = entityUrlMatch[1];
+                  } else {
+                    url = false;
+                  }
+                }
+              }
             }
             if (url !== undefined) {
               if (url.length > 8 && url.search(`/clients/`) > 0) {

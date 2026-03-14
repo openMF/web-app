@@ -119,29 +119,31 @@ export class LoansViewComponent implements OnInit {
       (data: { loanDetailsData: any; loanDatatables: any; loanArrearsDelinquencyConfig: any }) => {
         this.loanDetailsData = data.loanDetailsData;
         this.loanDatatables = data.loanDatatables;
-        this.loanDisplayArrearsDelinquency = data.loanArrearsDelinquencyConfig.value || 0;
-        this.loanStatus = this.loanDetailsData.status;
-        this.loanSubStatus = this.loanDetailsData.subStatus === undefined ? null : this.loanDetailsData.subStatus;
-        this.currency = this.loanDetailsData.currency;
-        loansService.saveLoanDisbursementDetailsData(this.loanDetailsData.disbursementDetails);
-        if (this.loanStatus.active) {
-          this.loanDetailsData.transactions.forEach((lt: LoanTransaction) => {
-            if (!lt.manuallyReversed) {
-              if (lt.type.reAge) {
-                this.loanReAged = true;
-              } else if (lt.type.reAmortize) {
-                this.loanReAmortized = true;
+        this.loanDisplayArrearsDelinquency = data.loanArrearsDelinquencyConfig?.value || 0;
+        if (this.loanDetailsData) {
+          this.loanStatus = this.loanDetailsData.status;
+          this.loanSubStatus = this.loanDetailsData.subStatus === undefined ? null : this.loanDetailsData.subStatus;
+          this.currency = this.loanDetailsData.currency;
+          loansService.saveLoanDisbursementDetailsData(this.loanDetailsData.disbursementDetails);
+          if (this.loanStatus?.active) {
+            this.loanDetailsData.transactions?.forEach((lt: LoanTransaction) => {
+              if (!lt.manuallyReversed) {
+                if (lt.type.reAge) {
+                  this.loanReAged = true;
+                } else if (lt.type.reAmortize) {
+                  this.loanReAmortized = true;
+                }
               }
-            }
-          });
+            });
+          }
+          this.clientId = this.loanDetailsData.clientId;
+          this.setConditionalButtons();
+          // Filter datatables based on entity datatable checks
+          this.filterDatatablesByProduct();
         }
-        this.setConditionalButtons();
-        // Filter datatables based on entity datatable checks
-        this.filterDatatablesByProduct();
       }
     );
     this.loanId = this.route.snapshot.params['loanId'];
-    this.clientId = this.loanDetailsData.clientId;
   }
 
   ngOnInit() {
@@ -151,11 +153,11 @@ export class LoansViewComponent implements OnInit {
         this.reload();
       }
     });
-    this.recalculateInterest = this.loanDetailsData.recalculateInterest || true;
-    this.status = this.loanDetailsData.status.value;
-    this.loanStatus = this.loanDetailsData.status;
-    this.loanSubStatus = this.loanDetailsData.subStatus === undefined ? null : this.loanDetailsData.subStatus;
-    if (this.loanStatus.active && this.loanDetailsData.multiDisburseLoan) {
+    this.recalculateInterest = this.loanDetailsData?.recalculateInterest || true;
+    this.status = this.loanDetailsData?.status?.value;
+    this.loanStatus = this.loanDetailsData?.status;
+    this.loanSubStatus = this.loanDetailsData?.subStatus === undefined ? null : this.loanDetailsData?.subStatus;
+    if (this.loanStatus?.active && this.loanDetailsData?.multiDisburseLoan) {
       if (this.loanDetailsData && this.loanDetailsData.transactions) {
         this.loanDetailsData.transactions.forEach((transaction: any) => {
           if (transaction.type.disbursement) {
@@ -247,6 +249,9 @@ export class LoansViewComponent implements OnInit {
 
   // Defines the buttons based on the status of the loan account
   setConditionalButtons() {
+    if (!this.loanDetailsData) {
+      return;
+    }
     this.buttonConfig = new LoansAccountButtonConfiguration(this.status, this.loanSubStatus);
 
     if (this.status === 'Submitted and pending approval') {
@@ -457,7 +462,7 @@ export class LoansViewComponent implements OnInit {
 
   loanDelinquencyClassification(): void {
     this.loanDelinquencyClassificationStyle = '';
-    if (this.loanDetailsData.delinquent && this.loanDetailsData.delinquent.delinquencyPausePeriods) {
+    if (this.loanDetailsData?.delinquent && this.loanDetailsData.delinquent.delinquencyPausePeriods) {
       this.loanDetailsData.delinquent.delinquencyPausePeriods.some((period: DelinquencyPausePeriod) => {
         if (period.active) {
           this.loanDelinquencyClassificationStyle = 'fa fa-stop status-pending';
@@ -499,6 +504,9 @@ export class LoansViewComponent implements OnInit {
   }
 
   iconLoanStatusColor() {
+    if (!this.loanDetailsData) {
+      return '';
+    }
     if (this.loanDetailsData.chargedOff) {
       return 'loanStatusType.chargeoff';
     }
@@ -508,17 +516,20 @@ export class LoansViewComponent implements OnInit {
     if (this.loanDetailsData.inArrears) {
       return 'loanStatusType.activeOverdue';
     }
-    return this.loanDetailsData.status.code;
+    return this.loanDetailsData.status?.code;
   }
 
   loanStatusTooltip() {
+    if (!this.loanDetailsData) {
+      return '';
+    }
     if (this.loanDetailsData.chargedOff) {
       return 'Chargeoff';
     }
     if (this.loanDetailsData.inArrears) {
       return 'activeOverdue';
     }
-    return this.loanDetailsData.status.code;
+    return this.loanDetailsData.status?.code;
   }
 
   loanSubStatusTooltip() {

@@ -17,6 +17,7 @@ import {
 } from '@angular/material/dialog';
 import { CdkScrollable } from '@angular/cdk/scrolling';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { FormatNumberPipe } from 'app/pipes/format-number.pipe';
 
 @Component({
   selector: 'mifosx-loans-account-view-guarantor-details-dialog',
@@ -28,7 +29,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     CdkScrollable,
     MatDialogContent,
     MatDialogActions,
-    MatDialogClose
+    MatDialogClose,
+    FormatNumberPipe
   ]
 })
 export class LoansAccountViewGuarantorDetailsDialogComponent implements OnInit {

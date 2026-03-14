@@ -11,7 +11,8 @@ import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 /** Custom Services */
 import { LoansService } from '../loans.service';
@@ -65,7 +66,7 @@ export class LoanActionButtonResolver {
     } else if (loanActionButton === 'Recovery Payment') {
       return this.loansService.getLoanActionTemplate(loanId, 'recoverypayment');
     } else if (loanActionButton === 'View Guarantors') {
-      return this.loansService.getLoanAccountResource(loanId, 'guarantors');
+      return this.loansService.getGuarantors(loanId).pipe(catchError(() => of([])));
     } else if (loanActionButton === 'Create Guarantor') {
       return this.loansService.getGuarantorTemplate(loanId);
     } else if (loanActionButton === 'Disburse') {

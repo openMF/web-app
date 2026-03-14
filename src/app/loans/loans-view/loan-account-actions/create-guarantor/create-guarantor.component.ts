@@ -202,6 +202,13 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
     delete data.existingClient;
     delete data.name;
 
+    // Remove empty optional fields to avoid API validation errors
+    Object.keys(data).forEach((key) => {
+      if (data[key] === '' || data[key] === null || data[key] === undefined) {
+        delete data[key];
+      }
+    });
+
     this.loanService.createNewGuarantor(this.loanId, data).subscribe((response: any) => {
       this.router.navigate(['../../general'], { relativeTo: this.route });
     });
