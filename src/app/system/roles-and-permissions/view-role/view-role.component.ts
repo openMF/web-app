@@ -24,6 +24,8 @@ import { NgClass } from '@angular/common';
 import { MatList, MatListItem } from '@angular/material/list';
 import { MatDivider } from '@angular/material/divider';
 import { MatCheckbox } from '@angular/material/checkbox';
+import { MatIcon } from '@angular/material/icon';
+import { MatIconButton } from '@angular/material/button';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /** Custom Service Zitadel */
@@ -44,7 +46,9 @@ import { AuthService } from 'app/zitadel/auth.service';
     MatListItem,
     NgClass,
     MatDivider,
-    MatCheckbox
+    MatCheckbox,
+    MatIcon,
+    MatIconButton
   ]
 })
 export class ViewRoleComponent implements OnInit {
@@ -88,6 +92,14 @@ export class ViewRoleComponent implements OnInit {
   permissions: {
     permissions: { code: string; id: number }[];
   } = { permissions: [] };
+  /** Search text for filtering permissions */
+  searchText = '';
+  /** Whether search is active */
+  isSearchActive = false;
+  /** Match counts per grouping when searching */
+  groupingMatchCounts: { [key: string]: number } = {};
+  /** Filtered permissions for the current grouping */
+  filteredGroupPermissions: { code: string; id: number }[] = [];
   /** Add role zitadel */
 
   /**
@@ -178,6 +190,7 @@ export class ViewRoleComponent implements OnInit {
     this.permissions = this.tempPermissionUIData[grouping];
     this.selectedItem = grouping;
     this.previousGrouping = grouping;
+    this.updateFilteredGroupPermissions();
   }
 
   /**
@@ -222,6 +235,63 @@ export class ViewRoleComponent implements OnInit {
       name = name.replace(/READ/g, 'View');
     }
     return name;
+  }
+
+  /**
+   * Filters permissions within all groupings and updates match counts.
+   * The right panel shows only matching permissions for the selected grouping.
+   * @param searchValue Search input value
+   */
+  filterPermissions(searchValue: string) {
+    this.searchText = searchValue;
+    if (!searchValue || searchValue.trim() === '') {
+      this.isSearchActive = false;
+      this.groupingMatchCounts = {};
+      this.filteredGroupPermissions = [];
+      return;
+    }
+    this.isSearchActive = true;
+    const lowerSearch = searchValue.toLowerCase();
+    this.groupingMatchCounts = {};
+    for (const grouping of this.groupings) {
+      const group = this.tempPermissionUIData[grouping];
+      if (group) {
+        let count = 0;
+        for (const perm of group.permissions) {
+          const readableName = perm.code.replace(/_/g, ' ').toLowerCase();
+          if (readableName.includes(lowerSearch) || perm.code.toLowerCase().includes(lowerSearch)) {
+            count++;
+          }
+        }
+        this.groupingMatchCounts[grouping] = count;
+      }
+    }
+    this.updateFilteredGroupPermissions();
+  }
+
+  /**
+   * Updates the filtered permissions for the currently selected grouping
+   */
+  updateFilteredGroupPermissions() {
+    if (!this.isSearchActive || !this.permissions) {
+      this.filteredGroupPermissions = [];
+      return;
+    }
+    const lowerSearch = this.searchText.toLowerCase();
+    this.filteredGroupPermissions = this.permissions.permissions.filter((perm) => {
+      const readableName = perm.code.replace(/_/g, ' ').toLowerCase();
+      return readableName.includes(lowerSearch) || perm.code.toLowerCase().includes(lowerSearch);
+    });
+  }
+
+  /**
+   * Clears the search field and returns to unfiltered view
+   */
+  clearSearch() {
+    this.searchText = '';
+    this.isSearchActive = false;
+    this.groupingMatchCounts = {};
+    this.filteredGroupPermissions = [];
   }
 
   /**
