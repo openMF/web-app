@@ -139,7 +139,10 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr
         mat-row
-        [routerLink]="['/savings-accounts', row.id, 'transactions']"
+        (click)="onRowClick(row)"
+        (keydown.enter)="onRowClick(row)"
+        tabindex="0"
+        class="select-row"
         *matRowDef="let row; columns: displayedColumns"
       ></tr>
     </table>

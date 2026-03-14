@@ -22,7 +22,7 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatCard, MatCardContent } from '@angular/material/card';
@@ -38,6 +38,21 @@ interface SavingAccount {
   };
   summary?: {
     accountBalance: number;
+  };
+}
+
+interface ChildGsimAccount {
+  id: number;
+  displayName: string;
+  accountNo: string;
+  productName: string;
+  clientId?: number;
+  status: {
+    code: string;
+    value: string;
+    active: boolean;
+    submittedAndPendingApproval: boolean;
+    approved: boolean;
   };
 }
 
@@ -74,6 +89,7 @@ interface GroupData {
 })
 export class GsimAccountComponent implements OnInit {
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
   dialog = inject(MatDialog);
 
   /** Columns to be displayed in charge overview table. */
@@ -85,9 +101,9 @@ export class GsimAccountComponent implements OnInit {
     'Actions'
   ];
   /** Data source for charge overview table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource: MatTableDataSource<ChildGsimAccount>;
   /** Charge Overview data */
-  gsimOverviewData: any;
+  gsimOverviewData: ChildGsimAccount[];
 
   savingAccountData: SavingAccount | null = null;
 
@@ -134,5 +150,35 @@ export class GsimAccountComponent implements OnInit {
    */
   routeEdit($event: MouseEvent) {
     $event.stopPropagation();
+  }
+
+  /**
+   * Navigates to the savings account transactions page if the account is active,
+   * otherwise navigates to the client detail page.
+   * @param row Member account row data
+   */
+  onRowClick(row: ChildGsimAccount) {
+    if (row.status?.active) {
+      this.router.navigate([
+        '/savings-accounts',
+        row.id,
+        'transactions'
+      ]);
+      return;
+    }
+
+    // Prefer explicit clientId if available from API, otherwise parse from displayName format "(clientId) clientName"
+    const clientId = row.clientId ?? row.displayName?.match(/^\((\d+)\)/)?.[1];
+    if (clientId) {
+      this.router.navigate([
+        '/clients',
+        clientId
+      ]);
+    } else {
+      this.router.navigate([
+        '/groups',
+        this.groupId
+      ]);
+    }
   }
 }
