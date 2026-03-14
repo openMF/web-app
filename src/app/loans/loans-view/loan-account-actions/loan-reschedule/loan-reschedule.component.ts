@@ -25,6 +25,7 @@ import { PenaltyManagementService } from 'app/loans/services/penalty-management.
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { RepaymentSchedulePeriod } from 'app/loans/models/loan-account.model';
 
 @Component({
   selector: 'mifosx-loan-reschedule',
@@ -56,6 +57,9 @@ export class LoanRescheduleComponent implements OnInit {
   maxDate = new Date();
   codes: any;
 
+  /** Unpaid installments from the repayment schedule */
+  unpaidInstallments: RepaymentSchedulePeriod[] = [];
+
   changeRepaymentDate = new UntypedFormControl(false);
   introduceGracePeriods = new UntypedFormControl(false);
   extendRepaymentPeriod = new UntypedFormControl(false);
@@ -86,12 +90,25 @@ export class LoanRescheduleComponent implements OnInit {
     this.setRescheduleLoanForm();
     this.loadPenalties();
     this.setupWaivePenaltiesListener();
+    this.loadRepaymentSchedule();
+  }
+
+  loadRepaymentSchedule() {
+    this.loanService.getLoanAccountAssociationDetails(this.loanId).subscribe({
+      next: (loanDetails: any) => {
+        const periods: RepaymentSchedulePeriod[] = loanDetails?.repaymentSchedule?.periods || [];
+        this.unpaidInstallments = periods.filter((period) => period.period != null && !period.complete);
+      },
+      error: () => {
+        this.unpaidInstallments = [];
+      }
+    });
   }
 
   setRescheduleLoanForm() {
     this.rescheduleLoanForm = this.formBuilder.group({
       rescheduleFromDate: [
-        new Date(),
+        null,
         Validators.required
       ],
       rescheduleReasonId: [
@@ -109,6 +126,21 @@ export class LoanRescheduleComponent implements OnInit {
       extraTerms: [''],
       newInterestRate: ['']
     });
+  }
+
+  /** Convert period dueDate array to a Date object for form binding */
+  getInstallmentDueDate(period: RepaymentSchedulePeriod): Date {
+    return this.dateUtils.parseDate(period.dueDate);
+  }
+
+  /** Returns the currently selected installment matching the form control value */
+  get selectedInstallment(): RepaymentSchedulePeriod | null {
+    const selectedDate = this.rescheduleLoanForm?.get('rescheduleFromDate')?.value;
+    if (!selectedDate || !(selectedDate instanceof Date) || !this.unpaidInstallments.length) {
+      return null;
+    }
+    const selectedTime = selectedDate.getTime();
+    return this.unpaidInstallments.find((inst) => this.getInstallmentDueDate(inst).getTime() === selectedTime) ?? null;
   }
 
   submit() {

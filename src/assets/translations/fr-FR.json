@@ -2829,7 +2829,8 @@
       "Period Payment Frequency": "Fréquence de paiement périodique",
       "Period Payment Frequency Type": "Type de fréquence de paiement périodique",
       "Payment Allocation Transactions": "Transactions d'affectation des paiements",
-      "Net Present Value day count": "Nombre de jours de la valeur actuelle nette"
+      "Net Present Value day count": "Nombre de jours de la valeur actuelle nette",
+      "Installment": "Versement"
     },
     "links": {
       "Community": "Communauté",

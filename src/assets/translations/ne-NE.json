@@ -2823,7 +2823,8 @@
       "Period Payment Frequency": "अवधि भुक्तानी आवृत्ति",
       "Period Payment Frequency Type": "अवधि भुक्तानी आवृत्ति प्रकार",
       "Payment Allocation Transactions": "भुक्तानी विनियोजन लेनदेन",
-      "Net Present Value day count": "खुद वर्तमान मूल्य दिन गणना"
+      "Net Present Value day count": "खुद वर्तमान मूल्य दिन गणना",
+      "Installment": "किस्ता"
     },
     "links": {
       "Community": "समुदाय",

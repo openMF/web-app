@@ -2826,7 +2826,8 @@
       "Period Payment Frequency": "Laikotarpis Mokėjimo dažnumas",
       "Period Payment Frequency Type": "Laikotarpio mokėjimo dažnumo tipas",
       "Payment Allocation Transactions": "Mokėjimų paskirstymo operacijos",
-      "Net Present Value day count": "Grynosios dabartinės vertės dienų skaičius"
+      "Net Present Value day count": "Grynosios dabartinės vertės dienų skaičius",
+      "Installment": "Įmoka"
     },
     "links": {
       "Community": "bendruomenė",

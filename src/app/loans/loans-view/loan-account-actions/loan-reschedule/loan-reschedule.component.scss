@@ -10,6 +10,47 @@
   max-width: 37rem;
 }
 
+.installment-option-title {
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.installment-option-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: rgb(0 0 0 / 70%);
+  line-height: 1.5;
+}
+
+.trigger-installment-title {
+  display: inline;
+  font-weight: 500;
+}
+
+.trigger-installment-details {
+  display: inline;
+  font-size: 0.75rem;
+  color: rgb(0 0 0 / 70%);
+}
+
+:host-context(.dark-theme) {
+  .trigger-installment-details {
+    color: rgb(255 255 255 / 70%);
+  }
+
+  .installment-option-details {
+    color: rgb(255 255 255 / 70%);
+  }
+
+  .penalty-item-container {
+    background-color: #3a3a3a;
+    color: rgb(255 255 255 / 87%);
+    border-color: #4a4a4a;
+  }
+}
+
 .penalty-item-container {
   width: 100%;
   max-width: 100%;
@@ -42,12 +83,4 @@
 .penalty-amount {
   text-align: right;
   white-space: nowrap;
-}
-
-:host-context(.dark-theme) {
-  .penalty-item-container {
-    background-color: #3a3a3a;
-    color: rgb(255 255 255 / 87%);
-    border-color: #4a4a4a;
-  }
 }

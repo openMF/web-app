@@ -11,17 +11,43 @@
     <form [formGroup]="rescheduleLoanForm" (ngSubmit)="submit()">
       <mat-card-content>
         <div class="layout-column">
-          <mat-form-field (click)="rescheduleDatePicker.open()">
+          <mat-form-field>
             <mat-label>{{ 'labels.inputs.Reschedule from Installment On' | translate }}</mat-label>
-            <input
-              matInput
-              [min]="minDate"
-              [matDatepicker]="rescheduleDatePicker"
-              required
-              formControlName="rescheduleFromDate"
-            />
-            <mat-datepicker-toggle matSuffix [for]="rescheduleDatePicker"></mat-datepicker-toggle>
-            <mat-datepicker #rescheduleDatePicker></mat-datepicker>
+            <mat-select required formControlName="rescheduleFromDate">
+              @if (selectedInstallment) {
+                <mat-select-trigger>
+                  <span class="trigger-installment-title"
+                    >{{ 'labels.inputs.Due Date' | translate }}: {{ selectedInstallment.dueDate | dateFormat }}</span
+                  >
+                  <span class="trigger-installment-details">
+                    <span>
+                      · {{ 'labels.inputs.Principal Due' | translate }}:
+                      {{ selectedInstallment.principalDue | formatNumber }}</span
+                    >
+                    <span>
+                      · {{ 'labels.inputs.Interest' | translate }}:
+                      {{ selectedInstallment.interestDue | formatNumber }}</span
+                    >
+                  </span>
+                </mat-select-trigger>
+              }
+              @for (installment of unpaidInstallments; track installment.period) {
+                <mat-option [value]="getInstallmentDueDate(installment)">
+                  <div class="installment-option-title">
+                    {{ 'labels.inputs.Due Date' | translate }}: {{ installment.dueDate | dateFormat }}
+                  </div>
+                  <div class="installment-option-details">
+                    <span>
+                      · {{ 'labels.inputs.Principal Due' | translate }}:
+                      {{ installment.principalDue | formatNumber }}</span
+                    >
+                    <span>
+                      · {{ 'labels.inputs.Interest' | translate }}: {{ installment.interestDue | formatNumber }}</span
+                    >
+                  </div>
+                </mat-option>
+              }
+            </mat-select>
             @if (rescheduleLoanForm.controls.rescheduleFromDate.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Reschedule Date' | translate }} {{ 'labels.commons.is' | translate }}
