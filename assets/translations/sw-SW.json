@@ -309,7 +309,7 @@
     },
     "aboutUs": {
       "Introduction": "Mpango wa Mifos ni shirika lisilo la faida la 501(c)(3) na jumuiya ya kimataifa ya wasanidi programu, taasisi za kifedha na wajasiriamali wa kijamii. Tunaamini kuwa ufikiaji wa huduma za kifedha ni haki ya msingi ya binadamu, lakini mabilioni ya watu bado wametengwa na mfumo rasmi wa kifedha.",
-      "Platform Description": "Tunaziba pengo hili kwa kutoa <a href=\"https://mifos.org\" target=\"_blank\" rel=\"noopener noreferrer\">Jukwaa la Mifos X</a>\u2014mfumo mkuu wa benki wa chanzo huria duniani. Kwa kufanya teknolojia ya benki ya kiwango cha biashara kuwa bure na inayopatikana, tunapunguza vikwazo vya kuingia kwa Taasisi za Fedha Ndogo (MFIs), Fintech na Mashirika Yasiyo ya Kiserikali, kuwawezesha kupanua athari zao na kuhudumia \"maili ya mwisho\" kwa ufanisi.",
+      "Platform Description": "Tunaziba pengo hili kwa kutoa <a href=\"https://mifos.org\" target=\"_blank\" rel=\"noopener noreferrer\">Jukwaa la Mifos X</a>—mfumo mkuu wa benki wa chanzo huria duniani. Kwa kufanya teknolojia ya benki ya kiwango cha biashara kuwa bure na inayopatikana, tunapunguza vikwazo vya kuingia kwa Taasisi za Fedha Ndogo (MFIs), Fintech na Mashirika Yasiyo ya Kiserikali, kuwawezesha kupanua athari zao na kuhudumia \"maili ya mwisho\" kwa ufanisi.",
       "Mission": "Kuharakisha ujumuishaji wa kifedha kwa kuchochea mfumo ikolojia wa teknolojia ya chanzo huria, jumuiya na kushiriki maarifa.",
       "Vision": "Ulimwengu ambapo kila mtu binafsi na biashara ndogo ina ufikiaji wa zana za kifedha wanazohitaji kustawi, bila kujali eneo lao au kiwango cha mapato.",
       "Why Open Source": "Tulichagua mtindo wa Chanzo Huria kwa sababu tunaamini miundombinu ya kifedha inapaswa kuwa:",
@@ -2089,7 +2089,6 @@
       "Loan Account Classification": "Uainishaji wa Akaunti ya Mkopo",
       "Loan Account Number": "Nambari ya Akaunti ya Mkopo",
       "Loan Account OverView": "Muhtasari wa Akaunti ya Mkopo",
-
       "Loan Amount and Balance": "Kiasi cha Mkopo na Salio",
       "Loan Approval": "Idhini ya Mkopo",
       "Loan Balance": "Salio la Mkopo",
@@ -2823,7 +2822,8 @@
       "Period Payment Frequency": "Mara kwa Mara za Malipo ya Kipindi",
       "Period Payment Frequency Type": "Aina ya Mara kwa Mara za Malipo ya Kipindi",
       "Payment Allocation Transactions": "Miamala ya Ugawaji wa Malipo",
-      "Net Present Value day count": "Idadi halisi ya siku za Thamani ya Sasa"
+      "Net Present Value day count": "Idadi halisi ya siku za Thamani ya Sasa",
+      "Installment": "Awamu"
     },
     "links": {
       "Community": "Jumuiya",

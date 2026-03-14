@@ -2826,7 +2826,8 @@
       "Period Payment Frequency": "Perioda maksājumu biežums",
       "Period Payment Frequency Type": "Perioda maksājumu biežuma veids",
       "Payment Allocation Transactions": "Maksājumu sadales darījumi",
-      "Net Present Value day count": "Neto pašreizējās vērtības dienu skaits"
+      "Net Present Value day count": "Neto pašreizējās vērtības dienu skaits",
+      "Installment": "Iemaksa"
     },
     "links": {
       "Community": "kopiena",

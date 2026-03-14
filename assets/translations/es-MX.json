@@ -2096,7 +2096,6 @@
       "Loan Account Classification": "Clasificación de cuentas de Créditos",
       "Loan Account Number": "Número de cuenta del Crédito",
       "Loan Account OverView": "Resumen cuenta de Crédito",
-
       "Loan Amount and Balance": "Monto y saldo del Crédito",
       "Loan Approval": "Aprobación de Crédito",
       "Loan Balance": "Balance de Crédito",
@@ -2844,7 +2843,8 @@
       "Period Payment Frequency": "Frecuencia de pago por período",
       "Period Payment Frequency Type": "Tipo de frecuencia de pago por período",
       "Payment Allocation Transactions": "Transacciones de asignación de pagos",
-      "Net Present Value day count": "Recuento de días del valor presente neto"
+      "Net Present Value day count": "Recuento de días del valor presente neto",
+      "Installment": "Cuota"
     },
     "links": {
       "Community": "Comunidad",

@@ -2827,7 +2827,8 @@
       "Period Payment Frequency": "Frekvence plateb za období",
       "Period Payment Frequency Type": "Typ frekvence plateb v období",
       "Payment Allocation Transactions": "Transakce alokace plateb",
-      "Net Present Value day count": "Počet dní čisté současné hodnoty"
+      "Net Present Value day count": "Počet dní čisté současné hodnoty",
+      "Installment": "Splátka"
     },
     "links": {
       "Community": "Společenství",

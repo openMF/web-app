@@ -2092,7 +2092,6 @@
       "Loan Account Classification": "Classificação da conta de empréstimo",
       "Loan Account Number": "Número da conta do empréstimo",
       "Loan Account OverView": "Visão geral da conta de empréstimo",
-
       "Loan Amount and Balance": "Valor e saldo do empréstimo",
       "Loan Approval": "Aprovação de empréstimo",
       "Loan Balance": "Saldo do empréstimo",
@@ -2826,7 +2825,8 @@
       "Period Payment Frequency": "Periodicidade de pagamento",
       "Period Payment Frequency Type": "Tipo de frequência de pagamento do período",
       "Payment Allocation Transactions": "Transações de Alocação de Pagamentos",
-      "Net Present Value day count": "Contagem de dias do Valor Presente Líquido"
+      "Net Present Value day count": "Contagem de dias do Valor Presente Líquido",
+      "Installment": "Prestação"
     },
     "links": {
       "Community": "Comunidade",

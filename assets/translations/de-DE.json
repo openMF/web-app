@@ -2828,7 +2828,8 @@
       "Period Payment Frequency": "Zahlungsperiode Häufigkeit",
       "Period Payment Frequency Type": "Zahlungsperiode Häufigkeit Art",
       "Payment Allocation Transactions": "Zahlungszuordnungstransaktionen",
-      "Net Present Value day count": "Nettobarwert-Tageszahl"
+      "Net Present Value day count": "Nettobarwert-Tageszahl",
+      "Installment": "Rate"
     },
     "links": {
       "Community": "Gemeinschaft",

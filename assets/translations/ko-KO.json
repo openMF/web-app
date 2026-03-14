@@ -309,7 +309,7 @@
     },
     "aboutUs": {
       "Introduction": "Mifos 이니셔티브는 501(c)(3) 비영리 단체이자 개발자, 금융 기관 및 사회적 기업가들의 글로벌 커뮤니티입니다. 우리는 금융 서비스에 대한 접근이 기본적인 인권이라고 믿지만, 수십억 명의 사람들이 여전히 공식 금융 시스템에서 배제되어 있습니다.",
-      "Platform Description": "우리는 <a href=\"https://mifos.org\" target=\"_blank\" rel=\"noopener noreferrer\">Mifos X 플랫폼</a>\u2014세계 최고의 오픈소스 핵심 뱅킹 시스템을 제공하여 이 격차를 해소합니다. 엔터프라이즈급 뱅킹 기술을 무료로 접근 가능하게 함으로써, 소액금융기관(MFI), 핀테크 및 NGO의 진입 장벽을 낮추어 그들이 영향력을 확대하고 \"라스트 마일\"을 효율적으로 서비스할 수 있도록 합니다.",
+      "Platform Description": "우리는 <a href=\"https://mifos.org\" target=\"_blank\" rel=\"noopener noreferrer\">Mifos X 플랫폼</a>—세계 최고의 오픈소스 핵심 뱅킹 시스템을 제공하여 이 격차를 해소합니다. 엔터프라이즈급 뱅킹 기술을 무료로 접근 가능하게 함으로써, 소액금융기관(MFI), 핀테크 및 NGO의 진입 장벽을 낮추어 그들이 영향력을 확대하고 \"라스트 마일\"을 효율적으로 서비스할 수 있도록 합니다.",
       "Mission": "오픈소스 기술, 커뮤니티 및 지식 공유의 생태계를 촉진하여 금융 포용을 가속화합니다.",
       "Vision": "모든 개인과 소기업이 위치나 소득 수준에 관계없이 번영하는 데 필요한 금융 도구에 접근할 수 있는 세상.",
       "Why Open Source": "우리는 금융 인프라가 다음과 같아야 한다고 믿기 때문에 오픈소스 모델을 선택했습니다:",
@@ -2826,7 +2826,8 @@
       "Period Payment Frequency": "기간별 지급 빈도",
       "Period Payment Frequency Type": "기간별 지급 빈도 유형",
       "Payment Allocation Transactions": "지불 할당 거래",
-      "Net Present Value day count": "순현재가치 일수 계산"
+      "Net Present Value day count": "순현재가치 일수 계산",
+      "Installment": "할부"
     },
     "links": {
       "Community": "지역 사회",
