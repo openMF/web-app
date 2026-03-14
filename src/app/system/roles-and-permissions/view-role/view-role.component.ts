@@ -24,6 +24,8 @@ import { NgClass } from '@angular/common';
 import { MatList, MatListItem } from '@angular/material/list';
 import { MatDivider } from '@angular/material/divider';
 import { MatCheckbox } from '@angular/material/checkbox';
+import { MatIcon } from '@angular/material/icon';
+import { MatIconButton } from '@angular/material/button';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /** Custom Service Zitadel */
@@ -44,7 +46,9 @@ import { AuthService } from 'app/zitadel/auth.service';
     MatListItem,
     NgClass,
     MatDivider,
-    MatCheckbox
+    MatCheckbox,
+    MatIcon,
+    MatIconButton
   ]
 })
 export class ViewRoleComponent implements OnInit {
@@ -88,6 +92,12 @@ export class ViewRoleComponent implements OnInit {
   permissions: {
     permissions: { code: string; id: number }[];
   } = { permissions: [] };
+  /** Search text for filtering permissions */
+  searchText = '';
+  /** Filtered permissions across all groupings */
+  filteredPermissions: { code: string; id: number; grouping: string }[] = [];
+  /** Whether search mode is active */
+  isSearchActive = false;
   /** Add role zitadel */
 
   /**
@@ -222,6 +232,46 @@ export class ViewRoleComponent implements OnInit {
       name = name.replace(/READ/g, 'View');
     }
     return name;
+  }
+
+  /**
+   * Filters permissions across all groupings based on search text
+   * @param searchValue Search input value
+   */
+  filterPermissions(searchValue: string) {
+    this.searchText = searchValue;
+    if (!searchValue || searchValue.trim() === '') {
+      this.isSearchActive = false;
+      this.filteredPermissions = [];
+      return;
+    }
+    this.isSearchActive = true;
+    const lowerSearch = searchValue.toLowerCase();
+    this.filteredPermissions = [];
+    for (const grouping of this.groupings) {
+      const group = this.tempPermissionUIData[grouping];
+      if (group) {
+        for (const perm of group.permissions) {
+          const readableName = perm.code.replace(/_/g, ' ').toLowerCase();
+          if (readableName.includes(lowerSearch) || perm.code.toLowerCase().includes(lowerSearch)) {
+            this.filteredPermissions.push({
+              code: perm.code,
+              id: perm.id,
+              grouping
+            });
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Clears the search field and returns to grouping view
+   */
+  clearSearch() {
+    this.searchText = '';
+    this.isSearchActive = false;
+    this.filteredPermissions = [];
   }
 
   /**
