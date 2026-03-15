@@ -81,18 +81,15 @@
     <div class="permission-toolbar">
       <div class="permission-toolbar-left">
         <h3>
-          @if (!isSearchActive) {
-            {{ 'labels.buttons.Permissions' | translate }}: <strong>{{ formatName(previousGrouping) }}</strong>
-          } @else {
-            {{ 'labels.buttons.Permissions' | translate }}:
-            <strong>{{ 'labels.text.Search Results' | translate }}</strong>
-            <span class="search-count">({{ filteredPermissions.length }})</span>
+          {{ 'labels.buttons.Permissions' | translate }}: <strong>{{ formatName(previousGrouping) }}</strong>
+          @if (isSearchActive) {
+            <span class="search-count">({{ groupingMatchCounts[previousGrouping] || 0 }})</span>
           }
         </h3>
       </div>
 
       <div class="permission-toolbar-right">
-        @if (!isDisabled) {
+        @if (!isDisabled && !isSearchActive) {
           <button mat-raised-button color="primary" (click)="selectAll()">
             {{ 'labels.buttons.Select All' | translate }}
           </button>
@@ -121,27 +118,30 @@
       </mat-form-field>
     </div>
 
-    @if (!isSearchActive) {
-      <div class="layout-row permissions-panel">
-        <div class="layout-column flex-30 grouping-list">
-          <mat-list>
-            @for (grouping of groupings; track grouping) {
-              <mat-list-item
-                [ngClass]="selectedItem === grouping ? 'active' : 'inactive'"
-                (click)="showPermissions(grouping)"
-              >
-                <span class="grouping-name">
-                  {{ formatName(grouping) }}
-                </span>
-              </mat-list-item>
-            }
-          </mat-list>
-        </div>
+    <div class="layout-row permissions-panel">
+      <div class="layout-column flex-30 grouping-list">
+        <mat-list>
+          @for (grouping of groupings; track grouping) {
+            <mat-list-item
+              [ngClass]="selectedItem === grouping ? 'active' : 'inactive'"
+              (click)="showPermissions(grouping)"
+            >
+              <span class="grouping-name">
+                {{ formatName(grouping) }}
+                @if (isSearchActive) {
+                  <span class="match-count-badge">{{ groupingMatchCounts[grouping] || 0 }}</span>
+                }
+              </span>
+            </mat-list-item>
+          }
+        </mat-list>
+      </div>
 
-        <mat-divider [vertical]="true"></mat-divider>
+      <mat-divider [vertical]="true"></mat-divider>
 
-        <div class="flex-70 layout-column list-permission">
-          <form [formGroup]="formGroup" (submit)="submit()">
+      <div class="flex-70 layout-column list-permission">
+        <form [formGroup]="formGroup" (submit)="submit()">
+          @if (!isSearchActive) {
             @for (permission of permissions.permissions; track permission) {
               <div class="display-permissions">
                 <div formArrayName="roster">
@@ -153,33 +153,28 @@
                 </div>
               </div>
             }
-          </form>
-        </div>
-      </div>
-    } @else {
-      <div class="search-results-panel">
-        <form [formGroup]="formGroup">
-          @if (filteredPermissions.length === 0) {
-            <div class="no-results">
-              <mat-icon>search_off</mat-icon>
-              <p>{{ 'labels.text.No permissions found' | translate }}</p>
-            </div>
-          }
-          @for (permission of filteredPermissions; track permission.id) {
-            <div class="display-permissions search-result-item">
-              <div formArrayName="roster">
-                <div [formGroupName]="permission.id">
-                  <mat-checkbox name="cp" id="search-{{ permission.code }}" formControlName="selected">
-                    {{ permissionName(permission.code) }}
-                  </mat-checkbox>
-                  <span class="permission-grouping-badge">{{ formatName(permission.grouping) }}</span>
+          } @else {
+            @if (filteredGroupPermissions.length === 0) {
+              <div class="no-results">
+                <mat-icon>search_off</mat-icon>
+                <p>{{ 'labels.text.No permissions found' | translate }}</p>
+              </div>
+            }
+            @for (permission of filteredGroupPermissions; track permission) {
+              <div class="display-permissions">
+                <div formArrayName="roster">
+                  <div [formGroupName]="permission.id">
+                    <mat-checkbox name="cp" id="search-{{ permission.code }}" formControlName="selected">
+                      {{ permissionName(permission.code) }}
+                    </mat-checkbox>
+                  </div>
                 </div>
               </div>
-            </div>
+            }
           }
         </form>
       </div>
-    }
+    </div>
 
     @if (!isDisabled) {
       <mat-card-actions class="submit-actions">

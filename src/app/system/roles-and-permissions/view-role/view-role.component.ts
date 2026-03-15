@@ -98,6 +98,10 @@ export class ViewRoleComponent implements OnInit {
   filteredPermissions: { code: string; id: number; grouping: string }[] = [];
   /** Whether search mode is active */
   isSearchActive = false;
+  /** Match counts per grouping when searching */
+  groupingMatchCounts: { [key: string]: number } = {};
+  /** Filtered permissions for the currently selected grouping */
+  filteredGroupPermissions: { code: string; id: number }[] = [];
   /** Add role zitadel */
 
   /**
@@ -188,6 +192,7 @@ export class ViewRoleComponent implements OnInit {
     this.permissions = this.tempPermissionUIData[grouping];
     this.selectedItem = grouping;
     this.previousGrouping = grouping;
+    this.updateFilteredGroupPermissions();
   }
 
   /**
@@ -243,14 +248,18 @@ export class ViewRoleComponent implements OnInit {
     if (!searchValue || searchValue.trim() === '') {
       this.isSearchActive = false;
       this.filteredPermissions = [];
+      this.groupingMatchCounts = {};
+      this.filteredGroupPermissions = [];
       return;
     }
     this.isSearchActive = true;
     const lowerSearch = searchValue.toLowerCase();
     this.filteredPermissions = [];
+    this.groupingMatchCounts = {};
     for (const grouping of this.groupings) {
       const group = this.tempPermissionUIData[grouping];
       if (group) {
+        let count = 0;
         for (const perm of group.permissions) {
           const readableName = perm.code.replace(/_/g, ' ').toLowerCase();
           if (readableName.includes(lowerSearch) || perm.code.toLowerCase().includes(lowerSearch)) {
@@ -259,10 +268,28 @@ export class ViewRoleComponent implements OnInit {
               id: perm.id,
               grouping
             });
+            count++;
           }
         }
+        this.groupingMatchCounts[grouping] = count;
       }
     }
+    this.updateFilteredGroupPermissions();
+  }
+
+  /**
+   * Updates the filtered permissions for the currently selected grouping
+   */
+  updateFilteredGroupPermissions() {
+    if (!this.isSearchActive || !this.permissions) {
+      this.filteredGroupPermissions = [];
+      return;
+    }
+    const lowerSearch = this.searchText.toLowerCase();
+    this.filteredGroupPermissions = this.permissions.permissions.filter((perm) => {
+      const readableName = perm.code.replace(/_/g, ' ').toLowerCase();
+      return readableName.includes(lowerSearch) || perm.code.toLowerCase().includes(lowerSearch);
+    });
   }
 
   /**
@@ -272,6 +299,8 @@ export class ViewRoleComponent implements OnInit {
     this.searchText = '';
     this.isSearchActive = false;
     this.filteredPermissions = [];
+    this.groupingMatchCounts = {};
+    this.filteredGroupPermissions = [];
   }
 
   /**
