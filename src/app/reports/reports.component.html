@@ -17,7 +17,9 @@
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="reportName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.name' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.text.BIRT' | translate }}
+        </th>
         <td mat-cell *matCellDef="let report">{{ report.reportName }}</td>
       </ng-container>
 
