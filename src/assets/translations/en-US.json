@@ -4,6 +4,8 @@
   "Remember me": "Remember me",
   "error.resource.notImplemented.type": "Not Implemented Error",
   "error.resource.notImplemented.message": "Not implemented functionality!",
+  "error.msg.platform.service.unavailable": "The server is currently unable to handle the request, please try again after some time.",
+  "error.msg.database.type.not.supported": "Data type is not supported",
   "errors": {
     "accountingRule": {
       "duplicateName": "Sorry, but an Accounting Rule with this Name exists already."

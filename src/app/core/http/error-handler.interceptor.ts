@@ -21,6 +21,7 @@ import { environment } from '../../../environments/environment';
 import { Logger } from '../logger/logger.service';
 import { AlertService } from '../alert/alert.service';
 import { TranslateService } from '@ngx-translate/core';
+import { ErrorHandlerService } from '../error-handler/error-handler.service';
 
 /** Initialize Logger */
 const log = new Logger('ErrorHandlerInterceptor');
@@ -32,10 +33,7 @@ const log = new Logger('ErrorHandlerInterceptor');
 export class ErrorHandlerInterceptor implements HttpInterceptor {
   private alertService = inject(AlertService);
   private translate = inject(TranslateService);
-  private databaseErrorCodes: string[] = [
-    'error.msg.data.integrity.issue.entity.duplicated',
-    'error.msg.data.integrity.issue'
-  ];
+  private errorHandlerService = inject(ErrorHandlerService);
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(catchError((error) => this.handleError(error, request)));
@@ -61,98 +59,64 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 
   private handleError(response: HttpErrorResponse, request: HttpRequest<any>): Observable<HttpEvent<any>> {
     const status = response.status;
-    const errorBody = this.parseErrorBody(response.error);
+    const errorBody: any = response.error;
+    const translatedErrorMessage = this.errorHandlerService.translateFineractError(errorBody);
+    const developerMessage: string | undefined = errorBody?.developerMessage;
+    const errorMessage = translatedErrorMessage || errorBody?.defaultUserMessage || response.message;
 
-    // Translate top-level globalisation code if present
-    const rawTopLevelMessage = errorBody?.defaultUserMessage || errorBody?.developerMessage;
-    let topLevelMessage = rawTopLevelMessage || response.message;
-    if (errorBody?.userMessageGlobalisationCode) {
-      const topCode = errorBody.userMessageGlobalisationCode;
-      const translated = this.translate.instant(topCode, errorBody || {});
-      if (translated !== topCode) {
-        topLevelMessage = translated;
-      }
-    }
-
-    // Translate nested globalisation code if present
-    let nestedMessage: string | null = null;
-    if (errorBody?.errors?.[0]?.userMessageGlobalisationCode) {
-      const nestedCode = errorBody.errors[0].userMessageGlobalisationCode;
-      const translated = this.translate.instant(nestedCode, errorBody.errors[0] || {});
-      nestedMessage = translated !== nestedCode ? translated : errorBody.errors[0].defaultUserMessage || null;
-    }
-
-    // Combine both messages if both exist and are distinct.
-    // Prefer translated messages; only fall back to raw defaultUserMessage when no translation was resolved.
-    const hasTopLevelPayload = Boolean(rawTopLevelMessage || errorBody?.userMessageGlobalisationCode);
-
-    let errorMessage = nestedMessage
-      ? hasTopLevelPayload && nestedMessage !== topLevelMessage
-        ? `${topLevelMessage} ${nestedMessage}`
-        : nestedMessage
-      : topLevelMessage;
-    let parameterName: string | null = null;
-    if (response.error.errors) {
-      if (response.error.errors[0]) {
-        if (
-          response.error.errors[0].userMessageGlobalisationCode &&
-          this.databaseErrorCodes.indexOf(response.error.errors[0].userMessageGlobalisationCode) > -1
-        ) {
-          errorMessage = this.translate.instant('errors.error.msg.data.integrity.issue');
-        } else {
-          errorMessage =
-            response.error.errors[0].defaultUserMessage.replace(/\\./g, ' ') ||
-            response.error.errors[0].developerMessage.replace(/\\./g, ' ');
-        }
-      }
-      if ('parameterName' in errorBody.errors[0]) {
-        parameterName = errorBody.errors[0].parameterName;
-      }
-    }
     const isClientImage404 = status === 404 && request.url.includes('/clients/') && request.url.includes('/images');
 
     if (!environment.production && !isClientImage404) {
+      if (developerMessage) {
+        log.error(`Request Error (developerMessage): ${developerMessage}`);
+      }
       log.error(`Request Error: ${errorMessage}`);
     }
 
-    if (status === 401 || (environment.oauth.enabled && status === 400)) {
+    // OAuth2 errors for invalid grants are returned as 400, so we need to check the URL.
+    if (status === 401 || (environment.oauth.enabled && status === 400 && request.url.includes('/oauth/token'))) {
       this.alertService.alert({
-        type: this.translate.instant('errors.error.auth.type'),
-        message: this.translate.instant('errors.error.auth.message')
-      });
-    } else if (
-      status === 403 &&
-      errorBody?.errors?.[0]?.defaultUserMessage === 'The provided one time token is invalid'
-    ) {
-      this.alertService.alert({
-        type: this.translate.instant('errors.error.token.invalid.type'),
-        message: this.translate.instant('errors.error.token.invalid.message')
+        type: this.translate.instant('error.resource.authenticationError.type'),
+        message: this.translate.instant('error.resource.authenticationError.message')
       });
     } else if (status === 400) {
       const fallback = this.translate.instant('errors.interceptor.invalidParams');
       const message = parameterName ? `[${parameterName}] ${errorMessage || fallback}` : `${errorMessage || fallback}`;
       this.alertService.alert({
-        type: this.translate.instant('errors.error.bad.request.type'),
-        message: message || this.translate.instant('errors.error.bad.request.message')
+        type: this.translate.instant('error.resource.badRequest.type'),
+        message: errorMessage || this.translate.instant('error.resource.badRequest.message')
       });
     } else if (status === 403) {
-      this.alertService.alert({
-        type: this.translate.instant('errors.error.unauthorized.type'),
-        message: errorMessage || this.translate.instant('errors.error.unauthorized.message')
-      });
+      // The token check must use a stable identifier, not the translated message.
+      const isInvalidToken =
+        errorBody?.userMessageGlobalisationCode === 'error.msg.invalid.onetime.token' ||
+        errorBody?.defaultUserMessage === 'The provided one time token is invalid' ||
+        errorMessage === 'The provided one time token is invalid';
+
+      if (isInvalidToken) {
+        this.alertService.alert({
+          type: this.translate.instant('error.resource.invalidToken.type'),
+          message: this.translate.instant('error.resource.invalidToken.message')
+        });
+      } else {
+        this.alertService.alert({
+          type: this.translate.instant('error.resource.unauthorizedRequest.type'),
+          message: errorMessage || this.translate.instant('error.resource.unauthorizedRequest.message')
+        });
+      }
     } else if (status === 404) {
       if (isClientImage404) {
         return throwError(() => response);
       } else {
         this.alertService.alert({
-          type: this.translate.instant('errors.error.resource.not.found.type'),
-          message: errorMessage || this.translate.instant('errors.error.resource.not.found.message')
+          type: this.translate.instant('error.resource.not.found'),
+          message: errorMessage || this.translate.instant('error.resource.notFound.message')
         });
       }
     } else if (status === 500) {
       this.alertService.alert({
-        type: this.translate.instant('errors.error.server.internal.type'),
-        message: errorMessage || this.translate.instant('errors.error.server.internal.message')
+        type: this.translate.instant('error.resource.internalServerError.type'),
+        message: this.translate.instant('error.resource.internalServerError.message')
       });
     } else if (status === 501) {
       this.alertService.alert({
@@ -161,8 +125,8 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
       });
     } else {
       this.alertService.alert({
-        type: this.translate.instant('errors.error.unknown.type'),
-        message: errorMessage || this.translate.instant('errors.error.unknown.message')
+        type: this.translate.instant('error.resource.unknownError.type'),
+        message: errorMessage || this.translate.instant('error.resource.unknownError.message')
       });
     }
 

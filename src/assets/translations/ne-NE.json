@@ -2,6 +2,8 @@
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "को रूपमा लग इन गरियो",
   "Remember me": "मलाई सम्झनुहोस्",
+  "error.msg.platform.service.unavailable": "सर्भरले अहिले अनुरोध प्रस्तुत गर्न सक्षम छैन। कृपया केही समयपछि पुन: प्रयास गर्नुहोस्।",
+  "error.msg.database.type.not.supported": "डेटाबेस प्रकार समर्थन गरिंदैन।",
   "errors": {
     "accountingRule": {
       "duplicateName": "माफ गर्नुहोस्, यो नामको लेखा नियम पहिले नै अवस्थित छ।"

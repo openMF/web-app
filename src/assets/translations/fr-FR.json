@@ -2,6 +2,8 @@
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "connecté en tant que",
   "Remember me": "Souviens-toi de moi",
+  "error.msg.platform.service.unavailable": "Le serveur est actuellement incapable de traiter la requête, veuillez réessayer ultérieurement.",
+  "error.msg.database.type.not.supported": "Le type de données n'est pas pris en charge",
   "errors": {
     "accountingRule": {
       "duplicateName": "Désolé, mais une règle comptable portant ce nom existe déjà."
@@ -3690,9 +3692,7 @@
       "No checker inbox data available for this account": "Aucune donnée de boîte de réception du vérificateur trouvé pour ce compte.",
       "No checker inbox data available for this search": "Aucune donnée de boîte de réception du vérificateur trouvé pour cette recherche.",
       "No client was found": "Aucun client n'a été trouvé",
-      "No data found": "Aucune donnée trouvé",
-      "No permissions found": "Aucune autorisation trouvé",
-      "NonTriggered": "Non déclenché",
+      "No data found": "Aucune donnée disponible",
       "No penalties found": "Aucune pénalité trouvée",
       "NoDocuments": "Aucun document trouvé.",
       "NoFileSelected": "Aucun fichier sélectionné",

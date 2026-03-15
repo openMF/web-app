@@ -4,6 +4,8 @@
   "Remember me": "Zapamatuj si mě",
   "error.resource.notImplemented.type": "Nenaimplementovaná chyba",
   "error.resource.notImplemented.message": "Funkce není implementována!",
+  "error.msg.platform.service.unavailable": "Server je v současné chvíli neschopen zpracovat požadavek. Zkuste to prosím později.",
+  "error.msg.database.type.not.supported": "Datový typ není podporován",
   "errors": {
     "accountingRule": {
       "duplicateName": "Omlouváme se, ale účetní pravidlo s tímto názvem již existuje."

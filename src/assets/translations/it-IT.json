@@ -2,6 +2,8 @@
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "Collegato come",
   "Remember me": "Ricordati di me",
+  "error.msg.platform.service.unavailable": "Il server non può elaborare la richiesta in questo momento. Si prega di riprovare più tardi.",
+  "error.msg.database.type.not.supported": "Il tipo di dati non è supportato",
   "errors": {
     "accountingRule": {
       "duplicateName": "Spiacenti, ma esiste già una regola contabile con questo nome."

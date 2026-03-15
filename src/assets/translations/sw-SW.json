@@ -2,6 +2,8 @@
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "Imeingia kama",
   "Remember me": "Nikumbuke",
+  "error.msg.platform.service.unavailable": "Seva kwa sasa haiwezi kushughulikia ombi, tafadhali jaribu tena baada ya muda.",
+  "error.msg.database.type.not.supported": "Aina ya data haiungwa mkono",
   "errors": {
     "accountingRule": {
       "duplicateName": "Samahani, lakini Kanuni ya Uhasibu yenye jina hili tayari ipo."

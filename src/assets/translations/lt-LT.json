@@ -2,6 +2,8 @@
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "prisijungęs kaip",
   "Remember me": "Prisimink mane",
+  "error.msg.platform.service.unavailable": "Serveris šiuo metu negali apdoroti užklausą. Prašome pabandyti vėliau.",
+  "error.msg.database.type.not.supported": "Duomenų tipas nepalaikomas",
   "errors": {
     "accountingRule": {
       "duplicateName": "Atsiprašome, bet apskaitos taisyklė su šiuo pavadinimu jau egzistuoja."
