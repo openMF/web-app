@@ -208,7 +208,17 @@
         </button>
 
         @if (isActive()) {
-          <button mat-menu-item [matMenuTriggerFor]="accountApplications">
+          <button
+            mat-menu-item
+            [matMenuTriggerFor]="accountApplications"
+            *mifosxHasPermission="[
+              'CREATE_LOAN',
+              'CREATE_SAVINGSACCOUNT',
+              'CREATE_SHAREACCOUNT',
+              'CREATE_RECURRINGDEPOSITACCOUNT',
+              'CREATE_FIXEDDEPOSITACCOUNT'
+            ]"
+          >
             <mat-icon matListIcon>
               <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
             </mat-icon>
