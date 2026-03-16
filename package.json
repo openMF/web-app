@@ -154,6 +154,7 @@
     "*": "prettier --check --ignore-unknown"
   },
   "overrides": {
+    "glob": "^13.0.0",
     "exceljs": {
       "archiver": "^7.0.1",
       "unzipper": "^0.12.3"
