@@ -228,15 +228,38 @@ export class ViewRoleComponent implements OnInit {
    * Formats the permission from permission code
    * @param name String
    */
-  permissionName(name: any) {
-    name = name || '';
-    // replace '_' with ' '
-    name = name.replace(/_/g, ' ');
-    // for reports replace read with view
+  permissionName(name: string): string {
+    name = (name || '').trim();
+
+    // Special case: reports replace READ with View
     if (this.previousGrouping === 'report') {
-      name = name.replace(/READ/g, 'View');
+      name = name.replace(/^READ_/, 'VIEW_');
     }
-    return name;
+
+    // Split into action + entity at the first underscore
+    const underscoreIndex = name.indexOf('_');
+    if (underscoreIndex === -1) {
+      const key = `labels.permissions.actions.${name}`;
+      const t = this.translateService.instant(key);
+      return t !== key ? t : this.titleCase(name);
+    }
+
+    const action = name.substring(0, underscoreIndex);
+    const entity = name.substring(underscoreIndex + 1);
+
+    const actionKey = `labels.permissions.actions.${action}`;
+    const translatedAction = this.translateService.instant(actionKey);
+    const actionResult = translatedAction !== actionKey ? translatedAction : this.titleCase(action);
+
+    const entityKey = `labels.permissions.entities.${entity}`;
+    const translatedEntity = this.translateService.instant(entityKey);
+    const entityResult = translatedEntity !== entityKey ? translatedEntity : this.titleCase(entity.replace(/_/g, ' '));
+
+    return `${actionResult} ${entityResult}`;
+  }
+
+  private titleCase(str: string): string {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
   }
 
   /**
@@ -261,7 +284,7 @@ export class ViewRoleComponent implements OnInit {
       if (group) {
         let count = 0;
         for (const perm of group.permissions) {
-          const readableName = perm.code.replace(/_/g, ' ').toLowerCase();
+          const readableName = this.permissionName(perm.code).toLowerCase();
           if (readableName.includes(lowerSearch) || perm.code.toLowerCase().includes(lowerSearch)) {
             this.filteredPermissions.push({
               code: perm.code,
@@ -287,7 +310,7 @@ export class ViewRoleComponent implements OnInit {
     }
     const lowerSearch = this.searchText.toLowerCase();
     this.filteredGroupPermissions = this.permissions.permissions.filter((perm) => {
-      const readableName = perm.code.replace(/_/g, ' ').toLowerCase();
+      const readableName = this.permissionName(perm.code).toLowerCase();
       return readableName.includes(lowerSearch) || perm.code.toLowerCase().includes(lowerSearch);
     });
   }
