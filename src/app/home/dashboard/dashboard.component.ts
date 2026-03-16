@@ -19,15 +19,13 @@ import { ClientTrendsBarComponent } from './client-trends-bar/client-trends-bar.
 import { AmountDisbursedPieComponent } from './amount-disbursed-pie/amount-disbursed-pie.component';
 import { AmountCollectedPieComponent } from './amount-collected-pie/amount-collected-pie.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-
-/** Custom Services */
-import { DashboardService } from './dashboard.service';
-
+/**
+ * Dashboard component.
+ */
 @Component({
   selector: 'mifosx-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
-  standalone: true,
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     MatAutocompleteTrigger,
@@ -40,100 +38,45 @@ import { DashboardService } from './dashboard.service';
 })
 export class DashboardComponent implements OnInit {
   private router = inject(Router);
-  private dashboardService = inject(DashboardService);
 
-  activeLoans = 0;
-  totalCollections = 0;
-  parRatio = 0;
-  newClients = 0;
-
+  /** Array of all user activities */
   userActivity: string[];
+  /** Array of most recent user activities */
   recentActivities: string[];
+  /** Array of most frequent user activities */
   frequentActivities: string[];
+  /** Search Text. */
   searchText: UntypedFormControl = new UntypedFormControl();
+  /** Filtered Activities. */
   filteredActivities: Observable<any[]>;
+  /** All User Activities. */
   allActivities: any[] = activities;
 
+  /**
+   * Gets user activities from local storage.
+   */
   constructor() {
-    try {
-      const savedLocation = localStorage.getItem('mifosXLocation');
-      this.userActivity = savedLocation ? JSON.parse(savedLocation) : [];
-      if (!Array.isArray(this.userActivity)) {
-        this.userActivity = [];
-      }
-    } catch (e) {
-      this.userActivity = [];
-    }
+    this.userActivity = JSON.parse(localStorage.getItem('mifosXLocation'));
   }
 
   ngOnInit() {
     this.recentActivities = this.getRecentActivities();
     this.frequentActivities = this.getFrequentActivities();
     this.setFilteredActivities();
-    this.fetchDashboardData();
   }
 
-  fetchDashboardData() {
-    this.dashboardService.getActiveLoansSummary().subscribe({
-      next: (response: any) => {
-        if (response && response.columnHeaders && response.data) {
-          const cols = response.columnHeaders;
-          const activeLoansIdx = cols.findIndex((c: any) => c.columnName === 'No. Active Loans');
-          const clientsIdx = cols.findIndex((c: any) => c.columnName === 'No. of Clients');
-          const princRepaidIdx = cols.findIndex((c: any) => c.columnName === 'Principal Repaid');
-          const intRepaidIdx = cols.findIndex((c: any) => c.columnName === 'Interest Repaid');
-          const feesRepaidIdx = cols.findIndex((c: any) => c.columnName === 'Fees Repaid');
-          const penRepaidIdx = cols.findIndex((c: any) => c.columnName === 'Penalties Repaid');
-          const princOverdueIdx = cols.findIndex((c: any) => c.columnName === 'Principal Overdue');
-          const princOutIdx = cols.findIndex((c: any) => c.columnName === 'Principal Outstanding');
-
-          if (activeLoansIdx === -1 || princOutIdx === -1) {
-            return;
-          }
-
-          let totalActiveLoans = 0;
-          let totalClients = 0;
-          let totalRepaid = 0;
-          let totalOverdue = 0;
-          let totalOutstanding = 0;
-
-          response.data.forEach((item: any) => {
-            const row = item.row;
-            totalActiveLoans += row[activeLoansIdx] || 0;
-            totalClients += row[clientsIdx] || 0;
-            totalRepaid +=
-              (princRepaidIdx !== -1 ? row[princRepaidIdx] || 0 : 0) +
-              (intRepaidIdx !== -1 ? row[intRepaidIdx] || 0 : 0) +
-              (feesRepaidIdx !== -1 ? row[feesRepaidIdx] || 0 : 0) +
-              (penRepaidIdx !== -1 ? row[penRepaidIdx] || 0 : 0);
-            totalOverdue += princOverdueIdx !== -1 ? row[princOverdueIdx] || 0 : 0;
-            totalOutstanding += row[princOutIdx] || 0;
-          });
-
-          this.activeLoans = totalActiveLoans;
-          this.newClients = totalClients;
-          this.totalCollections = totalRepaid;
-          this.parRatio = totalOutstanding > 0 ? totalOverdue / totalOutstanding : 0;
-        }
-      },
-      error: () => {
-        this.activeLoans = 0;
-        this.newClients = 0;
-        this.totalCollections = 0;
-        this.parRatio = 0;
-      }
-    });
-  }
-
+  /**
+   * Returns top eight recent activities.
+   */
   getRecentActivities() {
-    const reverseActivities = [...this.userActivity].reverse();
+    const reverseActivities = this.userActivity.reverse();
     const uniqueActivities: string[] = [];
     reverseActivities.forEach((activity: string) => {
       if (!uniqueActivities.includes(activity)) {
         uniqueActivities.push(activity);
       }
     });
-    return uniqueActivities
+    const topEightRecentActivities = uniqueActivities
       .filter(
         (activity: string) => ![
             '/',
@@ -143,8 +86,12 @@ export class DashboardComponent implements OnInit {
           ].includes(activity)
       )
       .slice(0, 8);
+    return topEightRecentActivities;
   }
 
+  /**
+   * Returns top eight frequent activities.
+   */
   getFrequentActivities() {
     const frequencyCounts: any = {};
     let index = this.userActivity?.length;
@@ -152,7 +99,8 @@ export class DashboardComponent implements OnInit {
       const activity = this.userActivity[--index];
       frequencyCounts[activity] = (frequencyCounts[activity] || 0) + 1;
     }
-    return Object.entries(frequencyCounts)
+    const frequencyCountsArray = Object.entries(frequencyCounts);
+    const topEigthFrequentActivities = frequencyCountsArray
       .sort((a: any, b: any) => b[1] - a[1])
       .map((entry: any[]) => entry[0])
       .filter(
@@ -164,12 +112,19 @@ export class DashboardComponent implements OnInit {
           ].includes(activity)
       )
       .slice(0, 8);
+    return topEigthFrequentActivities;
   }
 
+  /**
+   * Navigates to the activity
+   */
   navigatetoActivity(activity: string) {
     this.router.navigateByUrl(activity);
   }
 
+  /**
+   * Sets filtered activities for autocomplete.
+   */
   setFilteredActivities() {
     this.filteredActivities = this.searchText.valueChanges.pipe(
       map((activity: any) => (typeof activity === 'string' ? activity : activity.activity)),
@@ -177,6 +132,11 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  /**
+   * Filters activities.
+   * @param activityName Activity name to filter activity by.
+   * @returns {any} Filtered activities.
+   */
   private filterActivity(activityName: string): any {
     const filterValue = activityName.toLowerCase();
     return this.allActivities.filter((activity) => activity.activity.toLowerCase().indexOf(filterValue) === 0);
