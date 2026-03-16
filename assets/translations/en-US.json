@@ -289,6 +289,7 @@
     "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Withdrawal fee period type is mandatory."
   },
   "labels": {
+    "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
     "version": {
       "Tenant": "Tenant",
       "Mifos WebApp": "Mifos® WebApp",
@@ -3121,6 +3122,7 @@
       "Audit Trails": "Audit Trails",
       "Audit logs of all the activities": "Audit logs of all the activities, such as create client, disburse loans etc",
       "Bar": "Bar",
+      "BIRT": "Mifos Reporting Plugin for Eclipse Birt",
       "Bulk Import": "Bulk Import",
       "Bulk Loan Reassignment": "Bulk Loan Reassignment",
       "Bulk data import using excel spreadsheet templates": "Bulk data import using excel spreadsheet templates for clients, offices, etc.",
@@ -3599,7 +3601,7 @@
       "Passwords": "Passwords",
       "Pay Charge": "Pay Charge",
       "Payment Types": "Payment Types",
-      "Pentaho": "",
+      "Pentaho": "Mifos Reporting Plugin for Pentaho",
       "Periodic Accrual Accounting": "Periodic Accrual Accounting",
       "Pie": "Pie",
       "Please enter the OTP": "Please enter the OTP",

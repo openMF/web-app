@@ -288,6 +288,7 @@
     "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "출금 수수료 기간 유형은 필수입니다."
   },
   "labels": {
+    "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
     "version": {
       "Tenant": "임차인",
       "Mifos WebApp": "Mifos® WebApp",
@@ -3086,6 +3087,7 @@
       "Audit Trails": "감사 추적",
       "Audit logs of all the activities": "클라이언트 생성, 대출 지급 등과 같은 모든 활동에 대한 감사 로그",
       "Bar": "술집",
+      "BIRT": "Mifos Reporting Plugin for Eclipse Birt",
       "Bulk Import": "대량 가져오기",
       "Bulk Loan Reassignment": "대량대출 재할당",
       "Bulk data import using excel spreadsheet templates": "고객, 사무실 등을 위한 Excel 스프레드시트 템플릿을 사용하여 대량 데이터 가져오기",
@@ -3479,7 +3481,7 @@
       "Passwords": "비밀번호",
       "Pay Charge": "요금 지불",
       "Payment Types": "결제 유형",
-      "Pentaho": "",
+      "Pentaho": "Mifos Reporting Plugin for Pentaho",
       "Periodic Accrual Accounting": "정기 발생회계",
       "Pie": "파이",
       "Please enter the OTP": "OTP를 입력해주세요",

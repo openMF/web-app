@@ -288,6 +288,7 @@
     "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "El tipo de período de comisión de retiro es obligatorio."
   },
   "labels": {
+    "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
     "version": {
       "Tenant": "Instancia",
       "Mifos WebApp": "Mifos® WebApp",
@@ -3119,6 +3120,7 @@
       "Audit Trails": "Pistas de auditoría",
       "Audit logs of all the activities": "Registros de auditoría de todas las actividades, como crear clientes, desembolsar Créditos, etc.",
       "Bar": "Bar",
+      "BIRT": "Mifos Plugin para generar informes usando Eclipse Birt",
       "Bulk Import": "Importación masiva",
       "Bulk Loan Reassignment": "Reasignación de Créditos a granel",
       "Bulk data import using excel spreadsheet templates": "Importación masiva de datos mediante plantillas de hojas de cálculo excel para clientes, sucursales, etc.",
@@ -3512,7 +3514,7 @@
       "Passwords": "Contraseñas",
       "Pay Charge": "Pagar cargo",
       "Payment Types": "Formas de pago",
-      "Pentaho": "",
+      "Pentaho": "Mifos Plugin para generar informes usando Pentaho",
       "Periodic Accrual Accounting": "Contabilidad periódica devengada",
       "Pie": "Tarta",
       "Please enter the OTP": "Por favor ingrese la OTP",

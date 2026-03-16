@@ -288,6 +288,7 @@
     "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "O tipo de período de taxa de retirada é obrigatório."
   },
   "labels": {
+    "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
     "version": {
       "Tenant": "Inquilino",
       "Mifos WebApp": "Mifos® WebApp",
@@ -3086,6 +3087,7 @@
       "Audit Trails": "Trilhas de auditoria",
       "Audit logs of all the activities": "Registros de auditoria de todas as atividades, como criação de cliente, desembolso de empréstimos, etc.",
       "Bar": "Bar",
+      "BIRT": "Mifos Reporting Plugin for Eclipse Birt",
       "Bulk Import": "Importação em massa",
       "Bulk Loan Reassignment": "Reatribuição de empréstimo em massa",
       "Bulk data import using excel spreadsheet templates": "Importação de dados em massa usando modelos de planilhas Excel para clientes, escritórios, etc.",
@@ -3479,7 +3481,7 @@
       "Passwords": "Senhas",
       "Pay Charge": "Taxa de pagamento",
       "Payment Types": "Tipos de pagamento",
-      "Pentaho": "",
+      "Pentaho": "Mifos Reporting Plugin for Pentaho",
       "Periodic Accrual Accounting": "Contabilidade de acumulação periódica",
       "Pie": "Torta",
       "Please enter the OTP": "Por favor insira o OTP",

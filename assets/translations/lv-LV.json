@@ -288,6 +288,7 @@
     "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Izņemšanas maksas perioda veids ir obligāts."
   },
   "labels": {
+    "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
     "version": {
       "Tenant": "Nomnieks",
       "Mifos WebApp": "Mifos® WebApp",
@@ -3086,6 +3087,7 @@
       "Audit Trails": "Revīzijas pēdas",
       "Audit logs of all the activities": "Pārbaudīt visu darbību žurnālus, piemēram, klienta izveidošanu, aizdevumu izsniegšanu utt",
       "Bar": "Bārs",
+      "BIRT": "Mifos Reporting Plugin for Eclipse Birt",
       "Bulk Import": "Lielapjoma importēšana",
       "Bulk Loan Reassignment": "Lielapjoma aizdevuma pārcelšana",
       "Bulk data import using excel spreadsheet templates": "Lielapjoma datu importēšana, izmantojot Excel izklājlapu veidnes klientiem, birojiem utt.",
@@ -3480,7 +3482,7 @@
       "Passwords": "Paroles",
       "Pay Charge": "Maksājiet maksu",
       "Payment Types": "Maksājumu veidi",
-      "Pentaho": "",
+      "Pentaho": "Mifos Reporting Plugin for Pentaho",
       "Periodic Accrual Accounting": "Periodiskā uzkrājumu grāmatvedība",
       "Pie": "Pīrāgs",
       "Please enter the OTP": "Lūdzu, ievadiet OTP",

@@ -288,6 +288,7 @@
     "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "निकासी शुल्क अवधि प्रकार अनिवार्य छ।"
   },
   "labels": {
+    "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
     "version": {
       "Tenant": "भाडामा लिने व्यक्ति",
       "Mifos WebApp": "Mifos® WebApp",
@@ -3084,6 +3085,7 @@
       "Audit Trails": "अडिट ट्रेलहरू",
       "Audit logs of all the activities": "सबै गतिविधिहरूको अडिट लगहरू, जस्तै ग्राहक सिर्जना, ऋण वितरण आदि",
       "Bar": "बार",
+      "BIRT": "Mifos Reporting Plugin for Eclipse Birt",
       "Bulk Import": "थोक आयात",
       "Bulk Loan Reassignment": "बल्क ऋण पुन: असाइनमेन्ट",
       "Bulk data import using excel spreadsheet templates": "ग्राहकहरू, कार्यालयहरू, इत्यादिका लागि एक्सेल स्प्रेडसिट टेम्प्लेटहरू प्रयोग गरेर बल्क डाटा आयात।",
@@ -3477,7 +3479,7 @@
       "Passwords": "पासवर्डहरू",
       "Pay Charge": "शुल्क तिर्नुहोस्",
       "Payment Types": "भुक्तानीका प्रकारहरू",
-      "Pentaho": "",
+      "Pentaho": "Mifos Reporting Plugin for Pentaho",
       "Periodic Accrual Accounting": "आवधिक उपार्जन लेखा",
       "Pie": "पाई",
       "Please enter the OTP": "कृपया OTP प्रविष्ट गर्नुहोस्",

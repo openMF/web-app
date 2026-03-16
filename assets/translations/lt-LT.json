@@ -288,6 +288,7 @@
     "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Išėmimo mokesčio laikotarpio tipas yra privalomas."
   },
   "labels": {
+    "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
     "version": {
       "Tenant": "Nuomininkas",
       "Mifos WebApp": "Mifos® WebApp",
@@ -3087,6 +3088,7 @@
       "Audit Trails": "Audito takai",
       "Audit logs of all the activities": "Audito žurnalus apie visas veiklas, tokias kaip kliento kūrimas, paskolų išmokėjimas ir kt",
       "Bar": "Baras",
+      "BIRT": "Mifos Reporting Plugin for Eclipse Birt",
       "Bulk Import": "Masinis importas",
       "Bulk Loan Reassignment": "Masinės paskolos perskirstymas",
       "Bulk data import using excel spreadsheet templates": "Masinis duomenų importavimas naudojant „Excel“ skaičiuoklės šablonus klientams, biurams ir kt.",
@@ -3480,7 +3482,7 @@
       "Passwords": "Slaptažodžiai",
       "Pay Charge": "Mokėti mokestį",
       "Payment Types": "Mokėjimo tipai",
-      "Pentaho": "",
+      "Pentaho": "Mifos Reporting Plugin for Pentaho",
       "Periodic Accrual Accounting": "Periodinė kaupimo apskaita",
       "Pie": "Pyragas",
       "Please enter the OTP": "Įveskite vienkartinį kodą",

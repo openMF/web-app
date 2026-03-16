@@ -288,6 +288,7 @@
     "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Il tipo di periodo della commissione di prelievo è obbligatorio."
   },
   "labels": {
+    "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
     "version": {
       "Tenant": "Inquilino",
       "Mifos WebApp": "Mifos® WebApp",
@@ -3086,6 +3087,7 @@
       "Audit Trails": "Percorsi di controllo",
       "Audit logs of all the activities": "Registri di controllo di tutte le attività, come la creazione di clienti, l'erogazione di prestiti, ecc",
       "Bar": "Sbarra",
+      "BIRT": "Mifos Reporting Plugin for Eclipse Birt",
       "Bulk Import": "Importazione in blocco",
       "Bulk Loan Reassignment": "Riassegnazione del prestito in blocco",
       "Bulk data import using excel spreadsheet templates": "Importazione di dati in blocco utilizzando modelli di fogli di calcolo Excel per clienti, uffici, ecc.",
@@ -3479,7 +3481,7 @@
       "Passwords": "Le password",
       "Pay Charge": "Pagare la tassa",
       "Payment Types": "Modalità di pagamento",
-      "Pentaho": "",
+      "Pentaho": "Mifos Reporting Plugin for Pentaho",
       "Periodic Accrual Accounting": "Contabilità periodica per competenza",
       "Pie": "Torta",
       "Please enter the OTP": "Inserisci l'OTP",
