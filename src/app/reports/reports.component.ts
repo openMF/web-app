@@ -143,11 +143,29 @@ export class ReportsComponent implements OnInit {
       /** Transform the filter by converting it to lowercase and removing whitespace. */
       const transformedFilter = filter.trim().toLowerCase();
       /* Seperates filter for All reports page.*/
+
       if (this.filter) {
         return dataStr.indexOf(transformedFilter) !== -1 && data.reportCategory === this.filter;
       } else {
         return dataStr.indexOf(transformedFilter) !== -1;
       }
     };
+  }
+
+  getCategoryKey(category: string): string {
+    if (!category || category === '(NULL)' || category.trim() === '') {
+      return 'labels.text.withoutCategory';
+    }
+
+    if (category.startsWith('labels.text.')) {
+      return category;
+    }
+    return 'labels.text.' + category;
+  }
+
+  cleanTranslatedCategory(translatedText: string): string {
+    if (!translatedText) return '';
+
+    return translatedText.replace(/^labels\.text\./, '').replace(/^label\.text\./, '');
   }
 }
