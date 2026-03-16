@@ -671,7 +671,7 @@ export class LoansService {
     return this.http.post(`/loans/${loanId}/originators/${originatorId}`, emptyBody);
   }
 
-  dettachLoanOriginator(loanId: string, originatorId: string): Observable<any> {
+  detachLoanOriginator(loanId: string, originatorId: string): Observable<any> {
     const emptyBody = {};
     return this.http.delete(`/loans/${loanId}/originators/${originatorId}`, emptyBody);
   }

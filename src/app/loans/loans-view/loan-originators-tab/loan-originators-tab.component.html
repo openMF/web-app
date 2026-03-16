@@ -53,12 +53,12 @@
           <button
             type="button"
             color="warn"
-            title="{{ 'tooltips.Dettach' | translate }}"
+            title="{{ 'tooltips.Delete' | translate }}"
             mat-icon-button
             matTooltip="{{ 'tooltips.Delete' | translate }}"
-            *mifosxHasPermission="'DETTACH_LOAN_ORIGINATOR'"
+            *mifosxHasPermission="'DETACH_LOAN_ORIGINATOR'"
             matTooltipPosition="above"
-            (click)="dettachLoanOriginator(loanOriginator)"
+            (click)="detachLoanOriginator(loanOriginator)"
           >
             <fa-icon icon="trash" size="lg"></fa-icon>
           </button>

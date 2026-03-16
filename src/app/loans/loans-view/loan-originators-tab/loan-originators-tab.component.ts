@@ -83,8 +83,12 @@ export class LoanOriginatorsTabComponent {
     });
   }
 
-  dettachLoanOriginator(loanOriginator: LoanOriginator): void {
-    const dettachCodeDialogRef = this.dialog.open(ConfirmationDialogComponent, {
+  detachLoanOriginator(loanOriginator: LoanOriginator): void {
+    if (!this.loanId || loanOriginator.id == null) {
+      console.error('Invalid loan ID or originator ID');
+      return;
+    }
+    const detachCodeDialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
         heading: this.translateService.instant('labels.heading.Loan Originators'),
         dialogContext:
@@ -95,9 +99,9 @@ export class LoanOriginatorsTabComponent {
           loanOriginator.name
       }
     });
-    dettachCodeDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.confirm) {
-        this.loansService.dettachLoanOriginator(this.loanId, String(loanOriginator.id)).subscribe((response) => {
+    detachCodeDialogRef.afterClosed().subscribe((response?: { confirm?: boolean }) => {
+      if (response?.confirm && this.loanId) {
+        this.loansService.detachLoanOriginator(this.loanId, String(loanOriginator.id)).subscribe((response) => {
           this.reload();
         });
       }
