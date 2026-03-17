@@ -615,7 +615,7 @@
         <div class="flex-100 layout-row">
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Maximum allowed outstanding balance' | translate }}</mat-label>
-            <input matInput type="number" formControlName="maxOutstandingLoanBalance" />
+            <input matInput type="number" formControlName="maxOutstandingLoanBalance" min="0" />
             @if (loansAccountTermsForm.controls.maxOutstandingLoanBalance.hasError('required')) {
               <mat-error>
                 {{ 'labels.inputs.Maximum allowed outstanding balance' | translate }}

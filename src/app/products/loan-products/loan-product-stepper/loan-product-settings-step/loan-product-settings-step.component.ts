@@ -497,8 +497,20 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
         .get('allowVariableInstallments')
         .valueChanges.subscribe((allowVariableInstallments: any) => {
           if (allowVariableInstallments) {
-            this.loanProductSettingsForm.addControl('minimumGap', new UntypedFormControl('', Validators.required));
-            this.loanProductSettingsForm.addControl('maximumGap', new UntypedFormControl('', Validators.required));
+            this.loanProductSettingsForm.addControl(
+              'minimumGap',
+              new UntypedFormControl('', [
+                Validators.required,
+                Validators.min(0)
+              ])
+            );
+            this.loanProductSettingsForm.addControl(
+              'maximumGap',
+              new UntypedFormControl('', [
+                Validators.required,
+                Validators.min(0)
+              ])
+            );
           } else {
             this.loanProductSettingsForm.removeControl('minimumGap');
             this.loanProductSettingsForm.removeControl('maximumGap');
@@ -662,10 +674,19 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
         if (holdGuaranteeFunds) {
           this.loanProductSettingsForm.addControl(
             'mandatoryGuarantee',
-            new UntypedFormControl('', Validators.required)
+            new UntypedFormControl('', [
+              Validators.required,
+              Validators.min(0)
+            ])
           );
-          this.loanProductSettingsForm.addControl('minimumGuaranteeFromOwnFunds', new UntypedFormControl(''));
-          this.loanProductSettingsForm.addControl('minimumGuaranteeFromGuarantor', new UntypedFormControl(''));
+          this.loanProductSettingsForm.addControl(
+            'minimumGuaranteeFromOwnFunds',
+            new UntypedFormControl('', [Validators.min(0)])
+          );
+          this.loanProductSettingsForm.addControl(
+            'minimumGuaranteeFromGuarantor',
+            new UntypedFormControl('', [Validators.min(0)])
+          );
         } else {
           this.loanProductSettingsForm.removeControl('mandatoryGuarantee');
           this.loanProductSettingsForm.removeControl('minimumGuaranteeFromOwnFunds');
@@ -675,8 +696,17 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
 
       this.loanProductSettingsForm.get('multiDisburseLoan').valueChanges.subscribe((multiDisburseLoan) => {
         if (multiDisburseLoan) {
-          this.loanProductSettingsForm.addControl('maxTrancheCount', new UntypedFormControl('', Validators.required));
-          this.loanProductSettingsForm.addControl('outstandingLoanBalance', new UntypedFormControl(''));
+          this.loanProductSettingsForm.addControl(
+            'maxTrancheCount',
+            new UntypedFormControl('', [
+              Validators.required,
+              Validators.min(0)
+            ])
+          );
+          this.loanProductSettingsForm.addControl(
+            'outstandingLoanBalance',
+            new UntypedFormControl('', [Validators.min(0)])
+          );
         } else {
           this.loanProductSettingsForm.removeControl('maxTrancheCount');
           this.loanProductSettingsForm.removeControl('outstandingLoanBalance');

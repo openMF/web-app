@@ -187,6 +187,7 @@
               matTooltip="{{ 'tooltips.Maximum number of disbursements' | translate }}"
               formControlName="maxTrancheCount"
               required
+              min="0"
             />
             @if (loanProductSettingsForm.controls.maxTrancheCount.hasError('required')) {
               <mat-error>
@@ -202,6 +203,7 @@
               matInput
               matTooltip="{{ 'tooltips.Maximum outstanding loan account balance' | translate }}"
               formControlName="outstandingLoanBalance"
+              min="0"
             />
           </mat-form-field>
           <mat-checkbox class="flex-48 margin-v" labelPosition="before" formControlName="disallowExpectedDisbursements">
@@ -470,7 +472,7 @@
           <h4 class="mat-h4 flex-98">{{ 'labels.inputs.Variable Installments' | translate }}</h4>
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Minimum gap between Installments' | translate }}</mat-label>
-            <input type="number" matInput formControlName="minimumGap" required />
+            <input type="number" matInput formControlName="minimumGap" required min="0" />
             <mat-error>
               {{ 'labels.inputs.Minimum gap between Installments' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -478,7 +480,7 @@
           </mat-form-field>
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Maximum gap between Installments' | translate }}</mat-label>
-            <input type="number" matInput formControlName="maximumGap" required />
+            <input type="number" matInput formControlName="maximumGap" required min="0" />
             <mat-error>
               {{ 'labels.inputs.Maximum gap between Installments' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -758,7 +760,7 @@
         <div class="flex-fill layout-row-wrap gap-2percent responsive-column">
           <mat-form-field class="flex-31">
             <mat-label>{{ 'labels.inputs.Mandatory Guarantee(%)' | translate }}</mat-label>
-            <input type="number" matInput formControlName="mandatoryGuarantee" required />
+            <input type="number" matInput formControlName="mandatoryGuarantee" required min="0" />
             <mat-error>
               {{ 'labels.inputs.Mandatory Guarantee' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -766,11 +768,11 @@
           </mat-form-field>
           <mat-form-field class="flex-31">
             <mat-label>{{ 'labels.inputs.Minimum Guarantee from Own Funds(%)' | translate }}</mat-label>
-            <input type="number" matInput formControlName="minimumGuaranteeFromOwnFunds" />
+            <input type="number" matInput formControlName="minimumGuaranteeFromOwnFunds" min="0" />
           </mat-form-field>
           <mat-form-field class="flex-31">
             <mat-label>{{ 'labels.inputs.Minimum Guarantee from Guarantor Funds(%)' | translate }}</mat-label>
-            <input type="number" matInput formControlName="minimumGuaranteeFromGuarantor" />
+            <input type="number" matInput formControlName="minimumGuaranteeFromGuarantor" min="0" />
           </mat-form-field>
         </div>
       }
