@@ -66,7 +66,7 @@
     "exceljs": "^4.4.0",
     "hono": "^4.12.7",
     "html2canvas": "^1.4.1",
-    "jspdf": "^4.2.0",
+    "jspdf": "^4.2.1",
     "jspdf-autotable": "^5.0.2",
     "lightgallery": "^2.9.0",
     "lodash": "4.17.23",
