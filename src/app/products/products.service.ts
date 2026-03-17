@@ -343,6 +343,13 @@ export class ProductsService {
   }
 
   /**
+   * @returns {Observable<any>} Delinquency Bucket Template data
+   */
+  getDelinquencyBucketsTemplate(): Observable<any> {
+    return this.http.get('/delinquency/buckets/template');
+  }
+
+  /**
    * @returns {Observable<any>} Delinquency Bucket data
    */
   getDelinquencyBuckets(): Observable<any> {

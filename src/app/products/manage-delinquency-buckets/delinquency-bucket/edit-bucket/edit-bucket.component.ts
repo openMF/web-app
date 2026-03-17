@@ -7,16 +7,16 @@
  */
 
 import { Component, OnInit, inject } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ProductsService } from 'app/products/products.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
-import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import {
   MatTable,
@@ -33,6 +33,8 @@ import {
 import { MatTooltip } from '@angular/material/tooltip';
 import { FindPipe } from '../../../../pipes/find.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { DelinquencyBucketBaseComponent } from '../../delinquency-base.component';
+import { EnumOptionData } from 'app/shared/models/option-data.model';
 
 @Component({
   selector: 'mifosx-edit-bucket',
@@ -56,11 +58,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     FindPipe
   ]
 })
-export class EditBucketComponent implements OnInit {
+export class EditBucketComponent extends DelinquencyBucketBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   private productsService = inject(ProductsService);
   private router = inject(Router);
-  private route = inject(ActivatedRoute);
   dialog = inject(MatDialog);
   private translateService = inject(TranslateService);
 
@@ -73,7 +74,7 @@ export class EditBucketComponent implements OnInit {
   /** Delinquency Range Options */
   delinquencyRangesData: any;
   /** Delinquency Bucket data */
-  delinquencyBucketData: any;
+  delinquencyBucketData: any | null = null;
   delinquencyRangesIds: any;
   /** Delinquency Bucket Id */
   delinquencyBucketId: any;
@@ -88,18 +89,33 @@ export class EditBucketComponent implements OnInit {
     'actions'
   ];
 
+  frequencyTypeOptions: EnumOptionData[] = [];
+  minimumPaymentOptions: EnumOptionData[] = [];
+
   constructor() {
-    this.route.data.subscribe((data: { delinquencyBucket: any; delinquencyRanges: any }) => {
-      this.delinquencyRangesData = data.delinquencyRanges;
-      this.rangesDataSource = [];
-      this.delinquencyRangesIds = [];
-      this.delinquencyRangesData = this.delinquencyRangesData.sort(
-        (objA: { minimumAgeDays: number }, objB: { minimumAgeDays: number }) =>
-          objA.minimumAgeDays - objB.minimumAgeDays
-      );
+    super();
+    this.route.data.subscribe((data: { delinquencyBucket: any; delinquencyBucketsTemplateData: any }) => {
+      this.delinquencyRangesData = data.delinquencyBucketsTemplateData;
       this.delinquencyBucketData = data.delinquencyBucket;
       this.delinquencyBucketId = data.delinquencyBucket.id;
-      this.rangesDataSource = this.delinquencyBucketData.ranges;
+      this.rangesDataSource = [];
+      this.delinquencyRangesIds = [];
+      if (this.isRegularBucket) {
+        this.delinquencyRangesData = this.delinquencyRangesData.sort(
+          (objA: { minimumAgeDays: number }, objB: { minimumAgeDays: number }) =>
+            objA.minimumAgeDays - objB.minimumAgeDays
+        );
+        this.rangesDataSource = this.delinquencyBucketData.ranges;
+      } else if (this.isWorkingCapitalBucket) {
+        this.delinquencyRangesData = data.delinquencyBucketsTemplateData.rangesOptions;
+        this.delinquencyRangesData = this.delinquencyRangesData.sort(
+          (objA: { minimumAgeDays: number }, objB: { minimumAgeDays: number }) =>
+            objA.minimumAgeDays - objB.minimumAgeDays
+        );
+        this.rangesDataSource = data.delinquencyBucket.ranges;
+        this.frequencyTypeOptions = data.delinquencyBucketsTemplateData.frequencyTypeOptions;
+        this.minimumPaymentOptions = data.delinquencyBucketsTemplateData.minimumPaymentOptions;
+      }
       this.rangesDataSource.forEach((item: any) => {
         this.delinquencyRangesIds.push(item.id);
       });
@@ -114,12 +130,45 @@ export class EditBucketComponent implements OnInit {
    * Creates the Delinquency Bucket form
    */
   setupForm(): void {
-    this.bucketForm = this.formBuilder.group({
-      name: [
-        { value: this.delinquencyBucketData.name, disabled: true },
-        Validators.required
-      ]
-    });
+    if (this.isRegularBucket) {
+      this.bucketForm = this.formBuilder.group({
+        name: [
+          { value: this.delinquencyBucketData.name, disabled: true },
+          ,
+          Validators.required
+        ]
+      });
+    } else if (this.isWorkingCapitalBucket) {
+      this.bucketForm = this.formBuilder.group({
+        name: [
+          { value: this.delinquencyBucketData.name, disabled: true },
+          Validators.required
+        ],
+        frequency: [
+          this.delinquencyBucketData.minimumPaymentPeriodAndRule.frequency,
+          [
+            Validators.pattern('^(0*[1-9][0-9]*)$'),
+            Validators.min(1),
+            Validators.required
+          ]
+        ],
+        frequencyType: [
+          this.delinquencyBucketData.minimumPaymentPeriodAndRule.frequencyType.id,
+          [Validators.required]
+        ],
+        minimumPayment: [
+          this.delinquencyBucketData.minimumPaymentPeriodAndRule.minimumPayment,
+          [
+            Validators.required,
+            Validators.min(0.01)
+          ]
+        ],
+        minimumPaymentType: [
+          this.delinquencyBucketData.minimumPaymentPeriodAndRule.minimumPaymentType.id,
+          [Validators.required]
+        ]
+      });
+    }
   }
 
   /**
@@ -176,24 +225,44 @@ export class EditBucketComponent implements OnInit {
     });
   }
 
-  /**
-   * Submits the Delinquency Bucket form and creates the Delinquency Bucket,
-   * if successful redirects to Delinquency Buckets.
-   */
-  submit() {
+  validForm(): boolean {
+    return this.isRegularBucket ? !this.dataWasChanged : !this.bucketForm.valid;
+  }
+
+  get payloadData() {
+    const bucketType: number = this.isRegularBucket ? 1 : 2;
     const ranges: any = [];
     this.rangesDataSource.forEach((item: any) => {
       ranges.push(item.id);
     });
-    if (ranges.length > 0) {
-      const data = {
+    if (this.isRegularBucket) {
+      return {
+        bucketType: bucketType,
         ...this.bucketForm.value,
         ranges: ranges
       };
-
-      this.productsService.updateDelinquencyBucket(this.delinquencyBucketId, data).subscribe(() => {
-        this.router.navigate(['../'], { relativeTo: this.route });
-      });
+    } else if (this.isWorkingCapitalBucket) {
+      const payload = this.bucketForm.getRawValue();
+      const bucketName = payload['name'];
+      return {
+        bucketType: bucketType,
+        name: bucketName,
+        minimumPaymentPeriodAndRule: payload,
+        ranges: ranges
+      };
     }
+  }
+
+  /**
+   * Submits the Delinquency Bucket form and updates the Delinquency Bucket,
+   * if successful redirects to Delinquency Buckets.
+   */
+  submit() {
+    this.productsService.updateDelinquencyBucket(this.delinquencyBucketId, this.payloadData).subscribe(() => {
+      this.router.navigate(['../'], {
+        queryParams: { bucketType: this.delinquencyBucketType.value },
+        relativeTo: this.route
+      });
+    });
   }
 }

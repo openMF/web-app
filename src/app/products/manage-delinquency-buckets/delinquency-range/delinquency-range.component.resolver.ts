@@ -15,6 +15,7 @@ import { Observable } from 'rxjs';
 
 /** Custom Services */
 import { ProductsService } from '../../products.service';
+import { DELINQUENCY_BUCKET_TYPE } from '../models/delinquency-models';
 
 /**
  * Delinquency Range Component data resolver.
@@ -28,11 +29,14 @@ export class DelinquencyRangeComponentsResolver {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const delinquentcyRangeId = route.paramMap.get('rangeId');
-    if (delinquentcyRangeId === null) {
-      return this.productsService.getDelinquencyRanges();
-    } else {
-      return this.productsService.getDelinquencyRange(delinquentcyRangeId);
+    const bucketType = route.queryParams['bucketType'] || DELINQUENCY_BUCKET_TYPE.REGULAR;
+    if (DELINQUENCY_BUCKET_TYPE.WORKING_CAPITAL === bucketType) {
+      return this.productsService.getDelinquencyBucketsTemplate();
     }
+
+    const delinquencyRangeId = route.paramMap.get('rangeId');
+    return delinquencyRangeId === null
+      ? this.productsService.getDelinquencyRanges()
+      : this.productsService.getDelinquencyRange(delinquencyRangeId);
   }
 }

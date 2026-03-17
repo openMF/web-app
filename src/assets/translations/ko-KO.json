@@ -885,7 +885,8 @@
       "move to next working day": "다음 근무일로 이동",
       "move to next repayment meeting day": "다음 상환 회의일로 이동",
       "move to previous working day": "이전 근무일로 이동",
-      "move to next meeting day": "다음 회의일로 이동"
+      "move to next meeting day": "다음 회의일로 이동",
+      "Working Capital": "운전자본"
     },
     "commons": {
       "50 characters long": "50자(영문 기준)",
@@ -1759,6 +1760,7 @@
       "Delinquency Action": "연체 행동",
       "Delinquency Bucket": "연체 버킷",
       "Delinquency Classification": "연체 분류",
+      "Delinquency Payment Rule": "연체금 납부 규칙",
       "Delinquency Tags": "연체 태그",
       "Delinquent Days": "연체일수",
       "Delivery Method": "배달 방법",
@@ -2194,6 +2196,8 @@
       "Minimum Guarantee from Own Funds(%)": "자기자금의 최소보증(%)",
       "Minimum Opening Balance": "최소 기초 잔액",
       "Minimum Overdraft Required for Interest Calculation": "이자 계산에 필요한 최소 초과인월",
+      "Minimum Payment": "최소 지불액",
+      "Minimum Payment Type": "최소 지불 유형",
       "Minimum Required Balance": "최소 필요한 잔액",
       "Minimum Value": "최소값",
       "Minimum days between disbursal and first repayment date": "지불 날짜와 첫 번째 상환 날짜 사이의 최소 일수",

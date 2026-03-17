@@ -885,7 +885,8 @@
       "move to next working day": "pārvietot uz nākamo darba dienu",
       "move to next repayment meeting day": "pārvietot uz nākamo atmaksas sanāksmes dienu",
       "move to previous working day": "pārvietot uz iepriekšējo darba dienu",
-      "move to next meeting day": "pārvietot uz nākamo sanāksmes dienu"
+      "move to next meeting day": "pārvietot uz nākamo sanāksmes dienu",
+      "Working Capital": "Apgrozāmie līdzekļi"
     },
     "commons": {
       "50 characters long": "50 rakstzīmes garš",
@@ -1758,6 +1759,7 @@
       "Delinquency Action": "Likumpārkāpums",
       "Delinquency Bucket": "Noziedzības spainis",
       "Delinquency Classification": "Noziedzības klasifikācija",
+      "Delinquency Payment Rule": "Kavējuma maksājuma noteikums",
       "Delinquency Tags": "Noziedzības tagi",
       "Delinquent Days": "Noziedznieku dienas",
       "Delivery Method": "Piegāde metode",
@@ -2193,6 +2195,8 @@
       "Minimum Guarantee from Own Funds(%)": "Minimālā garantija no pašu līdzekļiem (%)",
       "Minimum Opening Balance": "Minimālais sākuma atlikums",
       "Minimum Overdraft Required for Interest Calculation": "Nepieciešamais minimālais overdrafts procentu aprēķināšanai",
+      "Minimum Payment": "Minimālais maksājums",
+      "Minimum Payment Type": "Minimālā maksājuma veids",
       "Minimum Required Balance": "Minimālais nepieciešamais līdzsvars",
       "Minimum Value": "Minimālā vērtība",
       "Minimum days between disbursal and first repayment date": "Minimālās dienas starp izmaksu un pirmo atmaksas datumu",

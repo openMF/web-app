@@ -887,7 +887,8 @@
       "move to next working day": "mover al siguiente día laborable",
       "move to next repayment meeting day": "mover al siguiente día de reunión de pago",
       "move to previous working day": "mover al día laborable anterior",
-      "move to next meeting day": "mover al siguiente día de reunión"
+      "move to next meeting day": "mover al siguiente día de reunión",
+      "Working Capital": "Capital de Trabajo"
     },
     "commons": {
       "50 characters long": "50 caracteres de largo",
@@ -1760,6 +1761,7 @@
       "Delinquency Action": "Acción de morosidad",
       "Delinquency Bucket": "Clasificación de morosidad",
       "Delinquency Classification": "Clasificación de morosidad",
+      "Delinquency Payment Rule": "Regla de pago por mora",
       "Delinquency Tags": "Clasificación de morosidad",
       "Delinquent Days": "Días morosos",
       "Delivery Method": "Método de entrega",
@@ -2196,6 +2198,8 @@
       "Minimum Guarantee from Own Funds(%)": "Garantía Mínima de Fondos Propios(%)",
       "Minimum Opening Balance": "Saldo mínimo de apertura",
       "Minimum Overdraft Required for Interest Calculation": "Sobregiro mínimo requerido para el cálculo de intereses",
+      "Minimum Payment": "Pago mínimo",
+      "Minimum Payment Type": "Tipo de pago mínimo",
       "Minimum Required Balance": "Balance mínimo requerido",
       "Minimum Value": "Valor mínimo",
       "Minimum days between disbursal and first repayment date": "Días mínimos entre el desembolso y la primera fecha de amortización",

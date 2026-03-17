@@ -7,7 +7,13 @@
 -->
 
 <div class="container m-b-20 layout-row layout-lt-md-column align-end gap-2percent">
-  <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_DELINQUENCY_BUCKET'">
+  <button
+    mat-raised-button
+    color="primary"
+    [routerLink]="['edit']"
+    [queryParams]="{ bucketType: delinquencyBucketType.value }"
+    *mifosxHasPermission="'UPDATE_DELINQUENCY_BUCKET'"
+  >
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Edit' | translate }}
   </button>
@@ -27,14 +33,68 @@
     <mat-card-content>
       <div class="layout-row-wrap">
         <div class="flex-100 layout-row m-b-10">
-          <div class="flex-30 mat-body-strong">
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Type' | translate }}
+          </div>
+
+          <div class="flex-50">
+            {{ bucketTypeLabel(delinquencyBucketData.bucketType) | translateKey: 'catalogs' }}
+          </div>
+        </div>
+        <div class="flex-100 layout-row m-b-10">
+          <div class="flex-50 mat-body-strong">
             {{ 'labels.inputs.Name' | translate }}
           </div>
 
-          <div class="flex-70">
+          <div class="flex-50">
             {{ delinquencyBucketData.name }}
           </div>
         </div>
+
+        @if (delinquencyBucketData.minimumPaymentPeriodAndRule) {
+          <div class="flex-100 layout-row m-b-10">
+            <div class="flex-50 mat-body-strong">
+              {{ 'labels.inputs.Frequency' | translate }}
+            </div>
+
+            <div class="flex-50">
+              {{ delinquencyBucketData.minimumPaymentPeriodAndRule.frequency | formatNumber }}
+            </div>
+          </div>
+          <div class="flex-100 layout-row m-b-10">
+            <div class="flex-50 mat-body-strong">
+              {{ 'labels.inputs.Frequency Type' | translate }}
+            </div>
+
+            <div class="flex-50">
+              {{
+                getCatalogLabel(delinquencyBucketData.minimumPaymentPeriodAndRule.frequencyType.code)
+                  | translateKey: 'catalogs'
+              }}
+            </div>
+          </div>
+          <div class="flex-100 layout-row m-b-10">
+            <div class="flex-50 mat-body-strong">
+              {{ 'labels.inputs.Minimum Payment' | translate }}
+            </div>
+
+            <div class="flex-50">
+              {{ delinquencyBucketData.minimumPaymentPeriodAndRule.minimumPayment | formatNumber }}
+            </div>
+          </div>
+          <div class="flex-100 layout-row m-b-10">
+            <div class="flex-50 mat-body-strong">
+              {{ 'labels.inputs.Minimum Payment Type' | translate }}
+            </div>
+
+            <div class="flex-50">
+              {{
+                getCatalogLabel(delinquencyBucketData.minimumPaymentPeriodAndRule.minimumPaymentType.code)
+                  | translateKey: 'catalogs'
+              }}
+            </div>
+          </div>
+        }
 
         <div class="flex-60 mat-body-strong">
           {{ 'labels.inputs.Classification' | translate }}

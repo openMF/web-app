@@ -883,7 +883,8 @@
       "move to next working day": "अर्को काम गर्ने दिनमा सार्नुहोस्",
       "move to next repayment meeting day": "अर्को भुक्तानी बैठक दिनमा सार्नुहोस्",
       "move to previous working day": "अघिल्लो काम गर्ने दिनमा सार्नुहोस्",
-      "move to next meeting day": "अर्को बैठक दिनमा सार्नुहोस्"
+      "move to next meeting day": "अर्को बैठक दिनमा सार्नुहोस्",
+      "Working Capital": "कार्यशील पूँजी"
     },
     "commons": {
       "50 characters long": "५० वर्ण लामो",
@@ -1755,6 +1756,7 @@
       "Delinquency Action": "अपराध कार्य",
       "Delinquency Bucket": "अपराध बाल्टी",
       "Delinquency Classification": "अपराध वर्गीकरण",
+      "Delinquency Payment Rule": "अपराध भुक्तानी नियम",
       "Delinquency Tags": "अपराध ट्यागहरू",
       "Delinquent Days": "अपराधी दिनहरू",
       "Delivery Method": "वितरण विधि",
@@ -2190,6 +2192,8 @@
       "Minimum Guarantee from Own Funds(%)": "आफ्नै कोषबाट न्यूनतम ग्यारेन्टी (%)",
       "Minimum Opening Balance": "न्यूनतम ओपनिङ ब्यालेन्स",
       "Minimum Overdraft Required for Interest Calculation": "ब्याज गणनाको लागि न्यूनतम ओभरड्राफ्ट आवश्यक छ",
+      "Minimum Payment": "न्यूनतम भुक्तानी",
+      "Minimum Payment Type": "न्यूनतम भुक्तानी प्रकार",
       "Minimum Required Balance": "न्यूनतम आवश्यक ब्यालेन्स",
       "Minimum Value": "न्यूनतम मान",
       "Minimum days between disbursal and first repayment date": "भुक्तानी र पहिलो भुक्तानी मिति बीचको न्यूनतम दिन",

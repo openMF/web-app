@@ -884,7 +884,8 @@
       "move to next working day": "spostare al giorno lavorativo successivo",
       "move to next repayment meeting day": "spostare al giorno di riunione di rimborso successivo",
       "move to previous working day": "spostare al giorno lavorativo precedente",
-      "move to next meeting day": "spostare al giorno di riunione successivo"
+      "move to next meeting day": "spostare al giorno di riunione successivo",
+      "Working Capital": "Capitale circolante"
     },
     "commons": {
       "50 characters long": "50 caratteri di lunghezza",
@@ -1757,6 +1758,7 @@
       "Delinquency Action": "Azione di delinquenza",
       "Delinquency Bucket": "Il secchio della delinquenza",
       "Delinquency Classification": "Classificazione della delinquenza",
+      "Delinquency Payment Rule": "Regola di pagamento in ritardo",
       "Delinquency Tags": "Tag di delinquenza",
       "Delinquent Days": "Giorni delinquenti",
       "Delivery Method": "metodo di consegna",
@@ -2192,6 +2194,8 @@
       "Minimum Guarantee from Own Funds(%)": "Garanzia minima dai fondi propri(%)",
       "Minimum Opening Balance": "Saldo di apertura minimo",
       "Minimum Overdraft Required for Interest Calculation": "Scoperto minimo richiesto per il calcolo degli interessi",
+      "Minimum Payment": "Pagamento minimo",
+      "Minimum Payment Type": "Tipo di pagamento minimo",
       "Minimum Required Balance": "Saldo minimo richiesto",
       "Minimum Value": "Valore minimo",
       "Minimum days between disbursal and first repayment date": "Giorni minimi tra la data di erogazione e la data del primo rimborso",

@@ -22,3 +22,9 @@ export interface StringEnumOptionData {
   value: string;
   code: string;
 }
+
+export interface EnumOptionData {
+  id: number;
+  name: string;
+  code: string;
+}

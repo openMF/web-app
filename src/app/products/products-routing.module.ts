@@ -548,7 +548,7 @@ const routes: Routes = [
                   component: CreateBucketComponent,
                   data: { title: 'Create Delinquency Bucket', breadcrumb: 'Create' },
                   resolve: {
-                    delinquencyRanges: DelinquencyRangeComponentsResolver
+                    delinquencyBucketsTemplateData: DelinquencyRangeComponentsResolver
                   }
                 },
                 {
@@ -571,7 +571,7 @@ const routes: Routes = [
                       component: EditBucketComponent,
                       resolve: {
                         delinquencyBucket: DelinquencyBucketComponentsResolver,
-                        delinquencyRanges: DelinquencyRangeComponentsResolver
+                        delinquencyBucketsTemplateData: DelinquencyRangeComponentsResolver
                       }
                     }
                   ]
