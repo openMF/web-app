@@ -4,6 +4,20 @@
   "Remember me": "Remember me",
   "error.resource.notImplemented.type": "Not Implemented Error",
   "error.resource.notImplemented.message": "Not implemented functionality!",
+  "error.auth.type": "Authentication Error",
+  "error.auth.message": "Invalid User Details. Please try again!",
+  "error.token.invalid.type": "Invalid Token",
+  "error.token.invalid.message": "Invalid Token. Please try again!",
+  "error.bad.request.type": "Bad Request",
+  "error.bad.request.message": "Invalid parameters were passed in the request!",
+  "error.unauthorized.type": "Unauthorized Request",
+  "error.unauthorized.message": "You are not authorized for this request!",
+  "error.resource.not.found": "Resource Not Found",
+  "error.resource.not.found.message": "Resource does not exist!",
+  "error.server.internal.type": "Internal Server Error",
+  "error.server.internal.message": "Internal Server Error. Please try again later.",
+  "error.unknown.type": "Unknown Error",
+  "error.unknown.message": "Unknown Error. Please try again later.",
   "errors": {
     "accountingRule": {
       "duplicateName": "Sorry, but an Accounting Rule with this Name exists already."

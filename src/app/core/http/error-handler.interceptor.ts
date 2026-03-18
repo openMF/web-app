@@ -20,13 +20,14 @@ import { environment } from '../../../environments/environment';
 /** Custom Services */
 import { Logger } from '../logger/logger.service';
 import { AlertService } from '../alert/alert.service';
-import { TranslateService } from '@ngx-translate/core'; // Added import for TranslateService
+import { TranslateService } from '@ngx-translate/core';
 
 /** Initialize Logger */
 const log = new Logger('ErrorHandlerInterceptor');
 
 /**
  * Http Request interceptor to add a default error handler to requests.
+ * Supports localisation of error messages using Fineract's userMessageGlobalisationCode.
  */
 @Injectable()
 export class ErrorHandlerInterceptor implements HttpInterceptor {
@@ -42,13 +43,32 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 
   /**
    * Error handler.
+   * Uses userMessageGlobalisationCode from Fineract error response to localise error messages.
    */
   private handleError(response: HttpErrorResponse, request: HttpRequest<any>): Observable<HttpEvent<any>> {
     const status = response.status;
-    let errorMessage = response.error.developerMessage || response.message;
-    if (response.error.errors) {
+    let errorMessage = response.error?.developerMessage || response.message;
+    let globalisationCode: string | null = null;
+
+    // Extract globalisation code and message from Fineract error response
+    if (response.error?.errors) {
       if (response.error.errors[0]) {
+        globalisationCode = response.error.errors[0].userMessageGlobalisationCode || null;
         errorMessage = response.error.errors[0].defaultUserMessage || response.error.errors[0].developerMessage;
+      }
+    }
+
+    // Also check top-level userMessageGlobalisationCode
+    if (response.error?.userMessageGlobalisationCode) {
+      globalisationCode = response.error.userMessageGlobalisationCode;
+    }
+
+    // If we have a globalisation code, try to translate it
+    if (globalisationCode) {
+      const translated = this.translate.instant(globalisationCode);
+      // Only use translation if the key actually exists (translate returns the key itself if not found)
+      if (translated !== globalisationCode) {
+        errorMessage = translated;
       }
     }
 
@@ -59,35 +79,38 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     }
 
     if (status === 401 || (environment.oauth.enabled && status === 400)) {
-      this.alertService.alert({ type: 'Authentication Error', message: 'Invalid User Details. Please try again!' });
+      this.alertService.alert({
+        type: this.translate.instant('error.auth.type'),
+        message: this.translate.instant('error.auth.message')
+      });
     } else if (status === 403 && errorMessage === 'The provided one time token is invalid') {
-      this.alertService.alert({ type: 'Invalid Token', message: 'Invalid Token. Please try again!' });
+      this.alertService.alert({
+        type: this.translate.instant('error.token.invalid.type'),
+        message: this.translate.instant('error.token.invalid.message')
+      });
     } else if (status === 400) {
       this.alertService.alert({
-        type: 'Bad Request',
-        message: errorMessage || 'Invalid parameters were passed in the request!'
+        type: this.translate.instant('error.bad.request.type'),
+        message: errorMessage || this.translate.instant('error.bad.request.message')
       });
     } else if (status === 403) {
       this.alertService.alert({
-        type: 'Unauthorized Request',
-        message: errorMessage || 'You are not authorized for this request!'
+        type: this.translate.instant('error.unauthorized.type'),
+        message: errorMessage || this.translate.instant('error.unauthorized.message')
       });
     } else if (status === 404) {
-      // Check if this is an image request that should be silently handled (client profile image)
       if (isClientImage404) {
-        // Don't show alerts for missing client images
-        // This is an expected condition, not an error
         return EMPTY;
       } else {
         this.alertService.alert({
           type: this.translate.instant('error.resource.not.found'),
-          message: errorMessage || 'Resource does not exist!'
+          message: errorMessage || this.translate.instant('error.resource.not.found.message')
         });
       }
     } else if (status === 500) {
       this.alertService.alert({
-        type: 'Internal Server Error',
-        message: 'Internal Server Error. Please try again later.'
+        type: this.translate.instant('error.server.internal.type'),
+        message: this.translate.instant('error.server.internal.message')
       });
     } else if (status === 501) {
       this.alertService.alert({
@@ -95,7 +118,10 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
         message: this.translate.instant('error.resource.notImplemented.message')
       });
     } else {
-      this.alertService.alert({ type: 'Unknown Error', message: 'Unknown Error. Please try again later.' });
+      this.alertService.alert({
+        type: this.translate.instant('error.unknown.type'),
+        message: this.translate.instant('error.unknown.message')
+      });
     }
 
     throw response;
