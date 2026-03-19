@@ -4,6 +4,20 @@
   "Remember me": "Erinnere dich an mich",
   "error.resource.notImplemented.type": "Nicht implementierter Fehler",
   "error.resource.notImplemented.message": "Nicht implementierte Funktion!",
+  "error.auth.type": "Authentifizierungsfehler",
+  "error.auth.message": "Ungültige Benutzerdetails. Bitte versuchen Sie es erneut!",
+  "error.token.invalid.type": "Ungültiger Token",
+  "error.token.invalid.message": "Ungültiger Token. Bitte versuchen Sie es erneut!",
+  "error.bad.request.type": "Ungültige Anfrage",
+  "error.bad.request.message": "Ungültige Parameter wurden in der Anfrage übergeben!",
+  "error.unauthorized.type": "Unbefugte Anfrage",
+  "error.unauthorized.message": "Sie sind nicht berechtigt für diese Anfrage!",
+  "error.resource.not.found.type": "Ressource nicht gefunden",
+  "error.resource.not.found.message": "Die Ressource existiert nicht!",
+  "error.server.internal.type": "Interner Serverfehler",
+  "error.server.internal.message": "Interner Serverfehler. Bitte versuchen Sie es später erneut.",
+  "error.unknown.type": "Unbekannter Fehler",
+  "error.unknown.message": "Unbekannter Fehler. Bitte versuchen Sie es später erneut.",
   "errors": {
     "accountingRule": {
       "duplicateName": "Entschuldigung, aber eine Buchungsregel mit diesem Namen existiert bereits."

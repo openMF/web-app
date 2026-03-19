@@ -11,7 +11,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 
 /** rxjs Imports */
-import { EMPTY, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 /** Environment Configuration */
@@ -63,9 +63,9 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
       globalisationCode = response.error.userMessageGlobalisationCode;
     }
 
-    // If we have a globalisation code, try to translate it
+    // If we have a globalisation code, try to translate it with variable substitution
     if (globalisationCode) {
-      const translated = this.translate.instant(globalisationCode);
+      const translated = this.translate.instant(globalisationCode, response.error?.errors?.[0] || response.error || {});
       // Only use translation if the key actually exists (translate returns the key itself if not found)
       if (translated !== globalisationCode) {
         errorMessage = translated;
@@ -78,15 +78,22 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
       log.error(`Request Error: ${errorMessage}`);
     }
 
-    if (status === 401 || (environment.oauth.enabled && status === 400)) {
-      this.alertService.alert({
-        type: this.translate.instant('error.auth.type'),
-        message: this.translate.instant('error.auth.message')
-      });
-    } else if (status === 403 && errorMessage === 'The provided one time token is invalid') {
+    // Check specific 403 error (invalid token) BEFORE generic 403 (higher priority)
+    if (status === 403 && globalisationCode === 'error.token.invalid') {
       this.alertService.alert({
         type: this.translate.instant('error.token.invalid.type'),
         message: this.translate.instant('error.token.invalid.message')
+      });
+    } else if (status === 401) {
+      // Allow Fineract translations for 401 errors
+      this.alertService.alert({
+        type: this.translate.instant('error.auth.type'),
+        message: errorMessage || this.translate.instant('error.auth.message')
+      });
+    } else if (environment.oauth.enabled && status === 400) {
+      this.alertService.alert({
+        type: this.translate.instant('error.auth.type'),
+        message: this.translate.instant('error.auth.message')
       });
     } else if (status === 400) {
       this.alertService.alert({
@@ -100,22 +107,28 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
       });
     } else if (status === 404) {
       if (isClientImage404) {
-        return EMPTY;
+        // Return observable of null for missing client images so imaging service can handle gracefully
+        return new Observable((observer) => {
+          observer.next(null);
+          observer.complete();
+        });
       } else {
         this.alertService.alert({
-          type: this.translate.instant('error.resource.not.found'),
+          type: this.translate.instant('error.resource.not.found.type'),
           message: errorMessage || this.translate.instant('error.resource.not.found.message')
         });
       }
     } else if (status === 500) {
+      // Allow Fineract translations for 500 errors
       this.alertService.alert({
         type: this.translate.instant('error.server.internal.type'),
-        message: this.translate.instant('error.server.internal.message')
+        message: errorMessage || this.translate.instant('error.server.internal.message')
       });
     } else if (status === 501) {
+      // Allow Fineract translations for 501 errors
       this.alertService.alert({
         type: this.translate.instant('error.resource.notImplemented.type'),
-        message: this.translate.instant('error.resource.notImplemented.message')
+        message: errorMessage || this.translate.instant('error.resource.notImplemented.message')
       });
     } else {
       this.alertService.alert({

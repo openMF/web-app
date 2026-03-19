@@ -16,7 +16,7 @@
     "error.bad.request.message": "Se enviaron parámetros no válidos en la solicitud.",
     "error.unauthorized.type": "Solicitud no autorizada",
     "error.unauthorized.message": "No está autorizado para esta solicitud.",
-    "error.resource.not.found": "Recurso no encontrado",
+    "error.resource.not.found.type": "Recurso no encontrado",
     "error.resource.not.found.message": "¡El recurso no existe!",
     "error.server.internal.type": "Error interno del servidor",
     "error.server.internal.message": "Error interno del servidor. Por favor, inténtelo más tarde.",

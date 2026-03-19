@@ -12,7 +12,7 @@
   "error.bad.request.message": "Invalid parameters were passed in the request!",
   "error.unauthorized.type": "Unauthorized Request",
   "error.unauthorized.message": "You are not authorized for this request!",
-  "error.resource.not.found": "Resource Not Found",
+  "error.resource.not.found.type": "Resource Not Found",
   "error.resource.not.found.message": "Resource does not exist!",
   "error.server.internal.type": "Internal Server Error",
   "error.server.internal.message": "Internal Server Error. Please try again later.",
