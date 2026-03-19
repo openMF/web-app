@@ -885,7 +885,8 @@
       "move to next working day": "mover para o próximo dia útil",
       "move to next repayment meeting day": "mover para o próximo dia de reunião de pagamento",
       "move to previous working day": "mover para o dia útil anterior",
-      "move to next meeting day": "mover para o próximo dia de reunião"
+      "move to next meeting day": "mover para o próximo dia de reunião",
+      "Working Capital": "Capital de giro"
     },
     "commons": {
       "50 characters long": "50 caracteres",
@@ -1757,6 +1758,7 @@
       "Delinquency Action": "Ação de inadimplência",
       "Delinquency Bucket": "Balde de inadimplência",
       "Delinquency Classification": "Classificação de Inadimplência",
+      "Delinquency Payment Rule": "Regra de pagamento de inadimplência",
       "Delinquency Tags": "Tags de inadimplência",
       "Delinquent Days": "Dias de Inadimplência",
       "Delivery Method": "Método de Entrega",
@@ -2192,6 +2194,8 @@
       "Minimum Guarantee from Own Funds(%)": "Garantia Mínima de Fundos Próprios(%)",
       "Minimum Opening Balance": "Saldo Mínimo de Abertura",
       "Minimum Overdraft Required for Interest Calculation": "Cheque especial mínimo necessário para cálculo de juros",
+      "Minimum Payment": "Pagamento mínimo",
+      "Minimum Payment Type": "Tipo de pagamento mínimo",
       "Minimum Required Balance": "Equilíbrio mínimo necessário",
       "Minimum Value": "Valor Mínimo",
       "Minimum days between disbursal and first repayment date": "Dias mínimos entre o desembolso e a data do primeiro reembolso",

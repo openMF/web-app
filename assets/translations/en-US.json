@@ -888,7 +888,8 @@
       "move to next working day": "move to next working day",
       "move to next repayment meeting day": "move to next repayment meeting day",
       "move to previous working day": "move to previous working day",
-      "move to next meeting day": "move to next meeting day"
+      "move to next meeting day": "move to next meeting day",
+      "Working Capital": "Working Capital"
     },
     "commons": {
       "50 characters long": "50 characters long",
@@ -1765,6 +1766,7 @@
       "Delinquency Action": "Delinquency Action",
       "Delinquency Bucket": "Delinquency Bucket",
       "Delinquency Classification": "Delinquency Classification",
+      "Delinquency Payment Rule": "Delinquency Payment Rule",
       "Delinquency Tags": "Delinquency Tags",
       "Delinquent Days": "Delinquent Days",
       "Delivery Method": "Delivery Method",
@@ -2211,6 +2213,8 @@
       "Minimum Guarantee from Own Funds(%)": "Minimum Guarantee from Own Funds(%)",
       "Minimum Opening Balance": "Minimum Opening Balance",
       "Minimum Overdraft Required for Interest Calculation": "Minimum Overdraft Required for Interest Calculation",
+      "Minimum Payment": "Minimum Payment",
+      "Minimum Payment Type": "Minimum Payment Type",
       "Minimum Required Balance": "Minimum Required Balance",
       "Minimum Value": "Minimum Value",
       "Minimum days between disbursal and first repayment date": "Minimum days between disbursal and first repayment date",

@@ -883,7 +883,8 @@
       "move to next working day": "hamisha kwa siku ya kazi ijayo",
       "move to next repayment meeting day": "hamisha kwa siku ya mkutano wa malipo ijayo",
       "move to previous working day": "hamisha kwa siku ya kazi iliyotangulia",
-      "move to next meeting day": "hamisha kwa siku ya mkutano ijayo"
+      "move to next meeting day": "hamisha kwa siku ya mkutano ijayo",
+      "Working Capital": "Mtaji wa Kufanya Kazi"
     },
     "commons": {
       "50 characters long": "Urefu wa herufi 50",
@@ -1754,6 +1755,7 @@
       "Delinquency Action": "Kitendo cha Delinquency",
       "Delinquency Bucket": "Ndoo ya Uhalifu",
       "Delinquency Classification": "Uainishaji wa Uhalifu",
+      "Delinquency Payment Rule": "Sheria ya Malipo ya Uhalifu",
       "Delinquency Tags": "Lebo za Uhalifu",
       "Delinquent Days": "Siku za Uhalifu",
       "Delivery Method": "Njia ya Utoaji",
@@ -2189,6 +2191,8 @@
       "Minimum Guarantee from Own Funds(%)": "Kiwango cha Chini cha Dhamana kutoka kwa Fedha Mwenyewe(%)",
       "Minimum Opening Balance": "Salio la chini la Ufunguzi",
       "Minimum Overdraft Required for Interest Calculation": "Kiwango cha Chini cha Overdrafti Inahitajika kwa Kukokotoa Riba",
+      "Minimum Payment": "Malipo ya Chini Zaidi",
+      "Minimum Payment Type": "Aina ya Malipo ya Chini Zaidi",
       "Minimum Required Balance": "Mizani ya chini inayohitajika",
       "Minimum Value": "Thamani ya chini",
       "Minimum days between disbursal and first repayment date": "Siku chache kati ya malipo na tarehe ya malipo ya kwanza",

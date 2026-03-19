@@ -884,7 +884,8 @@
       "move to next working day": "přesunout na další pracovní den",
       "move to next repayment meeting day": "přesunout na další den schůzky o splácení",
       "move to previous working day": "přesunout na předchozí pracovní den",
-      "move to next meeting day": "přesunout na další den schůzky"
+      "move to next meeting day": "přesunout na další den schůzky",
+      "Working Capital": "Provozní kapitál"
     },
     "commons": {
       "50 characters long": "50 znaků dlouhé",
@@ -1755,6 +1756,7 @@
       "Delinquency Action": "Akce delikvence",
       "Delinquency Bucket": "Delikvence Bucket",
       "Delinquency Classification": "Klasifikace delikvence",
+      "Delinquency Payment Rule": "Pravidlo pro platbu v prodlení",
       "Delinquency Tags": "Štítky delikvence",
       "Delinquent Days": "Delikventní dny",
       "Delivery Method": "způsob doručení",
@@ -2191,6 +2193,8 @@
       "Minimum Guarantee from Own Funds(%)": "Minimální záruka z vlastních prostředků (%)",
       "Minimum Opening Balance": "Minimální počáteční zůstatek",
       "Minimum Overdraft Required for Interest Calculation": "Minimální přečerpání požadované pro výpočet úroku",
+      "Minimum Payment": "Minimální platba",
+      "Minimum Payment Type": "Typ minimální platby",
       "Minimum Required Balance": "Minimální požadovaný zůstatek",
       "Minimum Value": "Minimální hodnota",
       "Minimum days between disbursal and first repayment date": "Minimální dny mezi výplatou a datem první splátky",

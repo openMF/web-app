@@ -883,7 +883,8 @@
       "move to next working day": "perkelti į kitą darbo dieną",
       "move to next repayment meeting day": "perkelti į kitą grąžinimo susitikimo dieną",
       "move to previous working day": "perkelti į ankstesnę darbo dieną",
-      "move to next meeting day": "perkelti į kitą susitikimo dieną"
+      "move to next meeting day": "perkelti į kitą susitikimo dieną",
+      "Working Capital": "Apyvartinis kapitalas"
     },
     "commons": {
       "50 characters long": "50 simbolių ilgio",
@@ -1756,6 +1757,7 @@
       "Delinquency Action": "Deliktingumo veiksmas",
       "Delinquency Bucket": "Nusikaltimų kibiras",
       "Delinquency Classification": "Nusikaltimų klasifikacija",
+      "Delinquency Payment Rule": "Mokėjimo už delspinigius taisyklė",
       "Delinquency Tags": "Nusikaltimų žymos",
       "Delinquent Days": "Nusikaltėlių dienos",
       "Delivery Method": "Pristatymo būdas",
@@ -2191,6 +2193,8 @@
       "Minimum Guarantee from Own Funds(%)": "Minimali garantija iš nuosavų lėšų (%)",
       "Minimum Opening Balance": "Minimalus pradinis likutis",
       "Minimum Overdraft Required for Interest Calculation": "Palūkanoms apskaičiuoti reikalingas minimalus overdraftas",
+      "Minimum Payment": "Minimali įmoka",
+      "Minimum Payment Type": "Minimalus mokėjimo tipas",
       "Minimum Required Balance": "Minimalus reikiamas balansas",
       "Minimum Value": "Minimali vertė",
       "Minimum days between disbursal and first repayment date": "Minimalios dienos nuo išmokėjimo iki pirmojo grąžinimo datos",
