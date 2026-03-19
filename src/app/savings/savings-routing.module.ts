@@ -60,7 +60,7 @@ const routes: Routes = [
     children: [
       {
         path: 'create',
-        data: { title: 'Create Savings Account', breadcrumb: 'Create Savings Account' },
+        data: { title: 'labels.createSavingsAccount', breadcrumb: 'labels.createSavingsAccount' },
         component: CreateSavingsAccountComponent,
         resolve: {
           savingsAccountTemplate: SavingsAccountTemplateResolver
