@@ -17,6 +17,7 @@ Mifos® X Web App is a modern single-page application (SPA) built on top of the 
 - [Slack Channel](https://app.slack.com/client/T0F5GHE8Y/CJJGJLN10)
 - [Jira Board of Mifos](https://mifosforge.jira.com/jira/your-work)
 - [Jira Board of Mifos Web App Project](https://mifosforge.jira.com/jira/software/c/projects/WEB/boards/62)
+- [AI Assistance Test Results](./AI.md)
 
 ## Installation Guide
 
