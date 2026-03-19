@@ -7,8 +7,8 @@
 -->
 
 <div class="container">
-  <mat-card class="card layout-column gap-40px">
-    <div class="layout-row search">
+  <div class="dashboard-layout">
+    <mat-card class="search-card">
       <mat-card-content>
         <mat-form-field>
           <mat-label>{{ 'labels.placeholders.Search Activity' | translate }}</mat-label>
@@ -23,22 +23,8 @@
           }
         </mat-autocomplete>
       </mat-card-content>
-    </div>
+    </mat-card>
 
-    <div class="layout-row top-card">
-      <div class="trends-bar">
-        <mifosx-client-trends-bar></mifosx-client-trends-bar>
-      </div>
-    </div>
-
-    <div class="layout-row bottom-card">
-      <div class="amount-disbursed">
-        <mifosx-amount-disbursed-pie></mifosx-amount-disbursed-pie>
-      </div>
-
-      <div class="amount-collected">
-        <mifosx-amount-collected-pie></mifosx-amount-collected-pie>
-      </div>
-    </div>
-  </mat-card>
+    <mifosx-analytics-dashboard [dashboard]="dashboardDefinition" [offices]="offices"></mifosx-analytics-dashboard>
+  </div>
 </div>

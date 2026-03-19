@@ -1,0 +1,73 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.dashboard-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.filter-card {
+  padding: 16px;
+}
+
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+}
+
+.office-field {
+  flex: 1 1 240px;
+  min-width: 240px;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* stylelint-disable-line unit-allowed-list */
+  gap: 16px;
+}
+
+.chart-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr)); /* stylelint-disable-line unit-allowed-list */
+  gap: 16px;
+}
+
+.widget-wide {
+  grid-column: span 12;
+}
+
+.widget-half {
+  grid-column: span 6;
+}
+
+.empty-dashboard {
+  padding: 24px;
+  text-align: center;
+}
+
+@media screen and (width <= 1024px) {
+  .widget-half,
+  .widget-wide {
+    grid-column: span 12;
+  }
+}
+
+@media screen and (width <= 768px) {
+  .filter-row {
+    align-items: stretch;
+  }
+
+  .office-field,
+  .filter-row button,
+  .filter-row mat-button-toggle-group {
+    width: 100%;
+  }
+}
