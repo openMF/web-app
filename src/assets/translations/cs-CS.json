@@ -4,6 +4,20 @@
   "Remember me": "Zapamatuj si mě",
   "error.resource.notImplemented.type": "Nenaimplementovaná chyba",
   "error.resource.notImplemented.message": "Funkce není implementována!",
+  "error.auth.type": "Chyba ověřování",
+  "error.auth.message": "Neplatné údaje o uživateli. Zkuste prosím znovu!",
+  "error.token.invalid.type": "Neplatný token",
+  "error.token.invalid.message": "Neplatný token. Zkuste prosím znovu!",
+  "error.bad.request.type": "Špatný požadavek",
+  "error.bad.request.message": "V požadavku byly předány neplatné parametry!",
+  "error.unauthorized.type": "Neautorizovaný požadavek",
+  "error.unauthorized.message": "Nemáte oprávnění pro tento požadavek!",
+  "error.resource.not.found.type": "Zdroj nenalezen",
+  "error.resource.not.found.message": "Zdroj neexistuje!",
+  "error.server.internal.type": "Interní chyba serveru",
+  "error.server.internal.message": "Interní chyba serveru. Zkuste prosím později.",
+  "error.unknown.type": "Neznámá chyba",
+  "error.unknown.message": "Neznámá chyba. Zkuste prosím později.",
   "errors": {
     "accountingRule": {
       "duplicateName": "Omlouváme se, ale účetní pravidlo s tímto názvem již existuje."
