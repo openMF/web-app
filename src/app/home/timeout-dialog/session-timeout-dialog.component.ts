@@ -19,6 +19,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-session-timeout-dialog',
+  standalone: true,
   templateUrl: './session-timeout-dialog.component.html',
   styleUrls: ['./session-timeout-dialog.component.scss'],
   imports: [
