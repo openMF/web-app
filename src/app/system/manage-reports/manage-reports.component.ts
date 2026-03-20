@@ -118,7 +118,14 @@ export class ManageReportsComponent implements OnInit, AfterViewInit {
    * Initializes the data source, paginator and sorter for reports table.
    */
   setReports() {
-    this.dataSource = new MatTableDataSource(this.reportsData);
+    // Transform data to replace "(NULL)" strings with null
+    const transformedData = this.reportsData.map((report: any) => ({
+      ...report,
+      reportCategory: report.reportCategory === '(NULL)' ? null : report.reportCategory,
+      description: report.description === '(NULL)' ? null : report.description
+    }));
+
+    this.dataSource = new MatTableDataSource(transformedData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
