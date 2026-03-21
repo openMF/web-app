@@ -3848,7 +3848,11 @@
         "WAIVEINTERESTPORTION": "이자 부분 포기",
         "WITHDRAW": "출금",
         "WITHDRAWAL": "출금",
-        "WRITEOFF": "상각"
+        "WRITEOFF": "상각",
+        "ALL": "전체",
+        "BYPASS": "우회",
+        "CHECKER": "검사자",
+        "REPORTING": "보고"
       },
       "entities": {
         "ACCOUNTINGRULE": "회계규칙",
@@ -3956,7 +3960,10 @@
         "TELLER": "창구직원",
         "TEMPLATE": "템플릿",
         "USER": "사용자",
-        "WORKINGDAYS": "근무일"
+        "WORKINGDAYS": "근무일",
+        "FUNCTIONS": "기능",
+        "TWOFACTOR": "이중인증",
+        "SUPER_USER": "슈퍼유저"
       }
     },
     "auditTrail": {
@@ -4375,5 +4382,7 @@
     "YE": "예멘",
     "ZM": "잠비아",
     "ZW": "짐바브웨"
-  }
+  },
+  "Deactivate Role": "역할 비활성화",
+  "Delete Role": "역할 삭제"
 }

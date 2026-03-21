@@ -3982,7 +3982,11 @@
         "WAIVEINTERESTPORTION": "Waive Interest Portion",
         "WITHDRAW": "Withdraw",
         "WITHDRAWAL": "Withdrawal",
-        "WRITEOFF": "Write-Off"
+        "WRITEOFF": "Write-Off",
+        "ALL": "All",
+        "BYPASS": "Bypass",
+        "CHECKER": "Checker",
+        "REPORTING": "Reporting"
       },
       "entities": {
         "ACCOUNTINGRULE": "Accounting Rule",
@@ -4090,6 +4094,9 @@
         "TELLER": "Teller",
         "TEMPLATE": "Template",
         "USER": "User",
+        "FUNCTIONS": "Functions",
+        "TWOFACTOR": "Two-Factor",
+        "SUPER_USER": "Super User",
         "WORKINGDAYS": "Working Days"
       }
     },

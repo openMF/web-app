@@ -310,7 +310,7 @@
     },
     "aboutUs": {
       "Introduction": "L'Iniziativa Mifos è un'organizzazione senza scopo di lucro 501(c)(3) e una comunità globale di sviluppatori, istituzioni finanziarie e imprenditori sociali. Crediamo che l'accesso ai servizi finanziari sia un diritto umano fondamentale, eppure miliardi di persone rimangono escluse dal sistema finanziario formale.",
-      "Platform Description": "Colmiamo questo divario fornendo la <a href=\"https://mifos.org\" target=\"_blank\" rel=\"noopener noreferrer\">Piattaforma Mifos X</a>\u2014il sistema bancario centrale open source leader nel mondo. Rendendo la tecnologia bancaria di livello enterprise gratuita e accessibile, abbassiamo le barriere all'ingresso per le Istituzioni di Microfinanza (IMF), le Fintech e le ONG, consentendo loro di ampliare il proprio impatto e servire l'\"ultimo miglio\" in modo efficiente.",
+      "Platform Description": "Colmiamo questo divario fornendo la <a href=\"https://mifos.org\" target=\"_blank\" rel=\"noopener noreferrer\">Piattaforma Mifos X</a>—il sistema bancario centrale open source leader nel mondo. Rendendo la tecnologia bancaria di livello enterprise gratuita e accessibile, abbassiamo le barriere all'ingresso per le Istituzioni di Microfinanza (IMF), le Fintech e le ONG, consentendo loro di ampliare il proprio impatto e servire l'\"ultimo miglio\" in modo efficiente.",
       "Mission": "Accelerare l'inclusione finanziaria catalizzando un ecosistema di tecnologia open source, comunità e condivisione delle conoscenze.",
       "Vision": "Un mondo in cui ogni individuo e piccola impresa abbia accesso agli strumenti finanziari di cui ha bisogno per prosperare, indipendentemente dalla propria posizione o livello di reddito.",
       "Why Open Source": "Abbiamo scelto il modello Open Source perché crediamo che l'infrastruttura finanziaria debba essere:",
@@ -3847,7 +3847,11 @@
         "WAIVEINTERESTPORTION": "Condona porzione di interesse",
         "WITHDRAW": "Preleva",
         "WITHDRAWAL": "Prelievo",
-        "WRITEOFF": "Cancellazione"
+        "WRITEOFF": "Cancellazione",
+        "ALL": "Tutto",
+        "BYPASS": "Ignora",
+        "CHECKER": "Revisore",
+        "REPORTING": "Reportistica"
       },
       "entities": {
         "ACCOUNTINGRULE": "Regola di contabilità",
@@ -3955,7 +3959,10 @@
         "TELLER": "Sportello",
         "TEMPLATE": "Modello",
         "USER": "Utente",
-        "WORKINGDAYS": "Giorni lavorativi"
+        "WORKINGDAYS": "Giorni lavorativi",
+        "FUNCTIONS": "Funzioni",
+        "TWOFACTOR": "Doppio fattore",
+        "SUPER_USER": "Super utente"
       }
     },
     "auditTrail": {
@@ -4374,5 +4381,7 @@
     "YE": "Yemen",
     "ZM": "Zambia",
     "ZW": "Zimbabwe"
-  }
+  },
+  "Deactivate Role": "Disattiva ruolo",
+  "Delete Role": "Elimina ruolo"
 }

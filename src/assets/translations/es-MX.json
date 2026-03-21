@@ -310,7 +310,7 @@
     },
     "aboutUs": {
       "Introduction": "La Iniciativa Mifos es una organización sin fines de lucro 501(c)(3) y una comunidad global de desarrolladores, instituciones financieras y emprendedores sociales. Creemos que el acceso a los servicios financieros es un derecho humano fundamental, sin embargo, miles de millones de personas siguen excluidas del sistema financiero formal.",
-      "Platform Description": "Cerramos esta brecha proporcionando la <a href=\"https://mifos.org\" target=\"_blank\" rel=\"noopener noreferrer\">Plataforma Mifos X</a>\u2014el sistema bancario central de código abierto líder en el mundo. Al hacer que la tecnología bancaria de nivel empresarial sea gratuita y accesible, reducimos las barreras de entrada para las Instituciones de Microfinanzas (IMFs), Fintechs y ONGs, permitiéndoles escalar su impacto y atender la \"última milla\" de manera eficiente.",
+      "Platform Description": "Cerramos esta brecha proporcionando la <a href=\"https://mifos.org\" target=\"_blank\" rel=\"noopener noreferrer\">Plataforma Mifos X</a>—el sistema bancario central de código abierto líder en el mundo. Al hacer que la tecnología bancaria de nivel empresarial sea gratuita y accesible, reducimos las barreras de entrada para las Instituciones de Microfinanzas (IMFs), Fintechs y ONGs, permitiéndoles escalar su impacto y atender la \"última milla\" de manera eficiente.",
       "Mission": "Acelerar la inclusión financiera catalizando un ecosistema de tecnología de código abierto, comunidad e intercambio de conocimientos.",
       "Vision": "Un mundo donde cada individuo y pequeña empresa tenga acceso a las herramientas financieras que necesitan para prosperar, independientemente de su ubicación o nivel de ingresos.",
       "Why Open Source": "Elegimos el modelo de Código Abierto porque creemos que la infraestructura financiera debería ser:",
@@ -2493,7 +2493,7 @@
       "Restricted products": "Productos restringidos",
       "Reversed": "invertido",
       "Revised Meeting Date": "Fecha de reunión revisada",
-      "Role": "Role",
+      "Role": "Rol",
       "Role Description": "Descripción del rol",
       "Role Name": "Nombre de rol",
       "Roles": "Roles",
@@ -3329,6 +3329,8 @@
       "Edit Recurring Deposit Product": "Editar producto de Depósito Recurrente",
       "Edit Report": "Editar reporte",
       "Edit Role": "Editar rol",
+      "Deactivate Role": "Desactivar Rol",
+      "Delete Role": "Borrar Rol",
       "Edit SMS Campaign": "Editar campaña de SMS",
       "Edit SMS Configuration": "Editar configuración de SMS",
       "Edit Saving Product": "Editar Cuenta de Ahorros",
@@ -3864,7 +3866,11 @@
         "WAIVEINTERESTPORTION": "Exonerar Porción de Interés",
         "WITHDRAW": "Retirar",
         "WITHDRAWAL": "Retiro",
-        "WRITEOFF": "Castigo por Incobrable"
+        "WRITEOFF": "Castigo por Incobrable",
+        "ALL": "Todas",
+        "BYPASS": "Omitir",
+        "CHECKER": "Verificador",
+        "REPORTING": "Reportes"
       },
       "entities": {
         "ACCOUNTINGRULE": "Regla Contable",
@@ -3972,7 +3978,10 @@
         "TELLER": "Caja",
         "TEMPLATE": "Plantilla",
         "USER": "Usuario",
-        "WORKINGDAYS": "Días Laborales"
+        "WORKINGDAYS": "Días Laborales",
+        "FUNCTIONS": "Funciones",
+        "TWOFACTOR": "Doble Factor",
+        "SUPER_USER": "Superusuario"
       }
     },
     "auditTrail": {

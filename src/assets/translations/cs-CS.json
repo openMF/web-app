@@ -309,7 +309,7 @@
     },
     "aboutUs": {
       "Introduction": "Iniciativa Mifos je nezisková organizace 501(c)(3) a globální komunita vývojářů, finančních institucí a sociálních podnikatelů. Věříme, že přístup k finančním službám je základní lidské právo, přesto miliardy lidí zůstávají vyloučeny z formálního finančního systému.",
-      "Platform Description": "Tuto mezeru překlenujeme poskytováním <a href=\"https://mifos.org\" target=\"_blank\" rel=\"noopener noreferrer\">Platformy Mifos X</a>\u2014světově vedoucího open-source bankovního systému. Tím, že zpřístupňujeme podnikovou bankovní technologii zdarma, snižujeme bariéry vstupu pro Mikrofinanční instituce (MFI), Fintechy a nevládní organizace, což jim umožňuje rozšířit svůj dopad a efektivně obsluhovat \"poslední míli\".",
+      "Platform Description": "Tuto mezeru překlenujeme poskytováním <a href=\"https://mifos.org\" target=\"_blank\" rel=\"noopener noreferrer\">Platformy Mifos X</a>—světově vedoucího open-source bankovního systému. Tím, že zpřístupňujeme podnikovou bankovní technologii zdarma, snižujeme bariéry vstupu pro Mikrofinanční instituce (MFI), Fintechy a nevládní organizace, což jim umožňuje rozšířit svůj dopad a efektivně obsluhovat \"poslední míli\".",
       "Mission": "Urychlit finanční inkluzi katalyzováním ekosystému open-source technologií, komunity a sdílení znalostí.",
       "Vision": "Svět, kde každý jednotlivec a malý podnik má přístup k finančním nástrojům, které potřebuje k prosperitě, bez ohledu na svou polohu nebo úroveň příjmů.",
       "Why Open Source": "Zvolili jsme model Open Source, protože věříme, že finanční infrastruktura by měla být:",
@@ -3748,6 +3748,19 @@
       "Search and assign this beneficiary to an existing Mifos client account": "Vyhledejte a přiřaďte tohoto příjemce k existujícímu účtu klienta Mifos",
       "Failed to search clients. Please try again.": "Hledání klientů se nezdařilo. Zkuste to prosím znovu.",
       "Process Remittance": "Zpracovat remitenci"
+    },
+    "permissions": {
+      "actions": {
+        "ALL": "Vše",
+        "BYPASS": "Obejít",
+        "CHECKER": "Kontrolor",
+        "REPORTING": "Reporting"
+      },
+      "entities": {
+        "FUNCTIONS": "Funkce",
+        "TWOFACTOR": "Dvoufaktorové",
+        "SUPER_USER": "Superuživatel"
+      }
     }
   },
   "permissions": {
@@ -4375,5 +4388,7 @@
     "YE": "Jemen",
     "ZM": "Zambie",
     "ZW": "Zimbabwe"
-  }
+  },
+  "Deactivate Role": "Deaktivovat roli",
+  "Delete Role": "Smazat roli"
 }
