@@ -310,7 +310,7 @@
     },
     "aboutUs": {
       "Introduction": "\\\"Mifos\\\" iniciatyva yra 501(c)(3) ne pelno organizacija ir pasauline kurejų, finansų institucijų ir socialinių verslininkų bendruomene. Tikime, kad prieiga prie finansinių paslaugų yra pagrindinė žmogaus teise, tačiau milijardai žmonių vis dar yra atskirti nuo formalios finansų sistemos.",
-      "Platform Description": "Mes užpildome šią spragą teikdami <a href=\"https://mifos.org\" target=\"_blank\" rel=\"noopener noreferrer\">Mifos X platformą</a>\u2014pasaulyje pirmaujančią atvirojo kodo pagrindinę bankininkystės sistemą. Padarydami įmonės lygio bankininkystės technologiją nemokamą ir prieinamą, sumažiname patekimo barjerus Mikrofinansų institucijoms (MFI), Fintech įmonėms ir NVO, leisdami joms plėsti savo poveikį ir efektyviai aptarnauti \\\"paskutinę mylią\\\".",
+      "Platform Description": "Mes užpildome šią spragą teikdami <a href=\"https://mifos.org\" target=\"_blank\" rel=\"noopener noreferrer\">Mifos X platformą</a>—pasaulyje pirmaujančią atvirojo kodo pagrindinę bankininkystės sistemą. Padarydami įmonės lygio bankininkystės technologiją nemokamą ir prieinamą, sumažiname patekimo barjerus Mikrofinansų institucijoms (MFI), Fintech įmonėms ir NVO, leisdami joms plėsti savo poveikį ir efektyviai aptarnauti \\\"paskutinę mylią\\\".",
       "Mission": "Paspartinti finansinę įtrauktį katalizuojant atvirojo kodo technologijų, bendruomenės ir žinių dalijimosi ekosistemą.",
       "Vision": "Pasaulis, kuriame kiekvienas asmuo ir smulkus verslas turi prieigą prie finansinių priemonių, reikalingų klestėti, nepriklausomai nuo jų vietos ar pajamų lygio.",
       "Why Open Source": "Pasirinkome atvirojo kodo modelį, nes tikime, kad finansinė infrastruktūra turėtų būti:",
@@ -3849,7 +3849,11 @@
         "WAIVEINTERESTPORTION": "Atsisakyti palūkanų dalies",
         "WITHDRAW": "Išimti",
         "WITHDRAWAL": "Išėmimas",
-        "WRITEOFF": "Nurašymas"
+        "WRITEOFF": "Nurašymas",
+        "ALL": "Visi",
+        "BYPASS": "Apeiti",
+        "CHECKER": "Tikrintojas",
+        "REPORTING": "Ataskaitos"
       },
       "entities": {
         "ACCOUNTINGRULE": "Apskaitos taisyklė",
@@ -3957,7 +3961,10 @@
         "TELLER": "Kasininkas",
         "TEMPLATE": "Šablonas",
         "USER": "Vartotojas",
-        "WORKINGDAYS": "Darbo dienos"
+        "WORKINGDAYS": "Darbo dienos",
+        "FUNCTIONS": "Funkcijos",
+        "TWOFACTOR": "Dviejų veiksnių",
+        "SUPER_USER": "Supervartotojas"
       }
     },
     "auditTrail": {
@@ -4376,5 +4383,7 @@
     "YE": "Jemenas",
     "ZM": "Zambija",
     "ZW": "Zimbabvė"
-  }
+  },
+  "Deactivate Role": "Deaktyvuoti vaidmenį",
+  "Delete Role": "Ištrinti vaidmenį"
 }

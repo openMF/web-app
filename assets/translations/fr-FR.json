@@ -310,7 +310,7 @@
     },
     "aboutUs": {
       "Introduction": "L'Initiative Mifos est une organisation à but non lucratif 501(c)(3) et une communauté mondiale de développeurs, d'institutions financières et d'entrepreneurs sociaux. Nous croyons que l'accès aux services financiers est un droit humain fondamental, mais des milliards de personnes restent exclues du système financier formel.",
-      "Platform Description": "Nous comblons cette lacune en fournissant la <a href=\"https://mifos.org\" target=\"_blank\" rel=\"noopener noreferrer\">Plateforme Mifos X</a>\u2014le système bancaire de base open source le plus avancé au monde. En rendant la technologie bancaire de niveau entreprise gratuite et accessible, nous abaissons les barrières à l'entrée pour les Institutions de Microfinance (IMF), les Fintechs et les ONG, leur permettant d'augmenter leur impact et de servir le \"dernier kilomètre\" efficacement.",
+      "Platform Description": "Nous comblons cette lacune en fournissant la <a href=\"https://mifos.org\" target=\"_blank\" rel=\"noopener noreferrer\">Plateforme Mifos X</a>—le système bancaire de base open source le plus avancé au monde. En rendant la technologie bancaire de niveau entreprise gratuite et accessible, nous abaissons les barrières à l'entrée pour les Institutions de Microfinance (IMF), les Fintechs et les ONG, leur permettant d'augmenter leur impact et de servir le \"dernier kilomètre\" efficacement.",
       "Mission": "Accélérer l'inclusion financière en catalysant un écosystème de technologie open source, de communauté et de partage des connaissances.",
       "Vision": "Un monde où chaque individu et chaque petite entreprise a accès aux outils financiers dont ils ont besoin pour prospérer, indépendamment de leur localisation ou de leur niveau de revenu.",
       "Why Open Source": "Nous avons choisi le modèle Open Source parce que nous croyons que l'infrastructure financière devrait être :",
@@ -3851,7 +3851,11 @@
         "WAIVEINTERESTPORTION": "Exonérer la portion d'intérêt",
         "WITHDRAW": "Retirer",
         "WITHDRAWAL": "Retrait",
-        "WRITEOFF": "Radiation"
+        "WRITEOFF": "Radiation",
+        "ALL": "Tout",
+        "BYPASS": "Contourner",
+        "CHECKER": "Vérificateur",
+        "REPORTING": "Rapports"
       },
       "entities": {
         "ACCOUNTINGRULE": "Règle comptable",
@@ -3959,7 +3963,10 @@
         "TELLER": "Caissier",
         "TEMPLATE": "Modèle",
         "USER": "Utilisateur",
-        "WORKINGDAYS": "Jours ouvrables"
+        "WORKINGDAYS": "Jours ouvrables",
+        "FUNCTIONS": "Fonctions",
+        "TWOFACTOR": "Double facteur",
+        "SUPER_USER": "Super utilisateur"
       }
     },
     "auditTrail": {
@@ -4378,5 +4385,7 @@
     "YE": "Yémen",
     "ZM": "Zambie",
     "ZW": "Zimbabwe"
-  }
+  },
+  "Deactivate Role": "Désactiver le rôle",
+  "Delete Role": "Supprimer le rôle"
 }

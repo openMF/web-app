@@ -310,7 +310,7 @@
     },
     "aboutUs": {
       "Introduction": "Die Mifos-Initiative ist eine gemeinnützige Organisation gemäß 501(c)(3) und eine globale Gemeinschaft von Entwicklern, Finanzinstitutionen und Sozialunternehmern. Wir glauben, dass der Zugang zu Finanzdienstleistungen ein grundlegendes Menschenrecht ist, doch Milliarden von Menschen bleiben vom formellen Finanzsystem ausgeschlossen.",
-      "Platform Description": "Wir überbrücken diese Lücke, indem wir die <a href=\"https://mifos.org\" target=\"_blank\" rel=\"noopener noreferrer\">Mifos X Plattform</a>\u2014das weltweit führende Open-Source-Kernbankensystem bereitstellen. Indem wir unternehmenstaugliche Bankentechnologie kostenlos und zugänglich machen, senken wir die Eintrittsbarrieren für Mikrofinanzinstitutionen (MFIs), Fintechs und NGOs und ermöglichen es ihnen, ihre Wirkung zu skalieren und die \\\"letzte Meile\\\" effizient zu bedienen.",
+      "Platform Description": "Wir überbrücken diese Lücke, indem wir die <a href=\"https://mifos.org\" target=\"_blank\" rel=\"noopener noreferrer\">Mifos X Plattform</a>—das weltweit führende Open-Source-Kernbankensystem bereitstellen. Indem wir unternehmenstaugliche Bankentechnologie kostenlos und zugänglich machen, senken wir die Eintrittsbarrieren für Mikrofinanzinstitutionen (MFIs), Fintechs und NGOs und ermöglichen es ihnen, ihre Wirkung zu skalieren und die \\\"letzte Meile\\\" effizient zu bedienen.",
       "Mission": "Die finanzielle Inklusion zu beschleunigen, indem wir ein Ökosystem aus Open-Source-Technologie, Gemeinschaft und Wissensaustausch katalysieren.",
       "Vision": "Eine Welt, in der jeder Einzelne und jedes kleine Unternehmen Zugang zu den Finanzwerkzeugen hat, die sie zum Gedeihen benötigen, unabhängig von ihrem Standort oder Einkommensniveau.",
       "Why Open Source": "Wir haben das Open-Source-Modell gewählt, weil wir glauben, dass Finanzinfrastruktur sein sollte:",
@@ -3749,6 +3749,19 @@
       "Search and assign this beneficiary to an existing Mifos client account": "Suchen und weisen Sie diesen Begünstigten einem bestehenden Mifos-Kundenkonto zu",
       "Failed to search clients. Please try again.": "Kundensuche fehlgeschlagen. Bitte versuchen Sie es erneut.",
       "Process Remittance": "Überweisung bearbeiten"
+    },
+    "permissions": {
+      "actions": {
+        "ALL": "Alle",
+        "BYPASS": "Umgehen",
+        "CHECKER": "Prüfer",
+        "REPORTING": "Berichterstattung"
+      },
+      "entities": {
+        "FUNCTIONS": "Funktionen",
+        "TWOFACTOR": "Zwei-Faktor",
+        "SUPER_USER": "Superbenutzer"
+      }
     }
   },
   "permissions": {
@@ -4376,5 +4389,7 @@
     "YE": "Jemen",
     "ZM": "Sambia",
     "ZW": "Simbabwe"
-  }
+  },
+  "Deactivate Role": "Rolle deaktivieren",
+  "Delete Role": "Rolle löschen"
 }

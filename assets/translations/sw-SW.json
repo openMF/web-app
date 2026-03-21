@@ -3844,7 +3844,11 @@
         "WAIVEINTERESTPORTION": "Ondoa sehemu ya riba",
         "WITHDRAW": "Ondoa",
         "WITHDRAWAL": "Kuondoleza",
-        "WRITEOFF": "Kuandika"
+        "WRITEOFF": "Kuandika",
+        "ALL": "Zote",
+        "BYPASS": "Pita",
+        "CHECKER": "Mkaguzi",
+        "REPORTING": "Ripoti"
       },
       "entities": {
         "ACCOUNTINGRULE": "Kanuni ya Uhasibu",
@@ -3952,7 +3956,10 @@
         "TELLER": "Mtoa Huduma",
         "TEMPLATE": "Muundo",
         "USER": "Mtumiaji",
-        "WORKINGDAYS": "Siku za Kazi"
+        "WORKINGDAYS": "Siku za Kazi",
+        "FUNCTIONS": "Kazi",
+        "TWOFACTOR": "Kipengele Mbili",
+        "SUPER_USER": "Mtumiaji Mkuu"
       }
     },
     "auditTrail": {
@@ -4371,5 +4378,7 @@
     "YE": "Yemen",
     "ZM": "Zambia",
     "ZW": "Zimbabwe"
-  }
+  },
+  "Deactivate Role": "Zima Jukumu",
+  "Delete Role": "Futa Jukumu"
 }
