@@ -6,17 +6,27 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<div class="m-b-20 layout-align-end">
-  <mat-button-toggle-group aria-label="Select Chart Type">
-    <mat-button-toggle value="Bar" (click)="setBarChart(inputData)">{{
-      'labels.buttons.Bar Chart' | translate
-    }}</mat-button-toggle>
-    <mat-button-toggle value="Pie" (click)="setPieChart(inputData)">{{
-      'labels.buttons.Pie Chart' | translate
-    }}</mat-button-toggle>
-  </mat-button-toggle-group>
-</div>
+<div class="p-20 m-b-20">
+  <div class="layout-align-end m-b-20">
+    <mat-button-toggle-group
+      [value]="selectedChartType"
+      [disabled]="hideOutput"
+      aria-label="{{ 'labels.buttons.Select Chart Type' | translate }}"
+      (change)="selectChart($event.value)"
+    >
+      <mat-button-toggle value="Bar" (click)="refreshChartIfSameType('Bar')">{{
+        'labels.buttons.Bar Chart' | translate
+      }}</mat-button-toggle>
+      <mat-button-toggle value="Pie" (click)="refreshChartIfSameType('Pie')">{{
+        'labels.buttons.Pie Chart' | translate
+      }}</mat-button-toggle>
+      <mat-button-toggle value="Polar" (click)="refreshChartIfSameType('Polar')">{{
+        'labels.buttons.Polar Area Chart' | translate
+      }}</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
 
-<div [ngStyle]="{ display: hideOutput ? 'none' : 'block' }">
-  <canvas id="output"></canvas>
+  <div [ngStyle]="{ display: hideOutput ? 'none' : 'block' }" class="chart-output-container">
+    <canvas id="output"></canvas>
+  </div>
 </div>
