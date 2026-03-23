@@ -28,13 +28,13 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
-      - name: Build application
-        run: npm run build
-
       - name: Run Playwright tests
         run: npx playwright test --reporter=html,github
         env:
           CI: true
+          FINERACT_API_URL: https://demo.mifos.community
+          E2E_USERNAME: mifos
+          E2E_PASSWORD: password
 
       - name: Upload Playwright report
         uses: actions/upload-artifact@v7

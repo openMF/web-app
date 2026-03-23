@@ -67,9 +67,9 @@ test.describe('Login Page', () => {
     await expect(loginPage.loginButton).toBeEnabled();
   });
 
-  // Skip in CI - requires Fineract backend
-  test.skip(!!process.env.CI, 'Requires Fineract backend');
   test('should successfully login with valid credentials', async () => {
+    test.skip(!!process.env.CI, 'Production build auth interceptor skips tenant header for absolute URLs');
+
     // Perform login with valid credentials
     // This uses the login() method which follows the exact codegen sequence
     await loginPage.loginAndWaitForDashboard('mifos', 'password');
@@ -98,9 +98,9 @@ test.describe('Login Page', () => {
    * Simple test that exactly mirrors the codegen script.
    * This is the baseline test generated from codegen.
    */
-  // Skip in CI - requires Fineract backend
-  test.skip(!!process.env.CI, 'Requires Fineract backend');
   test('codegen baseline: login with mifos credentials', async () => {
+    test.skip(!!process.env.CI, 'Production build auth interceptor skips tenant header for absolute URLs');
+
     // This test uses the exact codegen interaction sequence
     await loginPage.login('mifos', 'password');
 

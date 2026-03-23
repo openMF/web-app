@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright since 2025 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -88,12 +88,11 @@ export default defineConfig({
   ],
 
   // Web server configuration
-  // In CI: builds production bundle (without base-href), then serves it with http-server
+  // In CI: builds production bundle, then serves it with e2e-server.js
+  //        (Express + http-proxy-middleware for /fineract-provider/* proxy)
   // Locally: reuses existing ng serve if running
   webServer: {
-    command: process.env.CI
-      ? 'npm run build && npx http-server ./dist/web-app/browser -p 4200 --silent'
-      : 'npm run start',
+    command: process.env.CI ? 'npm run build && node playwright/e2e-server.js' : 'npm run start',
     url: 'http://localhost:4200',
     reuseExistingServer: !process.env.CI,
     timeout: 180000,
