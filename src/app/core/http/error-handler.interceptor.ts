@@ -59,8 +59,18 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     }
 
     // Combine both messages if both exist
-    const errorMessage = nestedMessage ? `${topLevelMessage} ${nestedMessage}` : topLevelMessage;
-
+    let errorMessage = nestedMessage ? `${topLevelMessage} ${nestedMessage}` : topLevelMessage;
+    let parameterName: string | null = null;
+    if (response.error.errors) {
+      if (response.error.errors[0]) {
+        errorMessage =
+          response.error.errors[0].defaultUserMessage.replace(/\\./g, ' ') ||
+          response.error.errors[0].developerMessage.replace(/\\./g, ' ');
+      }
+      if ('parameterName' in response.error.errors[0]) {
+        parameterName = response.error.errors[0].parameterName;
+      }
+    }
     const isClientImage404 = status === 404 && request.url.includes('/clients/') && request.url.includes('/images');
 
     if (!environment.production && !isClientImage404) {
@@ -81,9 +91,12 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
         message: this.translate.instant('errors.error.token.invalid.message')
       });
     } else if (status === 400) {
+      const message = parameterName
+        ? `[${parameterName}] ${errorMessage || 'Invalid parameters were passed in the request!'}`
+        : `${errorMessage || 'Invalid parameters were passed in the request!'}`;
       this.alertService.alert({
         type: this.translate.instant('errors.error.bad.request.type'),
-        message: errorMessage || this.translate.instant('errors.error.bad.request.message')
+        message: message || this.translate.instant('errors.error.bad.request.message')
       });
     } else if (status === 403) {
       this.alertService.alert({

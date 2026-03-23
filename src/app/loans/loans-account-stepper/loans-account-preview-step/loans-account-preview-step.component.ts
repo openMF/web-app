@@ -144,6 +144,14 @@ export class LoansAccountPreviewStepComponent extends LoanProductBaseComponent i
     return this.loanProductService.loanProductTypeLabel;
   }
 
+  fundName(fundId: number): string {
+    const fundOptions = this.loanProductService.isLoanProduct
+      ? this.loansAccountProductTemplate.fundOptions
+      : this.loansAccountProductTemplate.options.fundOptions;
+    const fund = fundOptions.find((fund: any) => fund.id === fundId);
+    return fund ? fund.name : '';
+  }
+
   camalize(word: string) {
     return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
   }

@@ -77,14 +77,22 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
     super();
     this.loanProductService.initialize(LoanProductBaseComponent.resolveProductTypeDefault(this.route, 'loan'));
 
+    this.loanId = this.route.snapshot.params['loanId'];
     this.route.data.subscribe(
       (data: { loansAccountAndTemplate: any; loanProductsBasicDetails: LoanProductBasicDetails[] }) => {
         this.loansAccountAndTemplate = data.loansAccountAndTemplate;
-        this.loansAccountProductTemplate = data.loansAccountAndTemplate;
+        if (this.loanProductService.isLoanProduct) {
+          this.loansAccountProductTemplate = data.loansAccountAndTemplate;
+        } else if (this.loanProductService.isWorkingCapital) {
+          this.loansAccountProductTemplate = data.loansAccountAndTemplate;
+          this.getWorkingCapitalLoanProductTemplate(
+            this.loansAccountProductTemplate.client.id,
+            this.loansAccountProductTemplate.product.id
+          );
+        }
         this.loanProductsBasicDetails = data.loanProductsBasicDetails;
       }
     );
-    this.loanId = this.route.snapshot.params['loanId'];
   }
 
   /**
@@ -95,6 +103,15 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
     const templateData: any = $event;
     this.loansAccountProductTemplate = templateData.loanData ? templateData.loanData : templateData;
     this.currencyCode = this.loansAccountProductTemplate.currency.code;
+    this.productDetails = this.loansAccountProductTemplate.product;
+    if (templateData.loanData) {
+      this.loansAccountProductTemplate = templateData.loanData;
+      this.loansAccountProductTemplate.options = {
+        delinquencyBucketOptions: templateData.delinquencyBucketOptions,
+        fundOptions: templateData.fundOptions,
+        periodFrequencyTypeOptions: templateData.periodFrequencyTypeOptions
+      };
+    }
     if (this.loansAccountProductTemplate.loanProductId) {
       this.loansService
         .getLoansCollateralTemplateResource(this.loansAccountProductTemplate.loanProductId)
@@ -102,6 +119,12 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
           this.collateralOptions = response.loanCollateralOptions;
         });
     }
+  }
+
+  getWorkingCapitalLoanProductTemplate(clientId: number, productId: number) {
+    this.loansService.getWorkingCapitalLoansAccountTemplate(clientId, productId).subscribe((response: any) => {
+      this.setTemplate(response);
+    });
   }
 
   setProductType($event: any): void {
@@ -131,7 +154,11 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
           !this.loansAccountChargesStep?.pristine)
       );
     } else if (this.loanProductService.isWorkingCapital) {
-      return false;
+      return (
+        this.loansAccountDetailsForm.valid &&
+        this.loansAccountTermsForm.valid &&
+        (!this.loansAccountDetailsForm.pristine || !this.loansAccountTermsForm.pristine)
+      );
     }
   }
 
@@ -241,15 +268,60 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
     loansAccountData.allowPartialPeriodInterestCalculation = loansAccountData.allowPartialPeriodInterestCalculation;
     delete loansAccountData.allowPartialPeriodInterestCalculation;
 
-    this.loansService.updateLoansAccount(this.loanId, loansAccountData).subscribe((response: any) => {
-      this.router.navigate(['../'], {
-        queryParams: {
-          productType: this.loanProductService.productType.value
-        },
-        relativeTo: this.route
+    this.loansService
+      .updateLoansAccount(this.loanProductService.loanAccountPath, this.loanId, loansAccountData)
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], {
+          queryParams: {
+            productType: this.loanProductService.productType.value
+          },
+          relativeTo: this.route
+        });
       });
-    });
   }
 
-  submitWorkingCapitalProduct(): void {}
+  submitWorkingCapitalProduct(): void {
+    const locale = this.settingsService.language.code;
+    const dateFormat = this.settingsService.dateFormat;
+    const payload = {
+      ...this.loansAccount,
+      clientId: this.loansAccountProductTemplate.client.id,
+      submittedOnDate: this.dateUtils.formatDate(this.loansAccount.submittedOnDate, dateFormat),
+      expectedDisbursementDate: this.dateUtils.formatDate(this.loansAccount.expectedDisbursementDate, dateFormat),
+      locale,
+      dateFormat
+    };
+
+    if (this.productDetails.allowAttributeOverrides) {
+      if (
+        !Object.hasOwn(this.productDetails.allowAttributeOverrides, 'periodPaymentFrequency') ||
+        this.productDetails.allowAttributeOverrides.periodPaymentFrequency === false
+      ) {
+        delete payload['repaymentEvery'];
+      }
+      if (
+        !Object.hasOwn(this.productDetails.allowAttributeOverrides, 'periodPaymentFrequencyType') ||
+        this.productDetails.allowAttributeOverrides.periodPaymentFrequencyType === false
+      ) {
+        delete payload['repaymentFrequencyType'];
+      }
+      if (
+        !Object.hasOwn(this.productDetails.allowAttributeOverrides, 'discountDefault') ||
+        this.productDetails.allowAttributeOverrides.discountDefault === false
+      ) {
+        delete payload['discount'];
+      }
+    }
+
+    this.loansService
+      .updateLoansAccount(this.loanProductService.loanAccountPath, this.loanId, payload)
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], {
+          queryParams: {
+            productType: this.loanProductService.productType.value
+          },
+          relativeTo: this.route
+        });
+      });
+  }
 }

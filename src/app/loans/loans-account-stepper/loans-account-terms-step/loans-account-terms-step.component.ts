@@ -46,6 +46,7 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { YesnoPipe } from '../../../pipes/yesno.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
+import { amountValueValidator } from 'app/shared/validators/amount-value.validator';
 
 interface DisbursementData {
   id?: number;
@@ -317,10 +318,22 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
     } else if (this.loanProductService.isWorkingCapital && this.loansAccountProductTemplate) {
       this.loansAccountTermsData = this.loansAccountProductTemplate;
       this.currency = this.loansAccountTermsData.currency;
-      this.termFrequencyTypeData = this.loansAccountTermsData.options.periodFrequencyTypeOptions;
-      this.loansAccountTermsForm.patchValue({
-        principalAmount: this.loansAccountTermsData.product.principal
-      });
+      this.termFrequencyTypeData = this.loansAccountTermsData.options?.periodFrequencyTypeOptions;
+      if (this.loanId != null && 'accountNo' in this.loansAccountTemplate) {
+        this.loansAccountTermsData = this.loansAccountTemplate;
+        this.loansAccountTermsForm.patchValue({
+          discount: this.loansAccountTermsData.discount || '',
+          principalAmount: this.loansAccountTermsData.proposedPrincipal,
+          periodPaymentRate: this.loansAccountTermsData.periodPaymentRate,
+          totalPayment: this.loansAccountTermsData.balance?.totalPayment,
+          repaymentEvery: this.loansAccountTermsData.repaymentEvery,
+          repaymentFrequencyType: this.loansAccountTermsData.repaymentFrequencyType?.id
+        });
+      } else {
+        this.loansAccountTermsForm.patchValue({
+          principalAmount: this.loansAccountTermsData.product.principal
+        });
+      }
       this.allowAttributeOverrides = this.loansAccountProductTemplate.product.allowAttributeOverrides;
       if (
         !this.allowAttributeOverrides.periodPaymentFrequency ||
@@ -583,25 +596,33 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
       this.loansAccountTermsForm = this.formBuilder.group({
         principalAmount: [
           '',
-          Validators.required
+          [
+            Validators.required,
+            amountValueValidator()
+          ]
         ],
         totalPayment: [
           '',
-          Validators.required
+          [
+            Validators.required,
+            amountValueValidator()
+          ]
         ],
         discount: [''],
         periodPaymentRate: [
           '',
           [
             Validators.required,
-            Validators.min(1)
+            Validators.min(1),
+            Validators.max(1000)
           ]
         ],
         repaymentEvery: [
           '',
           [
             Validators.required,
-            Validators.min(1)
+            Validators.min(1),
+            amountValueValidator()
           ]
         ],
         repaymentFrequencyType: [

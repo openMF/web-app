@@ -15,20 +15,28 @@ import { Observable } from 'rxjs';
 
 /** Custom Services */
 import { LoansService } from '../loans.service';
+import { LoanBaseResolver } from './loan-base.resolver';
 
 /**
- * Clients data resolver.
+ * Loan Delinquency Tags data resolver.
  */
 @Injectable()
-export class LoanDelinquencyTagsResolver {
+export class LoanDelinquencyTagsResolver extends LoanBaseResolver {
   private loansService = inject(LoansService);
+
+  constructor() {
+    super();
+  }
 
   /**
    * Returns the Loans with Association data.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    this.initialize(route);
     const loanId = route.paramMap.get('loanId') || route.parent.paramMap.get('loanId');
-    return this.loansService.getDelinquencyTags(loanId);
+    if (!isNaN(+loanId)) {
+      return this.loansService.getDelinquencyTags(this.loanAccountPath, loanId);
+    }
   }
 }

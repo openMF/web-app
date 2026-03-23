@@ -172,7 +172,11 @@
       <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
     </button>
     @if (loanId) {
-      <button mat-raised-button [routerLink]="['../', 'general']">
+      <button
+        mat-raised-button
+        [routerLink]="['../', 'general']"
+        [queryParams]="{ productType: loanProductService.productType.value }"
+      >
         {{ 'labels.buttons.Cancel' | translate }}
       </button>
     }

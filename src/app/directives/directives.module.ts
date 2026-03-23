@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 import { HasPermissionDirective } from './has-permission/has-permission.directive';
 import { FormatAmountDirective } from './format-amount.directive';
 import { ValidateOnFocusDirective } from './validate-on-focus.directive';
+import { PositiveNumberDirective } from './positive-number.directive';
 
 /**
  *  Directives Module
@@ -25,12 +26,14 @@ import { ValidateOnFocusDirective } from './validate-on-focus.directive';
     CommonModule,
     HasPermissionDirective,
     FormatAmountDirective,
-    ValidateOnFocusDirective
+    ValidateOnFocusDirective,
+    PositiveNumberDirective
   ],
   exports: [
     HasPermissionDirective,
     FormatAmountDirective,
-    ValidateOnFocusDirective
+    ValidateOnFocusDirective,
+    PositiveNumberDirective
   ]
 })
 export class DirectivesModule {}

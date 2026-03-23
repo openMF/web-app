@@ -40,7 +40,7 @@ export class LoanDetailsResolver {
       if (resolvedProductType === LOAN_PRODUCT_TYPE.LOAN) {
         return this.loansService.getLoanAccountAssociationDetails(loanId);
       } else {
-        return this.loansService.getWorkingCapitalLoannDetails(loanId);
+        return this.loansService.getWorkingCapitalLoanDetails(loanId);
       }
     }
   }

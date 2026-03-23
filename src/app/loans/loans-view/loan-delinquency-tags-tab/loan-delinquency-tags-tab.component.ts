@@ -41,6 +41,7 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { DatetimeFormatPipe } from '../../../pipes/datetime-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
 
 @Component({
   selector: 'mifosx-loan-delinquency-tags-tab',
@@ -67,7 +68,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     FormatNumberPipe
   ]
 })
-export class LoanDelinquencyTagsTabComponent implements OnInit {
+export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private loansServices = inject(LoansService);
   private dateUtils = inject(Dates);
@@ -105,6 +106,7 @@ export class LoanDelinquencyTagsTabComponent implements OnInit {
   dateFormat: string;
 
   constructor() {
+    super();
     this.loanId = this.route.parent.parent.snapshot.params['loanId'];
 
     this.route.parent.data.subscribe(
@@ -193,7 +195,7 @@ export class LoanDelinquencyTagsTabComponent implements OnInit {
 
     this.loansServices.createDelinquencyActions(this.loanId, payload).subscribe((result: any) => {
       this.loansServices
-        .getDelinquencyActions(this.loanId)
+        .getDelinquencyActions(this.loanProductService.loanAccountPath, this.loanId)
         .subscribe((loanDelinquencyActions: LoanDelinquencyAction[]) => {
           this.loanDelinquencyActions = loanDelinquencyActions;
           this.validateDelinquencyActions();

@@ -118,34 +118,41 @@ export class LoansAccountDetailsStepComponent extends LoanProductBaseComponent i
     this.placeHolderLabel = this.translateService.instant('labels.text.Search');
     this.noEntriesFoundLabel = this.translateService.instant('labels.text.No data found');
     this.maxDate = this.settingsService.maxFutureDate;
-    this.productList = this.loanProductsBasicDetails.sort(this.commons.dynamicSort('name'));
+    this.productList = this.loanProductsBasicDetails
+      ? this.loanProductsBasicDetails.sort(this.commons.dynamicSort('name'))
+      : [];
     if (this.loansAccountTemplate) {
+      this.addFormControlsBasedOnProductType();
+      let loanProductId: number | null = null;
+      this.loansAccountDetailsForm.patchValue({
+        fundId: this.loansAccountTemplate.fundId,
+        submittedOnDate:
+          this.loansAccountTemplate.timeline.submittedOnDate &&
+          new Date(this.loansAccountTemplate.timeline.submittedOnDate),
+        expectedDisbursementDate:
+          this.loansAccountTemplate.timeline.expectedDisbursementDate &&
+          new Date(this.loansAccountTemplate.timeline.expectedDisbursementDate),
+        externalId: this.loansAccountTemplate.externalId
+      });
       if (this.loansAccountTemplate.loanProductId) {
-        this.addFormControlsBasedOnProductType();
+        loanProductId = this.loansAccountTemplate.loanProductId;
         this.loansAccountDetailsForm.patchValue({
-          productId: this.loansAccountTemplate.loanProductId,
-          submittedOnDate:
-            this.loansAccountTemplate.timeline.submittedOnDate &&
-            new Date(this.loansAccountTemplate.timeline.submittedOnDate),
           loanOfficerId: this.loansAccountTemplate.loanOfficerId,
-          loanPurposeId: this.loansAccountTemplate.loanPurposeId,
-          fundId: this.loansAccountTemplate.fundId,
-          expectedDisbursementDate:
-            this.loansAccountTemplate.timeline.expectedDisbursementDate &&
-            new Date(this.loansAccountTemplate.timeline.expectedDisbursementDate),
-          externalId: this.loansAccountTemplate.externalId
+          loanPurposeId: this.loansAccountTemplate.loanPurposeId
         });
-        this.productSelected = this.loanProductsBasicDetails.find(
-          (p: LoanProductBasicDetails) =>
-            p.productType === this.loanProductService.productType.value &&
-            p.id === this.loansAccountTemplate.loanProductId
-        );
-        if (this.productSelected) {
-          this.loansAccountDetailsForm.patchValue({
-            productId: this.productSelected.shortName
-          });
-          this.loanProductSelected = true;
-        }
+      } else if (this.loanProductService.isWorkingCapital && this.loansAccountTemplate.product) {
+        loanProductId = this.loansAccountTemplate.product.id;
+      }
+      this.productSelected = this.loanProductsBasicDetails.find(
+        (p: LoanProductBasicDetails) =>
+          p.productType === this.loanProductService.productType.value && p.id === loanProductId
+      );
+      if (this.productSelected) {
+        this.loansAccountDetailsForm.patchValue({
+          productId: this.productSelected.shortName
+        });
+        this.loanProductSelected = true;
+        this.getProductTemplate(false);
       }
     }
     this.filterFormCtrl.valueChanges.pipe(takeUntil(this._onDestroy)).subscribe(() => {
@@ -220,16 +227,24 @@ export class LoansAccountDetailsStepComponent extends LoanProductBaseComponent i
     this.productSelected = this.loanProductsBasicDetails.find(
       (p: LoanProductBasicDetails) => p.shortName === productShortName
     );
+    this.getProductTemplate(true);
+  }
+
+  getProductTemplate(emitEvent: boolean): void {
     if (this.productSelected) {
       this.loanProductService.initialize(this.productSelected.productType);
-      const entityId = this.loansAccountTemplate.clientId
-        ? this.loansAccountTemplate.clientId
-        : this.loansAccountTemplate.group.id;
-      const isGroup: boolean = this.loansAccountTemplate.clientId ? false : true;
-
-      this.loansProductType.emit(this.productSelected.productType);
-      this.addFormControlsBasedOnProductType();
+      if (emitEvent) {
+        this.loansProductType.emit(this.productSelected.productType);
+        this.addFormControlsBasedOnProductType();
+      }
       if (this.loanProductService.isLoanProduct) {
+        const entityId = this.loansAccountTemplate.clientId
+          ? this.loansAccountTemplate.clientId
+          : this.loansAccountTemplate.group
+            ? this.loansAccountTemplate.group.id
+            : null;
+
+        const isGroup: boolean = this.loansAccountTemplate.clientId ? false : true;
         this.loansService
           .getLoansAccountTemplateResource(entityId, isGroup, this.productSelected.id)
           .subscribe((response: any) => {
@@ -246,14 +261,19 @@ export class LoansAccountDetailsStepComponent extends LoanProductBaseComponent i
             }
           });
       } else if (this.loanProductService.isWorkingCapital) {
+        const entityId = this.loansAccountTemplate.client
+          ? this.loansAccountTemplate.client.id
+          : this.route.parent.snapshot.params['clientId'];
         this.loansService
           .getWorkingCapitalLoansAccountTemplate(entityId, this.productSelected.id)
           .subscribe((response: any) => {
             this.loansAccountProductTemplate.emit(response);
             this.fundOptions = response.fundOptions;
-            this.loansAccountDetailsForm.patchValue({
-              fundId: response.loanData.fundId
-            });
+            if (emitEvent) {
+              this.loansAccountDetailsForm.patchValue({
+                fundId: response.loanData.fundId
+              });
+            }
             this.loanProductSelected = true;
           });
       } else {

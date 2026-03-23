@@ -10,19 +10,25 @@ import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { LoansService } from '../loans.service';
+import { LoanBaseResolver } from './loan-base.resolver';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoanDelinquencyActionsResolver {
+export class LoanDelinquencyActionsResolver extends LoanBaseResolver {
   private loansService = inject(LoansService);
+
+  constructor() {
+    super();
+  }
 
   /**
    * Returns the Loans with Association data.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    this.initialize(route);
     const loanId = route.paramMap.get('loanId') || route.parent.paramMap.get('loanId');
-    return this.loansService.getDelinquencyActions(loanId);
+    return this.loansService.getDelinquencyActions(this.loanAccountPath, loanId);
   }
 }

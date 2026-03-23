@@ -15,6 +15,7 @@ import { Observable } from 'rxjs';
 
 /** Custom Services */
 import { LoansService } from '../loans.service';
+import { LoanProductService } from 'app/products/loan-products/services/loan-product.service';
 
 /**
  * Loan accounts template data resolver.
@@ -22,6 +23,7 @@ import { LoansService } from '../loans.service';
 @Injectable()
 export class LoansAccountAndTemplateResolver {
   private loansService = inject(LoansService);
+  private loanProductService = inject(LoanProductService);
 
   /**
    * Returns the loan account template data.
@@ -29,6 +31,8 @@ export class LoansAccountAndTemplateResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const loanId = route.paramMap.get('loanId') || route.parent.paramMap.get('loanId');
-    return this.loansService.getLoansAccountAndTemplateResource(loanId);
+    return this.loanProductService.isLoanProduct
+      ? this.loansService.getLoansAccountAndTemplateResource(loanId)
+      : this.loansService.getWorkingCapitalLoanDetails(loanId);
   }
 }
