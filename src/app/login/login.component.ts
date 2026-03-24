@@ -9,7 +9,6 @@
 /** Angular Imports */
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { Router } from '@angular/router';
-
 /** rxjs Imports */
 
 import { Subscription } from 'rxjs';
@@ -46,7 +45,7 @@ import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { M3IconComponent } from '../shared/m3-ui/m3-icon/m3-icon.component';
-
+import { MatTooltip } from '@angular/material/tooltip';
 import { VersionService } from '../system/version.service';
 
 /**
@@ -69,7 +68,8 @@ import { VersionService } from '../system/version.service';
     FaIconComponent,
     MatMenu,
     MatMenuItem,
-    M3IconComponent
+    M3IconComponent,
+    MatTooltip
   ]
 })
 export class LoginComponent implements OnInit, OnDestroy {
