@@ -21,7 +21,7 @@ import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicke
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { Currency } from 'app/shared/models/general.model';
-import { CodeName, OptionData } from 'app/shared/models/option-data.model';
+import { CodeName, OptionData, StringEnumOptionData } from 'app/shared/models/option-data.model';
 import { InputAmountComponent } from '../../../shared/input-amount/input-amount.component';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -174,6 +174,8 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
 
   allowAttributeOverrides: any | null = null;
 
+  delinquencyStartTypeOptions: StringEnumOptionData[] = [];
+
   constructor() {
     super();
     this.createloansAccountTermsForm();
@@ -319,6 +321,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
       this.loansAccountTermsData = this.loansAccountProductTemplate;
       this.currency = this.loansAccountTermsData.currency;
       this.termFrequencyTypeData = this.loansAccountTermsData.options?.periodFrequencyTypeOptions;
+      this.delinquencyStartTypeOptions = this.loansAccountTermsData.options?.delinquencyStartTypeOptions;
       if (this.loanId != null && 'accountNo' in this.loansAccountTemplate) {
         this.loansAccountTermsData = this.loansAccountTemplate;
         this.loansAccountTermsForm.patchValue({
@@ -327,11 +330,16 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
           periodPaymentRate: this.loansAccountTermsData.periodPaymentRate,
           totalPayment: this.loansAccountTermsData.balance?.totalPayment,
           repaymentEvery: this.loansAccountTermsData.repaymentEvery,
-          repaymentFrequencyType: this.loansAccountTermsData.repaymentFrequencyType?.id
+          repaymentFrequencyType: this.loansAccountTermsData.repaymentFrequencyType?.id,
+          delinquencyGraceDays: this.loansAccountTermsData.delinquencyGraceDays,
+          delinquencyStartType: this.loansAccountTermsData.delinquencyStartType?.code
         });
       } else {
         this.loansAccountTermsForm.patchValue({
-          principalAmount: this.loansAccountTermsData.product.principal
+          discount: this.loansAccountTermsData.product.discount || '',
+          principalAmount: this.loansAccountTermsData.product.principal,
+          delinquencyGraceDays: this.loansAccountTermsData.product.delinquencyGraceDays || '',
+          delinquencyStartType: this.loansAccountTermsData.product.delinquencyStartType?.code || ''
         });
       }
       this.allowAttributeOverrides = this.loansAccountProductTemplate.product.allowAttributeOverrides;
@@ -436,7 +444,12 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
           principalAmount: this.loansAccountTermsData.principal || this.loansAccountTermsData.product.principal,
           periodPaymentRate: this.loansAccountTermsData.periodPaymentRate,
           repaymentEvery: this.loansAccountTermsData.repaymentEvery,
-          repaymentFrequencyType: this.loansAccountTermsData.repaymentFrequencyType.id
+          repaymentFrequencyType: this.loansAccountTermsData.repaymentFrequencyType.id,
+          delinquencyGraceDays:
+            this.loansAccountTermsData.delinquencyGraceDays || this.loansAccountTermsData.product.delinquencyGraceDays,
+          delinquencyStartType:
+            this.loansAccountTermsData.delinquencyStartType?.id ||
+            this.loansAccountTermsData.product.delinquencyStartType?.id
         });
       }
     }
@@ -628,7 +641,14 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
         repaymentFrequencyType: [
           '',
           Validators.required
-        ]
+        ],
+        delinquencyGraceDays: [
+          '',
+          [
+            Validators.min(0)
+          ]
+        ],
+        delinquencyStartType: ['']
       });
     }
   }

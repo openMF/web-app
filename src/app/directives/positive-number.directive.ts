@@ -8,7 +8,7 @@
 
 import { Directive, ElementRef, HostListener, inject } from '@angular/core';
 
-@Directive({ selector: '[mifosxPositiveNumber]' })
+@Directive({ selector: '[mifosxPositiveNumber]', standalone: true })
 export class PositiveNumberDirective {
   private el = inject(ElementRef);
 

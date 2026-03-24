@@ -888,7 +888,8 @@
       "Working Capital": "Capital de Trabajo",
       "DAYS": "DÍAS",
       "MONTHS": "MESES",
-      "YEARS": "AÑOS"
+      "YEARS": "AÑOS",
+      "Loan Creation": "Creación del préstamo"
     },
     "commons": {
       "50 characters long": "50 caracteres de largo",
@@ -916,6 +917,7 @@
       "greater equal to than 0": "mayor igual a 0",
       "higher than allowed": "superior al permitido",
       "invalid": "inválido",
+      "Invalid amount format": "Formato de importe no válido",
       "is": "es",
       "Is": "Es",
       "is required": "se requiere",
@@ -1765,6 +1767,8 @@
       "Delinquency Bucket": "Clasificación de morosidad",
       "Delinquency Classification": "Clasificación de morosidad",
       "Delinquency Payment Rule": "Regla de pago por mora",
+      "Delinquency Grace Days": "Días de gracia para morosidad",
+      "Delinquency Start Type": "Tipo de inicio de morosidad",
       "Delinquency Tags": "Etiquetas de morosidad",
       "Delinquent Days": "Días morosos",
       "Delivery Method": "Método de entrega",

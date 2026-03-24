@@ -27,6 +27,7 @@ export class LoanDelinquencyDataResolver extends LoanBaseResolver {
   constructor() {
     super();
   }
+
   /**
    * Returns the Loans with Association data.
    * @returns {Observable<any>}

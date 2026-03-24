@@ -40,6 +40,22 @@
           </mat-error>
         }
       </mat-form-field>
+
+      <mat-form-field class="flex-48">
+        <mat-label>{{ 'labels.inputs.Delinquency Grace Days' | translate }}</mat-label>
+        <input type="number" min="0" matInput formControlName="delinquencyGraceDays" />
+      </mat-form-field>
+
+      <mat-form-field class="flex-48">
+        <mat-label>{{ 'labels.inputs.Delinquency Start Type' | translate }}</mat-label>
+        <mat-select formControlName="delinquencyStartType">
+          @for (delinquencyStartType of delinquencyStartTypeOptions; track delinquencyStartType) {
+            <mat-option [value]="delinquencyStartType.id">
+              {{ delinquencyStartType.value | translateKey: 'catalogs' }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
     } @else if (loanProductService.isLoanProduct) {
       <mat-form-field class="flex-30">
         <mat-label>{{ 'labels.inputs.products.loan.Amortization' | translate }}</mat-label>

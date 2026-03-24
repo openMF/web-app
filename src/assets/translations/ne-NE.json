@@ -887,7 +887,8 @@
       "Working Capital": "कार्यशील पूँजी",
       "DAYS": "दिनहरू",
       "MONTHS": "महिनाहरू",
-      "YEARS": "वर्षहरू"
+      "YEARS": "वर्षहरू",
+      "Loan Creation": "ऋण सिर्जना"
     },
     "commons": {
       "50 characters long": "५० वर्ण लामो",
@@ -915,6 +916,7 @@
       "greater equal to than 0": "० भन्दा ठूलो बराबर",
       "higher than allowed": "अनुमति दिइएको भन्दा बढी",
       "invalid": "अवैध",
+      "Invalid amount format": "रकमको ढाँचा अमान्य छ",
       "is": "छ",
       "Is": "छ",
       "is required": "आवश्यक",
@@ -1762,6 +1764,8 @@
       "Delinquency Bucket": "अपराध बाल्टी",
       "Delinquency Classification": "अपराध वर्गीकरण",
       "Delinquency Payment Rule": "अपराध भुक्तानी नियम",
+      "Delinquency Grace Days": "अपराध अनुग्रह दिनहरू",
+      "Delinquency Start Type": "डिलिंक्वेन्सी सुरुवात प्रकार",
       "Delinquency Tags": "अपराध ट्यागहरू",
       "Delinquent Days": "अपराधी दिनहरू",
       "Delivery Method": "वितरण विधि",

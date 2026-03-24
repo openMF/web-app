@@ -889,7 +889,8 @@
       "Working Capital": "Betriebskapital",
       "DAYS": "TAGE",
       "MONTHS": "MONATE",
-      "YEARS": "JAHRE"
+      "YEARS": "JAHRE",
+      "Loan Creation": "Kreditvergabe"
     },
     "commons": {
       "50 characters long": "50 Zeichen lang",
@@ -917,6 +918,7 @@
       "greater equal to than 0": "größer gleich 0",
       "higher than allowed": "höher als zulässig",
       "invalid": "ungültig",
+      "Invalid amount format": "Ungültiges Betragsformat",
       "is": "Ist",
       "Is": "Ist",
       "is required": "ist erforderlich",
@@ -1765,6 +1767,8 @@
       "Delinquency Bucket": "Kriminalitätseimer",
       "Delinquency Classification": "Kriminalitätsklassifizierung",
       "Delinquency Payment Rule": "Regelung zu Zahlungsverzug",
+      "Delinquency Grace Days": "Gnadentage für Jugendstraftäter",
+      "Delinquency Start Type": "Delinquenz-Starttyp",
       "Delinquency Tags": "Kriminalitäts-Tags",
       "Delinquent Days": "Kriminelle Tage",
       "Delivery Method": "Versandart",

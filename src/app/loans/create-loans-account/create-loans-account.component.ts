@@ -124,7 +124,8 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
       this.loansAccountProductTemplate.options = {
         delinquencyBucketOptions: templateData.delinquencyBucketOptions,
         fundOptions: templateData.fundOptions,
-        periodFrequencyTypeOptions: templateData.periodFrequencyTypeOptions
+        periodFrequencyTypeOptions: templateData.periodFrequencyTypeOptions,
+        delinquencyStartTypeOptions: templateData.delinquencyStartTypeOptions
       };
     }
     this.currencyCode = this.loansAccountProductTemplate.currency.code;
@@ -288,6 +289,11 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
       ) {
         delete payload['discount'];
       }
+    }
+
+    // No Empty discount value to be sent
+    if (payload['discount'] == null || payload['discount'] === '') {
+      delete payload['discount'];
     }
 
     this.loansService

@@ -18,6 +18,7 @@
         (keypress)="numberOnly($event)"
         required
         matInput
+        mifosxPositiveNumber
         (blur)="displayHint = false"
         (focus)="displayHint = true"
       />
@@ -44,6 +45,11 @@
         {{ maxVal }}
       </mat-error>
     }
+    @if (inputFormControl.hasError('highAmountValue')) {
+      <mat-error>
+        {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.Invalid amount format' | translate }}
+      </mat-error>
+    }
   </mat-form-field>
 }
 @if (!isRequired) {
@@ -57,6 +63,7 @@
         [formControl]="inputFormControl"
         (keypress)="numberOnly($event)"
         matInput
+        mifosxPositiveNumber
         (blur)="displayHint = false"
         (focus)="displayHint = true"
       />

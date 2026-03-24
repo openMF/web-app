@@ -43,6 +43,7 @@ export class ApproveLoanComponent extends LoanAccountActionsBaseComponent implem
   loanData: any = new Object();
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
+  maxDate = new Date();
   currency: Currency;
 
   /**
@@ -51,8 +52,8 @@ export class ApproveLoanComponent extends LoanAccountActionsBaseComponent implem
    */
   constructor() {
     super();
+    this.maxDate = this.settingsService.maxFutureDate;
     this.route.data.subscribe((data: { actionButtonData: any }) => {
-      console.log(data.actionButtonData);
       this.loanData = data.actionButtonData;
       this.currency = data.actionButtonData.currency;
     });
@@ -63,13 +64,15 @@ export class ApproveLoanComponent extends LoanAccountActionsBaseComponent implem
     this.setApproveLoanForm();
 
     // Get delinquency data for available disbursement amount with over applied
-    this.loanService.getLoanDelinquencyDataForTemplate(this.loanId).subscribe((delinquencyData: any) => {
-      // Check if the field is at root level
-      if (delinquencyData.availableDisbursementAmountWithOverApplied !== undefined) {
-        this.loanData.availableDisbursementAmountWithOverApplied =
-          delinquencyData.availableDisbursementAmountWithOverApplied;
-      }
-    });
+    if (this.isLoanProduct) {
+      this.loanService.getLoanDelinquencyDataForTemplate(this.loanId).subscribe((delinquencyData: any) => {
+        // Check if the field is at root level
+        if (delinquencyData.availableDisbursementAmountWithOverApplied !== undefined) {
+          this.loanData.availableDisbursementAmountWithOverApplied =
+            delinquencyData.availableDisbursementAmountWithOverApplied;
+        }
+      });
+    }
   }
 
   /**

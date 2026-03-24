@@ -109,7 +109,8 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
       this.loansAccountProductTemplate.options = {
         delinquencyBucketOptions: templateData.delinquencyBucketOptions,
         fundOptions: templateData.fundOptions,
-        periodFrequencyTypeOptions: templateData.periodFrequencyTypeOptions
+        periodFrequencyTypeOptions: templateData.periodFrequencyTypeOptions,
+        delinquencyStartTypeOptions: templateData.delinquencyStartTypeOptions
       };
     }
     if (this.loansAccountProductTemplate.loanProductId) {
@@ -311,6 +312,11 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
       ) {
         delete payload['discount'];
       }
+    }
+
+    // No Empty discount value to be sent
+    if (payload['discount'] == null || payload['discount'] === '') {
+      delete payload['discount'];
     }
 
     this.loansService

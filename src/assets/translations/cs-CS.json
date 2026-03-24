@@ -888,7 +888,8 @@
       "Working Capital": "Provozní kapitál",
       "DAYS": "DNY",
       "MONTHS": "MĚSÍCE",
-      "YEARS": "ROKY"
+      "YEARS": "ROKY",
+      "Loan Creation": "Vytvoření úvěru"
     },
     "commons": {
       "50 characters long": "50 znaků dlouhé",
@@ -916,6 +917,7 @@
       "greater equal to than 0": "větší rovno 0",
       "higher than allowed": "vyšší než povolené",
       "invalid": "neplatný",
+      "Invalid amount format": "Neplatný formát částky",
       "is": "je",
       "Is": "Je",
       "is required": "je požadováno",
@@ -1762,6 +1764,8 @@
       "Delinquency Bucket": "Delikvence Bucket",
       "Delinquency Classification": "Klasifikace delikvence",
       "Delinquency Payment Rule": "Pravidlo pro platbu v prodlení",
+      "Delinquency Grace Days": "Dny odkladu prodlení",
+      "Delinquency Start Type": "Typ zahájení prodlení",
       "Delinquency Tags": "Štítky delikvence",
       "Delinquent Days": "Delikventní dny",
       "Delivery Method": "způsob doručení",

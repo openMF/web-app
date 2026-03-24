@@ -34,7 +34,8 @@
             <mat-label>{{ 'labels.inputs.Expected disbursement on' | translate }}</mat-label>
             <input
               matInput
-              [min]="minDate"
+              [min]="approveLoanForm.value.approvedOnDate"
+              [max]="maxDate"
               [matDatepicker]="disbursementDatePicker"
               required
               formControlName="expectedDisbursementDate"

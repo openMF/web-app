@@ -36,17 +36,17 @@
         }
       </mat-form-field>
 
-      <mat-form-field class="flex-48">
+      <mat-form-field class="flex-23">
         <mat-label>{{ 'labels.inputs.Discount' | translate }}</mat-label>
         <input type="number" matInput mifosxPositiveNumber min="0" formControlName="discount" />
       </mat-form-field>
 
-      <mat-form-field class="flex-48">
+      <mat-form-field class="flex-23">
         <mat-label>{{ 'labels.inputs.Period Payment Rate' | translate }}</mat-label>
         <input type="number" matInput mifosxPositiveNumber min="0" formControlName="periodPaymentRate" />
       </mat-form-field>
 
-      <mat-form-field class="flex-24">
+      <mat-form-field class="flex-23">
         <mat-label>{{ 'labels.inputs.Period Payment Frequency' | translate }}</mat-label>
         <input
           type="number"
@@ -65,12 +65,28 @@
         }
       </mat-form-field>
 
-      <mat-form-field class="flex-24">
+      <mat-form-field class="flex-23">
         <mat-label>{{ 'labels.inputs.Period Payment Frequency Type' | translate }}</mat-label>
         <mat-select formControlName="repaymentFrequencyType" required>
           @for (repaymentFrequencyType of termFrequencyTypeData; track repaymentFrequencyType) {
             <mat-option [value]="repaymentFrequencyType.id">
               {{ repaymentFrequencyType.value | translateKey: 'catalogs' }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="flex-23">
+        <mat-label>{{ 'labels.inputs.Delinquency Grace Days' | translate }}</mat-label>
+        <input type="number" min="0" matInput formControlName="delinquencyGraceDays" />
+      </mat-form-field>
+
+      <mat-form-field class="flex-23">
+        <mat-label>{{ 'labels.inputs.Delinquency Start Type' | translate }}</mat-label>
+        <mat-select formControlName="delinquencyStartType">
+          @for (delinquencyStartType of delinquencyStartTypeOptions; track delinquencyStartType) {
+            <mat-option [value]="delinquencyStartType.id">
+              {{ delinquencyStartType.value | translateKey: 'catalogs' }}
             </mat-option>
           }
         </mat-select>

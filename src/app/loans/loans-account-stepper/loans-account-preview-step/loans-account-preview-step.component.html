@@ -107,6 +107,20 @@
       </div>
     }
 
+    @if (loansAccount.delinquencyGraceDays) {
+      <div class="flex-fill">
+        <span class="flex-30">{{ 'labels.inputs.Delinquency Grace Days' | translate }}:</span>
+        <span class="flex-70"> {{ loansAccount.delinquencyGraceDays | formatNumber }}</span>
+      </div>
+    }
+
+    @if (loansAccount.delinquencyStartType) {
+      <div class="flex-fill">
+        <span class="flex-30">{{ 'labels.inputs.Delinquency Start Type' | translate }}:</span>
+        <span class="flex-60">{{ camalize(loansAccount.delinquencyStartType) | translateKey: 'catalogs' }}</span>
+      </div>
+    }
+
     <div class="flex-fill">
       <span class="flex-30">{{ 'labels.inputs.Period Payment Rate' | translate }}:</span>
       <span class="flex-70"> {{ loansAccount.periodPaymentRate | formatNumber }} % </span>

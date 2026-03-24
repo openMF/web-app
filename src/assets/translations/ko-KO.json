@@ -889,7 +889,8 @@
       "Working Capital": "운전자본",
       "DAYS": "날",
       "MONTHS": "개월",
-      "YEARS": "연령"
+      "YEARS": "연령",
+      "Loan Creation": "대출 생성"
     },
     "commons": {
       "50 characters long": "50자(영문 기준)",
@@ -917,6 +918,7 @@
       "greater equal to than 0": "0보다 큼",
       "higher than allowed": "허용치보다 높음",
       "invalid": "유효하지 않은",
+      "Invalid amount format": "금액 형식이 잘못되었습니다",
       "is": "~이다",
       "Is": "~이다",
       "is required": "필수",
@@ -1766,6 +1768,8 @@
       "Delinquency Bucket": "연체 버킷",
       "Delinquency Classification": "연체 분류",
       "Delinquency Payment Rule": "연체금 납부 규칙",
+      "Delinquency Grace Days": "비행 청소년 사면 기간",
+      "Delinquency Start Type": "비행 시작 유형",
       "Delinquency Tags": "연체 태그",
       "Delinquent Days": "연체일수",
       "Delivery Method": "배달 방법",

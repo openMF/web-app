@@ -515,6 +515,20 @@
         <span class="flex-60">{{ loanProduct.enableInstallmentLevelDelinquency | yesNo }}</span>
       </div>
     }
+    @if (loanProductService.isWorkingCapital) {
+      @if (loanProduct.delinquencyGraceDays) {
+        <div class="flex-fill layout-row">
+          <span class="flex-40">{{ 'labels.inputs.Delinquency Grace Days' | translate }}:</span>
+          <span class="flex-60">{{ loanProduct.delinquencyGraceDays | formatNumber }}</span>
+        </div>
+      }
+      @if (loanProduct.delinquencyStartType) {
+        <div class="flex-fill layout-row">
+          <span class="flex-40">{{ 'labels.inputs.Delinquency Start Type' | translate }}:</span>
+          <span class="flex-60">{{ loanProduct.delinquencyStartType.value | translateKey: 'catalogs' }}</span>
+        </div>
+      }
+    }
     @if (loanProductService.isLoanProduct) {
       @if (loanProduct.graceOnPrincipalPayment) {
         <div class="flex-fill layout-row">

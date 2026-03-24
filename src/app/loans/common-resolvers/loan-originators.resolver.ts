@@ -9,6 +9,7 @@
 import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { LoansService } from 'app/loans/loans.service';
+import { LoanProductService } from 'app/products/loan-products/services/loan-product.service';
 import { Observable, throwError } from 'rxjs';
 
 @Injectable({
@@ -16,6 +17,7 @@ import { Observable, throwError } from 'rxjs';
 })
 export class LoanOriginatorsResolver {
   private loansService = inject(LoansService);
+  private loanProductService = inject(LoanProductService);
 
   /**
    * Returns the Loans data.
@@ -26,6 +28,8 @@ export class LoanOriginatorsResolver {
     if (!loanId) {
       return throwError(() => new Error('Missing loanId route param'));
     }
-    return this.loansService.getLoanOriginators(loanId);
+    if (this.loanProductService.isLoanProduct) {
+      return this.loansService.getLoanOriginators(loanId);
+    }
   }
 }

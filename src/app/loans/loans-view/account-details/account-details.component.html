@@ -39,6 +39,16 @@
           <span class="flex-50">{{ loanDetails.discount | formatNumber }}</span>
         </div>
       }
+
+      <div class="flex-fill layout-row">
+        <span class="flex-50"> {{ 'labels.inputs.Delinquency Grace Days' | translate }} </span>
+        <span class="flex-50">{{ loanDetails.delinquencyGraceDays | formatNumber }}</span>
+      </div>
+
+      <div class="flex-fill layout-row">
+        <span class="flex-50"> {{ 'labels.inputs.Delinquency Start Type' | translate }} </span>
+        <span class="flex-50">{{ loanDetails.delinquencyStartType?.value | translateKey: 'catalogs' }}</span>
+      </div>
     }
 
     @if (loanProductService.isLoanProduct) {

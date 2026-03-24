@@ -80,6 +80,8 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
   /** Values to Days for Repayments */
   defaultConfigValues: GlobalConfiguration[] = [];
 
+  delinquencyStartTypeOptions: StringEnumOptionData[] = [];
+
   constructor() {
     super();
     this.createLoanProductSettingsForm();
@@ -166,11 +168,16 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
     }
 
     if (this.loanProductService.isWorkingCapital) {
+      this.delinquencyStartTypeOptions = this.loanProductsTemplate.delinquencyStartTypeOptions;
       this.loanProductSettingsForm.patchValue({
         amortizationType: this.loanProductsTemplate.amortizationType
           ? this.loanProductsTemplate.amortizationType.id
           : null,
-        npvDayCount: this.loanProductsTemplate.npvDayCount
+        npvDayCount: this.loanProductsTemplate.npvDayCount,
+        delinquencyGraceDays: this.loanProductsTemplate.delinquencyGraceDays,
+        delinquencyStartType: this.loanProductsTemplate.delinquencyStartType
+          ? this.loanProductsTemplate.delinquencyStartType.id
+          : null
       });
     }
 
@@ -431,7 +438,14 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
           periodPaymentFrequencyType: [true]
         }),
         allowAttributeConfiguration: [true],
-        delinquencyBucketId: ['']
+        delinquencyBucketId: [''],
+        delinquencyGraceDays: [
+          '',
+          [
+            Validators.min(0)
+          ]
+        ],
+        delinquencyStartType: ['']
       });
     }
   }

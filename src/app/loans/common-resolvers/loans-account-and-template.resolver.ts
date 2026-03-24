@@ -11,28 +11,35 @@ import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 
 /** Custom Services */
 import { LoansService } from '../loans.service';
-import { LoanProductService } from 'app/products/loan-products/services/loan-product.service';
+import { LoanBaseResolver } from './loan-base.resolver';
 
 /**
  * Loan accounts template data resolver.
  */
 @Injectable()
-export class LoansAccountAndTemplateResolver {
+export class LoansAccountAndTemplateResolver extends LoanBaseResolver {
   private loansService = inject(LoansService);
-  private loanProductService = inject(LoanProductService);
+
+  constructor() {
+    super();
+  }
 
   /**
    * Returns the loan account template data.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    this.initialize(route);
     const loanId = route.paramMap.get('loanId') || route.parent.paramMap.get('loanId');
-    return this.loanProductService.isLoanProduct
-      ? this.loansService.getLoansAccountAndTemplateResource(loanId)
-      : this.loansService.getWorkingCapitalLoanDetails(loanId);
+    if (!isNaN(+loanId)) {
+      return this.isLoanProduct
+        ? this.loansService.getLoansAccountAndTemplateResource(loanId)
+        : this.loansService.getWorkingCapitalLoanDetails(loanId);
+    }
+    return EMPTY;
   }
 }
