@@ -3082,6 +3082,7 @@
       "Failed to update payment type. Please try again.": "Error al actualizar el tipo de pago. Intente de nuevo.",
       "Review the transaction and recipient details below, then assign the payout.": "Revise los detalles de la transacción y del beneficiario a continuación, luego asigne el pago.",
       "Loading data": "Cargando datos",
+      "no-data": "-",
       "No repayment schedule available": "No se encontró el calendario de pagos",
       "About Us": "Sobre Nosotros",
       "A": "Una",

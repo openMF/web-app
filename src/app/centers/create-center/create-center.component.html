@@ -167,6 +167,8 @@
           mat-raised-button
           color="primary"
           [disabled]="!centerForm.valid"
+          [mifosxNgBusy]="loading"
+          [busyText]="'labels.buttons.Creating...' | translate"
           (click)="submit()"
           *mifosxHasPermission="'CREATE_CENTER'"
         >

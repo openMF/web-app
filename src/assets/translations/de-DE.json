@@ -3052,6 +3052,7 @@
     },
     "text": {
       "Loading data": "Daten werden geladen",
+      "no-data": "-",
       "withoutCategory": "Ohne Kategorie",
       "No repayment schedule available": "Kein Rückzahlungsplan gefunden",
       "About Us": "Über Uns",

@@ -3049,6 +3049,7 @@
     },
     "text": {
       "Loading data": "Carregando dados",
+      "no-data": "-",
       "No repayment schedule available": "Nenhum cronograma de reembolso encontrada",
       "About Us": "Sobre Nós",
       "A": "A",

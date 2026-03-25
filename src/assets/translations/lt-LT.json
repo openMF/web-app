@@ -24,6 +24,7 @@
     "validationSaveError": "Nepavyko išsaugoti patvirtinimo duomenų. Bandykite dar kartą.",
     "error.msg.charge.attach.to.savings.product.invalid.currency": "Mokesčių ir taupymo produktų valiuta turi būti ta pati.",
     "error.msg.charge.cannot.be.applied.to.savings.product": "Mokestis su identifikatoriumi `{{params[0].value}} negali būti taikomas taupymo produktui.",
+    "no-data": "-",
     "error.msg.charge.cannot.be.deleted.it.is.already.used.in.loan": "Šio mokesčio negalima ištrinti, nes jis jau susietas su paskolos produktu ir (arba) paskola.",
     "error.msg.charge.due.at.disbursement.cannot.be.penalty": "Mokestis negali būti nustatytas kaip bauda, ​​mokėtina išmokėjimo metu.",
     "error.msg.charge.duplicate.name": "Mokestis tokiu pavadinimu jau yra.",

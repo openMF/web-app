@@ -3053,6 +3053,7 @@
     },
     "text": {
       "Loading data": "Chargement des données",
+      "no-data": "-",
       "No repayment schedule available": "Aucun calendrier de remboursement trouvé",
       "About Us": "À Propos de Nous",
       "A": "UN",

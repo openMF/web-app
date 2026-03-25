@@ -3049,6 +3049,7 @@
     },
     "text": {
       "Loading data": "Ielādē datus",
+      "no-data": "-",
       "No repayment schedule available": "Nav pieejams atmaksas grafiks",
       "About Us": "Par Mums",
       "A": "A",

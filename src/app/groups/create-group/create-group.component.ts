@@ -29,12 +29,14 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatNavList, MatListSubheaderCssMatStyler } from '@angular/material/list';
 import { MatLine } from '@angular/material/grid-list';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { NgBusyDirective } from '../../shared/directives/ng-busy.directive';
 
 /**
  * Create Group component.
  */
 @Component({
   selector: 'mifosx-create-group',
+  standalone: true,
   templateUrl: './create-group.component.html',
   styleUrls: ['./create-group.component.scss'],
   imports: [
@@ -43,6 +45,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatAutocompleteTrigger,
     MatAutocomplete,
     MatIconButton,
+    NgBusyDirective,
     FaIconComponent,
     MatNavList,
     MatListSubheaderCssMatStyler,
@@ -74,6 +77,8 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
   clientMembers: any[] = [];
   /** ClientChoice. */
   clientChoice = new UntypedFormControl('');
+  /** True if loading. */
+  loading = false;
 
   /**
    * Retrieves the offices data from `resolve`.
@@ -104,12 +109,14 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
    */
   ngAfterViewInit() {
     this.clientChoice.valueChanges.subscribe((value: string) => {
-      if (value.length >= 2) {
+      if (value && value.length >= 2) {
         this.clientsService
           .getFilteredClients('displayName', 'ASC', true, value, this.groupForm.get('officeId').value)
           .subscribe((data: any) => {
             this.clientsData = data.pageItems;
           });
+      } else {
+        this.clientsData = [];
       }
     });
   }
@@ -214,12 +221,19 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
     };
     data.clientMembers = [];
     this.clientMembers.forEach((client: any) => data.clientMembers.push(client.id));
-    this.groupService.createGroup(data).subscribe((response: any) => {
-      this.router.navigate([
-        '../groups',
-        response.resourceId,
-        'general'
-      ]);
+    
+    this.loading = true;
+    this.groupService.createGroup(data).subscribe({
+      next: (response: any) => {
+        this.router.navigate([
+          '../groups',
+          response.resourceId,
+          'general'
+        ]);
+      },
+      error: () => {
+        this.loading = false;
+      }
     });
   }
 }

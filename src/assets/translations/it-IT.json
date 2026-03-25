@@ -3048,6 +3048,7 @@
     },
     "text": {
       "Loading data": "Caricamento dati",
+      "no-data": "-",
       "No repayment schedule available": "Nessun piano di rimborso trovato",
       "About Us": "Chi Siamo",
       "A": "UN",
