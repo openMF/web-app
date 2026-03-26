@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports. */
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, inject } from '@angular/core';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort, MatSortHeader } from '@angular/material/sort';
@@ -24,6 +24,12 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+
+/** rxjs Imports */
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
 /** Custom Services */
 import { environment } from '../../environments/environment';
@@ -35,6 +41,8 @@ import { AccountNumberComponent } from '../shared/account-number/account-number.
 import { ExternalIdentifierComponent } from '../shared/external-identifier/external-identifier.component';
 import { StatusLookupPipe } from '../pipes/status-lookup.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+
+export const DEBOUNCE_MS = 500;
 
 @Component({
   selector: 'mifosx-clients',
@@ -61,11 +69,18 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRowDef,
     MatRow,
     MatPaginator,
-    StatusLookupPipe
+    StatusLookupPipe,
+    MatIconButton,
+    MatIcon
   ]
 })
-export class ClientsComponent implements OnInit {
+export class ClientsComponent implements OnInit, OnDestroy {
   private clientService = inject(ClientsService);
+
+  private destroy$ = new Subject<void>();
+  private searchInput$ = new Subject<string>();
+  private clientsRequestSub: Subscription | null = null;
+  private isComposing = false;
 
   /** Returns true if client data masking is enabled */
   get hideClientData(): boolean {
@@ -109,9 +124,37 @@ export class ClientsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit() {
+    this.searchInput$
+      .pipe(debounceTime(DEBOUNCE_MS), distinctUntilChanged(), takeUntil(this.destroy$))
+      .subscribe((value) => {
+        if (value !== this.filterText) {
+          this.search(value);
+        }
+      });
+
     if (environment.preloadClients) {
       this.getClients();
     }
+  }
+
+  ngOnDestroy() {
+    this.clientsRequestSub?.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  onSearchInput(value: string) {
+    if (this.isComposing) return;
+    this.searchInput$.next(value);
+  }
+
+  onCompositionStart(): void {
+    this.isComposing = true;
+  }
+
+  onCompositionEnd(value: string): void {
+    this.isComposing = false;
+    this.searchInput$.next(value);
   }
 
   /**
@@ -119,13 +162,17 @@ export class ClientsComponent implements OnInit {
    */
   search(value: string) {
     this.filterText = value;
-    this.resetPaginator();
+    if (this.paginator?.pageIndex !== 0) {
+      this.resetPaginator();
+      return;
+    }
     this.getClients();
   }
 
   private getClients() {
+    this.clientsRequestSub?.unsubscribe();
     this.isLoading = true;
-    this.clientService
+    this.clientsRequestSub = this.clientService
       .searchByText(this.filterText, this.currentPage, this.pageSize, this.sortAttribute, this.sortDirection)
       .subscribe(
         (data: any) => {

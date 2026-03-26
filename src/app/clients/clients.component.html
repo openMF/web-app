@@ -14,8 +14,21 @@
           matInput
           placeholder="{{ 'labels.text.SearchByClient' | translate }}"
           class="search-box"
-          (keydown.enter)="search($event.target.value)"
+          #searchInput
+          (input)="onSearchInput(searchInput.value)"
+          (keydown.enter)="search(searchInput.value)"
+          (compositionstart)="onCompositionStart()"
+          (compositionend)="onCompositionEnd(searchInput.value)"
         />
+        <button
+          type="button"
+          mat-icon-button
+          matSuffix
+          (click)="search(searchInput.value)"
+          [attr.aria-label]="'labels.buttons.Search' | translate"
+        >
+          <mat-icon>search</mat-icon>
+        </button>
       </mat-form-field>
     </div>
     @if (existsClientsToFilter) {
