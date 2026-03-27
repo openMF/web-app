@@ -85,10 +85,15 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
         });
       }
     } else if (status === 500) {
-      this.alertService.alert({
-        type: 'Internal Server Error',
-        message: 'Internal Server Error. Please try again later.'
-      });
+      const isProvisioningEntryGet =
+        request.url.includes('/provisioningentries') && (request.method === 'GET' || request.method === 'POST');
+
+      if (!isProvisioningEntryGet) {
+        this.alertService.alert({
+          type: 'Internal Server Error',
+          message: 'Internal Server Error. Please try again later.'
+        });
+      }
     } else if (status === 501) {
       this.alertService.alert({
         type: this.translate.instant('error.resource.notImplemented.type'),

@@ -69,22 +69,32 @@ export class CreateProvisioningEntryComponent implements OnInit {
    * Submits the provisioning entry form and creates provisioning entry,
    * if successful redirects to view created entry.
    */
+
   submit() {
     const provisioningEntry = this.provisioningEntryForm.value;
-    // TODO: Update once language and date settings are setup
     provisioningEntry.locale = this.settingsService.language.code;
     provisioningEntry.dateFormat = this.settingsService.dateFormat;
     if (provisioningEntry.date instanceof Date) {
       provisioningEntry.date = this.dateUtils.formatDate(provisioningEntry.date, this.settingsService.dateFormat);
     }
-    this.accountingService.createProvisioningEntry(provisioningEntry).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          '../view',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
+
+    this.accountingService.createProvisioningEntry(provisioningEntry).subscribe({
+      next: (response: any) => {
+        this.router.navigate(
+          [
+            '../view',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      },
+      error: (error: any) => {
+        if (error.status === 500) {
+          // Fineract returns 500 even when the entry is created successfully.
+          // Navigate to the list since we don't have a resourceId.
+          this.router.navigate(['../'], { relativeTo: this.route });
+        }
+      }
     });
   }
 }

@@ -9,26 +9,23 @@
 /** Angular Imports */
 import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
-
-/** rxjs Imports */
-import { Observable } from 'rxjs';
-
-/** Custom Services */
+import { Observable, of } from 'rxjs';
+import { catchError, throwError } from 'rxjs';
 import { AccountingService } from '../../accounting.service';
 
-/**
- * Provisioning entry entries data resolver.
- */
 @Injectable()
 export class ProvisioningEntryEntriesResolver {
   private accountingService = inject(AccountingService);
 
-  /**
-   * Returns the provisioning entry entries data.
-   * @returns {Observable<any>}
-   */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const provisioningEntryId = route.paramMap.get('id');
-    return this.accountingService.getProvisioningEntryEntries(provisioningEntryId);
+    return this.accountingService.getProvisioningEntryEntries(provisioningEntryId).pipe(
+      catchError((error) => {
+        if (error.status === 500) {
+          return of({ pageItems: [], error: true });
+        }
+        return throwError(() => error);
+      })
+    );
   }
 }
