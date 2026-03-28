@@ -10,6 +10,43 @@ Mifos® X Web App is a modern single-page application (SPA) built on top of the 
 - Angular framework
 - Angular Material components
 
+## 📋 Table of Contents
+
+- [Overview](#overview)
+- [Quick Links](#quick-links)
+- [Installation Guide](#installation-guide)
+  - [Prerequisites](#prerequisites-for-all-methods)
+  - [Backend Setup](#backend-setup-required-first)
+  - [Frontend Setup](#frontend-setup-web-app)
+    - [Method 1: Manual Installation](#method-1-manual-installation)
+    - [Method 2: Docker](#method-2-docker-container-only)
+    - [Method 3: Docker Compose](#method-3-docker-compose-frontend--backend)
+- [Default Login Credentials](#default-login-credentials)
+- [Development Commands](#development-commands)
+- [Proxy Configuration](#proxy-configuration)
+  - [Sandbox Proxy](#using-the-sandbox-proxy-default)
+  - [Local Fineract](#using-a-local-fineract-instance)
+  - [Testing the Proxy](#testing-the-proxy)
+- [Configuration Options](#configuration-options)
+  - [Environment Variables for Docker](#environment-variables-for-docker)
+    - [Fineract Backend](#fineract-backend-settings)
+    - [Language Settings](#language-settings-i18n)
+    - [Date Formats](#date-and-datetime-format-settings)
+    - [Session & Performance](#session--performance-settings)
+    - [Password Policy](#password-policy-settings)
+    - [UI Display](#ui-display-settings)
+    - [OAUTH](#oauth-settings)
+    - [OIDC](#oidc-settings)
+    - [External National ID](#external-national-id-system-integration)
+    - [Interbank Transfers](#interbank-transfers-settings)
+    - [Remittance Module](#remittance-module-settings)
+  - [Client Data Masking](#client-data-masking-example)
+- [Interbank Transfer Menu](#interbank-transfer-menu)
+- [Role-Based Access Control](#role-based-access-control-rbac)
+- [Releases](#releases)
+- [Contributing](#contributing)
+- [Related Projects](#related-projects)
+
 ## Quick Links
 
 - [Live Demo](https://demo.mifos.community/#/login) (Updated nightly — sandbox data is reset every 6 hours; test data and transient state may be cleared.)
