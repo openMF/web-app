@@ -262,7 +262,7 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
       this.buttonConfig.addOption({
         name: this.loanDetailsData.loanOfficerName ? 'Change Loan Officer' : 'Assign Loan Officer',
         icon: 'user-tie',
-        taskPermissionName: 'DISBURSE_LOAN'
+        taskPermissionName: 'UPDATELOANOFFICER_LOAN'
       });
 
       if (this.loanDetailsData.isVariableInstallmentsAllowed) {
@@ -276,7 +276,7 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
       this.buttonConfig.addButton({
         name: this.loanDetailsData.loanOfficerName ? 'Change Loan Officer' : 'Assign Loan Officer',
         icon: 'user-tie',
-        taskPermissionName: 'DISBURSE_LOAN'
+        taskPermissionName: 'UPDATELOANOFFICER_LOAN'
       });
     } else if (this.status === 'Active') {
       if (this.loanDetailsData.enableBuyDownFee) {
