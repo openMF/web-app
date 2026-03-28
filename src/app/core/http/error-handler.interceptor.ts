@@ -40,51 +40,56 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   private handleError(response: HttpErrorResponse, request: HttpRequest<any>): Observable<HttpEvent<any>> {
     const status = response.status;
 
-    // Translate top-level globalisation code if present
-    let topLevelMessage = response.error?.defaultUserMessage || response.error?.developerMessage || response.message;
-    if (response.error?.userMessageGlobalisationCode) {
-      const topCode = response.error.userMessageGlobalisationCode;
-      const translated = this.translate.instant(topCode, response.error || {});
-      if (translated !== topCode) {
-        topLevelMessage = translated;
+    let errorMessage = response.error?.developerMessage || response.message;
+    let globalisationCode: string | null = null;
+
+    // Nested errors take priority over top-level
+    if (response.error?.errors?.[0]) {
+      globalisationCode = response.error.errors[0].userMessageGlobalisationCode || null;
+      errorMessage =
+        response.error.errors[0].defaultUserMessage || response.error.errors[0].developerMessage || errorMessage;
+    }
+
+    // Only use top-level code if nested did not provide one
+    if (!globalisationCode && response.error?.userMessageGlobalisationCode) {
+      globalisationCode = response.error.userMessageGlobalisationCode;
+    }
+
+    // Translate globalisation code if key exists
+    if (globalisationCode) {
+      const translated = this.translate.instant(globalisationCode, response.error?.errors?.[0] || response.error || {});
+      if (translated !== globalisationCode) {
+        errorMessage = translated;
       }
     }
 
-    // Translate nested globalisation code if present
-    let nestedMessage: string | null = null;
-    if (response.error?.errors?.[0]?.userMessageGlobalisationCode) {
-      const nestedCode = response.error.errors[0].userMessageGlobalisationCode;
-      const translated = this.translate.instant(nestedCode, response.error.errors[0] || {});
-      nestedMessage = translated !== nestedCode ? translated : response.error.errors[0].defaultUserMessage || null;
-    }
-
-    // Combine both messages if both exist
-    let errorMessage = nestedMessage ? `${topLevelMessage} ${nestedMessage}` : topLevelMessage;
+    // Extract parameterName if present
     let parameterName: string | null = null;
-    if (response.error.errors) {
-      if (response.error.errors[0]) {
-        errorMessage =
-          response.error.errors[0].defaultUserMessage.replace(/\\./g, ' ') ||
-          response.error.errors[0].developerMessage.replace(/\\./g, ' ');
-      }
-      if ('parameterName' in response.error.errors[0]) {
-        parameterName = response.error.errors[0].parameterName;
-      }
+    if (response.error?.errors?.[0] && 'parameterName' in response.error.errors[0]) {
+      parameterName = response.error.errors[0].parameterName;
     }
+
     const isClientImage404 = status === 404 && request.url.includes('/clients/') && request.url.includes('/images');
 
     if (!environment.production && !isClientImage404) {
       log.error(`Request Error: ${errorMessage}`);
     }
 
-    if (status === 401 || (environment.oauth.enabled && status === 400)) {
+    // OAuth 400 only for auth/token endpoints, not all 400s
+    if (
+      status === 401 ||
+      (environment.oauth.enabled &&
+        status === 400 &&
+        (request.url.includes('/oauth/token') || request.url.includes('/authentication')))
+    ) {
       this.alertService.alert({
         type: this.translate.instant('errors.error.auth.type'),
         message: this.translate.instant('errors.error.auth.message')
       });
     } else if (
       status === 403 &&
-      response.error?.errors?.[0]?.defaultUserMessage === 'The provided one time token is invalid'
+      (response.error?.errors?.[0]?.userMessageGlobalisationCode === 'error.msg.otp.token.invalid' ||
+        response.error?.userMessageGlobalisationCode === 'error.msg.otp.token.invalid')
     ) {
       this.alertService.alert({
         type: this.translate.instant('errors.error.token.invalid.type'),
