@@ -15,12 +15,13 @@ import {
   UntypedFormControl,
   ReactiveFormsModule
 } from '@angular/forms';
-import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
+import { ClientActionNotifierService } from '../client-action-notifier.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -35,12 +36,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class AddClientChargeComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private dateUtils = inject(Dates);
-  private clientsService = inject(ClientsService);
-  private settingsService = inject(SettingsService);
+  private readonly formBuilder = inject(UntypedFormBuilder);
+  private readonly route = inject(ActivatedRoute);
+  private readonly dateUtils = inject(Dates);
+  private readonly clientsService = inject(ClientsService);
+  private readonly settingsService = inject(SettingsService);
+  private readonly notifier = inject(ClientActionNotifierService);
 
   /** Minimum Due Date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -57,12 +58,6 @@ export class AddClientChargeComponent implements OnInit {
 
   /**
    * Retrieves charge template data from `resolve`
-   * @param {FormBuilder} formBuilder Form Builder
-   * @param {ActivatedRoute} route Activated Route
-   * @param {Router} router Router
-   * @param {Dates} dateUtils Date Utils
-   * @param {ClientsService} clientsService Clients Service
-   * @param {SettingsService} settingsService Setting service
    */
   constructor() {
     this.route.data.subscribe((data: { clientActionData: any }) => {
@@ -162,8 +157,9 @@ export class AddClientChargeComponent implements OnInit {
         }
       }
     }
-    this.clientsService.createClientCharge(this.clientId, clientCharge).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
+    this.clientsService.createClientCharge(this.clientId, clientCharge).subscribe({
+      next: () => this.notifier.notifyAndNavigate('clients.actions.addCharge.success', this.route),
+      error: () => this.notifier.notify('clients.actions.addCharge.failure')
     });
   }
 }

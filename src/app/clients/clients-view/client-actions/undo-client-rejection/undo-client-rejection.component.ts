@@ -8,13 +8,14 @@
 
 /** Angular Imports */
 import { Component, OnInit, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
+import { ClientActionNotifierService } from '../client-action-notifier.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -29,12 +30,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class UndoClientRejectionComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private clientsService = inject(ClientsService);
-  private dateUtils = inject(Dates);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private settingsService = inject(SettingsService);
+  private readonly formBuilder = inject(UntypedFormBuilder);
+  private readonly clientsService = inject(ClientsService);
+  private readonly dateUtils = inject(Dates);
+  private readonly route = inject(ActivatedRoute);
+  private readonly settingsService = inject(SettingsService);
+  private readonly notifier = inject(ClientActionNotifierService);
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -46,11 +47,7 @@ export class UndoClientRejectionComponent implements OnInit {
   clientId: any;
 
   /**
-   * @param {FormBuilder} formBuilder Form Builder
-   * @param {clientsService} clientsService Cliens Service
-   * @param {Dates} dateUtils Date Utils
-   * @param {ActivatedRoute} route Activated Route
-   * @param {Router} router Router
+   * constructor
    */
   constructor() {
     this.clientId = this.route.parent.snapshot.params['clientId'];
@@ -93,8 +90,9 @@ export class UndoClientRejectionComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.clientsService.executeClientCommand(this.clientId, 'undoRejection', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
+    this.clientsService.executeClientCommand(this.clientId, 'undoRejection', data).subscribe({
+      next: () => this.notifier.notifyAndNavigate('clients.actions.undoRejection.success', this.route),
+      error: () => this.notifier.notify('clients.actions.undoRejection.failure')
     });
   }
 }

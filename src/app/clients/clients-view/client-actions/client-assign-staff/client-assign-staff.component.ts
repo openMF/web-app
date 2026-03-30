@@ -8,11 +8,12 @@
 
 /** Angular Imports */
 import { Component, OnInit, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
+import { ClientActionNotifierService } from '../client-action-notifier.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -27,10 +28,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ClientAssignStaffComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private clientsService = inject(ClientsService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
+  private readonly formBuilder = inject(UntypedFormBuilder);
+  private readonly clientsService = inject(ClientsService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly notifier = inject(ClientActionNotifierService);
 
   /** Client Assign Staff form. */
   clientAssignStaffForm: UntypedFormGroup;
@@ -75,8 +76,9 @@ export class ClientAssignStaffComponent implements OnInit {
   submit() {
     this.clientsService
       .executeClientCommand(this.clientData.id, 'assignStaff', this.clientAssignStaffForm.value)
-      .subscribe(() => {
-        this.router.navigate(['../../'], { relativeTo: this.route });
+      .subscribe({
+        next: () => this.notifier.notifyAndNavigate('clients.actions.assignStaff.success', this.route),
+        error: () => this.notifier.notify('clients.actions.assignStaff.failure')
       });
   }
 }

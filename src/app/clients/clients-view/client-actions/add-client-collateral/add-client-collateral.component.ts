@@ -5,11 +5,10 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-
 /** Angular Imports */
 import { Component, OnInit, inject } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 /**
  * Custom Services
@@ -17,6 +16,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ClientsService } from 'app/clients/clients.service';
 import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { ClientActionNotifierService } from '../client-action-notifier.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
@@ -28,12 +28,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class AddClientCollateralComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private productsService = inject(ProductsService);
-  private clientsService = inject(ClientsService);
-  private settingsService = inject(SettingsService);
+  private readonly formBuilder = inject(UntypedFormBuilder);
+  private readonly route = inject(ActivatedRoute);
+  private readonly productsService = inject(ProductsService);
+  private readonly clientsService = inject(ClientsService);
+  private readonly settingsService = inject(SettingsService);
+  private readonly notifier = inject(ClientActionNotifierService);
 
   /** Client Collateral Form */
   clientCollateralForm: UntypedFormGroup;
@@ -48,7 +48,6 @@ export class AddClientCollateralComponent implements OnInit {
    * Retirives Collateral Form from `resolve`
    * @param {FormBuilder} formBuilder Form bUilder.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {Router} router Router.
    * @param {ProductsService} productsService Products Service
    */
   constructor() {
@@ -122,8 +121,9 @@ export class AddClientCollateralComponent implements OnInit {
       quantity,
       locale
     };
-    this.clientsService.createClientCollateral(this.clientId, clientCollateral).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
+    this.clientsService.createClientCollateral(this.clientId, clientCollateral).subscribe({
+      next: () => this.notifier.notifyAndNavigate('clients.actions.addCollateral.success', this.route),
+      error: () => this.notifier.notify('clients.actions.addCollateral.failure')
     });
   }
 }

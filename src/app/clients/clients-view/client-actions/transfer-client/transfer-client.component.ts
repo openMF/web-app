@@ -8,13 +8,14 @@
 
 /** Angular Imports */
 import { Component, OnInit, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
+import { ClientActionNotifierService } from '../client-action-notifier.service';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -31,12 +32,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class TransferClientComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private clientsService = inject(ClientsService);
-  private dateUtils = inject(Dates);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private settingsService = inject(SettingsService);
+  private readonly formBuilder = inject(UntypedFormBuilder);
+  private readonly clientsService = inject(ClientsService);
+  private readonly dateUtils = inject(Dates);
+  private readonly route = inject(ActivatedRoute);
+  private readonly settingsService = inject(SettingsService);
+  private readonly notifier = inject(ClientActionNotifierService);
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -54,7 +55,6 @@ export class TransferClientComponent implements OnInit {
    * @param {ClientsService} clientsService Clients Service
    * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
-   * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
    */
   constructor() {
@@ -102,8 +102,9 @@ export class TransferClientComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.clientsService.executeClientCommand(this.clientId, 'proposeTransfer', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
+    this.clientsService.executeClientCommand(this.clientId, 'proposeTransfer', data).subscribe({
+      next: () => this.notifier.notifyAndNavigate('clients.actions.transfer.success', this.route),
+      error: () => this.notifier.notify('clients.actions.transfer.failure')
     });
   }
 }

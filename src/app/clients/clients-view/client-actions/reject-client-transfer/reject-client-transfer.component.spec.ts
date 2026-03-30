@@ -1,7 +1,15 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of, throwError } from 'rxjs';
-import { CloseClientComponent } from './close-client.component';
+import { RejectClientTransferComponent } from './reject-client-transfer.component';
 import { ClientsService } from 'app/clients/clients.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
@@ -12,9 +20,9 @@ import { ClientActionNotifierService } from '../client-action-notifier.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { describe, it, expect, jest, beforeEach } from '@jest/globals';
 
-describe('CloseClientComponent', () => {
-  let component: CloseClientComponent;
-  let fixture: ComponentFixture<CloseClientComponent>;
+describe('RejectClientTransferComponent', () => {
+  let component: RejectClientTransferComponent;
+  let fixture: ComponentFixture<RejectClientTransferComponent>;
 
   let clientsService: jest.Mocked<ClientsService>;
   let settingsService: SettingsService;
@@ -22,7 +30,7 @@ describe('CloseClientComponent', () => {
   let notifier: jest.Mocked<ClientActionNotifierService>;
 
   const clientId = '456';
-  const businessDate = new Date(2025, 11, 20);
+  const transferDate = new Date(2025, 10, 1).toISOString();
 
   const setup = async () => {
     clientsService = {
@@ -31,26 +39,25 @@ describe('CloseClientComponent', () => {
 
     settingsService = {
       language: { code: 'en' },
-      dateFormat: 'dd MMMM yyyy',
-      businessDate
+      dateFormat: 'dd MMMM yyyy'
     } as any;
 
     dates = {
-      formatDate: jest.fn(() => '20 March 2026')
+      formatDate: jest.fn(() => '01 November 2025')
     } as any;
 
     notifier = { notifyAndNavigate: jest.fn() } as any;
 
     await TestBed.configureTestingModule({
       imports: [
-        CloseClientComponent,
+        RejectClientTransferComponent,
         TranslateModule.forRoot()
       ],
       providers: [
         {
           provide: ActivatedRoute,
           useValue: {
-            data: of({ clientActionData: { narrations: [] } }),
+            data: of({ clientActionData: transferDate }),
             parent: { snapshot: { params: { clientId } } }
           }
         },
@@ -63,78 +70,35 @@ describe('CloseClientComponent', () => {
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CloseClientComponent);
+    fixture = TestBed.createComponent(RejectClientTransferComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  };
-
-  const fillValidForm = (date: Date | string = new Date(2025, 10, 3)) => {
-    component.closeClientForm.patchValue({
-      closureDate: date,
-      closureReasonId: 1
-    });
   };
 
   beforeEach(setup);
 
   it('should initialize correctly', () => {
     expect(component.clientId).toBe(clientId);
-    expect(component.maxDate).toEqual(businessDate);
-    expect(component.closeClientForm.valid).toBe(false);
+    expect(component.rejectClientTransferForm).toBeDefined();
   });
 
-  it('should be invalid when required fields are missing', () => {
-    expect(component.closeClientForm.valid).toBe(false);
-  });
-
-  it('should be valid when all required fields are provided', () => {
-    fillValidForm();
-    expect(component.closeClientForm.valid).toBe(true);
-  });
-
-  it('should submit and call API with formatted date', () => {
-    const date = new Date(2025, 10, 3);
-    fillValidForm(date);
-
+  it('should call API with rejectTransfer command on submit', () => {
     component.submit();
 
-    expect(dates.formatDate).toHaveBeenCalledWith(date, 'dd MMMM yyyy');
-
-    expect(clientsService.executeClientCommand).toHaveBeenCalledWith(
-      clientId,
-      'close',
-      expect.objectContaining({
-        closureDate: '20 March 2026',
-        closureReasonId: 1,
-        locale: 'en',
-        dateFormat: 'dd MMMM yyyy'
-      })
-    );
-  });
-
-  it('should not format date if already a string', () => {
-    fillValidForm('14 August 2025');
-
-    component.submit();
-
-    expect(dates.formatDate).not.toHaveBeenCalled();
+    expect(clientsService.executeClientCommand).toHaveBeenCalledWith(clientId, 'rejectTransfer', expect.any(Object));
   });
 
   it('should notify and navigate after successful submission', () => {
-    fillValidForm();
-
     component.submit();
 
     expect(notifier.notifyAndNavigate).toHaveBeenCalledWith(
-      'clients.actions.close.success',
+      'clients.actions.rejectTransfer.success',
       TestBed.inject(ActivatedRoute)
     );
   });
 
   it('should not notify and navigate if API call fails', () => {
     clientsService.executeClientCommand.mockReturnValueOnce(throwError(() => new Error('API error')));
-
-    fillValidForm();
 
     component.submit();
 

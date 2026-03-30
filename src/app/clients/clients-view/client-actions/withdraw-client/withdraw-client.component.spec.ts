@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of, throwError } from 'rxjs';
-import { CloseClientComponent } from './close-client.component';
+import { WithdrawClientComponent } from './withdraw-client.component';
 import { ClientsService } from 'app/clients/clients.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
@@ -12,14 +12,14 @@ import { ClientActionNotifierService } from '../client-action-notifier.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { describe, it, expect, jest, beforeEach } from '@jest/globals';
 
-describe('CloseClientComponent', () => {
-  let component: CloseClientComponent;
-  let fixture: ComponentFixture<CloseClientComponent>;
+describe('WithdrawClientComponent', () => {
+  let component: WithdrawClientComponent;
+  let fixture: ComponentFixture<WithdrawClientComponent>;
 
-  let clientsService: jest.Mocked<ClientsService>;
-  let settingsService: SettingsService;
-  let dates: jest.Mocked<Dates>;
-  let notifier: jest.Mocked<ClientActionNotifierService>;
+  let clientsService: Partial<jest.Mocked<ClientsService>>;
+  let settingsService: Partial<SettingsService>;
+  let dates: Partial<jest.Mocked<Dates>>;
+  let notifier: Partial<jest.Mocked<ClientActionNotifierService>>;
 
   const clientId = '456';
   const businessDate = new Date(2025, 11, 20);
@@ -27,23 +27,26 @@ describe('CloseClientComponent', () => {
   const setup = async () => {
     clientsService = {
       executeClientCommand: jest.fn(() => of({}))
-    } as any;
+    };
 
     settingsService = {
       language: { code: 'en' },
       dateFormat: 'dd MMMM yyyy',
       businessDate
-    } as any;
+    } as SettingsService;
 
     dates = {
       formatDate: jest.fn(() => '20 March 2026')
-    } as any;
+    };
 
-    notifier = { notifyAndNavigate: jest.fn() } as any;
+    notifier = {
+      notifyAndNavigate: jest.fn(),
+      notify: jest.fn()
+    };
 
     await TestBed.configureTestingModule({
       imports: [
-        CloseClientComponent,
+        WithdrawClientComponent,
         TranslateModule.forRoot()
       ],
       providers: [
@@ -63,15 +66,15 @@ describe('CloseClientComponent', () => {
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CloseClientComponent);
+    fixture = TestBed.createComponent(WithdrawClientComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   };
 
   const fillValidForm = (date: Date | string = new Date(2025, 10, 3)) => {
-    component.closeClientForm.patchValue({
-      closureDate: date,
-      closureReasonId: 1
+    component.withdrawClientForm.patchValue({
+      withdrawalDate: date,
+      withdrawalReasonId: 1
     });
   };
 
@@ -80,16 +83,16 @@ describe('CloseClientComponent', () => {
   it('should initialize correctly', () => {
     expect(component.clientId).toBe(clientId);
     expect(component.maxDate).toEqual(businessDate);
-    expect(component.closeClientForm.valid).toBe(false);
+    expect(component.withdrawClientForm.valid).toBe(false);
   });
 
   it('should be invalid when required fields are missing', () => {
-    expect(component.closeClientForm.valid).toBe(false);
+    expect(component.withdrawClientForm.valid).toBe(false);
   });
 
   it('should be valid when all required fields are provided', () => {
     fillValidForm();
-    expect(component.closeClientForm.valid).toBe(true);
+    expect(component.withdrawClientForm.valid).toBe(true);
   });
 
   it('should submit and call API with formatted date', () => {
@@ -99,13 +102,12 @@ describe('CloseClientComponent', () => {
     component.submit();
 
     expect(dates.formatDate).toHaveBeenCalledWith(date, 'dd MMMM yyyy');
-
     expect(clientsService.executeClientCommand).toHaveBeenCalledWith(
       clientId,
-      'close',
+      'withdraw',
       expect.objectContaining({
-        closureDate: '20 March 2026',
-        closureReasonId: 1,
+        withdrawalDate: '20 March 2026',
+        withdrawalReasonId: 1,
         locale: 'en',
         dateFormat: 'dd MMMM yyyy'
       })
@@ -126,18 +128,18 @@ describe('CloseClientComponent', () => {
     component.submit();
 
     expect(notifier.notifyAndNavigate).toHaveBeenCalledWith(
-      'clients.actions.close.success',
+      'clients.actions.withdraw.success',
       TestBed.inject(ActivatedRoute)
     );
   });
 
-  it('should not notify and navigate if API call fails', () => {
-    clientsService.executeClientCommand.mockReturnValueOnce(throwError(() => new Error('API error')));
+  it('should notify failure if API call fails', () => {
+    (clientsService.executeClientCommand as jest.Mock).mockReturnValueOnce(throwError(() => new Error('API error')));
 
     fillValidForm();
 
     component.submit();
 
-    expect(notifier.notifyAndNavigate).not.toHaveBeenCalled();
+    expect(notifier.notify).toHaveBeenCalledWith('clients.actions.withdraw.failure');
   });
 });
