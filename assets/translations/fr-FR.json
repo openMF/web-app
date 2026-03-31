@@ -917,6 +917,7 @@
       "does not match": "ne correspond pas",
       "greater equal to than 0": "supérieur égal à 0",
       "greater than": "supérieur à",
+      "higher than allowed": "supérieur à la limite autorisée",
       "invalid": "invalide",
       "is": "est",
       "Is": "Est",
