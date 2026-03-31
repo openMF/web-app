@@ -6,27 +6,22 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/** Angular Imports */
 import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
-
-/** rxjs Imports */
 import { Observable } from 'rxjs';
+import { LoanBaseResolver } from '../loan-base.resolver';
+import { LoansService } from 'app/loans/loans.service';
 
-/** Custom Services */
-import { LoansService } from '../loans.service';
-import { LoanBaseResolver } from './loan-base.resolver';
-
-/**
- * Loan Delinquency data resolver.
- */
-@Injectable()
-export class LoanDelinquencyDataResolver extends LoanBaseResolver {
+@Injectable({
+  providedIn: 'root'
+})
+export class LoanDelinquencyRangeScheduleResolver extends LoanBaseResolver {
   private loansService = inject(LoansService);
 
   constructor() {
     super();
   }
+
   /**
    * Returns the Loans with Association data.
    * @returns {Observable<any>}
@@ -35,9 +30,9 @@ export class LoanDelinquencyDataResolver extends LoanBaseResolver {
     this.initialize(route);
     const loanId = route.paramMap.get('loanId') || route.parent.paramMap.get('loanId');
     if (!isNaN(+loanId)) {
-      return this.isLoanProduct
-        ? this.loansService.getDelinquencyData(loanId)
-        : this.loansService.getWorkingCapitalLoanDetails(loanId);
+      if (this.isWorkingCapital) {
+        return this.loansService.getWorkingCapitalLoanDelinquencyRangeSchedule(loanId);
+      }
     }
   }
 }

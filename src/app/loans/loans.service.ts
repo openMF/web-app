@@ -110,8 +110,8 @@ export class LoansService {
     return this.http.delete(`/loans/${loanId}`);
   }
 
-  getDelinquencyTags(productType: string, loanId: string): Observable<any> {
-    return this.http.get(`/${productType}/${loanId}/delinquencytags`);
+  getDelinquencyTags(loanId: string): Observable<any> {
+    return this.http.get(`/loans/${loanId}/delinquencytags`);
   }
 
   getDelinquencyData(loanId: string) {
@@ -133,8 +133,8 @@ export class LoansService {
     return this.http.get(`/${productType}/${loanId}/delinquency-actions`);
   }
 
-  createDelinquencyActions(loanId: string, delinquencyActions: any) {
-    return this.http.post(`/loans/${loanId}/delinquency-actions`, delinquencyActions);
+  createDelinquencyActions(productType: string, loanId: string, delinquencyActions: any) {
+    return this.http.post(`/${productType}/${loanId}/delinquency-actions`, delinquencyActions);
   }
 
   getDeferredIncomeData(loanId: string) {
@@ -143,6 +143,10 @@ export class LoansService {
 
   getBuyDownFeeData(loanId: string): Observable<any> {
     return this.http.get(`/loans/${loanId}/buydown-fees`);
+  }
+
+  getWorkingCapitalLoanDelinquencyRangeSchedule(loanId: string) {
+    return this.http.get(`/working-capital-loans/${loanId}/delinquency-range-schedule`);
   }
 
   /**

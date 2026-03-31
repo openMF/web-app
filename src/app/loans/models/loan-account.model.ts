@@ -181,3 +181,17 @@ export interface LoanOriginator {
   originatorType: CodeValue;
   channelType: CodeValue;
 }
+
+export interface DelinquencyRangeSchedule {
+  id: number;
+  loanId: number;
+  periodNumber: number;
+  fromDate: string;
+  toDate: string;
+  expectedAmount: number;
+  paidAmount: number;
+  outstandingAmount: number;
+  minPaymentCriteriaMet?: boolean;
+  delinquentDays?: number;
+  delinquentAmount?: number;
+}

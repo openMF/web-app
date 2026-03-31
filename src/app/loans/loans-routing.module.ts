@@ -78,6 +78,7 @@ import { LoanBuyDownFeesDataResolver } from './common-resolvers/loan-buy-down-fe
 import { LoanOriginatorsTabComponent } from './loans-view/loan-originators-tab/loan-originators-tab.component';
 import { LoanOriginatorsResolver } from './common-resolvers/loan-originators.resolver';
 import { LoanProductsResolver } from './common-resolvers/loan-products.resolver';
+import { LoanDelinquencyRangeScheduleResolver } from './common-resolvers/working-capital/loan-delinquency-actions.resolver';
 
 /** Loans Route. */
 const routes: Routes = [
@@ -168,7 +169,8 @@ const routes: Routes = [
             resolve: {
               loanDelinquencyTagsData: LoanDelinquencyTagsResolver,
               loanDelinquencyData: LoanDelinquencyDataResolver,
-              loanDelinquencyActions: LoanDelinquencyActionsResolver
+              loanDelinquencyActions: LoanDelinquencyActionsResolver,
+              wcLoanDelinquencyRangeSchedule: LoanDelinquencyRangeScheduleResolver
             },
             children: [
               {

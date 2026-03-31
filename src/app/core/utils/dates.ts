@@ -52,6 +52,20 @@ export class Dates {
     }
   }
 
+  public isBefore(date1: Date, date2: Date): boolean {
+    return (
+      Date.UTC(date1.getFullYear(), date1.getMonth(), date1.getDate()) <
+      Date.UTC(date2.getFullYear(), date2.getMonth(), date2.getDate())
+    );
+  }
+
+  public isAfter(date1: Date, date2: Date): boolean {
+    return (
+      Date.UTC(date1.getFullYear(), date1.getMonth(), date1.getDate()) >
+      Date.UTC(date2.getFullYear(), date2.getMonth(), date2.getDate())
+    );
+  }
+
   public parseDatetime(value: any): Date {
     return moment(value).toDate();
   }

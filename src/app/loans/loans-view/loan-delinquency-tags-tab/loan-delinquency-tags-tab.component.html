@@ -7,73 +7,75 @@
 -->
 
 <div class="container">
-  <h3>{{ 'labels.heading.Loan Delinquency Tags' | translate }}</h3>
+  @if (loanProductService.isLoanProduct) {
+    <h3>{{ 'labels.heading.Loan Delinquency Tags' | translate }}</h3>
 
-  @if (loanDelinquencyTags.length > 0) {
-    <table mat-table [dataSource]="loanDelinquencyTags">
-      <ng-container matColumnDef="classification">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Delinquency Classification' | translate }}</th>
-        <td mat-cell *matCellDef="let item">
-          {{ item.delinquencyRange.classification }}
-          @if (item.delinquencyRange.maximumAgeDays) {
-            <span>( {{ item.delinquencyRange.minimumAgeDays }} - {{ item.delinquencyRange.maximumAgeDays }} )</span>
-          }
-          @if (!item.delinquencyRange.maximumAgeDays) {
-            <span>( {{ item.delinquencyRange.minimumAgeDays }} )</span>
-          }
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="addedOn">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Added On' | translate }}</th>
-        <td mat-cell *matCellDef="let item">
-          @if (item.addedOnDate) {
-            <span>
-              {{ item.addedOnDate | dateFormat }}
-            </span>
-          }
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="liftedOn">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Lifted On' | translate }}</th>
-        <td mat-cell *matCellDef="let item">
-          @if (item.liftedOnDate) {
-            <span>
-              {{ item.liftedOnDate | dateFormat }}
-            </span>
-          }
-        </td>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="loanDelinquencyTagsColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: loanDelinquencyTagsColumns"></tr>
-    </table>
-  }
-
-  @if (installmentLevelDelinquency.length > 0) {
-    <div>
-      <h3>{{ 'labels.heading.Loan Delinquency Installment Tags' | translate }}</h3>
-      <table mat-table [dataSource]="installmentLevelDelinquency">
+    @if (loanDelinquencyTags.length > 0) {
+      <table mat-table [dataSource]="loanDelinquencyTags">
         <ng-container matColumnDef="classification">
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Delinquency Classification' | translate }}</th>
-          <td mat-cell *matCellDef="let item">{{ item.classification }}</td>
-        </ng-container>
-        <ng-container matColumnDef="minimumAgeDays">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Days' | translate }}</th>
-          <td mat-cell *matCellDef="let item">{{ item.minimumAgeDays | formatNumber }}</td>
-        </ng-container>
-        <ng-container matColumnDef="amount">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
           <td mat-cell *matCellDef="let item">
-            {{ item.delinquentAmount | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+            {{ item.delinquencyRange.classification }}
+            @if (item.delinquencyRange.maximumAgeDays) {
+              <span>( {{ item.delinquencyRange.minimumAgeDays }} - {{ item.delinquencyRange.maximumAgeDays }} )</span>
+            }
+            @if (!item.delinquencyRange.maximumAgeDays) {
+              <span>( {{ item.delinquencyRange.minimumAgeDays }} )</span>
+            }
           </td>
         </ng-container>
-        <tr mat-header-row *matHeaderRowDef="installmentDelinquencyTagsColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: installmentDelinquencyTagsColumns"></tr>
+        <ng-container matColumnDef="addedOn">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Added On' | translate }}</th>
+          <td mat-cell *matCellDef="let item">
+            @if (item.addedOnDate) {
+              <span>
+                {{ item.addedOnDate | dateFormat }}
+              </span>
+            }
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="liftedOn">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Lifted On' | translate }}</th>
+          <td mat-cell *matCellDef="let item">
+            @if (item.liftedOnDate) {
+              <span>
+                {{ item.liftedOnDate | dateFormat }}
+              </span>
+            }
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="loanDelinquencyTagsColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: loanDelinquencyTagsColumns"></tr>
       </table>
-    </div>
+    }
+
+    @if (installmentLevelDelinquency.length > 0) {
+      <div>
+        <h3>{{ 'labels.heading.Loan Delinquency Installment Tags' | translate }}</h3>
+        <table mat-table [dataSource]="installmentLevelDelinquency">
+          <ng-container matColumnDef="classification">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Delinquency Classification' | translate }}</th>
+            <td mat-cell *matCellDef="let item">{{ item.classification }}</td>
+          </ng-container>
+          <ng-container matColumnDef="minimumAgeDays">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Days' | translate }}</th>
+            <td mat-cell *matCellDef="let item">{{ item.minimumAgeDays | formatNumber }}</td>
+          </ng-container>
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
+            <td mat-cell *matCellDef="let item">
+              {{ item.delinquentAmount | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="installmentDelinquencyTagsColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: installmentDelinquencyTagsColumns"></tr>
+        </table>
+      </div>
+    }
   }
 
-  @if (allowPause) {
-    <div class="layout-row m-t-20 m-b-10 align-end align-items-center">
+  <div class="layout-row m-t-20 m-b-10 align-end align-items-center gap-5px">
+    @if (allowPause) {
       <button
         mat-raised-button
         color="primary"
@@ -83,13 +85,27 @@
         <fa-icon icon="pause" class="m-r-10"></fa-icon
         >{{ 'labels.buttons.Pause Delinquency Classification' | translate }}
       </button>
-    </div>
-  }
+    }
+    @if (loanProductService.isWorkingCapital) {
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="createDelinquencyActionReschedule()"
+        *mifosxHasPermission="'CREATE_WC_DELINQUENCY_ACTION'"
+      >
+        <fa-icon icon="calendar" class="m-r-10"></fa-icon>{{ 'labels.buttons.Reschedule' | translate }}
+      </button>
+    }
+  </div>
 
   @if (loanDelinquencyActions.length > 0) {
     <div class="m-t-10">
       <h3>{{ 'labels.heading.Loan Delinquency Actions' | translate }}</h3>
       <table mat-table [dataSource]="loanDelinquencyActions">
+        <ng-container matColumnDef="identifier">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Id' | translate }}</th>
+          <td mat-cell *matCellDef="let item">{{ item.id }}</td>
+        </ng-container>
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Action' | translate }}</th>
           <td mat-cell *matCellDef="let item" ngClass="{{ actionClass(item.action) }}">{{ item.action }}</td>
@@ -100,16 +116,41 @@
         </ng-container>
         <ng-container matColumnDef="endDate">
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.End Date' | translate }}</th>
-          <td mat-cell *matCellDef="let item">{{ item.endDate | dateFormat }}</td>
+          <td mat-cell *matCellDef="let item">
+            @if (item.endDate) {
+              {{ item.endDate | dateFormat }}
+            }
+          </td>
         </ng-container>
-        <ng-container matColumnDef="createdOn">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Created On' | translate }}</th>
-          <td mat-cell *matCellDef="let item">{{ item.createdOn | datetimeFormat }}</td>
-        </ng-container>
+        @if (loanProductService.isLoanProduct) {
+          <ng-container matColumnDef="createdOn">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Created On' | translate }}</th>
+            <td mat-cell *matCellDef="let item">{{ item.createdOn | datetimeFormat }}</td>
+          </ng-container>
+        }
+        @if (loanProductService.isWorkingCapital) {
+          <ng-container matColumnDef="minimumPayment">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Minimum Payment' | translate }}</th>
+            <td mat-cell *matCellDef="let item">
+              @if (item.action === 'RESCHEDULE') {
+                {{ item.minimumPayment | formatNumber: '' : 0 }}
+                {{ item.minimumPaymentType | translateKey: 'catalogs' }}
+              }
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="frequency">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Frequency' | translate }}</th>
+            <td mat-cell *matCellDef="let item">
+              @if (item.action === 'RESCHEDULE') {
+                {{ item.frequency | formatNumber: '' : 0 }} {{ item.frequencyType | translateKey: 'catalogs' }}
+              }
+            </td>
+          </ng-container>
+        }
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
           <td mat-cell *matCellDef="let item">
-            @if (isCurrentAndPauseAction(item)) {
+            @if (loanProductService.isLoanProduct && isCurrentAndPauseAction(item)) {
               <span>
                 <button
                   mat-button
@@ -126,6 +167,55 @@
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="loanDelinquencyActionsColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: loanDelinquencyActionsColumns"></tr>
+      </table>
+    </div>
+  }
+  @if (wcLoanDelinquencyRangeSchedule.length > 0) {
+    <div class="m-t-10">
+      <h3>{{ 'labels.heading.Loan Delinquency Range Schedule' | translate }}</h3>
+      <table mat-table [dataSource]="wcLoanDelinquencyRangeSchedule">
+        <ng-container matColumnDef="periodNumber">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Period' | translate }}</th>
+          <td mat-cell *matCellDef="let item">{{ item.periodNumber }}</td>
+        </ng-container>
+        <ng-container matColumnDef="fromDate">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Start Date' | translate }}</th>
+          <td mat-cell *matCellDef="let item">{{ item.fromDate | dateFormat }}</td>
+        </ng-container>
+        <ng-container matColumnDef="toDate">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.End Date' | translate }}</th>
+          <td mat-cell *matCellDef="let item">{{ item.toDate | dateFormat }}</td>
+        </ng-container>
+        <ng-container matColumnDef="expectedAmount">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Expected Amount' | translate }}</th>
+          <td mat-cell *matCellDef="let item" class="r-amount">{{ item.expectedAmount | formatNumber }}</td>
+        </ng-container>
+        <ng-container matColumnDef="paidAmount">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Paid Amount' | translate }}</th>
+          <td mat-cell *matCellDef="let item" class="r-amount">{{ item.paidAmount | formatNumber }}</td>
+        </ng-container>
+        <ng-container matColumnDef="outstandingAmount">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Outstanding Amount' | translate }}</th>
+          <td mat-cell *matCellDef="let item" class="r-amount">{{ item.outstandingAmount | formatNumber }}</td>
+        </ng-container>
+        <ng-container matColumnDef="delinquentDays">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Delinquent Days' | translate }}</th>
+          <td mat-cell *matCellDef="let item" class="r-amount">{{ item.delinquentDays | formatNumber }}</td>
+        </ng-container>
+        <ng-container matColumnDef="delinquentAmount">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Delinquent Amount' | translate }}</th>
+          <td mat-cell *matCellDef="let item" class="r-amount">{{ item.delinquentAmount | formatNumber }}</td>
+        </ng-container>
+        <ng-container matColumnDef="minPaymentCriteriaMet">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Minimum Payment Criteria Met' | translate }}</th>
+          <td mat-cell *matCellDef="let item" class="center">
+            <div [ngClass]="item.minPaymentCriteriaMet ? 'enabled' : 'disabled'">
+              <fa-icon icon="circle" size="lg"></fa-icon>
+            </div>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="loanDelinquencyRangeScheduleColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: loanDelinquencyRangeScheduleColumns"></tr>
       </table>
     </div>
   }

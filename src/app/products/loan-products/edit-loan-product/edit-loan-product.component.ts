@@ -414,15 +414,6 @@ export class EditLoanProductComponent extends LoanProductBaseComponent implement
       delete loanProduct['useDueForRepaymentsConfigurations'];
     }
 
-    // No Empty values to be sent
-    [
-      'nearBreachId'
-    ].forEach((attr: string) => {
-      if (loanProduct[attr] === null || loanProduct[attr] === '') {
-        delete loanProduct[attr];
-      }
-    });
-
     this.productsService
       .updateLoanProduct(this.loanProductService.loanProductPath, this.loanProductAndTemplate.id, loanProduct)
       .subscribe((response: any) => {

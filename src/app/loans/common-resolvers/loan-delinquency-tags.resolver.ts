@@ -36,7 +36,9 @@ export class LoanDelinquencyTagsResolver extends LoanBaseResolver {
     this.initialize(route);
     const loanId = route.paramMap.get('loanId') || route.parent.paramMap.get('loanId');
     if (!isNaN(+loanId)) {
-      return this.loansService.getDelinquencyTags(this.loanAccountPath, loanId);
+      if (this.isLoanProduct) {
+        return this.loansService.getDelinquencyTags(loanId);
+      }
     }
   }
 }

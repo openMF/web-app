@@ -375,15 +375,6 @@ export class CreateLoanProductComponent extends LoanProductBaseComponent impleme
   submitWCProduct(): void {
     const loanProduct = this.loanProducts.buildPayload(this.loanProduct, this.itemsByDefault);
 
-    // No Empty values to be sent
-    [
-      'nearBreachId'
-    ].forEach((attr: string) => {
-      if (loanProduct[attr] === null || loanProduct[attr] === '') {
-        delete loanProduct[attr];
-      }
-    });
-
     this.productsService
       .createLoanProduct(this.loanProductService.loanProductPath, loanProduct)
       .subscribe((response: any) => {

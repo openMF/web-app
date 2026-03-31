@@ -86,12 +86,8 @@ export class FooterComponent implements OnInit, OnDestroy {
     if (this.displayBackEndInfo) {
       this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
         const alertType = alertEvent.type;
-        if (
-          alertType ===
-          this.translateService.instant('errors.config.setConfig', { type: SettingsService.businessDateType })
-        ) {
-          this.isBusinessDateEnabled =
-            alertEvent.message === this.translateService.instant('labels.inputs.Enabled') ? true : false;
+        if (alertType === SettingsService.businessDateType + ' Set Config') {
+          this.isBusinessDateEnabled = alertEvent.enabled ? true : false;
           this.isBusinessDateDefined = false;
           if (this.isBusinessDateEnabled) {
             this.setBusinessDate();

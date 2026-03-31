@@ -155,9 +155,11 @@ export class GlobalConfigurationsTabComponent implements OnInit, AfterViewInit {
           const msg = configuration.enabled
             ? this.translateService.instant('labels.inputs.Enabled')
             : this.translateService.instant('labels.inputs.Disabled');
+          // Do not change Type, It is linked to other stuffs
           this.alertService.alert({
-            type: this.translateService.instant('errors.config.setConfig', { type: SettingsService.businessDateType }),
-            message: msg
+            type: SettingsService.businessDateType + ' Set Config',
+            message: msg,
+            enabled: configuration.enabled
           });
         }
       });
