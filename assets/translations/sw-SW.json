@@ -887,7 +887,8 @@
       "Working Capital": "Mtaji wa Kufanya Kazi",
       "DAYS": "SIKU",
       "MONTHS": "MIEZI",
-      "YEARS": "MIAKA"
+      "YEARS": "MIAKA",
+      "Loan Creation": "Uundaji wa Mikopo"
     },
     "commons": {
       "50 characters long": "Urefu wa herufi 50",
@@ -915,6 +916,7 @@
       "greater equal to than 0": "kubwa zaidi ya 0",
       "higher than allowed": "juu kuliko inavyoruhusiwa",
       "invalid": "batili",
+      "Invalid amount format": "Muundo batili wa kiasi",
       "is": "ni",
       "Is": "Ni",
       "is required": "inahitajika",
@@ -1761,6 +1763,8 @@
       "Delinquency Bucket": "Ndoo ya Uhalifu",
       "Delinquency Classification": "Uainishaji wa Uhalifu",
       "Delinquency Payment Rule": "Sheria ya Malipo ya Uhalifu",
+      "Delinquency Grace Days": "Siku za Neema za Uhalifu",
+      "Delinquency Start Type": "Aina ya Mwanzo wa Uhalifu",
       "Delinquency Tags": "Lebo za Uhalifu",
       "Delinquent Days": "Siku za Uhalifu",
       "Delivery Method": "Njia ya Utoaji",

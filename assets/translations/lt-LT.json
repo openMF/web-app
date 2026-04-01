@@ -887,7 +887,8 @@
       "Working Capital": "Apyvartinis kapitalas",
       "DAYS": "DIENOS",
       "MONTHS": "MĖNESIŲ",
-      "YEARS": "METAI"
+      "YEARS": "METAI",
+      "Loan Creation": "Paskolos sukūrimas"
     },
     "commons": {
       "50 characters long": "50 simbolių ilgio",
@@ -915,6 +916,7 @@
       "greater equal to than 0": "didesnis lygus 0",
       "higher than allowed": "didesnis nei leidžiamas",
       "invalid": "negaliojančiais",
+      "Invalid amount format": "Neteisingas sumos formatas",
       "is": "yra",
       "Is": "Yra",
       "is required": "yra būtinas",
@@ -1763,6 +1765,8 @@
       "Delinquency Bucket": "Nusikaltimų kibiras",
       "Delinquency Classification": "Nusikaltimų klasifikacija",
       "Delinquency Payment Rule": "Mokėjimo už delspinigius taisyklė",
+      "Delinquency Grace Days": "Delspinigių dienos",
+      "Delinquency Start Type": "Delspinigių pradžios tipas",
       "Delinquency Tags": "Nusikaltimų žymos",
       "Delinquent Days": "Nusikaltėlių dienos",
       "Delivery Method": "Pristatymo būdas",

@@ -888,7 +888,8 @@
       "Working Capital": "Capitale circolante",
       "DAYS": "GIORNI",
       "MONTHS": "MESI",
-      "YEARS": "ANNI"
+      "YEARS": "ANNI",
+      "Loan Creation": "Creazione di prestiti"
     },
     "commons": {
       "50 characters long": "50 caratteri di lunghezza",
@@ -916,6 +917,7 @@
       "greater equal to than 0": "maggiore uguale a 0",
       "higher than allowed": "superiore al consentito",
       "invalid": "non valido",
+      "Invalid amount format": "Format de montant invalide",
       "is": "È",
       "Is": "È",
       "is required": "è obbligatorio",
@@ -1764,6 +1766,8 @@
       "Delinquency Bucket": "Il secchio della delinquenza",
       "Delinquency Classification": "Classificazione della delinquenza",
       "Delinquency Payment Rule": "Regola di pagamento in ritardo",
+      "Delinquency Grace Days": "Giorni di grazia per i delinquenti",
+      "Delinquency Start Type": "Tipo di inizio della delinquenza",
       "Delinquency Tags": "Tag di delinquenza",
       "Delinquent Days": "Giorni delinquenti",
       "Delivery Method": "metodo di consegna",

@@ -889,7 +889,8 @@
       "Working Capital": "Apgrozāmie līdzekļi",
       "DAYS": "DIENAS",
       "MONTHS": "MĒNEŠI",
-      "YEARS": "GADI"
+      "YEARS": "GADI",
+      "Loan Creation": "Aizdevuma izveide"
     },
     "commons": {
       "50 characters long": "50 rakstzīmes garš",
@@ -917,6 +918,7 @@
       "greater equal to than 0": "lielāks, vienāds ar 0",
       "higher than allowed": "augstāk nekā atļauts",
       "invalid": "nederīgs",
+      "Invalid amount format": "Nederīgs summas formāts",
       "is": "ir",
       "Is": "Ir",
       "is required": "ir nepieciešams",
@@ -1765,6 +1767,8 @@
       "Delinquency Bucket": "Noziedzības spainis",
       "Delinquency Classification": "Noziedzības klasifikācija",
       "Delinquency Payment Rule": "Kavējuma maksājuma noteikums",
+      "Delinquency Grace Days": "Nokavējuma atvieglojumu dienas",
+      "Delinquency Start Type": "Kavējuma sākuma veids",
       "Delinquency Tags": "Noziedzības tagi",
       "Delinquent Days": "Noziedznieku dienas",
       "Delivery Method": "Piegāde metode",

@@ -889,7 +889,8 @@
       "Working Capital": "Capital de giro",
       "DAYS": "DIAS",
       "MONTHS": "MESES",
-      "YEARS": "ANOS"
+      "YEARS": "ANOS",
+      "Loan Creation": "Criação de Empréstimo"
     },
     "commons": {
       "50 characters long": "50 caracteres",
@@ -917,6 +918,7 @@
       "greater equal to than 0": "maior igual a 0",
       "higher than allowed": "superior ao permitido",
       "invalid": "inválido",
+      "Invalid amount format": "Formato de valor inválido",
       "is": "é",
       "Is": "É",
       "is required": "é necessário",
@@ -1764,6 +1766,8 @@
       "Delinquency Bucket": "Balde de inadimplência",
       "Delinquency Classification": "Classificação de Inadimplência",
       "Delinquency Payment Rule": "Regra de pagamento de inadimplência",
+      "Delinquency Grace Days": "Dias de Tolerância para Delinquência",
+      "Delinquency Start Type": "Tipo de início de inadimplência",
       "Delinquency Tags": "Tags de inadimplência",
       "Delinquent Days": "Dias de Inadimplência",
       "Delivery Method": "Método de Entrega",
