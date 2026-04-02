@@ -1800,6 +1800,7 @@
       "Disbursement On": "Utoaji Umewashwa",
       "Disbursement on": "Ulipaji umewashwa",
       "Discount": "Punguzo",
+      "Discount must be greater than or equal to 0": "Punguzo lazima liwe kubwa au sawa na 0",
       "Display Name": "Jina la Kuonyesha",
       "Dividend Amount": "Kiasi cha Mgao",
       "Dividend Period End Date": "Tarehe ya Mwisho ya Kipindi cha Gawio",
@@ -2244,6 +2245,7 @@
       "Not Available": "Haipatikani",
       "Not Provided": "Haijatolewa",
       "Note": "Kumbuka",
+      "Note is too long": "Dokezo ni refu mno",
       "Notes": "Vidokezo",
       "Notes/Comments": "Vidokezo/Maoni",
       "Notification": "Taarifa",
@@ -2257,6 +2259,7 @@
       "Number of Active Overdue Group Loans": "Idadi ya Mikopo ya Kikundi ambayo Haijalipwa",
       "Number of Centers": "Idadi ya Vituo",
       "Number of Clients": "Idadi ya Wateja",
+      "Please enter a valid number": "Tafadhali weka namba halali",
       "Number of Collaterals": "Idadi ya dhamana",
       "Number of Days to Dormant sub-status": "Idadi ya Siku hadi hali ndogo ya Dormant",
       "Number of Days to Escheat": "Idadi ya Siku za Escheat",
@@ -2974,6 +2977,7 @@
       "Withdrawal": "Uondoaji",
       "Withdrawn by Client": "Imetolewa na mteja",
       "Write Off": "Andika",
+      "Update discount": "Sasisha punguzo",
       "Apply Additional Shares": "Omba Ziada",
       "Redeem Shares": "Komboa Hisa",
       "Approve Additional Shares": "Idhinisha Hisa za Ziada",
@@ -4046,7 +4050,9 @@
       "No Closed Share Accounts Found": "Hakuna akaunti za hisa zilizofungwa zilizopatikana",
       "No Collateral Data Found": "Hakuna data ya dhamana iliyopatikana",
       "No Identities Found": "Hakuna vitambulisho vilivyopatikana",
-      "validationSaved": "Data ya uthibitishaji imehifadhiwa kwa mafanikio."
+      "validationSaved": "Data ya uthibitishaji imehifadhiwa kwa mafanikio.",
+      "workingCapitalDiscountUpdated": "Punguzo la mkopo wa mtaji wa kufanya kazi limefanikiwa kusasishwa.",
+      "unableToUpdateDiscount": "Haikuwezekana kusasisha punguzo."
     }
   },
   "languages": {

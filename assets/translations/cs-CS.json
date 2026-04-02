@@ -1801,6 +1801,7 @@
       "Disbursement On": "Vyplácení zapnuto",
       "Disbursement on": "Výplata zapnuta",
       "Discount": "Sleva",
+      "Discount must be greater than or equal to 0": "Sleva musí být větší nebo rovna 0",
       "Display Name": "Zobrazovaný název",
       "Dividend Amount": "Částka dividendy",
       "Dividend Period End Date": "Datum ukončení dividendového období",
@@ -2246,6 +2247,7 @@
       "Not Available": "Není dostupný",
       "Not Provided": "Není poskytnuto",
       "Note": "Poznámka",
+      "Note is too long": "Poznámka je příliš dlouhá",
       "Notes": "Poznámky",
       "Notes/Comments": "Poznámky/Komentáře",
       "Notification": "Oznámení",
@@ -2259,6 +2261,7 @@
       "Number of Active Overdue Group Loans": "Počet aktivních skupinových půjček po splatnosti",
       "Number of Centers": "Počet středisek",
       "Number of Clients": "Počet klientů",
+      "Please enter a valid number": "Zadejte prosím platné číslo",
       "Number of Collaterals": "Počet kolaterálů",
       "Number of Days to Dormant sub-status": "Dílčí stav Počet dnů do klidového stavu",
       "Number of Days to Escheat": "Počet dní do Escheat",
@@ -2979,6 +2982,7 @@
       "Withdrawal": "Vybrání",
       "Withdrawn by Client": "Staženo klientem",
       "Write Off": "Odepsat",
+      "Update discount": "Aktualizovat slevu",
       "Apply Additional Shares": "Použít další",
       "Redeem Shares": "Uplatnit akcie",
       "Approve Additional Shares": "Schválit další akcie",
@@ -4072,7 +4076,9 @@
     "No Closed Share Accounts Found": "Žádné uzavřené účty podílů nalezeny",
     "No Collateral Data Found": "Žádná data o kolaterálu nalezeny",
     "No Identities Found": "Žádné identity nalezeny",
-    "validationSaved": "Data ověření byla úspěšně uložena."
+    "validationSaved": "Data ověření byla úspěšně uložena.",
+    "workingCapitalDiscountUpdated": "Sleva pro úvěr pracovního kapitálu byla úspěšně aktualizována.",
+    "unableToUpdateDiscount": "Slevu se nepodařilo aktualizovat."
   },
   "languages": {
     "cs-CS": "Čeština",

@@ -1806,6 +1806,7 @@
       "Disbursement On": "Dispersión en",
       "Disbursement on": "Dispersión en",
       "Discount": "Descuento",
+      "Discount must be greater than or equal to 0": "El descuento debe ser mayor o igual a 0",
       "Display Name": "Nombre para mostrar",
       "Dividend Amount": "Monto del dividendo",
       "Dividend Period End Date": "Fecha de finalización del período de dividendos",
@@ -2252,6 +2253,7 @@
       "Not Available": "No encontrado",
       "Not Provided": "No provisto",
       "Note": "Nota",
+      "Note is too long": "La nota es demasiado larga",
       "Notes": "Notas",
       "Notes/Comments": "Notas/Comentarios",
       "Notification": "Notificación",
@@ -2265,6 +2267,7 @@
       "Number of Active Overdue Group Loans": "Número de Créditos grupales vencidos activos",
       "Number of Centers": "Número de Centros",
       "Number of Clients": "Número de clientes",
+      "Please enter a valid number": "Por favor, introduzca un número válido",
       "Number of Collaterals": "Número de garantías",
       "Number of Days to Dormant sub-status": "Número de días hasta el estado inactivo",
       "Number of Days to Escheat": "Número de días para no reclamo",
@@ -2992,6 +2995,7 @@
       "User Panel": "Panel de usuario",
       "Users": "Usuarios",
       "View Guarantor": "Ver aval",
+      "Update discount": "Actualizar descuento",
       "View Guarantors": "Ver avales",
       "Waive Interest": "Renunciar a intereses",
       "Withdrawal": "Retiro",
@@ -4068,7 +4072,9 @@
       "No Closed Share Accounts Found": "No se encontraron cuentas de acciones cerradas",
       "No Collateral Data Found": "No se encontraron datos de garantía",
       "No Identities Found": "No se encontraron identidades",
-      "validationSaved": "Datos de validación guardados exitosamente."
+      "validationSaved": "Datos de validación guardados exitosamente.",
+      "workingCapitalDiscountUpdated": "El descuento del préstamo de capital de trabajo se actualizó correctamente.",
+      "unableToUpdateDiscount": "No se pudo actualizar el descuento."
     }
   },
   "languages": {

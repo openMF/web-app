@@ -1802,6 +1802,7 @@
       "Disbursement On": "Išmokėjimas Įjungtas",
       "Disbursement on": "Išmokėjimas įjungtas",
       "Discount": "Nuolaida",
+      "Discount must be greater than or equal to 0": "Nuolaida turi būti didesnė arba lygi 0",
       "Display Name": "Rodomas pavadinimas",
       "Dividend Amount": "Dividendų suma",
       "Dividend Period End Date": "Dividendų laikotarpio pabaigos data",
@@ -2246,6 +2247,7 @@
       "Not Available": "Nepasiekiamas",
       "Not Provided": "Nepateikta",
       "Note": "Pastaba",
+      "Note is too long": "Pastaba per ilga",
       "Notes": "Pastabos",
       "Notes/Comments": "Pastabos/Komentarai",
       "Notification": "Pranešimas",
@@ -2259,6 +2261,7 @@
       "Number of Active Overdue Group Loans": "Aktyviai pradelstų grupės paskolų skaičius",
       "Number of Centers": "Centrų skaičius",
       "Number of Clients": "Klientų skaičius",
+      "Please enter a valid number": "Įveskite tinkamą skaičių",
       "Number of Collaterals": "Užstatų skaičius",
       "Number of Days to Dormant sub-status": "Dienų skaičius iki neaktyvios būsenos",
       "Number of Days to Escheat": "Dienų skaičius iki Escheat",
@@ -2979,6 +2982,7 @@
       "Withdrawal": "Pasitraukimas",
       "Withdrawn by Client": "Atsiėmė klientas",
       "Write Off": "Nusirašinėti",
+      "Update discount": "Atnaujinti nuolaidą",
       "Apply Additional Shares": "Taikyti Papildomą",
       "Redeem Shares": "Išpirkti akcijas",
       "Approve Additional Shares": "Patvirtinti papildomas akcijas",
@@ -4051,7 +4055,9 @@
       "No Closed Share Accounts Found": "Nerasta uždarytų akcijų sąskaitų",
       "No Collateral Data Found": "Nerasta užstato duomenų",
       "No Identities Found": "Nerasta tapatybių",
-      "validationSaved": "Patvirtinimo duomenys sėkmingai išsaugoti."
+      "validationSaved": "Patvirtinimo duomenys sėkmingai išsaugoti.",
+      "workingCapitalDiscountUpdated": "Apyvartinio kapitalo paskolos nuolaida buvo sėkmingai atnaujinta.",
+      "unableToUpdateDiscount": "Nepavyko atnaujinti nuolaidos."
     }
   },
   "languages": {

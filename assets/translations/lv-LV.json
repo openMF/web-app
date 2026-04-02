@@ -1804,6 +1804,7 @@
       "Disbursement On": "Izmaksa ieslēgta",
       "Disbursement on": "Izmaksa ieslēgta",
       "Discount": "Atlaide",
+      "Discount must be greater than or equal to 0": "Atlaidei jābūt lielākai vai vienādai ar 0",
       "Display Name": "Parādāmais nosaukums",
       "Dividend Amount": "Dividenžu summa",
       "Dividend Period End Date": "Dividenžu perioda beigu datums",
@@ -2248,6 +2249,7 @@
       "Not Available": "Nav pieejams",
       "Not Provided": "Nav nodrošināts",
       "Note": "Piezīme",
+      "Note is too long": "Piezīme ir pārāk gara",
       "Notes": "Piezīmes",
       "Notes/Comments": "Piezīmes/Komentāri",
       "Notification": "Paziņojums",
@@ -2261,6 +2263,7 @@
       "Number of Active Overdue Group Loans": "Aktīvi kavēto grupas aizdevumu skaits",
       "Number of Centers": "Centru skaits",
       "Number of Clients": "Klientu skaits",
+      "Please enter a valid number": "Lūdzu, ievadiet derīgu skaitli",
       "Number of Collaterals": "Ķīlu skaits",
       "Number of Days to Dormant sub-status": "Dienu skaits līdz apakšstatusam Neaktīvs",
       "Number of Days to Escheat": "Dienu skaits līdz Escheat",
@@ -2978,6 +2981,7 @@
       "Withdrawal": "Izņemšana",
       "Withdrawn by Client": "Izņēmis klients",
       "Write Off": "Norakstīt",
+      "Update discount": "Atjaunināt atlaidi",
       "Apply Additional Shares": "Lietot papildu",
       "Redeem Shares": "Izpirkt Akcijas",
       "Approve Additional Shares": "Apstipriniet papildu akcijas",
@@ -4050,7 +4054,9 @@
       "No Closed Share Accounts Found": "Nav atrasts slēgtu akciju kontu",
       "No Collateral Data Found": "Nav atrasts nodrošinājuma datu",
       "No Identities Found": "Nav atrastas identitātes",
-      "validationSaved": "Validācijas dati veiksmīgi saglabāti."
+      "validationSaved": "Validācijas dati veiksmīgi saglabāti.",
+      "workingCapitalDiscountUpdated": "Apgrozāmo līdzekļu aizdevuma atlaide ir veiksmīgi atjaunināta.",
+      "unableToUpdateDiscount": "Neizdevās atjaunināt atlaidi."
     }
   },
   "languages": {

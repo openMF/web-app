@@ -1801,6 +1801,7 @@
       "Disbursement On": "वितरण सुरु",
       "Disbursement on": "वितरण जारी छ",
       "Discount": "छुट",
+      "Discount must be greater than or equal to 0": "छुट ० वा त्योभन्दा बढी हुनुपर्छ",
       "Display Name": "प्रदर्शन नाम",
       "Dividend Amount": "लाभांश रकम",
       "Dividend Period End Date": "लाभांश अवधि समाप्ति मिति",
@@ -2245,6 +2246,7 @@
       "Not Available": "उपलब्ध छैन",
       "Not Provided": "प्रदान गरिएको छैन",
       "Note": "नोट",
+      "Note is too long": "नोट धेरै लामो छ",
       "Notes": "नोटहरू",
       "Notes/Comments": "टिप्पणी/टिप्पणीहरू",
       "Notification": "सूचना",
@@ -2258,6 +2260,7 @@
       "Number of Active Overdue Group Loans": "सक्रिय ओभरड्यू समूह ऋणहरूको संख्या",
       "Number of Centers": "केन्द्रहरूको संख्या",
       "Number of Clients": "ग्राहकहरूको संख्या",
+      "Please enter a valid number": "कृपया मान्य संख्या प्रविष्ट गर्नुहोस्",
       "Number of Collaterals": "धितो संख्या",
       "Number of Days to Dormant sub-status": "निष्क्रिय उप-स्थितिमा दिनहरूको संख्या",
       "Number of Days to Escheat": "Escheat गर्न दिनहरूको संख्या",
@@ -2976,6 +2979,7 @@
       "Withdrawal": "फिर्ता",
       "Withdrawn by Client": "ग्राहक द्वारा फिर्ता",
       "Write Off": "लेख्नुहोस्",
+      "Update discount": "छुट अद्यावधिक गर्नुहोस्",
       "Apply Additional Shares": "अतिरिक्त लागू गर्नुहोस्",
       "Redeem Shares": "शेयरहरू रिडिम गर्नुहोस्",
       "Approve Additional Shares": "अतिरिक्त शेयरहरू स्वीकृत गर्नुहोस्",
@@ -4043,7 +4047,9 @@
       "No Closed Share Accounts Found": "कुनै बन्द शेयर खाताहरू भेटिएनन्",
       "No Collateral Data Found": "कुनै धितो डेटा भेटिएन",
       "No Identities Found": "कुनै पहिचान भेटिएनन्",
-      "validationSaved": "प्रमाणीकरण डाटा सफलतापूर्वक बचत भयो।"
+      "validationSaved": "प्रमाणीकरण डाटा सफलतापूर्वक बचत भयो।",
+      "workingCapitalDiscountUpdated": "कार्यशील पूँजी ऋणको छुट सफलतापूर्वक अपडेट गरिएको छ।",
+      "unableToUpdateDiscount": "छुट अपडेट गर्न सकिएन।"
     }
   },
   "languages": {

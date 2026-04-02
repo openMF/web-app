@@ -1811,6 +1811,7 @@
       "Disbursement On": "Disbursement On",
       "Disbursement on": "Disbursement on",
       "Discount": "Discount",
+      "Discount must be greater than or equal to 0": "Discount must be greater than or equal to 0",
       "Display Name": "Display Name",
       "Dividend Amount": "Dividend Amount",
       "Dividend Period End Date": "Dividend Period End Date",
@@ -2266,6 +2267,7 @@
       "Not Available": "Not Available",
       "Not Provided": "Not Provided",
       "Note": "Note",
+      "Note is too long": "Note is too long",
       "Notes": "Notes",
       "Notes/Comments": "Notes/Comments",
       "Notification": "Notification",
@@ -2279,6 +2281,7 @@
       "Number of Active Overdue Group Loans": "Number of Active Overdue Group Loans",
       "Number of Centers": "Number of Centers",
       "Number of Clients": "Number of Clients",
+      "Please enter a valid number": "Please enter a valid number",
       "Number of Collaterals": "Number Of Collaterals",
       "Number of Days to Dormant sub-status": "Number of Days to Dormant sub-status",
       "Number of Days to Escheat": "Number of Days to Escheat",
@@ -2986,6 +2989,7 @@
       "Recovery Payment": "Recovery Payment",
       "Reject": "Reject",
       "Undo Write-off": "Undo Write-off",
+      "Update discount": "Update discount",
       "Reports": "Reports",
       "Reschedule": "Reschedule",
       "Savings": "Savings",
@@ -4184,7 +4188,9 @@
       "No Closed Share Accounts Found": "No Closed Share Accounts Found",
       "No Collateral Data Found": "No Collateral Data Found",
       "No Identities Found": "No Identities Found",
-      "validationSaved": "Validation data saved successfully."
+      "validationSaved": "Validation data saved successfully.",
+      "workingCapitalDiscountUpdated": "Working capital discount was updated successfully.",
+      "unableToUpdateDiscount": "Unable to update discount."
     }
   },
   "languages": {

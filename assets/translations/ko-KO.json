@@ -1805,6 +1805,7 @@
       "Disbursement On": "지불 날짜",
       "Disbursement on": "지불 날짜",
       "Discount": "할인",
+      "Discount must be greater than or equal to 0": "할인은 0 이상이어야 합니다",
       "Display Name": "이름 표시하기",
       "Dividend Amount": "배당금액",
       "Dividend Period End Date": "배당기간 종료일",
@@ -2249,6 +2250,7 @@
       "Not Available": "사용 불가",
       "Not Provided": "제공되지 않음",
       "Note": "메모",
+      "Note is too long": "메모가 너무 깁니다",
       "Notes": "노트",
       "Notes/Comments": "메모/의견",
       "Notification": "공고",
@@ -2262,6 +2264,7 @@
       "Number of Active Overdue Group Loans": "활성 연체단체대출 건수",
       "Number of Centers": "센터 수",
       "Number of Clients": "클라이언트 수",
+      "Please enter a valid number": "유효한 숫자를 입력해 주세요",
       "Number of Collaterals": "담보 건수",
       "Number of Days to Dormant sub-status": "휴면 하위 상태까지의 일수",
       "Number of Days to Escheat": "탈퇴까지 남은 일수",
@@ -2978,6 +2981,7 @@
       "Withdrawal": "철수",
       "Withdrawn by Client": "고객이 철회함",
       "Write Off": "상각",
+      "Update discount": "할인 업데이트",
       "Apply Additional Shares": "추가 신청",
       "Redeem Shares": "주식 상환",
       "Approve Additional Shares": "추가 공유 승인",
@@ -4050,7 +4054,9 @@
       "No Closed Share Accounts Found": "해지된 주식 계좌가 없습니다",
       "No Collateral Data Found": "담보 데이터가 없습니다",
       "No Identities Found": "신원 정보가 없습니다",
-      "validationSaved": "검증 데이터가 성공적으로 저장되었습니다."
+      "validationSaved": "검증 데이터가 성공적으로 저장되었습니다.",
+      "workingCapitalDiscountUpdated": "운전자금 대출 할인율이 성공적으로 업데이트되었습니다.",
+      "unableToUpdateDiscount": "할인을 업데이트할 수 없습니다."
     }
   },
   "languages": {
