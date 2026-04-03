@@ -33,6 +33,11 @@
     "playwright:ui": "playwright test --ui",
     "playwright:headed": "playwright test --headed",
     "playwright:debug": "playwright test --debug",
+    "playwright:ci": "playwright test --reporter=html,github --workers=1",
+    "e2e:docker": "bash scripts/e2e-docker.sh",
+    "e2e:docker:up": "docker compose -f docker-compose.e2e.yml up -d --build",
+    "e2e:docker:down": "docker compose -f docker-compose.e2e.yml down -v --remove-orphans",
+    "e2e:docker:logs": "docker compose -f docker-compose.e2e.yml logs -f",
     "headers:check": "node scripts/check-file-headers.js",
     "headers:add": "node scripts/add-file-headers.js"
   },

@@ -1,0 +1,95 @@
+services:
+  db:
+    image: postgres:18.3-alpine
+    container_name: e2e-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: skdcnwauicn2ucnaecasdsajdnizucawencascdca
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ./config/e2e/postgresql-init.sh:/docker-entrypoint-initdb.d/01-init.sh:ro
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    ports:
+      - '5432:5432'
+    mem_limit: 768m
+    shm_size: 256m
+    tmpfs:
+      - /var/lib/postgresql/data
+    command: >
+      postgres
+        -c shared_buffers=128MB
+        -c work_mem=4MB
+        -c maintenance_work_mem=64MB
+
+  fineract:
+    image: apache/fineract:latest
+    container_name: e2e-fineract
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - ./config/e2e/fineract.env
+    environment:
+      JAVA_TOOL_OPTIONS: >-
+        -Xmx1536m -Xms512m
+        -XX:+UseG1GC -XX:MaxGCPauseMillis=200
+        -Djava.security.egd=file:/dev/./urandom
+    healthcheck:
+      test:
+        [
+          'CMD-SHELL',
+          'wget -qO- --no-check-certificate https://localhost:8443/fineract-provider/actuator/health || exit 1'
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 60
+      start_period: 120s
+    ports:
+      - '8443:8443'
+    mem_limit: 2g
+
+  web-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PUPPETEER_SKIP_DOWNLOAD_ARG: 'true'
+    container_name: e2e-web-app
+    depends_on:
+      fineract:
+        condition: service_healthy
+    environment:
+      # Nginx proxy target (internal docker DNS)
+      E2E_PROXY_TARGET: https://fineract:8443
+
+      # Angular app configuration (resolved by host browser via proxy)
+      FINERACT_API_URLS: http://localhost:4200
+      FINERACT_API_URL: http://localhost:4200
+
+      FINERACT_API_PROVIDER: /fineract-provider/api
+      FINERACT_API_VERSION: /v1
+      FINERACT_PLATFORM_TENANT_IDENTIFIER: default
+      MIFOS_DEFAULT_LANGUAGE: en-US
+      MIFOS_SUPPORTED_LANGUAGES: en-US
+      MIFOS_PRELOAD_CLIENTS: 'false'
+      MIFOS_DEFAULT_CHAR_DELIMITER: ','
+      NGINX_ENVSUBST_FILTER: '^(FINERACT_|MIFOS_|ENABLE_|EXTERNAL_|E2E_PROXY_TARGET)'
+    volumes:
+      - ./config/e2e/nginx-e2e.conf.template:/etc/nginx/templates/default.conf.template:ro
+    ports:
+      - '4200:80'
+    mem_limit: 256m
+    # Override CMD: Dockerfile's /bin/sh CMD causes the nginx entrypoint to
+    # skip template processing (it checks $1 == "nginx"). Process both
+    # templates explicitly. Only substitute $E2E_PROXY_TARGET in the nginx
+    # template so $host, $scheme, $uri etc. are left for nginx.
+    command: >-
+      /bin/sh -c "
+      envsubst '$$E2E_PROXY_TARGET' < /etc/nginx/templates/default.conf.template > /etc/nginx/conf.d/default.conf &&
+      envsubst < /usr/share/nginx/html/assets/env.template.js > /usr/share/nginx/html/assets/env.js &&
+      nginx -g 'daemon off;'
+      "

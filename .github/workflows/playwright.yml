@@ -1,22 +1,35 @@
-name: Playwright E2E Tests
+name: E2E Tests (Playwright + Fineract)
 
 on:
   push:
-    branches: [main, dev, dev-angular-19]
+    branches: [main, dev]
   pull_request:
-    branches: [main, dev, dev-angular-19]
+    branches: [main, dev]
+
+concurrency:
+  group: e2e-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  playwright:
-    name: Run Playwright Tests
+  e2e:
+    name: Playwright E2E
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
+
+    env:
+      CI: true
+      E2E_BASE_URL: http://localhost:4200
+      E2E_FINERACT_URL: https://localhost:8443
+      E2E_USERNAME: mifos
+      E2E_PASSWORD: password
+      E2E_TENANT_ID: default
+      NODE_TLS_REJECT_UNAUTHORIZED: '0'
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
 
-      - name: Use Node.js 22x
+      - name: Use Node.js 24
         uses: actions/setup-node@v6
         with:
           node-version: '24.14.0'
@@ -28,13 +41,65 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
+      - name: Start E2E infrastructure
+        run: docker compose -f docker-compose.e2e.yml up -d --build
+
+      - name: Wait for PostgreSQL
+        run: |
+          timeout 60 bash -c '
+            until docker exec e2e-postgres pg_isready -U postgres 2>/dev/null; do
+              sleep 2
+            done
+          '
+          echo "✅ PostgreSQL ready"
+
+      - name: Wait for Fineract backend
+        run: |
+          timeout 300 bash -c '
+            until docker ps --filter "health=healthy" --filter "name=e2e-fineract" | grep -q healthy; do
+              echo "  … Fineract not healthy yet"
+              sleep 10
+            done
+          '
+          curl -fk --retry 30 --retry-all-errors --connect-timeout 10 --retry-delay 10 \
+            https://localhost:8443/fineract-provider/actuator/health
+          echo ""
+          echo "✅ Fineract ready"
+
+      - name: Verify Fineract initialization complete
+        run: |
+          AUTH_HEADER=$(echo -n "${E2E_USERNAME}:${E2E_PASSWORD}" | base64 | tr -d '\n')
+          timeout 120 bash -c "
+            until curl -fsk \
+              -H 'Fineract-Platform-TenantId: ${E2E_TENANT_ID}' \
+              -H 'Authorization: Basic ${AUTH_HEADER}' \
+              https://localhost:8443/fineract-provider/api/v1/offices 2>/dev/null | grep -q 'Head Office'; do
+              echo '  … waiting for seed data'
+              sleep 5
+            done
+          "
+          echo "✅ Fineract initialization complete"
+
+      - name: Wait for web-app
+        run: |
+          curl -f --retry 20 --retry-all-errors --connect-timeout 5 --retry-delay 5 \
+            http://localhost:4200 > /dev/null 2>&1
+          echo "✅ Web-app ready"
+
       - name: Run Playwright tests
-        run: npx playwright test --reporter=html,github
-        env:
-          CI: true
-          FINERACT_API_URL: https://demo.mifos.community
-          E2E_USERNAME: mifos
-          E2E_PASSWORD: password
+        run: npx playwright test --reporter=html,github --workers=1
+
+      - name: Dump Docker logs on failure
+        if: failure()
+        run: |
+          echo "=== Fineract ==="
+          docker logs e2e-fineract --tail 100 2>&1 || true
+          echo "=== PostgreSQL ==="
+          docker logs e2e-postgres --tail 50 2>&1 || true
+          echo "=== Web-App ==="
+          docker logs e2e-web-app --tail 50 2>&1 || true
+          echo "=== Memory ==="
+          docker stats --no-stream || true
 
       - name: Upload Playwright report
         uses: actions/upload-artifact@v7
@@ -51,3 +116,9 @@ jobs:
           name: test-results
           path: test-results/
           retention-days: 7
+
+      - name: Tear down E2E infrastructure
+        if: always()
+        run: |
+          docker compose -f docker-compose.e2e.yml down -v --remove-orphans
+          docker system prune -f

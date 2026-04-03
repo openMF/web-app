@@ -18,6 +18,7 @@ import { defineConfig, devices } from '@playwright/test';
  * @see https://playwright.dev/docs/test-configuration
  */
 export default defineConfig({
+  globalSetup: process.env.CI ? './playwright/global-setup.ts' : undefined,
   // Test directory
   testDir: './playwright/tests',
 
@@ -43,8 +44,8 @@ export default defineConfig({
 
   // Global test settings
   use: {
-    // Base URL for the Angular app
-    baseURL: 'http://localhost:4200',
+    // Base URL for the Angular app (aligned with global-setup.ts)
+    baseURL: process.env.E2E_BASE_URL || 'http://localhost:4200',
 
     // Handle self-signed certificates from Fineract backend
     ignoreHTTPSErrors: true,
@@ -87,19 +88,12 @@ export default defineConfig({
     }
   ],
 
-  // Web server configuration
-  // In CI: builds production bundle, then serves it with e2e-server.js
-  //        (Express + http-proxy-middleware for /fineract-provider/* proxy)
-  // Locally: reuses existing ng serve if running
-  webServer: {
-    command: process.env.CI ? 'npm run build && node playwright/e2e-server.js' : 'npm run start',
-    url: 'http://localhost:4200',
-    reuseExistingServer: !process.env.CI,
-    timeout: 180000,
-    // Add retry logic for server startup
-    ...(process.env.CI && {
-      stdout: 'pipe',
-      stderr: 'pipe'
-    })
-  }
+  webServer: process.env.CI
+    ? undefined
+    : {
+        command: 'npm run start',
+        url: 'http://localhost:4200',
+        reuseExistingServer: true,
+        timeout: 180000
+      }
 });
