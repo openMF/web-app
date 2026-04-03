@@ -7,20 +7,22 @@
 -->
 
 <div class="tab-container mat-typography">
-  <!-- Action Buttons Header -->
-  <div class="button-header">
-    <button mat-raised-button class="export-kyc-button" (click)="exportKYC()">
-      <mat-icon>download</mat-icon>
-      {{ 'labels.buttons.Export KYC' | translate }}
-    </button>
-    <button mat-raised-button color="primary" class="validate-docs-button" (click)="validateDocumentation()">
-      <mat-icon>fact_check</mat-icon>
-      {{ 'labels.buttons.Validate Documentation' | translate }}
-    </button>
-  </div>
+  <!-- Action Buttons Header (only shown when KYC is enabled via global configuration) -->
+  @if (isKycEnabled) {
+    <div class="button-header">
+      <button mat-raised-button class="export-kyc-button" (click)="exportKYC()">
+        <mat-icon>download</mat-icon>
+        {{ 'labels.buttons.Export KYC' | translate }}
+      </button>
+      <button mat-raised-button color="primary" class="validate-docs-button" (click)="validateDocumentation()">
+        <mat-icon>fact_check</mat-icon>
+        {{ 'labels.buttons.Validate Documentation' | translate }}
+      </button>
+    </div>
+  }
 
   <!-- Validation Status Badge -->
-  @if (validationData?.validationStatus) {
+  @if (isKycEnabled && validationData?.validationStatus) {
     <div
       class="validation-status-banner"
       [class.status-complete]="validationData.validationStatus === ValidationStatus.COMPLETE"

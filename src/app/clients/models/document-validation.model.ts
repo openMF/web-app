@@ -35,8 +35,14 @@ export interface CustomerDataValidation {
   validationStatus: ValidationStatus | null;
 }
 
-/** Datatable name used to persist validation data in Fineract */
+/** Datatable name used to persist validation data for Person clients */
 export const KYC_VALIDATION_DATATABLE = 'dt_kyc_validation';
+
+/** Datatable name used to persist validation data for Entity clients */
+export const KYC_VALIDATION_DATATABLE_ENTITY = 'dt_kyc_validation_entity';
+
+/** Global configuration name to enable/disable KYC validation feature */
+export const KYC_VALIDATION_CONFIG_NAME = 'enable-kyc-validation';
 
 /** Data type rows shown in the validation dialog */
 export const DOCUMENT_DATA_TYPES: Array<{

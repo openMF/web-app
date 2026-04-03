@@ -23,11 +23,14 @@ import { MatIcon } from '@angular/material/icon';
 import { ReportsService } from 'app/reports/reports.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { AlertService } from 'app/core/alert/alert.service';
+import { SystemService } from 'app/system/system.service';
 import { Subject, EMPTY } from 'rxjs';
 import { takeUntil, catchError } from 'rxjs/operators';
 import {
   CustomerDataValidation,
   KYC_VALIDATION_DATATABLE,
+  KYC_VALIDATION_DATATABLE_ENTITY,
+  KYC_VALIDATION_CONFIG_NAME,
   ValidationStatus,
   emptyCustomerDataValidation
 } from 'app/clients/models/document-validation.model';
@@ -84,6 +87,7 @@ export class PersonalDataTabComponent implements OnDestroy {
   private reportsService = inject(ReportsService);
   private settingsService = inject(SettingsService);
   private alertService = inject(AlertService);
+  private systemService = inject(SystemService);
   private translateService = inject(TranslateService);
   private dialog = inject(MatDialog);
 
@@ -95,6 +99,8 @@ export class PersonalDataTabComponent implements OnDestroy {
   rawPdfUrl: string | null = null;
   private destroy$ = new Subject<void>();
 
+  /** Whether the KYC validation feature is enabled via global configuration */
+  isKycEnabled = false;
   /** Current document validation state */
   validationData: CustomerDataValidation | null = null;
   /** True when the datatable already has a row (drives add vs edit) */
@@ -102,22 +108,49 @@ export class PersonalDataTabComponent implements OnDestroy {
   /** Expose ValidationStatus enum to template */
   readonly ValidationStatus = ValidationStatus;
 
+  /** Whether the global config check has completed */
+  private configLoaded = false;
+
   constructor() {
+    this.systemService
+      .getConfigurations()
+      .pipe(
+        catchError(() => {
+          this.isKycEnabled = false;
+          this.configLoaded = true;
+          return EMPTY;
+        })
+      )
+      .subscribe((configs: any) => {
+        const kycConfig = configs?.globalConfiguration?.find((c: any) => c.name === KYC_VALIDATION_CONFIG_NAME);
+        this.isKycEnabled = kycConfig?.enabled ?? false;
+        this.configLoaded = true;
+        this.loadValidationData();
+      });
+
     this.route.parent.data.pipe(takeUntilDestroyed()).subscribe((data: { clientViewData: ClientViewData }) => {
       this.clientViewData = data.clientViewData;
       this.validationData = null;
       this.hasDatatableEntry = false;
-      this.loadValidationData();
+      if (this.configLoaded) {
+        this.loadValidationData();
+      }
     });
+  }
+
+  /** Returns the correct datatable name based on the client's legal form */
+  private getKycDatatableName(): string {
+    return this.isLegalEntity() ? KYC_VALIDATION_DATATABLE_ENTITY : KYC_VALIDATION_DATATABLE;
   }
 
   /** Loads saved validation data from the datatable */
   private loadValidationData() {
-    if (!this.clientViewData?.id) {
+    if (!this.clientViewData?.id || !this.isKycEnabled) {
       return;
     }
+    const datatableName = this.getKycDatatableName();
     this.clientsService
-      .getClientDatatable(this.clientViewData.id.toString(), KYC_VALIDATION_DATATABLE)
+      .getClientDatatable(this.clientViewData.id.toString(), datatableName)
       .pipe(
         takeUntil(this.destroy$),
         catchError(() => {
@@ -199,9 +232,10 @@ export class PersonalDataTabComponent implements OnDestroy {
       }
       const payload = this.buildDatatablePayload(result);
       const clientId = this.clientViewData.id.toString();
+      const datatableName = this.getKycDatatableName();
       const save$ = this.hasDatatableEntry
-        ? this.clientsService.editClientDatatableEntry(clientId, KYC_VALIDATION_DATATABLE, payload)
-        : this.clientsService.addClientDatatableEntry(clientId, KYC_VALIDATION_DATATABLE, payload);
+        ? this.clientsService.editClientDatatableEntry(clientId, datatableName, payload)
+        : this.clientsService.addClientDatatableEntry(clientId, datatableName, payload);
       save$
         .pipe(
           takeUntil(this.destroy$),
