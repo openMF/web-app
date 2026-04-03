@@ -221,7 +221,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
     };
     data.clientMembers = [];
     this.clientMembers.forEach((client: any) => data.clientMembers.push(client.id));
-    
+
     this.loading = true;
     this.groupService.createGroup(data).subscribe({
       next: (response: any) => {

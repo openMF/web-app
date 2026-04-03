@@ -1,4 +1,22 @@
-import { Directive, Input, ElementRef, Renderer2, OnInit, OnChanges, SimpleChanges, OnDestroy, inject } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import {
+  Directive,
+  Input,
+  ElementRef,
+  Renderer2,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+  OnDestroy,
+  inject
+} from '@angular/core';
 
 @Directive({
   selector: '[mifosxNgBusy]',
@@ -22,7 +40,7 @@ export class NgBusyDirective implements OnInit, OnChanges, OnDestroy {
     // Store original content and state
     this.originalContent = this.el.nativeElement.innerHTML;
     this.originalDisabled = this.el.nativeElement.disabled;
-    
+
     // Add global styles for animation
     this.addGlobalStyles();
   }
@@ -50,7 +68,7 @@ export class NgBusyDirective implements OnInit, OnChanges, OnDestroy {
 
     // Create busy content
     const busyContent = this.createBusyContent();
-    
+
     // Clear and set busy content
     this.el.nativeElement.innerHTML = '';
     this.el.nativeElement.appendChild(busyContent);
@@ -82,7 +100,7 @@ export class NgBusyDirective implements OnInit, OnChanges, OnDestroy {
     // Create CSS spinner with proper rotation
     this.spinnerElement = this.renderer.createElement('span');
     this.renderer.addClass(this.spinnerElement, 'css-spinner');
-    
+
     // Create spinner using CSS border technique
     this.renderer.setStyle(this.spinnerElement, 'display', 'inline-block');
     this.renderer.setStyle(this.spinnerElement, 'width', '16px');
@@ -108,7 +126,10 @@ export class NgBusyDirective implements OnInit, OnChanges, OnDestroy {
     // Add proper rotation animation only once globally
     if (!NgBusyDirective.globalStylesAdded) {
       this.styleElement = this.renderer.createElement('style');
-      this.renderer.setProperty(this.styleElement, 'innerHTML', `
+      this.renderer.setProperty(
+        this.styleElement,
+        'innerHTML',
+        `
         @keyframes spin {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
@@ -123,7 +144,8 @@ export class NgBusyDirective implements OnInit, OnChanges, OnDestroy {
           border: 2px solid rgba(255, 255, 255, 0.3) !important;
           border-top: 2px solid #ffffff !important;
         }
-      `);
+      `
+      );
       this.renderer.appendChild(document.head, this.styleElement);
       NgBusyDirective.globalStylesAdded = true;
     }

@@ -34,12 +34,16 @@
 
     <ng-container matColumnDef="accountNo">
       <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account' | translate }} #</th>
-      <td mat-cell *matCellDef="let group">{{ group.accountNo ? group.accountNo : ('labels.text.no-data' | translate) }}</td>
+      <td mat-cell *matCellDef="let group">
+        {{ group.accountNo ? group.accountNo : ('labels.text.no-data' | translate) }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="externalId">
       <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.External Id' | translate }}</th>
-      <td mat-cell *matCellDef="let group">{{ group.externalId ? group.externalId : ('labels.text.no-data' | translate) }}</td>
+      <td mat-cell *matCellDef="let group">
+        {{ group.externalId ? group.externalId : ('labels.text.no-data' | translate) }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="status">
@@ -53,7 +57,9 @@
 
     <ng-container matColumnDef="officeName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Office Name' | translate }}</th>
-      <td mat-cell *matCellDef="let group">{{ group.officeName ? group.officeName : ('labels.text.no-data' | translate) }}</td>
+      <td mat-cell *matCellDef="let group">
+        {{ group.officeName ? group.officeName : ('labels.text.no-data' | translate) }}
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

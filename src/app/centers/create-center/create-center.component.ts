@@ -198,7 +198,7 @@ export class CreateCenterComponent implements OnInit {
     };
     data.groupMembers = [];
     this.groupMembers.forEach((group: any) => data.groupMembers.push(group.id));
-    
+
     this.loading = true;
     this.centerService.createCenter(data).subscribe({
       next: (response: any) => {
