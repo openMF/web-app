@@ -112,7 +112,7 @@ const routes: Routes = [
           {
             path: 'general',
             component: GeneralTabComponent,
-            data: { title: 'General', breadcrumb: 'General', routeParamBreadcrumb: false },
+            data: { title: 'Loan Account Details', breadcrumb: 'General', routeParamBreadcrumb: false },
             resolve: {}
           },
           {
