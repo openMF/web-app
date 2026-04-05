@@ -54,28 +54,33 @@ export class FloatingRatePeriodDialogComponent implements OnInit {
    * Creates the floating rate period form.
    */
   ngOnInit() {
-    this.minDate = this.settingsService.businessDate;
+    // Set minDate to tomorrow based on server business date (floating rates must always be in the future)
+    const tomorrow = new Date(this.settingsService.businessDate);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(0, 0, 0, 0);
+    this.minDate = tomorrow;
+
     let rowDisabled = false;
-    if (this.data && new Date(this.data.fromDate) < this.minDate) {
+    if (this.data?.fromDate && new Date(this.data.fromDate) < this.minDate) {
       rowDisabled = true;
     }
-    if (this.data.isNew) {
+    if (this.data?.isNew) {
       rowDisabled = false;
     }
     this.floatingRatePeriodForm = this.formBuilder.group({
       fromDate: [
-        { value: this.data ? new Date(this.data.fromDate) : '', disabled: rowDisabled },
+        { value: this.data?.fromDate ? new Date(this.data.fromDate) : '', disabled: rowDisabled },
         Validators.required
       ],
       interestRate: [
-        { value: this.data ? this.data.interestRate : '', disabled: rowDisabled },
+        { value: this.data?.interestRate ?? '', disabled: rowDisabled },
         [
           Validators.required,
           Validators.min(0)
         ]
       ],
       isDifferentialToBaseLendingRate: [
-        { value: this.data ? this.data.isDifferentialToBaseLendingRate : false, disabled: rowDisabled }]
+        { value: this.data?.isDifferentialToBaseLendingRate ?? false, disabled: rowDisabled }]
     });
   }
 

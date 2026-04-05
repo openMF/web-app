@@ -57,10 +57,6 @@
         <div class="layout-row-wrap gap-70percent m-b-10 layout-lt-md-column">
           <p class="mat-title flex-25">
             {{ 'labels.inputs.Floating Rate Periods' | translate }}
-            <i
-              class="fas fa-question"
-              matTooltip="{{ 'tooltips.Floating interest rate and start date' | translate }}"
-            ></i>
           </p>
 
           <button mat-mini-fab type="button" color="primary" (click)="addFloatingRatePeriod()">
@@ -167,7 +163,7 @@
           mat-raised-button
           type="submit"
           color="primary"
-          [disabled]="!floatingRateForm.valid"
+          [disabled]="!floatingRateForm.valid || floatingRatePeriodsData.length === 0"
           *mifosxHasPermission="'CREATE_FLOATINGRATE'"
         >
           {{ 'labels.buttons.Submit' | translate }}
