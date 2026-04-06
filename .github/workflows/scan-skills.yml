@@ -10,7 +10,7 @@ on:
 
 jobs:
   scan:
-    uses: cisco-ai-defense/skill-scanner/.github/workflows/scan-skills.yml@main
+    uses: cisco-ai-defense/skill-scanner/.github/workflows/scan-skills.yml@a2c48d4c448dd8d532e9aee350317ead9e9103c8 # main
     with:
       # We tell the scanner to look at the skills directory
       skill_path: skills
