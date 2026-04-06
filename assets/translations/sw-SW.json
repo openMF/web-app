@@ -3758,7 +3758,8 @@
       "Failed to update payment type. Please try again.": "Imeshindwa kusasisha aina ya malipo. Tafadhali jaribu tena.",
       "Search and assign this beneficiary to an existing Mifos client account": "Tafuta na uweke mpokeaji huyu kwenye akaunti ya mteja wa Mifos iliyopo",
       "Failed to search clients. Please try again.": "Imeshindwa kutafuta wateja. Tafadhali jaribu tena.",
-      "Process Remittance": "Chakata uhawilishaji"
+      "Process Remittance": "Chakata uhawilishaji",
+      "Loan Originators": "Waanzilishi wa Mikopo"
     },
     "permissions": {
       "actions": {

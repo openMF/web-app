@@ -3763,7 +3763,8 @@
       "Failed to update payment type. Please try again.": "Nepavyko atnaujinti mokėjimo tipo. Bandykite dar kartą.",
       "Search and assign this beneficiary to an existing Mifos client account": "Ieškokite ir priskirkite šį gavėją esamai Mifos kliento paskyrai",
       "Failed to search clients. Please try again.": "Nepavyko ieškoti klientų. Bandykite dar kartą.",
-      "Process Remittance": "Apdoroti pervedimą"
+      "Process Remittance": "Apdoroti pervedimą",
+      "Loan Originators": "Paskolų teikėjai"
     },
     "permissions": {
       "actions": {

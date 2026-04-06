@@ -3760,7 +3760,8 @@
       "Failed to update payment type. Please try again.": "Aktualizace typu platby se nezdařila. Zkuste to prosím znovu.",
       "Search and assign this beneficiary to an existing Mifos client account": "Vyhledejte a přiřaďte tohoto příjemce k existujícímu účtu klienta Mifos",
       "Failed to search clients. Please try again.": "Hledání klientů se nezdařilo. Zkuste to prosím znovu.",
-      "Process Remittance": "Zpracovat remitenci"
+      "Process Remittance": "Zpracovat remitenci",
+      "Loan Originators": "Poskytovatelé úvěrů"
     },
     "permissions": {
       "actions": {

@@ -3760,7 +3760,8 @@
       "Failed to update payment type. Please try again.": "भुक्तानी प्रकार अद्यावधिक गर्न असफल भयो। कृपया पुनः प्रयास गर्नुहोस्।",
       "Search and assign this beneficiary to an existing Mifos client account": "यो लाभग्राहीलाई खोजेर अवस्थित Mifos ग्राहक खातामा तोक्नुहोस्",
       "Failed to search clients. Please try again.": "ग्राहकहरू खोज्न असफल भयो। कृपया पुनः प्रयास गर्नुहोस्।",
-      "Process Remittance": "रेमिट्यान्स प्रक्रिया गर्नुहोस्"
+      "Process Remittance": "रेमिट्यान्स प्रक्रिया गर्नुहोस्",
+      "Loan Originators": "ऋण सुरुवातकर्ताहरू"
     },
     "permissions": {
       "actions": {

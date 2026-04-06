@@ -3780,7 +3780,8 @@
       "“Maker-Checker” principle requires every tasks": "El principio \"Maker-Checker\" requiere que dos personas completen cada tarea para reducir la posibilidad de errores y uso indebido. Una persona inicia el proceso y la segunda lo completa.",
       "Buy Down Fees": "Tarifas de compra",
       "UploadDocumentHint": "Suba un PDF o imagen para generar una vista previa.",
-      "Process Remittance": "Procesar Remesa"
+      "Process Remittance": "Procesar Remesa",
+      "Loan Originators": "Comisionistas de créditos"
     },
     "permissions": {
       "actions": {

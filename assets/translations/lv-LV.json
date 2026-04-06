@@ -3762,7 +3762,8 @@
       "Failed to update payment type. Please try again.": "Neizdevās atjaunināt maksājuma veidu. Lūdzu, mēģiniet vēlreiz.",
       "Search and assign this beneficiary to an existing Mifos client account": "Meklējiet un piešķiriet šo saņēmēju esošam Mifos klienta kontam",
       "Failed to search clients. Please try again.": "Neizdevās meklēt klientus. Lūdzu, mēģiniet vēlreiz.",
-      "Process Remittance": "Apstrādāt pārvedumu"
+      "Process Remittance": "Apstrādāt pārvedumu",
+      "Loan Originators": "Aizdevumu izsniedzēji"
     },
     "permissions": {
       "actions": {

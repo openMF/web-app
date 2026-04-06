@@ -3761,7 +3761,8 @@
       "Failed to update payment type. Please try again.": "Aggiornamento del tipo di pagamento non riuscito. Si prega di riprovare.",
       "Search and assign this beneficiary to an existing Mifos client account": "Cerca e assegna questo beneficiario a un conto cliente Mifos esistente",
       "Failed to search clients. Please try again.": "Ricerca clienti non riuscita. Si prega di riprovare.",
-      "Process Remittance": "Elabora rimessa"
+      "Process Remittance": "Elabora rimessa",
+      "Loan Originators": "Originatori di prestiti"
     },
     "permissions": {
       "actions": {
