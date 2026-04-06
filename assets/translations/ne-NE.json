@@ -3400,6 +3400,7 @@
       "LoanAccountCustomSnapshotBusinessEvent": "LoanAccountCustomSnapshotBusinessEvent",
       "LoanAccountDelinquencyPauseChangedBusinessEvent": "LoanAccountDelinquencyPauseChangedBusinessEvent",
       "LoanAccountSnapshotBusinessEvent": "LoanAccountSnapshotBusinessEvent",
+      "Loan Account Details": "ऋण खाता विवरण",
       "Loan Account Actions": "ऋण खाता कार्यहरू",
       "Loan Collateral Details": "ऋण संपार्श्विक विवरण",
       "Loan Disbursal": "ऋण वितरण",

@@ -3403,6 +3403,7 @@
       "LoanAccountCustomSnapshotBusinessEvent": "LoanAccountCustomSnapshotBusinessEvent",
       "LoanAccountDelinquencyPauseChangedBusinessEvent": "LoanAccount DelikvencePauseChangedBusinessEvent",
       "LoanAccountSnapshotBusinessEvent": "LoanAccountSnapshotBusinessEvent",
+      "Loan Account Details": "Detaily úvěrového účtu",
       "Loan Account Actions": "Akce na úvěrovém účtu",
       "Loan Collateral Details": "Podrobnosti o zajištění úvěru",
       "Loan Disbursal": "Vyplacení půjčky",

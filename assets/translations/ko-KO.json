@@ -3402,6 +3402,7 @@
       "LoanAccountCustomSnapshotBusinessEvent": "대출계정CustomSnapshotBusinessEvent",
       "LoanAccountDelinquencyPauseChangedBusinessEvent": "대출계정연체 일시중지ChangedBusinessEvent",
       "LoanAccountSnapshotBusinessEvent": "대출계정스냅샷비즈니스이벤트",
+      "Loan Account Details": "대출 계좌 세부 정보",
       "Loan Account Actions": "대출 계정 작업",
       "Loan Collateral Details": "대출 담보 세부정보",
       "Loan Disbursal": "대출금 지급",

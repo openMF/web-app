@@ -3403,6 +3403,7 @@
       "LoanAccountCustomSnapshotBusinessEvent": "LoanAccountCustomSnapshotBusinessEvent",
       "LoanAccountDelinquencyPauseChangedBusinessEvent": "LoanAccountDelinquencyPauseChangedBusinessEvent",
       "LoanAccountSnapshotBusinessEvent": "LoanAccountSnapshotBusinessEvent",
+      "Loan Account Details": "Paskolos sąskaitos rekvizitai",
       "Loan Account Actions": "Paskolos sąskaitos veiksmai",
       "Loan Collateral Details": "Paskolos užstato informacija",
       "Loan Disbursal": "Paskolos išmokėjimas",

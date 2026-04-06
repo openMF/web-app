@@ -3402,6 +3402,7 @@
       "LoanAccountCustomSnapshotBusinessEvent": "LoanAccountCustomSnapshotBusinessEvent",
       "LoanAccountDelinquencyPauseChangedBusinessEvent": "LoanAccountDelinquencyPauseChangedBusinessEvent",
       "LoanAccountSnapshotBusinessEvent": "LoanAccountSnapshotBusinessEvent",
+      "Loan Account Details": "Kredītkonta informācija",
       "Loan Account Actions": "Aizdevuma konta darbības",
       "Loan Collateral Details": "Sīkāka informācija par aizdevuma nodrošinājumu",
       "Loan Disbursal": "Aizdevuma izsniegšana",

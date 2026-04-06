@@ -3537,6 +3537,7 @@
       "LoanWithdrawnByApplicantBusinessEvent": "Loan Withdrawn By Applicant Business Event",
       "LoanWrittenOffPostBusinessEvent": "Loan Written Off Post Business Event",
       "LoanWrittenOffPreBusinessEvent": "Loan Written Off Pre Business Event",
+      "Loan Account Details": "Loan Account Details",
       "Loan Account Actions": "Loan Account Actions",
       "Loan Collateral Details": "Loan Collateral Details",
       "Loan Disbursal": "Loan Disbursal",

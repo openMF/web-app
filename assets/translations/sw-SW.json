@@ -3398,6 +3398,7 @@
       "LoanAccountCustomSnapshotBusinessEvent": "LoanAccountCustomSnapshotBusinessEvent",
       "LoanAccountDelinquencyPauseChangedBusinessEvent": "LoanAccountDelinquencyPauseChangedBusinessEvent",
       "LoanAccountSnapshotBusinessEvent": "LoanAccountSnapshotBusinessEvent",
+      "Loan Account Details": "Maelezo ya Akaunti ya Mkopo",
       "Loan Account Actions": "Vitendo vya Akaunti ya Mkopo",
       "Loan Collateral Details": "Maelezo ya Dhamana ya Mkopo",
       "Loan Disbursal": "Utoaji wa mkopo",

@@ -3404,6 +3404,7 @@
       "LoanAccountCustomSnapshotBusinessEvent": "PréstamoCuentaPersonalizadoInstantáneaNegocioEvento",
       "LoanAccountDelinquencyPauseChangedBusinessEvent": "PréstamoCuentaMorosidadPausaCambiadoNegocioEvento",
       "LoanAccountSnapshotBusinessEvent": "PréstamoCuentaInstantáneaNegocioEvento",
+      "Loan Account Details": "Detalles de la cuenta de Crédito",
       "Loan Account Actions": "Acciones de la cuenta de Crédito",
       "Loan Collateral Details": "Detalles de la garantía del Crédito",
       "Loan Disbursal": "Curso del Crédito",
