@@ -3348,6 +3348,7 @@
       "Fineract": "Apache Fineract®",
       "Fixed Deposit Account Standing Instructions": "Anweisungen zum Festgeldkonto",
       "Fixed Deposit Account Transactions": "Transaktionen mit Festgeldkonten",
+      "Fixed Deposit Account Details": "Festgeldkonto-Details",
       "Fixed Deposit Account View": "Ansicht Festgeldkonto",
       "Fixed Deposit Products": "Festgeldprodukte",
       "Fixed Deposit Products defines the rules, default settings": "Festgeldprodukte definiert die Regeln, Standardeinstellungen und Einschränkungen für die Festgeldangebote eines Finanzinstituts (auch als Termineinlagen bezeichnet). Ein Festgeldprodukt bietet eine Vorlage für mehrere Festgeldkonten für die Kunden des Finanzinstituts.",

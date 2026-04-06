@@ -3350,6 +3350,7 @@
       "Fixed Deposit Account Interest Rate Chart": "Tableau des taux d’intérêt des comptes de dépôt fixe",
       "Fixed Deposit Account Standing Instructions": "Instructions permanentes pour les comptes de dépôt à terme",
       "Fixed Deposit Account Transactions": "Opérations sur compte de dépôt fixe",
+      "Fixed Deposit Account Details": "Détails du compte de dépôt à terme",
       "Fixed Deposit Account View": "Vue du compte de dépôt fixe",
       "Fixed Deposit Products": "Produits de dépôt fixe",
       "Fixed Deposit Products defines the rules, default settings": "Les produits de dépôt fixe définissent les règles, les paramètres par défaut et les contraintes pour les offres de dépôt fixe d'une institution financière (également appelées dépôts à terme). Un produit de dépôt à terme fournit un modèle pour plusieurs comptes de dépôt à terme pour les clients de l'institution financière.",

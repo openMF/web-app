@@ -3346,6 +3346,7 @@
       "Fixed Deposit Account Interest Rate Chart": "정기예금 이자율 차트",
       "Fixed Deposit Account Standing Instructions": "정기예금 계좌 예금 안내",
       "Fixed Deposit Account Transactions": "정기예금 거래",
+      "Fixed Deposit Account Details": "정기 예금 계좌 세부 정보",
       "Fixed Deposit Account View": "정기예금계좌조회",
       "Fixed Deposit Products": "정기예금 상품",
       "Fixed Deposit Products defines the rules, default settings": "정기 예금 상품은 금융 기관의 <br> 정기 예금 상품(정기 예금이라고도 함)에 대한 규칙, 기본 설정 및 제약 조건을 정의합니다. 정기 예금 상품은 금융 기관의 고객을 위해 여러 정기 예금 계좌에 대한 템플릿을 제공합니다.",
