@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, inject } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -32,6 +40,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ManageGroupsComponent implements AfterViewInit {
+  private route = inject(ActivatedRoute);
+  private centersService = inject(CentersService);
+  private groupsService = inject(GroupsService);
+  dialog = inject(MatDialog);
+
   /** Center Data */
   centerData: any;
   /** Group data. */
@@ -48,12 +61,7 @@ export class ManageGroupsComponent implements AfterViewInit {
    * @param {GroupsService} groupsService Groups Service
    * @param {MatDialog} dialog Mat Dialog
    */
-  constructor(
-    private route: ActivatedRoute,
-    private centersService: CentersService,
-    private groupsService: GroupsService,
-    public dialog: MatDialog
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { centersActionData: any }) => {
       this.centerData = data.centersActionData;
       this.groupMembers = data.centersActionData.groupMembers;

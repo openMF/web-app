@@ -1,16 +1,22 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports. */
-import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 /** Custom Services. */
-import { LoansService } from '@fineract/client';
 import { Dates } from 'app/core/utils/dates';
-import { SettingsService } from 'app/settings/settings.service';
 import { Currency } from 'app/shared/models/general.model';
 import { InputAmountComponent } from '../../../../shared/input-amount/input-amount.component';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 
 /**
  * Waive Interest component.
@@ -25,8 +31,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     CdkTextareaAutosize
   ]
 })
-export class WaiveInterestComponent implements OnInit {
-  @Input() dataObject: any;
+export class WaiveInterestComponent extends LoanAccountActionsBaseComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private dateUtils = inject(Dates);
 
   /** Loan Interest form. */
   loanInterestForm: UntypedFormGroup;
@@ -36,21 +43,9 @@ export class WaiveInterestComponent implements OnInit {
   maxDate = new Date();
   currency: Currency;
 
-  /**
-   * Get data from `Resolver`.
-   * @param {FormBuilder} formBuilder Form Builder.
-   * @param {Router} router Router.
-   * @param {LoansService} loanService Loan Service.
-   * @param {ActivatedRoute} route Activated Route.
-   */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private router: Router,
-    private settingsService: SettingsService,
-    private dateUtils: Dates,
-    private loanService: LoansService,
-    private route: ActivatedRoute
-  ) {}
+  constructor() {
+    super();
+  }
 
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;
@@ -94,15 +89,8 @@ export class WaiveInterestComponent implements OnInit {
       locale
     };
     data['transactionAmount'] = data['transactionAmount'] * 1;
-    const loanId = this.route.snapshot.params['loanId'];
-    this.loanService
-      .stateTransitions({
-        loanId: Number(loanId),
-        postLoansLoanIdRequest: data,
-        command: 'waiveinterest'
-      })
-      .subscribe((response: any) => {
-        this.router.navigate(['../../general'], { relativeTo: this.route });
-      });
+    this.loanService.submitLoanActionButton(this.loanId, data, 'waiveinterest').subscribe((response: any) => {
+      this.gotoLoanDefaultView();
+    });
   }
 }

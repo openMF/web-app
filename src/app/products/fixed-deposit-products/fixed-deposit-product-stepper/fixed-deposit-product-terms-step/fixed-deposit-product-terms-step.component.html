@@ -1,3 +1,11 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <form [formGroup]="fixedDepositProductTermsForm">
   <div class="layout-row-wrap gap-2px responsive-column">
     <h4 class="mat-h4 flex-98">{{ 'labels.inputs.Deposit Amount' | translate }}</h4>
@@ -6,6 +14,7 @@
       <mat-label>{{ 'labels.inputs.Minimum' | translate }}</mat-label>
       <input
         type="number"
+        min="0"
         matInput
         formControlName="minDepositAmount"
         matTooltip="{{ 'tooltips.The minimum deposit amount required to open a fixed deposit' | translate }}"
@@ -16,14 +25,15 @@
       <mat-label>{{ 'labels.inputs.Default' | translate }}</mat-label>
       <input
         type="number"
+        min="0"
         matInput
         formControlName="depositAmount"
         matTooltip="{{ 'tooltips.The default deposit amount expected' | translate }}"
         required
       />
       <mat-error>
-        {{ 'labels.inputs.Default Deposit Amount' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
+        {{ 'labels.inputs.Default' | translate }} {{ 'labels.inputs.Deposit Amount' | translate }}
+        {{ 'labels.commons.is' | translate }} <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
 
@@ -32,6 +42,7 @@
 
       <input
         type="number"
+        min="0"
         matInput
         formControlName="maxDepositAmount"
         matTooltip="{{ 'tooltips.The maximum deposit amount allowed when a fixed deposit' | translate }}"
@@ -47,12 +58,11 @@
         matTooltip="{{ 'tooltips.The period at which interest rate' | translate }}"
         required
       >
-        <mat-option
-          *ngFor="let interestCompoundingPeriodType of interestCompoundingPeriodTypeData"
-          [value]="interestCompoundingPeriodType.id"
-        >
-          {{ interestCompoundingPeriodType.value }}
-        </mat-option>
+        @for (interestCompoundingPeriodType of interestCompoundingPeriodTypeData; track interestCompoundingPeriodType) {
+          <mat-option [value]="interestCompoundingPeriodType.id">
+            {{ interestCompoundingPeriodType.value }}
+          </mat-option>
+        }
       </mat-select>
       <mat-error>
         {{ 'labels.inputs.Interest Compounding Period' | translate }} {{ 'labels.commons.is' | translate }}
@@ -67,12 +77,11 @@
         matTooltip="{{ 'tooltips.The period at which interest rate is posted or credited' | translate }}"
         required
       >
-        <mat-option
-          *ngFor="let interestPostingPeriodType of interestPostingPeriodTypeData"
-          [value]="interestPostingPeriodType.id"
-        >
-          {{ interestPostingPeriodType.value }}
-        </mat-option>
+        @for (interestPostingPeriodType of interestPostingPeriodTypeData; track interestPostingPeriodType) {
+          <mat-option [value]="interestPostingPeriodType.id">
+            {{ interestPostingPeriodType.value }}
+          </mat-option>
+        }
       </mat-select>
       <mat-error>
         {{ 'labels.inputs.Interest Posting Period' | translate }} {{ 'labels.commons.is' | translate }}
@@ -87,12 +96,11 @@
         matTooltip="{{ 'tooltips.The method used to calculate interest' | translate }}"
         required
       >
-        <mat-option
-          *ngFor="let interestCalculationType of interestCalculationTypeData"
-          [value]="interestCalculationType.id"
-        >
-          {{ interestCalculationType.value }}
-        </mat-option>
+        @for (interestCalculationType of interestCalculationTypeData; track interestCalculationType) {
+          <mat-option [value]="interestCalculationType.id">
+            {{ interestCalculationType.value }}
+          </mat-option>
+        }
       </mat-select>
       <mat-error>
         {{ 'labels.inputs.Interest Calculated using' | translate }} {{ 'labels.commons.is' | translate }}
@@ -107,12 +115,14 @@
         matTooltip="{{ 'tooltips.The setting for number of days' | translate }}"
         required
       >
-        <mat-option
-          *ngFor="let interestCalculationDaysInYearType of interestCalculationDaysInYearTypeData"
-          [value]="interestCalculationDaysInYearType.id"
-        >
-          {{ interestCalculationDaysInYearType.value }}
-        </mat-option>
+        @for (
+          interestCalculationDaysInYearType of interestCalculationDaysInYearTypeData;
+          track interestCalculationDaysInYearType
+        ) {
+          <mat-option [value]="interestCalculationDaysInYearType.id">
+            {{ interestCalculationDaysInYearType.value }}
+          </mat-option>
+        }
       </mat-select>
       <mat-error>
         {{ 'labels.inputs.Days in Year' | translate }} {{ 'labels.commons.is' | translate }}

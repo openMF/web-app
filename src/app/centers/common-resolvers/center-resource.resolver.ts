@@ -1,35 +1,34 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { CentersService } from '@fineract/client';
+import { CentersService } from '../centers.service';
 
 /**
- * Center resource resolver.
+ * Centers data resolver.
  */
 @Injectable()
 export class CenterResourceResolver {
-  /**
-   * @param {CentersService} centersService Centers service.
-   */
-  constructor(private centersService: CentersService) {}
+  private centersService = inject(CentersService);
 
   /**
-   * Returns the Center data.
+   * Returns the Centers data for General Tab.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const centerId = route.paramMap.get('centerId');
-    return this.centersService
-      .retrieveOne14({
-        centerId: parseInt(centerId, 10),
-        associations: 'groupMembers,collectionMeetingCalendar'
-      } as any)
-      .pipe(catchError(() => of({})));
+    const centerId = route.parent.paramMap.get('centerId');
+    return this.centersService.getCenterData(centerId);
   }
 }

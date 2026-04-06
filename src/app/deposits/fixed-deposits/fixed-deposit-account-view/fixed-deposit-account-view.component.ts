@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -14,7 +22,7 @@ import { FixedDepositsButtonsConfiguration } from './fixed-deposits-buttons.conf
 
 /** Custom Services */
 import { FixedDepositsService } from '../fixed-deposits.service';
-import { SavingsAccountService } from '@fineract/client';
+import { SavingsService } from 'app/savings/savings.service';
 import { Currency } from 'app/shared/models/general.model';
 import {
   MatCard,
@@ -25,7 +33,7 @@ import {
   MatCardContent
 } from '@angular/material/card';
 import { MatTooltip } from '@angular/material/tooltip';
-import { NgClass, NgIf, NgFor, CurrencyPipe } from '@angular/common';
+import { NgClass, CurrencyPipe } from '@angular/common';
 import { AccountNumberComponent } from '../../../shared/account-number/account-number.component';
 import { MatIconButton } from '@angular/material/button';
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
@@ -67,6 +75,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class FixedDepositAccountViewComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private fixedDepositsService = inject(FixedDepositsService);
+  private savingsService = inject(SavingsService);
+  dialog = inject(MatDialog);
+
   /** Fixed Deposits Account Data */
   fixedDepositsAccountData: any;
   /** Savings Data Tables */
@@ -83,16 +97,10 @@ export class FixedDepositAccountViewComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {FixedDepositsService} fixedDepositsService Fixed Deposits Service
-   * @param {SavingsAccountService} savingsAccountService Savings Account Service
+   * @param {SavingsService} savingsService Savings Service
    * @param {MatDialog} dialog Mat Dialog
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private fixedDepositsService: FixedDepositsService,
-    private savingsAccountService: SavingsAccountService,
-    public dialog: MatDialog
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { fixedDepositsAccountData: any; savingsDatatables: any }) => {
       this.fixedDepositsAccountData = data.fixedDepositsAccountData;
       this.savingsDatatables = data.savingsDatatables;
@@ -240,13 +248,9 @@ export class FixedDepositAccountViewComponent implements OnInit {
     });
     deleteSavingsAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsAccountService
-          .update20({
-            accountId: this.fixedDepositsAccountData.id,
-            command: 'updateWithHoldTax',
-            putSavingsAccountsAccountIdRequest: {
-              withHoldTax: true
-            } as any
+        this.savingsService
+          .executeSavingsAccountUpdateCommand(this.fixedDepositsAccountData.id, 'updateWithHoldTax', {
+            withHoldTax: true
           })
           .subscribe(() => {
             this.reload();
@@ -265,13 +269,9 @@ export class FixedDepositAccountViewComponent implements OnInit {
     });
     disableWithHoldTaxDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsAccountService
-          .update20({
-            accountId: this.fixedDepositsAccountData.id,
-            command: 'updateWithHoldTax',
-            putSavingsAccountsAccountIdRequest: {
-              withHoldTax: false
-            } as any
+        this.savingsService
+          .executeSavingsAccountUpdateCommand(this.fixedDepositsAccountData.id, 'updateWithHoldTax', {
+            withHoldTax: false
           })
           .subscribe(() => {
             this.reload();

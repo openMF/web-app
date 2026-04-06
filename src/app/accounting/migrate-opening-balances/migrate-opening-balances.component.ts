@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -10,7 +18,7 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { JournalEntriesService } from '@fineract/client';
+import { AccountingService } from '../accounting.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { PopoverService } from '../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
@@ -19,7 +27,7 @@ import { ConfigurationWizardService } from '../../configuration-wizard/configura
 import { onlyOneOfTheFieldsIsRequiredValidator } from './only-one-of-the-fields-is-required.validator';
 import { Dates } from 'app/core/utils/dates';
 import { TranslateService } from '@ngx-translate/core';
-import { NgFor, NgIf, CurrencyPipe } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 import { GlAccountDisplayComponent } from '../../shared/accounting/gl-account-display/gl-account-display.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -37,6 +45,16 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private accountingService = inject(AccountingService);
+  private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private configurationWizardService = inject(ConfigurationWizardService);
+  private popoverService = inject(PopoverService);
+  private translateService = inject(TranslateService);
+
   /** Minimum opening balances date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum opening balances date allowed. */
@@ -70,17 +88,7 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private journalEntriesService: JournalEntriesService,
-    private settingsService: SettingsService,
-    private dateUtils: Dates,
-    private route: ActivatedRoute,
-    private router: Router,
-    private configurationWizardService: ConfigurationWizardService,
-    private popoverService: PopoverService,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { offices: any; currencies: any }) => {
       this.officeData = data.offices;
       this.currencyData = data.currencies.selectedCurrencyOptions;
@@ -148,8 +156,8 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
    * Retrieves gl accounts on the basis of specified office.
    */
   retrieveOpeningBalances() {
-    this.journalEntriesService
-      .retrieveOpeningBalance({ officeId: parseInt(this.openingBalancesForm.value.officeId) })
+    this.accountingService
+      .retrieveOpeningBalances(this.openingBalancesForm.value.officeId)
       .subscribe((openingBalancesData: any) => {
         const entry = this.openingBalancesForm.get('glAccountEntries') as UntypedFormArray;
 
@@ -203,17 +211,12 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
         }
       });
       delete openingBalances.glAccountEntries;
-      this.journalEntriesService
-        .createGLJournalEntry({
-          command: 'defineOpeningBalance',
-          journalEntryCommand: openingBalances
-        })
-        .subscribe((response: any) => {
-          this.router.navigate([
-            '/accounting/journal-entries/transactions/view',
-            response.transactionId
-          ]);
-        });
+      this.accountingService.defineOpeningBalances(openingBalances).subscribe((response: any) => {
+        this.router.navigate([
+          '/accounting/journal-entries/transactions/view',
+          response.transactionId
+        ]);
+      });
     }
   }
 
@@ -237,7 +240,7 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showMigrateOpeningBalances === true) {
+    if (this.configurationWizardService.showMigrateOpeningBalances) {
       setTimeout(() => {
         this.showPopover(this.templateSearchFormRef, this.searchFormRef.nativeElement, 'bottom', true);
       });

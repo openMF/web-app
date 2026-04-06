@@ -1,22 +1,27 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { ShareAccountService } from '@fineract/client';
+import { SharesService } from '../shares.service';
 
 /**
  * Shares Account Actions data resolver.
  */
 @Injectable()
 export class ShareAccountActionsResolver {
-  /**
-   * @param {ShareAccountService} ShareAccountService Shares account service.
-   */
-  constructor(private shareAccountService: ShareAccountService) {}
+  private sharesService = inject(SharesService);
 
   /**
    * Returns the Shares account actions data.
@@ -31,10 +36,7 @@ export class ShareAccountActionsResolver {
       case 'Redeem Shares':
       case 'Approve Additional Shares':
       case 'Reject Additional Shares':
-        return this.shareAccountService.retrieveAccount({
-          accountId: Number(shareAccountId),
-          type: 'full'
-        });
+        return this.sharesService.getSharesAccountData(shareAccountId, true);
       default:
         return undefined;
     }

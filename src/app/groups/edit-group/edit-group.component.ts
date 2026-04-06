@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -10,7 +18,7 @@ import {
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { GroupsService } from '@fineract/client';
+import { GroupsService } from '../groups.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -26,7 +34,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ...STANDALONE_SHARED_IMPORTS
   ]
 })
-export class EditGroupComponent implements OnInit, AfterViewInit {
+export class EditGroupComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private groupService = inject(GroupsService);
+  private dateUtils = inject(Dates);
+  private settingsService = inject(SettingsService);
+
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -49,14 +64,7 @@ export class EditGroupComponent implements OnInit, AfterViewInit {
    * @param {Dates} dateUtils Date Utils to format date.
    * @param {SettingsService} settingsService SettingsService
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private groupService: GroupsService,
-    private dateUtils: Dates,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { groupAndTemplateData: any; groupViewData: any }) => {
       this.staffData = data.groupAndTemplateData.staffOptions;
       this.groupData = data.groupAndTemplateData;
@@ -80,15 +88,6 @@ export class EditGroupComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Build dependencies after view initialization to avoid ExpressionChangedAfterItHasBeenCheckedError
-   */
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.buildDependencies();
-    });
-  }
-
-  /**
    * Creates the edit group form.
    */
   createEditGroupForm() {
@@ -97,7 +96,8 @@ export class EditGroupComponent implements OnInit, AfterViewInit {
         '',
         [
           Validators.required,
-          Validators.pattern('(^[A-z]).*')]
+          Validators.pattern('(^[A-z]).*')
+        ]
       ],
       submittedOnDate: [
         '',
@@ -106,7 +106,7 @@ export class EditGroupComponent implements OnInit, AfterViewInit {
       staffId: [''],
       externalId: ['']
     });
-    // Remove buildDependencies from here to avoid change detection issues
+    this.buildDependencies();
   }
 
   /**
@@ -121,14 +121,6 @@ export class EditGroupComponent implements OnInit, AfterViewInit {
     } else {
       this.editGroupForm.removeControl('activationDate');
     }
-  }
-
-  /**
-   * Get the group ID from various possible sources
-   */
-  private getGroupId(): number | null {
-    const id = this.groupData?.id || this.route.snapshot.paramMap.get('groupId');
-    return id ? Number(id) : null;
   }
 
   /**
@@ -152,13 +144,8 @@ export class EditGroupComponent implements OnInit, AfterViewInit {
       dateFormat,
       locale
     };
-    const groupId = this.getGroupId();
-    if (groupId) {
-      this.groupService.update13({ groupId: groupId, putGroupsGroupIdRequest: data }).subscribe((response: any) => {
-        this.router.navigate(['../'], { relativeTo: this.route });
-      });
-    } else {
-      console.error('Group ID is not available');
-    }
+    this.groupService.updateGroup(data, this.groupData.id).subscribe((response: any) => {
+      this.router.navigate(['../'], { relativeTo: this.route });
+    });
   }
 }

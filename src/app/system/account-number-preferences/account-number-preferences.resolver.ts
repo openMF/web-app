@@ -1,27 +1,32 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { AccountNumberFormatService } from '@fineract/client';
+import { SystemService } from '../system.service';
 
 /**
  * Account Number Preferences data resolver.
  */
 @Injectable()
 export class AccountNumberPreferencesResolver {
-  /**
-   * @param {AccountNumberFormatService} accountNumberFormatService Account Number Format service.
-   */
-  constructor(private accountNumberFormatService: AccountNumberFormatService) {}
+  private systemService = inject(SystemService);
 
   /**
    * Returns the Account Number Preferences data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.accountNumberFormatService.retrieveAll3();
+    return this.systemService.getAccountNumberPreferences();
   }
 }

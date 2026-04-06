@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /* Angular Imports */
-import { Directive, Renderer2, ElementRef, HostBinding, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Directive, Renderer2, ElementRef, HostBinding, ChangeDetectorRef, OnDestroy, inject } from '@angular/core';
 
 /* rxjs Imports */
 import { Subscription } from 'rxjs';
@@ -13,6 +21,9 @@ import { PopoverRef } from './popover-ref';
  */
 @Directive({ selector: '[mifosxPopoverArrow]' })
 export class PopoverArrowDirective implements OnDestroy {
+  private popoverRef = inject(PopoverRef);
+  private cd = inject(ChangeDetectorRef);
+
   @HostBinding('style.width.px')
   @HostBinding('style.height.px')
   arrowSize: number;
@@ -35,10 +46,9 @@ export class PopoverArrowDirective implements OnDestroy {
    * @param {PopoverRef} popoverRef PopoverRef.
    * @param {ChangeDetectorRef} cd ChangeDetectorRef
    */
-  constructor(
-    private popoverRef: PopoverRef,
-    private cd: ChangeDetectorRef
-  ) {
+  constructor() {
+    const popoverRef = this.popoverRef;
+
     this.arrowSize = popoverRef.config.arrowSize;
 
     this.subscription = popoverRef.positionChanges().subscribe((p) => {

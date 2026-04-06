@@ -1,17 +1,23 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports. */
-import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services. */
-import { LoansService } from '@fineract/client';
-import { SettingsService } from 'app/settings/settings.service';
 import { Currency } from 'app/shared/models/general.model';
 import { InputAmountComponent } from '../../../../shared/input-amount/input-amount.component';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 
 /**
  * Approve Loan component.
@@ -27,36 +33,26 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     FormatNumberPipe
   ]
 })
-export class ApproveLoanComponent implements OnInit {
+export class ApproveLoanComponent extends LoanAccountActionsBaseComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private dateUtils = inject(Dates);
+
   /** Approve Loan form. */
   approveLoanForm: UntypedFormGroup;
   /** Loan data. */
   loanData: any = new Object();
-  /** Association Data */
-  associationData: any;
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
-  /** Loan Id */
-  loanId: any;
+  maxDate = new Date();
   currency: Currency;
 
   /**
-   * Retrieve data from `Resolver`.
    * @param formBuilder Form Builder.
-   * @param route Activated Route.
    * @param dateUtils Date Utils.
-   * @param loanService Loan Service.
-   * @param router Router.
-   * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private dateUtils: Dates,
-    private loanService: LoansService,
-    private router: Router,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
+    super();
+    this.maxDate = this.settingsService.maxFutureDate;
     this.route.data.subscribe((data: { actionButtonData: any }) => {
       this.loanData = data.actionButtonData;
       this.currency = data.actionButtonData.currency;
@@ -66,56 +62,17 @@ export class ApproveLoanComponent implements OnInit {
 
   ngOnInit() {
     this.setApproveLoanForm();
-    this.loanService
-      .retrieveLoan({
-        loanId: Number(this.loanId),
-        associations: 'multiDisburseDetails'
-      })
-      .subscribe((response: any) => {
-        this.associationData = response;
-        this.approveLoanForm.patchValue({
-          expectedDisbursementDate: new Date(response.timeline.expectedDisbursementDate)
-        });
+
+    // Get delinquency data for available disbursement amount with over applied
+    if (this.isLoanProduct) {
+      this.loanService.getLoanDelinquencyDataForTemplate(this.loanId).subscribe((delinquencyData: any) => {
+        // Check if the field is at root level
+        if (delinquencyData.availableDisbursementAmountWithOverApplied !== undefined) {
+          this.loanData.availableDisbursementAmountWithOverApplied =
+            delinquencyData.availableDisbursementAmountWithOverApplied;
+        }
       });
-
-    // Get delinquency data for available disbursement amount with over applied
-    this.loanService.retrieveLoan(this.loanId).subscribe((delinquencyData: any) => {
-      // Check if the field is at root level
-      if (delinquencyData.availableDisbursementAmountWithOverApplied !== undefined) {
-        this.loanData.availableDisbursementAmountWithOverApplied =
-          delinquencyData.availableDisbursementAmountWithOverApplied;
-      }
-      // Also check if it's in delinquent object
-      if (delinquencyData.delinquent) {
-        this.loanData.delinquent = delinquencyData.delinquent;
-      }
-    });
-
-    // Get delinquency data for available disbursement amount with over applied
-    this.loanService.retrieveLoan(this.loanId).subscribe((delinquencyData: any) => {
-      // Check if the field is at root level
-      if (delinquencyData.availableDisbursementAmountWithOverApplied !== undefined) {
-        this.loanData.availableDisbursementAmountWithOverApplied =
-          delinquencyData.availableDisbursementAmountWithOverApplied;
-      }
-      // Also check if it's in delinquent object
-      if (delinquencyData.delinquent) {
-        this.loanData.delinquent = delinquencyData.delinquent;
-      }
-    });
-
-    // Get delinquency data for available disbursement amount with over applied
-    this.loanService.retrieveLoan(this.loanId).subscribe((delinquencyData: any) => {
-      // Check if the field is at root level
-      if (delinquencyData.availableDisbursementAmountWithOverApplied !== undefined) {
-        this.loanData.availableDisbursementAmountWithOverApplied =
-          delinquencyData.availableDisbursementAmountWithOverApplied;
-      }
-      // Also check if it's in delinquent object
-      if (delinquencyData.delinquent) {
-        this.loanData.delinquent = delinquencyData.delinquent;
-      }
-    });
+    }
   }
 
   /**
@@ -127,13 +84,19 @@ export class ApproveLoanComponent implements OnInit {
         this.settingsService.businessDate,
         Validators.required
       ],
-      expectedDisbursementDate: [''],
+      expectedDisbursementDate: [
+        new Date(this.loanData.expectedDisbursementDate),
+        Validators.required
+      ],
       approvedLoanAmount: [
         this.loanData.approvalAmount,
         Validators.required
       ],
       note: ['']
     });
+    if (this.isWorkingCapital) {
+      this.approveLoanForm.addControl('discountAmount', new UntypedFormControl());
+    }
   }
 
   /**
@@ -156,14 +119,21 @@ export class ApproveLoanComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.loanService
-      .stateTransitions({
-        loanId: Number(this.loanId),
-        postLoansLoanIdRequest: data,
-        command: 'approve'
-      })
-      .subscribe((response: any) => {
-        this.router.navigate(['../../general'], { relativeTo: this.route });
-      });
+    const loanCommand: string = 'approve';
+    const request$ = this.isLoanProduct
+      ? this.loanService.loanActionButtons(this.loanId, loanCommand, data)
+      : this.isWorkingCapital
+        ? this.loanService.applyWorkingCapitalLoanAccountCommand(this.loanId, loanCommand, data)
+        : undefined;
+
+    if (!request$) {
+      this.approveLoanForm.setErrors({ unsupportedProductType: true });
+      return;
+    }
+
+    request$.subscribe({
+      next: () => this.gotoLoanDefaultView(),
+      error: () => this.approveLoanForm.setErrors({ submitFailed: true })
+    });
   }
 }

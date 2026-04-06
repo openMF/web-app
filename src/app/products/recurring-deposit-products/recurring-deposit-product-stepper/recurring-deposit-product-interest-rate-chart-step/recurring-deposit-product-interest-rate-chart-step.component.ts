@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -25,7 +33,7 @@ import { Dates } from 'app/core/utils/dates';
 import { TranslateService } from '@ngx-translate/core';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { NgFor, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
+
 import { MatDivider } from '@angular/material/divider';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -53,8 +61,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     trigger('expandChartSlab', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
       state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))])
-
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
+    ])
   ],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
@@ -69,8 +77,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatHeaderCell,
     MatCellDef,
     MatCell,
-    NgSwitch,
-    NgSwitchCase,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
@@ -81,6 +87,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class RecurringDepositProductInterestRateChartStepComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  dialog = inject(MatDialog);
+  private dateUtils = inject(Dates);
+  private settingsService = inject(SettingsService);
+  private translateService = inject(TranslateService);
+
   @Input() recurringDepositProductsTemplate: any;
 
   recurringDepositProductInterestRateChartForm: UntypedFormGroup;
@@ -120,13 +132,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
    * @param {SettingsService} settingsService Settings Service.
    */
 
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    public dialog: MatDialog,
-    private dateUtils: Dates,
-    private settingsService: SettingsService,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.createrecurringDepositProductInterestRateChartForm();
   }
 
@@ -462,28 +468,32 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
         value: values ? values.fromPeriod : undefined,
         type: 'number',
         required: true,
-        order: 2
+        order: 2,
+        min: 0
       }),
       new InputBase({
         controlName: 'toPeriod',
         label: this.translateService.instant('labels.inputs.Period To'),
         value: values ? values.toPeriod : undefined,
         type: 'number',
-        order: 3
+        order: 3,
+        min: 0
       }),
       new InputBase({
         controlName: 'amountRangeFrom',
         label: this.translateService.instant('labels.inputs.Amount Range From'),
         value: values ? values.amountRangeFrom : undefined,
         type: 'number',
-        order: 4
+        order: 4,
+        min: 0
       }),
       new InputBase({
         controlName: 'amountRangeTo',
         label: this.translateService.instant('labels.inputs.Amount Range To'),
         value: values ? values.amountRangeTo : undefined,
         type: 'number',
-        order: 5
+        order: 5,
+        min: 0
       }),
       new InputBase({
         controlName: 'annualInterestRate',
@@ -491,7 +501,8 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
         value: values ? values.annualInterestRate : undefined,
         type: 'number',
         required: true,
-        order: 6
+        order: 6,
+        min: 0
       }),
       new InputBase({
         controlName: 'description',
@@ -500,7 +511,6 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
         required: true,
         order: 7
       })
-
     ];
     return formfields;
   }

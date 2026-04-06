@@ -1,22 +1,27 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { StandingInstructionsService } from '@fineract/client';
+import { AccountTransfersService } from '../account-transfers.service';
 
 /**
  * View Standing Instructions resolver.
  */
 @Injectable()
 export class StandingInstructionsDataAndTemplateResolver {
-  /**
-   * @param {StandingInstructionsService} StandingInstructionsService Standing Instructions service.
-   */
-  constructor(private standingInstructionsService: StandingInstructionsService) {}
+  private accountTransfersService = inject(AccountTransfersService);
 
   /**
    * Returns the Standing Instructions Data.
@@ -25,8 +30,6 @@ export class StandingInstructionsDataAndTemplateResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const standingInstructionsId = route.parent.paramMap.get('standingInstructionsId');
-    return this.standingInstructionsService.retrieveOne10({
-      standingInstructionId: Number(standingInstructionsId)
-    });
+    return this.accountTransfersService.getStandingInstructionsDataAndTemplate(standingInstructionsId);
   }
 }

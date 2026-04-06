@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports. */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoansAccountCloseComponent } from './loans-account-close/loans-account-close.component';
 import { UndoApprovalComponent } from './undo-approval/undo-approval.component';
@@ -32,6 +40,9 @@ import { LoanReamortizeComponent } from './loan-reamortize/loan-reamortize.compo
 import { AddInterestPauseComponent } from './add-interest-pause/add-interest-pause.component';
 import { UndoWriteOffComponent } from './undo-write-off/undo-write-off.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { AttachOriginatorComponent } from './attach-originator/attach-originator.component';
+import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
+import { UpdateDiscountComponent } from './update-discount/update-discount.component';
 
 /**
  * Loan Account Actions component.
@@ -39,7 +50,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 @Component({
   selector: 'mifosx-loan-account-actions',
   templateUrl: './loan-account-actions.component.html',
-  styleUrls: ['./loan-account-actions.component.scss'],
+  styleUrls: [],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     LoansAccountCloseComponent,
@@ -71,10 +82,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     LoanReagingComponent,
     LoanReamortizeComponent,
     AddInterestPauseComponent,
-    UndoWriteOffComponent
+    UndoWriteOffComponent,
+    AttachOriginatorComponent,
+    UpdateDiscountComponent
   ]
 })
 export class LoanAccountActionsComponent {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   /** Loan Details Data */
   navigationData: any;
 
@@ -119,6 +135,8 @@ export class LoanAccountActionsComponent {
     'Contract Termination': boolean;
     'Buy Down Fee': boolean;
     'Undo Write-off': boolean;
+    'Attach Loan Originator': boolean;
+    'Update discount': boolean;
   } = {
     Close: false,
     'Undo Approval': false,
@@ -158,7 +176,9 @@ export class LoanAccountActionsComponent {
     'Capitalized Income': false,
     'Contract Termination': false,
     'Buy Down Fee': false,
-    'Undo Write-off': false
+    'Undo Write-off': false,
+    'Attach Loan Originator': false,
+    'Update discount': false
   };
 
   actionButtonData: any;
@@ -167,11 +187,8 @@ export class LoanAccountActionsComponent {
   /**
    * @param route Activated Route.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
-    const currentNavigation = this.router.getCurrentNavigation();
+  constructor() {
+    const currentNavigation = this.router.currentNavigation();
     // Safely access data with optional chaining
     this.navigationData = currentNavigation?.extras?.state?.data;
 
@@ -191,5 +208,6 @@ export class LoanAccountActionsComponent {
     });
 
     this.actionButtonData['actionName'] = this.actionName;
+    this.actionButtonData['productType'] = LoanProductBaseComponent.resolveProductTypeDefault(this.route, 'loan');
   }
 }

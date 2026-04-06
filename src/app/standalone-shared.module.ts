@@ -1,3 +1,11 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 // src/app/shared/standalone-shared.module.ts
 
 import { CommonModule } from '@angular/common';
@@ -14,6 +22,7 @@ import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular
 import { MatButton } from '@angular/material/button';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { DateFormatPipe } from '@pipes/date-format.pipe';
+import { DocumentationLinkPipe } from '@pipes/documentation-link.pipe';
 import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { TranslatePipe } from '@pipes/translate.pipe';
 import { HasPermissionDirective } from './directives/has-permission/has-permission.directive';
@@ -43,10 +52,12 @@ export const STANDALONE_SHARED_IMPORTS = [
   MatButton,
   MatCheckbox,
   DateFormatPipe,
+  DocumentationLinkPipe,
   HasPermissionDirective,
 
   // Pipes and Directives
   NgxTranslatePipe,
   TranslatePipe
 ];
+export { M3ButtonComponent } from './shared/m3-ui/m3-button/m3-button.component';
 export { HasPermissionDirective } from './directives/has-permission/has-permission.directive';

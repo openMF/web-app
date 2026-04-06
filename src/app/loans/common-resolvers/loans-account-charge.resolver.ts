@@ -1,20 +1,27 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
-import { LoanChargesService } from '@fineract/client';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
+
+/** Custom Services */
+import { LoansService } from '../loans.service';
 
 /**
  * Loans Account Charge data resolver.
  */
 @Injectable()
 export class LoansAccountChargeResolver {
-  /**
-   * @param {LoanChargesService} loanChargesService Loan charges service.
-   */
-  constructor(private loanChargesService: LoanChargesService) {}
+  private loansService = inject(LoansService);
 
   /**
    * Returns the Loans Account Charge data.
@@ -24,9 +31,6 @@ export class LoansAccountChargeResolver {
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const loanId = route.paramMap.get('loanId');
     const chargeId = route.paramMap.get('id');
-    return this.loanChargesService.retrieveLoanCharge({
-      loanId: Number(loanId),
-      loanChargeId: Number(chargeId)
-    });
+    return this.loansService.getLoansAccountCharge(loanId, chargeId);
   }
 }

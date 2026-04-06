@@ -1,13 +1,24 @@
-<span class="layout-row" *ngIf="accountTitle">
-  <div [ngClass]="getWithClass(withTitle)" class="header">
-    {{ 'labels.inputs.' + accountTitle | translate }}
-  </div>
+<!--
+  Copyright since 2025 Mifos Initiative
 
-  <div [ngClass]="getWithClass(withAccount)">
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+@if (accountTitle) {
+  <span class="layout-row">
+    <div [ngClass]="getWithClass(withTitle)" class="header">
+      {{ 'labels.inputs.' + accountTitle | translate }}
+    </div>
+    <div [ngClass]="getWithClass(withAccount)">
+      {{ glAccountValue() }}
+    </div>
+  </span>
+}
+
+@if (!accountTitle) {
+  <div class="flex-100">
     {{ glAccountValue() }}
   </div>
-</span>
-
-<div class="flex-100" *ngIf="!accountTitle">
-  {{ glAccountValue() }}
-</div>
+}

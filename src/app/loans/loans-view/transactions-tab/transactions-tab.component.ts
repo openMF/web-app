@@ -1,5 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -17,8 +25,7 @@ import {
   MatRow
 } from '@angular/material/table';
 import { Dates } from 'app/core/utils/dates';
-import { LoanTransactionsService, LoansService } from '@fineract/client';
-import { LoansService as CustomLoansService } from 'app/customApis.service';
+import { LoansService } from 'app/loans/loans.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsService } from 'app/settings/settings.service';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
@@ -40,6 +47,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
 
 @Component({
   selector: 'mifosx-transactions-tab',
@@ -72,7 +80,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     FormatNumberPipe
   ]
 })
-export class TransactionsTabComponent implements OnInit {
+export class TransactionsTabComponent extends LoanProductBaseComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private dateUtils = inject(Dates);
+  private dialog = inject(MatDialog);
+  private loansService = inject(LoansService);
+  private translateService = inject(TranslateService);
+  private settingsService = inject(SettingsService);
+  private alertService = inject(AlertService);
+
   /** Loan Details Data */
   transactionsData: LoanTransaction[] = [];
   loanDetailsData: any;
@@ -128,18 +144,8 @@ export class TransactionsTabComponent implements OnInit {
    * Retrieves the loans with associations data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private dateUtils: Dates,
-    private router: Router,
-    private dialog: MatDialog,
-    private loanTransactionsService: LoanTransactionsService,
-    private loansService: LoansService,
-    private customLoansService: CustomLoansService,
-    private translateService: TranslateService,
-    private settingsService: SettingsService,
-    private alertService: AlertService
-  ) {
+  constructor() {
+    super();
     this.route.parent.parent.data.subscribe((data: { loanDetailsData: any }) => {
       this.loanDetailsData = data.loanDetailsData;
       this.status = data.loanDetailsData.status.value;
@@ -214,7 +220,12 @@ export class TransactionsTabComponent implements OnInit {
    */
   showTransactions(transactionsData: LoanTransaction) {
     if (this.showTransaction(transactionsData)) {
-      this.router.navigate([transactionsData.id], { relativeTo: this.route });
+      this.router.navigate([transactionsData.id], {
+        queryParams: {
+          productType: this.loanProductService.productType.value
+        },
+        relativeTo: this.route
+      });
     }
   }
 
@@ -373,11 +384,7 @@ export class TransactionsTabComponent implements OnInit {
           transactionId = null;
         }
         this.loansService
-          .stateTransitions({
-            loanId: parseInt(loanId, 10),
-            postLoansLoanIdRequest: payload,
-            command: command
-          })
+          .executeLoansAccountTransactionsCommand(loanId, command, payload, transactionId)
           .subscribe((responseCmd: any) => {
             transaction.manuallyReversed = true;
             this.reload();
@@ -400,15 +407,9 @@ export class TransactionsTabComponent implements OnInit {
     undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
         const undoCommand = actionName === 'Re-Age' ? 'undoReAge' : 'undoReAmortize';
-        this.loansService
-          .stateTransitions({
-            loanId: this.loanId,
-            postLoansLoanIdRequest: {},
-            command: undoCommand
-          })
-          .subscribe(() => {
-            this.reload();
-          });
+        this.loansService.executeLoansAccountTransactionsCommand(String(this.loanId), undoCommand, {}).subscribe(() => {
+          this.reload();
+        });
       }
     });
   }
@@ -490,12 +491,8 @@ export class TransactionsTabComponent implements OnInit {
 
   openInterestRefundDialog(transaction: LoanTransaction) {
     const loanId = this.loanId;
-    this.loanTransactionsService
-      .retrieveTransactionTemplate({
-        loanId: loanId,
-        command: 'interest-refund',
-        transactionId: transaction.id
-      })
+    this.loansService
+      .getLoanTransactionActionTemplate(String(loanId), 'interest-refund', String(transaction.id))
       .subscribe((template: any) => {
         const paymentTypeField = new FormfieldBase({
           controlType: 'select',
@@ -537,7 +534,6 @@ export class TransactionsTabComponent implements OnInit {
             required: false,
             order: 4
           })
-
         ];
         const data = {
           title: this.translateService.instant('labels.buttons.Create Interest Refund'),
@@ -554,7 +550,7 @@ export class TransactionsTabComponent implements OnInit {
               locale: this.settingsService.language.code,
               dateFormat: this.settingsService.dateFormat
             };
-            this.customLoansService
+            this.loansService
               .executeLoansAccountTransactionsCommand(
                 String(loanId),
                 'interest-refund',
@@ -569,12 +565,6 @@ export class TransactionsTabComponent implements OnInit {
       });
   }
 
-  private reload() {
-    const clientId = this.route.parent.parent.snapshot.params['clientId'];
-    const url: string = this.router.url;
-    this.router.navigateByUrl(`/clients`, { skipLocationChange: true }).then(() => this.router.navigate([url]));
-  }
-
   displaySubMenu(transaction: LoanTransaction): boolean {
     if (this.isReAgoeOrReAmortize(transaction.type) && transaction.manuallyReversed) {
       return false;
@@ -584,12 +574,8 @@ export class TransactionsTabComponent implements OnInit {
 
   capitalizedIncomeAdjustmentTransaction(transaction: LoanTransaction) {
     const accountId = `${this.loanId}`;
-    this.loanTransactionsService
-      .retrieveTransactionTemplate({
-        loanId: Number(accountId),
-        command: 'capitalizedIncomeAdjustment',
-        transactionId: Number(transaction.id)
-      })
+    this.loansService
+      .getLoanTransactionActionTemplate(accountId, 'capitalizedIncomeAdjustment', `${transaction.id}`)
       .subscribe((response: any) => {
         const transactionDate = response.date || transaction.date;
         if (response.amount == 0) {
@@ -616,10 +602,10 @@ export class TransactionsTabComponent implements OnInit {
               max: transactionAmount,
               validators: [
                 Validators.min(0.001),
-                Validators.max(transactionAmount)],
+                Validators.max(transactionAmount)
+              ],
               order: 2
             })
-
           ];
           const data = {
             title: `Adjustment ${transaction.type.value} Transaction`,
@@ -641,11 +627,12 @@ export class TransactionsTabComponent implements OnInit {
                   dateFormat
                 };
                 this.loansService
-                  .stateTransitions({
-                    loanId: parseInt(accountId, 10),
-                    postLoansLoanIdRequest: payload,
-                    command: 'capitalizedIncomeAdjustment'
-                  })
+                  .executeLoansAccountTransactionsCommand(
+                    accountId,
+                    'capitalizedIncomeAdjustment',
+                    payload,
+                    transaction.id
+                  )
                   .subscribe(() => {
                     this.reload();
                   });
@@ -663,12 +650,8 @@ export class TransactionsTabComponent implements OnInit {
 
   buyDownFeeAdjustmentTransaction(transaction: LoanTransaction) {
     const accountId = `${this.loanId}`;
-    this.loanTransactionsService
-      .retrieveTransactionTemplate({
-        loanId: Number(accountId),
-        command: 'buyDownFeeAdjustment',
-        transactionId: Number(transaction.id)
-      })
+    this.loansService
+      .getLoanTransactionActionTemplate(accountId, 'buyDownFeeAdjustment', `${transaction.id}`)
       .subscribe((response: any) => {
         const transactionDate = response.date || transaction.date;
         if (response.amount == 0) {
@@ -695,10 +678,10 @@ export class TransactionsTabComponent implements OnInit {
               max: transactionAmount,
               validators: [
                 Validators.min(0.001),
-                Validators.max(transactionAmount)],
+                Validators.max(transactionAmount)
+              ],
               order: 2
             })
-
           ];
           const data = {
             title: `Adjustment ${transaction.type.value} Transaction`,
@@ -719,7 +702,7 @@ export class TransactionsTabComponent implements OnInit {
                   locale,
                   dateFormat
                 };
-                this.customLoansService
+                this.loansService
                   .executeLoansAccountTransactionsCommand(accountId, 'buyDownFeeAdjustment', payload, transaction.id)
                   .subscribe(() => {
                     this.reload();

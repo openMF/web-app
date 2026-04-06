@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -12,7 +20,7 @@ import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { TaxGroupService } from '@fineract/client';
+import { ProductsService } from '../../products.service';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Dialog Components */
@@ -67,6 +75,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateTaxGroupComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private productsService = inject(ProductsService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dateUtils = inject(Dates);
+  private dialog = inject(MatDialog);
+  private settingsService = inject(SettingsService);
+  private translateService = inject(TranslateService);
+
   /** Minimum start date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum start date allowed. */
@@ -97,16 +114,7 @@ export class CreateTaxGroupComponent implements OnInit {
    * @param {MatDialog} dialog Dialog reference.
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private taxGroupService: TaxGroupService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private dateUtils: Dates,
-    private dialog: MatDialog,
-    private settingsService: SettingsService,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { taxGroupTemplate: any }) => {
       this.taxGroupTemplateData = data.taxGroupTemplate;
       this.taxComponentOptions = this.taxGroupTemplateData.taxComponents;
@@ -148,7 +156,6 @@ export class CreateTaxGroupComponent implements OnInit {
         maxDate: this.maxDate,
         order: 2
       })
-
     ];
     const data = {
       title:
@@ -186,7 +193,6 @@ export class CreateTaxGroupComponent implements OnInit {
         maxDate: this.maxDate,
         order: 2
       })
-
     ];
     const data = {
       title: 'Edit Tax Component',
@@ -234,7 +240,7 @@ export class CreateTaxGroupComponent implements OnInit {
     for (const taxComponent of taxGroup.taxComponents) {
       taxComponent.startDate = this.dateUtils.formatDate(taxComponent.startDate, dateFormat) || '';
     }
-    this.taxGroupService.createTaxGroup({ postTaxesGroupRequest: taxGroup }).subscribe((response: any) => {
+    this.productsService.createTaxGroup(taxGroup).subscribe((response: any) => {
       this.router.navigate(
         [
           '../',

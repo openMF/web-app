@@ -1,27 +1,33 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { AccountTransfersService } from '@fineract/client';
+import { AccountTransfersService } from '../account-transfers.service';
 
 /**
  * View Standing Instructions resolver.
  */
 @Injectable()
 export class MakeAccountTransferTemplateResolver {
+  private accountTransfersService = inject(AccountTransfersService);
+
   accountTypeId: string;
   id: any;
-  /**
-   * @param {AccountTransfersService} accountTransfersService Account Transfers service.
-   */
-  constructor(private accountTransfersService: AccountTransfersService) {}
 
   /**
-   * Returns the Account Transfer Template Data.
+   * Returns the Standing Instructions Data.
    * @param {ActivatedRouteSnapshot} route Route Snapshot
    * @returns {Observable<any>}
    */
@@ -43,9 +49,6 @@ export class MakeAccountTransferTemplateResolver {
       default:
         this.accountTypeId = '0';
     }
-    return this.accountTransfersService.template5({
-      fromAccountId: this.id,
-      fromAccountType: Number(this.accountTypeId)
-    });
+    return this.accountTransfersService.newAccountTranferResource(this.id, this.accountTypeId);
   }
 }

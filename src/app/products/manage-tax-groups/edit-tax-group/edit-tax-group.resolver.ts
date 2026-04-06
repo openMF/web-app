@@ -1,19 +1,27 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable, forkJoin } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
-import { TaxGroupService } from '@fineract/client';
+/** Custom Services */
+import { ProductsService } from '../../products.service';
 
 /**
  * tax Group data resolver.
  */
 @Injectable()
 export class EditTaxGroupResolver {
-  constructor(private taxGroupService: TaxGroupService) {}
+  private productsService = inject(ProductsService);
 
   /**
    * Returns the tax Group data.
@@ -21,18 +29,6 @@ export class EditTaxGroupResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const taxGroupId = route.parent.paramMap.get('id');
-    return forkJoin([
-      this.taxGroupService.retrieveTaxGroup({ taxGroupId: +taxGroupId }),
-      this.taxGroupService.retrieveTemplate22()
-    ]).pipe(
-      map(
-        ([
-          taxGroup,
-          template
-        ]) => {
-          return { ...taxGroup, taxComponents: (template as any).taxComponents };
-        }
-      )
-    );
+    return this.productsService.getTaxGroup(taxGroupId, 'true');
   }
 }

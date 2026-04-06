@@ -1,18 +1,26 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 import { DatePipe } from '@angular/common';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Dates {
+  private datePipe = inject(DatePipe);
+
   public static DEFAULT_DATEFORMAT = 'yyyy-MM-dd';
   public static DEFAULT_DATETIMEFORMAT = 'yyyy-MM-dd HH:mm';
 
-  constructor(private datePipe: DatePipe) {}
-
   public getDate(timestamp: any): string {
-    return this.datePipe.transform(timestamp, 'YYYY-MM-DD');
+    return this.datePipe.transform(timestamp, 'yyyy-MM-dd');
   }
 
   public formatDate(timestamp: any, dateFormat: string): string {
@@ -21,7 +29,19 @@ export class Dates {
   }
 
   public formatDateAsString(value: Date, dateFormat: string): string {
-    return moment(value).format(dateFormat);
+    const momentFormat = this.angularToMomentFormat(dateFormat);
+    return moment(value).format(momentFormat);
+  }
+
+  public angularToMomentFormat(angularFormat: string): string {
+    return angularFormat.replace(/y/g, 'Y').replace(/d/g, 'D').replace(/a/g, 'A');
+  }
+
+  public getMomentLocale(language?: { code: string }): string {
+    const langCode = language?.code;
+    if (!langCode) return 'en';
+    if (langCode.includes('-')) return langCode.split('-')[0];
+    return langCode;
   }
 
   public parseDate(value: any): Date {
@@ -37,7 +57,8 @@ export class Dates {
   }
 
   public convertToDate(value: any, format: string): Date {
-    return moment(value).toDate();
+    const momentFormat = this.angularToMomentFormat(format);
+    return moment(value, momentFormat).toDate();
   }
 
   get language() {

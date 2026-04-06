@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 
 /** rxjs Imports */
@@ -27,17 +35,37 @@ const twoFactorAccessTokenHeader = 'Fineract-Platform-TFA-Token';
  */
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
-  constructor(private settingsService: SettingsService) {}
+  private settingsService = inject(SettingsService);
 
   /**
    * Intercepts a Http request and sets the request headers.
    */
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (this.isExternalUrl(request.url)) {
+      return next.handle(request);
+    }
     if (this.settingsService.tenantIdentifier) {
       httpOptions.headers['Fineract-Platform-TenantId'] = this.settingsService.tenantIdentifier;
     }
     request = request.clone({ setHeaders: httpOptions.headers });
     return next.handle(request);
+  }
+
+  /**
+   * Absolute URLs pointing at our own Fineract server are internal — ApiPrefixInterceptor
+   * (in HttpService's dynamic chain) may have already converted relative URLs to absolute ones.
+   */
+  private isExternalUrl(url: string): boolean {
+    try {
+      const requestOrigin = new URL(url).origin;
+      const server = this.settingsService.server;
+      if (server) {
+        return requestOrigin !== new URL(server).origin;
+      }
+      return true;
+    } catch {
+      return false; // Relative URL (new URL() throws) → internal
+    }
   }
 
   /**

@@ -1,11 +1,19 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
-import { SavingsAccountService } from '@fineract/client';
+import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -21,6 +29,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class SavingsAccountAssignStaffComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private savingsService = inject(SavingsService);
+  private dateUtils = inject(Dates);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private settingsService = inject(SettingsService);
+
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -36,20 +51,13 @@ export class SavingsAccountAssignStaffComponent implements OnInit {
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
-   * @param {SavingsAccountService} savingsAccountService Savings Account Service
+   * @param {SavingsService} savingsService Savings Service
    * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private savingsAccountService: SavingsAccountService,
-    private dateUtils: Dates,
-    private route: ActivatedRoute,
-    private router: Router,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.accountId = this.route.snapshot.params['savingAccountId'];
     this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
       this.savingsAccountData = data.savingsAccountActionData;
@@ -70,7 +78,10 @@ export class SavingsAccountAssignStaffComponent implements OnInit {
    */
   createSavingsAssignStaffForm() {
     this.savingsAssignStaffForm = this.formBuilder.group({
-      toSavingsOfficerId: [''],
+      toSavingsOfficerId: [
+        '',
+        Validators.required
+      ],
       assignmentDate: [
         '',
         Validators.required
@@ -83,27 +94,21 @@ export class SavingsAccountAssignStaffComponent implements OnInit {
    * if successful redirects to the saving account.
    */
   submit() {
-    const savingsAssignStaffFormData = this.savingsAssignStaffForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    const prevAssignmentDate: Date = this.savingsAssignStaffForm.value.assignmentDate;
-    if (savingsAssignStaffFormData.assignmentDate instanceof Date) {
-      savingsAssignStaffFormData.assignmentDate = this.dateUtils.formatDate(prevAssignmentDate, dateFormat);
-    }
+    const formValue = this.savingsAssignStaffForm.value;
+    const assignmentDate =
+      formValue.assignmentDate instanceof Date
+        ? this.dateUtils.formatDate(formValue.assignmentDate, dateFormat)
+        : formValue.assignmentDate;
     const data = {
-      ...savingsAssignStaffFormData,
-      fromSavingsOfficerId: '',
+      toSavingsOfficerId: formValue.toSavingsOfficerId,
+      assignmentDate,
       dateFormat,
       locale
     };
-    this.savingsAccountService
-      .handleCommands6({
-        accountId: this.accountId,
-        command: 'assignSavingsOfficer',
-        postSavingsAccountsAccountIdRequest: data
-      })
-      .subscribe(() => {
-        this.router.navigate(['../../transactions'], { relativeTo: this.route });
-      });
+    this.savingsService.executeSavingsAccountCommand(this.accountId, 'assignSavingsOfficer', data).subscribe(() => {
+      this.router.navigate(['../../transactions'], { relativeTo: this.route });
+    });
   }
 }

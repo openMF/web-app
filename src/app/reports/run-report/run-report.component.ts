@@ -1,18 +1,31 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { UntypedFormControl, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  AbstractControl,
+  UntypedFormControl,
+  UntypedFormGroup,
+  ValidatorFn,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 
 /** Custom Services */
-import { ReportsService as CustomReportsService } from 'app/customApis.service';
+import { ReportsService } from '../reports.service';
 import { SettingsService } from 'app/settings/settings.service';
-import { ReportsService } from '@fineract/client';
 
 /** Custom Models */
 import { ReportParameter } from '../common-models/report-parameter.model';
 import { SelectOption } from '../common-models/select-option.model';
 import { Dates } from 'app/core/utils/dates';
-import { map } from 'rxjs/operators';
 import { GlobalConfiguration } from 'app/system/configurations/global-configurations-tab/configuration.model';
 
 import * as ExcelJS from 'exceljs';
@@ -23,6 +36,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TableAndSmsComponent } from './table-and-sms/table-and-sms.component';
 import { ChartComponent } from './chart/chart.component';
 import { PentahoComponent } from './pentaho/pentaho.component';
+import { BirtComponent } from './birt/birt.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -40,10 +54,17 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     FaIconComponent,
     TableAndSmsComponent,
     ChartComponent,
-    PentahoComponent
+    PentahoComponent,
+    BirtComponent
   ]
 })
 export class RunReportComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private reportsService = inject(ReportsService);
+  private settingsService = inject(SettingsService);
+  private alertService = inject(AlertService);
+  private dateUtils = inject(Dates);
+
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -73,6 +94,8 @@ export class RunReportComponent implements OnInit {
   hideChart = true;
   /** Toggles Pentaho output */
   hidePentaho = true;
+  /** Toggles BIRT output */
+  hideBirt = true;
   /** Report uses dates */
   reportUsesDates = false;
   exportToS3Allowed = false;
@@ -89,14 +112,7 @@ export class RunReportComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    * @param {Dates} dateUtils Date Utils
    */
-  constructor(
-    private route: ActivatedRoute,
-    private reportsService: ReportsService,
-    private settingsService: SettingsService,
-    private alertService: AlertService,
-    private dateUtils: Dates,
-    private customReportsService: CustomReportsService
-  ) {
+  constructor() {
     this.report.name = this.route.snapshot.params['name'];
     this.route.queryParams.subscribe((queryParams: { type: any; id: any }) => {
       this.report.type = queryParams.type;
@@ -132,6 +148,10 @@ export class RunReportComponent implements OnInit {
 
   isPentahoReport(): boolean {
     return this.report.type === 'Pentaho';
+  }
+
+  isBirtReport(): boolean {
+    return this.report.type === 'BIRT';
   }
 
   /**
@@ -174,11 +194,23 @@ export class RunReportComponent implements OnInit {
       ];
       this.mapPentahoParams();
     }
+    if (this.isBirtReport()) {
+      this.reportForm.addControl('outputType', new UntypedFormControl('', Validators.required));
+      this.outputTypeOptions = [
+        { name: 'PDF format', value: 'PDF' },
+        { name: 'Normal format', value: 'HTML' },
+        { name: 'Excel format', value: 'XLS' },
+        { name: 'Excel 2007 format', value: 'XLSX' },
+        { name: 'CSV format', value: 'CSV' }
+      ];
+      this.mapBirtParams();
+    }
     if (this.exportToS3Allowed) {
       this.reportForm.addControl('exportOutputToS3', new UntypedFormControl(false));
     }
-    this.decimalChoice.patchValue('0');
+    this.decimalChoice.patchValue('2');
     this.setChildControls();
+    this.addDateRangeValidator();
   }
 
   /**
@@ -201,15 +233,88 @@ export class RunReportComponent implements OnInit {
    * Maps pentaho specific names to form-control names.
    */
   mapPentahoParams() {
-    this.reportsService
-      .retrieveReport({ id: this.report.id })
-      .pipe(map((response: any) => response.reportParameters))
-      .subscribe((data: any) => {
-        data.forEach((entry: any) => {
-          const param: ReportParameter = this.paramData.find((_entry: any) => _entry.name === entry.parameterName);
+    this.reportsService.getPentahoParams(this.report.id).subscribe((data: any) => {
+      data.forEach((entry: any) => {
+        const param: ReportParameter = this.paramData.find((_entry: any) => _entry.name === entry.parameterName);
+        if (param && entry.reportParameterName) {
           param.pentahoName = `R_${entry.reportParameterName}`;
-        });
+        } else if (!param) {
+          console.warn('Pentaho parameter not found in paramData:', entry.parameterName);
+        }
       });
+    });
+  }
+
+  /**
+   * Maps BIRT specific names to form-control names.
+   */
+  mapBirtParams() {
+    this.reportsService.getBirtParams(this.report.id).subscribe((data: any) => {
+      data.forEach((entry: any) => {
+        const param: ReportParameter = this.paramData.find((_entry: any) => _entry.name === entry.parameterName);
+        if (param && entry.reportParameterName) {
+          param.pentahoName = `R_${entry.reportParameterName}`;
+        } else if (!param) {
+          console.warn('BIRT parameter not found in paramData:', entry.parameterName);
+        }
+      });
+    });
+  }
+
+  addDateRangeValidator(): void {
+    const dateParams = this.paramData.filter((param: ReportParameter) => param.displayType === 'date');
+    const startParam = dateParams.find((param: ReportParameter) => this.isStartDateParam(param));
+    const endParam = dateParams.find((param: ReportParameter) => this.isEndDateParam(param));
+
+    if (!startParam || !endParam) {
+      return;
+    }
+
+    const startControl = this.reportForm.get(startParam.name);
+    const endControl = this.reportForm.get(endParam.name);
+
+    if (!startControl || !endControl) {
+      return;
+    }
+
+    endControl.addValidators(this.endDateAfterStartValidator(startParam.name));
+    endControl.updateValueAndValidity({ emitEvent: false });
+    startControl.valueChanges.subscribe(() => endControl.updateValueAndValidity({ emitEvent: false }));
+  }
+
+  endDateAfterStartValidator(startControlName: string): ValidatorFn {
+    return (control: AbstractControl) => {
+      const startControl = control.parent?.get(startControlName);
+      const startValue = startControl?.value;
+      const endValue = control.value;
+
+      if (!startValue || !endValue) {
+        return null;
+      }
+
+      const startDate = new Date(startValue);
+      const endDate = new Date(endValue);
+
+      if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+        return null;
+      }
+
+      if (endDate < startDate) {
+        return { endBeforeStart: true };
+      }
+
+      return null;
+    };
+  }
+
+  isStartDateParam(param: ReportParameter): boolean {
+    const identifier = `${param.name}${param.variable}${param.label}`.toLowerCase();
+    return identifier.includes('start') || identifier.includes('from');
+  }
+
+  isEndDateParam(param: ReportParameter): boolean {
+    const identifier = `${param.name}${param.variable}${param.label}`.toLowerCase();
+    return identifier.includes('end') || identifier.includes('to');
   }
 
   /**
@@ -239,7 +344,7 @@ export class RunReportComponent implements OnInit {
    * @param {string} inputstring url substring for API call.
    */
   fetchSelectOptions(param: ReportParameter, inputstring: string) {
-    this.customReportsService.getSelectOptions(inputstring).subscribe((options: SelectOption[]) => {
+    this.reportsService.getSelectOptions(inputstring).subscribe((options: SelectOption[]) => {
       param.selectOptions = options;
       if (param.selectAll === 'Y') {
         param.selectOptions.push({ id: '-1', name: 'All' });
@@ -268,7 +373,12 @@ export class RunReportComponent implements OnInit {
       }
 
       const param: ReportParameter = this.paramData.find((_entry: any) => _entry.name === key);
-      newKey = this.isPentahoReport() ? param.pentahoName : param.inputName;
+      if (!param) {
+        console.warn('Parameter not found in paramData:', key);
+        continue;
+      }
+      newKey =
+        (this.isPentahoReport() || this.isBirtReport()) && param.pentahoName ? param.pentahoName : param.inputName;
       switch (param.displayType) {
         case 'text':
           formattedResponse[newKey] = value;
@@ -331,6 +441,9 @@ export class RunReportComponent implements OnInit {
       case 'Pentaho':
         this.hidePentaho = false;
         break;
+      case 'BIRT':
+        this.hideBirt = false;
+        break;
     }
   }
 
@@ -345,7 +458,7 @@ export class RunReportComponent implements OnInit {
       decimalChoice: this.decimalChoice.value
       // exportCSV: true
     };
-    this.customReportsService.getRunReportData(reportName, payload).subscribe((res: any) => {
+    this.reportsService.getRunReportData(reportName, payload).subscribe((res: any) => {
       if (res.data.length > 0) {
         this.alertService.alert({ type: 'Report generation', message: `Report: ${reportName} data generated` });
 

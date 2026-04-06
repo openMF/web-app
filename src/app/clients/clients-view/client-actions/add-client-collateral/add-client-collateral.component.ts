@@ -1,12 +1,21 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /**
  * Custom Services
  */
-import { ClientCollateralManagementService, CollateralManagementService } from '@fineract/client';
+import { ClientsService } from 'app/clients/clients.service';
+import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -19,6 +28,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class AddClientCollateralComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private productsService = inject(ProductsService);
+  private clientsService = inject(ClientsService);
+  private settingsService = inject(SettingsService);
+
   /** Client Collateral Form */
   clientCollateralForm: UntypedFormGroup;
   /** Client Collateral Options */
@@ -35,14 +51,7 @@ export class AddClientCollateralComponent implements OnInit {
    * @param {Router} router Router.
    * @param {ProductsService} productsService Products Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private collateralManagementService: CollateralManagementService,
-    private clientCollateralManagementService: ClientCollateralManagementService,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.clientCollateralOptions = data.clientActionData;
     });
@@ -59,7 +68,7 @@ export class AddClientCollateralComponent implements OnInit {
    */
   buildDependencies() {
     this.clientCollateralForm.controls.collateralId.valueChanges.subscribe((collateralId) => {
-      this.collateralManagementService.getCollateral({ collateralId }).subscribe((data: any) => {
+      this.productsService.getCollateral(collateralId).subscribe((data: any) => {
         this.collateralDetails = data;
         this.clientCollateralForm.patchValue({
           name: data.name,
@@ -113,13 +122,8 @@ export class AddClientCollateralComponent implements OnInit {
       quantity,
       locale
     };
-    this.clientCollateralManagementService
-      .addCollateral({
-        clientId: Number(this.clientId),
-        clientCollateralRequest: clientCollateral
-      })
-      .subscribe(() => {
-        this.router.navigate(['../../'], { relativeTo: this.route });
-      });
+    this.clientsService.createClientCollateral(this.clientId, clientCollateral).subscribe(() => {
+      this.router.navigate(['../../'], { relativeTo: this.route });
+    });
   }
 }

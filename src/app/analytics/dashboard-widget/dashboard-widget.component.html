@@ -1,0 +1,53 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<mat-card class="widget-card">
+  <div class="widget-header">
+    <div class="widget-title">
+      <fa-icon [icon]="widget.icon"></fa-icon>
+      <span>{{ widget.titleKey | translate }}</span>
+    </div>
+
+    @if (state?.contextKey) {
+      <span class="widget-context">
+        {{ state.contextKey | translate }}
+      </span>
+    }
+  </div>
+
+  <div class="widget-content">
+    @if (state?.loading) {
+      <div class="widget-placeholder"></div>
+    } @else if (state?.empty) {
+      <div class="widget-empty">
+        {{ 'labels.text.No Data' | translate }}
+      </div>
+    } @else if (widget.type === 'metric') {
+      <div class="metric-body">
+        <div class="metric-value">
+          {{ state.metricValue | number: '1.0-0' }}
+        </div>
+      </div>
+    } @else {
+      @if (state?.details?.length) {
+        <div class="widget-details">
+          @for (detail of state.details; track detail.labelKey) {
+            <div class="detail-chip">
+              <span class="detail-label">{{ detail.labelKey | translate }}</span>
+              <span class="detail-value">{{ detail.value | number: '1.0-0' }}</span>
+            </div>
+          }
+        </div>
+      }
+
+      <div class="chart-shell">
+        <canvas #chartCanvas></canvas>
+      </div>
+    }
+  </div>
+</mat-card>

@@ -1,11 +1,17 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { ScoreCardService } from '@fineract/client';
-import { ScorecardData } from '@fineract/client';
-import { ScorecardValue } from '@fineract/client';
+import { ClientsService } from '../../../clients.service';
 import { AuthenticationService } from '../../../../core/authentication/authentication.service';
 import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -26,6 +32,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class TakeSurveyComponent {
+  private route = inject(ActivatedRoute);
+  private clientsService = inject(ClientsService);
+  private router = inject(Router);
+  private authenticationService = inject(AuthenticationService);
+
   /** List of all Survey Data */
   allSurveyData: any;
   /** User Id */
@@ -37,7 +48,15 @@ export class TakeSurveyComponent {
   /** Client ID */
   clientId: any;
   /** Stores the value to send to the API */
-  formData: ScorecardData;
+  formData: {
+    userId: Number;
+    clientId: Number;
+    surveyId: Number;
+    scorecardValues: { questionId: Number; responseId: Number; value: String }[];
+    surveyName: String;
+    username: String;
+    id: Number;
+  };
 
   /**
    * Retrieves the survey data from `resolve`.
@@ -46,12 +65,7 @@ export class TakeSurveyComponent {
    * @param {Router} router Router
    * @param {AuthenticationService} authenticationService AuthenticationService
    */
-  constructor(
-    private route: ActivatedRoute,
-    private scoreCardService: ScoreCardService,
-    private router: Router,
-    private authenticationService: AuthenticationService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.allSurveyData = data.clientActionData;
       this.clientId = this.route.parent.snapshot.params['clientId'];
@@ -61,7 +75,10 @@ export class TakeSurveyComponent {
     this.userId = savedCredentials.userId;
   }
 
-  // TODO: document the function
+  /**
+   * Handles survey selection change. Updates surveyData and groups
+   * questions by their componentKey for sectioned display.
+   */
   onSurveyChange(resEvent: any) {
     if (resEvent.value) {
       this.surveyData = resEvent.value;
@@ -73,7 +90,12 @@ export class TakeSurveyComponent {
     }
   }
 
-  // TODO: document the function
+  /**
+   * Groups an array of objects by the value returned from a key function.
+   * @param array The array to group.
+   * @param func A function returning the grouping key for each element.
+   * @returns An array of grouped sub-arrays.
+   */
   groupBy(array: any, func: any) {
     const groups: { [key: string]: any[] } = {};
     array.forEach((ele: any) => {
@@ -116,23 +138,18 @@ export class TakeSurveyComponent {
 
     this.surveyData.questionDatas.forEach((elem: any) => {
       if (elem.answer) {
-        const tmp: ScorecardValue = {
+        const tmp = {
           questionId: elem.id,
           responseId: elem.answer.id,
-          value: Number(elem.answer.value),
-          createdOn: new Date().toISOString()
+          value: elem.answer.value,
+          createdOn: new Date().getTime()
         };
         this.formData.scorecardValues.push(tmp);
       }
     });
 
-    this.scoreCardService
-      .createScorecard1({
-        surveyId: this.surveyData.id,
-        scorecardData: this.formData
-      })
-      .subscribe(() => {
-        this.router.navigate(['../../general'], { relativeTo: this.route });
-      });
+    this.clientsService.createNewSurvey(this.surveyData.id, this.formData).subscribe(() => {
+      this.router.navigate(['../../general'], { relativeTo: this.route });
+    });
   }
 }

@@ -1,0 +1,159 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+/** Angular Imports */
+import { Injectable, inject } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+
+/** rxjs Imports */
+import { Observable } from 'rxjs';
+
+/** Environment Configuration */
+import { environment } from '../../environments/environment';
+import { switchMap } from 'rxjs/operators';
+
+/**
+ * Account Transfers Service.
+ */
+@Injectable({
+  providedIn: 'root'
+})
+export class AccountTransfersService {
+  private http = inject(HttpClient);
+
+  /**
+   * @params standingInstructionsId
+   * Returns the details of a particular Standing Instruction
+   */
+  getStandingInstructionsData(standingInstructionsId: any): Observable<any> {
+    return this.http.get(`/standinginstructions/${standingInstructionsId}`);
+  }
+
+  getStandingInstructionsDataAndTemplate(standingInstructionsId: any): Observable<any> {
+    const httpParams = new HttpParams().set('associations', 'template');
+    return this.http.get(`/standinginstructions/${standingInstructionsId}`, { params: httpParams });
+  }
+
+  updateStandingInstructionsData(standinginstructionsId: any, data: any): Observable<any> {
+    const httpParams = new HttpParams().set('command', 'update');
+    return this.http.put(`/standinginstructions/${standinginstructionsId}`, data, { params: httpParams });
+  }
+
+  getStandingInstructionsTemplate(
+    clientId: any,
+    officeId: any,
+    accountTypeId: string,
+    formValue?: any
+  ): Observable<any> {
+    let httpParams = new HttpParams()
+      .set('fromAccountType', accountTypeId)
+      .set('fromClientId', clientId)
+      .set('fromOfficeId', officeId);
+    if (formValue) {
+      const propNames = Object.getOwnPropertyNames(formValue);
+      for (let i = 0; i < propNames.length; i++) {
+        const propName = propNames[i];
+        httpParams = httpParams.set(propName, formValue[propName]);
+      }
+    }
+    return this.http.get(`/standinginstructions/template`, { params: httpParams });
+  }
+
+  createStandingInstructions(data: Object): Observable<any> {
+    return this.http.post(`/standinginstructions`, data);
+  }
+
+  newAccountTranferResource(id: any, accountTypeId: any, formValue?: any): Observable<any> {
+    let httpParams = new HttpParams().set('fromAccountId', id).set('fromAccountType', accountTypeId);
+    if (formValue) {
+      const propNames = Object.getOwnPropertyNames(formValue);
+      for (let i = 0; i < propNames.length; i++) {
+        const propName = propNames[i];
+        httpParams = httpParams.set(propName, formValue[propName]);
+      }
+    }
+    return this.http.get(`/accounttransfers/template`, { params: httpParams });
+  }
+
+  createAccountTransfer(data: any): Observable<any> {
+    return this.http.post(`/accounttransfers`, data);
+  }
+
+  /**
+   * @param clientId Client Id
+   * @param clientName Client Name
+   * @param fromAccountId Account Id
+   * @param locale Locale
+   * @param dateFormat Date Format
+   * @returns {Observable<any>} Standing Instructions
+   */
+  getStandingInstructions(searchData: any): Observable<any> {
+    let httpParams = new HttpParams();
+    const propNames = Object.getOwnPropertyNames(searchData);
+    for (let i = 0; i < propNames.length; i++) {
+      const propName = propNames[i];
+      if (!(searchData[propName] === '' || searchData[propName] === undefined || searchData[propName] === null)) {
+        httpParams = httpParams.set(propName, searchData[propName]);
+      }
+    }
+    return this.http.get(`/standinginstructions`, { params: httpParams });
+  }
+
+  deleteStandingInstrucions(id: any) {
+    const httpParams = new HttpParams().set('command', 'delete');
+    return this.http.delete(`/standinginstructions/${id}`, { params: httpParams });
+  }
+
+  getStandingInstructionsTransactions(standingInstructionsId: any, dateFormat: any, locale: any) {
+    const httpParams = new HttpParams()
+      .set('associations', 'transactions')
+      .set('dateFormat', dateFormat)
+      .set('limit', '14')
+      .set('locale', locale)
+      .set('offset', '0');
+    return this.http.get(`/standinginstructions/${standingInstructionsId}`, { params: httpParams });
+  }
+
+  getViewAccountTransferDetails(transferId: any): Observable<any> {
+    return this.http.get(`/accounttransfers/${transferId}`);
+  }
+
+  getAccountByNumber(accountNumber: string, currency: string): Observable<any> {
+    const payload = {
+      partyId: accountNumber,
+      partyIdType: 'MSISDN',
+      currencyCode: currency
+    };
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http
+      .post(
+        `${environment.mifosInterbankTransfersApiUrl}${environment.mifosInterbankTransfersApiVersion}${environment.mifosInterbankTransfersApiProvider}/participant`,
+        JSON.stringify(payload),
+        { headers }
+      )
+      .pipe(
+        switchMap((participant: any) => {
+          const body = JSON.stringify({ ...payload, ownerFspId: participant.fspId });
+          return this.http.post(
+            `${environment.mifosInterbankTransfersApiUrl}${environment.mifosInterbankTransfersApiVersion}${environment.mifosInterbankTransfersApiProvider}/partyinfo`,
+            body,
+            { headers }
+          );
+        })
+      );
+  }
+
+  sendInterbankTransfer(body: any): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post(
+      `${environment.mifosInterbankTransfersApiUrl}${environment.mifosInterbankTransfersApiVersion}${environment.mifosInterbankTransfersApiProvider}/executetransfer`,
+      body,
+      { headers }
+    );
+  }
+}

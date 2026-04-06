@@ -1,3 +1,11 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 form {
   padding: 16px 0;
 
@@ -112,6 +120,23 @@ mat-checkbox {
       width: 100%;
       margin: 2px 0;
     }
+  }
+}
+
+.external-id-status {
+  font-size: 12px;
+  font-weight: 500;
+
+  &.loading {
+    color: #1976d2;
+  }
+
+  &.success {
+    color: #388e3c;
+  }
+
+  &.error {
+    color: #d32f2f;
   }
 }
 

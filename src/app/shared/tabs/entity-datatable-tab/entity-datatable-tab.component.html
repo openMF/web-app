@@ -1,14 +1,24 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <div>
-  <mifosx-datatable-multi-row
-    *ngIf="multiRowDatatableFlag"
-    [entityType]="entityType"
-    [entityId]="entityId"
-    [dataObject]="entityDatatable"
-  ></mifosx-datatable-multi-row>
-  <mifosx-datatable-single-row
-    *ngIf="!multiRowDatatableFlag"
-    [entityType]="entityType"
-    [entityId]="entityId"
-    [dataObject]="entityDatatable"
-  ></mifosx-datatable-single-row>
+  @if (multiRowDatatableFlag) {
+    <mifosx-datatable-multi-row
+      [entityType]="entityType"
+      [entityId]="entityId"
+      [dataObject]="entityDatatable"
+    ></mifosx-datatable-multi-row>
+  }
+  @if (!multiRowDatatableFlag) {
+    <mifosx-datatable-single-row
+      [entityType]="entityType"
+      [entityId]="entityId"
+      [dataObject]="entityDatatable"
+    ></mifosx-datatable-single-row>
+  }
 </div>

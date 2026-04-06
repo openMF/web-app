@@ -1,0 +1,103 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="step-content">
+  <div class="receipt-header" [ngClass]="{ success: isPaid, terminal: isTerminal }">
+    <mat-icon class="receipt-icon">{{ receiptIcon }}</mat-icon>
+    <h3>{{ receiptTitle }}</h3>
+  </div>
+
+  @if (remittanceData) {
+    <div class="receipt-body">
+      <div class="receipt-section">
+        <h4>{{ 'labels.heading.Transaction Details' | translate }}</h4>
+        @if (officeName) {
+          <div class="receipt-row">
+            <span class="label">{{ 'labels.inputs.Office' | translate }}</span>
+            <span class="value">{{ officeName }}</span>
+          </div>
+        }
+        <div class="receipt-row">
+          <span class="label">{{ 'labels.inputs.External ID' | translate }}</span>
+          <span class="value">{{ remittanceData.pin }}</span>
+        </div>
+        <div class="receipt-row">
+          <span class="label">{{ 'labels.inputs.Status' | translate }}</span>
+          <span class="value status-text">{{ payoutConfirmation?.transaction?.status || remittanceData.status }}</span>
+        </div>
+        <div class="receipt-row">
+          <span class="label">{{ 'labels.inputs.Payout Amount' | translate }}</span>
+          <span class="value amount">{{
+            remittanceData.receivingAmount | currency: remittanceData.receivingCurrency
+          }}</span>
+        </div>
+        <div class="receipt-row">
+          <span class="label">{{ 'labels.inputs.Sender' | translate }}</span>
+          <span class="value">{{ remittanceData.senderName }}</span>
+        </div>
+      </div>
+
+      <div class="receipt-section">
+        <h4>{{ 'labels.heading.Recipient Details' | translate }}</h4>
+        <div class="receipt-row">
+          <span class="label">{{ 'labels.inputs.Name' | translate }}</span>
+          @if (recipientData?.givenName) {
+            <span class="value">{{ recipientData.givenName }} {{ recipientData.lastName }}</span>
+          } @else {
+            <span class="value">{{ remittanceData?.recipientName }}</span>
+          }
+        </div>
+        @if (recipientData?.primaryDocument?.documentType) {
+          <div class="receipt-row">
+            <span class="label">{{ 'labels.inputs.Document' | translate }}</span>
+            <span class="value"
+              >{{ recipientData.primaryDocument.documentType }} -
+              {{ recipientData.primaryDocument.documentNumber }}</span
+            >
+          </div>
+        }
+      </div>
+
+      @if (payoutConfirmation) {
+        <div class="receipt-section">
+          <h4>{{ 'labels.heading.Confirmation Details' | translate }}</h4>
+          @if (payoutConfirmation?.transaction) {
+            <div class="receipt-row">
+              <span class="label">{{ 'labels.inputs.Status' | translate }}</span>
+              <span class="value">{{ payoutConfirmation.transaction.status }}</span>
+            </div>
+            @if (payoutAssignment?.trackingNumber) {
+              <div class="receipt-row">
+                <span class="label">{{ 'labels.inputs.Reference Number' | translate }}</span>
+                <span class="value mono">{{ payoutAssignment.trackingNumber }}</span>
+              </div>
+            }
+            <div class="receipt-row">
+              <span class="label">{{ 'labels.inputs.Payout Amount' | translate }}</span>
+              <span class="value">{{
+                payoutConfirmation.transaction.receivingAmount
+                  | currency: payoutConfirmation.transaction.receivingCurrency
+              }}</span>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+
+  <div class="step-actions">
+    <button mat-raised-button (click)="printReceipt()">
+      <mat-icon>print</mat-icon>
+      {{ 'labels.buttons.Print Receipt' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="onNewRemittance()">
+      <mat-icon>add</mat-icon>
+      {{ 'labels.buttons.New Remittance' | translate }}
+    </button>
+  </div>
+</div>

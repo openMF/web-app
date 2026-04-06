@@ -1,0 +1,50 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container">
+  <mat-card>
+    <div class="system-info-section">
+      <table class="system-info-table">
+        <tr>
+          <td class="info-label">{{ 'labels.version.Tenant' | translate }}</td>
+          <td class="info-value">{{ tenant }}</td>
+        </tr>
+        <tr>
+          <td class="info-label">{{ 'labels.version.Mifos WebApp' | translate }}</td>
+          <td class="info-value">{{ mifosVersion }}</td>
+        </tr>
+        <tr>
+          <td class="info-label">{{ 'labels.version.Apache Fineract' | translate }}</td>
+          <td class="info-value">{{ fineractVersion }}</td>
+        </tr>
+        <tr>
+          <td class="info-label">{{ 'labels.version.Server' | translate }}</td>
+          <td class="info-value">{{ server }}</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="licensing-section">
+      <h2>{{ 'labels.heading.Software Licensing' | translate }}</h2>
+
+      <p [innerHTML]="'labels.licensing.Apache Fineract Description' | translate"></p>
+
+      <p [innerHTML]="'labels.licensing.Mifos X Distribution' | translate"></p>
+
+      <p [innerHTML]="'labels.licensing.Legacy Codebase' | translate"></p>
+
+      <ul>
+        <li [innerHTML]="'labels.licensing.How to License Code' | translate"></li>
+        <li [innerHTML]="'labels.licensing.Contributor Agreement' | translate"></li>
+        <li [innerHTML]="'labels.licensing.License FAQs' | translate"></li>
+        <li [innerHTML]="'labels.licensing.Adding External Software' | translate"></li>
+        <li [innerHTML]="'labels.licensing.Code of Conduct' | translate"></li>
+      </ul>
+    </div>
+  </mat-card>
+</div>

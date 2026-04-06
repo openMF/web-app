@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -26,12 +34,13 @@ import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 
 /** Custom Services */
-import { ProvisioningCriteriaService } from '@fineract/client';
+import { OrganizationService } from '../../organization.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { MatFormField, MatLabel, MatError, MatHint } from '@angular/material/form-field';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { FindPipe } from '../../../pipes/find.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Edit Loan Provisioning Criteria Component.
@@ -58,6 +67,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditLoanProvisioningCriteriaComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private organizationService = inject(OrganizationService);
+  private router = inject(Router);
+  private settingsService = inject(SettingsService);
+  dialog = inject(MatDialog);
+  private route = inject(ActivatedRoute);
+  private translateService = inject(TranslateService);
+
   /** Loan Provisioning Criteria form. */
   provisioningCriteriaForm: UntypedFormGroup;
   /** Loan Provisioning Criteria Template */
@@ -93,19 +110,12 @@ export class EditLoanProvisioningCriteriaComponent implements OnInit {
   /**
    * Retrieves the offices data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {ProvisioningCriteriaService} provisioningCriteriaService Provisioning Criteria Service.
+   * @param {OrganizationService} organizationService Organization Service.
    * @param {SettingsService} settingsService Settings Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private provisioningCriteriaService: ProvisioningCriteriaService,
-    private router: Router,
-    private settingsService: SettingsService,
-    public dialog: MatDialog,
-    private route: ActivatedRoute
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { loanProvisioningCriteriaAndTemplate: any }) => {
       this.loanProvisioningCriteriaAndTemplate = data.loanProvisioningCriteriaAndTemplate;
       this.definitions = this.loanProvisioningCriteriaAndTemplate.definitions;
@@ -155,7 +165,7 @@ export class EditLoanProvisioningCriteriaComponent implements OnInit {
    */
   editDefinition(definition: any) {
     const data = {
-      title: 'Edit Criteria Definition',
+      title: this.translateService.instant('labels.buttons.Edit Criteria Definition'),
       formfields: this.getDefinitionFormFields(definition),
       layout: { addButtonText: 'Confirm' }
     };
@@ -181,37 +191,40 @@ export class EditLoanProvisioningCriteriaComponent implements OnInit {
     formfields.push(
       new InputBase({
         controlName: 'minAge',
-        label: 'Min Age',
+        label: this.translateService.instant('labels.inputs.Min Age'),
         value: definition ? definition.minAge : '',
         type: 'number',
         required: true,
+        min: 0,
         order: 1
       })
     );
     formfields.push(
       new InputBase({
         controlName: 'maxAge',
-        label: 'Max Age',
+        label: this.translateService.instant('labels.inputs.Max Age'),
         value: definition ? definition.maxAge : '',
         type: 'number',
         required: true,
+        min: 0,
         order: 2
       })
     );
     formfields.push(
       new InputBase({
         controlName: 'provisioningPercentage',
-        label: 'Percentage (%)',
+        label: this.translateService.instant('labels.inputs.Percentage') + ' (%)',
         value: definition ? definition.provisioningPercentage : '',
         type: 'number',
         required: true,
+        min: 0,
         order: 3
       })
     );
     formfields.push(
       new SelectBase({
         controlName: 'liabilityAccount',
-        label: 'Liability Account',
+        label: this.translateService.instant('labels.inputs.Liability Account'),
         value: definition ? definition.liabilityAccount : '',
         options: { label: 'name', value: 'id', data: this.liabilityAccounts },
         required: true,
@@ -221,7 +234,7 @@ export class EditLoanProvisioningCriteriaComponent implements OnInit {
     formfields.push(
       new SelectBase({
         controlName: 'expenseAccount',
-        label: 'Expense Account',
+        label: this.translateService.instant('labels.inputs.Expense Account'),
         value: definition ? definition.expenseAccount : '',
         options: { label: 'name', value: 'id', data: this.expenseAccounts },
         required: true,
@@ -253,7 +266,7 @@ export class EditLoanProvisioningCriteriaComponent implements OnInit {
       definitions: this.definitions,
       locale
     };
-    this.provisioningCriteriaService
+    this.organizationService
       .updateProvisioningCriteria(this.loanProvisioningCriteriaAndTemplate.criteriaId, loanProvisioningCriteria)
       .subscribe((response: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });

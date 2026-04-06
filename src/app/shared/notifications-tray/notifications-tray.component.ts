@@ -1,11 +1,20 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation, inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 /** RxJS Imports */
 import { forkJoin } from 'rxjs';
 
 /** Custom Services */
-import { NotificationService } from '@fineract/client';
+import { NotificationsService } from 'app/notifications/notifications.service';
 import { environment } from '../../../environments/environment';
 import { MatIconButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
@@ -36,6 +45,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class NotificationsTrayComponent implements OnInit, OnDestroy {
+  notificationsService = inject(NotificationsService);
+  private router = inject(Router);
+
   /** Wait time between API status calls 60 seg */
   waitTime = environment.waitTimeForNotifications || 60;
   /** Read Notifications */
@@ -47,10 +59,9 @@ export class NotificationsTrayComponent implements OnInit, OnDestroy {
   /** Timer to refetch notifications every 60 seconds */
   timer: any;
 
-  /**
-   * Gets router link prefix from notification's objectType attribute
-   * Shares, Savings, Deposits, Loans routes inaccessible because of dependency on entity ID.
-   */
+  /** track if timer is paused */
+  private timerPaused = false;
+
   routeMap: any = {
     client: '/clients/',
     group: '/groups/',
@@ -65,12 +76,12 @@ export class NotificationsTrayComponent implements OnInit, OnDestroy {
   };
 
   /**
-   * @param {NotificationService} notificationService Notifications Service
+   * @param {NotificationsService} notificationsService Notifications Service
    */
-  constructor(public notificationService: NotificationService) {
+  constructor() {
     forkJoin([
-      this.notificationService.getAllNotifications({ isRead: true, limit: 9 }),
-      this.notificationService.getAllNotifications({ isRead: false, limit: 9 })
+      this.notificationsService.getNotifications(true, 9),
+      this.notificationsService.getNotifications(false, 9)
     ]).subscribe((response: any[]) => {
       this.readNotifications = response[0].pageItems;
       this.unreadNotifications = response[1].pageItems;
@@ -90,9 +101,6 @@ export class NotificationsTrayComponent implements OnInit, OnDestroy {
     clearTimeout(this.timer);
   }
 
-  /**
-   * Restructures displayed read notifications vis-a-vis unread notifications.
-   */
   setNotifications() {
     const length = this.unreadNotifications.length;
     this.displayedReadNotifications = length < 9 ? this.readNotifications.slice(0, 9 - length) : [];
@@ -102,22 +110,40 @@ export class NotificationsTrayComponent implements OnInit, OnDestroy {
    * Recursively fetch unread notifications.
    */
   fetchUnreadNotifications() {
-    this.notificationService.getAllNotifications({ isRead: false, limit: 9 }).subscribe((response: any) => {
-      this.unreadNotifications = this.unreadNotifications.concat(response.pageItems);
+    // Clear any existing timer
+    if (this.timer) {
+      clearTimeout(this.timer);
+      this.timer = null;
+    }
+
+    this.notificationsService.getNotifications(false, 9).subscribe((response: any) => {
+      this.unreadNotifications = response.pageItems; // Avoid concat duplication
       this.setNotifications();
     });
-    // this.mockNotifications(); // Uncomment for Testing.
-    this.timer = setTimeout(() => {
-      this.fetchUnreadNotifications();
-    }, this.waitTime * 1000);
+
+    // Schedule next poll ONLY if not paused
+    if (!this.timerPaused) {
+      this.timer = setTimeout(() => {
+        this.fetchUnreadNotifications();
+      }, this.waitTime * 1000);
+    }
   }
 
+  pauseTimer = () => {
+    this.timerPaused = true;
+    clearTimeout(this.timer);
+  };
+
+  resumeTimer = () => {
+    this.timerPaused = false;
+    this.fetchUnreadNotifications();
+  };
   /**
    * Update read/unread notifications.
    */
   menuClosed() {
     // Update the server for read notifications.
-    this.notificationService.getAllNotifications({ isRead: true }).subscribe(() => {});
+    this.notificationsService.updateNotifications().subscribe(() => {});
     // Update locally for read notifications.
     this.readNotifications = this.unreadNotifications.concat(this.readNotifications);
     this.unreadNotifications = [];
@@ -128,9 +154,97 @@ export class NotificationsTrayComponent implements OnInit, OnDestroy {
    * Function to test notifications in case of faulty backend.
    */
   mockNotifications() {
-    this.notificationService.getAllNotifications({ isRead: false, limit: 9 }).subscribe((response: any) => {
+    this.notificationsService.getMockUnreadNotification().subscribe((response: any) => {
       this.unreadNotifications = this.unreadNotifications.concat(response.pageItems);
       this.setNotifications();
     });
+  }
+
+  /**
+   * Navigate to notification object with proper entity context
+   * @param {any} notification Notification object
+   * @param {Event} event Click event
+   */
+  navigateToNotification(notification: any, event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const objectType = notification.objectType;
+    const objectId = notification.objectId;
+
+    // For entities that don't require parent context (client, group, center, products)
+    if ([
+        'client',
+        'group',
+        'center',
+        'shareProduct',
+        'loanProduct'
+      ].includes(objectType)) {
+      this.router.navigate([
+        this.routeMap[objectType],
+        objectId
+      ]);
+      return;
+    }
+
+    // For account types that require parent entity (client/group) ID
+    switch (objectType) {
+      case 'loan':
+        this.notificationsService.getLoanAccount(objectId).subscribe((account) => {
+          if (account && (account.clientId || account.groupId)) {
+            const entityType = account.clientId ? 'clients' : 'groups';
+            const entityId = account.clientId || account.groupId;
+            this.router.navigate([`/${entityType}/${entityId}/loans-accounts/${account.accountId}`]);
+          }
+        });
+        break;
+
+      case 'savingsAccount':
+        this.notificationsService.getSavingsAccount(objectId).subscribe((account) => {
+          if (account && (account.clientId || account.groupId)) {
+            const entityType = account.clientId ? 'clients' : 'groups';
+            const entityId = account.clientId || account.groupId;
+            this.router.navigate([`/${entityType}/${entityId}/savings-accounts/${account.accountId}`]);
+          }
+        });
+        break;
+
+      case 'fixedDeposit':
+        this.notificationsService.getFixedDepositAccount(objectId).subscribe((account) => {
+          if (account && (account.clientId || account.groupId)) {
+            const entityType = account.clientId ? 'clients' : 'groups';
+            const entityId = account.clientId || account.groupId;
+            this.router.navigate([`/${entityType}/${entityId}/fixed-deposits-accounts/${account.accountId}`]);
+          }
+        });
+        break;
+
+      case 'recurringDepositAccount':
+        this.notificationsService.getRecurringDepositAccount(objectId).subscribe((account) => {
+          if (account && (account.clientId || account.groupId)) {
+            const entityType = account.clientId ? 'clients' : 'groups';
+            const entityId = account.clientId || account.groupId;
+            this.router.navigate([`/${entityType}/${entityId}/recurring-deposits-accounts/${account.accountId}`]);
+          }
+        });
+        break;
+
+      case 'shareAccount':
+        this.notificationsService.getShareAccount(objectId).subscribe((account) => {
+          if (account && (account.clientId || account.groupId)) {
+            const entityType = account.clientId ? 'clients' : 'groups';
+            const entityId = account.clientId || account.groupId;
+            this.router.navigate([`/${entityType}/${entityId}/shares-accounts/${account.accountId}`]);
+          }
+        });
+        break;
+
+      default:
+        // Fallback to old behavior for unknown types
+        this.router.navigate([
+          this.routeMap[objectType],
+          objectId
+        ]);
+    }
   }
 }

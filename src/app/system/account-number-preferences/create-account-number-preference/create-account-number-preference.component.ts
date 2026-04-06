@@ -1,10 +1,18 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { AccountNumberFormatService } from '@fineract/client';
+import { SystemService } from '../../system.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -19,6 +27,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateAccountNumberPreferenceComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private systemService = inject(SystemService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   /** Account Number Preferences Form */
   accountNumberPreferenceForm: UntypedFormGroup;
   /** Account Number Preferences Template Data */
@@ -29,16 +42,11 @@ export class CreateAccountNumberPreferenceComponent implements OnInit {
   /**
    * Retrieves the account number preferences template data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {AccountNumberFormatService} accountNumberFormatService Account Number Format Service.
+   * @param {SystemService} systemService Accounting Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private accountNumberFormatService: AccountNumberFormatService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { accountNumberPreferencesTemplate: any }) => {
       this.accountNumberPreferencesTemplateData = data.accountNumberPreferencesTemplate;
     });
@@ -87,7 +95,7 @@ export class CreateAccountNumberPreferenceComponent implements OnInit {
     if (accountNumberPreference.prefixType === '') {
       accountNumberPreference.prefixType = undefined;
     }
-    this.accountNumberFormatService.create(accountNumberPreference).subscribe((response: any) => {
+    this.systemService.createAccountNumberPreference(accountNumberPreference).subscribe((response: any) => {
       this.router.navigate(
         [
           '../',

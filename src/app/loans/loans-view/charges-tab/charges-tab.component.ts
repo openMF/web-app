@@ -1,6 +1,14 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -19,7 +27,7 @@ import {
 } from '@angular/material/table';
 
 /** Custom Services */
-import { LoanChargesService } from '@fineract/client';
+import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Dialogs */
@@ -32,13 +40,16 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { Dates } from 'app/core/utils/dates';
-import { GlobalConfigurationService } from '@fineract/client';
+import { SystemService } from 'app/system/system.service';
 import { GlobalConfiguration } from 'app/system/configurations/global-configurations-tab/configuration.model';
 import { TranslateService } from '@ngx-translate/core';
-import { NgIf, CurrencyPipe } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 import { MatTooltip } from '@angular/material/tooltip';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanCharge } from 'app/loans/models/loan-charge.model';
+import { FormatNumberPipe } from '@pipes/format-number.pipe';
+import { LoanAccountTabBaseComponent } from '../loan-account-tab-base.component';
 
 @Component({
   selector: 'mifosx-charges-tab',
@@ -61,14 +72,23 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRow,
     MatPaginator,
     CurrencyPipe,
-    DateFormatPipe
+    DateFormatPipe,
+    FormatNumberPipe
   ]
 })
-export class ChargesTabComponent implements OnInit {
+export class ChargesTabComponent extends LoanAccountTabBaseComponent implements OnInit {
+  private loansService = inject(LoansService);
+  private route = inject(ActivatedRoute);
+  private dateUtils = inject(Dates);
+  private translateService = inject(TranslateService);
+  private dialog = inject(MatDialog);
+  private settingsService = inject(SettingsService);
+  private systemService = inject(SystemService);
+
   /** Loan Details Data */
   loanDetails: any;
   /** Charges Data */
-  chargesData: any;
+  chargesData: LoanCharge[] = [];
   /** Status */
   status: any;
   /** Columns to be displayed in charges table. */
@@ -98,29 +118,18 @@ export class ChargesTabComponent implements OnInit {
    * Retrieves the loans data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    * @param {SettingsService} settingsService Settings Service
-   * @param {GlobalConfigurationService} globalConfigurationService Global Configuration Service
    */
-  constructor(
-    private loanChargesService: LoanChargesService,
-    private route: ActivatedRoute,
-    private dateUtils: Dates,
-    private router: Router,
-    private translateService: TranslateService,
-    public dialog: MatDialog,
-    private settingsService: SettingsService,
-    private globalConfigurationService: GlobalConfigurationService
-  ) {
+  constructor() {
+    super();
     this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
       this.loanDetails = data.loanDetailsData;
     });
   }
 
   ngOnInit() {
-    this.globalConfigurationService
-      .retrieveOneByName({ name: 'charge-accrual-date' })
-      .subscribe((config: GlobalConfiguration) => {
-        this.useDueDate = config.stringValue === 'due-date';
-      });
+    this.systemService.getConfigurationByName('charge-accrual-date').subscribe((config: GlobalConfiguration) => {
+      this.useDueDate = config.stringValue === 'due-date';
+    });
     this.chargesData = this.loanDetails.charges;
     this.status = this.loanDetails.status.value;
     let actionFlag;
@@ -151,7 +160,12 @@ export class ChargesTabComponent implements OnInit {
    * @param {any} chargeId Charge Id
    */
   adjustCharge(chargeId: string) {
-    this.router.navigate([`${chargeId}/adjustment`], { relativeTo: this.route });
+    this.router.navigate([`${chargeId}/adjustment`], {
+      queryParams: {
+        productType: this.loanProductService.productType.value
+      },
+      relativeTo: this.route
+    });
   }
 
   /**
@@ -167,7 +181,6 @@ export class ChargesTabComponent implements OnInit {
         type: 'date',
         required: true
       })
-
     ];
     const data = {
       title: `Pay Charge ${chargeId}`,
@@ -185,13 +198,8 @@ export class ChargesTabComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.loanChargesService
-          .executeLoanCharge2({
-            loanId: Number(this.loanDetails.id),
-            loanChargeId: Number(chargeId),
-            postLoansLoanIdChargesChargeIdRequest: dataObject,
-            command: 'pay'
-          })
+        this.loansService
+          .executeLoansAccountChargesCommand(this.loanDetails.id, 'pay', dataObject, chargeId)
           .subscribe(() => {
             this.reload();
           });
@@ -215,13 +223,8 @@ export class ChargesTabComponent implements OnInit {
     });
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.loanChargesService
-          .executeLoanCharge2({
-            loanId: Number(this.loanDetails.id),
-            loanChargeId: Number(chargeId),
-            postLoansLoanIdChargesChargeIdRequest: {},
-            command: 'waive'
-          })
+        this.loansService
+          .executeLoansAccountChargesCommand(this.loanDetails.id, 'waive', {}, chargeId)
           .subscribe(() => {
             this.reload();
           });
@@ -238,11 +241,10 @@ export class ChargesTabComponent implements OnInit {
       new InputBase({
         controlName: 'amount',
         label: 'Amount',
-        value: charge.amount || charge.amountOrPercentage,
+        value: this.isPercentageCharge(charge) ? charge.amountOrPercentage : charge.amount,
         type: 'number',
         required: true
       })
-
     ];
     const data = {
       title: `Edit Charge ${charge.id}`,
@@ -259,15 +261,9 @@ export class ChargesTabComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.loanChargesService
-          .updateLoanCharge({
-            loanId: Number(this.loanDetails.id),
-            loanChargeId: Number(charge.id),
-            putLoansLoanIdChargesChargeIdRequest: dataObject
-          })
-          .subscribe(() => {
-            this.reload();
-          });
+        this.loansService.editLoansAccountCharge(this.loanDetails.id, dataObject, charge.id).subscribe(() => {
+          this.reload();
+        });
       }
     });
   }
@@ -282,14 +278,9 @@ export class ChargesTabComponent implements OnInit {
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.loanChargesService
-          .deleteLoanCharge({
-            loanId: Number(this.loanDetails.id),
-            loanChargeId: Number(chargeId)
-          })
-          .subscribe(() => {
-            this.reload();
-          });
+        this.loansService.deleteLoansAccountCharge(this.loanDetails.id, chargeId).subscribe(() => {
+          this.reload();
+        });
       }
     });
   }
@@ -302,15 +293,7 @@ export class ChargesTabComponent implements OnInit {
     $event.stopPropagation();
   }
 
-  /**
-   * Refetches data fot the component
-   * TODO: Replace by a custom reload component instead of hard-coded back-routing.
-   */
-  private reload() {
-    const clientId = this.loanDetails.clientId;
-    const url: string = this.router.url;
-    this.router
-      .navigateByUrl(`/clients/${clientId}/loans-accounts`, { skipLocationChange: true })
-      .then(() => this.router.navigate([url]));
+  isPercentageCharge(loanCharge: LoanCharge): boolean {
+    return loanCharge.chargeCalculationType.code.includes('.percent.');
   }
 }

@@ -1,13 +1,21 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
 import { I18nService } from 'app/core/i18n/i18n.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
-import { LoansService, BatchAPIService } from '@fineract/client';
+import { LoansService } from '../../loans.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
-import { CollateralManagementService } from '@fineract/client';
+import { ClientsService } from 'app/clients/clients.service';
 
 /** Step Components */
 import { LoansAccountDetailsStepComponent } from '../../loans-account-stepper/loans-account-details-step/loans-account-details-step.component';
@@ -42,6 +50,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateGlimAccountComponent {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private loansService = inject(LoansService);
+  private settingsService = inject(SettingsService);
+  private clientService = inject(ClientsService);
+  private dateUtils = inject(Dates);
+  private i18nService = inject(I18nService);
+
   /** Imports all the step component */
   @ViewChild(LoansAccountDetailsStepComponent, { static: true })
   loansAccountDetailsStep: LoansAccountDetailsStepComponent;
@@ -77,17 +93,9 @@ export class CreateGlimAccountComponent {
    * @param {router} Router Router.
    * @param {loansService} LoansService Loans Service
    * @param {SettingsService} settingsService Settings Service
+   * @param {ClientsService} clientService Client Service
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private loansService: LoansService,
-    private batchAPIService: BatchAPIService,
-    private settingsService: SettingsService,
-    private dateUtils: Dates,
-    private collateralManagementService: CollateralManagementService,
-    private i18nService: I18nService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { loansAccountTemplate: any; groupsData: any }) => {
       this.loansAccountTemplate = data.loansAccountTemplate;
       this.dataSource = data.groupsData.activeClientMembers;
@@ -103,9 +111,7 @@ export class CreateGlimAccountComponent {
     this.currencyCode = this.loansAccountProductTemplate.currency.code;
     const clientId = this.loansAccountTemplate.clientId;
     if (!!clientId) {
-      // Use CollateralManagementService from OpenAPI client
-      // Assuming you have injected collateralManagementService: CollateralManagementService
-      this.collateralManagementService.getCollateralTemplate().subscribe((response: any) => {
+      this.clientService.getCollateralTemplate(clientId).subscribe((response: any) => {
         this.collateralOptions = response;
       });
     } else {
@@ -119,18 +125,9 @@ export class CreateGlimAccountComponent {
       : this.loansAccountTemplate.group.id;
     const isGroup = this.loansAccountTemplate.clientId ? false : true;
     const productId = this.loansAccountProductTemplate.loanProductId;
-    this.loansService
-      .template10({
-        clientId: isGroup ? undefined : entityId,
-        groupId: isGroup ? entityId : undefined,
-        productId: productId,
-        templateType: isGroup ? 'group' : 'individual',
-        staffInSelectedOfficeOnly: true,
-        activeOnly: true
-      })
-      .subscribe((response: any) => {
-        this.multiDisburseLoan = response.multiDisburseLoan;
-      });
+    this.loansService.getLoansAccountTemplateResource(entityId, isGroup, productId).subscribe((response: any) => {
+      this.multiDisburseLoan = response.multiDisburseLoan;
+    });
     this.setDatatables();
   }
 
@@ -194,10 +191,31 @@ export class CreateGlimAccountComponent {
     // const monthDayFormat = 'dd MMMM';
     const data = {
       ...this.loansAccount,
-      charges: this.loansAccount.charges.map((charge: any) => ({
-        chargeId: charge.id,
-        amount: charge.amount
-      })),
+      charges: (this.loansAccount.charges ?? [])
+        .map((charge: any) => {
+          const chargeId = charge.chargeId ?? charge.id;
+          if (chargeId == null) {
+            return null;
+          }
+          const mappedCharge: any = {
+            chargeId,
+            amount: charge.amount
+          };
+          if (charge.id && charge.id !== chargeId) {
+            mappedCharge.id = charge.id;
+          }
+          if (charge.dueDate) {
+            mappedCharge.dueDate = this.dateUtils.formatDate(charge.dueDate, dateFormat);
+          }
+          if (charge.feeInterval !== undefined) {
+            mappedCharge.feeInterval = charge.feeInterval;
+          }
+          if (charge.feeOnMonthDay !== undefined) {
+            mappedCharge.feeOnMonthDay = charge.feeOnMonthDay;
+          }
+          return mappedCharge;
+        })
+        .filter(Boolean),
       clientId: client.id,
       totalLoan: totalLoan,
       loanType: 'glim',
@@ -276,7 +294,7 @@ export class CreateGlimAccountComponent {
 
     // Use date format from settingsService for interestChargedFromDate
     const data = this.buildRequestData();
-    this.batchAPIService.handleBatchRequests({ batchRequest: data }).subscribe((response: any) => {
+    this.loansService.createGlimAccount(data).subscribe((response: any) => {
       const body = JSON.parse(response[0].body);
       if (body.glimId) {
         this.router.navigate(

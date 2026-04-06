@@ -1,3 +1,11 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <div
   [ngClass]="{
     'sidebar-full': !sidenavCollapsed,
@@ -40,16 +48,18 @@
         </div>
       </div>
       <div class="icon-menu">
-        <div class="icon-menu-item" *ngFor="let activity of mappedActivities">
-          <button
-            mat-raised-button
-            [matTooltipPosition]="tooltipPosition"
-            [matTooltip]="activity.toolTip"
-            [routerLink]="[activity.path]"
-          >
-            <fa-icon [icon]="activity.icon" size="lg"></fa-icon>
-          </button>
-        </div>
+        @for (activity of mappedActivities; track activity) {
+          <div class="icon-menu-item">
+            <button
+              mat-raised-button
+              [matTooltipPosition]="tooltipPosition"
+              [matTooltip]="activity.toolTip"
+              [routerLink]="[activity.path]"
+            >
+              <fa-icon [icon]="activity.icon" size="lg"></fa-icon>
+            </button>
+          </div>
+        }
       </div>
 
       <div class="nav-item-sep">
@@ -76,6 +86,7 @@
           matTooltip="{{ 'tooltips.Navigation' | translate }}"
           routerLinkActive="active-menu"
           [routerLinkActiveOptions]="{ exact: false }"
+          *mifosxHasPermission="'READ_CLIENT'"
         >
           <mat-icon matListIcon>
             <fa-icon icon="location-arrow" size="sm"></fa-icon>
@@ -88,6 +99,7 @@
           matTooltip="{{ 'tooltips.Checker Inbox and Tasks' | translate }}"
           routerLinkActive="active-menu"
           [routerLinkActiveOptions]="{ exact: false }"
+          *mifosxHasPermission="'READ_MAKERCHECKER'"
         >
           <mat-icon matListIcon>
             <i class="fa fa-check"></i>
@@ -97,9 +109,10 @@
         <mat-list-item
           [routerLink]="['/collections/collection-sheet']"
           [matTooltipPosition]="tooltipPosition"
-          matTooltip="{{ 'tooltips.Collection Sheet' | translate }}"
+          matTooltip="{{ 'labels.menus.Collection Sheet' | translate }}"
           routerLinkActive="active-menu"
           [routerLinkActiveOptions]="{ exact: false }"
+          *mifosxHasPermission="'READ_COLLECTIONSHEET'"
         >
           <mat-icon matListIcon>
             <i class="fa fa-tasks"></i>
@@ -112,6 +125,7 @@
           matTooltip="{{ 'tooltips.Individual Collection Sheet' | translate }}"
           routerLinkActive="active-menu"
           [routerLinkActiveOptions]="{ exact: false }"
+          *mifosxHasPermission="'READ_COLLECTIONSHEET'"
         >
           <mat-icon matListIcon>
             <i class="fa fa-tasks"></i>
@@ -119,11 +133,25 @@
           <a matLine>{{ 'labels.menus.Individual Collection Sheet' | translate }}</a>
         </mat-list-item>
         <mat-list-item
+          *ngIf="mifosRemittanceEnabled"
+          [routerLink]="['/remittances/process']"
+          [matTooltipPosition]="tooltipPosition"
+          matTooltip="{{ 'tooltips.Process Remittance' | translate }}"
+          routerLinkActive="active-menu"
+          [routerLinkActiveOptions]="{ exact: false }"
+        >
+          <mat-icon matListIcon>
+            <fa-icon icon="money-bill-wave" size="sm"></fa-icon>
+          </mat-icon>
+          <a matLine>{{ 'labels.menus.Remittances' | translate }}</a>
+        </mat-list-item>
+        <mat-list-item
           [routerLink]="['/notifications']"
           [matTooltipPosition]="tooltipPosition"
           matTooltip="{{ 'tooltips.Notifications' | translate }}"
           routerLinkActive="active-menu"
           [routerLinkActiveOptions]="{ exact: false }"
+          *mifosxHasPermission="'READ_NOTIFICATION'"
         >
           <mat-icon matListIcon>
             <fa-icon icon="bell" size="sm"></fa-icon>
@@ -136,6 +164,7 @@
           matTooltip="{{ 'tooltips.Frequent Postings' | translate }}"
           routerLinkActive="active-menu"
           [routerLinkActiveOptions]="{ exact: false }"
+          *mifosxHasPermission="'CREATE_JOURNALENTRY'"
         >
           <mat-icon matListIcon>
             <fa-icon icon="sync" size="sm"></fa-icon>
@@ -148,6 +177,7 @@
           matTooltip="{{ 'tooltips.Create Journal Entry' | translate }}"
           routerLinkActive="active-menu"
           [routerLinkActiveOptions]="{ exact: false }"
+          *mifosxHasPermission="'CREATE_JOURNALENTRY'"
         >
           <mat-icon matListIcon>
             <fa-icon icon="plus" size="sm"></fa-icon>
@@ -160,6 +190,7 @@
           matTooltip="{{ 'tooltips.Chart Of Accounts' | translate }}"
           routerLinkActive="active-menu"
           [routerLinkActiveOptions]="{ exact: false }"
+          *mifosxHasPermission="'READ_GLACCOUNT'"
         >
           <mat-icon matListIcon>
             <fa-icon icon="sitemap" size="sm"></fa-icon>

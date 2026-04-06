@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, inject } from '@angular/core';
 import { FormGroup, FormBuilder, UntypedFormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -7,8 +15,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 
 /** Custom Services */
-import { GroupsService } from 'app/customApis.service';
-import { ClientService } from '@fineract/client';
+import { GroupsService } from 'app/groups/groups.service';
+import { ClientsService } from 'app/clients/clients.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
 import { MatIconButton } from '@angular/material/button';
@@ -17,7 +25,6 @@ import { MatListSubheaderCssMatStyler, MatNavList } from '@angular/material/list
 import { MatLine } from '@angular/material/grid-list';
 import { MatTooltip } from '@angular/material/tooltip';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { privateDecrypt } from 'crypto';
 
 /**
  * Manage Group Members Component
@@ -39,6 +46,11 @@ import { privateDecrypt } from 'crypto';
   ]
 })
 export class ManageGroupMembersComponent implements AfterViewInit {
+  private route = inject(ActivatedRoute);
+  private groupsService = inject(GroupsService);
+  private clientsService = inject(ClientsService);
+  dialog = inject(MatDialog);
+
   /** Group Data */
   groupData: any;
   /** Client data. */
@@ -55,12 +67,7 @@ export class ManageGroupMembersComponent implements AfterViewInit {
    * @param {ClientsService} clientsService Clients Service
    * @param {MatDialog} dialog Mat Dialog
    */
-  constructor(
-    private route: ActivatedRoute,
-    private clientsService: ClientService,
-    public dialog: MatDialog,
-    private customGroupsService: GroupsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { groupActionData: any }) => {
       this.groupData = data.groupActionData;
       this.clientMembers = data.groupActionData.clientMembers || [];
@@ -74,13 +81,7 @@ export class ManageGroupMembersComponent implements AfterViewInit {
     this.clientChoice.valueChanges.subscribe((value: string) => {
       if (value.length >= 2) {
         this.clientsService
-          .retrieveAll21({
-            displayName: value,
-            orphansOnly: true,
-            orderBy: 'displayName',
-            sortOrder: 'ASC',
-            officeId: this.groupData.officeId
-          })
+          .getFilteredClients('displayName', 'ASC', true, value, this.groupData.officeId)
           .subscribe((data: any) => {
             this.clientsData = data.pageItems;
           });
@@ -89,54 +90,15 @@ export class ManageGroupMembersComponent implements AfterViewInit {
   }
 
   /**
-   * Get the group ID from various possible sources
-   */
-  private getGroupId(): number | null {
-    const id = this.groupData?.id || this.route.snapshot.paramMap.get('groupId');
-    return id ? Number(id) : null;
-  }
-
-  /**
    * Add client.
    */
   addClient() {
-    // Check if a client is selected and not already in the members list
-    const selectedClient = this.clientChoice.value;
-
-    if (selectedClient) {
-      // Handle both cases: when selectedClient is an object or just an ID
-      const clientId = typeof selectedClient === 'object' ? selectedClient.id : selectedClient;
-      const groupId = this.getGroupId();
-
-      console.log('Debug - selectedClient:', selectedClient);
-      console.log('Debug - clientId:', clientId);
-      console.log('Debug - groupData:', this.groupData);
-      console.log('Debug - groupId:', groupId);
-
-      if (clientId && groupId) {
-        // Use the custom service to associate client
-        this.customGroupsService
-          .executeGroupCommand(groupId.toString(), 'associateClients', { clientMembers: [clientId] })
-          .subscribe(
-            () => {
-              // If the selectedClient is just an ID, we need to find the client object
-              const clientToAdd =
-                typeof selectedClient === 'object'
-                  ? selectedClient
-                  : this.clientsData.find((c: any) => c.id === clientId);
-
-              if (clientToAdd && !this.clientMembers.some((member) => member.id === clientToAdd.id)) {
-                this.clientMembers.push(clientToAdd);
-              }
-              this.clientChoice.setValue('');
-            },
-            (error) => {
-              console.error('Error associating client:', error);
-            }
-          );
-      } else {
-        console.error('Missing client ID or group ID - clientId:', clientId, 'groupId:', groupId);
-      }
+    if (!this.clientMembers.includes(this.clientChoice.value)) {
+      this.groupsService
+        .executeGroupCommand(this.groupData.id, 'associateClients', { clientMembers: [this.clientChoice.value.id] })
+        .subscribe(() => {
+          this.clientMembers.push(this.clientChoice.value);
+        });
     }
   }
 
@@ -146,32 +108,16 @@ export class ManageGroupMembersComponent implements AfterViewInit {
    * @param {any} client Client
    */
   removeClient(index: number, client: any) {
-    // Safety check - ensure we have a client object with a displayName
-    const clientName = client?.displayName || 'selected client';
-
     const removeMemberDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `client member: ${clientName}` }
+      data: { deleteContext: `client member: ${client.displayName}` }
     });
     removeMemberDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        const groupId = this.getGroupId();
-        // Handle both cases: when client is an object or just an ID
-        const clientId = typeof client === 'object' ? client.id : client;
-
-        if (clientId && groupId) {
-          this.customGroupsService
-            .executeGroupCommand(groupId.toString(), 'disassociateClients', { clientMembers: [clientId] })
-            .subscribe(
-              () => {
-                this.clientMembers.splice(index, 1);
-              },
-              (error) => {
-                console.error('Error disassociating client:', error);
-              }
-            );
-        } else {
-          console.error('Missing client ID or group ID for remove - clientId:', clientId, 'groupId:', groupId);
-        }
+        this.groupsService
+          .executeGroupCommand(this.groupData.id, 'disassociateClients', { clientMembers: [client.id] })
+          .subscribe(() => {
+            this.clientMembers.splice(index, 1);
+          });
       }
     });
   }
@@ -182,11 +128,6 @@ export class ManageGroupMembersComponent implements AfterViewInit {
    * @returns {string} Client name if valid otherwise undefined.
    */
   displayClient(client: any): string | undefined {
-    if (!client) {
-      return undefined;
-    }
-
-    // Simply return the displayName if it exists
-    return client.displayName;
+    return client ? client.displayName : undefined;
   }
 }

@@ -1,10 +1,18 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { ClientService } from '@fineract/client';
+import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
@@ -23,6 +31,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class UndoClientTransferComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private clientsService = inject(ClientsService);
+  private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   /** Undo Client Transfer form. */
   undoClientTransferForm: UntypedFormGroup;
   /** Client Id */
@@ -36,14 +51,7 @@ export class UndoClientTransferComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private clientsService: ClientService,
-    private settingsService: SettingsService,
-    private dateUtils: Dates,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.transferDate = data.clientActionData;
     });
@@ -82,14 +90,8 @@ export class UndoClientTransferComponent implements OnInit {
     const data = {
       ...undoClientTransferFormData
     };
-    this.clientsService
-      .activate1({
-        clientId: this.clientId,
-        postClientsClientIdRequest: data,
-        command: 'withdrawTransfer'
-      })
-      .subscribe(() => {
-        this.router.navigate(['../../'], { relativeTo: this.route });
-      });
+    this.clientsService.executeClientCommand(this.clientId, 'withdrawTransfer', data).subscribe(() => {
+      this.router.navigate(['../../'], { relativeTo: this.route });
+    });
   }
 }

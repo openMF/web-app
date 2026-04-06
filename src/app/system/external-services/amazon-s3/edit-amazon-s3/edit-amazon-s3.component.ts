@@ -1,10 +1,18 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
-import { ExternalServicesService } from '@fineract/client';
+import { SystemService } from 'app/system/system.service';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -23,6 +31,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditAmazonS3Component implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private systemService = inject(SystemService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   /** Amazon S3 Configuration data */
   amazonS3ConfigurationData: any;
   /** Amazon S3 Configuration Form */
@@ -35,16 +48,11 @@ export class EditAmazonS3Component implements OnInit {
   /**
    * Retrieves the Amazon S3 configuration data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {ExternalServicesService} externalServicesService External Services Service.
+   * @param {SystemService} systemService Accounting Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private externalServicesService: ExternalServicesService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { amazonS3Configuration: any }) => {
       this.amazonS3ConfigurationData = data.amazonS3Configuration;
     });
@@ -84,16 +92,10 @@ export class EditAmazonS3Component implements OnInit {
    * if successful redirects to view Amazon S3 configuration.
    */
   submit() {
-    const requestParams = {
-      name: 'S3',
-      body: this.amazonS3ConfigurationForm.value
-    };
-    const updateParams = {
-      servicename: 'S3',
-      putExternalServiceRequest: this.amazonS3ConfigurationForm.value
-    };
-    this.externalServicesService.updateExternalServiceProperties(updateParams).subscribe((response: any) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.systemService
+      .updateExternalConfiguration('S3', this.amazonS3ConfigurationForm.value)
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
 }

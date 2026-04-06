@@ -1,39 +1,29 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import {
-  ClientService,
-  SelfScoreCardService,
-  SelfSpmService,
-  OfficesService,
-  ClientChargesService,
-  UserGeneratedDocumentsService,
-  CollateralManagementService
-} from '@fineract/client';
+import { ClientsService } from '../clients.service';
+import { ProductsService } from 'app/products/products.service';
 
 /**
  * Client Actions data resolver.
  */
 @Injectable()
 export class ClientActionsResolver {
-  /**
-   * @param {ClientsService} clientsService Clients service.
-   * @param {CollateralManagementService} collateralManagementService Collateral Management Service
-   */
-  constructor(
-    private clientsService: ClientService,
-    private selfScoreCardService: SelfScoreCardService,
-    private selfSpmService: SelfSpmService,
-    private officesService: OfficesService,
-    private clientChargesService: ClientChargesService,
-    private userGeneratedDocumentsService: UserGeneratedDocumentsService,
-    private collateralManagementService: CollateralManagementService
-  ) {}
+  private clientsService = inject(ClientsService);
+  private productsService = inject(ProductsService);
 
   /**
    * Returns the clients actions data.
@@ -45,30 +35,30 @@ export class ClientActionsResolver {
     const clientId = route.paramMap.get('clientId') || route.parent.parent.paramMap.get('clientId');
     switch (actionName) {
       case 'Survey':
-        return this.selfScoreCardService.findByClient({ clientId: Number(clientId) });
+        return this.clientsService.getSurveys(clientId);
       case 'Take Survey':
-        return this.selfSpmService.fetchAllSurveys();
+        return this.clientsService.getAllSurveysType();
       case 'Close':
-        return this.clientsService.retrieveTemplate5({ commandParam: 'close' });
+        return this.clientsService.getClientCommandTemplate('close');
       case 'Reject':
-        return this.clientsService.retrieveTemplate5({ commandParam: 'reject' });
+        return this.clientsService.getClientCommandTemplate('reject');
       case 'Withdraw':
-        return this.clientsService.retrieveTemplate5({ commandParam: 'withdraw' });
+        return this.clientsService.getClientCommandTemplate('withdraw');
       case 'Transfer Client':
-        return this.officesService.retrieveOffices();
+        return this.clientsService.getOffices();
       case 'Add Charge':
-        return this.clientChargesService.retrieveTemplate4({ clientId: Number(clientId) });
+        return this.clientsService.getClientChargeTemplate(clientId);
       case 'Create Collateral':
-        return this.collateralManagementService.getAllCollaterals();
+        return this.productsService.getCollaterals();
       case 'Client Screen Reports':
-        return this.userGeneratedDocumentsService.retrieveAll40();
+        return this.clientsService.getClientReportTemplates();
       case 'Assign Staff':
       case 'Update Default Savings':
-        return this.clientsService.retrieveOne11({ clientId: Number(clientId) });
+        return this.clientsService.getClientDataAndTemplate(clientId);
       case 'Undo Transfer':
       case 'Accept Transfer':
       case 'Reject Transfer':
-        return this.clientsService.retrieveTransferTemplate({ clientId: Number(clientId) });
+        return this.clientsService.getClientTransferProposalDate(clientId);
       default:
         return undefined;
     }

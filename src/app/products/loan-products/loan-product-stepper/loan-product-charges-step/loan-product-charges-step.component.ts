@@ -1,10 +1,18 @@
-import { Component, Input, OnInit } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 import { TranslateService } from '@ngx-translate/core';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
-import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import {
   MatTable,
@@ -24,6 +32,7 @@ import { ChargesFilterPipe } from '../../../../pipes/charges-filter.pipe';
 import { ChargesPenaltyFilterPipe } from '../../../../pipes/charges-penalty-filter.pipe';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanProductBaseComponent } from '../../common/loan-product-base.component';
 
 @Component({
   selector: 'mifosx-loan-product-charges-step',
@@ -51,10 +60,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     FormatNumberPipe
   ]
 })
-export class LoanProductChargesStepComponent implements OnInit {
+export class LoanProductChargesStepComponent extends LoanProductBaseComponent implements OnInit {
+  dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
+
   @Input() loanProductsTemplate: any;
   @Input() currencyCode: UntypedFormControl;
-  @Input() multiDisburseLoan: UntypedFormControl;
+  @Input() multiDisburseLoan: UntypedFormControl | null;
 
   chargeData: any;
   overdueChargeData: any;
@@ -68,12 +80,11 @@ export class LoanProductChargesStepComponent implements OnInit {
     'action'
   ];
 
-  pristine = true;
+  constructor() {
+    super();
+  }
 
-  constructor(
-    public dialog: MatDialog,
-    private translateService: TranslateService
-  ) {}
+  pristine = true;
 
   ngOnInit() {
     this.chargeData = this.loanProductsTemplate.chargeOptions;
@@ -87,7 +98,9 @@ export class LoanProductChargesStepComponent implements OnInit {
     this.pristine = true;
 
     this.currencyCode.valueChanges.subscribe(() => (this.chargesDataSource = []));
-    this.multiDisburseLoan.valueChanges.subscribe(() => (this.chargesDataSource = []));
+    if (this.loanProductService.isLoanProduct && this.multiDisburseLoan) {
+      this.multiDisburseLoan.valueChanges.subscribe(() => (this.chargesDataSource = []));
+    }
   }
 
   addCharge(charge: any) {

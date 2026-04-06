@@ -1,18 +1,27 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
-import { FloatingRatesService } from '@fineract/client';
+/** Custom Services */
+import { ProductsService } from '../products.service';
 
 /**
  * Floating Rate data resolver.
  */
 @Injectable()
 export class FloatingRateResolver {
-  constructor(private floatingRatesService: FloatingRatesService) {}
+  private productsService = inject(ProductsService);
 
   /**
    * Returns the floating rate data.
@@ -20,6 +29,6 @@ export class FloatingRateResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const floatingRateId = route.paramMap.get('id');
-    return this.floatingRatesService.retrieveOne13({ floatingRateId: +floatingRateId });
+    return this.productsService.getFloatingRate(floatingRateId);
   }
 }

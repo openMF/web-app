@@ -3,7 +3,7 @@
   "attr-lowercase": false,
   "attr-value-double-quotes": true,
   "tag-pair": true,
-  "spec-char-escape": true,
+  "spec-char-escape": false,
   "id-unique": true,
   "src-not-empty": true,
   "attr-no-duplication": true,

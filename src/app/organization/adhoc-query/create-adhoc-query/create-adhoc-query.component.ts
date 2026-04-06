@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -10,7 +18,7 @@ import {
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { AdhocQueryApiService } from '@fineract/client';
+import { OrganizationService } from '../../organization.service';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -27,6 +35,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateAdhocQueryComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private organizationService = inject(OrganizationService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   /** Adhoc Query form. */
   adhocQueryForm: UntypedFormGroup;
   /** Adhoc Query template data. */
@@ -37,16 +50,11 @@ export class CreateAdhocQueryComponent implements OnInit {
   /**
    * Retrieves the adhoc query template data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {AdhocQueryApiService} adhocQueryApiService Adhoc Query API Service.
+   * @param {OrganizationService} organizationService Organization Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private adhocQueryApiService: AdhocQueryApiService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { adhocQueryTemplate: any }) => {
       this.adhocQueryTemplateData = data.adhocQueryTemplate;
     });
@@ -101,7 +109,8 @@ export class CreateAdhocQueryComponent implements OnInit {
           'reportRunEvery',
           new UntypedFormControl('', [
             Validators.required,
-            Validators.min(1)])
+            Validators.min(1)
+          ])
         );
       } else {
         this.adhocQueryForm.removeControl('reportRunEvery');
@@ -114,7 +123,7 @@ export class CreateAdhocQueryComponent implements OnInit {
    * if successful redirects to view adhoc query.
    */
   submit() {
-    this.adhocQueryApiService.createAdHocQuery(this.adhocQueryForm.value).subscribe((response: any) => {
+    this.organizationService.createAdhocQuery(this.adhocQueryForm.value).subscribe((response: any) => {
       this.router.navigate(
         [
           '../',

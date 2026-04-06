@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -20,7 +28,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
 
 /** rxjs Imports */
-import { SCHEDULERJOBService, SchedulerService } from '@fineract/client';
+import { SystemService } from '../../system.service';
 
 /** Custom Services */
 import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
@@ -32,7 +40,7 @@ import { CustomParametersPopoverComponent } from './custom-parameters-popover/cu
 import { SchedulerJob } from './models/scheduler-job.model';
 import { ErrorLogPopoverComponent } from './error-log-popover/error-log-popover.component';
 import { RunSelectedJobsPopoverComponent } from './run-selected-jobs-popover/run-selected-jobs-popover.component';
-import { NgIf, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -73,6 +81,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ManageSchedulerJobsComponent implements OnInit, AfterViewInit {
+  private route = inject(ActivatedRoute);
+  private systemService = inject(SystemService);
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
+  private configurationWizardService = inject(ConfigurationWizardService);
+  private popoverService = inject(PopoverService);
+
   /** Jobs data. */
   jobData: any;
   /** Scheduler data */
@@ -117,18 +132,8 @@ export class ManageSchedulerJobsComponent implements OnInit, AfterViewInit {
    * @param {Router} router Router for navigation.
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
-   * @param {SchedulerJobService} schedulerJobService SchedulerJob Service.
-   * @param {SchedulerService} schedulerService SchedulerService.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private dialog: MatDialog,
-    private configurationWizardService: ConfigurationWizardService,
-    private popoverService: PopoverService,
-    private schedulerJobService: SCHEDULERJOBService,
-    private schedulerService: SchedulerService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { jobsScheduler: any }) => {
       if (data.jobsScheduler) {
         this.jobData = data.jobsScheduler[0];
@@ -172,7 +177,7 @@ export class ManageSchedulerJobsComponent implements OnInit, AfterViewInit {
    * Initializes the data source, paginator and sorter for manage scheduler jobs table.
    */
   setJobs() {
-    this.schedulerJobService.retrieveAll8().subscribe((jobData: any[]) => {
+    this.systemService.getJobs().subscribe((jobData: any[]) => {
       const sortedData = jobData.sort((a, b) => b.active - a.active || this.sortByName(a, b));
       this.dataSource = new MatTableDataSource(sortedData);
       this.dataSource.paginator = this.paginator;
@@ -209,20 +214,20 @@ export class ManageSchedulerJobsComponent implements OnInit, AfterViewInit {
   }
 
   getScheduler() {
-    this.schedulerService.retrieveStatus().subscribe((schedulerData: any) => {
+    this.systemService.getScheduler().subscribe((schedulerData: any) => {
       this.schedulerData = schedulerData;
       this.schedulerActive = this.schedulerData.active;
     });
   }
 
   suspendScheduler(): void {
-    this.schedulerService.changeSchedulerStatus({ command: 'stop' }).subscribe(() => {
+    this.systemService.runCommandOnScheduler('stop').subscribe(() => {
       this.getScheduler();
     });
   }
 
   activateScheduler(): void {
-    this.schedulerService.changeSchedulerStatus({ command: 'start' }).subscribe(() => {
+    this.systemService.runCommandOnScheduler('start').subscribe(() => {
       this.getScheduler();
     });
   }
@@ -233,7 +238,7 @@ export class ManageSchedulerJobsComponent implements OnInit, AfterViewInit {
 
   runSelectedJobs(): void {
     this.selection.selected.forEach((job) => {
-      this.schedulerJobService.executeJob(job.jobId);
+      this.systemService.runSelectedJob(job.jobId);
     });
   }
 
@@ -260,12 +265,12 @@ export class ManageSchedulerJobsComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showSchedulerJobsPage === true) {
+    if (this.configurationWizardService.showSchedulerJobsPage) {
       setTimeout(() => {
         this.showPopover(this.templateSchedulerStatus, this.schedulerStatus.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showSchedulerJobsList === true) {
+    if (this.configurationWizardService.showSchedulerJobsList) {
       setTimeout(() => {
         this.showPopover(this.templateJobsTable, this.jobsTable.nativeElement, 'top', true);
       });

@@ -1,7 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { DelinquencyRangeAndBucketsManagementService } from '@fineract/client';
+import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -14,18 +22,18 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditRangeComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private productsService = inject(ProductsService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private settingsService = inject(SettingsService);
+
   /** Delinquency Range Data. */
   delinquencyRangeData: any;
   /** Delinquency Range form. */
   delinquencyRangeForm: UntypedFormGroup;
 
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private delinquencyService: DelinquencyRangeAndBucketsManagementService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { delinquencyRange: any }) => {
       this.delinquencyRangeData = data.delinquencyRange;
     });
@@ -49,13 +57,15 @@ export class EditRangeComponent implements OnInit {
         [
           Validators.required,
           Validators.pattern('^(0*[1-9][0-9]*?)$'),
-          Validators.max(1000)]
+          Validators.min(1)
+        ]
       ],
       maximumAgeDays: [
         this.delinquencyRangeData.maximumAgeDays,
         [
           Validators.pattern('^(0*[1-9][0-9]*?)$'),
-          Validators.max(10000)]
+          Validators.min(1)
+        ]
       ]
     });
   }
@@ -67,16 +77,14 @@ export class EditRangeComponent implements OnInit {
       ...delinquencyRangeFormData,
       locale
     };
-    this.delinquencyService
-      .updateDelinquencyRange({ delinquencyRangeId: this.delinquencyRangeData.id, delinquencyRangeRequest: data })
-      .subscribe((response: any) => {
-        this.router.navigate(
-          [
-            '../../',
-            response.resourceId
-          ],
-          { relativeTo: this.route }
-        );
-      });
+    this.productsService.updateDelinquencyRange(this.delinquencyRangeData.id, data).subscribe((response: any) => {
+      this.router.navigate(
+        [
+          '../../',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
+    });
   }
 }

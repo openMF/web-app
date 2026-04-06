@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -59,6 +67,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ChargesComponent implements OnInit, AfterViewInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private configurationWizardService = inject(ConfigurationWizardService);
+  private popoverService = inject(PopoverService);
+  private charges = inject(Charges);
+
   /** Charge data. */
   chargeData: Charge[] = [];
   /** Columns to be displayed in charges table. */
@@ -97,13 +111,7 @@ export class ChargesComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private configurationWizardService: ConfigurationWizardService,
-    private popoverService: PopoverService,
-    private charges: Charges
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { charges: any }) => {
       this.chargeData = data.charges;
     });
@@ -146,13 +154,13 @@ export class ChargesComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showChargesPage === true) {
+    if (this.configurationWizardService.showChargesPage) {
       setTimeout(() => {
         this.showPopover(this.templateButtonCreateCharge, this.buttonCreateCharge.nativeElement, 'bottom', true);
       });
     }
 
-    if (this.configurationWizardService.showChargesList === true) {
+    if (this.configurationWizardService.showChargesList) {
       setTimeout(() => {
         this.showPopover(this.templateChargesTable, this.chargesTable.nativeElement, 'top', true);
       });

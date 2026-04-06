@@ -1,16 +1,21 @@
-import { Injectable } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { DocumentsService } from '@fineract/client';
+import { SavingsService } from '../savings.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SavingDocumentsResolver {
-  /**
-   * @param {DocumentsService} documentsService Documents service.
-   */
-  constructor(private documentsService: DocumentsService) {}
+  private savingsService = inject(SavingsService);
 
   /**
    * Returns the Savings data.
@@ -18,9 +23,6 @@ export class SavingDocumentsResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const savingAccountId = route.parent.paramMap.get('savingAccountId');
-    return this.documentsService.retrieveAllDocuments({
-      entityId: Number(savingAccountId),
-      entityType: 'savings'
-    });
+    return this.savingsService.getSavingsDocuments(savingAccountId);
   }
 }

@@ -1,3 +1,11 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <h2 mat-dialog-title>{{ 'labels.heading.Loan Delinquency Actions' | translate }}</h2>
 
 <div mat-dialog-content [formGroup]="delinquencyActionForm" class="layout-column">
@@ -13,10 +21,12 @@
     />
     <mat-datepicker-toggle matSuffix [for]="validFromDatePicker"></mat-datepicker-toggle>
     <mat-datepicker #validFromDatePicker></mat-datepicker>
-    <mat-error *ngIf="delinquencyActionForm.controls.startDate.hasError('required')">
-      {{ 'labels.inputs.Start Date' | translate }} {{ 'labels.commons.is' | translate }}
-      <strong>{{ 'labels.commons.required' | translate }}</strong>
-    </mat-error>
+    @if (delinquencyActionForm.controls.startDate.hasError('required')) {
+      <mat-error>
+        {{ 'labels.inputs.Start Date' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
+      </mat-error>
+    }
   </mat-form-field>
 
   <mat-form-field class="flex-48" (click)="validTillDatePicker.open()">
@@ -31,10 +41,12 @@
     />
     <mat-datepicker-toggle matSuffix [for]="validTillDatePicker"></mat-datepicker-toggle>
     <mat-datepicker #validTillDatePicker></mat-datepicker>
-    <mat-error *ngIf="delinquencyActionForm.controls.endDate.hasError('required')">
-      {{ 'labels.inputs.End Date' | translate }} {{ 'labels.commons.is' | translate }}
-      <strong>{{ 'labels.commons.required' | translate }}</strong>
-    </mat-error>
+    @if (delinquencyActionForm.controls.endDate.hasError('required')) {
+      <mat-error>
+        {{ 'labels.inputs.End Date' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
+      </mat-error>
+    }
   </mat-form-field>
 </div>
 

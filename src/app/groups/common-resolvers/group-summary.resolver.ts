@@ -1,22 +1,27 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { RunReportsService } from '@fineract/client';
+import { GroupsService } from '../groups.service';
 
 /**
  * Group Summary resolver.
  */
 @Injectable()
 export class GroupSummaryResolver {
-  /**
-   * @param {RunReportsService} runReportsService Groups service.
-   */
-  constructor(private runReportsService: RunReportsService) {}
+  private groupsService = inject(GroupsService);
 
   /**
    * Returns the Group Summary data.
@@ -25,8 +30,6 @@ export class GroupSummaryResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const groupId = route.parent.paramMap.get('groupId');
-    return this.runReportsService.runReport({
-      reportName: `GroupSummary?R_groupId=${groupId}&genericResultSet=false`
-    });
+    return this.groupsService.getGroupSummary(groupId);
   }
 }

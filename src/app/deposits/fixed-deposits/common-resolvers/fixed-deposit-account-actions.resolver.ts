@@ -1,12 +1,20 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SavingsChargesService } from '@fineract/client';
+import { SavingsService } from 'app/savings/savings.service';
 import { FixedDepositsService } from '../fixed-deposits.service';
 
 /**
@@ -14,14 +22,8 @@ import { FixedDepositsService } from '../fixed-deposits.service';
  */
 @Injectable()
 export class FixedDepositsAccountActionsResolver {
-  /**
-   * @param {SavingsChargesService} SavingsChargesService Savings charges service.
-   * @param {FixedDepositsService} fixedDepositsService Fixed Deposits Service.
-   */
-  constructor(
-    private savingsChargesService: SavingsChargesService,
-    private fixedDepositsService: FixedDepositsService
-  ) {}
+  private savingsService = inject(SavingsService);
+  private fixedDepositsService = inject(FixedDepositsService);
 
   /**
    * Returns the Fixed deposits account actions data.
@@ -34,7 +36,7 @@ export class FixedDepositsAccountActionsResolver {
       route.paramMap.get('fixedDepositAccountId') || route.parent.parent.paramMap.get('fixedDepositAccountId');
     switch (actionName) {
       case 'Add Charge':
-        return this.savingsChargesService.retrieveTemplate18({ savingsAccountId: Number(fixedDepositAccountId) });
+        return this.savingsService.getSavingsChargeTemplateResource(fixedDepositAccountId);
       case 'Close':
         return this.fixedDepositsService.getFixedDepositsAccountClosureTemplate(fixedDepositAccountId);
       case 'Withdrawal':

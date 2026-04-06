@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -10,7 +18,7 @@ import {
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { ChargesService, ClientChargesService } from '@fineract/client';
+import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -27,6 +35,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class AddClientChargeComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dateUtils = inject(Dates);
+  private clientsService = inject(ClientsService);
+  private settingsService = inject(SettingsService);
+
   /** Minimum Due Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Due Date allowed. */
@@ -49,15 +64,7 @@ export class AddClientChargeComponent implements OnInit {
    * @param {ClientsService} clientsService Clients Service
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private dateUtils: Dates,
-    private chargesService: ChargesService,
-    private clientChargesService: ClientChargesService,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.clientChargeOptions = data.clientActionData.chargeOptions;
     });
@@ -75,7 +82,7 @@ export class AddClientChargeComponent implements OnInit {
    */
   buildDependencies() {
     this.clientChargeForm.controls.chargeId.valueChanges.subscribe((chargeId) => {
-      this.chargesService.retrieveCharge(chargeId).subscribe((data: any) => {
+      this.clientsService.getChargeAndTemplate(chargeId).subscribe((data: any) => {
         this.chargeDetails = data;
         const chargeTimeType = data.chargeTimeType.id;
         if (data.chargeTimeType.value === 'Withdrawal Fee' || data.chargeTimeType.value === 'Saving No Activity Fee') {
@@ -139,7 +146,7 @@ export class AddClientChargeComponent implements OnInit {
       clientCharge.feeInterval = this.chargeDetails.feeInterval;
     }
     if (this.chargeDetails.dueDateNotRequired !== true) {
-      if (this.chargeDetails.chargeTimeTypeAnnualOrMonth === true) {
+      if (this.chargeDetails.chargeTimeTypeAnnualOrMonth) {
         const monthDayFormat = 'MMMM-dd'; // TODO: Update once language and date settings are setup
         clientCharge.monthDayFormat = monthDayFormat;
         if (clientCharge.feeOnMonthDay) {
@@ -155,13 +162,8 @@ export class AddClientChargeComponent implements OnInit {
         }
       }
     }
-    this.clientChargesService
-      .applyClientCharge({
-        clientId: Number(this.clientId),
-        postClientsClientIdChargesRequest: clientCharge
-      })
-      .subscribe(() => {
-        this.router.navigate(['../../'], { relativeTo: this.route });
-      });
+    this.clientsService.createClientCharge(this.clientId, clientCharge).subscribe(() => {
+      this.router.navigate(['../../'], { relativeTo: this.route });
+    });
   }
 }

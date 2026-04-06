@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Components */
@@ -7,7 +15,7 @@ import { SmsCampaignStepComponent } from '../sms-campaign-stepper/sms-campaign-s
 import { CampaignMessageStepComponent } from '../sms-campaign-stepper/campaign-message-step/campaign-message-step.component';
 
 /** Custom Services */
-import { DefaultService } from '@fineract/client';
+import { OrganizationService } from 'app/organization/organization.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
@@ -35,6 +43,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateCampaignComponent {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private organizationService = inject(OrganizationService);
+  private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
+
   /** SMS Campaign Template */
   smsCampaignTemplate: any;
   /** Run report headers */
@@ -49,17 +63,11 @@ export class CreateCampaignComponent {
    * Fetches campaign template from `resolve`
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
-   * @param {DefaultService} defaultService Default Service
+   * @param {OrganizationService} organizationService Organization Service
    * @param {SettingsService} settingsService Settings Service
    * @param {Dates} dateUtils Date Utils
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private defaultService: DefaultService,
-    private settingsService: SettingsService,
-    private dateUtils: Dates
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { smsCampaignTemplate: any }) => {
       this.smsCampaignTemplate = data.smsCampaignTemplate;
     });
@@ -110,7 +118,7 @@ export class CreateCampaignComponent {
       const prevRecurrenceDate: Date = smsCampaign.recurrenceStartDate;
       smsCampaign.recurrenceStartDate = this.dateUtils.formatDate(prevRecurrenceDate, dateTimeFormat);
     }
-    this.defaultService.createCampaign1(smsCampaign).subscribe((response: any) => {
+    this.organizationService.createSmsCampaign(smsCampaign).subscribe((response: any) => {
       this.router.navigate(
         [
           '../',

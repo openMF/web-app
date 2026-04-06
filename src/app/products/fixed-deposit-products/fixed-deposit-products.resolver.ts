@@ -1,23 +1,32 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
-import { FixedDepositProductService } from '@fineract/client';
+/** Custom Services */
+import { ProductsService } from '../products.service';
 
 /**
  * Fixed Deposit Products data resolver.
  */
 @Injectable()
 export class FixedDepositProductsResolver {
-  constructor(private fixedDepositProductService: FixedDepositProductService) {}
+  private productsService = inject(ProductsService);
 
   /**
    * Returns the fixed deposit products data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.fixedDepositProductService.retrieveAll30();
+    return this.productsService.getFixedDepositProducts();
   }
 }

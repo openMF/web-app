@@ -1,9 +1,17 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 const activities: any[] = [
   { activity: 'client', path: '/clients' },
   { activity: 'groups', path: '/groups' },
   { activity: 'centers', path: '/centers' },
   { activity: 'accounting', path: '/accounting' },
-  { activity: 'users', path: '/users' },
+  { activity: 'users', path: '/appusers' },
   { activity: 'organization', path: '/organization' },
   { activity: 'system', path: '/system' },
   { activity: 'templates', path: '/templates' },
@@ -50,6 +58,7 @@ const activities: any[] = [
   { activity: 'audit', path: '/products/audit-trails' },
   { activity: 'create accounting closure', path: '' },
   { activity: 'navigation', path: '/navigation' },
+  { activity: 'remittances', path: '/remittances/process' },
   { activity: '', path: 'home' }
 ];
 

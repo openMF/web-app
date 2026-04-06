@@ -1,3 +1,11 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <div class="container">
   <mat-stepper
     orientation="vertical"
@@ -56,17 +64,18 @@
       </mifosx-savings-account-charges-step>
     </mat-step>
 
-    <mat-step *ngIf="savingsAccountFormValidAndNotPristine" completed>
-      <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
-
-      <mifosx-savings-account-preview-step
-        [savingsAccountProductTemplate]="savingsAccountProductTemplate"
-        [savingsAccountTemplate]="savingsAccountAndTemplate"
-        [savingsAccountTermsForm]="savingsAccountTermsForm"
-        [savingsAccount]="savingsAccount"
-        (submitEvent)="submit()"
-      >
-      </mifosx-savings-account-preview-step>
-    </mat-step>
+    @if (savingsAccountFormValidAndNotPristine) {
+      <mat-step completed>
+        <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
+        <mifosx-savings-account-preview-step
+          [savingsAccountProductTemplate]="savingsAccountProductTemplate"
+          [savingsAccountTemplate]="savingsAccountAndTemplate"
+          [savingsAccountTermsForm]="savingsAccountTermsForm"
+          [savingsAccount]="savingsAccount"
+          (submitEvent)="submit()"
+        >
+        </mifosx-savings-account-preview-step>
+      </mat-step>
+    }
   </mat-stepper>
 </div>

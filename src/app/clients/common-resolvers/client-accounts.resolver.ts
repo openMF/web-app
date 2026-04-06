@@ -1,22 +1,27 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { ClientService } from '@fineract/client';
+import { ClientsService } from '../clients.service';
 
 /**
  * Client Accounts data resolver.
  */
 @Injectable()
 export class ClientAccountsResolver {
-  /**
-   * @param {ClientsService} ClientsService Clients service.
-   */
-  constructor(private clientsService: ClientService) {}
+  private clientsService = inject(ClientsService);
 
   /**
    * Returns the Client Account data.
@@ -24,6 +29,6 @@ export class ClientAccountsResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const clientId = route.parent.paramMap.get('clientId');
-    return this.clientsService.retrieveAssociatedAccounts({ clientId: Number(clientId) });
+    return this.clientsService.getClientAccountData(clientId);
   }
 }

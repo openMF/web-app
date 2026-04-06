@@ -1,14 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { CentersService as CollectionsService, PostCentersCenterIdResponse } from '@fineract/client';
+import { CollectionsService } from '../collections.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+
 import { OrganizationService } from 'app/organization/organization.service';
-import { CentersService } from 'app/customApis.service';
+import { CentersService } from 'app/centers/centers.service';
+import { GroupsService } from 'app/groups/groups.service';
 import { Dates } from 'app/core/utils/dates';
 import { CollectionSheetData, JLGGroupData, MeetingFallCenter } from '../models/collection-sheet-data.model';
+import { Logger } from 'app/core/logger/logger.service';
 
 @Component({
   selector: 'mifosx-collection-sheet',
@@ -20,6 +31,16 @@ import { CollectionSheetData, JLGGroupData, MeetingFallCenter } from '../models/
   ]
 })
 export class CollectionSheetComponent implements OnInit {
+  private readonly log = new Logger('CollectionSheetComponent');
+  private formBuilder = inject(UntypedFormBuilder);
+  private centerService = inject(CentersService);
+  private collectionsService = inject(CollectionsService);
+  private organizationService = inject(OrganizationService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
+
   /** Offices Data */
   officesData: any;
   /** Group Data */
@@ -48,16 +69,7 @@ export class CollectionSheetComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private centerService: CentersService,
-    private collectionsService: CollectionsService,
-    private organizationService: OrganizationService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private settingsService: SettingsService,
-    private dateUtils: Dates
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { officesData: any }) => {
       this.officesData = data.officesData;
     });
@@ -128,13 +140,9 @@ export class CollectionSheetComponent implements OnInit {
             dateFormat
           };
           this.collectionsService
-            .activate2({
-              centerId: this.meetingFallCenters[0].id,
-              postCentersCenterIdRequest: payload,
-              command: 'activate'
-            })
-            .subscribe((response: PostCentersCenterIdResponse) => {
-              console.log(response);
+            .generateCollectionSheetData(this.meetingFallCenters[0].id, payload)
+            .subscribe((jlgGroupData: JLGGroupData) => {
+              this.log.debug('JLG Group Data:', jlgGroupData);
             });
         }
       });

@@ -1,3 +1,11 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <div class="layout-row align-end gap-2px responsive-column container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_TELLER'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
@@ -29,13 +37,17 @@
           {{ tellerData.officeName }}
         </div>
 
-        <div class="flex-50 mat-body-strong" *ngIf="tellerData.description">
-          {{ 'labels.inputs.Description' | translate }}
-        </div>
+        @if (tellerData.description) {
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Description' | translate }}
+          </div>
+        }
 
-        <div class="flex-50" *ngIf="tellerData.description">
-          {{ tellerData.description }}
-        </div>
+        @if (tellerData.description) {
+          <div class="flex-50">
+            {{ tellerData.description }}
+          </div>
+        }
 
         <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Start Date' | translate }}
@@ -45,13 +57,17 @@
           {{ tellerData.startDate | dateFormat }}
         </div>
 
-        <div class="flex-50 mat-body-strong" *ngIf="tellerData.endDate">
-          {{ 'labels.inputs.End Date' | translate }}
-        </div>
+        @if (tellerData.endDate) {
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.End Date' | translate }}
+          </div>
+        }
 
-        <div class="flex-50" *ngIf="tellerData.endDate">
-          {{ tellerData.endDate | dateFormat }}
-        </div>
+        @if (tellerData.endDate) {
+          <div class="flex-50">
+            {{ tellerData.endDate | dateFormat }}
+          </div>
+        }
 
         <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Status' | translate }}

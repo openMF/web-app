@@ -1,3 +1,11 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <div class="container mat-elevation-z8">
   <mat-card>
     <form [formGroup]="savingsAssignStaffForm" (ngSubmit)="submit()">
@@ -6,10 +14,18 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.To Savings Officer' | translate }}</mat-label>
             <mat-select formControlName="toSavingsOfficerId">
-              <mat-option *ngFor="let officer of fieldOfficerData" [value]="officer.id">
-                {{ officer.displayName }}
-              </mat-option>
+              @for (officer of fieldOfficerData; track officer) {
+                <mat-option [value]="officer.id">
+                  {{ officer.displayName }}
+                </mat-option>
+              }
             </mat-select>
+            @if (savingsAssignStaffForm.controls.toSavingsOfficerId.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.To Savings Officer' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field (click)="assignmentDatePicker.open()">
@@ -24,10 +40,12 @@
             />
             <mat-datepicker-toggle matSuffix [for]="assignmentDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #assignmentDatePicker></mat-datepicker>
-            <mat-error *ngIf="savingsAssignStaffForm.controls.assignmentDate.hasError('required')">
-              {{ 'labels.inputs.Assignment Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (savingsAssignStaffForm.controls.assignmentDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Assignment Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
         </div>
       </mat-card-content>

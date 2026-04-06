@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import {
   MatTableDataSource,
@@ -51,6 +59,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class SearchPageComponent {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   /** Flags if number of search results exceed 200 */
   overload: boolean;
   /** Datasource for loans disbursal table */
@@ -74,10 +85,7 @@ export class SearchPageComponent {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { searchResults: any }) => {
       this.dataSource = new MatTableDataSource(data.searchResults);
       this.dataSource.paginator = this.paginator;

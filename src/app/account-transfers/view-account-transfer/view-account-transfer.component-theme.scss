@@ -1,0 +1,48 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+@use '@angular/material' as mat;
+@use 'sass:map';
+
+@mixin view-account-transfer-component-theme($theme) {
+  $is-dark: map.get($theme, is-dark);
+  $foreground: map.get($theme, foreground);
+  $primary: map.get($theme, primary);
+
+  mifosx-view-account-transfer {
+    .section-title {
+      color: mat.m2-get-color-from-palette($foreground, text);
+    }
+
+    .info-label {
+      color: mat.m2-get-color-from-palette($foreground, secondary-text);
+    }
+
+    .info-value {
+      color: mat.m2-get-color-from-palette($foreground, text);
+
+      a {
+        color: mat.m2-get-color-from-palette($primary, 500);
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .status-indicator {
+      &.active {
+        background-color: #4caf50;
+      }
+
+      &.undo {
+        background-color: #f44336;
+      }
+    }
+  }
+}

@@ -1,0 +1,77 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="step-content">
+  <form [formGroup]="beneficiaryForm" (ngSubmit)="validateRecipient()">
+    <div class="form-fields">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'labels.inputs.First Name' | translate }}</mat-label>
+        <input
+          matInput
+          formControlName="givenName"
+          placeholder="{{ 'labels.placeholders.Enter first name (include middle name)' | translate }}"
+        />
+        @if (beneficiaryForm.get('givenName')?.hasError('required') && beneficiaryForm.get('givenName')?.touched) {
+          <mat-error>{{ 'labels.inputs.First name is required' | translate }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'labels.inputs.Last Name' | translate }}</mat-label>
+        <input
+          matInput
+          formControlName="lastName"
+          placeholder="{{ 'labels.placeholders.Enter last name' | translate }}"
+        />
+        @if (beneficiaryForm.get('lastName')?.hasError('required') && beneficiaryForm.get('lastName')?.touched) {
+          <mat-error>{{ 'labels.inputs.Last name is required' | translate }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'labels.inputs.Document Type' | translate }}</mat-label>
+        <mat-select formControlName="documentType">
+          @for (doc of documentTypes; track doc.value) {
+            <mat-option [value]="doc.value">{{ doc.label | translate }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'labels.inputs.Document Number' | translate }}</mat-label>
+        <input
+          matInput
+          formControlName="documentNumber"
+          placeholder="{{ 'labels.placeholders.Enter document number' | translate }}"
+        />
+        @if (
+          beneficiaryForm.get('documentNumber')?.hasError('required') && beneficiaryForm.get('documentNumber')?.touched
+        ) {
+          <mat-error>{{ 'labels.inputs.Document number is required' | translate }}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    @if (errorMessage) {
+      <div class="error-banner">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ errorMessage }}</span>
+      </div>
+    }
+
+    <div class="step-actions">
+      <button mat-raised-button color="primary" type="submit" [disabled]="beneficiaryForm.invalid || isLoading">
+        @if (isLoading) {
+          <mat-spinner diameter="20"></mat-spinner>
+        } @else {
+          <span><mat-icon>person_search</mat-icon> {{ 'labels.buttons.Validate Recipient' | translate }}</span>
+        }
+      </button>
+    </div>
+  </form>
+</div>

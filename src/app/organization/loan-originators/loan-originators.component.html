@@ -1,0 +1,91 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container m-b-20 layout-row align-end gap-20px">
+  <div #buttonCreateLoanOriginator>
+    <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_LOAN_ORIGINATOR'">
+      <fa-icon icon="plus" class="m-r-10"></fa-icon>
+      {{ 'labels.buttons.Create' | translate }} {{ 'labels.inputs.Loan Originator' | translate }}
+    </button>
+  </div>
+</div>
+
+<div class="container">
+  <div #filter class="layout-row gap-20px">
+    <mat-form-field class="flex-fill">
+      <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
+      <input matInput (keyup)="applyFilter($event.target.value)" />
+    </mat-form-field>
+  </div>
+
+  <div #tableLoanOriginators class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Id' | translate }}</th>
+        <td mat-cell *matCellDef="let loanOriginator">{{ loanOriginator.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Name' | translate }}</th>
+        <td mat-cell class="wrap-content" *matCellDef="let loanOriginator">{{ loanOriginator.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="externalId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.External Id' | translate }}</th>
+        <td mat-cell *matCellDef="let loanOriginator">
+          <mifosx-external-identifier externalId="{{ loanOriginator.externalId }}"></mifosx-external-identifier>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Status' | translate }}</th>
+        <td mat-cell *matCellDef="let loanOriginator">
+          <div [className]="classStatus(loanOriginator.status)">
+            <fa-icon
+              icon="circle"
+              size="lg"
+              matTooltip="{{ 'tooltips.' + loanOriginator.status | translate }}"
+              matTooltipPosition="right"
+            ></fa-icon>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="originatorType">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Originator Type' | translate }}</th>
+        <td mat-cell *matCellDef="let loanOriginator">{{ loanOriginator.originatorType?.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="channelType">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Channel Type' | translate }}</th>
+        <td mat-cell *matCellDef="let loanOriginator">{{ loanOriginator.channelType?.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
+        <td mat-cell *matCellDef="let loanOriginator">
+          <button
+            type="button"
+            color="warn"
+            title="{{ 'tooltips.Delete' | translate }}"
+            mat-icon-button
+            matTooltip="{{ 'tooltips.Delete' | translate }}"
+            *mifosxHasPermission="'DELETE_LOAN_ORIGINATOR'"
+            matTooltipPosition="above"
+            (click)="deleteLoanOriginator(loanOriginator)"
+          >
+            <fa-icon icon="trash" size="lg"></fa-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns" [routerLink]="[row.id]" class="select-row"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>

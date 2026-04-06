@@ -1,5 +1,95 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+@use '../../../../assets/styles/colours' as *;
+
+.container {
+  padding: 1rem;
+
+  mat-card {
+    margin-bottom: 0.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba($black, 0.1);
+    border: 1px solid var(--border-color, $mid-grey);
+    border-radius: 8px;
+    transition:
+      background-color 0.3s ease,
+      border-color 0.3s ease;
+
+    mat-card-content {
+      padding: 0;
+    }
+
+    .layout-row {
+      margin: 0;
+      padding: 0;
+    }
+
+    &.role-details-card {
+      padding: 0.5rem;
+    }
+  }
+}
+
+.permission-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+
+  .permission-toolbar-left {
+    h3 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 500;
+    }
+  }
+
+  .permission-toolbar-right {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+}
+
+.search-count {
+  font-weight: 400;
+  font-size: 0.875rem;
+  color: $concrete;
+  margin-left: 8px;
+}
+
+.search-field-container {
+  margin-bottom: 16px;
+
+  .search-field {
+    width: 100%;
+  }
+
+  .search-icon {
+    color: $concrete;
+  }
+}
+
+.permissions-panel {
+  min-height: 320px;
+}
+
+.grouping-list {
+  max-height: 480px;
+  overflow-y: auto;
+}
+
 .display-permissions {
-  padding-top: 15px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 span {
@@ -8,43 +98,99 @@ span {
 
 mat-list-item {
   cursor: pointer;
+  padding: 8px 0;
 }
 
 .mat-list-base .mat-list-item .mat-list-item-content {
   cursor: pointer;
-}
-
-.active {
-  background-color: #f2f2f2;
+  padding: 0 16px;
 }
 
 .grouping-name {
-  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 8px;
+}
+
+.match-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0 6px;
+  margin-left: 8px;
+  border-radius: 10px;
+  background-color: $accent;
+  color: $white;
 }
 
 .list-permission {
-  padding-left: 20px;
-}
-
-.permission-selected {
-  margin-top: 10px;
-  height: 40px;
+  padding-left: 24px;
+  padding-right: 16px;
+  max-height: 480px;
+  overflow-y: auto;
 }
 
 .inactive {
   transition: all 0.2s ease-in-out;
-}
 
-.inactive:hover {
-  transform: scale(1.1);
+  &:hover {
+    transform: scale(1.01);
+    background-color: $light-grey;
+  }
 }
 
 .content {
   div {
-    line-height: 3rem;
+    line-height: 2.5rem;
+    margin-bottom: 0.5rem;
 
     &.header {
       font-weight: 500;
+      padding: 0.5rem 0;
+    }
+  }
+}
+
+.no-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 0;
+  color: $concrete;
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
+  }
+
+  p {
+    font-size: 1rem;
+    margin: 0;
+  }
+}
+
+.submit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 16px 0 0;
+  margin: 0;
+  border-top: 1px solid $light-grey;
+
+  button {
+    margin-right: 8px;
+
+    &:last-child {
+      margin-right: 0;
     }
   }
 }

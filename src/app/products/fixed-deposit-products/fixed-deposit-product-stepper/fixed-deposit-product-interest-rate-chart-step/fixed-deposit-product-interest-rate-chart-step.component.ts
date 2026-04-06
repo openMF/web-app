@@ -1,6 +1,14 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import {
   UntypedFormArray,
   UntypedFormBuilder,
@@ -27,7 +35,7 @@ import { SettingsService } from 'app/settings/settings.service';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { NgFor, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
+
 import { MatDivider } from '@angular/material/divider';
 import { MatCheckbox } from '@angular/material/checkbox';
 import {
@@ -54,8 +62,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     trigger('expandChartSlab', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
       state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))])
-
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
+    ])
   ],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
@@ -70,8 +78,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatHeaderCell,
     MatCellDef,
     MatCell,
-    NgSwitch,
-    NgSwitchCase,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
@@ -82,6 +88,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class FixedDepositProductInterestRateChartStepComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  dialog = inject(MatDialog);
+  private dateUtils = inject(Dates);
+  private settingsService = inject(SettingsService);
+  private translateService = inject(TranslateService);
+
   @Input() fixedDepositProductsTemplate: any;
 
   fixedDepositProductInterestRateChartForm: UntypedFormGroup;
@@ -121,13 +133,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
    * @param {SettingsService} settingsService Settings Service.
    */
 
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    public dialog: MatDialog,
-    private dateUtils: Dates,
-    private settingsService: SettingsService,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.createFixedDepositProductInterestRateChartForm();
   }
 
@@ -374,7 +380,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
   }
 
   addChartSlab(chartSlabs: UntypedFormArray) {
-    const data = { ...this.getData('Slab') };
+    const data = { ...this.getData('Range') };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
@@ -396,8 +402,8 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
 
   editChartSlab(chartSlabs: UntypedFormArray, chartSlabIndex: number) {
     const data = {
-      ...this.getData('Slab', chartSlabs.at(chartSlabIndex).value),
-      layout: { addButtonText: this.translateService.instant('labels.text.this') }
+      ...this.getData('Range', chartSlabs.at(chartSlabIndex).value),
+      layout: { addButtonText: 'Submit' }
     };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
@@ -410,7 +416,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
   editIncentive(incentives: UntypedFormArray, incentiveIndex: number) {
     const data = {
       ...this.getData('Incentive', incentives.at(incentiveIndex).value),
-      layout: { addButtonText: this.translateService.instant('labels.text.this') }
+      layout: { addButtonText: 'Submit' }
     };
     const dialogRef = this.dialog.open(DepositProductIncentiveFormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
@@ -433,9 +439,9 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
 
   getData(formType: string, values?: any) {
     switch (formType) {
-      case 'Slab':
+      case 'Range':
         return {
-          title: this.translateService.instant('labels.inputs.Slab'),
+          title: this.translateService.instant('labels.inputs.Range'),
           formfields: this.getSlabFormfields(values)
         };
       case 'Incentive':
@@ -459,28 +465,32 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
         value: values ? values.fromPeriod : undefined,
         type: 'number',
         required: true,
-        order: 2
+        order: 2,
+        min: 0
       }),
       new InputBase({
         controlName: 'toPeriod',
         label: this.translateService.instant('labels.inputs.Period To'),
         value: values ? values.toPeriod : undefined,
         type: 'number',
-        order: 3
+        order: 3,
+        min: 0
       }),
       new InputBase({
         controlName: 'amountRangeFrom',
         label: this.translateService.instant('labels.inputs.Amount Range From'),
         value: values ? values.amountRangeFrom : undefined,
         type: 'number',
-        order: 4
+        order: 4,
+        min: 0
       }),
       new InputBase({
         controlName: 'amountRangeTo',
         label: this.translateService.instant('labels.inputs.Amount Range To'),
         value: values ? values.amountRangeTo : undefined,
         type: 'number',
-        order: 5
+        order: 5,
+        min: 0
       }),
       new InputBase({
         controlName: 'annualInterestRate',
@@ -488,7 +498,8 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
         value: values ? values.annualInterestRate : undefined,
         type: 'number',
         required: true,
-        order: 6
+        order: 6,
+        min: 0
       }),
       new InputBase({
         controlName: 'description',
@@ -497,7 +508,6 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
         required: true,
         order: 7
       })
-
     ];
     return formfields;
   }

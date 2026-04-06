@@ -1,4 +1,12 @@
 /**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+/**
  * Entry point of the application.
  * Only platform bootstrapping code should be here.
  * For app-specific initialization, use `app/web-app.component.ts`.
@@ -9,11 +17,15 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
+import { Logger } from './app/core/logger/logger.service';
+
+const log = new Logger('Bootstrap');
 
 if (environment.production) {
   enableProdMode();
+  Logger.enableProductionMode();
 }
 
 platformBrowserDynamic()
   .bootstrapModule(AppModule)
-  .catch((err) => console.log(err));
+  .catch((err) => log.error('Application bootstrap failed:', err));

@@ -1,11 +1,19 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { GeneralLedgerAccountService } from '@fineract/client';
+import { AccountingService } from '../../accounting.service';
 import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
 
@@ -32,6 +40,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateGlAccountComponent implements OnInit, AfterViewInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private accountingService = inject(AccountingService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private configurationWizardService = inject(ConfigurationWizardService);
+  private popoverService = inject(PopoverService);
+  dialog = inject(MatDialog);
+
   /** GL account form. */
   glAccountForm: UntypedFormGroup;
   /** Chart of accounts data. */
@@ -59,22 +75,14 @@ export class CreateGlAccountComponent implements OnInit, AfterViewInit {
   /**
    * Retrieves the chart of accounts data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {GeneralLedgerAccountService} generalLedgerAccountService General Ledger Account Service.
+   * @param {AccountingService} accountingService Accounting Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    * @param {Matdialog} dialog Matdialog.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private generalLedgerAccountService: GeneralLedgerAccountService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private configurationWizardService: ConfigurationWizardService,
-    private popoverService: PopoverService,
-    public dialog: MatDialog
-  ) {
+  constructor() {
     this.route.queryParamMap.subscribe((params) => {
       this.accountTypeId = Number(params.get('accountType'));
       this.parentId = Number(params.get('parent'));
@@ -154,8 +162,6 @@ export class CreateGlAccountComponent implements OnInit, AfterViewInit {
           break;
       }
     });
-
-    this.glAccountForm.get('type').setValue(this.accountTypeId);
   }
 
   /**
@@ -163,22 +169,23 @@ export class CreateGlAccountComponent implements OnInit, AfterViewInit {
    * if successful redirects to view created account.
    */
   submit() {
-    this.generalLedgerAccountService
-      .createGLAccount1({ postGLAccountsRequest: this.glAccountForm.value })
-      .subscribe((response: any) => {
-        if (this.configurationWizardService.showChartofAccounts === true) {
-          this.configurationWizardService.showChartofAccounts = false;
-          this.openDialog();
-        } else {
-          this.router.navigate(
-            [
-              '../view',
-              response.resourceId
-            ],
-            { relativeTo: this.route }
-          );
-        }
-      });
+    if (this.glAccountForm.invalid) {
+      return;
+    }
+    this.accountingService.createGlAccount(this.glAccountForm.value).subscribe((response: any) => {
+      if (this.configurationWizardService.showChartofAccounts) {
+        this.configurationWizardService.showChartofAccounts = false;
+        this.openDialog();
+      } else {
+        this.router.navigate(
+          [
+            '../view',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      }
+    });
   }
 
   /**
@@ -201,7 +208,7 @@ export class CreateGlAccountComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showChartofAccountsForm === true) {
+    if (this.configurationWizardService.showChartofAccountsForm) {
       setTimeout(() => {
         this.showPopover(this.templateAccountFormRef, this.accountFormRef.nativeElement, 'bottom', true);
       });

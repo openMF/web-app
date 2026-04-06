@@ -1,22 +1,27 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { DefaultService } from '@fineract/client';
+import { OrganizationService } from 'app/organization/organization.service';
 
 /**
  * SMS Campaign data resolver.
  */
 @Injectable()
 export class SmsCampaignResolver {
-  /**
-   * @param {DefaultService} defaultService Default service.
-   */
-  constructor(private defaultService: DefaultService) {}
+  private organizationService = inject(OrganizationService);
 
   /**
    * Returns the SMS Campaign data.
@@ -24,7 +29,6 @@ export class SmsCampaignResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const smsCampaignId = route.paramMap.get('id');
-    // Replace with the correct parameter(s) as per RetrieveAllEmails1RequestParams definition
-    return this.defaultService.retrieveAllEmails1({});
+    return this.organizationService.getSmsCampaign(smsCampaignId);
   }
 }

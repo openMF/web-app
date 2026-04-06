@@ -1,3 +1,11 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -14,9 +22,10 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { MatMenu, MatMenuTrigger, MatMenuItem } from '@angular/material/menu';
+import { DelinquencyBucketBaseComponent } from '../delinquency-base.component';
 
 @Component({
   selector: 'mifosx-delinquency-bucket',
@@ -37,13 +46,19 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatPaginator
+    MatPaginator,
+    MatMenu,
+    MatMenuTrigger,
+    MatMenuItem
   ]
 })
-export class DelinquencyBucketComponent implements OnInit {
+export class DelinquencyBucketComponent extends DelinquencyBucketBaseComponent implements OnInit {
   delinquencyBucketData: any;
   /** Columns to be displayed in delinquency bucket table. */
-  displayedColumns: string[] = ['name'];
+  displayedColumns: string[] = [
+    'name',
+    'bucketType'
+  ];
   /** Data source for delinquency bucket table. */
   dataSource: MatTableDataSource<any>;
 
@@ -52,7 +67,8 @@ export class DelinquencyBucketComponent implements OnInit {
   /** Sorter for delinquency bucket table. */
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private route: ActivatedRoute) {
+  constructor() {
+    super();
     this.route.data.subscribe((data: { delinquencyBuckets: any }) => {
       this.delinquencyBucketData = data.delinquencyBuckets;
     });

@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 
 import { MatPaginator } from '@angular/material/paginator';
 import {
@@ -46,6 +54,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ListTransactionsComponent {
+  private route = inject(ActivatedRoute);
+
   /** List Transactions Data */
   listTransactionData: any;
   /** Data source for instructions table. */
@@ -65,7 +75,7 @@ export class ListTransactionsComponent {
    * Retrieves Recurring Deposits Account Data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     this.route.data.subscribe((data: { listTransactionData: any }) => {
       this.listTransactionData = data.listTransactionData;
       this.dataSource = new MatTableDataSource(this.listTransactionData.transactions.pageItems);

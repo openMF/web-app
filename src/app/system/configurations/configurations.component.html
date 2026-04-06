@@ -1,12 +1,22 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <mat-card class="configurations-card">
   <mat-card-content>
     <mat-tab-group #tabGroup mat-align-tabs="center">
       <mat-tab label="{{ 'labels.inputs.Global Configurations' | translate }}">
         <mifosx-global-configurations-tab></mifosx-global-configurations-tab>
       </mat-tab>
-      <mat-tab label="{{ 'labels.inputs.Business Date' | translate }}" *ngIf="isBusinessDateEnabled">
-        <mifosx-business-date-tab></mifosx-business-date-tab>
-      </mat-tab>
+      @if (isBusinessDateEnabled) {
+        <mat-tab label="{{ 'labels.inputs.Business Date' | translate }}">
+          <mifosx-business-date-tab></mifosx-business-date-tab>
+        </mat-tab>
+      }
     </mat-tab-group>
   </mat-card-content>
 </mat-card>

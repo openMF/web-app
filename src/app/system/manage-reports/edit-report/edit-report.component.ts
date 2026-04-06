@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -20,7 +28,7 @@ import {
 } from '@angular/material/table';
 
 /** Custom Services */
-import { ReportsService } from '@fineract/client';
+import { SystemService } from 'app/system/system.service';
 
 /** Custom Components */
 import { ReportParameterDialogComponent } from '../report-parameter-dialog/report-parameter-dialog.component';
@@ -60,6 +68,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditReportComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private systemService = inject(SystemService);
+  private dialog = inject(MatDialog);
+
   /** Report Data. */
   reportData: any;
   /** Report Template Data. */
@@ -101,18 +115,12 @@ export class EditReportComponent implements OnInit {
   /**
    * Retrieves the report and report template data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {ReportsService} reportsService Reports Service.
+   * @param {SystemService} systemService System Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog Reference.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private reportService: ReportsService,
-    private dialog: MatDialog
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { report: any; reportTemplate: any }) => {
       this.reportData = data.report;
       this.reportParametersData = data.report.reportParameters ? data.report.reportParameters : [];
@@ -174,10 +182,12 @@ export class EditReportComponent implements OnInit {
       reportSql: [
         {
           value: this.reportData.reportSql,
-          disabled: this.reportData.coreReport || this.reportData.reportType === 'Pentaho'
+          disabled:
+            this.reportData.coreReport ||
+            this.reportData.reportType === 'Pentaho' ||
+            this.reportData.reportType === 'BIRT'
         },
         Validators.required
-
       ]
     });
   }
@@ -261,6 +271,7 @@ export class EditReportComponent implements OnInit {
           this.reportForm.get('reportSql').enable();
           break;
         case 'Pentaho':
+        case 'BIRT':
           this.reportForm.get('reportSql').disable();
           this.reportForm.get('reportSubType').disable();
           break;
@@ -285,7 +296,7 @@ export class EditReportComponent implements OnInit {
         return reportParameter;
       });
     }
-    this.reportService.updateReport(this.reportData.id, this.reportForm.value).subscribe(() => {
+    this.systemService.updateReport(this.reportData.id, this.reportForm.value).subscribe(() => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

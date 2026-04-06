@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -22,7 +30,7 @@ import { MatTable } from '@angular/material/table';
 import { RejectShareDialogComponent } from './reject-share-dialog/reject-share-dialog.component';
 
 /** Custom Serices */
-import { ShareAccountService } from '@fineract/client';
+import { SharesService } from 'app/shares/shares.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { NgClass } from '@angular/common';
 import { MatTooltip } from '@angular/material/tooltip';
@@ -59,6 +67,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class RejectSharesComponent implements OnInit {
+  private sharesService = inject(SharesService);
+  private route = inject(ActivatedRoute);
+  dialog = inject(MatDialog);
+  private settingsService = inject(SettingsService);
+
   /** Shares account data. */
   sharesAccountData: any;
 
@@ -85,17 +98,12 @@ export class RejectSharesComponent implements OnInit {
   @ViewChild('sharesTable', { static: true }) sharesTableRef: MatTable<Element>;
 
   /**
-   * @param {ShareAccountService } ShareAccountService Shares account service.
+   * @param {SharesService} sharesService Shares Service
    * @param {ActivatedRoute} route Activated Route
    * @param {MatDialog} dialog Mat Dialog
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(
-    private shareAccountService: ShareAccountService,
-    private route: ActivatedRoute,
-    public dialog: MatDialog,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.accountId = this.route.parent.snapshot.params['shareAccountId'];
     this.route.data.subscribe((data: { shareAccountActionData: any }) => {
       this.sharesAccountData = data.shareAccountActionData;
@@ -134,17 +142,11 @@ export class RejectSharesComponent implements OnInit {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
         const data = {
-          requestedShares: new Set([{ id }]),
+          requestedShares: [{ id }],
           dateFormat,
           locale
         };
-        const params = {
-          type: 'shares',
-          accountId: this.accountId,
-          postAccountsTypeAccountIdRequest: data,
-          command: 'rejectadditionalshares'
-        };
-        this.shareAccountService.handleCommands2(params).subscribe(() => {
+        this.sharesService.executeSharesAccountCommand(this.accountId, 'rejectadditionalshares', data).subscribe(() => {
           const share = this.sharesData.find((element) => element.id === id);
           const index = this.sharesData.indexOf(share);
           this.sharesData.splice(index, 1);

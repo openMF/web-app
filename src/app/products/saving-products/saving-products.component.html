@@ -1,3 +1,11 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <div class="container m-b-20 layout-row align-end gap-20px">
   <div #buttonSavingProduct class="in-block">
     <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_SAVINGSPRODUCT'">
@@ -81,7 +89,7 @@
 <ng-template #templateSavingProductTable let-popover="popover">
   <h4 class="mw300">
     {{ 'labels.heading.List of saving products in the organization' | translate }}:
-    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/102629497/Savings+Products" target="_blank">{{
+    <a [href]="'savingsProducts' | documentationLink" target="_blank" rel="noopener noreferrer">{{
       'labels.heading.Savings Products' | translate
     }}</a>
   </h4>

@@ -1,3 +1,11 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 @use 'sass:color';
 @use 'colours' as *;
 
@@ -78,4 +86,16 @@ mat-card-title {
   font-size: x-large;
   padding-left: 20px;
   padding-top: 20px;
+}
+
+.table-empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--mdc-theme-text-secondary-on-background, #666);
+  font-size: 14px;
+  cursor: auto;
+
+  p {
+    margin: 0;
+  }
 }

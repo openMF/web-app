@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   Validators,
@@ -32,6 +40,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditSmsCampaignStepComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private reportService = inject(ReportsService);
+  private settingsService = inject(SettingsService);
+
   /** SMS Campaign Template */
   @Input() smsCampaignTemplate: any;
   /** SMS Campaign */
@@ -62,11 +74,7 @@ export class EditSmsCampaignStepComponent implements OnInit {
    * @param {ReportsService} reportService Reports Service
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private reportService: ReportsService,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.createSMSCampaignDetailsForm();
   }
 

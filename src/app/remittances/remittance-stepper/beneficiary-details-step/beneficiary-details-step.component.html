@@ -1,0 +1,234 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+@if (recipientData) {
+  <div class="step-content">
+    <h3>{{ 'labels.heading.Validated Recipient Information' | translate }}</h3>
+
+    <!-- Section: Identification -->
+    <div class="section-header">
+      <mat-icon>badge</mat-icon>
+      <h4>{{ 'labels.heading.Identification' | translate }}</h4>
+    </div>
+    <div class="details-grid">
+      @if (recipientData.primaryDocument?.documentType) {
+        <div class="detail-item">
+          <span class="label">{{ 'labels.inputs.Document Type' | translate }}</span>
+          <span class="value">{{ recipientData.primaryDocument?.documentType }}</span>
+        </div>
+      }
+
+      @if (recipientData.primaryDocument?.documentNumber) {
+        <div class="detail-item">
+          <span class="label">{{ 'labels.inputs.Document Number' | translate }}</span>
+          <span class="value">{{ recipientData.primaryDocument?.documentNumber }}</span>
+        </div>
+      }
+
+      @if (recipientData.identityCard) {
+        <div class="detail-item">
+          <span class="label">{{ 'labels.inputs.National Identity Card Number' | translate }}</span>
+          <span class="value">{{ recipientData.identityCard }}</span>
+        </div>
+      }
+    </div>
+
+    <!-- Section: Personal Information -->
+    <div class="section-header">
+      <mat-icon>person</mat-icon>
+      <h4>{{ 'labels.heading.Personal Information' | translate }}</h4>
+    </div>
+    <div class="details-grid">
+      <div class="detail-item">
+        <span class="label">{{ 'labels.inputs.First Name' | translate }}</span>
+        <span class="value">{{ recipientData.givenName }}</span>
+      </div>
+
+      <div class="detail-item">
+        <span class="label">{{ 'labels.inputs.Last Name' | translate }}</span>
+        <span class="value">{{ recipientData.lastName }}</span>
+      </div>
+
+      @if (recipientData.motherMaidenName) {
+        <div class="detail-item">
+          <span class="label">{{ 'labels.inputs.Mothers Maiden Name' | translate }}</span>
+          <span class="value">{{ recipientData.motherMaidenName }}</span>
+        </div>
+      }
+
+      @if (recipientData.dateOfBirth) {
+        <div class="detail-item">
+          <span class="label">{{ 'labels.inputs.Date of Birth' | translate }}</span>
+          <span class="value">{{ recipientData.dateOfBirth | date: 'mediumDate' }}</span>
+        </div>
+      }
+
+      @if (recipientData.phone) {
+        <div class="detail-item">
+          <span class="label">{{ 'labels.inputs.Phone Number' | translate }}</span>
+          <span class="value">{{ recipientData.phone }}</span>
+        </div>
+      }
+    </div>
+
+    <!-- Section: Address -->
+    <div class="section-header">
+      <mat-icon>location_on</mat-icon>
+      <h4>{{ 'labels.inputs.Address' | translate }}</h4>
+    </div>
+    <div class="details-grid">
+      @if (recipientData.address?.line1) {
+        <div class="detail-item">
+          <span class="label">{{ 'labels.inputs.Address Line' | translate }}</span>
+          <span class="value">{{ recipientData.address?.line1 }}</span>
+        </div>
+      }
+
+      @if (recipientData.address?.postalCode) {
+        <div class="detail-item">
+          <span class="label">{{ 'labels.inputs.Postal Code' | translate }}</span>
+          <span class="value">{{ recipientData.address?.postalCode }}</span>
+        </div>
+      }
+
+      @if (recipientData.address?.state) {
+        <div class="detail-item">
+          <span class="label">{{ 'labels.inputs.State' | translate }}</span>
+          <span class="value">{{ recipientData.address?.state }}</span>
+        </div>
+      }
+
+      @if (recipientData.municipality || recipientData.address?.city) {
+        <div class="detail-item">
+          <span class="label">{{ 'labels.inputs.Municipality' | translate }}</span>
+          <span class="value">{{ recipientData.municipality || recipientData.address?.city }}</span>
+        </div>
+      }
+
+      @if (recipientData.locality) {
+        <div class="detail-item">
+          <span class="label">{{ 'labels.inputs.Locality' | translate }}</span>
+          <span class="value">{{ recipientData.locality }}</span>
+        </div>
+      }
+
+      @if (recipientData.newLocality) {
+        <div class="detail-item">
+          <span class="label">{{ 'labels.inputs.New Locality' | translate }}</span>
+          <span class="value">{{ recipientData.newLocality }}</span>
+        </div>
+      }
+
+      @if (recipientData.address?.country) {
+        <div class="detail-item">
+          <span class="label">{{ 'labels.inputs.Country' | translate }}</span>
+          <span class="value">{{ recipientData.address?.country }}</span>
+        </div>
+      }
+    </div>
+
+    <!-- Section: Professional Information -->
+    <div class="section-header">
+      <mat-icon>work</mat-icon>
+      <h4>{{ 'labels.heading.Professional Information' | translate }}</h4>
+    </div>
+    <div class="details-grid">
+      @if (recipientData.occupation) {
+        <div class="detail-item">
+          <span class="label">{{ 'labels.inputs.Occupation' | translate }}</span>
+          <span class="value">{{ recipientData.occupation }}</span>
+        </div>
+      }
+
+      @if (recipientData.economicActivity) {
+        <div class="detail-item">
+          <span class="label">{{ 'labels.inputs.Economic Activity' | translate }}</span>
+          <span class="value">{{ recipientData.economicActivity }}</span>
+        </div>
+      }
+
+      @if (recipientData.entityMember) {
+        <div class="detail-item">
+          <span class="label">{{ 'labels.inputs.Entity Member' | translate }}</span>
+          <span class="value">{{ recipientData.entityMember }}</span>
+        </div>
+      }
+    </div>
+
+    <!-- Section: Assign to Mifos Client -->
+    <div class="section-header">
+      <mat-icon>assignment_ind</mat-icon>
+      <h4>{{ 'labels.heading.Assign to Mifos Client' | translate }}</h4>
+    </div>
+    <div class="client-search-section">
+      <p class="search-instruction">
+        {{ 'labels.text.Search and assign this beneficiary to an existing Mifos client account' | translate }}
+      </p>
+
+      <mat-form-field appearance="outline" class="client-search-field">
+        <mat-label>{{ 'labels.inputs.Search Client' | translate }}</mat-label>
+        <input
+          matInput
+          [formControl]="clientSearchControl"
+          [matAutocomplete]="clientAuto"
+          placeholder="{{ 'labels.inputs.Type client name or account number' | translate }}"
+        />
+        <mat-icon matIconPrefix>search</mat-icon>
+        <mat-autocomplete
+          #clientAuto="matAutocomplete"
+          [displayWith]="displayFn"
+          (optionSelected)="onClientSelected($event.option.value)"
+        >
+          @for (client of filteredClients$ | async; track client.id) {
+            <mat-option [value]="client">
+              <div class="client-option">
+                <span class="client-name">{{ client.displayName }}</span>
+                <span class="client-details">
+                  @if (client.accountNo) {
+                    <span class="account-no">{{ 'labels.inputs.Account' | translate }}: {{ client.accountNo }}</span>
+                  }
+                  @if (client.externalId) {
+                    <span class="external-id"
+                      >{{ 'labels.inputs.External ID' | translate }}: {{ client.externalId }}</span
+                    >
+                  }
+                </span>
+              </div>
+            </mat-option>
+          }
+        </mat-autocomplete>
+      </mat-form-field>
+
+      @if (searchError) {
+        <div class="error-message">
+          <mat-icon>error</mat-icon>
+          <span>{{ 'labels.text.Failed to search clients. Please try again.' | translate }}</span>
+        </div>
+      }
+
+      @if (selectedClient) {
+        <div class="selected-client-info">
+          <mat-icon color="primary">check_circle</mat-icon>
+          <div class="client-info">
+            <strong>{{ selectedClient.displayName }}</strong>
+            @if (selectedClient.accountNo) {
+              <span class="subdued">{{ 'labels.inputs.Account' | translate }}: {{ selectedClient.accountNo }}</span>
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="step-actions">
+      <button mat-raised-button color="primary" (click)="onNext()" [disabled]="!selectedClient">
+        {{ 'labels.buttons.Next' | translate }}
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </div>
+  </div>
+}

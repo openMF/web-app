@@ -1,5 +1,12 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { LoanCOBCatchUpService } from '@fineract/client';
+﻿/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+import { Component, Input, OnDestroy, inject } from '@angular/core';
+import { SystemService } from 'app/system/system.service';
 import { environment } from '../../../../environments/environment';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { LoanLockedComponent } from './loan-locked/loan-locked.component';
@@ -15,7 +22,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     LoanLockedComponent
   ]
 })
-export class CobWorkflowComponent implements OnInit, OnDestroy {
+export class CobWorkflowComponent implements OnDestroy {
+  private systemService = inject(SystemService);
+
   /** Wait time between API status calls 30 seg */
   waitTime = environment.waitTimeForCOBCatchUp || 30;
   /** Process running flag */
@@ -23,18 +32,12 @@ export class CobWorkflowComponent implements OnInit, OnDestroy {
   /** Timer to refetch COB Catch-Up status every 5 seconds */
   timer: any;
 
-  constructor(private loanCOBCatchUpService: LoanCOBCatchUpService) {}
-
-  ngOnInit(): void {
-    this.getCOBCatchUpStatus();
-  }
-
   ngOnDestroy() {
     clearTimeout(this.timer);
   }
 
   getCOBCatchUpStatus(): void {
-    this.loanCOBCatchUpService.isCatchUpRunning().subscribe((response: any) => {
+    this.systemService.getCOBCatchUpStatus().subscribe((response: any) => {
       this.isCatchUpRunning = response.isCatchUpRunning;
     });
     this.timer = setTimeout(() => {
@@ -43,7 +46,7 @@ export class CobWorkflowComponent implements OnInit, OnDestroy {
   }
 
   runCatchUp(): void {
-    this.loanCOBCatchUpService.executeLoanCOBCatchUp().subscribe((response: any) => {
+    this.systemService.runCOBCatchUp().subscribe((response: any) => {
       this.isCatchUpRunning = true;
       this.waitTime = 5000;
     });

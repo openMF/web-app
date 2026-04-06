@@ -1,24 +1,36 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <div class="container mat-elevation-z8">
   <mat-card>
     <form [formGroup]="savingsUnassignStaffForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <mat-form-field class="flex-fill" (click)="unassignedDatePicker.open()">
-          <mat-label>{{ 'labels.inputs.Unassignment Date' | translate }}</mat-label>
-          <input
-            matInput
-            [min]="minDate"
-            [max]="maxDate"
-            [matDatepicker]="unassignedDatePicker"
-            required
-            formControlName="unassignedDate"
-          />
-          <mat-datepicker-toggle matSuffix [for]="unassignedDatePicker"></mat-datepicker-toggle>
-          <mat-datepicker #unassignedDatePicker></mat-datepicker>
-          <mat-error *ngIf="savingsUnassignStaffForm.controls.unassignedDate.hasError('required')">
-            {{ 'labels.inputs.Unassignment Date' | translate }} {{ 'labels.commons.is' | translate }}
-            <strong>{{ 'labels.commons.required' | translate }}</strong>
-          </mat-error>
-        </mat-form-field>
+        <div class="layout-column">
+          <mat-form-field class="flex-fill" (click)="unassignedDatePicker.open()">
+            <mat-label>{{ 'labels.inputs.Unassignment Date' | translate }}</mat-label>
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="unassignedDatePicker"
+              required
+              formControlName="unassignedDate"
+            />
+            <mat-datepicker-toggle matSuffix [for]="unassignedDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #unassignedDatePicker></mat-datepicker>
+            @if (savingsUnassignStaffForm.controls.unassignedDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Unassignment Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
+          </mat-form-field>
+        </div>
       </mat-card-content>
 
       <mat-card-actions class="layout-row align-center gap-5px responsive-column">

@@ -1,6 +1,14 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Component, OnInit, Input, inject } from '@angular/core';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
@@ -11,6 +19,7 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanProductBaseComponent } from '../../common/loan-product-base.component';
 
 @Component({
   selector: 'mifosx-loan-product-details-step',
@@ -26,7 +35,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatStepperNext
   ]
 })
-export class LoanProductDetailsStepComponent implements OnInit {
+export class LoanProductDetailsStepComponent extends LoanProductBaseComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private dateUtils = inject(Dates);
+  private settingsService = inject(SettingsService);
+
   @Input() loanProductsTemplate: any;
 
   loanProductDetailsForm: UntypedFormGroup;
@@ -36,17 +49,8 @@ export class LoanProductDetailsStepComponent implements OnInit {
   minDate = new Date(2000, 0, 1);
   maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 10));
 
-  /**
-   * @param {FormBuilder} formBuilder Form Builder.
-   * @param {Dates} dateUtils Date Utils.
-   * @param {SettingsService} settingsService Settings Service.
-   */
-
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private dateUtils: Dates,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
+    super();
     this.createLoanProductDetailsForm();
   }
 
@@ -69,19 +73,31 @@ export class LoanProductDetailsStepComponent implements OnInit {
     this.loanProductDetailsForm = this.formBuilder.group({
       name: [
         '',
-        Validators.required
+        [
+          Validators.required,
+          Validators.maxLength(100)
+        ]
       ],
       shortName: [
         '',
-        Validators.required
+        [
+          Validators.required,
+          Validators.maxLength(4)
+        ]
       ],
-      description: [''],
+      description: [
+        '',
+        Validators.maxLength(500)
+      ],
       externalId: [''],
       fundId: [''],
       startDate: [''],
-      closeDate: [''],
-      includeInBorrowerCycle: [false]
+      closeDate: ['']
     });
+
+    if (this.loanProductService.isLoanProduct) {
+      this.loanProductDetailsForm.addControl('includeInBorrowerCycle', new UntypedFormControl(false));
+    }
   }
 
   get loanProductDetails() {

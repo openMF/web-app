@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AlertService } from 'app/core/alert/alert.service';
 import { Dates } from 'app/core/utils/dates';
 
@@ -13,6 +21,9 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class SettingsService {
+  private alertService = inject(AlertService);
+  private dateUtils = inject(Dates);
+
   public static businessDateFormat = 'yyyy-MM-dd';
   public static businessDateConfigName = 'enable-business-date';
   public static businessDateType = 'BUSINESS_DATE';
@@ -20,17 +31,16 @@ export class SettingsService {
   minAllowedDate = new Date(1950, 0, 1);
   maxAllowedDate = new Date(2100, 0, 1);
 
-  constructor(
-    private alertService: AlertService,
-    private dateUtils: Dates
-  ) {}
-
   /**
    * Sets date format setting throughout the app.
    * @param {string} dateFormat Date Format
    */
   setDateFormat(dateFormat: string) {
     localStorage.setItem('mifosXDateFormat', JSON.stringify(dateFormat));
+  }
+
+  setDatetimeFormat(datetimeFormat: string) {
+    localStorage.setItem('mifosXDatetimeFormat', JSON.stringify(datetimeFormat));
   }
 
   /**
@@ -106,10 +116,37 @@ export class SettingsService {
   }
 
   /**
-   * Returns date format setting.
+   * Returns date format setting with fallback precedence:
+   * 1. User setting (localStorage)
+   * 2. Global env var
+   * 3. Hardcoded default
    */
   get dateFormat() {
-    return JSON.parse(localStorage.getItem('mifosXDateFormat'));
+    const userSetting = localStorage.getItem('mifosXDateFormat');
+    if (userSetting) {
+      return JSON.parse(userSetting);
+    }
+    if (environment.defaultFormatDate) {
+      return environment.defaultFormatDate;
+    }
+    return 'dd MMMM yyyy';
+  }
+
+  /**
+   * Returns datetime format setting with fallback precedence:
+   * 1. User setting (localStorage)
+   * 2. Global env var
+   * 3. Hardcoded default
+   */
+  get datetimeFormat() {
+    const userSetting = localStorage.getItem('mifosXDatetimeFormat');
+    if (userSetting) {
+      return JSON.parse(userSetting);
+    }
+    if (environment.defaultFormatDatetime) {
+      return environment.defaultFormatDatetime;
+    }
+    return 'dd MMMM yyyy HH:mm:ss';
   }
 
   /**

@@ -1,3 +1,11 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <div class="container">
   <mat-stepper
     orientation="vertical"
@@ -84,17 +92,18 @@
       </mifosx-fixed-deposit-product-accounting-step>
     </mat-step>
 
-    <mat-step state="preview" *ngIf="fixedDepositProductFormValidAndNotPrinstine" completed>
-      <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
-
-      <mifosx-fixed-deposit-product-preview-step
-        [fixedDepositProductsTemplate]="fixedDepositProductsTemplate"
-        [chartSlabsDisplayedColumns]="fixedDepositProductInterestRateChartStep.chartSlabsDisplayedColumns"
-        [accountingRuleData]="accountingRuleData"
-        [fixedDepositProduct]="fixedDepositProduct"
-        (submitEvent)="submit()"
-      >
-      </mifosx-fixed-deposit-product-preview-step>
-    </mat-step>
+    @if (fixedDepositProductFormValidAndNotPrinstine) {
+      <mat-step state="preview" completed>
+        <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
+        <mifosx-fixed-deposit-product-preview-step
+          [fixedDepositProductsTemplate]="fixedDepositProductsTemplate"
+          [chartSlabsDisplayedColumns]="fixedDepositProductInterestRateChartStep.chartSlabsDisplayedColumns"
+          [accountingRuleData]="accountingRuleData"
+          [fixedDepositProduct]="fixedDepositProduct"
+          (submitEvent)="submit()"
+        >
+        </mifosx-fixed-deposit-product-preview-step>
+      </mat-step>
+    }
   </mat-stepper>
 </div>

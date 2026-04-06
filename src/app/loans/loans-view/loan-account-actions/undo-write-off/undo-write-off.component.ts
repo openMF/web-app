@@ -1,15 +1,24 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Component, OnInit, Input, inject } from '@angular/core';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
-import { LoanTransactionsService } from '@fineract/client';
+import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { AlertService } from 'app/core/alert/alert.service';
 import { Dates } from 'app/core/utils/dates';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 
 /**
  * Loan Undo Write-off Action
@@ -23,10 +32,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     CdkTextareaAutosize
   ]
 })
-export class UndoWriteOffComponent implements OnInit {
-  @Input() dataObject: any;
-  /** Loan Id */
-  loanId: string;
+export class UndoWriteOffComponent extends LoanAccountActionsBaseComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private dateUtils = inject(Dates);
+  private alertService = inject(AlertService);
+
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
@@ -34,23 +44,8 @@ export class UndoWriteOffComponent implements OnInit {
   /** Undo Write-off Loan Form */
   undoWriteOffLoanForm: UntypedFormGroup;
 
-  /**
-   * @param {FormBuilder} formBuilder Form Builder.
-   * @param {LoansService} loanService Loan Service.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {Router} router Router for navigation.
-   * @param {SettingsService} settingsService Settings Service
-   */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private loanTransactionsService: LoanTransactionsService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private dateUtils: Dates,
-    private settingsService: SettingsService,
-    private alertService: AlertService
-  ) {
-    this.loanId = this.route.snapshot.params['loanId'];
+  constructor() {
+    super();
   }
 
   /**
@@ -77,7 +72,7 @@ export class UndoWriteOffComponent implements OnInit {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const operationDate = this.settingsService.businessDate;
-    const transactionCommand = {
+    const data = {
       ...undoWriteOffLoanFormData,
       transactionDate: this.dateUtils.formatDate(operationDate && new Date(operationDate), dateFormat),
       transactionAmount: 0,
@@ -85,24 +80,18 @@ export class UndoWriteOffComponent implements OnInit {
       locale
     };
 
-    this.loanTransactionsService
-      .executeLoanTransaction({
-        loanId: Number(this.loanId),
-        command: 'undowriteoff',
-        transactionCommand
-      } as any)
-      .subscribe({
-        next: (response: any) => {
-          this.router.navigate(['../../general'], { relativeTo: this.route });
-        },
-        error: (error) => {
-          console.error('Undo write-off failed:', error);
-          this.alertService.alert({
-            type: 'Undo Write-off Failed',
-            message:
-              'An error occurred while processing the undo write-off transaction. Please try again or contact support if the problem persists.'
-          });
-        }
-      });
+    this.loanService.submitLoanActionButton(this.loanId, data, 'undowriteoff').subscribe({
+      next: (response: any) => {
+        this.gotoLoanDefaultView();
+      },
+      error: (error) => {
+        console.error('Undo write-off failed:', error);
+        this.alertService.alert({
+          type: 'Undo Write-off Failed',
+          message:
+            'An error occurred while processing the undo write-off transaction. Please try again or contact support if the problem persists.'
+        });
+      }
+    });
   }
 }

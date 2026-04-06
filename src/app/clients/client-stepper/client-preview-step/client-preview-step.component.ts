@@ -1,3 +1,11 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
 import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { MatDivider } from '@angular/material/divider';
@@ -15,6 +23,7 @@ import { FindPipe } from '../../../pipes/find.pipe';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { YesnoPipe } from '../../../pipes/yesno.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LegalFormId } from 'app/clients/models/legal-form.enum';
 
 /**
  * Client Preview Step Component
@@ -49,6 +58,9 @@ export class ClientPreviewStepComponent {
 
   /** Form submission event */
   @Output() submitEvent = new EventEmitter();
+
+  /** Expose enum to template */
+  readonly LegalFormId = LegalFormId;
 
   constructor() {}
 

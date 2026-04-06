@@ -1,3 +1,11 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <form [formGroup]="shareProductDetailsForm">
   <div class="layout-row-wrap gap-2px responsive-column">
     <mat-form-field class="flex-48">
@@ -37,6 +45,12 @@
         matTooltip="{{ 'tooltips.Provides additional information' | translate }}"
         required
       ></textarea>
+      @if (shareProductDetailsForm.get('description')?.hasError('required')) {
+        <mat-error>
+          {{ 'labels.inputs.Description' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
     </mat-form-field>
   </div>
 

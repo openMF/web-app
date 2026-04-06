@@ -1,0 +1,29 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { LoanProductService } from 'app/products/loan-products/services/loan-product.service';
+
+export abstract class LoanAccountTabBaseComponent {
+  protected router = inject(Router);
+  protected loanProductService = inject(LoanProductService);
+
+  static PRODUCT_TYPE_PARAM: string = 'productType';
+
+  constructor() {}
+
+  protected reload() {
+    const url: string = this.router.url.split('?')[0];
+    this.router
+      .navigateByUrl(`/clients`, { skipLocationChange: true })
+      .then(() =>
+        this.router.navigate([url], { queryParams: { productType: this.loanProductService.productType.value } })
+      );
+  }
+}

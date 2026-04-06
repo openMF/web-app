@@ -1,25 +1,39 @@
-<mat-toolbar class="layout-row" color="primary" id="mifosx-toolbar">
-  <button
-    mat-icon-button
-    *ngIf="!sidenavCollapsed"
-    (click)="toggleSidenav()"
-    matTooltip="{{ 'tooltips.Toggle Hide/Open' | translate }}"
-    tabindex="0"
-  >
-    <fa-icon icon="bars" size="lg"></fa-icon>
-  </button>
+<!--
+  Copyright since 2025 Mifos Initiative
 
-  <button
-    mat-icon-button
-    *ngIf="sidenav.opened"
-    (click)="toggleSidenavCollapse()"
-    matTooltip="{{ 'tooltips.Toggle Collapse' | translate }}"
-    class="hide-lt-md"
-    tabindex="0"
-  >
-    <fa-icon *ngIf="!sidenavCollapsed" icon="chevron-left"></fa-icon>
-    <fa-icon *ngIf="sidenavCollapsed" icon="chevron-right"></fa-icon>
-  </button>
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<mat-toolbar class="layout-row" color="primary" id="mifosx-toolbar">
+  @if (!sidenavCollapsed) {
+    <button
+      mat-icon-button
+      (click)="toggleSidenav()"
+      matTooltip="{{ 'tooltips.Toggle Hide/Open' | translate }}"
+      tabindex="0"
+    >
+      <fa-icon icon="bars" size="lg"></fa-icon>
+    </button>
+  }
+
+  @if (sidenav.opened) {
+    <button
+      mat-icon-button
+      (click)="toggleSidenavCollapse()"
+      matTooltip="{{ 'tooltips.Toggle Collapse' | translate }}"
+      class="hide-lt-md"
+      tabindex="0"
+    >
+      @if (!sidenavCollapsed) {
+        <fa-icon icon="chevron-left"></fa-icon>
+      }
+      @if (sidenavCollapsed) {
+        <fa-icon icon="chevron-right"></fa-icon>
+      }
+    </button>
+  }
 
   <div class="tab-nav-bar">
     <a
@@ -28,25 +42,52 @@
       [matMenuTriggerFor]="institutionMenu"
       #institutionMenuTrigger="matMenuTrigger"
       tabindex="0"
+      *mifosxHasPermission="['READ_CLIENT', 'READ_GROUP', 'READ_CENTER']"
     >
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
       {{ 'labels.menus.Institution' | translate }}
     </a>
 
     <span class="hide-lt-md">
-      <a #accounting class="tab-link accounting-link" [routerLink]="['/accounting']" tabindex="0">
+      <a
+        #accounting
+        class="tab-link accounting-link"
+        [routerLink]="['/accounting']"
+        tabindex="0"
+        *mifosxHasPermission="[
+          'READ_JOURNALENTRY',
+          'READ_GLACCOUNT',
+          'READ_GLCLOSURE',
+          'READ_ACCOUNTINGRULE',
+          'READ_PROVISIONINGCRITERIA'
+        ]"
+      >
         <fa-icon class="mr-05" icon="money-bill-alt" size="lg"></fa-icon>
         {{ 'labels.menus.Accounting' | translate }}
       </a>
-      <a #reports class="tab-link" [matMenuTriggerFor]="reportsMenu" #reportsMenuTrigger="matMenuTrigger" tabindex="0">
+      <a
+        #reports
+        class="tab-link"
+        [matMenuTriggerFor]="reportsMenu"
+        #reportsMenuTrigger="matMenuTrigger"
+        tabindex="0"
+        *mifosxHasPermission="'READ_REPORT'"
+      >
         <fa-icon class="mr-05" icon="chart-bar" size="lg"></fa-icon>
         {{ 'labels.menus.Reports' | translate }}
       </a>
-      <a #admin class="tab-link" [matMenuTriggerFor]="adminMenu" #adminMenuTrigger="matMenuTrigger" tabindex="0">
+      <a
+        #admin
+        class="tab-link"
+        [matMenuTriggerFor]="adminMenu"
+        #adminMenuTrigger="matMenuTrigger"
+        tabindex="0"
+        *mifosxHasPermission="['READ_USER', 'READ_ROLE']"
+      >
         <fa-icon class="mr-05" icon="shield-alt" size="lg"></fa-icon>
         {{ 'labels.menus.Admin' | translate }}
       </a>
-      <a #configWizard class="tab-link" (click)="openDialog()" tabindex="0">
+      <a #configWizard class="tab-link" (click)="openDialog()" tabindex="0" *mifosxHasPermission="'READ_CONFIG_WIZARD'">
         <fa-icon class="mr-05" icon="info" size="lg"></fa-icon>
         {{ 'labels.menus.Configuration Wizard' | translate }}
       </a>
@@ -63,8 +104,15 @@
     <mifosx-language-selector class="ml-1 language hide-lt-md" tabindex="0"></mifosx-language-selector>
   </div>
 
-  <button mat-icon-button [matMenuTriggerFor]="languageMenu" tabindex="0">
-    <mat-icon class="lg-icon">language</mat-icon>
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="languageMenu"
+    class="show-lt-md"
+    tabindex="0"
+    [attr.aria-label]="'labels.menus.Language Selector' | translate"
+    matTooltip="{{ 'labels.menus.Language Selector' | translate }}"
+  >
+    <mat-icon>language</mat-icon>
   </button>
 
   <div #notifications>
@@ -88,44 +136,82 @@
 </mat-menu>
 
 <mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item routerLink="/clients" tabindex="0">{{ 'labels.menus.Clients' | translate }}</button>
-  <button mat-menu-item routerLink="/groups" tabindex="0">{{ 'labels.menus.Groups' | translate }}</button>
-  <button mat-menu-item routerLink="/centers" tabindex="0">{{ 'labels.menus.Centers' | translate }}</button>
+  <button mat-menu-item routerLink="/clients" tabindex="0" *mifosxHasPermission="'READ_CLIENT'">
+    {{ 'labels.menus.Clients' | translate }}
+  </button>
+  <button mat-menu-item routerLink="/groups" tabindex="0" *mifosxHasPermission="'READ_GROUP'">
+    {{ 'labels.menus.Groups' | translate }}
+  </button>
+  <button mat-menu-item routerLink="/centers" tabindex="0" *mifosxHasPermission="'READ_CENTER'">
+    {{ 'labels.menus.Centers' | translate }}
+  </button>
   <span class="hide-lt-md">
-    <button mat-menu-item [routerLink]="['/accounting']" tabindex="0">
+    <button
+      mat-menu-item
+      [routerLink]="['/accounting']"
+      tabindex="0"
+      *mifosxHasPermission="[
+        'READ_JOURNALENTRY',
+        'READ_GLACCOUNT',
+        'READ_GLCLOSURE',
+        'READ_ACCOUNTINGRULE',
+        'READ_PROVISIONINGCRITERIA'
+      ]"
+    >
       {{ 'labels.menus.Accounting' | translate }}
     </button>
-    <button mat-menu-item [matMenuTriggerFor]="reportsMenu" tabindex="0">
+    <button mat-menu-item [matMenuTriggerFor]="reportsMenu" tabindex="0" *mifosxHasPermission="'READ_REPORT'">
       {{ 'labels.menus.Reports' | translate }}
     </button>
-    <button mat-menu-item [matMenuTriggerFor]="adminMenu" tabindex="0">{{ 'labels.menus.Admin' | translate }}</button>
+    <button
+      mat-menu-item
+      [matMenuTriggerFor]="adminMenu"
+      tabindex="0"
+      *mifosxHasPermission="['READ_USER', 'READ_ROLE']"
+    >
+      {{ 'labels.menus.Admin' | translate }}
+    </button>
   </span>
 </mat-menu>
 
 <!-- Toolbar Menus -->
 <mat-menu #reportsMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item [routerLink]="['/reports']" tabindex="0">{{ 'labels.menus.All' | translate }}</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Client']" tabindex="0">
+  <button mat-menu-item [routerLink]="['/reports']" tabindex="0" *mifosxHasPermission="'READ_REPORT'">
+    {{ 'labels.menus.All' | translate }}
+  </button>
+  <button mat-menu-item [routerLink]="['/reports', 'Client']" tabindex="0" *mifosxHasPermission="'READ_REPORT'">
     {{ 'labels.menus.Clients' | translate }}
   </button>
-  <button mat-menu-item [routerLink]="['/reports', 'Loan']" tabindex="0">{{ 'labels.menus.Loans' | translate }}</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Savings']" tabindex="0">
+  <button mat-menu-item [routerLink]="['/reports', 'Loan']" tabindex="0" *mifosxHasPermission="'READ_REPORT'">
+    {{ 'labels.menus.Loans' | translate }}
+  </button>
+  <button mat-menu-item [routerLink]="['/reports', 'Savings']" tabindex="0" *mifosxHasPermission="'READ_REPORT'">
     {{ 'labels.menus.Savings' | translate }}
   </button>
-  <button mat-menu-item [routerLink]="['/reports', 'Fund']" tabindex="0">{{ 'labels.menus.Funds' | translate }}</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Accounting']" tabindex="0">
+  <button mat-menu-item [routerLink]="['/reports', 'Fund']" tabindex="0" *mifosxHasPermission="'READ_REPORT'">
+    {{ 'labels.menus.Funds' | translate }}
+  </button>
+  <button mat-menu-item [routerLink]="['/reports', 'Accounting']" tabindex="0" *mifosxHasPermission="'READ_REPORT'">
     {{ 'labels.menus.Accounting' | translate }}
   </button>
 </mat-menu>
 
 <mat-menu #adminMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item (click)="navigateMenu('/appusers')" tabindex="0">{{ 'labels.menus.Users' | translate }}</button>
-  <button mat-menu-item [routerLink]="['/organization']" tabindex="0">
+  <button mat-menu-item [routerLink]="['/appusers']" tabindex="0" *mifosxHasPermission="'READ_USER'">
+    {{ 'labels.menus.Users' | translate }}
+  </button>
+  <button mat-menu-item [routerLink]="['/organization']" tabindex="0" *mifosxHasPermission="'READ_OFFICE'">
     {{ 'labels.menus.Organization' | translate }}
   </button>
-  <button mat-menu-item [routerLink]="['/system']" tabindex="0">{{ 'labels.menus.System' | translate }}</button>
-  <button mat-menu-item [routerLink]="['/products']" tabindex="0">{{ 'labels.menus.Products' | translate }}</button>
-  <button mat-menu-item routerLink="/templates" tabindex="0">{{ 'labels.menus.Templates' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/system']" tabindex="0" *mifosxHasPermission="'READ_CONFIGURATION'">
+    {{ 'labels.menus.System' | translate }}
+  </button>
+  <button mat-menu-item [routerLink]="['/products']" tabindex="0" *mifosxHasPermission="'READ_PRODUCT'">
+    {{ 'labels.menus.Products' | translate }}
+  </button>
+  <button mat-menu-item routerLink="/templates" tabindex="0" *mifosxHasPermission="'READ_TEMPLATE'">
+    {{ 'labels.menus.Templates' | translate }}
+  </button>
 </mat-menu>
 
 <!-- Application User Help Menu -->

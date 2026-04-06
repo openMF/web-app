@@ -1,0 +1,62 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+/** Angular Imports */
+import { Injectable, inject } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+
+/** rxjs Imports */
+import { Observable } from 'rxjs';
+/**
+ * Collaterals service.
+ */
+@Injectable({
+  providedIn: 'root'
+})
+export class CollateralsService {
+  private http = inject(HttpClient);
+
+  getFilteredClients(
+    orderBy: string,
+    sortOrder: string,
+    orphansOnly: boolean,
+    displayName: string,
+    officeId?: any
+  ): Observable<any> {
+    let httpParams = new HttpParams()
+      .set('displayName', displayName)
+      .set('orphansOnly', orphansOnly.toString())
+      .set('sortOrder', sortOrder)
+      .set('orderBy', orderBy);
+    if (officeId) {
+      httpParams = httpParams.set('officeId', officeId);
+    }
+    return this.http.get('/clients', { params: httpParams });
+  }
+
+  /**
+   * @returns {Observable<any>} Collaterals data
+   */
+  getClientCollateral(clientId: any, clientCollateralId: any): Observable<any> {
+    return this.http.get(`/clients/${clientId}/collaterals/${clientCollateralId}`);
+  }
+
+  /**
+   * @returns {Observable<any>} Collaterals data
+   */
+  updateClientCollateral(clientId: any, clientCollateralId: any, clientCollateralData: any): Observable<any> {
+    return this.http.put(`/clients/${clientId}/collaterals/${clientCollateralId}`, clientCollateralData);
+  }
+
+  /**
+   * @returns {Observable<any>} Delete Collaterals data
+   */
+  deleteCollateral(clientId: any, clientCollateralId: any): Observable<any> {
+    return this.http.delete(`/clients/${clientId}/collaterals/${clientCollateralId}`);
+  }
+}

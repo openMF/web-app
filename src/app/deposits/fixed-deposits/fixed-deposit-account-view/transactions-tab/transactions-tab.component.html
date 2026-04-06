@@ -1,17 +1,27 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <div class="tab-container mat-typography">
   <div class="mat-elevation-z1 m-b-25">
     <div class="layout-row align-start">
       <div class="m-b-20">
         <h3>{{ 'labels.heading.All Transactions' | translate }}</h3>
       </div>
-      <div class="action-button m-b-20 layout-row gap-20px" *ngIf="checkStatus()">
-        <mat-checkbox [formControl]="hideReversedParam" (click)="hideReversed()" class="accruals">
-          {{ 'labels.inputs.Hide Reversed' | translate }}</mat-checkbox
-        >
-        <mat-checkbox [formControl]="hideAccrualsParam" (click)="hideAccruals()" class="accruals">
-          {{ 'labels.inputs.Hide Accruals' | translate }}</mat-checkbox
-        >
-      </div>
+      @if (checkStatus()) {
+        <div class="action-button m-b-20 layout-row gap-20px">
+          <mat-checkbox [formControl]="hideReversedParam" (click)="hideReversed()" class="accruals">
+            {{ 'labels.inputs.Hide Reversed' | translate }}</mat-checkbox
+          >
+          <mat-checkbox [formControl]="hideAccrualsParam" (click)="hideAccruals()" class="accruals">
+            {{ 'labels.inputs.Hide Accruals' | translate }}</mat-checkbox
+          >
+        </div>
+      }
     </div>
 
     <table mat-table [dataSource]="dataSource">
@@ -96,7 +106,7 @@
 
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
-        <td mat-cell class="center" *matCellDef="let transaction">
+        <td mat-cell class="center" *matCellDef="let transaction; let idx = index">
           <button mat-icon-button [matMenuTriggerFor]="transactionMenu" aria-label="" class="action-button">
             <mat-icon>more_vert</mat-icon>
           </button>
@@ -105,6 +115,12 @@
               <mat-icon><fa-icon icon="eye" size="sm"></fa-icon></mat-icon>
               <span>{{ 'labels.text.View Transaction' | translate }}</span>
             </button>
+            @if (!isFirstTransaction(idx)) {
+              <button mat-menu-item (click)="undoTransaction(transaction)">
+                <mat-icon><fa-icon icon="undo" size="sm"></fa-icon></mat-icon>
+                <span>{{ 'tooltips.Undo Transaction' | translate }}</span>
+              </button>
+            }
             <button
               mat-menu-item
               (click)="routeEdit($event)"

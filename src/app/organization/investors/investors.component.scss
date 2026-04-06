@@ -1,3 +1,95 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+// Filter Section Styling
+.investor-filter-section {
+  margin-bottom: 24px;
+
+  .filter-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .filter-field {
+    flex: 1 1 calc(33.333% - 11px);
+    min-width: 200px;
+    max-width: 100%;
+
+    // Ensure consistent height across all fields
+    ::ng-deep .mat-mdc-form-field-infix {
+      min-height: 56px;
+    }
+
+    // Align datepicker icons consistently
+    ::ng-deep .mat-datepicker-toggle {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .filter-button-container {
+    flex: 1 1 calc(33.333% - 11px);
+    min-width: 200px;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 4px;
+
+    .search-button {
+      width: 100%;
+      height: 48px;
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+
+      fa-icon {
+        margin-right: 8px;
+      }
+    }
+  }
+
+  // Responsive adjustments for tablets
+  @media screen and (width <= 1024px) {
+    .filter-field,
+    .filter-button-container {
+      flex: 1 1 calc(50% - 8px);
+      min-width: 180px;
+    }
+  }
+
+  // Responsive adjustments for mobile
+  @media screen and (width <= 768px) {
+    .filter-row {
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .filter-field,
+    .filter-button-container {
+      flex: 1 1 100%;
+      width: 100%;
+      max-width: 100%;
+      min-width: 100%;
+    }
+
+    .filter-button-container {
+      padding-bottom: 0;
+      margin-top: 8px;
+    }
+  }
+}
+
 .status {
   color: black;
 }

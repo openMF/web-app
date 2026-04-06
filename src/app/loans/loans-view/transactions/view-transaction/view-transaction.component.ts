@@ -1,14 +1,20 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { LoansService, LoanTransactionsService } from '@fineract/client';
+import { LoansService } from 'app/loans/loans.service';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
-import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
-import { PaymentTypeService } from '@fineract/client';
+import { OrganizationService } from 'app/organization/organization.service';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
@@ -29,7 +35,7 @@ import {
 import { LoanTransactionType } from 'app/loans/models/loan-transaction-type.model';
 import { AlertService } from 'app/core/alert/alert.service';
 import { TranslateService } from '@ngx-translate/core';
-import { NgIf, NgClass, CurrencyPipe } from '@angular/common';
+import { NgClass, CurrencyPipe } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { ExternalIdentifierComponent } from '../../../../shared/external-identifier/external-identifier.component';
 import { MatDivider } from '@angular/material/divider';
@@ -37,6 +43,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { TransactionPaymentDetailComponent } from '../../../../shared/transaction-payment-detail/transaction-payment-detail.component';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanAccountActionsBaseComponent } from '../../loan-account-actions/loan-account-actions-base.component';
 
 /** Custom Dialogs */
 
@@ -70,7 +77,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     DateFormatPipe
   ]
 })
-export class ViewTransactionComponent implements OnInit {
+export class ViewTransactionComponent extends LoanAccountActionsBaseComponent implements OnInit {
+  private loansService = inject(LoansService);
+  private dateUtils = inject(Dates);
+  dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
+  private organizationService = inject(OrganizationService);
+  private alertService = inject(AlertService);
+
   /** Transaction data. */
   transactionData: any;
   transactionType: LoanTransactionType;
@@ -94,12 +108,10 @@ export class ViewTransactionComponent implements OnInit {
   amountRelationsAllowed = 0;
 
   clientId: number;
-  loanId: number;
 
   /**
    * Retrieves the Transaction data from `resolve`.
    * @param {LoansService} loansService Loans Service
-   * @param {LoanTransactionsService} loanTransactionsService Loan Transactions Service
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
@@ -107,18 +119,8 @@ export class ViewTransactionComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    * @param {AlertService} alertService Alert Service
    */
-  constructor(
-    private loansService: LoansService,
-    private loanTransactionsService: LoanTransactionsService,
-    private route: ActivatedRoute,
-    private dateUtils: Dates,
-    private router: Router,
-    public dialog: MatDialog,
-    private translateService: TranslateService,
-    private settingsService: SettingsService,
-    private paymentTypeService: PaymentTypeService,
-    private alertService: AlertService
-  ) {
+  constructor() {
+    super();
     this.route.data.subscribe((data: { loansAccountTransaction: any }) => {
       this.transactionData = data.loansAccountTransaction;
       this.transactionType = this.transactionData.type;
@@ -159,8 +161,8 @@ export class ViewTransactionComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.allowChargeback) {
-      this.paymentTypeService
-        .getAllPaymentTypes()
+      this.organizationService
+        .getPaymentTypesWithCode()
         .toPromise()
         .then((data) => {
           this.paymentTypeOptions = data;
@@ -230,7 +232,6 @@ export class ViewTransactionComponent implements OnInit {
           required: false,
           order: 2
         })
-
       ];
       const data = {
         title: this.translateService.instant('labels.heading.Undo Transaction'),
@@ -246,15 +247,14 @@ export class ViewTransactionComponent implements OnInit {
             reversalExternalId: response.data.value.reversalExternalId
           };
 
-          this.loansService
-            .stateTransitions({
-              loanId: Number(accountId),
-              command: 'undoContractTermination',
-              postLoansLoanIdRequest: payload
-            })
-            .subscribe(() => {
-              this.router.navigate(['../'], { relativeTo: this.route });
+          this.loansService.loanActionButtons(accountId, 'undoContractTermination', payload).subscribe(() => {
+            this.router.navigate(['../'], {
+              queryParams: {
+                productType: this.loanProductService.productType.value
+              },
+              relativeTo: this.route
             });
+          });
         }
       });
     } else {
@@ -279,15 +279,17 @@ export class ViewTransactionComponent implements OnInit {
             dateFormat,
             locale
           };
-          this.loanTransactionsService
-            .adjustLoanTransaction({
-              loanId: parseInt(accountId, 10),
-              transactionId: this.transactionData.id,
-              postLoansLoanIdTransactionsTransactionIdRequest: data,
-              command: 'undo'
-            })
+          const command = this.isWriteOff(this.transactionType) ? 'undowriteoff' : 'undo';
+          const transactionId = command === 'undowriteoff' ? null : this.transactionData.id;
+          this.loansService
+            .executeLoansAccountTransactionsCommand(accountId, command, data, transactionId)
             .subscribe(() => {
-              this.router.navigate(['../'], { relativeTo: this.route });
+              this.router.navigate(['../'], {
+                queryParams: {
+                  productType: this.loanProductService.productType.value
+                },
+                relativeTo: this.route
+              });
             });
         }
       });
@@ -314,7 +316,6 @@ export class ViewTransactionComponent implements OnInit {
         max: this.amountRelationsAllowed,
         order: 2
       })
-
     ];
     const data = {
       title: `Chargeback ${this.transactionType.value} Transaction`,
@@ -331,15 +332,15 @@ export class ViewTransactionComponent implements OnInit {
             paymentTypeId: response.data.value.paymentTypeId,
             locale
           };
-          this.loanTransactionsService
-            .adjustLoanTransaction({
-              loanId: parseInt(accountId, 10),
-              transactionId: this.transactionData.id,
-              postLoansLoanIdTransactionsTransactionIdRequest: payload,
-              command: 'chargeback'
-            })
+          this.loansService
+            .executeLoansAccountTransactionsCommand(accountId, 'chargeback', payload, this.transactionData.id)
             .subscribe(() => {
-              this.router.navigate(['../'], { relativeTo: this.route });
+              this.router.navigate(['../'], {
+                queryParams: {
+                  productType: this.loanProductService.productType.value
+                },
+                relativeTo: this.route
+              });
             });
         } else {
           this.alertService.alert({

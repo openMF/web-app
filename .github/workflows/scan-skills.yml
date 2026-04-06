@@ -1,0 +1,19 @@
+name: Scan AI Agent Skills
+
+on:
+  push:
+    paths:
+      - 'skills/**'
+  pull_request:
+    paths:
+      - 'skills/**'
+
+jobs:
+  scan:
+    uses: cisco-ai-defense/skill-scanner/.github/workflows/scan-skills.yml@main
+    with:
+      # We tell the scanner to look at the skills directory
+      skill_path: skills
+    permissions:
+      security-events: write
+      contents: read

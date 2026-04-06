@@ -1,0 +1,76 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container mat-elevation-z8">
+  <mat-card>
+    <form [formGroup]="updateDiscountForm" (ngSubmit)="submit()">
+      <mat-card-content>
+        <div class="layout-column">
+          <mat-form-field>
+            <mat-label>{{ 'labels.inputs.Discount' | translate }}</mat-label>
+            <input
+              matInput
+              type="number"
+              min="0"
+              step="0.01"
+              required
+              mifosxPositiveNumber
+              formControlName="discountAmount"
+            />
+            @if (updateDiscountForm.controls.discountAmount.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Discount' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
+            @if (updateDiscountForm.controls.discountAmount.hasError('min')) {
+              <mat-error>{{ 'labels.inputs.Discount must be greater than or equal to 0' | translate }}</mat-error>
+            }
+            @if (updateDiscountForm.controls.discountAmount.hasError('highAmountValue')) {
+              <mat-error>{{ 'labels.inputs.Please enter a valid number' | translate }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>
+            <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+            <mat-hint align="end">
+              {{ updateDiscountForm.controls.note.value?.length || 0 }}/{{ maxNoteLength }}
+            </mat-hint>
+            @if (updateDiscountForm.controls.note.hasError('maxlength')) {
+              <mat-error>{{ 'labels.inputs.Note is too long' | translate }}</mat-error>
+            }
+          </mat-form-field>
+
+          @if (submitErrorMessage) {
+            <mat-error>{{ submitErrorMessage }}</mat-error>
+          }
+        </div>
+
+        <mat-card-actions class="layout-row align-center gap-5px responsive-column">
+          <button type="button" mat-raised-button (click)="gotoLoanDefaultView()" [disabled]="isSubmitting">
+            {{ 'labels.buttons.Cancel' | translate }}
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            [disabled]="!updateDiscountForm.valid || isSubmitting"
+            *mifosxHasPermission="'UPDATEDISCOUNT_WORKINGCAPITALLOAN'"
+          >
+            @if (isSubmitting) {
+              <mat-spinner diameter="20"></mat-spinner>
+            }
+            @if (!isSubmitting) {
+              {{ 'labels.buttons.Submit' | translate }}
+            }
+          </button>
+        </mat-card-actions>
+      </mat-card-content>
+    </form>
+  </mat-card>
+</div>

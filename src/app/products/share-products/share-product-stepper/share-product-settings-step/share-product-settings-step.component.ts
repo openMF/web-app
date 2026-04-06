@@ -1,4 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, OnInit, Input, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -20,6 +28,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ShareProductSettingsStepComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+
   @Input() shareProductsTemplate: any;
 
   shareProductSettingsForm: UntypedFormGroup;
@@ -27,7 +37,7 @@ export class ShareProductSettingsStepComponent implements OnInit {
   minimumActivePeriodFrequencyTypeData: any;
   lockinPeriodFrequencyTypeData: any;
 
-  constructor(private formBuilder: UntypedFormBuilder) {
+  constructor() {
     this.createShareProductSettingsForm();
   }
 
@@ -51,19 +61,61 @@ export class ShareProductSettingsStepComponent implements OnInit {
   }
 
   createShareProductSettingsForm() {
-    this.shareProductSettingsForm = this.formBuilder.group({
-      minimumShares: [''],
-      nominalShares: [
-        '',
-        Validators.required
-      ],
-      maximumShares: [''],
-      minimumActivePeriodForDividends: [''],
-      minimumactiveperiodFrequencyType: [''],
-      lockinPeriodFrequency: [''],
-      lockinPeriodFrequencyType: [''],
-      allowDividendCalculationForInactiveClients: [false]
-    });
+    this.shareProductSettingsForm = this.formBuilder.group(
+      {
+        minimumShares: [
+          '',
+          [
+            Validators.required,
+            Validators.min(1),
+            Validators.pattern(/^[0-9]+$/)
+          ]
+        ],
+        nominalShares: [
+          '',
+          [
+            Validators.required,
+            Validators.min(1),
+            Validators.pattern(/^[0-9]+$/)
+          ]
+        ],
+        maximumShares: [
+          '',
+          [
+            Validators.required,
+            Validators.min(1),
+            Validators.pattern(/^[0-9]+$/)
+          ]
+        ],
+        minimumActivePeriodForDividends: [
+          '',
+          [
+            Validators.required,
+            Validators.min(1),
+            Validators.pattern(/^[0-9]+$/)
+          ]
+        ],
+        minimumactiveperiodFrequencyType: [''],
+        lockinPeriodFrequency: [''],
+        lockinPeriodFrequencyType: [''],
+        allowDividendCalculationForInactiveClients: [false]
+      },
+      {
+        validators: this.validateSharesOrder
+      }
+    );
+  }
+
+  private validateSharesOrder(group: UntypedFormGroup): { [key: string]: any } | null {
+    const min = Number(group.get('minimumShares')?.value);
+    const nominal = Number(group.get('nominalShares')?.value);
+    const max = Number(group.get('maximumShares')?.value);
+    if (min && nominal && max) {
+      if (min > nominal || nominal > max) {
+        return { sharesOrder: true };
+      }
+    }
+    return null;
   }
 
   get shareProductSettings() {

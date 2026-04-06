@@ -1,22 +1,27 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { GroupsService } from '@fineract/client';
+import { GroupsService } from '../groups.service';
 
 /**
  * Group Actions data resolver.
  */
 @Injectable()
 export class GroupActionsResolver {
-  /**
-   * @param {GroupsService} groupsService,
-   */
-  constructor(private groupsService: GroupsService) {}
+  private groupsService = inject(GroupsService);
 
   /**
    * Returns the group actions data.
@@ -25,23 +30,22 @@ export class GroupActionsResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const actionName = route.paramMap.get('action');
-    const groupIdStr = route.paramMap.get('groupId') || route.parent.parent.paramMap.get('groupId');
-    const groupId = groupIdStr ? Number(groupIdStr) : undefined;
+    const groupId = route.paramMap.get('groupId') || route.parent.parent.paramMap.get('groupId');
     switch (actionName) {
       case 'Attendance':
       case 'Manage Members':
       case 'Transfer Clients':
-        return this.groupsService.retrieveOne15({ groupId });
+        return this.groupsService.getGroupData(groupId);
       case 'Assign Staff':
-        return this.groupsService.retrieveOne15({ groupId, staffInSelectedOfficeOnly: true });
+        return this.groupsService.getGroupData(groupId, 'true');
       case 'Close':
-        return this.groupsService.retrieveTemplate7({ command: 'close' });
+        return this.groupsService.getGroupCommandTemplate('close');
       case 'Attach Meeting':
-        return this.groupsService.retrieveOne15({ groupId });
+        return this.groupsService.getGroupCalendarTemplate(groupId);
       case 'Edit Meeting':
       case 'Edit Meeting Schedule':
         const calendarId = route.queryParamMap.get('calendarId');
-        return this.groupsService.retrieveOne15({ groupId });
+        return this.groupsService.getGroupCalendarAndTemplate(groupId, calendarId);
       default:
         return undefined;
     }

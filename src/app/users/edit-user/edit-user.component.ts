@@ -1,10 +1,18 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
-import { UsersService, StaffService } from '@fineract/client';
+import { UsersService } from '../users.service';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -21,6 +29,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditUserComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private usersService = inject(UsersService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   /** User Data */
   userData: any;
   /** Offices Data */
@@ -36,17 +49,10 @@ export class EditUserComponent implements OnInit {
    * Retrieves the offices data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {UsersService} UsersService Users Service.
-   * @param {StaffService} staffService Staff Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private usersService: UsersService,
-    private staffService: StaffService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { user: any; usersTemplate: any }) => {
       this.userData = data.user;
       this.officesData = data.usersTemplate.allowedOffices;
@@ -80,13 +86,15 @@ export class EditUserComponent implements OnInit {
         this.userData.firstname,
         [
           Validators.required,
-          Validators.pattern('(^[A-z]).*')]
+          Validators.pattern('(^[A-z]).*')
+        ]
       ],
       lastname: [
         this.userData.lastname,
         [
           Validators.required,
-          Validators.pattern('(^[A-z]).*')]
+          Validators.pattern('(^[A-z]).*')
+        ]
       ],
       passwordNeverExpires: [this.userData.passwordNeverExpires],
       officeId: [
@@ -107,7 +115,7 @@ export class EditUserComponent implements OnInit {
    */
   officeChanged(officeId: number) {
     this.staffData = [];
-    this.staffService.retrieveAll16({ officeId }).subscribe((staff: any) => {
+    this.usersService.getStaff(officeId).subscribe((staff: any) => {
       this.staffData = staff;
     });
   }
@@ -118,7 +126,7 @@ export class EditUserComponent implements OnInit {
    */
   submit() {
     const editedUser = this.editUserForm.value;
-    this.usersService.update26(this.userData.id, editedUser).subscribe((response: any) => {
+    this.usersService.editUser(this.userData.id, editedUser).subscribe((response: any) => {
       this.router.navigate(
         [
           '../../',

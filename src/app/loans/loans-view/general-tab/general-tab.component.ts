@@ -1,4 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   MatTableDataSource,
@@ -13,11 +21,13 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { NgIf, CurrencyPipe } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 import { ExternalIdentifierComponent } from '../../../shared/external-identifier/external-identifier.component';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanProductService } from 'app/products/loan-products/services/loan-product.service';
+import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
 
 @Component({
   selector: 'mifosx-general-tab',
@@ -41,7 +51,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     FormatNumberPipe
   ]
 })
-export class GeneralTabComponent implements OnInit {
+export class GeneralTabComponent extends LoanProductBaseComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+
   /** Currency Code */
   currencyCode: string;
   loanDetails: any;
@@ -61,13 +73,13 @@ export class GeneralTabComponent implements OnInit {
   ];
   loanSummaryTableData: {
     property: string;
-    original: string;
-    adjustment: string;
-    paid: string;
-    waived: string;
-    writtenOff: string;
-    outstanding: string;
-    overdue: string;
+    original: number;
+    adjustment: number;
+    paid: number;
+    waived: number;
+    writtenOff: number;
+    outstanding: number;
+    overdue: number;
   }[];
   loanDetailsTableData: {
     key: string;
@@ -78,7 +90,12 @@ export class GeneralTabComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   detailsDataSource: MatTableDataSource<any>;
 
-  constructor(private route: ActivatedRoute) {
+  constructor() {
+    super();
+    const productType = this.route.snapshot.queryParamMap.get('productType') || null;
+    if (productType) {
+      this.loanProductService.initialize(productType);
+    }
     this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
       this.loanDetails = data.loanDetailsData;
       this.currencyCode = this.loanDetails.currency.code;
@@ -127,7 +144,7 @@ export class GeneralTabComponent implements OnInit {
       {
         property: 'Interest',
         original: this.loanDetails.summary.interestCharged,
-        adjustment: '0',
+        adjustment: 0,
         paid: this.loanDetails.summary.interestPaid,
         waived: this.loanDetails.summary.interestWaived,
         writtenOff: this.loanDetails.summary.interestWrittenOff,
@@ -137,7 +154,7 @@ export class GeneralTabComponent implements OnInit {
       {
         property: 'Fees',
         original: this.loanDetails.summary.feeChargesCharged,
-        adjustment: '0',
+        adjustment: 0,
         paid: this.loanDetails.summary.feeChargesPaid,
         waived: this.loanDetails.summary.feeChargesWaived,
         writtenOff: this.loanDetails.summary.feeChargesWrittenOff,
@@ -147,7 +164,7 @@ export class GeneralTabComponent implements OnInit {
       {
         property: 'Penalties',
         original: this.loanDetails.summary.penaltyChargesCharged,
-        adjustment: '0',
+        adjustment: 0,
         paid: this.loanDetails.summary.penaltyChargesPaid,
         waived: this.loanDetails.summary.penaltyChargesWaived,
         writtenOff: this.loanDetails.summary.penaltyChargesWrittenOff,
@@ -171,13 +188,16 @@ export class GeneralTabComponent implements OnInit {
   setloanDetailsTableData() {
     this.loanDetailsTableData = [
       {
+        key: 'Product Type'
+      },
+      {
+        key: 'Product Name'
+      },
+      {
+        key: 'Status'
+      },
+      {
         key: 'Disbursement Date'
-      },
-      {
-        key: 'Loan Purpose'
-      },
-      {
-        key: 'Loan Officer'
       },
       {
         key: 'Currency'
@@ -198,11 +218,31 @@ export class GeneralTabComponent implements OnInit {
         value: this.loanDetails.principal
       }
     ];
+    if (this.loanDetails.writeOffReason) {
+      this.loanDetailsTableData.push({
+        key: 'Write-off Reason',
+        value: this.loanDetails.writeOffReason
+      });
+    }
+    if (this.loanProductService.isLoanProduct) {
+      this.loanDetailsTableData.push({
+        key: 'Loan Officer'
+      });
+    }
     this.detailsDataSource = new MatTableDataSource(this.loanDetailsTableData);
   }
 
   setloanNonDetailsTableData() {
     this.loanDetailsTableData = [
+      {
+        key: 'Product Type'
+      },
+      {
+        key: 'Product Name'
+      },
+      {
+        key: 'Status'
+      },
       {
         key: 'Disbursement Date'
       },
@@ -210,12 +250,17 @@ export class GeneralTabComponent implements OnInit {
         key: 'Currency'
       },
       {
-        key: 'Loan Officer'
-      },
-      {
         key: 'External Id'
       }
     ];
+    if (this.loanProductService.isLoanProduct) {
+      this.loanDetailsTableData.push({
+        key: 'Loan Officer'
+      });
+      this.loanDetailsTableData.push({
+        key: 'Loan Purpose'
+      });
+    }
     this.detailsDataSource = new MatTableDataSource(this.loanDetailsTableData);
   }
 
@@ -241,4 +286,10 @@ export class GeneralTabComponent implements OnInit {
     }
     return true;
   };
+
+  loanProductType(): string {
+    return this.loanDetails.loanType
+      ? LoanProductService.productTypeLabel('loan')
+      : LoanProductService.productTypeLabel('working-capital');
+  }
 }

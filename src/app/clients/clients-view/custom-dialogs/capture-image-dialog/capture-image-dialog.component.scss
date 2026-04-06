@@ -1,0 +1,18 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+@use '../../../../../assets/styles/colours' as colors;
+
+.capture-video {
+  width: 100%;
+  max-width: 640px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 4px;
+  background-color: colors.$black;
+}

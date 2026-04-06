@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { DeferredIncomeRecognition } from '../loan-product-payment-strategy-step/payment-allocation-model';
 import { StringEnumOptionData } from 'app/shared/models/option-data.model';
@@ -15,6 +23,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoanProductDeferredIncomeRecognitionStepComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+
   @Input() deferredIncomeRecognition: DeferredIncomeRecognition;
   @Input() capitalizedIncomeCalculationTypeOptions: StringEnumOptionData[];
   @Input() capitalizedIncomeStrategyOptions: StringEnumOptionData[];
@@ -30,7 +40,7 @@ export class LoanProductDeferredIncomeRecognitionStepComponent implements OnInit
 
   @Output() setViewChildForm = new EventEmitter<UntypedFormGroup>();
 
-  constructor(private formBuilder: UntypedFormBuilder) {
+  constructor() {
     this.enableIncomeCapitalization =
       this.deferredIncomeRecognition != null
         ? this.deferredIncomeRecognition.capitalizedIncome.enableIncomeCapitalization
@@ -104,6 +114,7 @@ export class LoanProductDeferredIncomeRecognitionStepComponent implements OnInit
         merchantBuyDownFee: this.deferredIncomeRecognition.buyDownFee.merchantBuyDownFee
       });
     }
+    this.setViewChildForm.emit(this.loanDeferredIncomeRecognitionForm);
   }
 
   setConditionalControls() {

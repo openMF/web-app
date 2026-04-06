@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
 
 /** Custom Model */
 import { Theme } from './theme.model';
@@ -36,6 +44,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ThemePickerComponent implements OnInit {
+  themeStorageService = inject(ThemeStorageService);
+
   /** Default theme for the application. */
   currentTheme: Theme = {
     href: 'denim-yellowgreen.css',
@@ -78,11 +88,6 @@ export class ThemePickerComponent implements OnInit {
       isDark: true
     }
   ];
-
-  /**
-   * @param {ThemeStorageService} themeStorageService Theme Storage Service.
-   */
-  constructor(public themeStorageService: ThemeStorageService) {}
 
   /**
    * Initializes the theme for the application.

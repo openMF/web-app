@@ -1,3 +1,11 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <div class="container input">
   <mat-card *ngIf="!isCollapsed">
     <form [formGroup]="reportForm">
@@ -29,6 +37,9 @@
                 {{ param.label }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
+              <mat-error *ngIf="reportForm.controls[param.name].hasError('endBeforeStart')">
+                {{ param.label }} {{ 'labels.commons.must be after or equal to start date' | translate }}
+              </mat-error>
             </mat-form-field>
 
             <mat-form-field class="form-field" *ngSwitchCase="'select'">
@@ -57,7 +68,7 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field class="form-field" *ngIf="isPentahoReport()">
+        <mat-form-field class="form-field" *ngIf="isPentahoReport() || isBirtReport()">
           <mat-label>{{ 'labels.inputs.Output Type' | translate }}</mat-label>
           <mat-select required formControlName="outputType">
             <mat-option *ngFor="let option of outputTypeOptions" [value]="option.value">
@@ -118,6 +129,7 @@
       <mifosx-table-and-sms *ngIf="!hideTable" [dataObject]="dataObject"></mifosx-table-and-sms>
       <mifosx-chart *ngIf="!hideChart" [dataObject]="dataObject"></mifosx-chart>
       <mifosx-pentaho *ngIf="!hidePentaho" [dataObject]="dataObject"></mifosx-pentaho>
+      <mifosx-birt *ngIf="!hideBirt" [dataObject]="dataObject"></mifosx-birt>
     </div>
   </mat-card>
 </div>

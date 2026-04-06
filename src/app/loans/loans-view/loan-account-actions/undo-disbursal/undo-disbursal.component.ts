@@ -1,12 +1,20 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { UntypedFormControl, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { LoansService } from '@fineract/client';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 
 /**
  * Undo Disbursal component.
@@ -20,27 +28,16 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     CdkTextareaAutosize
   ]
 })
-export class UndoDisbursalComponent implements OnInit {
+export class UndoDisbursalComponent extends LoanAccountActionsBaseComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+
   @Input() actionName: string;
 
-  /** Loan ID. */
-  loanId: any;
   /** Undo disbursal form. */
   note: UntypedFormControl;
 
-  /**
-   * @param {FormBuilder} formBuilder Form Builder.
-   * @param {LoansService} loansService Loans Service.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {Router} router Router for navigation.
-   */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private loansService: LoansService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {
-    this.loanId = this.route.snapshot.params['loanId'];
+  constructor() {
+    super();
   }
 
   /**
@@ -54,18 +51,25 @@ export class UndoDisbursalComponent implements OnInit {
    * Submits the undo disbursal form.
    */
   submit() {
-    let command = 'undodisbursal';
+    let loanCommand = 'undodisbursal';
     if (this.actionName === 'Undo Last Disbursal') {
-      command = 'undolastdisbursal';
+      loanCommand = 'undolastdisbursal';
     }
-    this.loansService
-      .stateTransitions({
-        loanId: Number(this.loanId),
-        command: command,
-        postLoansLoanIdRequest: { note: this.note.value }
-      })
-      .subscribe((response: any) => {
-        this.router.navigate(['../../general'], { relativeTo: this.route });
-      });
+    const request$ = this.isLoanProduct
+      ? this.loanService.loanActionButtons(this.loanId, loanCommand, { note: this.note.value })
+      : this.isWorkingCapital
+        ? this.loanService.applyWorkingCapitalLoanAccountCommand(this.loanId, loanCommand, { note: this.note.value })
+        : undefined;
+
+    if (!request$) {
+      return;
+    }
+
+    request$.subscribe({
+      next: () => this.gotoLoanDefaultView(),
+      error: () => {
+        this.note.setErrors({ submitFailed: true });
+      }
+    });
   }
 }

@@ -1,4 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import {
@@ -14,11 +22,43 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { NgClass, NgIf } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { NgClass } from '@angular/common';
 import { MatTooltip } from '@angular/material/tooltip';
+import { MatCard, MatCardContent } from '@angular/material/card';
 import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+
+interface SavingAccount {
+  accountNo: string;
+  savingsProductName?: string;
+  status: {
+    code: string;
+    value: string;
+  };
+  summary?: {
+    accountBalance: number;
+  };
+}
+
+interface ChildGsimAccount {
+  id: number;
+  displayName: string;
+  accountNo: string;
+  productName: string;
+  clientId?: number;
+  status: {
+    code: string;
+    value: string;
+    active: boolean;
+    submittedAndPendingApproval: boolean;
+    approved: boolean;
+  };
+}
+
+interface GroupData {
+  groupName?: string;
+}
 
 /**
  * GSIM Accounts Overview component.
@@ -42,10 +82,16 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRowDef,
     MatRow,
     MatPaginator,
+    MatCard,
+    MatCardContent,
     StatusLookupPipe
   ]
 })
 export class GsimAccountComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  dialog = inject(MatDialog);
+
   /** Columns to be displayed in charge overview table. */
   displayedColumns: string[] = [
     'clientDetails',
@@ -55,13 +101,15 @@ export class GsimAccountComponent implements OnInit {
     'Actions'
   ];
   /** Data source for charge overview table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource: MatTableDataSource<ChildGsimAccount>;
   /** Charge Overview data */
-  gsimOverviewData: any;
+  gsimOverviewData: ChildGsimAccount[];
 
-  savingAccountData: any;
+  savingAccountData: SavingAccount | null = null;
 
-  groupsData: any;
+  groupsData: GroupData | null = null;
+
+  groupId: string;
 
   /** Paginator for charge overview table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -71,10 +119,12 @@ export class GsimAccountComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(
-    private route: ActivatedRoute,
-    public dialog: MatDialog
-  ) {
+  constructor() {
+    // Get groupId from route params
+    this.route.parent?.parent?.params.subscribe((params) => {
+      this.groupId = params['groupId'];
+    });
+
     this.route.data.subscribe((data: { gsimData: any; savingAccountData: any; groupsData: any }) => {
       this.gsimOverviewData = data.gsimData[0].childGSIMAccounts;
       this.savingAccountData = data.savingAccountData;
@@ -100,5 +150,35 @@ export class GsimAccountComponent implements OnInit {
    */
   routeEdit($event: MouseEvent) {
     $event.stopPropagation();
+  }
+
+  /**
+   * Navigates to the savings account transactions page if the account is active,
+   * otherwise navigates to the client detail page.
+   * @param row Member account row data
+   */
+  onRowClick(row: ChildGsimAccount) {
+    if (row.status?.active) {
+      this.router.navigate([
+        '/savings-accounts',
+        row.id,
+        'transactions'
+      ]);
+      return;
+    }
+
+    // Prefer explicit clientId if available from API, otherwise parse from displayName format "(clientId) clientName"
+    const clientId = row.clientId ?? row.displayName?.match(/^\((\d+)\)/)?.[1];
+    if (clientId) {
+      this.router.navigate([
+        '/clients',
+        clientId
+      ]);
+    } else {
+      this.router.navigate([
+        '/groups',
+        this.groupId
+      ]);
+    }
   }
 }

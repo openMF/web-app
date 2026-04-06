@@ -1,3 +1,11 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <div class="container">
   <mat-card>
     <form [formGroup]="clientCollateralForm" (ngSubmit)="submit()">
@@ -12,10 +20,12 @@
             <mat-form-field>
               <mat-label>{{ 'labels.inputs.Quantity' | translate }}</mat-label>
               <input matInput required formControlName="quantity" />
-              <mat-error *ngIf="clientCollateralForm.controls.quantity.hasError('required')">
-                {{ 'labels.inputs.Quantity' | translate }} {{ 'labels.commons.is' | translate }}
-                <strong>{{ 'labels.commons.required' | translate }}</strong>
-              </mat-error>
+              @if (clientCollateralForm.controls.quantity.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Quantity' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
             </mat-form-field>
 
             <mat-form-field>

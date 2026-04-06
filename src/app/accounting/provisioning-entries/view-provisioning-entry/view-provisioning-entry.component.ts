@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
@@ -22,8 +30,8 @@ import {
 import { startWith, map, debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 
 /** Custom Services */
-import { ProvisioningEntriesService } from '@fineract/client';
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { AccountingService } from '../../accounting.service';
+import { AsyncPipe } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -57,6 +65,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
+  private accountingService = inject(AccountingService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   /** Provisioning entry id. */
   provisioningEntryId: string;
   /** Provisioning entry. */
@@ -108,15 +120,11 @@ export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
   /**
    * Retrieves the provisioning entry, provisioning entry entries, offices,
    * loan products, provisioning categories data from `resolve`.
-   * @param {ProvisioningEntriesService} provisioningEntriesService Provisioning Entries Service.
+   * @param {AccountingService} accountingService Accounting Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(
-    private provisioningEntriesService: ProvisioningEntriesService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe(
       (data: {
         provisioningEntry: any;
@@ -296,19 +304,14 @@ export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
    * and redirects to created entries.
    */
   createProvisioningJournalEntries() {
-    this.provisioningEntriesService
-      .modifyProvisioningEntry({
-        entryId: Number(this.provisioningEntryId),
-        command: 'createjournalentry'
-      })
-      .subscribe((response: any) => {
-        this.router.navigate(
-          [
-            '../../journal-entries/view',
-            response.resourceId
-          ],
-          { relativeTo: this.route }
-        );
-      });
+    this.accountingService.createProvisioningJournalEntries(this.provisioningEntryId).subscribe((response: any) => {
+      this.router.navigate(
+        [
+          '../../journal-entries/view',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
+    });
   }
 }

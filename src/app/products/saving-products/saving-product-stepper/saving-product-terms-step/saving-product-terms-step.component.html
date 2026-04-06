@@ -1,3 +1,11 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <form [formGroup]="savingProductTermsForm">
   <div class="layout-row-wrap gap-2px responsive-column">
     <mat-form-field class="flex-48">
@@ -8,10 +16,15 @@
         matTooltip="{{ 'tooltips.The default interest rate set' | translate }}"
         formControlName="nominalAnnualInterestRate"
         required
+        min="0"
+        step="0.01"
       />
-      <mat-error>
+      <mat-error *ngIf="savingProductTermsForm.get('nominalAnnualInterestRate').hasError('required')">
         {{ 'labels.inputs.Nominal Annual Interest' | translate }} {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
+      </mat-error>
+      <mat-error *ngIf="savingProductTermsForm.get('nominalAnnualInterestRate').hasError('min')">
+        {{ 'labels.inputs.Nominal Annual Interest' | translate }} must be zero or greater
       </mat-error>
     </mat-form-field>
 
@@ -24,12 +37,11 @@
         matTooltip="{{ 'tooltips.The period at which interest rate' | translate }}"
         required
       >
-        <mat-option
-          *ngFor="let interestCompoundingPeriodType of interestCompoundingPeriodTypeData"
-          [value]="interestCompoundingPeriodType.id"
-        >
-          {{ interestCompoundingPeriodType.value | translateKey: 'catalogs' }}
-        </mat-option>
+        @for (interestCompoundingPeriodType of interestCompoundingPeriodTypeData; track interestCompoundingPeriodType) {
+          <mat-option [value]="interestCompoundingPeriodType.id">
+            {{ interestCompoundingPeriodType.value | translateKey: 'catalogs' }}
+          </mat-option>
+        }
       </mat-select>
       <mat-error>
         {{ 'labels.inputs.Interest Compounding Period' | translate }} {{ 'labels.commons.is' | translate }}
@@ -44,12 +56,11 @@
         matTooltip="{{ 'tooltips.Interest rate is posted or credited to a saving account' | translate }}"
         required
       >
-        <mat-option
-          *ngFor="let interestPostingPeriodType of interestPostingPeriodTypeData"
-          [value]="interestPostingPeriodType.id"
-        >
-          {{ interestPostingPeriodType.value | translateKey: 'catalogs' }}
-        </mat-option>
+        @for (interestPostingPeriodType of interestPostingPeriodTypeData; track interestPostingPeriodType) {
+          <mat-option [value]="interestPostingPeriodType.id">
+            {{ interestPostingPeriodType.value | translateKey: 'catalogs' }}
+          </mat-option>
+        }
       </mat-select>
       <mat-error>
         {{ 'labels.inputs.Interest Posting Period' | translate }} {{ 'labels.commons.is' | translate }}
@@ -64,12 +75,11 @@
         matTooltip="{{ 'tooltips.The method used to calculate interest' | translate }}"
         required
       >
-        <mat-option
-          *ngFor="let interestCalculationType of interestCalculationTypeData"
-          [value]="interestCalculationType.id"
-        >
-          {{ interestCalculationType.value | translateKey: 'catalogs' }}
-        </mat-option>
+        @for (interestCalculationType of interestCalculationTypeData; track interestCalculationType) {
+          <mat-option [value]="interestCalculationType.id">
+            {{ interestCalculationType.value | translateKey: 'catalogs' }}
+          </mat-option>
+        }
       </mat-select>
       <mat-error>
         {{ 'labels.inputs.Interest Calculated using' | translate }} {{ 'labels.commons.is' | translate }}
@@ -84,12 +94,14 @@
         matTooltip="{{ 'tooltips.To calculate interest' | translate }}"
         required
       >
-        <mat-option
-          *ngFor="let interestCalculationDaysInYearType of interestCalculationDaysInYearTypeData"
-          [value]="interestCalculationDaysInYearType.id"
-        >
-          {{ interestCalculationDaysInYearType.value | translateKey: 'catalogs' }}
-        </mat-option>
+        @for (
+          interestCalculationDaysInYearType of interestCalculationDaysInYearTypeData;
+          track interestCalculationDaysInYearType
+        ) {
+          <mat-option [value]="interestCalculationDaysInYearType.id">
+            {{ interestCalculationDaysInYearType.value | translateKey: 'catalogs' }}
+          </mat-option>
+        }
       </mat-select>
       <mat-error>
         {{ 'labels.inputs.Days in Year' | translate }} {{ 'labels.commons.is' | translate }}

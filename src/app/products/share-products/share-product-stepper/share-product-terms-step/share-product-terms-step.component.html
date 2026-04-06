@@ -1,3 +1,11 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <form [formGroup]="shareProductTermsForm">
   <div class="layout-row-wrap gap-2px responsive-column">
     <mat-form-field class="flex-48">
@@ -8,11 +16,19 @@
         matTooltip="{{ 'tooltips.Total number of shares that a product is offering' | translate }}"
         formControlName="totalShares"
         required
+        min="1"
       />
-      <mat-error>
-        {{ 'labels.inputs.Total Number of Shares' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
+      @if (shareProductTermsForm.get('totalShares').hasError('required')) {
+        <mat-error>
+          {{ 'labels.inputs.Total Number of Shares' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
+      @if (shareProductTermsForm.get('totalShares').hasError('min')) {
+        <mat-error>
+          {{ 'labels.inputs.Total Number of Shares' | translate }} must be at least <strong>1</strong>
+        </mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field class="flex-48">
@@ -23,11 +39,19 @@
         matTooltip="{{ 'tooltips.Total number of shares that an orgranization' | translate }}"
         formControlName="sharesIssued"
         required
+        min="1"
       />
-      <mat-error>
-        {{ 'labels.inputs.Shares to be Issued' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
+      @if (shareProductTermsForm.get('sharesIssued').hasError('required')) {
+        <mat-error>
+          {{ 'labels.inputs.Shares to be Issued' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
+      @if (shareProductTermsForm.get('sharesIssued').hasError('min')) {
+        <mat-error>
+          {{ 'labels.inputs.Shares to be Issued' | translate }} must be at least <strong>1</strong>
+        </mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field class="flex-48">
@@ -38,11 +62,17 @@
         matTooltip="{{ 'tooltips.Unit/Nominal Price of each share' | translate }}"
         formControlName="unitPrice"
         required
+        min="1"
       />
-      <mat-error>
-        {{ 'labels.inputs.Nominal Price' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
+      @if (shareProductTermsForm.get('unitPrice').hasError('required')) {
+        <mat-error>
+          {{ 'labels.inputs.Nominal Price' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
+      @if (shareProductTermsForm.get('unitPrice').hasError('min')) {
+        <mat-error> {{ 'labels.inputs.Nominal Price' | translate }} must be at least <strong>1</strong> </mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field class="flex-48">

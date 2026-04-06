@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { UntypedFormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -19,7 +27,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
-import { BusinessStepConfigurationService } from '@fineract/client';
+import { SystemService } from 'app/system/system.service';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatTooltip } from '@angular/material/tooltip';
@@ -57,6 +65,10 @@ export interface JobStep {
   ]
 })
 export class WorkflowJobsComponent implements OnInit {
+  private systemService = inject(SystemService);
+  dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
+
   stepOrderHasChanged = false;
 
   jobNameOptions: any = [];
@@ -76,15 +88,9 @@ export class WorkflowJobsComponent implements OnInit {
     'actions'
   ];
 
-  constructor(
-    private buisnessStepConfigService: BusinessStepConfigurationService,
-    public dialog: MatDialog,
-    private translateService: TranslateService
-  ) {}
-
   ngOnInit(): void {
-    this.buisnessStepConfigService
-      .retrieveAllConfiguredBusinessJobs()
+    this.systemService
+      .getWorkflowJobNames()
       .toPromise()
       .then((jobNames) => {
         this.jobNameOptions = jobNames.businessJobs.sort(function (a: any, b: any) {
@@ -98,7 +104,7 @@ export class WorkflowJobsComponent implements OnInit {
    * @param {string} jobName Value to Workflow Job name.
    */
   getWorkflowJobSteps(jobName: string) {
-    this.buisnessStepConfigService.retrieveAllConfiguredBusinessStep({ jobName }).subscribe((data: any) => {
+    this.systemService.getWorkflowJobSteps(jobName).subscribe((data: any) => {
       this.jobStepName = jobName;
       this.jobStepsData = data.businessSteps.sort(function (a: JobStep, b: JobStep) {
         return a.order - b.order;
@@ -139,19 +145,13 @@ export class WorkflowJobsComponent implements OnInit {
     if (this.jobStepName != null) {
       const jobDatas = this.jobStepName.split('_');
       this.jobAvailableStepsData = [];
-      this.buisnessStepConfigService
-        .retrieveAllAvailableBusinessStep({ jobName: jobDatas[0] })
+      this.systemService
+        .getAvailablesJobSteps(jobDatas[0])
         .toPromise()
         .then((jobData) => {
-          this.jobAvailableStepsData = jobData.availableBusinessSteps
-            .map((step: any, idx: number) => ({
-              stepName: step.stepName,
-              stepDescription: step.stepDescription,
-              order: idx + 1 // or assign a default value if needed
-            }))
-            .sort(function (a: JobStep, b: JobStep) {
-              return a.stepName.localeCompare(b.stepName);
-            });
+          this.jobAvailableStepsData = jobData.availableBusinessSteps.sort(function (a: any, b: any) {
+            return a.stepName - b.stepName;
+          });
 
           const tmpStepsNames: any = [];
           this.jobStepsData.forEach((step: any) => {
@@ -177,7 +177,6 @@ export class WorkflowJobsComponent implements OnInit {
                 options: { label: 'stepDescription', value: 'stepName', data: this.jobAvailableStepsData },
                 order: 1
               })
-
             ];
             const data = {
               title: this.translateService.instant('labels.text.Add Job Step to Workflow'),
@@ -207,11 +206,8 @@ export class WorkflowJobsComponent implements OnInit {
       businessSteps: this.jobStepsData
     };
 
-    this.buisnessStepConfigService
-      .updateJobBusinessStepConfig({
-        jobName: this.jobStepName as string,
-        businessStepRequest: payload
-      })
+    this.systemService
+      .putWorkflowJobSteps(this.jobStepName, payload)
       .toPromise()
       .then((data) => {
         this.stepOrderHasChanged = false;

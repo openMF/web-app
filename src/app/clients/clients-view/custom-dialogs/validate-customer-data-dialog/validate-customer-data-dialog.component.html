@@ -1,0 +1,63 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h2 mat-dialog-title class="dialog-title">
+  {{ 'labels.heading.Do you want to mark the Customer Data as valid?' | translate }}
+</h2>
+
+<mat-dialog-content class="dialog-content">
+  <form [formGroup]="validationForm">
+    <table formArrayName="rows" class="validation-table">
+      <thead>
+        <tr>
+          <th class="col-data">{{ 'labels.inputs.Data' | translate }}</th>
+          @for (reason of reasonTypes; track reason.key) {
+            <th class="col-reason">{{ reason.labelKey | translate }}</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (dt of dataTypes; track dt.key; let i = $index) {
+          <tr [formGroupName]="i">
+            <td class="col-data">
+              <label class="data-label">
+                <mat-checkbox
+                  formControlName="selected"
+                  color="primary"
+                  [attr.aria-label]="dt.labelKey | translate"
+                ></mat-checkbox>
+                <span class="label-text">{{ dt.labelKey | translate }}</span>
+              </label>
+            </td>
+            @for (reason of reasonTypes; track reason.key) {
+              <td class="col-reason">
+                <mat-checkbox
+                  [formControlName]="reason.key"
+                  color="primary"
+                  [attr.aria-label]="(dt.labelKey | translate) + ' – ' + (reason.labelKey | translate)"
+                ></mat-checkbox>
+              </td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-raised-button color="primary" mat-dialog-close class="btn-cancel">
+    {{ 'labels.buttons.Cancel' | translate }}
+  </button>
+  <button mat-raised-button color="warn" class="btn-incomplete" (click)="submit('INCOMPLETE')">
+    {{ 'labels.buttons.INCOMPLETE' | translate }}
+  </button>
+  <button mat-raised-button color="primary" class="btn-complete" (click)="submit('COMPLETE')">
+    {{ 'labels.buttons.COMPLETE' | translate }}
+  </button>
+</mat-dialog-actions>

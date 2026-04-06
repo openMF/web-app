@@ -1,27 +1,32 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { ProvisioningCriteriaService } from '@fineract/client';
+import { OrganizationService } from '../../organization.service';
 
 /**
  * Charges data resolver.
  */
 @Injectable()
 export class LoanProvisioningCriteriasResolver {
-  /**
-   * @param {ProvisioningCriteriaService} provisioningCriteriaService Provisioning Criteria service.
-   */
-  constructor(private provisioningCriteriaService: ProvisioningCriteriaService) {}
+  private organizationService = inject(OrganizationService);
 
   /**
    * Returns the products data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.provisioningCriteriaService.retrieveAllProvisioningCriterias();
+    return this.organizationService.getProvisioningCriterias();
   }
 }
