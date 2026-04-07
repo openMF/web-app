@@ -4410,5 +4410,59 @@
     "ZW": "Zimbabvė"
   },
   "Deactivate Role": "Deaktyvuoti vaidmenį",
-  "Delete Role": "Ištrinti vaidmenį"
+  "Delete Role": "Ištrinti vaidmenį",
+  "clients": {
+    "actions": {
+      "close": {
+        "success": "Klientas sėkmingai uždarytas."
+      },
+      "reject": {
+        "success": "Klientas sėkmingai atmestas."
+      },
+      "withdraw": {
+        "success": "Klientas sėkmingai atšauktas."
+      },
+      "reactivate": {
+        "success": "Klientas sėkmingai reaktyvuotas.",
+        "failure": "Nepavyko reaktyvuoti kliento."
+      },
+      "activate": {
+        "success": "Klientas sėkmingai aktyvuotas.",
+        "failure": "Nepavyko aktyvuoti kliento."
+      },
+      "acceptTransfer": {
+        "success": "Kliento pervedimas sėkmingai priimtas."
+      },
+      "rejectTransfer": {
+        "success": "Kliento pervedimas sėkmingai atmestas."
+      },
+      "undoTransfer": {
+        "success": "Kliento pervedimas sėkmingai atšauktas."
+      },
+      "undoRejection": {
+        "success": "Kliento atmetimas sėkmingai atšauktas."
+      },
+      "transfer": {
+        "success": "Kliento pervedimas sėkmingai pasiūlytas.",
+        "failure": "Nepavyko pasiūlyti kliento pervedimo."
+      },
+      "addCharge": {
+        "success": "Kliento mokestis sėkmingai pridėtas."
+      },
+      "addCollateral": {
+        "success": "Kliento užstatas sėkmingai pridėtas."
+      },
+      "assignStaff": {
+        "success": "Darbuotojas sėkmingai priskirtas klientui.",
+        "failure": "Nepavyko priskirti darbuotojo klientui."
+      },
+      "updateSavingsAccount": {
+        "success": "Kliento taupomoji sąskaita sėkmingai atnaujinta."
+      },
+      "takeSurvey": {
+        "success": "Apklausa sėkmingai pateikta.",
+        "failure": "Nepavyko pateikti apklausos."
+      }
+    }
+  }
 }

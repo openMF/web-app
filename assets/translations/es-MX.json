@@ -4425,5 +4425,59 @@
     "YE": "Yemen",
     "ZM": "Zambia",
     "ZW": "Zimbabue"
+  },
+  "clients": {
+    "actions": {
+      "close": {
+        "success": "Cliente cerrado con éxito."
+      },
+      "reject": {
+        "success": "Cliente rechazado con éxito."
+      },
+      "withdraw": {
+        "success": "Cliente retirado con éxito."
+      },
+      "reactivate": {
+        "success": "Cliente reactivado con éxito.",
+        "failure": "Error al reactivar al cliente."
+      },
+      "activate": {
+        "success": "Cliente activado con éxito.",
+        "failure": "Error al activar el cliente."
+      },
+      "acceptTransfer": {
+        "success": "Transferencia de cliente aceptada con éxito."
+      },
+      "rejectTransfer": {
+        "success": "Transferencia de cliente rechazada con éxito."
+      },
+      "undoTransfer": {
+        "success": "Transferencia de cliente deshecha con éxito."
+      },
+      "undoRejection": {
+        "success": "Rechazo de cliente deshecho con éxito."
+      },
+      "transfer": {
+        "success": "Transferencia de cliente propuesta con éxito.",
+        "failure": "Error al proponer la transferencia del cliente."
+      },
+      "addCharge": {
+        "success": "Cargo del cliente añadido con éxito."
+      },
+      "addCollateral": {
+        "success": "Garantía del cliente añadida con éxito."
+      },
+      "assignStaff": {
+        "success": "Asesor asignado al cliente con éxito.",
+        "failure": "Error al asignar asesor al cliente."
+      },
+      "updateSavingsAccount": {
+        "success": "Cuenta de ahorros del cliente actualizada con éxito."
+      },
+      "takeSurvey": {
+        "success": "Encuesta enviada con éxito.",
+        "failure": "Error al enviar la encuesta."
+      }
+    }
   }
 }

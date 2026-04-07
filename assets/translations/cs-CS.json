@@ -4432,5 +4432,59 @@
     "ZW": "Zimbabwe"
   },
   "Deactivate Role": "Deaktivovat roli",
-  "Delete Role": "Smazat roli"
+  "Delete Role": "Smazat roli",
+  "clients": {
+    "actions": {
+      "close": {
+        "success": "Klient byl úspěšně uzavřen."
+      },
+      "reject": {
+        "success": "Klient byl úspěšně odmítnut."
+      },
+      "withdraw": {
+        "success": "Klient byl úspěšně stažen."
+      },
+      "reactivate": {
+        "success": "Klient byl úspěšně reaktivován.",
+        "failure": "Nepodařilo se reaktivovat klienta."
+      },
+      "activate": {
+        "success": "Klient byl úspěšně aktivován.",
+        "failure": "Nepodařilo se aktivovat klienta."
+      },
+      "acceptTransfer": {
+        "success": "Převod klienta byl úspěšně přijat."
+      },
+      "rejectTransfer": {
+        "success": "Převod klienta byl úspěšně odmítnut."
+      },
+      "undoTransfer": {
+        "success": "Převod klienta byl úspěšně zrušen."
+      },
+      "undoRejection": {
+        "success": "Odmítnutí klienta bylo úspěšně zrušeno."
+      },
+      "transfer": {
+        "success": "Převod klienta byl úspěšně navržen.",
+        "failure": "Nepodařilo se navrhnout převod klienta."
+      },
+      "addCharge": {
+        "success": "Poplatek klienta byl úspěšně přidán."
+      },
+      "addCollateral": {
+        "success": "Kolaterál klienta byl úspěšně přidán."
+      },
+      "assignStaff": {
+        "success": "Personál byl úspěšně přidělen ke klientovi.",
+        "failure": "Nepodařilo se přidělit personál ke klientovi."
+      },
+      "updateSavingsAccount": {
+        "success": "Spořicí účet klienta byl úspěšně aktualizován."
+      },
+      "takeSurvey": {
+        "success": "Průzkum byl úspěšně odeslán.",
+        "failure": "Nepodařilo se odeslat průzkum."
+      }
+    }
+  }
 }

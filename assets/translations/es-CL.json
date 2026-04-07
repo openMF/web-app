@@ -4411,5 +4411,59 @@
     "ZW": "Zimbabue"
   },
   "Deactivate Role": "Desactivar Rol",
-  "Delete Role": "Borrar Rol"
+  "Delete Role": "Borrar Rol",
+  "clients": {
+    "actions": {
+      "close": {
+        "success": "Cliente cerrado exitosamente."
+      },
+      "reject": {
+        "success": "Cliente rechazado exitosamente."
+      },
+      "withdraw": {
+        "success": "Cliente retirado exitosamente."
+      },
+      "reactivate": {
+        "success": "Cliente reactivado exitosamente.",
+        "failure": "Error al reactivar el cliente."
+      },
+      "activate": {
+        "success": "Cliente activado exitosamente.",
+        "failure": "Error al activar el cliente."
+      },
+      "acceptTransfer": {
+        "success": "Transferencia de cliente aceptada exitosamente."
+      },
+      "rejectTransfer": {
+        "success": "Transferencia de cliente rechazada exitosamente."
+      },
+      "undoTransfer": {
+        "success": "Transferencia de cliente deshecha exitosamente."
+      },
+      "undoRejection": {
+        "success": "Rechazo de cliente deshecho exitosamente."
+      },
+      "transfer": {
+        "success": "Transferencia de cliente propuesta exitosamente.",
+        "failure": "Error al proponer la transferencia del cliente."
+      },
+      "addCharge": {
+        "success": "Comisión del cliente agregado exitosamente."
+      },
+      "addCollateral": {
+        "success": "Garantía del cliente agregada exitosamente."
+      },
+      "assignStaff": {
+        "success": "Asesor asignado al cliente exitosamente.",
+        "failure": "Error al asignar asesor al cliente."
+      },
+      "updateSavingsAccount": {
+        "success": "Cuenta de ahorros del cliente actualizada exitosamente."
+      },
+      "takeSurvey": {
+        "success": "Encuesta enviada exitosamente.",
+        "failure": "Error al enviar la encuesta."
+      }
+    }
+  }
 }

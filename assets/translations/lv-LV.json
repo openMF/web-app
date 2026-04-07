@@ -4409,5 +4409,59 @@
     "ZW": "Zimbabve"
   },
   "Deactivate Role": "Deaktivēt lomu",
-  "Delete Role": "Dzēst lomu"
+  "Delete Role": "Dzēst lomu",
+  "clients": {
+    "actions": {
+      "close": {
+        "success": "Klients veiksmīgi slēgts."
+      },
+      "reject": {
+        "success": "Klients veiksmīgi noraidīts."
+      },
+      "withdraw": {
+        "success": "Klients veiksmīgi atsaukts."
+      },
+      "reactivate": {
+        "success": "Klients veiksmīgi reaktivēts.",
+        "failure": "Neizdevās reaktivēt klientu."
+      },
+      "activate": {
+        "success": "Klients veiksmīgi aktivizēts.",
+        "failure": "Neizdevās aktivizēt klientu."
+      },
+      "acceptTransfer": {
+        "success": "Klienta pārsūtīšana veiksmīgi pieņemta."
+      },
+      "rejectTransfer": {
+        "success": "Klienta pārsūtīšana veiksmīgi noraidīta."
+      },
+      "undoTransfer": {
+        "success": "Klienta pārsūtīšana veiksmīgi atcelta."
+      },
+      "undoRejection": {
+        "success": "Klienta noraidīšana veiksmīgi atcelta."
+      },
+      "transfer": {
+        "success": "Klienta pārsūtīšana veiksmīgi ierosināta.",
+        "failure": "Neizdevās ierosināt klienta pārsūtīšanu."
+      },
+      "addCharge": {
+        "success": "Klienta maksa veiksmīgi pievienota."
+      },
+      "addCollateral": {
+        "success": "Klienta nodrošinājums veiksmīgi pievienots."
+      },
+      "assignStaff": {
+        "success": "Darbinieks veiksmīgi piesaistīts klientam.",
+        "failure": "Neizdevās piesaistīt darbinieku klientam."
+      },
+      "updateSavingsAccount": {
+        "success": "Klienta krājkonts veiksmīgi atjaunināts."
+      },
+      "takeSurvey": {
+        "success": "Aptauja veiksmīgi iesniegta.",
+        "failure": "Neizdevās iesniegt aptauju."
+      }
+    }
+  }
 }

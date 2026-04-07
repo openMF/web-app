@@ -4433,5 +4433,59 @@
     "ZW": "Simbabwe"
   },
   "Deactivate Role": "Rolle deaktivieren",
-  "Delete Role": "Rolle löschen"
+  "Delete Role": "Rolle löschen",
+  "clients": {
+    "actions": {
+      "close": {
+        "success": "Kunde erfolgreich geschlossen."
+      },
+      "reject": {
+        "success": "Kunde erfolgreich abgelehnt."
+      },
+      "withdraw": {
+        "success": "Kunde erfolgreich zurückgezogen."
+      },
+      "reactivate": {
+        "success": "Kunde erfolgreich reaktiviert.",
+        "failure": "Reaktivierung des Kunden fehlgeschlagen."
+      },
+      "activate": {
+        "success": "Kunde erfolgreich aktiviert.",
+        "failure": "Aktivierung des Kunden fehlgeschlagen."
+      },
+      "acceptTransfer": {
+        "success": "Kundentransfer erfolgreich akzeptiert."
+      },
+      "rejectTransfer": {
+        "success": "Kundentransfer erfolgreich abgelehnt."
+      },
+      "undoTransfer": {
+        "success": "Kundentransfer erfolgreich rückgängig gemacht."
+      },
+      "undoRejection": {
+        "success": "Kundenablehnung erfolgreich rückgängig gemacht."
+      },
+      "transfer": {
+        "success": "Kundentransfer erfolgreich vorgeschlagen.",
+        "failure": "Vorschlag des Kundentransfers fehlgeschlagen."
+      },
+      "addCharge": {
+        "success": "Kundengebühr erfolgreich hinzugefügt."
+      },
+      "addCollateral": {
+        "success": "Kundensicherheit erfolgreich hinzugefügt."
+      },
+      "assignStaff": {
+        "success": "Personal erfolgreich dem Kunden zugewiesen.",
+        "failure": "Personal konnte dem Kunden nicht zugewiesen werden."
+      },
+      "updateSavingsAccount": {
+        "success": "Kundensparkonto erfolgreich aktualisiert."
+      },
+      "takeSurvey": {
+        "success": "Umfrage erfolgreich eingereicht.",
+        "failure": "Umfrage konnte nicht eingereicht werden."
+      }
+    }
+  }
 }

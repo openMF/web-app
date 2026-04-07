@@ -4542,5 +4542,59 @@
     "YE": "Yemen",
     "ZM": "Zambia",
     "ZW": "Zimbabwe"
+  },
+  "clients": {
+    "actions": {
+      "close": {
+        "success": "Client closed successfully."
+      },
+      "reject": {
+        "success": "Client rejected successfully."
+      },
+      "withdraw": {
+        "success": "Client withdrawn successfully."
+      },
+      "reactivate": {
+        "success": "Client reactivated successfully.",
+        "failure": "Failed to reactivate client."
+      },
+      "activate": {
+        "success": "Client activated successfully.",
+        "failure": "Failed to activate client."
+      },
+      "acceptTransfer": {
+        "success": "Client transfer accepted successfully."
+      },
+      "rejectTransfer": {
+        "success": "Client transfer rejected successfully."
+      },
+      "undoTransfer": {
+        "success": "Client transfer undone successfully."
+      },
+      "undoRejection": {
+        "success": "Client rejection undone successfully."
+      },
+      "transfer": {
+        "success": "Client transfer proposed successfully.",
+        "failure": "Failed to propose client transfer."
+      },
+      "addCharge": {
+        "success": "Client charge added successfully."
+      },
+      "addCollateral": {
+        "success": "Client collateral added successfully."
+      },
+      "assignStaff": {
+        "success": "Staff assigned to client successfully.",
+        "failure": "Failed to assign staff to client."
+      },
+      "updateSavingsAccount": {
+        "success": "Client savings account updated successfully."
+      },
+      "takeSurvey": {
+        "success": "Survey submitted successfully.",
+        "failure": "Failed to submit survey."
+      }
+    }
   }
 }

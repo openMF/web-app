@@ -4409,5 +4409,59 @@
     "ZW": "짐바브웨"
   },
   "Deactivate Role": "역할 비활성화",
-  "Delete Role": "역할 삭제"
+  "Delete Role": "역할 삭제",
+  "clients": {
+    "actions": {
+      "close": {
+        "success": "고객이 성공적으로 해지되었습니다."
+      },
+      "reject": {
+        "success": "고객이 성공적으로 거절되었습니다."
+      },
+      "withdraw": {
+        "success": "고객이 성공적으로 탈퇴되었습니다."
+      },
+      "reactivate": {
+        "success": "고객이 성공적으로 재활성화되었습니다.",
+        "failure": "고객 재활성화에 실패했습니다."
+      },
+      "activate": {
+        "success": "고객이 성공적으로 활성화되었습니다.",
+        "failure": "고객 활성화에 실패했습니다."
+      },
+      "acceptTransfer": {
+        "success": "고객 이체가 성공적으로 수락되었습니다."
+      },
+      "rejectTransfer": {
+        "success": "고객 이체가 성공적으로 거절되었습니다."
+      },
+      "undoTransfer": {
+        "success": "고객 이체가 성공적으로 취소되었습니다."
+      },
+      "undoRejection": {
+        "success": "고객 거절이 성공적으로 취소되었습니다."
+      },
+      "transfer": {
+        "success": "고객 이체가 성공적으로 제안되었습니다.",
+        "failure": "고객 이체 제안에 실패했습니다."
+      },
+      "addCharge": {
+        "success": "고객 수수료가 성공적으로 추가되었습니다."
+      },
+      "addCollateral": {
+        "success": "고객 담보가 성공적으로 추가되었습니다."
+      },
+      "assignStaff": {
+        "success": "직원이 고객에게 성공적으로 배정되었습니다.",
+        "failure": "직원 배정에 실패했습니다."
+      },
+      "updateSavingsAccount": {
+        "success": "고객 저축 계좌가 성공적으로 업데이트되었습니다."
+      },
+      "takeSurvey": {
+        "success": "설문조사가 성공적으로 제출되었습니다.",
+        "failure": "설문조사 제출에 실패했습니다."
+      }
+    }
+  }
 }

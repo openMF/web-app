@@ -4405,5 +4405,59 @@
     "ZW": "Zimbabwe"
   },
   "Deactivate Role": "Zima Jukumu",
-  "Delete Role": "Futa Jukumu"
+  "Delete Role": "Futa Jukumu",
+  "clients": {
+    "actions": {
+      "close": {
+        "success": "Mteja amefungwa kwa mafanikio."
+      },
+      "reject": {
+        "success": "Mteja amekataliwa kwa mafanikio."
+      },
+      "withdraw": {
+        "success": "Mteja ameondolewa kwa mafanikio."
+      },
+      "reactivate": {
+        "success": "Mteja amerejeshwa kwa mafanikio.",
+        "failure": "Imeshindwa kumrejesha mteja."
+      },
+      "activate": {
+        "success": "Mteja amewashwa kwa mafanikio.",
+        "failure": "Imeshindikana kumwezesha mteja."
+      },
+      "acceptTransfer": {
+        "success": "Uhamisho wa mteja umekubaliwa kwa mafanikio."
+      },
+      "rejectTransfer": {
+        "success": "Uhamisho wa mteja umekataliwa kwa mafanikio."
+      },
+      "undoTransfer": {
+        "success": "Uhamisho wa mteja umetenguliwa kwa mafanikio."
+      },
+      "undoRejection": {
+        "success": "Kukataliwa kwa mteja umetenguliwa kwa mafanikio."
+      },
+      "transfer": {
+        "success": "Uhamisho wa mteja umependekezwa kwa mafanikio.",
+        "failure": "Imeshindwa kupendekeza uhamisho wa mteja."
+      },
+      "addCharge": {
+        "success": "Malipo ya mteja yameongezwa kwa mafanikio."
+      },
+      "addCollateral": {
+        "success": "Dhamana ya mteja imeongezwa kwa mafanikio."
+      },
+      "assignStaff": {
+        "success": "Mfanyakazi amepangiwa mteja kwa mafanikio.",
+        "failure": "Imeshindwa kumpangia mfanyakazi kwa mteja."
+      },
+      "updateSavingsAccount": {
+        "success": "Akaunti ya akiba ya mteja imesasishwa kwa mafanikio."
+      },
+      "takeSurvey": {
+        "success": "Utafiti umewasilishwa kwa mafanikio.",
+        "failure": "Imeshindwa kuwasilisha utafiti."
+      }
+    }
+  }
 }

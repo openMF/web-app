@@ -4408,5 +4408,59 @@
     "ZW": "Zimbabwe"
   },
   "Deactivate Role": "Disattiva ruolo",
-  "Delete Role": "Elimina ruolo"
+  "Delete Role": "Elimina ruolo",
+  "clients": {
+    "actions": {
+      "close": {
+        "success": "Cliente chiuso con successo."
+      },
+      "reject": {
+        "success": "Cliente rifiutato con successo."
+      },
+      "withdraw": {
+        "success": "Cliente ritirato con successo."
+      },
+      "reactivate": {
+        "success": "Cliente riattivato con successo.",
+        "failure": "Impossibile riattivare il cliente."
+      },
+      "activate": {
+        "success": "Cliente attivato con successo.",
+        "failure": "Impossibile attivare il cliente."
+      },
+      "acceptTransfer": {
+        "success": "Trasferimento cliente accettato con successo."
+      },
+      "rejectTransfer": {
+        "success": "Trasferimento cliente rifiutato con successo."
+      },
+      "undoTransfer": {
+        "success": "Trasferimento cliente annullato con successo."
+      },
+      "undoRejection": {
+        "success": "Rifiuto cliente annullato con successo."
+      },
+      "transfer": {
+        "success": "Trasferimento cliente proposto con successo.",
+        "failure": "Impossibile proporre il trasferimento del cliente."
+      },
+      "addCharge": {
+        "success": "Addebito cliente aggiunto con successo."
+      },
+      "addCollateral": {
+        "success": "Garanzia cliente aggiunta con successo."
+      },
+      "assignStaff": {
+        "success": "Personale assegnato al cliente con successo.",
+        "failure": "Impossibile assegnare il personale al cliente."
+      },
+      "updateSavingsAccount": {
+        "success": "Conto di risparmio del cliente aggiornato con successo."
+      },
+      "takeSurvey": {
+        "success": "Sondaggio inviato con successo.",
+        "failure": "Impossibile inviare il sondaggio."
+      }
+    }
+  }
 }
