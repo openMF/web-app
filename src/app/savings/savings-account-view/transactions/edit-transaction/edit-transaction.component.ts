@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -11,7 +19,7 @@ import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
-import { SavingsAccountTransactionsService } from '@fineract/client';
+import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Currency } from 'app/shared/models/general.model';
 import { InputAmountComponent } from '../../../../shared/input-amount/input-amount.component';
@@ -32,6 +40,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditTransactionComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dateUtils = inject(Dates);
+  private savingsService = inject(SavingsService);
+  private settingsService = inject(SettingsService);
+
   /** Minimum Due Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Due Date allowed. */
@@ -57,20 +72,13 @@ export class EditTransactionComponent implements OnInit {
   /**
    * Retrieves the Saving Account transaction template data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {SavingsAccountTransactionsService} savingsAccountTransactionsService Savings Account Transactions Service.
+   * @param {SavingsService} savingsService Savings Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Dates} dateUtils Date Utils.
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private dateUtils: Dates,
-    private savingsAccountTransactionsService: SavingsAccountTransactionsService,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { savingsAccountTransactionTemplate: any }) => {
       this.transactionTemplateData = data.savingsAccountTransactionTemplate;
       if (data.savingsAccountTransactionTemplate.currency) {
@@ -147,13 +155,8 @@ export class EditTransactionComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.savingsAccountTransactionsService
-      .adjustTransaction1({
-        savingsId: Number(this.savingAccountId),
-        transactionId: Number(this.transactionTemplateData.id),
-        postSavingsAccountBulkReversalTransactionsRequest: data,
-        command: 'modify'
-      })
+    this.savingsService
+      .executeSavingsAccountTransactionsCommand(this.savingAccountId, 'modify', data, this.transactionTemplateData.id)
       .subscribe((res) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });

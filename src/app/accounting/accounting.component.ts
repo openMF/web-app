@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { AfterViewInit, Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, TemplateRef, ViewChild, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -28,6 +36,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class AccountingComponent implements AfterViewInit {
+  private router = inject(Router);
+  private configurationWizardService = inject(ConfigurationWizardService);
+  private popoverService = inject(PopoverService);
+
   /* Reference of Chart of Accounts */
   @ViewChild('chartofAccounts') chartofAccounts: ElementRef<any>;
   /* Template for popover on Chart of Accounts */
@@ -52,17 +64,6 @@ export class AccountingComponent implements AfterViewInit {
   arrowBooleans: boolean[] = new Array(10).fill(false);
 
   /**
-   * @param {Router} router Router.
-   * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
-   * @param {PopoverService} popoverService PopoverService.
-   */
-  constructor(
-    private router: Router,
-    private configurationWizardService: ConfigurationWizardService,
-    private popoverService: PopoverService
-  ) {}
-
-  /**
    * Popover function
    * @param template TemplateRef<any>.
    * @param target HTMLElement | ElementRef<any>.
@@ -83,17 +84,17 @@ export class AccountingComponent implements AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showChartofAccounts === true) {
+    if (this.configurationWizardService.showChartofAccounts) {
       setTimeout(() => {
         this.showPopover(this.templateChartofAccounts, this.chartofAccounts.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showAccountsLinked === true) {
+    if (this.configurationWizardService.showAccountsLinked) {
       setTimeout(() => {
         this.showPopover(this.templateAccountsLinked, this.accountsLinked.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showMigrateOpeningBalances === true) {
+    if (this.configurationWizardService.showMigrateOpeningBalances) {
       setTimeout(() => {
         this.showPopover(
           this.templateMigrateOpeningBalances,
@@ -103,12 +104,12 @@ export class AccountingComponent implements AfterViewInit {
         );
       });
     }
-    if (this.configurationWizardService.showClosingEntries === true) {
+    if (this.configurationWizardService.showClosingEntries) {
       setTimeout(() => {
         this.showPopover(this.templateClosingEntries, this.closingEntries.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showCreateJournalEntries === true) {
+    if (this.configurationWizardService.showCreateJournalEntries) {
       setTimeout(() => {
         this.showPopover(this.templateCreateJournalEntries, this.createJournalEntries.nativeElement, 'bottom', true);
       });

@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -19,7 +27,7 @@ import {
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { EntityDataTableService } from '@fineract/client';
+import { OrganizationService } from '../organization.service';
 
 /** Custom Components */
 import { DeleteDialogComponent } from '../../shared/delete-dialog/delete-dialog.component';
@@ -54,6 +62,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EntityDataTableChecksComponent implements OnInit {
+  private organizationService = inject(OrganizationService);
+  private route = inject(ActivatedRoute);
+  private dialog = inject(MatDialog);
+
   /** Entity Data Table Checks data. */
   entityDataTableChecksData: any;
   /** Columns to be displayed in entity data table checks table. */
@@ -94,15 +106,11 @@ export class EntityDataTableChecksComponent implements OnInit {
 
   /**
    * Retrieves the entity data table checks data from `resolve`.
-   * @param {EntityDataTableService} entityDataTableService Entity Data Table Service.
+   * @param {OrganizationService} organizationService Organization Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(
-    private entityDataTableService: EntityDataTableService,
-    private route: ActivatedRoute,
-    private dialog: MatDialog
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { entityDataTableChecks: any }) => {
       this.entityDataTableChecksData = data.entityDataTableChecks.pageItems;
     });
@@ -124,17 +132,18 @@ export class EntityDataTableChecksComponent implements OnInit {
     this.setEntity();
   }
 
-  /**
-   * Sets Entity to its corresponding values
-   */
   setEntity() {
-    for (let i = 0; i < this.dataSource.data.length; i++) {
-      for (let j = 0; j < this.entityValues.length; j++) {
-        if (this.entityValues[j].code === this.dataSource.data[i].entity) {
-          this.dataSource.data[i].entity = this.entityValues[j].value;
-        }
+    const entityMap = new Map<string, string>();
+    this.entityValues.forEach((entity: any) => {
+      entityMap.set(entity.code, entity.value);
+    });
+
+    this.dataSource.data.forEach((item: any) => {
+      const entityValue = entityMap.get(item.entity);
+      if (entityValue) {
+        item.entity = entityValue;
       }
-    }
+    });
   }
 
   /**
@@ -164,14 +173,12 @@ export class EntityDataTableChecksComponent implements OnInit {
     });
     deleteEntityDataTableCheckDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.entityDataTableService
-          .deleteDatatable1({ entityDatatableCheckId: Number(entityDataTableCheckId) })
-          .subscribe(() => {
-            this.entityDataTableChecksData = this.entityDataTableChecksData.filter(
-              (entityDataTableChecks: any) => entityDataTableChecks.id !== Number(entityDataTableCheckId)
-            );
-            this.dataSource.data = this.entityDataTableChecksData;
-          });
+        this.organizationService.deleteEntityDataTableCheck(entityDataTableCheckId).subscribe(() => {
+          this.entityDataTableChecksData = this.entityDataTableChecksData.filter(
+            (entityDataTableChecks: any) => entityDataTableChecks.id !== entityDataTableCheckId
+          );
+          this.dataSource.data = this.entityDataTableChecksData;
+        });
       }
     });
   }

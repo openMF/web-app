@@ -1,7 +1,15 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { NgIf, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import {
   MatTable,
   MatColumnDef,
@@ -19,7 +27,7 @@ import { StatusLookupPipe } from '../../../pipes/status-lookup.pipe';
 import { AccountsFilterPipe } from '../../../pipes/accounts-filter.pipe';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { GroupsService } from '@fineract/client';
+import { GroupsService } from '../../groups.service';
 
 /**
  * Groups View General Tab Component.
@@ -48,6 +56,9 @@ import { GroupsService } from '@fineract/client';
   ]
 })
 export class GeneralTabComponent {
+  private route = inject(ActivatedRoute);
+  private groupsService = inject(GroupsService);
+
   /** Group's all accounts data */
   groupAccountData: any;
   /** Group's loan accounts data */
@@ -124,10 +135,7 @@ export class GeneralTabComponent {
   /** Boolean for toggling savings accounts table */
   showClosedSavingAccounts = false;
 
-  constructor(
-    private route: ActivatedRoute,
-    private groupsService: GroupsService
-  ) {
+  constructor() {
     this.route.data.subscribe(
       (data: { groupAccountsData: any; groupClientMembers: any; groupSummary: any; glimData: any; gsimData: any }) => {
         this.glimAccounts = data.glimData;
@@ -147,7 +155,7 @@ export class GeneralTabComponent {
    * Refreshes group account data from backend (for GSIM/GLIM status/balance update)
    */
   refreshAccounts(groupId: string) {
-    this.groupsService.retrieveAccounts({ groupId: parseInt(groupId) }).subscribe((data: any) => {
+    this.groupsService.getGroupAccountsData(groupId).subscribe((data: any) => {
       this.groupAccountData = data;
       this.savingAccounts = data.savingsAccounts;
       this.loanAccounts = data.loanAccounts;

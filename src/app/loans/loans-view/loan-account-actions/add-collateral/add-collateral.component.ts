@@ -1,12 +1,19 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports. */
-import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 
 /** Custom Services. */
-import { LoanCollateralService } from '@fineract/client';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 
 /**
  * Add Collateral component.
@@ -20,27 +27,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     CdkTextareaAutosize
   ]
 })
-export class AddCollateralComponent implements OnInit {
-  @Input() dataObject: any;
+export class AddCollateralComponent extends LoanAccountActionsBaseComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
 
   /** Collateral form. */
   collateralForm: UntypedFormGroup;
-  /** Loan Id. */
-  loanId: string;
 
-  /**
-   * Retrieve data from `Resolver`.
-   * @param {FormBuilder} formBuilder Form Builder.
-   * @param {Router} router Router.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {LoanCollateralService} loanCollateralService loan collateral service.
-   */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private router: Router,
-    private route: ActivatedRoute,
-    private loanCollateralService: LoanCollateralService
-  ) {}
+  constructor() {
+    super();
+  }
 
   ngOnInit() {
     this.createAddCollateralForm();
@@ -71,16 +66,10 @@ export class AddCollateralComponent implements OnInit {
     this.collateralForm.patchValue({
       collateralTypeId: collateralTypeId
     });
-    const loanId = this.route.snapshot.params['loanId'];
     const collateralForm = this.collateralForm.value;
-    collateralForm.locale = 'en';
-    this.loanCollateralService
-      .createCollateral({
-        loanId: Number(loanId),
-        loansLoanIdCollateralsRequest: collateralForm
-      })
-      .subscribe((response: any) => {
-        this.router.navigate(['../../loan-collateral'], { relativeTo: this.route });
-      });
+    collateralForm.locale = this.settingsService.language.code;
+    this.loanService.createLoanCollateral(this.loanId, collateralForm).subscribe((response: any) => {
+      this.gotoLoanView('loan-collateral');
+    });
   }
 }

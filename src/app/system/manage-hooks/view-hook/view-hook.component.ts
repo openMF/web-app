@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
@@ -8,7 +16,7 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
 
 /** Custom Services */
 import { TranslateService } from '@ngx-translate/core';
-import { HooksService } from '@fineract/client';
+import { SystemService } from '../../system.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -27,6 +35,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewHookComponent {
+  private route = inject(ActivatedRoute);
+  private dialog = inject(MatDialog);
+  private systemService = inject(SystemService);
+  private router = inject(Router);
+  private translateService = inject(TranslateService);
+
   /** Hook Data. */
   hookData: any;
 
@@ -34,17 +48,11 @@ export class ViewHookComponent {
    * Retrieves the hook data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    * @param {MatDialog} dialog Dialog Reference.
-   * @param {HooksService} hooksService Hooks Service.
+   * @param {SystemService} systemService System Service.
    * @param {Router} router Router for navigation.
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private dialog: MatDialog,
-    private hooksService: HooksService,
-    private router: Router,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { hook: any }) => {
       this.hookData = data.hook;
     });
@@ -59,7 +67,7 @@ export class ViewHookComponent {
     });
     deleteHookDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.hooksService.deleteHook(this.hookData.id).subscribe(() => {
+        this.systemService.deleteHook(this.hookData.id).subscribe(() => {
           this.router.navigate(['/system/hooks']);
         });
       }

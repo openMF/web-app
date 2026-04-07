@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -22,7 +30,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 /** Custom Services */
 import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
 import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
-import { DataTablesService } from '@fineract/client';
+import { SystemService } from '../../system.service';
 
 /** Data Imports */
 import { appTableData, entitySubTypeData, savingsSubTypeData } from '../app-table-data';
@@ -70,6 +78,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateDataTableComponent implements OnInit, AfterViewInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private systemService = inject(SystemService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
+  private configurationWizardService = inject(ConfigurationWizardService);
+  private popoverService = inject(PopoverService);
+  private translateService = inject(TranslateService);
+
   /** Data Table Form */
   dataTableForm: UntypedFormGroup;
   /** Application Table Data */
@@ -118,7 +135,7 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
   /**
    * Retrieves the column codes data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {DataTablesService} dataTablesService Data Tables Service.
+   * @param {SystemService} systemService System Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog Reference.
@@ -126,16 +143,7 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private dataTablesService: DataTablesService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private dialog: MatDialog,
-    private configurationWizardService: ConfigurationWizardService,
-    private popoverService: PopoverService,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { columnCodes: any }) => {
       this.dataForDialog.columnCodes = data.columnCodes;
     });
@@ -270,16 +278,6 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
    * if successful redirects to view created data table.
    */
   submit() {
-    if (this.dataTableForm.invalid) {
-      this.dataTableForm.markAllAsTouched();
-      alert('Please fill all required fields.');
-      return;
-    }
-    // Validate columns
-    if (!this.columnData || this.columnData.length === 0) {
-      alert('Please add at least one column before submitting.');
-      return;
-    }
     const columns: any = [];
     this.columnData.forEach((column: DatatableColumn) => {
       columns.push({
@@ -292,32 +290,23 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
         indexed: column.isColumnIndexed
       });
     });
-    // Build payload
-    const payload = {
-      ...this.dataTableForm.value,
-      columns
-    };
-    if (payload.entitySubType == null || payload.entitySubType === '') {
+    this.dataTableForm.value.columns = columns;
+    const payload = this.dataTableForm.value;
+    if (this.dataTableForm.value.entitySubType == null || this.dataTableForm.value.entitySubType === '') {
       delete payload.entitySubType;
     }
-    // Ensure payload is passed as postDataTablesRequest if required by the service
-    this.dataTablesService.createDatatable({ postDataTablesRequest: payload }).subscribe({
-      next: (response: any) => {
-        if (this.configurationWizardService.showDatatablesForm === true) {
-          this.configurationWizardService.showDatatablesForm = false;
-          this.openDialog();
-        } else {
-          this.router.navigate(
-            [
-              '../',
-              response.resourceIdentifier
-            ],
-            { relativeTo: this.route }
-          );
-        }
-      },
-      error: (err) => {
-        alert('Failed to create data table. Please check your input and try again.');
+    this.systemService.createDataTable(payload).subscribe((response: any) => {
+      if (this.configurationWizardService.showDatatablesForm) {
+        this.configurationWizardService.showDatatablesForm = false;
+        this.openDialog();
+      } else {
+        this.router.navigate(
+          [
+            '../',
+            response.resourceIdentifier
+          ],
+          { relativeTo: this.route }
+        );
       }
     });
   }
@@ -342,7 +331,7 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showDatatablesForm === true) {
+    if (this.configurationWizardService.showDatatablesForm) {
       setTimeout(() => {
         this.showPopover(this.templateDataTableFormRef, this.dataTableFormRef.nativeElement, 'bottom', true);
       });

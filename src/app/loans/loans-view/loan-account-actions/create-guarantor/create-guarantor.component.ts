@@ -1,22 +1,22 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
-import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  Validators,
-  UntypedFormControl,
-  ReactiveFormsModule
-} from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Component, OnInit, AfterViewInit, inject } from '@angular/core';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 
 /** Custom Services */
-import { GuarantorsService } from '@fineract/client';
-import { ClientService } from '@fineract/client';
-import { SettingsService } from 'app/settings/settings.service';
+import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatCheckbox } from '@angular/material/checkbox';
-import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
+import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 
 /**
  * Create Guarantor Action
@@ -32,12 +32,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatAutocomplete
   ]
 })
-export class CreateGuarantorComponent implements OnInit, AfterViewInit {
-  @Input() dataObject: any;
+export class CreateGuarantorComponent extends LoanAccountActionsBaseComponent implements OnInit, AfterViewInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private dateUtils = inject(Dates);
+  private clientsService = inject(ClientsService);
+
   /** New Guarantor Form */
   newGuarantorForm: UntypedFormGroup;
-  /** Loan ID */
-  loanId: string;
   /** Relation Types */
   relationTypes: any;
   /** Show Client Details Form */
@@ -57,18 +58,9 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
-   * @param {GuarantorsService} guarantorsService Guarantors Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private guarantorsService: GuarantorsService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private dateUtils: Dates,
-    private clientsService: ClientService,
-    private settingsService: SettingsService
-  ) {
-    this.loanId = this.route.snapshot.params['loanId'];
+  constructor() {
+    super();
   }
 
   ngOnInit() {
@@ -143,16 +135,9 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
     if (this.newGuarantorForm.value.existingClient) {
       this.newGuarantorForm.get('name').valueChanges.subscribe((value: string) => {
         if (value.length >= 2) {
-          this.clientsService
-            .retrieveAll21({
-              displayName: value,
-              orphansOnly: true,
-              orderBy: 'displayName',
-              sortOrder: 'ASC'
-            })
-            .subscribe((data: any) => {
-              this.clientsData = data.pageItems;
-            });
+          this.clientsService.getFilteredClients('displayName', 'ASC', true, value).subscribe((data: any) => {
+            this.clientsData = data.pageItems;
+          });
         }
       });
     }
@@ -160,14 +145,9 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
 
   clientSelected(clientDetails: any) {
     this.accountOptions = [];
-    this.guarantorsService
-      .accountsTemplate({
-        loanId: Number(this.loanId),
-        clientId: clientDetails.id
-      })
-      .subscribe((response: any) => {
-        this.accountOptions = response.accountLinkingOptions;
-      });
+    this.loanService.guarantorAccountResource(this.loanId, clientDetails.id).subscribe((response: any) => {
+      this.accountOptions = response.accountLinkingOptions;
+    });
   }
 
   /**
@@ -207,13 +187,15 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
     delete data.existingClient;
     delete data.name;
 
-    this.guarantorsService
-      .createGuarantor({
-        loanId: Number(this.loanId),
-        guarantorsRequest: data
-      })
-      .subscribe((response: any) => {
-        this.router.navigate(['../../general'], { relativeTo: this.route });
-      });
+    // Remove empty optional fields to avoid API validation errors
+    Object.keys(data).forEach((key) => {
+      if (data[key] === '' || data[key] === null || data[key] === undefined) {
+        delete data[key];
+      }
+    });
+
+    this.loanService.createNewGuarantor(this.loanId, data).subscribe((response: any) => {
+      this.gotoLoanDefaultView();
+    });
   }
 }

@@ -1,0 +1,111 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.system-info-section {
+  padding: 24px 16px;
+}
+
+.system-info-table {
+  width: 100%;
+  max-width: 600px;
+  border-collapse: collapse;
+
+  tr {
+    border-bottom: 1px solid var(--md-sys-color-outline-variant, #e0e0e0);
+  }
+
+  td {
+    padding: 12px 16px;
+  }
+
+  .info-label {
+    font-weight: 500;
+    color: var(--md-sys-color-on-surface-variant, #555);
+    width: 40%;
+  }
+
+  .info-value {
+    font-weight: 600;
+    color: var(--md-sys-color-on-surface, #333);
+  }
+}
+
+.licensing-section {
+  padding: 16px 24px;
+
+  h2 {
+    color: #4caf50;
+    margin-top: 24px;
+    margin-bottom: 16px;
+    font-size: 1.5rem;
+    font-weight: 400;
+  }
+
+  p {
+    line-height: 1.6;
+    margin-bottom: 12px;
+    color: var(--md-sys-color-on-surface-variant, #555);
+  }
+
+  // stylelint-disable-next-line selector-pseudo-element-no-unknown
+  ::ng-deep a {
+    color: #4caf50;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  ul {
+    padding-left: 24px;
+    margin-top: 12px;
+
+    li {
+      margin-bottom: 8px;
+      line-height: 1.5;
+      color: var(--md-sys-color-on-surface-variant, #555);
+    }
+  }
+}
+
+// Dark theme support
+:host-context(.dark-theme) {
+  .system-info-table {
+    tr {
+      border-bottom-color: rgb(255 255 255 / 30%);
+    }
+
+    .info-label {
+      color: #bbb;
+    }
+
+    .info-value {
+      color: rgb(255 255 255 / 87%);
+    }
+  }
+
+  .licensing-section {
+    h2 {
+      color: #66bb6a;
+    }
+
+    p {
+      color: rgb(255 255 255 / 70%);
+    }
+
+    // stylelint-disable-next-line selector-pseudo-element-no-unknown
+    ::ng-deep a {
+      color: #0098ff;
+    }
+
+    ul li {
+      color: rgb(255 255 255 / 70%);
+    }
+  }
+}

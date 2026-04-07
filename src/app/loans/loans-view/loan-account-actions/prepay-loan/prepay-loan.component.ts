@@ -1,17 +1,16 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
-import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  Validators,
-  UntypedFormControl,
-  ReactiveFormsModule
-} from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 
 /** Custom Services */
-import { LoansService, LoanTransactionsService } from '@fineract/client';
-import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { Currency } from 'app/shared/models/general.model';
 import { InputAmountComponent } from '../../../../shared/input-amount/input-amount.component';
@@ -19,6 +18,7 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 
 /**
  * Loan Prepay Loan Option
@@ -35,10 +35,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     FormatNumberPipe
   ]
 })
-export class PrepayLoanComponent implements OnInit {
-  @Input() dataObject: any;
-  /** Loan Id */
-  loanId: string;
+export class PrepayLoanComponent extends LoanAccountActionsBaseComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private dateUtils = inject(Dates);
+
   /** Payment Types */
   paymentTypes: any;
   /** Principal Portion */
@@ -61,21 +61,12 @@ export class PrepayLoanComponent implements OnInit {
   /**
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {LoansService} loanService Loan Service.
-   * @param {LoanTransactionsService} loanTransactionsService Loan Transactions Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private loanService: LoansService,
-    private loanTransactionsService: LoanTransactionsService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private dateUtils: Dates,
-    private settingsService: SettingsService
-  ) {
-    this.loanId = this.route.snapshot.params['loanId'];
+  constructor() {
+    super();
   }
 
   /**
@@ -130,17 +121,14 @@ export class PrepayLoanComponent implements OnInit {
       transactionAmount: this.dataObject.amount
     });
     this.prepayLoanForm.get('transactionDate').valueChanges.subscribe((transactionDate: string) => {
-      this.loanTransactionsService
-        .retrieveTransactionTemplate({
-          loanId: parseInt(this.loanId, 10),
-          command: 'prepayLoan'
-        })
-        .subscribe((response: any) => {
-          this.prepayData = response;
-          this.prepayLoanForm.patchValue({
-            transactionAmount: this.prepayData.amount
-          });
+      const prepayDate = this.dateUtils.formatDate(transactionDate, this.settingsService.dateFormat);
+
+      this.loanService.getLoanPrepayLoanActionTemplate(this.loanId, prepayDate).subscribe((response: any) => {
+        this.prepayData = response;
+        this.prepayLoanForm.patchValue({
+          transactionAmount: this.prepayData.amount
         });
+      });
     });
   }
 
@@ -181,30 +169,23 @@ export class PrepayLoanComponent implements OnInit {
       locale
     };
     data['transactionAmount'] = data['transactionAmount'] * 1;
-    this.loanService
-      .stateTransitions({
-        loanId: Number(this.loanId),
-        postLoansLoanIdRequest: data,
-        command: 'repayment'
-      })
-      .subscribe((response: any) => {
-        this.router.navigate(['../../general'], { relativeTo: this.route });
+    this.loanService.submitLoanActionButton(this.loanId, data, 'repayment').subscribe((response: any) => {
+      this.router.navigate(['../../general'], {
+        queryParams: {
+          productType: this.loanProductService.productType.value
+        },
+        relativeTo: this.route
       });
+    });
   }
 
   submitContractTermination() {
     const data = {
       ...this.prepayLoanForm.value
     };
-    this.loanService
-      .stateTransitions({
-        loanId: Number(this.loanId),
-        postLoansLoanIdRequest: data,
-        command: 'contractTermination'
-      })
-      .subscribe((response: any) => {
-        this.router.navigate(['../../general'], { relativeTo: this.route });
-      });
+    this.loanService.loanActionButtons(this.loanId, 'contractTermination', data).subscribe((response: any) => {
+      this.gotoLoanDefaultView();
+    });
   }
 
   submit() {

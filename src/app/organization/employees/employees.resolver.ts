@@ -1,27 +1,32 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { StaffService } from '@fineract/client';
+import { OrganizationService } from '../organization.service';
 
 /**
  * Employees data resolver.
  */
 @Injectable()
 export class EmployeesResolver {
-  /**
-   * @param {StaffService} staffService Staff service.
-   */
-  constructor(private staffService: StaffService) {}
+  private organizationService = inject(OrganizationService);
 
   /**
    * Returns the employees data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.staffService.retrieveAll16();
+    return this.organizationService.getEmployees();
   }
 }

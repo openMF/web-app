@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -20,7 +28,7 @@ import { PasswordsUtility } from 'app/core/utils/passwords-utility';
 import { confirmPasswordValidator } from 'app/login/reset-password/confirm-password.validator';
 import { ConfigurationWizardService } from 'app/configuration-wizard/configuration-wizard.service';
 import { ContinueSetupDialogComponent } from 'app/configuration-wizard/continue-setup-dialog/continue-setup-dialog.component';
-import { StaffService } from '@fineract/client';
+import { UsersService } from 'app/users/users.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { COUNTRY_CODES } from 'app/zitadel/constants/coutry-codes';
 import { ZITADEL_LANGUAGES } from 'app/zitadel/constants/languages';
@@ -38,6 +46,16 @@ import { ZITADEL_LANGUAGES } from 'app/zitadel/constants/languages';
   ]
 })
 export class CreateUserComponent implements OnInit, AfterViewInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private usersService = inject(UsersServiceZitadel);
+  private usersService2 = inject(UsersService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private popoverService = inject(PopoverService);
+  private configurationWizardService = inject(ConfigurationWizardService);
+  private dialog = inject(MatDialog);
+  private passwordsUtility = inject(PasswordsUtility);
+
   /** User form. */
   userForm: UntypedFormGroup;
   /** Offices data. */
@@ -65,17 +83,7 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private usersService: UsersServiceZitadel,
-    private staffService: StaffService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private popoverService: PopoverService,
-    private configurationWizardService: ConfigurationWizardService,
-    private dialog: MatDialog,
-    private passwordsUtility: PasswordsUtility
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { usersTemplate: any }) => {
       this.officesData = data.usersTemplate.allowedOffices;
       this.rolesData = data.usersTemplate.availableRoles;
@@ -132,7 +140,8 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
           '',
           [
             Validators.required,
-            Validators.pattern(/^[0-9]{7,15}$/)]
+            Validators.pattern(/^[0-9]{7,15}$/)
+          ]
         ],
         password: [
           '',
@@ -140,7 +149,8 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
             Validators.required,
             Validators.minLength(12),
             Validators.maxLength(50),
-            Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/)]
+            Validators.pattern(/^(?!.*(.)\1)(?!.*\s)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).+$/)
+          ]
         ],
         repeatPassword: [
           '',
@@ -166,7 +176,7 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
   setStaffData() {
     this.userForm.get('officeId').valueChanges.subscribe((officeId: string) => {
       this.staffData = [];
-      this.staffService.retrieveAll16({ officeId: Number(officeId) }).subscribe((staff: any) => {
+      this.usersService2.getStaff(officeId).subscribe((staff: any) => {
         this.staffData = staff;
       });
     });
@@ -255,7 +265,7 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
             if (selectedRoleIds?.length > 0) {
               this.usersService.assignRolesToUser(userId, selectedRoleIds).subscribe(
                 () => {
-                  if (this.configurationWizardService.showUsersForm === true) {
+                  if (this.configurationWizardService.showUsersForm) {
                     this.configurationWizardService.showUsersForm = false;
                     this.openDialog();
                   } else {
@@ -300,7 +310,7 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showUsersForm === true) {
+    if (this.configurationWizardService.showUsersForm) {
       setTimeout(() => {
         this.showPopover(this.templateUserFormRef, this.userFormRef.nativeElement, 'top', true);
       });

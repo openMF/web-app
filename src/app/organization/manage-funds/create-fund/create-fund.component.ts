@@ -1,7 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { FundsService } from '@fineract/client';
+import { OrganizationService } from 'app/organization/organization.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
@@ -13,22 +21,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateFundComponent implements OnInit {
+  private organizationService = inject(OrganizationService);
+  private formBuilder = inject(UntypedFormBuilder);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+
   /** Charge form. */
   fundForm: UntypedFormGroup;
-
-  /**
-   * Retrieves the charge data from `resolve`.
-   * @param {ProductsService} productsService Products Service.
-   * @param {FormBuilder} formBuilder Form Builder.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {Router} router Router for navigation.
-   */
-  constructor(
-    private fundsService: FundsService,
-    private formBuilder: UntypedFormBuilder,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
 
   ngOnInit() {
     this.createFundForm();
@@ -49,7 +48,7 @@ export class CreateFundComponent implements OnInit {
 
   submit() {
     const payload = this.fundForm.getRawValue();
-    this.fundsService.createFund(payload).subscribe((response: any) => {
+    this.organizationService.createFund(payload).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

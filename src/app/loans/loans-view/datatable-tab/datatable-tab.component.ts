@@ -1,4 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EntityDatatableTabComponent } from '../../../shared/tabs/entity-datatable-tab/entity-datatable-tab.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -13,6 +21,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class DatatableTabComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+
   entityId: string;
   /** Loan Datatable */
   entityDatatable: any = null;
@@ -23,7 +33,7 @@ export class DatatableTabComponent implements OnInit {
    * Fetches data table data from `resolve`
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     this.entityId = this.route.parent.parent.snapshot.paramMap.get('loanId');
     this.entityDatatable = null;
     this.route.data.subscribe((data: { loanDatatable: any }) => {

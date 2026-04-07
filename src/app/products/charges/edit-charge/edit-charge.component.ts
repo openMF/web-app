@@ -1,10 +1,18 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { ChargesService } from '@fineract/client';
+import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { maxNumberValueValidator } from 'app/shared/validators/max-number-value.validator';
 import { minNumberValueValidator } from 'app/shared/validators/min-number-value.validator';
@@ -28,6 +36,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditChargeComponent implements OnInit {
+  private productsService = inject(ProductsService);
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private settingsService = inject(SettingsService);
+
   /** Selected Data. */
   chargeData: any;
   /** Charge form. */
@@ -63,13 +77,7 @@ export class EditChargeComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private chargesService: ChargesService,
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { chargesTemplate: any }) => {
       this.chargeData = data.chargesTemplate;
     });
@@ -205,10 +213,8 @@ export class EditChargeComponent implements OnInit {
     if (!charges.maxCap) {
       delete charges.maxCap;
     }
-    this.chargesService
-      .updateCharge({ chargeId: this.chargeData.id, chargeRequest: charges })
-      .subscribe((response: any) => {
-        this.router.navigate(['../'], { relativeTo: this.route });
-      });
+    this.productsService.updateCharge(this.chargeData.id.toString(), charges).subscribe((response: any) => {
+      this.router.navigate(['../'], { relativeTo: this.route });
+    });
   }
 }

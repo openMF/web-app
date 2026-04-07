@@ -1,3 +1,11 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
 import { Component, Input, OnChanges, ViewChild } from '@angular/core';
 import {
@@ -31,8 +39,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     trigger('expandChartSlab', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
       state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))])
-
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
+    ])
   ],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,

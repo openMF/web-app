@@ -1,0 +1,23 @@
+{
+  "commitMessagePrefix": "WEB-818: ",
+  "extends": [
+    "config:base",
+    "group:allNonMajor",
+    "schedule:weekly",
+    "helpers:pinGitHubActionDigests"
+  ],
+  "ignorePaths": [
+    "src/**"
+  ],
+  "labels": ["renovate"],
+  "packageRules": [
+    {
+      "depTypeList": ["dependencies"],
+      "updateTypes": [
+        "patch",
+        "minor"
+      ],
+      "groupName": "non-major"
+    }
+  ]
+}

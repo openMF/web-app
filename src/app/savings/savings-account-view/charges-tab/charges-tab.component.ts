@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -17,7 +25,7 @@ import {
 } from '@angular/material/table';
 
 /** Custom Services */
-import { SavingsChargesService } from '@fineract/client';
+import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Dialogs */
@@ -32,7 +40,7 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { Dates } from 'app/core/utils/dates';
 import { TranslateService } from '@ngx-translate/core';
-import { NgIf, CurrencyPipe } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 import { MatTooltip } from '@angular/material/tooltip';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -62,6 +70,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ChargesTabComponent implements OnInit {
+  private savingsService = inject(SavingsService);
+  private route = inject(ActivatedRoute);
+  private dateUtils = inject(Dates);
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
+  private settingsService = inject(SettingsService);
+  private translateService = inject(TranslateService);
+
   /** Savings Account Data */
   savingsAccountData: any;
   /** Charges Data */
@@ -97,15 +113,7 @@ export class ChargesTabComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils.
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(
-    private savingsChargeService: SavingsChargesService,
-    private route: ActivatedRoute,
-    private dateUtils: Dates,
-    private router: Router,
-    private dialog: MatDialog,
-    private settingsService: SettingsService,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.route.parent.data.subscribe((data: { savingsAccountData: any }) => {
       this.savingsAccountData = data.savingsAccountData;
       this.chargesData = this.savingsAccountData.charges;
@@ -152,7 +160,6 @@ export class ChargesTabComponent implements OnInit {
         type: 'date',
         required: true
       })
-
     ];
     const data = {
       title: `Pay Charge ${chargeId}`,
@@ -170,13 +177,8 @@ export class ChargesTabComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.savingsChargeService
-          .payOrWaiveSavingsAccountCharge({
-            savingsAccountId: this.savingsAccountData.id,
-            savingsAccountChargeId: chargeId,
-            postSavingsAccountsSavingsAccountIdChargesSavingsAccountChargeIdRequest: dataObject,
-            command: 'paycharge'
-          })
+        this.savingsService
+          .executeSavingsAccountChargesCommand(this.savingsAccountData.id, 'paycharge', dataObject, chargeId)
           .subscribe(() => {
             this.reload();
           });
@@ -192,13 +194,8 @@ export class ChargesTabComponent implements OnInit {
     const waiveChargeDialogRef = this.dialog.open(WaiveChargeDialogComponent, { data: { id: chargeId } });
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsChargeService
-          .payOrWaiveSavingsAccountCharge({
-            savingsAccountId: this.savingsAccountData.id,
-            savingsAccountChargeId: chargeId,
-            command: 'waive',
-            postSavingsAccountsSavingsAccountIdChargesSavingsAccountChargeIdRequest: {}
-          })
+        this.savingsService
+          .executeSavingsAccountChargesCommand(this.savingsAccountData.id, 'waive', {}, chargeId)
           .subscribe(() => {
             this.reload();
           });
@@ -214,13 +211,8 @@ export class ChargesTabComponent implements OnInit {
     const inactivateChargeDialogRef = this.dialog.open(InactivateChargeDialogComponent, { data: { id: chargeId } });
     inactivateChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsChargeService
-          .payOrWaiveSavingsAccountCharge({
-            savingsAccountId: this.savingsAccountData.id,
-            savingsAccountChargeId: chargeId,
-            command: 'inactivate',
-            postSavingsAccountsSavingsAccountIdChargesSavingsAccountChargeIdRequest: {}
-          })
+        this.savingsService
+          .executeSavingsAccountChargesCommand(this.savingsAccountData.id, 'inactivate', {}, chargeId)
           .subscribe(() => {
             this.reload();
           });
@@ -241,7 +233,6 @@ export class ChargesTabComponent implements OnInit {
         type: 'number',
         required: true
       })
-
     ];
     const data = {
       title: `Edit Charge ${charge.id}`,
@@ -258,8 +249,8 @@ export class ChargesTabComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.savingsChargeService
-          .updateSavingsAccountCharge(this.savingsAccountData.id, dataObject, charge.id)
+        this.savingsService
+          .editSavingsAccountCharge(this.savingsAccountData.id, dataObject, charge.id)
           .subscribe(() => {
             this.reload();
           });
@@ -277,7 +268,7 @@ export class ChargesTabComponent implements OnInit {
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.savingsChargeService.deleteSavingsAccountCharge(this.savingsAccountData.id, chargeId).subscribe(() => {
+        this.savingsService.deleteSavingsAccountCharge(this.savingsAccountData.id, chargeId).subscribe(() => {
           this.reload();
         });
       }

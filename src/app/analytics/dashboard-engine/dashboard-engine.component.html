@@ -1,0 +1,56 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+@if (filtersForm) {
+  <div class="dashboard-shell">
+    <mat-card class="filter-card">
+      <div class="filter-row">
+        <mat-form-field class="office-field">
+          <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
+          <mat-select [formControl]="filtersForm.controls.officeId">
+            @for (office of offices; track office.id) {
+              <mat-option [value]="office.id">
+                {{ office.name }}
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-button-toggle-group [formControl]="filtersForm.controls.timescale" appearance="legacy">
+          <mat-button-toggle value="Day">{{ 'labels.buttons.Day' | translate }}</mat-button-toggle>
+          <mat-button-toggle value="Week">{{ 'labels.buttons.Week' | translate }}</mat-button-toggle>
+          <mat-button-toggle value="Month">{{ 'labels.buttons.Month' | translate }}</mat-button-toggle>
+        </mat-button-toggle-group>
+
+        <button mat-stroked-button type="button" (click)="reloadDashboard(true)">
+          {{ 'labels.buttons.Refresh' | translate }}
+        </button>
+      </div>
+    </mat-card>
+
+    @if (!visibleWidgets.length) {
+      <mat-card class="empty-dashboard">
+        {{ 'labels.text.No Data' | translate }}
+      </mat-card>
+    } @else {
+      <div class="summary-grid">
+        @for (widget of metricWidgets; track widget.id) {
+          <mifosx-dashboard-widget [widget]="widget" [state]="widgetStateMap[widget.id]"></mifosx-dashboard-widget>
+        }
+      </div>
+
+      <div class="chart-grid">
+        @for (widget of chartWidgets; track widget.id) {
+          <div [class.widget-wide]="widget.layout === 'wide'" [class.widget-half]="widget.layout === 'half'">
+            <mifosx-dashboard-widget [widget]="widget" [state]="widgetStateMap[widget.id]"></mifosx-dashboard-widget>
+          </div>
+        }
+      </div>
+    }
+  </div>
+}

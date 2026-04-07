@@ -1,10 +1,18 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { CodesService } from '@fineract/client';
+import { SystemService } from '../../system.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -19,6 +27,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditCodeComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private systemService = inject(SystemService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   /** Code Form */
   codeForm: UntypedFormGroup;
   /** Code Data */
@@ -27,16 +40,11 @@ export class EditCodeComponent implements OnInit {
   /**
    * Retrieves the code data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {CodesService} codesService Codes Service.
+   * @param {SystemService} systemService System Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private codesService: CodesService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { code: any }) => {
       this.codeData = data.code;
     });
@@ -66,17 +74,7 @@ export class EditCodeComponent implements OnInit {
    * if successful redirects to view updated code.
    */
   submit() {
-    let codeId = this.codeData?.id;
-    if (!codeId) {
-      codeId = Number(this.route.snapshot.params['id']);
-    }
-    const payload = {
-      codeId,
-      putCodesRequest: {
-        name: this.codeForm.value.name
-      }
-    };
-    this.codesService.updateCode(payload).subscribe((response: any) => {
+    this.systemService.updateCode(this.codeForm.value, this.codeData.id).subscribe((response: any) => {
       this.router.navigate(
         [
           '../../',

@@ -256,7 +256,7 @@ export class AccountTransfersService {
   sendInterbankTransfer(body: any): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post(
-      `${environment.vNextApiUrl}${environment.vNextApiVersion}${environment.vNextApiProvider}/executetransfer`,
+      `${environment.baseApiUrl}${environment.apiVersion}${environment.apiProvider}/executetransfer`,
       body,
       { headers }
     );
@@ -271,7 +271,7 @@ export class AccountTransfersService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http
       .post(
-        `${environment.vNextApiUrl}${environment.vNextApiVersion}${environment.vNextApiProvider}/participant`,
+        `${environment.baseApiUrl}${environment.apiVersion}${environment.apiProvider}/participant`,
         JSON.stringify(payload),
         { headers }
       )
@@ -279,7 +279,7 @@ export class AccountTransfersService {
         switchMap((participant: any) => {
           const body = JSON.stringify({ ...payload, ownerFspId: participant.fspId });
           return this.http.post(
-            `${environment.vNextApiUrl}${environment.vNextApiVersion}${environment.vNextApiProvider}/partyinfo`,
+            `${environment.baseApiUrl}${environment.apiVersion}${environment.apiProvider}/partyinfo`,
             body,
             { headers }
           );

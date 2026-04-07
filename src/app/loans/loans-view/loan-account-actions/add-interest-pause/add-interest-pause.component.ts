@@ -1,11 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { LoanInterestPauseService } from '@fineract/client';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, OnInit, inject } from '@angular/core';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Dates } from 'app/core/utils/dates';
-import { SettingsService } from 'app/settings/settings.service';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 
 @Component({
   selector: 'mifosx-add-interest-pause',
@@ -16,10 +22,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     DateFormatPipe
   ]
 })
-export class AddInterestPauseComponent implements OnInit {
-  @Input() dataObject: any;
-  /** Loan Id */
-  loanId: string;
+export class AddInterestPauseComponent extends LoanAccountActionsBaseComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private dateUtils = inject(Dates);
+
   /** Payment Type Options */
   paymentTypes: any;
   /** Show payment details */
@@ -35,21 +41,10 @@ export class AddInterestPauseComponent implements OnInit {
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {LoansService} loanService Loan Service.
-   * @param {LoanInterestPauseService} loanInterestPauseService Loan Interest Pause Service.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private loanInterestPauseService: LoanInterestPauseService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private dateUtils: Dates,
-    private settingsService: SettingsService
-  ) {
-    this.loanId = this.route.snapshot.params['loanId'];
+  constructor() {
+    super();
   }
 
   /**
@@ -100,13 +95,11 @@ export class AddInterestPauseComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.loanInterestPauseService
-      .createInterestPause({
-        loanId: Number(this.loanId),
-        interestPauseRequestDto: data
-      })
-      .subscribe((response: any) => {
-        this.router.navigate(['../../term-variations'], { relativeTo: this.route });
-      });
+    this.loanService.addInterestPauseToLoan(this.loanId, data).subscribe({
+      next: (response: any) => {
+        this.gotoLoanView('term-variations');
+      },
+      error: (error) => {}
+    });
   }
 }

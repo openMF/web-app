@@ -1,10 +1,18 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { MappingFinancialActivitiesToAccountsService } from '@fineract/client';
+import { AccountingService } from '../../accounting.service';
 import { GLAccount } from 'app/shared/models/general.model';
 import { GlAccountSelectorComponent } from '../../../shared/accounting/gl-account-selector/gl-account-selector.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -22,6 +30,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateFinancialActivityMappingComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private accountingService = inject(AccountingService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   /** Financial activity mapping form. */
   financialActivityMappingForm: UntypedFormGroup;
   /** GL Account options. */
@@ -34,16 +47,11 @@ export class CreateFinancialActivityMappingComponent implements OnInit {
   /**
    * Retrieves the gl account options and financial activity data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {MappingFinancialActivitiesToAccountsService} mappingFinancialActivitiesToAccountsService Mapping Financial Activities to Accounts Service.
+   * @param {AccountingService} accountingService Accounting Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private mappingFinancialActivitiesToAccountsService: MappingFinancialActivitiesToAccountsService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { financialActivityAccountsTemplate: any }) => {
       this.glAccountOptions = data.financialActivityAccountsTemplate.glAccountOptions;
       this.financialActivityData = data.financialActivityAccountsTemplate.financialActivityOptions;
@@ -102,8 +110,8 @@ export class CreateFinancialActivityMappingComponent implements OnInit {
    * if successful redirects to view created account.
    */
   submit() {
-    this.mappingFinancialActivitiesToAccountsService
-      .createGLAccount({ postFinancialActivityAccountsRequest: this.financialActivityMappingForm.value })
+    this.accountingService
+      .createFinancialActivityAccount(this.financialActivityMappingForm.value)
       .subscribe((response: any) => {
         this.router.navigate(
           [

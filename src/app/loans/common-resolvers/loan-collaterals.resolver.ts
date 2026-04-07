@@ -1,16 +1,21 @@
-import { Injectable } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { LoanCollateralService } from '@fineract/client';
+import { LoansService } from '../loans.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoanCollateralsResolver {
-  /**
-   * @param {LoanCollateralService} loanCollateralService Loan Collateral service.
-   */
-  constructor(private loanCollateralService: LoanCollateralService) {}
+  private loansService = inject(LoansService);
 
   /**
    * Returns the Loans data.
@@ -18,8 +23,6 @@ export class LoanCollateralsResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const loanId = route.paramMap.get('loanId') || route.parent.paramMap.get('loanId');
-    return this.loanCollateralService.retrieveCollateralDetails({
-      loanId: Number(loanId)
-    });
+    return this.loansService.getLoanCollaterals(loanId);
   }
 }

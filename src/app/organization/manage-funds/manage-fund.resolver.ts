@@ -1,16 +1,21 @@
-import { Injectable } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { FundsService } from '@fineract/client';
+import { OrganizationService } from '../organization.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ManageFundResolver {
-  /**
-   * @param {FundsService} fundsService Funds service.
-   */
-  constructor(private fundsService: FundsService) {}
+  private organizationService = inject(OrganizationService);
 
   /**
    * Returns the manage funds data.
@@ -18,6 +23,6 @@ export class ManageFundResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const fundId = route.paramMap.get('id');
-    return this.fundsService.retrieveFunds('body', false, { httpHeaderAccept: 'application/json' });
+    return this.organizationService.getFund(fundId);
   }
 }

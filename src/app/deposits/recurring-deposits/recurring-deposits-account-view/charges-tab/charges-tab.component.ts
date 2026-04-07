@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -17,7 +25,7 @@ import {
 } from '@angular/material/table';
 
 /** Custom Services */
-import { SavingsAccountService, SavingsChargesService } from '@fineract/client';
+import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Dialogs */
@@ -59,6 +67,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ChargesTabComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private savingsService = inject(SavingsService);
+  private dateUtils = inject(Dates);
+  private router = inject(Router);
+  dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
+  private settingsService = inject(SettingsService);
+
   /** Recurring Deposits Account Data */
   recurringDepositsAccountData: any;
   /** Charges Data */
@@ -88,18 +104,8 @@ export class ChargesTabComponent implements OnInit {
   /**
    * Retrieves Recurring Deposits Account Data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {SavingsAccountService} savingsAccountService Savings Account Service
    */
-  constructor(
-    private route: ActivatedRoute,
-    private savingsAccountService: SavingsAccountService,
-    private savingsChargesService: SavingsChargesService,
-    private dateUtils: Dates,
-    private router: Router,
-    public dialog: MatDialog,
-    private translateService: TranslateService,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.parent.data.subscribe((data: { recurringDepositsAccountData: any }) => {
       this.recurringDepositsAccountData = data.recurringDepositsAccountData;
       this.chargesData = this.recurringDepositsAccountData.charges;
@@ -131,7 +137,6 @@ export class ChargesTabComponent implements OnInit {
         type: 'date',
         required: true
       })
-
     ];
     const data = {
       title: `Pay Charge ${chargeId}`,
@@ -149,15 +154,8 @@ export class ChargesTabComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.savingsAccountService
-          .handleCommands6({
-            accountId: this.recurringDepositsAccountData.id,
-            command: 'paycharge',
-            postSavingsAccountsAccountIdRequest: {
-              ...dataObject,
-              chargeId: chargeId
-            }
-          })
+        this.savingsService
+          .executeSavingsAccountChargesCommand(this.recurringDepositsAccountData.id, 'paycharge', dataObject, chargeId)
           .subscribe(() => {
             this.reload();
           });
@@ -173,18 +171,15 @@ export class ChargesTabComponent implements OnInit {
     const waiveChargeDialogRef = this.dialog.open(RecurringDepositConfirmationDialogComponent, {
       data: {
         heading: this.translateService.instant('labels.heading.Waive Charge'),
-        dialogContext: this.translateService.instant('labels.text.Are you sure you want to waive this charge?')
+        dialogContext:
+          this.translateService.instant('labels.dialogContext.Are you sure you want to waive charge with id: ') +
+          `${chargeId} ?`
       }
     });
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsChargesService
-          .payOrWaiveSavingsAccountCharge({
-            savingsAccountId: this.recurringDepositsAccountData.id,
-            savingsAccountChargeId: chargeId,
-            command: 'waive',
-            postSavingsAccountsSavingsAccountIdChargesSavingsAccountChargeIdRequest: {}
-          })
+        this.savingsService
+          .executeSavingsAccountChargesCommand(this.recurringDepositsAccountData.id, 'waive', {}, chargeId)
           .subscribe(() => {
             this.reload();
           });
@@ -205,7 +200,6 @@ export class ChargesTabComponent implements OnInit {
         type: 'number',
         required: true
       })
-
     ];
     const data = {
       title: `Edit Charge ${charge.id}`,
@@ -222,8 +216,8 @@ export class ChargesTabComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.savingsAccountService
-          .update20(this.recurringDepositsAccountData.id, dataObject, charge.id)
+        this.savingsService
+          .editSavingsAccountCharge(this.recurringDepositsAccountData.id, dataObject, charge.id)
           .subscribe(() => {
             this.reload();
           });
@@ -241,7 +235,7 @@ export class ChargesTabComponent implements OnInit {
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.savingsAccountService.delete18(this.recurringDepositsAccountData.id, chargeId).subscribe(() => {
+        this.savingsService.deleteSavingsAccountCharge(this.recurringDepositsAccountData.id, chargeId).subscribe(() => {
           this.reload();
         });
       }

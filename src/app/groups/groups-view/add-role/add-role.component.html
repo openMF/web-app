@@ -1,3 +1,11 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <div class="container">
   <mat-card>
     <form [formGroup]="groupsAddRoleForm" (ngSubmit)="submit()">
@@ -6,27 +14,35 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Client' | translate }}</mat-label>
             <mat-select formControlName="clientId">
-              <mat-option *ngFor="let client of clientMemberData" [value]="client.id">
-                {{ client.displayName }}
-              </mat-option>
+              @for (client of clientMemberData; track client) {
+                <mat-option [value]="client.id">
+                  {{ client.displayName }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error *ngIf="groupsAddRoleForm.controls.clientId.hasError('required')">
-              {{ 'labels.inputs.Client Member' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (groupsAddRoleForm.controls.clientId.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Client Member' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Role' | translate }}</mat-label>
             <mat-select formControlName="role">
-              <mat-option *ngFor="let role of roleData" [value]="role.id">
-                {{ role.name }}
-              </mat-option>
+              @for (role of roleData; track role) {
+                <mat-option [value]="role.id">
+                  {{ role.name }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error *ngIf="groupsAddRoleForm.controls.role.hasError('required')">
-              {{ 'labels.inputs.Role' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (groupsAddRoleForm.controls.role.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Role' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
         </div>
       </mat-card-content>

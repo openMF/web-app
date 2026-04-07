@@ -1,4 +1,12 @@
-import { Component, Input, Optional, Self, ViewChild } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, Input, ViewChild, inject } from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -22,6 +30,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class InputPasswordComponent implements ControlValueAccessor, ErrorStateMatcher {
+  ngControl = inject(NgControl, { optional: true, self: true });
+
   disabled = false;
 
   icon = 'visibility_off';
@@ -61,7 +71,9 @@ export class InputPasswordComponent implements ControlValueAccessor, ErrorStateM
 
   private _visible = false;
 
-  constructor(@Optional() @Self() public ngControl: NgControl) {
+  constructor() {
+    const ngControl = this.ngControl;
+
     if (ngControl !== null) {
       ngControl.valueAccessor = this;
     }

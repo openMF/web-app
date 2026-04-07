@@ -1,22 +1,27 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SavingsAccountTransactionsService } from '@fineract/client';
+import { SavingsService } from '../savings.service';
 
 /**
  * Savings Account Transaction Template data resolver.
  */
 @Injectable()
 export class SavingsAccountTransactionTemplateResolver {
-  /**
-   * @param SavingsAccountTransactionsService savingsAccountTransactionsService Savings Account Transactions Service
-   */
-  constructor(private savingsAccountTransactionsService: SavingsAccountTransactionsService) {}
+  private savingsService = inject(SavingsService);
 
   /**
    * Returns the Savings Account Transaction Template data.
@@ -26,9 +31,6 @@ export class SavingsAccountTransactionTemplateResolver {
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const savingAccountId = route.parent.paramMap.get('savingAccountId');
     const transactionId = route.paramMap.get('id');
-    return this.savingsAccountTransactionsService.retrieveOne24({
-      savingsId: Number(savingAccountId),
-      transactionId: Number(transactionId)
-    });
+    return this.savingsService.getSavingsAccountTransactionTemplate(savingAccountId, transactionId);
   }
 }

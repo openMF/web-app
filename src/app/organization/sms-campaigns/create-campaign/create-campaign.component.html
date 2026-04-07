@@ -1,3 +1,11 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <div class="container">
   <mat-stepper
     orientation="vertical"
@@ -46,15 +54,16 @@
       </mifosx-campaign-message-step>
     </mat-step>
 
-    <mat-step state="preview" *ngIf="smsCampaignForm.valid" completed>
-      <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
-
-      <mifosx-campaign-preview-step
-        [smsCampaignTemplate]="smsCampaignTemplate"
-        [campaign]="smsCampaign"
-        (submitEvent)="submit()"
-      >
-      </mifosx-campaign-preview-step>
-    </mat-step>
+    @if (smsCampaignForm.valid) {
+      <mat-step state="preview" completed>
+        <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
+        <mifosx-campaign-preview-step
+          [smsCampaignTemplate]="smsCampaignTemplate"
+          [campaign]="smsCampaign"
+          (submitEvent)="submit()"
+        >
+        </mifosx-campaign-preview-step>
+      </mat-step>
+    }
   </mat-stepper>
 </div>

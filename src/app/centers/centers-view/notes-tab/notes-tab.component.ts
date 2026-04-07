@@ -1,20 +1,17 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-/** Custom Components */
-import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
-import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
-
-/** Custom Services */
-import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from '../../../core/authentication/authentication.service';
-import { NotesService } from '@fineract/client';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatList, MatListItem } from '@angular/material/list';
-import { MatLine } from '@angular/material/grid-list';
-import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { CentersService } from '../../centers.service';
+import { EntityNotesTabComponent } from '../../../shared/tabs/entity-notes-tab/entity-notes-tab.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
@@ -23,122 +20,53 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./notes-tab.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    FaIconComponent,
-    MatList,
-    MatListItem,
-    MatLine,
-    DateFormatPipe
+    EntityNotesTabComponent
   ]
 })
 export class NotesTabComponent implements OnInit {
-  centerId: string;
-  username: string;
-  centerNotes: any;
-  noteForm: UntypedFormGroup;
-  @ViewChild('formRef', { static: true }) formRef: any;
+  private route = inject(ActivatedRoute);
+  private authenticationService = inject(AuthenticationService);
+  private centersService = inject(CentersService);
 
-  constructor(
-    private route: ActivatedRoute,
-    private formBuilder: UntypedFormBuilder,
-    private notesService: NotesService, // Changed from centersService to notesService
-    private authenticationService: AuthenticationService,
-    private dialog: MatDialog,
-    private translateService: TranslateService
-  ) {
-    const savedCredentials = this.authenticationService.getCredentials();
-    this.username = savedCredentials.username;
-    this.route.parent.data.subscribe((data: { centerViewData: any }) => {
-      // Updated centerId assignment
-      this.centerId = data.centerViewData.id;
-    });
-    this.route.data.subscribe((data: { centerNotes: any }) => {
-      this.centerNotes = data.centerNotes;
-    });
+  entityId: string;
+  username: string;
+  entityNotes: any;
+
+  constructor() {
+    this.entityId = this.route.parent.parent.snapshot.params['centerId'];
+    this.addNote = this.addNote.bind(this);
+    this.editNote = this.editNote.bind(this);
+    this.deleteNote = this.deleteNote.bind(this);
   }
 
   ngOnInit() {
-    this.createNoteForm();
-  }
-
-  createNoteForm() {
-    this.noteForm = this.formBuilder.group({
-      note: [
-        '',
-        Validators.required
-      ]
+    const savedCredentials = this.authenticationService.getCredentials();
+    this.username = savedCredentials.username;
+    this.route.data.subscribe((data: { centerNotes: any }) => {
+      this.entityNotes = data.centerNotes;
     });
   }
 
-  submit() {
-    this.notesService
-      .addNewNote({
-        resourceType: 'groups',
-        resourceId: parseInt(this.centerId, 10),
-        noteRequest: { note: this.noteForm.value.note }
-      })
-      .subscribe((response: any) => {
-        const newNote = {
-          id: response.resourceId,
-          note: this.noteForm.value.note,
-          createdByUsername: this.username,
-          createdOn: new Date(),
-          updatedByUsername: this.username,
-          updatedOn: new Date()
-        };
-        this.centerNotes.push(newNote);
-        this.formRef.resetForm();
+  addNote(noteContent: any) {
+    this.centersService.createCenterNote(this.entityId, noteContent).subscribe((response: any) => {
+      this.entityNotes.push({
+        id: response.resourceId,
+        createdByUsername: this.username,
+        createdOn: new Date(),
+        note: noteContent.note
       });
-  }
-
-  editNote(noteId: any, noteContent: string, index: number) {
-    const editNoteDialogRef = this.dialog.open(FormDialogComponent, {
-      data: {
-        formfields: [
-          {
-            controlName: 'note',
-            required: true,
-            value: noteContent,
-            controlType: 'input',
-            label: this.translateService.instant('labels.inputs.Note')
-          }
-        ],
-        layout: {
-          columns: 1,
-          addButtonText: 'Confirm'
-        },
-        title: this.translateService.instant('labels.heading.Edit Note')
-      }
-    });
-    editNoteDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
-        this.notesService
-          .updateNote({
-            resourceType: 'groups',
-            resourceId: parseInt(this.centerId, 10),
-            noteId: noteId,
-            noteRequest: { note: response.data.value.note }
-          })
-          .subscribe(() => {
-            this.centerNotes[index].note = response.data.value.note;
-          });
-      }
     });
   }
 
-  deleteNote(noteId: any, index: number) {
-    const deleteNoteDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: {
-        deleteContext: `${this.translateService.instant('labels.inputs.Note')} ${this.translateService.instant('labels.inputs.Id')}:${noteId}`
-      }
+  editNote(noteId: string, noteContent: any, index: number) {
+    this.centersService.editCenterNote(this.entityId, noteId, noteContent).subscribe(() => {
+      this.entityNotes[index].note = noteContent.note;
     });
-    deleteNoteDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
-        this.notesService
-          .deleteNote({ resourceType: 'groups', resourceId: parseInt(this.centerId, 10), noteId: noteId })
-          .subscribe(() => {
-            this.centerNotes.splice(index, 1);
-          });
-      }
+  }
+
+  deleteNote(noteId: string, index: number) {
+    this.centersService.deleteCenterNote(this.entityId, noteId).subscribe(() => {
+      this.entityNotes.splice(index, 1);
     });
   }
 }

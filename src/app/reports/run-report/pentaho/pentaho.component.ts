@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnChanges, Input } from '@angular/core';
+import { Component, OnChanges, OnDestroy, Input, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 /** Custom Services */
@@ -19,7 +27,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ...STANDALONE_SHARED_IMPORTS
   ]
 })
-export class PentahoComponent implements OnChanges {
+export class PentahoComponent implements OnChanges, OnDestroy {
+  private sanitizer = inject(DomSanitizer);
+  private reportsService = inject(ReportsService);
+  private settingsService = inject(SettingsService);
+  private progressBarService = inject(ProgressBarService);
+
   /** Run Report Data */
   @Input() dataObject: any;
 
@@ -27,18 +40,8 @@ export class PentahoComponent implements OnChanges {
   hideOutput = true;
   /** trusted resource url for pentaho output */
   pentahoUrl: any;
-
-  /**
-   * @param {DomSanitizer} sanitizer DOM Sanitizer
-   * @param {ReportsService} reportsService Reports Service
-   * @param {SettingsService} settingsService Settings Service
-   */
-  constructor(
-    private sanitizer: DomSanitizer,
-    private reportsService: ReportsService,
-    private settingsService: SettingsService,
-    private progressBarService: ProgressBarService
-  ) {}
+  /** current blob URL to track and revoke */
+  private currentBlobUrl: string | null = null;
 
   /**
    * Fetches run report data post changes in run report form.
@@ -60,10 +63,31 @@ export class PentahoComponent implements OnChanges {
       .subscribe((res: any) => {
         const contentType = res.headers.get('Content-Type');
         const file = new Blob([res.body], { type: contentType });
-        const filecontent = URL.createObjectURL(file);
+
+        if (this.currentBlobUrl) {
+          URL.revokeObjectURL(this.currentBlobUrl);
+        }
+
+        let filecontent = URL.createObjectURL(file);
+        this.currentBlobUrl = filecontent;
+
+        if (this.isTicketReport()) {
+          filecontent += '#zoom=500';
+        }
+
         this.pentahoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(filecontent);
         this.hideOutput = false;
         this.progressBarService.decrease();
       });
+  }
+
+  isTicketReport(): boolean {
+    return this.dataObject?.report?.name?.toLowerCase().includes('-ticket') || false;
+  }
+
+  ngOnDestroy() {
+    if (this.currentBlobUrl) {
+      URL.revokeObjectURL(this.currentBlobUrl);
+    }
   }
 }

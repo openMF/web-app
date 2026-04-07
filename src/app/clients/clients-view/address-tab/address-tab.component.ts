@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
@@ -11,7 +19,7 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 
 /** Custom Services */
 import { TranslateService } from '@ngx-translate/core';
-import { ClientsAddressService } from '@fineract/client';
+import { ClientsService } from '../../clients.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import {
   MatAccordion,
@@ -44,6 +52,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class AddressTabComponent {
+  private route = inject(ActivatedRoute);
+  private clientService = inject(ClientsService);
+  private dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
+
   /** Client Address Data */
   clientAddressData: any;
   /** Client Address Field Config */
@@ -59,12 +72,7 @@ export class AddressTabComponent {
    * @param {MatDialog} dialog Mat Dialog
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private clientsAddressService: ClientsAddressService,
-    private dialog: MatDialog,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.route.data.subscribe(
       (data: { clientAddressData: any; clientAddressFieldConfig: any; clientAddressTemplateData: any }) => {
         this.clientAddressData = data.clientAddressData;
@@ -91,12 +99,8 @@ export class AddressTabComponent {
     const addAddressDialogRef = this.dialog.open(FormDialogComponent, { data });
     addAddressDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        this.clientsAddressService
-          .addClientAddress({
-            clientid: Number(this.clientId),
-            clientAddressRequest: response.data.value,
-            type: response.data.value.addressType
-          })
+        this.clientService
+          .createClientAddress(this.clientId, response.data.value.addressType, response.data.value)
           .subscribe((res: any) => {
             const addressData = response.data.value;
             addressData.addressId = res.resourceId;
@@ -130,11 +134,8 @@ export class AddressTabComponent {
         const addressData = response.data.value;
         addressData.addressId = address.addressId;
         addressData.isActive = address.isActive;
-        this.clientsAddressService
-          .updateClientAddress({
-            clientid: Number(this.clientId),
-            clientAddressRequest: addressData
-          })
+        this.clientService
+          .editClientAddress(this.clientId, address.addressTypeId, addressData)
           .subscribe((res: any) => {
             addressData.addressTypeId = address.addressTypeId;
             addressData.addressType = address.addressType;
@@ -153,14 +154,9 @@ export class AddressTabComponent {
       addressId: address.addressId,
       isActive: address.isActive ? false : true
     };
-    this.clientsAddressService
-      .updateClientAddress({
-        clientid: Number(this.clientId),
-        clientAddressRequest: addressData
-      })
-      .subscribe(() => {
-        address.isActive = address.isActive ? false : true;
-      });
+    this.clientService.editClientAddress(this.clientId, address.addressTypeId, addressData).subscribe(() => {
+      address.isActive = address.isActive ? false : true;
+    });
   }
 
   /**
@@ -208,6 +204,17 @@ export class AddressTabComponent {
       );
     }
     formfields.push(
+      this.isFieldEnabled('postalCode')
+        ? new InputBase({
+            controlName: 'postalCode',
+            label: this.translateService.instant('labels.inputs.Postal Code'),
+            value: address ? address.postalCode : '',
+            type: 'text',
+            order: 2
+          })
+        : null
+    );
+    formfields.push(
       this.isFieldEnabled('street')
         ? new InputBase({
             controlName: 'street',
@@ -215,7 +222,7 @@ export class AddressTabComponent {
             value: address ? address.street : '',
             type: 'text',
             required: false,
-            order: 2
+            order: 3
           })
         : null
     );
@@ -304,17 +311,6 @@ export class AddressTabComponent {
             value: address ? address.countryId : '',
             options: { label: 'name', value: 'id', data: this.clientAddressTemplate.countryIdOptions },
             order: 10
-          })
-        : null
-    );
-    formfields.push(
-      this.isFieldEnabled('postalCode')
-        ? new InputBase({
-            controlName: 'postalCode',
-            label: this.translateService.instant('labels.inputs.Postal Code'),
-            value: address ? address.postalCode : '',
-            type: 'text',
-            order: 11
           })
         : null
     );

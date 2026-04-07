@@ -1,9 +1,17 @@
-import { Component } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { DocumentsService } from '@fineract/client';
+import { ClientsService } from '../../clients.service';
 import { EntityDocumentsTabComponent } from '../../../shared/tabs/entity-documents-tab/entity-documents-tab.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -17,52 +25,26 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class DocumentsTabComponent {
+  private route = inject(ActivatedRoute);
+  private clientsService = inject(ClientsService);
+  dialog = inject(MatDialog);
+
   entityDocuments: any;
   entityId: string;
   entityType = 'clients';
 
-  constructor(
-    private route: ActivatedRoute,
-    private documentsService: DocumentsService,
-    public dialog: MatDialog
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { clientDocuments: any }) => {
       this.entityDocuments = data.clientDocuments;
     });
     this.entityId = this.route.parent.snapshot.paramMap.get('clientId');
   }
 
-  downloadDocument(documentId: string) {
-    this.documentsService
-      .downloadFile({
-        entityType: this.entityType,
-        entityId: Number(this.entityId),
-        documentId: Number(documentId)
-      })
-      .subscribe((res: any) => {
-        const url = window.URL.createObjectURL(res);
-        window.open(url);
-      });
-  }
-
   deleteDocument(documentId: string) {
-    this.documentsService
-      .deleteDocument({
-        entityType: this.entityType,
-        entityId: Number(this.entityId),
-        documentId: Number(documentId)
-      })
-      .subscribe(() => {});
+    this.clientsService.deleteClientDocument(this.entityId, documentId).subscribe((res) => {});
   }
 
   uploadDocument(formData: FormData): any {
-    const file = formData.get('file') as File;
-    return this.documentsService.createDocument({
-      entityType: this.entityType,
-      entityId: Number(this.entityId),
-      name: formData.get('name') as string,
-      description: formData.get('description') as string,
-      uploadedInputStream: file
-    });
+    return this.clientsService.uploadClientDocument(this.entityId, formData);
   }
 }

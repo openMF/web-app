@@ -1,0 +1,81 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="step-content">
+  <form [formGroup]="searchForm" (ngSubmit)="searchRemittance()">
+    <div class="form-fields">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'labels.inputs.Vendor' | translate }}</mat-label>
+        <mat-select formControlName="vendor" [disabled]="vendorLoadError">
+          @for (v of vendors; track v.name) {
+            <mat-option [value]="v.headerValue">{{ v.name }}</mat-option>
+          }
+        </mat-select>
+        @if (isLoadingVendors) {
+          <mat-hint>{{ 'labels.inputs.Loading vendors...' | translate }}</mat-hint>
+        }
+        @if (vendorLoadError) {
+          <mat-error>{{ 'labels.inputs.Failed to load vendors' | translate }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'labels.inputs.External Reference ID' | translate }}</mat-label>
+        <input
+          matInput
+          formControlName="externalId"
+          placeholder="{{ 'labels.placeholders.Enter remittance reference number' | translate }}"
+        />
+        @if (searchForm.get('externalId')?.hasError('required') && searchForm.get('externalId')?.touched) {
+          <mat-error>{{ 'labels.inputs.Reference ID is required' | translate }}</mat-error>
+        }
+        @if (searchForm.get('externalId')?.hasError('minlength')) {
+          <mat-error>{{ 'labels.inputs.Minimum 3 characters' | translate }}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    @if (vendorLoadError) {
+      <div class="vendor-error-banner">
+        <mat-icon>warning</mat-icon>
+        <span>{{ 'labels.text.Unable to load vendors. Please check your connection and try again.' | translate }}</span>
+        <button mat-stroked-button color="primary" type="button" (click)="loadVendors()" [disabled]="isLoadingVendors">
+          @if (isLoadingVendors) {
+            <mat-spinner diameter="16"></mat-spinner>
+          } @else {
+            <mat-icon>refresh</mat-icon>
+            <span>{{ 'labels.buttons.Retry' | translate }}</span>
+          }
+        </button>
+      </div>
+    }
+
+    @if (errorMessage) {
+      <div class="error-banner">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ errorMessage }}</span>
+      </div>
+    }
+
+    <div class="step-actions">
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="searchRemittance()"
+        [disabled]="isLoading || vendorLoadError"
+      >
+        @if (isLoading) {
+          <mat-spinner diameter="20"></mat-spinner>
+        } @else {
+          <span><mat-icon>search</mat-icon> {{ 'labels.buttons.Search' | translate }}</span>
+        }
+      </button>
+    </div>
+  </form>
+</div>

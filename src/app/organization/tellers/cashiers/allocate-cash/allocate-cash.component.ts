@@ -1,11 +1,19 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports. */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services. */
-import { TellerCashManagementService } from '@fineract/client';
+import { OrganizationService } from 'app/organization/organization.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -21,6 +29,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class AllocateCashComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private dateUtils = inject(Dates);
+  private organizationService = inject(OrganizationService);
+  private settingsService = inject(SettingsService);
+  private router = inject(Router);
+
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
@@ -35,18 +50,11 @@ export class AllocateCashComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {ActivatedRoute} route ActivateRoute.
    * @param {Dates} dateUtils Date Utils.
-   * @param {TellerCashManagementService} tellerCashManagementService Teller Cash Management Service.
+   * @param {OrganizationService} organizationService Organization Service.
    * @param {SettingsService} settingsService Settings Service.
    * @param {Router} router Router.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private dateUtils: Dates,
-    private tellerCashManagementService: TellerCashManagementService,
-    private settingsService: SettingsService,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { cashierTemplate: any }) => {
       this.cashierData = data.cashierTemplate;
     });
@@ -109,8 +117,8 @@ export class AllocateCashComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.tellerCashManagementService
-      .allocateCashToCashier(this.cashierData.tellerId, this.cashierData.cashierId, data)
+    this.organizationService
+      .allocateCash(this.cashierData.tellerId, this.cashierData.cashierId, data)
       .subscribe((response: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });

@@ -1,10 +1,18 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { CodesService } from '@fineract/client';
+import { SystemService } from '../../system.service';
 import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
 import { PopoverRef } from '../../../configuration-wizard/popover/popover-ref';
 import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
@@ -19,6 +27,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateCodeComponent implements OnInit, AfterViewInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private systemService = inject(SystemService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private configurationWizardService = inject(ConfigurationWizardService);
+  private popoverService = inject(PopoverService);
+
   /** Code form. */
   codeForm: UntypedFormGroup;
 
@@ -26,23 +41,6 @@ export class CreateCodeComponent implements OnInit, AfterViewInit {
   @ViewChild('codeFormRef') codeFormRef: ElementRef<any>;
   /* Template for popover on create code form */
   @ViewChild('templateCodeFormRef') templateCodeFormRef: TemplateRef<any>;
-
-  /**
-   * @param {FormBuilder} formBuilder Form Builder.
-   * @param {CodeValuesService} codeValuesService Code Values Service.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {Router} router Router for navigation.
-   * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
-   * @param {PopoverService} popoverService PopoverService.
-   */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private codesService: CodesService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private configurationWizardService: ConfigurationWizardService,
-    private popoverService: PopoverService
-  ) {}
 
   /**
    * Creates the code form.
@@ -68,15 +66,8 @@ export class CreateCodeComponent implements OnInit, AfterViewInit {
    * if successful redirects to view created code.
    */
   submit() {
-    // Fix: Get codeId from route params, not from name field
-    // This is a create code page, so use the correct service method
-    const payload = {
-      postCodesRequest: {
-        name: this.codeForm.value.name
-      }
-    };
-    this.codesService.createCode(payload).subscribe((response: any) => {
-      if (this.configurationWizardService.showSystemCodesForm === true) {
+    this.systemService.createCode(this.codeForm.value).subscribe((response: any) => {
+      if (this.configurationWizardService.showSystemCodesForm) {
         this.configurationWizardService.showSystemCodesForm = false;
         this.configurationWizardService.showRolesandPermission = true;
         this.router.navigate(['/system']);
@@ -112,7 +103,7 @@ export class CreateCodeComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showSystemCodesForm === true) {
+    if (this.configurationWizardService.showSystemCodesForm) {
       setTimeout(() => {
         this.showPopover(this.templateCodeFormRef, this.codeFormRef.nativeElement, 'right', true);
       });

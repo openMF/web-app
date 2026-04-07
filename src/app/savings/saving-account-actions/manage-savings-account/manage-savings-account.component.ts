@@ -1,11 +1,19 @@
-import { Component, Input, OnInit } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
-import { SavingsAccountTransactionsService, SavingsAccountService } from '@fineract/client';
+import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Currency } from 'app/shared/models/general.model';
-import { CodesService, CodeValuesService } from '@fineract/client';
+import { SystemService } from 'app/system/system.service';
 import { MatCard, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
 import { InputAmountComponent } from '../../../shared/input-amount/input-amount.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -30,6 +38,14 @@ interface TransactionType {
   ]
 })
 export class ManageSavingsAccountComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private savingsService = inject(SavingsService);
+  private dateUtils = inject(Dates);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private systemService = inject(SystemService);
+  private settingsService = inject(SettingsService);
+
   @Input() currency: Currency;
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -52,26 +68,13 @@ export class ManageSavingsAccountComponent implements OnInit {
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
-   * @param {SavingsAccountTransactionsService} savingsAccountTransactionsService Savings Account Transactions Service
-   * @param {SavingsAccountService} savingsAccountService Savings Account Service
+   * @param {SavingsService} savingsService Savings Service
    * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
-   * @param {CodeValuesService} codeValuesService Code Values Service
-   * @param {CodesService} codesService Codes Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private savingsAccountTransactionsService: SavingsAccountTransactionsService,
-    private savingsAccountService: SavingsAccountService,
-    private dateUtils: Dates,
-    private route: ActivatedRoute,
-    private router: Router,
-    private settingsService: SettingsService,
-    private codeValuesService: CodeValuesService,
-    private codesService: CodesService
-  ) {
+  constructor() {
     this.transactionCommand = this.route.snapshot.params['name'].toLowerCase().replaceAll(' ', '');
     this.transactionType[this.transactionCommand] = true;
     this.savingAccountId = this.route.snapshot.params['savingAccountId'];
@@ -103,10 +106,10 @@ export class ManageSavingsAccountComponent implements OnInit {
       codeName = 'DebitTransactionFreezeReasons';
     }
 
-    this.codesService.retrieveCodes().subscribe((codes: any) => {
+    this.systemService.getCodes().subscribe((codes: any) => {
       codes.some((code: any) => {
         if (code.name === codeName) {
-          this.codeValuesService.retrieveAllCodeValues(code.id).subscribe((codeValues: any) => {
+          this.systemService.getCodeValues(code.id).subscribe((codeValues: any) => {
             this.reasonOptions = codeValues;
             return true;
           });
@@ -165,13 +168,8 @@ export class ManageSavingsAccountComponent implements OnInit {
       command = 'holdAmount';
       payload['transactionAmount'] = payload['transactionAmount'] * 1;
 
-      this.savingsAccountTransactionsService
-        .adjustTransaction1({
-          savingsId: parseInt(this.savingAccountId, 10),
-          transactionId: 0,
-          command: command,
-          postSavingsAccountBulkReversalTransactionsRequest: payload as any
-        })
+      this.savingsService
+        .executeSavingsAccountTransactionsCommand(this.savingAccountId, command, payload)
         .subscribe((response: any) => {
           this.router.navigate(['../../transactions'], { relativeTo: this.route });
         });
@@ -186,13 +184,8 @@ export class ManageSavingsAccountComponent implements OnInit {
         command = 'blockDebit';
       }
 
-      this.savingsAccountService
-        .handleCommands6({
-          accountId: parseInt(this.savingAccountId, 10),
-          command: command,
-          postSavingsAccountsAccountIdRequest:
-            payload as unknown as import('@fineract/client').PostSavingsAccountsAccountIdRequest
-        })
+      this.savingsService
+        .executeSavingsAccountCommand(this.savingAccountId, command, payload)
         .subscribe((response: any) => {
           this.router.navigate(['../../transactions'], { relativeTo: this.route });
         });

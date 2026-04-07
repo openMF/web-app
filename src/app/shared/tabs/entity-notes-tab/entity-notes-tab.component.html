@@ -1,3 +1,11 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <div class="tab-container mat-typography">
   <h3>{{ 'labels.heading.Notes' | translate }}</h3>
 
@@ -18,39 +26,57 @@
           cdkAutosizeMinRows="2"
         ></textarea>
       </mat-form-field>
-      <button mat-raised-button class="flex-1" color="primary" [disabled]="!noteForm.valid">
-        <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
+      <button type="submit" mat-raised-button class="flex-1" color="primary" [disabled]="!noteForm.valid">
+        <fa-icon icon="plus" class="m-r-10" aria-hidden="true"></fa-icon>{{ 'labels.buttons.Add' | translate }}
       </button>
     </form>
   </div>
 
   <div class="notes-container">
-    <div *ngIf="entityNotes && entityNotes.length > 0; else emptyState">
-      <div class="note-card" *ngFor="let entityNote of entityNotes; let i = index">
-        <div class="note-content">
-          {{ entityNote.note }}
-        </div>
-
-        <div class="note-footer">
-          <div class="note-meta">
-            <div class="created-by">Created by {{ entityNote.createdByUsername }}</div>
-            <div class="created-date">
-              {{ entityNote.createdOn | dateFormat }}
+    @if (entityNotes && entityNotes.length > 0) {
+      <div>
+        @for (entityNote of entityNotes; track entityNote; let i = $index) {
+          <div class="note-card">
+            <div class="note-content">
+              {{ entityNote.note }}
+            </div>
+            <div class="note-footer">
+              <div class="note-meta">
+                <div class="created-by">
+                  {{ 'labels.inputs.Created By' | translate }} {{ entityNote.createdByUsername }}
+                </div>
+                <div class="created-date">
+                  {{ entityNote.createdOn | dateFormat }}
+                </div>
+              </div>
+              <div class="note-actions">
+                <button
+                  type="button"
+                  mat-raised-button
+                  color="primary"
+                  (click)="editNote(entityNote.id, entityNote.note, i)"
+                  [title]="'labels.heading.Edit Note' | translate"
+                >
+                  <fa-icon icon="edit" class="m-r-10" aria-hidden="true"></fa-icon
+                  >{{ 'labels.buttons.Edit' | translate }}
+                </button>
+                <button
+                  type="button"
+                  mat-raised-button
+                  color="warn"
+                  (click)="deleteNote(entityNote.id, i)"
+                  [title]="('labels.inputs.Note' | translate) + ': ' + ('labels.buttons.Delete' | translate)"
+                >
+                  <fa-icon icon="trash" class="m-r-10" aria-hidden="true"></fa-icon
+                  >{{ 'labels.buttons.Delete' | translate }}
+                </button>
+              </div>
             </div>
           </div>
-
-          <div class="note-actions">
-            <button class="edit-btn" (click)="editNote(entityNote.id, entityNote.note, i)" title="Edit note">
-              Edit
-            </button>
-            <button class="delete-btn" (click)="deleteNote(entityNote.id, i)" title="Delete note">Delete</button>
-          </div>
-        </div>
+        }
       </div>
-    </div>
-
-    <ng-template #emptyState>
-      <div class="empty-state">No notes available</div>
-    </ng-template>
+    } @else {
+      <div class="empty-state">{{ 'labels.text.NoNotesAvailable' | translate }}</div>
+    }
   </div>
 </div>

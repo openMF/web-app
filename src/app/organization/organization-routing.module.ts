@@ -1,3 +1,11 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -103,6 +111,12 @@ import { ViewFundComponent } from './manage-funds/view-fund/view-fund.component'
 import { EditFundComponent } from './manage-funds/edit-fund/edit-fund.component';
 import { CreateFundComponent } from './manage-funds/create-fund/create-fund.component';
 import { InvestorsComponent } from './investors/investors.component';
+import { LoanOriginatorsComponent } from './loan-originators/loan-originators.component';
+import { LoanOriginatorsResolver } from './loan-originators/loan-originators.resolver';
+import { ViewLoanOriginatorComponent } from './loan-originators/view-loan-originator/view-loan-originator.component';
+import { EditLoanOriginatorComponent } from './loan-originators/edit-loan-originator/edit-loan-originator.component';
+import { CreateLoanOriginatorComponent } from './loan-originators/create-loan-originator/create-loan-originator.component';
+import { LoanOriginatorsTemplateResolver } from './loan-originators/loan-originators-template.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -550,7 +564,7 @@ const routes: Routes = [
         {
           path: 'bulkloan',
           component: BulkLoanReassignmnetComponent,
-          data: { title: 'Bulk Loan Reassignment', breadcrumb: 'Bulk Loan Reasssignment' },
+          data: { title: 'Bulk Loan Reassignment', breadcrumb: 'Bulk Loan Reassignment' },
           resolve: {
             offices: OfficesResolver
           }
@@ -583,6 +597,50 @@ const routes: Routes = [
           resolve: {
             workingDays: WorkingDaysResolver
           }
+        },
+        {
+          path: 'manage-loan-originators',
+          data: { title: 'Manage Loan Originators', breadcrumb: 'Manage Loan Originators' },
+          children: [
+            {
+              path: '',
+              component: LoanOriginatorsComponent,
+              resolve: {
+                loanOriginatorsData: LoanOriginatorsResolver
+              }
+            },
+            {
+              path: 'create',
+              component: CreateLoanOriginatorComponent,
+              data: { title: 'Create Loan Originator', breadcrumb: 'Create' },
+              resolve: {
+                loanOriginatorsTemplateData: LoanOriginatorsTemplateResolver
+              }
+            },
+            {
+              path: ':id',
+              data: { routeParamBreadcrumb: 'id', addBreadcrumbLink: false },
+              children: [
+                {
+                  path: '',
+                  component: ViewLoanOriginatorComponent,
+                  data: { title: 'View Loan Originator', breadcrumb: 'View', routeParamBreadcrumb: false },
+                  resolve: {
+                    loanOriginatorData: LoanOriginatorsResolver
+                  }
+                },
+                {
+                  path: 'edit',
+                  component: EditLoanOriginatorComponent,
+                  data: { title: 'Edit Loan Originator', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  resolve: {
+                    loanOriginatorData: LoanOriginatorsResolver,
+                    loanOriginatorsTemplateData: LoanOriginatorsTemplateResolver
+                  }
+                }
+              ]
+            }
+          ]
         },
         {
           path: 'manage-funds',
@@ -695,7 +753,6 @@ const routes: Routes = [
       ]
     }
   ])
-
 ];
 
 /**
@@ -746,7 +803,9 @@ const routes: Routes = [
     LoanProvisioningCriteriaTemplateResolver,
     LoanProvisioningCriteriaAndTemplateResolver,
     StandingInstructionsTemplateResolver,
-    AdvanceSearchTemplateResolver
+    AdvanceSearchTemplateResolver,
+    LoanOriginatorsResolver,
+    LoanOriginatorsTemplateResolver
   ]
 })
 export class OrganizationRoutingModule {}

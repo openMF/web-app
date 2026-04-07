@@ -1,3 +1,11 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -16,6 +24,7 @@ import { NotesTabComponent } from './clients-view/notes-tab/notes-tab.component'
 import { DocumentsTabComponent } from './clients-view/documents-tab/documents-tab.component';
 import { DatatableTabComponent } from './clients-view/datatable-tab/datatable-tab.component';
 import { AddressTabComponent } from './clients-view/address-tab/address-tab.component';
+import { PersonalDataTabComponent } from './clients-view/personal-data-tab/personal-data-tab.component';
 import { ClientActionsComponent } from './clients-view/client-actions/client-actions.component';
 import { ViewChargeComponent } from './clients-view/charges/view-charge/view-charge.component';
 import { ClientPayChargesComponent } from './clients-view/charges/client-pay-charges/client-pay-charges.component';
@@ -90,6 +99,11 @@ const routes: Routes = [
                 clientChargesData: ClientChargesResolver,
                 clientCollateralData: ClientCollateralResolver
               }
+            },
+            {
+              path: 'personal-data',
+              component: PersonalDataTabComponent,
+              data: { title: 'Personal Data', breadcrumb: 'Personal Data', routeParamBreadcrumb: false }
             },
             {
               path: 'address',
@@ -277,7 +291,6 @@ const routes: Routes = [
       ]
     }
   ])
-
 ];
 
 @NgModule({

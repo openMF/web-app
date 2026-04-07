@@ -1,9 +1,17 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
-import { SavingsAccountService } from '@fineract/client';
+import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -24,6 +32,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class SavingsAccountDetailsStepComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private savingsService = inject(SavingsService);
+  private settingsService = inject(SettingsService);
+
   /** Savings Account Template */
   @Input() savingsAccountTemplate: any;
 
@@ -48,14 +60,10 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
   /**
    * Sets share account details form.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {SavingsAccountService} savingsAccountService Savings Account Service
+   * @param {SavingsService} savingsService Savings Service.
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private savingsAccountService: SavingsAccountService,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.createSavingsAccountDetailsForm();
   }
 
@@ -104,12 +112,8 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
   buildDependencies() {
     const entityId = this.savingsAccountTemplate.groupId || this.savingsAccountTemplate.clientId;
     this.savingsAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
-      this.savingsAccountService
-        .template14({
-          clientId: this.savingsAccountTemplate.groupId ? undefined : entityId ? Number(entityId) : undefined,
-          groupId: this.savingsAccountTemplate.groupId ? Number(entityId) : undefined,
-          productId: productId ? Number(productId) : undefined
-        })
+      this.savingsService
+        .getSavingsAccountTemplate(entityId, productId, this.savingsAccountTemplate.groupId ? true : false)
         .subscribe((response: any) => {
           this.savingsAccountProductTemplate.emit(response);
           this.fieldOfficerData = response.fieldOfficerOptions;

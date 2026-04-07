@@ -1,4 +1,12 @@
-import { Component, OnInit, Inject } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, OnInit, inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogActions } from '@angular/material/dialog';
 import { UntypedFormBuilder, Validators, AbstractControl, ValidationErrors, FormGroup } from '@angular/forms';
 import { confirmPasswordValidator } from 'app/login/reset-password/confirm-password.validator';
@@ -23,16 +31,14 @@ import { TranslateService } from '@ngx-translate/core';
   ]
 })
 export class ChangePasswordDialogComponent implements OnInit {
+  dialogRef = inject<MatDialogRef<ChangePasswordDialogComponent>>(MatDialogRef);
+  data = inject(MAT_DIALOG_DATA);
+  private formBuilder = inject(UntypedFormBuilder);
+  private http = inject(HttpClient);
+  private translateService = inject(TranslateService);
+
   minPasswordLength: number = environment.minPasswordLength || 12;
   changePasswordForm: FormGroup;
-
-  constructor(
-    public dialogRef: MatDialogRef<ChangePasswordDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private formBuilder: UntypedFormBuilder,
-    private http: HttpClient,
-    private translateService: TranslateService
-  ) {}
 
   private api = environment.OIDC.oidcApiUrl;
 
@@ -54,7 +60,8 @@ export class ChangePasswordDialogComponent implements OnInit {
             Validators.required,
             Validators.minLength(this.minPasswordLength),
             Validators.maxLength(50),
-            Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/)]
+            Validators.pattern(/^(?!.*(.)\1)(?!.*\s)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).+$/)
+          ]
         ],
         repeatPassword: [
           '',
@@ -72,7 +79,8 @@ export class ChangePasswordDialogComponent implements OnInit {
 
     this.changePasswordForm.get('repeatPassword')?.setValidators([
       Validators.required,
-      this.matchOtherControl('password')]);
+      this.matchOtherControl('password')
+    ]);
   }
 
   matchOtherControl(controlNameToMatch: string) {

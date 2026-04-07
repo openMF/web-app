@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import {
   MatTableDataSource,
@@ -17,8 +25,8 @@ import {
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
-import { StandingInstructionsService } from '@fineract/client';
-import { AccountTransfersService } from 'app/customApis.service';
+import { LoansService } from 'app/loans/loans.service';
+import { AccountTransfersService } from 'app/account-transfers/account-transfers.service';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Dialog Components */
@@ -51,6 +59,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class StandingInstructionsTabComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private loansService = inject(LoansService);
+  private dialog = inject(MatDialog);
+  private accountTransfersService = inject(AccountTransfersService);
+  private settingsService = inject(SettingsService);
+
   /** Loans Data */
   loanDetailsData: any;
   /** Instructions Data */
@@ -76,13 +90,7 @@ export class StandingInstructionsTabComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private route: ActivatedRoute,
-    private standingInstructionsService: StandingInstructionsService,
-    private dialog: MatDialog,
-    private accountTransfersService: AccountTransfersService,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
       this.loanDetailsData = data.loanDetailsData;
     });
@@ -101,15 +109,8 @@ export class StandingInstructionsTabComponent implements OnInit {
     const accountId = this.loanDetailsData.id;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    this.standingInstructionsService
-      .retrieveAll19({
-        clientId: Number(clientId),
-        clientName: clientName,
-        fromAccountId: Number(accountId),
-        fromAccountType: 1,
-        limit: 14,
-        offset: 0
-      })
+    this.loansService
+      .getStandingInstructions(clientId, clientName, accountId, locale, dateFormat)
       .subscribe((response: any) => {
         this.instructionsData = response.pageItems;
         this.dataSource.data = this.instructionsData;
@@ -123,9 +124,7 @@ export class StandingInstructionsTabComponent implements OnInit {
     });
     deleteStandingInstructionDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.accountTransfersService.deleteStandingInstrucions(instructionId).subscribe(() => {
-          this.getStandingInstructions(); // Refresh the list after deletion
-        });
+        this.accountTransfersService.deleteStandingInstrucions(instructionId).subscribe(() => {});
       }
     });
   }

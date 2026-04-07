@@ -1,6 +1,15 @@
-import { Component, Input } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, Input, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { LoansService } from '@fineract/client';
+import { LoansService } from 'app/loans/loans.service';
+import { RepaymentSchedule } from 'app/loans/models/loan-account.model';
 import { SettingsService } from 'app/settings/settings.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { RepaymentScheduleTabComponent } from '../../loans-view/repayment-schedule-tab/repayment-schedule-tab.component';
@@ -20,31 +29,29 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoansAccountScheduleStepComponent {
+  private loansService = inject(LoansService);
+  private settingsService = inject(SettingsService);
+  private route = inject(ActivatedRoute);
+
   /** Currency Code */
   @Input() currencyCode: string;
   /** Loans Account Template */
-  @Input() loansAccountTemplate: any;
+  @Input() loansAccountTemplate: Record<string, unknown>;
   /** Loans Account Product Template */
-  @Input() loansAccountProductTemplate: any;
+  @Input() loansAccountProductTemplate: { calendarOptions?: unknown };
   /** Loans Account Data */
-  @Input() loansAccount: any;
+  @Input() loansAccount: Record<string, unknown>;
 
-  repaymentScheduleDetails: any = { periods: [] };
+  repaymentScheduleDetails: RepaymentSchedule | null = null;
 
-  loanId: any = null;
+  loanId: string | null = null;
 
-  constructor(
-    private loansService: LoansService,
-    private settingsService: SettingsService,
-    private route: ActivatedRoute
-  ) {
+  constructor() {
     this.loanId = this.route.snapshot.params['loanId'];
   }
 
   showRepaymentInfo(): void {
-    this.repaymentScheduleDetails = { periods: [] };
-    // TODO: Re-implement loan schedule calculation with @fineract/client
-    /*
+    this.repaymentScheduleDetails = null;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const payload = this.loansService.buildLoanRequestPayload(
@@ -57,9 +64,8 @@ export class LoansAccountScheduleStepComponent {
     delete payload['enableInstallmentLevelDelinquency'];
     delete payload['externalId'];
 
-    this.loansService.calculateLoanSchedule(payload).subscribe((response: any) => {
+    this.loansService.calculateLoanSchedule(payload).subscribe((response: RepaymentSchedule) => {
       this.repaymentScheduleDetails = response;
     });
-    */
   }
 }

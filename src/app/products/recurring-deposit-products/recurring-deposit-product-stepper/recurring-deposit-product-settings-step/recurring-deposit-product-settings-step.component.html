@@ -1,3 +1,11 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <form [formGroup]="recurringDepositProductSettingsForm">
   <div class="layout-row-wrap gap-2px responsive-column">
     <mat-checkbox labelPosition="before" formControlName="isMandatoryDeposit" class="margin-v flex-48">
@@ -18,6 +26,7 @@
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
       <input
         type="number"
+        min="0"
         matInput
         formControlName="lockinPeriodFrequency"
         matTooltip="{{ 'tooltips.The number at which lock in period occurs' | translate }}"
@@ -27,12 +36,11 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="lockinPeriodFrequencyType">
-        <mat-option
-          *ngFor="let lockinPeriodFrequencyType of lockinPeriodFrequencyTypeData"
-          [value]="lockinPeriodFrequencyType.id"
-        >
-          {{ lockinPeriodFrequencyType.value }}
-        </mat-option>
+        @for (lockinPeriodFrequencyType of lockinPeriodFrequencyTypeData; track lockinPeriodFrequencyType) {
+          <mat-option [value]="lockinPeriodFrequencyType.id">
+            {{ lockinPeriodFrequencyType.value }}
+          </mat-option>
+        }
       </mat-select>
     </mat-form-field>
 
@@ -42,6 +50,7 @@
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
       <input
         type="number"
+        min="0"
         matInput
         formControlName="minDepositTerm"
         matTooltip="{{ 'tooltips.The number at which minimum deposit occurs' | translate }}"
@@ -56,9 +65,11 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency Type' | translate }}</mat-label>
       <mat-select formControlName="minDepositTermTypeId" required>
-        <mat-option *ngFor="let periodFrequencyType of periodFrequencyTypeData" [value]="periodFrequencyType.id">
-          {{ periodFrequencyType.value }}
-        </mat-option>
+        @for (periodFrequencyType of periodFrequencyTypeData; track periodFrequencyType) {
+          <mat-option [value]="periodFrequencyType.id">
+            {{ periodFrequencyType.value }}
+          </mat-option>
+        }
       </mat-select>
       <mat-error>
         {{ 'labels.inputs.Minimum Deposit Term Frequency Type' | translate }} {{ 'labels.commons.is' | translate }}
@@ -72,6 +83,7 @@
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
       <input
         type="number"
+        min="0"
         matInput
         formControlName="inMultiplesOfDepositTerm"
         matTooltip="{{ 'tooltips.The number at which multiple deposits occurs' | translate }}"
@@ -81,9 +93,11 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="inMultiplesOfDepositTermTypeId">
-        <mat-option *ngFor="let periodFrequencyType of periodFrequencyTypeData" [value]="periodFrequencyType.id">
-          {{ periodFrequencyType.value }}
-        </mat-option>
+        @for (periodFrequencyType of periodFrequencyTypeData; track periodFrequencyType) {
+          <mat-option [value]="periodFrequencyType.id">
+            {{ periodFrequencyType.value }}
+          </mat-option>
+        }
       </mat-select>
     </mat-form-field>
 
@@ -93,6 +107,7 @@
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
       <input
         type="number"
+        min="0"
         matInput
         formControlName="maxDepositTerm"
         matTooltip="{{ 'tooltips.The number at which minimum deposit occurs' | translate }}"
@@ -102,9 +117,11 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="maxDepositTermTypeId">
-        <mat-option *ngFor="let periodFrequencyType of periodFrequencyTypeData" [value]="periodFrequencyType.id">
-          {{ periodFrequencyType.value }}
-        </mat-option>
+        @for (periodFrequencyType of periodFrequencyTypeData; track periodFrequencyType) {
+          <mat-option [value]="periodFrequencyType.id">
+            {{ periodFrequencyType.value }}
+          </mat-option>
+        }
       </mat-select>
     </mat-form-field>
 
@@ -118,18 +135,17 @@
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Penal Interest' | translate }} (%)</mat-label>
-      <input type="number" matInput formControlName="preClosurePenalInterest" />
+      <input type="number" min="0" matInput formControlName="preClosurePenalInterest" />
     </mat-form-field>
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Period' | translate }}</mat-label>
       <mat-select formControlName="preClosurePenalInterestOnTypeId">
-        <mat-option
-          *ngFor="let preClosurePenalInterestOnType of preClosurePenalInterestOnTypeData"
-          [value]="preClosurePenalInterestOnType.id"
-        >
-          {{ preClosurePenalInterestOnType.value }}
-        </mat-option>
+        @for (preClosurePenalInterestOnType of preClosurePenalInterestOnTypeData; track preClosurePenalInterestOnType) {
+          <mat-option [value]="preClosurePenalInterestOnType.id">
+            {{ preClosurePenalInterestOnType.value }}
+          </mat-option>
+        }
       </mat-select>
     </mat-form-field>
 
@@ -139,18 +155,22 @@
       {{ 'labels.inputs.Is Withhold Tax Applicable' | translate }}
     </mat-checkbox>
 
-    <mat-form-field class="flex-48" *ngIf="recurringDepositProductSettingsForm.value.withHoldTax">
-      <mat-label>{{ 'labels.inputs.Tax Group' | translate }}</mat-label>
-      <mat-select formControlName="taxGroupId" required>
-        <mat-option *ngFor="let taxGroup of taxGroupData" [value]="taxGroup.id">
-          {{ taxGroup.name }}
-        </mat-option>
-      </mat-select>
-      <mat-error>
-        {{ 'labels.inputs.Tax Group' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
-    </mat-form-field>
+    @if (recurringDepositProductSettingsForm.value.withHoldTax) {
+      <mat-form-field class="flex-48">
+        <mat-label>{{ 'labels.inputs.Tax Group' | translate }}</mat-label>
+        <mat-select formControlName="taxGroupId" required>
+          @for (taxGroup of taxGroupData; track taxGroup) {
+            <mat-option [value]="taxGroup.id">
+              {{ taxGroup.name }}
+            </mat-option>
+          }
+        </mat-select>
+        <mat-error>
+          {{ 'labels.inputs.Tax Group' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      </mat-form-field>
+    }
   </div>
 
   <div class="layout-row align-center gap-2percent margin-t responsive-column">

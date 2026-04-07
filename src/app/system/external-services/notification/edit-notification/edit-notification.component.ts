@@ -1,10 +1,18 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
-import { ExternalServicesService } from '@fineract/client';
+import { SystemService } from 'app/system/system.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -19,6 +27,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditNotificationComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private systemService = inject(SystemService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   /** Notification Configuration data */
   notificationConfigurationData: any;
   /** Notification Configuration Form */
@@ -27,16 +40,11 @@ export class EditNotificationComponent implements OnInit {
   /**
    * Retrieves the Notification configuration data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {ExternalServicesService} externalServicesService External Services Service.
+   * @param {SystemService} systemService Accounting Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private externalServicesService: ExternalServicesService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { notificationConfiguration: any }) => {
       this.notificationConfigurationData = data.notificationConfiguration;
     });
@@ -74,11 +82,8 @@ export class EditNotificationComponent implements OnInit {
    * if successful redirects to view Notification configuration.
    */
   submit() {
-    this.externalServicesService
-      .updateExternalServiceProperties({
-        servicename: 'NOTIFICATION',
-        putExternalServiceRequest: this.notificationConfigurationForm.value
-      })
+    this.systemService
+      .updateExternalConfiguration('NOTIFICATION', this.notificationConfigurationForm.value)
       .subscribe((response: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });

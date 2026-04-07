@@ -1,10 +1,18 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { SavingsChargesService } from '@fineract/client';
+import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Dialogs */
@@ -38,6 +46,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewChargeComponent {
+  private savingsService = inject(SavingsService);
+  private route = inject(ActivatedRoute);
+  private dateUtils = inject(Dates);
+  private router = inject(Router);
+  dialog = inject(MatDialog);
+  private settingsService = inject(SettingsService);
+
   /** Charge data. */
   chargeData: any;
   /** Savings Account Data */
@@ -45,21 +60,14 @@ export class ViewChargeComponent {
 
   /**
    * Retrieves the Charge data from `resolve`.
-   * @param {SavingsChargesService} savingsChargesService Savings Charges Service.
+   * @param {SavingsService} savingsService Savings Service
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    * @param {Dates} dateUtils Date Utils.
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(
-    private savingsChargesService: SavingsChargesService,
-    private route: ActivatedRoute,
-    private dateUtils: Dates,
-    private router: Router,
-    public dialog: MatDialog,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { savingsAccountCharge: any }) => {
       this.chargeData = data.savingsAccountCharge;
     });
@@ -87,7 +95,6 @@ export class ViewChargeComponent {
         type: 'date',
         required: true
       })
-
     ];
     const data = {
       title: 'Pay Charge',
@@ -105,13 +112,8 @@ export class ViewChargeComponent {
           dateFormat,
           locale
         };
-        this.savingsChargesService
-          .payOrWaiveSavingsAccountCharge({
-            savingsAccountId: this.chargeData.accountId,
-            savingsAccountChargeId: this.chargeData.id,
-            postSavingsAccountsSavingsAccountIdChargesSavingsAccountChargeIdRequest: dataObject,
-            command: 'pay'
-          })
+        this.savingsService
+          .executeSavingsAccountChargesCommand(this.chargeData.accountId, 'pay', dataObject, this.chargeData.id)
           .subscribe(() => {
             this.reload();
           });
@@ -126,13 +128,8 @@ export class ViewChargeComponent {
     const waiveChargeDialogRef = this.dialog.open(WaiveChargeDialogComponent, { data: { id: this.chargeData.id } });
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsChargesService
-          .payOrWaiveSavingsAccountCharge({
-            savingsAccountId: this.chargeData.accountId,
-            savingsAccountChargeId: this.chargeData.id,
-            postSavingsAccountsSavingsAccountIdChargesSavingsAccountChargeIdRequest: {},
-            command: 'waive'
-          })
+        this.savingsService
+          .executeSavingsAccountChargesCommand(this.chargeData.accountId, 'waive', {}, this.chargeData.id)
           .subscribe(() => {
             this.reload();
           });
@@ -149,13 +146,8 @@ export class ViewChargeComponent {
     });
     inactivateChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsChargesService
-          .payOrWaiveSavingsAccountCharge({
-            savingsAccountId: this.chargeData.accountId,
-            savingsAccountChargeId: this.chargeData.id,
-            postSavingsAccountsSavingsAccountIdChargesSavingsAccountChargeIdRequest: {},
-            command: 'inactivate'
-          })
+        this.savingsService
+          .executeSavingsAccountChargesCommand(this.chargeData.accountId, 'inactivate', {}, this.chargeData.id)
           .subscribe(() => {
             this.reload();
           });
@@ -175,7 +167,6 @@ export class ViewChargeComponent {
         type: 'number',
         required: true
       })
-
     ];
     const data = {
       title: 'Edit Charge',
@@ -192,8 +183,8 @@ export class ViewChargeComponent {
           dateFormat,
           locale
         };
-        this.savingsChargesService
-          .updateSavingsAccountCharge(this.chargeData.accountId, dataObject, this.chargeData.id)
+        this.savingsService
+          .editSavingsAccountCharge(this.chargeData.accountId, dataObject, this.chargeData.id)
           .subscribe(() => {
             this.reload();
           });
@@ -210,11 +201,9 @@ export class ViewChargeComponent {
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.savingsChargesService
-          .deleteSavingsAccountCharge(this.chargeData.accountId, this.chargeData.id)
-          .subscribe(() => {
-            this.reload();
-          });
+        this.savingsService.deleteSavingsAccountCharge(this.chargeData.accountId, this.chargeData.id).subscribe(() => {
+          this.reload();
+        });
       }
     });
   }

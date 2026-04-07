@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatDialogRef, MatDialogTitle, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 import { FileUploadComponent } from '../../../../shared/file-upload/file-upload.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -20,13 +28,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class UploadImageDialogComponent {
+  dialogRef = inject<MatDialogRef<UploadImageDialogComponent>>(MatDialogRef);
+
   /** Client Image */
   image: File;
-
-  /**
-   * @param {MatDialogRef} dialogRef Component reference to dialog.
-   */
-  constructor(public dialogRef: MatDialogRef<UploadImageDialogComponent>) {}
 
   /**
    * Sets file form control value.

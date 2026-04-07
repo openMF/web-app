@@ -1,45 +1,32 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 /** Custom Services */
-import {
-  LoansService,
-  LoanTransactionsService,
-  RescheduleLoansService,
-  LoanCollateralService,
-  GuarantorsService,
-  UserGeneratedDocumentsService,
-  LoanChargesService
-} from '@fineract/client';
+import { LoansService } from '../loans.service';
+import { OrganizationService } from 'app/organization/organization.service';
+import { LoanProductService } from 'app/products/loan-products/services/loan-product.service';
 
 /**
  * Loans notes data resolver.
  */
 @Injectable()
 export class LoanActionButtonResolver {
-  /**
-   * @param {LoansService} loansService Loans service.
-   * @param {LoanTransactionsService} loanTransactionsService Loan Transactions service.
-   * @param {RescheduleLoansService} rescheduleLoansService Reschedule Loans service.
-   * @param {LoanCollateralService} loanCollateralService Loan Collateral service.
-   * @param {GuarantorsService} guarantorsService Guarantors service.
-   * @param {UserGeneratedDocumentsService} userGeneratedDocumentsService User Generated Documents service.
-   * @param {LoanChargesService} loanChargesService Loan Charges service.
-   */
-  constructor(
-    private loansService: LoansService,
-    private loanTransactionsService: LoanTransactionsService,
-    private rescheduleLoansService: RescheduleLoansService,
-    private loanCollateralService: LoanCollateralService,
-    private guarantorsService: GuarantorsService,
-    private userGeneratedDocumentsService: UserGeneratedDocumentsService,
-    private loanChargesService: LoanChargesService
-  ) {}
+  private loansService = inject(LoansService);
+  private organizationService = inject(OrganizationService);
+  private loanProductService = inject(LoanProductService);
 
   /**
    * Returns the Loans Notes Data.
@@ -47,183 +34,73 @@ export class LoanActionButtonResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const loanId = route.paramMap.get('loanId') || route.parent.paramMap.get('loanId');
-    const clientId =
-      route.parent && route.parent.paramMap.get('clientId') ? route.parent.paramMap.get('clientId') : undefined;
     const loanActionButton = route.paramMap.get('action');
     if (loanActionButton === 'Assign Loan Officer' || loanActionButton === 'Change Loan Officer') {
-      // Fetch loan details and loan officer options for assigning/changing loan officer
-      return new Observable((observer) => {
-        this.loansService
-          .retrieveLoan({
-            loanId: parseInt(loanId, 10),
-            associations: 'all'
-          })
-          .subscribe(
-            (loanResp: any) => {
-              // Try to get loan officer options from loanResp, fallback to template endpoint if needed
-              if (loanResp && loanResp.loanOfficerOptions) {
-                observer.next({ ...loanResp, loanOfficerOptions: loanResp.loanOfficerOptions });
-                observer.complete();
-              } else {
-                // Try to fetch from /loans/template (without templateType)
-                this.loansService
-                  .template10({
-                    clientId: clientId ? parseInt(clientId, 10) : undefined,
-                    templateType: 'individual'
-                  })
-                  .subscribe(
-                    (templateResp: any) => {
-                      observer.next({ ...loanResp, loanOfficerOptions: templateResp?.loanOfficerOptions || [] });
-                      observer.complete();
-                    },
-                    (err) => {
-                      observer.next({ ...loanResp, loanOfficerOptions: [] });
-                      observer.complete();
-                    }
-                  );
-              }
-            },
-            (err) => observer.error(err)
-          );
-      });
+      return this.loansService.getLoanTemplate(loanId);
     } else if (loanActionButton === 'Make Repayment') {
-      return this.loanTransactionsService.retrieveTransactionTemplate({
-        loanId: parseInt(loanId, 10),
-        command: 'repayment'
-      });
+      return this.loansService.getLoanActionTemplate(loanId, 'repayment');
     } else if (loanActionButton === 'Goodwill Credit') {
-      return this.loanTransactionsService.retrieveTransactionTemplate({
-        loanId: parseInt(loanId, 10),
-        command: 'goodwillCredit'
-      });
+      return this.loansService.getLoanActionTemplate(loanId, 'goodwillCredit');
     } else if (loanActionButton === 'Interest Payment Waiver') {
-      return this.loanTransactionsService.retrieveTransactionTemplate({
-        loanId: parseInt(loanId, 10),
-        command: 'interestPaymentWaiver'
-      });
+      return this.loansService.getLoanActionTemplate(loanId, 'interestPaymentWaiver');
     } else if (loanActionButton === 'Payout Refund') {
-      return this.loanTransactionsService.retrieveTransactionTemplate({
-        loanId: parseInt(loanId, 10),
-        command: 'payoutRefund'
-      });
+      return this.loansService.getLoanActionTemplate(loanId, 'payoutRefund');
     } else if (loanActionButton === 'Merchant Issued Refund') {
-      return this.loanTransactionsService.retrieveTransactionTemplate({
-        loanId: parseInt(loanId, 10),
-        command: 'merchantIssuedRefund'
-      });
+      return this.loansService.getLoanActionTemplate(loanId, 'merchantIssuedRefund');
     } else if (loanActionButton === 'Credit Balance Refund') {
-      return this.loanTransactionsService.retrieveTransactionTemplate({
-        loanId: parseInt(loanId, 10),
-        command: 'creditBalanceRefund'
-      });
+      return this.loansService.getLoanActionTemplate(loanId, 'creditBalanceRefund');
     } else if (loanActionButton === 'Waive Interest') {
-      return this.loanTransactionsService.retrieveTransactionTemplate({
-        loanId: parseInt(loanId, 10),
-        command: 'waiveinterest'
-      });
+      return this.loansService.getLoanActionTemplate(loanId, 'waiveinterest');
     } else if (loanActionButton === 'Write Off') {
-      return this.loanTransactionsService.retrieveTransactionTemplate({
-        loanId: parseInt(loanId, 10),
-        command: 'writeoff'
-      });
+      return this.loansService.getLoanActionTemplate(loanId, 'writeoff');
     } else if (loanActionButton === 'Close') {
-      return this.loanTransactionsService.retrieveTransactionTemplate({
-        loanId: parseInt(loanId, 10),
-        command: 'close'
-      });
+      return this.loansService.getLoanActionTemplate(loanId, 'close');
     } else if (loanActionButton === 'Close (as Rescheduled)') {
-      return this.loanTransactionsService.retrieveTransactionTemplate({
-        loanId: parseInt(loanId, 10),
-        command: 'close-rescheduled'
-      });
+      return this.loansService.getLoanActionTemplate(loanId, 'close-rescheduled');
     } else if (loanActionButton === 'Reschedule') {
-      return this.rescheduleLoansService.retrieveTemplate10();
+      return this.loansService.rescheduleLoanTemplate();
     } else if (loanActionButton === 'Prepay Loan') {
-      return this.loanTransactionsService.retrieveTransactionTemplate({
-        loanId: parseInt(loanId, 10),
-        command: 'prepayLoan'
-      });
+      return this.loansService.getLoanPrepayLoanActionTemplate(loanId, null);
     } else if (loanActionButton === 'Add Collateral') {
-      return this.loanCollateralService.newCollateralTemplate({ loanId: parseInt(loanId, 10) });
+      return this.loansService.getLoanCollateralTemplate(loanId);
     } else if (loanActionButton === 'Disburse to Savings') {
-      return this.loanTransactionsService.retrieveTransactionTemplate({
-        loanId: parseInt(loanId, 10),
-        command: 'disburseToSavings'
-      });
+      return this.loansService.getLoanActionTemplate(loanId, 'disburseToSavings');
     } else if (loanActionButton === 'Recovery Payment') {
-      return this.loanTransactionsService.retrieveTransactionTemplate({
-        loanId: parseInt(loanId, 10),
-        command: 'recoverypayment'
-      });
+      return this.loansService.getLoanActionTemplate(loanId, 'recoverypayment');
     } else if (loanActionButton === 'View Guarantors') {
-      return this.loansService.retrieveLoan({ loanId: parseInt(loanId, 10), associations: 'guarantors' });
+      return this.loansService.getGuarantors(loanId).pipe(catchError(() => of([])));
     } else if (loanActionButton === 'Create Guarantor') {
-      return this.guarantorsService.newGuarantorTemplate({ loanId: parseInt(loanId, 10) });
+      return this.loansService.getGuarantorTemplate(loanId);
     } else if (loanActionButton === 'Disburse') {
-      return this.loanTransactionsService.retrieveTransactionTemplate({
-        loanId: parseInt(loanId, 10),
-        command: 'disburse'
-      });
+      return this.loanProductService.isLoanProduct
+        ? this.loansService.getLoanActionTemplate(loanId, loanActionButton.toLowerCase())
+        : this.loansService.getWorkingCapitalLoanActionTemplate(loanId, loanActionButton.toLowerCase());
     } else if (loanActionButton === 'Loan Screen Reports') {
-      return this.userGeneratedDocumentsService.retrieveAll40();
+      return this.loansService.getLoanScreenReportsData();
     } else if (loanActionButton === 'Approve') {
-      // Use template10 for approval and map to expected structure
-      return new Observable((observer) => {
-        this.loansService
-          .retrieveLoan({
-            loanId: parseInt(loanId, 10)
-          })
-          .subscribe(
-            (resp: any) => {
-              observer.next({
-                approvalAmount: resp.approvedPrincipal || resp.principal || 0,
-                currency: resp.currency?.code || '',
-                minApprovalAmount: 0, // Set as needed
-                maxApprovalAmount: resp.approvedPrincipal || resp.principal || 0, // Set as needed
-                ...resp
-              });
-              observer.complete();
-            },
-            (err) => observer.error(err)
-          );
-      });
+      return this.loanProductService.isLoanProduct
+        ? this.loansService.getLoanApprovalTemplate(loanId)
+        : this.loansService.getWorkingCapitalLoanActionTemplate(loanId, loanActionButton.toLowerCase());
     } else if (loanActionButton === 'Add Loan Charge') {
-      return this.loanChargesService.retrieveTemplate8({ loanId: parseInt(loanId, 10) });
+      return this.loansService.getLoanChargeTemplateResource(loanId);
     } else if (loanActionButton === 'Foreclosure') {
-      return this.loanTransactionsService.retrieveTransactionTemplate({
-        loanId: parseInt(loanId, 10),
-        command: 'foreclosure'
-      });
+      return this.loansService.getLoanForeclosureActionTemplate(loanId);
     } else if (loanActionButton === 'Charge-Off') {
-      return this.loanTransactionsService.retrieveTransactionTemplate({
-        loanId: parseInt(loanId, 10),
-        command: 'charge-off'
-      });
+      return this.loansService.getLoanActionTemplate(loanId, 'charge-off');
     } else if (loanActionButton === 'Capitalized Income') {
-      return this.loanTransactionsService.retrieveTransactionTemplate({
-        loanId: parseInt(loanId, 10),
-        command: 'capitalizedIncome'
-      });
+      return this.loansService.getLoanActionTemplate(loanId, 'capitalizedIncome');
     } else if (loanActionButton === 'Contract Termination') {
-      return this.loanTransactionsService.retrieveTransactionTemplate({
-        loanId: parseInt(loanId, 10),
-        command: 'contractTermination'
-      });
+      return this.loansService.getLoanActionTemplate(loanId, 'contractTermination');
     } else if (loanActionButton === 'Buy Down Fee') {
-      return this.loanTransactionsService.retrieveTransactionTemplate({
-        loanId: parseInt(loanId, 10),
-        command: 'buyDownFee'
-      });
+      return this.loansService.getLoanActionTemplate(loanId, 'buyDownFee');
     } else if (loanActionButton === 'Re-Age') {
-      return this.loanTransactionsService.retrieveTransactionTemplate({
-        loanId: parseInt(loanId, 10),
-        command: 'reAge'
-      });
+      return this.loansService.getLoanActionTemplate(loanId, 'reAge');
     } else if (loanActionButton === 'Re-Amortize') {
-      return this.loanTransactionsService.retrieveTransactionTemplate({
-        loanId: parseInt(loanId, 10),
-        command: 'reAmortization'
-      });
+      return this.loansService.getLoanActionTemplate(loanId, 'reAmortization');
+    } else if (loanActionButton === 'Attach Loan Originator') {
+      return this.organizationService.getLoanOriginators();
+    } else if (loanActionButton === 'Update discount') {
+      return this.loansService.getWorkingCapitalLoanDetails(loanId);
     } else {
       return undefined;
     }

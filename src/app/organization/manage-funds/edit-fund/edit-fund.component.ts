@@ -1,7 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { FundsService } from '@fineract/client';
+import { OrganizationService } from 'app/organization/organization.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
@@ -13,6 +21,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditFundComponent implements OnInit {
+  private organizationService = inject(OrganizationService);
+  private formBuilder = inject(UntypedFormBuilder);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+
   /** Selected Data. */
   fundData: any;
   /** Charge form. */
@@ -25,12 +38,7 @@ export class EditFundComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(
-    private fundsService: FundsService,
-    private formBuilder: UntypedFormBuilder,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { fundData: any }) => {
       this.fundData = data.fundData;
     });
@@ -55,7 +63,7 @@ export class EditFundComponent implements OnInit {
 
   submit() {
     const payload = this.fundForm.getRawValue();
-    this.fundsService.updateFund(this.fundData.id.toString(), payload).subscribe((response: any) => {
+    this.organizationService.editFund(this.fundData.id.toString(), payload).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

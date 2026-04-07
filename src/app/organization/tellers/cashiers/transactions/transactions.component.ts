@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -19,7 +27,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
-import { TellerCashManagementService } from '@fineract/client';
+import { OrganizationService } from 'app/organization/organization.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
@@ -53,6 +61,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class TransactionsComponent implements OnInit {
+  private organizationService = inject(OrganizationService);
+  private route = inject(ActivatedRoute);
+
   /** Currency selector. */
   currencySelector = new UntypedFormControl();
   /** Cashier Id */
@@ -82,13 +93,10 @@ export class TransactionsComponent implements OnInit {
 
   /**
    * Retrieves the currencies data from `resolve`.
-   * @param {TellerCashManagementService} tellerCashManagementService Teller Cash Management Service.
+   * @param {OrganizationService} organizationService Organization Service.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(
-    private tellerCashManagementService: TellerCashManagementService,
-    private route: ActivatedRoute
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { currencies: any }) => {
       this.currencyData = data.currencies.selectedCurrencyOptions;
     });
@@ -116,8 +124,8 @@ export class TransactionsComponent implements OnInit {
    */
   onChangeCurrency() {
     this.currencySelector.valueChanges.subscribe((currencyCode: any) => {
-      this.tellerCashManagementService
-        .getCashierData1(this.tellerId, this.cashierId, currencyCode)
+      this.organizationService
+        .getCashierSummaryAndTransactions(this.tellerId, this.cashierId, currencyCode)
         .subscribe((response: any) => {
           this.cashierData = response;
           this.setTransactions();

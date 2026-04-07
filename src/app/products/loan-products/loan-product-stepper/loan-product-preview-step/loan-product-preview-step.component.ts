@@ -1,9 +1,18 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { LoanProducts } from '../../loan-products';
 import { LoanProductSummaryComponent } from '../../common/loan-product-summary/loan-product-summary.component';
 import { MatStepperPrevious } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanProductBaseComponent } from '../../common/loan-product-base.component';
 
 @Component({
   selector: 'mifosx-loan-product-preview-step',
@@ -16,15 +25,18 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     FaIconComponent
   ]
 })
-export class LoanProductPreviewStepComponent implements OnInit, OnChanges {
+export class LoanProductPreviewStepComponent extends LoanProductBaseComponent implements OnInit, OnChanges {
   @Input() loanProductsTemplate: any;
   @Input() accountingRuleData: any;
   @Input() loanProduct: any;
+  @Input() isValid: boolean = true;
   @Output() submitEvent = new EventEmitter();
 
   isAdvancedPaymentAllocation = false;
 
-  constructor() {}
+  constructor() {
+    super();
+  }
 
   ngOnInit() {
     this.advancedPaymentAllocation();

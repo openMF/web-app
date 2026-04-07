@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import * as _ from 'lodash';
@@ -22,7 +30,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 
 /** Custom Services */
-import { BatchAPIService, LoansService } from '@fineract/client';
+import { TasksService } from '../../tasks.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { TranslateService } from '@ngx-translate/core';
@@ -59,6 +67,14 @@ interface OfficeNode {
   ]
 })
 export class LoanApprovalComponent {
+  private route = inject(ActivatedRoute);
+  private dialog = inject(MatDialog);
+  private dateUtils = inject(Dates);
+  private router = inject(Router);
+  private translateService = inject(TranslateService);
+  private settingsService = inject(SettingsService);
+  private tasksService = inject(TasksService);
+
   /** Offices Data */
   offices: any;
   /** Loans Data */
@@ -91,19 +107,9 @@ export class LoanApprovalComponent {
    * @param {Dates} dateUtils Date Utils.
    * @param {router} router Router.
    * @param {SettingsService} settingsService Settings Service.
-   * @param {BatchAPIService} batchAPIService Batch API Service.
-   * @param {LoansService} loan Loan Service.
+   * @param {TasksService} tasksService Tasks Service.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private dialog: MatDialog,
-    private dateUtils: Dates,
-    private router: Router,
-    private translateService: TranslateService,
-    private settingsService: SettingsService,
-    private batchAPIService: BatchAPIService,
-    private loansService: LoansService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { officesData: any; loansData: any }) => {
       this.offices = data.officesData;
       this.loans = data.loansData.pageItems;
@@ -202,9 +208,9 @@ export class LoanApprovalComponent {
       const batchData = { requestId: reqId++, relativeUrl: url, method: 'POST', body: bodyData };
       this.batchRequests.push(batchData);
     });
-    this.batchAPIService.handleBatchRequests({ batchRequest: this.batchRequests }).subscribe((response: any) => {
+    this.tasksService.submitBatchData(this.batchRequests).subscribe((response: any) => {
       response.forEach((responseEle: any) => {
-        if ((responseEle.statusCode = '200')) {
+        if (responseEle.statusCode === '200') {
           approvedAccounts++;
           responseEle.body = JSON.parse(responseEle.body);
           if (selectedAccounts === approvedAccounts) {
@@ -221,10 +227,10 @@ export class LoanApprovalComponent {
   }
 
   loanResource() {
-    this.loansService.retrieveAll27().subscribe((response: any) => {
+    this.tasksService.getAllLoansToBeApproved().subscribe((response: any) => {
       this.loans = response.pageItems;
       this.loans = this.loans.filter((account: any) => {
-        return account.status.waitingForDisbursal === true;
+        return account.status.waitingForDisbursal;
       });
       this.dataSource = new MatTableDataSource(this.loans);
       this.selection = new SelectionModel(true, []);

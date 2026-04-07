@@ -1,3 +1,11 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -144,10 +152,7 @@ const routes: Routes = [
           children: [
             {
               path: '',
-              component: LoanProductsComponent,
-              resolve: {
-                loanProducts: LoanProductsResolver
-              }
+              component: LoanProductsComponent
             },
             {
               path: 'create',
@@ -219,7 +224,7 @@ const routes: Routes = [
             {
               path: 'create',
               component: CreateSavingProductComponent,
-              data: { title: 'Create Saving Product', breadcrumb: 'Create' },
+              data: { title: 'Create Savings Product', breadcrumb: 'Create' },
               resolve: {
                 savingProductsTemplate: SavingProductsTemplateResolver
               }
@@ -543,7 +548,7 @@ const routes: Routes = [
                   component: CreateBucketComponent,
                   data: { title: 'Create Delinquency Bucket', breadcrumb: 'Create' },
                   resolve: {
-                    delinquencyRanges: DelinquencyRangeComponentsResolver
+                    delinquencyBucketsTemplateData: DelinquencyRangeComponentsResolver
                   }
                 },
                 {
@@ -566,7 +571,7 @@ const routes: Routes = [
                       component: EditBucketComponent,
                       resolve: {
                         delinquencyBucket: DelinquencyBucketComponentsResolver,
-                        delinquencyRanges: DelinquencyRangeComponentsResolver
+                        delinquencyBucketsTemplateData: DelinquencyRangeComponentsResolver
                       }
                     }
                   ]
@@ -888,7 +893,6 @@ const routes: Routes = [
       ]
     }
   ])
-
 ];
 
 /**

@@ -1,0 +1,145 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="step-content">
+  <h3>{{ 'labels.heading.Transactional Profile' | translate }}</h3>
+  <p class="description">
+    {{
+      'labels.text.Register the transactional profile for the beneficiary. Add entries for individuals or legal entities.'
+        | translate
+    }}
+  </p>
+
+  <!-- Entity Type Toggle -->
+  <div class="entity-type-toggle">
+    <mat-button-toggle-group [(ngModel)]="entityType" aria-label="Entity type">
+      <mat-button-toggle value="individual">
+        <mat-icon>person</mat-icon>
+        {{ 'labels.inputs.Individual' | translate }}
+      </mat-button-toggle>
+      <mat-button-toggle value="legal">
+        <mat-icon>business</mat-icon>
+        {{ 'labels.inputs.Legal Entity' | translate }}
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <!-- Transactional Profile Data Table -->
+  <div class="table-section">
+    @if (profileData.length > 0) {
+      <table mat-table [dataSource]="profileData" class="profile-table">
+        <!-- # Remittance Column -->
+        <ng-container matColumnDef="remittanceNumber">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.# Remittance' | translate }}</th>
+          <td mat-cell *matCellDef="let row">{{ row.remittanceNumber }}</td>
+        </ng-container>
+
+        <!-- Avg Amount/Transaction Column -->
+        <ng-container matColumnDef="averageAmount">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Avg Amount/Transaction' | translate }}</th>
+          <td mat-cell *matCellDef="let row">{{ row.averageAmount | currency: row.currency }}</td>
+        </ng-container>
+
+        <!-- # Senders Column -->
+        <ng-container matColumnDef="senderCount">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.# Senders' | translate }}</th>
+          <td mat-cell *matCellDef="let row">{{ row.senderCount }}</td>
+        </ng-container>
+
+        <!-- Sender Registry Column -->
+        <ng-container matColumnDef="senderRegistry">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Sender Registry' | translate }}</th>
+          <td mat-cell *matCellDef="let row">{{ row.senderRegistry }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns; let i = index"
+          (click)="removeProfileEntry(i)"
+          matTooltip="{{ 'labels.text.Click to remove' | translate }}"
+          class="clickable-row"
+        ></tr>
+      </table>
+    }
+
+    @if (profileData.length === 0) {
+      <div class="empty-table">
+        <mat-icon>table_chart</mat-icon>
+        <p>{{ 'labels.text.No transactional profile entries yet. Add one below.' | translate }}</p>
+      </div>
+    }
+  </div>
+
+  <!-- Add Profile Entry Form -->
+  <div class="add-entry-section">
+    <h4>{{ 'labels.heading.Add Profile Entry' | translate }}</h4>
+    <form [formGroup]="profileForm" class="entry-form">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'labels.inputs.# Remittance' | translate }}</mat-label>
+        <input
+          matInput
+          formControlName="remittanceNumber"
+          placeholder="{{ 'labels.placeholders.# Remittance' | translate }}"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'labels.inputs.Avg Amount/Transaction' | translate }}</mat-label>
+        <input matInput type="number" formControlName="averageAmount" placeholder="0.00" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'labels.inputs.# Senders' | translate }}</mat-label>
+        <input matInput type="number" formControlName="senderCount" placeholder="0" min="0" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'labels.inputs.Sender Registry' | translate }}</mat-label>
+        <input
+          matInput
+          formControlName="senderRegistry"
+          placeholder="{{ 'labels.placeholders.Sender name' | translate }}"
+        />
+      </mat-form-field>
+
+      <button
+        mat-stroked-button
+        color="primary"
+        type="button"
+        (click)="addProfileEntry()"
+        [disabled]="profileForm.invalid"
+      >
+        <mat-icon>add</mat-icon>
+        {{ 'labels.buttons.Add Entry' | translate }}
+      </button>
+    </form>
+  </div>
+
+  @if (errorMessage) {
+    <div class="error-banner">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ errorMessage }}</span>
+    </div>
+  }
+
+  <div class="step-actions">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="assignPayout()"
+      [disabled]="isLoading || !vendor || !recipientData || profileData.length === 0"
+    >
+      @if (isLoading) {
+        <mat-spinner diameter="20"></mat-spinner>
+      } @else {
+        <span><mat-icon>assignment_turned_in</mat-icon> {{ 'labels.buttons.Assign Payout' | translate }}</span>
+      }
+    </button>
+  </div>
+</div>

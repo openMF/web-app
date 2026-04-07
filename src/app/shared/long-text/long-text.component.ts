@@ -1,3 +1,11 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 import { Component, Input, OnInit } from '@angular/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TruncateTextPipe } from '../../pipes/truncate-text.pipe';
@@ -39,10 +47,10 @@ export class LongTextComponent implements OnInit {
   }
 
   showValue() {
-    if (this.printChars == 30) {
+    if (this.printChars < 1000) {
       this.printChars = 1000;
     } else {
-      this.printChars = 30;
+      this.printChars = this.chars;
     }
   }
 

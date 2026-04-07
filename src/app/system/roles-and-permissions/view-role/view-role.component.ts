@@ -1,10 +1,18 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports  */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, FormArray, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'lodash';
-import { RolesService } from '@fineract/client';
+import { SystemService } from '../../system.service';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
@@ -12,10 +20,12 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
 import { DisableDialogComponent } from '../../../shared/disable-dialog/disable-dialog.component';
 import { EnableDialogComponent } from '../../../shared/enable-dialog/enable-dialog.component';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { NgIf, NgFor, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { MatList, MatListItem } from '@angular/material/list';
 import { MatDivider } from '@angular/material/divider';
 import { MatCheckbox } from '@angular/material/checkbox';
+import { MatIcon } from '@angular/material/icon';
+import { MatIconButton } from '@angular/material/button';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /** Custom Service Zitadel */
@@ -36,10 +46,20 @@ import { AuthService } from 'app/zitadel/auth.service';
     MatListItem,
     NgClass,
     MatDivider,
-    MatCheckbox
+    MatCheckbox,
+    MatIcon,
+    MatIconButton
   ]
 })
 export class ViewRoleComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private systemService = inject(SystemService);
+  private router = inject(Router);
+  private formBuilder = inject(UntypedFormBuilder);
+  private translateService = inject(TranslateService);
+  dialog = inject(MatDialog);
+  private authService = inject(AuthService);
+
   /** Role Permissions Data */
   rolePermissionService: any;
   /** Stores the current grouping */
@@ -72,33 +92,30 @@ export class ViewRoleComponent implements OnInit {
   permissions: {
     permissions: { code: string; id: number }[];
   } = { permissions: [] };
+  /** Search text for filtering permissions */
+  searchText = '';
+  /** Filtered permissions across all groupings */
+  filteredPermissions: { code: string; id: number; grouping: string }[] = [];
+  /** Whether search mode is active */
+  isSearchActive = false;
+  /** Match counts per grouping when searching */
+  groupingMatchCounts: { [key: string]: number } = {};
+  /** Filtered permissions for the currently selected grouping */
+  filteredGroupPermissions: { code: string; id: number }[] = [];
   /** Add role zitadel */
 
   /**
    * Retrieves the roledetails data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {RolesService} rolesService Roles Service.
+   * @param {SystemService} systemService System Service.
    * @param {Router} router Router for navigation.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {MatDialog} dialog Shared Dialog Boxes.
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private rolesService: RolesService,
-    private router: Router,
-    private formBuilder: UntypedFormBuilder,
-    private translateService: TranslateService,
-    public dialog: MatDialog,
-    private authService: AuthService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { roledetails: any }) => {
       this.rolePermissionService = data.roledetails;
-      // Only create form and group rules after data is available
-      this.createForm();
-      this.groupRules();
-      this.selectedItem = 'special';
-      this.showPermissions('special');
     });
   }
 
@@ -109,22 +126,23 @@ export class ViewRoleComponent implements OnInit {
     this.permissions = {
       permissions: []
     };
+    this.createForm();
+    this.groupRules();
+    this.selectedItem = 'special';
+    this.showPermissions('special');
     this.route.params.subscribe((routeParams: any) => {
       this.roleId = routeParams.id;
     });
-    // Form creation moved to constructor after data is loaded
   }
 
   /**
    * creates the form to display and edit permissions
    */
   createForm() {
-    const permissionData =
-      this.rolePermissionService && Array.isArray(this.rolePermissionService.permissionUsageData)
-        ? this.rolePermissionService.permissionUsageData
-        : [];
     this.formGroup = this.formBuilder.group({
-      roster: this.formBuilder.array(permissionData.map((elem: any) => this.createMemberGroup(elem)))
+      roster: this.formBuilder.array(
+        this.rolePermissionService.permissionUsageData.map((elem: any) => this.createMemberGroup(elem))
+      )
     });
   }
 
@@ -174,13 +192,27 @@ export class ViewRoleComponent implements OnInit {
     this.permissions = this.tempPermissionUIData[grouping];
     this.selectedItem = grouping;
     this.previousGrouping = grouping;
+    this.updateFilteredGroupPermissions();
   }
 
   /**
    * Formats the Role Name
    * @param string String
    */
-  formatName(string: any) {
+  formatName(string: string) {
+    if (!string) {
+      return string;
+    }
+    // Try to translate first
+    const translationKey = `labels.catalogs.${string}`;
+    const translated = this.translateService.instant(translationKey);
+
+    // If translation exists (and is different from key), use it
+    if (translated && translated !== translationKey) {
+      return translated;
+    }
+
+    // Otherwise, format the original string
     if (string.indexOf('portfolio_') > -1) {
       string = string.replace('portfolio_', '');
     }
@@ -196,15 +228,102 @@ export class ViewRoleComponent implements OnInit {
    * Formats the permission from permission code
    * @param name String
    */
-  permissionName(name: any) {
-    name = name || '';
-    // replace '_' with ' '
-    name = name.replace(/_/g, ' ');
-    // for reports replace read with view
+  permissionName(name: string): string {
+    name = (name || '').trim();
+
+    // Special case: reports replace READ with View
     if (this.previousGrouping === 'report') {
-      name = name.replace(/READ/g, 'View');
+      name = name.replace(/^READ_/, 'VIEW_');
     }
-    return name;
+
+    // Split into action + entity at the first underscore
+    const underscoreIndex = name.indexOf('_');
+    if (underscoreIndex === -1) {
+      const key = `labels.permissions.actions.${name}`;
+      const t = this.translateService.instant(key);
+      return t !== key ? t : this.titleCase(name);
+    }
+
+    const action = name.substring(0, underscoreIndex);
+    const entity = name.substring(underscoreIndex + 1);
+
+    const actionKey = `labels.permissions.actions.${action}`;
+    const translatedAction = this.translateService.instant(actionKey);
+    const actionResult = translatedAction !== actionKey ? translatedAction : this.titleCase(action);
+
+    const entityKey = `labels.permissions.entities.${entity}`;
+    const translatedEntity = this.translateService.instant(entityKey);
+    const entityResult = translatedEntity !== entityKey ? translatedEntity : this.titleCase(entity.replace(/_/g, ' '));
+
+    return `${actionResult} ${entityResult}`;
+  }
+
+  private titleCase(str: string): string {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  }
+
+  /**
+   * Filters permissions across all groupings based on search text
+   * @param searchValue Search input value
+   */
+  filterPermissions(searchValue: string) {
+    this.searchText = searchValue;
+    if (!searchValue || searchValue.trim() === '') {
+      this.isSearchActive = false;
+      this.filteredPermissions = [];
+      this.groupingMatchCounts = {};
+      this.filteredGroupPermissions = [];
+      return;
+    }
+    this.isSearchActive = true;
+    const lowerSearch = searchValue.toLowerCase();
+    this.filteredPermissions = [];
+    this.groupingMatchCounts = {};
+    for (const grouping of this.groupings) {
+      const group = this.tempPermissionUIData[grouping];
+      if (group) {
+        let count = 0;
+        for (const perm of group.permissions) {
+          const readableName = this.permissionName(perm.code).toLowerCase();
+          if (readableName.includes(lowerSearch) || perm.code.toLowerCase().includes(lowerSearch)) {
+            this.filteredPermissions.push({
+              code: perm.code,
+              id: perm.id,
+              grouping
+            });
+            count++;
+          }
+        }
+        this.groupingMatchCounts[grouping] = count;
+      }
+    }
+    this.updateFilteredGroupPermissions();
+  }
+
+  /**
+   * Updates the filtered permissions for the currently selected grouping
+   */
+  updateFilteredGroupPermissions() {
+    if (!this.isSearchActive || !this.permissions) {
+      this.filteredGroupPermissions = [];
+      return;
+    }
+    const lowerSearch = this.searchText.toLowerCase();
+    this.filteredGroupPermissions = this.permissions.permissions.filter((perm) => {
+      const readableName = this.permissionName(perm.code).toLowerCase();
+      return readableName.includes(lowerSearch) || perm.code.toLowerCase().includes(lowerSearch);
+    });
+  }
+
+  /**
+   * Clears the search field and returns to grouping view
+   */
+  clearSearch() {
+    this.searchText = '';
+    this.isSearchActive = false;
+    this.filteredPermissions = [];
+    this.groupingMatchCounts = {};
+    this.filteredGroupPermissions = [];
   }
 
   /**
@@ -218,9 +337,7 @@ export class ViewRoleComponent implements OnInit {
    * Restores the checkboxes to previous data on clicking cancel
    */
   restoreCheckboxes() {
-    if (this.backupform) {
-      this.formGroup = _.cloneDeep(this.backupform) as UntypedFormGroup;
-    }
+    this.formGroup = _.cloneDeep(this.backupform) as UntypedFormGroup;
   }
 
   isRoleEnable(value: any) {
@@ -229,17 +346,7 @@ export class ViewRoleComponent implements OnInit {
 
   editRoles() {
     this.isDisabled = false;
-    if (this.formGroup && this.formGroup.controls && this.formGroup.controls.roster) {
-      this.formGroup.controls.roster.enable();
-      const rosterArray = this.formGroup.get('roster') as FormArray;
-      if (rosterArray && Array.isArray(rosterArray.controls)) {
-        rosterArray.controls.forEach((group: UntypedFormGroup) => {
-          if (group && group.controls && group.controls.selected) {
-            group.controls.selected.enable();
-          }
-        });
-      }
-    }
+    this.formGroup.controls.roster.enable();
   }
 
   /**
@@ -247,9 +354,7 @@ export class ViewRoleComponent implements OnInit {
    */
   cancel() {
     this.isDisabled = true;
-    if (this.formGroup && this.formGroup.controls && this.formGroup.controls.roster) {
-      this.formGroup.controls.roster.disable();
-    }
+    this.formGroup.controls.roster.disable();
   }
 
   /**
@@ -268,12 +373,7 @@ export class ViewRoleComponent implements OnInit {
     this.formGroup.controls.roster.disable();
     this.checkboxesChanged = false;
     this.isDisabled = true;
-    this.rolesService
-      .updateRolePermissions({
-        roleId: this.roleId,
-        putRolesRoleIdPermissionsRequest: permissionData
-      })
-      .subscribe((response: any) => {});
+    this.systemService.updateRolePermission(this.roleId, permissionData).subscribe((response: any) => {});
   }
 
   /**
@@ -304,30 +404,18 @@ export class ViewRoleComponent implements OnInit {
    * Deletes the Role and redirects to Roles and Permissions.
    */
   deleteRole() {
-    this.roleId = this.route.snapshot.paramMap.get('id') || this.route.snapshot.params['id'] || this.roleId;
-    if (this.roleId === null || this.roleId === undefined || this.roleId === '') {
-      console.error('Delete Role Error: roleId is null or undefined');
-      alert('Cannot delete role: roleId is missing.');
-      return;
-    }
-    const roleIdNum = Number(this.roleId);
-    if (isNaN(roleIdNum)) {
-      console.error('Delete Role Error: roleId is not a valid number');
-      alert('Cannot delete role: roleId is not a valid number.');
-      return;
-    }
-    console.log('Delete Role: roleId =', roleIdNum);
     const deleteRoleDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: this.translateService.instant('labels.inputs.Role') + ' ' + roleIdNum }
+      data: { deleteContext: this.translateService.instant('labels.inputs.Role') + ' ' + this.roleId }
     });
     deleteRoleDialogRef.afterClosed().subscribe((response: any) => {
-      if (response && response.delete) {
-        this.rolesService.deleteRole({ roleId: roleIdNum }).subscribe(() => {
+      if (response.delete) {
+        this.systemService.deleteRole(this.roleId).subscribe(() => {
           if (environment.OIDC.oidcServerEnabled) {
-            this.authService.deleteRole(String(roleIdNum));
+            this.authService.deleteRole(this.roleId);
           }
           this.router.navigate(['/system/roles-and-permissions']);
         });
+      } else {
       }
     });
   }
@@ -336,26 +424,15 @@ export class ViewRoleComponent implements OnInit {
    * Enables the Role and redirects to Roles and Permissions.
    */
   enableRolesConfirmation() {
-    this.roleId = this.route.snapshot.paramMap.get('id') || this.route.snapshot.params['id'] || this.roleId;
-    if (this.roleId === null || this.roleId === undefined || this.roleId === '') {
-      console.error('Enable Role Error: roleId is null or undefined');
-      alert('Cannot enable role: roleId is missing.');
-      return;
-    }
-    const roleIdNum = Number(this.roleId);
-    if (isNaN(roleIdNum)) {
-      console.error('Enable Role Error: roleId is not a valid number');
-      alert('Cannot enable role: roleId is not a valid number.');
-      return;
-    }
     const enableRoleDialogRef = this.dialog.open(EnableDialogComponent, {
-      data: { enableContext: this.translateService.instant('labels.inputs.Role') + ' ' + roleIdNum }
+      data: { enableContext: this.translateService.instant('labels.inputs.Role') + ' ' + this.roleId }
     });
     enableRoleDialogRef.afterClosed().subscribe((response: any) => {
-      if (response && response.enable) {
-        this.rolesService.actionsOnRoles({ roleId: roleIdNum }).subscribe(() => {
+      if (response.enable) {
+        this.systemService.enableRole(this.roleId).subscribe(() => {
           this.router.navigate(['/system/roles-and-permissions']);
         });
+      } else {
       }
     });
   }
@@ -364,27 +441,15 @@ export class ViewRoleComponent implements OnInit {
    * Disables the Role and redirects to Roles and Permissions.
    */
   disableRolesConfirmation() {
-    this.roleId = this.route.snapshot.paramMap.get('id') || this.route.snapshot.params['id'] || this.roleId;
-    if (this.roleId === null || this.roleId === undefined || this.roleId === '') {
-      console.error('Disable Role Error: roleId is null or undefined');
-      alert('Cannot disable role: roleId is missing.');
-      return;
-    }
-    const roleIdNum = Number(this.roleId);
-    if (isNaN(roleIdNum)) {
-      console.error('Disable Role Error: roleId is not a valid number');
-      alert('Cannot disable role: roleId is not a valid number.');
-      return;
-    }
-    console.log('Disable Role: roleId =', roleIdNum);
     const deleteRoleDialogRef = this.dialog.open(DisableDialogComponent, {
-      data: { disableContext: this.translateService.instant('labels.inputs.Role') + ' ' + roleIdNum }
+      data: { disableContext: this.translateService.instant('labels.inputs.Role') + ' ' + this.roleId }
     });
     deleteRoleDialogRef.afterClosed().subscribe((response: any) => {
-      if (response && response.disable) {
-        this.rolesService.actionsOnRoles({ roleId: roleIdNum }).subscribe(() => {
+      if (response.disable) {
+        this.systemService.disableRole(this.roleId).subscribe(() => {
           this.router.navigate(['/system/roles-and-permissions']);
         });
+      } else {
       }
     });
   }

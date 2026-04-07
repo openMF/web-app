@@ -1,0 +1,159 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+mat-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgb(0 0 0 / 5%);
+  padding: 10px;
+  background-color: var(--md-sys-color-surface, #fff);
+}
+
+.mat-mdc-nav-list {
+  padding-top: 0;
+
+  .mat-mdc-list-item {
+    height: auto !important;
+    min-height: 48px;
+    margin-bottom: 2px;
+    border-radius: 8px;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      background-color: rgb(16 116 185 / 5%);
+      transform: translateX(4px);
+    }
+
+    .menu-list-item-content {
+      padding: 8px 0;
+    }
+
+    .menu-left-section {
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      overflow: hidden;
+
+      mat-icon {
+        color: var(--md-sys-color-primary, #1074b9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 4px;
+        flex-shrink: 0;
+      }
+
+      .menu-text-content {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        padding-top: 4px;
+
+        .menu-title {
+          font-weight: 500;
+          color: var(--md-sys-color-on-surface, #1a1c1e);
+          line-height: 1.2;
+        }
+
+        .menu-explanation {
+          color: var(--md-sys-color-on-surface-variant, #44474e);
+          font-size: 13px;
+          margin-top: 6px;
+          line-height: 1.4;
+          opacity: 0.8;
+          white-space: normal;
+          overflow-wrap: anywhere;
+          word-break: normal;
+        }
+      }
+    }
+
+    .menu-right-section {
+      align-self: center;
+      margin-left: auto;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+
+      &:focus-visible {
+        outline: 2px solid var(--md-sys-color-primary, #1074b9);
+        outline-offset: 2px;
+        border-radius: 8px;
+      }
+
+      fa-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--md-sys-color-outline, #74777f);
+        transition:
+          transform 0.2s ease,
+          color 0.2s ease;
+      }
+
+      fa-icon.rotated {
+        transform: rotate(180deg);
+        color: var(--md-sys-color-primary, #1074b9);
+      }
+
+      &:hover fa-icon {
+        color: var(--md-sys-color-primary, #1074b9);
+      }
+    }
+  }
+}
+
+/* Responsive adjustments */
+@media (width <= 768px) {
+  .container {
+    padding: 10px;
+  }
+}
+
+/* Dark Mode Support */
+:host-context(.dark-theme) {
+  .mat-mdc-nav-list .mat-mdc-list-item {
+    &:hover {
+      background-color: rgb(255 255 255 / 8%);
+    }
+
+    .menu-text-content {
+      .menu-title {
+        color: var(--md-sys-color-on-surface, #e2e2e5);
+      }
+
+      .menu-explanation {
+        color: var(--md-sys-color-on-surface-variant, #c4c6d0);
+        opacity: 0.85;
+      }
+    }
+
+    .menu-right-section fa-icon {
+      color: var(--md-sys-color-outline, #939099);
+
+      &.rotated {
+        color: var(--md-sys-color-primary, #a8c8ff);
+      }
+
+      &:hover {
+        color: var(--md-sys-color-primary, #a8c8ff);
+      }
+    }
+  }
+}

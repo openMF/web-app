@@ -1,29 +1,34 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { ReportsService } from '@fineract/client';
+import { SystemService } from '../system.service';
 
 /**
  * Report data resolver.
  */
 @Injectable()
 export class ReportResolver {
-  /**
-   * @param {ReportsService} reportsService Reports service.
-   */
-  constructor(private reportsService: ReportsService) {}
+  private systemService = inject(SystemService);
 
   /**
    * Returns the Report data.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const reportId = Number(route.paramMap.get('id'));
-    return this.reportsService.retrieveReport({ id: reportId });
+    const reportId = route.paramMap.get('id');
+    return this.systemService.getReport(reportId);
   }
 }

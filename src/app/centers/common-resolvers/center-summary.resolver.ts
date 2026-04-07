@@ -1,32 +1,34 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { RunReportsService } from '@fineract/client';
+import { CentersService } from '../centers.service';
 
 /**
- * Center summary resolver.
+ * Centers data resolver.
  */
 @Injectable()
 export class CenterSummaryResolver {
-  /**
-   * @param {RunReportsService} runReportsService RunReports service.
-   */
-  constructor(private runReportsService: RunReportsService) {}
+  private centersService = inject(CentersService);
 
   /**
-   * Returns the Center summary data.
+   * Returns the Centers Summary Data.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const centerId = route.parent.parent.paramMap.get('centerId');
-    return this.runReportsService
-      .runReport({ reportName: 'GroupSummaryCounts', R_groupId: centerId, genericResultSet: 'false' } as any)
-      .pipe(catchError(() => of([{}])));
+    const centerId = route.parent.paramMap.get('centerId');
+    return this.centersService.getCenterSummary(centerId);
   }
 }

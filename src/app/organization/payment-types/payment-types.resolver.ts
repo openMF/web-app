@@ -1,22 +1,27 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { PaymentTypeService } from '@fineract/client';
+import { OrganizationService } from '../organization.service';
 
 /**
  * Payment Types data resolver.
  */
 @Injectable()
 export class PaymentTypesResolver {
-  /**
-   * @param {PaymentTypeService} paymentTypeService Payment Type service.
-   */
-  constructor(private paymentTypeService: PaymentTypeService) {}
+  private organizationService = inject(OrganizationService);
 
   /**
    * Returns the payment types data.
@@ -25,9 +30,9 @@ export class PaymentTypesResolver {
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const paymentTypeId = route.paramMap.get('id');
     if (paymentTypeId) {
-      return this.paymentTypeService.getAllPaymentTypes({ onlyWithCode: !!paymentTypeId });
+      return this.organizationService.getPaymentType(paymentTypeId);
     } else {
-      return this.paymentTypeService.getAllPaymentTypes();
+      return this.organizationService.getPaymentTypes();
     }
   }
 }

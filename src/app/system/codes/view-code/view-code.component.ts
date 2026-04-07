@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormArray,
   UntypedFormBuilder,
@@ -11,7 +19,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { CodeValuesService, CodesService } from '@fineract/client';
+import { SystemService } from 'app/system/system.service';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
@@ -40,6 +48,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewCodeComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private systemService = inject(SystemService);
+  private router = inject(Router);
+  private formBuilder = inject(UntypedFormBuilder);
+  private dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
+
   /** Code Data */
   codeData: any;
   /** Code Values Data */
@@ -52,21 +67,13 @@ export class ViewCodeComponent implements OnInit {
   /**
    * Retrieves the codes and code values data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {CodeValuesService} codeValuesService Code Values Service.
+   * @param {SystemService} systemService System Service.
    * @param {Router} router Router for navigation.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {MatDialog} dialog Dialog reference.
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private codeValuesService: CodeValuesService,
-    private codesService: CodesService,
-    private router: Router,
-    private formBuilder: UntypedFormBuilder,
-    private dialog: MatDialog,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { code: any; codeValues: any }) => {
       this.codeData = data.code;
       this.codeValuesData = data.codeValues;
@@ -129,8 +136,11 @@ export class ViewCodeComponent implements OnInit {
       ],
       description: [{ value: codeValue ? codeValue.description : '', disabled: true }],
       position: [
-        { value: codeValue ? codeValue.position : 0, disabled: true },
-        Validators.required
+        { value: codeValue ? codeValue.position : '', disabled: true },
+        [
+          Validators.required,
+          Validators.min(0)
+        ]
       ],
       isActive: [{ value: codeValue ? codeValue.active : false, disabled: true }]
     });
@@ -141,34 +151,8 @@ export class ViewCodeComponent implements OnInit {
    * @param {number} index Index of the row.
    */
   deleteCodeValue(index: number) {
-    // Defensive checks to avoid calling API with undefined ids
-    if (!this.codeValuesData || !Array.isArray(this.codeValuesData)) {
-      console.error('deleteCodeValue: codeValuesData is not available', this.codeValuesData);
-      return;
-    }
-    if (index < 0 || index >= this.codeValuesData.length) {
-      console.error('deleteCodeValue: invalid index', index, 'length', this.codeValuesData.length);
-      return;
-    }
-    const codeValueId = this.codeValuesData[index]?.id;
-    if (codeValueId == null) {
-      console.error('deleteCodeValue: codeValueId is null or undefined at index', index, this.codeValuesData[index]);
-      return;
-    }
-    let codeId = this.codeData?.id;
-    if (!codeId) {
-      const paramId = this.route.snapshot.params['id'];
-      codeId = paramId != null ? Number(paramId) : undefined;
-    }
-    if (codeId == null || Number.isNaN(Number(codeId))) {
-      console.error('deleteCodeValue: codeId is missing or not a number', this.codeData, this.route.snapshot.params);
-      // Show a friendly message and don't call the API
-      alert('Unable to delete code value: missing code id. Try reloading the page.');
-      return;
-    }
-
-    // All checks passed, call the API
-    this.codeValuesService.deleteCodeValue({ codeId: Number(codeId), codeValueId }).subscribe((response: any) => {
+    const codeValueId = this.codeValuesData[index].id;
+    this.systemService.deleteCodeValue(this.codeData.id, codeValueId).subscribe((response: any) => {
       this.codeValuesData.splice(index, 1);
       this.codeValues.removeAt(index);
       this.codeValueRowStatus.splice(index, 1);
@@ -191,16 +175,8 @@ export class ViewCodeComponent implements OnInit {
   updateCodeValue(index: number) {
     const updatedCodeValue: { name: string; description: string; position: number; isActive: boolean } =
       this.codeValues.at(index).value;
-    let codeId = this.codeData?.id;
-    if (!codeId) {
-      codeId = Number(this.route.snapshot.params['id']);
-    }
-    this.codeValuesService
-      .updateCodeValue({
-        codeId,
-        codeValueId: this.codeValuesData[index].id,
-        putCodeValuesDataRequest: updatedCodeValue
-      })
+    this.systemService
+      .updateCodeValue(this.codeData.id, this.codeValuesData[index].id, updatedCodeValue)
       .subscribe((response: any) => {
         this.codeValues.at(index).disable();
         this.codeValueRowStatus[index] = 'disabled';
@@ -213,13 +189,11 @@ export class ViewCodeComponent implements OnInit {
    */
   delete() {
     const deleteCodeDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: this.translateService.instant('labels.inputs.Code') + ' ' + this.codeData?.name }
+      data: { deleteContext: this.translateService.instant('labels.inputs.Code') + ' ' + this.codeData.name }
     });
     deleteCodeDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
-        const codeId = this.codeData?.id || this.route.snapshot.params['id'];
-        // Use injected CodesService to delete a code
-        this.codesService.deleteCode({ codeId: Number(codeId) }).subscribe(() => {
+      if (response?.delete) {
+        this.systemService.deleteCode(this.codeData.id).subscribe(() => {
           this.router.navigate(['/system/codes']);
         });
       }
@@ -245,34 +219,20 @@ export class ViewCodeComponent implements OnInit {
    * @param {number} index Index of the row.
    */
   addCodeValue(index: number) {
-    const rawValue = this.codeValues.at(index).value;
-    const newCodeValue: { name: string; description: string; position: number; isActive: boolean } = {
-      name: rawValue.name,
-      description: rawValue.description,
-      position: Number(rawValue.position),
-      isActive: rawValue.isActive
-    };
-    let codeId = this.codeData?.id;
-    if (!codeId) {
-      codeId = Number(this.route.snapshot.params['id']);
-    }
-    this.codeValuesService
-      .createCodeValue({
-        codeId,
-        postCodeValuesDataRequest: newCodeValue
-      })
-      .subscribe((response: any) => {
-        this.codeValues.at(index).disable();
-        this.codeValueRowStatus[index] = 'disabled';
-        this.codeValuesData.push({
-          id: response.subResourceId,
-          name: this.codeValues.at(index).get('name').value,
-          description: this.codeValues.at(index).get('description').value,
-          position: this.codeValues.at(index).get('position').value,
-          isActive: this.codeValues.at(index).get('isActive').value
-        });
-        this.codeValues.at(index).markAsPristine();
+    const newCodeValue: { name: string; description: string; position: string; isActive: boolean } =
+      this.codeValues.at(index).value;
+    this.systemService.createCodeValue(this.codeData.id, newCodeValue).subscribe((response: any) => {
+      this.codeValues.at(index).disable();
+      this.codeValueRowStatus[index] = 'disabled';
+      this.codeValuesData.push({
+        id: response.subResourceId,
+        name: this.codeValues.at(index).get('name').value,
+        description: this.codeValues.at(index).get('description').value,
+        position: this.codeValues.at(index).get('position').value,
+        isActive: this.codeValues.at(index).get('isActive').value
       });
+      this.codeValues.at(index).markAsPristine();
+    });
   }
 
   /**

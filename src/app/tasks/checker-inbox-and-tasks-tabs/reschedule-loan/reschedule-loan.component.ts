@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import * as _ from 'lodash';
@@ -22,7 +30,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 
 /** Custom Services */
-import { BatchAPIService } from '@fineract/client';
+import { TasksService } from '../../tasks.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { TranslateService } from '@ngx-translate/core';
@@ -60,6 +68,14 @@ interface RescheduleFormData {
   ]
 })
 export class RescheduleLoanComponent {
+  private route = inject(ActivatedRoute);
+  private dialog = inject(MatDialog);
+  private dateUtils = inject(Dates);
+  private router = inject(Router);
+  private settingsService = inject(SettingsService);
+  private translateService = inject(TranslateService);
+  private tasksService = inject(TasksService);
+
   /** Loans Data */
   loans: any;
   /** Datasource */
@@ -85,19 +101,11 @@ export class RescheduleLoanComponent {
    * @param {Dates} dateUtils Date Utils.
    * @param {router} router Router.
    * @param {SettingsService} settingsService Settings Service.
-   * @param {BatchAPIService} batchAPIService Batch API Service.
+   * @param {TasksService} tasksService Tasks Service.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private dialog: MatDialog,
-    private dateUtils: Dates,
-    private router: Router,
-    private settingsService: SettingsService,
-    private translateService: TranslateService,
-    private batchAPIService: BatchAPIService
-  ) {
-    this.route.data.subscribe((data: { recheduleLoansData: any }) => {
-      this.loans = data.recheduleLoansData;
+  constructor() {
+    this.route.data.subscribe((data: { rescheduleLoansData: any }) => {
+      this.loans = data.rescheduleLoansData;
       this.dataSource = new MatTableDataSource(this.loans);
       this.selection = new SelectionModel(true, []);
     });
@@ -164,7 +172,7 @@ export class RescheduleLoanComponent {
       const batchData = { requestId: reqId++, relativeUrl: url, method: 'POST', body: bodyData };
       this.batchRequests.push(batchData);
     });
-    this.batchAPIService.handleBatchRequests({ batchRequest: this.batchRequests }).subscribe((response: any) => {
+    this.tasksService.submitBatchData(this.batchRequests).subscribe((response: any) => {
       this.reload();
     });
   }

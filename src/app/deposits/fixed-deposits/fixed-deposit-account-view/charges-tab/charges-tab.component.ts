@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -17,7 +25,7 @@ import {
 } from '@angular/material/table';
 
 /** Custom Services */
-import { SavingsAccountService } from '@fineract/client';
+import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Dialogs */
@@ -62,6 +70,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ChargesTabComponent implements OnInit {
+  private savingsService = inject(SavingsService);
+  private route = inject(ActivatedRoute);
+  private dateUtils = inject(Dates);
+  private router = inject(Router);
+  dialog = inject(MatDialog);
+  private settingsService = inject(SettingsService);
+
   /** Fixed Deposits Account Data */
   fixedDepositsAccountData: any;
   /** Charges Data */
@@ -90,21 +105,14 @@ export class ChargesTabComponent implements OnInit {
 
   /**
    * Retrieves the Fixed Deposits account data from `resolve`.
-   * @param {SavingsAccountService} savingsAccountService Savings Account Service
+   * @param {SavingsService} savingsService Savings Service
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    * @param {Dates} dateUtils Date Utils.
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(
-    private savingsAccountService: SavingsAccountService,
-    private route: ActivatedRoute,
-    private dateUtils: Dates,
-    private router: Router,
-    public dialog: MatDialog,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.parent.data.subscribe((data: { fixedDepositsAccountData: any }) => {
       this.fixedDepositsAccountData = data.fixedDepositsAccountData;
       this.chargesData = this.fixedDepositsAccountData.charges;
@@ -151,7 +159,6 @@ export class ChargesTabComponent implements OnInit {
         type: 'date',
         required: true
       })
-
     ];
     const data = {
       title: `Pay Charge ${chargeId}`,
@@ -169,12 +176,8 @@ export class ChargesTabComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.savingsAccountService
-          .handleCommands6({
-            accountId: this.fixedDepositsAccountData.id,
-            postSavingsAccountsAccountIdRequest: dataObject,
-            command: 'paycharge'
-          })
+        this.savingsService
+          .executeSavingsAccountChargesCommand(this.fixedDepositsAccountData.id, 'paycharge', dataObject, chargeId)
           .subscribe(() => {
             this.reload();
           });
@@ -190,18 +193,8 @@ export class ChargesTabComponent implements OnInit {
     const waiveChargeDialogRef = this.dialog.open(WaiveChargeDialogComponent, { data: { id: chargeId } });
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        const locale = this.settingsService.language.code;
-        const dateFormat = this.settingsService.dateFormat;
-        const dataObject = {
-          dateFormat,
-          locale
-        };
-        this.savingsAccountService
-          .handleCommands6({
-            accountId: this.fixedDepositsAccountData.id,
-            postSavingsAccountsAccountIdRequest: dataObject,
-            command: 'waive'
-          })
+        this.savingsService
+          .executeSavingsAccountChargesCommand(this.fixedDepositsAccountData.id, 'waive', {}, chargeId)
           .subscribe(() => {
             this.reload();
           });
@@ -217,18 +210,8 @@ export class ChargesTabComponent implements OnInit {
     const inactivateChargeDialogRef = this.dialog.open(InactivateChargeDialogComponent, { data: { id: chargeId } });
     inactivateChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        const locale = this.settingsService.language.code;
-        const dateFormat = this.settingsService.dateFormat;
-        const dataObject = {
-          dateFormat,
-          locale
-        };
-        this.savingsAccountService
-          .handleCommands6({
-            accountId: this.fixedDepositsAccountData.id,
-            postSavingsAccountsAccountIdRequest: dataObject,
-            command: 'inactivate'
-          })
+        this.savingsService
+          .executeSavingsAccountChargesCommand(this.fixedDepositsAccountData.id, 'inactivate', {}, chargeId)
           .subscribe(() => {
             this.reload();
           });
@@ -249,7 +232,6 @@ export class ChargesTabComponent implements OnInit {
         type: 'number',
         required: true
       })
-
     ];
     const data = {
       title: `Edit Charge ${charge.id}`,
@@ -266,8 +248,8 @@ export class ChargesTabComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.savingsAccountService
-          .handleCommands6(this.fixedDepositsAccountData.id, dataObject, charge.id)
+        this.savingsService
+          .editSavingsAccountCharge(this.fixedDepositsAccountData.id, dataObject, charge.id)
           .subscribe(() => {
             this.reload();
           });
@@ -285,7 +267,7 @@ export class ChargesTabComponent implements OnInit {
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.savingsAccountService.delete18(this.fixedDepositsAccountData.id, chargeId).subscribe(() => {
+        this.savingsService.deleteSavingsAccountCharge(this.fixedDepositsAccountData.id, chargeId).subscribe(() => {
           this.reload();
         });
       }

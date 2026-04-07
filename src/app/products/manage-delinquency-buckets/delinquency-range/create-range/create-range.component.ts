@@ -1,7 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { DelinquencyRangeAndBucketsManagementService } from '@fineract/client';
+import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -14,16 +22,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateRangeComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private productsService = inject(ProductsService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private settingsService = inject(SettingsService);
+
   /** Delinquency Range form. */
   delinquencyRangeForm: UntypedFormGroup;
-
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private delinquencyService: DelinquencyRangeAndBucketsManagementService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private settingsService: SettingsService
-  ) {}
 
   ngOnInit(): void {
     this.setInputForm();
@@ -39,17 +45,19 @@ export class CreateRangeComponent implements OnInit {
         [Validators.required]
       ],
       minimumAgeDays: [
-        0,
+        '',
         [
           Validators.required,
-          Validators.pattern('^(0*[1-9][0-9]*?)$'),
-          Validators.max(1000)]
+          Validators.pattern('^(0|[1-9][0-9]*)$'),
+          Validators.min(1)
+        ]
       ],
       maximumAgeDays: [
         '',
         [
-          Validators.pattern('^(0*[1-9][0-9]*?)$'),
-          Validators.max(10000)]
+          Validators.pattern('^(0*[1-9][0-9]*)$'),
+          Validators.min(1)
+        ]
       ]
     });
   }
@@ -61,7 +69,7 @@ export class CreateRangeComponent implements OnInit {
       ...delinquencyRangeFormData,
       locale
     };
-    this.delinquencyService.createDelinquencyRange({ delinquencyRangeRequest: data }).subscribe((response: any) => {
+    this.productsService.createDelinquencyRange(data).subscribe((response: any) => {
       this.router.navigate(
         [
           '../',

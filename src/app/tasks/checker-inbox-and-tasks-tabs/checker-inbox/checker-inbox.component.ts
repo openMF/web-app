@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { UntypedFormBuilder, UntypedFormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -17,9 +25,10 @@ import {
   MatRow
 } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
+import { MatIcon } from '@angular/material/icon';
 
 /** Custom Services */
-import { MakerCheckerOr4EyeFunctionalityService } from '@fineract/client';
+import { TasksService } from '../../tasks.service';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Dialog Components */
@@ -49,10 +58,20 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    DateFormatPipe
+    DateFormatPipe,
+    MatIcon
   ]
 })
 export class CheckerInboxComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private dialog = inject(MatDialog);
+  private dateUtils = inject(Dates);
+  private router = inject(Router);
+  private translateService = inject(TranslateService);
+  private tasksService = inject(TasksService);
+  private settingsService = inject(SettingsService);
+  private formBuilder = inject(UntypedFormBuilder);
+
   /** Data to be displayed */
   searchData: any;
   /** Maker Checker Template */
@@ -61,6 +80,8 @@ export class CheckerInboxComponent implements OnInit {
   noSearchedData = false;
   /** Checks if there is any checker data */
   checkerData = false;
+  /** Show/hide advanced search form */
+  showAdvancedSearch = false;
   /** Maker Checker Search Form */
   makerCheckerSearchForm: UntypedFormGroup;
   /** Minimum date allowed. */
@@ -89,19 +110,10 @@ export class CheckerInboxComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils.
    * @param {router} router Router.
    * @param {SettingsService} settingsService Settings Service.
-   * @param {MakerCheckerOr4EyeFunctionalityService} makerCheckerService Maker Checker Service.
+   * @param {TasksService} tasksService Tasks Service.
    * @param {FormBuilder} formBuilder Form Builder.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private dialog: MatDialog,
-    private dateUtils: Dates,
-    private router: Router,
-    private translateService: TranslateService,
-    private makerCheckerService: MakerCheckerOr4EyeFunctionalityService,
-    private settingsService: SettingsService,
-    private formBuilder: UntypedFormBuilder
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { makerCheckerResource: any; makerCheckerTemplate: any }) => {
       this.searchData = data.makerCheckerResource;
       if (this.searchData.length > 0) {
@@ -130,6 +142,13 @@ export class CheckerInboxComponent implements OnInit {
     });
   }
 
+  /**
+   * Toggle advanced search form visibility.
+   */
+  toggleAdvancedSearch() {
+    this.showAdvancedSearch = !this.showAdvancedSearch;
+  }
+
   search() {
     const dateFormat = this.settingsService.dateFormat;
     const makerCheckerSearchParams = {
@@ -137,7 +156,7 @@ export class CheckerInboxComponent implements OnInit {
       makerDateTimeFrom: this.dateUtils.formatDate(this.makerCheckerSearchForm.value.makerDateTimeFrom, dateFormat),
       makerDateTimeto: this.dateUtils.formatDate(this.makerCheckerSearchForm.value.makerDateTimeto, dateFormat)
     };
-    this.makerCheckerService.retrieveCommands(makerCheckerSearchParams).subscribe((response: any) => {
+    this.tasksService.getMakerCheckerData(makerCheckerSearchParams).subscribe((response: any) => {
       this.searchData = response;
       if (this.searchData.length === 0) {
         this.noSearchedData = true;
@@ -218,7 +237,7 @@ export class CheckerInboxComponent implements OnInit {
     const listSelectedAccounts = this.selection.selected;
     let approvedAccounts = 0;
     listSelectedAccounts.forEach((element: any) => {
-      this.makerCheckerService.approveMakerCheckerEntry(element.id, action).subscribe((response: any) => {
+      this.tasksService.executeMakerCheckerAction(element.id, action).subscribe((response: any) => {
         approvedAccounts++;
         if (selectedAccounts === approvedAccounts) {
           this.reload();
@@ -232,7 +251,7 @@ export class CheckerInboxComponent implements OnInit {
     const listSelectedAccounts = this.selection.selected;
     let approvedAccounts = 0;
     listSelectedAccounts.forEach((element: any) => {
-      this.makerCheckerService.deleteMakerCheckerEntry(element.id).subscribe((response: any) => {
+      this.tasksService.deleteMakerChecker(element.id).subscribe((response: any) => {
         approvedAccounts++;
         if (selectedAccounts === approvedAccounts) {
           this.reload();

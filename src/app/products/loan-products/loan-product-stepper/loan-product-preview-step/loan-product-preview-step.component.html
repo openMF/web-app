@@ -1,3 +1,11 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <mifosx-loan-product-summary
   [action]="'preview'"
   [loanProduct]="loanProduct"
@@ -14,10 +22,14 @@
     <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Previous' | translate }}
   </button>
-  <button mat-raised-button [routerLink]="['../']">
+  <button
+    mat-raised-button
+    [routerLink]="['../']"
+    [queryParams]="{ productType: loanProductService.productType.value }"
+  >
     {{ 'labels.buttons.Cancel' | translate }}
   </button>
-  <button mat-raised-button color="primary" (click)="submitEvent.emit()">
+  <button mat-raised-button color="primary" [disabled]="!isValid" (click)="submitEvent.emit()">
     {{ 'labels.buttons.Submit' | translate }}
   </button>
 </div>

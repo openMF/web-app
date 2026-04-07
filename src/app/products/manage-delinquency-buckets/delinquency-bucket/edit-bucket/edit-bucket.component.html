@@ -1,3 +1,11 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <div class="container">
   <mat-card>
     <form [formGroup]="bucketForm" (ngSubmit)="submit()">
@@ -6,12 +14,83 @@
           <mat-form-field class="flex-100">
             <mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
-            <mat-error *ngIf="bucketForm.controls.name.hasError('required')">
-              {{ 'labels.inputs.Name' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (bucketForm.controls.name.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Name' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
+          @if (isWorkingCapitalBucket) {
+            <h3 class="mat-h3 flex-100">{{ 'labels.inputs.Delinquency Payment Rule' | translate }}</h3>
+            <mat-form-field class="flex-100">
+              <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
+              <input matInput type="number" required formControlName="frequency" min="1" step="1" />
+              @if (bucketForm.controls.frequency.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Frequency' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+              @if (bucketForm.controls.frequency.hasError('pattern')) {
+                <mat-error>
+                  {{ 'labels.inputs.Frequency' | translate }} {{ 'labels.commons.must be' | translate }}
+                  {{ 'labels.commons.a positive number' | translate }}
+                </mat-error>
+              }
+            </mat-form-field>
 
+            <mat-form-field class="flex-100">
+              <mat-label>{{ 'labels.inputs.Frequency Type' | translate }}</mat-label>
+              <mat-select required formControlName="frequencyType">
+                @for (frequencyType of frequencyTypeOptions; track frequencyType) {
+                  <mat-option [value]="frequencyType.id">
+                    {{ getCatalogLabel(frequencyType.code) | translateKey: 'catalogs' }}
+                  </mat-option>
+                }
+              </mat-select>
+              @if (bucketForm.controls.frequencyType.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Frequency Type' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field class="flex-100">
+              <mat-label>{{ 'labels.inputs.Minimum Payment' | translate }}</mat-label>
+              <input matInput type="number" required formControlName="minimumPayment" min="0.01" />
+              @if (bucketForm.controls.minimumPayment.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Minimum Payment' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+              @if (bucketForm.controls.minimumPayment.hasError('pattern')) {
+                <mat-error>
+                  {{ 'labels.inputs.Minimum Payment' | translate }} {{ 'labels.commons.must be' | translate }}
+                  {{ 'labels.commons.a positive number' | translate }}
+                </mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field class="flex-100">
+              <mat-label>{{ 'labels.inputs.Minimum Payment Type' | translate }}</mat-label>
+              <mat-select required formControlName="minimumPaymentType">
+                @for (minimumPaymentType of minimumPaymentOptions; track minimumPaymentType) {
+                  <mat-option [value]="minimumPaymentType.id">
+                    {{ getCatalogLabel(minimumPaymentType.code) | translateKey: 'catalogs' }}
+                  </mat-option>
+                }
+              </mat-select>
+              @if (bucketForm.controls.minimumPaymentType.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Minimum Payment Type' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+          }
           <h3 class="mat-h3 flex-40">{{ 'labels.heading.Delinquency Ranges' | translate }}</h3>
 
           <div class="flex-40 layout-row align-start-center">
@@ -75,7 +154,7 @@
         <button
           mat-raised-button
           color="primary"
-          [disabled]="!dataWasChanged"
+          [disabled]="validForm()"
           *mifosxHasPermission="'UPDATE_DELINQUENCY_BUCKET'"
         >
           {{ 'labels.buttons.Submit' | translate }}

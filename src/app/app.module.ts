@@ -1,3 +1,11 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -40,9 +48,8 @@ import { CollectionsModule } from './collections/collections.module';
 import { ProfileModule } from './profile/profile.module';
 import { TasksModule } from './tasks/tasks.module';
 import { ConfigurationWizardModule } from './configuration-wizard/configuration-wizard.module';
+import { RemittancesModule } from './remittances/remittances.module';
 import { PortalModule } from '@angular/cdk/portal';
-import { ApiModule, Configuration, BASE_PATH } from '@fineract/client';
-import { SettingsService } from './settings/settings.service';
 
 /** Main Routing Module */
 import { AppRoutingModule } from './app-routing.module';
@@ -60,6 +67,7 @@ import { TokenInterceptor as ZitadelTokenInterceptor } from './zitadel/token.int
 import { AuthService } from './zitadel/auth.service';
 import { environment } from '../environments/environment';
 import { CallbackComponent } from './zitadel/callback/callback.component';
+import { OAuthModule } from 'angular-oauth2-oidc';
 
 export class CustomMissingTranslationHandler implements MissingTranslationHandler {
   handle(params: MissingTranslationHandlerParams): string {
@@ -120,16 +128,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     CollectionsModule,
     TasksModule,
     ConfigurationWizardModule,
-    ApiModule.forRoot(
-      () =>
-        new Configuration({
-          basePath: '' // Empty so ApiPrefixInterceptor handles all URL construction
-        })
-    ),
+    RemittancesModule,
     AppRoutingModule,
     NotFoundComponent,
-    CallbackComponent
-
+    CallbackComponent,
+    OAuthModule.forRoot()
   ],
   providers: [
     DatePipe,

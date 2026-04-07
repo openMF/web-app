@@ -1,22 +1,27 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SpmSurveysService } from '@fineract/client';
+import { SystemService } from '../system.service';
 
 /**
  * System data resolver.
  */
 @Injectable()
 export class SurveyResolver {
-  /**
-   * @param { SpmSurveysService } surveyService Survey service.
-   */
-  constructor(private spmSurveysService: SpmSurveysService) {}
+  private systemService = inject(SystemService);
 
   /**
    * Returns the Survey data.
@@ -24,6 +29,6 @@ export class SurveyResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const surveyId = route.paramMap.get('id');
-    return this.spmSurveysService.fetchAllSurveys1({ isActive: surveyId === 'active' });
+    return this.systemService.getSurvey(surveyId);
   }
 }

@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Components */
@@ -9,7 +17,7 @@ import { SavingsAccountChargesStepComponent } from '../../savings-account-steppe
 import { SavingsActiveClientMembersComponent } from '../../savings-account-stepper/savings-active-client-members/savings-active-client-members.component';
 
 /** Custom Services */
-import { SavingsAccountService } from '@fineract/client';
+import { SavingsService } from '../../savings.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
@@ -39,6 +47,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateGsimAccountComponent {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dateUtils = inject(Dates);
+  private savingsService = inject(SavingsService);
+  private settingsService = inject(SettingsService);
+
   /** Savings Account Template */
   savingsAccountTemplate: any;
   /** Savings Account Product Template */
@@ -66,16 +80,10 @@ export class CreateGsimAccountComponent {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {Dates} dateUtils Date Utils
-   * @param {SavingsAccountService} savingsAccountService Savings Account Service
+   * @param {SavingsService} savingsService Savings Service
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private dateUtils: Dates,
-    private savingsAccountService: SavingsAccountService,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { savingsAccountTemplate: any; groupsData: any }) => {
       this.savingsAccountTemplate = data.savingsAccountTemplate;
       this.dataSource = data.groupsData.activeClientMembers;
@@ -179,18 +187,14 @@ export class CreateGsimAccountComponent {
     const gsimData = {
       clientArray: data
     };
-    this.savingsAccountService
-      .submitGSIMApplication({
-        body: JSON.stringify(gsimData)
-      })
-      .subscribe((response: any) => {
-        this.router.navigate(
-          [
-            '../',
-            response.resourceId
-          ],
-          { relativeTo: this.route }
-        );
-      });
+    this.savingsService.createGsimAcccount(gsimData).subscribe((response: any) => {
+      this.router.navigate(
+        [
+          '../',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
+    });
   }
 }

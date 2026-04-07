@@ -31,21 +31,27 @@ interface Window {
     defaultCharDelimiter?: string;
     displayBackEndInfo?: string;
     displayTenantSelector?: string;
+    /** Production mode - when true, shows minimal hero with only branding at bottom */
+    productionMode?: string | boolean;
     waitTimeForNotifications?: number;
     waitTimeForCOBCatchUp?: number;
     sessionIdleTimeout?: number;
-    vNextApiUrl?: string;
-    vNextApiProvider?: string;
-    vNextApiVersion?: string;
-    interbankTransfers?: boolean;
+    mifosInterbankTransfersApiUrl?: string;
+    mifosInterbankTransfersApiProvider?: string;
+    mifosInterbankTransfersApiVersion?: string;
+    mifosInterbankTransfersEnabled?: string | boolean;
     minPasswordLength?: number;
+    enableExternalNationalIdSystem?: string | boolean;
+    externalNationalIdSystemUrl?: string;
+    externalNationalIdSystemApiHeader?: string;
+    externalNationalIdSystemApiKey?: string;
+    externalNationalIdRegex?: string;
+    mifosRemittanceApiUrl?: string;
+    mifosRemittanceApiProvider?: string;
+    mifosRemittanceApiVersion?: string;
+    mifosRemittanceEnabled?: string | boolean;
+    mifosRemittanceApiKey?: string;
   };
 }
 
 declare module 'chart.js';
-
-declare module '@ckeditor/ckeditor5-build-classic' {
-  const ClassicEditorBuild: any;
-
-  export = ClassicEditorBuild;
-}

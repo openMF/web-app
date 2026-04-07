@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -57,6 +65,9 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
   ]
 })
 export class ShareProductsDividendsComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   /** Dividends data. */
   dividendData: any;
   /** Columns to be displayed in dividends table. */
@@ -79,10 +90,7 @@ export class ShareProductsDividendsComponent implements OnInit {
    * Retrieves the dividends data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { dividends: any }) => {
       this.dividendData = data.dividends.pageItems;
     });

@@ -1,4 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import {
   MatTable,
@@ -35,6 +43,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoanCollateralTabComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+
   /** Loan Collateral Details */
   loanCollaterals: any[] = [];
   /** Columns to be displayed in collateral table. */
@@ -51,7 +61,7 @@ export class LoanCollateralTabComponent implements OnInit {
    * Retrieves the loans data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     this.route.data.subscribe((data: { loanCollaterals: any }) => {
       this.loanCollaterals = data.loanCollaterals;
     });

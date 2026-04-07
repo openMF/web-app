@@ -1,0 +1,90 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.step-content {
+  padding: 16px 0;
+}
+
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 480px;
+}
+
+.error-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  margin: 8px 0;
+  background-color: #fdecea;
+  border-radius: 4px;
+  color: #611a15;
+
+  mat-icon {
+    color: #f44336;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.vendor-error-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  margin: 12px 0;
+  background-color: #fff3e0;
+  border-radius: 4px;
+  border-left: 4px solid #ff9800;
+  color: #e65100;
+
+  mat-icon {
+    color: #ff9800;
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+  }
+
+  span {
+    flex: 1;
+    font-size: 14px;
+  }
+
+  button {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    mat-spinner {
+      display: inline-block;
+    }
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      margin: 0;
+    }
+  }
+}
+
+.step-actions {
+  margin-top: 16px;
+
+  button {
+    mat-spinner {
+      display: inline-block;
+      margin-right: 8px;
+    }
+  }
+}

@@ -1,3 +1,11 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <mat-card-header class="layout-row gap-5percent header">
   <fa-icon class="main-icon" icon="user" size="3x"></fa-icon>
   <mat-card-title-group>
@@ -40,13 +48,17 @@
       {{ employeeData.isLoanOfficer | yesNo }}
     </div>
 
-    <div class="flex-50 mat-body-strong" *ngIf="employeeData.mobileNo">
-      {{ 'labels.inputs.Mobile Number' | translate }}
-    </div>
+    @if (employeeData.mobileNo) {
+      <div class="flex-50 mat-body-strong">
+        {{ 'labels.inputs.Mobile Number' | translate }}
+      </div>
+    }
 
-    <div class="flex-50" *ngIf="employeeData.mobileNo">
-      {{ employeeData.mobileNo }}
-    </div>
+    @if (employeeData.mobileNo) {
+      <div class="flex-50">
+        {{ employeeData.mobileNo }}
+      </div>
+    }
 
     <div class="flex-50 mat-body-strong">
       {{ 'labels.inputs.Number of Centers' | translate }}

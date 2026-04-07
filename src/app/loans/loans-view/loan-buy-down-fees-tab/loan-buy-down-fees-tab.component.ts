@@ -1,4 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, OnInit, inject } from '@angular/core';
 import {
   MatCell,
   MatCellDef,
@@ -14,7 +22,7 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { FormatNumberPipe } from '@pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { LoansService } from 'app/customApis.service';
+import { LoansService } from '../../loans.service';
 import { BuyDownFeeAmortizationDetails } from '../../models/loan-account.model';
 import { DateFormatPipe } from '@pipes/date-format.pipe';
 
@@ -39,6 +47,9 @@ import { DateFormatPipe } from '@pipes/date-format.pipe';
   ]
 })
 export class LoanBuyDownFeesTabComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private loansService = inject(LoansService);
+
   buyDownFeeData: BuyDownFeeAmortizationDetails[] = [];
   loanId: string;
   isLoading = true;
@@ -51,11 +62,6 @@ export class LoanBuyDownFeesTabComponent implements OnInit {
     'adjustedAmount',
     'chargedOffAmount'
   ];
-
-  constructor(
-    private route: ActivatedRoute,
-    private loansService: LoansService
-  ) {}
 
   ngOnInit(): void {
     this.getLoanId();

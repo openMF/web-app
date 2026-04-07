@@ -1,9 +1,18 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { HttpResponse } from '@angular/common/http';
 
 /**
  * View Transaction Reciept Component
@@ -17,30 +26,47 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     FaIconComponent
   ]
 })
-export class ViewRecieptComponent implements OnInit {
+export class ViewRecieptComponent implements OnInit, OnDestroy {
+  private sanitizer = inject(DomSanitizer);
+  private route = inject(ActivatedRoute);
+
   /** trusted resource url for pentaho output */
-  pentahoUrl: any;
+  pentahoUrl: SafeResourceUrl | null = null;
   /** Transaction Reciept Data */
-  transactionRecieptData: any;
+  transactionRecieptData: HttpResponse<Blob>;
+  /** Blob URL for cleanup */
+  private blobUrl: string | null = null;
 
   /**
    * Fetches transaction reciept `resolve`
    * @param {DomSanitizer} sanitizer DOM Sanitizer
    * @param {ActivatedRoute} route Activated Route
    */
-  constructor(
-    private sanitizer: DomSanitizer,
-    private route: ActivatedRoute
-  ) {
-    this.route.data.subscribe((data: { savingsTransactionReciept: any }) => {
+  constructor() {
+    this.route.data.subscribe((data: { savingsTransactionReciept: HttpResponse<Blob> }) => {
       this.transactionRecieptData = data.savingsTransactionReciept;
     });
   }
 
   ngOnInit() {
+    if (!this.transactionRecieptData || !this.transactionRecieptData.body) {
+      return;
+    }
+
     const contentType = this.transactionRecieptData.headers.get('Content-Type');
     const file = new Blob([this.transactionRecieptData.body], { type: contentType });
-    const filecontent = URL.createObjectURL(file);
-    this.pentahoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(filecontent);
+
+    if (file.size === 0) {
+      return;
+    }
+
+    this.blobUrl = URL.createObjectURL(file);
+    this.pentahoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.blobUrl);
+  }
+
+  ngOnDestroy() {
+    if (this.blobUrl) {
+      URL.revokeObjectURL(this.blobUrl);
+    }
   }
 }

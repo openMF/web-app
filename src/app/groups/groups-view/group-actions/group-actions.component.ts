@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GroupAssignStaffComponent } from './group-assign-staff/group-assign-staff.component';
 import { CloseGroupComponent } from './close-group/close-group.component';
@@ -33,6 +41,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class GroupActionsComponent {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   /** Flag object to store possible actions and render appropriate UI to the user */
   actions: {
     'Assign Staff': boolean;
@@ -60,10 +71,7 @@ export class GroupActionsComponent {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     const action = this.route.snapshot.params['action'];
     if (action && action in this.actions) {

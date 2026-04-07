@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports. */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -10,7 +18,7 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services. */
-import { BulkLoansService } from '@fineract/client';
+import { OrganizationService } from '../organization.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -29,6 +37,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class BulkLoanReassignmnetComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private organizationSevice = inject(OrganizationService);
+  private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
+  private router = inject(Router);
+
   /** Bulk Loan form. */
   bulkLoanForm: UntypedFormGroup;
   /** Office data. */
@@ -52,18 +67,11 @@ export class BulkLoanReassignmnetComponent implements OnInit {
    * Get Office data from `resolver`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {BulkLoansService} bulkLoansService Bulk Loans Service.
+   * @param {OrganizationService} organizationSevice Organization Service.
    * @param {SettingsService} settingsService Settings Service.
    * @param {Router} router Router.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private bulkLoansService: BulkLoansService,
-    private settingsService: SettingsService,
-    private dateUtils: Dates,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { offices: any }) => {
       this.offices = data.offices;
     });
@@ -79,8 +87,12 @@ export class BulkLoanReassignmnetComponent implements OnInit {
    */
   setBulkLoanForm() {
     this.bulkLoanForm = this.formBuilder.group({
+      officeId: [
+        '',
+        Validators.required
+      ],
       assignmentDate: [
-        new Date(),
+        '',
         Validators.required
       ],
       toLoanOfficerId: [
@@ -95,8 +107,7 @@ export class BulkLoanReassignmnetComponent implements OnInit {
    * @param officeId Office Id.
    */
   getOffice(officeId: string) {
-    const params = { officeId: Number(officeId) };
-    this.bulkLoansService.loanReassignmentTemplate(params).subscribe((response: any) => {
+    this.organizationSevice.getOfficeTemplate(officeId).subscribe((response: any) => {
       this.officeTemplate = response;
       this.fromLoanOfficers = this.officeTemplate.loanOfficerOptions;
       this.bulkLoanForm.addControl('fromLoanOfficerId', new UntypedFormControl('', Validators.required));
@@ -108,10 +119,14 @@ export class BulkLoanReassignmnetComponent implements OnInit {
    * @param officerId Office Id.
    */
   getFromOfficers(officerId: any) {
-    this.toLoanOfficers = this.fromLoanOfficers.filter((officer: any) => officer.id !== officerId);
-    this.bulkLoansService.loanReassignmentTemplate(officerId, this.officeTemplate.id).subscribe((response: any) => {
-      this.officerTemplate = response;
-    });
+    this.toLoanOfficers = this.fromLoanOfficers?.filter((officer: any) => officer.id !== officerId) || [];
+    if (officerId && this.officeTemplate && this.officeTemplate.officeId) {
+      this.organizationSevice.getOfficerTemplate(officerId, this.officeTemplate.officeId).subscribe((response: any) => {
+        this.officerTemplate = response;
+      });
+    } else {
+      this.officerTemplate = undefined;
+    }
   }
 
   /**
@@ -133,7 +148,7 @@ export class BulkLoanReassignmnetComponent implements OnInit {
    * Submits bulk loan reassignment form.
    */
   submit() {
-    const bulkLoanFormData = this.bulkLoanForm.value;
+    const { officeId, ...bulkLoanFormData } = this.bulkLoanForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevAssignmentDate = this.bulkLoanForm.value.assignmentDate;
@@ -146,7 +161,7 @@ export class BulkLoanReassignmnetComponent implements OnInit {
       locale
     };
     data.loans = this.loans;
-    this.bulkLoansService.loanReassignment(data).subscribe((response: any) => {
+    this.organizationSevice.createLoanReassignment(data).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

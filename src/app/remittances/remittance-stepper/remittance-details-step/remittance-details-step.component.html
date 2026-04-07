@@ -1,0 +1,92 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+@if (remittanceData) {
+  <div class="step-content">
+    <div class="status-row">
+      <span class="status-badge" [ngClass]="statusBadgeClass">{{ remittanceData.status }}</span>
+    </div>
+
+    <div class="details-grid">
+      @if (remittanceData.sendingPartner) {
+        <div class="detail-item">
+          <span class="label">{{ 'labels.inputs.Sent By' | translate }}</span>
+          <span class="value">{{ remittanceData.sendingPartner }}</span>
+        </div>
+      }
+
+      <div class="detail-item">
+        <span class="label">{{ 'labels.inputs.External ID' | translate }}</span>
+        <span class="value">{{ remittanceData.pin }}</span>
+      </div>
+
+      <div class="detail-item">
+        <span class="label">{{ 'labels.inputs.Created At' | translate }}</span>
+        @if (isValidDate(remittanceData.created)) {
+          <span class="value">{{ remittanceData.created | date: 'medium' }}</span>
+        } @else {
+          <span class="value">{{ remittanceData.created }}</span>
+        }
+      </div>
+
+      @if (remittanceData.processedAt && isValidDate(remittanceData.processedAt)) {
+        <div class="detail-item">
+          <span class="label">{{ 'labels.inputs.Deposited At' | translate }}</span>
+          <span class="value">{{ remittanceData.processedAt | date: 'medium' }}</span>
+        </div>
+      }
+
+      <div class="detail-item">
+        <span class="label">{{ 'labels.inputs.Sender Name' | translate }}</span>
+        <span class="value">{{ remittanceData.senderName }}</span>
+      </div>
+
+      <div class="detail-item">
+        <span class="label">{{ 'labels.inputs.Payout Amount' | translate }}</span>
+        <span class="value">{{ remittanceData.receivingAmount | currency: remittanceData.receivingCurrency }}</span>
+      </div>
+
+      <div class="detail-item">
+        <span class="label">{{ 'labels.inputs.Recipient Name' | translate }}</span>
+        <span class="value">{{ remittanceData.recipientName }}</span>
+      </div>
+
+      @if (remittanceData.recipientAddress) {
+        <div class="detail-item">
+          <span class="label">{{ 'labels.inputs.Address' | translate }}</span>
+          <span class="value">{{ remittanceData.recipientAddress }}</span>
+        </div>
+      }
+    </div>
+
+    @if (isPaid) {
+      <div class="terminal-info paid-info">
+        <mat-icon>check_circle</mat-icon>
+        <span>{{ 'labels.text.This remittance has already been paid successfully.' | translate }}</span>
+      </div>
+    } @else if (isTerminal) {
+      <div class="terminal-warning">
+        <mat-icon>info</mat-icon>
+        <span>{{
+          'labels.text.This remittance has a terminal status and cannot be processed further.' | translate
+        }}</span>
+      </div>
+    }
+
+    <div class="step-actions">
+      <button mat-raised-button color="primary" (click)="onNext()">
+        @if (isTerminal) {
+          {{ 'labels.buttons.View Receipt' | translate }}
+        } @else {
+          {{ 'labels.buttons.Next' | translate }}
+        }
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </div>
+  </div>
+}

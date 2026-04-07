@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports. */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
@@ -10,7 +18,7 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services. */
-import { EntityDataTableService } from '@fineract/client';
+import { OrganizationService } from 'app/organization/organization.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -25,6 +33,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateEntityDataTableChecksComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private organizationService = inject(OrganizationService);
+  private router = inject(Router);
+
   /** Create Entity Datatable Checks form. */
   createEntityForm: UntypedFormGroup;
   /** Entity Datatable Checks data. */
@@ -42,15 +55,10 @@ export class CreateEntityDataTableChecksComponent implements OnInit {
    * Retrieves Entity Datatable Checks data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {EntityDataTableService} entityDataTableService Entity Data Table Service.
+   * @param {OrganizationService} organizationService Organization Service.
    * @param {Router} router Router.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private entityDataTableService: EntityDataTableService,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { dataTableEntity: any }) => {
       this.createEntityData = data.dataTableEntity;
       // hardcoded, because data.dataTableEntity.entities might change anytime its order
@@ -133,7 +141,7 @@ export class CreateEntityDataTableChecksComponent implements OnInit {
    * Submits Entity Datble Form.
    */
   submit() {
-    this.entityDataTableService.createEntityDatatableCheck(this.createEntityForm.value).subscribe((response: any) => {
+    this.organizationService.createEntityDataTableChecks(this.createEntityForm.value).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

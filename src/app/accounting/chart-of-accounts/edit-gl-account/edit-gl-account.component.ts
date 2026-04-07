@@ -1,10 +1,18 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
-import { GeneralLedgerAccountService } from '@fineract/client';
+import { AccountingService } from '../../accounting.service';
 import { GlAccountSelectorComponent } from '../../../shared/accounting/gl-account-selector/gl-account-selector.component';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
@@ -25,6 +33,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditGlAccountComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private accountingService = inject(AccountingService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   /** GL account form. */
   glAccountForm: UntypedFormGroup;
   /** GL account and chart of accounts data. */
@@ -41,16 +54,11 @@ export class EditGlAccountComponent implements OnInit {
   /**
    * Retrieves the chart of accounts data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {GeneralLedgerAccountService} generalLedgerAccountService General Ledger Account Service.
+   * @param {AccountingService} accountingService Accounting Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private generalLedgerAccountService: GeneralLedgerAccountService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { glAccountAndChartOfAccountsTemplate: any }) => {
       this.glAccount = data.glAccountAndChartOfAccountsTemplate;
     });
@@ -134,19 +142,14 @@ export class EditGlAccountComponent implements OnInit {
    * if successful redirects to view updated account.
    */
   submit() {
-    this.generalLedgerAccountService
-      .updateGLAccount1({
-        glAccountId: this.glAccount.id,
-        putGLAccountsRequest: this.glAccountForm.value
-      })
-      .subscribe((response: any) => {
-        this.router.navigate(
-          [
-            '../../',
-            response.resourceId
-          ],
-          { relativeTo: this.route }
-        );
-      });
+    this.accountingService.updateGlAccount(this.glAccount.id, this.glAccountForm.value).subscribe((response: any) => {
+      this.router.navigate(
+        [
+          '../../',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
+    });
   }
 }

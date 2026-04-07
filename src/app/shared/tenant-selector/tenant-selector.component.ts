@@ -1,8 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
+import { AlertService } from 'app/core/alert/alert.service';
 import { MatFormField, MatPrefix, MatLabel } from '@angular/material/form-field';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { M3IconComponent } from 'app/shared/m3-ui/m3-icon/m3-icon.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
@@ -12,18 +21,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     MatPrefix,
-    FaIconComponent
+    M3IconComponent
   ]
 })
 export class TenantSelectorComponent implements OnInit {
+  private settingsService = inject(SettingsService);
+  private alertService = inject(AlertService);
+
   /** Tenant selector form control. */
   tenantSelector = new UntypedFormControl();
-
-  /**
-   * Sets the Tenant Identifier of the application in the selector on initial setup.
-   * @param {SettingsService} settingsService Settings Service.
-   */
-  constructor(private settingsService: SettingsService) {}
 
   ngOnInit(): void {
     this.tenantSelector.setValue(this.settingsService.tenantIdentifier);
@@ -44,6 +50,7 @@ export class TenantSelectorComponent implements OnInit {
 
   setTenantIdentifier(): void {
     this.settingsService.setTenantIdentifier(this.tenantSelector.value);
+    this.alertService.alert({ type: 'Tenant Changed', message: this.tenantSelector.value });
   }
 
   allowSelection(): boolean {

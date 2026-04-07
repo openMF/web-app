@@ -1,3 +1,11 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <div class="layout-row align-end gap-2px responsive-column container m-b-20">
   <div #buttonDashboard class="in-block">
     <button mat-raised-button color="primary" [routerLink]="['/dashboard']">
@@ -10,7 +18,10 @@
 <div class="container">
   <mat-card>
     <mat-card-header>
-      <mat-card-title class="title"> {{ 'labels.text.Welcome' | translate }}, {{ username }}! </mat-card-title>
+      <mat-card-title class="title">
+        {{ 'labels.text.Welcome' | translate }} {{ username }} {{ 'labels.text.To' | translate }}
+        {{ tenant | titlecase }}!
+      </mat-card-title>
     </mat-card-header>
 
     <mat-card-content #searchActivity>
@@ -22,13 +33,20 @@
       </div>
 
       <mat-autocomplete #activitySearch="matAutocomplete">
-        <mat-option *ngFor="let activity of filteredActivities | async" [routerLink]="activity.path">
-          <span>{{ activity.activity }}</span>
-        </mat-option>
+        @for (activity of filteredActivities | async; track activity) {
+          <mat-option [routerLink]="activity.path">
+            <span>{{ activity.activity }}</span>
+          </mat-option>
+        }
       </mat-autocomplete>
     </mat-card-content>
 
-    <img mat-card-image src="assets/images/mifos_lg-logo.png" alt="Mifos X" />
+    <img
+      mat-card-image
+      [src]="'assets/images/' + tenant + '_home.png'"
+      (error)="onImageMissing($event)"
+      alt="Mifos X"
+    />
   </mat-card>
 </div>
 
@@ -37,22 +55,24 @@
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button
-      *ngIf="prev"
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(prev.template, prev.target, 'bottom', true)"
-    >
-      {{ 'labels.buttons.Back' | translate }}
-    </button>
-    <button
-      *ngIf="next"
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(next.template, next.target, 'bottom', true)"
-    >
-      {{ 'labels.buttons.Next' | translate }}
-    </button>
+    @if (prev) {
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="popover.close(); showPopover(prev.template, prev.target, 'bottom', true)"
+      >
+        {{ 'labels.buttons.Back' | translate }}
+      </button>
+    }
+    @if (next) {
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="popover.close(); showPopover(next.template, next.target, 'bottom', true)"
+      >
+        {{ 'labels.buttons.Next' | translate }}
+      </button>
+    }
   </div>
 </ng-template>
 

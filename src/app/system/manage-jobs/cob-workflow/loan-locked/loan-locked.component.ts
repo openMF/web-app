@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import {
@@ -17,10 +25,10 @@ import {
 } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { LoansService } from '@fineract/client';
+import { LoansService } from 'app/loans/loans.service';
 import { ErrorDialogComponent } from 'app/shared/error-dialog/error-dialog.component';
-import { InlineJobService } from '@fineract/client';
-import { LoanAccountLockService } from '@fineract/client';
+import { SystemService } from 'app/system/system.service';
+import { TasksService } from 'app/tasks/tasks.service';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -53,6 +61,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoanLockedComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private loansService = inject(LoansService);
+  private systemService = inject(SystemService);
+  private tasksService = inject(TasksService);
+  private dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
+
   /** Loans Data */
   loans: any[] = [];
   /** Batch Requests */
@@ -89,24 +105,6 @@ export class LoanLockedComponent implements OnInit {
 
   showPaginator = false;
 
-  /**
-   * @param {LoansService} loansService Loans Service
-   * @param {Router} router Router for navigation.
-   * @param {MatDialog} dialog Dialog reference.
-   * @param {TranslateService} translateService Translate Service.
-   * @param {LoanAccountLockService} tasksService Loan Account Lock Service.
-   * @param {InlineJobService} inlineJobService Inline Job Service.
-   */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private loansService: LoansService,
-    private inlineJobService: InlineJobService,
-    private loanAccountLockService: LoanAccountLockService,
-    private dialog: MatDialog,
-    private translateService: TranslateService
-  ) {}
-
   ngOnInit(): void {
     this.allowRunInlineJob = false;
     this.getLoansLocked(0);
@@ -124,7 +122,7 @@ export class LoanLockedComponent implements OnInit {
   }
 
   getLoansLocked(page: number) {
-    this.loanAccountLockService.retrieveLockedAccounts({ page: page }).subscribe((data: any) => {
+    this.tasksService.getAllLoansLocked(page, this.itemsToRead).subscribe((data: any) => {
       this.loans = data.content;
       this.dataSource = new MatTableDataSource(this.loans);
       this.dataSource.paginator = this.paginator;
@@ -171,7 +169,7 @@ export class LoanLockedComponent implements OnInit {
 
   viewLoanAccount(loan: any) {
     const loanId = loan.loanId;
-    this.loansService.retrieveLoan({ loanId: Number(loanId) }).subscribe((loanData: any) => {
+    this.loansService.getLoanAccountDetails(loanId).subscribe((loanData: any) => {
       const clientId = loanData.clientId;
       this.router.navigateByUrl(`/clients/${clientId}/loans-accounts/${loanId}/general`);
     });
@@ -186,14 +184,9 @@ export class LoanLockedComponent implements OnInit {
       const payload = {
         loanIds: loanIds
       };
-      this.inlineJobService
-        .executeInlineJob({
-          jobName: this.jobName as string,
-          inlineJobRequest: payload
-        })
-        .subscribe((data: any) => {
-          this.getLoansLocked(0);
-        });
+      this.systemService.runInlineCOB(this.jobName, payload).subscribe((data: any) => {
+        this.getLoansLocked(0);
+      });
     }
   }
 }

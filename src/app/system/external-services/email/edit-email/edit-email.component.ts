@@ -1,10 +1,18 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
-import { ExternalServicesService } from '@fineract/client';
+import { SystemService } from 'app/system/system.service';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -25,6 +33,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditEmailComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private systemService = inject(SystemService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   /** Password input field type. */
   passwordInputType: string;
   /** Email Configuration data */
@@ -35,16 +48,11 @@ export class EditEmailComponent implements OnInit {
   /**
    * Retrieves the Email configuration data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {ExternalServicesService} externalServicesService External Services Service.
+   * @param {SystemService} systemService Accounting Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private externalServicesService: ExternalServicesService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { emailConfiguration: any }) => {
       this.emailConfigurationData = data.emailConfiguration;
     });
@@ -99,11 +107,8 @@ export class EditEmailComponent implements OnInit {
    * if successful redirects to view Email configuration.
    */
   submit() {
-    this.externalServicesService
-      .updateExternalServiceProperties({
-        servicename: 'SMTP',
-        putExternalServiceRequest: this.emailConfigurationForm.value
-      })
+    this.systemService
+      .updateExternalConfiguration('SMTP', this.emailConfigurationForm.value)
       .subscribe((response: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
