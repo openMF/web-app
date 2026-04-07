@@ -128,10 +128,7 @@ export class SavingsAccountTermsStepComponent implements OnChanges, OnInit {
       decimal: [{ value: '', disabled: true }],
       nominalAnnualInterestRate: [
         '',
-        [
-          Validators.required,
-          Validators.min(0)
-        ]
+        Validators.required
       ],
       interestCompoundingPeriodType: [
         '',
@@ -149,22 +146,13 @@ export class SavingsAccountTermsStepComponent implements OnChanges, OnInit {
         '',
         Validators.required
       ],
-      minRequiredOpeningBalance: [
-        '',
-        Validators.min(0)
-      ],
+      minRequiredOpeningBalance: [''],
       withdrawalFeeForTransfers: [false],
-      lockinPeriodFrequency: [
-        '',
-        Validators.min(0)
-      ],
+      lockinPeriodFrequency: [''],
       lockinPeriodFrequencyType: [''],
       allowOverdraft: [false],
       enforceMinRequiredBalance: [false],
-      minRequiredBalance: [
-        '',
-        Validators.min(0)
-      ],
+      minRequiredBalance: [''],
       minBalanceForInterestCalculation: [{ value: '', disabled: true }]
     });
   }
@@ -185,26 +173,11 @@ export class SavingsAccountTermsStepComponent implements OnChanges, OnInit {
    * Subscribes to value changes and sets new form controls accordingly.
    */
   buildDependencies() {
-    const nominalInterestControl = this.savingsAccountTermsForm.get('nominalAnnualInterestRate');
-    if (nominalInterestControl) {
-      nominalInterestControl.valueChanges.subscribe((value) => {
-        if (typeof value === 'number' && value < 0) {
-          nominalInterestControl.setValue(0, { emitEvent: false });
-        }
-      });
-    }
-
     this.savingsAccountTermsForm.get('allowOverdraft').valueChanges.subscribe((allowOverdraft: any) => {
       if (allowOverdraft) {
-        this.savingsAccountTermsForm.addControl(
-          'minOverdraftForInterestCalculation',
-          new UntypedFormControl('', Validators.min(0))
-        );
-        this.savingsAccountTermsForm.addControl(
-          'nominalAnnualInterestRateOverdraft',
-          new UntypedFormControl('', Validators.min(0))
-        );
-        this.savingsAccountTermsForm.addControl('overdraftLimit', new UntypedFormControl('', Validators.min(0)));
+        this.savingsAccountTermsForm.addControl('minOverdraftForInterestCalculation', new UntypedFormControl(''));
+        this.savingsAccountTermsForm.addControl('nominalAnnualInterestRateOverdraft', new UntypedFormControl(''));
+        this.savingsAccountTermsForm.addControl('overdraftLimit', new UntypedFormControl(''));
       } else {
         this.savingsAccountTermsForm.removeControl('minOverdraftForInterestCalculation');
         this.savingsAccountTermsForm.removeControl('nominalAnnualInterestRateOverdraft');
