@@ -496,36 +496,6 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
         repaymentFrequencyDayOfWeekType.updateValueAndValidity();
       });
     });
-    const numericFieldsWithMinZero = [
-      'graceOnPrincipalPayment',
-      'graceOnInterestPayment',
-      'graceOnArrearsAgeing',
-      'inArrearsTolerance',
-      'graceOnInterestCharged',
-      'loanTermFrequency',
-      'numberOfRepayments',
-      'repaymentEvery'
-    ];
-
-    numericFieldsWithMinZero.forEach((fieldName) => {
-      const control = this.loansAccountTermsForm.get(fieldName);
-      if (control) {
-        control.valueChanges.subscribe((value) => {
-          if (typeof value === 'number' && value < 0) {
-            control.setValue(0, { emitEvent: false });
-          }
-        });
-      }
-    });
-
-    const interestRateControl = this.loansAccountTermsForm.get('interestRatePerPeriod');
-    if (interestRateControl) {
-      interestRateControl.valueChanges.subscribe((value) => {
-        if (typeof value === 'number' && value < 0.01) {
-          interestRateControl.setValue(0.01, { emitEvent: false });
-        }
-      });
-    }
   }
 
   /** Custom Listeners for the form to calculate Loan Term */
@@ -599,10 +569,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
         ],
         loanTermFrequency: [
           { value: '', disabled: true },
-          [
-            Validators.required,
-            Validators.min(0)
-          ]
+          Validators.required
         ],
         loanTermFrequencyType: [
           '',
@@ -610,17 +577,11 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
         ],
         numberOfRepayments: [
           '',
-          [
-            Validators.required,
-            Validators.min(0)
-          ]
+          Validators.required
         ],
         repaymentEvery: [
           '',
-          [
-            Validators.required,
-            Validators.min(0)
-          ]
+          Validators.required
         ],
         repaymentFrequencyType: [
           { value: '', disabled: true },
@@ -630,10 +591,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
         repaymentFrequencyDayOfWeekType: [''],
         repaymentsStartingFromDate: [''],
         interestChargedFromDate: [''],
-        interestRatePerPeriod: [
-          '',
-          Validators.min(0.01)
-        ],
+        interestRatePerPeriod: [''],
         interestType: [''],
         isFloatingInterestRate: [null],
         isEqualAmortization: [''],
@@ -643,26 +601,11 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
         ],
         interestCalculationPeriodType: [''],
         allowPartialPeriodInterestCalculation: [''],
-        inArrearsTolerance: [
-          '',
-          Validators.min(0)
-        ],
-        graceOnInterestCharged: [
-          '',
-          Validators.min(0)
-        ],
-        graceOnPrincipalPayment: [
-          '',
-          Validators.min(0)
-        ],
-        graceOnInterestPayment: [
-          '',
-          Validators.min(0)
-        ],
-        graceOnArrearsAgeing: [
-          '',
-          Validators.min(0)
-        ],
+        inArrearsTolerance: [''],
+        graceOnInterestCharged: [''],
+        graceOnPrincipalPayment: [''],
+        graceOnInterestPayment: [''],
+        graceOnArrearsAgeing: [''],
         loanIdToClose: [''],
         fixedEmiAmount: [''],
         isTopup: [''],
