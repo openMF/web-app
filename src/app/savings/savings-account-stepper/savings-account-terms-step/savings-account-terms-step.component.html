@@ -20,11 +20,13 @@
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Nominal Annual Interest' | translate }}</mat-label>
-      <input type="number" matInput formControlName="nominalAnnualInterestRate" required />
-      <mat-error>
-        {{ 'labels.inputs.Nominal Annual Interest' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
+      <input type="number" matInput formControlName="nominalAnnualInterestRate" required min="0" step="0.01" />
+      @if (savingsAccountTermsForm.controls.nominalAnnualInterestRate.hasError('required')) {
+        <mat-error>
+          {{ 'labels.inputs.Nominal Annual Interest' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field class="flex-48">
@@ -92,7 +94,7 @@
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Minimum Opening Balance' | translate }}</mat-label>
-      <input type="number" matInput formControlName="minRequiredOpeningBalance" />
+      <input type="number" matInput formControlName="minRequiredOpeningBalance" min="0" />
     </mat-form-field>
 
     <mat-checkbox labelPosition="before" formControlName="withdrawalFeeForTransfers" class="margin-v flex-48">
@@ -103,7 +105,7 @@
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
-      <input type="number" matInput formControlName="lockinPeriodFrequency" />
+      <input type="number" matInput formControlName="lockinPeriodFrequency" min="0" />
     </mat-form-field>
 
     <mat-form-field class="flex-48">
@@ -129,15 +131,15 @@
       <div class="flex-fill layout-row-wrap gap-2percent responsive-column">
         <mat-form-field class="flex-31">
           <mat-label>{{ 'labels.inputs.Minimum Overdraft Required for Interest Calculation' | translate }}</mat-label>
-          <input type="number" matInput formControlName="minOverdraftForInterestCalculation" />
+          <input type="number" matInput formControlName="minOverdraftForInterestCalculation" min="0" />
         </mat-form-field>
         <mat-form-field class="flex-31">
           <mat-label>{{ 'labels.inputs.Nominal Annual Interest for Overdraft' | translate }}</mat-label>
-          <input type="number" matInput formControlName="nominalAnnualInterestRateOverdraft" />
+          <input type="number" matInput formControlName="nominalAnnualInterestRateOverdraft" min="0" />
         </mat-form-field>
         <mat-form-field class="flex-31">
           <mat-label>{{ 'labels.inputs.Maximum Overdraft Amount Limit' | translate }}</mat-label>
-          <input type="number" matInput formControlName="overdraftLimit" />
+          <input type="number" matInput formControlName="overdraftLimit" min="0" />
         </mat-form-field>
       </div>
     }
@@ -150,13 +152,13 @@
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Minimum Balance' | translate }}</mat-label>
-      <input type="number" matInput formControlName="minRequiredBalance" />
+      <input type="number" matInput formControlName="minRequiredBalance" min="0" />
     </mat-form-field>
 
     @if (savingsAccountTermsForm.controls.minBalanceForInterestCalculation.value) {
       <mat-form-field class="flex-48">
         <mat-label>{{ 'labels.inputs.Balance Required for Interest Calculation' | translate }}</mat-label>
-        <input type="number" matInput formControlName="minBalanceForInterestCalculation" />
+        <input type="number" matInput formControlName="minBalanceForInterestCalculation" min="0" />
       </mat-form-field>
     }
   </div>
