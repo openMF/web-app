@@ -1,20 +1,13 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, Renderer2, ViewChild, ElementRef, SecurityContext, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
+import { Component, OnInit, Renderer2, ViewChild, ElementRef, SecurityContext, Input } from '@angular/core';
+import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
+import { UserGeneratedDocumentsService } from '@fineract/client';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 
 /**
  * Loans Screen Reports Component.
@@ -28,15 +21,14 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
     FaIconComponent
   ]
 })
-export class LoanScreenReportsComponent extends LoanAccountActionsBaseComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private sanitizer = inject(DomSanitizer);
-  private renderer = inject(Renderer2);
-
+export class LoanScreenReportsComponent implements OnInit {
+  @Input() dataObject: any;
   /** Loan Screen Reportform. */
   loanScreenReportForm: UntypedFormGroup;
   /** Templates Data */
   templatesData: any;
+  /** Loan Id */
+  loanId: any;
   /** HTML Template */
   template: any;
 
@@ -51,8 +43,14 @@ export class LoanScreenReportsComponent extends LoanAccountActionsBaseComponent 
    * @param {DomSanitizer} sanitizer DOM Sanitizer
    * @param {Renderer2} renderer Renderer 2
    */
-  constructor() {
-    super();
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private userGeneratedDocumentsService: UserGeneratedDocumentsService,
+    private route: ActivatedRoute,
+    private sanitizer: DomSanitizer,
+    private renderer: Renderer2
+  ) {
+    this.loanId = this.route.snapshot.params['loanId'];
   }
 
   /**
@@ -90,7 +88,7 @@ export class LoanScreenReportsComponent extends LoanAccountActionsBaseComponent 
    */
   generate() {
     const templateId = this.loanScreenReportForm.get('templateId').value;
-    this.loanService.getTemplateData(templateId, this.loanId).subscribe((response: any) => {
+    this.userGeneratedDocumentsService.mergeTemplate(templateId, this.loanId).subscribe((response: any) => {
       this.template = this.sanitizer.sanitize(SecurityContext.HTML, response);
       this.renderer.setProperty(this.screenReportRef.nativeElement, 'innerHTML', this.template);
     });

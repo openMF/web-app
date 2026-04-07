@@ -1,32 +1,27 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { AccountingService } from '../accounting.service';
+import { AccountingClosureService } from '@fineract/client';
 
 /**
  * Closing entries data resolver.
  */
 @Injectable()
 export class ClosingEntriesResolver {
-  private accountingService = inject(AccountingService);
+  /**
+   * @param {AccountingClosureService} accountingClosureService Accounting closure service.
+   */
+  constructor(private accountingClosureService: AccountingClosureService) {}
 
   /**
    * Returns the gl account closures data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.accountingService.getAccountingClosures();
+    return this.accountingClosureService.retrieveAllClosures();
   }
 }

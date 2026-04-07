@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnChanges, Input, inject } from '@angular/core';
+import { Component, OnChanges, Input } from '@angular/core';
 
 /** Custom Services */
 import { ReportsService } from 'app/customApis.service';
@@ -16,13 +8,10 @@ import { ReportsService } from 'app/customApis.service';
 import { ChartData } from '../../common-models/chart-data.model';
 
 /** Charting Imports */
-import { Chart, registerables } from 'chart.js';
+import Chart from 'chart.js';
 import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
 import { NgStyle } from '@angular/common';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-
-// Register Chart.js components
-Chart.register(...registerables);
 
 /**
  * Chart Component
@@ -39,8 +28,6 @@ Chart.register(...registerables);
   ]
 })
 export class ChartComponent implements OnChanges {
-  private reportsService = inject(ReportsService);
-
   /** Run Report Data */
   @Input() dataObject: any;
 
@@ -50,6 +37,11 @@ export class ChartComponent implements OnChanges {
   hideOutput = true;
   /** Data object for witching charts in view. */
   inputData: ChartData;
+
+  /**
+   * @param {ReportsService} reportsService Reports Service
+   */
+  constructor(private reportsService: ReportsService) {}
 
   /**
    * Fetches run report data post changes in run report form.
@@ -89,11 +81,9 @@ export class ChartComponent implements OnChanges {
         ]
       },
       options: {
-        plugins: {
-          title: {
-            display: true,
-            text: inputData.keysLabel
-          }
+        title: {
+          display: true,
+          text: inputData.keysLabel
         }
       }
     });
@@ -120,19 +110,19 @@ export class ChartComponent implements OnChanges {
         ]
       },
       options: {
-        plugins: {
-          legend: { display: false }
-        },
+        legend: { display: false },
         scales: {
-          x: {
-            title: {
-              display: true,
-              text: inputData.keysLabel
+          xAxes: [
+            {
+              scaleLabel: {
+                display: true,
+                labelString: inputData.keysLabel
+              },
+              ticks: {
+                beginAtZero: true
+              }
             }
-          },
-          y: {
-            min: 0
-          }
+          ]
         }
       }
     });

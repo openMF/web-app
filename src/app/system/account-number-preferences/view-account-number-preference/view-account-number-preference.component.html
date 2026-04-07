@@ -1,11 +1,3 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <div class="container m-b-20 layout-row align-end gap-20px">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_ACCOUNTNUMBERFORMAT'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
@@ -30,17 +22,13 @@
           {{ accountNumberPreferenceData.accountType.value | translateKey: 'catalogs' }}
         </div>
 
-        @if (accountNumberPreferenceData.prefixType) {
-          <div class="flex-50 mat-body-strong">
-            {{ 'labels.inputs.Prefix Type' | translate }}
-          </div>
-        }
+        <div class="flex-50 mat-body-strong" *ngIf="accountNumberPreferenceData.prefixType">
+          {{ 'labels.inputs.Prefix Type' | translate }}
+        </div>
 
-        @if (accountNumberPreferenceData.prefixType) {
-          <div class="flex-50">
-            {{ accountNumberPreferenceData.prefixType.value }}
-          </div>
-        }
+        <div class="flex-50" *ngIf="accountNumberPreferenceData.prefixType">
+          {{ accountNumberPreferenceData.prefixType.value }}
+        </div>
       </div>
     </mat-card-content>
   </mat-card>

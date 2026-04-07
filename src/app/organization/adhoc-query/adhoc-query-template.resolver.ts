@@ -1,32 +1,26 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from 'app/organization/organization.service';
-
+import { AdhocQueryApiService } from '@fineract/client';
 /**
  * Adhoc Query template data resolver.
  */
 @Injectable()
 export class AdhocQueryTemplateResolver {
-  private organizationService = inject(OrganizationService);
+  /**
+   * @param {AdhocQueryApiService} adhocQueryApiService Adhoc Query API service.
+   */
+  constructor(private adhocQueryApiService: AdhocQueryApiService) {}
 
   /**
    * Returns the adhoc query template data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.organizationService.getAdhocQueryTemplate();
+    return this.adhocQueryApiService.template();
   }
 }

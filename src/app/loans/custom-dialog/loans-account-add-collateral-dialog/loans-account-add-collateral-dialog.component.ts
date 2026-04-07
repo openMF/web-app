@@ -1,12 +1,4 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -33,10 +25,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoansAccountAddCollateralDialogComponent implements OnInit {
-  dialogRef = inject<MatDialogRef<LoansAccountAddCollateralDialogComponent>>(MatDialogRef);
-  data = inject(MAT_DIALOG_DATA);
-  private formBuilder = inject(UntypedFormBuilder);
-
   layout: {
     addButtonText?: string;
   } = {
@@ -51,7 +39,11 @@ export class LoansAccountAddCollateralDialogComponent implements OnInit {
   /** Maximum ALlowed Quantity of selected collateral  */
   maxQuantity: any = 0;
 
-  constructor() {
+  constructor(
+    public dialogRef: MatDialogRef<LoansAccountAddCollateralDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private formBuilder: UntypedFormBuilder
+  ) {
     this.createAddCollateralForm();
   }
 

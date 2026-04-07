@@ -55,17 +55,14 @@ testem.log
 .DS_Store
 Thumbs.db
 .vscode/
-
-# Cypress - only ignore downloads, screenshots, and videos
-cypress/downloads/
-cypress/screenshots/
-cypress/videos/
+cypress/
 
 src/assets/env.js
 src/environments/.env.ts
 
-# Playwright
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/
+# Node and build artifacts
+/node_modules
+/dist
+/out-tsc
+/openapitools.json
+

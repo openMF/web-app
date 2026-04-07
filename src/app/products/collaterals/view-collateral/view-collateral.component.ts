@@ -1,17 +1,9 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { ProductsService } from 'app/products/products.service';
+import { CollateralManagementService } from '@fineract/client';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
@@ -32,12 +24,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewCollateralComponent {
-  private productsService = inject(ProductsService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private dialog = inject(MatDialog);
-  private translateService = inject(TranslateService);
-
   /** Collateral Data */
   collateralData: any;
 
@@ -49,7 +35,13 @@ export class ViewCollateralComponent {
    * @param {MatDialog} dialog Dialog reference.
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor() {
+  constructor(
+    private collateralManagementService: CollateralManagementService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dialog: MatDialog,
+    private translateService: TranslateService
+  ) {
     this.route.data.subscribe((data: { collateral: any }) => {
       this.collateralData = data.collateral;
     });
@@ -64,7 +56,7 @@ export class ViewCollateralComponent {
     });
     deleteCollateralDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.productsService.deleteCollateral(this.collateralData.id).subscribe(() => {
+        this.collateralManagementService.deleteCollateral2({ collateralId: this.collateralData.id }).subscribe(() => {
           this.router.navigate(['/products/collaterals']);
         });
       }

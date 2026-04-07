@@ -1,11 +1,3 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <div class="layout-row align-end gap-2px responsive-column container m-b-20">
   <button mat-raised-button color="primary" *mifosxHasPermission="'UPDATE_REPORT'" (click)="onEdit()">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
@@ -64,58 +56,53 @@
       <mat-divider [inset]="true"></mat-divider>
     </mat-card-header>
     <mat-card-content>
-      @for (questionData of surveyData.questionDatas; track questionData; let i = $index) {
-        <div class="survey-questions">
-          <mat-card>
-            <mat-card-content>
-              <div>{{ 'labels.heading.Question' | translate }}: {{ i + 1 }}</div>
-              <div class="layout-row" id="key-text">
-                <div class="flex-25 header">
-                  <b>{{ 'labels.inputs.Key' | translate }}:</b>
-                </div>
-                <div class="flex-40 flex-50-lt-md">
-                  {{ questionData.key }}
-                </div>
-                <div class="flex-40 flex-lt-md-50 header">
-                  <b>{{ 'labels.inputs.Text' | translate }}:</b>
-                </div>
-                <div class="flex-40 flex-50-lt-md">
-                  {{ questionData.text }}
-                </div>
+      <div class="survey-questions" *ngFor="let questionData of surveyData.questionDatas; index as i">
+        <mat-card>
+          <mat-card-content>
+            <div>{{ 'labels.heading.Question' | translate }}: {{ i + 1 }}</div>
+            <div class="layout-row" id="key-text">
+              <div class="flex-25 header">
+                <b>{{ 'labels.inputs.Key' | translate }}:</b>
               </div>
-              <div class="layout-row" id="description">
-                <div class="flex-20 flex-50-lt-md header">
-                  <b>{{ 'labels.inputs.Description' | translate }}:</b>
-                </div>
-                <div class="flex-40 flex-50-lt-md">
-                  {{ questionData.description }}
-                </div>
+
+              <div class="flex-40 flex-50-lt-md">
+                {{ questionData.key }}
               </div>
-              <div class="layout-column" id="questionaire">
-                <div>
-                  <b>{{ 'labels.inputs.Option' | translate }}: </b>
-                </div>
-                <table id="response">
-                  <tr>
-                    @for (column of displayedColumns; track column) {
-                      <th>{{ column | titlecase }}</th>
-                    }
-                  </tr>
-                  @for (row of questionData.responseDatas; track row) {
-                    <tr>
-                      @for (column of displayedColumns; track column) {
-                        <td>
-                          {{ row[column] }}
-                        </td>
-                      }
-                    </tr>
-                  }
-                </table>
+              <div class="flex-40 flex-lt-md-50 header">
+                <b>{{ 'labels.inputs.Text' | translate }}:</b>
               </div>
-            </mat-card-content>
-          </mat-card>
-        </div>
-      }
+
+              <div class="flex-40 flex-50-lt-md">
+                {{ questionData.text }}
+              </div>
+            </div>
+            <div class="layout-row" id="description">
+              <div class="flex-20 flex-50-lt-md header">
+                <b>{{ 'labels.inputs.Description' | translate }}:</b>
+              </div>
+
+              <div class="flex-40 flex-50-lt-md">
+                {{ questionData.description }}
+              </div>
+            </div>
+            <div class="layout-column" id="questionaire">
+              <div>
+                <b>{{ 'labels.inputs.Option' | translate }}: </b>
+              </div>
+              <table id="response">
+                <tr>
+                  <th *ngFor="let column of displayedColumns">{{ column | titlecase }}</th>
+                </tr>
+                <tr *ngFor="let row of questionData.responseDatas">
+                  <td *ngFor="let column of displayedColumns">
+                    {{ row[column] }}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
     </mat-card-content>
   </mat-card>
 </div>

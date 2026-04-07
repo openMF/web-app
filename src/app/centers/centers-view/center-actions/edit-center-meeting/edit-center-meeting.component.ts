@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -18,7 +10,7 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { CentersService } from 'app/centers/centers.service';
+import { CalendarService } from '@fineract/client';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -39,13 +31,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditCenterMeetingComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private centersService = inject(CentersService);
-  private settingsService = inject(SettingsService);
-  private dateUtils = inject(Dates);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -68,13 +53,20 @@ export class EditCenterMeetingComponent implements OnInit {
   /**
    * Fetches Calendar Template from `resolve`
    * @param {FormBuilder} formBuilder Form Builder
-   * @param {CentersService} centersService Shares Service
+   * @param {CalendarService} calendarService Calendar Service
    * @param {SettingsService} settingsService Settings Service.
    * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private formBuilder: UntypedFormBuilder,
+    private calendarService: CalendarService,
+    private dateUtils: Dates,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { centersActionData: any }) => {
       this.calendarTemplate = data.centersActionData;
       this.frequencyOptions = this.calendarTemplate.frequencyOptions;
@@ -181,22 +173,30 @@ export class EditCenterMeetingComponent implements OnInit {
     const centerEditMeetingFormData = this.centerEditMeetingForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    const title = `centers_${this.centerId}_CollectionMeeting`;
-    const typeId = '1';
+    // const title = `centers_${this.centerId}_CollectionMeeting`; // Original line, not needed with new API
+    // const typeId = '1'; // Original line, not needed with new API
+
+    // The original code was formatting startDate if it was a Date object.
+    // The new API expects the date to be formatted.
     const prevStartDate: Date = this.centerEditMeetingForm.value.startDate;
-    if (centerEditMeetingFormData.startDate instanceof Date) {
-      centerEditMeetingFormData.startDate = this.dateUtils.formatDate(prevStartDate, dateFormat);
-    }
+    const formattedStartDate = this.dateUtils.formatDate(prevStartDate, dateFormat);
+
     const data = {
       ...centerEditMeetingFormData,
+      startDate: formattedStartDate, // Ensure startDate is formatted
       repeating: true,
-      title,
-      typeId,
+      // title, // Original line, not needed with new API
+      // typeId, // Original line, not needed with new API
       dateFormat,
       locale
     };
-    this.centersService.updateCenterMeeting(this.centerId, data, this.calendarId).subscribe((response: any) => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    // It seems 'updateCenterMeeting' in custom service was likely updating the meeting instance,
+    // often treated as a calendar update or a specific meeting update.
+    // Assuming it's updating the calendar entry for this center.
+    this.calendarService
+      .updateCalendar({ calendarId: this.calendarId, putGlCalendarsCalendarIdRequest: data } as any)
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }

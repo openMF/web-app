@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -60,11 +52,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ManageDataTablesComponent implements OnInit, AfterViewInit {
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private configurationWizardService = inject(ConfigurationWizardService);
-  private popoverService = inject(PopoverService);
-
   /** Data table data. */
   dataTableData: any;
   /** Columns to be displayed in manage data tables table. */
@@ -97,7 +84,12 @@ export class ManageDataTablesComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService
+  ) {
     this.route.data.subscribe((data: { dataTables: any }) => {
       this.dataTableData = data.dataTables;
     });
@@ -147,12 +139,12 @@ export class ManageDataTablesComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showDatatablesPage) {
+    if (this.configurationWizardService.showDatatablesPage === true) {
       setTimeout(() => {
         this.showPopover(this.templateCreateDatatableRef, this.createDatatableRef.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showDatatablesList) {
+    if (this.configurationWizardService.showDatatablesList === true) {
       setTimeout(() => {
         this.showPopover(this.templateDatatablesList, this.datatablesList.nativeElement, 'top', true);
       });

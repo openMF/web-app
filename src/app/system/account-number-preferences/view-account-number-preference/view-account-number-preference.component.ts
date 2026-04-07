@@ -1,18 +1,10 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { AccountNumberFormatService } from '@fineract/client';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
@@ -33,24 +25,24 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewAccountNumberPreferenceComponent {
-  private route = inject(ActivatedRoute);
-  private systemService = inject(SystemService);
-  private router = inject(Router);
-  private dialog = inject(MatDialog);
-  private translateService = inject(TranslateService);
-
   /** Account Number Preference Data */
   accountNumberPreferenceData: any;
 
   /**
    * Retrieves the account number preference data from `resolve`.
-   * @param {SystemService} systemService Accounting Service.
+   * @param {AccountNumberFormatService} accountNumberFormatService Account Number Format Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private accountNumberFormatService: AccountNumberFormatService,
+    private router: Router,
+    private dialog: MatDialog,
+    private translateService: TranslateService
+  ) {
     this.route.data.subscribe((data: { accountNumberPreference: any }) => {
       this.accountNumberPreferenceData = data.accountNumberPreference;
     });
@@ -70,7 +62,7 @@ export class ViewAccountNumberPreferenceComponent {
     });
     deleteAccountNumberPreferenceDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.systemService.deleteAccountNumberPreference(this.accountNumberPreferenceData.id).subscribe(() => {
+        this.accountNumberFormatService._delete(this.accountNumberPreferenceData.id).subscribe(() => {
           this.router.navigate(['/system/account-number-preferences']);
         });
       }

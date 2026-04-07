@@ -1,16 +1,13 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <div class="container">
   <mat-card>
-    <div #currencyFormRef class="currency-form-container">
-      <form #formRef="ngForm" [formGroup]="currencyForm" class="layout-row gap-20px">
-        <mat-form-field class="currency-search-field">
+    <div #currencyFormRef>
+      <form
+        #formRef="ngForm"
+        [formGroup]="currencyForm"
+        class="layout-row align-start-baseline gap-20px flex-48"
+        (ngSubmit)="addCurrency()"
+      >
+        <mat-form-field class="flex-fill flex-90-minus-20px">
           <mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
           <mat-select required formControlName="currency">
             <mat-option>
@@ -20,27 +17,21 @@
                 [formControl]="filterFormCtrl"
               ></ngx-mat-select-search>
             </mat-option>
-            @for (currency of currencyData | async; track currency) {
-              <mat-option [value]="currency"> ({{ currency.code }}) {{ currency.name }} </mat-option>
-            }
+            <mat-option *ngFor="let currency of currencyData | async" [value]="currency">
+              ({{ currency.code }}) {{ currency.name }}
+            </mat-option>
           </mat-select>
-          @if (currencyForm.controls.currency.hasError('required')) {
-            <mat-error>
-              {{ 'labels.inputs.Currency' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
-          }
+          <mat-error *ngIf="currencyForm.controls.currency.hasError('required')">
+            {{ 'labels.inputs.Currency' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
+          </mat-error>
         </mat-form-field>
 
         <button
-          type="submit"
           mat-raised-button
-          class="add-currency-button"
+          class="flex-fill"
           color="primary"
           [disabled]="!currencyForm.valid"
-          (click)="addCurrency()"
-          [attr.aria-label]="'labels.buttons.Add Currency' | translate"
-          [title]="'labels.buttons.Add Currency' | translate"
           *mifosxHasPermission="'UPDATE_CURRENCY'"
         >
           <fa-icon icon="plus"></fa-icon>
@@ -49,28 +40,24 @@
     </div>
 
     <mat-grid-list cols="2" rowHeight="50px">
-      @for (currency of selectedCurrencies; track currency; let i = $index) {
-        <mat-grid-tile class="grid-tile-content">
-          <div class="grid-container">
-            <div>
-              <button
-                type="button"
-                mat-button
-                color="warn"
-                (click)="deleteCurrency(currency.code, i)"
-                [attr.aria-label]="'labels.buttons.Delete' | translate"
-                [title]="'labels.buttons.Delete' | translate"
-                *mifosxHasPermission="'UPDATE_CURRENCY'"
-              >
-                <fa-icon icon="trash"></fa-icon>
-              </button>
-            </div>
-            <span class="label m-l-10 p-t-5"
-              ><b>{{ currency.name }}</b></span
+      <mat-grid-tile class="grid-tile-content" *ngFor="let currency of selectedCurrencies; index as i">
+        <div class="grid-container">
+          <div>
+            <button
+              mat-button
+              color="warn"
+              (click)="deleteCurrency(currency.code, i)"
+              *mifosxHasPermission="'UPDATE_CURRENCY'"
             >
+              <fa-icon icon="trash"></fa-icon>
+            </button>
           </div>
-        </mat-grid-tile>
-      }
+
+          <span class="label m-l-10 p-t-5"
+            ><b>{{ currency.name }}</b></span
+          >
+        </div>
+      </mat-grid-tile>
     </mat-grid-list>
   </mat-card>
 </div>
@@ -79,7 +66,7 @@
   <h4>{{ 'labels.heading.Add Currency Form' | translate }}</h4>
   <p class="mw400">
     {{ 'labels.text.Used to add currency' | translate }}:
-    <a [href]="'currencyConfiguration' | documentationLink" target="_blank" rel="noopener noreferrer">{{
+    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141734/Currency+Configuration" target="_blank">{{
       'labels.inputs.Currency Configuration' | translate
     }}</a>
   </p>

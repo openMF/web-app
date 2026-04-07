@@ -1,12 +1,4 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Currency } from 'app/shared/models/general.model';
 import { ActivateRecurringDepositsAccountComponent } from './activate-recurring-deposits-account/activate-recurring-deposits-account.component';
@@ -38,8 +30,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class RecurringDepositsAccountActionsComponent {
-  private route = inject(ActivatedRoute);
-
   /** Flag object to store possible actions and render appropriate UI to the user */
   actions: {
     Activate: boolean;
@@ -72,7 +62,7 @@ export class RecurringDepositsAccountActionsComponent {
   /**
    * @param {ActivatedRoute} route Activated Route
    */
-  constructor() {
+  constructor(private route: ActivatedRoute) {
     this.route.data.subscribe((data: { recurringDepositsAccountActionData: any }) => {
       if (data.recurringDepositsAccountActionData) {
         this.currency = data.recurringDepositsAccountActionData.currency;

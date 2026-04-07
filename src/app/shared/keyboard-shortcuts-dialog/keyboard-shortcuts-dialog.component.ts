@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle, MatDialogContent } from '@angular/material/dialog';
 import { KeyboardShortcutsConfiguration } from '../../keyboards-shortcut-config';
 import { CdkScrollable } from '@angular/cdk/scrolling';
@@ -29,9 +21,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class KeyboardShortcutsDialogComponent implements OnInit {
-  dialogRef = inject<MatDialogRef<KeyboardShortcutsDialogComponent>>(MatDialogRef);
-
   buttonConfig: KeyboardShortcutsConfiguration;
+
+  /**
+   * @param {MatDialogRef} dialogRef Component reference to dialog.
+   * @param {any} data Provides a deleteContext.
+   */
+  constructor(public dialogRef: MatDialogRef<KeyboardShortcutsDialogComponent>) {}
 
   ngOnInit() {
     this.dialogRef.updateSize(`800px`);

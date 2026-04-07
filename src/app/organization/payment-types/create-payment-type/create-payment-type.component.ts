@@ -1,18 +1,10 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { OrganizationService } from '../../organization.service';
+import { PaymentTypeService } from '@fineract/client';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -31,13 +23,21 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreatePaymentTypeComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private organizationService = inject(OrganizationService);
-  private router = inject(Router);
-  private route = inject(ActivatedRoute);
-
   /** Payment Type form. */
   paymentTypeForm: UntypedFormGroup;
+
+  /**
+   * @param {FormBuilder} formBuilder Form Builder.
+   * @param {PaymentTypeService} paymentTypeService Payment Type Service.
+   * @param {ActivatedRoute} route Activated Route.
+   * @param {Router} router Router for navigation.
+   */
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private paymentTypeService: PaymentTypeService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   /**
    * Creates and sets the payment type form.
@@ -59,10 +59,7 @@ export class CreatePaymentTypeComponent implements OnInit {
       isCashPayment: [false],
       position: [
         '',
-        [
-          Validators.required,
-          Validators.min(1)
-        ]
+        Validators.required
       ]
     });
   }
@@ -73,7 +70,7 @@ export class CreatePaymentTypeComponent implements OnInit {
    */
   submit() {
     const paymentType = this.paymentTypeForm.value;
-    this.organizationService.createPaymentType(paymentType).subscribe((response) => {
+    this.paymentTypeService.createPaymentType(paymentType).subscribe((response) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

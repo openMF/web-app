@@ -1,11 +1,3 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <div class="container">
   <mat-card>
     <form [formGroup]="createCashierForm" (ngSubmit)="submit()">
@@ -24,18 +16,14 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Cashier' | translate }}</mat-label>
             <mat-select formControlName="staffId">
-              @for (staff of cashierTemplate.staffOptions; track staff) {
-                <mat-option [value]="staff.id">
-                  {{ staff.displayName }}
-                </mat-option>
-              }
+              <mat-option *ngFor="let staff of cashierTemplate.staffOptions" [value]="staff.id">
+                {{ staff.displayName }}
+              </mat-option>
             </mat-select>
-            @if (createCashierForm.controls.staffId.hasError('required')) {
-              <mat-error>
-                {{ 'labels.inputs.Cashier' | translate }} {{ 'labels.commons.is' | translate }}
-                <strong>{{ 'labels.commons.required' | translate }}</strong>
-              </mat-error>
-            }
+            <mat-error *ngIf="createCashierForm.controls.staffId.hasError('required')">
+              {{ 'labels.inputs.Cashier' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field class="flex-48">
@@ -55,12 +43,10 @@
             />
             <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #fromDatePicker></mat-datepicker>
-            @if (createCashierForm.controls.startDate.hasError('required')) {
-              <mat-error>
-                {{ 'labels.inputs.From Date' | translate }} {{ 'labels.commons.is' | translate }}
-                <strong>{{ 'labels.commons.required' | translate }}</strong>
-              </mat-error>
-            }
+            <mat-error *ngIf="createCashierForm.controls.startDate.hasError('required')">
+              {{ 'labels.inputs.From Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field class="flex-48" (click)="toDatePicker.open()">
@@ -75,71 +61,13 @@
             />
             <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #toDatePicker></mat-datepicker>
-            @if (createCashierForm.controls.endDate.hasError('required')) {
-              <mat-error>
-                {{ 'labels.inputs.To Date' | translate }} {{ 'labels.commons.is' | translate }}
-                <strong>{{ 'labels.commons.required' | translate }}</strong>
-              </mat-error>
-            }
+            <mat-error *ngIf="createCashierForm.controls.endDate.hasError('required')">
+              {{ 'labels.inputs.To Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
           </mat-form-field>
 
-          @if (!createCashierForm.value.isFullDay) {
-            <div class="flex-48 layout-row gap-10px">
-              <mat-form-field class="flex-50">
-                <mat-label
-                  >{{ 'labels.inputs.Start Time' | translate }} ({{ 'labels.inputs.Hour' | translate }})</mat-label
-                >
-                <mat-select formControlName="hourStartTime">
-                  @for (hour of hours; track hour) {
-                    <mat-option [value]="hour">{{ hour }}</mat-option>
-                  }
-                </mat-select>
-              </mat-form-field>
-              <mat-form-field class="flex-50">
-                <mat-label
-                  >{{ 'labels.inputs.Start Time' | translate }} ({{ 'labels.inputs.Minute' | translate }})</mat-label
-                >
-                <mat-select formControlName="minStartTime">
-                  @for (minute of minutes; track minute) {
-                    <mat-option [value]="minute">{{ minute }}</mat-option>
-                  }
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="flex-48 layout-row gap-10px">
-              <mat-form-field class="flex-50">
-                <mat-label
-                  >{{ 'labels.inputs.End Time' | translate }} ({{ 'labels.inputs.Hour' | translate }})</mat-label
-                >
-                <mat-select formControlName="hourEndTime">
-                  @for (hour of hours; track hour) {
-                    <mat-option [value]="hour">{{ hour }}</mat-option>
-                  }
-                </mat-select>
-              </mat-form-field>
-              <mat-form-field class="flex-50">
-                <mat-label
-                  >{{ 'labels.inputs.End Time' | translate }} ({{ 'labels.inputs.Minute' | translate }})</mat-label
-                >
-                <mat-select formControlName="minEndTime">
-                  @for (minute of minutes; track minute) {
-                    <mat-option [value]="minute">{{ minute }}</mat-option>
-                  }
-                </mat-select>
-              </mat-form-field>
-            </div>
-            @if (createCashierForm.hasError('invalidTimeRange')) {
-              <div class="flex-48">
-                <mat-error>
-                  {{ 'labels.inputs.End Time' | translate }} {{ 'labels.commons.must' | translate }}
-                  {{ 'labels.commons.be' | translate }} {{ 'labels.commons.greater than' | translate }}
-                  {{ 'labels.inputs.Start Time' | translate }}
-                </mat-error>
-              </div>
-            }
-          }
-
-          <div class="space flex-100">
+          <div class="space flex-48">
             <mat-checkbox labelPosition="before" formControlName="isFullDay">
               {{ 'labels.inputs.Full Day' | translate }}?
             </mat-checkbox>

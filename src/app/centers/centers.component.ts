@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, ViewChild, AfterViewInit, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatCheckbox } from '@angular/material/checkbox';
 
 import { MatPaginator } from '@angular/material/paginator';
@@ -71,8 +63,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CentersComponent implements OnInit, AfterViewInit {
-  private centersService = inject(CentersService);
-
   @ViewChild('showClosedCenters', { static: true }) showClosedCenters: MatCheckbox;
 
   /** Name form control. */
@@ -105,6 +95,8 @@ export class CentersComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   /** Sorter for centers table. */
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+
+  constructor(private centersService: CentersService) {}
 
   ngOnInit() {
     this.getCenters();

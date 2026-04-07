@@ -1,18 +1,10 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services. */
-import { ClientsService } from 'app/clients/clients.service';
+import { ClientChargesService } from '@fineract/client';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -29,13 +21,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ClientPayChargesComponent implements OnInit {
-  private clientsService = inject(ClientsService);
-  private formBuilder = inject(UntypedFormBuilder);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private dateUtils = inject(Dates);
-  private settingsService = inject(SettingsService);
-
   /** Transaction Form. */
   transactionForm: any;
   /** Transaction Data. */
@@ -51,7 +36,14 @@ export class ClientPayChargesComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Setting service
    */
-  constructor() {
+  constructor(
+    private clientChargesService: ClientChargesService,
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { transactionData: any }) => {
       this.transactionData = data.transactionData;
     });
@@ -93,14 +85,21 @@ export class ClientPayChargesComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.clientsService.payClientCharge(this.transactionData.clientId, this.transactionData.id, data).subscribe(() => {
-      this.router.navigate(
-        [
-          '../../..',
-          'general'
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.clientChargesService
+      .payOrWaiveClientCharge({
+        clientId: Number(this.transactionData.clientId),
+        chargeId: Number(this.transactionData.id),
+        postClientsClientIdChargesChargeIdRequest: data,
+        command: 'paycharge'
+      })
+      .subscribe(() => {
+        this.router.navigate(
+          [
+            '../../..',
+            'general'
+          ],
+          { relativeTo: this.route }
+        );
+      });
   }
 }

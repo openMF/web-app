@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -28,7 +20,7 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { DataTablesService } from '@fineract/client';
 
 /** Data Imports */
 import { appTableData, entitySubTypeData } from '../app-table-data';
@@ -71,13 +63,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditDataTableComponent implements OnInit {
-  private systemService = inject(SystemService);
-  private formBuilder = inject(UntypedFormBuilder);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private dialog = inject(MatDialog);
-  private translateService = inject(TranslateService);
-
   /** Data Table Form. */
   dataTableForm: UntypedFormGroup;
   /** Data Table Data. */
@@ -154,27 +139,38 @@ export class EditDataTableComponent implements OnInit {
   /**
    * Retrieves the data table and column codes data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {SystemService} systemService System Service.
+   * @param {DataTablesService} dataTablesService Data Tables Service.
    * @param {Router} router Router for navigation.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {MatDialog} dialog Dialog Reference.
    */
-  constructor() {
+  constructor(
+    private dataTablesService: DataTablesService,
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dialog: MatDialog,
+    private translateService: TranslateService
+  ) {
     this.route.data.subscribe((data: { dataTable: any; columnCodes: any }) => {
       this.dataTableData = data.dataTable;
 
       // Get the relationship column name based on application table
-      const relationshipColumnName = this.getRelationshipColumnName(this.dataTableData.applicationTableName);
+      const relationshipColumnName = this.getRelationshipColumnName(this.dataTableData?.applicationTableName);
 
-      this.dataTableData.columnHeaderData.forEach((item: any) => {
-        // Mark system columns (id, created_at, updated_at) and relationship column as system
-        item.system = [
-            'id',
-            'created_at',
-            'updated_at'
-          ].includes(item.columnName) || item.columnName === relationshipColumnName;
-      });
-      this.columnData = this.dataTableData.columnHeaderData;
+      if (Array.isArray(this.dataTableData?.columnHeaderData)) {
+        this.dataTableData.columnHeaderData.forEach((item: any) => {
+          // Mark system columns (id, created_at, updated_at) and relationship column as system
+          item.system = [
+              'id',
+              'created_at',
+              'updated_at'
+            ].includes(item.columnName) || item.columnName === relationshipColumnName;
+        });
+        this.columnData = this.dataTableData.columnHeaderData;
+      } else {
+        this.columnData = [];
+      }
       this.dataForDialog.columnCodes = data.columnCodes;
     });
   }
@@ -209,9 +205,12 @@ export class EditDataTableComponent implements OnInit {
     this.initData();
     this.createDataTableForm();
     this.setColumns();
-    this.dataTableForm.controls.apptableName.valueChanges.subscribe((value: any) => {
-      this.showEntitySubType = value === 'm_client';
-    });
+    if (this.dataTableForm && this.dataTableForm.controls && this.dataTableForm.controls.apptableName) {
+      this.dataTableForm.controls.apptableName.valueChanges.subscribe((value: any) => {
+        // Show entity sub type for all valid values, not just 'm_client'
+        this.showEntitySubType = !!value;
+      });
+    }
   }
 
   /**
@@ -229,17 +228,21 @@ export class EditDataTableComponent implements OnInit {
   initData() {
     // Remove the 'id' column if it exists (primary key for multi-row datatables)
     // but keep the relationship column visible (it's already marked as system)
-    if (this.columnData.length > 0 && this.columnData[0].columnName === 'id') {
+    if (Array.isArray(this.columnData) && this.columnData.length > 0 && this.columnData[0].columnName === 'id') {
       this.columnData.shift();
     }
 
-    this.dataTableChangesData.apptableName = this.dataTableData.applicationTableName;
-    this.dataTableChangesData.entitySubType = this.dataTableData.entitySubType;
-    for (let index = 0; index < this.columnData.length; index++) {
-      this.columnData[index].columnDisplayType = this.getColumnType(this.columnData[index].columnDisplayType);
-      this.columnData[index].type = 'existing';
+    if (this.dataTableData) {
+      this.dataTableChangesData.apptableName = this.dataTableData.applicationTableName;
+      this.dataTableChangesData.entitySubType = this.dataTableData.entitySubType;
+      if (Array.isArray(this.columnData)) {
+        for (let index = 0; index < this.columnData.length; index++) {
+          this.columnData[index].columnDisplayType = this.getColumnType(this.columnData[index].columnDisplayType);
+          this.columnData[index].type = 'existing';
+        }
+      }
+      this.showEntitySubType = this.dataTableData.applicationTableName === 'm_client';
     }
-    this.showEntitySubType = this.dataTableData.applicationTableName === 'm_client';
   }
 
   /**
@@ -248,14 +251,14 @@ export class EditDataTableComponent implements OnInit {
   createDataTableForm() {
     this.dataTableForm = this.formBuilder.group({
       datatableName: [
-        { value: this.dataTableData.registeredTableName, disabled: true },
+        { value: this.dataTableData?.registeredTableName ?? '', disabled: false },
         Validators.required
       ],
       apptableName: [
-        { value: this.dataTableData.applicationTableName, disabled: true },
+        { value: this.dataTableData?.applicationTableName ?? '', disabled: false },
         Validators.required
       ],
-      entitySubType: [{ value: this.dataTableData.entitySubType, disabled: true }]
+      entitySubType: [{ value: this.dataTableData?.entitySubType ?? '', disabled: false }]
     });
   }
 
@@ -277,7 +280,7 @@ export class EditDataTableComponent implements OnInit {
       width: '400px'
     });
     addColumnDialogRef.afterClosed().subscribe((response: any) => {
-      if (response !== '') {
+      if (response && typeof response === 'object' && response.name) {
         this.isFormEdited = true;
         const newColumn: DatatableColumn = {
           columnName: response.name,
@@ -449,7 +452,7 @@ export class EditDataTableComponent implements OnInit {
         return 'Dropdown';
       }
       default: {
-        return columnDisplayType[0] + columnDisplayType.substring(1).toLowerCase();
+        return columnDisplayType[0] + columnDisplayType.substr(1).toLowerCase();
       }
     }
   }
@@ -468,10 +471,18 @@ export class EditDataTableComponent implements OnInit {
     if (!this.dataTableChangesData.dropColumns || this.dataTableChangesData.dropColumns.length === 0) {
       this.dataTableChangesData.dropColumns = undefined;
     }
-    this.systemService
-      .updateDataTable(this.dataTableChangesData, this.dataTableData.registeredTableName)
-      .subscribe((response: any) => {
-        this.router.navigate(['../'], { relativeTo: this.route });
-      });
+    const requestParams = {
+      datatableName: this.dataTableForm.get('datatableName')?.value,
+      putDataTablesRequest: {
+        apptableName: this.dataTableForm.get('apptableName')?.value,
+        entitySubType: this.dataTableForm.get('entitySubType')?.value,
+        dropColumns: this.dataTableChangesData.dropColumns,
+        changeColumns: this.dataTableChangesData.changeColumns,
+        addColumns: this.dataTableChangesData.addColumns
+      }
+    };
+    this.dataTablesService.updateDatatable(requestParams).subscribe((response: any) => {
+      this.router.navigate(['../'], { relativeTo: this.route });
+    });
   }
 }

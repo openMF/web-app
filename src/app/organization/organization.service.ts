@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
@@ -23,8 +15,13 @@ import { SettingsService } from 'app/settings/settings.service';
   providedIn: 'root'
 })
 export class OrganizationService {
-  private http = inject(HttpClient);
-  private settingsService = inject(SettingsService);
+  /**
+   * @param {HttpClient} http Http Client to send requests.
+   */
+  constructor(
+    private http: HttpClient,
+    private settingsService: SettingsService
+  ) {}
 
   /**
    * @returns {Observable<any>} Loan Provisioning Criteria data
@@ -720,16 +717,12 @@ export class OrganizationService {
     return this.http.get(`/groups`, { params: httpParams });
   }
 
-  /**
-   * @param {number | string} officeId ID of office to retrieve staff from.
-   * @param {boolean} [isLoanOfficer] Optional flag to filter by loan officer status.
+  /*
+   * @param {any} officeId ID of office to retrieve staff from.
    * @returns {Observable<any>} Staff data.
    */
-  getStaff(officeId: number | string, isLoanOfficer?: boolean): Observable<any> {
-    let httpParams = new HttpParams().set('officeId', officeId.toString()).set('status', 'active');
-    if (isLoanOfficer !== undefined) {
-      httpParams = httpParams.set('isLoanOfficer', isLoanOfficer.toString());
-    }
+  getStaff(officeId: any): Observable<any> {
+    const httpParams = new HttpParams().set('officeId', officeId.toString());
     return this.http.get('/staff', { params: httpParams });
   }
 
@@ -834,47 +827,5 @@ export class OrganizationService {
     formData.append('locale', this.settingsService.language.code);
     formData.append('dateFormat', this.settingsService.dateFormat);
     return this.http.post(`${urlSuffix}/uploadtemplate`, formData, { params: httpParams });
-  }
-
-  /**
-   * @returns {Observable<any>} Loan Originators data
-   */
-  getLoanOriginators(): Observable<any> {
-    return this.http.get('/loan-originators');
-  }
-
-  /**
-   * @returns {Observable<any>} Loan Originators Template data
-   */
-  getLoanOriginatorsTemplate(): Observable<any> {
-    return this.http.get('/loan-originators/template');
-  }
-
-  /**
-   * @returns {Observable<any>} Loan Originator data
-   */
-  getLoanOriginator(originatorId: string): Observable<any> {
-    return this.http.get(`/loan-originators/${originatorId}`);
-  }
-
-  /**
-   * @returns {Observable<any>}
-   */
-  createLoanOriginator(payload: any): Observable<any> {
-    return this.http.post(`/loan-originators`, payload);
-  }
-
-  /**
-   * @returns {Observable<any>}
-   */
-  updateLoanOriginator(originatorId: number, payload: any): Observable<any> {
-    return this.http.put(`/loan-originators/${originatorId}`, payload);
-  }
-
-  /**
-   * @returns {Observable<any>}
-   */
-  deleteLoanOriginator(originatorId: number): Observable<any> {
-    return this.http.delete(`/loan-originators/${originatorId}`);
   }
 }

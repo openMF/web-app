@@ -1,23 +1,23 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
+import { Component, OnInit, Input } from '@angular/core';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  UntypedFormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
+import { LoansService } from '@fineract/client';
+import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { Currency } from 'app/shared/models/general.model';
 import { InputAmountComponent } from '../../../../shared/input-amount/input-amount.component';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 
 /**
  * Loan Recovery Repayment Action
@@ -33,10 +33,10 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
     CdkTextareaAutosize
   ]
 })
-export class RecoveryRepaymentComponent extends LoanAccountActionsBaseComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private dateUtils = inject(Dates);
-
+export class RecoveryRepaymentComponent implements OnInit {
+  @Input() dataObject: any;
+  /** Loan Id */
+  loanId: string;
   /** Payment Type Options */
   paymentTypes: any;
   /** Show payment details */
@@ -56,8 +56,15 @@ export class RecoveryRepaymentComponent extends LoanAccountActionsBaseComponent 
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor() {
-    super();
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private loanService: LoansService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates,
+    private settingsService: SettingsService
+  ) {
+    this.loanId = this.route.snapshot.params['loanId'];
   }
 
   /**
@@ -136,11 +143,14 @@ export class RecoveryRepaymentComponent extends LoanAccountActionsBaseComponent 
       locale
     };
     data['transactionAmount'] = data['transactionAmount'] * 1;
-    this.loanService.submitLoanActionButton(this.loanId, data, 'recoverypayment').subscribe({
-      next: (response: any) => {
-        this.gotoLoanDefaultView();
-      },
-      error: (error) => {}
-    });
+    this.loanService
+      .stateTransitions({
+        loanId: Number(this.loanId),
+        postLoansLoanIdRequest: data,
+        command: 'recoverypayment'
+      })
+      .subscribe((response: any) => {
+        this.router.navigate(['../../general'], { relativeTo: this.route });
+      });
   }
 }

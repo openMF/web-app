@@ -1,25 +1,15 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <div class="container m-b-20 layout-row align-end gap-20px">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_REPORT'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Edit' | translate }}
   </button>
 
-  @if (!reportData.coreReport) {
-    <span>
-      <button mat-raised-button color="warn" (click)="delete()" *mifosxHasPermission="'DELETE_REPORT'">
-        <fa-icon icon="trash" class="m-r-10"></fa-icon>
-        {{ 'labels.buttons.Delete' | translate }}
-      </button>
-    </span>
-  }
+  <span *ngIf="!reportData.coreReport">
+    <button mat-raised-button color="warn" (click)="delete()" *mifosxHasPermission="'DELETE_REPORT'">
+      <fa-icon icon="trash" class="m-r-10"></fa-icon>
+      {{ 'labels.buttons.Delete' | translate }}
+    </button>
+  </span>
 </div>
 
 <div class="container">
@@ -38,15 +28,13 @@
           {{ reportData.reportType | translateKey: 'text' }}
         </div>
 
-        @if (reportData.reportSubType) {
-          <div class="mat-body-strong flex-50">{{ 'labels.inputs.Report Sub Type' | translate }}:</div>
-        }
+        <div *ngIf="reportData.reportSubType" class="mat-body-strong flex-50">
+          {{ 'labels.inputs.Report Sub Type' | translate }}:
+        </div>
 
-        @if (reportData.reportSubType) {
-          <div class="flex-50">
-            {{ reportData.reportSubType | translateKey: 'text' }}
-          </div>
-        }
+        <div *ngIf="reportData.reportSubType" class="flex-50">
+          {{ reportData.reportSubType | translateKey: 'text' }}
+        </div>
 
         <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Report Category' | translate }}:</div>
 

@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -19,7 +11,7 @@ import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { UsersService } from '../users.service';
+import { UsersService, StaffService } from '@fineract/client';
 import { PopoverService } from '../../configuration-wizard/popover/popover.service';
 
 /** Custom Dialog Component */
@@ -43,15 +35,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateUserComponent implements OnInit, AfterViewInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private usersService = inject(UsersService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private popoverService = inject(PopoverService);
-  private configurationWizardService = inject(ConfigurationWizardService);
-  private dialog = inject(MatDialog);
-  private passwordsUtility = inject(PasswordsUtility);
-
   /** User form. */
   userForm: UntypedFormGroup;
   /** Offices data. */
@@ -69,13 +52,24 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
   /**
    * Retrieves the offices and roles data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {UsersService} UsersService Users Service.
+   * @param {UsersService} usersService Users Service.
+   * @param {StaffService} staffService Staff Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor() {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private usersService: UsersService,
+    private staffService: StaffService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private popoverService: PopoverService,
+    private configurationWizardService: ConfigurationWizardService,
+    private dialog: MatDialog,
+    private passwordsUtility: PasswordsUtility
+  ) {
     this.route.data.subscribe((data: { usersTemplate: any }) => {
       this.officesData = data.usersTemplate.allowedOffices;
       this.rolesData = data.usersTemplate.availableRoles;
@@ -112,15 +106,13 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
           '',
           [
             Validators.required,
-            Validators.pattern('(^[A-z]).*')
-          ]
+            Validators.pattern('(^[A-z]).*')]
         ],
         lastname: [
           '',
           [
             Validators.required,
-            Validators.pattern('(^[A-z]).*')
-          ]
+            Validators.pattern('(^[A-z]).*')]
         ],
         sendPasswordToEmail: [true],
         passwordNeverExpires: [false],
@@ -144,7 +136,7 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
   setStaffData() {
     this.userForm.get('officeId').valueChanges.subscribe((officeId: string) => {
       this.staffData = [];
-      this.usersService.getStaff(officeId).subscribe((staff: any) => {
+      this.staffService.retrieveAll16({ officeId: Number(officeId) }).subscribe((staff: any) => {
         this.staffData = staff;
       });
     });
@@ -168,8 +160,7 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
           'repeatPassword',
           new UntypedFormControl('', [
             Validators.required,
-            this.passwordsUtility.confirmPassword('password')
-          ])
+            this.passwordsUtility.confirmPassword('password')])
         );
         this.userForm.get('email').setValidators([Validators.email]);
       }
@@ -186,8 +177,8 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
     if (this.userForm.value.staffId == null || this.userForm.value.staffId === '') {
       delete user.staffId;
     }
-    this.usersService.createUser(user).subscribe((response: any) => {
-      if (this.configurationWizardService.showUsersForm) {
+    this.usersService.create15({ postUsersRequest: user }).subscribe((response: any) => {
+      if (this.configurationWizardService.showUsersForm === true) {
         this.configurationWizardService.showUsersForm = false;
         this.openDialog();
       } else {
@@ -222,7 +213,7 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showUsersForm) {
+    if (this.configurationWizardService.showUsersForm === true) {
       setTimeout(() => {
         this.showPopover(this.templateUserFormRef, this.userFormRef.nativeElement, 'top', true);
       });

@@ -1,32 +1,27 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../system.service';
+import { HooksService } from '@fineract/client';
 
 /**
  * Hooks template data resolver.
  */
 @Injectable()
 export class HooksTemplateResolver {
-  private systemService = inject(SystemService);
+  /**
+   * @param {HooksService} hooksService Hooks service.
+   */
+  constructor(private hooksService: HooksService) {}
 
   /**
    * Returns the hooks template data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.systemService.getHooksTemplate();
+    return this.hooksService.template3();
   }
 }

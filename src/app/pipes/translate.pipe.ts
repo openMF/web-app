@@ -1,36 +1,11 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Pipe, PipeTransform, inject, OnDestroy } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Subscription } from 'rxjs';
 
-@Pipe({ name: 'translateKey', standalone: true, pure: false })
-export class TranslatePipe implements PipeTransform, OnDestroy {
-  private translateService = inject(TranslateService);
-  private onLangChange: Subscription;
-
-  constructor() {
-    this.onLangChange = this.translateService.onLangChange.subscribe(() => {
-      // Trigger change detection when language changes
-    });
-  }
-
-  ngOnDestroy(): void {
-    if (this.onLangChange) {
-      this.onLangChange.unsubscribe();
-    }
-  }
+@Pipe({ name: 'translateKey', standalone: true })
+export class TranslatePipe implements PipeTransform {
+  constructor(private translateService: TranslateService) {}
 
   transform(attributeValue: any, group: string, prefix: string = 'labels'): string {
-    if (!attributeValue) {
-      return attributeValue;
-    }
     const translationKey = `${prefix}.${group}.${attributeValue}`;
     return this.translateService.instant(translationKey);
   }

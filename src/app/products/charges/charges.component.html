@@ -1,11 +1,3 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <div class="container m-b-20 layout-row align-end gap-20px">
   <div #buttonCreateCharge class="in-block">
     <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_CHARGE'">
@@ -26,11 +18,9 @@
         placeholder="{{ 'labels.inputs.Filter' | translate }}"
         (selectionChange)="filterByAppliesTo($event.value)"
       >
-        @for (chargeAppliesTo of chargeAppliesToOptions; track chargeAppliesTo) {
-          <mat-option [value]="chargeAppliesTo.id">
-            {{ chargeAppliesTo.value | translateKey: 'catalogs' }}
-          </mat-option>
-        }
+        <mat-option *ngFor="let chargeAppliesTo of chargeAppliesToOptions" [value]="chargeAppliesTo.id">
+          {{ chargeAppliesTo.value | translateKey: 'catalogs' }}
+        </mat-option>
       </mat-select>
     </mat-form-field>
   </div>
@@ -67,24 +57,22 @@
           {{ 'labels.commons.Is' | translate }} {{ 'labels.inputs.Penalty' | translate }}?
         </th>
         <td mat-cell *matCellDef="let charge" class="center">
-          @if (charge.penalty) {
-            <fa-icon
-              icon="check-circle"
-              size="lg"
-              class="ispenalty"
-              matTooltip="{{ 'tooltips.Yes' | translate }}"
-              matTooltipPosition="right"
-            ></fa-icon>
-          }
-          @if (!charge.penalty) {
-            <fa-icon
-              icon="times-circle"
-              size="lg"
-              class="nopenalty"
-              matTooltip="{{ 'tooltips.No' | translate }}"
-              matTooltipPosition="right"
-            ></fa-icon>
-          }
+          <fa-icon
+            *ngIf="charge.penalty"
+            icon="check-circle"
+            size="lg"
+            class="ispenalty"
+            matTooltip="{{ 'tooltips.Yes' | translate }}"
+            matTooltipPosition="right"
+          ></fa-icon>
+          <fa-icon
+            *ngIf="!charge.penalty"
+            icon="times-circle"
+            size="lg"
+            class="nopenalty"
+            matTooltip="{{ 'tooltips.No' | translate }}"
+            matTooltipPosition="right"
+          ></fa-icon>
         </td>
       </ng-container>
 
@@ -160,7 +148,7 @@
 <ng-template #templateChargesTable let-popover="popover">
   <h4 class="mw300">
     {{ 'labels.heading.List of charges in the organization. For more details click' | translate }}:
-    <a [href]="'charges' | documentationLink" target="_blank" rel="noopener noreferrer">{{
+    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/72908813/Charges" target="_blank">{{
       'labels.heading.Charges' | translate
     }}</a>
   </h4>

@@ -1,11 +1,3 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
 import { Injectable } from '@angular/core';
 
@@ -21,186 +13,186 @@ export class ConfigurationWizardService {
    */
 
   /*To show toolbar*/
-  showToolbar: boolean = false;
+  showToolbar = false;
   /*To show popover on admin section in toolbar*/
-  showToolbarAdmin: boolean = false;
+  showToolbarAdmin = false;
   /*To show side navbar*/
-  showSideNav: boolean = false;
+  showSideNav = false;
   /*To show popover on chart of accounts section in sidenav bar*/
-  showSideNavChartofAccounts: boolean = false;
+  showSideNavChartofAccounts = false;
   /*To show breadcrumbs*/
-  showBreadcrumbs: boolean = false;
+  showBreadcrumbs = false;
   /*To show home*/
-  showHome: boolean = false;
+  showHome = false;
   /*To show search activity in home*/
-  showHomeSearchActivity: boolean = false;
+  showHomeSearchActivity = false;
 
   /**
    * Organization Setup
    */
 
   /*To show popover on manage offices on oganization page*/
-  showCreateOffice: boolean = false;
+  showCreateOffice = false;
   /*To show popover on button in offices page*/
-  showOfficeList: boolean = false;
+  showOfficeList = false;
   /*To show popover on offices table*/
-  showOfficeTable: boolean = false;
+  showOfficeTable = false;
   /*To show popover on create office form*/
-  showOfficeForm: boolean = false;
+  showOfficeForm = false;
   /*To show popover on add edit currency on organization page*/
-  showAddEditCurrency: boolean = false;
+  showAddEditCurrency = false;
   /*To show popover on button in currency page*/
-  showCurrencyPage: boolean = false;
+  showCurrencyPage = false;
   /*To show popover on currency table*/
-  showCurrencyList: boolean = false;
+  showCurrencyList = false;
   /*To show popover on currency form*/
-  showCurrencyForm: boolean = false;
+  showCurrencyForm = false;
   /*To show popover on manage holiday on organization page*/
-  showCreateHoliday: boolean = false;
+  showCreateHoliday = false;
   /*To show popover on button in holiday page*/
-  showHolidayPage: boolean = false;
+  showHolidayPage = false;
   /*To show popover on filter in holiday table*/
-  showHolidayFilter: boolean = false;
+  showHolidayFilter = false;
   /*To show popover on manage employees on organization page*/
-  showCreateEmployee: boolean = false;
+  showCreateEmployee = false;
   /*To show popover on button in employee page*/
-  showEmployeeList: boolean = false;
+  showEmployeeList = false;
   /*To show popover on employees table*/
-  showEmployeeTable: boolean = false;
+  showEmployeeTable = false;
   /*To show popover on create employee form*/
-  showEmployeeForm: boolean = false;
+  showEmployeeForm = false;
   /*To show popover on define working days*/
-  showDefineWorkingDays: boolean = false;
+  showDefineWorkingDays = false;
 
   /**
    * System Setup
    */
 
   /*To show popover on manage datatables on system page*/
-  showDatatables: boolean = false;
+  showDatatables = false;
   /*To show popover on button in datatables page*/
-  showDatatablesPage: boolean = false;
+  showDatatablesPage = false;
   /*To show popover on datatables table*/
-  showDatatablesList: boolean = false;
+  showDatatablesList = false;
   /*To show popover on create datable form*/
-  showDatatablesForm: boolean = false;
+  showDatatablesForm = false;
   /*To show popover manage codes on system page*/
-  showSystemCodes: boolean = false;
+  showSystemCodes = false;
   /*To show popover on button in codes page*/
-  showSystemCodesPage: boolean = false;
+  showSystemCodesPage = false;
   /*To show popover on codes table*/
-  showSystemCodesList: boolean = false;
+  showSystemCodesList = false;
   /*To show popover on create codes form*/
-  showSystemCodesForm: boolean = false;
+  showSystemCodesForm = false;
   /*To show popover on manage roles and permision on system page*/
-  showRolesandPermission: boolean = false;
+  showRolesandPermission = false;
   /*To show popover on button in rolaes and permission page*/
-  showRolesandPermissionPage: boolean = false;
+  showRolesandPermissionPage = false;
   /*To show popover on roles and permission list*/
-  showRolesandPermissionList: boolean = false;
+  showRolesandPermissionList = false;
   /*To show popover on button on user page*/
-  showUsers: boolean = false;
+  showUsers = false;
   /*To show popover on users table*/
-  showUsersList: boolean = false;
+  showUsersList = false;
   /*To show popover on create user form*/
-  showUsersForm: boolean = false;
+  showUsersForm = false;
   /*To show popover on maker checker table in system page*/
-  showMakerCheckerTable: boolean = false;
+  showMakerCheckerTable = false;
   /*To show popover on button in make checker tasks page*/
-  showMakerCheckerTablePage: boolean = false;
+  showMakerCheckerTablePage = false;
   /*To show popover on maker checker tasks table*/
-  showMakerCheckerTableList: boolean = false;
+  showMakerCheckerTableList = false;
   /*To show popover on global configuration in system page*/
-  showConfigurations: boolean = false;
+  showConfigurations = false;
   /*To show popover on button in configuration page*/
-  showConfigurationsPage: boolean = false;
+  showConfigurationsPage = false;
   /*To show popover on button in configuration list*/
-  showConfigurationsList: boolean = false;
+  showConfigurationsList = false;
   /*To show popover on manage scheduler jobs on system page*/
-  showSchedulerJobs: boolean = false;
+  showSchedulerJobs = false;
   /*To show popover on button in scheduler jobs page*/
-  showSchedulerJobsPage: boolean = false;
+  showSchedulerJobsPage = false;
   /*To show popover on scheduler jobs table*/
-  showSchedulerJobsList: boolean = false;
+  showSchedulerJobsList = false;
 
   /**
    * Accounting Setup
    */
 
   /*To show popover on chart of accounts on accounting page*/
-  showChartofAccounts: boolean = false;
+  showChartofAccounts = false;
   /*To show popover on button in chart of accounts page*/
-  showChartofAccountsPage: boolean = false;
+  showChartofAccountsPage = false;
   /*To show popover on button in chart of accounts page*/
-  showChartofAccountsList: boolean = false;
+  showChartofAccountsList = false;
   /*To show popover on create chart of accounts form*/
-  showChartofAccountsForm: boolean = false;
+  showChartofAccountsForm = false;
   /*To show popover on accounts linked on accounting page*/
-  showAccountsLinked: boolean = false;
+  showAccountsLinked = false;
   /*To show popover on button in accounting page*/
-  showAccountsLinkedPage: boolean = false;
+  showAccountsLinkedPage = false;
   /*To show popover on accounts linked table*/
-  showAccountsLinkedList: boolean = false;
+  showAccountsLinkedList = false;
   /*To show popover on migrate openening balances*/
-  showMigrateOpeningBalances: boolean = false;
+  showMigrateOpeningBalances = false;
   /*To show popover on closing entries on accounting page*/
-  showClosingEntries: boolean = false;
+  showClosingEntries = false;
   /*To show popover on button in closing entries page*/
-  showClosingEntriesPage: boolean = false;
+  showClosingEntriesPage = false;
   /*To show popover on closing entries table*/
-  showClosingEntriesList: boolean = false;
+  showClosingEntriesList = false;
   /*To show popover on create journal entry*/
-  showCreateJournalEntries: boolean = false;
+  showCreateJournalEntries = false;
 
   /**
    * Products Setup
    */
 
   /*To show popover on charges on products page*/
-  showCharges: boolean = false;
+  showCharges = false;
   /*To show popover on button in charges page*/
-  showChargesPage: boolean = false;
+  showChargesPage = false;
   /*To show popover on charges table*/
-  showChargesList: boolean = false;
+  showChargesList = false;
   /*To show popover on loan products on products page*/
-  showLoanProducts: boolean = false;
+  showLoanProducts = false;
   /*To show popover on button in load products page*/
-  showLoanProductsPage: boolean = false;
+  showLoanProductsPage = false;
   /*To show popover on loan products table*/
-  showLoanProductsList: boolean = false;
+  showLoanProductsList = false;
   /*To show popover on savings products on products page*/
-  showSavingsProducts: boolean = false;
+  showSavingsProducts = false;
   /*To show popover on button in savings products page*/
-  showSavingsProductsPage: boolean = false;
+  showSavingsProductsPage = false;
   /*To show popover on savings products table*/
-  showSavingsProductsList: boolean = false;
+  showSavingsProductsList = false;
   /*To show popover on shares products on products page*/
-  showShareProducts: boolean = false;
+  showShareProducts = false;
   /*To show popover on button in share products page*/
-  showShareProductsPage: boolean = false;
+  showShareProductsPage = false;
   /*To show popover on share products table*/
-  showShareProductsList: boolean = false;
+  showShareProductsList = false;
   /*To show popover on fixed deposit products on products page*/
-  showFixedDepositProducts: boolean = false;
+  showFixedDepositProducts = false;
   /*To show popover on button in fixed deposit products page*/
-  showFixedDepositProductsPage: boolean = false;
+  showFixedDepositProductsPage = false;
   /*To show popover on fixed deposit products table*/
-  showFixedDepositProductsList: boolean = false;
+  showFixedDepositProductsList = false;
   /*To show popover on recrurring deposit products on products page*/
-  showRecurringDepositProducts: boolean = false;
+  showRecurringDepositProducts = false;
   /*To show popover on button in recurring deposit products page*/
-  showRecurringDepositProductsPage: boolean = false;
+  showRecurringDepositProductsPage = false;
   /*To show popover on recurring deposit products table*/
-  showRecurringDepositProductsList: boolean = false;
+  showRecurringDepositProductsList = false;
 
   /**
    * Manage Funds and manage reports Setup
    */
 
   /*To show popover on manage funds*/
-  showManageFunds: boolean = false;
+  showManageFunds = false;
   /*To show popover on manage reports*/
-  showManageReports: boolean = false;
+  showManageReports = false;
 
   constructor() {}
 

@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -19,7 +11,7 @@ import { ToggleWithholdTaxDialogComponent } from './custom-dialogs/toggle-withho
 
 /** Custom Buttons Configuration */
 import { SavingsButtonsConfiguration } from './savings-buttons.config';
-import { SavingsService } from '../savings.service';
+import { SavingsAccountService } from '@fineract/client';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 import { Currency } from 'app/shared/models/general.model';
 import { TranslateService } from '@ngx-translate/core';
@@ -35,7 +27,7 @@ import {
   MatCardContent
 } from '@angular/material/card';
 import { MatTooltip } from '@angular/material/tooltip';
-import { NgClass, CurrencyPipe } from '@angular/common';
+import { NgIf, NgClass, NgFor, CurrencyPipe } from '@angular/common';
 import { LongTextComponent } from '../../shared/long-text/long-text.component';
 import { AccountNumberComponent } from '../../shared/account-number/account-number.component';
 import { MatIconButton } from '@angular/material/button';
@@ -79,12 +71,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class SavingsAccountViewComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private savingsService = inject(SavingsService);
-  private translateService = inject(TranslateService);
-  dialog = inject(MatDialog);
-
   /** Savings Account Data */
   savingsAccountData: any;
   /** Savings Data Tables */
@@ -101,9 +87,15 @@ export class SavingsAccountViewComponent implements OnInit {
    * Fetches savings account data from `resolve`
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
-   * @param {SavingsService} savingsService Savings Service
+   * @param {SavingsAccountService} savingsAccountService Savings Account Service
    */
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private savingsAccountService: SavingsAccountService,
+    private translateService: TranslateService,
+    public dialog: MatDialog
+  ) {
     this.route.data.subscribe((data: { savingsAccountData: any; savingsDatatables: any }) => {
       this.savingsAccountData = data.savingsAccountData;
       this.currency = this.savingsAccountData.currency;
@@ -136,7 +128,7 @@ export class SavingsAccountViewComponent implements OnInit {
         taskPermissionName: 'CREATE_ACCOUNTTRANSFER'
       });
     }
-    if (this.savingsAccountData.externalId && environment.mifosInterbankTransfersEnabled) {
+    if (this.savingsAccountData.externalId && environment.interbankTransfers) {
       this.buttonConfig.addOption({
         name: 'Interbank Transfer',
         taskPermissionName: 'CREATE_ACCOUNTTRANSFER'
@@ -275,7 +267,7 @@ export class SavingsAccountViewComponent implements OnInit {
     });
     deleteSavingsAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.savingsService.deleteSavingsAccount(this.savingsAccountData.id).subscribe(() => {
+        this.savingsAccountService.delete18(this.savingsAccountData.id).subscribe(() => {
           this.router.navigate(['../../'], { relativeTo: this.route });
         });
       }
@@ -289,8 +281,12 @@ export class SavingsAccountViewComponent implements OnInit {
     const calculateInterestAccountDialogRef = this.dialog.open(CalculateInterestDialogComponent);
     calculateInterestAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService
-          .executeSavingsAccountCommand(this.savingsAccountData.id, 'calculateInterest', {})
+        this.savingsAccountService
+          .handleCommands6({
+            accountId: this.savingsAccountData.id,
+            command: 'calculateInterest',
+            postSavingsAccountsAccountIdRequest: {}
+          })
           .subscribe(() => {
             this.reload();
           });
@@ -305,8 +301,12 @@ export class SavingsAccountViewComponent implements OnInit {
     const postInterestAccountDialogRef = this.dialog.open(PostInterestDialogComponent);
     postInterestAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService
-          .executeSavingsAccountCommand(this.savingsAccountData.id, 'postInterest', {})
+        this.savingsAccountService
+          .handleCommands6({
+            accountId: this.savingsAccountData.id,
+            command: 'postInterest',
+            postSavingsAccountsAccountIdRequest: {}
+          })
           .subscribe(() => {
             this.reload();
           });
@@ -323,8 +323,12 @@ export class SavingsAccountViewComponent implements OnInit {
     });
     deleteSavingsAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService
-          .executeSavingsAccountUpdateCommand(this.savingsAccountData.id, 'updateWithHoldTax', { withHoldTax: true })
+        this.savingsAccountService
+          .update20({
+            accountId: this.savingsAccountData.id,
+            putSavingsAccountsAccountIdRequest: {},
+            command: 'updateWithHoldTax?withHoldTax=true'
+          })
           .subscribe(() => {
             this.reload();
           });
@@ -341,8 +345,12 @@ export class SavingsAccountViewComponent implements OnInit {
     });
     disableWithHoldTaxDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService
-          .executeSavingsAccountUpdateCommand(this.savingsAccountData.id, 'updateWithHoldTax', { withHoldTax: false })
+        this.savingsAccountService
+          .update20({
+            accountId: this.savingsAccountData.id,
+            putSavingsAccountsAccountIdRequest: {},
+            command: 'updateWithHoldTax?withHoldTax=false'
+          })
           .subscribe(() => {
             this.reload();
           });
@@ -372,9 +380,15 @@ export class SavingsAccountViewComponent implements OnInit {
     }
     unblockSavingsAccountDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
-        this.savingsService.executeSavingsAccountCommand(this.savingsAccountData.id, command, {}).subscribe(() => {
-          this.reload();
-        });
+        this.savingsAccountService
+          .handleCommands6({
+            accountId: this.savingsAccountData.id,
+            command: command,
+            postSavingsAccountsAccountIdRequest: {}
+          })
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }

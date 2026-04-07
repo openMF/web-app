@@ -1,14 +1,6 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { CollateralsService } from '../collaterals.service';
+import { ClientCollateralManagementService } from '@fineract/client';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Components */
@@ -52,11 +44,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewCollateralComponent {
-  private route = inject(ActivatedRoute);
-  private collateralsService = inject(CollateralsService);
-  private router = inject(Router);
-  private dialog = inject(MatDialog);
-
   clientCollateralData: any;
 
   collateralColumns: string[] = [
@@ -66,7 +53,12 @@ export class ViewCollateralComponent {
     'Last Repayment Date'
   ];
 
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private clientCollateralManagementService: ClientCollateralManagementService,
+    private router: Router,
+    private dialog: MatDialog
+  ) {
     this.route.data.subscribe((data: { clientCollateralData: any }) => {
       this.clientCollateralData = data.clientCollateralData;
     });
@@ -81,8 +73,8 @@ export class ViewCollateralComponent {
     });
     deleteCollateralDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.collateralsService
-          .deleteCollateral(this.clientCollateralData.clientId, this.clientCollateralData.id)
+        this.clientCollateralManagementService
+          .deleteCollateral1(this.clientCollateralData.clientId, this.clientCollateralData.id)
           .subscribe(() => {
             this.router.navigate(['../../'], { relativeTo: this.route });
           });

@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -19,7 +11,7 @@ import {
 import { DomSanitizer } from '@angular/platform-browser';
 
 /** Custom Services */
-import { ClientsService } from 'app/clients/clients.service';
+import { DocumentsService } from '@fineract/client';
 
 /** Node Types */
 import { Buffer } from 'buffer';
@@ -43,14 +35,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewSignatureDialogComponent implements OnInit {
-  dialogRef = inject<MatDialogRef<ViewSignatureDialogComponent>>(MatDialogRef);
-  private clientsService = inject(ClientsService);
-  private sanitizer = inject(DomSanitizer);
-  data = inject<{
-    documents: any[];
-    id: string;
-  }>(MAT_DIALOG_DATA);
-
   /** Id of client signature in documents */
   signatureId: any;
   /** Signature Image */
@@ -62,7 +46,12 @@ export class ViewSignatureDialogComponent implements OnInit {
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    * @param {any} data Documents data
    */
-  constructor() {
+  constructor(
+    public dialogRef: MatDialogRef<ViewSignatureDialogComponent>,
+    private documentsService: DocumentsService,
+    private sanitizer: DomSanitizer,
+    @Inject(MAT_DIALOG_DATA) public data: { documents: any[]; id: string }
+  ) {
     const signature = this.data.documents.find((document: any) => document.name === 'clientSignature') || {};
     this.signatureId = signature.id;
     this.clientId = this.data.id;
@@ -70,13 +59,19 @@ export class ViewSignatureDialogComponent implements OnInit {
 
   ngOnInit() {
     if (this.signatureId) {
-      this.clientsService.getClientSignatureImage(this.clientId, this.signatureId).subscribe(
-        async (blob: any) => {
-          const buffer = Buffer.from(await blob.arrayBuffer());
-          this.signatureImage = 'data:' + blob.type + ';base64,' + buffer.toString('base64');
-        },
-        (error: any) => {}
-      );
+      this.documentsService
+        .downloadFile({
+          entityType: 'clients',
+          entityId: Number(this.clientId),
+          documentId: Number(this.signatureId)
+        })
+        .subscribe(
+          async (blob: any) => {
+            const buffer = Buffer.from(await blob.arrayBuffer());
+            this.signatureImage = 'data:' + blob.type + ';base64,' + buffer.toString('base64');
+          },
+          (error: any) => {}
+        );
     }
   }
 }

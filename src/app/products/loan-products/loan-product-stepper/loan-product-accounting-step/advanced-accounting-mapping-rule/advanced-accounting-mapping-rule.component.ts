@@ -1,12 +1,4 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UntypedFormArray } from '@angular/forms';
 import { MatIconButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -53,9 +45,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrl: './advanced-accounting-mapping-rule.component.scss'
 })
 export class AdvancedAccountingMappingRuleComponent implements OnInit {
-  dialog = inject(MatDialog);
-  translateService = inject(TranslateService);
-
   @Input() formType: string;
   @Input() formArray: UntypedFormArray;
   @Input() textHeading: string;
@@ -84,24 +73,26 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
     'actions'
   ];
 
+  constructor(
+    public dialog: MatDialog,
+    public translateService: TranslateService
+  ) {}
+
   ngOnInit(): void {
     this.tableData = this.formArray?.value || [];
     this.sendParentData();
   }
 
-  fillCurrentFormValues(): void {
-    this.currentFormValues = [];
-    this.allowAddAccountingMapping = true;
-    this.tableData.forEach((item: any) => this.currentFormValues.push(item.value.id));
-    this.allowAddAccountingMapping = !(this.accountingMappingOptions.length == this.currentFormValues.length);
-  }
-
   add() {
-    this.fillCurrentFormValues();
-    if (!this.allowAddAccountingMapping) {
-      return;
+    this.currentFormValues = [];
+    if (this.formType == 'ChargeOffReasonExpense') {
+      this.allowAddAccountingMapping = true;
+      this.tableData.forEach((item: any) => this.currentFormValues.push(item.chargeOffReasonCodeValueId));
+      if (this.accountingMappingOptions.length == this.currentFormValues.length) {
+        this.allowAddAccountingMapping = false;
+        return;
+      }
     }
-
     const data = { ...this.getData(this.formType), pristine: false };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
@@ -111,7 +102,7 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
             'WriteOffReasonToExpense'
           ].includes(this.formType)) {
           const addData: AccountingMappingDTO = {
-            value: this.getValueData(response.data.value.reasonCodeValueId),
+            value: this.getValueData(response.data.value.chargeOffReasonCodeValueId),
             glAccount: this.getGlAccountData(response.data.value.expenseAccountId)
           };
           this.addTableData(addData);
@@ -126,7 +117,6 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
           this.addTableData(addData);
         }
         this.sendParentData();
-        this.fillCurrentFormValues();
 
         if (this.formType == 'ChargeOffReasonExpense') {
           this.allowAddAccountingMapping = this.tableData.length < this.accountingMappingOptions.length;
@@ -147,8 +137,7 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
     let newData = [
       ...this.tableData.slice(0, index),
       updatedData,
-      ...this.tableData.slice(index + 1)
-    ];
+      ...this.tableData.slice(index + 1)];
     this.tableData = newData;
   }
 
@@ -160,7 +149,6 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
       if (response.delete) {
         this.tableData = this.tableData.filter((_, i) => i !== index);
         this.sendParentData();
-        this.fillCurrentFormValues();
       }
     });
   }
@@ -177,7 +165,7 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
             'WriteOffReasonToExpense'
           ].includes(this.formType)) {
           updateData = {
-            value: this.getValueData(response.data.value.reasonCodeValueId),
+            value: this.getValueData(response.data.value.chargeOffReasonCodeValueId),
             glAccount: this.getGlAccountData(response.data.value.expenseAccountId)
           };
         } else if ([
@@ -235,7 +223,7 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
       case 'ChargeOffReasonExpense':
         return {
           title: 'Map Charge-off reasons to Expense accounts',
-          formfields: this.getReasonsExpenseFormfields(values)
+          formfields: this.getChargeOffReasonExpenseFormfields(values)
         };
       case 'BuydownFeeClassificationToIncome':
         return {
@@ -250,7 +238,7 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
       case 'WriteOffReasonToExpense':
         return {
           title: 'Map Write-off reasons to Expense accounts',
-          formfields: this.getReasonsExpenseFormfields(values)
+          formfields: this.getChargeOffReasonExpenseFormfields(values)
         };
     }
   }
@@ -273,6 +261,7 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
         required: true,
         order: 2
       })
+
     ];
     return formfields;
   }
@@ -295,6 +284,7 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
         required: true,
         order: 2
       })
+
     ];
     return formfields;
   }
@@ -317,18 +307,19 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
         required: true,
         order: 2
       })
+
     ];
     return formfields;
   }
 
-  getReasonsExpenseFormfields(values?: any) {
+  getChargeOffReasonExpenseFormfields(values?: any) {
     const reasonOptions = this.accountingMappingOptions.filter(
       (item: any) => !this.currentFormValues.includes(item.id)
     );
     const formfields: FormfieldBase[] = [
       new SelectBase({
-        controlName: 'reasonCodeValueId',
-        label: this.formType === 'ChargeOffReasonExpense' ? 'Charge-off reason' : 'Write-off reason',
+        controlName: 'chargeOffReasonCodeValueId',
+        label: 'Charge-off reason',
         value: values ? values.value.id : reasonOptions[0].id,
         options: { label: 'name', value: 'id', data: reasonOptions },
         required: true,
@@ -342,6 +333,7 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
         required: true,
         order: 2
       })
+
     ];
     return formfields;
   }
@@ -367,6 +359,7 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
         required: true,
         order: 2
       })
+
     ];
     return formfields;
   }

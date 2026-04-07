@@ -1,19 +1,12 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { AfterViewInit, ChangeDetectorRef, Component, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
-import { LoansService } from '../loans.service';
+import { LoansService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
-import { ClientsService } from 'app/clients/clients.service';
+import { CollateralManagementService } from '@fineract/client';
+import { Dates } from 'app/core/utils/dates';
 
 /** Step Components */
 import { LoansAccountDetailsStepComponent } from '../loans-account-stepper/loans-account-details-step/loans-account-details-step.component';
@@ -25,9 +18,6 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { LoansAccountScheduleStepComponent } from '../loans-account-stepper/loans-account-schedule-step/loans-account-schedule-step.component';
 import { LoansAccountPreviewStepComponent } from '../loans-account-stepper/loans-account-preview-step/loans-account-preview-step.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { LoanProductBasicDetails } from '../models/loan-product.model';
-import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
-import { Dates } from 'app/core/utils/dates';
 
 /**
  * Create loans account
@@ -51,19 +41,12 @@ import { Dates } from 'app/core/utils/dates';
     LoansAccountPreviewStepComponent
   ]
 })
-export class CreateLoansAccountComponent extends LoanProductBaseComponent implements AfterViewInit {
-  private route = inject(ActivatedRoute);
-  private loansService = inject(LoansService);
-  private settingsService = inject(SettingsService);
-  private clientService = inject(ClientsService);
-  private cdr = inject(ChangeDetectorRef);
-  private dateUtils = inject(Dates);
-
+export class CreateLoansAccountComponent {
   /** Imports all the step component */
-  @ViewChild(LoansAccountDetailsStepComponent, { static: false })
+  @ViewChild(LoansAccountDetailsStepComponent, { static: true })
   loansAccountDetailsStep: LoansAccountDetailsStepComponent;
-  @ViewChild(LoansAccountTermsStepComponent, { static: false }) loansAccountTermsStep: LoansAccountTermsStepComponent;
-  @ViewChild(LoansAccountChargesStepComponent, { static: false })
+  @ViewChild(LoansAccountTermsStepComponent, { static: true }) loansAccountTermsStep: LoansAccountTermsStepComponent;
+  @ViewChild(LoansAccountChargesStepComponent, { static: true })
   loansAccountChargesStep: LoansAccountChargesStepComponent;
   /** Get handle on dtloan tags in the template */
   @ViewChildren('dtloan') loanDatatables: QueryList<LoansAccountDatatableStepComponent>;
@@ -81,13 +64,8 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
   datatables: any = [];
   /** Currency Code */
   currencyCode: string;
-
-  clientId: number | null = null;
-  productId: number | null = null;
-  productDetails: any;
-
-  loanProductsBasicDetails: LoanProductBasicDetails[] | null = null;
-  productType: string | null = null;
+  /** Date utils */
+  dateUtils: Dates;
 
   /**
    * Sets loans account create form.
@@ -97,62 +75,57 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
    * @param {SettingsService} settingsService Settings Service
    * @param {ClientsService} clientService Client Service
    */
-  constructor() {
-    super();
-    this.loanProductsBasicDetails = [];
-    this.route.data.subscribe(
-      (data: { loansAccountTemplate: any; loanProductsBasicDetails: LoanProductBasicDetails[] }) => {
-        this.loanProductsBasicDetails = data.loanProductsBasicDetails;
-        this.loansAccountTemplate = data.loansAccountTemplate;
-      }
-    );
-  }
-
-  ngAfterViewInit() {
-    this.cdr.detectChanges();
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private loansService: LoansService,
+    private settingsService: SettingsService,
+    private collateralManagementService: CollateralManagementService
+  ) {
+    this.dateUtils = new Dates(this.settingsService.dateFormat);
+    this.route.data.subscribe((data: { loansAccountTemplate: any }) => {
+      this.loansAccountTemplate = data.loansAccountTemplate;
+    });
   }
 
   /**
    * Sets loans account product template and collateral template
    * @param {any} $event API response
    */
-  setTemplate($event: any): void {
-    const templateData: any = $event;
-    this.loansAccountProductTemplate = templateData;
-    if (templateData.loanData) {
-      this.loansAccountProductTemplate = templateData.loanData;
-      this.loansAccountProductTemplate.options = {
-        delinquencyBucketOptions: templateData.delinquencyBucketOptions,
-        fundOptions: templateData.fundOptions,
-        periodFrequencyTypeOptions: templateData.periodFrequencyTypeOptions,
-        delinquencyStartTypeOptions: templateData.delinquencyStartTypeOptions
-      };
-    }
+  setTemplate($event: any) {
+    this.loansAccountProductTemplate = $event;
     this.currencyCode = this.loansAccountProductTemplate.currency.code;
-    this.productId = this.loansAccountProductTemplate.product.id;
-    this.productDetails = this.loansAccountProductTemplate.product;
-
-    if (this.loanProductService.isLoanProduct) {
-      const clientId = this.loansAccountTemplate.clientId;
-      if (!!clientId) {
-        this.clientService.getCollateralTemplate(clientId).subscribe((response: any) => {
-          this.collateralOptions = response;
-        });
-      } else {
-        // Fineract API doesn't have "Group Collateral Management" endpoint; from the obsolete
-        // community app it appears getCollateralTemplate(clientId) is called as well, but it's not clear how
-        // the clientId is selected from the clientIds that belong to the group.
-        console.error('No collateral data requested from Fineract, collateral might misbehave');
-      }
-      this.multiDisburseLoan = this.loansAccountProductTemplate.multiDisburseLoan;
-      this.setDatatables();
+    const clientId = this.loansAccountTemplate.clientId;
+    if (!!clientId) {
+      // Use CollateralManagementService from OpenAPI client
+      // Assuming you have injected collateralManagementService: CollateralManagementService
+      this.collateralManagementService.getCollateralTemplate().subscribe((response: any) => {
+        this.collateralOptions = response;
+      });
+    } else {
+      // Fineract API doesn't have "Group Collateral Management" endpoint; from the obsolete
+      // community app it appears getCollateralTemplate(clientId) is called as well, but it's not clear how
+      // the clientId is selected from the clientIds that belong to the group.
+      console.error('No collateral data requested from Fineract, collateral might misbehave');
     }
-    this.cdr.detectChanges();
-  }
-
-  setProductType($event: any): void {
-    this.productType = $event;
-    this.loanProductService.initialize(this.productType);
+    const entityId = this.loansAccountTemplate.clientId
+      ? this.loansAccountTemplate.clientId
+      : this.loansAccountTemplate.group.id;
+    const isGroup = this.loansAccountTemplate.clientId ? false : true;
+    const productId = this.loansAccountProductTemplate.loanProductId;
+    this.loansService
+      .template10({
+        clientId: isGroup ? undefined : entityId,
+        groupId: isGroup ? entityId : undefined,
+        productId: productId,
+        templateType: isGroup ? 'group' : 'individual',
+        staffInSelectedOfficeOnly: true,
+        activeOnly: true
+      })
+      .subscribe((response: any) => {
+        this.multiDisburseLoan = response.multiDisburseLoan;
+      });
+    this.setDatatables();
   }
 
   setDatatables(): void {
@@ -167,63 +140,46 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
 
   /** Get Loans Account Details Form Data */
   get loansAccountDetailsForm() {
-    return this.loansAccountDetailsStep?.loansAccountDetailsForm;
+    return this.loansAccountDetailsStep.loansAccountDetailsForm;
   }
 
   /** Get Loans Account Terms Form Data */
   get loansAccountTermsForm() {
-    return this.loansAccountTermsStep?.loansAccountTermsForm;
+    return this.loansAccountTermsStep.loansAccountTermsForm;
   }
 
   /** Checks wheter all the forms in different steps are valid or not */
   get loansAccountFormValid() {
-    return this.loansAccountDetailsForm?.valid && this.loansAccountTermsForm?.valid;
+    return this.loansAccountDetailsForm.valid && this.loansAccountTermsForm.valid;
   }
 
   get loansSavingsAccountLinked() {
-    if (this.loanProductService.isLoanProduct) {
-      return this.loansAccountDetailsStep?.loansAccountDetailsForm.get('linkAccountId').value;
-    }
-    return null;
+    return this.loansAccountDetailsStep.loansAccountDetailsForm.get('linkAccountId').value;
   }
 
   /** Gets principal Amount */
   get loanPrincipal() {
-    return this.loansAccountTermsStep?.loansAccountTermsForm.value.principal;
+    return this.loansAccountTermsStep.loansAccountTermsForm.value.principal;
   }
 
   /** Retrieves Data of all forms except Currency to submit the data */
   get loansAccount() {
-    if (this.loanProductService.isLoanProduct) {
-      return {
-        ...this.loansAccountDetailsStep.loansAccountDetails,
-        ...this.loansAccountTermsStep?.loansAccountTerms,
-        ...this.loansAccountChargesStep?.loansAccountCharges,
-        ...this.loansAccountTermsStep?.loanCollateral,
-        ...this.loansAccountTermsStep?.disbursementData
-      };
-    } else if (this.loanProductService.isWorkingCapital) {
-      return {
-        ...this.loansAccountDetailsStep.loansAccountDetails,
-        ...this.loansAccountTermsStep?.loansAccountTerms
-      };
-    }
-    console.warn('Unexpected product type in loansAccount getter');
-    return {};
+    return {
+      ...this.loansAccountDetailsStep.loansAccountDetails,
+      ...this.loansAccountTermsStep.loansAccountTerms,
+      ...this.loansAccountChargesStep.loansAccountCharges,
+      ...this.loansAccountTermsStep.loanCollateral,
+      ...this.loansAccountTermsStep.disbursementData
+    };
   }
 
-  submit(): void {
-    if (this.loanProductService.isLoanProduct) {
-      this.submitLoanProduct();
-    } else if (this.loanProductService.isWorkingCapital) {
-      this.submitWorkingCapitalProduct();
-    }
-  }
-
-  submitLoanProduct() {
+  /**
+   * Submits Data to create loan account
+   */
+  submit() {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    const payload = this.loansService.buildLoanRequestPayload(
+    const payload = this.buildLoanRequestPayload(
       this.loansAccount,
       this.loansAccountTemplate,
       this.loansAccountProductTemplate.calendarOptions,
@@ -240,7 +196,9 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
     }
 
     this.loansService
-      .createLoansAccount(this.loanProductService.loanAccountPath, payload)
+      .calculateLoanScheduleOrSubmitLoanApplication({
+        postLoansRequest: payload
+      })
       .subscribe((response: any) => {
         this.router.navigate(
           [
@@ -248,70 +206,89 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
             response.resourceId,
             'general'
           ],
-          {
-            queryParams: {
-              productType: this.loanProductService.productType.value
-            },
-            relativeTo: this.route
-          }
+          { relativeTo: this.route }
         );
       });
   }
 
-  submitWorkingCapitalProduct() {
-    const locale = this.settingsService.language.code;
-    const dateFormat = this.settingsService.dateFormat;
-    const payload = {
-      ...this.loansAccount,
-      clientId: this.loansAccountProductTemplate.client.id,
-      submittedOnDate: this.dateUtils.formatDate(this.loansAccount.submittedOnDate, dateFormat),
-      expectedDisbursementDate: this.dateUtils.formatDate(this.loansAccount.expectedDisbursementDate, dateFormat),
-      locale,
-      dateFormat
+  /**
+   * Build loan request payload (copied from original loans.service.ts)
+   */
+  private buildLoanRequestPayload(
+    loansAccount: any,
+    loansAccountTemplate: any,
+    calendarOptions: any,
+    locale: string,
+    dateFormat: string
+  ): any {
+    const loansAccountData = {
+      ...loansAccount,
+      charges: loansAccount.charges.map((charge: any) => ({
+        chargeId: charge.id,
+        amount: charge.amount,
+        dueDate: charge.dueDate && this.dateUtils.formatDate(charge.dueDate, dateFormat)
+      })),
+      disbursementData: loansAccount.disbursementData.map((item: any) => ({
+        expectedDisbursementDate: this.dateUtils.formatDate(item.expectedDisbursementDate, dateFormat),
+        principal: item.principal
+      })),
+      interestChargedFromDate: this.dateUtils.formatDate(loansAccount.interestChargedFromDate, dateFormat),
+      repaymentsStartingFromDate: this.dateUtils.formatDate(loansAccount.repaymentsStartingFromDate, dateFormat),
+      submittedOnDate: this.dateUtils.formatDate(loansAccount.submittedOnDate, dateFormat),
+      expectedDisbursementDate: this.dateUtils.formatDate(loansAccount.expectedDisbursementDate, dateFormat),
+      dateFormat,
+      locale
     };
 
-    if (this.productDetails.allowAttributeOverrides) {
-      if (
-        !Object.hasOwn(this.productDetails.allowAttributeOverrides, 'periodPaymentFrequency') ||
-        this.productDetails.allowAttributeOverrides.periodPaymentFrequency === false
-      ) {
-        delete payload['repaymentEvery'];
-      }
-      if (
-        !Object.hasOwn(this.productDetails.allowAttributeOverrides, 'periodPaymentFrequencyType') ||
-        this.productDetails.allowAttributeOverrides.periodPaymentFrequencyType === false
-      ) {
-        delete payload['repaymentFrequencyType'];
-      }
-      if (
-        !Object.hasOwn(this.productDetails.allowAttributeOverrides, 'discountDefault') ||
-        this.productDetails.allowAttributeOverrides.discountDefault === false
-      ) {
-        delete payload['discount'];
-      }
+    if (loansAccount.collateral) {
+      loansAccountData.collateral = loansAccount.collateral.map((collateralEle: any) => ({
+        clientCollateralId: collateralEle.type.collateralId,
+        quantity: collateralEle.value
+      }));
     }
 
-    // No Empty discount value to be sent
-    if (payload['discount'] == null || payload['discount'] === '') {
-      delete payload['discount'];
+    if (loansAccountTemplate.clientId && loansAccountTemplate.group?.id) {
+      loansAccountData.clientId = loansAccountTemplate.clientId;
+      loansAccountData.groupId = loansAccountTemplate.group.id;
+      loansAccountData.loanType = 'glim';
+    } else if (loansAccountTemplate.clientId) {
+      loansAccountData.clientId = loansAccountTemplate.clientId;
+      loansAccountData.loanType = 'individual';
+    } else {
+      loansAccountData.groupId = loansAccountTemplate.group.id;
+      loansAccountData.loanType = 'group';
     }
 
-    this.loansService
-      .createLoansAccount(this.loanProductService.loanAccountPath, payload)
-      .subscribe((response: any) => {
-        this.router.navigate(
-          [
-            '../',
-            response.resourceId,
-            'general'
-          ],
-          {
-            queryParams: {
-              productType: this.loanProductService.productType.value
-            },
-            relativeTo: this.route
-          }
-        );
-      });
+    if (loansAccountData.syncRepaymentsWithMeeting) {
+      loansAccountData.calendarId = calendarOptions[0].id;
+      delete loansAccountData.syncRepaymentsWithMeeting;
+    }
+
+    if (loansAccountData.recalculationRestFrequencyDate) {
+      loansAccountData.recalculationRestFrequencyDate = this.dateUtils.formatDate(
+        loansAccount.recalculationRestFrequencyDate,
+        dateFormat
+      );
+    }
+
+    if (loansAccountData.interestCalculationPeriodType === 0) {
+      loansAccountData.allowPartialPeriodInterestCalculation = false;
+    }
+    if (!(loansAccountData.isFloatingInterestRate === false)) {
+      delete loansAccountData.isFloatingInterestRate;
+    }
+    if (!loansAccountData.multiDisburseLoan) {
+      delete loansAccountData.disbursementData;
+    }
+    delete loansAccountData.isValid;
+    loansAccountData.principal = loansAccountData.principalAmount;
+    delete loansAccountData.principalAmount;
+    delete loansAccountData.multiDisburseLoan; // this was just added so that disbursement data can be send in the backend
+
+    // In Fineract, the POST and PUT endpoints for /v1/loans have a typo in the field
+    // allowPartialPeriodInterestCalculation. Until that is fixed, we need to replace the field name in the payload.
+    loansAccountData.allowPartialPeriodInterestCalcualtion = loansAccountData.allowPartialPeriodInterestCalculation;
+    delete loansAccountData.allowPartialPeriodInterestCalculation;
+    return loansAccountData;
   }
 }

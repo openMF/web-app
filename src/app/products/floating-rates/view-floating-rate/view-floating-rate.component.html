@@ -1,11 +1,3 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <div class="container m-b-20 layout-row align-end gap-20px">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_FLOATINGRATE'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
@@ -61,24 +53,22 @@
               {{ 'labels.inputs.Is Differential' | translate }}?
             </th>
             <td mat-cell *matCellDef="let floatingRate">
-              @if (floatingRate.isDifferentialToBaseLendingRate) {
-                <fa-icon
-                  icon="check-circle"
-                  size="lg"
-                  class="is-differential"
-                  matTooltip="{{ 'tooltips.Yes' | translate }}"
-                  matTooltipPosition="right"
-                ></fa-icon>
-              }
-              @if (!floatingRate.isDifferentialToBaseLendingRate) {
-                <fa-icon
-                  icon="times-circle"
-                  size="lg"
-                  class="not-is-differential"
-                  matTooltip="{{ 'tooltips.No' | translate }}"
-                  matTooltipPosition="right"
-                ></fa-icon>
-              }
+              <fa-icon
+                *ngIf="floatingRate.isDifferentialToBaseLendingRate"
+                icon="check-circle"
+                size="lg"
+                class="is-differential"
+                matTooltip="{{ 'tooltips.Yes' | translate }}"
+                matTooltipPosition="right"
+              ></fa-icon>
+              <fa-icon
+                *ngIf="!floatingRate.isDifferentialToBaseLendingRate"
+                icon="times-circle"
+                size="lg"
+                class="not-is-differential"
+                matTooltip="{{ 'tooltips.No' | translate }}"
+                matTooltipPosition="right"
+              ></fa-icon>
             </td>
           </ng-container>
 

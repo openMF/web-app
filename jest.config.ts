@@ -35,8 +35,7 @@ const config: Config = {
   moduleNameMapper: {
     '^app/(.*)$': '<rootDir>/src/app/$1',
     '^@/(.*)$': '<rootDir>/src/$1',
-    '^@pipes/(.*)$': '<rootDir>/src/app/pipes/$1',
-    '^environments/(.*)$': '<rootDir>/src/environments/$1'
+    '^@pipes/(.*)$': '<rootDir>/src/app/pipes/$1'
   },
 
   // An array of directory names to be searched recursively up from the requiring module's location
@@ -81,9 +80,7 @@ const config: Config = {
   },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
-  transformIgnorePatterns: [
-    'node_modules/(?!.*\\.mjs$|@angular|@fortawesome|@material/web|lit|lit-element|lit-html|@lit|@lit-labs)'
-  ]
+  transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$|@angular|@fortawesome)']
 };
 
 export default config;

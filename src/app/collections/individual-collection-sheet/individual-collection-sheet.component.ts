@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, OnDestroy, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -26,12 +18,9 @@ import {
 } from '@angular/material/table';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject } from 'rxjs';
-import { takeUntil, switchMap } from 'rxjs/operators';
 
 /** Services Import */
-import { CollectionsService } from '../collections.service';
-import { DataReloadService } from 'app/core/services/data-reload.service';
+import { StaffService, CollectionSheetService } from '@fineract/client';
 
 /** Custom Dialogs */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -73,30 +62,25 @@ import { OrganizationService } from 'app/organization/organization.service';
     MatPaginator
   ]
 })
-export class IndividualCollectionSheetComponent implements OnInit, OnDestroy {
-  private formBuilder = inject(UntypedFormBuilder);
-  private collectionsService = inject(CollectionsService);
-  private organizationService = inject(OrganizationService);
-  private route = inject(ActivatedRoute);
-  private dateUtils = inject(Dates);
-  private dialog = inject(MatDialog);
-  private router = inject(Router);
-  private settingsService = inject(SettingsService);
-  private dataReloadService = inject(DataReloadService);
-
+export class IndividualCollectionSheetComponent implements OnInit {
+  /** Offices Data */
   officesData: any;
+  /** Loan Officer Data */
   loanOfficerData: any = [];
+  /** Loans Data */
   loansData: any = [];
+  /** Savings Data */
   savingsData: any = [];
+  /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
+  /** Maximum Date allowed. */
   maxDate = new Date();
+  /** Collection Sheet form. */
   collectionSheetForm: UntypedFormGroup;
+  /** Toggles b/w form and table */
   isCollapsed = false;
+  /** Collections Sheet Data */
   collectionSheetData: any;
-
-  private reloadContext = 'individual-collection-sheet';
-  private destroy$ = new Subject<void>();
-  private buildDependencies$ = new Subject<void>();
   /** checks and stores the local storage values */
   Success: boolean;
   /** Bulk Disbursement Transactions Data */
@@ -143,26 +127,30 @@ export class IndividualCollectionSheetComponent implements OnInit, OnDestroy {
   /**
    * Retrieves the offices data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {OrganizationService} collectionsService Organization Service.
+   * @param {CollectionSheetService} collectionSheetService Collection Sheet Service.
+   * @param {StaffService} staffService Staff Service.
    * @param {Route} route Route.
    * @param {Dates} dateUtils Date Utils to format date.
    * @param {Dialog} dialog Dialog component.
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  ngOnInit(): void {
-    this.route.data.pipe(takeUntil(this.destroy$)).subscribe((data: { officesData: any }) => {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private collectionSheetService: CollectionSheetService,
+    private staffService: StaffService,
+    private route: ActivatedRoute,
+    private dateUtils: Dates,
+    public dialog: MatDialog,
+    private router: Router,
+    private settingsService: SettingsService
+  ) {
+    this.route.data.subscribe((data: { officesData: any }) => {
       this.officesData = data.officesData;
     });
+  }
 
-    // Subscribe to reload events
-    this.dataReloadService
-      .getReloadObservable(this.reloadContext)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        this.refreshData();
-      });
-
+  ngOnInit() {
     this.maxDate = this.settingsService.businessDate;
     if (localStorage.getItem('Success')) {
       localStorage.removeItem('Success');
@@ -173,16 +161,6 @@ export class IndividualCollectionSheetComponent implements OnInit, OnDestroy {
     }
     this.createCollectionSheetForm();
     this.buildDependencies();
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-    this.buildDependencies$.next();
-    this.buildDependencies$.complete();
-    if (this.reloadContext) {
-      this.dataReloadService.cleanup(this.reloadContext);
-    }
   }
 
   /**
@@ -206,19 +184,11 @@ export class IndividualCollectionSheetComponent implements OnInit, OnDestroy {
    * Checks for the office id value change
    */
   buildDependencies() {
-    // Complete previous subscription before creating new one
-    this.buildDependencies$.next();
-
-    this.collectionSheetForm
-      .get('officeId')
-      .valueChanges.pipe(
-        takeUntil(this.buildDependencies$),
-        takeUntil(this.destroy$),
-        switchMap((value: any) => this.organizationService.getStaffs(value))
-      )
-      .subscribe((response: any) => {
+    this.collectionSheetForm.get('officeId').valueChanges.subscribe((value: any) => {
+      this.staffService.retrieveAll16(value).subscribe((response: any) => {
         this.loanOfficerData = response;
       });
+    });
   }
 
   /**
@@ -316,6 +286,7 @@ export class IndividualCollectionSheetComponent implements OnInit, OnDestroy {
         type: 'number',
         required: false
       })
+
     ];
     const data = {
       title: `Payment for ${type === 'loans' ? 'Loan' : 'Saving'} Id ${type === 'loans' ? selectedData.loanId : selectedData.savingsId}`,
@@ -405,7 +376,7 @@ export class IndividualCollectionSheetComponent implements OnInit, OnDestroy {
     if (collectionSheet.staffId === '') {
       delete collectionSheet.staffId;
     }
-    this.collectionsService.retrieveCollectionSheetData(collectionSheet).subscribe((response: any) => {
+    this.collectionSheetService.generateCollectionSheet(collectionSheet).subscribe((response: any) => {
       if (response.clients.length > 0) {
         this.collectionSheetData = response;
         this.organizeData(response);
@@ -434,37 +405,18 @@ export class IndividualCollectionSheetComponent implements OnInit, OnDestroy {
       transactionDate: this.dateUtils.formatDate(this.collectionSheetForm.value.transactionDate, dateFormat),
       bulkDisbursementTransactions: this.bulkDisbursementTransactionsData
     };
-    this.collectionsService.executeSaveCollectionSheet(finalSubmitData).subscribe(() => {
+    this.collectionSheetService.generateCollectionSheet({ collectionSheetRequest: finalSubmitData }).subscribe(() => {
       this.reload();
       localStorage.setItem('Success', 'true');
     });
   }
 
   /**
-   * Triggers a reload event for the collection sheet.
+   * Refetches data for the component
+   * TODO: Replace by a custom reload component instead of hard-coded back-routing.
    */
-  reload(): void {
-    this.dataReloadService.triggerReload(this.reloadContext);
-  }
-
-  /**
-   * Refreshes the collection sheet data when reload is triggered.
-   */
-  private refreshData(): void {
-    // Re-create the form and rebuild dependencies
-    this.isCollapsed = false;
-    this.collectionSheetData = null;
-
-    // Clear bulk transaction arrays to prevent stale data
-    this.bulkRepaymentTransactions = [];
-    this.bulkSavingsDueTransactions = [];
-    this.bulkDisbursementTransactionsData = {};
-
-    // Clear table data arrays
-    this.loansData = [];
-    this.savingsData = [];
-
-    this.createCollectionSheetForm();
-    this.buildDependencies();
+  reload() {
+    const url: string = this.router.url;
+    this.router.navigateByUrl(`/collections`, { skipLocationChange: true }).then(() => this.router.navigate([url]));
   }
 }

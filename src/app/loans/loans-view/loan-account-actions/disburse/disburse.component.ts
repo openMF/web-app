@@ -1,16 +1,11 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
+import { LoansService } from '@fineract/client';
+import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { Currency } from 'app/shared/models/general.model';
 import { InputAmountComponent } from '../../../../shared/input-amount/input-amount.component';
@@ -18,7 +13,6 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 
 /**
  * Disburse Loan Option
@@ -35,16 +29,14 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
     FormatNumberPipe
   ]
 })
-export class DisburseComponent extends LoanAccountActionsBaseComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private dateUtils = inject(Dates);
-
+export class DisburseComponent implements OnInit {
+  @Input() dataObject: any;
+  /** Loan Id */
+  loanId: string;
   /** Payment Type Options */
   paymentTypes: any;
   /** Show payment details */
   showPaymentDetails = false;
-  /** Prevents multiple form submissions */
-  isSubmitting = false;
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
@@ -53,8 +45,22 @@ export class DisburseComponent extends LoanAccountActionsBaseComponent implement
   disbursementLoanForm: UntypedFormGroup;
   currency: Currency;
 
-  constructor() {
-    super();
+  /**
+   * @param {FormBuilder} formBuilder Form Builder.
+   * @param {LoansService} loanService Loan Service.
+   * @param {ActivatedRoute} route Activated Route.
+   * @param {Router} router Router for navigation.
+   * @param {SettingsService} settingsService Settings Service
+   */
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private loanService: LoansService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates,
+    private settingsService: SettingsService
+  ) {
+    this.loanId = this.route.snapshot.params['loanId'];
   }
 
   /**
@@ -68,6 +74,19 @@ export class DisburseComponent extends LoanAccountActionsBaseComponent implement
     if (this.dataObject.currency) {
       this.currency = this.dataObject.currency;
     }
+
+    // Get delinquency data for available disbursement amount with over applied
+    this.loanService.retrieveLoan({ loanId: Number(this.loanId) }).subscribe((delinquencyData: any) => {
+      // Check if the field is at root level
+      if (delinquencyData.availableDisbursementAmountWithOverApplied !== undefined) {
+        this.dataObject.availableDisbursementAmountWithOverApplied =
+          delinquencyData.availableDisbursementAmountWithOverApplied;
+      }
+      // Also check if it's in delinquent object
+      if (delinquencyData.delinquent) {
+        this.dataObject.delinquent = delinquencyData.delinquent;
+      }
+    });
   }
 
   /**
@@ -87,15 +106,12 @@ export class DisburseComponent extends LoanAccountActionsBaseComponent implement
       paymentTypeId: '',
       note: ''
     });
-    if (this.isWorkingCapital) {
-      this.disbursementLoanForm.addControl('discountAmount', new UntypedFormControl());
-    }
   }
 
   setDisbursementLoanDetails() {
     this.paymentTypes = this.dataObject.paymentTypeOptions;
     this.disbursementLoanForm.patchValue({
-      transactionAmount: this.dataObject.amount || this.dataObject.expectedAmount
+      transactionAmount: this.dataObject.amount
       // actualDisbursementDate: new Date(this.dataObject.date)
     });
   }
@@ -132,54 +148,20 @@ export class DisburseComponent extends LoanAccountActionsBaseComponent implement
         dateFormat
       );
     }
-    const payload = {
+    const data = {
       ...disbursementLoanFormData,
       dateFormat,
       locale
     };
-    payload['transactionAmount'] = payload['transactionAmount'] * 1;
-    if (this.isWorkingCapital) {
-      const paymentDetails: Record<string, any> = {};
-      if (payload['paymentTypeId']) {
-        paymentDetails['paymentTypeId'] = payload['paymentTypeId'];
-      }
-      if (this.showPaymentDetails) {
-        if (payload['accountNumber']) paymentDetails['accountNumber'] = payload['accountNumber'];
-        if (payload['checkNumber']) paymentDetails['checkNumber'] = payload['checkNumber'];
-        if (payload['routingCode']) paymentDetails['routingCode'] = payload['routingCode'];
-        if (payload['receiptNumber']) paymentDetails['receiptNumber'] = payload['receiptNumber'];
-        if (payload['bankNumber']) paymentDetails['bankNumber'] = payload['bankNumber'];
-      }
-      if (Object.keys(paymentDetails).length > 0) {
-        payload['paymentDetails'] = paymentDetails;
-      }
-      delete payload['paymentTypeId'];
-      delete payload['accountNumber'];
-      delete payload['checkNumber'];
-      delete payload['routingCode'];
-      delete payload['receiptNumber'];
-      delete payload['bankNumber'];
-    }
-
-    const loanCommand: string = 'disburse';
-    const request$ = this.isLoanProduct
-      ? this.loanService.loanActionButtons(this.loanId, loanCommand, payload)
-      : this.isWorkingCapital
-        ? this.loanService.applyWorkingCapitalLoanAccountCommand(this.loanId, loanCommand, payload)
-        : undefined;
-
-    if (!request$) {
-      this.disbursementLoanForm.setErrors({ unsupportedProductType: true });
-      return;
-    }
-
-    this.isSubmitting = true;
-    request$.subscribe({
-      next: () => this.gotoLoanDefaultView(),
-      error: () => {
-        this.disbursementLoanForm.setErrors({ submitFailed: true });
-        this.isSubmitting = false;
-      }
-    });
+    data['transactionAmount'] = data['transactionAmount'] * 1;
+    this.loanService
+      .stateTransitions({
+        loanId: Number(this.loanId),
+        postLoansLoanIdRequest: data,
+        command: 'disburse'
+      })
+      .subscribe((response: any) => {
+        this.router.navigate(['../../general'], { relativeTo: this.route });
+      });
   }
 }

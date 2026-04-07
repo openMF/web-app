@@ -1,20 +1,10 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <div class="layout-row-wrap gap-2px responsive-column">
   <mat-form-field class="flex-48">
     <mat-label>{{ 'labels.inputs.Charge' | translate }}</mat-label>
     <mat-select #charge>
-      @for (charge of chargeData; track charge) {
-        <mat-option [value]="charge">
-          {{ charge.name }}
-        </mat-option>
-      }
+      <mat-option *ngFor="let charge of chargeData" [value]="charge">
+        {{ charge.name }}
+      </mat-option>
     </mat-select>
   </mat-form-field>
 
@@ -34,7 +24,7 @@
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
       <td mat-cell *matCellDef="let charge">
-        {{ charge.name + ', ' + (charge.currency?.displaySymbol || '') }}
+        {{ charge.name + ', ' + charge.currency.displaySymbol }}
       </td>
     </ng-container>
 
@@ -65,37 +55,38 @@
     <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Date' | translate }}</th>
       <td mat-cell *matCellDef="let charge">
-        @if (charge.chargeTimeType.value === 'Specified due date' || charge.chargeTimeType.value === 'Weekly Fee') {
-          <span>
-            {{ (charge.dueDate | dateFormat) || 'Unassigned' }}
-          </span>
-        }
-        @if (charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee') {
-          <span>
-            {{ (charge.feeOnMonthDay | dateFormat) || 'Unassigned' }}
-          </span>
-        }
-        @if (
-          !(
-            charge.chargeTimeType.value === 'Monthly Fee' ||
+        <span
+          *ngIf="charge.chargeTimeType.value === 'Specified due date' || charge.chargeTimeType.value === 'Weekly Fee'"
+        >
+          {{ (charge.dueDate | dateFormat) || 'Unassigned' }}
+        </span>
+        <span *ngIf="charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee'">
+          {{ (charge.feeOnMonthDay | dateFormat) || 'Unassigned' }}
+        </span>
+        <span
+          *ngIf="
+            !(
+              charge.chargeTimeType.value === 'Monthly Fee' ||
+              charge.chargeTimeType.value === 'Annual Fee' ||
+              charge.chargeTimeType.value === 'Specified due date' ||
+              charge.chargeTimeType.value === 'Weekly Fee'
+            )
+          "
+        >
+          {{ 'labels.inputs.N/A' | translate }}
+        </span>
+        <button
+          mat-icon-button
+          color="primary"
+          *ngIf="
+            charge.chargeTimeType.value === 'Weekly Fee' ||
             charge.chargeTimeType.value === 'Annual Fee' ||
-            charge.chargeTimeType.value === 'Specified due date' ||
-            charge.chargeTimeType.value === 'Weekly Fee'
-          )
-        ) {
-          <span>
-            {{ 'labels.inputs.N/A' | translate }}
-          </span>
-        }
-        @if (
-          charge.chargeTimeType.value === 'Weekly Fee' ||
-          charge.chargeTimeType.value === 'Annual Fee' ||
-          charge.chargeTimeType.value === 'Specified due date'
-        ) {
-          <button mat-icon-button color="primary" (click)="editChargeDate(charge)">
-            <fa-icon icon="pen"></fa-icon>
-          </button>
-        }
+            charge.chargeTimeType.value === 'Specified due date'
+          "
+          (click)="editChargeDate(charge)"
+        >
+          <fa-icon icon="pen"></fa-icon>
+        </button>
       </td>
     </ng-container>
 
@@ -119,7 +110,7 @@
   <table mat-table class="mat-elevation-z1" [dataSource]="overDueChargesDataSource">
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
-      <td mat-cell *matCellDef="let charge">{{ charge.name + ', ' + (charge.currency?.displaySymbol || '') }}</td>
+      <td mat-cell *matCellDef="let charge">{{ charge.name }},{{ charge.currency.displaySymbol }}</td>
     </ng-container>
 
     <ng-container matColumnDef="type">
@@ -142,7 +133,7 @@
   </table>
 </div>
 
-<div class="layout-row responsive-column align-center gap-2px margin-t stepper-buttons">
+<div class="layout-row responsive-column align-center gap-2px margin-t">
   <button mat-raised-button matStepperPrevious>
     <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Previous' | translate }}
@@ -151,9 +142,7 @@
     {{ 'labels.buttons.Next' | translate }}
     <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
   </button>
-  @if (loanId) {
-    <button mat-raised-button [routerLink]="['../', 'general']">
-      {{ 'labels.buttons.Cancel' | translate }}
-    </button>
-  }
+  <button mat-raised-button *ngIf="loanId" [routerLink]="['../', 'general']">
+    {{ 'labels.buttons.Cancel' | translate }}
+  </button>
 </div>

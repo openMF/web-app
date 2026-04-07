@@ -1,23 +1,11 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { SettingsService } from 'app/settings/settings.service';
 import { GlobalConfiguration } from 'app/system/configurations/global-configurations-tab/configuration.model';
-import { LoanProductService } from './services/loan-product.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoanProducts {
-  private settingsService = inject(SettingsService);
-  private loanProductService = inject(LoanProductService);
-
   public static LOAN_SCHEDULE_TYPE_CUMULATIVE = 'CUMULATIVE';
   public static LOAN_SCHEDULE_TYPE_PROGRESSIVE = 'PROGRESSIVE';
 
@@ -41,6 +29,8 @@ export class LoanProducts {
   public static isAdvancedPaymentAllocationStrategy(code: string): boolean {
     return code === this.ADVANCED_PAYMENT_ALLOCATION_STRATEGY;
   }
+
+  constructor(private settingsService: SettingsService) {}
 
   public setItemsByDefault(configurations: any) {
     const itemsByDefault: GlobalConfiguration[] = [];
@@ -73,38 +63,30 @@ export class LoanProducts {
     const dateFormat: string = this.settingsService.dateFormat;
     const locale: string = this.settingsService.language.code;
 
-    const loanProduct = this.loanProductService.isLoanProduct
-      ? {
-          ...loanProductData,
-          charges: loanProductData.charges.map((charge: any) => ({ id: charge.id })),
-          dateFormat,
-          locale
-        }
-      : {
-          ...loanProductData,
-          dateFormat,
-          locale
-        };
+    const loanProduct = {
+      ...loanProductData,
+      charges: loanProductData.charges.map((charge: any) => ({ id: charge.id })),
+      dateFormat,
+      locale
+    };
     // Remove unnecessary properties
     delete loanProduct.allowAttributeConfiguration;
     delete loanProduct.advancedAccountingRules;
 
     // In Fineract, the POST and PUT endpoints for /v1/loanproducts have a typo in the field
     // allowPartialPeriodInterestCalculation. Until that is fixed, we need to replace the field name in the payload.
-    loanProduct.allowPartialPeriodInterestCalculation = loanProduct.allowPartialPeriodInterestCalculation;
+    loanProduct.allowPartialPeriodInterestCalcualtion = loanProduct.allowPartialPeriodInterestCalculation;
     delete loanProduct.allowPartialPeriodInterestCalculation;
 
     // Set Default values If they were not set
-    if (this.loanProductService.isLoanProduct) {
-      itemsByDefault.forEach((config: GlobalConfiguration) => {
-        const propertyName = this.resolvePropertyName(config.name);
-        if (propertyName !== '') {
-          if (!loanProduct[propertyName] || loanProduct[propertyName] === '') {
-            loanProduct[propertyName] = config.value;
-          }
+    itemsByDefault.forEach((config: GlobalConfiguration) => {
+      const propertyName = this.resolvePropertyName(config.name);
+      if (propertyName !== '') {
+        if (!loanProduct[propertyName] || loanProduct[propertyName] === '') {
+          loanProduct[propertyName] = config.value;
         }
-      });
-    }
+      }
+    });
 
     return loanProduct;
   }

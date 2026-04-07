@@ -1,22 +1,13 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-/* eslint-disable @angular-eslint/prefer-inject */
 /** Angular Imports */
 import { Component, OnInit, HostListener, HostBinding, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 
 /** rxjs Imports */
-import { merge, Subscription, Subject } from 'rxjs';
-import { filter, map, mergeMap, takeUntil, take } from 'rxjs/operators';
+import { merge, Subscription } from 'rxjs';
+import { filter, map, mergeMap } from 'rxjs/operators';
 
 /** Translation Imports */
 import { TranslateService } from '@ngx-translate/core';
@@ -30,7 +21,6 @@ import { ThemeStorageService } from './shared/theme-picker/theme-storage.service
 import { AlertService } from './core/alert/alert.service';
 import { AuthenticationService } from './core/authentication/authentication.service';
 import { SettingsService } from './settings/settings.service';
-import { DocumentationLinksService } from 'app/shared/services/documentation-links.service';
 import { IdleTimeoutService } from './home/timeout-dialog/idle-timeout.service';
 import { SessionTimeoutDialogComponent } from './home/timeout-dialog/session-timeout-dialog.component';
 
@@ -41,6 +31,8 @@ import { Dates } from './core/utils/dates';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { I18nService } from './core/i18n/i18n.service';
 import { ThemingService } from './shared/theme-toggle/theming.service';
+
+import { AuthService } from './zitadel/auth.service';
 
 /** Initialize Logger */
 const log = new Logger('MifosX');
@@ -59,7 +51,6 @@ import localeNE from '@angular/common/locales/ne';
 import localePT from '@angular/common/locales/pt';
 import localeSW from '@angular/common/locales/sw';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-
 registerLocaleData(localeCS);
 registerLocaleData(localeEN);
 registerLocaleData(localeES);
@@ -84,13 +75,13 @@ registerLocaleData(localeSW);
     trigger('opacityScale', [
       transition(':enter', [
         style({ opacity: 0, transform: 'scale(.95)' }),
-        animate('100ms ease-out', style({ opacity: 1, transform: 'scale(1)' }))
-      ]),
+        animate('100ms ease-out', style({ opacity: 1, transform: 'scale(1)' }))]),
       transition(':leave', [
         style({ opacity: 1, transform: 'scale(1)' }),
-        animate('75ms ease-in', style({ opacity: 0, transform: 'scale(.95)' }))
-      ])
+        animate('75ms ease-in', style({ opacity: 0, transform: 'scale(.95)' }))])
+
     ])
+
   ],
 
   // eslint-disable-next-line @angular-eslint/prefer-standalone
@@ -102,7 +93,6 @@ export class WebAppComponent implements OnInit, OnDestroy {
   i18nService: I18nService;
 
   private authSubscription: Subscription;
-  private destroy$ = new Subject<void>();
 
   /**
    * @param {Router} router Router for navigation.
@@ -132,7 +122,7 @@ export class WebAppComponent implements OnInit, OnDestroy {
     private dateUtils: Dates,
     private idle: IdleTimeoutService,
     private dialog: MatDialog,
-    private documentationLinks: DocumentationLinksService
+    private authService: AuthService
   ) {}
 
   @HostBinding('class') public cssClass: string;
@@ -148,6 +138,10 @@ export class WebAppComponent implements OnInit, OnDestroy {
    *
    * 4) Alerts
    */
+
+  login() {
+    this.authService.login();
+  }
 
   ngOnInit() {
     this.themingService.theme.subscribe((value: string) => {
@@ -184,17 +178,13 @@ export class WebAppComponent implements OnInit, OnDestroy {
           return route;
         }),
         filter((route) => route.outlet === 'primary'),
-        mergeMap((route) => route.data),
-        takeUntil(this.destroy$)
+        mergeMap((route) => route.data)
       )
       .subscribe((event) => {
         const title = event['title'] ? `labels.text.${event['title']}` : 'APP_NAME';
-        this.i18nService
-          .translate(title)
-          .pipe(take(1))
-          .subscribe((titleTranslated: any) => {
-            this.titleService.setTitle(titleTranslated);
-          });
+        this.i18nService.translate(title).subscribe((titleTranslated: any) => {
+          this.titleService.setTitle(titleTranslated);
+        });
       });
 
     // Stores top 100 user activites as local storage object.
@@ -205,27 +195,27 @@ export class WebAppComponent implements OnInit, OnDestroy {
       activities = length > 100 ? activitiesArray.slice(length - 100) : activitiesArray;
     }
     // Store route URLs array in local storage on navigation end.
-    onNavigationEnd.pipe(takeUntil(this.destroy$)).subscribe(() => {
+    onNavigationEnd.subscribe(() => {
       activities.push(this.router.url);
       localStorage.setItem('mifosXLocation', JSON.stringify(activities));
     });
 
-    // Setup alerts with hover behavior
+    // Setup alerts
     this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
-      const snackBarRef = this.snackBar.open(`${alertEvent.message}`, 'Close', {
-        duration: 0, // Set to 0 - no auto-dismiss initially
+      this.snackBar.open(`${alertEvent.message}`, 'Close', {
+        duration: 2000,
         horizontalPosition: 'right',
         verticalPosition: 'top'
       });
-      // Handle hover behavior
-      this.handleSnackbarHover(snackBarRef, 2000);
     });
-
     this.buttonConfig = new KeyboardShortcutsConfiguration();
 
     // initialize language and date format if they are null.
     if (!localStorage.getItem('mifosXLanguage')) {
       this.settingsService.setDefaultLanguage();
+    }
+    if (!localStorage.getItem('mifosXDateFormat')) {
+      this.settingsService.setDateFormat('dd MMMM yyyy');
     }
     // Set default max date picker as Today
     this.settingsService.setBusinessDate(this.dateUtils.formatDate(new Date(), SettingsService.businessDateFormat));
@@ -256,58 +246,17 @@ export class WebAppComponent implements OnInit, OnDestroy {
         });
         this.dialog.open(SessionTimeoutDialogComponent);
         setTimeout(() => {
-          this.logout();
+          if (!environment.OIDC.oidcServerEnabled) {
+            this.logout();
+          } else {
+            this.authService.logout();
+          }
         }, 1000);
       });
     }
   }
 
-  /**
-   * Handle snackbar hover behavior - pause dismiss on hover, resume on leave
-   * @param snackBarRef Reference to the snackbar
-   * @param defaultDuration Default duration in milliseconds before auto-dismiss
-   */
-  private handleSnackbarHover(snackBarRef: MatSnackBarRef<any>, defaultDuration: number): void {
-    snackBarRef
-      .afterOpened()
-      .pipe(take(1))
-      .subscribe(() => {
-        const snackbarContainer = document.querySelector('.mat-mdc-snack-bar-container');
-        if (!snackbarContainer) {
-          snackBarRef.dismiss();
-          return;
-        }
-
-        let dismissTimer: any;
-
-        // Start the auto-dismiss timer
-        const startDismissTimer = () => {
-          dismissTimer = setTimeout(() => {
-            snackBarRef.dismiss();
-          }, defaultDuration);
-        };
-
-        // Pause auto-dismiss on hover (mouseenter)
-        snackbarContainer.addEventListener('mouseenter', () => {
-          if (dismissTimer) {
-            clearTimeout(dismissTimer);
-            dismissTimer = null;
-          }
-        });
-
-        // Resume auto-dismiss when cursor leaves (mouseleave)
-        snackbarContainer.addEventListener('mouseleave', () => {
-          startDismissTimer();
-        });
-
-        // Start initial timer
-        startDismissTimer();
-      });
-  }
-
   ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
     if (this.authSubscription) {
       this.authSubscription.unsubscribe();
     }
@@ -318,7 +267,7 @@ export class WebAppComponent implements OnInit, OnDestroy {
   }
 
   help() {
-    this.documentationLinks.open('userManual');
+    window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');
   }
 
   // Monitor all keyboard events and excute keyboard shortcuts

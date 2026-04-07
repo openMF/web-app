@@ -1,62 +1,114 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { activities } from '../activities';
-import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
-import { AsyncPipe } from '@angular/common';
+import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
+import { NgFor, AsyncPipe } from '@angular/common';
+import { ClientTrendsBarComponent } from './client-trends-bar/client-trends-bar.component';
+import { AmountDisbursedPieComponent } from './amount-disbursed-pie/amount-disbursed-pie.component';
+import { AmountCollectedPieComponent } from './amount-collected-pie/amount-collected-pie.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { DashboardEngineComponent } from 'app/analytics/dashboard-engine/dashboard-engine.component';
-import { GLOBAL_ANALYTICS_DASHBOARD } from 'app/analytics/global-dashboard.config';
-
 /**
  * Dashboard component.
  */
 @Component({
   selector: 'mifosx-dashboard',
-  standalone: true,
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     MatAutocompleteTrigger,
     MatAutocomplete,
-    DashboardEngineComponent,
+    ClientTrendsBarComponent,
+    AmountDisbursedPieComponent,
+    AmountCollectedPieComponent,
     AsyncPipe
   ]
 })
 export class DashboardComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-
+  /** Array of all user activities */
+  userActivity: string[];
+  /** Array of most recent user activities */
+  recentActivities: string[];
+  /** Array of most frequent user activities */
+  frequentActivities: string[];
   /** Search Text. */
   searchText: UntypedFormControl = new UntypedFormControl();
   /** Filtered Activities. */
-  filteredActivities!: Observable<any[]>;
+  filteredActivities: Observable<any[]>;
   /** All User Activities. */
   allActivities: any[] = activities;
-  /** Dashboard definition */
-  dashboardDefinition = GLOBAL_ANALYTICS_DASHBOARD;
-  /** Office options from resolver */
-  offices: any[] = [];
 
-  constructor() {
-    this.route.data.subscribe((data: { offices: any[] }) => {
-      this.offices = data.offices || [];
-    });
+  /**
+   * Gets user activities from local storage.
+   */
+  constructor(private router: Router) {
+    this.userActivity = JSON.parse(localStorage.getItem('mifosXLocation'));
   }
 
   ngOnInit() {
+    this.recentActivities = this.getRecentActivities();
+    this.frequentActivities = this.getFrequentActivities();
     this.setFilteredActivities();
+  }
+
+  /**
+   * Returns top eight recent activities.
+   */
+  getRecentActivities() {
+    const reverseActivities = this.userActivity.reverse();
+    const uniqueActivities: string[] = [];
+    reverseActivities.forEach((activity: string) => {
+      if (!uniqueActivities.includes(activity)) {
+        uniqueActivities.push(activity);
+      }
+    });
+    const topEightRecentActivities = uniqueActivities
+      .filter(
+        (activity: string) => ![
+            '/',
+            '/login',
+            '/home',
+            '/dashboard'
+          ].includes(activity)
+      )
+      .slice(0, 8);
+    return topEightRecentActivities;
+  }
+
+  /**
+   * Returns top eight frequent activities.
+   */
+  getFrequentActivities() {
+    const frequencyCounts: any = {};
+    let index = this.userActivity?.length;
+    while (index) {
+      frequencyCounts[this.userActivity[--index]] = (frequencyCounts[this.userActivity[index]] || 0) + 1;
+    }
+    const frequencyCountsArray = Object.entries(frequencyCounts);
+    const topEigthFrequentActivities = frequencyCountsArray
+      .sort((a: any, b: any) => b[1] - a[1])
+      .map((entry: any[]) => entry[0])
+      .filter(
+        (activity: string) => ![
+            '/',
+            '/login',
+            '/home',
+            '/dashboard'
+          ].includes(activity)
+      )
+      .slice(0, 8);
+    return topEigthFrequentActivities;
+  }
+
+  /**
+   * Navigates to the activity
+   */
+  navigatetoActivity(activity: string) {
+    this.router.navigateByUrl(activity);
   }
 
   /**

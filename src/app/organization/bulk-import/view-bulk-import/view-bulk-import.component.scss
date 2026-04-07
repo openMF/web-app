@@ -1,13 +1,3 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-@use '../../../../assets/styles/colours' as *;
-
 .container {
   padding: 24px;
   max-width: 100%;
@@ -30,12 +20,11 @@
       display: flex;
       flex-direction: column;
       border-radius: 20px;
-      min-height: 400px;
 
       h3 {
         margin: 0 0 20px;
         font-weight: 500;
-        color: var(--md-sys-color-on-surface, #333);
+        color: #333;
       }
 
       h4 {
@@ -47,6 +36,7 @@
       mat-card-content {
         padding: 0;
         margin-bottom: 20px;
+        flex-grow: 1;
 
         mat-form-field {
           width: 100%;
@@ -65,11 +55,6 @@
         }
       }
 
-      .flex-spacer {
-        flex: 1;
-        min-height: 20px;
-      }
-
       mifosx-file-upload {
         margin: 16px 0;
         flex-grow: 1;
@@ -79,7 +64,7 @@
       mat-hint {
         margin: 12px 0;
         font-size: 12px;
-        color: var(--md-sys-color-on-surface-variant, #666);
+        color: #666;
       }
 
       .flex.cover {
@@ -97,7 +82,7 @@
     .documents {
       margin: 16px 0 20px;
       font-weight: 500;
-      color: var(--md-sys-color-on-surface, #333);
+      color: #333;
     }
 
     .m-b-10 {
@@ -138,26 +123,4 @@
 
 mat-paginator {
   margin-top: 16px;
-}
-
-:host-context(.dark-theme) {
-  .container {
-    .gap-2percent {
-      mat-card {
-        h3 {
-          color: $white;
-        }
-
-        h4 {
-          color: $white;
-        }
-      }
-    }
-
-    mat-card:last-child {
-      .documents {
-        color: $white;
-      }
-    }
-  }
 }

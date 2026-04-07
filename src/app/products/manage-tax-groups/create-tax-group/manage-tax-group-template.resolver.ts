@@ -1,32 +1,23 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
-/** Custom Services */
-import { ProductsService } from '../../products.service';
+import { TaxGroupService } from '@fineract/client';
 
 /**
  * Tax Group template data resolver.
  */
 @Injectable()
 export class ManageTaxGroupTemplateResolver {
-  private productsService = inject(ProductsService);
+  constructor(private taxGroupService: TaxGroupService) {}
 
   /**
    * Returns the tax groups template data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.productsService.getTaxGroupTemplate();
+    return this.taxGroupService.retrieveTemplate22();
   }
 }

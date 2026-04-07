@@ -1,32 +1,27 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import { SearchAPIService } from '@fineract/client';
 
 /**
  * Advance Search Template resolver.
  */
 @Injectable()
 export class AdvanceSearchTemplateResolver {
-  private organizationService = inject(OrganizationService);
+  /**
+   * @param {SearchAPIService} searchAPIService Search API service.
+   */
+  constructor(private searchAPIService: SearchAPIService) {}
 
   /**
    * Returns the Advance Search template.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.organizationService.getAdvanceSearchTemplate();
+    return this.searchAPIService.retrieveAdHocSearchQueryTemplate();
   }
 }

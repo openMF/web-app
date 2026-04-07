@@ -1,12 +1,4 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   MatDialogRef,
   MatDialogTitle,
@@ -20,7 +12,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-warning-dialog',
-  standalone: true,
   templateUrl: './warning-dialog.component.html',
   styleUrls: ['./warning-dialog.component.scss'],
   imports: [
@@ -33,13 +24,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class WarningDialogComponent {
-  dialogRef = inject<MatDialogRef<WarningDialogComponent>>(MatDialogRef);
-
   title: string;
   content: string;
   buttonText: string;
 
-  constructor() {
+  constructor(public dialogRef: MatDialogRef<WarningDialogComponent>) {
     this.title = environment.warningDialog.title;
     this.content = environment.warningDialog.content;
     this.buttonText = environment.warningDialog.buttonText;

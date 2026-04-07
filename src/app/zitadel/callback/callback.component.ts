@@ -1,45 +1,23 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Component, OnInit, inject } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthenticationService } from '../../core/authentication/authentication.service';
-import { AlertService } from '../../core/alert/alert.service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'mifosx-callback',
   templateUrl: './callback.component.html'
 })
 export class CallbackComponent implements OnInit {
-  private router = inject(Router);
-  private alertService = inject(AlertService);
-  private authenticationService = inject(AuthenticationService);
+  constructor(
+    private route: ActivatedRoute,
+    private authService: AuthService
+  ) {}
 
-  async ngOnInit(): Promise<void> {
-    try {
-      const success = await this.authenticationService.handleOAuthCallback();
+  ngOnInit(): void {
+    let code = localStorage.getItem('auth_code');
 
-      if (success) {
-        this.router.navigate(['/home']);
-      } else {
-        this.alertService.alert({
-          type: 'Authentication Failed',
-          message: 'Unable to complete authentication. Please try again.'
-        });
-        this.router.navigate(['/login']);
-      }
-    } catch (error) {
-      console.error('Authentication callback failed:', error);
-      this.alertService.alert({
-        type: 'Authentication Error',
-        message: 'An error occurred during authentication. Please try again.'
-      });
-      this.router.navigate(['/login']);
+    if (code) {
+      const codeVerifier = localStorage.getItem('code_verifier');
+      this.authService.exchangeCodeForTokens(code, codeVerifier);
     }
   }
 }

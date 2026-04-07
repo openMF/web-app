@@ -1,23 +1,18 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <div class="container mat-elevation-z8">
   <mat-card>
     <form [formGroup]="adjustLoanChargeForm" (ngSubmit)="submit()">
       <mat-card-content>
         <div class="layout-column">
-          <mifosx-input-amount
-            [currency]="loanDetailsData.currency"
-            [isRequired]="true"
-            [inputFormControl]="adjustLoanChargeForm.controls.amount"
-            [inputLabel]="'Amount'"
-          >
-          </mifosx-input-amount>
+          <mat-form-field appearance="fill">
+            <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
+            <span matTextSuffix class="m-l-10">{{ loanDetailsData.currency.code }}</span>
+            <span class="flex-auto"></span>
+            <input type="number" matInput required class="right-input" formControlName="amount" />
+            <mat-error *ngIf="adjustLoanChargeForm.controls.amount.hasError('required')">
+              {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
@@ -27,11 +22,9 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Payment Type' | translate }}</mat-label>
             <mat-select formControlName="paymentTypeId">
-              @for (paymentType of paymentTypes; track paymentType) {
-                <mat-option [value]="paymentType.id">
-                  {{ paymentType.name }}
-                </mat-option>
-              }
+              <mat-option *ngFor="let paymentType of paymentTypes" [value]="paymentType.id">
+                {{ paymentType.name }}
+              </mat-option>
             </mat-select>
           </mat-form-field>
 
@@ -45,28 +38,32 @@
             </span>
           </div>
 
-          @if (showPaymentDetails) {
+          <ng-container *ngIf="showPaymentDetails">
             <mat-form-field>
               <mat-label> {{ 'labels.inputs.Account' | translate }} #</mat-label>
               <input matInput formControlName="accountNumber" />
             </mat-form-field>
+
             <mat-form-field>
               <mat-label>{{ 'labels.inputs.Cheque' | translate }} #</mat-label>
               <input matInput formControlName="checkNumber" />
             </mat-form-field>
+
             <mat-form-field>
               <mat-label>{{ 'labels.inputs.Routing Code' | translate }}</mat-label>
               <input matInput formControlName="routingCode" />
             </mat-form-field>
+
             <mat-form-field>
               <mat-label>{{ 'labels.inputs.Reciept' | translate }} #</mat-label>
               <input matInput formControlName="receiptNumber" />
             </mat-form-field>
+
             <mat-form-field>
               <mat-label>{{ 'labels.inputs.Bank' | translate }} #</mat-label>
               <input matInput formControlName="bankNumber" />
             </mat-form-field>
-          }
+          </ng-container>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>
@@ -75,7 +72,7 @@
         </div>
 
         <mat-card-actions class="layout-row align-center gap-5px responsive-column">
-          <button type="button" mat-raised-button (click)="gotoLoanChargesView()">
+          <button type="button" mat-raised-button [routerLink]="['../..']">
             {{ 'labels.buttons.Cancel' | translate }}
           </button>
           <button

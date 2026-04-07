@@ -1,11 +1,3 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <div class="tab-container mat-typography">
   <div class="layout-row align-start-center">
     <h3 class="flex-90">{{ 'labels.heading.Documents' | translate }}</h3>
@@ -17,71 +9,51 @@
     </div>
   </div>
 
-  @if (entityDocuments?.length) {
-    <div>
-      <div class="document-grid">
-        @for (document of entityDocuments; track trackByDocumentId($index, document)) {
-          <div class="document-card">
-            <div
-              class="thumb"
-              [class.clickable]="isPreviewable(document)"
-              role="button"
-              tabindex="0"
-              [attr.aria-label]="('labels.buttons.Preview' | translate) + ': ' + document.name"
-              (keydown.enter)="isPreviewable(document) && openPreview(document)"
-              (keydown.space)="isPreviewable(document) && openPreview(document)"
-              (click)="isPreviewable(document) && openPreview(document)"
-            >
-              @if (previewThumbnails[document.id]) {
-                <img
-                  [src]="previewThumbnails[document.id]"
-                  [alt]="document.name"
-                  [title]="document.name"
-                  loading="lazy"
-                />
-              } @else {
-                <div class="placeholder">
-                  <fa-icon icon="file"></fa-icon>
-                  <span>{{ document.fileName || document.name }}</span>
-                </div>
-              }
-              @if (isPreviewable(document)) {
-                <div class="preview-overlay">
-                  <fa-icon icon="eye"></fa-icon>
-                </div>
-              }
-            </div>
-            <div class="card-body">
-              <div class="title">{{ document.name }}</div>
-              @if (document.fileName) {
-                <div class="meta">{{ document.fileName }}</div>
-              }
-              @if (document.description) {
-                <div class="description">{{ document.description }}</div>
-              }
-              <div class="actions">
-                <button
-                  mat-icon-button
-                  color="warn"
-                  (click)="deleteDocument(document.id, document.name)"
-                  title="Delete"
-                  [attr.aria-label]="'labels.buttons.Delete' | translate"
-                  *mifosxHasPermission="'DELETE_DOCUMENT'"
-                >
-                  <fa-icon icon="times"></fa-icon>
-                </button>
-              </div>
-            </div>
-          </div>
-        }
-      </div>
-    </div>
-  } @else {
-    <div class="empty-state">
-      <p>{{ 'labels.text.NoDocuments' | translate }}</p>
-      <p class="muted">{{ 'labels.text.UploadDocumentHint' | translate }}</p>
-    </div>
-  }
-</div>
+  <table mat-table #documentsTable [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.name' | translate }}</th>
+      <td mat-cell *matCellDef="let document">{{ document.name }}</td>
+    </ng-container>
 
-<div #lightboxRoot class="document-lightbox-host"></div>
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Description' | translate }}</th>
+      <td mat-cell *matCellDef="let document">{{ document.description }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="filename">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.File Name' | translate }}</th>
+      <td mat-cell *matCellDef="let document">{{ document.fileName }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Actions' | translate }}</th>
+      <td mat-cell *matCellDef="let document; let index">
+        <button
+          class="document-action-button"
+          mat-raised-button
+          color="primary"
+          (click)="downloadDocument(document.id)"
+        >
+          <fa-icon icon="cloud-download-alt"></fa-icon>
+        </button>
+        <button
+          class="document-action-button"
+          mat-raised-button
+          color="warn"
+          (click)="deleteDocument(document.id, document.name)"
+        >
+          <fa-icon icon="times"></fa-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    *ngIf="entityDocuments && entityDocuments.length > 10"
+    [pageSizeOptions]="[10, 25, 50]"
+    showFirstLastButtons
+  ></mat-paginator>
+</div>

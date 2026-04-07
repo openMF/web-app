@@ -1,32 +1,31 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { ClientsService } from '../clients.service';
+import { ClientsAddressService } from '@fineract/client';
 
 /**
  * Client Address Field Configuration resolver.
  */
 @Injectable()
 export class ClientAddressFieldConfigurationResolver {
-  private clientsService = inject(ClientsService);
+  /**
+   * @param {ClientsService} ClientsService Clients service.
+   */
+  constructor(private clientsAddressService: ClientsAddressService) {}
 
   /**
    * Returns the Client Address Field Configuration.
    * @returns {Observable<any>}
    */
-  resolve(): Observable<any> {
-    return this.clientsService.getAddressFieldConfiguration();
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const clientId = route.paramMap.get('clientId');
+    return this.clientsAddressService.getAddresses1({
+      clientid: Number(clientId)
+    });
   }
 }

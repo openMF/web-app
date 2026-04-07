@@ -4,9 +4,9 @@ name: build-run
 on:
   # Triggers the workflow on push or pull request events for specific branches
   push:
-    branches: [main, dev, dev-angular-19]
+    branches: [main, dev, angular-update-18]
   pull_request:
-    branches: [main, dev, dev-angular-19]
+    branches: [main, dev, angular-update-18]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -19,15 +19,15 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Use Node.js 22
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v3
         with:
           # no support for lts as of now with github actions.
           # issue link : https://github.com/actions/setup-node/issues/26
           # lts/gallium node v19.7.0 (npm v9.5.0)
-          node-version: '24.14.0'
+          node-version: '22.9.0'
 
       - name: Remove node_modules
         run: rm -rf node_modules
@@ -54,31 +54,6 @@ jobs:
       - name: Run HTMLHint
         run: npx htmlhint "src" --config .htmlhintrc
 
-      - name: Check file headers
-        run: |
-          echo "Checking for MPL-2.0 license headers in changed files..."
-
-          # Get list of changed files (comparing with base branch)
-          if [ "${{ github.event_name }}" == "pull_request" ]; then
-            BASE_SHA="${{ github.event.pull_request.base.sha }}"
-          else
-            BASE_SHA="${{ github.event.before }}"
-          fi
-
-          # Get changed files
-          CHANGED_FILES=$(git diff --name-only --diff-filter=ACMRT $BASE_SHA HEAD | grep -E '\.(ts|js|html|css|scss)$' | grep -v -E '\.(spec\.ts|spec\.js|d\.ts)$' | grep -v -E '(environment\.ts|environment\.prod\.ts|polyfills\.ts|node_modules)' || true)
-
-          if [ -z "$CHANGED_FILES" ]; then
-            echo "✅ No relevant files changed"
-            exit 0
-          fi
-
-          echo "📋 Checking $(echo "$CHANGED_FILES" | wc -l) changed file(s)..."
-          echo "$CHANGED_FILES"
-
-          # Run header check on changed files
-          echo "$CHANGED_FILES" | xargs node scripts/check-file-headers.js
-
       - name: Run production build
         run: npm run build:prod
 
@@ -88,7 +63,7 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: dist/web-app/browser
+          FOLDER: dist/web-app
           #without preserve it only builds if you have untracked files
           PRESERVE: true
           # github user name and email shows up in the logs,

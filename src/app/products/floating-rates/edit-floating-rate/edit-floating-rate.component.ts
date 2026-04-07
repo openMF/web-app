@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -29,7 +21,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
-import { ProductsService } from '../../products.service';
+import { FloatingRatesService } from '@fineract/client';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
@@ -76,15 +68,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditFloatingRateComponent implements OnInit {
-  private router = inject(Router);
-  private formBuilder = inject(UntypedFormBuilder);
-  private productsService = inject(ProductsService);
-  private route = inject(ActivatedRoute);
-  private dateUtils = inject(Dates);
-  private dialog = inject(MatDialog);
-  private settingsService = inject(SettingsService);
-  private translateService = inject(TranslateService);
-
   /** Floating Rate Form. */
   floatingRateForm: UntypedFormGroup;
   /** Floating Rate Data. */
@@ -116,14 +99,23 @@ export class EditFloatingRateComponent implements OnInit {
    * Retrieves the floating rate data from `resolve`.
    * @param {Router} router Router for navigation.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {ProductsService} productsService Product Service.
+   * @param {FloatingRatesService} floatingRatesService Floating Rates Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Dates} dateUtils Date Utils.
    * @param {MatDialog} dialog Dialog reference.
    * @param {SettingsService} settingsService Settings Service.
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor() {
+  constructor(
+    private router: Router,
+    private formBuilder: UntypedFormBuilder,
+    private floatingRatesService: FloatingRatesService,
+    private route: ActivatedRoute,
+    private dateUtils: Dates,
+    private dialog: MatDialog,
+    private settingsService: SettingsService,
+    private translateService: TranslateService
+  ) {
     this.route.data.subscribe((data: { floatingRate: any }) => {
       this.floatingRateData = data.floatingRate;
       this.floatingRatePeriodsData = data.floatingRate.ratePeriods ? data.floatingRate.ratePeriods : [];
@@ -250,8 +242,11 @@ export class EditFloatingRateComponent implements OnInit {
     });
     this.floatingRateForm.value.ratePeriods =
       this.floatingRatePeriodsData.length > 0 ? this.floatingRatePeriodsData : undefined;
-    this.productsService
-      .updateFloatingRate(this.route.snapshot.paramMap.get('id'), this.floatingRateForm.value)
+    this.floatingRatesService
+      .updateFloatingRate({
+        floatingRateId: +this.route.snapshot.paramMap.get('id'),
+        floatingRateRequest: this.floatingRateForm.value
+      })
       .subscribe((response: any) => {
         this.router.navigate(
           [

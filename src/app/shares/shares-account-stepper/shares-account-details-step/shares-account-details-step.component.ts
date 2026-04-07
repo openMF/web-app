@@ -1,18 +1,10 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, Input, Output, EventEmitter, inject } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Services */
-import { SharesService } from 'app/shares/shares.service';
+import { ShareAccountService } from '@fineract/client';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -32,10 +24,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class SharesAccountDetailsStepComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private sharesService = inject(SharesService);
-  private settingsService = inject(SettingsService);
-
   /** Shares Account Template */
   @Input() sharesAccountTemplate: any;
 
@@ -54,10 +42,14 @@ export class SharesAccountDetailsStepComponent implements OnInit {
   /**
    * Sets share account details form.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {SharesService} sharesService Shares Service.
+   * @param {ShareAccountService} shareAccountService Share Account Service.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor() {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private shareAccountService: ShareAccountService,
+    private settingsService: SettingsService
+  ) {
     this.createSharesAccountDetailsForm();
   }
 
@@ -101,9 +93,11 @@ export class SharesAccountDetailsStepComponent implements OnInit {
   buildDependencies() {
     const clientId = this.sharesAccountTemplate.clientId;
     this.sharesAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
-      this.sharesService.getSharesAccountTemplate(clientId, productId).subscribe((response: any) => {
-        this.sharesAccountProductTemplate.emit(response);
-      });
+      this.shareAccountService
+        .template7({ clientId: Number(clientId), productId: Number(productId), type: 'client' })
+        .subscribe((response: any) => {
+          this.sharesAccountProductTemplate.emit(response);
+        });
     });
   }
 

@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClientAssignStaffComponent } from './client-assign-staff/client-assign-staff.component';
 import { CloseClientComponent } from './close-client/close-client.component';
@@ -57,9 +49,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ClientActionsComponent {
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-
   /** Flag object to store possible actions and render appropriate UI to the user */
   actions: {
     'Assign Staff': boolean;
@@ -103,7 +92,10 @@ export class ClientActionsComponent {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     const name = this.route.snapshot.params['name'] as keyof typeof this.actions;
     this.actions[name] = true;

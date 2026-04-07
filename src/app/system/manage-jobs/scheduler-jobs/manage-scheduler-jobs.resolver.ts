@@ -1,11 +1,3 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
@@ -14,7 +6,7 @@ import { Resolve } from '@angular/router';
 import { Observable, forkJoin } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { SCHEDULERJOBService, SchedulerService } from '@fineract/client';
 
 /**
  * Manage Scheduler Jobs data resolver.
@@ -22,10 +14,13 @@ import { SystemService } from '../../system.service';
 @Injectable()
 export class ManageSchedulerJobsResolver implements Resolve<Object> {
   /**
-   * @param {SystemService} systemService System service.
+   * @param {SCHEDULERJOBService} schedulerJobService Scheduler Job service.
+   * @param {SchedulerService} schedulerService Scheduler service.
    */
-  // eslint-disable-next-line @angular-eslint/prefer-inject
-  constructor(private systemService: SystemService) {}
+  constructor(
+    private schedulerJobService: SCHEDULERJOBService,
+    private schedulerService: SchedulerService
+  ) {}
 
   /**
    * Returns the manage scheduler jobs data.
@@ -33,8 +28,8 @@ export class ManageSchedulerJobsResolver implements Resolve<Object> {
    */
   resolve() {
     return forkJoin([
-      this.systemService.getJobs(),
-      this.systemService.getScheduler()
+      this.schedulerJobService.retrieveAll8(),
+      this.schedulerService.retrieveStatus()
     ]);
   }
 }

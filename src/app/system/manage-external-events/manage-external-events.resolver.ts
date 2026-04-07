@@ -1,12 +1,4 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { SystemService } from 'app/customApis.service';
@@ -15,7 +7,10 @@ import { SystemService } from 'app/customApis.service';
   providedIn: 'root'
 })
 export class ManageExternalEventsResolver {
-  private systemService = inject(SystemService);
+  /**
+   * @param {SystemService} systemService System service.
+   */
+  constructor(private systemService: SystemService) {}
 
   /**
    * Returns the Configuration data.

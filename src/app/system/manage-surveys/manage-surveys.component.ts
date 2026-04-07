@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -26,7 +18,7 @@ import {
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { SystemService } from '../system.service';
+import { SPMAPILookUpTableService } from '@fineract/client';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatTooltip } from '@angular/material/tooltip';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -58,9 +50,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ManageSurveysComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private systemService = inject(SystemService);
-
   /* Surveys data */
   surveysData: any;
   /* Columns to be displayed in manage surveys data table */
@@ -83,8 +72,12 @@ export class ManageSurveysComponent implements OnInit {
   /**
    * Retrieves the surveys data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
+   * @param {SPMAPILookUpTableService} sPMAPILookUpTableService SPM API Look Up Table Service.
    */
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private sPMAPILookUpTableService: SPMAPILookUpTableService
+  ) {
     this.route.data.subscribe((data: { surveys: any }) => {
       this.surveysData = data.surveys;
     });
@@ -139,7 +132,7 @@ export class ManageSurveysComponent implements OnInit {
    * @param {any} survey Survey to activate.
    */
   activate(survey: any) {
-    this.systemService.activateSurvey(survey.id).subscribe(() => {
+    this.sPMAPILookUpTableService.createLookupTable(survey.id).subscribe(() => {
       const today = new Date().toISOString().split('T')[0];
       // This mimics the server-side logic
       survey.validFrom = today;
@@ -152,7 +145,7 @@ export class ManageSurveysComponent implements OnInit {
    * @param {any} survey Survey to deactivate.
    */
   deactivate(survey: any) {
-    this.systemService.deactivateSurvey(survey.id).subscribe(() => {
+    this.sPMAPILookUpTableService.createLookupTable(survey.id).subscribe(() => {
       const date = new Date();
       date.setDate(date.getDate() - 1); // Set to yesterday
       const yesterday = date.toISOString().split('T')[0];

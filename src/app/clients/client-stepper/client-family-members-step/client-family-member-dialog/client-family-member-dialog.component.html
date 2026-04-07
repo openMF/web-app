@@ -1,11 +1,3 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <h1 mat-dialog-title>{{ data.context }} {{ 'labels.heading.Family Member' | translate }}</h1>
 
 <form [formGroup]="familyMemberForm">
@@ -13,12 +5,10 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.First Name' | translate }}</mat-label>
       <input formControlName="firstName" required matInput />
-      @if (familyMemberForm.controls.firstName.hasError('required')) {
-        <mat-error>
-          {{ 'labels.inputs.First Name' | translate }} {{ 'labels.commons.is' | translate }}
-          <strong>{{ 'labels.commons.required' | translate }}</strong>
-        </mat-error>
-      }
+      <mat-error *ngIf="familyMemberForm.controls.firstName.hasError('required')">
+        {{ 'labels.inputs.First Name' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field class="flex-48">
@@ -29,12 +19,10 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Last Name' | translate }}</mat-label>
       <input formControlName="lastName" required matInput />
-      @if (familyMemberForm.controls.lastName.hasError('required')) {
-        <mat-error>
-          {{ 'labels.inputs.Last Name' | translate }} {{ 'labels.commons.is' | translate }}
-          <strong>{{ 'labels.commons.required' | translate }}</strong>
-        </mat-error>
-      }
+      <mat-error *ngIf="familyMemberForm.controls.lastName.hasError('required')">
+        {{ 'labels.inputs.Last Name' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field class="flex-48">
@@ -54,56 +42,44 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Relationship' | translate }}</mat-label>
       <mat-select formControlName="relationshipId" required>
-        @for (relation of data.options.relationshipIdOptions; track relation) {
-          <mat-option [value]="relation.id">
-            {{ relation.name | translateKey: 'catalogs' }}
-          </mat-option>
-        }
+        <mat-option *ngFor="let relation of data.options.relationshipIdOptions" [value]="relation.id">
+          {{ relation.name | translateKey: 'catalogs' }}
+        </mat-option>
       </mat-select>
-      @if (familyMemberForm.controls.relationshipId.hasError('required')) {
-        <mat-error>
-          {{ 'labels.inputs.Relationship' | translate }} {{ 'labels.commons.is' | translate }}
-          <strong>{{ 'labels.commons.required' | translate }}</strong>
-        </mat-error>
-      }
+      <mat-error *ngIf="familyMemberForm.controls.relationshipId.hasError('required')">
+        {{ 'labels.inputs.Relationship' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Gender' | translate }}</mat-label>
       <mat-select formControlName="genderId" required>
-        @for (gender of data.options.genderIdOptions; track gender) {
-          <mat-option [value]="gender.id">
-            {{ gender.name | translateKey: 'catalogs' }}
-          </mat-option>
-        }
+        <mat-option *ngFor="let gender of data.options.genderIdOptions" [value]="gender.id">
+          {{ gender.name | translateKey: 'catalogs' }}
+        </mat-option>
       </mat-select>
-      @if (familyMemberForm.controls.genderId.hasError('required')) {
-        <mat-error>
-          {{ 'labels.inputs.Gender' | translate }} {{ 'labels.commons.is' | translate }}
-          <strong>{{ 'labels.commons.required' | translate }}</strong>
-        </mat-error>
-      }
+      <mat-error *ngIf="familyMemberForm.controls.genderId.hasError('required')">
+        {{ 'labels.inputs.Gender' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Profession' | translate }}</mat-label>
       <mat-select formControlName="professionId">
-        @for (profession of data.options.professionIdOptions; track profession) {
-          <mat-option [value]="profession.id">
-            {{ profession.name | translateKey: 'catalogs' }}
-          </mat-option>
-        }
+        <mat-option *ngFor="let profession of data.options.professionIdOptions" [value]="profession.id">
+          {{ profession.name | translateKey: 'catalogs' }}
+        </mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Marital Status' | translate }}</mat-label>
       <mat-select formControlName="maritalStatusId">
-        @for (maritalStatus of data.options.maritalStatusIdOptions; track maritalStatus) {
-          <mat-option [value]="maritalStatus.id">
-            {{ maritalStatus.name | translateKey: 'catalogs' }}
-          </mat-option>
-        }
+        <mat-option *ngFor="let maritalStatus of data.options.maritalStatusIdOptions" [value]="maritalStatus.id">
+          {{ maritalStatus.name | translateKey: 'catalogs' }}
+        </mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -114,7 +90,7 @@
         matInput
         [max]="maxDate"
         [matDatepicker]="dueDatePicker"
-        placeholder="{{ 'labels.text.Optional' | translate }}"
+        placeholder="Optional"
       />
       <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #dueDatePicker></mat-datepicker>

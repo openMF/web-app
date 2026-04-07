@@ -1,12 +1,4 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Accounting } from 'app/core/utils/accounting';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -54,9 +46,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ShareProductGeneralTabComponent {
-  private route = inject(ActivatedRoute);
-  private accounting = inject(Accounting);
-
   shareProduct: any;
 
   marketPriceDisplayedColumns: string[] = [
@@ -70,7 +59,10 @@ export class ShareProductGeneralTabComponent {
     'chargeTimeType'
   ];
 
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private accounting: Accounting
+  ) {
     this.route.data.subscribe((data: { shareProduct: any }) => {
       this.shareProduct = data.shareProduct;
     });

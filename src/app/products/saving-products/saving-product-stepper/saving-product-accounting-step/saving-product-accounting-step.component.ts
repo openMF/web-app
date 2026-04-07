@@ -1,12 +1,4 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Component, OnInit, Input, inject } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -74,10 +66,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class SavingProductAccountingStepComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private dialog = inject(MatDialog);
-  private translateService = inject(TranslateService);
-
   @Input() savingProductsTemplate: any;
   @Input() accountingRuleData: any;
   @Input() isDormancyTrackingActive: UntypedFormControl;
@@ -107,7 +95,11 @@ export class SavingProductAccountingStepComponent implements OnInit {
     'actions'
   ];
 
-  constructor() {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private dialog: MatDialog,
+    private translateService: TranslateService
+  ) {
     this.createsavingProductAccountingForm();
     this.setConditionalControls();
   }
@@ -434,6 +426,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
         required: true,
         order: 2
       })
+
     ];
     return formfields;
   }
@@ -456,6 +449,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
         required: true,
         order: 2
       })
+
     ];
     return formfields;
   }
@@ -478,6 +472,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
         required: true,
         order: 2
       })
+
     ];
     return formfields;
   }

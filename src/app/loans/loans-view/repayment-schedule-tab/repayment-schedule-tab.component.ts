@@ -1,31 +1,8 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import {
-  Component,
-  DestroyRef,
-  EventEmitter,
-  inject,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges
-} from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
-import {
-  RepaymentSchedule,
-  RepaymentSchedulePeriod,
-  RepaymentScheduleEditCache
-} from 'app/loans/models/loan-account.model';
+import { RepaymentSchedulePeriod } from 'app/loans/models/loan-account.model';
 import { SettingsService } from 'app/settings/settings.service';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
@@ -88,21 +65,16 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
-  private route = inject(ActivatedRoute);
-  private settingsService = inject(SettingsService);
-  private dateUtils = inject(Dates);
-  private dialog = inject(MatDialog);
-
   /** Currency Code */
   @Input() currencyCode: string;
   /** Loan Repayment Schedule to be Edited */
   @Input() forEditing = false;
   /** Loan Repayment Schedule Details Data */
-  @Input() repaymentScheduleDetails: RepaymentSchedule | null = null;
-  loanDetailsDataRepaymentSchedule: RepaymentSchedule | null = null;
+  @Input() repaymentScheduleDetails: any = null;
+  loanDetailsDataRepaymentSchedule: any = [];
 
-  editCache: { [key: string]: RepaymentScheduleEditCache } = {};
-  listOfData: RepaymentSchedulePeriod[] = [];
+  editCache: { [key: string]: any } = {};
+  listOfData: any[] = [];
 
   repaymentSchedulePeriods: RepaymentSchedulePeriod[] = [];
 
@@ -146,76 +118,34 @@ export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
 
   businessDate: Date = new Date();
 
-  private destroyRef = inject(DestroyRef);
-
   /**
    * Retrieves the loans with associations data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private settingsService: SettingsService,
+    private dateUtils: Dates,
+    private dialog: MatDialog
+  ) {
+    this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
+      if (data.loanDetailsData) {
+        this.currencyCode = data.loanDetailsData.currency.code;
+      }
+      this.loanDetailsDataRepaymentSchedule = data.loanDetailsData ? data.loanDetailsData.repaymentSchedule : [];
+    });
     this.businessDate = this.settingsService.businessDate;
   }
 
   ngOnInit() {
-    if (this.route.parent) {
-      this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
-        next: (data: { loanDetailsData: { repaymentSchedule?: RepaymentSchedule; currency?: { code: string } } }) => {
-          this.loanDetailsDataRepaymentSchedule =
-            data.loanDetailsData?.repaymentSchedule ?? this.getDefaultRepaymentSchedule();
-          if (data.loanDetailsData?.currency?.code) {
-            this.currencyCode = data.loanDetailsData.currency.code;
-          }
-          this.initializeRepaymentSchedule();
-        },
-        error: (err) => {
-          console.error('Failed to load loan repayment schedule data:', err);
-          this.loanDetailsDataRepaymentSchedule = this.getDefaultRepaymentSchedule();
-          this.initializeRepaymentSchedule();
-        }
-      });
-    } else {
-      this.loanDetailsDataRepaymentSchedule = this.getDefaultRepaymentSchedule();
-      this.initializeRepaymentSchedule();
+    if (this.repaymentScheduleDetails == null) {
+      this.repaymentScheduleDetails = this.loanDetailsDataRepaymentSchedule;
     }
-  }
-
-  private initializeRepaymentSchedule(): void {
-    if (!this.repaymentScheduleDetails) {
-      this.repaymentScheduleDetails = this.loanDetailsDataRepaymentSchedule ?? this.getDefaultRepaymentSchedule();
-    } else {
-      this.repaymentScheduleDetails.periods ??= [];
-      this.repaymentScheduleDetails.totalWaived ??= 0;
-    }
-    this.isWaived = (this.repaymentScheduleDetails.totalWaived ?? 0) > 0;
+    this.isWaived = this.repaymentScheduleDetails.totalWaived > 0;
     this.updateEditCache();
   }
 
-  private getDefaultRepaymentSchedule(): RepaymentSchedule {
-    return {
-      periods: [],
-      totalWaived: 0,
-      currency: {} as any,
-      loanTermInDays: 0,
-      totalPrincipalDisbursed: 0,
-      totalPrincipalExpected: 0,
-      totalPrincipalPaid: 0,
-      totalInterestCharged: 0,
-      totalFeeChargesCharged: 0,
-      totalPenaltyChargesCharged: 0,
-      totalWrittenOff: 0,
-      totalRepaymentExpected: 0,
-      totalRepayment: 0,
-      totalPaidInAdvance: 0,
-      totalPaidLate: 0,
-      totalOutstanding: 0,
-      totalCredits: 0
-    };
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['repaymentScheduleDetails'] && !changes['repaymentScheduleDetails'].firstChange) {
-      this.initializeRepaymentSchedule();
-    }
     this.totalRepaymentExpected = 0;
     this.listOfData.forEach((item) => {
       this.totalRepaymentExpected = this.totalRepaymentExpected + item.totalDueForPeriod;
@@ -286,9 +216,6 @@ export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
   }
 
   editInstallment(period: RepaymentSchedulePeriod): void {
-    if (!period.period) {
-      return;
-    }
     this.editCache[period.period].edit = true;
     const formfields: FormfieldBase[] = [
       new DatepickerBase({
@@ -305,6 +232,7 @@ export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
         type: 'number',
         required: true
       })
+
     ];
 
     const data = {
@@ -312,17 +240,14 @@ export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
       formfields: formfields
     };
     const addDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
-    addDialogRef.afterClosed().subscribe((response: { data?: { value?: Record<string, unknown> } }) => {
+    addDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
       }
     });
   }
 
   cancelEdit(id: string): void {
-    const index = this.listOfData.findIndex((item) => item.period?.toString() === id);
-    if (index === -1) {
-      return;
-    }
+    const index = this.listOfData.findIndex((item) => item.id === id);
     this.editCache[id] = {
       data: { ...this.listOfData[index] },
       edit: false
@@ -330,17 +255,14 @@ export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
   }
 
   saveEdit(period: string): void {
-    const index = this.listOfData.findIndex((item) => item.period?.toString() === period);
-    if (index === -1) {
-      return;
-    }
+    const index = this.listOfData.findIndex((item) => item.period === period);
     Object.assign(this.listOfData[index], this.editCache[period].data);
     this.editCache[period].edit = false;
     this.editPeriod.emit(period);
   }
 
   updateEditCache(): void {
-    if (this.repaymentScheduleDetails?.periods) {
+    if (this.repaymentScheduleDetails != null) {
       this.listOfData = this.repaymentScheduleDetails.periods;
       this.totalRepaymentExpected = 0;
       this.listOfData.forEach((item) => {
@@ -353,7 +275,7 @@ export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
     }
   }
 
-  numberOnly(inputFormControl: { value: string }, event: KeyboardEvent): boolean {
+  numberOnly(inputFormControl: any, event: any): boolean {
     const charCode = event.which ? event.which : event.keyCode;
     if (charCode === 46) {
       if (!(inputFormControl.value.indexOf('.') > -1)) {

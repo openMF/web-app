@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import {
@@ -25,15 +17,13 @@ import {
 } from '@angular/material/table';
 
 /** Custom Services */
-import { OrganizationService } from 'app/organization/organization.service';
+import { ProvisioningCriteriaService } from '@fineract/client';
 
 /** Dialog Component */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatDivider } from '@angular/material/divider';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-
-import { LoanProduct } from 'app/products/loan-products/models/loan-product.model';
 
 /**
  * View Loan Provisioning
@@ -59,11 +49,6 @@ import { LoanProduct } from 'app/products/loan-products/models/loan-product.mode
   ]
 })
 export class ViewLoanProvisioningCriteriaComponent implements OnInit {
-  private organizationService = inject(OrganizationService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  dialog = inject(MatDialog);
-
   /** Loan Provisioning data. */
   provisioningData: any;
   /** Loan Product String. */
@@ -82,12 +67,17 @@ export class ViewLoanProvisioningCriteriaComponent implements OnInit {
 
   /**
    * Retrieves the Provisioning data from `resolve`.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {ProvisioningCriteriaService} provisioningCriteriaService Provisioning Criteria Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor() {
+  constructor(
+    private provisioningCriteriaService: ProvisioningCriteriaService,
+    private route: ActivatedRoute,
+    private router: Router,
+    public dialog: MatDialog
+  ) {
     this.route.data.subscribe((data: { loanProvisioningCriteria: any }) => {
       this.provisioningData = data.loanProvisioningCriteria;
     });
@@ -103,14 +93,9 @@ export class ViewLoanProvisioningCriteriaComponent implements OnInit {
   setLoanProvisioningSelectedCriteria() {
     this.dataSource = new MatTableDataSource(this.provisioningData.definitions);
 
-    // Get loan products as a comma-separated string, no trailing comma, with type safety
-    if (this.provisioningData.loanProducts && this.provisioningData.loanProducts.length > 0) {
-      this.loanProducts = (this.provisioningData.loanProducts as LoanProduct[])
-        .filter((p) => p && p.name)
-        .map((p) => p.name)
-        .join(', ');
-    } else {
-      this.loanProducts = '';
+    /** Get load products as a string. */
+    for (let _id = 0; _id < this.provisioningData.loanProducts.length; _id++) {
+      this.loanProducts += this.provisioningData.loanProducts[_id].name + ',';
     }
   }
 
@@ -123,14 +108,9 @@ export class ViewLoanProvisioningCriteriaComponent implements OnInit {
     });
     deleteCriteriaDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.organizationService.deleteProvisioningCriteria(this.provisioningData.criteriaId).subscribe(
-          () => {
-            this.router.navigate(['/organization/provisioning-criteria']);
-          },
-          (error) => {
-            console.error('Failed to delete provisioning criteria:', error);
-          }
-        );
+        this.provisioningCriteriaService.deleteProvisioningCriteria(this.provisioningData.criteriaId).subscribe(() => {
+          this.router.navigate(['/organization/provisioningcriteria']);
+        });
       }
     });
   }

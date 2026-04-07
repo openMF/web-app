@@ -20,15 +20,10 @@ interface Window {
     waitTimeForNotifications?: number;
     waitTimeForCOBCatchUp?: number;
     sessionIdleTimeout?: number;
-    mifosInterbankTransfersApiUrl?: string;
-    mifosInterbankTransfersApiProvider?: string;
-    mifosInterbankTransfersApiVersion?: string;
-    mifosInterbankTransfersEnabled?: boolean;
-    mifosRemittanceApiUrl?: string;
-    mifosRemittanceApiProvider?: string;
-    mifosRemittanceApiVersion?: string;
-    mifosRemittanceEnabled?: boolean;
-    mifosRemittanceApiKey?: string;
+    vNextApiUrl?: string;
+    vNextApiProvider?: string;
+    vNextApiVersion?: string;
+    interbankTransfers?: boolean;
     minPasswordLength?: number;
   };
 }

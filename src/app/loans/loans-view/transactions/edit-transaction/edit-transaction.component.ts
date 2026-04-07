@@ -1,23 +1,22 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  UntypedFormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { LoanTransactionsService } from '@fineract/client';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
-import { LoansService } from 'app/loans/loans.service';
+import { SettingsService } from 'app/settings/settings.service';
 import { Currency } from 'app/shared/models/general.model';
 import { InputAmountComponent } from '../../../../shared/input-amount/input-amount.component';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { LoanAccountActionsBaseComponent } from '../../loan-account-actions/loan-account-actions-base.component';
 
 /**
  * Edit Transaction component.
@@ -32,11 +31,7 @@ import { LoanAccountActionsBaseComponent } from '../../loan-account-actions/loan
     MatSlideToggle
   ]
 })
-export class EditTransactionComponent extends LoanAccountActionsBaseComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private dateUtils = inject(Dates);
-  private loansService = inject(LoansService);
-
+export class EditTransactionComponent implements OnInit {
   /** Minimum Due Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Due Date allowed. */
@@ -63,13 +58,20 @@ export class EditTransactionComponent extends LoanAccountActionsBaseComponent im
    * Retrieves the Loan Account transaction template data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {LoansService} loansService Loans Service.
+   * @param {LoanTransactionsService} loanTransactionsService Loan Transactions Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Dates} dateUtils Date Utils.
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor() {
-    super();
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates,
+    private loanTransactionsService: LoanTransactionsService,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { loansAccountTransactionTemplate: any }) => {
       this.transactionTemplateData = data.loansAccountTransactionTemplate;
       if (data.loansAccountTransactionTemplate.currency) {
@@ -149,15 +151,14 @@ export class EditTransactionComponent extends LoanAccountActionsBaseComponent im
       locale
     };
     data['transactionAmount'] = data['transactionAmount'] * 1;
-    this.loansService
-      .executeLoansAccountTransactionsCommand(this.loanAccountId, 'modify', data, this.transactionTemplateData.id)
+    this.loanTransactionsService
+      .adjustLoanTransaction({
+        loanId: Number(this.loanAccountId),
+        transactionId: Number(this.transactionTemplateData.id),
+        postLoansLoanIdTransactionsTransactionIdRequest: data
+      })
       .subscribe((res: any) => {
-        this.router.navigate(['../'], {
-          queryParams: {
-            productType: this.loanProductService.productType.value
-          },
-          relativeTo: this.route
-        });
+        this.router.navigate(['../'], { relativeTo: this.route });
       });
   }
 }

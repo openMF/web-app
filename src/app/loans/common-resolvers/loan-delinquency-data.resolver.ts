@@ -1,44 +1,33 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { LoansService } from '../loans.service';
-import { LoanBaseResolver } from './loan-base.resolver';
+import { LoansService } from '@fineract/client';
 
 /**
  * Loan Delinquency data resolver.
  */
 @Injectable()
-export class LoanDelinquencyDataResolver extends LoanBaseResolver {
-  private loansService = inject(LoansService);
-
-  constructor() {
-    super();
-  }
+export class LoanDelinquencyDataResolver {
+  /**
+   * @param {LoansService} LoansService Loans service.
+   */
+  constructor(private loansService: LoansService) {}
 
   /**
    * Returns the Loans with Association data.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    this.initialize(route);
     const loanId = route.paramMap.get('loanId') || route.parent.paramMap.get('loanId');
-    if (!isNaN(+loanId)) {
-      if (this.isLoanProduct) {
-        return this.loansService.getDelinquencyData(loanId);
-      }
-    }
+    return this.loansService.retrieveLoan({
+      loanId: Number(loanId),
+      associations: 'collection',
+      exclude: 'guarantors,futureSchedule'
+    });
   }
 }

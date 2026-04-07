@@ -1,19 +1,10 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Currency } from '../models/general.model';
-import { UntypedFormControl } from '@angular/forms';
-import { CurrencyPipe } from '@angular/common';
-import { MatHint } from '@angular/material/form-field';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
+import { NgIf, CurrencyPipe } from '@angular/common';
+import { MatFormField, MatLabel, MatError, MatHint, MatSuffix } from '@angular/material/form-field';
 import { FormatAmountDirective } from '../../directives/format-amount.directive';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { amountValueValidator } from '../validators/amount-value.validator';
 
 @Component({
   selector: 'mifosx-input-amount',
@@ -26,22 +17,15 @@ import { amountValueValidator } from '../validators/amount-value.validator';
     CurrencyPipe
   ]
 })
-export class InputAmountComponent implements OnInit {
+export class InputAmountComponent {
   @Input() isRequired = false;
   @Input() currency: Currency;
   @Input() inputLabel: string;
   @Input() inputFormControl: UntypedFormControl;
-  @Input() minVal: number;
-  @Input() maxVal: number;
 
   displayHint = false;
 
   constructor() {}
-
-  ngOnInit(): void {
-    this.inputFormControl.addValidators(amountValueValidator());
-    this.inputFormControl.updateValueAndValidity({ emitEvent: false });
-  }
 
   numberOnly(event: any): boolean {
     const charCode = event.which ? event.which : event.keyCode;
@@ -54,5 +38,13 @@ export class InputAmountComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  inputBlur(): void {
+    this.displayHint = false;
+  }
+
+  inputFocus(): void {
+    this.displayHint = true;
   }
 }

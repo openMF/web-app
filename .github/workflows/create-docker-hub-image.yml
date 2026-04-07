@@ -2,7 +2,7 @@ name: Publish Image in Docker Hub
 
 on:
   push:
-    branches: [main, dev, dev-angular-19]
+    branches: [main, dev, angular-update]
 
 jobs:
   build:
@@ -11,10 +11,10 @@ jobs:
       DOCKER_ORGANIZATION: ${{ secrets.DOCKER_ORGANIZATION }}
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v2
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v4
+        uses: docker/setup-qemu-action@v2
 
       - name: Set up Docker Buildx
         id: buildx
@@ -23,7 +23,7 @@ jobs:
           install: true
 
       - name: Log in to Docker Hub
-        uses: docker/login-action@v4
+        uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}

@@ -1,32 +1,27 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { AccountingService } from '../../accounting.service';
+import { GeneralLedgerAccountService } from '@fineract/client';
 
 /**
  * Chart of accounts template data resolver.
  */
 @Injectable()
 export class ChartOfAccountsTemplateResolver {
-  private accountingService = inject(AccountingService);
+  /**
+   * @param {GeneralLedgerAccountService} generalLedgerAccountService General Ledger Account service.
+   */
+  constructor(private generalLedgerAccountService: GeneralLedgerAccountService) {}
 
   /**
    * Returns the chart of accounts template data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.accountingService.getChartOfAccountsTemplate();
+    return this.generalLedgerAccountService.getGlAccountsTemplate();
   }
 }

@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, ViewChild, inject } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Components */
@@ -16,7 +8,7 @@ import { SavingsAccountTermsStepComponent } from '../savings-account-stepper/sav
 import { SavingsAccountChargesStepComponent } from '../savings-account-stepper/savings-account-charges-step/savings-account-charges-step.component';
 
 /** Custom Services */
-import { SavingsService } from '../savings.service';
+import { SavingsAccountService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
@@ -45,12 +37,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditSavingsAccountComponent {
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private dateUtils = inject(Dates);
-  private savingsService = inject(SavingsService);
-  private settingsService = inject(SettingsService);
-
   /** Savings Account Template */
   savingsAccountAndTemplate: any;
   /** Savings Account Product Template */
@@ -71,10 +57,16 @@ export class EditSavingsAccountComponent {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {Dates} dateUtils Date Utils
-   * @param {SavingsService} savingsService Savings Service
+   * @param {SavingsAccountService} savingsAccountService Savings Account Service
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates,
+    private savingsAccountService: SavingsAccountService,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { savingsAccountAndTemplate: any }) => {
       this.savingsAccountAndTemplate = data.savingsAccountAndTemplate;
     });
@@ -153,8 +145,8 @@ export class EditSavingsAccountComponent {
     } else {
       savingsAccount.groupId = this.savingsAccountAndTemplate.groupId;
     }
-    this.savingsService
-      .updateSavingsAccount(this.savingsAccountAndTemplate.id, savingsAccount)
+    this.savingsAccountService
+      .update20(this.savingsAccountAndTemplate.id, savingsAccount)
       .subscribe((response: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });

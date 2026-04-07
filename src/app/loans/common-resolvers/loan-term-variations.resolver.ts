@@ -1,27 +1,22 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { LoansService } from '../loans.service';
+import { LoanInterestPauseService } from '@fineract/client';
 
 /**
  * Clients data resolver.
  */
 @Injectable()
 export class LoanTermVariationsResolver {
-  private loansService = inject(LoansService);
+  /**
+   * @param {LoanInterestPauseService} loanInterestPauseService Loan Interest Pause service.
+   */
+  constructor(private loanInterestPauseService: LoanInterestPauseService) {}
 
   /**
    * Returns the Loans with Association data.
@@ -30,7 +25,9 @@ export class LoanTermVariationsResolver {
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const loanId = route.paramMap.get('loanId') || route.parent.paramMap.get('loanId');
     if (!isNaN(+loanId)) {
-      return this.loansService.getInterestPausesOfLoan(loanId);
+      return this.loanInterestPauseService.retrieveInterestPauses({
+        loanId: Number(loanId)
+      });
     }
   }
 }

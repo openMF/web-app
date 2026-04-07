@@ -1,19 +1,19 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  UntypedFormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
+import { LoansService, LoanChargesService } from '@fineract/client';
+import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 
 /**
  * Create Add Loan Charge component.
@@ -26,10 +26,7 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
     ...STANDALONE_SHARED_IMPORTS
   ]
 })
-export class AddLoanChargeComponent extends LoanAccountActionsBaseComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private dateUtils = inject(Dates);
-
+export class AddLoanChargeComponent implements OnInit {
   /** Minimum Due Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Due Date allowed. */
@@ -52,14 +49,26 @@ export class AddLoanChargeComponent extends LoanAccountActionsBaseComponent impl
       value: any;
     };
   }[];
+  /** loan Id of the loan account. */
+  loanId: string;
 
   /**
    * Retrieves the loan charge template data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
+   * @param {AccountingService} accountingService Accounting Service.
+   * @param {ActivatedRoute} route Activated Route.
+   * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor() {
-    super();
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates,
+    private loansService: LoansService,
+    private loanChargesService: LoanChargesService,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { actionButtonData: any }) => {
       this.loanChargeOptions = data.actionButtonData.chargeOptions;
     });
@@ -120,8 +129,13 @@ export class AddLoanChargeComponent extends LoanAccountActionsBaseComponent impl
       dateFormat,
       locale
     };
-    this.loanService.createLoanCharge(this.loanId, 'charges', data).subscribe((res) => {
-      this.gotoLoanDefaultView();
-    });
+    this.loanChargesService
+      .executeLoanCharge({
+        loanId: parseInt(this.loanId, 10),
+        postLoansLoanIdChargesRequest: data
+      })
+      .subscribe((res: any) => {
+        this.router.navigate(['../../general'], { relativeTo: this.route });
+      });
   }
 }

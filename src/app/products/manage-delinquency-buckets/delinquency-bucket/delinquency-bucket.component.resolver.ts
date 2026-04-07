@@ -1,27 +1,18 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
-/** Custom Services */
-import { ProductsService } from '../../products.service';
+import { DelinquencyRangeAndBucketsManagementService } from '@fineract/client';
 
 /**
  * Delinquency Bucket Component data resolver.
  */
 @Injectable()
 export class DelinquencyBucketComponentsResolver {
-  private productsService = inject(ProductsService);
+  constructor(private delinquencyService: DelinquencyRangeAndBucketsManagementService) {}
 
   /**
    * Returns the delinquency buckets data.
@@ -30,9 +21,9 @@ export class DelinquencyBucketComponentsResolver {
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const delinquentcyBucketId = route.paramMap.get('bucketId');
     if (delinquentcyBucketId === null) {
-      return this.productsService.getDelinquencyBuckets();
+      return this.delinquencyService.getDelinquencyBuckets();
     } else {
-      return this.productsService.getDelinquencyBucket(delinquentcyBucketId);
+      return this.delinquencyService.getDelinquencyBucket({ delinquencyBucketId: +delinquentcyBucketId });
     }
   }
 }

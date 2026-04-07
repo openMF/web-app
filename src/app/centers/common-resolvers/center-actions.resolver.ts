@@ -1,53 +1,74 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 /** Custom Services */
-import { CentersService } from '../centers.service';
+import { CentersService, CalendarService, RunReportsService } from '@fineract/client';
+import { CentersService as CustomCentersService } from 'app/customApis.service';
 
 /**
- * Group Actions data resolver.
+ * Center actions resolver.
  */
 @Injectable()
 export class CenterActionsResolver {
-  private centersService = inject(CentersService);
+  /**
+   * @param {CentersService} centersService Centers service.
+   * @param {CalendarService} calendarService Calendar service.
+   * @param {RunReportsService} runReportsService RunReports service.
+   * @param {HttpClient} http HttpClient.
+   */
+  constructor(
+    private centersService: CentersService,
+    private calendarService: CalendarService,
+    private runReportsService: RunReportsService,
+    private customCentersService: CustomCentersService
+  ) {}
 
   /**
-   * Returns the Centers account actions data.
-   * @param {ActivatedRouteSnapshot} route Route Snapshot
+   * Returns the Center actions data.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const actionName = route.paramMap.get('action');
-    const centerId = route.paramMap.get('centerId') || route.parent.parent.paramMap.get('centerId');
+    const actionName = route.paramMap.get('name');
+    const centerId = parseInt(route.parent.paramMap.get('centerId'), 10);
+    const calendarId = parseInt(route.queryParamMap.get('calendarId'), 10);
+
     switch (actionName) {
       case 'Assign Staff':
-        return this.centersService.getGroupStaffData(centerId);
+        return this.centersService.retrieveOne14({
+          centerId,
+          staffInSelectedOfficeOnly: true,
+          template: 'true',
+          groupOrCenter: 'centers'
+        } as any);
       case 'Attendance':
-        return this.centersService.getCentersData(centerId, 'groupMembers,collectionMeetingCalendar');
+        return this.centersService.retrieveOne14({
+          centerId,
+          associations: 'groupMembers,collectionMeetingCalendar'
+        } as any);
       case 'Manage Groups':
-        return this.centersService.getCentersData(centerId, 'groupMembers', 'true');
+        return this.centersService.retrieveOne14({ centerId, associations: 'groupMembers', template: 'true' } as any);
       case 'Attach Meeting':
-        return this.centersService.getCalendarTemplate(centerId);
+        return this.customCentersService.getCalendarTemplate(centerId);
       case 'Edit Meeting':
-      case 'Edit Meeting Schedule':
-        const calendarId = route.queryParamMap.get('calendarId');
-        return this.centersService.getCalendarAndTemplate(centerId, calendarId);
+        return this.calendarService.retrieveCalendar({
+          calendarId,
+          entityType: 'centers',
+          entityId: centerId,
+          template: 'true'
+        } as any);
       case 'Staff Assignment History':
-        return this.centersService.getStaffAssignmentHistoryData('Staff Assignment History', centerId, 'default', 'en');
+        return this.runReportsService.runReport({
+          reportName: 'Staff Assignment History',
+          R_centerId: centerId,
+          tenantIdentifier: 'default',
+          locale: 'en'
+        } as any);
       default:
-        return undefined;
+        return of(null);
     }
   }
 }

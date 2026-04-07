@@ -1,18 +1,10 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { ClientsService } from '../../../clients.service';
+import { ClientFamilyMemberService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -31,13 +23,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class AddFamilyMemberComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private dateUtils = inject(Dates);
-  private router = inject(Router);
-  private route = inject(ActivatedRoute);
-  private clientsService = inject(ClientsService);
-  private settingsService = inject(SettingsService);
-
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Minimum age allowed is 0. */
@@ -57,7 +42,14 @@ export class AddFamilyMemberComponent implements OnInit {
    * @param {ClientsService} clientsService Clients Service
    * @param {SettingsService} settingsService Setting service
    */
-  constructor() {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private dateUtils: Dates,
+    private router: Router,
+    private route: ActivatedRoute,
+    private clientFamilyMemberService: ClientFamilyMemberService,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { clientTemplate: any }) => {
       this.addFamilyMemberTemplate = data.clientTemplate.familyMemberOptions;
     });
@@ -160,8 +152,7 @@ export class AddFamilyMemberComponent implements OnInit {
       dateFormat,
       locale
     };
-
-    this.clientsService.addFamilyMember(this.clientId, data).subscribe((res) => {
+    this.clientFamilyMemberService.addClientFamilyMembers(this.clientId, data).subscribe((res) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

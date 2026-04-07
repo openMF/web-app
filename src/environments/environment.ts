@@ -1,11 +1,3 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 // The file contents for the current environment will overwrite these during build.
 // The build system defaults to the dev environment which uses `environment.ts`, but if you do
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
@@ -17,9 +9,6 @@ import env from './.env';
 // The `window.env` object is loaded in the `index.html` file
 const loadedEnv = window.env || {};
 
-const parsedMinLength = Number(loadedEnv.minPasswordLength);
-const resolvedMinPasswordLength = Number.isInteger(parsedMinLength) && parsedMinLength > 0 ? parsedMinLength : 8;
-
 export const environment = {
   production: false,
   version: env.mifos_x.version,
@@ -29,7 +18,8 @@ export const environment = {
   fineractPlatformTenantIds: loadedEnv.fineractPlatformTenantIds || 'default',
   // For connecting to others servers running elsewhere update the base API URL
   baseApiUrls:
-    loadedEnv.fineractApiUrls || 'https://demo.mifos.community,https://localhost:8443,' + window.location.origin,
+    loadedEnv.fineractApiUrls ||
+    'https://sandbox.mifos.community,https://demo.mifos.community,https://localhost:8443,' + window.location.origin,
   // For connecting to server running elsewhere set the base API URL
   baseApiUrl:
     loadedEnv.fineractApiUrl ||
@@ -37,19 +27,13 @@ export const environment = {
   allowServerSwitch: loadedEnv.allowServerSwitch || 'true',
   apiProvider: loadedEnv.apiProvider || '/fineract-provider/api',
   apiVersion: loadedEnv.apiVersion || '/v1',
-  apiActuator: loadedEnv.apiActuator || '/fineract-provider',
   serverUrl: '',
   /** Feature flag for Remember Me functionality */
   enableRememberMe: false,
   oauth: {
-    enabled: loadedEnv.oauthServerEnabled === true,
+    enabled: loadedEnv.oauthServerEnabled || false, // For connecting to Mifos X using OAuth2 Authentication change the value to true
     serverUrl: loadedEnv.oauthServerUrl || '',
-    logoutUrl: loadedEnv.oauthServerLogoutUrl || '',
-    appId: loadedEnv.oauthAppId || '',
-    authorizeUrl: loadedEnv.oauthAuthorizeUrl || '',
-    tokenUrl: loadedEnv.oauthTokenUrl || '',
-    redirectUri: loadedEnv.oauthRedirectUri || '',
-    scope: loadedEnv.oauthScope || ''
+    appId: loadedEnv.oauthAppId || ''
   },
   warningDialog: {
     title: 'Warning',
@@ -60,19 +44,12 @@ export const environment = {
   defaultLanguage: loadedEnv.defaultLanguage || 'en-US',
   supportedLanguages:
     loadedEnv.supportedLanguages || 'cs-CS,de-DE,en-US,es-MX,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,ne-NE,pt-PT,sw-SW',
-  defaultFormatDate: loadedEnv.defaultFormatDate || '',
-  defaultFormatDatetime: loadedEnv.defaultFormatDatetime || '',
   preloadClients: loadedEnv['preloadClients'] || true,
 
   defaultCharDelimiter: loadedEnv.defaultCharDelimiter || ',',
 
   displayBackEndInfo: loadedEnv.displayBackEndInfo || 'true',
   displayTenantSelector: loadedEnv.displayTenantSelector || 'true',
-  /** Production mode - when true, shows minimal hero with only branding at bottom */
-  productionMode: loadedEnv.productionMode === 'true' || loadedEnv.productionMode === true || false,
-  tenantLogoUrl: loadedEnv.tenantLogoUrl || 'assets/images/default_home.png',
-  tenantLogoUrlDark: loadedEnv.tenantLogoUrlDark || 'assets/images/white-mifos.png',
-  documentationBaseUrl: loadedEnv.documentationBaseUrl || 'https://mifosforge.jira.com/wiki',
   // Time in seconds, default 60 seconds
   waitTimeForNotifications: loadedEnv.waitTimeForNotifications || 60,
   // Time in seconds, default 30 seconds
@@ -84,64 +61,19 @@ export const environment = {
   },
   httpCacheEnabled: loadedEnv.httpCacheEnabled || false,
 
-  mifosInterbankTransfersApiUrl: window.env?.mifosInterbankTransfersApiUrl || 'https://apis.mifos.community',
-  mifosInterbankTransfersApiProvider: window.env?.mifosInterbankTransfersApiProvider || '/vnext1',
-  mifosInterbankTransfersApiVersion: window.env?.mifosInterbankTransfersApiVersion || '/v1.0',
-  mifosInterbankTransfersEnabled:
-    window.env?.mifosInterbankTransfersEnabled !== 'false' && window.env?.mifosInterbankTransfersEnabled !== false,
+  vNextApiUrl: window.env?.vNextApiUrl || 'https://apis.flexcore.mx',
+  vNextApiProvider: window.env?.vNextApiProvider || '/vnext1',
+  vNextApiVersion: window.env?.vNextApiVersion || '/v1.0',
+  interbankTransfers: window.env?.interbankTransfers || false,
 
-  /** Remittance Module Integration */
-  mifosRemittanceApiUrl: window.env?.mifosRemittanceApiClientUrl || '',
-  mifosRemittanceApiProvider: window.env?.mifosRemittanceApiProvider || '',
-  mifosRemittanceApiVersion: window.env?.mifosRemittanceApiVersion || '',
-  mifosRemittanceEnabled:
-    loadedEnv['mifosRemittanceEnabled'] !== 'false' && loadedEnv['mifosRemittanceEnabled'] !== false,
-  mifosRemittanceApiHeader: window.env?.mifosRemittanceApiClientHeader || '',
-  mifosRemittanceApiKey: window.env?.mifosRemittanceApiClientKey || '',
-
-  /**
-   * External National ID System Integration
-   * When enabled, client creation/editing will lookup external National ID
-   * and auto-fill client details (name, DOB, gender) from the external system.
-   */
-  enableExternalNationalIdSystem:
-    loadedEnv.enableExternalNationalIdSystem === 'true' || loadedEnv.enableExternalNationalIdSystem === true || false,
-  externalNationalIdSystemUrl: loadedEnv.externalNationalIdSystemUrl || '',
-  externalNationalIdSystemApiHeader: loadedEnv.externalNationalIdSystemApiHeader || '',
-  externalNationalIdSystemApiKey: loadedEnv.externalNationalIdSystemApiKey || '',
-  externalNationalIdRegex: loadedEnv.externalNationalIdRegex || '',
-
-  minPasswordLength: resolvedMinPasswordLength,
-  passwordRegex:
-    loadedEnv.passwordRegex ||
-    `^(?!.*(.)\\1)(?!.*\\s)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^\\w\\s]).{${resolvedMinPasswordLength},50}$`,
-
-  /**
-   * Hide client data information (mask client names with *)
-   * Set via MIFOS_COMPLIANCE_HIDE_CLIENT_DATA env var
-   */
-  complianceHideClientData:
-    loadedEnv.complianceHideClientData === 'true' || loadedEnv.complianceHideClientData === true || false,
-
-  /**
-   * Enable Role-Based Access Control (RBAC) for menus and buttons
-   * When enabled, menus/buttons visibility is controlled by user permissions
-   * When disabled (default), shows all menus/buttons for backward compatibility
-   * Set via MIFOS_PRODUCTION_MODE_ENABLE_RBAC env var
-   */
-  productionModeEnableRBAC:
-    loadedEnv.productionModeEnableRBAC === 'true' || loadedEnv.productionModeEnableRBAC === true || false,
+  minPasswordLength: loadedEnv.minPasswordLength || 12,
 
   OIDC: {
-    // Support legacy FINERACT_PLUGIN_OIDC_* variable names for backward compatibility
-    oidcServerEnabled:
-      loadedEnv.oidcServerEnabled === true ||
-      loadedEnv.oidcServerEnabled === 'true' ||
-      loadedEnv.FINERACT_PLUGIN_OIDC_ENABLED === 'true',
-    oidcBaseUrl: loadedEnv.oidcBaseUrl || loadedEnv.FINERACT_PLUGIN_OIDC_BASE_URL || '',
-    oidcClientId: loadedEnv.oidcClientId || loadedEnv.FINERACT_PLUGIN_OIDC_CLIENT_ID || '',
-    oidcApiUrl: loadedEnv.oidcApiUrl || loadedEnv.FINERACT_PLUGIN_OIDC_API_URL || '',
-    oidcFrontUrl: loadedEnv.oidcFrontUrl || loadedEnv.FINERACT_PLUGIN_OIDC_FRONTEND_URL || ''
+    oidcServerEnabled: window['env']['oidcServerEnabled'] || false,
+    oidcBaseUrl: window['env']['oidcBaseUrl'] || '',
+    oidcClientId: window['env']['oidcClientId'] || '',
+    oidcApiUrl: window['env']['oidcApiUrl'] || '',
+    oidcFrontUrl: window['env']['oidcFrontUrl'] || ''
   }
 };
 

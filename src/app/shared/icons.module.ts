@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { NgModule, inject } from '@angular/core';
+import { NgModule } from '@angular/core';
 
 /** Angular Font Awesome Imports */
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
@@ -47,11 +39,9 @@ import {
   faEyeSlash,
   faFile,
   faFileAlt,
-  faFilePdf,
   faFileUpload,
   faFileWord,
   faFillDrip,
-  faGlobe,
   faHandHoldingUsd,
   faHome,
   faKey,
@@ -64,7 +54,6 @@ import {
   faMinusCircle,
   faMinus,
   faMoneyBillAlt,
-  faMoneyBillWave,
   faMoneyCheck,
   faPencilAlt,
   faPlay,
@@ -86,7 +75,6 @@ import {
   faTrash,
   faUndo,
   faUniversity,
-  faUnlink,
   faUserCircle,
   faUser,
   faUsers,
@@ -114,7 +102,6 @@ import {
   faAddressCard,
   faKeyboard,
   faInfo,
-  faInfoCircle,
   faTasks,
   faCoins,
   faPiggyBank,
@@ -125,18 +112,7 @@ import {
   faPause,
   faReceipt,
   faTableCells,
-  faSave,
-  faExternalLinkAlt,
-  faHeart,
-  faBookOpen,
-  faCode,
-  faLaptopCode,
-  faComments,
-  faLightbulb,
-  faCodeBranch,
-  faHandHoldingHand,
-  faHandHoldingHeart,
-  faCaretDown
+  faSave
 } from '@fortawesome/free-solid-svg-icons';
 
 /**
@@ -148,9 +124,7 @@ import {
   exports: [FontAwesomeModule]
 })
 export class IconsModule {
-  constructor() {
-    const library = inject(FaIconLibrary);
-
+  constructor(library: FaIconLibrary) {
     library.addIcons(
       faAnchor,
       faArchive,
@@ -160,14 +134,12 @@ export class IconsModule {
       faBars,
       faBell,
       faBook,
-      faBookOpen,
       faBriefcase,
       faBuilding,
       faCalculator,
       faCalendar,
       faCalendarAlt,
       faCalendarCheck,
-      faCaretDown,
       faChartBar,
       faCheck,
       faCheckCircle,
@@ -175,12 +147,9 @@ export class IconsModule {
       faChevronLeft,
       faChevronRight,
       faCircle,
-      faComments,
       faHeartBroken,
       faClock,
       faCloud,
-      faCode,
-      faCodeBranch,
       faCog,
       faCogs,
       faCommentAlt,
@@ -191,26 +160,18 @@ export class IconsModule {
       faExchange,
       faExclamationCircle,
       faExclamationTriangle,
-      faExternalLinkAlt,
       faEye,
       faEyeSlash,
       faFile,
       faFileAlt,
-      faFilePdf,
       faFileUpload,
       faFileWord,
       faFileExcel,
       faFileExport,
       faFillDrip,
-      faGlobe,
-      faHandHoldingHand,
-      faHandHoldingHeart,
       faHandHoldingUsd,
-      faHeart,
       faHome,
       faKey,
-      faLaptopCode,
-      faLightbulb,
       faLink,
       faList,
       faListUl,
@@ -220,7 +181,6 @@ export class IconsModule {
       faMinus,
       faMinusCircle,
       faMoneyBillAlt,
-      faMoneyBillWave,
       faMoneyCheck,
       faPause,
       faPencilAlt,
@@ -270,7 +230,6 @@ export class IconsModule {
       faAddressCard,
       faKeyboard,
       faInfo,
-      faInfoCircle,
       faTasks,
       faCoins,
       faPiggyBank,
@@ -278,8 +237,7 @@ export class IconsModule {
       faUndo,
       faReceipt,
       faTableCells,
-      faSave,
-      faUnlink
+      faSave
     );
   }
 }

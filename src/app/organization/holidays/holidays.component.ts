@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -30,7 +22,7 @@ import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import { HolidaysService } from '@fineract/client';
 import { PopoverService } from '../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -64,12 +56,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class HolidaysComponent implements OnInit, AfterViewInit {
-  private organizationService = inject(OrganizationService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private configurationWizardService = inject(ConfigurationWizardService);
-  private popoverService = inject(PopoverService);
-
   /** Office selector. */
   officeSelector = new UntypedFormControl();
   /** Holidays data. */
@@ -103,14 +89,20 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
 
   /**
    * Retrieves the offices data from `resolve`.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {HolidaysService} holidaysService Holidays Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {Router} router Router.
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor() {
+  constructor(
+    private holidaysService: HolidaysService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService
+  ) {
     this.route.data.subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });
@@ -137,7 +129,7 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
   onChangeOffice() {
     this.officeSelector.valueChanges.subscribe((officeId = this.officeSelector.value) => {
       this.holidaysData = [];
-      this.organizationService.getHolidays(officeId).subscribe((holidays: any) => {
+      this.holidaysService.retrieveAllHolidays(officeId).subscribe((holidays: any) => {
         this.holidaysData = holidays.filter((holiday: any) => holiday.status.value !== 'Deleted');
         this.setHolidays();
       });
@@ -173,13 +165,13 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showHolidayPage) {
+    if (this.configurationWizardService.showHolidayPage === true) {
       setTimeout(() => {
         this.showPopover(this.templateButtonCreateHoliday, this.buttonCreateHoliday.nativeElement, 'bottom', true);
       });
     }
 
-    if (this.configurationWizardService.showHolidayFilter) {
+    if (this.configurationWizardService.showHolidayFilter === true) {
       setTimeout(() => {
         this.showPopover(this.templateFilterRef, this.filterRef.nativeElement, 'bottom', true);
       });

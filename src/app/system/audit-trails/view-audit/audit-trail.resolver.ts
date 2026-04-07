@@ -1,27 +1,22 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { AuditsService } from '@fineract/client';
 
 /**
  * Audit Trail data resolver.
  */
 @Injectable()
 export class AuditTrailResolver {
-  private systemService = inject(SystemService);
+  /**
+   * @param {AuditsService} auditsService Audits service.
+   */
+  constructor(private auditsService: AuditsService) {}
 
   /**
    * Returns the Audit Trail data.
@@ -29,6 +24,6 @@ export class AuditTrailResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const auditTrailId = route.paramMap.get('id');
-    return this.systemService.getAuditTrail(auditTrailId);
+    return this.auditsService.retrieveAuditEntries({ resourceId: auditTrailId ? Number(auditTrailId) : undefined });
   }
 }

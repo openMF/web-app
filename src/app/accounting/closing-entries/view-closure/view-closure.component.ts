@@ -1,18 +1,10 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { AccountingService } from '../../accounting.service';
+import { AccountingClosureService } from '@fineract/client';
 
 /** Custom Components */
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
@@ -32,22 +24,22 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewClosureComponent {
-  private accountingService = inject(AccountingService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  dialog = inject(MatDialog);
-
   /** GL Account closure. */
   glAccountClosure: any;
 
   /**
    * Retrieves the gl account closure data from `resolve`.
-   * @param {AccountingService} accountingService Accounting Service.
+   * @param {AccountingClosureService} accountingClosureService Accounting Closure Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor() {
+  constructor(
+    private accountingClosureService: AccountingClosureService,
+    private route: ActivatedRoute,
+    private router: Router,
+    public dialog: MatDialog
+  ) {
     this.route.data.subscribe((data: { glAccountClosure: any }) => {
       this.glAccountClosure = data.glAccountClosure;
     });
@@ -62,7 +54,7 @@ export class ViewClosureComponent {
     });
     deleteAccountingClosureDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.accountingService.deleteAccountingClosure(this.glAccountClosure.id).subscribe(() => {
+        this.accountingClosureService.deleteGLClosure({ glClosureId: this.glAccountClosure.id }).subscribe(() => {
           this.router.navigate(['/accounting/closing-entries']);
         });
       }

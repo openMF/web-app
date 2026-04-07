@@ -1,18 +1,11 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
-import { NavigationService } from './navigation.service';
+import { StaffService, CentersService, GroupsService, ClientService } from '@fineract/client';
+import { ReportsService as CustomreportAPi } from 'app/customApis.service';
 
 /** Custom Components */
 import { OfficeNavigationComponent } from './office-navigation/office-navigation.component';
@@ -39,10 +32,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class NavigationComponent implements OnInit {
-  private navigationService = inject(NavigationService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-
   /** Navigation Components */
   @ViewChild(OfficeNavigationComponent) officeNavigationComponent: OfficeNavigationComponent;
   @ViewChild(StaffNavigationComponent) staffNavigationComponent: StaffNavigationComponent;
@@ -82,11 +71,23 @@ export class NavigationComponent implements OnInit {
   /**
    * Retrieves the offices data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {NavigationService} navigationService Navigation Service.
+   * @param {StaffService} staffService Staff Service.
+   * @param {CentersService} centersService Centers Service.
+   * @param {GroupsService} groupsService Groups Service.
+   * @param {ClientService} clientService Client Service.
+   * @param {CustomreportAPi} CustomreportAPi Run Reports Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor() {
+  constructor(
+    private staffService: StaffService,
+    private centersService: CentersService,
+    private groupsService: GroupsService,
+    private clientService: ClientService,
+    private customreportAPi: CustomreportAPi,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });
@@ -118,7 +119,7 @@ export class NavigationComponent implements OnInit {
       this.clientData = null;
       this.selectedItem = this.officeData.find((office: any) => office.id === officeId);
       this.selectedItem.itemType = 'office';
-      this.navigationService.getEmployees(officeId).subscribe((employees: any) => {
+      this.staffService.retrieveAll16(officeId).subscribe((employees: any) => {
         this.employeeData = employees;
         if (this.employeeData.length) {
           this.employeeSelector.enable();
@@ -143,7 +144,7 @@ export class NavigationComponent implements OnInit {
         this.clientData = null;
         this.selectedItem = this.employeeData.find((employee: any) => employee.id === employeeId);
         this.selectedItem.itemType = 'employee';
-        this.navigationService.getCentersFromStaffId(employeeId).subscribe((centers: any) => {
+        this.customreportAPi.getCentersFromStaffId(employeeId).subscribe((centers: any) => {
           this.centerData = centers;
           if (this.centerData.length) {
             this.centerSelector.enable();
@@ -165,7 +166,7 @@ export class NavigationComponent implements OnInit {
         this.clientSelector.reset(null, { emitEvent: false });
         this.groupData = null;
         this.clientData = null;
-        this.navigationService.getCenter(centerId).subscribe((center: any) => {
+        this.customreportAPi.getCenter(centerId).subscribe((center: any) => {
           this.selectedItem = center;
           this.selectedItem.itemType = 'center';
           this.groupData = center.groupMembers ? center.groupMembers : [];
@@ -176,11 +177,11 @@ export class NavigationComponent implements OnInit {
           }
         });
         this.selectedItemAccounts = null;
-        this.navigationService.getCenterAccounts(centerId).subscribe((centerAccounts: any) => {
+        this.centersService.retrieveGroupAccount(centerId).subscribe((centerAccounts: any) => {
           this.selectedItemAccounts = centerAccounts;
         });
         this.selectedItemSummary = null;
-        this.navigationService.getCenterSummary(centerId).subscribe((centerSummary: any) => {
+        this.customreportAPi.getCenterSummary(centerId).subscribe((centerSummary: any) => {
           this.selectedItemSummary = centerSummary[0];
         });
       }
@@ -195,7 +196,7 @@ export class NavigationComponent implements OnInit {
       if (groupId) {
         this.clientSelector.reset(null, { emitEvent: false });
         this.clientData = null;
-        this.navigationService.getGroup(groupId).subscribe((group: any) => {
+        this.groupsService.retrieveOne15(groupId).subscribe((group: any) => {
           this.selectedItem = group;
           this.selectedItem.itemType = 'group';
           this.clientData = group.clientMembers ? group.clientMembers : [];
@@ -206,7 +207,7 @@ export class NavigationComponent implements OnInit {
           }
         });
         this.selectedItemAccounts = null;
-        this.navigationService.getGroupAccounts(groupId).subscribe((groupAccounts: any) => {
+        this.groupsService.retrieveAccounts(groupId).subscribe((groupAccounts: any) => {
           this.selectedItemAccounts = groupAccounts;
         });
       }
@@ -220,11 +221,11 @@ export class NavigationComponent implements OnInit {
     this.clientSelector.valueChanges.subscribe((clientId) => {
       if (clientId) {
         this.selectedItemAccounts = null;
-        this.navigationService.getClient(clientId).subscribe((client: any) => {
+        this.clientService.retrieveAssociatedAccounts(clientId).subscribe((client: any) => {
           this.selectedItem = client;
           this.selectedItem.itemType = 'client';
         });
-        this.navigationService.getClientAccounts(clientId).subscribe((clientAccounts: any) => {
+        this.clientService.retrieveAssociatedAccounts(clientId).subscribe((clientAccounts: any) => {
           this.selectedItemAccounts = clientAccounts;
         });
       }

@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -73,14 +65,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CenterAttendanceComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private dateUtils = inject(Dates);
-  private router = inject(Router);
-  private centersService = inject(CentersService);
-  private settingsService = inject(SettingsService);
-  dialog = inject(MatDialog);
-  private translateService = inject(TranslateService);
-
   /** Members data. */
   membersData: any;
   /** Center Data */
@@ -112,7 +96,15 @@ export class CenterAttendanceComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    * @param {MatDialog} dialog Mat Dialog
    */
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private dateUtils: Dates,
+    private router: Router,
+    private centersService: CentersService,
+    private settingsService: SettingsService,
+    public dialog: MatDialog,
+    private translateService: TranslateService
+  ) {
     this.route.data.subscribe((data: { centersActionData: any }) => {
       this.centerData = data.centersActionData;
       this.membersData = data.centersActionData.clients;
@@ -157,6 +149,7 @@ export class CenterAttendanceComponent implements OnInit {
         options: { label: 'value', value: 'id', data: this.attendanceTypeOptions },
         required: false
       })
+
     ];
     const data = {
       title:

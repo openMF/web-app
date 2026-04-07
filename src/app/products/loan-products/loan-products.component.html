@@ -1,66 +1,17 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <div class="container m-b-20 layout-row align-end gap-20px">
   <div #buttonCreateLoanProduct class="in-block">
-    <button
-      mat-raised-button
-      color="primary"
-      [matMenuTriggerFor]="createMenu"
-      *mifosxHasPermission="'CREATE_LOANPRODUCT'"
-    >
-      {{ 'labels.buttons.Create' | translate }}
-      <fa-icon icon="caret-down" class="m-l-10"></fa-icon>
-    </button>
-    <mat-menu #createMenu="matMenu">
-      <button
-        mat-menu-item
-        [routerLink]="['create']"
-        [queryParams]="{ productType: 'loan' }"
-        *mifosxHasPermission="'CREATE_LOANPRODUCT'"
-      >
-        <fa-icon icon="calendar-alt" class="m-r-10"></fa-icon>
-        {{ 'labels.buttons.Create Loan Product' | translate }}
-      </button>
-      <button
-        mat-menu-item
-        [routerLink]="['create']"
-        [queryParams]="{ productType: 'working-capital' }"
-        *mifosxHasPermission="'CREATE_LOANPRODUCT'"
-      >
-        <fa-icon icon="money-bill-alt" class="m-r-10"></fa-icon>
-        {{ 'labels.buttons.Create Working Capital Product' | translate }}
-      </button>
-    </mat-menu>
-  </div>
-  <div class="in-block">
-    <button mat-raised-button color="primary" (click)="openImportDialog()" *mifosxHasPermission="'CREATE_LOANPRODUCT'">
-      <fa-icon icon="upload" class="m-r-10"></fa-icon>
-      {{ 'labels.buttons.Import' | translate }}
+    <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_LOANPRODUCT'">
+      <fa-icon icon="plus" class="m-r-10"></fa-icon>
+      {{ 'labels.buttons.Create Loan Product' | translate }}
     </button>
   </div>
 </div>
 
 <div class="container">
-  <div #filter class="layout-row flex-fill form-container">
-    <mat-form-field class="flex-70">
+  <div #filter class="layout-row">
+    <mat-form-field class="flex-fill">
       <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)" />
-    </mat-form-field>
-    <mat-form-field class="flex-28">
-      <mat-label>{{ 'labels.inputs.Product' | translate }}</mat-label>
-      <mat-select (selectionChange)="fetchProducts()" [formControl]="loanProductSelector">
-        @for (loanProduct of loanProductOptions; track loanProduct.type) {
-          <mat-option [value]="loanProduct.type">
-            {{ loanProduct.label | translateKey: 'catalogs' }}
-          </mat-option>
-        }
-      </mat-select>
     </mat-form-field>
   </div>
 
@@ -100,13 +51,7 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr
-        mat-row
-        *matRowDef="let row; columns: displayedColumns"
-        [routerLink]="[row.id]"
-        [queryParams]="{ productType: loanProductService.productType.value }"
-        class="select-row"
-      ></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns" [routerLink]="[row.id]" class="select-row"></tr>
     </table>
 
     <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
@@ -159,7 +104,7 @@
 <ng-template #templateLoanProductsTable let-popover="popover">
   <h4 class="mw300">
     {{ 'labels.heading.List of loan products in the organization' | translate }}:
-    <a [href]="'loanProducts' | documentationLink" target="_blank" rel="noopener noreferrer">{{
+    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/102039585/Loan+Products" target="_blank">{{
       'labels.heading.Loan Products' | translate
     }}</a>
   </h4>
