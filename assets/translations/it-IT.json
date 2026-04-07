@@ -3770,7 +3770,8 @@
       "Search and assign this beneficiary to an existing Mifos client account": "Cerca e assegna questo beneficiario a un conto cliente Mifos esistente",
       "Failed to search clients. Please try again.": "Ricerca clienti non riuscita. Si prega di riprovare.",
       "Process Remittance": "Elabora rimessa",
-      "Loan Originators": "Originatori di prestiti"
+      "Loan Originators": "Originatori di prestiti",
+      "Loan Reschedules": "Riprogrammazioni dei prestiti"
     },
     "permissions": {
       "actions": {

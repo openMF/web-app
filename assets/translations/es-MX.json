@@ -3789,7 +3789,8 @@
       "Buy Down Fees": "Tarifas de compra",
       "UploadDocumentHint": "Suba un PDF o imagen para generar una vista previa.",
       "Process Remittance": "Procesar Remesa",
-      "Loan Originators": "Comisionistas de créditos"
+      "Loan Originators": "Comisionistas de créditos",
+      "Loan Reschedules": "Reprogramaciones de Créditos"
     },
     "permissions": {
       "actions": {

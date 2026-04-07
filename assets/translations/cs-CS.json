@@ -3769,7 +3769,8 @@
       "Search and assign this beneficiary to an existing Mifos client account": "Vyhledejte a přiřaďte tohoto příjemce k existujícímu účtu klienta Mifos",
       "Failed to search clients. Please try again.": "Hledání klientů se nezdařilo. Zkuste to prosím znovu.",
       "Process Remittance": "Zpracovat remitenci",
-      "Loan Originators": "Poskytovatelé úvěrů"
+      "Loan Originators": "Poskytovatelé úvěrů",
+      "Loan Reschedules": "Termíny půjček"
     },
     "permissions": {
       "actions": {

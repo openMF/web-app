@@ -3772,7 +3772,8 @@
       "Search and assign this beneficiary to an existing Mifos client account": "Ieškokite ir priskirkite šį gavėją esamai Mifos kliento paskyrai",
       "Failed to search clients. Please try again.": "Nepavyko ieškoti klientų. Bandykite dar kartą.",
       "Process Remittance": "Apdoroti pervedimą",
-      "Loan Originators": "Paskolų teikėjai"
+      "Loan Originators": "Paskolų teikėjai",
+      "Loan Reschedules": "Paskolų atidėjimas"
     },
     "permissions": {
       "actions": {
