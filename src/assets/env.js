@@ -112,6 +112,10 @@
   window['env']['externalNationalIdSystemApiKey'] = '';
   window['env']['externalNationalIdRegex'] = '';
 
+  // Postal Code Lookup (auto-fill address from postal code via external API)
+  // Set to 'true' to enable, 'false' (default) to disable
+  window['env']['enablePostalCodeLookup'] = 'false';
+
   // Password Configuration
   window['env']['minPasswordLength'] = 8;
 

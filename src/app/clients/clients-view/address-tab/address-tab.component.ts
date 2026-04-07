@@ -8,7 +8,8 @@
 
 /** Angular Imports */
 import { Component, inject } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
@@ -19,6 +20,12 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 
 /** Custom Services */
 import { TranslateService } from '@ngx-translate/core';
+import { PostalCodeLookupService } from 'app/shared/services/postal-code-lookup.service';
+import { ResolvedAddress } from 'app/shared/models/postal-code-lookup.model';
+
+/** rxjs Imports */
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { of, Subscription } from 'rxjs';
 import { ClientsService } from '../../clients.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import {
@@ -56,6 +63,7 @@ export class AddressTabComponent {
   private clientService = inject(ClientsService);
   private dialog = inject(MatDialog);
   private translateService = inject(TranslateService);
+  private postalCodeLookup = inject(PostalCodeLookupService);
 
   /** Client Address Data */
   clientAddressData: any;
@@ -97,6 +105,7 @@ export class AddressTabComponent {
       formfields: this.getAddressFormFields('add')
     };
     const addAddressDialogRef = this.dialog.open(FormDialogComponent, { data });
+    this.setupPostalCodeLookup(addAddressDialogRef);
     addAddressDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         this.clientService
@@ -129,6 +138,7 @@ export class AddressTabComponent {
       layout: { addButtonText: 'Edit' }
     };
     const editAddressDialogRef = this.dialog.open(FormDialogComponent, { data });
+    this.setupPostalCodeLookup(editAddressDialogRef);
     editAddressDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         const addressData = response.data.value;
@@ -143,6 +153,139 @@ export class AddressTabComponent {
           });
       }
     });
+  }
+
+  /** Tracks which fields were auto-filled by the postal code lookup. */
+  private autoFilledFields = new Set<string>();
+
+  /**
+   * Sets up postal code auto-lookup on the dialog form.
+   * Subscribes to postalCode valueChanges, queries the lookup API,
+   * and auto-fills City, State/Province, and Country fields.
+   */
+  private setupPostalCodeLookup(dialogRef: MatDialogRef<FormDialogComponent>) {
+    if (!this.postalCodeLookup.enabled) return;
+
+    let postalSub: Subscription;
+
+    dialogRef.afterOpened().subscribe(() => {
+      const form: UntypedFormGroup = dialogRef.componentInstance.form;
+      const postalCodeControl = form.get('postalCode');
+      if (!postalCodeControl) return;
+
+      // Capture the initial country value so we can distinguish
+      // user-selected countries from auto-filled ones.
+      const initialCountryId = form.get('countryId')?.value || null;
+
+      postalSub = postalCodeControl.valueChanges
+        .pipe(
+          debounceTime(600),
+          distinctUntilChanged(),
+          switchMap((value: string) => {
+            if (!value || value.trim().length < 3) {
+              return of(null);
+            }
+            const postalCode = value.trim();
+            // Only use the country for lookup if the user explicitly selected it
+            // (i.e. it was set initially or the user changed it manually).
+            const currentCountryId = form.get('countryId')?.value;
+            const isUserSelectedCountry =
+              currentCountryId && (currentCountryId === initialCountryId || !this.autoFilledFields.has('countryId'));
+
+            if (isUserSelectedCountry) {
+              const countryCode = this.getSelectedCountryCode(form);
+              if (countryCode) {
+                return this.postalCodeLookup.lookup(countryCode, postalCode);
+              }
+            }
+            return this.postalCodeLookup.lookupWithFallback(postalCode);
+          })
+        )
+        .subscribe((response) => {
+          if (!response) {
+            this.clearAutoFilledFields(form);
+            return;
+          }
+          const resolved = this.postalCodeLookup.toResolvedAddress(response);
+          if (resolved) {
+            this.clearAutoFilledFields(form);
+            this.applyResolvedAddress(form, resolved);
+          } else {
+            this.clearAutoFilledFields(form);
+          }
+        });
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      postalSub?.unsubscribe();
+      this.autoFilledFields.clear();
+    });
+  }
+
+  /**
+   * Gets the ISO country code for the currently selected country in the form.
+   */
+  private getSelectedCountryCode(form: UntypedFormGroup): string | null {
+    const countryIdValue = form.get('countryId')?.value;
+    if (!countryIdValue) return null;
+
+    const selectedCountry = this.clientAddressTemplate.countryIdOptions?.find((c: any) => c.id === countryIdValue);
+    if (!selectedCountry) return null;
+
+    return this.postalCodeLookup.resolveCountryCode(selectedCountry.name);
+  }
+
+  /**
+   * Applies the resolved address to the form fields.
+   * Passes both full name and abbreviation to maximize match chances
+   * against Fineract's configured code values.
+   */
+  /**
+   * Clears form fields that were previously set by auto-fill,
+   * so stale data doesn't persist when a new lookup fails or returns different results.
+   */
+  private clearAutoFilledFields(form: UntypedFormGroup) {
+    for (const fieldName of this.autoFilledFields) {
+      const control = form.get(fieldName);
+      if (control) {
+        control.setValue(fieldName === 'city' ? '' : '');
+        control.markAsDirty();
+      }
+    }
+    this.autoFilledFields.clear();
+  }
+
+  private applyResolvedAddress(form: UntypedFormGroup, address: ResolvedAddress) {
+    const cityControl = form.get('city');
+    if (cityControl && address.city) {
+      cityControl.setValue(address.city);
+      cityControl.markAsDirty();
+      this.autoFilledFields.add('city');
+    }
+
+    const stateControl = form.get('stateProvinceId');
+    if (stateControl && (address.state || address.stateAbbreviation)) {
+      const stateOptions = this.clientAddressTemplate.stateProvinceIdOptions ?? [];
+      const matched = this.postalCodeLookup.findBestMatch(stateOptions, address.state, address.stateAbbreviation);
+      if (matched) {
+        stateControl.setValue(matched.id);
+        stateControl.markAsDirty();
+        this.autoFilledFields.add('stateProvinceId');
+      }
+    }
+
+    const countryControl = form.get('countryId');
+    if (countryControl && (address.country || address.countryAbbreviation)) {
+      const countryOptions = this.clientAddressTemplate.countryIdOptions ?? [];
+      const matched = this.postalCodeLookup.findBestMatch(countryOptions, address.country, address.countryAbbreviation);
+      if (matched) {
+        countryControl.setValue(matched.id);
+        countryControl.markAsDirty();
+        this.autoFilledFields.add('countryId');
+      }
+    }
+
+    form.markAsDirty();
   }
 
   /**
