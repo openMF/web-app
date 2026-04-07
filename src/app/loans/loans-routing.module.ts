@@ -179,7 +179,7 @@ const routes: Routes = [
           },
           {
             path: 'loan-reschedules',
-            data: {},
+            data: { title: 'Loan Reschedules', breadcrumb: 'Loan Reschedules', routeParamBreadcrumb: false },
             resolve: {
               loanRescheduleData: LoanReschedulesResolver
             },
