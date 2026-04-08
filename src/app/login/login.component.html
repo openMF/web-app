@@ -170,9 +170,9 @@
           mat-icon-button
           (click)="reloadSettings()"
           class="reload-button"
-          title="Reload Settings"
-          matTooltip="Reload Settings"
-          attr.aria-label="Reload Settings"
+          [title]="'labels.buttons.Reload Settings' | translate"
+          matTooltip="{{ 'labels.buttons.Reload Settings' | translate }}"
+          [attr.aria-label]="'labels.buttons.Reload Settings' | translate"
         >
           <mifosx-m3-icon name="refresh"></mifosx-m3-icon>
         </button>
