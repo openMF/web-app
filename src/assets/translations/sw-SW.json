@@ -6,8 +6,8 @@
     "accountingRule": {
       "duplicateName": "Samahani, lakini Kanuni ya Uhasibu yenye jina hili tayari ipo."
     },
-    "error.resource.notImplemented.type": "Hitilafu ya Kukamilika Haijatimizwa",
-    "error.resource.notImplemented.message": "Utendakazi haujatekelezwa!",
+    "error.resource.notImplemented.type": "Haijatekelezwa",
+    "error.resource.notImplemented.message": "Utendaji haujatekelezwa!",
     "linkedSavingsAccountOwnership": "Akaunti ya akiba iliyounganishwa haimilikiwi na mteja aliyechaguliwa.",
     "clientNotInGSIM": "Mteja mwenye kitambulisho {{id}} hayupo kwenye GSIM.",
     "Capitalized Income amount adjusted already adjusted": "Kiasi cha Mapato ya Mtaji kilichorekebishwa tayari kimerekebishwa",
@@ -285,7 +285,140 @@
     "validation.msg.savingsproduct.shortName.exceeds.max.length": "Jina fupi haliwezi kuwa zaidi ya vibambo {{params[0].value}} kwa urefu.",
     "validation.msg.savingsproduct.withdrawalFeeAmount.cannot.be.blank": "Kiasi cha ada ya uondoaji ni lazima.",
     "validation.msg.savingsproduct.withdrawalFeeAmount.not.zero.or.greater": "Ada ya uondoaji lazima iwe kubwa kuliko au sawa na sufuri ikiwa imetolewa.",
-    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Aina ya muda wa ada ya kujiondoa ni ya lazima."
+    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Aina ya ada ya kujiondoa iliyochaguliwa si sahihi.",
+    "http": {
+      "connection": {
+        "title": "Hitilafu ya muunganisho",
+        "message": "Haiwezi kuunganisha na seva. Tafadhali angalia muunganisho wako wa intaneti."
+      },
+      "badRequest": {
+        "title": "Ombi batili",
+        "message": "Tafadhali angalia maingizo yako na ujaribu tena."
+      },
+      "unauthorized": {
+        "title": "Haukuidhinishwa",
+        "message": "Kipindi chako kimeisha. Tafadhali ingia tena.",
+        "action": "Ingia"
+      },
+      "forbidden": {
+        "title": "Ufikiaji umekataliwa",
+        "message": "Huna ruhusa ya kufanya kitendo hiki."
+      },
+      "notFound": {
+        "title": "Haijapatikana",
+        "message": "Rasilimali iliyoombwa haijapatikana.",
+        "contextMessage": "{{context}} haijapatikana."
+      },
+      "conflict": {
+        "title": "Mgongano",
+        "message": "Rasilimali tayari ipo au kuna mgongano."
+      },
+      "serverError": {
+        "title": "Hitilafu ya seva",
+        "message": "Hitilafu isiyotarajiwa ilitokea. Tafadhali jaribu tena baadaye."
+      },
+      "serviceUnavailable": {
+        "title": "Huduma haipatikani",
+        "message": "Huduma haipatikani kwa muda. Tafadhali jaribu tena baadaye."
+      },
+      "default": {
+        "title": "Hitilafu",
+        "message": "Hitilafu isiyotarajiwa ilitokea."
+      }
+    },
+    "interceptor": {
+      "invalidParams": "Vigezo batili vilitumwa katika ombi!"
+    },
+    "auth": {
+      "pleaseWait": "Tafadhali subiri...",
+      "startType": "Kuanza uthibitishaji",
+      "twoFactor": {
+        "type": "Uthibitishaji wa hatua mbili unahitajika",
+        "message": "Uthibitishaji wa hatua mbili unahitajika"
+      },
+      "passwordExpired": {
+        "type": "Nenosiri limeisha",
+        "message": "Nenosiri lako limeisha, tafadhali weka upya nenosiri lako!"
+      },
+      "success": {
+        "type": "Uthibitishaji umefanikiwa",
+        "message": "{{username}} ameingia kwa mafanikio!"
+      },
+      "passwordReset": {
+        "type": "Nenosiri limewekwa upya kwa mafanikio",
+        "message": "Nenosiri lako limewekwa upya kwa mafanikio!"
+      },
+      "callbackFailed": {
+        "type": "Uthibitishaji umeshindwa",
+        "message": "Haiwezekani kukamilisha uthibitishaji. Tafadhali jaribu tena."
+      },
+      "callbackError": {
+        "type": "Hitilafu ya uthibitishaji",
+        "message": "Hitilafu ilitokea wakati wa uthibitishaji. Tafadhali jaribu tena."
+      }
+    },
+    "hooks": {
+      "lastEvent": "Angalau tukio moja linahitajika. Haiwezekani kufuta tukio la mwisho."
+    },
+    "generic": {
+      "unexpected": "Hitilafu ilitokea. Tafadhali jaribu tena.",
+      "unexpectedRetry": "Hitilafu isiyotarajiwa ilitokea. Tafadhali jaribu tena.",
+      "unexpectedShort": "Hitilafu isiyotarajiwa ilitokea."
+    },
+    "holiday": {
+      "invalidDate": "Tarehe iliyochaguliwa si sahihi. Tafadhali chagua tarehe sahihi.",
+      "invalidRepaymentDate": "Tarehe ya kupanga upya malipo si sahihi. Tafadhali chagua tarehe sahihi."
+    },
+    "report": {
+      "type": "Uzalishaji wa ripoti",
+      "generated": "Ripoti: data ya {{reportName}} imezalishwa",
+      "generatedNoData": "Ripoti: {{reportName}} imezalishwa bila data"
+    },
+    "clipboard": {
+      "type": "Ubao wa kunakili",
+      "copied": "Imenakiliwa: {{value}}"
+    },
+    "tenant": {
+      "changed": {
+        "type": "Mpangaji amebadilishwa"
+      }
+    },
+    "config": {
+      "setConfig": "{{type}} usanidi umewekwa"
+    },
+    "loans": {
+      "undoWriteOff": {
+        "type": "Kushindwa kutengua uandishi",
+        "message": "Hitilafu ilitokea wakati wa kusindika kutengua uandishi. Tafadhali jaribu tena au wasiliana na msaada."
+      },
+      "alreadyAdjusted": "Kiasi cha mapato yaliyohifadhiwa tayari kimerekebishwa",
+      "adjustment": "Marekebisho {{type}} Muamala",
+      "capitalizedIncomeLimit": "Kiasi cha marekebisho ya mapato yaliyohifadhiwa lazima kiwe kidogo au sawa na",
+      "buyDownFeeAdjusted": "Kiasi cha ada ya Buy Down tayari kimerekebishwa",
+      "buyDownFeeLimit": "Kiasi cha marekebisho ya ada ya Buy Down lazima kiwe kidogo au sawa na",
+      "businessRule": "Kanuni ya biashara",
+      "alertWithAmount": "{{label}}: {{amount}}"
+    },
+    "error.auth.type": "Hitilafu ya uthibitishaji",
+    "error.auth.message": "Kipindi chako kimeisha au vithibitisho si sahihi.",
+    "error.token.invalid.type": "Tokeni batili",
+    "error.token.invalid.message": "Tokeni ya matumizi moja iliyotolewa si sahihi.",
+    "error.bad.request.type": "Ombi baya",
+    "error.bad.request.message": "Vigezo batili vilitumwa katika ombi!",
+    "error.unauthorized.type": "Haukuidhinishwa",
+    "error.unauthorized.message": "Kipindi chako kimeisha au vithibitisho si sahihi.",
+    "error.resource.not.found.type": "Rasilimali haijapatikana",
+    "error.resource.not.found.message": "Rasilimali iliyoombwa haijapatikana.",
+    "error.server.internal.type": "Hitilafu ya ndani ya seva",
+    "error.server.internal.message": "Hitilafu isiyotarajiwa ilitokea kwenye seva. Tafadhali jaribu tena baadaye.",
+    "error.unknown.type": "Hitilafu isiyojulikana",
+    "error.unknown.message": "Hitilafu isiyotarajiwa ilitokea.",
+    "validation.required": "Sehemu hii inahitajika",
+    "validation.minLength": "Urefu wa chini ni {{requiredLength}}",
+    "validation.emailInvalid": "Barua pepe si sahihi",
+    "validation.requiredField": "{{label}} ni sehemu inayohitajika.",
+    "validation.mustBeAtLeast": "{{field}} lazima iwe angalau {{min}}",
+    "validation.mustBePositive": "{{field}} lazima iwe nambari chanya."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -618,7 +751,8 @@
       "Retry": "Jaribu tena",
       "PRINT": "Chapisha",
       "DONE": "Imekamilika",
-      "Submitting": "Inatuma"
+      "Submitting": "Inatuma",
+      "OK": "Sawa"
     },
     "catalogs": {
       "Interest payment waiver": "Msamaha wa Malipo ya Riba",

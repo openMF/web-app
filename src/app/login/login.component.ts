@@ -31,6 +31,7 @@ import { Alert } from '../core/alert/alert.model';
 /** Custom Services */
 import { AlertService } from '../core/alert/alert.service';
 import { ThemingService } from '../shared/theme-toggle/theming.service';
+import { TranslateService } from '@ngx-translate/core';
 
 /** Environment Imports */
 import { environment } from '../../environments/environment';
@@ -86,6 +87,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   private router = inject(Router);
 
   private versionService = inject(VersionService);
+  private translateService = inject(TranslateService);
 
   public environment = environment;
 
@@ -131,17 +133,17 @@ export class LoginComponent implements OnInit, OnDestroy {
     // Subscribe to alerts
     this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
       const alertType = alertEvent.type;
-      if (alertType === 'Password Expired') {
+      if (alertType === this.translateService.instant('errors.auth.passwordExpired.type')) {
         this.twoFactorAuthenticationRequired = false;
         this.resetPassword = true;
-      } else if (alertType === 'Two Factor Authentication Required') {
+      } else if (alertType === this.translateService.instant('errors.auth.twoFactor.type')) {
         this.resetPassword = false;
         this.twoFactorAuthenticationRequired = true;
-      } else if (alertType === 'Authentication Success') {
+      } else if (alertType === this.translateService.instant('errors.auth.success.type')) {
         this.resetPassword = false;
         this.twoFactorAuthenticationRequired = false;
         this.router.navigate(['/'], { replaceUrl: true });
-      } else if (alertType === 'Tenant Changed') {
+      } else if (alertType === this.translateService.instant('errors.tenant.changed.type')) {
         this.updateLogo();
       }
     });

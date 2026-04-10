@@ -6,7 +6,7 @@
     "accountingRule": {
       "duplicateName": "죄송합니다. 이미 동일한 이름의 회계 규칙이 존재합니다."
     },
-    "error.resource.notImplemented.type": "구현되지 않은 오류",
+    "error.resource.notImplemented.type": "구현되지 않음",
     "error.resource.notImplemented.message": "구현되지 않은 기능입니다!",
     "linkedSavingsAccountOwnership": "연결된 저축 계좌가 선택한 클라이언트에 속하지 않습니다.",
     "clientNotInGSIM": "ID가 {{id}}인 클라이언트가 GSIM에 없습니다.",
@@ -285,7 +285,140 @@
     "validation.msg.savingsproduct.shortName.exceeds.max.length": "짧은 이름은 {{params[0].value}}자를 초과할 수 없습니다.",
     "validation.msg.savingsproduct.withdrawalFeeAmount.cannot.be.blank": "출금수수료 금액은 필수입니다.",
     "validation.msg.savingsproduct.withdrawalFeeAmount.not.zero.or.greater": "출금 수수료 금액은 제공된 경우 0보다 크거나 같아야 합니다.",
-    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "출금 수수료 기간 유형은 필수입니다."
+    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "선택한 출금 수수료 유형이 유효하지 않습니다.",
+    "http": {
+      "connection": {
+        "title": "연결 오류",
+        "message": "서버에 연결할 수 없습니다. 인터넷 연결을 확인해 주세요."
+      },
+      "badRequest": {
+        "title": "잘못된 요청",
+        "message": "입력 내용을 확인하고 다시 시도해 주세요."
+      },
+      "unauthorized": {
+        "title": "권한 없음",
+        "message": "세션이 만료되었습니다. 다시 로그인해 주세요.",
+        "action": "로그인"
+      },
+      "forbidden": {
+        "title": "접근 거부",
+        "message": "이 작업을 수행할 권한이 없습니다."
+      },
+      "notFound": {
+        "title": "찾을 수 없음",
+        "message": "요청한 리소스를 찾을 수 없습니다.",
+        "contextMessage": "{{context}}을(를) 찾을 수 없습니다."
+      },
+      "conflict": {
+        "title": "충돌",
+        "message": "리소스가 이미 존재하거나 충돌이 있습니다."
+      },
+      "serverError": {
+        "title": "서버 오류",
+        "message": "예기치 않은 오류가 발생했습니다. 나중에 다시 시도해 주세요."
+      },
+      "serviceUnavailable": {
+        "title": "서비스 이용 불가",
+        "message": "서비스를 일시적으로 이용할 수 없습니다. 나중에 다시 시도해 주세요."
+      },
+      "default": {
+        "title": "오류",
+        "message": "예기치 않은 오류가 발생했습니다."
+      }
+    },
+    "interceptor": {
+      "invalidParams": "요청에 잘못된 매개변수가 전달되었습니다!"
+    },
+    "auth": {
+      "pleaseWait": "잠시 기다려 주세요...",
+      "startType": "인증 시작",
+      "twoFactor": {
+        "type": "2단계 인증 필요",
+        "message": "2단계 인증이 필요합니다"
+      },
+      "passwordExpired": {
+        "type": "비밀번호 만료",
+        "message": "비밀번호가 만료되었습니다. 비밀번호를 재설정해 주세요!"
+      },
+      "success": {
+        "type": "인증 성공",
+        "message": "{{username}} 로그인 성공!"
+      },
+      "passwordReset": {
+        "type": "비밀번호 재설정 성공",
+        "message": "비밀번호가 성공적으로 재설정되었습니다!"
+      },
+      "callbackFailed": {
+        "type": "인증 실패",
+        "message": "인증을 완료할 수 없습니다. 다시 시도해 주세요."
+      },
+      "callbackError": {
+        "type": "인증 오류",
+        "message": "인증 중 오류가 발생했습니다. 다시 시도해 주세요."
+      }
+    },
+    "hooks": {
+      "lastEvent": "최소 하나의 이벤트가 필요합니다. 마지막 이벤트를 삭제할 수 없습니다."
+    },
+    "generic": {
+      "unexpected": "오류가 발생했습니다. 다시 시도해 주세요.",
+      "unexpectedRetry": "예기치 않은 오류가 발생했습니다. 다시 시도해 주세요.",
+      "unexpectedShort": "예기치 않은 오류가 발생했습니다."
+    },
+    "holiday": {
+      "invalidDate": "선택한 날짜가 유효하지 않습니다. 유효한 날짜를 선택해 주세요.",
+      "invalidRepaymentDate": "상환 재조정 날짜가 유효하지 않습니다. 유효한 날짜를 선택해 주세요."
+    },
+    "report": {
+      "type": "보고서 생성",
+      "generated": "보고서: {{reportName}} 데이터 생성됨",
+      "generatedNoData": "보고서: {{reportName}} 데이터 없이 생성됨"
+    },
+    "clipboard": {
+      "type": "클립보드",
+      "copied": "복사됨: {{value}}"
+    },
+    "tenant": {
+      "changed": {
+        "type": "테넌트 변경됨"
+      }
+    },
+    "config": {
+      "setConfig": "{{type}} 구성 설정"
+    },
+    "loans": {
+      "undoWriteOff": {
+        "type": "대손상각 취소 실패",
+        "message": "대손상각 취소 처리 중 오류가 발생했습니다. 다시 시도하거나 지원팀에 문의해 주세요."
+      },
+      "alreadyAdjusted": "자본화 수입 금액이 이미 조정되었습니다",
+      "adjustment": "조정 {{type}} 거래",
+      "capitalizedIncomeLimit": "자본화 수입 조정 금액은 다음 이하여야 합니다",
+      "buyDownFeeAdjusted": "Buy Down 수수료 금액이 이미 조정되었습니다",
+      "buyDownFeeLimit": "Buy Down 수수료 조정 금액은 다음 이하여야 합니다",
+      "businessRule": "비즈니스 규칙",
+      "alertWithAmount": "{{label}}: {{amount}}"
+    },
+    "error.auth.type": "인증 오류",
+    "error.auth.message": "세션이 만료되었거나 자격 증명이 유효하지 않습니다.",
+    "error.token.invalid.type": "유효하지 않은 토큰",
+    "error.token.invalid.message": "제공된 일회용 토큰이 유효하지 않습니다.",
+    "error.bad.request.type": "잘못된 요청",
+    "error.bad.request.message": "요청에 잘못된 매개변수가 전달되었습니다!",
+    "error.unauthorized.type": "권한 없음",
+    "error.unauthorized.message": "세션이 만료되었거나 자격 증명이 유효하지 않습니다.",
+    "error.resource.not.found.type": "리소스를 찾을 수 없음",
+    "error.resource.not.found.message": "요청한 리소스를 찾을 수 없습니다.",
+    "error.server.internal.type": "내부 서버 오류",
+    "error.server.internal.message": "서버에서 예기치 않은 오류가 발생했습니다. 나중에 다시 시도해 주세요.",
+    "error.unknown.type": "알 수 없는 오류",
+    "error.unknown.message": "예기치 않은 오류가 발생했습니다.",
+    "validation.required": "이 필드는 필수입니다",
+    "validation.minLength": "최소 길이는 {{requiredLength}}입니다",
+    "validation.emailInvalid": "유효하지 않은 이메일",
+    "validation.requiredField": "{{label}}은(는) 필수 필드입니다.",
+    "validation.mustBeAtLeast": "{{field}}은(는) 최소 {{min}}이어야 합니다",
+    "validation.mustBePositive": "{{field}}은(는) 양수여야 합니다."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -618,7 +751,8 @@
       "Retry": "재시도",
       "PRINT": "인쇄",
       "DONE": "완료",
-      "Submitting": "제출 중"
+      "Submitting": "제출 중",
+      "OK": "확인"
     },
     "catalogs": {
       "Interest payment waiver": "이자 지급 면제",

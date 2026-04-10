@@ -17,6 +17,7 @@ import { map, switchMap } from 'rxjs/operators';
 import { OAuthService } from 'angular-oauth2-oidc';
 /** Custom Services */
 import { AlertService } from '../alert/alert.service';
+import { TranslateService } from '@ngx-translate/core';
 
 /** Custom Interceptors */
 import { AuthenticationInterceptor } from './authentication.interceptor';
@@ -38,6 +39,7 @@ export class AuthenticationService {
   private alertService = inject(AlertService);
   private authenticationInterceptor = inject(AuthenticationInterceptor);
   private oauthService = inject(OAuthService);
+  private translateService = inject(TranslateService);
 
   /**
    * Updates the password for the specified user.
@@ -195,7 +197,10 @@ export class AuthenticationService {
    * @returns {Observable<boolean>} True if authentication is successful.
    */
   login(loginContext?: LoginContext): Observable<boolean> {
-    this.alertService.alert({ type: 'Authentication Start', message: 'Please wait...' });
+    this.alertService.alert({
+      type: this.translateService.instant('errors.auth.startType'),
+      message: this.translateService.instant('errors.auth.pleaseWait')
+    });
 
     if (this.authMode !== AuthMode.Basic) {
       // OAuth2/OIDC: Wait for the discovery document, then redirect to authorization server with PKCE
@@ -295,21 +300,21 @@ export class AuthenticationService {
     if (credentials.isTwoFactorAuthenticationRequired) {
       this.credentials = credentials;
       this.alertService.alert({
-        type: 'Two Factor Authentication Required',
-        message: 'Two Factor Authentication Required'
+        type: this.translateService.instant('errors.auth.twoFactor.type'),
+        message: this.translateService.instant('errors.auth.twoFactor.message')
       });
     } else {
       if (credentials.shouldRenewPassword) {
         this.credentials = credentials;
         this.alertService.alert({
-          type: 'Password Expired',
-          message: 'Your password has expired, please reset your password!'
+          type: this.translateService.instant('errors.auth.passwordExpired.type'),
+          message: this.translateService.instant('errors.auth.passwordExpired.message')
         });
       } else {
         this.setCredentials(credentials);
         this.alertService.alert({
-          type: 'Authentication Success',
-          message: `${credentials.username} successfully logged in!`
+          type: this.translateService.instant('errors.auth.success.type'),
+          message: this.translateService.instant('errors.auth.success.message', { username: credentials.username })
         });
         delete this.credentials;
       }
@@ -524,14 +529,14 @@ export class AuthenticationService {
     this.authenticationInterceptor.setTwoFactorAccessToken(response.token);
     if (this.credentials.shouldRenewPassword) {
       this.alertService.alert({
-        type: 'Password Expired',
-        message: 'Your password has expired, please reset your password!'
+        type: this.translateService.instant('errors.auth.passwordExpired.type'),
+        message: this.translateService.instant('errors.auth.passwordExpired.message')
       });
     } else {
       this.setCredentials(this.credentials);
       this.alertService.alert({
-        type: 'Authentication Success',
-        message: `${this.credentials.username} successfully logged in!`
+        type: this.translateService.instant('errors.auth.success.type'),
+        message: this.translateService.instant('errors.auth.success.message', { username: this.credentials.username })
       });
       delete this.credentials;
       this.storage.setItem(this.twoFactorAuthenticationTokenStorageKey, JSON.stringify(response));
@@ -545,7 +550,10 @@ export class AuthenticationService {
   resetPassword(passwordDetails: any) {
     return this.http.put(`/users/${this.credentials.userId}`, passwordDetails).pipe(
       map(() => {
-        this.alertService.alert({ type: 'Password Reset Success', message: `Your password was sucessfully reset!` });
+        this.alertService.alert({
+          type: this.translateService.instant('errors.auth.passwordReset.type'),
+          message: this.translateService.instant('errors.auth.passwordReset.message')
+        });
         this.authenticationInterceptor.removeAuthorization();
         this.authenticationInterceptor.removeTwoFactorAuthorization();
         const loginContext: LoginContext = {

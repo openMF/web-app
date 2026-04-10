@@ -212,11 +212,15 @@ export class WebAppComponent implements OnInit, OnDestroy {
 
     // Setup alerts with hover behavior
     this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
-      const snackBarRef = this.snackBar.open(`${alertEvent.message}`, 'Close', {
-        duration: 0, // Set to 0 - no auto-dismiss initially
-        horizontalPosition: 'right',
-        verticalPosition: 'top'
-      });
+      const snackBarRef = this.snackBar.open(
+        `${alertEvent.message}`,
+        this.translateService.instant('labels.buttons.Close'),
+        {
+          duration: 0, // Set to 0 - no auto-dismiss initially
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        }
+      );
       // Handle hover behavior
       this.handleSnackbarHover(snackBarRef, 2000);
     });

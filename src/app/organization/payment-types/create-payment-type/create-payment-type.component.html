@@ -41,7 +41,9 @@
               </mat-error>
             }
             @if (paymentTypeForm.controls.position.hasError('min')) {
-              <mat-error> {{ 'labels.inputs.Position' | translate }} must be a positive number. </mat-error>
+              <mat-error>{{
+                'errors.validation.mustBePositive' | translate: { field: ('labels.inputs.Position' | translate) }
+              }}</mat-error>
             }
           </mat-form-field>
         </div>

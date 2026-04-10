@@ -225,10 +225,14 @@ export class EditHookComponent implements OnInit {
    */
   deleteEvent(index: number) {
     if (this.eventsData.length === 1) {
-      this.snackBar.open('At least one event is required. Cannot delete the last event.', 'Close', {
-        duration: 3000,
-        panelClass: ['error-snackbar']
-      });
+      this.snackBar.open(
+        this.translateService.instant('errors.hooks.lastEvent'),
+        this.translateService.instant('labels.buttons.Close'),
+        {
+          duration: 3000,
+          panelClass: ['error-snackbar']
+        }
+      );
       return;
     }
 

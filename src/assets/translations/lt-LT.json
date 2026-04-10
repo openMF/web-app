@@ -6,8 +6,8 @@
     "accountingRule": {
       "duplicateName": "Atsiprašome, bet apskaitos taisyklė su šiuo pavadinimu jau egzistuoja."
     },
-    "error.resource.notImplemented.type": "Neįdiegta klaida",
-    "error.resource.notImplemented.message": "Funkcionalumas neįdiegtas!",
+    "error.resource.notImplemented.type": "Neįgyvendinta",
+    "error.resource.notImplemented.message": "Neįgyvendinta funkcija!",
     "linkedSavingsAccountOwnership": "Susieta taupomoji sąskaita nepriklauso pasirinktam klientui.",
     "clientNotInGSIM": "Klientas su ID {{id}} nėra GSIM sistemoje.",
     "Capitalized Income amount adjusted already adjusted": "Kapitalizuotų pajamų suma pakoreguota jau pakoreguota",
@@ -285,7 +285,140 @@
     "validation.msg.savingsproduct.shortName.exceeds.max.length": "Trumpas pavadinimas negali būti ilgesnis nei {{params[0].value}} simbolių.",
     "validation.msg.savingsproduct.withdrawalFeeAmount.cannot.be.blank": "Išėmimo mokesčio suma yra privaloma.",
     "validation.msg.savingsproduct.withdrawalFeeAmount.not.zero.or.greater": "Išėmimo mokesčio suma turi būti didesnė už nulį arba lygi nuliui, jei nurodyta.",
-    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Išėmimo mokesčio laikotarpio tipas yra privalomas."
+    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Pasirinktas išėmimo mokesčio tipas yra neteisingas.",
+    "http": {
+      "connection": {
+        "title": "Ryšio klaida",
+        "message": "Nepavyksta prisijungti prie serverio. Patikrinkite interneto ryšį."
+      },
+      "badRequest": {
+        "title": "Neteisinga užklausa",
+        "message": "Patikrinkite įvestus duomenis ir bandykite dar kartą."
+      },
+      "unauthorized": {
+        "title": "Neautorizuota",
+        "message": "Jūsų sesija baigėsi. Prisijunkite iš naujo.",
+        "action": "Prisijungti"
+      },
+      "forbidden": {
+        "title": "Prieiga uždrausta",
+        "message": "Jūs neturite teisės atlikti šį veiksmą."
+      },
+      "notFound": {
+        "title": "Nerasta",
+        "message": "Prašomas išteklius nerastas.",
+        "contextMessage": "{{context}} nerastas."
+      },
+      "conflict": {
+        "title": "Konfliktas",
+        "message": "Išteklius jau egzistuoja arba yra konfliktas."
+      },
+      "serverError": {
+        "title": "Serverio klaida",
+        "message": "Įvyko netikėta klaida. Bandykite vėliau."
+      },
+      "serviceUnavailable": {
+        "title": "Paslauga nepasiekiama",
+        "message": "Paslauga laikinai nepasiekiama. Bandykite vėliau."
+      },
+      "default": {
+        "title": "Klaida",
+        "message": "Įvyko netikėta klaida."
+      }
+    },
+    "interceptor": {
+      "invalidParams": "Užklausoje buvo perduoti neteisingi parametrai!"
+    },
+    "auth": {
+      "pleaseWait": "Prašome palaukti...",
+      "startType": "Autentifikacijos pradžia",
+      "twoFactor": {
+        "type": "Reikalinga dviejų veiksnių autentifikacija",
+        "message": "Reikalinga dviejų veiksnių autentifikacija"
+      },
+      "passwordExpired": {
+        "type": "Slaptažodis pasibaigė",
+        "message": "Jūsų slaptažodis pasibaigė, prašome jį atstatyti!"
+      },
+      "success": {
+        "type": "Autentifikacija sėkminga",
+        "message": "{{username}} sėkmingai prisijungė!"
+      },
+      "passwordReset": {
+        "type": "Slaptažodis sėkmingai atstatytas",
+        "message": "Jūsų slaptažodis buvo sėkmingai atstatytas!"
+      },
+      "callbackFailed": {
+        "type": "Autentifikacija nepavyko",
+        "message": "Nepavyko užbaigti autentifikacijos. Bandykite dar kartą."
+      },
+      "callbackError": {
+        "type": "Autentifikacijos klaida",
+        "message": "Autentifikacijos metu įvyko klaida. Bandykite dar kartą."
+      }
+    },
+    "hooks": {
+      "lastEvent": "Reikalingas bent vienas įvykis. Negalima ištrinti paskutinio įvykio."
+    },
+    "generic": {
+      "unexpected": "Įvyko klaida. Bandykite dar kartą.",
+      "unexpectedRetry": "Įvyko netikėta klaida. Bandykite dar kartą.",
+      "unexpectedShort": "Įvyko netikėta klaida."
+    },
+    "holiday": {
+      "invalidDate": "Pasirinkta neteisinga data. Pasirinkite teisingą datą.",
+      "invalidRepaymentDate": "Neteisinga grąžinimo perplanavimo data. Pasirinkite teisingą datą."
+    },
+    "report": {
+      "type": "Ataskaitos generavimas",
+      "generated": "Ataskaita: {{reportName}} duomenys sugeneruoti",
+      "generatedNoData": "Ataskaita: {{reportName}} sugeneruota be duomenų"
+    },
+    "clipboard": {
+      "type": "Iškarpinė",
+      "copied": "Nukopijuota: {{value}}"
+    },
+    "tenant": {
+      "changed": {
+        "type": "Nuomininkas pakeistas"
+      }
+    },
+    "config": {
+      "setConfig": "{{type}} konfigūracija nustatyta"
+    },
+    "loans": {
+      "undoWriteOff": {
+        "type": "Nurašymo atšaukimas nepavyko",
+        "message": "Apdorojant nurašymo atšaukimą įvyko klaida. Bandykite dar kartą arba kreipkitės į palaikymą."
+      },
+      "alreadyAdjusted": "Kapitalizuotų pajamų suma jau pakoreguota",
+      "adjustment": "Koregavimas {{type}} Sandoris",
+      "capitalizedIncomeLimit": "Kapitalizuotų pajamų koregavimo suma turi būti mažesnė arba lygi",
+      "buyDownFeeAdjusted": "Buy Down mokesčio suma jau pakoreguota",
+      "buyDownFeeLimit": "Buy Down mokesčio koregavimo suma turi būti mažesnė arba lygi",
+      "businessRule": "Verslo taisyklė",
+      "alertWithAmount": "{{label}}: {{amount}}"
+    },
+    "error.auth.type": "Autentifikacijos klaida",
+    "error.auth.message": "Jūsų sesija baigėsi arba prisijungimo duomenys neteisingi.",
+    "error.token.invalid.type": "Neteisingas žetonas",
+    "error.token.invalid.message": "Pateiktas vienkartinis žetonas yra neteisingas.",
+    "error.bad.request.type": "Bloga užklausa",
+    "error.bad.request.message": "Užklausoje buvo perduoti neteisingi parametrai!",
+    "error.unauthorized.type": "Neautorizuota",
+    "error.unauthorized.message": "Jūsų sesija baigėsi arba prisijungimo duomenys neteisingi.",
+    "error.resource.not.found.type": "Išteklius nerastas",
+    "error.resource.not.found.message": "Prašomas išteklius nerastas.",
+    "error.server.internal.type": "Vidinė serverio klaida",
+    "error.server.internal.message": "Serveryje įvyko netikėta klaida. Bandykite vėliau.",
+    "error.unknown.type": "Nežinoma klaida",
+    "error.unknown.message": "Įvyko netikėta klaida.",
+    "validation.required": "Šis laukas yra privalomas",
+    "validation.minLength": "Minimali ilgis yra {{requiredLength}}",
+    "validation.emailInvalid": "El. paštas neteisingas",
+    "validation.requiredField": "{{label}} yra privalomas laukas.",
+    "validation.mustBeAtLeast": "{{field}} turi būti bent {{min}}",
+    "validation.mustBePositive": "{{field}} turi būti teigiamas skaičius."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -618,7 +751,8 @@
       "Retry": "Bandyti dar kartą",
       "PRINT": "Spausdinti",
       "DONE": "Atlikta",
-      "Submitting": "Pateikiama"
+      "Submitting": "Pateikiama",
+      "OK": "Gerai"
     },
     "catalogs": {
       "Interest payment waiver": "Palūkanų mokėjimo atsisakymas",

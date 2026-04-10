@@ -91,9 +91,8 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
         message: this.translate.instant('errors.error.token.invalid.message')
       });
     } else if (status === 400) {
-      const message = parameterName
-        ? `[${parameterName}] ${errorMessage || 'Invalid parameters were passed in the request!'}`
-        : `${errorMessage || 'Invalid parameters were passed in the request!'}`;
+      const fallback = this.translate.instant('errors.interceptor.invalidParams');
+      const message = parameterName ? `[${parameterName}] ${errorMessage || fallback}` : `${errorMessage || fallback}`;
       this.alertService.alert({
         type: this.translate.instant('errors.error.bad.request.type'),
         message: message || this.translate.instant('errors.error.bad.request.message')

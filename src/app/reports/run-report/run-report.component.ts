@@ -30,6 +30,7 @@ import { GlobalConfiguration } from 'app/system/configurations/global-configurat
 
 import * as ExcelJS from 'exceljs';
 import { AlertService } from 'app/core/alert/alert.service';
+import { TranslateService } from '@ngx-translate/core';
 import { NgIf, NgFor, NgSwitch, NgSwitchCase } from '@angular/common';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -63,6 +64,7 @@ export class RunReportComponent implements OnInit {
   private reportsService = inject(ReportsService);
   private settingsService = inject(SettingsService);
   private alertService = inject(AlertService);
+  private translateService = inject(TranslateService);
   private dateUtils = inject(Dates);
 
   /** Minimum date allowed. */
@@ -460,7 +462,10 @@ export class RunReportComponent implements OnInit {
     };
     this.reportsService.getRunReportData(reportName, payload).subscribe((res: any) => {
       if (res.data.length > 0) {
-        this.alertService.alert({ type: 'Report generation', message: `Report: ${reportName} data generated` });
+        this.alertService.alert({
+          type: this.translateService.instant('errors.report.type'),
+          message: this.translateService.instant('errors.report.generated', { reportName })
+        });
 
         const displayedColumns: string[] = [];
         res.columnHeaders.forEach((header: any) => {
@@ -469,7 +474,10 @@ export class RunReportComponent implements OnInit {
 
         this.exportToXLS(reportName, res.data, displayedColumns);
       } else {
-        this.alertService.alert({ type: 'Report generation', message: `Report: ${reportName} without data generated` });
+        this.alertService.alert({
+          type: this.translateService.instant('errors.report.type'),
+          message: this.translateService.instant('errors.report.generatedNoData', { reportName })
+        });
       }
       this.isProcessing = false;
     });

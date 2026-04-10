@@ -32,7 +32,9 @@
               </mat-error>
             }
             @if (delinquencyRangeForm.controls.minimumAgeDays.hasError('pattern')) {
-              <mat-error> {{ 'labels.inputs.Days From' | translate }} must be a positive number. </mat-error>
+              <mat-error>{{
+                'errors.validation.mustBePositive' | translate: { field: ('labels.inputs.Days From' | translate) }
+              }}</mat-error>
             }
           </mat-form-field>
 

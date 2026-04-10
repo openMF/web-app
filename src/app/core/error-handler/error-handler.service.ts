@@ -24,16 +24,18 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface ErrorMessage {
   title: string;
   message: string;
   action?: string;
+  actionType?: string;
 }
 
 /**
@@ -45,12 +47,9 @@ export interface ErrorMessage {
   providedIn: 'root'
 })
 export class ErrorHandlerService {
-  constructor(
-    // eslint-disable-next-line @angular-eslint/prefer-inject
-    private snackBar: MatSnackBar,
-    // eslint-disable-next-line @angular-eslint/prefer-inject
-    private router: Router
-  ) {}
+  private snackBar = inject(MatSnackBar);
+  private router = inject(Router);
+  private translateService = inject(TranslateService);
 
   /**
    * Handle HTTP errors and show user-friendly messages
@@ -72,68 +71,67 @@ export class ErrorHandlerService {
    */
   private getErrorMessage(error: HttpErrorResponse, context?: string): ErrorMessage {
     if (error.error instanceof ErrorEvent) {
-      // Client-side or network error
       return {
-        title: 'Connection Error',
-        message: 'Unable to connect to the server. Please check your internet connection.',
-        action: 'OK'
+        title: this.translateService.instant('errors.http.connection.title'),
+        message: this.translateService.instant('errors.http.connection.message'),
+        action: this.translateService.instant('labels.buttons.OK')
       };
     }
 
-    // Server-side error - Extract Fineract-specific error messages
     const fineractError = error.error?.errors?.[0]?.defaultUserMessage;
     const defaultMessage = error.error?.defaultUserMessage;
 
     switch (error.status) {
       case 400:
         return {
-          title: 'Invalid Request',
-          message: fineractError || defaultMessage || 'Please check your input and try again.',
-          action: 'OK'
+          title: this.translateService.instant('errors.http.badRequest.title'),
+          message: fineractError || defaultMessage || this.translateService.instant('errors.http.badRequest.message'),
+          action: this.translateService.instant('labels.buttons.OK')
         };
       case 401:
         return {
-          title: 'Unauthorized',
-          message: 'Your session has expired. Please log in again.',
-          action: 'Login'
+          title: this.translateService.instant('errors.http.unauthorized.title'),
+          message: this.translateService.instant('errors.http.unauthorized.message'),
+          action: this.translateService.instant('errors.http.unauthorized.action'),
+          actionType: 'login'
         };
       case 403:
         return {
-          title: 'Access Denied',
-          message: fineractError || defaultMessage || 'You do not have permission to perform this action.',
-          action: 'OK'
+          title: this.translateService.instant('errors.http.forbidden.title'),
+          message: fineractError || defaultMessage || this.translateService.instant('errors.http.forbidden.message'),
+          action: this.translateService.instant('labels.buttons.OK')
         };
       case 404:
         return {
-          title: 'Not Found',
+          title: this.translateService.instant('errors.http.notFound.title'),
           message: context
-            ? `${context} not found.`
-            : fineractError || defaultMessage || 'The requested resource was not found.',
-          action: 'OK'
+            ? this.translateService.instant('errors.http.notFound.contextMessage', { context })
+            : fineractError || defaultMessage || this.translateService.instant('errors.http.notFound.message'),
+          action: this.translateService.instant('labels.buttons.OK')
         };
       case 409:
         return {
-          title: 'Conflict',
-          message: fineractError || defaultMessage || 'The resource already exists or there is a conflict.',
-          action: 'OK'
+          title: this.translateService.instant('errors.http.conflict.title'),
+          message: fineractError || defaultMessage || this.translateService.instant('errors.http.conflict.message'),
+          action: this.translateService.instant('labels.buttons.OK')
         };
       case 500:
         return {
-          title: 'Server Error',
-          message: fineractError || defaultMessage || 'An unexpected error occurred. Please try again later.',
-          action: 'OK'
+          title: this.translateService.instant('errors.http.serverError.title'),
+          message: fineractError || defaultMessage || this.translateService.instant('errors.http.serverError.message'),
+          action: this.translateService.instant('labels.buttons.OK')
         };
       case 503:
         return {
-          title: 'Service Unavailable',
-          message: 'The service is temporarily unavailable. Please try again later.',
-          action: 'OK'
+          title: this.translateService.instant('errors.http.serviceUnavailable.title'),
+          message: this.translateService.instant('errors.http.serviceUnavailable.message'),
+          action: this.translateService.instant('labels.buttons.OK')
         };
       default:
         return {
-          title: 'Error',
-          message: fineractError || defaultMessage || 'An unexpected error occurred.',
-          action: 'OK'
+          title: this.translateService.instant('errors.http.default.title'),
+          message: fineractError || defaultMessage || this.translateService.instant('errors.http.default.message'),
+          action: this.translateService.instant('labels.buttons.OK')
         };
     }
   }
@@ -145,7 +143,7 @@ export class ErrorHandlerService {
   private showError(errorMessage: ErrorMessage): void {
     const snackBarRef = this.snackBar.open(
       `${errorMessage.title}: ${errorMessage.message}`,
-      errorMessage.action || 'Close',
+      errorMessage.action || this.translateService.instant('labels.buttons.Close'),
       {
         duration: 5000,
         horizontalPosition: 'center',
@@ -154,8 +152,7 @@ export class ErrorHandlerService {
       }
     );
 
-    // Handle action button clicks (e.g., "Login" for 401 errors)
-    if (errorMessage.action === 'Login') {
+    if (errorMessage.actionType === 'login') {
       snackBarRef.onAction().subscribe(() => {
         this.router.navigate(['/login']);
       });

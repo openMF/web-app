@@ -10,6 +10,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../../core/authentication/authentication.service';
 import { AlertService } from '../../core/alert/alert.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'mifosx-callback',
@@ -19,6 +20,7 @@ export class CallbackComponent implements OnInit {
   private router = inject(Router);
   private alertService = inject(AlertService);
   private authenticationService = inject(AuthenticationService);
+  private translateService = inject(TranslateService);
 
   async ngOnInit(): Promise<void> {
     try {
@@ -28,16 +30,16 @@ export class CallbackComponent implements OnInit {
         this.router.navigate(['/home']);
       } else {
         this.alertService.alert({
-          type: 'Authentication Failed',
-          message: 'Unable to complete authentication. Please try again.'
+          type: this.translateService.instant('errors.auth.callbackFailed.type'),
+          message: this.translateService.instant('errors.auth.callbackFailed.message')
         });
         this.router.navigate(['/login']);
       }
     } catch (error) {
       console.error('Authentication callback failed:', error);
       this.alertService.alert({
-        type: 'Authentication Error',
-        message: 'An error occurred during authentication. Please try again.'
+        type: this.translateService.instant('errors.auth.callbackError.type'),
+        message: this.translateService.instant('errors.auth.callbackError.message')
       });
       this.router.navigate(['/login']);
     }

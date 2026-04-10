@@ -285,7 +285,142 @@
     "validation.msg.savingsproduct.shortName.exceeds.max.length": "Der Kurzname darf nicht länger als {{params[0].value}} Zeichen sein.",
     "validation.msg.savingsproduct.withdrawalFeeAmount.cannot.be.blank": "Der Betrag der Auszahlungsgebühr ist obligatorisch.",
     "validation.msg.savingsproduct.withdrawalFeeAmount.not.zero.or.greater": "Sofern angegeben, muss der Betrag der Abhebungsgebühr größer oder gleich Null sein.",
-    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Der Zeitraumtyp der Auszahlungsgebühr ist obligatorisch."
+    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Der ausgewählte Auszahlungsgebührentyp ist ungültig.",
+    "http": {
+      "connection": {
+        "title": "Verbindungsfehler",
+        "message": "Verbindung zum Server nicht möglich. Bitte überprüfen Sie Ihre Internetverbindung."
+      },
+      "badRequest": {
+        "title": "Ungültige Anfrage",
+        "message": "Bitte überprüfen Sie Ihre Eingabe und versuchen Sie es erneut."
+      },
+      "unauthorized": {
+        "title": "Nicht autorisiert",
+        "message": "Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.",
+        "action": "Anmelden"
+      },
+      "forbidden": {
+        "title": "Zugriff verweigert",
+        "message": "Sie haben keine Berechtigung, diese Aktion auszuführen."
+      },
+      "notFound": {
+        "title": "Nicht gefunden",
+        "message": "Die angeforderte Ressource wurde nicht gefunden.",
+        "contextMessage": "{{context}} nicht gefunden."
+      },
+      "conflict": {
+        "title": "Konflikt",
+        "message": "Die Ressource existiert bereits oder es liegt ein Konflikt vor."
+      },
+      "serverError": {
+        "title": "Serverfehler",
+        "message": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es später erneut."
+      },
+      "serviceUnavailable": {
+        "title": "Dienst nicht verfügbar",
+        "message": "Der Dienst ist vorübergehend nicht verfügbar. Bitte versuchen Sie es später erneut."
+      },
+      "default": {
+        "title": "Fehler",
+        "message": "Ein unerwarteter Fehler ist aufgetreten."
+      }
+    },
+    "interceptor": {
+      "invalidParams": "In der Anfrage wurden ungültige Parameter übergeben!"
+    },
+    "auth": {
+      "pleaseWait": "Bitte warten...",
+      "startType": "Authentifizierung gestartet",
+      "twoFactor": {
+        "type": "Zwei-Faktor-Authentifizierung erforderlich",
+        "message": "Zwei-Faktor-Authentifizierung erforderlich"
+      },
+      "passwordExpired": {
+        "type": "Passwort abgelaufen",
+        "message": "Ihr Passwort ist abgelaufen, bitte setzen Sie Ihr Passwort zurück!"
+      },
+      "success": {
+        "type": "Authentifizierung erfolgreich",
+        "message": "{{username}} erfolgreich angemeldet!"
+      },
+      "passwordReset": {
+        "type": "Passwort erfolgreich zurückgesetzt",
+        "message": "Ihr Passwort wurde erfolgreich zurückgesetzt!"
+      },
+      "callbackFailed": {
+        "type": "Authentifizierung fehlgeschlagen",
+        "message": "Authentifizierung konnte nicht abgeschlossen werden. Bitte versuchen Sie es erneut."
+      },
+      "callbackError": {
+        "type": "Authentifizierungsfehler",
+        "message": "Bei der Authentifizierung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+      }
+    },
+    "hooks": {
+      "lastEvent": "Mindestens ein Ereignis ist erforderlich. Das letzte Ereignis kann nicht gelöscht werden."
+    },
+    "generic": {
+      "unexpected": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+      "unexpectedRetry": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+      "unexpectedShort": "Ein unerwarteter Fehler ist aufgetreten."
+    },
+    "holiday": {
+      "invalidDate": "Ungültiges Datum ausgewählt. Bitte wählen Sie ein gültiges Datum.",
+      "invalidRepaymentDate": "Ungültiges Rückzahlungsdatum. Bitte wählen Sie ein gültiges Datum."
+    },
+    "report": {
+      "type": "Berichterstellung",
+      "generated": "Bericht: {{reportName}} Daten generiert",
+      "generatedNoData": "Bericht: {{reportName}} ohne Daten generiert"
+    },
+    "clipboard": {
+      "type": "Zwischenablage",
+      "copied": "Kopiert: {{value}}"
+    },
+    "tenant": {
+      "changed": {
+        "type": "Mandant geändert"
+      }
+    },
+    "config": {
+      "setConfig": "{{type}} Konfiguration festgelegt"
+    },
+    "loans": {
+      "undoWriteOff": {
+        "type": "Rückgängigmachen der Abschreibung fehlgeschlagen",
+        "message": "Bei der Verarbeitung der Abschreibungsrücknahme ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder kontaktieren Sie den Support."
+      },
+      "alreadyAdjusted": "Kapitalisierter Ertragsbetrag bereits angepasst",
+      "adjustment": "Anpassung {{type}} Transaktion",
+      "capitalizedIncomeLimit": "Anpassungsbetrag des kapitalisierten Ertrags muss kleiner oder gleich sein",
+      "buyDownFeeAdjusted": "Buy-Down-Gebühr bereits angepasst",
+      "buyDownFeeLimit": "Anpassungsbetrag der Buy-Down-Gebühr muss kleiner oder gleich sein",
+      "businessRule": "Geschäftsregel",
+      "alertWithAmount": "{{label}}: {{amount}}"
+    },
+    "error.auth.type": "Authentifizierungsfehler",
+    "error.auth.message": "Ihre Sitzung ist abgelaufen oder die Anmeldedaten sind ungültig.",
+    "error.token.invalid.type": "Ungültiger Token",
+    "error.token.invalid.message": "Der angegebene Einmaltoken ist ungültig.",
+    "error.bad.request.type": "Fehlerhafte Anfrage",
+    "error.bad.request.message": "In der Anfrage wurden ungültige Parameter übergeben!",
+    "error.unauthorized.type": "Nicht autorisiert",
+    "error.unauthorized.message": "Ihre Sitzung ist abgelaufen oder die Anmeldedaten sind ungültig.",
+    "error.resource.not.found.type": "Ressource nicht gefunden",
+    "error.resource.not.found.message": "Die angeforderte Ressource wurde nicht gefunden.",
+    "error.resource.notImplemented.type": "Nicht implementiert",
+    "error.resource.notImplemented.message": "Nicht implementierte Funktionalität!",
+    "error.server.internal.type": "Interner Serverfehler",
+    "error.server.internal.message": "Auf dem Server ist ein unerwarteter Fehler aufgetreten. Bitte versuchen Sie es später erneut.",
+    "error.unknown.type": "Unbekannter Fehler",
+    "error.unknown.message": "Ein unerwarteter Fehler ist aufgetreten.",
+    "validation.required": "Dieses Feld ist erforderlich",
+    "validation.minLength": "Mindestlänge ist {{requiredLength}}",
+    "validation.emailInvalid": "E-Mail ist ungültig",
+    "validation.requiredField": "{{label}} ist ein Pflichtfeld.",
+    "validation.mustBeAtLeast": "{{field}} muss mindestens {{min}} betragen",
+    "validation.mustBePositive": "{{field}} muss eine positive Zahl sein."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -618,7 +753,8 @@
       "Retry": "Erneut versuchen",
       "PRINT": "Drucken",
       "DONE": "Fertig",
-      "Submitting": "Wird gesendet"
+      "Submitting": "Wird gesendet",
+      "OK": "OK"
     },
     "catalogs": {
       "Interest payment waiver": "Zinszahlungsverzicht",

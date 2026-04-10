@@ -171,8 +171,10 @@ export class CreateRuleComponent implements OnInit {
           });
         } else {
           this.snackBar.open(
-            err?.error?.defaultUserMessage || err?.error?.message || 'An error occurred. Please try again.',
-            'Close',
+            err?.error?.defaultUserMessage ||
+              err?.error?.message ||
+              this.translateService.instant('errors.generic.unexpected'),
+            this.translateService.instant('labels.buttons.Close'),
             {
               duration: 7000,
               verticalPosition: 'top',

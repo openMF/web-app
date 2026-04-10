@@ -579,13 +579,13 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
       .subscribe((response: any) => {
         const transactionDate = response.date || transaction.date;
         if (response.amount == 0) {
-          this.displayAlertMessage('Capitalized Income amount adjusted already adjusted', transaction.amount);
+          this.displayAlertMessage(this.translateService.instant('errors.loans.alreadyAdjusted'), transaction.amount);
         } else {
           const transactionAmount = response.amount || transaction.amount;
           const formfields: FormfieldBase[] = [
             new DatepickerBase({
               controlName: 'transactionDate',
-              label: 'Date',
+              label: this.translateService.instant('labels.inputs.Date'),
               value: this.dateUtils.parseDate(transactionDate),
               type: 'datetime-local',
               required: true,
@@ -594,7 +594,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
             }),
             new InputBase({
               controlName: 'amount',
-              label: 'Amount',
+              label: this.translateService.instant('labels.inputs.Amount'),
               value: transactionAmount,
               type: 'number',
               required: true,
@@ -608,8 +608,10 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
             })
           ];
           const data = {
-            title: `Adjustment ${transaction.type.value} Transaction`,
-            layout: { addButtonText: 'Adjustment' },
+            title: this.translateService.instant('errors.loans.adjustment', {
+              type: this.translateService.instant('labels.catalogs.' + transaction.type.value)
+            }),
+            layout: { addButtonText: this.translateService.instant('labels.buttons.Adjustment') },
             formfields: formfields,
             pristine: false
           };
@@ -638,7 +640,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
                   });
               } else {
                 this.displayAlertMessage(
-                  'Capitalized Income Adjustment amount must be lower or equal to',
+                  this.translateService.instant('errors.loans.capitalizedIncomeLimit'),
                   transactionAmount
                 );
               }
@@ -655,13 +657,16 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
       .subscribe((response: any) => {
         const transactionDate = response.date || transaction.date;
         if (response.amount == 0) {
-          this.displayAlertMessage('Buy Down Fee amount already adjusted', transaction.amount);
+          this.displayAlertMessage(
+            this.translateService.instant('errors.loans.buyDownFeeAdjusted'),
+            transaction.amount
+          );
         } else {
           const transactionAmount = response.amount || transaction.amount;
           const formfields: FormfieldBase[] = [
             new DatepickerBase({
               controlName: 'transactionDate',
-              label: 'Date',
+              label: this.translateService.instant('labels.inputs.Date'),
               value: this.dateUtils.parseDate(transactionDate),
               type: 'datetime-local',
               required: true,
@@ -670,7 +675,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
             }),
             new InputBase({
               controlName: 'amount',
-              label: 'Amount',
+              label: this.translateService.instant('labels.inputs.Amount'),
               value: transactionAmount,
               type: 'number',
               required: true,
@@ -684,8 +689,10 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
             })
           ];
           const data = {
-            title: `Adjustment ${transaction.type.value} Transaction`,
-            layout: { addButtonText: 'Adjustment' },
+            title: this.translateService.instant('errors.loans.adjustment', {
+              type: this.translateService.instant('labels.catalogs.' + transaction.type.value)
+            }),
+            layout: { addButtonText: this.translateService.instant('labels.buttons.Adjustment') },
             formfields: formfields,
             pristine: false
           };
@@ -708,7 +715,10 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
                     this.reload();
                   });
               } else {
-                this.displayAlertMessage('Buy Down Fee Adjustment amount must be lower or equal to', transactionAmount);
+                this.displayAlertMessage(
+                  this.translateService.instant('errors.loans.buyDownFeeLimit'),
+                  transactionAmount
+                );
               }
             }
           });
@@ -717,12 +727,12 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
   }
 
   private displayAlertMessage(label: string, amount: number): void {
-    let message: string = this.translateService.instant('errors.' + label);
+    let message: string = label;
     if (amount) {
-      message = message + ': ' + amount;
+      message = this.translateService.instant('errors.loans.alertWithAmount', { label, amount });
     }
     this.alertService.alert({
-      type: 'BusinessRule',
+      type: this.translateService.instant('errors.loans.businessRule'),
       message: message
     });
   }
