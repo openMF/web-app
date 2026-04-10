@@ -6,7 +6,7 @@
     "accountingRule": {
       "duplicateName": "Lo sentimos, pero ya existe una regla contable con este nombre."
     },
-    "error.resource.notImplemented.type": "Error no implementado",
+    "error.resource.notImplemented.type": "No implementado",
     "error.resource.notImplemented.message": "¡Funcionalidad no implementada!",
     "linkedSavingsAccountOwnership": "La cuenta de ahorro vinculada no pertenece al cliente seleccionado.",
     "clientNotInGSIM": "El cliente con ID {{id}} no está presente en GSIM.",
@@ -285,7 +285,140 @@
     "validation.msg.savingsproduct.shortName.exceeds.max.length": "El nombre corto no puede tener más de {{params[0].value}} caracteres.",
     "validation.msg.savingsproduct.withdrawalFeeAmount.cannot.be.blank": "El monto de la comisión de retiro es obligatorio.",
     "validation.msg.savingsproduct.withdrawalFeeAmount.not.zero.or.greater": "El monto de la comisión de retiro debe ser mayor o igual a cero, si se proporciona.",
-    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "El tipo de período de comisión de retiro es obligatorio."
+    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "El tipo de tarifa de retiro seleccionado no es válido.",
+    "http": {
+      "connection": {
+        "title": "Error de conexión",
+        "message": "No se puede conectar al servidor. Por favor verifique su conexión a internet."
+      },
+      "badRequest": {
+        "title": "Solicitud inválida",
+        "message": "Por favor verifique su entrada e intente nuevamente."
+      },
+      "unauthorized": {
+        "title": "No autorizado",
+        "message": "Su sesión ha expirado. Por favor inicie sesión nuevamente.",
+        "action": "Iniciar sesión"
+      },
+      "forbidden": {
+        "title": "Acceso denegado",
+        "message": "No tiene permiso para realizar esta acción."
+      },
+      "notFound": {
+        "title": "No encontrado",
+        "message": "El recurso solicitado no fue encontrado.",
+        "contextMessage": "{{context}} no encontrado."
+      },
+      "conflict": {
+        "title": "Conflicto",
+        "message": "El recurso ya existe o hay un conflicto."
+      },
+      "serverError": {
+        "title": "Error del servidor",
+        "message": "Ocurrió un error inesperado. Por favor intente más tarde."
+      },
+      "serviceUnavailable": {
+        "title": "Servicio no disponible",
+        "message": "El servicio no está disponible temporalmente. Por favor intente más tarde."
+      },
+      "default": {
+        "title": "Error",
+        "message": "Ocurrió un error inesperado."
+      }
+    },
+    "interceptor": {
+      "invalidParams": "¡Se pasaron parámetros inválidos en la solicitud!"
+    },
+    "auth": {
+      "pleaseWait": "Por favor espere...",
+      "startType": "Inicio de autenticación",
+      "twoFactor": {
+        "type": "Autenticación de dos factores requerida",
+        "message": "Autenticación de dos factores requerida"
+      },
+      "passwordExpired": {
+        "type": "Contraseña expirada",
+        "message": "¡Su contraseña ha expirado, por favor restablezca su contraseña!"
+      },
+      "success": {
+        "type": "Autenticación exitosa",
+        "message": "¡{{username}} inició sesión exitosamente!"
+      },
+      "passwordReset": {
+        "type": "Contraseña restablecida exitosamente",
+        "message": "¡Su contraseña fue restablecida exitosamente!"
+      },
+      "callbackFailed": {
+        "type": "Autenticación fallida",
+        "message": "No se pudo completar la autenticación. Por favor intente nuevamente."
+      },
+      "callbackError": {
+        "type": "Error de autenticación",
+        "message": "Ocurrió un error durante la autenticación. Por favor intente nuevamente."
+      }
+    },
+    "hooks": {
+      "lastEvent": "Se requiere al menos un evento. No se puede eliminar el último evento."
+    },
+    "generic": {
+      "unexpected": "Ocurrió un error. Por favor intente nuevamente.",
+      "unexpectedRetry": "Ocurrió un error inesperado. Por favor intente nuevamente.",
+      "unexpectedShort": "Ocurrió un error inesperado."
+    },
+    "holiday": {
+      "invalidDate": "Fecha seleccionada inválida. Por favor seleccione una fecha válida.",
+      "invalidRepaymentDate": "Fecha de reprogramación de pago inválida. Por favor seleccione una fecha válida."
+    },
+    "report": {
+      "type": "Generación de reporte",
+      "generated": "Reporte: datos de {{reportName}} generados",
+      "generatedNoData": "Reporte: {{reportName}} generado sin datos"
+    },
+    "clipboard": {
+      "type": "Portapapeles",
+      "copied": "Copiado: {{value}}"
+    },
+    "tenant": {
+      "changed": {
+        "type": "Inquilino cambiado"
+      }
+    },
+    "config": {
+      "setConfig": "{{type}} configuración establecida"
+    },
+    "loans": {
+      "undoWriteOff": {
+        "type": "Error al revertir castigo",
+        "message": "Ocurrió un error al procesar la reversión del castigo. Por favor intente nuevamente o contacte soporte."
+      },
+      "alreadyAdjusted": "Monto de ingreso capitalizado ya ajustado",
+      "adjustment": "Ajuste {{type}} Transacción",
+      "capitalizedIncomeLimit": "El monto de ajuste de ingreso capitalizado debe ser menor o igual a",
+      "buyDownFeeAdjusted": "Monto de tarifa Buy Down ya ajustado",
+      "buyDownFeeLimit": "El monto de ajuste de tarifa Buy Down debe ser menor o igual a",
+      "businessRule": "Regla de negocio",
+      "alertWithAmount": "{{label}}: {{amount}}"
+    },
+    "error.auth.type": "Error de autenticación",
+    "error.auth.message": "Su sesión ha expirado o las credenciales son inválidas.",
+    "error.token.invalid.type": "Token inválido",
+    "error.token.invalid.message": "El token de un solo uso proporcionado es inválido.",
+    "error.bad.request.type": "Solicitud incorrecta",
+    "error.bad.request.message": "¡Se pasaron parámetros inválidos en la solicitud!",
+    "error.unauthorized.type": "No autorizado",
+    "error.unauthorized.message": "Su sesión ha expirado o las credenciales son inválidas.",
+    "error.resource.not.found.type": "Recurso no encontrado",
+    "error.resource.not.found.message": "El recurso solicitado no fue encontrado.",
+    "error.server.internal.type": "Error interno del servidor",
+    "error.server.internal.message": "Ocurrió un error inesperado en el servidor. Por favor intente más tarde.",
+    "error.unknown.type": "Error desconocido",
+    "error.unknown.message": "Ocurrió un error inesperado.",
+    "validation.required": "Este campo es obligatorio",
+    "validation.minLength": "La longitud mínima es {{requiredLength}}",
+    "validation.emailInvalid": "Correo electrónico no válido",
+    "validation.requiredField": "{{label}} es un campo obligatorio.",
+    "validation.mustBeAtLeast": "{{field}} debe ser al menos {{min}}",
+    "validation.mustBePositive": "{{field}} debe ser un número positivo."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -618,7 +751,8 @@
       "Retry": "Reintentar",
       "PRINT": "Imprimir",
       "DONE": "Hecho",
-      "Submitting": "Enviando"
+      "Submitting": "Enviando",
+      "OK": "OK"
     },
     "catalogs": {
       "Interest payment waiver": "Exención de pago de intereses",

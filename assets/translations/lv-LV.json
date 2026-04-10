@@ -6,8 +6,8 @@
     "accountingRule": {
       "duplicateName": "Atvainojiet, bet grāmatvedības noteikums ar šo nosaukumu jau pastāv."
     },
-    "error.resource.notImplemented.type": "Neieviesta kļūda",
-    "error.resource.notImplemented.message": "Funkcionalitāte nav ieviesta!",
+    "error.resource.notImplemented.type": "Nav ieviests",
+    "error.resource.notImplemented.message": "Neieviesta funkcionalitāte!",
     "linkedSavingsAccountOwnership": "Saistītais krājkonts nepieder izvēlētajam klientam.",
     "clientNotInGSIM": "Klients ar ID {{id}} nav GSIM sistēmā.",
     "Capitalized Income amount adjusted already adjusted": "Kapitalizēto ienākumu summa jau koriģēta",
@@ -285,7 +285,140 @@
     "validation.msg.savingsproduct.shortName.exceeds.max.length": "Īsā nosaukuma garums nedrīkst pārsniegt {{params[0].value}} rakstzīmes.",
     "validation.msg.savingsproduct.withdrawalFeeAmount.cannot.be.blank": "Izņemšanas maksas summa ir obligāta.",
     "validation.msg.savingsproduct.withdrawalFeeAmount.not.zero.or.greater": "Izņemšanas maksas summai ir jābūt lielākai par nulli vai vienādai ar to, ja tāda ir paredzēta.",
-    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Izņemšanas maksas perioda veids ir obligāts."
+    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Izvēlētais izņemšanas maksas veids nav derīgs.",
+    "http": {
+      "connection": {
+        "title": "Savienojuma kļūda",
+        "message": "Nevar izveidot savienojumu ar serveri. Lūdzu, pārbaudiet interneta savienojumu."
+      },
+      "badRequest": {
+        "title": "Nederīgs pieprasījums",
+        "message": "Lūdzu, pārbaudiet ievadītos datus un mēģiniet vēlreiz."
+      },
+      "unauthorized": {
+        "title": "Nav autorizēts",
+        "message": "Jūsu sesija ir beigusies. Lūdzu, piesakieties vēlreiz.",
+        "action": "Pieteikties"
+      },
+      "forbidden": {
+        "title": "Piekļuve liegta",
+        "message": "Jums nav atļaujas veikt šo darbību."
+      },
+      "notFound": {
+        "title": "Nav atrasts",
+        "message": "Pieprasītais resurss nav atrasts.",
+        "contextMessage": "{{context}} nav atrasts."
+      },
+      "conflict": {
+        "title": "Konflikts",
+        "message": "Resurss jau pastāv vai ir konflikts."
+      },
+      "serverError": {
+        "title": "Servera kļūda",
+        "message": "Radās neparedzēta kļūda. Lūdzu, mēģiniet vēlāk."
+      },
+      "serviceUnavailable": {
+        "title": "Pakalpojums nav pieejams",
+        "message": "Pakalpojums īslaicīgi nav pieejams. Lūdzu, mēģiniet vēlāk."
+      },
+      "default": {
+        "title": "Kļūda",
+        "message": "Radās neparedzēta kļūda."
+      }
+    },
+    "interceptor": {
+      "invalidParams": "Pieprasījumā tika nodoti nederīgi parametri!"
+    },
+    "auth": {
+      "pleaseWait": "Lūdzu, uzgaidiet...",
+      "startType": "Autentifikācijas sākums",
+      "twoFactor": {
+        "type": "Nepieciešama divu faktoru autentifikācija",
+        "message": "Nepieciešama divu faktoru autentifikācija"
+      },
+      "passwordExpired": {
+        "type": "Parole ir beigusies",
+        "message": "Jūsu parole ir beigusies, lūdzu, atjaunojiet paroli!"
+      },
+      "success": {
+        "type": "Autentifikācija veiksmīga",
+        "message": "{{username}} veiksmīgi pieteicies!"
+      },
+      "passwordReset": {
+        "type": "Parole veiksmīgi atjaunota",
+        "message": "Jūsu parole tika veiksmīgi atjaunota!"
+      },
+      "callbackFailed": {
+        "type": "Autentifikācija neizdevās",
+        "message": "Neizdevās pabeigt autentifikāciju. Lūdzu, mēģiniet vēlreiz."
+      },
+      "callbackError": {
+        "type": "Autentifikācijas kļūda",
+        "message": "Autentifikācijas laikā radās kļūda. Lūdzu, mēģiniet vēlreiz."
+      }
+    },
+    "hooks": {
+      "lastEvent": "Nepieciešams vismaz viens notikums. Nevar dzēst pēdējo notikumu."
+    },
+    "generic": {
+      "unexpected": "Radās kļūda. Lūdzu, mēģiniet vēlreiz.",
+      "unexpectedRetry": "Radās neparedzēta kļūda. Lūdzu, mēģiniet vēlreiz.",
+      "unexpectedShort": "Radās neparedzēta kļūda."
+    },
+    "holiday": {
+      "invalidDate": "Izvēlēts nederīgs datums. Lūdzu, izvēlieties derīgu datumu.",
+      "invalidRepaymentDate": "Nederīgs atmaksas pārplānošanas datums. Lūdzu, izvēlieties derīgu datumu."
+    },
+    "report": {
+      "type": "Atskaites ģenerēšana",
+      "generated": "Atskaite: {{reportName}} dati ģenerēti",
+      "generatedNoData": "Atskaite: {{reportName}} ģenerēta bez datiem"
+    },
+    "clipboard": {
+      "type": "Starpliktuve",
+      "copied": "Nokopēts: {{value}}"
+    },
+    "tenant": {
+      "changed": {
+        "type": "Nomnieks mainīts"
+      }
+    },
+    "config": {
+      "setConfig": "{{type}} konfigurācija iestatīta"
+    },
+    "loans": {
+      "undoWriteOff": {
+        "type": "Norakstīšanas atcelšana neizdevās",
+        "message": "Apstrādājot norakstīšanas atcelšanu, radās kļūda. Lūdzu, mēģiniet vēlreiz vai sazinieties ar atbalstu."
+      },
+      "alreadyAdjusted": "Kapitalizēto ienākumu summa jau koriģēta",
+      "adjustment": "Korekcija {{type}} Darījums",
+      "capitalizedIncomeLimit": "Kapitalizēto ienākumu korekcijas summai jābūt mazākai vai vienādai ar",
+      "buyDownFeeAdjusted": "Buy Down maksas summa jau koriģēta",
+      "buyDownFeeLimit": "Buy Down maksas korekcijas summai jābūt mazākai vai vienādai ar",
+      "businessRule": "Biznesa noteikums",
+      "alertWithAmount": "{{label}}: {{amount}}"
+    },
+    "error.auth.type": "Autentifikācijas kļūda",
+    "error.auth.message": "Jūsu sesija ir beigusies vai akreditācijas dati nav derīgi.",
+    "error.token.invalid.type": "Nederīgs tokens",
+    "error.token.invalid.message": "Norādītais vienreizējais tokens nav derīgs.",
+    "error.bad.request.type": "Nepareizs pieprasījums",
+    "error.bad.request.message": "Pieprasījumā tika nodoti nederīgi parametri!",
+    "error.unauthorized.type": "Nav autorizēts",
+    "error.unauthorized.message": "Jūsu sesija ir beigusies vai akreditācijas dati nav derīgi.",
+    "error.resource.not.found.type": "Resurss nav atrasts",
+    "error.resource.not.found.message": "Pieprasītais resurss nav atrasts.",
+    "error.server.internal.type": "Iekšēja servera kļūda",
+    "error.server.internal.message": "Serverī radās neparedzēta kļūda. Lūdzu, mēģiniet vēlāk.",
+    "error.unknown.type": "Nezināma kļūda",
+    "error.unknown.message": "Radās neparedzēta kļūda.",
+    "validation.required": "Šis lauks ir obligāts",
+    "validation.minLength": "Minimālais garums ir {{requiredLength}}",
+    "validation.emailInvalid": "E-pasts nav derīgs",
+    "validation.requiredField": "{{label}} ir obligāts lauks.",
+    "validation.mustBeAtLeast": "{{field}} jābūt vismaz {{min}}",
+    "validation.mustBePositive": "{{field}} jābūt pozitīvam skaitlim."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -618,7 +751,8 @@
       "Retry": "Mēģināt vēlreiz",
       "PRINT": "Drukāt",
       "DONE": "Gatavs",
-      "Submitting": "Iesniedz"
+      "Submitting": "Iesniedz",
+      "OK": "Labi"
     },
     "catalogs": {
       "Interest payment waiver": "Atteikšanās no procentu maksājumiem",

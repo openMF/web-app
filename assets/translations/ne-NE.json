@@ -6,8 +6,8 @@
     "accountingRule": {
       "duplicateName": "माफ गर्नुहोस्, यो नामको लेखा नियम पहिले नै अवस्थित छ।"
     },
-    "error.resource.notImplemented.type": "लागू नभएको त्रुटि",
-    "error.resource.notImplemented.message": "कार्यक्षमता लागू गरिएको छैन!",
+    "error.resource.notImplemented.type": "कार्यान्वयन भएको छैन",
+    "error.resource.notImplemented.message": "कार्यान्वयन नभएको कार्यक्षमता!",
     "linkedSavingsAccountOwnership": "लिंक गरिएको बचत खाता चयनित ग्राहकको होइन।",
     "clientNotInGSIM": "आईडी {{id}} भएको ग्राहक GSIM मा उपस्थित छैन।",
     "Capitalized Income amount adjusted already adjusted": "क्यापिटलाइज्ड आय रकम पहिले नै समायोजन गरिएको छ",
@@ -285,7 +285,140 @@
     "validation.msg.savingsproduct.shortName.exceeds.max.length": "छोटो नाम {{params[0].value}} वर्णभन्दा लामो हुन सक्दैन।",
     "validation.msg.savingsproduct.withdrawalFeeAmount.cannot.be.blank": "निकासी शुल्क रकम अनिवार्य छ।",
     "validation.msg.savingsproduct.withdrawalFeeAmount.not.zero.or.greater": "निकासी शुल्क रकम प्रदान गरिएको भएमा शून्य भन्दा बढी वा बराबर हुनुपर्छ।",
-    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "निकासी शुल्क अवधि प्रकार अनिवार्य छ।"
+    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "चयन गरिएको निकासी शुल्क प्रकार मान्य छैन।",
+    "http": {
+      "connection": {
+        "title": "जडान त्रुटि",
+        "message": "सर्भरमा जडान गर्न सकिएन। कृपया आफ्नो इन्टरनेट जडान जाँच गर्नुहोस्।"
+      },
+      "badRequest": {
+        "title": "अमान्य अनुरोध",
+        "message": "कृपया आफ्नो इनपुट जाँच गर्नुहोस् र पुन: प्रयास गर्नुहोस्।"
+      },
+      "unauthorized": {
+        "title": "अनधिकृत",
+        "message": "तपाईंको सत्र समाप्त भएको छ। कृपया पुन: लग इन गर्नुहोस्।",
+        "action": "लग इन"
+      },
+      "forbidden": {
+        "title": "पहुँच अस्वीकृत",
+        "message": "तपाईंलाई यो कार्य गर्ने अनुमति छैन।"
+      },
+      "notFound": {
+        "title": "फेला परेन",
+        "message": "अनुरोध गरिएको स्रोत फेला परेन।",
+        "contextMessage": "{{context}} फेला परेन।"
+      },
+      "conflict": {
+        "title": "द्वन्द्व",
+        "message": "स्रोत पहिले नै अवस्थित छ वा द्वन्द्व छ।"
+      },
+      "serverError": {
+        "title": "सर्भर त्रुटि",
+        "message": "अप्रत्याशित त्रुटि भयो। कृपया पछि पुन: प्रयास गर्नुहोस्।"
+      },
+      "serviceUnavailable": {
+        "title": "सेवा उपलब्ध छैन",
+        "message": "सेवा अस्थायी रूपमा उपलब्ध छैन। कृपया पछि पुन: प्रयास गर्नुहोस्।"
+      },
+      "default": {
+        "title": "त्रुटि",
+        "message": "अप्रत्याशित त्रुटि भयो।"
+      }
+    },
+    "interceptor": {
+      "invalidParams": "अनुरोधमा अमान्य प्यारामिटरहरू पठाइयो!"
+    },
+    "auth": {
+      "pleaseWait": "कृपया पर्खनुहोस्...",
+      "startType": "प्रमाणीकरण सुरु",
+      "twoFactor": {
+        "type": "दुई-कारक प्रमाणीकरण आवश्यक",
+        "message": "दुई-कारक प्रमाणीकरण आवश्यक छ"
+      },
+      "passwordExpired": {
+        "type": "पासवर्ड समाप्त भयो",
+        "message": "तपाईंको पासवर्ड समाप्त भएको छ, कृपया पासवर्ड रिसेट गर्नुहोस्!"
+      },
+      "success": {
+        "type": "प्रमाणीकरण सफल",
+        "message": "{{username}} सफलतापूर्वक लग इन भयो!"
+      },
+      "passwordReset": {
+        "type": "पासवर्ड सफलतापूर्वक रिसेट भयो",
+        "message": "तपाईंको पासवर्ड सफलतापूर्वक रिसेट भयो!"
+      },
+      "callbackFailed": {
+        "type": "प्रमाणीकरण असफल",
+        "message": "प्रमाणीकरण पूरा गर्न सकिएन। कृपया पुन: प्रयास गर्नुहोस्।"
+      },
+      "callbackError": {
+        "type": "प्रमाणीकरण त्रुटि",
+        "message": "प्रमाणीकरणको क्रममा त्रुटि भयो। कृपया पुन: प्रयास गर्नुहोस्।"
+      }
+    },
+    "hooks": {
+      "lastEvent": "कम्तिमा एउटा घटना आवश्यक छ। अन्तिम घटना मेटाउन सकिँदैन।"
+    },
+    "generic": {
+      "unexpected": "त्रुटि भयो। कृपया पुन: प्रयास गर्नुहोस्।",
+      "unexpectedRetry": "अप्रत्याशित त्रुटि भयो। कृपया पुन: प्रयास गर्नुहोस्।",
+      "unexpectedShort": "अप्रत्याशित त्रुटि भयो।"
+    },
+    "holiday": {
+      "invalidDate": "अमान्य मिति चयन गरिएको छ। कृपया मान्य मिति चयन गर्नुहोस्।",
+      "invalidRepaymentDate": "अमान्य भुक्तानी पुनर्तालिका मिति। कृपया मान्य मिति चयन गर्नुहोस्।"
+    },
+    "report": {
+      "type": "प्रतिवेदन उत्पादन",
+      "generated": "प्रतिवेदन: {{reportName}} डाटा उत्पन्न भयो",
+      "generatedNoData": "प्रतिवेदन: {{reportName}} डाटा बिना उत्पन्न भयो"
+    },
+    "clipboard": {
+      "type": "क्लिपबोर्ड",
+      "copied": "प्रतिलिपि गरियो: {{value}}"
+    },
+    "tenant": {
+      "changed": {
+        "type": "भाडावाल परिवर्तन भयो"
+      }
+    },
+    "config": {
+      "setConfig": "{{type}} कन्फिगरेसन सेट गरियो"
+    },
+    "loans": {
+      "undoWriteOff": {
+        "type": "ऋण माफी रद्द गर्न असफल",
+        "message": "ऋण माफी रद्द प्रक्रियामा त्रुटि भयो। कृपया पुन: प्रयास गर्नुहोस् वा सहायतामा सम्पर्क गर्नुहोस्।"
+      },
+      "alreadyAdjusted": "पुँजीकृत आय रकम पहिले नै समायोजित भइसकेको छ",
+      "adjustment": "समायोजन {{type}} कारोबार",
+      "capitalizedIncomeLimit": "पुँजीकृत आय समायोजन रकम बराबर वा कम हुनुपर्छ",
+      "buyDownFeeAdjusted": "Buy Down शुल्क रकम पहिले नै समायोजित भइसकेको छ",
+      "buyDownFeeLimit": "Buy Down शुल्क समायोजन रकम बराबर वा कम हुनुपर्छ",
+      "businessRule": "व्यापार नियम",
+      "alertWithAmount": "{{label}}: {{amount}}"
+    },
+    "error.auth.type": "प्रमाणीकरण त्रुटि",
+    "error.auth.message": "तपाईंको सत्र समाप्त भएको छ वा प्रमाणपत्रहरू अमान्य छन्।",
+    "error.token.invalid.type": "अमान्य टोकन",
+    "error.token.invalid.message": "प्रदान गरिएको एक पटकको टोकन अमान्य छ।",
+    "error.bad.request.type": "खराब अनुरोध",
+    "error.bad.request.message": "अनुरोधमा अमान्य प्यारामिटरहरू पठाइयो!",
+    "error.unauthorized.type": "अनधिकृत",
+    "error.unauthorized.message": "तपाईंको सत्र समाप्त भएको छ वा प्रमाणपत्रहरू अमान्य छन्।",
+    "error.resource.not.found.type": "स्रोत फेला परेन",
+    "error.resource.not.found.message": "अनुरोध गरिएको स्रोत फेला परेन।",
+    "error.server.internal.type": "आन्तरिक सर्भर त्रुटि",
+    "error.server.internal.message": "सर्भरमा अप्रत्याशित त्रुटि भयो। कृपया पछि पुन: प्रयास गर्नुहोस्।",
+    "error.unknown.type": "अज्ञात त्रुटि",
+    "error.unknown.message": "अप्रत्याशित त्रुटि भयो।",
+    "validation.required": "यो फिल्ड आवश्यक छ",
+    "validation.minLength": "न्यूनतम लम्बाइ {{requiredLength}} हो",
+    "validation.emailInvalid": "इमेल मान्य छैन",
+    "validation.requiredField": "{{label}} एक आवश्यक फिल्ड हो।",
+    "validation.mustBeAtLeast": "{{field}} कम्तिमा {{min}} हुनुपर्छ",
+    "validation.mustBePositive": "{{field}} धनात्मक संख्या हुनुपर्छ।"
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -618,7 +751,8 @@
       "Retry": "पुनः प्रयास गर्नुहोस्",
       "PRINT": "छाप्नुहोस्",
       "DONE": "सम्पन्न",
-      "Submitting": "पेश गर्दै"
+      "Submitting": "पेश गर्दै",
+      "OK": "ठीक छ"
     },
     "catalogs": {
       "Interest payment waiver": "ब्याज भुक्तानी माफी",

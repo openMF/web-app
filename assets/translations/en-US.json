@@ -286,7 +286,142 @@
     "validation.msg.savingsproduct.shortName.exceeds.max.length": "Short name cannot be over {{params[0].value}} characters long.",
     "validation.msg.savingsproduct.withdrawalFeeAmount.cannot.be.blank": "Withdrawal fee amount is mandatory.",
     "validation.msg.savingsproduct.withdrawalFeeAmount.not.zero.or.greater": "Withdrawal fee amount must be greater than or equal to zero if provided.",
-    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Withdrawal fee period type is mandatory."
+    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "The selected withdrawal fee type is not valid.",
+    "http": {
+      "connection": {
+        "title": "Connection Error",
+        "message": "Unable to connect to the server. Please check your internet connection."
+      },
+      "badRequest": {
+        "title": "Invalid Request",
+        "message": "Please check your input and try again."
+      },
+      "unauthorized": {
+        "title": "Unauthorized",
+        "message": "Your session has expired. Please log in again.",
+        "action": "Login"
+      },
+      "forbidden": {
+        "title": "Access Denied",
+        "message": "You do not have permission to perform this action."
+      },
+      "notFound": {
+        "title": "Not Found",
+        "message": "The requested resource was not found.",
+        "contextMessage": "{{context}} not found."
+      },
+      "conflict": {
+        "title": "Conflict",
+        "message": "The resource already exists or there is a conflict."
+      },
+      "serverError": {
+        "title": "Server Error",
+        "message": "An unexpected error occurred. Please try again later."
+      },
+      "serviceUnavailable": {
+        "title": "Service Unavailable",
+        "message": "The service is temporarily unavailable. Please try again later."
+      },
+      "default": {
+        "title": "Error",
+        "message": "An unexpected error occurred."
+      }
+    },
+    "interceptor": {
+      "invalidParams": "Invalid parameters were passed in the request!"
+    },
+    "auth": {
+      "pleaseWait": "Please wait...",
+      "startType": "Authentication Start",
+      "twoFactor": {
+        "type": "Two Factor Authentication Required",
+        "message": "Two Factor Authentication Required"
+      },
+      "passwordExpired": {
+        "type": "Password Expired",
+        "message": "Your password has expired, please reset your password!"
+      },
+      "success": {
+        "type": "Authentication Success",
+        "message": "{{username}} successfully logged in!"
+      },
+      "passwordReset": {
+        "type": "Password Reset Success",
+        "message": "Your password was successfully reset!"
+      },
+      "callbackFailed": {
+        "type": "Authentication Failed",
+        "message": "Unable to complete authentication. Please try again."
+      },
+      "callbackError": {
+        "type": "Authentication Error",
+        "message": "An error occurred during authentication. Please try again."
+      }
+    },
+    "hooks": {
+      "lastEvent": "At least one event is required. Cannot delete the last event."
+    },
+    "generic": {
+      "unexpected": "An error occurred. Please try again.",
+      "unexpectedRetry": "An unexpected error occurred. Please try again.",
+      "unexpectedShort": "An unexpected error occurred."
+    },
+    "holiday": {
+      "invalidDate": "Invalid date selected. Please select a valid date.",
+      "invalidRepaymentDate": "Invalid repayment rescheduled date. Please select a valid date."
+    },
+    "report": {
+      "type": "Report generation",
+      "generated": "Report: {{reportName}} data generated",
+      "generatedNoData": "Report: {{reportName}} without data generated"
+    },
+    "clipboard": {
+      "type": "Clipboard",
+      "copied": "Copied: {{value}}"
+    },
+    "tenant": {
+      "changed": {
+        "type": "Tenant Changed"
+      }
+    },
+    "config": {
+      "setConfig": "{{type}} Set Config"
+    },
+    "loans": {
+      "undoWriteOff": {
+        "type": "Undo Write-off Failed",
+        "message": "An error occurred while processing the undo write-off transaction. Please try again or contact support if the problem persists."
+      },
+      "alreadyAdjusted": "Capitalized Income amount already adjusted",
+      "adjustment": "Adjustment {{type}} Transaction",
+      "capitalizedIncomeLimit": "Capitalized Income Adjustment amount must be lower or equal to",
+      "buyDownFeeAdjusted": "Buy Down Fee amount already adjusted",
+      "buyDownFeeLimit": "Buy Down Fee Adjustment amount must be lower or equal to",
+      "businessRule": "Business Rule",
+      "alertWithAmount": "{{label}}: {{amount}}"
+    },
+    "error.auth.type": "Authentication Error",
+    "error.auth.message": "Your session has expired or the credentials are invalid.",
+    "error.token.invalid.type": "Invalid Token",
+    "error.token.invalid.message": "The provided one time token is invalid.",
+    "error.bad.request.type": "Bad Request",
+    "error.bad.request.message": "Invalid parameters were passed in the request!",
+    "error.unauthorized.type": "Unauthorized",
+    "error.unauthorized.message": "Your session has expired or the credentials are invalid.",
+    "error.resource.not.found.type": "Resource Not Found",
+    "error.resource.not.found.message": "The requested resource was not found.",
+    "error.resource.notImplemented.type": "Not Implemented Error",
+    "error.resource.notImplemented.message": "Not implemented functionality!",
+    "error.server.internal.type": "Internal Server Error",
+    "error.server.internal.message": "An unexpected error occurred on the server. Please try again later.",
+    "error.unknown.type": "Unknown Error",
+    "error.unknown.message": "An unexpected error occurred.",
+    "validation.required": "This field is required",
+    "validation.minLength": "Minimum length is {{requiredLength}}",
+    "validation.emailInvalid": "Email not valid",
+    "validation.requiredField": "{{label}} is a required field.",
+    "validation.mustBeAtLeast": "{{field}} must be at least {{min}}",
+    "validation.mustBePositive": "{{field}} must be a positive number."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -619,7 +754,8 @@
       "Add Entry": "Add Entry",
       "PRINT": "Print",
       "DONE": "Done",
-      "Submitting": "Submitting"
+      "Submitting": "Submitting",
+      "OK": "OK"
     },
     "catalogs": {
       "Interest payment waiver": "Interest Payment Waiver",

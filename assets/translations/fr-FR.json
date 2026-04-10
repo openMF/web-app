@@ -6,7 +6,7 @@
     "accountingRule": {
       "duplicateName": "Désolé, mais une règle comptable portant ce nom existe déjà."
     },
-    "error.resource.notImplemented.type": "Erreur non implémentée",
+    "error.resource.notImplemented.type": "Non implémenté",
     "error.resource.notImplemented.message": "Fonctionnalité non implémentée !",
     "linkedSavingsAccountOwnership": "Le compte d'épargne lié n'appartient pas au client sélectionné.",
     "clientNotInGSIM": "Le client avec l'ID {{id}} n'est pas membre du GSIM.",
@@ -285,7 +285,140 @@
     "validation.msg.savingsproduct.shortName.exceeds.max.length": "Le nom court ne peut pas contenir plus de {{params[0].value}} caractères.",
     "validation.msg.savingsproduct.withdrawalFeeAmount.cannot.be.blank": "Le montant des frais de retrait est obligatoire.",
     "validation.msg.savingsproduct.withdrawalFeeAmount.not.zero.or.greater": "Le montant des frais de retrait doit être supérieur ou égal à zéro s’il est indiqué.",
-    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Le type de période de frais de retrait est obligatoire."
+    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Le type de frais de retrait sélectionné n'est pas valide.",
+    "http": {
+      "connection": {
+        "title": "Erreur de connexion",
+        "message": "Impossible de se connecter au serveur. Veuillez vérifier votre connexion internet."
+      },
+      "badRequest": {
+        "title": "Requête invalide",
+        "message": "Veuillez vérifier votre saisie et réessayer."
+      },
+      "unauthorized": {
+        "title": "Non autorisé",
+        "message": "Votre session a expiré. Veuillez vous reconnecter.",
+        "action": "Connexion"
+      },
+      "forbidden": {
+        "title": "Accès refusé",
+        "message": "Vous n'avez pas la permission d'effectuer cette action."
+      },
+      "notFound": {
+        "title": "Introuvable",
+        "message": "La ressource demandée est introuvable.",
+        "contextMessage": "{{context}} introuvable."
+      },
+      "conflict": {
+        "title": "Conflit",
+        "message": "La ressource existe déjà ou il y a un conflit."
+      },
+      "serverError": {
+        "title": "Erreur serveur",
+        "message": "Une erreur inattendue s'est produite. Veuillez réessayer plus tard."
+      },
+      "serviceUnavailable": {
+        "title": "Service indisponible",
+        "message": "Le service est temporairement indisponible. Veuillez réessayer plus tard."
+      },
+      "default": {
+        "title": "Erreur",
+        "message": "Une erreur inattendue s'est produite."
+      }
+    },
+    "interceptor": {
+      "invalidParams": "Des paramètres invalides ont été transmis dans la requête !"
+    },
+    "auth": {
+      "pleaseWait": "Veuillez patienter...",
+      "startType": "Début de l'authentification",
+      "twoFactor": {
+        "type": "Authentification à deux facteurs requise",
+        "message": "Authentification à deux facteurs requise"
+      },
+      "passwordExpired": {
+        "type": "Mot de passe expiré",
+        "message": "Votre mot de passe a expiré, veuillez le réinitialiser !"
+      },
+      "success": {
+        "type": "Authentification réussie",
+        "message": "{{username}} connecté avec succès !"
+      },
+      "passwordReset": {
+        "type": "Mot de passe réinitialisé avec succès",
+        "message": "Votre mot de passe a été réinitialisé avec succès !"
+      },
+      "callbackFailed": {
+        "type": "Authentification échouée",
+        "message": "Impossible de terminer l'authentification. Veuillez réessayer."
+      },
+      "callbackError": {
+        "type": "Erreur d'authentification",
+        "message": "Une erreur s'est produite lors de l'authentification. Veuillez réessayer."
+      }
+    },
+    "hooks": {
+      "lastEvent": "Au moins un événement est requis. Impossible de supprimer le dernier événement."
+    },
+    "generic": {
+      "unexpected": "Une erreur s'est produite. Veuillez réessayer.",
+      "unexpectedRetry": "Une erreur inattendue s'est produite. Veuillez réessayer.",
+      "unexpectedShort": "Une erreur inattendue s'est produite."
+    },
+    "holiday": {
+      "invalidDate": "Date sélectionnée invalide. Veuillez sélectionner une date valide.",
+      "invalidRepaymentDate": "Date de rééchelonnement de remboursement invalide. Veuillez sélectionner une date valide."
+    },
+    "report": {
+      "type": "Génération de rapport",
+      "generated": "Rapport : données de {{reportName}} générées",
+      "generatedNoData": "Rapport : {{reportName}} généré sans données"
+    },
+    "clipboard": {
+      "type": "Presse-papiers",
+      "copied": "Copié : {{value}}"
+    },
+    "tenant": {
+      "changed": {
+        "type": "Locataire modifié"
+      }
+    },
+    "config": {
+      "setConfig": "{{type}} configuration définie"
+    },
+    "loans": {
+      "undoWriteOff": {
+        "type": "Échec de l'annulation de la radiation",
+        "message": "Une erreur s'est produite lors du traitement de l'annulation de la radiation. Veuillez réessayer ou contacter le support."
+      },
+      "alreadyAdjusted": "Montant du revenu capitalisé déjà ajusté",
+      "adjustment": "Ajustement {{type}} Transaction",
+      "capitalizedIncomeLimit": "Le montant d'ajustement du revenu capitalisé doit être inférieur ou égal à",
+      "buyDownFeeAdjusted": "Montant des frais Buy Down déjà ajusté",
+      "buyDownFeeLimit": "Le montant d'ajustement des frais Buy Down doit être inférieur ou égal à",
+      "businessRule": "Règle métier",
+      "alertWithAmount": "{{label}} : {{amount}}"
+    },
+    "error.auth.type": "Erreur d'authentification",
+    "error.auth.message": "Votre session a expiré ou les identifiants sont invalides.",
+    "error.token.invalid.type": "Jeton invalide",
+    "error.token.invalid.message": "Le jeton à usage unique fourni est invalide.",
+    "error.bad.request.type": "Requête incorrecte",
+    "error.bad.request.message": "Des paramètres invalides ont été transmis dans la requête !",
+    "error.unauthorized.type": "Non autorisé",
+    "error.unauthorized.message": "Votre session a expiré ou les identifiants sont invalides.",
+    "error.resource.not.found.type": "Ressource introuvable",
+    "error.resource.not.found.message": "La ressource demandée est introuvable.",
+    "error.server.internal.type": "Erreur interne du serveur",
+    "error.server.internal.message": "Une erreur inattendue s'est produite sur le serveur. Veuillez réessayer plus tard.",
+    "error.unknown.type": "Erreur inconnue",
+    "error.unknown.message": "Une erreur inattendue s'est produite.",
+    "validation.required": "Ce champ est obligatoire",
+    "validation.minLength": "La longueur minimale est {{requiredLength}}",
+    "validation.emailInvalid": "E-mail non valide",
+    "validation.requiredField": "{{label}} est un champ obligatoire.",
+    "validation.mustBeAtLeast": "{{field}} doit être au moins {{min}}",
+    "validation.mustBePositive": "{{field}} doit être un nombre positif."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -618,7 +751,8 @@
       "Retry": "Réessayer",
       "PRINT": "Imprimer",
       "DONE": "Terminer",
-      "Submitting": "Envoi en cours"
+      "Submitting": "Envoi en cours",
+      "OK": "OK"
     },
     "catalogs": {
       "Interest payment waiver": "Renonciation au paiement des intérêts",

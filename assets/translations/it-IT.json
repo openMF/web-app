@@ -6,7 +6,7 @@
     "accountingRule": {
       "duplicateName": "Spiacenti, ma esiste già una regola contabile con questo nome."
     },
-    "error.resource.notImplemented.type": "Errore non implementato",
+    "error.resource.notImplemented.type": "Non implementato",
     "error.resource.notImplemented.message": "Funzionalità non implementata!",
     "linkedSavingsAccountOwnership": "Il conto di risparmio collegato non appartiene al cliente selezionato.",
     "clientNotInGSIM": "Il cliente con ID {{id}} non è presente in GSIM.",
@@ -285,7 +285,140 @@
     "validation.msg.savingsproduct.shortName.exceeds.max.length": "Il nome breve non può contenere più di {{params[0].value}} caratteri.",
     "validation.msg.savingsproduct.withdrawalFeeAmount.cannot.be.blank": "L'importo della commissione di prelievo è obbligatorio.",
     "validation.msg.savingsproduct.withdrawalFeeAmount.not.zero.or.greater": "L'importo della commissione di prelievo deve essere maggiore o uguale a zero, se previsto.",
-    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Il tipo di periodo della commissione di prelievo è obbligatorio."
+    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Il tipo di commissione di prelievo selezionato non è valido.",
+    "http": {
+      "connection": {
+        "title": "Errore di connessione",
+        "message": "Impossibile connettersi al server. Verifica la tua connessione internet."
+      },
+      "badRequest": {
+        "title": "Richiesta non valida",
+        "message": "Verifica i dati inseriti e riprova."
+      },
+      "unauthorized": {
+        "title": "Non autorizzato",
+        "message": "La sessione è scaduta. Effettua nuovamente il login.",
+        "action": "Accedi"
+      },
+      "forbidden": {
+        "title": "Accesso negato",
+        "message": "Non hai il permesso di eseguire questa azione."
+      },
+      "notFound": {
+        "title": "Non trovato",
+        "message": "La risorsa richiesta non è stata trovata.",
+        "contextMessage": "{{context}} non trovato."
+      },
+      "conflict": {
+        "title": "Conflitto",
+        "message": "La risorsa esiste già o si è verificato un conflitto."
+      },
+      "serverError": {
+        "title": "Errore del server",
+        "message": "Si è verificato un errore imprevisto. Riprova più tardi."
+      },
+      "serviceUnavailable": {
+        "title": "Servizio non disponibile",
+        "message": "Il servizio è temporaneamente non disponibile. Riprova più tardi."
+      },
+      "default": {
+        "title": "Errore",
+        "message": "Si è verificato un errore imprevisto."
+      }
+    },
+    "interceptor": {
+      "invalidParams": "Sono stati passati parametri non validi nella richiesta!"
+    },
+    "auth": {
+      "pleaseWait": "Attendere prego...",
+      "startType": "Inizio autenticazione",
+      "twoFactor": {
+        "type": "Autenticazione a due fattori richiesta",
+        "message": "Autenticazione a due fattori richiesta"
+      },
+      "passwordExpired": {
+        "type": "Password scaduta",
+        "message": "La password è scaduta, reimpostala!"
+      },
+      "success": {
+        "type": "Autenticazione riuscita",
+        "message": "{{username}} ha effettuato il login con successo!"
+      },
+      "passwordReset": {
+        "type": "Password reimpostata con successo",
+        "message": "La password è stata reimpostata con successo!"
+      },
+      "callbackFailed": {
+        "type": "Autenticazione fallita",
+        "message": "Impossibile completare l'autenticazione. Riprova."
+      },
+      "callbackError": {
+        "type": "Errore di autenticazione",
+        "message": "Si è verificato un errore durante l'autenticazione. Riprova."
+      }
+    },
+    "hooks": {
+      "lastEvent": "È richiesto almeno un evento. Impossibile eliminare l'ultimo evento."
+    },
+    "generic": {
+      "unexpected": "Si è verificato un errore. Riprova.",
+      "unexpectedRetry": "Si è verificato un errore imprevisto. Riprova.",
+      "unexpectedShort": "Si è verificato un errore imprevisto."
+    },
+    "holiday": {
+      "invalidDate": "Data selezionata non valida. Seleziona una data valida.",
+      "invalidRepaymentDate": "Data di riprogrammazione rimborso non valida. Seleziona una data valida."
+    },
+    "report": {
+      "type": "Generazione report",
+      "generated": "Report: dati di {{reportName}} generati",
+      "generatedNoData": "Report: {{reportName}} generato senza dati"
+    },
+    "clipboard": {
+      "type": "Appunti",
+      "copied": "Copiato: {{value}}"
+    },
+    "tenant": {
+      "changed": {
+        "type": "Tenant modificato"
+      }
+    },
+    "config": {
+      "setConfig": "{{type}} configurazione impostata"
+    },
+    "loans": {
+      "undoWriteOff": {
+        "type": "Annullamento della cancellazione fallito",
+        "message": "Si è verificato un errore durante l'elaborazione dell'annullamento della cancellazione. Riprova o contatta il supporto."
+      },
+      "alreadyAdjusted": "Importo del reddito capitalizzato già rettificato",
+      "adjustment": "Rettifica {{type}} Transazione",
+      "capitalizedIncomeLimit": "L'importo della rettifica del reddito capitalizzato deve essere inferiore o uguale a",
+      "buyDownFeeAdjusted": "Importo della commissione Buy Down già rettificato",
+      "buyDownFeeLimit": "L'importo della rettifica della commissione Buy Down deve essere inferiore o uguale a",
+      "businessRule": "Regola aziendale",
+      "alertWithAmount": "{{label}}: {{amount}}"
+    },
+    "error.auth.type": "Errore di autenticazione",
+    "error.auth.message": "La sessione è scaduta o le credenziali non sono valide.",
+    "error.token.invalid.type": "Token non valido",
+    "error.token.invalid.message": "Il token monouso fornito non è valido.",
+    "error.bad.request.type": "Richiesta errata",
+    "error.bad.request.message": "Sono stati passati parametri non validi nella richiesta!",
+    "error.unauthorized.type": "Non autorizzato",
+    "error.unauthorized.message": "La sessione è scaduta o le credenziali non sono valide.",
+    "error.resource.not.found.type": "Risorsa non trovata",
+    "error.resource.not.found.message": "La risorsa richiesta non è stata trovata.",
+    "error.server.internal.type": "Errore interno del server",
+    "error.server.internal.message": "Si è verificato un errore imprevisto sul server. Riprova più tardi.",
+    "error.unknown.type": "Errore sconosciuto",
+    "error.unknown.message": "Si è verificato un errore imprevisto.",
+    "validation.required": "Questo campo è obbligatorio",
+    "validation.minLength": "La lunghezza minima è {{requiredLength}}",
+    "validation.emailInvalid": "Email non valida",
+    "validation.requiredField": "{{label}} è un campo obbligatorio.",
+    "validation.mustBeAtLeast": "{{field}} deve essere almeno {{min}}",
+    "validation.mustBePositive": "{{field}} deve essere un numero positivo."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -617,7 +750,8 @@
       "Retry": "Riprova",
       "PRINT": "Stampa",
       "DONE": "Fatto",
-      "Submitting": "Invio in corso"
+      "Submitting": "Invio in corso",
+      "OK": "OK"
     },
     "catalogs": {
       "Interest payment waiver": "Rinuncia al pagamento degli interessi",
