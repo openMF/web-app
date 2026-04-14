@@ -899,7 +899,7 @@ const routes: Routes = [
         },
         {
           path: 'breach-configurations',
-          data: { title: 'Breach Configurations', breadcrumb: 'Breach Configurations' },
+          data: { title: 'Breach Configuration', breadcrumb: 'Breach Configuration' },
           children: [
             {
               path: '',
