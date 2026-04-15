@@ -35,6 +35,7 @@
     "error.msg.product.savings.duplicate.name": "El producto de ahorro con nombre `{{params[0].value}}` ya existe.",
     "error.msg.product.savings.duplicate.short.name": "El producto de ahorro con nombre corto {{params[0].value}} ya existe.",
     "error.msg.savingsproduct.unknown.data.integrity.issue": "Ocurrió un problema inesperado al crear/actualizar el producto de ahorro. Error al iniciar sesión en el servidor.",
+    "error.msg.reporting.error": "Se produjo un error al generar el informe.",
     "validation.msg.charge.amount.cannot.be.blank": "El monto no puede estar en blanco.",
     "validation.msg.charge.amount.not.greater.than.zero": "El monto del cargo debe ser mayor que cero.",
     "validation.msg.charge.chargeAppliesTo.cannot.be.blank": "El cargo se aplica a no puede estar en blanco.",

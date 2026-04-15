@@ -35,6 +35,7 @@
     "error.msg.product.savings.duplicate.name": "Uzkrājuma produkts ar nosaukumu `{{params[0].value}}` jau pastāv.",
     "error.msg.product.savings.duplicate.short.name": "Krājprodukts ar īso nosaukumu {{params[0].value}} jau pastāv.",
     "error.msg.savingsproduct.unknown.data.integrity.issue": "Veidojot/atjauninot uzkrājumu produktu, radās neparedzēta problēma. Serverī reģistrēta kļūda.",
+    "error.msg.reporting.error": "Ģenerējot pārskatu, radās kļūda.",
     "validation.msg.charge.amount.cannot.be.blank": "Summas lauks nedrīkst būt tukšs.",
     "validation.msg.charge.amount.not.greater.than.zero": "Maksas summai ir jābūt lielākai par nulli.",
     "validation.msg.charge.chargeAppliesTo.cannot.be.blank": "Maksa tiek piemērota, nevar būt tukša.",

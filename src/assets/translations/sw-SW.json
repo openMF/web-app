@@ -35,6 +35,7 @@
     "error.msg.product.savings.duplicate.name": "Bidhaa ya akiba yenye jina `{{params[0].value}}` tayari ipo.",
     "error.msg.product.savings.duplicate.short.name": "Bidhaa ya akiba yenye jina fupi {{params[0].value}} tayari ipo.",
     "error.msg.savingsproduct.unknown.data.integrity.issue": "Tatizo lisilotarajiwa limetokea wakati wa kuunda/kusasisha bidhaa ya akiba. Hitilafu imeingia kwenye seva.",
+    "error.msg.reporting.error": "Hitilafu ilitokea wakati wa kuzalisha ripoti.",
     "validation.msg.charge.amount.cannot.be.blank": "Kiasi hakiwezi kuwa tupu.",
     "validation.msg.charge.amount.not.greater.than.zero": "Kiasi cha malipo lazima kiwe kikubwa kuliko sifuri.",
     "validation.msg.charge.chargeAppliesTo.cannot.be.blank": "Ada inatumika kwa haiwezi kuwa tupu.",

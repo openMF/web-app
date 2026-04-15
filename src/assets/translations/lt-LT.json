@@ -35,6 +35,7 @@
     "error.msg.product.savings.duplicate.name": "Taupymo produktas pavadinimu `{{params[0].value}}` jau yra.",
     "error.msg.product.savings.duplicate.short.name": "Taupymo produktas trumpuoju pavadinimu {{params[0].value}} jau yra.",
     "error.msg.savingsproduct.unknown.data.integrity.issue": "Kuriant/atnaujinant taupymo produktą iškilo netikėta problema. Klaida prisijungta prie serverio.",
+    "error.msg.reporting.error": "Generuojant ataskaitą įvyko klaida.",
     "validation.msg.charge.amount.cannot.be.blank": "Sumos laukas negali būti tuščias.",
     "validation.msg.charge.amount.not.greater.than.zero": "Mokesčio suma turi būti didesnė už nulį.",
     "validation.msg.charge.chargeAppliesTo.cannot.be.blank": "Mokestis taikomas negali būti tuščias.",

@@ -35,6 +35,7 @@
     "error.msg.product.savings.duplicate.name": "Le produit d'épargne portant le nom `{{params[0].value}}` existe déjà.",
     "error.msg.product.savings.duplicate.short.name": "Le produit d'épargne portant le nom court {{params[0].value}} existe déjà.",
     "error.msg.savingsproduct.unknown.data.integrity.issue": "Un problème inattendu est survenu lors de la création/mise à jour du produit d'épargne. Erreur enregistrée sur le serveur.",
+    "error.msg.reporting.error": "Une erreur s'est produite lors de la génération du rapport.",
     "validation.msg.charge.amount.cannot.be.blank": "Le montant ne peut pas être vide.",
     "validation.msg.charge.amount.not.greater.than.zero": "Le montant des frais doit être supérieur à zéro.",
     "validation.msg.charge.chargeAppliesTo.cannot.be.blank": "Les frais s'appliquent à ne peuvent pas être vides.",

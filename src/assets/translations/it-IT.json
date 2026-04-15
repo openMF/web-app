@@ -35,6 +35,7 @@
     "error.msg.product.savings.duplicate.name": "Il prodotto di risparmio con il nome `{{params[0].value}}` esiste già.",
     "error.msg.product.savings.duplicate.short.name": "Il prodotto di risparmio con il nome breve {{params[0].value}} esiste già.",
     "error.msg.savingsproduct.unknown.data.integrity.issue": "Si è verificato un problema imprevisto durante la creazione/aggiornamento del prodotto di risparmio. Errore registrato sul server.",
+    "error.msg.reporting.error": "Si è verificato un errore durante la generazione del report.",
     "validation.msg.charge.amount.cannot.be.blank": "L'importo non può essere vuoto.",
     "validation.msg.charge.amount.not.greater.than.zero": "L'importo dell'addebito deve essere maggiore di zero.",
     "validation.msg.charge.chargeAppliesTo.cannot.be.blank": "L'addebito si applica a non può essere vuoto.",

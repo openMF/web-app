@@ -37,14 +37,34 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(catchError((error) => this.handleError(error, request)));
   }
 
+  /**
+   * Parses the error body from an HttpErrorResponse.
+   * When a request uses responseType 'arraybuffer' or 'blob', Angular stores the
+   * raw binary data in response.error instead of a parsed JSON object. This method
+   * decodes it so the rest of the error handler can read structured fields like
+   * userMessageGlobalisationCode.
+   */
+  private parseErrorBody(error: any): any {
+    if (error instanceof ArrayBuffer) {
+      try {
+        return JSON.parse(new TextDecoder().decode(error));
+      } catch {
+        return null;
+      }
+    }
+    return error;
+  }
+
   private handleError(response: HttpErrorResponse, request: HttpRequest<any>): Observable<HttpEvent<any>> {
     const status = response.status;
+    const errorBody = this.parseErrorBody(response.error);
 
     // Translate top-level globalisation code if present
-    let topLevelMessage = response.error?.defaultUserMessage || response.error?.developerMessage || response.message;
-    if (response.error?.userMessageGlobalisationCode) {
-      const topCode = response.error.userMessageGlobalisationCode;
-      const translated = this.translate.instant(topCode, response.error || {});
+    const rawTopLevelMessage = errorBody?.defaultUserMessage || errorBody?.developerMessage;
+    let topLevelMessage = rawTopLevelMessage || response.message;
+    if (errorBody?.userMessageGlobalisationCode) {
+      const topCode = errorBody.userMessageGlobalisationCode;
+      const translated = this.translate.instant(topCode, errorBody || {});
       if (translated !== topCode) {
         topLevelMessage = translated;
       }
@@ -52,23 +72,31 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 
     // Translate nested globalisation code if present
     let nestedMessage: string | null = null;
-    if (response.error?.errors?.[0]?.userMessageGlobalisationCode) {
-      const nestedCode = response.error.errors[0].userMessageGlobalisationCode;
-      const translated = this.translate.instant(nestedCode, response.error.errors[0] || {});
-      nestedMessage = translated !== nestedCode ? translated : response.error.errors[0].defaultUserMessage || null;
+    if (errorBody?.errors?.[0]?.userMessageGlobalisationCode) {
+      const nestedCode = errorBody.errors[0].userMessageGlobalisationCode;
+      const translated = this.translate.instant(nestedCode, errorBody.errors[0] || {});
+      nestedMessage = translated !== nestedCode ? translated : errorBody.errors[0].defaultUserMessage || null;
     }
 
-    // Combine both messages if both exist
-    let errorMessage = nestedMessage ? `${topLevelMessage} ${nestedMessage}` : topLevelMessage;
+    // Combine both messages if both exist and are distinct.
+    // Prefer translated messages; only fall back to raw defaultUserMessage when no translation was resolved.
+    const hasTopLevelPayload = Boolean(rawTopLevelMessage || errorBody?.userMessageGlobalisationCode);
+
+    let errorMessage = nestedMessage
+      ? hasTopLevelPayload && nestedMessage !== topLevelMessage
+        ? `${topLevelMessage} ${nestedMessage}`
+        : nestedMessage
+      : topLevelMessage;
     let parameterName: string | null = null;
-    if (response.error.errors) {
-      if (response.error.errors[0]) {
+    if (errorBody?.errors?.[0]) {
+      if (!nestedMessage) {
         errorMessage =
-          response.error.errors[0].defaultUserMessage.replace(/\\./g, ' ') ||
-          response.error.errors[0].developerMessage.replace(/\\./g, ' ');
+          errorBody.errors[0].defaultUserMessage?.replace(/\\./g, ' ') ||
+          errorBody.errors[0].developerMessage?.replace(/\\./g, ' ') ||
+          errorMessage;
       }
-      if ('parameterName' in response.error.errors[0]) {
-        parameterName = response.error.errors[0].parameterName;
+      if ('parameterName' in errorBody.errors[0]) {
+        parameterName = errorBody.errors[0].parameterName;
       }
     }
     const isClientImage404 = status === 404 && request.url.includes('/clients/') && request.url.includes('/images');
@@ -84,7 +112,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
       });
     } else if (
       status === 403 &&
-      response.error?.errors?.[0]?.defaultUserMessage === 'The provided one time token is invalid'
+      errorBody?.errors?.[0]?.defaultUserMessage === 'The provided one time token is invalid'
     ) {
       this.alertService.alert({
         type: this.translate.instant('errors.error.token.invalid.type'),
@@ -114,7 +142,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     } else if (status === 500) {
       this.alertService.alert({
         type: this.translate.instant('errors.error.server.internal.type'),
-        message: this.translate.instant('errors.error.server.internal.message')
+        message: errorMessage || this.translate.instant('errors.error.server.internal.message')
       });
     } else if (status === 501) {
       this.alertService.alert({

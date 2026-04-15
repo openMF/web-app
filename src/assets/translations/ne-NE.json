@@ -35,6 +35,7 @@
     "error.msg.product.savings.duplicate.name": "`{{params[0].value}}` नामको बचत उत्पादन पहिले नै अवस्थित छ।",
     "error.msg.product.savings.duplicate.short.name": "छोटो नाम {{params[0].value}} भएको बचत उत्पादन पहिले नै अवस्थित छ।",
     "error.msg.savingsproduct.unknown.data.integrity.issue": "बचत उत्पादन सिर्जना / अद्यावधिक गर्दा एक अप्रत्याशित समस्या भयो। सर्भरमा लगइन त्रुटि भयो।",
+    "error.msg.reporting.error": "रिपोर्ट उत्पन्न गर्दा त्रुटि भयो।",
     "validation.msg.charge.amount.cannot.be.blank": "रकम खाली हुन सक्दैन।",
     "validation.msg.charge.amount.not.greater.than.zero": "शुल्क रकम शून्य भन्दा बढी हुनुपर्छ।",
     "validation.msg.charge.chargeAppliesTo.cannot.be.blank": "शुल्क खाली हुन सक्दैन मा लागू हुन्छ।",

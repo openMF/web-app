@@ -35,6 +35,7 @@
     "error.msg.product.savings.duplicate.name": "이름이 `{{params[0].value}}`인 저축 상품이 이미 존재합니다.",
     "error.msg.product.savings.duplicate.short.name": "닉네임이 {{params[0].value}}인 저축 상품이 이미 존재합니다.",
     "error.msg.savingsproduct.unknown.data.integrity.issue": "적금 상품 생성/업데이트 시 예상치 못한 문제가 발생했습니다. 서버에 오류가 기록되었습니다.",
+    "error.msg.reporting.error": "보고서를 생성하는 동안 오류가 발생했습니다.",
     "validation.msg.charge.amount.cannot.be.blank": "금액은 비워둘 수 없습니다.",
     "validation.msg.charge.amount.not.greater.than.zero": "청구 금액은 0보다 커야 합니다.",
     "validation.msg.charge.chargeAppliesTo.cannot.be.blank": "요금이 적용되는 항목은 비워둘 수 없습니다.",
