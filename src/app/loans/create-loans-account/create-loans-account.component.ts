@@ -290,6 +290,13 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
       ) {
         delete payload['discount'];
       }
+      if (
+        !Object.hasOwn(this.productDetails.allowAttributeOverrides, 'breach') ||
+        this.productDetails.allowAttributeOverrides.breach === false
+      ) {
+        delete payload['breachId'];
+        delete payload['nearBreachId'];
+      }
     }
 
     // No Empty values to be sent
