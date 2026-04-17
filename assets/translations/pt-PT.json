@@ -3328,6 +3328,8 @@
       "Create Journal Entry": "Criar lançamento contábil manual",
       "Create Loan Product": "Criar produto de empréstimo",
       "Create Loan Originator": "Criar Agente de Crédito",
+      "View Loan Originator": "Ver Originador de Empréstimo",
+      "Edit Loan Originator": "Editar Originador de Empréstimo",
       "Create Loans Account": "Criar conta de empréstimos",
       "Create New GL Account": "Esta opção permite criar novas contas contábeis.",
       "Create Office": "Criar escritório",
