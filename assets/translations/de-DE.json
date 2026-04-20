@@ -35,6 +35,7 @@
     "error.msg.product.savings.duplicate.name": "Das Sparprodukt mit dem Namen „{{params[0].value}}“ existiert bereits.",
     "error.msg.product.savings.duplicate.short.name": "Das Sparprodukt mit dem Kurznamen {{params[0].value}} existiert bereits.",
     "error.msg.savingsproduct.unknown.data.integrity.issue": "Beim Erstellen/Aktualisieren des Sparprodukts ist ein unerwartetes Problem aufgetreten. Auf dem Server wurde ein Fehler angemeldet.",
+    "error.msg.reporting.error": "Beim Erstellen des Berichts ist ein Fehler aufgetreten.",
     "validation.msg.charge.amount.cannot.be.blank": "Der Betrag darf nicht leer sein.",
     "validation.msg.charge.amount.not.greater.than.zero": "Der Gebührenbetrag muss größer als Null sein.",
     "validation.msg.charge.chargeAppliesTo.cannot.be.blank": "Es wird eine Gebühr erhoben, die nicht leer sein darf.",

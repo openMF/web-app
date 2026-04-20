@@ -35,6 +35,7 @@
     "error.msg.product.savings.duplicate.name": "O produto de poupança com o nome `{{params[0].value}}` já existe.",
     "error.msg.product.savings.duplicate.short.name": "O produto de poupança com nome abreviado {{params[0].value}} já existe.",
     "error.msg.savingsproduct.unknown.data.integrity.issue": "Ocorreu um problema inesperado ao criar/atualizar o produto de poupança. Erro logado no servidor.",
+    "error.msg.reporting.error": "Ocorreu um erro ao gerar o relatório.",
     "validation.msg.charge.amount.cannot.be.blank": "O valor não pode ficar em branco.",
     "validation.msg.charge.amount.not.greater.than.zero": "O valor da cobrança deve ser maior que zero.",
     "validation.msg.charge.chargeAppliesTo.cannot.be.blank": "A cobrança se aplica a não pode ficar em branco.",

@@ -35,6 +35,7 @@
     "error.msg.product.savings.duplicate.name": "Úsporný produkt s názvem `{{params[0].value}}` již existuje.",
     "error.msg.product.savings.duplicate.short.name": "Spořicí produkt s krátkým názvem {{params[0].value}} již existuje.",
     "error.msg.savingsproduct.unknown.data.integrity.issue": "Při vytváření/aktualizaci spořicího produktu došlo k neočekávanému problému. Chyba přihlášení na serveru.",
+    "error.msg.reporting.error": "Při generování sestavy došlo k chybě.",
     "validation.msg.charge.amount.cannot.be.blank": "Částka nemůže být prázdná.",
     "validation.msg.charge.amount.not.greater.than.zero": "Částka poplatku musí být větší než nula.",
     "validation.msg.charge.chargeAppliesTo.cannot.be.blank": "Poplatek se vztahuje na nemůže být prázdný.",
