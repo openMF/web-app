@@ -28,6 +28,7 @@
     "error.msg.charge.due.at.disbursement.cannot.be.penalty": "Maksu nevar iestatīt kā sodu, kas jāmaksā izmaksas brīdī.",
     "error.msg.charge.duplicate.name": "Maksa ar šādu nosaukumu jau pastāv.",
     "error.msg.charge.update.of.charge.applies.to.is.not.supported": "Maksas atjaunināšana netiek atbalstīta.",
+    "error.msg.data.integrity.issue": "Pieprasījums izraisīja datu integritātes problēmu datu bāzē",
     "error.msg.loan.product.close.date.cannot.be.before.start.date": "Aizdevuma produkta slēgšanas datums nedrīkst būt agrāks par sākuma datumu.",
     "error.msg.product.loan.duplicate.charge": "Aizdevuma produktam var būt tikai viena maksa par katru veidu.",
     "error.msg.product.loan.duplicate.name": "Aizdevuma produkts ar nosaukumu `{{params[0].value}}` jau pastāv.",
@@ -1047,6 +1048,8 @@
       "are": "ir",
       "be larger than 0 and at most 100": "jābūt lielākam par 0 un ne vairāk kā 100",
       "begin with a special character or number": "sākas ar īpašu rakstzīmi vai ciparu",
+      "can not be less than": "nedrīkst būt mazāk par",
+      "can not be more than": "nedrīkst būt vairāk par",
       "cannot begin with a special character or number": "nevar sākties ar speciālo rakstzīmi vai ciparu",
       "decimal places": "decimālzīmes",
       "do not match": "nesakrīt",
@@ -1347,6 +1350,7 @@
       "Minimum Active Period": "Minimālais aktīvais periods",
       "Minimum Deposit Term": "Minimālais depozīta termiņš",
       "Moratorium": "Moratorijs",
+      "Near Breach Configuration": "Tuvas pārkāpuma konfigurācija",
       "Nominal Interest Rate by loan cycle": "Nominālā procentu likme pēc aizdevuma cikla",
       "Notes": "Piezīmes",
       "Notification External Service": "Paziņojumu ārējais pakalpojums",
@@ -1539,7 +1543,8 @@
       "Payout Assignment": "Izmaksas piešķiršana",
       "Identification": "Identifikācija",
       "Professional Information": "Profesionālā informācija",
-      "Add Profile Entry": "Pievienot profila ierakstu"
+      "Add Profile Entry": "Pievienot profila ierakstu",
+      "Recipient Summary": "Saņēmēja kopsavilkums"
     },
     "inputs": {
       "Loan Account Status": "Aizdevuma konta statuss",
@@ -2368,6 +2373,7 @@
       "Name": "Vārds",
       "Name Decorated": "Nosaukums Dekorēts",
       "Name of the Organization": "Organizācijas nosaukums",
+      "Near Breach": "Tuvu pārkāpumam",
       "Near Breach Evaluation Frequency": "Tuva pārkāpuma novērtēšanas biežums",
       "Near Breach Evaluation Frequency Type": "Tuva pārkāpuma novērtēšanas biežuma veids",
       "Near Breach Threshold": "Tuva pārkāpuma slieksnis",
@@ -2776,6 +2782,7 @@
       "Text": "Teksts",
       "Theme": "Tēma",
       "Theme and Font": "Motīvs un fonts",
+      "Threshold": "Slieksnis",
       "Thursday": "ceturtdiena",
       "Time": "Laiks",
       "To": "Uz",
@@ -2992,7 +2999,46 @@
       "Period Payment Frequency Type": "Perioda maksājumu biežuma veids",
       "Payment Allocation Transactions": "Maksājumu sadales darījumi",
       "Net Present Value day count": "Neto pašreizējās vērtības dienu skaits",
-      "Installment": "Iemaksa"
+      "Installment": "Iemaksa",
+      "Beneficiary Selection": "Saņēmēja izvēle",
+      "Confirmation Number": "Apstiprinājuma numurs",
+      "Sub Status": "Apakšstatuss",
+      "Document": "Dokuments",
+      "Document Number": "Dokumenta numurs",
+      "Document number is required": "Dokumenta numurs ir obligāts",
+      "Allow full term for each tranche": "Atļaut pilnu termiņu katrai tranšei",
+      "Failed to load vendors": "Neizdevās ielādēt piegādātājus",
+      "First name is required": "Vārds ir obligāts",
+      "Last name is required": "Uzvārds ir obligāts",
+      "Search Client": "Meklēt klientu",
+      "Type client name or account number": "Ievadiet klienta vārdu vai konta numuru",
+      "Overdue": "Nokavēts",
+      "Overdue Fees": "Nokavēšanas maksas",
+      "Confirmed At": "Apstiprināts",
+      "Full Name": "Pilns vārds",
+      "Loading vendors": {
+        "": {
+          "": {
+            "": "Ielādē piegādātājus..."
+          }
+        }
+      },
+      "Minimum 3 characters": "Vismaz 3 rakstzīmes",
+      "National ID": "Personas kods",
+      "Nationality": "Pilsonība",
+      "Payout Amount": "Izmaksas summa",
+      "Payout Country": "Izmaksas valsts",
+      "Payout Token": "Izmaksas žetons",
+      "Recipient Name": "Saņēmēja vārds",
+      "Send Amount": "Sūtīšanas summa",
+      "Send Country": "Sūtīšanas valsts",
+      "Sender": "Sūtītājs",
+      "Sender Name": "Sūtītāja vārds",
+      "Sent By": "Sūtīja",
+      "Deposited At": "Iemaksāts",
+      "Passport": "Pase",
+      "Driver's License": "Vadītāja apliecība",
+      "Mothers Maiden Name": "Mātes pirmslaulību uzvārds"
     },
     "links": {
       "Community": "kopiena",
@@ -3131,7 +3177,8 @@
       "Reject Additional Shares": "Noraidīt papildu akcijas",
       "Tasks": "Uzdevumi",
       "Remittances": "Pārvedumi",
-      "Process Remittance": "Apstrādāt pārvedumu"
+      "Process Remittance": "Apstrādāt pārvedumu",
+      "Undo Write-off": "Atcelt norakstīšanu"
     },
     "placeholders": {
       "Add new server": "Pievienot jaunu serveri",
@@ -3253,6 +3300,7 @@
       "Audit logs of all the activities": "Pārbaudīt visu darbību žurnālus, piemēram, klienta izveidošanu, aizdevumu izsniegšanu utt",
       "Bar": "Bārs",
       "BIRT": "Mifos Reporting Plugin for Eclipse Birt",
+      "Breach Configurations": "Pārkāpumu Konfigurācijas",
       "Bulk Import": "Lielapjoma importēšana",
       "Bulk Loan Reassignment": "Lielapjoma aizdevuma pārcelšana",
       "Bulk data import using excel spreadsheet templates": "Lielapjoma datu importēšana, izmantojot Excel izklājlapu veidnes klientiem, birojiem utt.",
@@ -3303,6 +3351,7 @@
       "Create Accounting Closure": "Izveidojiet grāmatvedības slēgšanu",
       "Create Accounting Rule": "Izveidojiet grāmatvedības noteikumu",
       "Create Adhoc Query": "Izveidojiet Adhoc vaicājumu",
+      "Create Breach": "Izveidot Pārkāpumu",
       "Create Center": "Izveidot centru",
       "Create Charge": "Izveidot maksu",
       "Create Client": "Izveidot klientu",
@@ -3331,6 +3380,7 @@
       "View Loan Originator": "Skatīt aizdevuma izsniedzēju",
       "Edit Loan Originator": "Rediģēt aizdevuma izsniedzēju",
       "Create Loans Account": "Izveidojiet aizdevuma kontu",
+      "Create Near Breach": "Izveidot Gandrīz Pārkāpumu",
       "Create New GL Account": "Šī opcija ļauj izveidot jaunus GL kontus.",
       "Create Office": "Izveidojiet biroju",
       "Create Payment Type": "Izveidojiet maksājuma veidu",
@@ -3401,6 +3451,7 @@
       "Define delinquency day ranges and bucket set for loan products": "Definējiet maksātnespējas dienu diapazonus un aizdevuma produktu kopu",
       "Define floating rates for loan products": "Definējiet mainīgās procentu likmes aizdevumu produktiem",
       "Define holidays for office": "Definējiet biroja brīvdienas",
+      "Define near breaches for working capital products": "Definēt tuvas pārkāpuma robežas apgrozāmā kapitāla produktiem",
       "Define or modify Maker Checker tasks": "Definējiet vai modificējiet Maker Checker uzdevumus",
       "Define or modify entity to entity mappings": "Definējiet vai modificējiet entītiju kartējumus",
       "Define or modify roles and associated permissions": "Definējiet vai mainiet lomas un saistītās atļaujas",
@@ -3420,6 +3471,7 @@
       "Edit Accounting Rules": "Rediģēt grāmatvedības noteikumus",
       "Edit Adhoc Query": "Rediģēt Adhoc vaicājumu",
       "Edit Amazon S3 Configuration": "Rediģēt Amazon S3 konfigurāciju",
+      "Edit Breach": "Rediģēt Pārkāpumu",
       "Edit Cashier": "Rediģēt kasieri",
       "Edit Center": "Rediģēšanas centrs",
       "Edit Charge": "Rediģēt maksu",
@@ -3441,7 +3493,9 @@
       "Edit Group": "Rediģēt grupu",
       "Edit Holidays": "Rediģēt brīvdienas",
       "Edit Hook": "Rediģēt Āķi",
+      "Edit Loan Originator": "Rediģēt Aizdevuma Izsniedzēju",
       "Edit Loan Product": "Rediģēt aizdevuma produktu",
+      "Edit Near Breach": "Rediģēt Gandrīz Pārkāpumu",
       "Edit Notification Configuration": "Rediģēt paziņojumu konfigurāciju",
       "Edit Office": "Rediģēt Office",
       "Edit Payment Type": "Rediģēt maksājuma veidu",
@@ -3617,6 +3671,7 @@
       "N/A": "N/A",
       "Navigate system selecting entity": "Tas ļaus lietotājam ātri pārvietoties pa sistēmas atlases entītiju, kamēr meklēšana padara navigāciju noturīgāku.",
       "Navigation": "Navigācija",
+      "Near Breach Configurations": "Gandrīz Pārkāpumu Konfigurācijas",
       "No Data": "Nav datu",
       "Not Activated": "Nav aktivizēts",
       "No Description": "Nav apraksta",
@@ -3685,6 +3740,7 @@
       "Recurring Deposits Account Transactions": "Periodiskie noguldījumu konta darījumi",
       "RecurringDeposit Account View": "Atkārtota depozīta konta skats",
       "Red asterisk field": "Jāaizpilda lauki ar sarkanu zvaigznīti (*). Lai uzzinātu vairāk, noklikšķiniet:",
+      "Remittances": "Pārvedumi",
       "Repayment Schedule": "Atmaksas grafiks",
       "Repeats' and 'Repeats every": "Piezīme: \"Atkārtojas\" un \"Atkārtojas katru\" nevar mainīt, ja ir aktīvi konti (JLG aizdevumi, periodiski noguldījumi utt.), kas ir atkarīgi no šīs sanāksmes.",
       "Report Parameters": "Pārskata parametri",
@@ -3813,6 +3869,7 @@
       "View Adhoc Query": "Skatīt Adhoc vaicājumu",
       "View Amazon S3 Configuration": "Skatīt Amazon S3 konfigurāciju",
       "View Audit": "Skatīt auditu",
+      "View Breach": "Skatīt Pārkāpumu",
       "View Bulk Import": "Skatīt lielapjoma importēšanu",
       "View Cashier": "Skatīt Kasieri",
       "View Charges": "Skatīt maksas",
@@ -3835,7 +3892,9 @@
       "View Group": "Skatīt grupu",
       "View Holidays": "Skatīt brīvdienas",
       "View Hook": "Skatīt Āķi",
+      "View Loan Originator": "Skatīt Aizdevuma Izsniedzēju",
       "View Loan Product": "Skatīt aizdevuma produktu",
+      "View Near Breach": "Skatīt Gandrīz Pārkāpumu",
       "View Notification Configuration": "Skatīt paziņojumu konfigurāciju",
       "View Office": "Skatīt Office",
       "View Product Mix": "Skatīt produktu kombināciju",
@@ -3910,7 +3969,9 @@
       "Failed to search clients. Please try again.": "Neizdevās meklēt klientus. Lūdzu, mēģiniet vēlreiz.",
       "Process Remittance": "Apstrādāt pārvedumu",
       "Loan Originators": "Aizdevumu izsniedzēji",
-      "Loan Reschedules": "Aizdevuma grafiki"
+      "Loan Reschedules": "Aizdevuma grafiki",
+      "Settings saved successfully": "Iestatījumi veiksmīgi saglabāti.",
+      "Undo Write-off Description": "Šī darbība atcels norakstīšanas darījumu un atjaunos aizdevumu tā iepriekšējā aktīvajā statusā. Lūdzu, norādiet piezīmi, kurā paskaidrots šīs darbības iemesls."
     },
     "permissions": {
       "actions": {
@@ -4427,7 +4488,8 @@
     "ACTIVE": "AKTĪVS",
     "PENDING": "NEAPSTRĀDĀTS",
     "INACTIVE": "NEAKTIVS",
-    "Process Remittance": "Apstrādāt pārvedumu"
+    "Process Remittance": "Apstrādāt pārvedumu",
+    "Allow full term length for each tranche disbursement": "Ja iespējots, katrs tranšes izmaksājums sekos pilnajam aizdevuma termiņa grafikam, nevis pielāgosies atlikušajam termiņam. Pieejams tikai PROGRESĪVAJAM aizdevuma grafika tipam."
   },
   "countries": {
     "AF": "Afganistāna",
@@ -4599,6 +4661,14 @@
       "takeSurvey": {
         "success": "Aptauja veiksmīgi iesniegta.",
         "failure": "Neizdevās iesniegt aptauju."
+      }
+    }
+  },
+  "error": {
+    "resource": {
+      "notImplemented": {
+        "type": "Neimplementēta kļūda",
+        "message": "Neimplementēta funkcionalitāte!"
       }
     }
   }

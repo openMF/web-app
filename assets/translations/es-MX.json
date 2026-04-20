@@ -28,6 +28,7 @@
     "error.msg.charge.due.at.disbursement.cannot.be.penalty": "El cargo no se puede configurar como una penalización adeudada en el momento de la ministración.",
     "error.msg.charge.duplicate.name": "El cargo con ese nombre ya existe.",
     "error.msg.charge.update.of.charge.applies.to.is.not.supported": "No se admite la actualización del cargo aplicable.",
+    "error.msg.data.integrity.issue": "La solicitud provocó un problema de integridad de datos en la base de datos",
     "error.msg.loan.product.close.date.cannot.be.before.start.date": "La fecha de cierre del producto crediticio no puede ser anterior a la fecha de inicio.",
     "error.msg.product.loan.duplicate.charge": "El producto de Crédito sólo podrá tener un cargo de cada tipo.",
     "error.msg.product.loan.duplicate.name": "El producto de Crédito con nombre `{{params[0].value}}` ya existe.",
@@ -1049,6 +1050,8 @@
       "are": "son",
       "be larger than 0 and at most 100": "ser mayor que 0 y como máximo 100",
       "begin with a special character or number": "comenzar con un carácter especial o número",
+      "can not be less than": "no puede ser menos que",
+      "can not be more than": "no puede ser más que",
       "cannot begin with a special character or number": "no puede comenzar con un carácter o número especial",
       "decimal places": "lugares decimales",
       "do not match": "no coinciden",
@@ -1349,6 +1352,7 @@
       "Minimum Active Period": "Período mínimo activo",
       "Minimum Deposit Term": "Plazo mínimo de depósito",
       "Moratorium": "Moratoria",
+      "Near Breach Configuration": "Configuración de Incumplimiento Cercano",
       "Nominal Interest Rate by loan cycle": "Tasa de Interés Nominal por ciclo de Crédito",
       "Notes": "Notas",
       "Notification External Service": "Notificación Servicio Externo",
@@ -1541,7 +1545,8 @@
       "Confirmation Details": "Detalles de Confirmación",
       "Payment Successful": "Pago Exitoso",
       "Transaction Status": "Estado de la Transacción",
-      "Transaction Summary": "Resumen de la Transacción"
+      "Transaction Summary": "Resumen de la Transacción",
+      "Recipient Summary": "Resumen del destinatario"
     },
     "inputs": {
       "Loan Account Status": "Estado de la cuenta",
@@ -2372,6 +2377,7 @@
       "Name": "Nombre",
       "Name Decorated": "Nombre decorado",
       "Name of the Organization": "Nombre de la organización",
+      "Near Breach": "Incumplimiento inminente",
       "Near Breach Evaluation Frequency": "Frecuencia de evaluación de incumplimiento inminente",
       "Near Breach Evaluation Frequency Type": "Tipo de frecuencia de evaluación de incumplimiento inminente",
       "Near Breach Threshold": "Umbral de incumplimiento inminente",
@@ -2781,6 +2787,7 @@
       "Text": "Texto",
       "Theme": "Tema",
       "Theme and Font": "Tema y fuente",
+      "Threshold": "Umbral",
       "Thursday": "Jueves",
       "Time": "Tiempo",
       "To": "A",
@@ -3009,7 +3016,22 @@
       "Period Payment Frequency Type": "Tipo de frecuencia de pago por período",
       "Payment Allocation Transactions": "Transacciones de asignación de pagos",
       "Net Present Value day count": "Recuento de días del valor presente neto",
-      "Installment": "Cuota"
+      "Installment": "Cuota",
+      "Beneficiary Selection": "Selección de beneficiario",
+      "Confirmation Number": "Número de confirmación",
+      "Sub Status": "Subestado",
+      "Allow full term for each tranche": "Permitir plazo completo para cada tramo",
+      "Confirmed At": "Confirmado el",
+      "Full Name": "Nombre completo",
+      "National ID": "CURP / INE",
+      "Nationality": "Nacionalidad",
+      "Payout Country": "País de pago",
+      "Payout Token": "Token de pago",
+      "Send Amount": "Monto a enviar",
+      "Send Country": "País de envío",
+      "Voter ID": "Credencial de elector",
+      "Passport": "Pasaporte",
+      "Driver's License": "Licencia de conducir"
     },
     "links": {
       "Community": "Comunidad",
@@ -3148,7 +3170,9 @@
       "Redeem Shares": "Canjear acciones",
       "Approve Additional Shares": "Aprobar acciones adicionales",
       "Reject Additional Shares": "Rechazar acciones adicionales",
-      "Tasks": "Tareas"
+      "Tasks": "Tareas",
+      "Process Remittance": "Procesar remesa",
+      "Undo Write-off": "Deshacer castigo contable"
     },
     "placeholders": {
       "# Remittance": "# Remesa",
@@ -3287,6 +3311,7 @@
       "Audit logs of all the activities": "Registros de auditoría de todas las actividades, como crear clientes, ministrar Créditos, etc.",
       "Bar": "Bar",
       "BIRT": "Mifos Plugin para generar informes usando Eclipse Birt",
+      "Breach Configurations": "Configuraciones de Incumplimiento",
       "Bulk Import": "Importación masiva",
       "Bulk Loan Reassignment": "Reasignación de Créditos a granel",
       "Bulk data import using excel spreadsheet templates": "Importación masiva de datos mediante plantillas de hojas de cálculo excel para clientes, sucursales, etc.",
@@ -3337,6 +3362,7 @@
       "Create Accounting Closure": "Crear cierre contable",
       "Create Accounting Rule": "Crear regla de contabilidad",
       "Create Adhoc Query": "Crear consulta ad hoc",
+      "Create Breach": "Crear Incumplimiento",
       "Create Center": "Crear centro",
       "Create Charge": "Crear cargo",
       "Create Client": "Crear cliente",
@@ -3365,6 +3391,7 @@
       "View Loan Originator": "Ver Originador de Créditos",
       "Edit Loan Originator": "Editar Originador de Créditos",
       "Create Loans Account": "Crear cuenta de Créditos",
+      "Create Near Breach": "Crear Cuasi Incumplimiento",
       "Create New GL Account": "Esta opción le permite crear nuevas cuentas GL.",
       "Create Office": "Crear sucursal",
       "Create Payment Type": "Crear tipo de pago",
@@ -3434,6 +3461,7 @@
       "Define delinquency day ranges and bucket set for loan products": "Definir rangos de días de morosidad y conjuntos de categorías para productos de Crédito",
       "Define floating rates for loan products": "Definir tasas flotantes para productos crediticios",
       "Define holidays for office": "Definir días festivos para la sucursal.",
+      "Define near breaches for working capital products": "Definir incumplimientos cercanos para productos de capital de trabajo",
       "Define or modify Maker Checker tasks": "Definir o modificar tareas de Realizador Aprobador",
       "Define or modify entity to entity mappings": "Definir o modificar asignaciones de entidad a entidad",
       "Define or modify roles and associated permissions": "Definir o modificar roles y permisos asociados.",
@@ -3453,6 +3481,7 @@
       "Edit Accounting Rules": "Editar reglas de contabilidad",
       "Edit Adhoc Query": "Editar consulta ad hoc",
       "Edit Amazon S3 Configuration": "Editar la configuración de Amazon S3",
+      "Edit Breach": "Editar Incumplimiento",
       "Edit Cashier": "Editar cajero",
       "Edit Center": "Centro de edición",
       "Edit Charge": "Editar cargo",
@@ -3474,7 +3503,9 @@
       "Edit Group": "Editar grupo",
       "Edit Holidays": "Editar días festivos",
       "Edit Hook": "Editar gancho",
+      "Edit Loan Originator": "Editar Originador de Préstamo",
       "Edit Loan Product": "Editar producto de Crédito",
+      "Edit Near Breach": "Editar Cuasi Incumplimiento",
       "Edit Notification Configuration": "Editar configuración de notificación",
       "Edit Office": "Editar sucursal",
       "Edit Payment Type": "Editar tipo de pago",
@@ -3652,6 +3683,7 @@
       "N/A": "N/A",
       "Navigate system selecting entity": "Esto permitirá al usuario navegar rápidamente por el sistema seleccionando la entidad mientras la búsqueda hace que la navegación sea más sólida.",
       "Navigation": "Navegación",
+      "Near Breach Configurations": "Configuraciones de Cuasi Incumplimiento",
       "Not Activated": "No Activado",
       "No Data": "Sin datos",
       "No Description": "Sin descripción",
@@ -3720,6 +3752,7 @@
       "Recurring Deposits Account Transactions": "Transacciones de cuentas de depósitos recurrentes",
       "RecurringDeposit Account View": "Vista de cuenta de Depósito Recurrente",
       "Red asterisk field": "Los campos con un asterisco rojo (*) son obligatorios. Para saber más haga clic en:",
+      "Remittances": "Remesas",
       "Repayment Schedule": "Calendario de pagos",
       "Repeats' and 'Repeats every": "Nota: 'Repeticiones' y 'Repeticiones cada' no se pueden modificar si hay cuentas activas (Créditos JLG, depósitos recurrentes, etc.) que dependen de esta reunión.",
       "Report Parameters": "Parámetros del reporte",
@@ -3848,6 +3881,7 @@
       "View Adhoc Query": "Ver consulta ad hoc",
       "View Amazon S3 Configuration": "Ver la configuración de Amazon S3",
       "View Audit": "Ver auditoría",
+      "View Breach": "Ver Incumplimiento",
       "View Bulk Import": "Ver importación masiva",
       "View Cashier": "Ver cajero",
       "View Charges": "Ver cargos",
@@ -3870,7 +3904,9 @@
       "View Group": "Ver grupo",
       "View Holidays": "Ver festivos",
       "View Hook": "Ver gancho",
+      "View Loan Originator": "Ver Originador de Préstamo",
       "View Loan Product": "Ver producto de Crédito",
+      "View Near Breach": "Ver Cuasi Incumplimiento",
       "View Notification Configuration": "Ver configuración de notificación",
       "View Office": "Ver Sucursal",
       "View Product Mix": "Ver mezcla de productos",
@@ -3928,7 +3964,9 @@
       "UploadDocumentHint": "Suba un PDF o imagen para generar una vista previa.",
       "Process Remittance": "Procesar Remesa",
       "Loan Originators": "Comisionistas de créditos",
-      "Loan Reschedules": "Reprogramaciones de Créditos"
+      "Loan Reschedules": "Reprogramaciones de Créditos",
+      "Settings saved successfully": "Configuración guardada exitosamente.",
+      "Undo Write-off Description": "Esta acción revertirá la transacción de castigo contable y restaurará el préstamo a su estado activo anterior. Por favor, proporcione una nota explicando el motivo de esta acción."
     },
     "permissions": {
       "actions": {
@@ -4445,7 +4483,8 @@
     "Create Interest Refund": "Crear reembolso de intereses",
     "ACTIVE": "ACTIVO",
     "PENDING": "PENDIENTE",
-    "INACTIVE": "INACTIVO"
+    "INACTIVE": "INACTIVO",
+    "Allow full term length for each tranche disbursement": "Cuando está habilitado, cada desembolso de tramo seguirá el cronograma completo del préstamo en lugar de ajustarse al plazo restante. Solo disponible para el tipo de cronograma PROGRESIVO."
   },
   "countries": {
     "AF": "Afganistán",
@@ -4615,6 +4654,14 @@
       "takeSurvey": {
         "success": "Encuesta enviada con éxito.",
         "failure": "Error al enviar la encuesta."
+      }
+    }
+  },
+  "error": {
+    "resource": {
+      "notImplemented": {
+        "type": "Error no implementado",
+        "message": "¡Funcionalidad no implementada!"
       }
     }
   }

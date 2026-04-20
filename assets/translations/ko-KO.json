@@ -28,6 +28,7 @@
     "error.msg.charge.due.at.disbursement.cannot.be.penalty": "지불 시 부과되는 벌금을 벌금으로 설정할 수 없습니다.",
     "error.msg.charge.duplicate.name": "해당 이름의 청구가 이미 존재합니다.",
     "error.msg.charge.update.of.charge.applies.to.is.not.supported": "요금 적용 대상 업데이트는 지원되지 않습니다.",
+    "error.msg.data.integrity.issue": "요청이 데이터베이스에서 데이터 무결성 문제를 일으켰습니다",
     "error.msg.loan.product.close.date.cannot.be.before.start.date": "대출상품 마감일은 시작일보다 이전일 수 없습니다.",
     "error.msg.product.loan.duplicate.charge": "대출 상품은 각 유형별로 한 번만 청구할 수 있습니다.",
     "error.msg.product.loan.duplicate.name": "'{{params[0].value}}' 이름의 대출 상품이 이미 존재합니다.",
@@ -1047,6 +1048,8 @@
       "are": "~이다",
       "be larger than 0 and at most 100": "0보다 크고 최대 100이어야 합니다.",
       "begin with a special character or number": "특수 문자나 숫자로 시작",
+      "can not be less than": "보다 작을 수 없습니다",
+      "can not be more than": "보다 클 수 없습니다",
       "cannot begin with a special character or number": "특수 문자나 숫자로 시작할 수 없습니다.",
       "decimal places": "소수점 자리",
       "do not match": "일치하지 않는",
@@ -1347,6 +1350,7 @@
       "Minimum Active Period": "최소 활동 기간",
       "Minimum Deposit Term": "최소 예금 기간",
       "Moratorium": "모라토리엄",
+      "Near Breach Configuration": "근접 위반 구성",
       "Nominal Interest Rate by loan cycle": "대출주기별 명목이자율",
       "Notes": "노트",
       "Notification External Service": "알림 외부 서비스",
@@ -1540,7 +1544,8 @@
       "Payout Assignment": "지급 배정 정보",
       "Identification": "신원 확인",
       "Professional Information": "직업 정보",
-      "Add Profile Entry": "프로필 항목 추가"
+      "Add Profile Entry": "프로필 항목 추가",
+      "Recipient Summary": "수취인 요약"
     },
     "inputs": {
       "Loan Account Status": "대출 계좌 상태",
@@ -2369,6 +2374,7 @@
       "Name": "이름",
       "Name Decorated": "이름 장식",
       "Name of the Organization": "조직 이름",
+      "Near Breach": "위반 임박",
       "Near Breach Evaluation Frequency": "임박한 위반 평가 빈도",
       "Near Breach Evaluation Frequency Type": "임박한 위반 평가 빈도 유형",
       "Near Breach Threshold": "임박한 위반 임계값",
@@ -2777,6 +2783,7 @@
       "Text": "텍스트",
       "Theme": "주제",
       "Theme and Font": "테마 및 글꼴",
+      "Threshold": "임계값",
       "Thursday": "목요일",
       "Time": "시간",
       "To": "에게",
@@ -2992,7 +2999,46 @@
       "Period Payment Frequency Type": "기간별 지급 빈도 유형",
       "Payment Allocation Transactions": "지불 할당 거래",
       "Net Present Value day count": "순현재가치 일수 계산",
-      "Installment": "할부"
+      "Installment": "할부",
+      "Beneficiary Selection": "수익자 선택",
+      "Confirmation Number": "확인 번호",
+      "Sub Status": "하위 상태",
+      "Document": "문서",
+      "Document Number": "문서 번호",
+      "Document number is required": "문서 번호는 필수입니다",
+      "Allow full term for each tranche": "각 트란셰에 전체 기간 허용",
+      "Failed to load vendors": "공급업체를 불러오지 못했습니다",
+      "First name is required": "이름은 필수입니다",
+      "Last name is required": "성은 필수입니다",
+      "Search Client": "고객 검색",
+      "Type client name or account number": "고객명 또는 계좌번호를 입력하세요",
+      "Overdue": "연체",
+      "Overdue Fees": "연체 수수료",
+      "Confirmed At": "확인 날짜",
+      "Full Name": "전체 이름",
+      "Loading vendors": {
+        "": {
+          "": {
+            "": "공급업체 불러오는 중..."
+          }
+        }
+      },
+      "Minimum 3 characters": "최소 3자 이상",
+      "National ID": "주민등록번호",
+      "Nationality": "국적",
+      "Payout Amount": "지급 금액",
+      "Payout Country": "지급 국가",
+      "Payout Token": "지급 토큰",
+      "Recipient Name": "수취인 이름",
+      "Send Amount": "송금액",
+      "Send Country": "발송 국가",
+      "Sender": "발신자",
+      "Sender Name": "발신자 이름",
+      "Sent By": "발송인",
+      "Deposited At": "입금일",
+      "Passport": "여권",
+      "Driver's License": "운전면허증",
+      "Mothers Maiden Name": "어머니 결혼 전 성"
     },
     "links": {
       "Community": "지역 사회",
@@ -3131,7 +3177,8 @@
       "Reject Additional Shares": "추가 공유 거부",
       "Tasks": "작업",
       "Remittances": "송금",
-      "Process Remittance": "송금 처리"
+      "Process Remittance": "송금 처리",
+      "Undo Write-off": "상각 취소"
     },
     "placeholders": {
       "Add new server": "새 서버 추가",
@@ -3254,6 +3301,7 @@
       "Audit logs of all the activities": "클라이언트 생성, 대출 지급 등과 같은 모든 활동에 대한 감사 로그",
       "Bar": "술집",
       "BIRT": "Mifos Reporting Plugin for Eclipse Birt",
+      "Breach Configurations": "위반 구성",
       "Bulk Import": "대량 가져오기",
       "Bulk Loan Reassignment": "대량대출 재할당",
       "Bulk data import using excel spreadsheet templates": "고객, 사무실 등을 위한 Excel 스프레드시트 템플릿을 사용하여 대량 데이터 가져오기",
@@ -3304,6 +3352,7 @@
       "Create Accounting Closure": "회계 마감 생성",
       "Create Accounting Rule": "회계 규칙 생성",
       "Create Adhoc Query": "임시 쿼리 만들기",
+      "Create Breach": "위반 생성",
       "Create Center": "센터 만들기",
       "Create Charge": "청구 생성",
       "Create Client": "클라이언트 생성",
@@ -3332,6 +3381,7 @@
       "View Loan Originator": "대출 담당자 보기",
       "Edit Loan Originator": "대출 담당자 수정",
       "Create Loans Account": "대출 계좌 만들기",
+      "Create Near Breach": "근접 위반 생성",
       "Create New GL Account": "이 옵션을 사용하면 새 GL 계정을 만들 수 있습니다.",
       "Create Office": "사무실 만들기",
       "Create Payment Type": "결제 유형 생성",
@@ -3401,6 +3451,7 @@
       "Define delinquency day ranges and bucket set for loan products": "대출 상품에 대한 연체 기간 및 버킷 세트 정의",
       "Define floating rates for loan products": "대출 상품에 대한 변동 금리 정의",
       "Define holidays for office": "사무실의 휴일을 정의하세요.",
+      "Define near breaches for working capital products": "운전자본 상품에 대한 근접 위반 정의",
       "Define or modify Maker Checker tasks": "Maker Checker 작업 정의 또는 수정",
       "Define or modify entity to entity mappings": "엔터티 대 엔터티 매핑 정의 또는 수정",
       "Define or modify roles and associated permissions": "역할 및 관련 권한 정의 또는 수정",
@@ -3420,6 +3471,7 @@
       "Edit Accounting Rules": "회계 규칙 편집",
       "Edit Adhoc Query": "임시 쿼리 편집",
       "Edit Amazon S3 Configuration": "Amazon S3 구성 편집",
+      "Edit Breach": "위반 수정",
       "Edit Cashier": "계산원 편집",
       "Edit Center": "편집 센터",
       "Edit Charge": "청구 수정",
@@ -3441,7 +3493,9 @@
       "Edit Group": "그룹 편집",
       "Edit Holidays": "공휴일 수정",
       "Edit Hook": "후크 편집",
+      "Edit Loan Originator": "대출 담당자 수정",
       "Edit Loan Product": "대출상품 수정",
+      "Edit Near Breach": "근접 위반 수정",
       "Edit Notification Configuration": "알림 구성 편집",
       "Edit Office": "사무실 편집",
       "Edit Payment Type": "결제 유형 수정",
@@ -3617,6 +3671,7 @@
       "N/A": "해당 없음",
       "Navigate system selecting entity": "이를 통해 사용자는 시스템 선택 엔터티를 빠르게 탐색할 수 있으며 검색은 탐색을 더욱 강력하게 만듭니다.",
       "Navigation": "항해",
+      "Near Breach Configurations": "근접 위반 구성",
       "No Data": "데이터 없음",
       "Not Activated": "활성화되지 않음",
       "No Description": "설명이 없습니다",
@@ -3685,6 +3740,7 @@
       "Recurring Deposits Account Transactions": "정기예금 계좌거래",
       "RecurringDeposit Account View": "정기예금 계좌조회",
       "Red asterisk field": "빨간색 별표(*)가 있는 필드는 필수입니다. 자세한 내용을 보려면 다음을 클릭하세요.",
+      "Remittances": "송금",
       "Repayment Schedule": "상환 일정",
       "Repeats' and 'Repeats every": "참고: 이 회의에 종속된 활성 계좌(JLG 대출, 정기 예금 등)가 있는 경우 '반복' 및 '반복 간격'은 수정할 수 없습니다.",
       "Report Parameters": "보고서 매개변수",
@@ -3813,6 +3869,7 @@
       "View Adhoc Query": "임시 쿼리 보기",
       "View Amazon S3 Configuration": "Amazon S3 구성 보기",
       "View Audit": "감사 보기",
+      "View Breach": "위반 보기",
       "View Bulk Import": "대량 가져오기 보기",
       "View Cashier": "계산원 보기",
       "View Charges": "요금 보기",
@@ -3835,7 +3892,9 @@
       "View Group": "그룹 보기",
       "View Holidays": "휴일 보기",
       "View Hook": "후크 보기",
+      "View Loan Originator": "대출 담당자 보기",
       "View Loan Product": "대출상품 보기",
+      "View Near Breach": "근접 위반 보기",
       "View Notification Configuration": "알림 구성 보기",
       "View Office": "사무실 보기",
       "View Product Mix": "제품 믹스 보기",
@@ -3910,7 +3969,9 @@
       "Failed to search clients. Please try again.": "고객 검색에 실패했습니다. 다시 시도하세요.",
       "Process Remittance": "송금 처리",
       "Loan Originators": "대출 담당자",
-      "Loan Reschedules": "대출 일정 변경"
+      "Loan Reschedules": "대출 일정 변경",
+      "Settings saved successfully": "설정이 성공적으로 저장되었습니다.",
+      "Undo Write-off Description": "이 작업은 상각 거래를 취소하고 대출을 이전 활성 상태로 복원합니다. 이 작업의 이유를 설명하는 메모를 제공해 주세요."
     },
     "permissions": {
       "actions": {
@@ -4427,7 +4488,8 @@
     "ACTIVE": "활동적인",
     "PENDING": "보류 중",
     "INACTIVE": "비활성",
-    "Process Remittance": "송금 처리"
+    "Process Remittance": "송금 처리",
+    "Allow full term length for each tranche disbursement": "활성화되면 각 트란셰 지급은 남은 기간에 맞추는 대신 전체 대출 기간 일정을 따릅니다. PROGRESSIVE 대출 일정 유형에만 사용 가능합니다."
   },
   "countries": {
     "AF": "아프가니스탄",
@@ -4599,6 +4661,14 @@
       "takeSurvey": {
         "success": "설문조사가 성공적으로 제출되었습니다.",
         "failure": "설문조사 제출에 실패했습니다."
+      }
+    }
+  },
+  "error": {
+    "resource": {
+      "notImplemented": {
+        "type": "구현되지 않은 오류",
+        "message": "구현되지 않은 기능입니다!"
       }
     }
   }

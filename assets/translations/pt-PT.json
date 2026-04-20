@@ -28,6 +28,7 @@
     "error.msg.charge.due.at.disbursement.cannot.be.penalty": "A cobrança não pode ser configurada como uma penalidade devida no desembolso.",
     "error.msg.charge.duplicate.name": "Já existe cobrança com esse nome.",
     "error.msg.charge.update.of.charge.applies.to.is.not.supported": "A atualização de cobrança se aplica a não é suportada.",
+    "error.msg.data.integrity.issue": "O pedido causou um problema de integridade de dados na base de dados",
     "error.msg.loan.product.close.date.cannot.be.before.start.date": "A data de fechamento do produto de empréstimo não pode ser anterior à data de início.",
     "error.msg.product.loan.duplicate.charge": "O produto de empréstimo só pode ter uma cobrança de cada tipo.",
     "error.msg.product.loan.duplicate.name": "O produto de empréstimo com o nome `{{params[0].value}}` já existe.",
@@ -1047,6 +1048,8 @@
       "are": "são",
       "be larger than 0 and at most 100": "ser maior que 0 e no máximo 100",
       "begin with a special character or number": "comece com um caractere especial ou número",
+      "can not be less than": "não pode ser menos do que",
+      "can not be more than": "não pode ser mais do que",
       "cannot begin with a special character or number": "não pode começar com um caractere especial ou número",
       "decimal places": "casas decimais",
       "do not match": "não combina",
@@ -1346,6 +1349,7 @@
       "Minimum Active Period": "Período Mínimo Ativo",
       "Minimum Deposit Term": "Prazo mínimo de depósito",
       "Moratorium": "Moratória",
+      "Near Breach Configuration": "Configuração de quase incumprimento",
       "Nominal Interest Rate by loan cycle": "Taxa de juros nominal por ciclo de empréstimo",
       "Notes": "Notas",
       "Notification External Service": "Serviço externo de notificação",
@@ -1538,7 +1542,8 @@
       "Payout Assignment": "Atribuição de pagamento",
       "Identification": "Identificação",
       "Professional Information": "Informações profissionais",
-      "Add Profile Entry": "Adicionar entrada de perfil"
+      "Add Profile Entry": "Adicionar entrada de perfil",
+      "Recipient Summary": "Resumo do destinatário"
     },
     "inputs": {
       "Loan Account Status": "Estado da conta do empréstimo",
@@ -2367,6 +2372,7 @@
       "Name": "Nome",
       "Name Decorated": "Nome Decorado",
       "Name of the Organization": "Nome da Organização",
+      "Near Breach": "Violação próxima",
       "Near Breach Evaluation Frequency": "Frequência de avaliação de violação próxima",
       "Near Breach Evaluation Frequency Type": "Tipo de frequência de avaliação de violação próxima",
       "Near Breach Threshold": "Limiar de violação próxima",
@@ -2775,6 +2781,7 @@
       "Text": "Texto",
       "Theme": "Tema",
       "Theme and Font": "Tema e fonte",
+      "Threshold": "Limiar",
       "Thursday": "Quinta-feira",
       "Time": "Tempo",
       "To": "Para",
@@ -2991,7 +2998,46 @@
       "Period Payment Frequency Type": "Tipo de frequência de pagamento do período",
       "Payment Allocation Transactions": "Transações de Alocação de Pagamentos",
       "Net Present Value day count": "Contagem de dias do Valor Presente Líquido",
-      "Installment": "Prestação"
+      "Installment": "Prestação",
+      "Beneficiary Selection": "Seleção de beneficiário",
+      "Confirmation Number": "Número de confirmação",
+      "Sub Status": "Sub estado",
+      "Document": "Documento",
+      "Document Number": "Número do documento",
+      "Document number is required": "O número do documento é obrigatório",
+      "Allow full term for each tranche": "Permitir prazo completo para cada tranche",
+      "Failed to load vendors": "Falha ao carregar fornecedores",
+      "First name is required": "O nome é obrigatório",
+      "Last name is required": "O apelido é obrigatório",
+      "Search Client": "Pesquisar cliente",
+      "Type client name or account number": "Insira o nome do cliente ou o número de conta",
+      "Overdue": "Em atraso",
+      "Overdue Fees": "Taxas em atraso",
+      "Confirmed At": "Confirmado em",
+      "Full Name": "Nome completo",
+      "Loading vendors": {
+        "": {
+          "": {
+            "": "A carregar fornecedores..."
+          }
+        }
+      },
+      "Minimum 3 characters": "Mínimo 3 caracteres",
+      "National ID": "Bilhete de identidade",
+      "Nationality": "Nacionalidade",
+      "Payout Amount": "Valor do pagamento",
+      "Payout Country": "País do pagamento",
+      "Payout Token": "Token de pagamento",
+      "Recipient Name": "Nome do destinatário",
+      "Send Amount": "Valor a enviar",
+      "Send Country": "País de envio",
+      "Sender": "Remetente",
+      "Sender Name": "Nome do remetente",
+      "Sent By": "Enviado por",
+      "Deposited At": "Depositado em",
+      "Passport": "Passaporte",
+      "Driver's License": "Carta de condução",
+      "Mothers Maiden Name": "Nome de solteira da mãe"
     },
     "links": {
       "Community": "Comunidade",
@@ -3131,7 +3177,8 @@
       "Reject Additional Shares": "Rejeitar compartilhamentos adicionais",
       "Tasks": "Tarefas",
       "Remittances": "Remessas",
-      "Process Remittance": "Processar remessa"
+      "Process Remittance": "Processar remessa",
+      "Undo Write-off": "Desfazer abatimento"
     },
     "placeholders": {
       "Add new server": "Adicionar novo servidor",
@@ -3254,6 +3301,7 @@
       "Audit logs of all the activities": "Registros de auditoria de todas as atividades, como criação de cliente, desembolso de empréstimos, etc.",
       "Bar": "Bar",
       "BIRT": "Mifos Reporting Plugin for Eclipse Birt",
+      "Breach Configurations": "Configurações de Incumprimento",
       "Bulk Import": "Importação em massa",
       "Bulk Loan Reassignment": "Reatribuição de empréstimo em massa",
       "Bulk data import using excel spreadsheet templates": "Importação de dados em massa usando modelos de planilhas Excel para clientes, escritórios, etc.",
@@ -3304,6 +3352,7 @@
       "Create Accounting Closure": "Criar encerramento contábil",
       "Create Accounting Rule": "Criar regra contábil",
       "Create Adhoc Query": "Criar consulta ad hoc",
+      "Create Breach": "Criar Incumprimento",
       "Create Center": "Criar Centro",
       "Create Charge": "Criar cobrança",
       "Create Client": "Criar cliente",
@@ -3332,6 +3381,7 @@
       "View Loan Originator": "Ver Originador de Empréstimo",
       "Edit Loan Originator": "Editar Originador de Empréstimo",
       "Create Loans Account": "Criar conta de empréstimos",
+      "Create Near Breach": "Criar Quase Incumprimento",
       "Create New GL Account": "Esta opção permite criar novas contas contábeis.",
       "Create Office": "Criar escritório",
       "Create Payment Type": "Criar tipo de pagamento",
@@ -3401,6 +3451,7 @@
       "Define delinquency day ranges and bucket set for loan products": "Definir intervalos de dias de inadimplência e conjuntos de intervalos para produtos de empréstimo",
       "Define floating rates for loan products": "Definir taxas flutuantes para produtos de empréstimo",
       "Define holidays for office": "Defina feriados para o escritório",
+      "Define near breaches for working capital products": "Definir quase incumprimentos para produtos de capital de giro",
       "Define or modify Maker Checker tasks": "Definir ou modificar tarefas do Maker Checker",
       "Define or modify entity to entity mappings": "Definir ou modificar mapeamentos de entidade para entidade",
       "Define or modify roles and associated permissions": "Definir ou modificar funções e permissões associadas",
@@ -3420,6 +3471,7 @@
       "Edit Accounting Rules": "Editar regras contábeis",
       "Edit Adhoc Query": "Editar consulta ad hoc",
       "Edit Amazon S3 Configuration": "Editar configuração do Amazon S3",
+      "Edit Breach": "Editar Incumprimento",
       "Edit Cashier": "Editar caixa",
       "Edit Center": "Centro de edição",
       "Edit Charge": "Editar cobrança",
@@ -3441,7 +3493,9 @@
       "Edit Group": "Editar grupo",
       "Edit Holidays": "Editar feriados",
       "Edit Hook": "Editar gancho",
+      "Edit Loan Originator": "Editar Agente de Crédito",
       "Edit Loan Product": "Editar produto de empréstimo",
+      "Edit Near Breach": "Editar Quase Incumprimento",
       "Edit Notification Configuration": "Editar configuração de notificação",
       "Edit Office": "Editar escritório",
       "Edit Payment Type": "Editar tipo de pagamento",
@@ -3617,6 +3671,7 @@
       "N/A": "N / D",
       "Navigate system selecting entity": "Isso permitirá que o usuário navegue rapidamente no sistema selecionando a entidade enquanto a pesquisa torna a navegação mais robusta.",
       "Navigation": "Navegação",
+      "Near Breach Configurations": "Configurações de Quase Incumprimento",
       "No Data": "Sem dados",
       "Not Activated": "Não ativado",
       "No Description": "Sem descrição",
@@ -3685,6 +3740,7 @@
       "Recurring Deposits Account Transactions": "Transações de contas de depósitos recorrentes",
       "RecurringDeposit Account View": "Visualização da conta de depósito recorrente",
       "Red asterisk field": "Os campos com asterisco vermelho (*) são obrigatórios. Para saber mais clique:",
+      "Remittances": "Remessas",
       "Repayment Schedule": "Cronograma de Reembolso",
       "Repeats' and 'Repeats every": "Nota: 'Repetições' e 'Repetições a cada' não podem ser modificadas se houver contas ativas (Empréstimos JLG, Depósitos Recorrentes etc.) dependentes desta reunião.",
       "Report Parameters": "Parâmetros do relatório",
@@ -3813,6 +3869,7 @@
       "View Adhoc Query": "Ver consulta ad hoc",
       "View Amazon S3 Configuration": "Ver configuração do Amazon S3",
       "View Audit": "Ver auditoria",
+      "View Breach": "Ver Incumprimento",
       "View Bulk Import": "Ver importação em massa",
       "View Cashier": "Ver caixa",
       "View Charges": "Ver cobranças",
@@ -3835,7 +3892,9 @@
       "View Group": "Ver grupo",
       "View Holidays": "Ver feriados",
       "View Hook": "Ver gancho",
+      "View Loan Originator": "Ver Agente de Crédito",
       "View Loan Product": "Ver produto de empréstimo",
+      "View Near Breach": "Ver Quase Incumprimento",
       "View Notification Configuration": "Ver configuração de notificação",
       "View Office": "Ver escritório",
       "View Product Mix": "Ver mix de produtos",
@@ -3910,7 +3969,9 @@
       "Failed to search clients. Please try again.": "Falha ao pesquisar clientes. Tente novamente.",
       "Process Remittance": "Processar remessa",
       "Loan Originators": "Agentes de Crédito",
-      "Loan Reschedules": "Reprogramações de empréstimos"
+      "Loan Reschedules": "Reprogramações de empréstimos",
+      "Settings saved successfully": "Definições guardadas com sucesso.",
+      "Undo Write-off Description": "Esta ação reverterá a transação de abatimento e restaurará o empréstimo ao seu estado ativo anterior. Por favor, forneça uma nota explicando o motivo desta ação."
     },
     "permissions": {
       "actions": {
@@ -4427,7 +4488,8 @@
     "ACTIVE": "ATIVO",
     "PENDING": "PENDENTE",
     "INACTIVE": "INATIVO",
-    "Process Remittance": "Processar remessa"
+    "Process Remittance": "Processar remessa",
+    "Allow full term length for each tranche disbursement": "Quando ativado, cada desembolso de tranche seguirá o calendário completo do empréstimo em vez de se ajustar ao prazo restante. Disponível apenas para o tipo de calendário PROGRESSIVO."
   },
   "countries": {
     "AF": "Afeganistão",
@@ -4599,6 +4661,14 @@
       "takeSurvey": {
         "success": "Questionário submetido com sucesso.",
         "failure": "Falha ao submeter o questionário."
+      }
+    }
+  },
+  "error": {
+    "resource": {
+      "notImplemented": {
+        "type": "Erro não implementado",
+        "message": "Funcionalidade não implementada!"
       }
     }
   }

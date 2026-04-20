@@ -28,6 +28,7 @@
     "error.msg.charge.due.at.disbursement.cannot.be.penalty": "भुक्तानी गर्दा शुल्कलाई जरिवानाको रूपमा सेटअप गर्न सकिँदैन।",
     "error.msg.charge.duplicate.name": "त्यो नामको चार्ज पहिले नै अवस्थित छ।",
     "error.msg.charge.update.of.charge.applies.to.is.not.supported": "मा लागू हुने शुल्कको अद्यावधिक समर्थित छैन।",
+    "error.msg.data.integrity.issue": "अनुरोधले डाटाबेसमा डेटा अखण्डता समस्या उत्पन्न गर्‍यो",
     "error.msg.loan.product.close.date.cannot.be.before.start.date": "ऋण उत्पादन बन्द मिति सुरु मिति भन्दा पहिले हुन सक्दैन।",
     "error.msg.product.loan.duplicate.charge": "ऋण उत्पादन प्रत्येक प्रकारको मात्र एक शुल्क हुन सक्छ।",
     "error.msg.product.loan.duplicate.name": "`{{params[0].value}}` नामको ऋण उत्पादन पहिले नै अवस्थित छ।",
@@ -1024,7 +1025,8 @@
       "DAYS": "दिनहरू",
       "MONTHS": "महिनाहरू",
       "YEARS": "वर्षहरू",
-      "Loan Creation": "ऋण सिर्जना"
+      "Loan Creation": "ऋण सिर्जना",
+      "Account_transfer": "खाता स्थानान्तरण"
     },
     "commons": {
       "50 characters long": "५० वर्ण लामो",
@@ -1045,6 +1047,8 @@
       "are": "छन्",
       "be larger than 0 and at most 100": "० भन्दा ठुलो र बढीमा १००",
       "begin with a special character or number": "एक विशेष वर्ण वा संख्या संग सुरु गर्नुहोस्",
+      "can not be less than": "भन्दा कम हुन सक्दैन",
+      "can not be more than": "भन्दा बढी हुन सक्दैन",
       "cannot begin with a special character or number": "विशेष वर्ण वा संख्याबाट सुरु गर्न सकिँदैन",
       "decimal places": "दशमलव स्थानहरू",
       "do not match": "मिल्दैन",
@@ -1345,6 +1349,7 @@
       "Minimum Active Period": "न्यूनतम सक्रिय अवधि",
       "Minimum Deposit Term": "न्यूनतम जम्मा अवधि",
       "Moratorium": "मोरेटोरियम",
+      "Near Breach Configuration": "नजिकको उल्लङ्घन कन्फिगरेसन",
       "Nominal Interest Rate by loan cycle": "ऋण चक्र द्वारा नाममात्र ब्याज दर",
       "Notes": "नोटहरू",
       "Notification External Service": "सूचना बाह्य सेवा",
@@ -1536,7 +1541,9 @@
       "Payout Assignment": "भुक्तानी तोकिएको",
       "Identification": "पहिचान",
       "Professional Information": "पेशागत जानकारी",
-      "Add Profile Entry": "प्रोफाइल प्रविष्टि थप्नुहोस्"
+      "Add Profile Entry": "प्रोफाइल प्रविष्टि थप्नुहोस्",
+      "Id": "आईडी",
+      "Recipient Summary": "प्राप्तकर्ता सारांश"
     },
     "inputs": {
       "Loan Account Status": "ऋण खाता स्थिति",
@@ -2365,6 +2372,7 @@
       "Name": "नाम",
       "Name Decorated": "नाम सजाइएको",
       "Name of the Organization": "संस्थाको नाम",
+      "Near Breach": "नजिकको उल्लंघन",
       "Near Breach Evaluation Frequency": "नजिकको उल्लंघन मूल्यांकन आवृत्ति",
       "Near Breach Evaluation Frequency Type": "नजिकको उल्लंघन मूल्यांकन आवृत्ति प्रकार",
       "Near Breach Threshold": "नजिकको उल्लंघन सीमा",
@@ -2773,6 +2781,7 @@
       "Text": "पाठ",
       "Theme": "विषयवस्तु",
       "Theme and Font": "विषयवस्तु र फन्ट",
+      "Threshold": "थ्रेसहोल्ड",
       "Thursday": "बिहीबार",
       "Time": "समय",
       "To": "को",
@@ -2989,7 +2998,46 @@
       "Period Payment Frequency Type": "अवधि भुक्तानी आवृत्ति प्रकार",
       "Payment Allocation Transactions": "भुक्तानी विनियोजन लेनदेन",
       "Net Present Value day count": "खुद वर्तमान मूल्य दिन गणना",
-      "Installment": "किस्ता"
+      "Installment": "किस्ता",
+      "Beneficiary Selection": "लाभार्थी चयन",
+      "Confirmation Number": "पुष्टि नम्बर",
+      "Sub Status": "उप-स्थिति",
+      "Document": "कागजात",
+      "Document Number": "कागजात नम्बर",
+      "Document number is required": "कागजात नम्बर आवश्यक छ",
+      "Allow full term for each tranche": "प्रत्येक किस्तालाई पूर्ण अवधि अनुमति दिनुहोस्",
+      "Failed to load vendors": "विक्रेताहरू लोड गर्न असफल भयो",
+      "First name is required": "पहिलो नाम आवश्यक छ",
+      "Last name is required": "थर आवश्यक छ",
+      "Search Client": "ग्राहक खोज्नुहोस्",
+      "Type client name or account number": "ग्राहकको नाम वा खाता नम्बर टाइप गर्नुहोस्",
+      "Overdue": "म्याद गुज्रेको",
+      "Overdue Fees": "म्याद गुज्रेको शुल्क",
+      "Confirmed At": "पुष्टि मिति",
+      "Full Name": "पूरा नाम",
+      "Loading vendors": {
+        "": {
+          "": {
+            "": "विक्रेताहरू लोड हुँदैछ..."
+          }
+        }
+      },
+      "Minimum 3 characters": "कम्तीमा ३ अक्षर",
+      "National ID": "राष्ट्रिय परिचयपत्र",
+      "Nationality": "राष्ट्रियता",
+      "Payout Amount": "भुक्तानी रकम",
+      "Payout Country": "भुक्तानी देश",
+      "Payout Token": "भुक्तानी टोकन",
+      "Recipient Name": "प्राप्तकर्ताको नाम",
+      "Send Amount": "पठाउने रकम",
+      "Send Country": "पठाउने देश",
+      "Sender": "प्रेषक",
+      "Sender Name": "प्रेषकको नाम",
+      "Sent By": "द्वारा पठाइएको",
+      "Deposited At": "जम्मा मिति",
+      "Passport": "राहदानी",
+      "Driver's License": "सवारी चालक अनुमतिपत्र",
+      "Mothers Maiden Name": "आमाको कुमारी नाम"
     },
     "links": {
       "Community": "समुदाय",
@@ -3129,7 +3177,8 @@
       "Reject Additional Shares": "अतिरिक्त शेयरहरू अस्वीकार गर्नुहोस्",
       "Tasks": "कार्यहरू",
       "Remittances": "रेमिट्यान्स",
-      "Process Remittance": "रेमिट्यान्स प्रक्रिया"
+      "Process Remittance": "रेमिट्यान्स प्रक्रिया",
+      "Undo Write-off": "राइट-अफ पूर्ववत गर्नुहोस्"
     },
     "placeholders": {
       "Add new server": "नयाँ सर्भर थप्नुहोस्",
@@ -3252,6 +3301,7 @@
       "Audit logs of all the activities": "सबै गतिविधिहरूको अडिट लगहरू, जस्तै ग्राहक सिर्जना, ऋण वितरण आदि",
       "Bar": "बार",
       "BIRT": "Mifos Reporting Plugin for Eclipse Birt",
+      "Breach Configurations": "उल्लंघन कन्फिगरेसन",
       "Bulk Import": "थोक आयात",
       "Bulk Loan Reassignment": "बल्क ऋण पुन: असाइनमेन्ट",
       "Bulk data import using excel spreadsheet templates": "ग्राहकहरू, कार्यालयहरू, इत्यादिका लागि एक्सेल स्प्रेडसिट टेम्प्लेटहरू प्रयोग गरेर बल्क डाटा आयात।",
@@ -3302,6 +3352,7 @@
       "Create Accounting Closure": "लेखा बन्द सिर्जना गर्नुहोस्",
       "Create Accounting Rule": "लेखा नियम बनाउनुहोस्",
       "Create Adhoc Query": "Adhoc क्वेरी सिर्जना गर्नुहोस्",
+      "Create Breach": "उल्लंघन सिर्जना गर्नुहोस्",
       "Create Center": "केन्द्र सिर्जना गर्नुहोस्",
       "Create Charge": "चार्ज सिर्जना गर्नुहोस्",
       "Create Client": "ग्राहक सिर्जना गर्नुहोस्",
@@ -3330,6 +3381,7 @@
       "View Loan Originator": "ऋण सुरुवातकर्ता हेर्नुहोस्",
       "Edit Loan Originator": "ऋण सुरुवातकर्ता सम्पादन गर्नुहोस्",
       "Create Loans Account": "ऋण खाता सिर्जना गर्नुहोस्",
+      "Create Near Breach": "लगभग उल्लंघन सिर्जना गर्नुहोस्",
       "Create New GL Account": "यो विकल्पले तपाईंलाई नयाँ GL खाताहरू सिर्जना गर्न अनुमति दिन्छ।",
       "Create Office": "कार्यालय सिर्जना गर्नुहोस्",
       "Create Payment Type": "भुक्तानी प्रकार सिर्जना गर्नुहोस्",
@@ -3399,6 +3451,7 @@
       "Define delinquency day ranges and bucket set for loan products": "ऋण उत्पादनहरूको लागि अपराध दिन दायरा र बाल्टिन सेट परिभाषित गर्नुहोस्",
       "Define floating rates for loan products": "ऋण उत्पादनहरूको लागि फ्लोटिंग दरहरू परिभाषित गर्नुहोस्",
       "Define holidays for office": "कार्यालयका लागि छुट्टिहरू परिभाषित गर्नुहोस्",
+      "Define near breaches for working capital products": "कार्यशील पूँजी उत्पादहरूको लागि नजिकको उल्लङ्घन परिभाषित गर्नुहोस्",
       "Define or modify Maker Checker tasks": "मेकर जाँचकर्ता कार्यहरू परिभाषित वा परिमार्जन गर्नुहोस्",
       "Define or modify entity to entity mappings": "इकाई म्यापिङहरूमा इकाई परिभाषित वा परिमार्जन गर्नुहोस्",
       "Define or modify roles and associated permissions": "भूमिका र सम्बन्धित अनुमतिहरू परिभाषित वा परिमार्जन गर्नुहोस्",
@@ -3418,6 +3471,7 @@
       "Edit Accounting Rules": "लेखा नियमहरू सम्पादन गर्नुहोस्",
       "Edit Adhoc Query": "Adhoc क्वेरी सम्पादन गर्नुहोस्",
       "Edit Amazon S3 Configuration": "Amazon S3 कन्फिगरेसन सम्पादन गर्नुहोस्",
+      "Edit Breach": "उल्लंघन सम्पादन गर्नुहोस्",
       "Edit Cashier": "क्यासियर सम्पादन गर्नुहोस्",
       "Edit Center": "केन्द्र सम्पादन गर्नुहोस्",
       "Edit Charge": "शुल्क सम्पादन गर्नुहोस्",
@@ -3439,7 +3493,9 @@
       "Edit Group": "समूह सम्पादन गर्नुहोस्",
       "Edit Holidays": "बिदाहरू सम्पादन गर्नुहोस्",
       "Edit Hook": "हुक सम्पादन गर्नुहोस्",
+      "Edit Loan Originator": "ऋण सुरुवातकर्ता सम्पादन गर्नुहोस्",
       "Edit Loan Product": "ऋण उत्पादन सम्पादन गर्नुहोस्",
+      "Edit Near Breach": "लगभग उल्लंघन सम्पादन गर्नुहोस्",
       "Edit Notification Configuration": "सूचना कन्फिगरेसन सम्पादन गर्नुहोस्",
       "Edit Office": "कार्यालय सम्पादन गर्नुहोस्",
       "Edit Payment Type": "भुक्तानी प्रकार सम्पादन गर्नुहोस्",
@@ -3615,6 +3671,7 @@
       "N/A": "N/A",
       "Navigate system selecting entity": "यसले प्रयोगकर्तालाई प्रणाली चयन गर्ने निकायलाई द्रुत रूपमा नेभिगेट गर्न अनुमति दिनेछ जब खोजी गर्दा नेभिगेसनलाई अझ बलियो बनाउँछ।",
       "Navigation": "नेभिगेसन",
+      "Near Breach Configurations": "लगभग उल्लंघन कन्फिगरेसन",
       "No Data": "डाटा छैन",
       "Not Activated": "सक्रिय छैन",
       "No Description": "विवरण छैन",
@@ -3683,6 +3740,7 @@
       "Recurring Deposits Account Transactions": "आवर्ती जम्मा खाता लेनदेन",
       "RecurringDeposit Account View": "आवर्ती जम्मा खाता दृश्य",
       "Red asterisk field": "रातो तारा चिन्ह (*) भएका क्षेत्रहरू आवश्यक छन्। थप जान्नको लागि क्लिक गर्नुहोस्:",
+      "Remittances": "रेमिट्यान्स",
       "Repayment Schedule": "पुन: भुक्तानी तालिका",
       "Repeats' and 'Repeats every": "नोट: यस बैठकमा निर्भर सक्रिय खाताहरू (JLG Loans, Recurring Deposits आदि) छन् भने 'दोहोर्याउने' र 'हरेक दोहोर्याउने' परिमार्जन गर्न सकिँदैन।",
       "Report Parameters": "रिपोर्ट प्यारामिटरहरू",
@@ -3811,6 +3869,7 @@
       "View Adhoc Query": "Adhoc क्वेरी हेर्नुहोस्",
       "View Amazon S3 Configuration": "Amazon S3 कन्फिगरेसन हेर्नुहोस्",
       "View Audit": "लेखापरीक्षण हेर्नुहोस्",
+      "View Breach": "उल्लंघन हेर्नुहोस्",
       "View Bulk Import": "बल्क आयात हेर्नुहोस्",
       "View Cashier": "क्यासियर हेर्नुहोस्",
       "View Charges": "शुल्कहरू हेर्नुहोस्",
@@ -3833,7 +3892,9 @@
       "View Group": "समूह हेर्नुहोस्",
       "View Holidays": "बिदाहरू हेर्नुहोस्",
       "View Hook": "हुक हेर्नुहोस्",
+      "View Loan Originator": "ऋण सुरुवातकर्ता हेर्नुहोस्",
       "View Loan Product": "ऋण उत्पादन हेर्नुहोस्",
+      "View Near Breach": "लगभग उल्लंघन हेर्नुहोस्",
       "View Notification Configuration": "सूचना कन्फिगरेसन हेर्नुहोस्",
       "View Office": "कार्यालय हेर्नुहोस्",
       "View Product Mix": "उत्पादन मिक्स हेर्नुहोस्",
@@ -3908,7 +3969,9 @@
       "Failed to search clients. Please try again.": "ग्राहकहरू खोज्न असफल भयो। कृपया पुनः प्रयास गर्नुहोस्।",
       "Process Remittance": "रेमिट्यान्स प्रक्रिया गर्नुहोस्",
       "Loan Originators": "ऋण सुरुवातकर्ताहरू",
-      "Loan Reschedules": "ऋण पुन: तालिका"
+      "Loan Reschedules": "ऋण पुन: तालिका",
+      "Settings saved successfully": "सेटिङहरू सफलतापूर्वक सेभ गरियो।",
+      "Undo Write-off Description": "यो कार्यले राइट-अफ ट्रान्जेक्सन फिर्ता गर्नेछ र ऋणलाई यसको अघिल्लो सक्रिय अवस्थामा पुनर्स्थापित गर्नेछ। कृपया यस कार्यको कारण बताउने नोट प्रदान गर्नुहोस्।"
     },
     "permissions": {
       "actions": {
@@ -4010,7 +4073,8 @@
         "ALL": "सबै",
         "BYPASS": "बाइपास",
         "CHECKER": "जाँचकर्ता",
-        "REPORTING": "रिपोर्टिङ"
+        "REPORTING": "रिपोर्टिङ",
+        "UNASSIGNSTAFF": "कर्मचारी हटाउनुहोस्"
       },
       "entities": {
         "ACCOUNTINGRULE": "लेखा नियम",
@@ -4117,7 +4181,11 @@
         "STANDINGINSTRUCTION": "स्थायी निर्देशन",
         "FUNCTIONS": "कार्यहरू",
         "TWOFACTOR": "दुई-कारक",
-        "SUPER_USER": "सुपर प्रयोगकर्ता"
+        "SUPER_USER": "सुपर प्रयोगकर्ता",
+        "REPAYMENT_SCHEDULE": "भुक्तानी तालिका",
+        "SHARESACCOUNTCHARGE": "सेयर खाता शुल्क",
+        "TAXCOMPONENT": "कर घटक",
+        "TAXGROUP": "कर समूह"
       }
     },
     "auditTrail": {
@@ -4420,7 +4488,8 @@
     "ACTIVE": "सक्रिय",
     "PENDING": "पेन्डिङ",
     "INACTIVE": "निष्क्रिय",
-    "Process Remittance": "रेमिट्यान्स प्रक्रिया"
+    "Process Remittance": "रेमिट्यान्स प्रक्रिया",
+    "Allow full term length for each tranche disbursement": "सक्षम गरिएमा, प्रत्येक किस्ता वितरण बाँकी अवधिमा फिट हुनुको सट्टा पूर्ण ऋण अवधि तालिका अनुसरण गर्नेछ। केवल PROGRESSIVE ऋण तालिका प्रकारको लागि उपलब्ध।"
   },
   "countries": {
     "AF": "अफगानिस्तान",
@@ -4592,6 +4661,14 @@
       "takeSurvey": {
         "success": "सर्वेक्षण सफलतापूर्वक बुझाइयो।",
         "failure": "सर्वेक्षण बुझाउन असफल भयो।"
+      }
+    }
+  },
+  "error": {
+    "resource": {
+      "notImplemented": {
+        "type": "कार्यान्वयन नभएको त्रुटि",
+        "message": "कार्यान्वयन नभएको कार्यक्षमता!"
       }
     }
   }

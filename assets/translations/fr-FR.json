@@ -28,6 +28,7 @@
     "error.msg.charge.due.at.disbursement.cannot.be.penalty": "Les frais ne peuvent pas être établis comme une pénalité due au décaissement.",
     "error.msg.charge.duplicate.name": "Une charge portant ce nom existe déjà.",
     "error.msg.charge.update.of.charge.applies.to.is.not.supported": "La mise à jour des frais s'applique à n'est pas prise en charge.",
+    "error.msg.data.integrity.issue": "La requête a provoqué un problème d'intégrité des données dans la base de données",
     "error.msg.loan.product.close.date.cannot.be.before.start.date": "La date de clôture du produit de prêt ne peut pas être antérieure à la date de début.",
     "error.msg.product.loan.duplicate.charge": "Le produit de prêt ne peut comporter qu’un seul frais de chaque type.",
     "error.msg.product.loan.duplicate.name": "Le produit de prêt portant le nom `{{params[0].value}}` existe déjà.",
@@ -1048,6 +1049,8 @@
       "be": "être",
       "be larger than 0 and at most 100": "être supérieur à 0 et au maximum 100",
       "begin with a special character or number": "commencer par un caractère spécial ou un chiffre",
+      "can not be less than": "ne peut pas être inférieur à",
+      "can not be more than": "ne peut pas être supérieur à",
       "cannot begin with a special character or number": "ne peut pas commencer par un caractère spécial ou un chiffre",
       "decimal places": "décimales",
       "do not match": "ne correspondent pas",
@@ -1350,6 +1353,7 @@
       "Minimum Active Period": "Période d'activité minimale",
       "Minimum Deposit Term": "Durée de dépôt minimale",
       "Moratorium": "Moratoire",
+      "Near Breach Configuration": "Configuration de quasi-violation",
       "Nominal Interest Rate by loan cycle": "Taux d'intérêt nominal par cycle de prêt",
       "Notes": "Remarques",
       "Notification External Service": "Service externe de notification",
@@ -1542,7 +1546,8 @@
       "Payout Assignment": "Attribution du versement",
       "Identification": "Identification",
       "Professional Information": "Informations professionnelles",
-      "Add Profile Entry": "Ajouter une entrée de profil"
+      "Add Profile Entry": "Ajouter une entrée de profil",
+      "Recipient Summary": "Récapitulatif du destinataire"
     },
     "inputs": {
       "Loan Account Status": "Statut du compte de prêt",
@@ -2371,6 +2376,7 @@
       "Name": "Nom",
       "Name Decorated": "Nom décoré",
       "Name of the Organization": "Nom de l'organisation",
+      "Near Breach": "Violation proche",
       "Near Breach Evaluation Frequency": "Fréquence d'évaluation de violation proche",
       "Near Breach Evaluation Frequency Type": "Type de fréquence d'évaluation de violation proche",
       "Near Breach Threshold": "Seuil de violation proche",
@@ -2779,6 +2785,7 @@
       "Text": "Texte",
       "Theme": "Thème",
       "Theme and Font": "Thème et police",
+      "Threshold": "Seuil",
       "Thursday": "Jeudi",
       "Time": "Temps",
       "To": "À",
@@ -2995,7 +3002,46 @@
       "Period Payment Frequency Type": "Type de fréquence de paiement périodique",
       "Payment Allocation Transactions": "Transactions d'affectation des paiements",
       "Net Present Value day count": "Nombre de jours de la valeur actuelle nette",
-      "Installment": "Versement"
+      "Installment": "Versement",
+      "Beneficiary Selection": "Sélection du bénéficiaire",
+      "Confirmation Number": "Numéro de confirmation",
+      "Sub Status": "Sous-statut",
+      "Document": "Document",
+      "Document Number": "Numéro de document",
+      "Document number is required": "Le numéro de document est obligatoire",
+      "Allow full term for each tranche": "Autoriser la durée totale pour chaque tranche",
+      "Failed to load vendors": "Échec du chargement des fournisseurs",
+      "First name is required": "Le prénom est obligatoire",
+      "Last name is required": "Le nom de famille est obligatoire",
+      "Search Client": "Rechercher un client",
+      "Type client name or account number": "Saisissez le nom du client ou le numéro de compte",
+      "Overdue": "En retard",
+      "Overdue Fees": "Frais en retard",
+      "Confirmed At": "Confirmé le",
+      "Full Name": "Nom complet",
+      "Loading vendors": {
+        "": {
+          "": {
+            "": "Chargement des fournisseurs..."
+          }
+        }
+      },
+      "Minimum 3 characters": "Minimum 3 caractères",
+      "National ID": "Carte d'identité nationale",
+      "Nationality": "Nationalité",
+      "Payout Amount": "Montant du paiement",
+      "Payout Country": "Pays de paiement",
+      "Payout Token": "Jeton de paiement",
+      "Recipient Name": "Nom du destinataire",
+      "Send Amount": "Montant à envoyer",
+      "Send Country": "Pays d'envoi",
+      "Sender": "Expéditeur",
+      "Sender Name": "Nom de l'expéditeur",
+      "Sent By": "Envoyé par",
+      "Deposited At": "Déposé le",
+      "Passport": "Passeport",
+      "Driver's License": "Permis de conduire",
+      "Mothers Maiden Name": "Nom de jeune fille de la mère"
     },
     "links": {
       "Community": "Communauté",
@@ -3135,7 +3181,8 @@
       "Reject Additional Shares": "Rejeter les partages supplémentaires",
       "Tasks": "Tâches",
       "Remittances": "Transferts",
-      "Process Remittance": "Traiter le transfert"
+      "Process Remittance": "Traiter le transfert",
+      "Undo Write-off": "Annuler l'abandon de créance"
     },
     "placeholders": {
       "Add new server": "Ajouter un nouveau serveur",
@@ -3258,6 +3305,7 @@
       "Audit logs of all the activities": "Journaux d'audit de toutes les activités, telles que la création de clients, le décaissement des prêts, etc.",
       "Bar": "Bar",
       "BIRT": "Mifos Reporting Plugin for Eclipse Birt",
+      "Breach Configurations": "Configurations de Dépassement",
       "Bulk Import": "Importation en masse",
       "Bulk Loan Reassignment": "Réaffectation groupée de prêts",
       "Bulk data import using excel spreadsheet templates": "Importation de données en masse à l'aide de modèles de feuilles de calcul Excel pour les clients, les bureaux, etc.",
@@ -3308,6 +3356,7 @@
       "Create Accounting Closure": "Créer une clôture comptable",
       "Create Accounting Rule": "Créer une règle comptable",
       "Create Adhoc Query": "Créer une requête ad hoc",
+      "Create Breach": "Créer un Dépassement",
       "Create Center": "Créer un centre",
       "Create Charge": "Créer des frais",
       "Create Client": "Créer un client",
@@ -3336,6 +3385,7 @@
       "View Loan Originator": "Voir le courtier en prêts",
       "Edit Loan Originator": "Modifier le courtier en prêts",
       "Create Loans Account": "Créer un compte de prêts",
+      "Create Near Breach": "Créer un Quasi-Dépassement",
       "Create New GL Account": "Cette option vous permet de créer de nouveaux comptes GL.",
       "Create Office": "Créer un bureau",
       "Create Payment Type": "Créer un type de paiement",
@@ -3405,6 +3455,7 @@
       "Define delinquency day ranges and bucket set for loan products": "Définir des plages de jours de délinquance et un ensemble de catégories pour les produits de prêt",
       "Define floating rates for loan products": "Définir des taux variables pour les produits de prêt",
       "Define holidays for office": "Définir les jours fériés pour le bureau",
+      "Define near breaches for working capital products": "Définir les quasi-violations pour les produits de fonds de roulement",
       "Define or modify Maker Checker tasks": "Définir ou modifier les tâches de Maker Checker",
       "Define or modify entity to entity mappings": "Définir ou modifier les mappages d'entité à entité",
       "Define or modify roles and associated permissions": "Définir ou modifier les rôles et les autorisations associées",
@@ -3424,6 +3475,7 @@
       "Edit Accounting Rules": "Modifier les règles comptables",
       "Edit Adhoc Query": "Modifier une requête ad hoc",
       "Edit Amazon S3 Configuration": "Modifier la configuration d'Amazon S3",
+      "Edit Breach": "Modifier un Dépassement",
       "Edit Cashier": "Modifier le caissier",
       "Edit Center": "Centre d'édition",
       "Edit Charge": "Modifier les frais",
@@ -3445,7 +3497,9 @@
       "Edit Group": "Modifier le groupe",
       "Edit Holidays": "Modifier les jours fériés",
       "Edit Hook": "Modifier le crochet",
+      "Edit Loan Originator": "Modifier l'Initiateur de Prêt",
       "Edit Loan Product": "Modifier le produit de prêt",
+      "Edit Near Breach": "Modifier un Quasi-Dépassement",
       "Edit Notification Configuration": "Modifier la configuration des notifications",
       "Edit Office": "Modifier le bureau",
       "Edit Payment Type": "Modifier le type de paiement",
@@ -3620,6 +3674,7 @@
       "N/A": "N / A",
       "Navigate system selecting entity": "Cela permettra à l'utilisateur de naviguer rapidement dans l'entité de sélection du système tandis que la recherche rendra la navigation plus robuste.",
       "Navigation": "La navigation",
+      "Near Breach Configurations": "Configurations de Quasi-Dépassement",
       "Not Activated": "Non activé",
       "No Data": "Pas de données",
       "No Description": "Pas de description",
@@ -3688,6 +3743,7 @@
       "Recurring Deposits Account Transactions": "Opérations récurrentes sur le compte de dépôt",
       "RecurringDeposit Account View": "Vue du compte de dépôt récurrent",
       "Red asterisk field": "Les champs marqués d'un astérisque rouge (*) sont obligatoires. Pour en savoir plus cliquez :",
+      "Remittances": "Remises",
       "Repayment Schedule": "Calendrier de remboursement",
       "Repeats' and 'Repeats every": "Remarque : « Répétitions » et « Répétitions tous les » ne peuvent pas être modifiés s'il existe des comptes actifs (prêts JLG, dépôts récurrents, etc.) dépendant de cette réunion.",
       "Report Parameters": "Paramètres du rapport",
@@ -3816,6 +3872,7 @@
       "View Adhoc Query": "Afficher la requête ad hoc",
       "View Amazon S3 Configuration": "Afficher la configuration d'Amazon S3",
       "View Audit": "Afficher l'audit",
+      "View Breach": "Afficher un Dépassement",
       "View Bulk Import": "Afficher l'importation groupée",
       "View Cashier": "Afficher le caissier",
       "View Charges": "Afficher les frais",
@@ -3838,7 +3895,9 @@
       "View Group": "Afficher le groupe",
       "View Holidays": "Voir les jours fériés",
       "View Hook": "Voir le crochet",
+      "View Loan Originator": "Afficher l'Initiateur de Prêt",
       "View Loan Product": "Voir le produit de prêt",
+      "View Near Breach": "Afficher un Quasi-Dépassement",
       "View Notification Configuration": "Afficher la configuration des notifications",
       "View Office": "Voir le bureau",
       "View Product Mix": "Voir la gamme de produits",
@@ -3913,7 +3972,9 @@
       "Failed to search clients. Please try again.": "Échec de la recherche de clients. Veuillez réessayer.",
       "Process Remittance": "Traiter le transfert",
       "Loan Originators": "Les courtiers en prêts",
-      "Loan Reschedules": "Rééchelonnements de prêt"
+      "Loan Reschedules": "Rééchelonnements de prêt",
+      "Settings saved successfully": "Paramètres enregistrés avec succès.",
+      "Undo Write-off Description": "Cette action annulera la transaction d'abandon de créance et rétablira le prêt à son statut actif précédent. Veuillez fournir une note expliquant la raison de cette action."
     },
     "permissions": {
       "actions": {
@@ -4430,7 +4491,8 @@
     "ACTIVE": "ACTIF",
     "PENDING": "EN ATTENTE",
     "INACTIVE": "INACTIF",
-    "Process Remittance": "Traiter le transfert"
+    "Process Remittance": "Traiter le transfert",
+    "Allow full term length for each tranche disbursement": "Lorsqu'activé, chaque décaissement de tranche suivra le calendrier complet du prêt au lieu de s'adapter à la durée restante. Disponible uniquement pour le type de calendrier PROGRESSIF."
   },
   "countries": {
     "AF": "Afghanistan",
@@ -4603,6 +4665,14 @@
       "takeSurvey": {
         "success": "Enquête soumise avec succès.",
         "failure": "Échec de la soumission de l'enquête."
+      }
+    }
+  },
+  "error": {
+    "resource": {
+      "notImplemented": {
+        "type": "Erreur non implémentée",
+        "message": "Fonctionnalité non implémentée !"
       }
     }
   }
