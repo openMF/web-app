@@ -489,6 +489,7 @@
       "Home": "Home"
     },
     "buttons": {
+      "Create Your First Group": "Create Your First Group",
       "Accept Transfer": "Accept Transfer",
       "Actions": "Actions",
       "Activate": "Activate",
@@ -3235,6 +3236,8 @@
       "the Transaction Type": "the Transaction Type"
     },
     "text": {
+      "No Groups Found": "No Groups Found",
+      "No Groups Found Description": "We couldn't find any groups. Try a different search or create one now.",
       "About Us": "About Us",
       "withoutCategory": "Without Category",
       "A": "A",

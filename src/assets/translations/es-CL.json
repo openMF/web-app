@@ -486,6 +486,7 @@
       "Home": "Inicio"
     },
     "buttons": {
+      "Create Your First Group": "Crea tu primer grupo",
       "Accept Transfer": "Aceptar transferencia",
       "Actions": "Acciones",
       "Activate": "Activar",
@@ -3240,6 +3241,8 @@
       "the Transaction Type": "el tipo de transacción"
     },
     "text": {
+      "No Groups Found": "No se encontraron grupos",
+      "No Groups Found Description": "No pudimos encontrar ningún grupo. Intente una búsqueda diferente o cree uno ahora.",
       "Loading data": "Cargando datos",
       "withoutCategory": "Sin categoría",
       "No repayment schedule available": "No hay cronograma de pagos encontrado",

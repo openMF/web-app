@@ -487,6 +487,7 @@
       "Home": "Domov"
     },
     "buttons": {
+      "Create Your First Group": "Create Your First Group",
       "Accept Transfer": "Přijmout převod",
       "Actions": "Akce",
       "Activate": "aktivovat",
@@ -3239,6 +3240,8 @@
       "the Transaction Type": "typ transakce"
     },
     "text": {
+      "No Groups Found": "No Groups Found",
+      "No Groups Found Description": "We couldn't find any groups. Try a different search or create one now.",
       "Loading data": "Načítání dat",
       "withoutCategory": "Bez kategorie",
       "No repayment schedule available": "Není nalezeny žádný splátkový kalendář",

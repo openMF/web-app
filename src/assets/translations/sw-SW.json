@@ -486,6 +486,7 @@
       "Home": "Nyumbani"
     },
     "buttons": {
+      "Create Your First Group": "Unda Kikundi Chako Cha Kwanza",
       "Accept Transfer": "Kubali Uhamisho",
       "Actions": "Vitendo",
       "Activate": "Amilisha",
@@ -3235,6 +3236,8 @@
       "the Transaction Type": "Aina ya Muamala"
     },
     "text": {
+      "No Groups Found": "Hakuna Vikundi Vilivyopatikana",
+      "No Groups Found Description": "Hatuwezi kupata vikundi vyovyote. Jaribu utafutaji tofauti au unda kimoja sasa.",
       "Loading data": "Inapakia data",
       "No repayment schedule available": "Hakuna ratiba ya malipo inayopatikana",
       "About Us": "Kuhusu Sisi",

@@ -25,8 +25,18 @@
       </button>
     </div>
   </div>
+  <div *ngIf="(dataSource?.records$ | async) === 0" class="empty-state-container">
+    <div class="m-t-40 m-b-40 text-center">
+      <fa-icon icon="users" size="6x" class="gray-text m-b-20"></fa-icon>
+      <h2 class="mat-h2">{{ 'labels.text.No Groups Found' | translate }}</h2>
+      <p class="gray-text">{{ 'labels.text.No Groups Found Description' | translate }}</p>
+      <button mat-raised-button color="primary" [routerLink]="['create']">
+        <fa-icon icon="plus" class="m-r-10"></fa-icon> {{ 'labels.buttons.Create Your First Group' | translate }}
+      </button>
+    </div>
+  </div>
 
-  <table mat-table [dataSource]="dataSource" matSort class="bordered-table">
+  <table *ngIf="(dataSource?.records$ | async) > 0" mat-table [dataSource]="dataSource" matSort class="bordered-table">
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.name' | translate }}</th>
       <td mat-cell *matCellDef="let group">{{ group.name }}</td>

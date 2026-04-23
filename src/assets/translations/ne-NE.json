@@ -486,6 +486,7 @@
       "Home": "घर"
     },
     "buttons": {
+      "Create Your First Group": "आफ्नो पहिलो समूह सिर्जना गर्नुहोस्",
       "Accept Transfer": "स्थानान्तरण स्वीकार गर्नुहोस्",
       "Actions": "कार्यहरू",
       "Activate": "सक्रिय गर्नुहोस्",
@@ -3238,6 +3239,8 @@
       "the Transaction Type": "लेनदेन प्रकार"
     },
     "text": {
+      "No Groups Found": "समूह फेला परेन",
+      "No Groups Found Description": "हामी कुनै समूह फेला पार्न सकेनौं। फरक खोज प्रयास गर्नुहोस् वा अहिले एउटा सिर्जना गर्नुहोस्।",
       "Loading data": "डाटा लोड गर्दै",
       "No repayment schedule available": "कुनै पुनर्भुक्तानी तालिका उपलब्ध छैन",
       "About Us": "हाम्रो बारेमा",
