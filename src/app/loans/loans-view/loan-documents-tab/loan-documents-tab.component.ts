@@ -1,18 +1,10 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
 import { environment } from '../../../../environments/environment';
-import { LoansService } from 'app/loans/loans.service';
+import { LoansService as CustomLoansService } from 'app/customApis.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { EntityDocumentsTabComponent } from '../../../shared/tabs/entity-documents-tab/entity-documents-tab.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -30,10 +22,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoanDocumentsTabComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private loansService = inject(LoansService);
-  private settingsService = inject(SettingsService);
-
   /** Stores the resolved loan documents data */
   entityDocuments: any;
   /** Loan account Id */
@@ -44,7 +32,11 @@ export class LoanDocumentsTabComponent implements OnInit {
    * Retrieves the loans data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private customLoansService: CustomLoansService,
+    private settingsService: SettingsService
+  ) {
     this.entityId = this.route.parent.snapshot.params['loanId'];
 
     this.route.data.subscribe((data: { loanDocuments: any }) => {
@@ -86,11 +78,18 @@ export class LoanDocumentsTabComponent implements OnInit {
     this.entityDocuments = data;
   }
 
-  uploadDocument(formData: FormData): any {
-    return this.loansService.loadLoanDocument(this.entityId, formData);
-  }
+  downloadDocument = (documentId: string) => {
+    this.customLoansService.downloadLoanDocument(this.entityId, documentId).subscribe((res) => {
+      const url = window.URL.createObjectURL(res);
+      window.open(url);
+    });
+  };
 
-  deleteDocument(documentId: any) {
-    this.loansService.deleteLoanDocument(this.entityId, documentId).subscribe((res: any) => {});
-  }
+  uploadDocument = (formData: FormData): any => {
+    return this.customLoansService.loadLoanDocument(this.entityId, formData);
+  };
+
+  deleteDocument = (documentId: any) => {
+    this.customLoansService.deleteLoanDocument(this.entityId, documentId).subscribe((res: any) => {});
+  };
 }

@@ -1,29 +1,22 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <button mat-icon-button [matMenuTriggerFor]="themeMenu" matTooltip="{{ 'tooltips.Color Schemes' | translate }}">
   <fa-icon icon="fill-drip" size="lg"></fa-icon>
 </button>
 
 <mat-menu class="mifosx-theme-picker-menu" #themeMenu="matMenu" x-position="before">
   <mat-grid-list cols="2">
-    @for (theme of themes; track theme) {
-      <mat-grid-tile>
-        <div mat-menu-item (click)="installTheme(theme)">
-          <div class="mifosx-theme-picker-swatch">
-            @if (currentTheme.href === theme.href) {
-              <fa-icon class="mifosx-theme-chosen-icon" icon="check-circle" size="lg"></fa-icon>
-            }
-            <div class="mifosx-theme-picker-primary" [style.background]="theme.primary"></div>
-            <div class="mifosx-theme-picker-accent" [style.background]="theme.accent"></div>
-          </div>
+    <mat-grid-tile *ngFor="let theme of themes">
+      <div mat-menu-item (click)="installTheme(theme)">
+        <div class="mifosx-theme-picker-swatch">
+          <fa-icon
+            class="mifosx-theme-chosen-icon"
+            *ngIf="currentTheme.href === theme.href"
+            icon="check-circle"
+            size="lg"
+          ></fa-icon>
+          <div class="mifosx-theme-picker-primary" [style.background]="theme.primary"></div>
+          <div class="mifosx-theme-picker-accent" [style.background]="theme.accent"></div>
         </div>
-      </mat-grid-tile>
-    }
+      </div>
+    </mat-grid-tile>
   </mat-grid-list>
 </mat-menu>

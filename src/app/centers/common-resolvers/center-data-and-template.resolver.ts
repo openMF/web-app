@@ -1,35 +1,33 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { CentersService } from '../centers.service';
+import { CentersService } from '@fineract/client';
 
 /**
  * Centers data and template resolver.
  */
 @Injectable()
 export class CenterDataAndTemplateResolver {
-  private centersService = inject(CentersService);
+  /**
+   * @param {CentersService} centersService Centers service.
+   */
+  constructor(private centersService: CentersService) {}
 
   /**
-   * Returns the Centers and template data.
-   * @param {ActivatedRouteSnapshot} route Route Snapshot
+   * Returns the Center data and template.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const centerId = route.parent.paramMap.get('centerId');
-    return this.centersService.getCenterAndTemplateData(centerId);
+    const centerId = route.paramMap.get('centerId');
+    return this.centersService.retrieveOne14({
+      centerId: parseInt(centerId, 10),
+      staffInSelectedOfficeOnly: true,
+      template: 'true'
+    } as any);
   }
 }

@@ -1,20 +1,10 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 
 /** Custom Services */
-import { OrganizationService } from 'app/organization/organization.service';
-import { AlertService } from 'app/core/alert/alert.service';
+import { PaymentTypeService } from '@fineract/client';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -33,31 +23,26 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditPaymentTypeComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private organizationService = inject(OrganizationService);
-  private alertService = inject(AlertService);
-  private translateService = inject(TranslateService);
-  private router = inject(Router);
-  private route = inject(ActivatedRoute);
-
   /** Payment Type form. */
   paymentTypeForm: UntypedFormGroup;
   /** Payment Type Data. */
   paymentTypeData: any;
-  /** Flag to check if payment type is system defined. */
-  isSystemDefined: boolean;
 
   /**
    * Retrieves the payment type data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {PaymentTypeService} paymentTypeService Payment Type Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor() {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private paymentTypeService: PaymentTypeService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     this.route.data.subscribe((data: { paymentType: any }) => {
       this.paymentTypeData = data.paymentType;
-      this.isSystemDefined = data.paymentType.isSystemDefined;
     });
   }
 
@@ -78,14 +63,10 @@ export class EditPaymentTypeComponent implements OnInit {
         Validators.required
       ],
       description: [this.paymentTypeData.description],
-      isCashPayment: [
-        { value: this.paymentTypeData.isCashPayment, disabled: this.isSystemDefined }],
+      isCashPayment: [this.paymentTypeData.isCashPayment],
       position: [
-        { value: this.paymentTypeData.position, disabled: this.isSystemDefined },
-        [
-          Validators.required,
-          Validators.min(1)
-        ]
+        this.paymentTypeData.position,
+        Validators.required
       ]
     });
   }
@@ -96,38 +77,8 @@ export class EditPaymentTypeComponent implements OnInit {
    */
   submit() {
     const paymentType = this.paymentTypeForm.value;
-    if (this.isSystemDefined) {
-      const systemDefinedPayload = {
-        name: paymentType.name,
-        description: paymentType.description
-      };
-      this.organizationService.updatePaymentType(this.paymentTypeData.id, systemDefinedPayload).subscribe({
-        next: (response) => {
-          this.router.navigate(['../../'], { relativeTo: this.route });
-        },
-        error: (error) => {
-          this.alertService.alert({
-            type: 'Error',
-            message:
-              error.error?.defaultUserMessage ||
-              this.translateService.instant('labels.text.Failed to update payment type. Please try again.')
-          });
-        }
-      });
-    } else {
-      this.organizationService.updatePaymentType(this.paymentTypeData.id, paymentType).subscribe({
-        next: (response) => {
-          this.router.navigate(['../../'], { relativeTo: this.route });
-        },
-        error: (error) => {
-          this.alertService.alert({
-            type: 'Error',
-            message:
-              error.error?.defaultUserMessage ||
-              this.translateService.instant('labels.text.Failed to update payment type. Please try again.')
-          });
-        }
-      });
-    }
+    this.paymentTypeService.updatePaymentType(this.paymentTypeData.id, paymentType).subscribe((response) => {
+      this.router.navigate(['../../'], { relativeTo: this.route });
+    });
   }
 }

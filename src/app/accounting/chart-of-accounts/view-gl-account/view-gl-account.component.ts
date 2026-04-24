@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -15,8 +7,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 
 /** Custom Services */
-import { AccountingService } from '../../accounting.service';
-import { Location } from '@angular/common';
+import { GeneralLedgerAccountService } from '@fineract/client';
+import { Location, NgIf } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { GlAccountDisplayComponent } from '../../../shared/accounting/gl-account-display/gl-account-display.component';
 import { YesnoPipe } from '../../../pipes/yesno.pipe';
@@ -37,23 +29,23 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewGlAccountComponent {
-  private accountingService = inject(AccountingService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private dialog = inject(MatDialog);
-  private location = inject(Location);
-
   /** GL Account. */
   glAccount: any;
 
   /**
    * Retrieves the gl account data from `resolve`.
-   * @param {AccountingService} accountingService Accounting Service.
+   * @param {GeneralLedgerAccountService} generalLedgerAccountService General Ledger Account Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor() {
+  constructor(
+    private generalLedgerAccountService: GeneralLedgerAccountService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dialog: MatDialog,
+    private location: Location
+  ) {
     this.route.data.subscribe((data: { glAccountAndChartOfAccountsTemplate: any }) => {
       this.glAccount = data.glAccountAndChartOfAccountsTemplate;
     });
@@ -68,7 +60,7 @@ export class ViewGlAccountComponent {
     });
     deleteGlAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.accountingService.deleteGlAccount(this.glAccount.id).subscribe(() => {
+        this.generalLedgerAccountService.deleteGLAccount1({ glAccountId: this.glAccount.id }).subscribe(() => {
           this.router.navigate(['/accounting/chart-of-accounts']);
         });
       }
@@ -79,8 +71,11 @@ export class ViewGlAccountComponent {
    * Changes state of gl account. (enabled/disabled)
    */
   changeGlAccountState() {
-    this.accountingService
-      .updateGlAccount(this.glAccount.id, { disabled: !this.glAccount.disabled })
+    this.generalLedgerAccountService
+      .updateGLAccount1({
+        glAccountId: this.glAccount.id,
+        putGLAccountsRequest: { disabled: !this.glAccount.disabled }
+      })
       .subscribe((response: any) => {
         this.glAccount.disabled = response.changes.disabled;
       });

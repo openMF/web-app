@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { AfterViewInit, Component, ElementRef, TemplateRef, ViewChild, inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -36,10 +28,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ProductsComponent implements AfterViewInit {
-  private router = inject(Router);
-  private configurationWizardService = inject(ConfigurationWizardService);
-  private popoverService = inject(PopoverService);
-
   /* Reference of charges */
   @ViewChild('charges') charges: ElementRef<any>;
   /* Template for popover on charges */
@@ -68,35 +56,46 @@ export class ProductsComponent implements AfterViewInit {
   arrowBooleans: boolean[] = new Array(11).fill(false);
 
   /**
+   * @param {Router} router Router.
+   * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
+   * @param {PopoverService} popoverService PopoverService.
+   */
+  constructor(
+    private router: Router,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService
+  ) {}
+
+  /**
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showCharges) {
+    if (this.configurationWizardService.showCharges === true) {
       setTimeout(() => {
         this.showPopover(this.templateCharges, this.charges.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showLoanProducts) {
+    if (this.configurationWizardService.showLoanProducts === true) {
       setTimeout(() => {
         this.showPopover(this.templateLoanProducts, this.loanProducts.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showSavingsProducts) {
+    if (this.configurationWizardService.showSavingsProducts === true) {
       setTimeout(() => {
         this.showPopover(this.templateSavingsProducts, this.savingsProducts.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showShareProducts) {
+    if (this.configurationWizardService.showShareProducts === true) {
       setTimeout(() => {
         this.showPopover(this.templateShareProducts, this.shareProducts.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showFixedDepositProducts) {
+    if (this.configurationWizardService.showFixedDepositProducts === true) {
       setTimeout(() => {
         this.showPopover(this.templateFixedDepositProducts, this.fixedDepositProducts.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showRecurringDepositProducts) {
+    if (this.configurationWizardService.showRecurringDepositProducts === true) {
       setTimeout(() => {
         this.showPopover(
           this.templateRecurringDepositProducts,

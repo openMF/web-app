@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 /** Custom Services */
@@ -22,8 +14,14 @@ const log = new Logger('AuthenticationGuard');
  */
 @Injectable()
 export class AuthenticationGuard {
-  private router = inject(Router);
-  private authenticationService = inject(AuthenticationService);
+  /**
+   * @param {Router} router Router for navigation.
+   * @param {AuthenticationService} authenticationService Authentication Service.
+   */
+  constructor(
+    private router: Router,
+    private authenticationService: AuthenticationService
+  ) {}
 
   /**
    * Ensures route access is authorized only when user is authenticated, otherwise redirects to login.

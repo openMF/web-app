@@ -1,15 +1,7 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { NgClass } from '@angular/common';
+import { NgIf, NgClass } from '@angular/common';
 import {
   MatTable,
   MatColumnDef,
@@ -55,8 +47,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class GeneralTabComponent {
-  private route = inject(ActivatedRoute);
-
   /** Savings Account Table Columns */
   savingsAccountColumns: string[] = [
     'Account No',
@@ -84,7 +74,7 @@ export class GeneralTabComponent {
    * Retrieves the data for centers
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor() {
+  constructor(private route: ActivatedRoute) {
     this.route.data.subscribe((data: { centerSummaryData: any; centerViewData: any; savingsAccountData: any }) => {
       this.centerSummaryData = data.centerSummaryData?.[0] || {};
       this.centerViewData = data.centerViewData || {};

@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { AfterViewInit, Component, ElementRef, TemplateRef, ViewChild, inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -36,11 +28,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class OrganizationComponent implements AfterViewInit {
-  private activatedRoute = inject(ActivatedRoute);
-  private router = inject(Router);
-  private configurationWizardService = inject(ConfigurationWizardService);
-  private popoverService = inject(PopoverService);
-
   shouldShowFundMapping = false;
   /* Reference of manage offices */
   @ViewChild('office') office: ElementRef<any>;
@@ -67,7 +54,20 @@ export class OrganizationComponent implements AfterViewInit {
   /* Template for popover on manage funds */
   @ViewChild('templateManageFunds') templateManageFunds: TemplateRef<any>;
   // Initialize an array of 18 boolean values, all set to false
-  arrowBooleans: boolean[] = new Array(19).fill(false);
+  arrowBooleans: boolean[] = new Array(18).fill(false);
+
+  /**
+   * @param {ActivatedRoute} activatedRoute ActivatedRoute.
+   * @param {Router} router Router.
+   * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
+   * @param {PopoverService} popoverService PopoverService.
+   */
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService
+  ) {}
 
   /**
    * Popover function
@@ -90,32 +90,32 @@ export class OrganizationComponent implements AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showCreateOffice) {
+    if (this.configurationWizardService.showCreateOffice === true) {
       setTimeout(() => {
         this.showPopover(this.templateOffice, this.office.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showAddEditCurrency) {
+    if (this.configurationWizardService.showAddEditCurrency === true) {
       setTimeout(() => {
         this.showPopover(this.templateAddEditCurrency, this.addEditCurrency.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showCreateHoliday) {
+    if (this.configurationWizardService.showCreateHoliday === true) {
       setTimeout(() => {
         this.showPopover(this.templateHolidays, this.holidays.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showCreateEmployee) {
+    if (this.configurationWizardService.showCreateEmployee === true) {
       setTimeout(() => {
         this.showPopover(this.templateEmployee, this.employee.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showDefineWorkingDays) {
+    if (this.configurationWizardService.showDefineWorkingDays === true) {
       setTimeout(() => {
         this.showPopover(this.templateWorkingDays, this.workingDays.nativeElement, 'bottom', true);
       });
     }
-    if (this.configurationWizardService.showManageFunds) {
+    if (this.configurationWizardService.showManageFunds === true) {
       setTimeout(() => {
         this.showPopover(this.templateManageFunds, this.manageFunds.nativeElement, 'bottom', true);
       });

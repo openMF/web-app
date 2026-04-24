@@ -1,32 +1,27 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import { FundsService } from '@fineract/client';
 
 /**
  * Manage Funds data resolver.
  */
 @Injectable()
 export class ManageFundsResolver {
-  private organizationService = inject(OrganizationService);
+  /**
+   * @param {FundsService} fundsService Funds service.
+   */
+  constructor(private fundsService: FundsService) {}
 
   /**
    * Returns the manage funds data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.organizationService.getFunds();
+    return this.fundsService.retrieveFunds();
   }
 }

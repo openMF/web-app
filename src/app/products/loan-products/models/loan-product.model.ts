@@ -1,11 +1,3 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 import {
   AccountingMapping,
   ChargeOffReasonToExpenseAccountMapping,
@@ -21,24 +13,6 @@ import {
   CreditAllocation,
   PaymentAllocation
 } from '../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
-
-export const LOAN_PRODUCT_TYPE = {
-  LOAN: 'loan',
-  WORKING_CAPITAL: 'working-capital'
-} as const;
-
-export type LoanProductType = (typeof LOAN_PRODUCT_TYPE)[keyof typeof LOAN_PRODUCT_TYPE];
-
-export const PRODUCT_TYPES = [
-  {
-    type: LOAN_PRODUCT_TYPE.LOAN,
-    label: 'Loan'
-  },
-  {
-    type: LOAN_PRODUCT_TYPE.WORKING_CAPITAL,
-    label: 'Working Capital'
-  }
-] as const;
 
 export interface LoanProduct {
   id: number;
@@ -123,8 +97,7 @@ export interface LoanProduct {
   creditAllocationAllocationTypes: OptionData[];
   multiDisburseLoan: boolean;
   maxTrancheCount: number;
-  allowFullTermForTranche: boolean;
-  disallowExpectedDisbursements?: boolean;
+  disallowExpectedDisbursements: boolean;
   allowApprovedDisbursedAmountsOverApplied: boolean;
   overAppliedNumber: number;
   principalThresholdForLastInstallment: number;

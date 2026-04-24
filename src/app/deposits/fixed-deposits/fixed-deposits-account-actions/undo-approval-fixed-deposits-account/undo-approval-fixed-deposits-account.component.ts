@@ -1,18 +1,10 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { SavingsService } from 'app/savings/savings.service';
+import { SavingsAccountService } from '@fineract/client';
 import { FixedDepositsService } from '../../fixed-deposits.service';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -30,12 +22,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class UndoApprovalFixedDepositsAccountComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private savingsService = inject(SavingsService);
-  private fixedDepositsService = inject(FixedDepositsService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-
   /** Undo Approval Fixed Deposits Account form. */
   undoApprovalFixedDepositsAccountForm: UntypedFormGroup;
   /** Fixed Deposits Account Id */
@@ -47,11 +33,17 @@ export class UndoApprovalFixedDepositsAccountComponent implements OnInit {
   /**
    * Fixed deposits endpoint is not supported so using Savings endpoint.
    * @param {FormBuilder} formBuilder Form Builder
-   * @param {SavingsService} savingsService Savings Service
+   * @param {SavingsAccountService } savingsAccountService Savings Account Service
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor() {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private savingsAccountService: SavingsAccountService,
+    private fixedDepositsService: FixedDepositsService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.undoCommand = 'undoapproval'; // Default command
     this.undoAction = this.route.snapshot.params['name'];
     if (this.undoAction === 'Undo Activation') {
@@ -91,9 +83,15 @@ export class UndoApprovalFixedDepositsAccountComponent implements OnInit {
           this.router.navigate(['../../'], { relativeTo: this.route });
         });
     } else {
-      this.savingsService.executeSavingsAccountCommand(this.accountId, this.undoCommand, data).subscribe(() => {
-        this.router.navigate(['../../'], { relativeTo: this.route });
-      });
+      this.savingsAccountService
+        .handleCommands6({
+          accountId: this.accountId,
+          command: this.undoCommand,
+          postSavingsAccountsAccountIdRequest: data
+        })
+        .subscribe(() => {
+          this.router.navigate(['../../'], { relativeTo: this.route });
+        });
     }
   }
 }

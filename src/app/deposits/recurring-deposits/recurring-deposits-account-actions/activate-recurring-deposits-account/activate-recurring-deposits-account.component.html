@@ -1,11 +1,3 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <div class="container">
   <mat-card>
     <form [formGroup]="activateRecurringDepositsAccountForm" (ngSubmit)="submit()">
@@ -22,12 +14,10 @@
           />
           <mat-datepicker-toggle matSuffix [for]="activatedOnDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #activatedOnDatePicker></mat-datepicker>
-          @if (activateRecurringDepositsAccountForm.controls.activatedOnDate.hasError('required')) {
-            <mat-error>
-              {{ 'labels.inputs.Activated On Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
-          }
+          <mat-error *ngIf="activateRecurringDepositsAccountForm.controls.activatedOnDate.hasError('required')">
+            {{ 'labels.inputs.Activated On Date' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
+          </mat-error>
         </mat-form-field>
       </mat-card-content>
 

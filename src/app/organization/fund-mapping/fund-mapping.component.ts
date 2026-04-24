@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -33,7 +25,7 @@ import {
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import { SearchAPIService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -67,12 +59,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class FundMappingComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private organizationService = inject(OrganizationService);
-  private settingsService = inject(SettingsService);
-  private route = inject(ActivatedRoute);
-  private dateUtils = inject(Dates);
-
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
@@ -103,12 +89,18 @@ export class FundMappingComponent implements OnInit {
   /**
    * Retrieves the advance search template from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {SearchAPIService} searchAPIService Search API Service.
    * @param {SettingsService} settingsService Settings Service.
    * @param {Router} router Router for navigation.
    * @param {Dates} dateUtils Date Utils to format date.
    */
-  constructor() {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private searchAPIService: SearchAPIService,
+    private settingsService: SettingsService,
+    private route: ActivatedRoute,
+    private dateUtils: Dates
+  ) {
     this.route.data.subscribe((data: { advanceSearchTemplate: any }) => {
       this.advanceSearchTemplate = data.advanceSearchTemplate;
     });
@@ -125,9 +117,9 @@ export class FundMappingComponent implements OnInit {
    */
   createFundMappingForm() {
     this.fundMappingForm = this.formBuilder.group({
-      loanStatus: [[]],
-      loanProducts: [[]],
-      offices: [[]],
+      loanStatus: [''],
+      loanProducts: [''],
+      offices: [''],
       loanDateOption: [
         '',
         Validators.required
@@ -159,26 +151,17 @@ export class FundMappingComponent implements OnInit {
           if (_value === 'between') {
             this.fundMappingForm.addControl(
               'minOutStandingAmountPercentage',
-              new UntypedFormControl('', [
-                Validators.required,
-                Validators.min(0)
-              ])
+              new UntypedFormControl('', Validators.required)
             );
             this.fundMappingForm.addControl(
               'maxOutStandingAmountPercentage',
-              new UntypedFormControl('', [
-                Validators.required,
-                Validators.min(0)
-              ])
+              new UntypedFormControl('', Validators.required)
             );
             this.fundMappingForm.removeControl('outStandingAmountPercentage');
           } else {
             this.fundMappingForm.addControl(
               'outStandingAmountPercentage',
-              new UntypedFormControl('', [
-                Validators.required,
-                Validators.min(0)
-              ])
+              new UntypedFormControl('', Validators.required)
             );
             this.fundMappingForm.removeControl('minOutStandingAmountPercentage');
             this.fundMappingForm.removeControl('maxOutStandingAmountPercentage');
@@ -198,29 +181,11 @@ export class FundMappingComponent implements OnInit {
         this.fundMappingForm.addControl('outstandingAmountCondition', new UntypedFormControl('', Validators.required));
         this.fundMappingForm.get('outstandingAmountCondition').valueChanges.subscribe((_value: string) => {
           if (_value === 'between') {
-            this.fundMappingForm.addControl(
-              'minOutstandingAmount',
-              new UntypedFormControl('', [
-                Validators.required,
-                Validators.min(0)
-              ])
-            );
-            this.fundMappingForm.addControl(
-              'maxOutstandingAmount',
-              new UntypedFormControl('', [
-                Validators.required,
-                Validators.min(0)
-              ])
-            );
+            this.fundMappingForm.addControl('minOutstandingAmount', new UntypedFormControl('', Validators.required));
+            this.fundMappingForm.addControl('maxOutstandingAmount', new UntypedFormControl('', Validators.required));
             this.fundMappingForm.removeControl('outstandingAmount');
           } else {
-            this.fundMappingForm.addControl(
-              'outstandingAmount',
-              new UntypedFormControl('', [
-                Validators.required,
-                Validators.min(0)
-              ])
-            );
+            this.fundMappingForm.addControl('outstandingAmount', new UntypedFormControl('', Validators.required));
             this.fundMappingForm.removeControl('minOutstandingAmount');
             this.fundMappingForm.removeControl('maxOutstandingAmount');
           }
@@ -259,10 +224,6 @@ export class FundMappingComponent implements OnInit {
     if (fundMappingFormData.loanFromDate instanceof Date) {
       fundMappingFormData.loanFromDate = this.dateUtils.formatDate(prevLoanFromDate, dateFormat);
     }
-    if (this.fundMappingForm.invalid) {
-      this.fundMappingForm.markAllAsTouched();
-      return;
-    }
     if (fundMappingFormData.loanToDate instanceof Date) {
       fundMappingFormData.loanToDate = this.dateUtils.formatDate(prevLoanToDate, dateFormat);
     }
@@ -272,7 +233,7 @@ export class FundMappingComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.organizationService.retrieveAdvanceSearchResults(data).subscribe((response: any) => {
+    this.searchAPIService.advancedSearch(data).subscribe((response: any) => {
       this.setLoans(response);
     });
   }

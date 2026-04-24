@@ -1,18 +1,10 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
-import { AccountTransfersService } from '../account-transfers.service';
+import { StandingInstructionsService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -29,13 +21,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditStandingInstructionsComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private accountTransfersService = inject(AccountTransfersService);
-  private settingsService = inject(SettingsService);
-  private dateUtils = inject(Dates);
-
   /** Standing Instructions Data */
   standingInstructionsData: any;
   /** Standing Instructions Id */
@@ -64,11 +49,18 @@ export class EditStandingInstructionsComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {FormBuilder} formBuilder Form Builder
    * @param {Router} router Router
-   * @param {AccountTransfersService} accountTransfersService Account Transfers Service
+   * @param {StandingInstructionsService} standingInstructionsService Standing Instructions Service
    * @param {SettingsService} settingsService Settings Service
    * @param {Dates} dateUtils Date Utils
    */
-  constructor() {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private standingInstructionsService: StandingInstructionsService,
+    private settingsService: SettingsService,
+    private dateUtils: Dates
+  ) {
     this.route.data.subscribe((data: { standingInstructionsDataAndTemplate: any }) => {
       this.standingInstructionsData = data.standingInstructionsDataAndTemplate;
       this.standingInstructionsId = data.standingInstructionsDataAndTemplate.id;
@@ -190,10 +182,12 @@ export class EditStandingInstructionsComponent implements OnInit {
       validFrom: this.dateUtils.formatDate(this.editStandingInstructionsForm.value.validFrom, dateFormat),
       validTill: this.dateUtils.formatDate(this.editStandingInstructionsForm.value.validTill, dateFormat)
     };
-    this.accountTransfersService
-      .updateStandingInstructionsData(this.standingInstructionsId, standingInstructionData)
-      .subscribe((response: any) => {
-        this.router.navigate(['../view'], { relativeTo: this.route });
-      });
+    const params = {
+      standingInstructionId: this.standingInstructionsId,
+      standingInstructionUpdatesRequest: standingInstructionData
+    };
+    this.standingInstructionsService.update9(params).subscribe((response: any) => {
+      this.router.navigate(['../view'], { relativeTo: this.route });
+    });
   }
 }

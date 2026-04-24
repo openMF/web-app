@@ -1,11 +1,3 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <div class="container">
   <mat-card>
     <div class="layout-row responsive-column gap-20px">
@@ -16,17 +8,21 @@
               <fa-icon icon="building" size="sm"></fa-icon>
             </mat-icon>
             <h4 matLine [routerLink]="['ranges']">{{ 'labels.heading.Manage Delinquency Ranges' | translate }}</h4>
-            @if (!arrowBooleans[0]) {
-              <fa-icon (click)="arrowBooleansToggle(0); $event.stopPropagation()" icon="arrow-down" size="md"></fa-icon>
-            }
-            @if (arrowBooleans[0]) {
-              <fa-icon (click)="arrowBooleansToggle(0); $event.stopPropagation()" icon="arrow-up" size="md"></fa-icon>
-            }
-            @if (arrowBooleans[0]) {
-              <p matLine [routerLink]="['ranges']">
-                {{ 'labels.text.Define delinquency day ranges' | translate }}
-              </p>
-            }
+            <fa-icon
+              (click)="arrowBooleansToggle(0); $event.stopPropagation()"
+              *ngIf="!arrowBooleans[0]"
+              icon="arrow-down"
+              size="md"
+            ></fa-icon>
+            <fa-icon
+              (click)="arrowBooleansToggle(0); $event.stopPropagation()"
+              *ngIf="arrowBooleans[0]"
+              icon="arrow-up"
+              size="md"
+            ></fa-icon>
+            <p matLine *ngIf="arrowBooleans[0]" [routerLink]="['ranges']">
+              {{ 'labels.text.Define delinquency day ranges' | translate }}
+            </p>
           </mat-list-item>
         </mat-nav-list>
       </div>
@@ -38,17 +34,21 @@
               <fa-icon icon="building" size="sm"></fa-icon>
             </mat-icon>
             <h4 matLine [routerLink]="['buckets']">{{ 'labels.heading.Manage Delinquency Buckets' | translate }}</h4>
-            @if (!arrowBooleans[1]) {
-              <fa-icon (click)="arrowBooleansToggle(1); $event.stopPropagation()" icon="arrow-down" size="md"></fa-icon>
-            }
-            @if (arrowBooleans[1]) {
-              <fa-icon (click)="arrowBooleansToggle(1); $event.stopPropagation()" icon="arrow-up" size="md"></fa-icon>
-            }
-            @if (arrowBooleans[1]) {
-              <p matLine [routerLink]="['buckets']">
-                {{ 'labels.text.Define delinquency bucket as set of ranges' | translate }}
-              </p>
-            }
+            <fa-icon
+              (click)="arrowBooleansToggle(1); $event.stopPropagation()"
+              *ngIf="!arrowBooleans[1]"
+              icon="arrow-down"
+              size="md"
+            ></fa-icon>
+            <fa-icon
+              (click)="arrowBooleansToggle(1); $event.stopPropagation()"
+              *ngIf="arrowBooleans[1]"
+              icon="arrow-up"
+              size="md"
+            ></fa-icon>
+            <p matLine *ngIf="arrowBooleans[1]" [routerLink]="['buckets']">
+              {{ 'labels.text.Define delinquency bucket as set of ranges' | translate }}
+            </p>
           </mat-list-item>
         </mat-nav-list>
       </div>

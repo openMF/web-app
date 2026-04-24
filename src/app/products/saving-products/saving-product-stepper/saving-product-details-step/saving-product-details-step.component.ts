@@ -1,12 +1,4 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Component, OnInit, Input, inject } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
@@ -28,13 +20,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class SavingProductDetailsStepComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-
   @Input() savingProductsTemplate: any;
 
   savingProductDetailsForm: UntypedFormGroup;
 
-  constructor() {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.createSavingProductDetailsForm();
   }
 

@@ -1,19 +1,11 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormArray, UntypedFormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { AccountingService } from '../accounting.service';
+import { JournalEntriesService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { PopoverService } from '../../configuration-wizard/popover/popover.service';
@@ -42,29 +34,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private accountingService = inject(AccountingService);
-  private settingsService = inject(SettingsService);
-  private dateUtils = inject(Dates);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private dialog = inject(MatDialog);
-  private configurationWizardService = inject(ConfigurationWizardService);
-  private popoverService = inject(PopoverService);
-
-  onAmountInput(event: Event): void {
-    const target = event.target;
-    if (!(target instanceof HTMLInputElement)) return;
-
-    const raw = target.value.trim();
-    if (raw === '') return;
-
-    const value = Number(raw);
-    if (!Number.isFinite(value) || value < 1) {
-      target.value = '1';
-      target.dispatchEvent(new Event('input', { bubbles: true }));
-    }
-  }
   /** Minimum transaction date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum transaction date allowed. */
@@ -98,7 +67,17 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor() {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private journalEntriesService: JournalEntriesService,
+    private settingsService: SettingsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dialog: MatDialog,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService
+  ) {
     this.assetExternalizationEnabled = false;
     this.route.data.subscribe(
       (data: { offices: any; currencies: any; paymentTypes: any; glAccounts: any; globalConfig: any }) => {
@@ -161,10 +140,7 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
       ],
       amount: [
         '',
-        [
-          Validators.required,
-          Validators.min(1)
-        ]
+        Validators.required
       ]
     });
   }
@@ -220,7 +196,7 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
     if (!journalEntry['externalAssetOwner']) {
       delete journalEntry['externalAssetOwner'];
     }
-    this.accountingService.createJournalEntry(journalEntry).subscribe((response) => {
+    this.journalEntriesService.createGLJournalEntry(journalEntry).subscribe((response) => {
       this.router.navigate(
         [
           '../transactions/view',
@@ -251,7 +227,7 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showCreateJournalEntries) {
+    if (this.configurationWizardService.showCreateJournalEntries === true) {
       setTimeout(() => {
         this.showPopover(this.templateCreateJournalFormRef, this.createJournalFormRef.nativeElement, 'top', true);
       });

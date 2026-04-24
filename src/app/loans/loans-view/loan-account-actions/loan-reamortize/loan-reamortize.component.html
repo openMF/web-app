@@ -1,11 +1,3 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <div class="container mat-elevation-z8">
   <mat-card>
     <form [formGroup]="reamortizeLoanForm" (ngSubmit)="submit()">
@@ -14,14 +6,15 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Interest Handling' | translate }}</mat-label>
             <mat-select formControlName="reAmortizationInterestHandling">
-              @for (
-                reAmortizationInterestHandlingOption of reAmortizationInterestHandlingOptions;
-                track trackByInterestHandlingOption($index, reAmortizationInterestHandlingOption)
-              ) {
-                <mat-option [value]="reAmortizationInterestHandlingOption.id">
-                  {{ reAmortizationInterestHandlingOption.value | translateKey: 'catalogs' }}
-                </mat-option>
-              }
+              <mat-option
+                *ngFor="
+                  let reAmortizationInterestHandlingOption of reAmortizationInterestHandlingOptions;
+                  trackBy: trackByInterestHandlingOption
+                "
+                [value]="reAmortizationInterestHandlingOption.id"
+              >
+                {{ reAmortizationInterestHandlingOption.value | translateKey: 'catalogs' }}
+              </mat-option>
             </mat-select>
           </mat-form-field>
         </div>
@@ -30,14 +23,12 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Reason' | translate }}</mat-label>
             <mat-select formControlName="reasonCodeValueId">
-              @for (
-                reAmortizationReasonOption of reAmortizationReasonOptions;
-                track trackByReasonOption($index, reAmortizationReasonOption)
-              ) {
-                <mat-option [value]="reAmortizationReasonOption.id">
-                  {{ reAmortizationReasonOption.name }}
-                </mat-option>
-              }
+              <mat-option
+                *ngFor="let reAmortizationReasonOption of reAmortizationReasonOptions; trackBy: trackByReasonOption"
+                [value]="reAmortizationReasonOption.id"
+              >
+                {{ reAmortizationReasonOption.name }}
+              </mat-option>
             </mat-select>
           </mat-form-field>
         </div>
@@ -57,7 +48,7 @@
         </div>
 
         <mat-card-actions class="layout-row align-center gap-5px responsive-column">
-          <button type="button" mat-raised-button (click)="gotoLoanDefaultView()">
+          <button type="button" mat-raised-button [routerLink]="['../../general']">
             {{ 'labels.buttons.Cancel' | translate }}
           </button>
           <button
@@ -67,16 +58,6 @@
             *mifosxHasPermission="'REAMORTIZE_LOAN'"
           >
             {{ 'labels.buttons.Submit' | translate }}
-          </button>
-          <button
-            type="button"
-            mat-raised-button
-            color="accent"
-            [disabled]="!reamortizeLoanForm.valid"
-            *mifosxHasPermission="'REAMORTIZE_LOAN'"
-            (click)="preview()"
-          >
-            {{ 'labels.buttons.Preview' | translate }}
           </button>
         </mat-card-actions>
       </mat-card-content>

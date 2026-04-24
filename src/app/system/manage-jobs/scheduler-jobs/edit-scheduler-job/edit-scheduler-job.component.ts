@@ -1,18 +1,10 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
-import { SystemService } from 'app/system/system.service';
+import { SCHEDULERJOBService } from '@fineract/client';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -29,11 +21,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditSchedulerJobComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private systemService = inject(SystemService);
-  private router = inject(Router);
-  private formBuilder = inject(UntypedFormBuilder);
-
   /** Job Data. */
   jobData: any;
   /** Job Form. */
@@ -42,11 +29,16 @@ export class EditSchedulerJobComponent implements OnInit {
   /**
    * Retrieves the selected job data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {SystemService} systemService System Service.
+   * @param {SCHEDULERJOBService} schedulerJobService Scheduler Job Service.
    * @param {Router} router Router for navigation.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private schedulerJobService: SCHEDULERJOBService,
+    private router: Router,
+    private formBuilder: UntypedFormBuilder
+  ) {
     this.route.data.subscribe((data: { jobSelected: any }) => {
       this.jobData = data.jobSelected;
     });
@@ -80,7 +72,7 @@ export class EditSchedulerJobComponent implements OnInit {
    * Submits the edit job form.
    */
   submit() {
-    this.systemService.updateScheduler(this.jobData.jobId, this.jobForm.value).subscribe(() => {
+    this.schedulerJobService.updateJobDetail(this.jobData.jobId, this.jobForm.value).subscribe(() => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

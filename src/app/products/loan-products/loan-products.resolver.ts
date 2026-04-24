@@ -1,34 +1,23 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
-/** Custom Services */
-import { ProductsService } from '../products.service';
-import { LoanProductService } from './services/loan-product.service';
+import { LoanProductsService } from '@fineract/client';
 
 /**
  * Loan products data resolver.
  */
 @Injectable()
 export class LoanProductsResolver {
-  private productsService = inject(ProductsService);
-  private loanProductService = inject(LoanProductService);
+  constructor(private loanProductsService: LoanProductsService) {}
 
   /**
    * Returns the loan products data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.productsService.getLoanProducts(this.loanProductService.loanProductPath);
+    return this.loanProductsService.retrieveAllLoanProducts();
   }
 }

@@ -1,11 +1,3 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <div class="container">
   <mat-card>
     <div class="layout-row responsive-column gap-20px">
@@ -20,20 +12,24 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Manage Offices' | translate }}
-                    @if (arrowBooleans[0]) {
-                      <p matLine [routerLink]="['offices']" class="menu-explanation">
-                        {{ 'labels.text.Add new office or modify or deactivate office' | translate }}
-                      </p>
-                    }
+                    <p matLine *ngIf="arrowBooleans[0]" [routerLink]="['offices']" class="menu-explanation">
+                      {{ 'labels.text.Add new office or modify or deactivate office' | translate }}
+                    </p>
                   </div>
                 </div>
                 <div class="menu-right-section">
-                  @if (!arrowBooleans[0]) {
-                    <fa-icon (click)="arrowBooleansToggle(0)" icon="arrow-down" size="md"></fa-icon>
-                  }
-                  @if (arrowBooleans[0]) {
-                    <fa-icon (click)="arrowBooleansToggle(0)" icon="arrow-up" size="md"></fa-icon>
-                  }
+                  <fa-icon
+                    (click)="arrowBooleansToggle(0)"
+                    *ngIf="!arrowBooleans[0]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(0)"
+                    *ngIf="arrowBooleans[0]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
                 </div>
               </div>
             </mat-list-item>
@@ -48,20 +44,24 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Manage Holidays' | translate }}
-                    @if (arrowBooleans[1]) {
-                      <p matLine [routerLink]="['holidays']" class="menu-explanation">
-                        {{ 'labels.text.Define holidays for office' | translate }}
-                      </p>
-                    }
+                    <p matLine *ngIf="arrowBooleans[1]" [routerLink]="['holidays']" class="menu-explanation">
+                      {{ 'labels.text.Define holidays for office' | translate }}
+                    </p>
                   </div>
                 </div>
                 <div class="menu-right-section">
-                  @if (!arrowBooleans[1]) {
-                    <fa-icon (click)="arrowBooleansToggle(1)" icon="arrow-down" size="md"></fa-icon>
-                  }
-                  @if (arrowBooleans[1]) {
-                    <fa-icon (click)="arrowBooleansToggle(1)" icon="arrow-up" size="md"></fa-icon>
-                  }
+                  <fa-icon
+                    (click)="arrowBooleansToggle(1)"
+                    *ngIf="!arrowBooleans[1]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(1)"
+                    *ngIf="arrowBooleans[1]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
                 </div>
               </div>
             </mat-list-item>
@@ -76,20 +76,24 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Manage Employees' | translate }}
-                    @if (arrowBooleans[2]) {
-                      <p matLine [routerLink]="['employees']" class="menu-explanation">
-                        {{ 'labels.text.Employee represents loan officers' | translate }}
-                      </p>
-                    }
+                    <p matLine *ngIf="arrowBooleans[2]" [routerLink]="['employees']" class="menu-explanation">
+                      {{ 'labels.text.Employee represents loan officers' | translate }}
+                    </p>
                   </div>
                 </div>
                 <div class="menu-right-section">
-                  @if (!arrowBooleans[2]) {
-                    <fa-icon (click)="arrowBooleansToggle(2)" icon="arrow-down" size="md"></fa-icon>
-                  }
-                  @if (arrowBooleans[2]) {
-                    <fa-icon (click)="arrowBooleansToggle(2)" icon="arrow-up" size="md"></fa-icon>
-                  }
+                  <fa-icon
+                    (click)="arrowBooleansToggle(2)"
+                    *ngIf="!arrowBooleans[2]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(2)"
+                    *ngIf="arrowBooleans[2]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
                 </div>
               </div>
             </mat-list-item>
@@ -104,20 +108,29 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Standing Instructions History' | translate }}
-                    @if (arrowBooleans[3]) {
-                      <p matLine [routerLink]="['standing-instructions-history']" class="menu-explanation">
-                        {{ 'labels.text.View logged history' | translate }}
-                      </p>
-                    }
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[3]"
+                      [routerLink]="['standing-instructions-history']"
+                      class="menu-explanation"
+                    >
+                      {{ 'labels.text.View logged history' | translate }}
+                    </p>
                   </div>
                 </div>
                 <div class="menu-right-section">
-                  @if (!arrowBooleans[3]) {
-                    <fa-icon (click)="arrowBooleansToggle(3)" icon="arrow-down" size="md"></fa-icon>
-                  }
-                  @if (arrowBooleans[3]) {
-                    <fa-icon (click)="arrowBooleansToggle(3)" icon="arrow-up" size="md"></fa-icon>
-                  }
+                  <fa-icon
+                    (click)="arrowBooleansToggle(3)"
+                    *ngIf="!arrowBooleans[3]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(3)"
+                    *ngIf="arrowBooleans[3]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
                 </div>
               </div>
             </mat-list-item>
@@ -132,20 +145,24 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.text.Investors' | translate }}
-                    @if (arrowBooleans[4]) {
-                      <p matLine [routerLink]="['investors']" class="menu-explanation">
-                        {{ 'labels.text.View the loan account details associated with the investors' | translate }}
-                      </p>
-                    }
+                    <p matLine *ngIf="arrowBooleans[4]" [routerLink]="['investors']" class="menu-explanation">
+                      {{ 'labels.text.View the loan account details associated with the investors' | translate }}
+                    </p>
                   </div>
                 </div>
                 <div class="menu-right-section">
-                  @if (!arrowBooleans[4]) {
-                    <fa-icon (click)="arrowBooleansToggle(4)" icon="arrow-down" size="md"></fa-icon>
-                  }
-                  @if (arrowBooleans[4]) {
-                    <fa-icon (click)="arrowBooleansToggle(4)" icon="arrow-up" size="md"></fa-icon>
-                  }
+                  <fa-icon
+                    (click)="arrowBooleansToggle(4)"
+                    *ngIf="!arrowBooleans[4]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(4)"
+                    *ngIf="arrowBooleans[4]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
                 </div>
               </div>
             </mat-list-item>
@@ -160,20 +177,24 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Fund Mapping' | translate }}
-                    @if (arrowBooleans[5]) {
-                      <p matLine [routerLink]="['fund-mapping']" class="menu-explanation">
-                        {{ 'labels.text.Bulk entry screen for mapping' | translate }}
-                      </p>
-                    }
+                    <p matLine *ngIf="arrowBooleans[5]" [routerLink]="['fund-mapping']" class="menu-explanation">
+                      {{ 'labels.text.Bulk entry screen for mapping' | translate }}
+                    </p>
                   </div>
                 </div>
                 <div class="menu-right-section">
-                  @if (!arrowBooleans[5]) {
-                    <fa-icon (click)="arrowBooleansToggle(5)" icon="arrow-down" size="md"></fa-icon>
-                  }
-                  @if (arrowBooleans[5]) {
-                    <fa-icon (click)="arrowBooleansToggle(5)" icon="arrow-up" size="md"></fa-icon>
-                  }
+                  <fa-icon
+                    (click)="arrowBooleansToggle(5)"
+                    *ngIf="!arrowBooleans[5]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(5)"
+                    *ngIf="arrowBooleans[5]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
                 </div>
               </div>
             </mat-list-item>
@@ -188,20 +209,29 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Password Preferences' | translate }}
-                    @if (arrowBooleans[6]) {
-                      <p matLine [routerLink]="['password-preferences']" class="menu-explanation">
-                        {{ 'labels.text.The usage of stronger passwords' | translate }}
-                      </p>
-                    }
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[6]"
+                      [routerLink]="['password-preferences']"
+                      class="menu-explanation"
+                    >
+                      {{ 'labels.text.The usage of stronger passwords' | translate }}
+                    </p>
                   </div>
                 </div>
                 <div class="menu-right-section">
-                  @if (!arrowBooleans[6]) {
-                    <fa-icon (click)="arrowBooleansToggle(6)" icon="arrow-down" size="md"></fa-icon>
-                  }
-                  @if (arrowBooleans[6]) {
-                    <fa-icon (click)="arrowBooleansToggle(6)" icon="arrow-up" size="md"></fa-icon>
-                  }
+                  <fa-icon
+                    (click)="arrowBooleansToggle(6)"
+                    *ngIf="!arrowBooleans[6]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(6)"
+                    *ngIf="arrowBooleans[6]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
                 </div>
               </div>
             </mat-list-item>
@@ -216,20 +246,29 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Loan Provisioning Criteria' | translate }}
-                    @if (arrowBooleans[7]) {
-                      <p matLine [routerLink]="['provisioning-criteria']" class="menu-explanation">
-                        {{ 'labels.text.Loan Provisioning Criteria Organization' | translate }}
-                      </p>
-                    }
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[7]"
+                      [routerLink]="['provisioning-criteria']"
+                      class="menu-explanation"
+                    >
+                      {{ 'labels.text.Loan Provisioning Criteria Organization' | translate }}
+                    </p>
                   </div>
                 </div>
                 <div class="menu-right-section">
-                  @if (!arrowBooleans[7]) {
-                    <fa-icon (click)="arrowBooleansToggle(7)" icon="arrow-down" size="md"></fa-icon>
-                  }
-                  @if (arrowBooleans[7]) {
-                    <fa-icon (click)="arrowBooleansToggle(7)" icon="arrow-up" size="md"></fa-icon>
-                  }
+                  <fa-icon
+                    (click)="arrowBooleansToggle(7)"
+                    *ngIf="!arrowBooleans[7]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(7)"
+                    *ngIf="arrowBooleans[7]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
                 </div>
               </div>
             </mat-list-item>
@@ -244,20 +283,29 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Entity Data Table Checks' | translate }}
-                    @if (arrowBooleans[8]) {
-                      <p matLine [routerLink]="['entity-data-table-checks']" class="menu-explanation">
-                        {{ 'labels.text.Entity Data Table Checks Organization' | translate }}
-                      </p>
-                    }
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[8]"
+                      [routerLink]="['entity-data-table-checks']"
+                      class="menu-explanation"
+                    >
+                      {{ 'labels.text.Entity Data Table Checks Organization' | translate }}
+                    </p>
                   </div>
                 </div>
                 <div class="menu-right-section">
-                  @if (!arrowBooleans[8]) {
-                    <fa-icon (click)="arrowBooleansToggle(8)" icon="arrow-down" size="md"></fa-icon>
-                  }
-                  @if (arrowBooleans[8]) {
-                    <fa-icon (click)="arrowBooleansToggle(8)" icon="arrow-up" size="md"></fa-icon>
-                  }
+                  <fa-icon
+                    (click)="arrowBooleansToggle(8)"
+                    *ngIf="!arrowBooleans[8]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(8)"
+                    *ngIf="arrowBooleans[8]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
                 </div>
               </div>
             </mat-list-item>
@@ -276,20 +324,24 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Currency Configuration' | translate }}
-                    @if (arrowBooleans[9]) {
-                      <p matLine [routerLink]="['currencies']" class="menu-explanation">
-                        {{ 'labels.text.Currencies available across organization' | translate }}
-                      </p>
-                    }
+                    <p matLine *ngIf="arrowBooleans[9]" [routerLink]="['currencies']" class="menu-explanation">
+                      {{ 'labels.text.Currencies available across organization' | translate }}
+                    </p>
                   </div>
                 </div>
                 <div class="menu-right-section">
-                  @if (!arrowBooleans[9]) {
-                    <fa-icon (click)="arrowBooleansToggle(9)" icon="arrow-down" size="md"></fa-icon>
-                  }
-                  @if (arrowBooleans[9]) {
-                    <fa-icon (click)="arrowBooleansToggle(9)" icon="arrow-up" size="md"></fa-icon>
-                  }
+                  <fa-icon
+                    (click)="arrowBooleansToggle(9)"
+                    *ngIf="!arrowBooleans[9]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(9)"
+                    *ngIf="arrowBooleans[9]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
                 </div>
               </div>
             </mat-list-item>
@@ -304,48 +356,24 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Manage Funds' | translate }}
-                    @if (arrowBooleans[10]) {
-                      <p matLine [routerLink]="['manage-funds']" class="menu-explanation">
-                        {{ 'labels.text.Funds are associated with loans' | translate }}
-                      </p>
-                    }
+                    <p matLine *ngIf="arrowBooleans[10]" [routerLink]="['manage-funds']" class="menu-explanation">
+                      {{ 'labels.text.Funds are associated with loans' | translate }}
+                    </p>
                   </div>
                 </div>
                 <div class="menu-right-section">
-                  @if (!arrowBooleans[10]) {
-                    <fa-icon (click)="arrowBooleansToggle(10)" icon="arrow-down" size="md"></fa-icon>
-                  }
-                  @if (arrowBooleans[10]) {
-                    <fa-icon (click)="arrowBooleansToggle(10)" icon="arrow-up" size="md"></fa-icon>
-                  }
-                </div>
-              </div>
-            </mat-list-item>
-          </div>
-
-          <div #manageLoanOriginators>
-            <mat-list-item *mifosxHasPermission="'READ_LOAN_ORIGINATOR'">
-              <div class="menu-list-item-content">
-                <div class="menu-left-section" [routerLink]="['manage-loan-originators']">
-                  <mat-icon matListIcon>
-                    <fa-icon icon="edit" size="sm"></fa-icon>
-                  </mat-icon>
-                  <div matLine>
-                    {{ 'labels.heading.Manage Loan Originators' | translate }}
-                    @if (arrowBooleans[18]) {
-                      <p matLine [routerLink]="['manage-loan-originators']" class="menu-explanation">
-                        {{ 'labels.text.Loan Originators are associated with loan accounts' | translate }}
-                      </p>
-                    }
-                  </div>
-                </div>
-                <div class="menu-right-section">
-                  @if (!arrowBooleans[18]) {
-                    <fa-icon (click)="arrowBooleansToggle(18)" icon="arrow-down" size="md"></fa-icon>
-                  }
-                  @if (arrowBooleans[18]) {
-                    <fa-icon (click)="arrowBooleansToggle(18)" icon="arrow-up" size="md"></fa-icon>
-                  }
+                  <fa-icon
+                    (click)="arrowBooleansToggle(10)"
+                    *ngIf="!arrowBooleans[10]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(10)"
+                    *ngIf="arrowBooleans[10]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
                 </div>
               </div>
             </mat-list-item>
@@ -360,20 +388,24 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Bulk Loan Reassignment' | translate }}
-                    @if (arrowBooleans[11]) {
-                      <p matLine [routerLink]="['bulkloan']" class="menu-explanation">
-                        {{ 'labels.text.Easy way to reassign all the loan' | translate }}
-                      </p>
-                    }
+                    <p matLine *ngIf="arrowBooleans[11]" [routerLink]="['bulkloan']" class="menu-explanation">
+                      {{ 'labels.text.Easy way to reassign all the loan' | translate }}
+                    </p>
                   </div>
                 </div>
                 <div class="menu-right-section">
-                  @if (!arrowBooleans[11]) {
-                    <fa-icon (click)="arrowBooleansToggle(11)" icon="arrow-down" size="md"></fa-icon>
-                  }
-                  @if (arrowBooleans[11]) {
-                    <fa-icon (click)="arrowBooleansToggle(11)" icon="arrow-up" size="md"></fa-icon>
-                  }
+                  <fa-icon
+                    (click)="arrowBooleansToggle(11)"
+                    *ngIf="!arrowBooleans[11]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(11)"
+                    *ngIf="arrowBooleans[11]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
                 </div>
               </div>
             </mat-list-item>
@@ -388,20 +420,24 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Teller / Cashier Management' | translate }}
-                    @if (arrowBooleans[12]) {
-                      <p matLine [routerLink]="['tellers']" class="menu-explanation">
-                        {{ 'labels.text.Manage Tellers / Cashiers' | translate }}
-                      </p>
-                    }
+                    <p matLine *ngIf="arrowBooleans[12]" [routerLink]="['tellers']" class="menu-explanation">
+                      {{ 'labels.text.Manage Tellers / Cashiers' | translate }}
+                    </p>
                   </div>
                 </div>
                 <div class="menu-right-section">
-                  @if (!arrowBooleans[12]) {
-                    <fa-icon (click)="arrowBooleansToggle(12)" icon="arrow-down" size="md"></fa-icon>
-                  }
-                  @if (arrowBooleans[12]) {
-                    <fa-icon (click)="arrowBooleansToggle(12)" icon="arrow-up" size="md"></fa-icon>
-                  }
+                  <fa-icon
+                    (click)="arrowBooleansToggle(12)"
+                    *ngIf="!arrowBooleans[12]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(12)"
+                    *ngIf="arrowBooleans[12]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
                 </div>
               </div>
             </mat-list-item>
@@ -416,20 +452,24 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Working Days' | translate }}
-                    @if (arrowBooleans[13]) {
-                      <p matLine [routerLink]="['working-days']" class="menu-explanation">
-                        {{ 'labels.text.Working days and configure behaviour of payments' | translate }}
-                      </p>
-                    }
+                    <p matLine *ngIf="arrowBooleans[13]" [routerLink]="['working-days']" class="menu-explanation">
+                      {{ 'labels.text.Working days and configure behaviour of payments' | translate }}
+                    </p>
                   </div>
                 </div>
                 <div class="menu-right-section">
-                  @if (!arrowBooleans[13]) {
-                    <fa-icon (click)="arrowBooleansToggle(13)" icon="arrow-down" size="md"></fa-icon>
-                  }
-                  @if (arrowBooleans[13]) {
-                    <fa-icon (click)="arrowBooleansToggle(13)" icon="arrow-up" size="md"></fa-icon>
-                  }
+                  <fa-icon
+                    (click)="arrowBooleansToggle(13)"
+                    *ngIf="!arrowBooleans[13]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(13)"
+                    *ngIf="arrowBooleans[13]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
                 </div>
               </div>
             </mat-list-item>
@@ -444,20 +484,24 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Payment Type' | translate }}
-                    @if (arrowBooleans[14]) {
-                      <p matLine [routerLink]="['payment-types']" class="menu-explanation">
-                        {{ 'labels.text.Manage payment types' | translate }}
-                      </p>
-                    }
+                    <p matLine *ngIf="arrowBooleans[14]" [routerLink]="['payment-types']" class="menu-explanation">
+                      {{ 'labels.text.Manage payment types' | translate }}
+                    </p>
                   </div>
                 </div>
                 <div class="menu-right-section">
-                  @if (!arrowBooleans[14]) {
-                    <fa-icon (click)="arrowBooleansToggle(14)" icon="arrow-down" size="md"></fa-icon>
-                  }
-                  @if (arrowBooleans[14]) {
-                    <fa-icon (click)="arrowBooleansToggle(14)" icon="arrow-up" size="md"></fa-icon>
-                  }
+                  <fa-icon
+                    (click)="arrowBooleansToggle(14)"
+                    *ngIf="!arrowBooleans[14]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(14)"
+                    *ngIf="arrowBooleans[14]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
                 </div>
               </div>
             </mat-list-item>
@@ -472,20 +516,24 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.SMS Campaigns' | translate }}
-                    @if (arrowBooleans[15]) {
-                      <p matLine [routerLink]="['sms-campaigns']" class="menu-explanation">
-                        {{ 'labels.text.Define SMS Campaigns for Organization' | translate }}
-                      </p>
-                    }
+                    <p matLine *ngIf="arrowBooleans[15]" [routerLink]="['sms-campaigns']" class="menu-explanation">
+                      {{ 'labels.text.Define SMS Campaigns for Organization' | translate }}
+                    </p>
                   </div>
                 </div>
                 <div class="menu-right-section">
-                  @if (!arrowBooleans[15]) {
-                    <fa-icon (click)="arrowBooleansToggle(15)" icon="arrow-down" size="md"></fa-icon>
-                  }
-                  @if (arrowBooleans[15]) {
-                    <fa-icon (click)="arrowBooleansToggle(15)" icon="arrow-up" size="md"></fa-icon>
-                  }
+                  <fa-icon
+                    (click)="arrowBooleansToggle(15)"
+                    *ngIf="!arrowBooleans[15]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(15)"
+                    *ngIf="arrowBooleans[15]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
                 </div>
               </div>
             </mat-list-item>
@@ -500,20 +548,24 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.AdHocQuery' | translate }}
-                    @if (arrowBooleans[16]) {
-                      <p matLine [routerLink]="['adhoc-query']" class="menu-explanation">
-                        {{ 'labels.text.Define AdHocQuery for Organization' | translate }}
-                      </p>
-                    }
+                    <p matLine *ngIf="arrowBooleans[16]" [routerLink]="['adhoc-query']" class="menu-explanation">
+                      {{ 'labels.text.Define AdHocQuery for Organization' | translate }}
+                    </p>
                   </div>
                 </div>
                 <div class="menu-right-section">
-                  @if (!arrowBooleans[16]) {
-                    <fa-icon (click)="arrowBooleansToggle(16)" icon="arrow-down" size="md"></fa-icon>
-                  }
-                  @if (arrowBooleans[16]) {
-                    <fa-icon (click)="arrowBooleansToggle(16)" icon="arrow-up" size="md"></fa-icon>
-                  }
+                  <fa-icon
+                    (click)="arrowBooleansToggle(16)"
+                    *ngIf="!arrowBooleans[16]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(16)"
+                    *ngIf="arrowBooleans[16]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
                 </div>
               </div>
             </mat-list-item>
@@ -528,20 +580,24 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Bulk Import' | translate }}
-                    @if (arrowBooleans[17]) {
-                      <p matLine [routerLink]="['bulk-import']" class="menu-explanation">
-                        {{ 'labels.text.Bulk data import using excel spreadsheet templates' | translate }}
-                      </p>
-                    }
+                    <p matLine *ngIf="arrowBooleans[17]" [routerLink]="['bulk-import']" class="menu-explanation">
+                      {{ 'labels.text.Bulk data import using excel spreadsheet templates' | translate }}
+                    </p>
                   </div>
                 </div>
                 <div class="menu-right-section">
-                  @if (!arrowBooleans[17]) {
-                    <fa-icon (click)="arrowBooleansToggle(17)" icon="arrow-down" size="md"></fa-icon>
-                  }
-                  @if (arrowBooleans[17]) {
-                    <fa-icon (click)="arrowBooleansToggle(17)" icon="arrow-up" size="md"></fa-icon>
-                  }
+                  <fa-icon
+                    (click)="arrowBooleansToggle(17)"
+                    *ngIf="!arrowBooleans[17]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(17)"
+                    *ngIf="arrowBooleans[17]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
                 </div>
               </div>
             </mat-list-item>

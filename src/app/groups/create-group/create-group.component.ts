@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, AfterViewInit, inject } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -18,8 +10,7 @@ import {
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { GroupsService } from '../groups.service';
-import { ClientsService } from '../../clients/clients.service';
+import { ClientService, GroupsService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatOption, MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
@@ -50,14 +41,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateGroupComponent implements OnInit, AfterViewInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private clientsService = inject(ClientsService);
-  private groupService = inject(GroupsService);
-  private dateUtils = inject(Dates);
-  private settingsService = inject(SettingsService);
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -85,7 +68,15 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
    * @param {Dates} dateUtils Date Utils to format date.
    * @param {SettingsService} settingsService SettingsService
    */
-  constructor() {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private clientsService: ClientService,
+    private groupService: GroupsService,
+    private dateUtils: Dates,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });
@@ -106,7 +97,13 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
     this.clientChoice.valueChanges.subscribe((value: string) => {
       if (value.length >= 2) {
         this.clientsService
-          .getFilteredClients('displayName', 'ASC', true, value, this.groupForm.get('officeId').value)
+          .retrieveAll21({
+            displayName: value,
+            orphansOnly: true,
+            orderBy: 'displayName',
+            sortOrder: 'ASC',
+            officeId: this.groupForm.get('officeId').value
+          })
           .subscribe((data: any) => {
             this.clientsData = data.pageItems;
           });
@@ -123,8 +120,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
         '',
         [
           Validators.required,
-          Validators.pattern('(^[A-z]).*')
-        ]
+          Validators.pattern('(^[A-z]).*')]
       ],
       officeId: [
         '',
@@ -147,7 +143,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
    */
   buildDependencies() {
     this.groupForm.get('officeId').valueChanges.subscribe((option: any) => {
-      this.groupService.getStaff(option).subscribe((data) => {
+      this.groupService.retrieveTemplate7(option).subscribe((data) => {
         this.staffData = data['staffOptions'];
         if (this.staffData === undefined) {
           this.groupForm.controls['staffId'].disable();
@@ -214,7 +210,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
     };
     data.clientMembers = [];
     this.clientMembers.forEach((client: any) => data.clientMembers.push(client.id));
-    this.groupService.createGroup(data).subscribe((response: any) => {
+    this.groupService.create8({ postGroupsRequest: data }).subscribe((response: any) => {
       this.router.navigate([
         '../groups',
         response.resourceId,

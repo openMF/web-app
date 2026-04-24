@@ -1,18 +1,10 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
-import { OrganizationService } from '../../organization.service';
+import { StaffService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -31,13 +23,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditEmployeeComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private organizationService = inject(OrganizationService);
-  private settingsService = inject(SettingsService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private dateUtils = inject(Dates);
-
   /** Employee data. */
   employeeData: any;
   /** Minimum joining date allowed. */
@@ -52,13 +37,20 @@ export class EditEmployeeComponent implements OnInit {
   /**
    * Retrieves the offices data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {StaffService} staffService Staff Service.
    * @param {SettingsService} settingsService Settings Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {Dates} dateUtils Date Utils to format date.
    */
-  constructor() {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private staffService: StaffService,
+    private settingsService: SettingsService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates
+  ) {
     this.route.data.subscribe((data: { employee: any; offices: any }) => {
       this.employeeData = data.employee;
       this.officeData = data.employee.allowedOffices;
@@ -86,15 +78,13 @@ export class EditEmployeeComponent implements OnInit {
         this.employeeData.firstname,
         [
           Validators.required,
-          Validators.pattern('(^[A-z]).*')
-        ]
+          Validators.pattern('(^[A-z]).*')]
       ],
       lastname: [
         this.employeeData.lastname,
         [
           Validators.required,
-          Validators.pattern('(^[A-z]).*')
-        ]
+          Validators.pattern('(^[A-z]).*')]
       ],
       isLoanOfficer: [this.employeeData.isLoanOfficer],
       mobileNo: [this.employeeData.mobileNo],
@@ -123,7 +113,7 @@ export class EditEmployeeComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.organizationService.updateEmployee(this.employeeData.id, data).subscribe((response: any) => {
+    this.staffService.update7(this.employeeData.id, data).subscribe((response: any) => {
       this.router.navigate(
         [
           '../../',

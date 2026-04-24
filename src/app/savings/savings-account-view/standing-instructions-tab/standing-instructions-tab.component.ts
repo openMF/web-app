@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import {
   MatTableDataSource,
@@ -25,8 +17,8 @@ import {
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
-import { SavingsService } from 'app/savings/savings.service';
-import { AccountTransfersService } from 'app/account-transfers/account-transfers.service';
+import { StandingInstructionsService } from '@fineract/client';
+import { AccountTransfersService } from 'app/customApis.service';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Dialog Components */
@@ -59,12 +51,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class StandingInstructionsTabComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private savingsService = inject(SavingsService);
-  private dialog = inject(MatDialog);
-  private accountTransfersService = inject(AccountTransfersService);
-  private settingsService = inject(SettingsService);
-
   /** Savings Data */
   savingsData: any;
   /** Instructions Data */
@@ -88,9 +74,16 @@ export class StandingInstructionsTabComponent implements OnInit {
   /**
    * Retrieves Savings Account Data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {SettingsService} settingsService Setting service
+   * @param {SettingsService} settingsService Setting service.
+   * @param {StandingInstructionsService} standingInstructionsService Standing Instructions Service.
    */
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private standingsInstructionsService: StandingInstructionsService,
+    private dialog: MatDialog,
+    private accountTransfersService: AccountTransfersService,
+    private settingsService: SettingsService
+  ) {
     this.route.parent.data.subscribe((data: { savingsAccountData: any }) => {
       this.savingsData = data.savingsAccountData;
     });
@@ -109,8 +102,13 @@ export class StandingInstructionsTabComponent implements OnInit {
     const accountId = this.savingsData.id;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    this.savingsService
-      .getStandingInstructions(clientId, clientName, accountId, locale, dateFormat)
+    this.standingsInstructionsService
+      .retrieveAll19({
+        clientId: clientId,
+        clientName: clientName,
+        fromAccountId: accountId,
+        limit: 1000
+      })
       .subscribe((response: any) => {
         this.instructionsData = response.pageItems;
         this.dataSource.data = this.instructionsData;

@@ -1,27 +1,22 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { ClientsService } from '../clients.service';
+import { DocumentsService } from '@fineract/client';
 
 /**
  * Client Documents resolver.
  */
 @Injectable()
 export class ClientDocumentsResolver {
-  private clientsService = inject(ClientsService);
+  /**
+   * @param {DocumentsService} documentsService Documents service.
+   */
+  constructor(private documentsService: DocumentsService) {}
 
   /**
    * Returns the Client's Documents data.
@@ -29,6 +24,9 @@ export class ClientDocumentsResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const clientId = route.parent.paramMap.get('clientId');
-    return this.clientsService.getClientDocuments(clientId);
+    return this.documentsService.retrieveAllDocuments({
+      entityType: 'clients',
+      entityId: Number(clientId)
+    });
   }
 }

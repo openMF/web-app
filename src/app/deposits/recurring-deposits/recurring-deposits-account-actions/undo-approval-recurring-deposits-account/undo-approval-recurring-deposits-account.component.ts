@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
@@ -29,11 +21,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class UndoApprovalRecurringDepositsAccountComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private recurringDepositsService = inject(RecurringDepositsService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-
   /** Undo Approval Recurring Deposits Account form. */
   undoApprovalRecurringDepositsAccountForm: UntypedFormGroup;
   /** Recurring Deposits Account Id */
@@ -48,7 +35,12 @@ export class UndoApprovalRecurringDepositsAccountComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor() {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private recurringDepositsService: RecurringDepositsService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.undoCommand = 'undoapproval'; // Default command
     this.undoAction = this.route.snapshot.params['name'];
     if (this.undoAction === 'Undo Activation') {

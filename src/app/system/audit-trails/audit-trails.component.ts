@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, ViewChild, AfterViewInit, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -17,7 +9,6 @@ import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { AuditTrailsDataSource } from './audit-trail.datasource';
 
 /** Custom Services */
-import { SystemService } from '../system.service';
 import { AuditsService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 
@@ -26,7 +17,7 @@ import { merge } from 'rxjs';
 import { tap, debounceTime, distinctUntilChanged, startWith, map } from 'rxjs/operators';
 import { Dates } from 'app/core/utils/dates';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { AsyncPipe } from '@angular/common';
+import { NgFor, NgIf, AsyncPipe } from '@angular/common';
 import { MatOption, MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import {
@@ -42,7 +33,6 @@ import {
   MatRow
 } from '@angular/material/table';
 import { DatetimeFormatPipe } from '../../pipes/datetime-format.pipe';
-import { TranslatePipe } from '../../pipes/translate.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -76,12 +66,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class AuditTrailsComponent implements OnInit, AfterViewInit {
-  private route = inject(ActivatedRoute);
-  private systemService = inject(SystemService);
-  private auditsService = inject(AuditsService);
-  private dateUtils = inject(Dates);
-  private settingsService = inject(SettingsService);
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -204,11 +188,16 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
   /**
    * Retrieves the audit trail search template data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {SystemService} systemService System Service.
+   * @param {AuditsService} auditsService Audits Service.
    * @param {Dates} dateUtils Dates utils
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private auditsService: AuditsService,
+    private dateUtils: Dates,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { auditTrailSearchTemplate: any }) => {
       this.auditTrailSearchTemplateData = data.auditTrailSearchTemplate;
     });
@@ -558,23 +547,48 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
       'actionName',
       'clientName'
     ];
-    this.systemService
-      .getAuditTrails(this.filterAuditTrailsBy, this.sort?.active ?? '', this.sort?.direction ?? '', 0, -1)
+    this.auditsService
+      .retrieveAuditEntries({
+        ...Object.fromEntries(
+          this.filterAuditTrailsBy.map((f) => [
+            f.type,
+            f.value
+          ])
+        ),
+        orderBy: this.sort?.active ?? '',
+        sortOrder: this.sort?.direction ?? '',
+        offset: 0,
+        limit: -1
+      })
       .subscribe((response: any) => {
-        if (response !== undefined) {
-          let csv = response.pageItems.map((row: any) =>
-            headerCode.map((fieldName) =>
-              (fieldName === 'madeOnDate' || fieldName === 'checkedOnDate') &&
-              row[fieldName] != null &&
-              row[fieldName] !== ''
-                ? JSON.stringify(this.dateUtils.formatDate(row[fieldName], 'yyyy-MM-ddTHH:mm:ssZ'))
-                : JSON.stringify(row[fieldName], replacer)
-            )
+        if (response && Array.isArray(response.pageItems) && response.pageItems.length > 0) {
+          let csvRows = response.pageItems.map((row: any) =>
+            headerCode
+              .map((fieldName) =>
+                (fieldName === 'madeOnDate' || fieldName === 'checkedOnDate') &&
+                row[fieldName] != null &&
+                row[fieldName] !== ''
+                  ? JSON.stringify(this.dateUtils.formatDate(row[fieldName], 'YYYY-MM-DDTHH:mm:ssZ'))
+                  : JSON.stringify(row[fieldName], replacer)
+              )
+              .join(',')
           );
-          csv.unshift(`data:text/csv;charset=utf-8,${header.join()}`);
-          csv = csv.join('\r\n');
+          const csvContent = [
+            header.join(','),
+            ...csvRows
+          ].join('\r\n');
+          const dataUri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvContent);
           const link = document.createElement('a');
-          link.setAttribute('href', encodeURI(csv));
+          link.setAttribute('href', dataUri);
+          link.setAttribute('download', 'Audit Trails.csv');
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        } else {
+          const csvContent = header.join(',');
+          const dataUri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvContent);
+          const link = document.createElement('a');
+          link.setAttribute('href', dataUri);
           link.setAttribute('download', 'Audit Trails.csv');
           document.body.appendChild(link);
           link.click();
@@ -609,6 +623,6 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
       result.setMinutes(minutes || 0);
       result.setSeconds(seconds || 0);
     }
-    return this.dateUtils.formatDate(result, 'yyyy-MM-ddTHH:mm:ssZ');
+    return this.dateUtils.formatDate(result, 'YYYY-MM-DDTHH:mm:ssZ');
   }
 }

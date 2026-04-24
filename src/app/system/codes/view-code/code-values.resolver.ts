@@ -1,27 +1,22 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { CodeValuesService } from '@fineract/client';
 
 /**
  * Code Values data resolver.
  */
 @Injectable()
 export class CodeValuesResolver {
-  private systemService = inject(SystemService);
+  /**
+   * @param {CodeValuesService} codeValuesService Code Values service.
+   */
+  constructor(private codeValuesService: CodeValuesService) {}
 
   /**
    * Returns the Code Values data.
@@ -29,6 +24,6 @@ export class CodeValuesResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const codeId = route.paramMap.get('id');
-    return this.systemService.getCodeValues(codeId);
+    return this.codeValuesService.retrieveAllCodeValues({ codeId: Number(codeId) });
   }
 }

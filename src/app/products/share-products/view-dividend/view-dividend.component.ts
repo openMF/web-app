@@ -1,12 +1,4 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -50,10 +42,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewDividendComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private productsService = inject(ProductsService);
-  private router = inject(Router);
-
   dividendData: any;
   status: any;
   isdividendPosted = false;
@@ -68,7 +56,11 @@ export class ViewDividendComponent implements OnInit {
   ];
   dataSource: MatTableDataSource<any>;
 
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private productsService: ProductsService,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { dividendData: any }) => {
       this.dividendData = data.dividendData;
     });

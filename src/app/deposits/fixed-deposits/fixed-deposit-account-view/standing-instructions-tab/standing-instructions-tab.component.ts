@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import {
   MatTableDataSource,
@@ -59,12 +51,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class StandingInstructionsTabComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private fixedDepositsService = inject(FixedDepositsService);
-  private dialog = inject(MatDialog);
-  private accountTransfersService = inject(AccountTransfersService);
-  private settingsService = inject(SettingsService);
-
   /** Fixed Deposits Data */
   fixedDepositsData: any;
   /** Instructions Data */
@@ -93,7 +79,13 @@ export class StandingInstructionsTabComponent implements OnInit {
    * @param {AccountTransfersService} accountTransfersService Accounts Transfer Service
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private fixedDepositsService: FixedDepositsService,
+    private dialog: MatDialog,
+    private accountTransfersService: AccountTransfersService,
+    private settingsService: SettingsService
+  ) {
     this.route.parent.data.subscribe((data: { fixedDepositsAccountData: any }) => {
       this.fixedDepositsData = data.fixedDepositsAccountData;
     });

@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, RouterOutlet, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -15,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 
 /** Custom Services */
-import { ClientsService } from '../../clients.service';
+import { ClientFamilyMemberService } from '@fineract/client';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import {
   MatAccordion,
@@ -51,10 +43,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class FamilyMembersTabComponent {
-  private route = inject(ActivatedRoute);
-  private clientsService = inject(ClientsService);
-  dialog = inject(MatDialog);
-
   /** Client Family Members */
   clientFamilyMembers: any;
 
@@ -63,7 +51,11 @@ export class FamilyMembersTabComponent {
    * @param {ClientsService} clientsService Clients Service
    * @param {MatDialog }dialog Mat Dialog
    */
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private clientfamilymemberService: ClientFamilyMemberService,
+    public dialog: MatDialog
+  ) {
     this.route.data.subscribe((data: { clientFamilyMembers: any }) => {
       this.clientFamilyMembers = data.clientFamilyMembers;
     });
@@ -78,9 +70,14 @@ export class FamilyMembersTabComponent {
     });
     deleteFamilyMemberDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.clientsService.deleteFamilyMember(clientId, id).subscribe(() => {
-          this.clientFamilyMembers.splice(index, 1);
-        });
+        this.clientfamilymemberService
+          .deleteClientFamilyMembers({
+            clientId: Number(clientId),
+            familyMemberId: Number(id)
+          })
+          .subscribe(() => {
+            this.clientFamilyMembers.splice(index, 1);
+          });
       }
     });
   }

@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -32,7 +24,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ChangeDetectorRef } from '@angular/core';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { HooksService } from '@fineract/client';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
@@ -75,15 +67,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditHookComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private systemService = inject(SystemService);
-  private router = inject(Router);
-  private formBuilder = inject(UntypedFormBuilder);
-  private dialog = inject(MatDialog);
-  private translateService = inject(TranslateService);
-  private snackBar = inject(MatSnackBar);
-  private cdr = inject(ChangeDetectorRef);
-
   @NgModule({
     imports: [
       MatSnackBarModule
@@ -114,13 +97,22 @@ export class EditHookComponent implements OnInit {
   /**
    * Retrieves the hooks template data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {SystemService} systemService System Service.
+   * @param {HooksService} hooksService Hooks Service.
    * @param {Router} router Router for navigation.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {MatDialog} dialog Dialog Reference.
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private hooksService: HooksService,
+    private router: Router,
+    private formBuilder: UntypedFormBuilder,
+    private dialog: MatDialog,
+    private translateService: TranslateService,
+    private snackBar: MatSnackBar,
+    private cdr: ChangeDetectorRef
+  ) {
     this.route.data.subscribe((data: { hooksTemplate: any; hook: any }) => {
       this.hooksTemplateData = data.hooksTemplate;
       this.hookData = data.hook;
@@ -164,6 +156,7 @@ export class EditHookComponent implements OnInit {
           disabled: this.hookData.name !== 'SMS Bridge'
         },
         Validators.required
+
       ],
       smsProvider: [
         {
@@ -171,6 +164,7 @@ export class EditHookComponent implements OnInit {
           disabled: this.hookData.name !== 'SMS Bridge'
         },
         Validators.required
+
       ],
       smsProviderAccountId: [
         {
@@ -178,6 +172,7 @@ export class EditHookComponent implements OnInit {
           disabled: this.hookData.name !== 'SMS Bridge'
         },
         Validators.required
+
       ],
       smsProviderToken: [
         {
@@ -185,6 +180,7 @@ export class EditHookComponent implements OnInit {
           disabled: this.hookData.name !== 'SMS Bridge'
         },
         Validators.required
+
       ],
       contentType: [
         {
@@ -192,6 +188,7 @@ export class EditHookComponent implements OnInit {
           disabled: this.hookData.name !== 'Web'
         },
         Validators.required
+
       ],
       payloadUrl: [
         this.hookData.name === 'Web' ? this.hookData.config[1].fieldValue : this.hookData.config[0].fieldValue,
@@ -256,37 +253,57 @@ export class EditHookComponent implements OnInit {
    * if successful redirects to view updated hook.
    */
   submit() {
-    const hook: {
-      name: string;
-      isActive: boolean;
-      displayName: string;
-      events: any;
-      config: {
-        'Payload URL': string;
-        'Content Type'?: string;
-        'SMS Provider'?: string;
-        'SMS Provider Account Id'?: string;
-        'SMS Provider Token'?: string;
-      };
-    } = {
+    const configFields: any[] = [];
+    if (this.hookData.name === 'Web') {
+      configFields.push(
+        {
+          fieldName: 'Content Type',
+          fieldValue: this.hookForm.get('contentType').value
+        },
+        {
+          fieldName: 'Payload URL',
+          fieldValue: this.hookForm.get('payloadUrl').value
+        }
+      );
+    }
+
+    // Add fields for SMS Bridge hook
+    if (this.hookData.name === 'SMS Bridge') {
+      configFields.push(
+        {
+          fieldName: 'Phone Number',
+          fieldValue: this.hookForm.get('phoneNumber').value
+        },
+        {
+          fieldName: 'SMS Provider',
+          fieldValue: this.hookForm.get('smsProvider').value
+        },
+        {
+          fieldName: 'SMS Provider Account Id',
+          fieldValue: this.hookForm.get('smsProviderAccountId').value
+        },
+        {
+          fieldName: 'SMS Provider Token',
+          fieldValue: this.hookForm.get('smsProviderToken').value
+        }
+      );
+    }
+
+    const hook = {
       name: this.hookForm.get('name').value,
       isActive: this.hookForm.get('isActive').value,
       displayName: this.hookForm.get('displayName').value,
       events: this.eventsData,
-      config: {
-        'Payload URL': this.hookForm.get('payloadUrl').value,
-        'Content Type': this.hookForm.get('contentType').enabled ? this.hookForm.get('contentType').value : undefined,
-        'SMS Provider': this.hookForm.get('smsProvider').enabled ? this.hookForm.get('smsProvider').value : undefined,
-        'SMS Provider Account Id': this.hookForm.get('smsProviderAccountId').enabled
-          ? this.hookForm.get('smsProviderAccountId').value
-          : undefined,
-        'SMS Provider Token': this.hookForm.get('smsProviderToken').enabled
-          ? this.hookForm.get('smsProviderToken').value
-          : undefined
-      }
+      config: configFields
     };
-    this.systemService.updateHook(this.hookData.id, hook).subscribe((response: any) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+
+    this.hooksService
+      .updateHook({
+        hookId: this.hookData.id,
+        putHookRequest: hook
+      })
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
 }

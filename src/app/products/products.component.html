@@ -1,56 +1,35 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <div class="container">
   <mat-card>
     <div class="layout-row responsive-column gap-20px">
       <div class="flex-50">
         <mat-nav-list>
           <div #loanProducts>
-            <mat-list-item
-              [routerLink]="['loan-products']"
-              [queryParams]="{ productType: 'loan' }"
-              *mifosxHasPermission="'READ_LOANPRODUCT'"
-            >
+            <mat-list-item [routerLink]="['loan-products']" *mifosxHasPermission="'READ_LOANPRODUCT'">
               <div class="menu-list-item-content">
-                <div class="menu-left-section" [routerLink]="['loan-products']" [queryParams]="{ productType: 'loan' }">
+                <div class="menu-left-section" [routerLink]="['loan-products']">
                   <mat-icon matListIcon>
                     <fa-icon icon="briefcase" size="sm"></fa-icon>
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Loan Products' | translate }}
-                    @if (arrowBooleans[0]) {
-                      <p
-                        matLine
-                        [routerLink]="['loan-products']"
-                        [queryParams]="{ productType: 'loan' }"
-                        class="menu-explanation"
-                      >
-                        {{ 'labels.text.Add new loan product or modify or inactivate loan product' | translate }}
-                      </p>
-                    }
+                    <p matLine *ngIf="arrowBooleans[0]" [routerLink]="['loan-products']" class="menu-explanation">
+                      {{ 'labels.text.Add new loan product or modify or inactivate loan product' | translate }}
+                    </p>
                   </div>
                 </div>
                 <div class="menu-right-section">
-                  @if (!arrowBooleans[0]) {
-                    <fa-icon
-                      (click)="arrowBooleansToggle(0); $event.stopPropagation()"
-                      icon="arrow-down"
-                      size="md"
-                    ></fa-icon>
-                  }
-                  @if (arrowBooleans[0]) {
-                    <fa-icon
-                      (click)="arrowBooleansToggle(0); $event.stopPropagation()"
-                      icon="arrow-up"
-                      size="md"
-                    ></fa-icon>
-                  }
+                  <fa-icon
+                    (click)="arrowBooleansToggle(0); $event.stopPropagation()"
+                    *ngIf="!arrowBooleans[0]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(0); $event.stopPropagation()"
+                    *ngIf="arrowBooleans[0]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
                 </div>
               </div>
             </mat-list-item>
@@ -65,28 +44,24 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Savings Products' | translate }}
-                    @if (arrowBooleans[1]) {
-                      <p matLine [routerLink]="['saving-products']" class="menu-explanation">
-                        {{ 'labels.text.Add new savings product or modify or inactivate savings product' | translate }}
-                      </p>
-                    }
+                    <p matLine *ngIf="arrowBooleans[1]" [routerLink]="['saving-products']" class="menu-explanation">
+                      {{ 'labels.text.Add new savings product or modify or inactivate savings product' | translate }}
+                    </p>
                   </div>
                 </div>
                 <div class="menu-right-section">
-                  @if (!arrowBooleans[1]) {
-                    <fa-icon
-                      (click)="arrowBooleansToggle(1); $event.stopPropagation()"
-                      icon="arrow-down"
-                      size="md"
-                    ></fa-icon>
-                  }
-                  @if (arrowBooleans[1]) {
-                    <fa-icon
-                      (click)="arrowBooleansToggle(1); $event.stopPropagation()"
-                      icon="arrow-up"
-                      size="md"
-                    ></fa-icon>
-                  }
+                  <fa-icon
+                    (click)="arrowBooleansToggle(1); $event.stopPropagation()"
+                    *ngIf="!arrowBooleans[1]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(1); $event.stopPropagation()"
+                    *ngIf="arrowBooleans[1]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
                 </div>
               </div>
             </mat-list-item>
@@ -101,28 +76,24 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Share Products' | translate }}
-                    @if (arrowBooleans[2]) {
-                      <p matLine [routerLink]="['share-products']" class="menu-explanation">
-                        {{ 'labels.text.Add new share product or modify or inactivate share product' | translate }}
-                      </p>
-                    }
+                    <p matLine *ngIf="arrowBooleans[2]" [routerLink]="['share-products']" class="menu-explanation">
+                      {{ 'labels.text.Add new share product or modify or inactivate share product' | translate }}
+                    </p>
                   </div>
                 </div>
                 <div class="menu-right-section">
-                  @if (!arrowBooleans[2]) {
-                    <fa-icon
-                      (click)="arrowBooleansToggle(2); $event.stopPropagation()"
-                      icon="arrow-down"
-                      size="md"
-                    ></fa-icon>
-                  }
-                  @if (arrowBooleans[2]) {
-                    <fa-icon
-                      (click)="arrowBooleansToggle(2); $event.stopPropagation()"
-                      icon="arrow-up"
-                      size="md"
-                    ></fa-icon>
-                  }
+                  <fa-icon
+                    (click)="arrowBooleansToggle(2); $event.stopPropagation()"
+                    *ngIf="!arrowBooleans[2]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(2); $event.stopPropagation()"
+                    *ngIf="arrowBooleans[2]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
                 </div>
               </div>
             </mat-list-item>
@@ -137,31 +108,27 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Charges' | translate }}
-                    @if (arrowBooleans[3]) {
-                      <p matLine [routerLink]="['charges']" class="menu-explanation">
-                        {{
-                          'labels.text.Define charges/penalties for loan products, savings and deposit products'
-                            | translate
-                        }}
-                      </p>
-                    }
+                    <p matLine *ngIf="arrowBooleans[3]" [routerLink]="['charges']" class="menu-explanation">
+                      {{
+                        'labels.text.Define charges/penalties for loan products, savings and deposit products'
+                          | translate
+                      }}
+                    </p>
                   </div>
                 </div>
                 <div class="menu-right-section">
-                  @if (!arrowBooleans[3]) {
-                    <fa-icon
-                      (click)="arrowBooleansToggle(3); $event.stopPropagation()"
-                      icon="arrow-down"
-                      size="md"
-                    ></fa-icon>
-                  }
-                  @if (arrowBooleans[3]) {
-                    <fa-icon
-                      (click)="arrowBooleansToggle(3); $event.stopPropagation()"
-                      icon="arrow-up"
-                      size="md"
-                    ></fa-icon>
-                  }
+                  <fa-icon
+                    (click)="arrowBooleansToggle(3); $event.stopPropagation()"
+                    *ngIf="!arrowBooleans[3]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(3); $event.stopPropagation()"
+                    *ngIf="arrowBooleans[3]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
                 </div>
               </div>
             </mat-list-item>
@@ -175,28 +142,24 @@
                 </mat-icon>
                 <div matLine>
                   {{ 'labels.heading.Collateral Management' | translate }}
-                  @if (arrowBooleans[4]) {
-                    <p matLine [routerLink]="['collaterals']" class="menu-explanation">
-                      {{ 'labels.text.Define collaterals for Collateral Management' | translate }}
-                    </p>
-                  }
+                  <p matLine *ngIf="arrowBooleans[4]" [routerLink]="['collaterals']" class="menu-explanation">
+                    {{ 'labels.text.Define collaterals for Collateral Management' | translate }}
+                  </p>
                 </div>
               </div>
               <div class="menu-right-section">
-                @if (!arrowBooleans[4]) {
-                  <fa-icon
-                    (click)="arrowBooleansToggle(4); $event.stopPropagation()"
-                    icon="arrow-down"
-                    size="md"
-                  ></fa-icon>
-                }
-                @if (arrowBooleans[4]) {
-                  <fa-icon
-                    (click)="arrowBooleansToggle(4); $event.stopPropagation()"
-                    icon="arrow-up"
-                    size="md"
-                  ></fa-icon>
-                }
+                <fa-icon
+                  (click)="arrowBooleansToggle(4); $event.stopPropagation()"
+                  *ngIf="!arrowBooleans[4]"
+                  icon="arrow-down"
+                  size="md"
+                ></fa-icon>
+                <fa-icon
+                  (click)="arrowBooleansToggle(4); $event.stopPropagation()"
+                  *ngIf="arrowBooleans[4]"
+                  icon="arrow-up"
+                  size="md"
+                ></fa-icon>
               </div>
             </div>
           </mat-list-item>
@@ -212,28 +175,29 @@
                 </mat-icon>
                 <div matLine>
                   {{ 'labels.heading.Delinquency Buckets' | translate }}
-                  @if (arrowBooleans[5]) {
-                    <p matLine [routerLink]="['delinquency-bucket-configurations']" class="menu-explanation">
-                      {{ 'labels.text.Define delinquency day ranges and bucket set for loan products' | translate }}
-                    </p>
-                  }
+                  <p
+                    matLine
+                    *ngIf="arrowBooleans[5]"
+                    [routerLink]="['delinquency-bucket-configurations']"
+                    class="menu-explanation"
+                  >
+                    {{ 'labels.text.Define delinquency day ranges and bucket set for loan products' | translate }}
+                  </p>
                 </div>
               </div>
               <div class="menu-right-section">
-                @if (!arrowBooleans[5]) {
-                  <fa-icon
-                    (click)="arrowBooleansToggle(5); $event.stopPropagation()"
-                    icon="arrow-down"
-                    size="md"
-                  ></fa-icon>
-                }
-                @if (arrowBooleans[5]) {
-                  <fa-icon
-                    (click)="arrowBooleansToggle(5); $event.stopPropagation()"
-                    icon="arrow-up"
-                    size="md"
-                  ></fa-icon>
-                }
+                <fa-icon
+                  (click)="arrowBooleansToggle(5); $event.stopPropagation()"
+                  *ngIf="!arrowBooleans[5]"
+                  icon="arrow-down"
+                  size="md"
+                ></fa-icon>
+                <fa-icon
+                  (click)="arrowBooleansToggle(5); $event.stopPropagation()"
+                  *ngIf="arrowBooleans[5]"
+                  icon="arrow-up"
+                  size="md"
+                ></fa-icon>
               </div>
             </div>
           </mat-list-item>
@@ -250,28 +214,24 @@
                 </mat-icon>
                 <div matLine>
                   {{ 'labels.heading.Products Mix' | translate }}
-                  @if (arrowBooleans[6]) {
-                    <p matLine [routerLink]="['products-mix']" class="menu-explanation">
-                      {{ 'labels.text.Defines rules for taking multiple rules' | translate }}
-                    </p>
-                  }
+                  <p matLine *ngIf="arrowBooleans[6]" [routerLink]="['products-mix']" class="menu-explanation">
+                    {{ 'labels.text.Defines rules for taking multiple rules' | translate }}
+                  </p>
                 </div>
               </div>
               <div class="menu-right-section">
-                @if (!arrowBooleans[6]) {
-                  <fa-icon
-                    (click)="arrowBooleansToggle(6); $event.stopPropagation()"
-                    icon="arrow-down"
-                    size="md"
-                  ></fa-icon>
-                }
-                @if (arrowBooleans[6]) {
-                  <fa-icon
-                    (click)="arrowBooleansToggle(6); $event.stopPropagation()"
-                    icon="arrow-up"
-                    size="md"
-                  ></fa-icon>
-                }
+                <fa-icon
+                  (click)="arrowBooleansToggle(6); $event.stopPropagation()"
+                  *ngIf="!arrowBooleans[6]"
+                  icon="arrow-down"
+                  size="md"
+                ></fa-icon>
+                <fa-icon
+                  (click)="arrowBooleansToggle(6); $event.stopPropagation()"
+                  *ngIf="arrowBooleans[6]"
+                  icon="arrow-up"
+                  size="md"
+                ></fa-icon>
               </div>
             </div>
           </mat-list-item>
@@ -285,28 +245,29 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Fixed Deposit Products' | translate }}
-                    @if (arrowBooleans[7]) {
-                      <p matLine [routerLink]="['fixed-deposit-products']" class="menu-explanation">
-                        {{ 'labels.text.Add, modify or inactivate a Fixed deposit product' | translate }}
-                      </p>
-                    }
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[7]"
+                      [routerLink]="['fixed-deposit-products']"
+                      class="menu-explanation"
+                    >
+                      {{ 'labels.text.Add, modify or inactivate a Fixed deposit product' | translate }}
+                    </p>
                   </div>
                 </div>
                 <div class="menu-right-section">
-                  @if (!arrowBooleans[7]) {
-                    <fa-icon
-                      (click)="arrowBooleansToggle(7); $event.stopPropagation()"
-                      icon="arrow-down"
-                      size="md"
-                    ></fa-icon>
-                  }
-                  @if (arrowBooleans[7]) {
-                    <fa-icon
-                      (click)="arrowBooleansToggle(7); $event.stopPropagation()"
-                      icon="arrow-up"
-                      size="md"
-                    ></fa-icon>
-                  }
+                  <fa-icon
+                    (click)="arrowBooleansToggle(7); $event.stopPropagation()"
+                    *ngIf="!arrowBooleans[7]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(7); $event.stopPropagation()"
+                    *ngIf="arrowBooleans[7]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
                 </div>
               </div>
             </mat-list-item>
@@ -324,28 +285,29 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Recurring Deposit Products' | translate }}
-                    @if (arrowBooleans[8]) {
-                      <p matLine [routerLink]="['recurring-deposit-products']" class="menu-explanation">
-                        {{ 'labels.text.Add, modify or inactivate a Recurring Deposit product' | translate }}
-                      </p>
-                    }
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[8]"
+                      [routerLink]="['recurring-deposit-products']"
+                      class="menu-explanation"
+                    >
+                      {{ 'labels.text.Add, modify or inactivate a Recurring Deposit product' | translate }}
+                    </p>
                   </div>
                 </div>
                 <div class="menu-right-section">
-                  @if (!arrowBooleans[8]) {
-                    <fa-icon
-                      (click)="arrowBooleansToggle(8); $event.stopPropagation()"
-                      icon="arrow-down"
-                      size="md"
-                    ></fa-icon>
-                  }
-                  @if (arrowBooleans[8]) {
-                    <fa-icon
-                      (click)="arrowBooleansToggle(8); $event.stopPropagation()"
-                      icon="arrow-up"
-                      size="md"
-                    ></fa-icon>
-                  }
+                  <fa-icon
+                    (click)="arrowBooleansToggle(8); $event.stopPropagation()"
+                    *ngIf="!arrowBooleans[8]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(8); $event.stopPropagation()"
+                    *ngIf="arrowBooleans[8]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
                 </div>
               </div>
             </mat-list-item>
@@ -359,28 +321,24 @@
                 </mat-icon>
                 <div matLine>
                   {{ 'labels.heading.Manage Tax Configurations' | translate }}
-                  @if (arrowBooleans[9]) {
-                    <p matLine [routerLink]="['tax-configurations']" class="menu-explanation">
-                      {{ 'labels.text.Define Tax components and Tax groups' | translate }}
-                    </p>
-                  }
+                  <p matLine *ngIf="arrowBooleans[9]" [routerLink]="['tax-configurations']" class="menu-explanation">
+                    {{ 'labels.text.Define Tax components and Tax groups' | translate }}
+                  </p>
                 </div>
               </div>
               <div class="menu-right-section">
-                @if (!arrowBooleans[9]) {
-                  <fa-icon
-                    (click)="arrowBooleansToggle(9); $event.stopPropagation()"
-                    icon="arrow-down"
-                    size="md"
-                  ></fa-icon>
-                }
-                @if (arrowBooleans[9]) {
-                  <fa-icon
-                    (click)="arrowBooleansToggle(9); $event.stopPropagation()"
-                    icon="arrow-up"
-                    size="md"
-                  ></fa-icon>
-                }
+                <fa-icon
+                  (click)="arrowBooleansToggle(9); $event.stopPropagation()"
+                  *ngIf="!arrowBooleans[9]"
+                  icon="arrow-down"
+                  size="md"
+                ></fa-icon>
+                <fa-icon
+                  (click)="arrowBooleansToggle(9); $event.stopPropagation()"
+                  *ngIf="arrowBooleans[9]"
+                  icon="arrow-up"
+                  size="md"
+                ></fa-icon>
               </div>
             </div>
           </mat-list-item>
@@ -393,28 +351,24 @@
                 </mat-icon>
                 <div matLine>
                   {{ 'labels.heading.Floating Rates' | translate }}
-                  @if (arrowBooleans[10]) {
-                    <p matLine [routerLink]="['floating-rates']">
-                      {{ 'labels.text.Define floating rates for loan products' | translate }}
-                    </p>
-                  }
+                  <p matLine *ngIf="arrowBooleans[10]" [routerLink]="['floating-rates']">
+                    {{ 'labels.text.Define floating rates for loan products' | translate }}
+                  </p>
                 </div>
               </div>
               <div class="menu-right-section">
-                @if (!arrowBooleans[10]) {
-                  <fa-icon
-                    (click)="arrowBooleansToggle(10); $event.stopPropagation()"
-                    icon="arrow-down"
-                    size="md"
-                  ></fa-icon>
-                }
-                @if (arrowBooleans[10]) {
-                  <fa-icon
-                    (click)="arrowBooleansToggle(10); $event.stopPropagation()"
-                    icon="arrow-up"
-                    size="md"
-                  ></fa-icon>
-                }
+                <fa-icon
+                  (click)="arrowBooleansToggle(10); $event.stopPropagation()"
+                  *ngIf="!arrowBooleans[10]"
+                  icon="arrow-down"
+                  size="md"
+                ></fa-icon>
+                <fa-icon
+                  (click)="arrowBooleansToggle(10); $event.stopPropagation()"
+                  *ngIf="arrowBooleans[10]"
+                  icon="arrow-up"
+                  size="md"
+                ></fa-icon>
               </div>
             </div>
           </mat-list-item>

@@ -1,42 +1,26 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <h1 mat-dialog-title>{{ 'labels.heading.Keyboard Shortcuts' | translate }}</h1>
 
 <div mat-dialog-content>
   <div class="layout-column gap-2px">
-    @for (item of buttonConfig.buttonCombinations; track item) {
+    <ng-container *ngFor="let item of buttonConfig.buttonCombinations">
       <mat-divider [inset]="true"></mat-divider>
       <div class="flex-fill flex-50">
         <span class="flex-50">
-          @if (item.ctrlKey) {
-            <span>
-              <span class="modifier-key">{{ 'labels.inputs.Ctrl' | translate }}</span> +
-            </span>
-          }
-          @if (item.shiftKey) {
-            <span>
-              <span class="modifier-key">{{ 'labels.inputs.Shift' | translate }}</span> +
-            </span>
-          }
-          @if (item.altKey) {
-            <span>
-              <span class="modifier-key">{{ 'labels.inputs.Alt' | translate }}</span> +
-            </span>
-          }
-          @if (item.key) {
-            <span>
-              <span class="modifier-key">{{ item.key }}</span></span
-            >
-          }
+          <span *ngIf="item.ctrlKey">
+            <span class="modifier-key">{{ 'labels.inputs.Ctrl' | translate }}</span> +
+          </span>
+          <span *ngIf="item.shiftKey">
+            <span class="modifier-key">{{ 'labels.inputs.Shift' | translate }}</span> +
+          </span>
+          <span *ngIf="item.altKey">
+            <span class="modifier-key">{{ 'labels.inputs.Alt' | translate }}</span> +
+          </span>
+          <span *ngIf="item.key">
+            <span class="modifier-key">{{ item.key }}</span></span
+          >
         </span>
         <span class="flex-50">{{ item.title }}</span>
       </div>
-    }
+    </ng-container>
   </div>
 </div>

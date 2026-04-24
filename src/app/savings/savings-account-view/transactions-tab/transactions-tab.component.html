@@ -1,27 +1,17 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <div class="container">
   <div class="mat-elevation-z1 m-b-25" [hidden]="!accountWithTransactions">
     <div class="layout-row align-end">
-      @if (checkStatus()) {
-        <div class="action-button m-b-20 layout-row gap-20px">
-          <mat-checkbox [formControl]="hideReversedParam" (click)="hideReversed()" class="accruals">
-            {{ 'labels.inputs.Hide Reversed' | translate }}</mat-checkbox
-          >
-          <mat-checkbox [formControl]="hideAccrualsParam" (click)="hideAccruals()" class="accruals">
-            {{ 'labels.inputs.Hide Accruals' | translate }}</mat-checkbox
-          >
-          <button mat-raised-button color="primary" [routerLink]="['export']">
-            {{ 'labels.buttons.Export' | translate }}
-          </button>
-        </div>
-      }
+      <div class="action-button m-b-20 layout-row gap-20px" *ngIf="checkStatus()">
+        <mat-checkbox [formControl]="hideReversedParam" (click)="hideReversed()" class="accruals">
+          {{ 'labels.inputs.Hide Reversed' | translate }}</mat-checkbox
+        >
+        <mat-checkbox [formControl]="hideAccrualsParam" (click)="hideAccruals()" class="accruals">
+          {{ 'labels.inputs.Hide Accruals' | translate }}</mat-checkbox
+        >
+        <button mat-raised-button color="primary" [routerLink]="['export']">
+          {{ 'labels.buttons.Export' | translate }}
+        </button>
+      </div>
     </div>
 
     <table mat-table [dataSource]="dataSource" matSort>
@@ -87,11 +77,7 @@
           [ngClass]="savingsTransactionColor(transaction)"
           (click)="showTransactions(transaction)"
         >
-          {{
-            isDebit(transaction.transactionType)
-              ? (transaction.amount | currency: currency?.code || 'USD' : 'symbol-narrow' : '1.2-2')
-              : 'N/A'
-          }}
+          {{ isDebit(transaction.transactionType) ? (transaction.amount | formatNumber) : 'N/A' }}
         </td>
       </ng-container>
 
@@ -104,11 +90,7 @@
           [ngClass]="savingsTransactionColor(transaction)"
           (click)="showTransactions(transaction)"
         >
-          {{
-            !isDebit(transaction.transactionType)
-              ? (transaction.amount | currency: currency?.code || 'USD' : 'symbol-narrow' : '1.2-2')
-              : 'N/A'
-          }}
+          {{ !isDebit(transaction.transactionType) ? (transaction.amount | formatNumber) : 'N/A' }}
         </td>
       </ng-container>
 
@@ -121,7 +103,7 @@
           [ngClass]="savingsTransactionColor(transaction)"
           (click)="showTransactions(transaction)"
         >
-          {{ transaction.runningBalance | currency: currency?.code || 'USD' : 'symbol-narrow' : '1.2-2' }}
+          {{ transaction.runningBalance | formatNumber }}
         </td>
       </ng-container>
 
@@ -129,25 +111,23 @@
         <th mat-header-cell class="center" *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
         <td mat-cell class="center" *matCellDef="let transaction">
           <button mat-icon-button [matMenuTriggerFor]="transactionMenu" aria-label="" class="action-button">
-            <mat-icon>more_vert</mat-icon>
+            <mat-icon>{{ 'labels.text.more_vert' | translate }}</mat-icon>
           </button>
           <mat-menu #transactionMenu="matMenu">
             <button mat-menu-item (click)="showTransactions(transaction)">
               <mat-icon><fa-icon icon="eye" size="sm"></fa-icon></mat-icon>
               <span>{{ 'labels.text.View Transaction' | translate }}</span>
             </button>
-            @if (!transaction.reversed) {
-              <span>
-                <button
-                  mat-menu-item
-                  *mifosxHasPermission="'ADJUSTTRANSACTION_SAVINGSACCOUNT'"
-                  (click)="undoTransaction(transaction, $event)"
-                >
-                  <mat-icon><fa-icon icon="undo" size="sm"></fa-icon></mat-icon>
-                  <span>{{ 'tooltips.Undo Transaction' | translate }}</span>
-                </button>
-              </span>
-            }
+            <span *ngIf="!transaction.reversed">
+              <button
+                mat-menu-item
+                *mifosxHasPermission="'ADJUSTTRANSACTION_SAVINGSACCOUNT'"
+                (click)="undoTransaction(transaction, $event)"
+              >
+                <mat-icon><fa-icon icon="undo" size="sm"></fa-icon></mat-icon>
+                <span>{{ 'tooltips.Undo Transaction' | translate }}</span>
+              </button>
+            </span>
             <button
               mat-menu-item
               class="account-action-button"

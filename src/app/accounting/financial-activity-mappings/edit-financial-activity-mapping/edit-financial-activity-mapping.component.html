@@ -1,11 +1,3 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <div class="container">
   <mat-card>
     <form [formGroup]="financialActivityMappingForm" (ngSubmit)="submit()">
@@ -14,12 +6,10 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Financial Activity' | translate }}</mat-label>
             <mat-select required formControlName="financialActivityId">
-              @for (financialActivity of financialActivityData; track financialActivity) {
-                <mat-option [value]="financialActivity.id">
-                  ({{ financialActivity.id }})
-                  {{ 'labels.accounting.financialActivity.' + financialActivity.name | translate }}
-                </mat-option>
-              }
+              <mat-option *ngFor="let financialActivity of financialActivityData" [value]="financialActivity.id">
+                ({{ financialActivity.id }})
+                {{ 'labels.accounting.financialActivity.' + financialActivity.name | translate }}
+              </mat-option>
             </mat-select>
           </mat-form-field>
 

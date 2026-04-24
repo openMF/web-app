@@ -1,11 +1,3 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <div class="tab-container mat-typography">
   <div class="shares-account-tables layout-row gap-2percent">
     <div class="flex-49">
@@ -14,16 +6,12 @@
         <tbody>
           <tr>
             <td>{{ 'labels.inputs.Activated On' | translate }}</td>
-            @if (sharesAccountData.timeline.activatedDate) {
-              <td>
-                {{ sharesAccountData.timeline.activatedDate | dateFormat }}
-              </td>
-            }
-            @if (!sharesAccountData.timeline.activatedDate) {
-              <td>
-                {{ 'labels.text.Not Activated' | translate }}
-              </td>
-            }
+            <td *ngIf="sharesAccountData.timeline.activatedDate">
+              {{ sharesAccountData.timeline.activatedDate | dateFormat }}
+            </td>
+            <td *ngIf="!sharesAccountData.timeline.activatedDate">
+              {{ 'labels.text.Not Activated' | translate }}
+            </td>
           </tr>
           <tr>
             <td>{{ 'labels.inputs.Currency' | translate }}</td>
@@ -31,36 +19,26 @@
           </tr>
           <tr>
             <td>{{ 'labels.inputs.External Id' | translate }}</td>
-            @if (sharesAccountData.externalId) {
-              <td>
-                <mifosx-external-identifier
-                  externalId="{{ sharesAccountData.externalId }}"
-                ></mifosx-external-identifier>
-              </td>
-            }
-            @if (!sharesAccountData.externalId) {
-              <td>
-                {{ 'labels.inputs.Unassigned' | translate }}
-              </td>
-            }
+            <td *ngIf="sharesAccountData.externalId">
+              <mifosx-external-identifier externalId="{{ sharesAccountData.externalId }}"></mifosx-external-identifier>
+            </td>
+            <td *ngIf="!sharesAccountData.externalId">
+              {{ 'labels.inputs.Unassigned' | translate }}
+            </td>
           </tr>
           <tr>
             <td>{{ 'labels.inputs.Linked Savings Account(Dividend Posting)' | translate }}</td>
-            @if (sharesAccountData.savingsAccountNumber) {
-              <td>
-                <mifosx-account-number
-                  accountType="2"
-                  clientId="{{ sharesAccountData.clientId }}"
-                  accountId="{{ sharesAccountData.savingsAccountId }}"
-                  accountNo="{{ sharesAccountData.savingsAccountNumber }}"
-                ></mifosx-account-number>
-              </td>
-            }
-            @if (!sharesAccountData.savingsAccountNumber) {
-              <td>
-                {{ 'labels.inputs.Unassigned' | translate }}
-              </td>
-            }
+            <td *ngIf="sharesAccountData.savingsAccountNumber">
+              <mifosx-account-number
+                accountType="2"
+                clientId="{{ sharesAccountData.clientId }}"
+                accountId="{{ sharesAccountData.savingsAccountId }}"
+                accountNo="{{ sharesAccountData.savingsAccountNumber }}"
+              ></mifosx-account-number>
+            </td>
+            <td *ngIf="!sharesAccountData.savingsAccountNumber">
+              {{ 'labels.inputs.Unassigned' | translate }}
+            </td>
           </tr>
         </tbody>
       </table>

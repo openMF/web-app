@@ -1,12 +1,4 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { CodeValue, Currency } from 'app/shared/models/general.model';
+import { Currency } from 'app/shared/models/general.model';
 
 export interface DelinquencyRange {
   id: number;
@@ -153,31 +145,4 @@ export interface BuyDownFeeAmortizationDetails {
   notYetAmortizedAmount: number;
   adjustedAmount: number;
   chargedOffAmount: number;
-}
-
-export interface EditablePeriod extends RepaymentSchedulePeriod {
-  changed?: boolean;
-}
-
-export interface EditableRepaymentSchedule extends RepaymentSchedule {
-  periods: EditablePeriod[];
-}
-
-export interface RepaymentScheduleEditCache {
-  edit: boolean;
-  data: RepaymentSchedulePeriod;
-}
-
-export interface ScheduleChangeRecord {
-  dueDate: string;
-  installmentAmount: number;
-}
-
-export interface LoanOriginator {
-  id: number;
-  externalId: string;
-  name: string;
-  status: string;
-  originatorType: CodeValue;
-  channelType: CodeValue;
 }

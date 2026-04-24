@@ -1,253 +1,180 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <div class="container p-b-20">
   <h3>{{ 'labels.heading.Loan Details' | translate }}</h3>
 
   <div class="responsive-column">
-    @if (loanDetails.transactionProcessingStrategyName) {
-      <div class="flex-fill layout-row">
-        <span class="flex-50">{{ 'labels.inputs.Repayment Strategy' | translate }}</span>
-        <span class="flex-50">{{ loanDetails.transactionProcessingStrategyName | translateKey: 'catalogs' }}</span>
-      </div>
-    }
+    <div class="flex-fill layout-row">
+      <span class="flex-50">{{ 'labels.inputs.Repayment Strategy' | translate }}</span>
+      <span class="flex-50">{{ loanDetails.transactionProcessingStrategyName | translateKey: 'catalogs' }}</span>
+    </div>
 
-    @if (loanProductService.isWorkingCapital) {
-      <div class="flex-fill layout-row">
-        <span class="flex-50">{{ 'labels.inputs.Period Payment Frequency' | translate }}</span>
-        <span class="flex-50">
-          {{ loanDetails.repaymentEvery }}
-          {{ camalize(loanDetails.repaymentFrequencyType.value) | translateKey: 'catalogs' }}
-        </span>
-      </div>
-
-      @if (loanDetails.periodPaymentRate) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Period Payment Rate' | translate }} </span>
-          <span class="flex-50">{{ loanDetails.periodPaymentRate | formatNumber }} %</span>
-        </div>
-      }
-
-      @if (loanDetails.discount) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Discount' | translate }} </span>
-          <span class="flex-50">{{ loanDetails.discount | formatNumber }}</span>
-        </div>
-      }
-
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Delinquency Grace Days' | translate }} </span>
-        <span class="flex-50">{{ loanDetails.delinquencyGraceDays | formatNumber }}</span>
-      </div>
-
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Delinquency Start Type' | translate }} </span>
-        <span class="flex-50">{{ loanDetails.delinquencyStartType?.value | translateKey: 'catalogs' }}</span>
-      </div>
-    }
-
-    @if (loanProductService.isLoanProduct) {
-      <div class="flex-fill layout-row">
-        <span class="flex-50">{{ 'labels.inputs.Repayments' | translate }}</span>
-        <span class="flex-50"
-          >{{ loanDetails.numberOfRepayments }} {{ 'labels.commons.every' | translate }}
-          {{ loanDetails.repaymentEvery }}&nbsp;{{
-            loanDetails.repaymentFrequencyType.value | translateKey: 'catalogs'
-          }}
-          @if (
+    <div class="flex-fill layout-row">
+      <span class="flex-50">{{ 'labels.inputs.Repayments' | translate }}</span>
+      <span class="flex-50"
+        >{{ loanDetails.numberOfRepayments }} every {{ loanDetails.repaymentEvery }}&nbsp;{{
+          loanDetails.repaymentFrequencyType.value | translateKey: 'catalogs'
+        }}
+        <span
+          *ngIf="
             loanDetails.repaymentFrequencyType?.id === 2 &&
             loanDetails.repaymentFrequencyNthDayType?.id !== 0 &&
             loanDetails.repaymentFrequencyDayOfWeekType?.id !== 0
-          ) {
-            <span class="m-l-10">
-              @if (loanDetails.repaymentFrequencyDayOfWeekType) {
-                <span>
-                  <span class="m-l-10">{{ 'labels.commons.on' | translate }}</span
-                  >{{ loanDetails.repaymentFrequencyNthDayType?.value }}
-                  <span class="m-l-10">{{
-                    loanDetails.repaymentFrequencyDayOfWeekType?.value | translateKey: 'catalogs'
-                  }}</span>
-                </span>
-              }
-            </span>
-          }
-        </span>
-      </div>
-
-      @if (loanDetails.fixedLength) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Fixed Length' | translate }} </span>
-          <span class="flex-50">
-            {{ loanDetails.fixedLength }}
-            {{ loanDetails.repaymentFrequencyType.value | translateKey: 'catalogs' }}</span
-          >
-        </div>
-      }
-
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Amortization' | translate }} </span>
-        <span class="flex-50"> {{ loanDetails.amortizationType.value | translateKey: 'catalogs' }} </span>
-      </div>
-
-      @if (loanDetails.fixedPrincipalPercentagePerInstallment) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Principal Percentage Per Installment' | translate }} </span>
-          <span class="flex-50"> {{ loanDetails.fixedPrincipalPercentagePerInstallment | formatNumber }} %</span>
-        </div>
-      }
-
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Equal Amortization' | translate }} </span>
-        <span class="flex-50"> {{ loanDetails.isEqualAmortization | yesNo }} </span>
-      </div>
-
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Interest' | translate }} </span>
-        <span class="flex-50">
-          {{ loanDetails.annualInterestRate | formatNumber }} % {{ 'labels.text.per annum' | translate }} ({{
-            loanDetails.interestRatePerPeriod
-          }}
-          %&nbsp; {{ loanDetails.interestRateFrequencyType.value | translateKey: 'catalogs' }})
-        </span>
-      </div>
-
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Interest Type' | translate }} </span>
-        <span class="flex-50"> {{ 'labels.text.' + loanDetails.interestType.value | translate }} </span>
-      </div>
-
-      <div class="flex-fill layout-row">
-        <span class="flex-50">{{ 'labels.inputs.Enable Down Payments' | translate }}:</span>
-        <span class="flex-50">{{ loanDetails.enableDownPayment | yesNo }}</span>
-      </div>
-
-      <div class="flex-fill layout-row">
-        <span class="flex-50">{{ 'labels.inputs.Loan Charge-off behaviour' | translate }}:</span>
-        <span class="flex-50">{{ loanDetails.chargeOffBehaviour.value | translateKey: 'catalogs' }}</span>
-      </div>
-
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Enable income capitalization' | translate }}</span>
-        <span class="flex-50"> {{ loanDetails.enableIncomeCapitalization | yesNo }} </span>
-      </div>
-
-      @if (loanDetails.enableIncomeCapitalization) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Income capitalization calculation type' | translate }}</span>
-          <span class="flex-50">
-            {{ loanDetails.capitalizedIncomeCalculationType?.value | translateKey: 'catalogs' }}
+          "
+          class="m-l-10"
+        >
+          <span *ngIf="loanDetails.repaymentFrequencyDayOfWeekType">
+            <span class="m-l-10">{{ 'labels.commons.on' | translate }}</span
+            >{{ loanDetails.repaymentFrequencyNthDayType?.value }}
+            <span class="m-l-10">{{
+              loanDetails.repaymentFrequencyDayOfWeekType?.value | translateKey: 'catalogs'
+            }}</span>
           </span>
-        </div>
-      }
+        </span>
+      </span>
+    </div>
 
-      @if (loanDetails.enableIncomeCapitalization) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Income capitalization strategy' | translate }}</span>
-          <span class="flex-50"> {{ loanDetails.capitalizedIncomeStrategy?.value | translateKey: 'catalogs' }} </span>
-        </div>
-      }
+    <div class="flex-fill layout-row" *ngIf="loanDetails.fixedLength">
+      <span class="flex-50"> {{ 'labels.inputs.Fixed Length' | translate }} </span>
+      <span class="flex-50">
+        {{ loanDetails.fixedLength }} {{ loanDetails.repaymentFrequencyType.value | translateKey: 'catalogs' }}</span
+      >
+    </div>
 
-      @if (loanDetails.enableIncomeCapitalization) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Income capitalization type' | translate }}</span>
-          <span class="flex-50"> {{ loanDetails.capitalizedIncomeType?.value | translateKey: 'catalogs' }} </span>
-        </div>
-      }
+    <div class="flex-fill layout-row">
+      <span class="flex-50"> {{ 'labels.inputs.Amortization' | translate }} </span>
+      <span class="flex-50"> {{ loanDetails.amortizationType.value | translateKey: 'catalogs' }} </span>
+    </div>
 
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Enable Buy down fee' | translate }}</span>
-        <span class="flex-50"> {{ loanDetails.enableBuyDownFee | yesNo }} </span>
-      </div>
+    <div class="flex-fill layout-row" *ngIf="loanDetails.fixedPrincipalPercentagePerInstallment">
+      <span class="flex-50"> {{ 'labels.inputs.Principal Percentage Per Installment' | translate }} </span>
+      <span class="flex-50"> {{ loanDetails.fixedPrincipalPercentagePerInstallment | formatNumber }} %</span>
+    </div>
 
-      @if (loanDetails.enableBuyDownFee) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Buy down fee calculation type' | translate }}</span>
-          <span class="flex-50">
-            {{ loanDetails.buyDownFeeCalculationType?.value | translateKey: 'catalogs' }}
-          </span>
-        </div>
-      }
+    <div class="flex-fill layout-row">
+      <span class="flex-50"> {{ 'labels.inputs.Equal Amortization' | translate }} </span>
+      <span class="flex-50"> {{ loanDetails.isEqualAmortization | yesNo }} </span>
+    </div>
 
-      @if (loanDetails.enableBuyDownFee) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Buy down fee strategy' | translate }}</span>
-          <span class="flex-50"> {{ loanDetails.buyDownFeeStrategy?.value | translateKey: 'catalogs' }} </span>
-        </div>
-      }
+    <div class="flex-fill layout-row">
+      <span class="flex-50"> {{ 'labels.inputs.Interest' | translate }} </span>
+      <span class="flex-50">
+        {{ loanDetails.annualInterestRate | formatNumber }} % {{ 'labels.text.per annum' | translate }} ({{
+          loanDetails.interestRatePerPeriod
+        }}
+        %&nbsp; {{ loanDetails.interestRateFrequencyType.value | translateKey: 'catalogs' }})
+      </span>
+    </div>
 
-      @if (loanDetails.enableBuyDownFee) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Buy down fee income type' | translate }}</span>
-          <span class="flex-50"> {{ loanDetails.buyDownFeeIncomeType?.value | translateKey: 'catalogs' }} </span>
-        </div>
-      }
+    <div class="flex-fill layout-row">
+      <span class="flex-50"> {{ 'labels.inputs.Interest Type' | translate }} </span>
+      <span class="flex-50"> {{ 'labels.text.' + loanDetails.interestType.value | translate }} </span>
+    </div>
 
-      @if (loanDetails.enableBuyDownFee) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Merchant Buy down fee' | translate }}</span>
-          <span class="flex-50"> {{ loanDetails.merchantBuyDownFee | yesNo }} </span>
-        </div>
-      }
+    <div class="flex-fill layout-row">
+      <span class="flex-50">{{ 'labels.inputs.Enable Down Payments' | translate }}:</span>
+      <span class="flex-50">{{ loanDetails.enableDownPayment | yesNo }}</span>
+    </div>
 
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Grace: On Principal Payment' | translate }}</span>
-        <span class="flex-50"> {{ loanDetails.graceOnPrincipalPayment }} </span>
-      </div>
+    <div class="flex-fill layout-row">
+      <span class="flex-50">{{ 'labels.inputs.Loan Charge-off behaviour' | translate }}:</span>
+      <span class="flex-50">{{ loanDetails.chargeOffBehaviour.value | translateKey: 'catalogs' }}</span>
+    </div>
 
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Grace: On Interest Payment' | translate }}</span>
-        <span class="flex-50"> {{ loanDetails.graceOnInterestPayment }} </span>
-      </div>
+    <div class="flex-fill layout-row">
+      <span class="flex-50"> {{ 'labels.inputs.Enable income capitalization' | translate }}</span>
+      <span class="flex-50"> {{ loanDetails.enableIncomeCapitalization | yesNo }} </span>
+    </div>
 
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Grace on Arrears Ageing' | translate }}</span>
-        <span class="flex-50"> {{ loanDetails.graceOnArrearsAgeing }} </span>
-      </div>
+    <div class="flex-fill layout-row" *ngIf="loanDetails.enableIncomeCapitalization">
+      <span class="flex-50"> {{ 'labels.inputs.Income capitalization calculation type' | translate }}</span>
+      <span class="flex-50">
+        {{ loanDetails.capitalizedIncomeCalculationType?.value | translateKey: 'catalogs' }}
+      </span>
+    </div>
 
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Enable installment level Delinquency' | translate }} </span>
-        <span class="flex-50"> {{ loanDetails.enableInstallmentLevelDelinquency | yesNo }} </span>
-      </div>
-    }
+    <div class="flex-fill layout-row" *ngIf="loanDetails.enableIncomeCapitalization">
+      <span class="flex-50"> {{ 'labels.inputs.Income capitalization strategy' | translate }}</span>
+      <span class="flex-50"> {{ loanDetails.capitalizedIncomeStrategy?.value | translateKey: 'catalogs' }} </span>
+    </div>
+
+    <div class="flex-fill layout-row" *ngIf="loanDetails.enableIncomeCapitalization">
+      <span class="flex-50"> {{ 'labels.inputs.Income capitalization type' | translate }}</span>
+      <span class="flex-50"> {{ loanDetails.capitalizedIncomeType?.value | translateKey: 'catalogs' }} </span>
+    </div>
+
+    <div class="flex-fill layout-row">
+      <span class="flex-50"> {{ 'labels.inputs.Enable Buy down fee' | translate }}</span>
+      <span class="flex-50"> {{ loanDetails.enableBuyDownFee | yesNo }} </span>
+    </div>
+
+    <div class="flex-fill layout-row" *ngIf="loanDetails.enableBuyDownFee">
+      <span class="flex-50"> {{ 'labels.inputs.Buy down fee calculation type' | translate }}</span>
+      <span class="flex-50">
+        {{ loanDetails.buyDownFeeCalculationType?.value | translateKey: 'catalogs' }}
+      </span>
+    </div>
+
+    <div class="flex-fill layout-row" *ngIf="loanDetails.enableBuyDownFee">
+      <span class="flex-50"> {{ 'labels.inputs.Buy down fee strategy' | translate }}</span>
+      <span class="flex-50"> {{ loanDetails.buyDownFeeStrategy?.value | translateKey: 'catalogs' }} </span>
+    </div>
+
+    <div class="flex-fill layout-row" *ngIf="loanDetails.enableBuyDownFee">
+      <span class="flex-50"> {{ 'labels.inputs.Buy down fee income type' | translate }}</span>
+      <span class="flex-50"> {{ loanDetails.buyDownFeeIncomeType?.value | translateKey: 'catalogs' }} </span>
+    </div>
+
+    <div class="flex-fill layout-row" *ngIf="loanDetails.enableBuyDownFee">
+      <span class="flex-50"> {{ 'labels.inputs.Merchant Buy down fee' | translate }}</span>
+      <span class="flex-50"> {{ loanDetails.merchantBuyDownFee | yesNo }} </span>
+    </div>
+
+    <div class="flex-fill layout-row">
+      <span class="flex-50"> {{ 'labels.inputs.Grace: On Principal Payment' | translate }}</span>
+      <span class="flex-50"> {{ loanDetails.graceOnPrincipalPayment }} </span>
+    </div>
+
+    <div class="flex-fill layout-row">
+      <span class="flex-50"> {{ 'labels.inputs.Grace: On Interest Payment' | translate }}</span>
+      <span class="flex-50"> {{ loanDetails.graceOnInterestPayment }} </span>
+    </div>
+
+    <div class="flex-fill layout-row">
+      <span class="flex-50"> {{ 'labels.inputs.Grace on Arrears Ageing' | translate }}</span>
+      <span class="flex-50"> {{ loanDetails.graceOnArrearsAgeing }} </span>
+    </div>
+
+    <div class="flex-fill layout-row">
+      <span class="flex-50"> {{ 'labels.inputs.Enable installment level Delinquency' | translate }} </span>
+      <span class="flex-50"> {{ loanDetails.enableInstallmentLevelDelinquency | yesNo }} </span>
+    </div>
 
     <div class="flex-fill layout-row">
       <span class="flex-50"> {{ 'labels.inputs.Fund Source' | translate }} </span>
-      @if (loanDetails.fundName) {
-        <span class="flex-50"> {{ loanDetails.fundName }} </span>
-      }
-      @if (!loanDetails.fundName) {
-        <span class="flex-50"> {{ 'labels.inputs.Unassigned' | translate }} </span>
-      }
+      <span class="flex-50" *ngIf="loanDetails.fundName"> {{ loanDetails.fundName }} </span>
+      <span class="flex-50" *ngIf="!loanDetails.fundName"> {{ 'labels.inputs.Unassigned' | translate }} </span>
     </div>
 
-    @if (loanProductService.isLoanProduct) {
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Interest Free Period' | translate }}</span>
-        <span class="flex-50"> {{ loanDetails.graceOnInterestCharged }} </span>
-      </div>
+    <div class="flex-fill layout-row">
+      <span class="flex-50"> {{ 'labels.inputs.Interest Free Period' | translate }}</span>
+      <span class="flex-50"> {{ loanDetails.graceOnInterestCharged }} </span>
+    </div>
 
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Interest Calculation Period' | translate }}</span>
-        <span class="flex-50"> {{ loanDetails.interestCalculationPeriodType.value | translateKey: 'catalogs' }} </span>
-      </div>
+    <div class="flex-fill layout-row">
+      <span class="flex-50"> {{ 'labels.inputs.Interest Calculation Period' | translate }}</span>
+      <span class="flex-50"> {{ loanDetails.interestCalculationPeriodType.value | translateKey: 'catalogs' }} </span>
+    </div>
 
-      <div class="flex-fill layout-row">
-        <span class="flex-50">
-          {{ 'labels.inputs.Allow Partial Interest Calculation with same as repayment' | translate }}</span
-        >
-        <span class="flex-50"> {{ loanDetails.allowPartialPeriodInterestCalculation | yesNo }} </span>
-      </div>
+    <div class="flex-fill layout-row">
+      <span class="flex-50">
+        {{ 'labels.inputs.Allow Partial Interest Calculation with same as repayment' | translate }}</span
+      >
+      <span class="flex-50"> {{ loanDetails.allowPartialPeriodInterestCalculation | yesNo }} </span>
+    </div>
 
-      <div class="flex-fill layout-row">
-        <span class="flex-50">{{ 'labels.inputs.Is interest recognition on disbursement date?' | translate }}:</span>
-        <span class="flex-50">{{ loanDetails.interestRecognitionOnDisbursementDate | yesNo }}</span>
-      </div>
-    }
+    <div class="flex-fill layout-row">
+      <span class="flex-50">{{ 'labels.inputs.Is interest recognition on disbursement date?' | translate }}:</span>
+      <span class="flex-50">{{ loanDetails.interestRecognitionOnDisbursementDate | yesNo }}</span>
+    </div>
 
     <div class="flex-fill layout-row">
       <span class="flex-50"> {{ 'labels.inputs.Submitted on' | translate }}</span>
@@ -269,124 +196,101 @@
       <span class="flex-50"> {{ loanDetails.timeline.expectedMaturityDate | dateFormat }} </span>
     </div>
 
-    @if (loanProductService.isLoanProduct) {
-      @if (loanDetails.canDefineInstallmentAmount) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Fixed EMI amount' | translate }}</span>
-          <span class="flex-50"> {{ loanDetails.fixedEmiAmount | formatNumber }} </span>
-        </div>
-      }
+    <div class="flex-fill layout-row" *ngIf="loanDetails.canDefineInstallmentAmount">
+      <span class="flex-50"> {{ 'labels.inputs.Fixed EMI amount' | translate }}</span>
+      <span class="flex-50"> {{ loanDetails.fixedEmiAmount | formatNumber }} </span>
+    </div>
 
-      @if (loanDetails.isTopup) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Is Topup Loan' | translate }}?</span>
-          <span class="flex-50"> {{ loanDetails.isTopup | yesNo }} </span>
-        </div>
-      }
+    <div class="flex-fill layout-row" *ngIf="loanDetails.isTopup">
+      <span class="flex-50"> {{ 'labels.inputs.Is Topup Loan' | translate }}?</span>
+      <span class="flex-50"> {{ loanDetails.isTopup | yesNo }} </span>
+    </div>
 
-      @if (loanDetails.isTopup) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Loan closed with Topup' | translate }} </span>
-          <span class="flex-50">
-            <a href="#">{{ loanDetails.closureLoanAccountNo }}</a>
-          </span>
-        </div>
-      }
+    <div class="flex-fill layout-row" *ngIf="loanDetails.isTopup">
+      <span class="flex-50"> {{ 'labels.inputs.Loan closed with Topup' | translate }} </span>
+      <span class="flex-50">
+        <a href="#">{{ loanDetails.closureLoanAccountNo }}</a>
+      </span>
+    </div>
 
-      @if (loanDetails.isTopup) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Topup closure amount' | translate }}</span>
-          <span class="flex-50"> {{ loanDetails.topupAmount | formatNumber }} </span>
-        </div>
-      }
+    <div class="flex-fill layout-row" *ngIf="loanDetails.isTopup">
+      <span class="flex-50"> {{ 'labels.inputs.Topup closure amount' | translate }}</span>
+      <span class="flex-50"> {{ loanDetails.topupAmount | formatNumber }} </span>
+    </div>
 
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Recalculate Interest based on new terms' | translate }}</span>
-        <span class="flex-50"> {{ loanDetails.isInterestRecalculationEnabled | yesNo }} </span>
-      </div>
+    <div class="flex-fill layout-row">
+      <span class="flex-50"> {{ 'labels.inputs.Recalculate Interest based on new terms' | translate }}</span>
+      <span class="flex-50"> {{ loanDetails.isInterestRecalculationEnabled | yesNo }} </span>
+    </div>
 
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Days in year' | translate }}</span>
-        <span class="flex-50"> {{ loanDetails.daysInYearType.value | translateKey: 'catalogs' }} </span>
-      </div>
+    <div class="flex-fill layout-row">
+      <span class="flex-50"> {{ 'labels.inputs.Days in year' | translate }}</span>
+      <span class="flex-50"> {{ loanDetails.daysInYearType.value | translateKey: 'catalogs' }} </span>
+    </div>
 
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Days in month' | translate }}</span>
-        <span class="flex-50"> {{ loanDetails.daysInMonthType.value | translateKey: 'catalogs' }} </span>
-      </div>
+    <div class="flex-fill layout-row">
+      <span class="flex-50"> {{ 'labels.inputs.Days in month' | translate }}</span>
+      <span class="flex-50"> {{ loanDetails.daysInMonthType.value | translateKey: 'catalogs' }} </span>
+    </div>
 
-      @if (loanDetails.isInterestRecalculationEnabled) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Interest recalculation compounding on' | translate }}</span>
-          <span class="flex-50">
-            {{
-              loanDetails.interestRecalculationData.interestRecalculationCompoundingType.value
-                | translateKey: 'catalogs'
-            }}
-          </span>
-        </div>
-      }
+    <div class="flex-fill layout-row" *ngIf="loanDetails.isInterestRecalculationEnabled">
+      <span class="flex-50"> {{ 'labels.inputs.Interest recalculation compounding on' | translate }}</span>
+      <span class="flex-50">
+        {{
+          loanDetails.interestRecalculationData.interestRecalculationCompoundingType.value | translateKey: 'catalogs'
+        }}
+      </span>
+    </div>
 
-      @if (loanDetails.isInterestRecalculationEnabled) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Advance payments adjustment type' | translate }}</span>
-          <span class="flex-50">
-            {{ loanDetails.interestRecalculationData.rescheduleStrategyType.value | translateKey: 'catalogs' }}
-          </span>
-        </div>
-      }
+    <div class="flex-fill layout-row" *ngIf="loanDetails.isInterestRecalculationEnabled">
+      <span class="flex-50"> {{ 'labels.inputs.Advance payments adjustment type' | translate }}</span>
+      <span class="flex-50">
+        {{ loanDetails.interestRecalculationData.rescheduleStrategyType.value | translateKey: 'catalogs' }}
+      </span>
+    </div>
 
-      @if (loanDetails.isInterestRecalculationEnabled) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50">
-            {{ 'labels.inputs.Frequency for recalculate Outstanding Principal' | translate }}</span
-          >
-          <span class="flex-50"> {{ loanDetails.interestRecalculationData.calendarData.humanReadable }} </span>
-        </div>
-      }
+    <div class="flex-fill layout-row" *ngIf="loanDetails.isInterestRecalculationEnabled">
+      <span class="flex-50"> {{ 'labels.inputs.Frequency for recalculate Outstanding Principal' | translate }}</span>
+      <span class="flex-50"> {{ loanDetails.interestRecalculationData.calendarData.humanReadable }} </span>
+    </div>
 
-      @if (
+    <div
+      class="flex-fill layout-row"
+      *ngIf="
         loanDetails.isInterestRecalculationEnabled &&
         loanDetails.interestRecalculationData.interestRecalculationCompoundingType.id !== 0
-      ) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Frequency for compounding' | translate }}</span>
-          <span class="flex-50">
-            {{ loanDetails.interestRecalculationData.compoundingCalendarData.humanReadable }}
-          </span>
-        </div>
-      }
+      "
+    >
+      <span class="flex-50"> {{ 'labels.inputs.Frequency for compounding' | translate }}</span>
+      <span class="flex-50"> {{ loanDetails.interestRecalculationData.compoundingCalendarData.humanReadable }} </span>
+    </div>
 
-      @if (loanDetails.isVariableInstallmentsAllowed) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Variable Installments Allowed' | translate }}</span>
-          <span class="flex-50"> {{ loanDetails.isVariableInstallmentsAllowed | yesNo }} </span>
-        </div>
-      }
+    <div class="flex-fill layout-row" *ngIf="loanDetails.isVariableInstallmentsAllowed">
+      <span class="flex-50"> {{ 'labels.inputs.Variable Installments Allowed' | translate }}</span>
+      <span class="flex-50"> {{ loanDetails.isVariableInstallmentsAllowed | yesNo }} </span>
+    </div>
 
-      @if (loanDetails.isVariableInstallmentsAllowed) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Gap between Installments' | translate }}</span>
-          <span class="flex-50">
-            {{ loanDetails.minimumGap | formatNumber }}&nbsp;{{ 'labels.text.Days' | translate }}&nbsp;, Max:{{
-              loanDetails.maximumGap | formatNumber
-            }}&nbsp;{{ 'labels.text.Days' | translate }}
-          </span>
-        </div>
-      }
-    }
+    <div class="flex-fill layout-row" *ngIf="loanDetails.isVariableInstallmentsAllowed">
+      <span class="flex-50"> {{ 'labels.inputs.Gap between Installments' | translate }}</span>
+      <span class="flex-50">
+        {{ loanDetails.minimumGap | formatNumber }}&nbsp;{{ 'labels.text.Days' | translate }}&nbsp;, Max:{{
+          loanDetails.maximumGap | formatNumber
+        }}&nbsp;{{ 'labels.text.Days' | translate }}
+      </span>
+    </div>
 
-    @if (
-      loanDetails &&
-      loanDetails.delinquent &&
-      loanDetails.delinquent.availableDisbursementAmountWithOverApplied !== undefined
-    ) {
-      <div class="flex-fill layout-row">
-        <span class="flex-50">{{ 'labels.inputs.Available Disbursement Amount (with Over Applied)' | translate }}</span>
-        <span class="flex-50">{{
-          loanDetails.delinquent.availableDisbursementAmountWithOverApplied | formatNumber
-        }}</span>
-      </div>
-    }
+    <div
+      class="flex-fill layout-row"
+      *ngIf="
+        loanDetails &&
+        loanDetails.delinquent &&
+        loanDetails.delinquent.availableDisbursementAmountWithOverApplied !== undefined
+      "
+    >
+      <span class="flex-50">{{ 'labels.inputs.Available Disbursement Amount (with Over Applied)' | translate }}</span>
+      <span class="flex-50">{{
+        loanDetails.delinquent.availableDisbursementAmountWithOverApplied | formatNumber
+      }}</span>
+    </div>
   </div>
 </div>

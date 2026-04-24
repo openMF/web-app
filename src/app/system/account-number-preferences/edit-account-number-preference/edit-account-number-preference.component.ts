@@ -1,18 +1,10 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { SystemService } from 'app/system/system.service';
+import { AccountNumberFormatService } from '@fineract/client';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -27,11 +19,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditAccountNumberPreferenceComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private formBuilder = inject(UntypedFormBuilder);
-  private systemService = inject(SystemService);
-  private router = inject(Router);
-
   /** Account Number Preference Form */
   accountNumberPreferenceForm: UntypedFormGroup;
   /** Account Number Preference Data */
@@ -44,11 +31,16 @@ export class EditAccountNumberPreferenceComponent implements OnInit {
   /**
    * Retrieves the account number preference and account number preferences template data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {SystemService} systemService Accounting Service.
+   * @param {AccountNumberFormatService} accountNumberFormatService Account Number Format Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private formBuilder: UntypedFormBuilder,
+    private accountNumberFormatService: AccountNumberFormatService,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { accountNumberPreference: any; accountNumberPreferencesTemplate: any }) => {
       this.accountNumberPreferenceData = data.accountNumberPreference;
       this.accountNumberPreferencesTemplateData = data.accountNumberPreferencesTemplate;
@@ -87,8 +79,8 @@ export class EditAccountNumberPreferenceComponent implements OnInit {
     if (accountNumberPreferenceValue.prefixType === '') {
       accountNumberPreferenceValue.prefixType = undefined;
     }
-    this.systemService
-      .updateAccountNumberPreference(this.accountNumberPreferenceData.id, accountNumberPreferenceValue)
+    this.accountNumberFormatService
+      .update1(this.accountNumberPreferenceData.id, accountNumberPreferenceValue)
       .subscribe((response: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });

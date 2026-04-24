@@ -1,17 +1,10 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Component, OnInit, inject } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 import { ExternalAssetOwnerService } from 'app/loans/services/external-asset-owner.service';
+import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 
 @Component({
   selector: 'mifosx-asset-transfer-loan',
@@ -21,15 +14,13 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
     ...STANDALONE_SHARED_IMPORTS
   ]
 })
-export class AssetTransferLoanComponent extends LoanAccountActionsBaseComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private externalAssetOwnerService = inject(ExternalAssetOwnerService);
-  private dateUtils = inject(Dates);
-
+export class AssetTransferLoanComponent implements OnInit {
   BUYBACK_COMMAND = 'buyback';
   SALE_COMMAND = 'sale';
 
   command: string;
+  /** Loan Id */
+  loanId: string;
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
@@ -37,8 +28,15 @@ export class AssetTransferLoanComponent extends LoanAccountActionsBaseComponent 
   /** Sell Loan Form */
   saleLoanForm: UntypedFormGroup;
 
-  constructor() {
-    super();
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private externalAssetOwnerService: ExternalAssetOwnerService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates,
+    private settingsService: SettingsService
+  ) {
+    this.loanId = this.route.snapshot.params['loanId'];
     const actionName = this.route.snapshot.params['action'];
     this.command = actionName === 'Sell Loan' ? this.SALE_COMMAND : this.BUYBACK_COMMAND;
   }
@@ -99,7 +97,7 @@ export class AssetTransferLoanComponent extends LoanAccountActionsBaseComponent 
     this.externalAssetOwnerService
       .executeExternalAssetOwnerLoanCommand(this.loanId, data, this.command)
       .subscribe((response: any) => {
-        this.gotoLoanView('external-asset-owner');
+        this.router.navigate(['../../external-asset-owner'], { relativeTo: this.route });
       });
   }
 }

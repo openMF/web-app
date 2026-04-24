@@ -1,12 +1,4 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import {
   AdvancedCreditAllocation,
   AdvancedPaymentAllocation,
@@ -46,22 +38,24 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoanProductPaymentStrategyStepComponent implements OnInit {
-  private dialog = inject(MatDialog);
-  private advancedPaymentStrategy = inject(AdvancedPaymentStrategy);
-  private translateService = inject(TranslateService);
-
   @Input() advancedPaymentAllocations: AdvancedPaymentAllocation[] = [];
   @Input() advancedCreditAllocations: AdvancedCreditAllocation[] = [];
   @Input() advancedPaymentAllocationTransactionTypes: PaymentAllocationTransactionType[] = [];
-  @Input() paymentAllocationOrderDefault: PaymentAllocationOrder[] = [];
+  @Input() paymentAllocationOrderDefault: PaymentAllocationOrder[];
   @Input() advancedCreditAllocationTransactionTypes: PaymentAllocationTransactionType[] = [];
-  @Input() creditAllocationOrderDefault: CreditAllocationOrder[] = [];
+  @Input() creditAllocationOrderDefault: CreditAllocationOrder[];
 
   @Output() paymentAllocationChange = new EventEmitter<boolean>();
   @Output() setPaymentAllocation = new EventEmitter<PaymentAllocation[]>();
   @Output() setCreditAllocation = new EventEmitter<CreditAllocation[]>();
 
   @ViewChild(MatTabGroup) tabGroup: MatTabGroup;
+
+  constructor(
+    private dialog: MatDialog,
+    private advancedPaymentStrategy: AdvancedPaymentStrategy,
+    private translateService: TranslateService
+  ) {}
 
   ngOnInit(): void {
     this.sendAllocations();
@@ -96,15 +90,13 @@ export class LoanProductPaymentStrategyStepComponent implements OnInit {
         transactionTypesOptions.push(option);
       }
     });
-    if (this.advancedCreditAllocationTransactionTypes) {
-      this.advancedCreditAllocationTransactionTypes.forEach((option: PaymentAllocationTransactionType) => {
-        if (transactionTypesCurrent.indexOf(option.code) < 0) {
-          option.credit = true;
-          option.value = this.translateService.instant('labels.catalogs.' + option.value);
-          transactionTypesOptions.push(option);
-        }
-      });
-    }
+    this.advancedCreditAllocationTransactionTypes.forEach((option: PaymentAllocationTransactionType) => {
+      if (transactionTypesCurrent.indexOf(option.code) < 0) {
+        option.credit = true;
+        option.value = this.translateService.instant('labels.catalogs.' + option.value);
+        transactionTypesOptions.push(option);
+      }
+    });
 
     const formfields: FormfieldBase[] = [
       new SelectBase({
@@ -113,6 +105,7 @@ export class LoanProductPaymentStrategyStepComponent implements OnInit {
         options: { label: 'value', value: 'code', data: transactionTypesOptions },
         order: 1
       })
+
     ];
     const data = {
       title: this.translateService.instant('labels.inputs.Advanced Payment Allocation Transaction Type'),

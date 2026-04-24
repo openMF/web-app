@@ -1,12 +1,3 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-/* eslint-disable @angular-eslint/prefer-inject */
 /** Angular Imports */
 import { Inject, Injectable, InjectionToken, Injector, Optional } from '@angular/core';
 import { HttpClient, HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
@@ -90,8 +81,7 @@ export class HttpService extends HttpClient {
       // Configure default interceptors that can be disabled here
       this.interceptors = [
         this.injector.get(ApiPrefixInterceptor),
-        this.injector.get(ErrorHandlerInterceptor)
-      ];
+        this.injector.get(ErrorHandlerInterceptor)];
     }
   }
 

@@ -1,21 +1,11 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <form [formGroup]="fixedDepositProductCurrencyForm">
   <div class="layout-row-wrap gap-2px responsive-column">
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
       <mat-select formControlName="currencyCode" required>
-        @for (currency of currencyData; track currency) {
-          <mat-option [value]="currency.code">
-            {{ currency.name }}
-          </mat-option>
-        }
+        <mat-option *ngFor="let currency of currencyData" [value]="currency.code">
+          {{ currency.name }}
+        </mat-option>
       </mat-select>
       <mat-error>
         {{ 'labels.inputs.Currency' | translate }} {{ 'labels.commons.is' | translate }}
@@ -25,38 +15,21 @@
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Decimal Places' | translate }}</mat-label>
-      <input
-        type="number"
-        min="0"
-        matInput
-        matTooltip="{{ 'tooltips.Decimal places to be used to track and report' | translate }}"
-        formControlName="digitsAfterDecimal"
-        required
-      />
-      <mat-error *ngIf="fixedDepositProductCurrencyForm.get('digitsAfterDecimal')?.hasError('required')">
+      <input type="number" matInput formControlName="digitsAfterDecimal" required />
+      <mat-error>
         {{ 'labels.inputs.Decimal Places' | translate }} {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
-      <mat-error *ngIf="fixedDepositProductCurrencyForm.get('digitsAfterDecimal')?.hasError('min')">
-        {{ 'labels.inputs.Decimal Places' | translate }} {{ 'labels.commons.Minimum Value must be' | translate }}
-        <strong>0</strong>
-      </mat-error>
     </mat-form-field>
 
-    <mat-checkbox labelPosition="before" formControlName="setMultiples" class="flex-98 margin-t checkbox-align-center">
-      {{ 'labels.inputs.Set the fixed deposit installment in multiples of' | translate }}
-    </mat-checkbox>
-
-    @if (fixedDepositProductCurrencyForm.value.setMultiples) {
-      <mat-form-field class="flex-48">
-        <mat-label>{{ 'labels.inputs.Currency in multiples of' | translate }}</mat-label>
-        <input type="number" min="1" matInput formControlName="inMultiplesOf" />
-        <mat-error>
-          {{ 'labels.inputs.Currency in multiples of' | translate }} {{ 'labels.commons.is' | translate }}
-          <strong>{{ 'labels.commons.required' | translate }}</strong>
-        </mat-error>
-      </mat-form-field>
-    }
+    <mat-form-field class="flex-48">
+      <mat-label>{{ 'labels.inputs.Currency in multiples of' | translate }}</mat-label>
+      <input type="number" matInput formControlName="inMultiplesOf" />
+      <mat-error>
+        {{ 'labels.inputs.Currency in multiples of' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
+      </mat-error>
+    </mat-form-field>
   </div>
 
   <div class="layout-row align-center gap-2percent margin-t responsive-column">

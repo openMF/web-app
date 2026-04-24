@@ -1,20 +1,12 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { UndoTransactionDialogComponent } from 'app/savings/savings-account-view/custom-dialogs/undo-transaction-dialog/undo-transaction-dialog.component';
 import { Dates } from 'app/core/utils/dates';
-import { SavingsService } from 'app/savings/savings.service';
+import { SavingsAccountTransactionsService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
-import { NgClass, CurrencyPipe } from '@angular/common';
+import { NgIf, NgClass, CurrencyPipe } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TransactionPaymentDetailComponent } from '../../../../shared/transaction-payment-detail/transaction-payment-detail.component';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
@@ -37,13 +29,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewTransactionComponent {
-  private savingsService = inject(SavingsService);
-  private route = inject(ActivatedRoute);
-  private dateUtils = inject(Dates);
-  private router = inject(Router);
-  dialog = inject(MatDialog);
-  private settingsService = inject(SettingsService);
-
   accountId: string;
   transactionId: string;
   /** Transaction data. */
@@ -51,7 +36,14 @@ export class ViewTransactionComponent {
 
   /**
    */
-  constructor() {
+  constructor(
+    private savingsAccountTransactionsService: SavingsAccountTransactionsService,
+    private route: ActivatedRoute,
+    private dateUtils: Dates,
+    private router: Router,
+    public dialog: MatDialog,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { fixedDepositsAccountTransaction: any }) => {
       this.accountId = this.route.parent.snapshot.params['fixedDepositAccountId'];
       this.transactionData = data.fixedDepositsAccountTransaction;
@@ -84,8 +76,13 @@ export class ViewTransactionComponent {
           dateFormat,
           locale
         };
-        this.savingsService
-          .executeSavingsAccountTransactionsCommand(this.accountId, 'undo', data, this.transactionData.id)
+        this.savingsAccountTransactionsService
+          .adjustTransaction1({
+            savingsId: Number(this.accountId),
+            transactionId: this.transactionData.id,
+            command: 'undo',
+            postSavingsAccountBulkReversalTransactionsRequest: data as any
+          })
           .subscribe(() => {
             this.router.navigate(['../'], { relativeTo: this.route });
           });

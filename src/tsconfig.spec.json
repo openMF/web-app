@@ -4,15 +4,8 @@
     "outDir": "../out-tsc/spec",
     "baseUrl": "../",
     "paths": {
-      "@pipes/*": [
-        "src/app/pipes/*"
-      ],
-      "app/*": [
-        "src/app/*"
-      ],
-      "environments/*": [
-        "src/environments/*"
-      ]
+      "@pipes/*": ["src/app/pipes/*"],
+      "app/*": ["src/app/*"]
     },
     "types": [
       "jest",

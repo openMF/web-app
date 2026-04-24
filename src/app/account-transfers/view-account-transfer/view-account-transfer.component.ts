@@ -1,14 +1,6 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
 import { Location, NgIf, NgClass } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatDivider } from '@angular/material/divider';
@@ -30,16 +22,16 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewAccountTransferComponent {
-  private route = inject(ActivatedRoute);
-  private location = inject(Location);
-
   viewAccountTransferData: any;
   /**
    * Retrieves the view account transfer data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Location} location Location.
    */
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private location: Location
+  ) {
     this.route.data.subscribe((data: { viewAccountTransferData: any }) => {
       this.viewAccountTransferData = data.viewAccountTransferData;
     });

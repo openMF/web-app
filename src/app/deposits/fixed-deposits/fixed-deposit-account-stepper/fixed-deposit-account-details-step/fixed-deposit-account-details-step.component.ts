@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, Input, Output, EventEmitter, inject } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 
@@ -34,10 +26,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class FixedDepositAccountDetailsStepComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private fixedDepositsService = inject(FixedDepositsService);
-  private settingsService = inject(SettingsService);
-
   /** Fixed Deposits Account Template */
   @Input() fixedDepositsAccountTemplate: any;
 
@@ -65,7 +53,11 @@ export class FixedDepositAccountDetailsStepComponent implements OnInit {
    * @param {FixedDepositsService} fixedDepositsService Fixed Deposits Service.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor() {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private fixedDepositsService: FixedDepositsService,
+    private settingsService: SettingsService
+  ) {
     this.createFixedDepositsAccountDetailsForm();
   }
 

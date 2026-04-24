@@ -1,18 +1,10 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Dates } from 'app/core/utils/dates';
 import { LoanDelinquencyActionDialogComponent } from 'app/loans/custom-dialog/loan-delinquency-action-dialog/loan-delinquency-action-dialog.component';
-import { LoansService } from 'app/loans/loans.service';
+import { LoansService } from '@fineract/client';
 import {
   DelinquentData,
   InstallmentLevelDelinquency,
@@ -22,7 +14,7 @@ import {
 import { SettingsService } from 'app/settings/settings.service';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 import { Currency } from 'app/shared/models/general.model';
-import { NgClass, CurrencyPipe } from '@angular/common';
+import { NgIf, NgClass, CurrencyPipe } from '@angular/common';
 import {
   MatTable,
   MatColumnDef,
@@ -41,7 +33,6 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { DatetimeFormatPipe } from '../../../pipes/datetime-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
 
 @Component({
   selector: 'mifosx-loan-delinquency-tags-tab',
@@ -68,14 +59,7 @@ import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan
     FormatNumberPipe
   ]
 })
-export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private loansServices = inject(LoansService);
-  private dateUtils = inject(Dates);
-  private settingsService = inject(SettingsService);
-  private translateService = inject(TranslateService);
-  dialog = inject(MatDialog);
-
+export class LoanDelinquencyTagsTabComponent implements OnInit {
   loanDelinquencyTags: LoanDelinquencyTags[] = [];
   loanDelinquencyActions: LoanDelinquencyAction[] = [];
   currentLoanDelinquencyAction: LoanDelinquencyAction | null;
@@ -105,8 +89,14 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
   locale: string;
   dateFormat: string;
 
-  constructor() {
-    super();
+  constructor(
+    private route: ActivatedRoute,
+    private loansServices: LoansService,
+    private dateUtils: Dates,
+    private settingsService: SettingsService,
+    private translateService: TranslateService,
+    public dialog: MatDialog
+  ) {
     this.loanId = this.route.parent.parent.snapshot.params['loanId'];
 
     this.route.parent.data.subscribe(
@@ -193,14 +183,16 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
       };
     }
 
-    this.loansServices.createDelinquencyActions(this.loanId, payload).subscribe((result: any) => {
-      this.loansServices
-        .getDelinquencyActions(this.loanProductService.loanAccountPath, this.loanId)
-        .subscribe((loanDelinquencyActions: LoanDelinquencyAction[]) => {
-          this.loanDelinquencyActions = loanDelinquencyActions;
-          this.validateDelinquencyActions();
-        });
-    });
+    this.loansServices
+      .createLoanDelinquencyAction({ loanId: Number(this.loanId), postLoansDelinquencyActionRequest: payload })
+      .subscribe((result: any) => {
+        this.loansServices
+          .getLoanDelinquencyActions({ loanId: Number(this.loanId) })
+          .subscribe((loanDelinquencyActions: any) => {
+            this.loanDelinquencyActions = loanDelinquencyActions;
+            this.validateDelinquencyActions();
+          });
+      });
   }
 
   isCurrentAndPauseAction(item: LoanDelinquencyAction): boolean {

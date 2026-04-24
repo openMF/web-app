@@ -1,20 +1,12 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import { BulkImportService } from '@fineract/client';
 
 /** Custom Imports */
 import { BulkImports } from './view-bulk-import/bulk-imports';
@@ -24,9 +16,12 @@ import { BulkImports } from './view-bulk-import/bulk-imports';
  */
 @Injectable()
 export class BulkImportResolver {
-  private organizationService = inject(OrganizationService);
-
   bulkImportsArray = BulkImports;
+
+  /**
+   * @param {BulkImportService} bulkImportService Bulk Import service.
+   */
+  constructor(private bulkImportService: BulkImportService) {}
 
   /**
    * Gets bulk-import's entity name
@@ -42,7 +37,7 @@ export class BulkImportResolver {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const entity = this.getEntityName(route.params['import-name']);
-    return this.organizationService.getImports(entity);
+    const entityType = this.getEntityName(route.params['import-name']);
+    return this.bulkImportService.retrieveImportDocuments({ entityType });
   }
 }

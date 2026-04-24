@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { Alert } from 'app/core/alert/alert.model';
@@ -17,7 +9,7 @@ import { SettingsService } from 'app/settings/settings.service';
 import { Subscription } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { GlobalConfigurationService, BusinessDateManagementService } from '@fineract/client';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -37,12 +29,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class BusinessDateTabComponent implements OnInit {
-  private systemService = inject(SystemService);
-  private settingsService = inject(SettingsService);
-  private formBuilder = inject(UntypedFormBuilder);
-  private dateUtils = inject(Dates);
-  private alertService = inject(AlertService);
-
   /** Subscription to alerts. */
   alert$: Subscription;
 
@@ -64,6 +50,23 @@ export class BusinessDateTabComponent implements OnInit {
   isBusinessDateEnabled = false;
   isEditInProgress = false;
 
+  /**
+   * Retrieves the configurations data from `resolve`.
+   * @param {GlobalConfigurationService} globalConfigurationService Global Configuration Service.
+   * @param {BusinessDateManagementService} BusinessDateManagementService Buisness Date Management Service.
+   * @param {SettingsService} settingsService Settings Service.
+   * @param {FormBuilder} formBuilder Form Builder.
+   * @param {Dates} dateUtils Date Utils.
+   */
+  constructor(
+    private globalConfigurationService: GlobalConfigurationService,
+    private businessDateManagementService: BusinessDateManagementService,
+    private settingsService: SettingsService,
+    private formBuilder: UntypedFormBuilder,
+    private dateUtils: Dates,
+    private alertService: AlertService
+  ) {}
+
   ngOnInit(): void {
     this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
       const alertType = alertEvent.type;
@@ -84,8 +87,8 @@ export class BusinessDateTabComponent implements OnInit {
    * Get the Configuration and the Business Date data
    */
   getConfigurations(): void {
-    this.systemService
-      .getConfigurationByName(SettingsService.businessDateConfigName)
+    this.globalConfigurationService
+      .retrieveOneByName({ name: SettingsService.businessDateConfigName })
       .subscribe((configurationData: any) => {
         this.isBusinessDateEnabled = configurationData.enabled;
         if (this.isBusinessDateEnabled) {
@@ -95,7 +98,7 @@ export class BusinessDateTabComponent implements OnInit {
   }
 
   setBusinessDates(): void {
-    this.systemService.getBusinessDates().subscribe((businessDateData: any) => {
+    this.businessDateManagementService.getBusinessDates().subscribe((businessDateData: any) => {
       businessDateData.forEach((data: any) => {
         if (data.type === SettingsService.businessDateType) {
           this.businessDate = new Date(data.date);
@@ -144,13 +147,13 @@ export class BusinessDateTabComponent implements OnInit {
     if (this.dateIndex === 1) {
       dateType = SettingsService.cobDateType;
     }
-    const data = {
+    const businessDateRequest = {
       date: this.dateUtils.formatDate(prevBusinessDate, dateFormat),
       type: dateType,
       dateFormat,
       locale
     };
-    this.systemService.updateBusinessDate(data).subscribe((response: any) => {
+    this.businessDateManagementService.updateBusinessDate({ businessDateRequest }).subscribe((response: any) => {
       this.getConfigurations();
       this.editInProgressToggle(this.dateIndex);
     });

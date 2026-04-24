@@ -1,18 +1,10 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { AccountingService } from '../accounting.service';
+import { PeriodicAccrualAccountingService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -30,19 +22,28 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class PeriodicAccrualsComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private accountingService = inject(AccountingService);
-  private settingsService = inject(SettingsService);
-  private dateUtils = inject(Dates);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-
   /** Minimum accrue date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum accrue date allowed. */
   maxDate = new Date();
   /** Periodic accruals form. */
   periodicAccrualsForm: UntypedFormGroup;
+
+  /**
+   * @param {FormBuilder} formBuilder Form Builder.
+   * @param {AccountingService} accountingService Accounting Service.
+   * @param {SettingsService} settingsService Settings Service.
+   * @param {ActivatedRoute} route Activated Route.
+   * @param {Router} router Router for navigation.
+   */
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private periodicAccrualAccountingService: PeriodicAccrualAccountingService,
+    private settingsService: SettingsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   /**
    * Creates periodic accruals form.
@@ -76,8 +77,10 @@ export class PeriodicAccrualsComponent implements OnInit {
     if (periodicAccruals.tillDate instanceof Date) {
       periodicAccruals.tillDate = this.dateUtils.formatDate(periodicAccruals.tillDate, this.settingsService.dateFormat);
     }
-    this.accountingService.executePeriodicAccruals(periodicAccruals).subscribe(() => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.periodicAccrualAccountingService
+      .executePeriodicAccrualAccounting({ postRunaccrualsRequest: periodicAccruals })
+      .subscribe(() => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
 }

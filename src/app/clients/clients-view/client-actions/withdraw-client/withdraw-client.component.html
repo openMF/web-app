@@ -1,11 +1,3 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <div class="container">
   <mat-card>
     <form [formGroup]="withdrawClientForm" (ngSubmit)="submit()">
@@ -23,29 +15,23 @@
             />
             <mat-datepicker-toggle matSuffix [for]="withdrawalDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #withdrawalDatePicker></mat-datepicker>
-            @if (withdrawClientForm.controls.withdrawalDate.hasError('required')) {
-              <mat-error>
-                {{ 'labels.inputs.Withdrawal Date' | translate }} {{ 'labels.commons.is' | translate }}
-                <strong>{{ 'labels.commons.required' | translate }}</strong>
-              </mat-error>
-            }
+            <mat-error *ngIf="withdrawClientForm.controls.withdrawalDate.hasError('required')">
+              {{ 'labels.inputs.Withdrawal Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Withdrawal Reason' | translate }}</mat-label>
             <mat-select formControlName="withdrawalReasonId">
-              @for (reason of withdrawalData; track reason) {
-                <mat-option [value]="reason.id">
-                  {{ reason.name }}
-                </mat-option>
-              }
+              <mat-option *ngFor="let reason of withdrawalData" [value]="reason.id">
+                {{ reason.name }}
+              </mat-option>
             </mat-select>
-            @if (withdrawClientForm.controls.withdrawalReasonId.hasError('required')) {
-              <mat-error>
-                {{ 'labels.inputs.Withdrawal Reason' | translate }} {{ 'labels.commons.is' | translate }}
-                <strong>{{ 'labels.commons.required' | translate }}</strong>
-              </mat-error>
-            }
+            <mat-error *ngIf="withdrawClientForm.controls.withdrawalReasonId.hasError('required')">
+              {{ 'labels.inputs.Withdrawal Reason' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
           </mat-form-field>
         </div>
       </mat-card-content>

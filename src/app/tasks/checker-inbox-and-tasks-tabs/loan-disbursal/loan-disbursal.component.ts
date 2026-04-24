@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
@@ -29,7 +21,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 
 /** Custom Services */
-import { TasksService } from '../../tasks.service';
+import { BatchAPIService, LoansService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { TranslateService } from '@ngx-translate/core';
@@ -60,13 +52,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoanDisbursalComponent {
-  private route = inject(ActivatedRoute);
-  private dialog = inject(MatDialog);
-  private dateUtils = inject(Dates);
-  private settingsService = inject(SettingsService);
-  private translateService = inject(TranslateService);
-  private tasksService = inject(TasksService);
-
   /** Loans Data */
   loans: any;
   /** Batch Requests */
@@ -91,9 +76,18 @@ export class LoanDisbursalComponent {
    * @param {Dates} dateUtils Date Utils.
    * @param {router} router Router.
    * @param {SettingsService} settingsService Settings Service.
-   * @param {TasksService} tasksService Tasks Service.
+   * @param {BatchAPIService} batchAPIService Batch API Service.
+   * @param {LoansService} loansService Loans Service.
    */
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private dialog: MatDialog,
+    private dateUtils: Dates,
+    private settingsService: SettingsService,
+    private translateService: TranslateService,
+    private batchAPIService: BatchAPIService,
+    private loansService: LoansService
+  ) {
     this.route.data.subscribe((data: { loansData: any }) => {
       this.loans = data.loansData.pageItems;
       this.loans = this.loans.filter((account: any) => {
@@ -142,11 +136,11 @@ export class LoanDisbursalComponent {
 
   bulkLoanDisbursal() {
     const dateFormat = this.settingsService.dateFormat;
-    const actualDisbursementDate = this.dateUtils.formatDate(new Date(), dateFormat);
+    const approvedOnDate = this.dateUtils.formatDate(new Date(), dateFormat);
     const locale = this.settingsService.language.code;
     const formData = {
       dateFormat,
-      actualDisbursementDate,
+      approvedOnDate,
       locale
     };
     const selectedAccounts = this.selection.selected.length;
@@ -160,9 +154,9 @@ export class LoanDisbursalComponent {
       const batchData = { requestId: reqId++, relativeUrl: url, method: 'POST', body: bodyData };
       this.batchRequests.push(batchData);
     });
-    this.tasksService.submitBatchData(this.batchRequests).subscribe((response: any) => {
+    this.batchAPIService.handleBatchRequests({ batchRequest: this.batchRequests }).subscribe((response: any) => {
       response.forEach((responseEle: any) => {
-        if (responseEle.statusCode === '200') {
+        if ((responseEle.statusCode = '200')) {
           approvedAccounts++;
           responseEle.body = JSON.parse(responseEle.body);
           if (selectedAccounts === approvedAccounts) {
@@ -174,10 +168,10 @@ export class LoanDisbursalComponent {
   }
 
   loanResource() {
-    this.tasksService.getAllLoansToBeDisbursed().subscribe((response: any) => {
+    this.loansService.retrieveAll27().subscribe((response: any) => {
       this.loans = response.pageItems;
       this.loans = this.loans.filter((account: any) => {
-        return account.status.waitingForDisbursal;
+        return account.status.waitingForDisbursal === true;
       });
       this.dataSource = new MatTableDataSource(this.loans);
       this.selection = new SelectionModel(true, []);

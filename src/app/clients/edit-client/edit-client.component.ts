@@ -1,15 +1,6 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { LegalFormId } from 'app/clients/models/legal-form.enum';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
@@ -19,10 +10,9 @@ import {
 } from '@angular/forms';
 
 /** Custom Services */
-import { ClientsService } from '../clients.service';
+import { ClientService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
-import { ExternalNationalIdService } from 'app/clients/services/external-national-id.service';
 import { MatDivider } from '@angular/material/divider';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -35,7 +25,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   selector: 'mifosx-edit-client',
   templateUrl: './edit-client.component.html',
   styleUrls: ['./edit-client.component.scss'],
-  providers: [ExternalNationalIdService],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     MatDivider,
@@ -44,14 +33,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditClientComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private clientsService = inject(ClientsService);
-  private dateUtils = inject(Dates);
-  private settingsService = inject(SettingsService);
-  externalNationalIdService = inject(ExternalNationalIdService);
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -78,10 +59,7 @@ export class EditClientComponent implements OnInit {
   constitutionOptions: any;
   /** Gender Options */
   genderOptions: any;
-  legalFormId = LegalFormId.PERSON;
-
-  /** Expose enum to template */
-  readonly LegalFormId = LegalFormId;
+  legalFormId = 1;
 
   /**
    * Fetches client template data from `resolve`
@@ -92,7 +70,14 @@ export class EditClientComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor() {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private clientsService: ClientService,
+    private dateUtils: Dates,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { clientDataAndTemplate: any }) => {
       this.clientDataAndTemplate = data.clientDataAndTemplate;
     });
@@ -103,7 +88,7 @@ export class EditClientComponent implements OnInit {
     this.createEditClientForm();
     this.setOptions();
     this.buildDependencies();
-    this.legalFormId = LegalFormId.PERSON;
+    this.legalFormId = 1;
     this.editClientForm.patchValue({
       officeId: this.clientDataAndTemplate.officeId,
       staffId: this.clientDataAndTemplate.staffId,
@@ -129,8 +114,6 @@ export class EditClientComponent implements OnInit {
     if (this.clientDataAndTemplate.legalForm) {
       this.legalFormId = this.clientDataAndTemplate.legalForm.id;
     }
-    // skipInitialValue=true: avoid re-fetching data for an already-saved external ID
-    this.externalNationalIdService.watchExternalId(this.editClientForm, this.genderOptions, true);
   }
 
   /**
@@ -181,7 +164,7 @@ export class EditClientComponent implements OnInit {
    */
   buildDependencies() {
     this.editClientForm.get('legalFormId').valueChanges.subscribe((legalFormId: any) => {
-      if (legalFormId === LegalFormId.PERSON) {
+      if (legalFormId === 1) {
         this.editClientForm.removeControl('fullname');
         this.editClientForm.removeControl('clientNonPersonDetails');
         this.editClientForm.addControl(
@@ -211,8 +194,7 @@ export class EditClientComponent implements OnInit {
             ],
             incorpValidityTillDate: [
               this.clientDataAndTemplate.clientNonPersonDetails.incorpValidityTillDate &&
-                new Date(this.clientDataAndTemplate.clientNonPersonDetails.incorpValidityTillDate)
-            ],
+                new Date(this.clientDataAndTemplate.clientNonPersonDetails.incorpValidityTillDate)],
             incorpNumber: [this.clientDataAndTemplate.clientNonPersonDetails.incorpNumber],
             mainBusinessLineId: [
               this.clientDataAndTemplate.clientNonPersonDetails.mainBusinessLine &&
@@ -226,7 +208,7 @@ export class EditClientComponent implements OnInit {
   }
 
   getDateLabel(legalFormId: number, values: string[]): string {
-    return legalFormId === LegalFormId.PERSON ? values[0] : values[1];
+    return legalFormId === 1 ? values[0] : values[1];
   }
 
   /**
@@ -260,8 +242,13 @@ export class EditClientComponent implements OnInit {
     } else {
       clientData.clientNonPersonDetails = {};
     }
-    this.clientsService.updateClient(this.clientDataAndTemplate.id, clientData).subscribe(() => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.clientsService
+      .update10({
+        clientId: this.clientDataAndTemplate.id,
+        putClientsClientIdRequest: clientData
+      })
+      .subscribe(() => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
 }

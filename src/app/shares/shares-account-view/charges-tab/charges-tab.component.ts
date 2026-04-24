@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   MatTableDataSource,
   MatTable,
@@ -22,7 +14,7 @@ import {
   MatRow
 } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { CurrencyPipe } from '@angular/common';
+import { NgIf, CurrencyPipe } from '@angular/common';
 import { MatTooltip } from '@angular/material/tooltip';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -50,8 +42,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ChargesTabComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-
   /** Shares Account Data */
   sharesAccountData: any;
   /** Charges Data */
@@ -75,7 +65,7 @@ export class ChargesTabComponent implements OnInit {
    * Retrieves shares account aata from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor() {
+  constructor(private route: ActivatedRoute) {
     this.route.parent.data.subscribe((data: { sharesAccountData: any }) => {
       this.sharesAccountData = data.sharesAccountData;
       this.chargesData = this.sharesAccountData.charges;

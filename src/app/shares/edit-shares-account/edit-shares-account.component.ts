@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, ViewChild, inject } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Components */
@@ -16,7 +8,7 @@ import { SharesAccountTermsStepComponent } from '../shares-account-stepper/share
 import { SharesAccountChargesStepComponent } from '../shares-account-stepper/shares-account-charges-step/shares-account-charges-step.component';
 
 /** Custom Services */
-import { SharesService } from '../shares.service';
+import { ShareAccountService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
@@ -45,12 +37,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditSharesAccountComponent {
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private dateUtils = inject(Dates);
-  private sharesService = inject(SharesService);
-  private settingsService = inject(SettingsService);
-
   /** Shares Account and Template */
   sharesAccountAndTemplate: any;
   /** Shares Account Product Template */
@@ -70,10 +56,16 @@ export class EditSharesAccountComponent {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {Dates} dateUtils Date Utils
-   * @param {SharesService} sharesService Shares Service
+   * @param {ShareAccountService} shareAccountService Shares Account Service
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates,
+    private shareAccountService: ShareAccountService,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { sharesAccountAndTemplate: any }) => {
       this.sharesAccountAndTemplate = data.sharesAccountAndTemplate;
     });
@@ -142,8 +134,8 @@ export class EditSharesAccountComponent {
       dateFormat,
       locale
     };
-    this.sharesService
-      .updateSharesAccount(this.sharesAccountAndTemplate.id, sharesAccount)
+    this.shareAccountService
+      .updateAccount(this.sharesAccountAndTemplate.id, sharesAccount)
       .subscribe((response: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });

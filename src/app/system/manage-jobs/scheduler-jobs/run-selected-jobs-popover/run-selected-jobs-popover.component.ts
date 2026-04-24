@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, EventEmitter, OnInit, Output, QueryList, ViewChildren, inject } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogTitle,
@@ -15,7 +7,7 @@ import {
   MatDialogActions,
   MatDialogClose
 } from '@angular/material/dialog';
-import { SystemService } from 'app/system/system.service';
+import { SCHEDULERJOBService } from '@fineract/client';
 import { RunSelectedJobsTableComponent } from './run-selected-jobs-table/run-selected-jobs-table.component';
 import { CdkScrollable } from '@angular/cdk/scrolling';
 import { MatList, MatListItem } from '@angular/material/list';
@@ -60,9 +52,6 @@ export interface JobDataType {
   ]
 })
 export class RunSelectedJobsPopoverComponent implements OnInit {
-  private systemService = inject(SystemService);
-  data = inject<SelectedJobsDataType>(MAT_DIALOG_DATA);
-
   /** Confirmed jobs event emitter */
   @Output() confirmedJobs = new EventEmitter<JobDataType[]>();
 
@@ -77,6 +66,12 @@ export class RunSelectedJobsPopoverComponent implements OnInit {
 
   /** API call response message */
   messages: { message: string; status: number }[] = [];
+
+  constructor(
+    private schedulerJobService: SCHEDULERJOBService,
+    @Inject(MAT_DIALOG_DATA)
+    public data: SelectedJobsDataType
+  ) {}
   ngOnInit(): void {
     this.selectedJobs = this.data.selectedJobs.selected.sort((a, b) => a.jobId - b.jobId);
   }
@@ -92,7 +87,7 @@ export class RunSelectedJobsPopoverComponent implements OnInit {
     });
 
     tableData.forEach((job) => {
-      this.systemService.runSelectedJob(job.jobId.toString()).then((response) => {
+      this.schedulerJobService.executeJob({ jobId: job.jobId }).subscribe((response) => {
         this.messages.push({
           message: `${job.displayName}: ${response.statusText} (${response.status})`,
           status: response.ok

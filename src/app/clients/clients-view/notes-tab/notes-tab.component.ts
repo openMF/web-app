@@ -1,19 +1,11 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Components */
 
 /** Custom Services */
-import { ClientsService } from '../../clients.service';
+import { NotesService } from '@fineract/client';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { EntityNotesTabComponent } from '../../../shared/tabs/entity-notes-tab/entity-notes-tab.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -31,10 +23,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class NotesTabComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private clientsService = inject(ClientsService);
-  private authenticationService = inject(AuthenticationService);
-
   /** Client ID */
   entityId: string;
   /** Username */
@@ -47,11 +35,13 @@ export class NotesTabComponent implements OnInit {
    * @param {ClientsService} clientsService Clients Service
    * @param {AuthenticationService} authenticationService Authentication Service
    */
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private notesService: NotesService,
+    private authenticationService: AuthenticationService
+  ) {
     this.entityId = this.route.parent.snapshot.params['clientId'];
     this.addNote = this.addNote.bind(this);
-    this.editNote = this.editNote.bind(this);
-    this.deleteNote = this.deleteNote.bind(this);
   }
 
   ngOnInit(): void {
@@ -69,9 +59,16 @@ export class NotesTabComponent implements OnInit {
    * @param {number} index Index
    */
   editNote(noteId: string, noteContent: any, index: number) {
-    this.clientsService.editClientNote(this.entityId, noteId, noteContent).subscribe(() => {
-      this.entityNotes[index].note = noteContent.note;
-    });
+    this.notesService
+      .updateNote({
+        resourceType: 'clients',
+        resourceId: Number(this.entityId),
+        noteId: Number(noteId),
+        noteRequest: noteContent
+      })
+      .subscribe(() => {
+        this.entityNotes[index].note = noteContent.note;
+      });
   }
 
   /**
@@ -80,22 +77,34 @@ export class NotesTabComponent implements OnInit {
    * @param {number} index Index
    */
   deleteNote(noteId: string, index: number) {
-    this.clientsService.deleteClientNote(this.entityId, noteId).subscribe(() => {
-      this.entityNotes.splice(index, 1);
-    });
+    this.notesService
+      .deleteNote({
+        resourceType: 'clients',
+        resourceId: Number(this.entityId),
+        noteId: Number(noteId)
+      })
+      .subscribe(() => {
+        this.entityNotes.splice(index, 1);
+      });
   }
 
   /**
    * Creates a client note.
    */
   addNote(noteContent: any) {
-    this.clientsService.createClientNote(this.entityId, noteContent).subscribe((response: any) => {
-      this.entityNotes.push({
-        id: response.resourceId,
-        createdByUsername: this.username,
-        createdOn: new Date(),
-        note: noteContent.note
+    this.notesService
+      .addNewNote({
+        resourceType: 'clients',
+        resourceId: Number(this.entityId),
+        noteRequest: noteContent
+      })
+      .subscribe((response: any) => {
+        this.entityNotes.push({
+          id: response.resourceId,
+          createdByUsername: this.username,
+          createdOn: new Date(),
+          note: noteContent.note
+        });
       });
-    });
   }
 }

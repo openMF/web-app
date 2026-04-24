@@ -1,11 +1,3 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 import { Injectable } from '@angular/core';
 import { AbstractControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -16,11 +8,12 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class PasswordsUtility {
-  minPasswordLength: number = environment.minPasswordLength;
-  private static readonly DEFAULT_PASSWORD_REGEX =
-    '^(?!.*(.)\\1)(?!.*\\s)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^\\w\\s]).{8,50}$';
-
-  public static PASSWORD_REGEX = environment.passwordRegex || PasswordsUtility.DEFAULT_PASSWORD_REGEX;
+  minPasswordLength: number = environment.minPasswordLength | 12;
+  // password regex pattern
+  public static PASSWORD_REGEX =
+    '^(?!.*(.)\\1{1,})(?!.*\\s)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^\\w\\s]).{' +
+    (environment.minPasswordLength | 12) +
+    ',50}$';
 
   public getPasswordValidators(): ValidatorFn[] {
     return [

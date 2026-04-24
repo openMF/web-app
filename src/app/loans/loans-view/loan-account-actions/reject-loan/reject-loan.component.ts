@@ -1,20 +1,14 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports. */
-import { Component, OnInit, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom services. */
+import { LoansService } from '@fineract/client';
+import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 
 /**
  * Reject Loan component.
@@ -28,10 +22,9 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
     CdkTextareaAutosize
   ]
 })
-export class RejectLoanComponent extends LoanAccountActionsBaseComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private dateUtils = inject(Dates);
-
+export class RejectLoanComponent implements OnInit {
+  /** Loan Id. */
+  loanId: any;
   /** Reject Loan form. */
   rejectLoanForm: UntypedFormGroup;
   /** Minimum Date allowed. */
@@ -46,8 +39,15 @@ export class RejectLoanComponent extends LoanAccountActionsBaseComponent impleme
    * @param route Activated Route.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor() {
-    super();
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private router: Router,
+    private route: ActivatedRoute,
+    private loanService: LoansService,
+    private dateUtils: Dates,
+    private settingsService: SettingsService
+  ) {
+    this.loanId = this.route.snapshot.params['loanId'];
   }
 
   ngOnInit() {
@@ -84,17 +84,14 @@ export class RejectLoanComponent extends LoanAccountActionsBaseComponent impleme
       dateFormat,
       locale
     };
-    const loanCommand: string = 'reject';
-    if (this.isLoanProduct) {
-      this.loanService.loanActionButtons(this.loanId, loanCommand, data).subscribe((response: any) => {
-        this.gotoLoanDefaultView();
+    this.loanService
+      .stateTransitions({
+        loanId: Number(this.loanId),
+        postLoansLoanIdRequest: data,
+        command: 'reject'
+      })
+      .subscribe((response: any) => {
+        this.router.navigate(['../../general'], { relativeTo: this.route });
       });
-    } else if (this.isWorkingCapital) {
-      this.loanService
-        .applyWorkingCapitalLoanAccountCommand(this.loanId, loanCommand, data)
-        .subscribe((response: any) => {
-          this.gotoLoanDefaultView();
-        });
-    }
   }
 }

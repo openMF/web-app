@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports. */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
@@ -19,10 +11,9 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services. */
-import { OrganizationService } from 'app/organization/organization.service';
+import { HolidaysService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { AlertService } from 'app/core/alert/alert.service';
 
 /**
  * Edit Holiday component.
@@ -36,14 +27,6 @@ import { AlertService } from 'app/core/alert/alert.service';
   ]
 })
 export class EditHolidayComponent implements OnInit {
-  private alertService = inject(AlertService);
-  private formBuilder = inject(UntypedFormBuilder);
-  private route = inject(ActivatedRoute);
-  private dateUtils = inject(Dates);
-  private organizatioService = inject(OrganizationService);
-  private settingsService = inject(SettingsService);
-  private router = inject(Router);
-
   /** Edit Holiday form. */
   holidayForm: UntypedFormGroup;
   /** Holiday data. */
@@ -54,17 +37,25 @@ export class EditHolidayComponent implements OnInit {
   isActiveHoliday = true;
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
-  maxDate = new Date(2100, 0, 1);
+  /** Maximum Date allowed. */
+  maxDate = new Date();
 
   /**
    * Get holiday and holiday template from `Resolver`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Dates} dateUtils Date Utils.
-   * @param {OrganizationService} organizatioService Organization Service.
+   * @param {HolidaysService} holidaysService Holidays Service.
    * @param {Router} router Router.
    */
-  constructor() {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private dateUtils: Dates,
+    private holidaysService: HolidaysService,
+    private settingsService: SettingsService,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { holiday: any; holidayTemplate: any }) => {
       this.holidayData = data.holiday;
       this.holidayData.repaymentSchedulingTypes = data.holidayTemplate;
@@ -78,7 +69,7 @@ export class EditHolidayComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.maxDate = new Date(2100, 0, 1);
+    this.maxDate = this.settingsService.businessDate;
     this.setEditForm();
     if (!this.isActiveHoliday) {
       this.getReschedulingType();
@@ -141,39 +132,19 @@ export class EditHolidayComponent implements OnInit {
   submit() {
     const holidayFormData = this.holidayForm.value;
     const locale = this.settingsService.language.code;
-    const dateFormat = 'dd MMMM yyyy';
-    const momentFormat = 'DD MMMM YYYY';
-    const coerceDate = (value: unknown): Date | null => {
-      if (value instanceof Date) return value;
-      if (value == null || value === '') return null;
-      const d = new Date(value as any);
-      return Number.isNaN(d.getTime()) ? null : d;
-    };
+    const dateFormat = this.settingsService.dateFormat;
     if (!this.isActiveHoliday) {
-      const fromDate = coerceDate(this.holidayForm.value.fromDate);
-      const toDate = coerceDate(this.holidayForm.value.toDate);
-      if (!fromDate || !toDate) {
-        this.alertService.alert({
-          type: 'Error',
-          message: 'Invalid date selected. Please select a valid date.'
-        });
-        return;
-      }
-      holidayFormData.fromDate = this.dateUtils.formatDateAsString(fromDate, momentFormat);
-      holidayFormData.toDate = this.dateUtils.formatDateAsString(toDate, momentFormat);
       if (this.reSchedulingType === 2) {
-        const repaymentsRescheduledTo = coerceDate(this.holidayForm.value.repaymentsRescheduledTo);
-        if (!repaymentsRescheduledTo) {
-          this.alertService.alert({
-            type: 'Error',
-            message: 'Invalid repayment rescheduled date. Please select a valid date.'
-          });
-          return;
-        }
-        holidayFormData.repaymentsRescheduledTo = this.dateUtils.formatDateAsString(
-          repaymentsRescheduledTo,
-          momentFormat
-        );
+        const repaymentScheduledTo: Date = this.holidayForm.value.repaymentsRescheduledTo;
+        holidayFormData.repaymentsRescheduledTo = this.dateUtils.formatDate(repaymentScheduledTo, dateFormat);
+      }
+      const prevFromDate: Date = this.holidayForm.value.fromDate;
+      const prevToDate: Date = this.holidayForm.value.toDate;
+      if (holidayFormData.closureDate instanceof Date) {
+        holidayFormData.fromDate = this.dateUtils.formatDate(prevFromDate, dateFormat);
+      }
+      if (holidayFormData.closureDate instanceof Date) {
+        holidayFormData.toDate = this.dateUtils.formatDate(prevToDate, dateFormat);
       }
     }
     const data = {
@@ -181,7 +152,7 @@ export class EditHolidayComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.organizatioService.updateHoliday(this.holidayData.id, data).subscribe((response) => {
+    this.holidaysService.update6(this.holidayData.id, data).subscribe((response) => {
       /** TODO Add Redirects to ViewMakerCheckerTask page. */
       this.router.navigate(['../'], { relativeTo: this.route });
     });

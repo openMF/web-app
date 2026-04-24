@@ -1,76 +1,26 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Pipe, PipeTransform, inject, OnDestroy } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 import { SettingsService } from 'app/settings/settings.service';
-import { TranslateService } from '@ngx-translate/core';
-import { Dates } from 'app/core/utils/dates';
-import { Subscription } from 'rxjs';
 import moment from 'moment';
 
-// Load moment.js locale data for all supported languages
-import 'moment/locale/ne'; // Nepali
-import 'moment/locale/es'; // Spanish
-import 'moment/locale/de'; // German
-import 'moment/locale/fr'; // French
-import 'moment/locale/it'; // Italian
-import 'moment/locale/ko'; // Korean
-import 'moment/locale/lt'; // Lithuanian
-import 'moment/locale/lv'; // Latvian
-import 'moment/locale/pt'; // Portuguese
-import 'moment/locale/sw'; // Swahili
-import 'moment/locale/cs'; // Czech
-
-@Pipe({ name: 'dateFormat', pure: false })
-export class DateFormatPipe implements PipeTransform, OnDestroy {
-  private settingsService = inject(SettingsService);
-  private translateService = inject(TranslateService);
-  private dateUtils = inject(Dates);
-  private onLangChange: Subscription;
-
-  constructor() {
-    // Subscribe to language changes so Angular re-evaluates the pipe when language switches
-    this.onLangChange = this.translateService.onLangChange.subscribe(() => {
-      // No body needed; impure pipe will be re-run during change detection
-    });
-  }
-
-  ngOnDestroy(): void {
-    if (this.onLangChange) {
-      this.onLangChange.unsubscribe();
-    }
-  }
+@Pipe({ name: 'dateFormat' })
+export class DateFormatPipe implements PipeTransform {
+  constructor(private settingsService: SettingsService) {}
 
   transform(value: any, dateFormat?: string): any {
-    const defaultDateFormat = this.dateUtils.angularToMomentFormat(this.settingsService.dateFormat);
-    if (typeof value === 'undefined' || value === null) {
+    const defaultDateFormat = this.settingsService.dateFormat.replace('dd', 'DD');
+    if (typeof value === 'undefined') {
       return '';
     }
-
-    const momentLocale = this.dateUtils.getMomentLocale(this.settingsService.language);
-    moment.locale(momentLocale);
-
     let dateVal;
-    if (Array.isArray(value)) {
-      // Backend sometimes returns [yyyy, MM, dd]
+    moment.locale(this.settingsService.language.code);
+    if (value instanceof Array) {
       dateVal = moment(value.join('-'), 'YYYY-MM-DD');
     } else {
       dateVal = moment(value);
     }
-
-    if (!dateVal.isValid()) {
-      return '';
-    }
-
-    if (!dateFormat) {
+    if (dateFormat == null) {
       return dateVal.format(defaultDateFormat);
     }
-
     return dateVal.format(dateFormat);
   }
 }

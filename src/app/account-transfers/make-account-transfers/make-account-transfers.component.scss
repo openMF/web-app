@@ -1,15 +1,19 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 .container {
   max-width: 42rem;
   margin: 0 auto;
   padding: 1rem;
+}
+
+#search-button {
+  background-color: #1074b9;
+  color: white;
+}
+
+.transfer-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 8%);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
 }
 
 // Section styling
@@ -20,10 +24,9 @@
 .section-title {
   font-size: 1.25rem;
   font-weight: 600;
-  color: var(--md-sys-color-on-surface, #333);
+  color: #333;
   margin: 0 0 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid rgb(0 0 0 / 12%);
+  padding-bottom: 0;
 
   &.transfer-heading {
     font-weight: 700;
@@ -45,7 +48,10 @@
   display: flex;
   align-items: center;
   padding: 0.5rem;
-  border-radius: 4px;
+  background-color: rgb(0 0 0 / 2%);
+  box-shadow: 0 0.5px 1px rgb(0 0 0 / 10%);
+  border: 1px solid var(--border-color, #ddd);
+  border-radius: 8px;
 
   &:hover {
     background-color: rgb(0 0 0 / 4%);
@@ -54,11 +60,13 @@
 
 .info-label {
   flex: 0 0 40%;
+  color: rgb(0 0 0 / 70%);
   font-weight: 500;
 }
 
 .info-value {
   flex: 1;
+  color: rgb(0 0 0 / 87%);
 }
 
 // Divider styling
@@ -69,12 +77,6 @@ mat-divider {
 // Interbank section
 .interbank-section {
   margin-bottom: 1rem;
-}
-
-// Beneficiary preview and summary
-.beneficiary-preview,
-.beneficiary-summary {
-  margin-top: 1rem;
 }
 
 // Form styling
@@ -88,55 +90,29 @@ mat-divider {
   gap: 1rem;
 
   @media (width >= 768px) {
-    grid-template-columns: repeat(2, 1fr); /* stylelint-disable-line unit-allowed-list */
-    gap: 1.5rem;
+    grid-template-columns: repeat(2, 50%);
   }
-}
-
-.form-row {
-  display: contents;
 }
 
 .form-field {
   width: 100%;
-  margin-bottom: 0.5rem;
-
-  &:nth-child(odd) {
-    @media (width >= 768px) {
-      margin-right: 0.5rem;
-    }
-  }
-
-  &:nth-child(even) {
-    @media (width >= 768px) {
-      margin-left: 0.5rem;
-    }
-  }
 
   &.description-field {
     grid-column: 1 / -1;
-
-    textarea {
-      min-height: 80px;
-      resize: vertical;
-    }
   }
-}
-
-::ng-deep .mat-form-field {
-  width: 100%;
 }
 
 // Button styling
 .action-buttons {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   gap: 1rem;
   padding: 1rem 1.5rem;
-  margin-top: 1rem;
+  margin-top: 0;
 
   @media (width <= 576px) {
     flex-direction: column;
+    align-items: center;
   }
 
   button {
@@ -144,6 +120,7 @@ mat-divider {
 
     @media (width <= 576px) {
       width: 100%;
+      max-width: 300px;
       margin-bottom: 0.5rem;
     }
   }
@@ -173,70 +150,52 @@ mat-divider {
   }
 }
 
-// Step navigation buttons (matching loans stepper pattern)
-.step-actions {
-  padding: 1rem 0;
-}
-
-// Transfer Status (Step 3)
-.transfer-status-container {
-  text-align: center;
-  padding: 1.5rem 0;
-}
-
-.status-icon {
-  margin-bottom: 1rem;
-
-  &.success {
-    color: #4caf50;
-  }
-
-  &.error {
-    color: #f44336;
-  }
-}
-
-.status-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin: 0 0 0.5rem;
-}
-
-.success-text {
-  color: #4caf50;
-}
-
-.error-text {
-  color: #f44336;
-}
-
-.status-message {
-  font-size: 0.875rem;
-  margin-bottom: 1.5rem;
-}
-
-.transfer-summary {
-  text-align: left;
-  margin-top: 1.5rem;
-}
-
-// Spinner centering
-.spinner-center {
+// Loader styling
+.loader-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 300px;
+  position: relative;
+}
+
+@keyframes rotate-triangle {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.triangle {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 34px solid rgb(0 0 0 / 5%);
+  animation: rotate-triangle 1.5s infinite linear;
+
+  &:hover {
+    border-bottom-color: rgb(0 0 0 / 8%);
+  }
 }
 
 // Dark theme
 // Lower specificity selectors first
 .dark-theme {
+  .info-row {
+    color: #fff !important;
+  }
+
   .info-label {
-    color: rgb(255 255 255 / 70%);
+    color: rgb(255 255 255 / 70%) !important;
   }
 
   .info-value {
-    color: rgb(255 255 255 / 87%);
+    color: rgb(255 255 255 / 87%) !important;
   }
 
   .section-title {
@@ -271,17 +230,21 @@ mat-divider {
       }
     }
   }
-
-  .status-icon.success {
-    color: #66bb6a;
-  }
-
-  .status-icon.error {
-    color: #ef5350;
-  }
 }
 
 // Higher specificity selectors
+:host-context(.dark-theme) .info-row {
+  color: #fff !important;
+}
+
+:host-context(.dark-theme) .info-label {
+  color: rgb(255 255 255 / 70%) !important;
+}
+
+:host-context(.dark-theme) .info-value {
+  color: rgb(255 255 255 / 87%) !important;
+}
+
 :host-context(.dark-theme) .transfer-heading {
   color: #fff;
   font-weight: 700;
@@ -303,6 +266,18 @@ mat-divider {
 // Medium specificity selectors
 body.dark-theme {
   .container {
+    .info-row {
+      color: #fff !important;
+    }
+
+    .info-label {
+      color: rgb(255 255 255 / 70%) !important;
+    }
+
+    .info-value {
+      color: rgb(255 255 255 / 87%) !important;
+    }
+
     .section-title {
       color: #fff;
     }
@@ -344,21 +319,4 @@ body.dark-theme {
 
 ::ng-deep mat-form-field.error-warn.mat-form-field-invalid .mat-error {
   color: #0009 !important;
-}
-
-::ng-deep .mat-form-field-flex {
-  align-items: center;
-}
-
-.transfer-form .form-field {
-  margin-bottom: 1rem;
-}
-
-.readonly-field {
-  background-color: rgb(0 0 0 / 2%);
-  cursor: not-allowed;
-}
-
-::ng-deep .mat-input-element {
-  font-size: 14px;
 }
