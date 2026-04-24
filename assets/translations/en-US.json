@@ -473,6 +473,7 @@
     "accounting": {
       "Accrual (periodic)": "Accrual (periodic)",
       "Accrual (upfront)": "Accrual (upfront)",
+      "CASH_BASED": "Cash",
       "Cash": "Cash",
       "NONE": "None",
       "financialActivity": {
@@ -2150,6 +2151,7 @@
       "Incentive Type": "Incentive Type",
       "Include in Customer Loan Counter": "Include in Customer Loan Counter",
       "Income Account": "Income Account",
+      "Income From Discount Fee": "Income From Discount Fee",
       "Income capitalization": "Income capitalization",
       "INCOME CAPITALIZATION": "INCOME CAPITALIZATION",
       "Income from Charge": "Income from Charge",

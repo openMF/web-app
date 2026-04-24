@@ -470,6 +470,7 @@
     "accounting": {
       "Accrual (periodic)": "Accrual (mara kwa mara)",
       "Accrual (upfront)": "Accrual (mbele)",
+      "CASH_BASED": "Fedha taslimu",
       "Cash": "Fedha taslimu",
       "NONE": "Hakuna",
       "financialActivity": {
@@ -2130,6 +2131,7 @@
       "Incentive Type": "Aina ya motisha",
       "Include in Customer Loan Counter": "Jumuisha katika Kaunta ya Mkopo kwa Wateja",
       "Income Account": "Akaunti ya Mapato",
+      "Income From Discount Fee": "Mapato kutoka ada ya punguzo",
       "Income capitalization": "Mtaji wa mapato",
       "INCOME CAPITALIZATION": "MTAJI WA KIPATO",
       "Income from Charge": "Mapato kutoka kwa Malipo",

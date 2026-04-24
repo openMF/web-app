@@ -470,6 +470,7 @@
     "accounting": {
       "Accrual (periodic)": "Accumulation (périodique)",
       "Accrual (upfront)": "Accumulation (d'avance)",
+      "CASH_BASED": "Espèces",
       "Cash": "Espèces",
       "NONE": "Aucun",
       "financialActivity": {
@@ -2136,6 +2137,7 @@
       "Incentive Type": "Type d'incitation",
       "Include in Customer Loan Counter": "Inclure dans le compteur de prêts clients",
       "Income Account": "Compte de revenu",
+      "Income From Discount Fee": "Revenus de frais d'escompte",
       "Income capitalization": "Capitalisation des revenus",
       "INCOME CAPITALIZATION": "CAPITALISATION DES REVENUS",
       "Income from Charge": "Revenu de Charge",

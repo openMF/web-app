@@ -470,6 +470,7 @@
     "accounting": {
       "Accrual (periodic)": "उपार्जन (आवधिक)",
       "Accrual (upfront)": "उपार्जन (अगाडि)",
+      "CASH_BASED": "नगद",
       "Cash": "नगद",
       "NONE": "कुनै पनि छैन",
       "financialActivity": {
@@ -2132,6 +2133,7 @@
       "Incentive Type": "प्रोत्साहन प्रकार",
       "Include in Customer Loan Counter": "ग्राहक ऋण काउन्टरमा समावेश गर्नुहोस्",
       "Income Account": "आय खाता",
+      "Income From Discount Fee": "छुट शुल्कबाट आय",
       "Income capitalization": "आय पूंजीकरण",
       "INCOME CAPITALIZATION": "आय पूंजीकरण",
       "Income from Charge": "शुल्कबाट आम्दानी",

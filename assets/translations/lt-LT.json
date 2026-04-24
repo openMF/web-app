@@ -470,6 +470,7 @@
     "accounting": {
       "Accrual (periodic)": "Kaupiamasis (periodinis)",
       "Accrual (upfront)": "Sukaupimas (išankstinis)",
+      "CASH_BASED": "Grynieji pinigai",
       "Cash": "Grynieji pinigai",
       "NONE": "Nė vienas",
       "financialActivity": {
@@ -2132,6 +2133,7 @@
       "Incentive Type": "Paskatinimo tipas",
       "Include in Customer Loan Counter": "Įtraukti į klientų paskolų skaitiklį",
       "Income Account": "Pajamų sąskaita",
+      "Income From Discount Fee": "Pajamos iš nuolaidų mokesčio",
       "Income capitalization": "Pajamų kapitalizacija",
       "INCOME CAPITALIZATION": "PAJAMŲ KAPITALIZAVIMAS",
       "Income from Charge": "Pajamos iš mokesčių",

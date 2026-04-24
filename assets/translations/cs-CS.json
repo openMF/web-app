@@ -471,6 +471,7 @@
     "accounting": {
       "Accrual (periodic)": "Akruální (periodické)",
       "Accrual (upfront)": "Akruální (předem)",
+      "CASH_BASED": "Hotovost",
       "Cash": "Hotovost",
       "NONE": "Žádný",
       "financialActivity": {
@@ -2133,6 +2134,7 @@
       "Incentive Type": "Typ pobídky",
       "Include in Customer Loan Counter": "Zahrnout do přepážky zákaznických půjček",
       "Income Account": "Příjmový účet",
+      "Income From Discount Fee": "Výnosy z diskontního poplatku",
       "Income capitalization": "Kapitalizace příjmu",
       "INCOME CAPITALIZATION": "KAPITALIZACE PŘÍJMU",
       "Income from Charge": "Příjem z poplatku",

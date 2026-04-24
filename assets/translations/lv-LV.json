@@ -470,6 +470,7 @@
     "accounting": {
       "Accrual (periodic)": "Uzkrāšana (periodiski)",
       "Accrual (upfront)": "Uzkrāšana (iepriekšēja)",
+      "CASH_BASED": "Skaidra nauda",
       "Cash": "Skaidra nauda",
       "NONE": "Nav",
       "financialActivity": {
@@ -2133,6 +2134,7 @@
       "Incentive Type": "Stimulēšanas veids",
       "Include in Customer Loan Counter": "Iekļaut klientu aizdevumu skaitītājā",
       "Income Account": "Ienākumu konts",
+      "Income From Discount Fee": "Ienākumi no atlaides maksas",
       "Income capitalization": "Ienākumu kapitalizācija",
       "INCOME CAPITALIZATION": "IENĀKUMU KAPITALIZĀCIJA",
       "Income from Charge": "Ienākumi no maksas",

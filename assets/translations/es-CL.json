@@ -470,6 +470,7 @@
     "accounting": {
       "Accrual (periodic)": "Devengo (periódico)",
       "Accrual (upfront)": "Devengo (adelantado)",
+      "CASH_BASED": "Efectivo",
       "Cash": "Efectivo",
       "NONE": "Ninguno",
       "financialActivity": {
@@ -2133,6 +2134,7 @@
       "Incentive Type": "Tipo de incentivo",
       "Include in Customer Loan Counter": "Incluir en el contador de Créditos al cliente",
       "Income Account": "Cuenta de Ingresos",
+      "Income From Discount Fee": "Ingresos por tarifa de descuento",
       "Income capitalization": "Capitalización de ingresos",
       "INCOME CAPITALIZATION": "CAPITALIZACIÓN DE INGRESOS",
       "Income from Charge": "Ingresos por cargo",

@@ -470,6 +470,7 @@
     "accounting": {
       "Accrual (periodic)": "발생(정기적)",
       "Accrual (upfront)": "발생(선불)",
+      "CASH_BASED": "현금",
       "Cash": "현금",
       "NONE": "없음",
       "financialActivity": {
@@ -2134,6 +2135,7 @@
       "Incentive Type": "인센티브 유형",
       "Include in Customer Loan Counter": "고객 대출 카운터에 포함",
       "Income Account": "소득 계정",
+      "Income From Discount Fee": "할인 수수료 수입",
       "Income capitalization": "소득 자본화",
       "INCOME CAPITALIZATION": "소득 자본화",
       "Income from Charge": "수수료 수입",

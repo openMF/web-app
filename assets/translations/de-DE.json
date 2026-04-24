@@ -472,6 +472,7 @@
     "accounting": {
       "Accrual (periodic)": "Abgrenzung (periodisch)",
       "Accrual (upfront)": "Rückstellung (im Voraus)",
+      "CASH_BASED": "Kasse",
       "Cash": "Kasse",
       "NONE": "Keiner",
       "financialActivity": {
@@ -2135,6 +2136,7 @@
       "Incentive Type": "Anreiztyp",
       "Include in Customer Loan Counter": "In Kundenkreditzähler einbeziehen",
       "Income Account": "Einkommenskonto",
+      "Income From Discount Fee": "Einnahmen aus Diskontgebühr",
       "Income capitalization": "Einkommenskapitalisierung",
       "INCOME CAPITALIZATION": "EINKOMMENSKAPITALISIERUNG",
       "Income from Charge": "Einnahmen aus Gebühr",
