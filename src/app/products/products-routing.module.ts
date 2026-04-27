@@ -632,6 +632,7 @@ const routes: Routes = [
                 },
                 {
                   path: 'general',
+                  data: { title: 'General', breadcrumb: 'General', routeParamBreadcrumb: false },
                   component: RecurringDepositGeneralTabComponent,
                   resolve: {
                     recurringDepositProduct: RecurringDepositProductResolver
@@ -643,7 +644,6 @@ const routes: Routes = [
                     {
                       path: ':datatableName',
                       component: RecurringDepositDatatableTabComponent,
-                      data: { title: 'Data Table View', routeParamBreadcrumb: 'datatableName' },
                       resolve: {
                         recurringDepositDatatable: SavingProductDatatableResolver
                       }
@@ -696,6 +696,7 @@ const routes: Routes = [
                 },
                 {
                   path: 'general',
+                  data: { title: 'General', breadcrumb: 'General', routeParamBreadcrumb: false },
                   component: FixedDepositGeneralTabComponent,
                   resolve: {
                     fixedDepositProduct: FixedDepositProductResolver
@@ -707,7 +708,6 @@ const routes: Routes = [
                     {
                       path: ':datatableName',
                       component: FixedDepositDatatableTabComponent,
-                      data: { title: 'Data Table View', routeParamBreadcrumb: 'datatableName' },
                       resolve: {
                         fixedDepositDatatable: SavingProductDatatableResolver
                       }
