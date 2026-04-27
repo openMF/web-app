@@ -25,22 +25,8 @@ import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
 import { MatDivider } from '@angular/material/divider';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { GlAccountSelectorComponent } from '../../../../shared/accounting/gl-account-selector/gl-account-selector.component';
-import { MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import {
-  MatTable,
-  MatColumnDef,
-  MatHeaderCellDef,
-  MatHeaderCell,
-  MatCellDef,
-  MatCell,
-  MatHeaderRowDef,
-  MatHeaderRow,
-  MatRowDef,
-  MatRow
-} from '@angular/material/table';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
-import { FindPipe } from '../../../../pipes/find.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { AdvancedAccountingMappingRuleComponent } from './advanced-accounting-mapping-rule/advanced-accounting-mapping-rule.component';
 import { AccountingMappingDTO, AdvancedMappingDTO } from '../../models/loan-product.model';
@@ -58,20 +44,8 @@ import { LoanProductBaseComponent } from '../../common/loan-product-base.compone
     MatCheckbox,
     GlAccountSelectorComponent,
     FaIconComponent,
-    MatTable,
-    MatColumnDef,
-    MatHeaderCellDef,
-    MatHeaderCell,
-    MatCellDef,
-    MatCell,
-    MatIconButton,
-    MatHeaderRowDef,
-    MatHeaderRow,
-    MatRowDef,
-    MatRow,
     MatStepperPrevious,
     MatStepperNext,
-    FindPipe,
     AdvancedAccountingMappingRuleComponent
   ]
 })
@@ -253,8 +227,8 @@ export class LoanProductAccountingStepComponent extends LoanProductBaseComponent
             'paymentChannelToFundSourceMappings',
             this.formBuilder.array(
               (this.loanProductsTemplate.paymentChannelToFundSourceMappings || []).map((paymentFundSource: any) => ({
-                paymentTypeId: paymentFundSource.paymentType.id,
-                fundSourceAccountId: paymentFundSource.fundSourceAccount.id
+                value: paymentFundSource.paymentType,
+                glAccount: paymentFundSource.fundSourceAccount
               }))
             )
           );
@@ -262,8 +236,8 @@ export class LoanProductAccountingStepComponent extends LoanProductBaseComponent
             'feeToIncomeAccountMappings',
             this.formBuilder.array(
               (this.loanProductsTemplate.feeToIncomeAccountMappings || []).map((feesIncome: any) => ({
-                chargeId: feesIncome.charge.id,
-                incomeAccountId: feesIncome.incomeAccount.id
+                value: feesIncome.charge,
+                glAccount: feesIncome.incomeAccount
               }))
             )
           );
@@ -271,8 +245,8 @@ export class LoanProductAccountingStepComponent extends LoanProductBaseComponent
             'penaltyToIncomeAccountMappings',
             this.formBuilder.array(
               (this.loanProductsTemplate.penaltyToIncomeAccountMappings || []).map((penaltyIncome: any) => ({
-                chargeId: penaltyIncome.charge.id,
-                incomeAccountId: penaltyIncome.incomeAccount.id
+                value: penaltyIncome.charge,
+                glAccount: penaltyIncome.incomeAccount
               }))
             )
           );
@@ -281,8 +255,8 @@ export class LoanProductAccountingStepComponent extends LoanProductBaseComponent
             this.formBuilder.array(
               (this.loanProductsTemplate.chargeOffReasonToExpenseAccountMappings || []).map(
                 (m: ChargeOffReasonToExpenseAccountMapping) => ({
-                  chargeOffReasonCodeValueId: m.reasonCodeValue.id,
-                  expenseAccountId: m.expenseAccount.id
+                  value: m.reasonCodeValue,
+                  glAccount: m.expenseAccount
                 })
               )
             )
@@ -359,8 +333,65 @@ export class LoanProductAccountingStepComponent extends LoanProductBaseComponent
               ? accountingMappings.chargeOffExpenseAccount.id
               : '',
             overpaymentLiabilityAccountId: accountingMappings.overpaymentLiabilityAccount.id,
-            deferredIncomeLiabilityAccountId: accountingMappings.deferredIncomeLiabilityAccount.id
+            deferredIncomeLiabilityAccountId: accountingMappings.deferredIncomeLiabilityAccount.id,
+            advancedAccountingRules:
+              (this.loanProductsTemplate.paymentChannelToFundSourceMappings?.length ?? 0) > 0 ||
+              (this.loanProductsTemplate.feeToIncomeAccountMappings?.length ?? 0) > 0 ||
+              (this.loanProductsTemplate.penaltyToIncomeAccountMappings?.length ?? 0) > 0 ||
+              (this.loanProductsTemplate.chargeOffReasonToExpenseAccountMappings?.length ?? 0) > 0 ||
+              (this.loanProductsTemplate.writeOffReasonsToExpenseMappings?.length ?? 0) > 0
+                ? true
+                : false
           });
+          this.loanProductAccountingForm.setControl(
+            'paymentChannelToFundSourceMappings',
+            this.formBuilder.array(
+              (this.loanProductsTemplate.paymentChannelToFundSourceMappings || []).map((paymentFundSource: any) => ({
+                value: paymentFundSource.paymentType,
+                glAccount: paymentFundSource.fundSourceAccount
+              }))
+            )
+          );
+          this.loanProductAccountingForm.setControl(
+            'feeToIncomeAccountMappings',
+            this.formBuilder.array(
+              (this.loanProductsTemplate.feeToIncomeAccountMappings || []).map((feesIncome: any) => ({
+                value: feesIncome.charge,
+                glAccount: feesIncome.incomeAccount
+              }))
+            )
+          );
+          this.loanProductAccountingForm.setControl(
+            'penaltyToIncomeAccountMappings',
+            this.formBuilder.array(
+              (this.loanProductsTemplate.penaltyToIncomeAccountMappings || []).map((penaltyIncome: any) => ({
+                value: penaltyIncome.charge,
+                glAccount: penaltyIncome.incomeAccount
+              }))
+            )
+          );
+          this.loanProductAccountingForm.setControl(
+            'chargeOffReasonToExpenseAccountMappings',
+            this.formBuilder.array(
+              (this.loanProductsTemplate.chargeOffReasonToExpenseAccountMappings || []).map(
+                (m: ChargeOffReasonToExpenseAccountMapping) => ({
+                  value: m.reasonCodeValue,
+                  glAccount: m.expenseAccount
+                })
+              )
+            )
+          );
+          this.loanProductAccountingForm.setControl(
+            'writeOffReasonsToExpenseMappings',
+            this.formBuilder.array(
+              (this.loanProductsTemplate.writeOffReasonsToExpenseMappings || []).map(
+                (m: ChargeOffReasonToExpenseAccountMapping) => ({
+                  value: m.reasonCodeValue,
+                  glAccount: m.expenseAccount
+                })
+              )
+            )
+          );
           break;
       }
     }
@@ -577,7 +608,7 @@ export class LoanProductAccountingStepComponent extends LoanProductBaseComponent
           this.loanProductAccountingForm.removeControl('overpaymentLiabilityAccountId');
           this.loanProductAccountingForm.removeControl('deferredIncomeLiabilityAccountId');
 
-          // this.loanProductAccountingForm.removeControl('advancedAccountingRules');
+          this.loanProductAccountingForm.removeControl('advancedAccountingRules');
         } else if (accountingRule === 'CASH_BASED') {
           this.loanProductAccountingForm.addControl(
             'fundSourceAccountId',
@@ -639,7 +670,15 @@ export class LoanProductAccountingStepComponent extends LoanProductBaseComponent
             'deferredIncomeLiabilityAccountId',
             new UntypedFormControl('', Validators.required)
           );
-          // this.loanProductAccountingForm.addControl('advancedAccountingRules', new UntypedFormControl(false));
+          this.loanProductAccountingForm.addControl('advancedAccountingRules', new UntypedFormControl(false));
+
+          this.loanProductAccountingForm
+            .get('advancedAccountingRules')
+            .valueChanges.subscribe((advancedAccountingRules: boolean) => {
+              if (advancedAccountingRules) {
+              } else {
+              }
+            });
         }
       });
     }
@@ -824,7 +863,7 @@ export class LoanProductAccountingStepComponent extends LoanProductBaseComponent
     const formfields: FormfieldBase[] = [
       new SelectBase({
         controlName: 'chargeOffReasonCodeValueId',
-        label: 'Charge-off reason',
+        label: 'Charge-off Reason',
         value: values ? values.chargeOffReasonCodeValueId : reasonOptions[0].id,
         options: { label: 'name', value: 'id', data: reasonOptions },
         required: true,
@@ -922,6 +961,46 @@ export class LoanProductAccountingStepComponent extends LoanProductBaseComponent
         this.formBuilder.array(
           (accountingData.values || []).map((m: AccountingMappingDTO) => ({
             writeOffReasonCodeValueId: m.value.id,
+            expenseAccountId: m.glAccount.id
+          }))
+        )
+      );
+    } else if (accountingData.formType === 'PaymentFundSource') {
+      this.loanProductAccountingForm.setControl(
+        'paymentChannelToFundSourceMappings',
+        this.formBuilder.array(
+          (accountingData.values || []).map((m: AccountingMappingDTO) => ({
+            paymentTypeId: m.value.id,
+            fundSourceAccountId: m.glAccount.id
+          }))
+        )
+      );
+    } else if (accountingData.formType === 'FeesIncome') {
+      this.loanProductAccountingForm.setControl(
+        'feeToIncomeAccountMappings',
+        this.formBuilder.array(
+          (accountingData.values || []).map((m: AccountingMappingDTO) => ({
+            chargeId: m.value.id,
+            incomeAccountId: m.glAccount.id
+          }))
+        )
+      );
+    } else if (accountingData.formType === 'PenaltyIncome') {
+      this.loanProductAccountingForm.setControl(
+        'penaltyToIncomeAccountMappings',
+        this.formBuilder.array(
+          (accountingData.values || []).map((m: AccountingMappingDTO) => ({
+            chargeId: m.value.id,
+            incomeAccountId: m.glAccount.id
+          }))
+        )
+      );
+    } else if (accountingData.formType === 'ChargeOffReasonExpense') {
+      this.loanProductAccountingForm.setControl(
+        'chargeOffReasonToExpenseAccountMappings',
+        this.formBuilder.array(
+          (accountingData.values || []).map((m: AccountingMappingDTO) => ({
+            chargeOffReasonCodeValueId: m.value.id,
             expenseAccountId: m.glAccount.id
           }))
         )

@@ -87,6 +87,7 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
   ngOnInit(): void {
     this.tableData = this.formArray?.value || [];
     this.sendParentData();
+    this.fillCurrentFormValues();
   }
 
   fillCurrentFormValues(): void {
@@ -102,7 +103,7 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
       return;
     }
 
-    const data = { ...this.getData(this.formType), pristine: false };
+    const data = { ...this.getData('add', this.formType), pristine: false };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
@@ -122,6 +123,24 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
           const addData: AccountingMappingDTO = {
             value: this.getValueData(response.data.value.valueId),
             glAccount: this.getGlAccountData(response.data.value.glAccountId)
+          };
+          this.addTableData(addData);
+        } else if (this.formType === 'PaymentFundSource') {
+          const addData: AccountingMappingDTO = {
+            value: this.getValueData(response.data.value.paymentTypeId),
+            glAccount: this.getGlAccountData(response.data.value.fundSourceAccountId)
+          };
+          this.addTableData(addData);
+        } else if (this.formType === 'FeesIncome') {
+          const addData: AccountingMappingDTO = {
+            value: this.getValueData(response.data.value.chargeId),
+            glAccount: this.getGlAccountData(response.data.value.incomeAccountId)
+          };
+          this.addTableData(addData);
+        } else if (this.formType === 'PenaltyIncome') {
+          const addData: AccountingMappingDTO = {
+            value: this.getValueData(response.data.value.chargeId),
+            glAccount: this.getGlAccountData(response.data.value.incomeAccountId)
           };
           this.addTableData(addData);
         }
@@ -166,12 +185,12 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
   }
 
   edit(record: AccountingMappingDTO, index: number) {
-    const data = { ...this.getData(this.formType, record), pristine: false, layout: { addButtonText: 'Edit' } };
+    const data = { ...this.getData('edit', this.formType, record), pristine: false, layout: { addButtonText: 'Edit' } };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
 
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        let updateData: AccountingMappingDTO;
+        let updateData: AccountingMappingDTO | null = null;
         if ([
             'ChargeOffReasonExpense',
             'WriteOffReasonToExpense'
@@ -190,22 +209,24 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
           };
         } else if (this.formType === 'PaymentFundSource') {
           updateData = {
-            value: this.getValueData(response.data.paymentTypeId),
-            glAccount: this.getGlAccountData(response.data.fundSourceAccountId)
+            value: this.getValueData(response.data.value.paymentTypeId),
+            glAccount: this.getGlAccountData(response.data.value.fundSourceAccountId)
           };
         } else if (this.formType === 'FeesIncome') {
           updateData = {
-            value: this.getValueData(response.data.chargeId),
-            glAccount: this.getGlAccountData(response.data.incomeAccountId)
+            value: this.getValueData(response.data.value.chargeId),
+            glAccount: this.getGlAccountData(response.data.value.incomeAccountId)
           };
         } else if (this.formType === 'PenaltyIncome') {
           updateData = {
-            value: this.getValueData(response.data.chargeId),
-            glAccount: this.getGlAccountData(response.data.incomeAccountId)
+            value: this.getValueData(response.data.value.chargeId),
+            glAccount: this.getGlAccountData(response.data.value.incomeAccountId)
           };
         }
-        this.updateTableData(updateData, index);
-        this.sendParentData();
+        if (updateData) {
+          this.updateTableData(updateData, index);
+          this.sendParentData();
+        }
       }
     });
   }
@@ -218,12 +239,12 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
     this.formChangeEvent.emit(advancedMappingDTO);
   }
 
-  getData(formType: string, values?: any) {
+  getData(action: string, formType: string, values?: any) {
     switch (formType) {
       case 'PaymentFundSource':
         return {
           title: 'Configure Fund Sources for Payment Channels',
-          formfields: this.getPaymentFundSourceFormfields(values)
+          formfields: this.getPaymentFundSourceFormfields(action, values)
         };
       case 'FeesIncome':
         return { title: 'Map Fees to Income Accounts', formfields: this.getFeesIncomeFormfields(values) };
@@ -235,7 +256,7 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
       case 'ChargeOffReasonExpense':
         return {
           title: 'Map Charge-off reasons to Expense accounts',
-          formfields: this.getReasonsExpenseFormfields(values)
+          formfields: this.getReasonsExpenseFormfields(action, values)
         };
       case 'BuydownFeeClassificationToIncome':
         return {
@@ -250,25 +271,29 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
       case 'WriteOffReasonToExpense':
         return {
           title: 'Map Write-off reasons to Expense accounts',
-          formfields: this.getReasonsExpenseFormfields(values)
+          formfields: this.getReasonsExpenseFormfields(action, values)
         };
     }
   }
 
-  getPaymentFundSourceFormfields(values?: any) {
+  getPaymentFundSourceFormfields(action: string, values?: any) {
+    const paymentTypeOptions =
+      action === 'edit'
+        ? this.paymentTypeData
+        : this.accountingMappingOptions.filter((item: any) => !this.currentFormValues.includes(item.id));
     const formfields: FormfieldBase[] = [
       new SelectBase({
         controlName: 'paymentTypeId',
         label: 'Payment Type',
-        value: values ? values.paymentTypeId : this.paymentTypeData[0].id,
-        options: { label: 'name', value: 'id', data: this.paymentTypeData },
+        value: values ? values.value.id : paymentTypeOptions[0].id,
+        options: { label: 'name', value: 'id', data: paymentTypeOptions },
         required: true,
         order: 1
       }),
       new SelectBase({
         controlName: 'fundSourceAccountId',
         label: 'Fund Source',
-        value: values ? values.fundSourceAccountId : this.assetAccountData[0].id,
+        value: values ? values.glAccount.id : this.assetAccountData[0].id,
         options: { label: 'name', value: 'id', data: this.assetAccountData },
         required: true,
         order: 2
@@ -321,14 +346,15 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
     return formfields;
   }
 
-  getReasonsExpenseFormfields(values?: any) {
-    const reasonOptions = this.accountingMappingOptions.filter(
-      (item: any) => !this.currentFormValues.includes(item.id)
-    );
+  getReasonsExpenseFormfields(action: string, values?: any) {
+    const reasonOptions =
+      action === 'edit'
+        ? this.accountingMappingOptions
+        : this.accountingMappingOptions.filter((item: any) => !this.currentFormValues.includes(item.id));
     const formfields: FormfieldBase[] = [
       new SelectBase({
         controlName: 'reasonCodeValueId',
-        label: this.formType === 'ChargeOffReasonExpense' ? 'Charge-off reason' : 'Write-off reason',
+        label: this.formType === 'ChargeOffReasonExpense' ? 'Charge-off Reason' : 'Write-off reason',
         value: values ? values.value.id : reasonOptions[0].id,
         options: { label: 'name', value: 'id', data: reasonOptions },
         required: true,

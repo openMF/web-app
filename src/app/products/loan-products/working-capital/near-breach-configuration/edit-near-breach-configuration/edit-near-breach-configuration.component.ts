@@ -40,7 +40,6 @@ export class EditNearBreachConfigurationComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.subscribe((data: { nearBreachData: NearBreach; breachTemplate: any }) => {
       this.nearBreachData = data.nearBreachData;
-      console.log(this.nearBreachData);
       this.frequencyTypeOptions = data.breachTemplate.breachFrequencyTypeOptions || [];
       this.initForm();
     });
