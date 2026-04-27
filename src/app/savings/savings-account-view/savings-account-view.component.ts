@@ -220,7 +220,14 @@ export class SavingsAccountViewComponent implements OnInit {
         this.router.navigate([`actions/Withdrawal`], { relativeTo: this.route });
         break;
       case 'Modify Application':
-        this.router.navigate(['edit'], { relativeTo: this.route });
+        this.router.navigate(
+          [
+            '../',
+            this.route.snapshot.paramMap.get('savingAccountId') || this.savingsAccountData.id,
+            'edit'
+          ],
+          { relativeTo: this.route }
+        );
         break;
       case 'Delete':
         this.deleteSavingsAccount();
