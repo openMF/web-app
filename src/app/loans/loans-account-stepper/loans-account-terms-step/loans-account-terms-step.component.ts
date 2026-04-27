@@ -716,7 +716,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
           '',
           [
             Validators.required,
-            Validators.min(1),
+            Validators.min(0),
             Validators.max(1000)
           ]
         ],
