@@ -9,6 +9,10 @@
 /** Angular Imports */
 import { Component, OnInit, inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+<<<<<<< HEAD
+=======
+import { TranslateService } from '@ngx-translate/core';
+>>>>>>> origin/dev
 
 /** rxjs Imports */
 import { finalize } from 'rxjs/operators';
@@ -43,6 +47,10 @@ import { environment } from '../../../environments/environment';
 export class LoginFormComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
   private authenticationService = inject(AuthenticationService);
+<<<<<<< HEAD
+=======
+  private translateService = inject(TranslateService);
+>>>>>>> origin/dev
   minPasswordLength = environment.minPasswordLength;
 
   /** Login form group. */
@@ -144,11 +152,19 @@ export class LoginFormComponent implements OnInit {
   getErrorMessage(controlName: string): string {
     const control = this.loginForm.get(controlName);
     if (control?.hasError('required')) {
+<<<<<<< HEAD
       return 'This field is required';
     }
     if (control?.hasError('minlength')) {
       const requiredLength = control.errors?.['minlength']?.requiredLength;
       return `Minimum length is ${requiredLength}`;
+=======
+      return this.translateService.instant('errors.validation.required');
+    }
+    if (control?.hasError('minlength')) {
+      const requiredLength = control.errors?.['minlength']?.requiredLength;
+      return this.translateService.instant('errors.validation.minLength', { requiredLength });
+>>>>>>> origin/dev
     }
 
     return '';

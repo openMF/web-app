@@ -89,8 +89,6 @@ export class EditFloatingRateComponent implements OnInit {
   floatingRateForm: UntypedFormGroup;
   /** Floating Rate Data. */
   floatingRateData: any;
-  /** Minimum floating rate period date allowed. */
-  minDate = new Date();
   /** Form Pristine Status. */
   isFloatingRateFormPristine = true;
   /** Columns to be displayed in floating rate periods table. */
@@ -192,7 +190,8 @@ export class EditFloatingRateComponent implements OnInit {
       data: {
         fromDate: ratePeriod.fromDate,
         interestRate: ratePeriod.interestRate,
-        isDifferentialToBaseLendingRate: ratePeriod.isDifferentialToBaseLendingRate
+        isDifferentialToBaseLendingRate: ratePeriod.isDifferentialToBaseLendingRate,
+        isNew: true
       }
     });
     editFloatingRatePeriodDialogRef.afterClosed().subscribe((response: any) => {

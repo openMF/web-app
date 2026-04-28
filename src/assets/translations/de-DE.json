@@ -28,6 +28,7 @@
     "error.msg.charge.due.at.disbursement.cannot.be.penalty": "Die Gebühr kann nicht als bei der Auszahlung fällige Strafe eingerichtet werden.",
     "error.msg.charge.duplicate.name": "Die Gebühr mit diesem Namen existiert bereits.",
     "error.msg.charge.update.of.charge.applies.to.is.not.supported": "Die Aktualisierung der Gebühr gilt für wird nicht unterstützt.",
+    "error.msg.data.integrity.issue": "Die Anfrage hat ein Datenintegritätsproblem in der Datenbank verursacht",
     "error.msg.loan.product.close.date.cannot.be.before.start.date": "Das Abschlussdatum des Darlehensprodukts darf nicht vor dem Startdatum liegen.",
     "error.msg.product.loan.duplicate.charge": "Bei einem Leihprodukt darf von jedem Typ nur eine Ladung vorhanden sein.",
     "error.msg.product.loan.duplicate.name": "Das Darlehensprodukt mit dem Namen „{{params[0].value}}“ existiert bereits.",
@@ -35,6 +36,7 @@
     "error.msg.product.savings.duplicate.name": "Das Sparprodukt mit dem Namen „{{params[0].value}}“ existiert bereits.",
     "error.msg.product.savings.duplicate.short.name": "Das Sparprodukt mit dem Kurznamen {{params[0].value}} existiert bereits.",
     "error.msg.savingsproduct.unknown.data.integrity.issue": "Beim Erstellen/Aktualisieren des Sparprodukts ist ein unerwartetes Problem aufgetreten. Auf dem Server wurde ein Fehler angemeldet.",
+    "error.msg.reporting.error": "Beim Erstellen des Berichts ist ein Fehler aufgetreten.",
     "validation.msg.charge.amount.cannot.be.blank": "Der Betrag darf nicht leer sein.",
     "validation.msg.charge.amount.not.greater.than.zero": "Der Gebührenbetrag muss größer als Null sein.",
     "validation.msg.charge.chargeAppliesTo.cannot.be.blank": "Es wird eine Gebühr erhoben, die nicht leer sein darf.",
@@ -285,7 +287,142 @@
     "validation.msg.savingsproduct.shortName.exceeds.max.length": "Der Kurzname darf nicht länger als {{params[0].value}} Zeichen sein.",
     "validation.msg.savingsproduct.withdrawalFeeAmount.cannot.be.blank": "Der Betrag der Auszahlungsgebühr ist obligatorisch.",
     "validation.msg.savingsproduct.withdrawalFeeAmount.not.zero.or.greater": "Sofern angegeben, muss der Betrag der Abhebungsgebühr größer oder gleich Null sein.",
-    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Der Zeitraumtyp der Auszahlungsgebühr ist obligatorisch."
+    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Der ausgewählte Auszahlungsgebührentyp ist ungültig.",
+    "http": {
+      "connection": {
+        "title": "Verbindungsfehler",
+        "message": "Verbindung zum Server nicht möglich. Bitte überprüfen Sie Ihre Internetverbindung."
+      },
+      "badRequest": {
+        "title": "Ungültige Anfrage",
+        "message": "Bitte überprüfen Sie Ihre Eingabe und versuchen Sie es erneut."
+      },
+      "unauthorized": {
+        "title": "Nicht autorisiert",
+        "message": "Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.",
+        "action": "Anmelden"
+      },
+      "forbidden": {
+        "title": "Zugriff verweigert",
+        "message": "Sie haben keine Berechtigung, diese Aktion auszuführen."
+      },
+      "notFound": {
+        "title": "Nicht gefunden",
+        "message": "Die angeforderte Ressource wurde nicht gefunden.",
+        "contextMessage": "{{context}} nicht gefunden."
+      },
+      "conflict": {
+        "title": "Konflikt",
+        "message": "Die Ressource existiert bereits oder es liegt ein Konflikt vor."
+      },
+      "serverError": {
+        "title": "Serverfehler",
+        "message": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es später erneut."
+      },
+      "serviceUnavailable": {
+        "title": "Dienst nicht verfügbar",
+        "message": "Der Dienst ist vorübergehend nicht verfügbar. Bitte versuchen Sie es später erneut."
+      },
+      "default": {
+        "title": "Fehler",
+        "message": "Ein unerwarteter Fehler ist aufgetreten."
+      }
+    },
+    "interceptor": {
+      "invalidParams": "In der Anfrage wurden ungültige Parameter übergeben!"
+    },
+    "auth": {
+      "pleaseWait": "Bitte warten...",
+      "startType": "Authentifizierung gestartet",
+      "twoFactor": {
+        "type": "Zwei-Faktor-Authentifizierung erforderlich",
+        "message": "Zwei-Faktor-Authentifizierung erforderlich"
+      },
+      "passwordExpired": {
+        "type": "Passwort abgelaufen",
+        "message": "Ihr Passwort ist abgelaufen, bitte setzen Sie Ihr Passwort zurück!"
+      },
+      "success": {
+        "type": "Authentifizierung erfolgreich",
+        "message": "{{username}} erfolgreich angemeldet!"
+      },
+      "passwordReset": {
+        "type": "Passwort erfolgreich zurückgesetzt",
+        "message": "Ihr Passwort wurde erfolgreich zurückgesetzt!"
+      },
+      "callbackFailed": {
+        "type": "Authentifizierung fehlgeschlagen",
+        "message": "Authentifizierung konnte nicht abgeschlossen werden. Bitte versuchen Sie es erneut."
+      },
+      "callbackError": {
+        "type": "Authentifizierungsfehler",
+        "message": "Bei der Authentifizierung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+      }
+    },
+    "hooks": {
+      "lastEvent": "Mindestens ein Ereignis ist erforderlich. Das letzte Ereignis kann nicht gelöscht werden."
+    },
+    "generic": {
+      "unexpected": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+      "unexpectedRetry": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+      "unexpectedShort": "Ein unerwarteter Fehler ist aufgetreten."
+    },
+    "holiday": {
+      "invalidDate": "Ungültiges Datum ausgewählt. Bitte wählen Sie ein gültiges Datum.",
+      "invalidRepaymentDate": "Ungültiges Rückzahlungsdatum. Bitte wählen Sie ein gültiges Datum."
+    },
+    "report": {
+      "type": "Berichterstellung",
+      "generated": "Bericht: {{reportName}} Daten generiert",
+      "generatedNoData": "Bericht: {{reportName}} ohne Daten generiert"
+    },
+    "clipboard": {
+      "type": "Zwischenablage",
+      "copied": "Kopiert: {{value}}"
+    },
+    "tenant": {
+      "changed": {
+        "type": "Mandant geändert"
+      }
+    },
+    "config": {
+      "setConfig": "{{type}} Konfiguration festgelegt"
+    },
+    "loans": {
+      "undoWriteOff": {
+        "type": "Rückgängigmachen der Abschreibung fehlgeschlagen",
+        "message": "Bei der Verarbeitung der Abschreibungsrücknahme ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder kontaktieren Sie den Support."
+      },
+      "alreadyAdjusted": "Kapitalisierter Ertragsbetrag bereits angepasst",
+      "adjustment": "Anpassung {{type}} Transaktion",
+      "capitalizedIncomeLimit": "Anpassungsbetrag des kapitalisierten Ertrags muss kleiner oder gleich sein",
+      "buyDownFeeAdjusted": "Buy-Down-Gebühr bereits angepasst",
+      "buyDownFeeLimit": "Anpassungsbetrag der Buy-Down-Gebühr muss kleiner oder gleich sein",
+      "businessRule": "Geschäftsregel",
+      "alertWithAmount": "{{label}}: {{amount}}"
+    },
+    "error.auth.type": "Authentifizierungsfehler",
+    "error.auth.message": "Ihre Sitzung ist abgelaufen oder die Anmeldedaten sind ungültig.",
+    "error.token.invalid.type": "Ungültiger Token",
+    "error.token.invalid.message": "Der angegebene Einmaltoken ist ungültig.",
+    "error.bad.request.type": "Fehlerhafte Anfrage",
+    "error.bad.request.message": "In der Anfrage wurden ungültige Parameter übergeben!",
+    "error.unauthorized.type": "Nicht autorisiert",
+    "error.unauthorized.message": "Ihre Sitzung ist abgelaufen oder die Anmeldedaten sind ungültig.",
+    "error.resource.not.found.type": "Ressource nicht gefunden",
+    "error.resource.not.found.message": "Die angeforderte Ressource wurde nicht gefunden.",
+    "error.resource.notImplemented.type": "Nicht implementiert",
+    "error.resource.notImplemented.message": "Nicht implementierte Funktionalität!",
+    "error.server.internal.type": "Interner Serverfehler",
+    "error.server.internal.message": "Auf dem Server ist ein unerwarteter Fehler aufgetreten. Bitte versuchen Sie es später erneut.",
+    "error.unknown.type": "Unbekannter Fehler",
+    "error.unknown.message": "Ein unerwarteter Fehler ist aufgetreten.",
+    "validation.required": "Dieses Feld ist erforderlich",
+    "validation.minLength": "Mindestlänge ist {{requiredLength}}",
+    "validation.emailInvalid": "E-Mail ist ungültig",
+    "validation.requiredField": "{{label}} ist ein Pflichtfeld.",
+    "validation.mustBeAtLeast": "{{field}} muss mindestens {{min}} betragen",
+    "validation.mustBePositive": "{{field}} muss eine positive Zahl sein."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -335,6 +472,7 @@
     "accounting": {
       "Accrual (periodic)": "Abgrenzung (periodisch)",
       "Accrual (upfront)": "Rückstellung (im Voraus)",
+      "CASH_BASED": "Kasse",
       "Cash": "Kasse",
       "NONE": "Keiner",
       "financialActivity": {
@@ -479,6 +617,10 @@
       "Export to File": "In eine Datei exportieren",
       "Export CSV": "CSV exportieren",
       "Export XLS": "XLS exportieren",
+<<<<<<< HEAD
+=======
+      "Export to PDF": "Als PDF exportieren",
+>>>>>>> origin/dev
       "Export KYC": "KYC exportieren",
       "Validate Documentation": "Dokumentation validieren",
       "INCOMPLETE": "UNVOLLSTÄNDIG",
@@ -618,7 +760,12 @@
       "Retry": "Erneut versuchen",
       "PRINT": "Drucken",
       "DONE": "Fertig",
+<<<<<<< HEAD
       "Submitting": "Wird gesendet"
+=======
+      "Submitting": "Wird gesendet",
+      "OK": "OK"
+>>>>>>> origin/dev
     },
     "catalogs": {
       "Interest payment waiver": "Zinszahlungsverzicht",
@@ -911,6 +1058,8 @@
       "are": "Sind",
       "be larger than 0 and at most 100": "größer als 0 und höchstens 100 sein",
       "begin with a special character or number": "beginnen mit einem Sonderzeichen oder einer Zahl",
+      "can not be less than": "darf nicht weniger als",
+      "can not be more than": "darf nicht mehr als",
       "cannot begin with a special character or number": "darf nicht mit einem Sonderzeichen oder einer Zahl beginnen",
       "decimal places": "Nachkommastellen",
       "do not match": "nicht übereinstimmen",
@@ -938,6 +1087,10 @@
       "on": "An",
       "every": "jeden",
       "Password validation": "Das Passwort sollte mindestens {{michar}} Zeichen enthalten, aus 1 Großbuchstaben, Kleinbuchstaben und Sonderzeichen bestehen und darf nicht aus wiederholten Zeichen oder Leerzeichen bestehen",
+<<<<<<< HEAD
+=======
+      "Must be a positive integer": "Muss eine positive ganze Zahl sein",
+>>>>>>> origin/dev
       "Must be at least": "Muss mindestens",
       "Must be less or equal to": "Muss kleiner oder gleich sein",
       "must be after or equal to start date": "muss nach oder gleich dem Startdatum sein",
@@ -998,6 +1151,7 @@
       "Beneficiary": "Begünstigter",
       "Beneficiary Selection": "Begünstigtenauswahl",
       "Block Savings Account": "Sparkonto sperren",
+      "Breach Configuration": "Verstoßkonfiguration",
       "Bulk Import": "Massenimport",
       "Bulk Loan Reassignment": "Neuzuweisung von Massenkrediten",
       "Business Rule Parameters": "Geschäftsregelparameter",
@@ -1166,6 +1320,7 @@
       "Loan Delinquency Classification": "Kreditkriminalitätsklassifizierung",
       "Loan Delinquency Tags": "Tags für Kreditausfälle",
       "Loan Delinquency Installment Tags": "Kredit -Delinquenz -Ratenmarke",
+      "Loan Delinquency Range Schedule": "Kredit-Delinquenz-Bereichsplan",
       "Loan Details": "Kreditdetails",
       "Loan Disbursal": "Darlehensauszahlung",
       "Loan Originators": "Kreditvermittler",
@@ -1209,6 +1364,7 @@
       "Minimum Active Period": "Mindestaktiver Zeitraum",
       "Minimum Deposit Term": "Mindesteinzahlungsdauer",
       "Moratorium": "Moratorium",
+      "Near Breach Configuration": "Konfiguration der Beinahe-Verletzung",
       "Nominal Interest Rate by loan cycle": "Nominalzinssatz nach Kreditzyklus",
       "Notes": "Anmerkungen",
       "Notification External Service": "Benachrichtigung Externer Dienst",
@@ -1401,7 +1557,12 @@
       "Payout Assignment": "Auszahlungszuweisung",
       "Identification": "Identifikation",
       "Professional Information": "Berufliche Informationen",
+<<<<<<< HEAD
       "Add Profile Entry": "Profileintrag hinzufügen"
+=======
+      "Add Profile Entry": "Profileintrag hinzufügen",
+      "Recipient Summary": "Empfängerübersicht"
+>>>>>>> origin/dev
     },
     "inputs": {
       "Loan Account Status": "Kreditkontostatus",
@@ -1558,6 +1719,7 @@
       "Beneficiary": "Begünstigter",
       "Branch": "Zweig",
       "Branch Office": "Zweigstelle",
+      "Breach": "Verstoß",
       "Breakdown": "Abbauen",
       "Boolean": "Boolescher Wert",
       "Business Date": "Geschäftsdatum",
@@ -1770,6 +1932,7 @@
       "Delinquency Grace Days": "Gnadentage für Jugendstraftäter",
       "Delinquency Start Type": "Delinquenz-Starttyp",
       "Delinquency Tags": "Kriminalitäts-Tags",
+      "Delinquent Amount": "Überfälliger Betrag",
       "Delinquent Days": "Kriminelle Tage",
       "Delivery Method": "Versandart",
       "Deposit Account": "Einlagenkonto",
@@ -1838,6 +2001,7 @@
       "Enable Down Payment": "Anzahlung aktivieren",
       "Enable Lock-in Period": "Sperrfrist aktivieren",
       "Enable Multiple Disbursals": "Aktivieren Sie Mehrfachauszahlungen",
+      "Enable Near Breach": "Beinahe-Verstoß aktivieren",
       "Enabled": "Ermöglicht",
       "End Date": "Endtermin",
       "End Point": "Endpunkt",
@@ -1862,6 +2026,7 @@
       "Execution Time": "Ausführungszeit",
       "Existing Client": "Bestehender Kunde",
       "Existing Meeting Date": "Bestehendes Besprechungsdatum",
+      "Expected Amount": "Erwarteter Betrag",
       "Expected Disbursement On": "Voraussichtliche Auszahlung am",
       "Expected disbursement on": "Voraussichtliche Auszahlung am",
       "Expense Account": "Aufwandskonto",
@@ -1988,6 +2153,7 @@
       "Incentive Type": "Anreiztyp",
       "Include in Customer Loan Counter": "In Kundenkreditzähler einbeziehen",
       "Income Account": "Einkommenskonto",
+      "Income From Discount Fee": "Einnahmen aus Diskontgebühr",
       "Income capitalization": "Einkommenskapitalisierung",
       "INCOME CAPITALIZATION": "EINKOMMENSKAPITALISIERUNG",
       "Income from Charge": "Einnahmen aus Gebühr",
@@ -2207,6 +2373,10 @@
       "Minimum Opening Balance": "Mindesteröffnungssaldo",
       "Minimum Overdraft Required for Interest Calculation": "Für die Zinsberechnung erforderlicher Mindestüberziehungskredit",
       "Minimum Payment": "Mindestzahlung",
+<<<<<<< HEAD
+=======
+      "Minimum Payment Criteria Met": "Mindestzahlungskriterien Erfüllt",
+>>>>>>> origin/dev
       "Minimum Payment Type": "Mindestzahlungsart",
       "Minimum Required Balance": "Mindestbetrag erforderlich",
       "Minimum Value": "Mindestwert",
@@ -2228,6 +2398,10 @@
       "Name": "Name",
       "Name Decorated": "Name dekoriert",
       "Name of the Organization": "Name der Organisation",
+      "Near Breach": "Beinahe-Verstoß",
+      "Near Breach Evaluation Frequency": "Bewertungshäufigkeit für Beinahe-Verstoß",
+      "Near Breach Evaluation Frequency Type": "Typ der Bewertungshäufigkeit für Beinahe-Verstoß",
+      "Near Breach Threshold": "Schwellenwert für Beinahe-Verstoß",
       "Net Cash": "Nettobargeld",
       "New Interest Rate": "Neuer Zinssatz",
       "Next Meeting Date": "Nächster Besprechungstermin",
@@ -2302,6 +2476,7 @@
       "Original Schedule": "Ursprünglicher Zeitplan",
       "Output Type": "Ausgabetyp",
       "Outstanding": "Hervorragend",
+      "Outstanding Amount": "Ausstehender Betrag",
       "Overdraft": "Überziehung",
       "Over Amount": "Überbetrag",
       "Over Amount Calculation Type": "Art der Berechnung des Überbetrags",
@@ -2325,6 +2500,7 @@
       "PDF format": "PDF-Format",
       "PREVIEW": "VORSCHAU",
       "Paid": "Bezahlt",
+      "Paid Amount": "Bezahlter Betrag",
       "Paid Date": "Bezahltes Datum",
       "Parameter": "Parameter",
       "Parameter Name Passed to Pentaho": "Berichtsparametername",
@@ -2364,6 +2540,10 @@
       "Percentage to Base": "Prozentsatz zur Basis",
       "Period": "Zeitraum",
       "Period From": "Zeitraum Von",
+<<<<<<< HEAD
+=======
+      "Period Number": "Periodennummer",
+>>>>>>> origin/dev
       "Period Payment Rate": "Zahlungsrate für den Zeitraum",
       "Period To": "Zeitraum bis",
       "Period Type": "Periodentyp",
@@ -2633,6 +2813,7 @@
       "Text": "Text",
       "Theme": "Thema",
       "Theme and Font": "Thema und Schriftart",
+      "Threshold": "Schwellenwert",
       "Thursday": "Donnerstag",
       "Time": "Zeit",
       "To": "Zu",
@@ -2851,7 +3032,48 @@
       "Period Payment Frequency Type": "Zahlungsperiode Häufigkeit Art",
       "Payment Allocation Transactions": "Zahlungszuordnungstransaktionen",
       "Net Present Value day count": "Nettobarwert-Tageszahl",
+<<<<<<< HEAD
       "Installment": "Rate"
+=======
+      "Installment": "Rate",
+      "Beneficiary Selection": "Begünstigtenauswahl",
+      "Confirmation Number": "Bestätigungsnummer",
+      "Sub Status": "Unterstatus",
+      "Document": "Dokument",
+      "Document Number": "Dokumentnummer",
+      "Document number is required": "Dokumentnummer ist erforderlich",
+      "Allow full term for each tranche": "Volle Laufzeit für jede Tranche erlauben",
+      "Failed to load vendors": "Anbieter konnten nicht geladen werden",
+      "First name is required": "Vorname ist erforderlich",
+      "Last name is required": "Nachname ist erforderlich",
+      "Search Client": "Kunde suchen",
+      "Type client name or account number": "Kundennamen oder Kontonummer eingeben",
+      "Confirmed At": "Bestätigt am",
+      "Full Name": "Vollständiger Name",
+      "Minimum 3 characters": "Mindestens 3 Zeichen",
+      "National ID": "Personalausweis",
+      "Nationality": "Nationalität",
+      "Payout Amount": "Auszahlungsbetrag",
+      "Payout Country": "Auszahlungsland",
+      "Payout Token": "Auszahlungs-Token",
+      "Recipient Name": "Empfängername",
+      "Send Amount": "Sendebetrag",
+      "Send Country": "Sendeland",
+      "Sender": "Absender",
+      "Sender Name": "Absendername",
+      "Sent By": "Gesendet von",
+      "Deposited At": "Eingezahlt am",
+      "Passport": "Reisepass",
+      "Driver's License": "Führerschein",
+      "Mothers Maiden Name": "Geburtsname der Mutter",
+      "Loading vendors": {
+        "": {
+          "": {
+            "": "Anbieter werden geladen..."
+          }
+        }
+      }
+>>>>>>> origin/dev
     },
     "links": {
       "Community": "Gemeinschaft",
@@ -2991,7 +3213,12 @@
       "Reject Additional Shares": "Zusätzliche Freigaben ablehnen",
       "Tasks": "Aufgaben",
       "Remittances": "Überweisungen",
+<<<<<<< HEAD
       "Process Remittance": "Überweisung bearbeiten"
+=======
+      "Process Remittance": "Überweisung bearbeiten",
+      "Undo Write-off": "Abschreibung rückgängig machen"
+>>>>>>> origin/dev
     },
     "placeholders": {
       "Add new server": "Neuen Server hinzufügen",
@@ -3114,6 +3341,10 @@
       "Audit logs of all the activities": "Prüfprotokolle aller Aktivitäten, z. B. Kunden erstellen, Kredite auszahlen usw",
       "Bar": "Bar",
       "BIRT": "Mifos Reporting Plugin for Eclipse Birt",
+<<<<<<< HEAD
+=======
+      "Breach Configurations": "Verstoss-Konfigurationen",
+>>>>>>> origin/dev
       "Bulk Import": "Massenimport",
       "Bulk Loan Reassignment": "Neuzuweisung von Massenkrediten",
       "Bulk data import using excel spreadsheet templates": "Massendatenimport mithilfe von Excel-Tabellenvorlagen für Kunden, Büros usw.",
@@ -3163,6 +3394,7 @@
       "Create Accounting Closure": "Erstellen Sie einen Buchhaltungsabschluss",
       "Create Accounting Rule": "Erstellen Sie eine Abrechnungsregel",
       "Create Adhoc Query": "Erstellen Sie eine Ad-hoc-Abfrage",
+      "Create Breach": "Verstoss erstellen",
       "Create Center": "Zentrum erstellen",
       "Create Charge": "Ladung erstellen",
       "Create Client": "Client erstellen",
@@ -3188,7 +3420,13 @@
       "Create Journal Entry": "Journaleintrag erstellen",
       "Create Loan Product": "Darlehensprodukt erstellen",
       "Create Loan Originator": "Kreditvermittler erstellen",
+<<<<<<< HEAD
+=======
+      "View Loan Originator": "Kreditvermittler anzeigen",
+      "Edit Loan Originator": "Kreditvermittler bearbeiten",
+>>>>>>> origin/dev
       "Create Loans Account": "Erstellen Sie ein Kreditkonto",
+      "Create Near Breach": "Beinahe-Verstoss erstellen",
       "Create New GL Account": "Mit dieser Option können Sie neue Hauptbuchkonten erstellen.",
       "Create Office": "Büro erstellen",
       "Create Payment Type": "Zahlungsart erstellen",
@@ -3250,6 +3488,7 @@
       "Define Tax Groups": "Steuergruppen definieren",
       "Define Tax components": "Steuerkomponenten definieren",
       "Define Tax components and Tax groups": "Definieren Sie Steuerkomponenten und Steuergruppen",
+      "Define breaches for working capital products": "Verstöße für Working-Capital-Produkte definieren",
       "Define charges/penalties for loan products, savings and deposit products": "Definieren Sie Gebühren/Strafen für Kreditprodukte, Spar- und Einlagenprodukte",
       "Define collaterals for Collateral Management": "Definieren Sie Sicherheiten für die Sicherheitenverwaltung",
       "Define delinquency bucket as set of ranges": "Definieren Sie den Verzugszeitraum als Reihe von Bereichen",
@@ -3257,6 +3496,7 @@
       "Define delinquency day ranges and bucket set for loan products": "Definieren Sie Ausfalltage und Bucket-Sets für Kreditprodukte",
       "Define floating rates for loan products": "Definieren Sie variable Zinssätze für Kreditprodukte",
       "Define holidays for office": "Definieren Sie Feiertage für das Büro",
+      "Define near breaches for working capital products": "Beinahe-Verletzungen für Working-Capital-Produkte definieren",
       "Define or modify Maker Checker tasks": "Definieren oder ändern Sie Maker Checker-Aufgaben",
       "Define or modify entity to entity mappings": "Definieren oder ändern Sie Zuordnungen von Entitäten zu Entitäten",
       "Define or modify roles and associated permissions": "Definieren oder ändern Sie Rollen und zugehörige Berechtigungen",
@@ -3276,6 +3516,7 @@
       "Edit Accounting Rules": "Buchhaltungsregeln bearbeiten",
       "Edit Adhoc Query": "Ad-hoc-Abfrage bearbeiten",
       "Edit Amazon S3 Configuration": "Bearbeiten Sie die Amazon S3-Konfiguration",
+      "Edit Breach": "Verstoss bearbeiten",
       "Edit Cashier": "Kassierer bearbeiten",
       "Edit Center": "Bearbeitungszentrum",
       "Edit Charge": "Gebühr bearbeiten",
@@ -3297,7 +3538,9 @@
       "Edit Group": "Gruppe bearbeiten",
       "Edit Holidays": "Feiertage bearbeiten",
       "Edit Hook": "Hook bearbeiten",
+      "Edit Loan Originator": "Kreditvermittler bearbeiten",
       "Edit Loan Product": "Darlehensprodukt bearbeiten",
+      "Edit Near Breach": "Beinahe-Verstoss bearbeiten",
       "Edit Notification Configuration": "Bearbeiten Sie die Benachrichtigungskonfiguration",
       "Edit Office": "Büro bearbeiten",
       "Edit Payment Type": "Zahlungsart bearbeiten",
@@ -3404,6 +3647,7 @@
       "LoanAccountCustomSnapshotBusinessEvent": "LoanAccountCustomSnapshotBusinessEvent",
       "LoanAccountDelinquencyPauseChangedBusinessEvent": "LoanAccountDelinquencyPauseChangedBusinessEvent",
       "LoanAccountSnapshotBusinessEvent": "LoanAccountSnapshotBusinessEvent",
+      "Loan Account Details": "Details zum Kreditkonto",
       "Loan Account Actions": "Aktionen zum Kreditkonto",
       "Loan Collateral Details": "Details zur Kreditsicherheit",
       "Loan Disbursal": "Kreditauszahlung",
@@ -3471,6 +3715,7 @@
       "N/A": "N / A",
       "Navigate system selecting entity": "Dadurch kann der Benutzer schnell durch das System navigieren und eine Entität auswählen, während die Suche die Navigation robuster macht.",
       "Navigation": "Navigation",
+      "Near Breach Configurations": "Beinahe-Verstoss-Konfigurationen",
       "Not Activated": "Nicht aktiviert",
       "No Data": "Keine Daten",
       "No Description": "Keine Beschreibung",
@@ -3528,6 +3773,7 @@
       "Provisioning criteria definitions": "Bitte füllen Sie alle Definitionen der Bereitstellungskriterien aus.",
       "Precedes of": "Präzedenzfälle von",
       "Recurring Deposit Account Charges": "Wiederkehrende Kontogebühren",
+      "Recurring Deposit Account Details": "Details zum wiederkehrenden Einzahlungskonto",
       "Recurring Deposit Account Interest Rate Chart": "Zinssatztabelle für wiederkehrende Einlagenkonten",
       "Recurring Deposit Account Standing Instructions": "Anweisungen zum Kontostand für wiederkehrende Einlagen",
       "Recurring Deposit Account Transactions": "Wiederkehrende Transaktionen auf dem Einlagenkonto",
@@ -3538,6 +3784,7 @@
       "Recurring Deposits Account Transactions": "Wiederkehrende Kontotransaktionen",
       "RecurringDeposit Account View": "Ansicht des wiederkehrenden Einzahlungskontos",
       "Red asterisk field": "Felder mit einem roten Sternchen (*) sind Pflichtfelder. Um mehr zu erfahren, klicken Sie:",
+      "Remittances": "Überweisungen",
       "Repayment Schedule": "Rückzahlungsplan",
       "Repeats' and 'Repeats every": "Hinweis: „Wiederholungen“ und „Wiederholungen alle“ können nicht geändert werden, wenn aktive Konten (JLG-Darlehen, wiederkehrende Einlagen usw.) vorhanden sind, die von dieser Besprechung abhängig sind.",
       "Report Parameters": "Berichtsparameter",
@@ -3593,6 +3840,7 @@
       "Share Products Dividends": "Dividenden für Aktienprodukte",
       "Share products define the rules, default settings": "Aktienprodukte definieren die Regeln, Standardeinstellungen und Einschränkungen für die Aktien und Dividenden eines Finanzinstituts. Ein Aktienprodukt bietet eine Vorlage für mehrere Konten, die von den Kunden des Finanzinstituts geführt werden oder werden.",
       "Shares": "Anteile",
+      "Shares Account Details": "Details zum Aktienkonto",
       "Shares Account Actions": "Gibt Kontoaktionen frei",
       "Shares Account Charges": "Gebühren für das Aktienkonto",
       "Shares Account Dividends": "Dividenden auf dem Aktienkonto",
@@ -3665,6 +3913,7 @@
       "View Adhoc Query": "Ad-hoc-Abfrage anzeigen",
       "View Amazon S3 Configuration": "Amazon S3-Konfiguration anzeigen",
       "View Audit": "Audit anzeigen",
+      "View Breach": "Verstoss anzeigen",
       "View Bulk Import": "Massenimport anzeigen",
       "View Cashier": "Kassierer anzeigen",
       "View Charges": "Gebühren anzeigen",
@@ -3687,7 +3936,9 @@
       "View Group": "Gruppe anzeigen",
       "View Holidays": "Feiertage anzeigen",
       "View Hook": "Haken anzeigen",
+      "View Loan Originator": "Kreditvermittler anzeigen",
       "View Loan Product": "Darlehensprodukt anzeigen",
+      "View Near Breach": "Beinahe-Verstoss anzeigen",
       "View Notification Configuration": "Benachrichtigungskonfiguration anzeigen",
       "View Office": "Büro ansehen",
       "View Product Mix": "Produktmix anzeigen",
@@ -3758,19 +4009,240 @@
       "Failed to update payment type. Please try again.": "Aktualisierung des Zahlungstyps fehlgeschlagen. Bitte versuchen Sie es erneut.",
       "Search and assign this beneficiary to an existing Mifos client account": "Suchen und weisen Sie diesen Begünstigten einem bestehenden Mifos-Kundenkonto zu",
       "Failed to search clients. Please try again.": "Kundensuche fehlgeschlagen. Bitte versuchen Sie es erneut.",
+<<<<<<< HEAD
       "Process Remittance": "Überweisung bearbeiten"
+=======
+      "Process Remittance": "Überweisung bearbeiten",
+      "Loan Originators": "Kreditvermittler",
+      "Loan Reschedules": "Kreditumschuldungen",
+      "Powered by": "Unterstützt von",
+      "Settings saved successfully": "Einstellungen erfolgreich gespeichert.",
+      "Tenant": "Mandant",
+      "To": "bis",
+      "Undo Write-off Description": "Diese Aktion macht die Abschreibungstransaktion rückgängig und stellt den Kredit auf seinen vorherigen aktiven Status wieder her. Bitte geben Sie eine Notiz an, die den Grund für diese Aktion erklärt."
+>>>>>>> origin/dev
     },
     "permissions": {
       "actions": {
         "ALL": "Alle",
         "BYPASS": "Umgehen",
         "CHECKER": "Prüfer",
+<<<<<<< HEAD
         "REPORTING": "Berichterstattung"
+=======
+        "REPORTING": "Berichterstattung",
+        "ACCEPTTRANSFER": "Übertragung akzeptieren",
+        "ACTIVATE": "Aktivieren",
+        "ADD": "Hinzufügen",
+        "ADDCHARGE": "Gebühr hinzufügen",
+        "ADJUST": "Anpassen",
+        "ADJUSTMENT": "Anpassung",
+        "ADJUSTTRANSACTION": "Transaktion anpassen",
+        "ALLOCATECASHIER": "Kassierer zuweisen",
+        "APPLYADDITIONAL": "Zusätzlich anwenden",
+        "APPLYANNUALFEE": "Jahresgebühr anwenden",
+        "APPROVALUNDO": "Genehmigung rückgängig",
+        "APPROVE": "Genehmigen",
+        "APPROVEADDITIONAL": "Zusätzlich genehmigen",
+        "ASSIGNROLE": "Rolle zuweisen",
+        "ASSIGNSTAFF": "Mitarbeiter zuweisen",
+        "ASSOCIATECLIENTS": "Kunden verknüpfen",
+        "ASSOCIATEGROUPS": "Gruppen verknüpfen",
+        "ATTACH": "Anhängen",
+        "BLOCK": "Sperren",
+        "BLOCKDEPOSIT": "Einzahlung sperren",
+        "BLOCKWITHDRAWAL": "Auszahlung sperren",
+        "BULKREASSIGN": "Massenzuweisung",
+        "BUYDOWNFEE": "Buydown-Gebühr",
+        "CALCULATEINTEREST": "Zinsen berechnen",
+        "CAPITALIZEDINCOME": "Kapitalisiertes Einkommen",
+        "CHARGEBACK": "Rückbuchung",
+        "CHARGEOFF": "Abschreiben",
+        "CLOSE": "Schließen",
+        "CLOSEASRESCHEDULED": "Als umgeplant schließen",
+        "CONTRACT_TERMINATION": "Vertragskündigung",
+        "CREATE": "Erstellen",
+        "DEACTIVATE": "Deaktivieren",
+        "DEFINEOPENINGBALANCE": "Eröffnungssaldo festlegen",
+        "DELETE": "Löschen",
+        "DELETECASHIER": "Kassierer löschen",
+        "DEPOSIT": "Einzahlung",
+        "DETACH": "Trennen",
+        "DISBURSALUNDO": "Auszahlung rückgängig",
+        "DISBURSALLASTUNDO": "Letzte Auszahlung rückgängig",
+        "DISBURSE": "Auszahlen",
+        "DISBURSETOSAVINGS": "Auf Sparkonto auszahlen",
+        "EXECUTE": "Ausführen",
+        "FORECLOSURE": "Zwangsvollstreckung",
+        "HOLDAMOUNT": "Betrag sperren",
+        "INACTIVATE": "Inaktivieren",
+        "PAY": "Bezahlen",
+        "PERMISSIONS": "Berechtigungen",
+        "POST": "Buchen",
+        "POSTINTEREST": "Zinsen buchen",
+        "PREMATURECLOSE": "Vorzeitig schließen",
+        "PROPOSETRANSFER": "Übertragung vorschlagen",
+        "REACTIVATE": "Reaktivieren",
+        "READ": "Lesen",
+        "REAGE": "Neu strukturieren",
+        "REAGING": "Neustrukturierung",
+        "REAMORTIZE": "Neu amortisieren",
+        "RECOVERGUARANTEES": "Bürgschaften einfordern",
+        "RECOVERYPAYMENT": "Rückzahlung einfordern",
+        "REJECT": "Ablehnen",
+        "REJECTADDITIONAL": "Zusätzlich ablehnen",
+        "RELEASEAMOUNT": "Betrag freigeben",
+        "REMOVESAVINGSOFFICER": "Sparkonto-Beauftragten entfernen",
+        "REOPEN": "Wiedereröffnen",
+        "REPAYMENT": "Rückzahlung",
+        "RESCHEDULE": "Umplanen",
+        "REVERSE": "Stornieren",
+        "SALE": "Verkauf",
+        "SAVEORUPDATEATTENDANCE": "Anwesenheit speichern/aktualisieren",
+        "SETTLECASHFROMCASHIER": "Bargeld vom Kassierer abrechnen",
+        "SETTLECASHIER": "Kassierer abrechnen",
+        "TRANSFER": "Übertragen",
+        "TRANSFERCLIENTS": "Kunden übertragen",
+        "UNASSIGNROLE": "Rolle entziehen",
+        "UNASSIGNSTAFF": "Mitarbeiter entziehen",
+        "UNBLOCK": "Entsperren",
+        "UNBLOCKDEPOSIT": "Einzahlung entsperren",
+        "UNBLOCKWITHDRAWAL": "Auszahlung entsperren",
+        "UNDO": "Rückgängig",
+        "UNDO_ACTIVATE": "Aktivierung rückgängig",
+        "UNDO_REAGE": "Neustrukturierung rückgängig",
+        "UNDO_REAMORTIZE": "Neu-Amortisierung rückgängig",
+        "UNDOCHARGEOFF": "Abschreibung rückgängig",
+        "UNDOTRANSACTION": "Transaktion rückgängig",
+        "UNDOWRITEOFF": "Abschreibung rückgängig",
+        "UPDATE": "Aktualisieren",
+        "UPDATECASHIERALLOCATION": "Kassierer-Zuweisung aktualisieren",
+        "UPDATELOANOFFICER": "Kreditsachbearbeiter aktualisieren",
+        "UPDATESAVINGSACCOUNT": "Sparkonto aktualisieren",
+        "UPDATESAVINGSOFFICER": "Sparkonto-Beauftragten aktualisieren",
+        "UPDATEWITHHOLDTAX": "Quellensteuer aktualisieren",
+        "VIEW": "Anzeigen",
+        "WAIVE": "Erlassen",
+        "WAIVEINTERESTPORTION": "Zinsanteil erlassen",
+        "WITHDRAW": "Abheben",
+        "WITHDRAWAL": "Auszahlung",
+        "WRITEOFF": "Abschreiben"
+>>>>>>> origin/dev
       },
       "entities": {
         "FUNCTIONS": "Funktionen",
         "TWOFACTOR": "Zwei-Faktor",
+<<<<<<< HEAD
         "SUPER_USER": "Superbenutzer"
+=======
+        "SUPER_USER": "Superbenutzer",
+        "ACCOUNTINGRULE": "Buchungsregel",
+        "ACCOUNTNUMBERFORMAT": "Kontonummernformat",
+        "ACCOUNTTRANSFER": "Kontoübertragung",
+        "ADHOC": "Ad-hoc",
+        "BUSINESSDATE": "Geschäftsdatum",
+        "CASHIER": "Kassierer",
+        "CASHIERS_FOR_TELLER": "Kassierer für Schalter",
+        "CENTER": "Zentrum",
+        "CENTERS": "Zentren",
+        "CHARGE": "Gebühr",
+        "CLIENT": "Kunde",
+        "CLIENTCHARGE": "Kundengebühr",
+        "CLIENTIDENTIFIER": "Kundenidentifikation",
+        "CLIENTIMAGE": "Kundenbild",
+        "CLIENT_COLLATERAL_PRODUCT": "Kunden-Sicherheitenprodukt",
+        "CLIENTS": "Kunden",
+        "CODE": "Code",
+        "CODEVALUE": "Code-Wert",
+        "COLLATERAL": "Sicherheit",
+        "COLLECTIONSHEET": "Inkassoübersicht",
+        "CONFIG_WIZARD": "Konfigurationsassistent",
+        "CONFIGURATION": "Konfiguration",
+        "CREDIT_BALANCE_REFUND": "Guthabenrückerstattung",
+        "CRITERIA": "Kriterien",
+        "CURRENCY": "Währung",
+        "DATATABLE": "Datentabelle",
+        "DELINQUENCY_ACTION": "Zahlungsverzug-Aktion",
+        "DELINQUENCY_BUCKET": "Zahlungsverzug-Kategorie",
+        "DELINQUENCY_RANGE": "Zahlungsverzug-Bereich",
+        "DIVIDENDS": "Dividenden",
+        "DOCUMENT": "Dokument",
+        "EMPLOYEE": "Mitarbeiter",
+        "ENTITYMAPPING": "Entitätszuordnung",
+        "ENTITY_DATATABLE_CHECK": "Entitäts-Datentabellenprüfung",
+        "EXTERNAL_EVENT_CONFIGURATION": "Externe Ereigniskonfiguration",
+        "FINANCIALACTIVITYACCOUNT": "Finanzaktivitätskonto",
+        "FIXEDDEPOSITACCOUNT": "Festgeldkonto",
+        "FIXEDDEPOSITPRODUCT": "Festgeldprodukt",
+        "FLOATINGRATE": "Variabler Zinssatz",
+        "FUND": "Fonds",
+        "GLACCOUNT": "Sachkonto",
+        "GLCLOSURE": "Buchungsabschluss",
+        "GOODWILL_TRANSACTION": "Kulanz-Transaktion",
+        "GROUP": "Gruppe",
+        "GROUPNOTE": "Gruppennotiz",
+        "GROUPS": "Gruppen",
+        "GSIMACCOUNT": "GSIM-Konto",
+        "GUARANTOR": "Bürge",
+        "HOLIDAY": "Feiertag",
+        "HOOK": "Hook",
+        "INLINE_JOB": "Inline-Job",
+        "INTEREST_PAUSE": "Zinspause",
+        "INTERESTPAYMENTWAIVER_TRANSACTION": "Zinsverzicht-Transaktion",
+        "JOURNAL_ENTRY": "Buchungseintrag",
+        "JOURNALENTRY": "Buchungseintrag",
+        "LOAN": "Kredit",
+        "LOANCHARGE": "Kreditgebühr",
+        "LOANNOTE": "Kreditnotiz",
+        "LOANPRODUCT": "Kreditprodukt",
+        "LOANRESCHEDULE": "Kreditumplanung",
+        "LOAN_ORIGINATOR": "Kreditoriginator",
+        "MAKERCHECKER": "Vier-Augen-Prinzip",
+        "MEETING": "Treffen",
+        "MERCHANT_ISSUED_REFUND": "Händler-Rückerstattung",
+        "NOTIFICATION": "Benachrichtigung",
+        "OFFICE": "Büro",
+        "OFFICES": "Büros",
+        "PASSWORD_VALIDATION_POLICY": "Passwortvalidierungsrichtlinie",
+        "PAYOUT_REFUND": "Auszahlungsrückerstattung",
+        "PAYMENTTYPE": "Zahlungsart",
+        "PERIODICACCRUALACCOUNTING": "Periodische Abgrenzungsbuchhaltung",
+        "PERMISSION": "Berechtigung",
+        "PREFERENCES": "Einstellungen",
+        "PRODUCT": "Produkt",
+        "PRODUCTMIX": "Produktmix",
+        "PROVISIONING_CRITERIA": "Rückstellungskriterien",
+        "PROVISIONING_ENTRIES": "Rückstellungseinträge",
+        "RECURRINGDEPOSITACCOUNT": "Sparplankonto",
+        "RECURRINGDEPOSITPRODUCT": "Sparplanprodukt",
+        "REPAYMENT_SCHEDULE": "Rückzahlungsplan",
+        "REPORT": "Bericht",
+        "RESCHEDULELOAN": "Kredit umplanen",
+        "ROLE": "Rolle",
+        "SAVINGNOTE": "Sparnotiz",
+        "SAVINGSACCOUNT": "Sparkonto",
+        "SAVINGSACCOUNTCHARGE": "Sparkontogebühr",
+        "SAVINGSNOTE": "Sparnotiz",
+        "SAVINGSPRODUCT": "Sparprodukt",
+        "SCHEDULER": "Planer",
+        "SHAREACCOUNT": "Anteilskonto",
+        "SHAREACCOUNTCHARGE": "Anteilskontogebühr",
+        "SHAREACCOUNTDIVIDENDS": "Anteilskonto-Dividenden",
+        "SHAREACCOUNTPURCHASE": "Anteilskontokauf",
+        "SHAREDIVIDEND": "Anteilsdividende",
+        "SHAREPRODUCT": "Anteilsprodukt",
+        "SHARESACCOUNTCHARGE": "Anteilskontogebühr",
+        "SMSCAMPAIGN": "SMS-Kampagne",
+        "SSBENEFICIARYTPT": "Self-Service-Begünstigte TPT",
+        "STAFF": "Personal",
+        "STANDINGINSTRUCTION": "Dauerauftrag",
+        "TAXCOMPONENT": "Steuerkomponente",
+        "TAXGROUP": "Steuergruppe",
+        "TELLER": "Schalter",
+        "TEMPLATE": "Vorlage",
+        "USER": "Benutzer",
+        "WORKINGDAYS": "Arbeitstage"
+>>>>>>> origin/dev
       }
     },
     "messages": {
@@ -3788,7 +4260,72 @@
       "No Closed Share Accounts Found": "Keine geschlossenen Anteilskonten gefunden",
       "No Collateral Data Found": "Keine Sicherheitsdaten gefunden",
       "No Identities Found": "Keine Identitäten gefunden",
+<<<<<<< HEAD
       "validationSaved": "Validierungsdaten erfolgreich gespeichert."
+=======
+      "validationSaved": "Validierungsdaten erfolgreich gespeichert.",
+      "workingCapitalDiscountUpdated": "Betriebskapitalrabatt wurde erfolgreich aktualisiert.",
+      "unableToUpdateDiscount": "Rabatt konnte nicht aktualisiert werden."
+    },
+    "auditTrail": {
+      "actions": {
+        "CREATE": "Erstellen",
+        "UPDATE": "Aktualisieren",
+        "DELETE": "Löschen",
+        "PERMISSIONS": "Berechtigungen",
+        "ACTIVATE": "Aktivieren",
+        "DEACTIVATE": "Deaktivieren",
+        "APPROVE": "Genehmigen",
+        "REJECT": "Ablehnen",
+        "DISBURSE": "Auszahlen",
+        "UNDO": "Rückgängig",
+        "CLOSE": "Schließen",
+        "REOPEN": "Wiedereröffnen",
+        "WITHDRAW": "Abheben",
+        "DEPOSIT": "Einzahlung",
+        "TRANSFER": "Übertragen",
+        "POSTINTEREST": "Zinsen buchen",
+        "CALCULATEINTEREST": "Zinsen berechnen",
+        "ASSIGNSTAFF": "Mitarbeiter zuweisen",
+        "ACCEPTTRANSFER": "Übertragung akzeptieren",
+        "PROPOSETRANSFER": "Übertragung vorschlagen",
+        "REPAYMENT": "Rückzahlung",
+        "DISBURSETOSAVINGS": "Auf Sparkonto auszahlen"
+      },
+      "entities": {
+        "ROLE": "Rolle",
+        "CODEVALUE": "Code-Wert",
+        "FUND": "Fonds",
+        "OFFICE": "Büro",
+        "TEMPLATE": "Vorlage",
+        "USER": "Benutzer",
+        "GROUPNOTE": "Gruppennotiz",
+        "SAVINGNOTE": "Sparnotiz",
+        "SAVINGSACCOUNT": "Sparkonto",
+        "LOAN": "Kredit",
+        "CLIENT": "Kunde",
+        "GROUP": "Gruppe",
+        "CHARGE": "Gebühr",
+        "PRODUCT": "Produkt",
+        "LOANPRODUCT": "Kreditprodukt",
+        "SAVINGSPRODUCT": "Sparprodukt",
+        "CENTER": "Zentrum",
+        "EMPLOYEE": "Mitarbeiter",
+        "CURRENCY": "Währung",
+        "HOLIDAY": "Feiertag",
+        "REPORT": "Bericht",
+        "DATATABLE": "Datentabelle",
+        "COLLATERAL": "Sicherheit",
+        "GUARANTOR": "Bürge",
+        "SHAREPRODUCT": "Anteilsprodukt",
+        "FIXEDDEPOSITPRODUCT": "Festgeldprodukt",
+        "FIXEDDEPOSITACCOUNT": "Festgeldkonto",
+        "RECURRINGDEPOSITPRODUCT": "Sparplanprodukt",
+        "RECURRINGDEPOSITACCOUNT": "Sparplankonto",
+        "ACCOUNTTRANSFER": "Kontoübertragung",
+        "SSBENEFICIARYTPT": "Self-Service-Begünstigte TPT"
+      }
+>>>>>>> origin/dev
     }
   },
   "permissions": {
@@ -4300,7 +4837,12 @@
     "ACTIVE": "AKTIV",
     "PENDING": "AUSSTEHEND",
     "INACTIVE": "INAKTIV",
+<<<<<<< HEAD
     "Process Remittance": "Überweisung bearbeiten"
+=======
+    "Process Remittance": "Überweisung bearbeiten",
+    "Allow full term length for each tranche disbursement": "Wenn aktiviert, folgt jede Tranchenauszahlung dem vollständigen Kreditlaufzeitplan anstatt sich an die verbleibende Laufzeit anzupassen. Nur verfügbar für den PROGRESSIVEN Kreditplantyp."
+>>>>>>> origin/dev
   },
   "countries": {
     "AF": "Afghanistan",
@@ -4420,5 +4962,71 @@
     "ZW": "Simbabwe"
   },
   "Deactivate Role": "Rolle deaktivieren",
+<<<<<<< HEAD
   "Delete Role": "Rolle löschen"
+=======
+  "Delete Role": "Rolle löschen",
+  "clients": {
+    "actions": {
+      "close": {
+        "success": "Kunde erfolgreich geschlossen."
+      },
+      "reject": {
+        "success": "Kunde erfolgreich abgelehnt."
+      },
+      "withdraw": {
+        "success": "Kunde erfolgreich zurückgezogen."
+      },
+      "reactivate": {
+        "success": "Kunde erfolgreich reaktiviert.",
+        "failure": "Reaktivierung des Kunden fehlgeschlagen."
+      },
+      "activate": {
+        "success": "Kunde erfolgreich aktiviert.",
+        "failure": "Aktivierung des Kunden fehlgeschlagen."
+      },
+      "acceptTransfer": {
+        "success": "Kundentransfer erfolgreich akzeptiert."
+      },
+      "rejectTransfer": {
+        "success": "Kundentransfer erfolgreich abgelehnt."
+      },
+      "undoTransfer": {
+        "success": "Kundentransfer erfolgreich rückgängig gemacht."
+      },
+      "undoRejection": {
+        "success": "Kundenablehnung erfolgreich rückgängig gemacht."
+      },
+      "transfer": {
+        "success": "Kundentransfer erfolgreich vorgeschlagen.",
+        "failure": "Vorschlag des Kundentransfers fehlgeschlagen."
+      },
+      "addCharge": {
+        "success": "Kundengebühr erfolgreich hinzugefügt."
+      },
+      "addCollateral": {
+        "success": "Kundensicherheit erfolgreich hinzugefügt."
+      },
+      "assignStaff": {
+        "success": "Personal erfolgreich dem Kunden zugewiesen.",
+        "failure": "Personal konnte dem Kunden nicht zugewiesen werden."
+      },
+      "updateSavingsAccount": {
+        "success": "Kundensparkonto erfolgreich aktualisiert."
+      },
+      "takeSurvey": {
+        "success": "Umfrage erfolgreich eingereicht.",
+        "failure": "Umfrage konnte nicht eingereicht werden."
+      }
+    }
+  },
+  "error": {
+    "resource": {
+      "notImplemented": {
+        "type": "Nicht implementierter Fehler",
+        "message": "Nicht implementierte Funktionalität!"
+      }
+    }
+  }
+>>>>>>> origin/dev
 }

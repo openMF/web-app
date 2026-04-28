@@ -34,7 +34,11 @@
   letter-spacing: normal;
   text-transform: none;
   white-space: nowrap;
+<<<<<<< HEAD
   word-wrap: normal;
+=======
+  overflow-wrap: normal;
+>>>>>>> origin/dev
   direction: ltr;
   color: var(--md-icon-prefix-label-text-color, #44474e);
 }

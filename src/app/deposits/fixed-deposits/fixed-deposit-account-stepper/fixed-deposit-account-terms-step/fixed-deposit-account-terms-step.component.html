@@ -23,7 +23,7 @@
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Deposit Period' | translate }}</mat-label>
-      <input type="number" matInput formControlName="depositPeriod" required />
+      <input type="number" matInput formControlName="depositPeriod" mifosxPositiveInteger required />
       <mat-error>
         {{ 'labels.inputs.Deposit Period' | translate }} {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>

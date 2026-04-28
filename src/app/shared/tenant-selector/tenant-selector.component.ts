@@ -10,6 +10,10 @@ import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 import { AlertService } from 'app/core/alert/alert.service';
+<<<<<<< HEAD
+=======
+import { TranslateService } from '@ngx-translate/core';
+>>>>>>> origin/dev
 import { MatFormField, MatPrefix, MatLabel } from '@angular/material/form-field';
 import { M3IconComponent } from 'app/shared/m3-ui/m3-icon/m3-icon.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -27,6 +31,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 export class TenantSelectorComponent implements OnInit {
   private settingsService = inject(SettingsService);
   private alertService = inject(AlertService);
+<<<<<<< HEAD
+=======
+  private translateService = inject(TranslateService);
+>>>>>>> origin/dev
 
   /** Tenant selector form control. */
   tenantSelector = new UntypedFormControl();
@@ -50,7 +58,14 @@ export class TenantSelectorComponent implements OnInit {
 
   setTenantIdentifier(): void {
     this.settingsService.setTenantIdentifier(this.tenantSelector.value);
+<<<<<<< HEAD
     this.alertService.alert({ type: 'Tenant Changed', message: this.tenantSelector.value });
+=======
+    this.alertService.alert({
+      type: this.translateService.instant('errors.tenant.changed.type'),
+      message: this.tenantSelector.value
+    });
+>>>>>>> origin/dev
   }
 
   allowSelection(): boolean {

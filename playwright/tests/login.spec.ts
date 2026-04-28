@@ -8,6 +8,10 @@
 
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/login.page';
+<<<<<<< HEAD
+=======
+test.use({ storageState: { cookies: [], origins: [] } });
+>>>>>>> origin/dev
 
 /**
  * Login Smoke Tests
@@ -68,8 +72,11 @@ test.describe('Login Page', () => {
   });
 
   test('should successfully login with valid credentials', async () => {
+<<<<<<< HEAD
     test.skip(!!process.env.CI, 'Production build auth interceptor skips tenant header for absolute URLs');
 
+=======
+>>>>>>> origin/dev
     // Perform login with valid credentials
     // This uses the login() method which follows the exact codegen sequence
     await loginPage.loginAndWaitForDashboard('mifos', 'password');
@@ -82,12 +89,17 @@ test.describe('Login Page', () => {
     // Attempt login with wrong password
     await loginPage.login('mifos', 'wrongpassword');
 
+<<<<<<< HEAD
     // Wait for the login attempt to process and any error notification to appear
     // The app shows a snackbar notification for authentication errors
     await page.waitForTimeout(3000);
 
     // Should remain on login page after failed attempt (URL still contains /login)
     await expect(page).toHaveURL(/.*login.*/);
+=======
+    // Should remain on login page after failed attempt
+    await expect(page).toHaveURL(/.*login.*/, { timeout: 10000 });
+>>>>>>> origin/dev
 
     // Verify we're still on the login page by checking form elements are visible
     await expect(loginPage.usernameInput).toBeVisible();
@@ -99,8 +111,11 @@ test.describe('Login Page', () => {
    * This is the baseline test generated from codegen.
    */
   test('codegen baseline: login with mifos credentials', async () => {
+<<<<<<< HEAD
     test.skip(!!process.env.CI, 'Production build auth interceptor skips tenant header for absolute URLs');
 
+=======
+>>>>>>> origin/dev
     // This test uses the exact codegen interaction sequence
     await loginPage.login('mifos', 'password');
 

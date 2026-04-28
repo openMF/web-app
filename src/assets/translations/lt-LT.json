@@ -6,8 +6,13 @@
     "accountingRule": {
       "duplicateName": "Atsiprašome, bet apskaitos taisyklė su šiuo pavadinimu jau egzistuoja."
     },
+<<<<<<< HEAD
     "error.resource.notImplemented.type": "Neįdiegta klaida",
     "error.resource.notImplemented.message": "Funkcionalumas neįdiegtas!",
+=======
+    "error.resource.notImplemented.type": "Neįgyvendinta",
+    "error.resource.notImplemented.message": "Neįgyvendinta funkcija!",
+>>>>>>> origin/dev
     "linkedSavingsAccountOwnership": "Susieta taupomoji sąskaita nepriklauso pasirinktam klientui.",
     "clientNotInGSIM": "Klientas su ID {{id}} nėra GSIM sistemoje.",
     "Capitalized Income amount adjusted already adjusted": "Kapitalizuotų pajamų suma pakoreguota jau pakoreguota",
@@ -28,6 +33,7 @@
     "error.msg.charge.due.at.disbursement.cannot.be.penalty": "Mokestis negali būti nustatytas kaip bauda, ​​mokėtina išmokėjimo metu.",
     "error.msg.charge.duplicate.name": "Mokestis tokiu pavadinimu jau yra.",
     "error.msg.charge.update.of.charge.applies.to.is.not.supported": "Mokesčio atnaujinimas taikomas nepalaikomas.",
+    "error.msg.data.integrity.issue": "Užklausa sukėlė duomenų vientisumo problemą duomenų bazėje",
     "error.msg.loan.product.close.date.cannot.be.before.start.date": "Paskolos produkto uždarymo data negali būti ankstesnė už pradžios datą.",
     "error.msg.product.loan.duplicate.charge": "Paskolos produktas gali turėti tik vieną kiekvienos rūšies mokestį.",
     "error.msg.product.loan.duplicate.name": "Paskolos produktas pavadinimu `{{params[0].value}}` jau yra.",
@@ -35,6 +41,7 @@
     "error.msg.product.savings.duplicate.name": "Taupymo produktas pavadinimu `{{params[0].value}}` jau yra.",
     "error.msg.product.savings.duplicate.short.name": "Taupymo produktas trumpuoju pavadinimu {{params[0].value}} jau yra.",
     "error.msg.savingsproduct.unknown.data.integrity.issue": "Kuriant/atnaujinant taupymo produktą iškilo netikėta problema. Klaida prisijungta prie serverio.",
+    "error.msg.reporting.error": "Generuojant ataskaitą įvyko klaida.",
     "validation.msg.charge.amount.cannot.be.blank": "Sumos laukas negali būti tuščias.",
     "validation.msg.charge.amount.not.greater.than.zero": "Mokesčio suma turi būti didesnė už nulį.",
     "validation.msg.charge.chargeAppliesTo.cannot.be.blank": "Mokestis taikomas negali būti tuščias.",
@@ -285,7 +292,140 @@
     "validation.msg.savingsproduct.shortName.exceeds.max.length": "Trumpas pavadinimas negali būti ilgesnis nei {{params[0].value}} simbolių.",
     "validation.msg.savingsproduct.withdrawalFeeAmount.cannot.be.blank": "Išėmimo mokesčio suma yra privaloma.",
     "validation.msg.savingsproduct.withdrawalFeeAmount.not.zero.or.greater": "Išėmimo mokesčio suma turi būti didesnė už nulį arba lygi nuliui, jei nurodyta.",
-    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Išėmimo mokesčio laikotarpio tipas yra privalomas."
+    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Pasirinktas išėmimo mokesčio tipas yra neteisingas.",
+    "http": {
+      "connection": {
+        "title": "Ryšio klaida",
+        "message": "Nepavyksta prisijungti prie serverio. Patikrinkite interneto ryšį."
+      },
+      "badRequest": {
+        "title": "Neteisinga užklausa",
+        "message": "Patikrinkite įvestus duomenis ir bandykite dar kartą."
+      },
+      "unauthorized": {
+        "title": "Neautorizuota",
+        "message": "Jūsų sesija baigėsi. Prisijunkite iš naujo.",
+        "action": "Prisijungti"
+      },
+      "forbidden": {
+        "title": "Prieiga uždrausta",
+        "message": "Jūs neturite teisės atlikti šį veiksmą."
+      },
+      "notFound": {
+        "title": "Nerasta",
+        "message": "Prašomas išteklius nerastas.",
+        "contextMessage": "{{context}} nerastas."
+      },
+      "conflict": {
+        "title": "Konfliktas",
+        "message": "Išteklius jau egzistuoja arba yra konfliktas."
+      },
+      "serverError": {
+        "title": "Serverio klaida",
+        "message": "Įvyko netikėta klaida. Bandykite vėliau."
+      },
+      "serviceUnavailable": {
+        "title": "Paslauga nepasiekiama",
+        "message": "Paslauga laikinai nepasiekiama. Bandykite vėliau."
+      },
+      "default": {
+        "title": "Klaida",
+        "message": "Įvyko netikėta klaida."
+      }
+    },
+    "interceptor": {
+      "invalidParams": "Užklausoje buvo perduoti neteisingi parametrai!"
+    },
+    "auth": {
+      "pleaseWait": "Prašome palaukti...",
+      "startType": "Autentifikacijos pradžia",
+      "twoFactor": {
+        "type": "Reikalinga dviejų veiksnių autentifikacija",
+        "message": "Reikalinga dviejų veiksnių autentifikacija"
+      },
+      "passwordExpired": {
+        "type": "Slaptažodis pasibaigė",
+        "message": "Jūsų slaptažodis pasibaigė, prašome jį atstatyti!"
+      },
+      "success": {
+        "type": "Autentifikacija sėkminga",
+        "message": "{{username}} sėkmingai prisijungė!"
+      },
+      "passwordReset": {
+        "type": "Slaptažodis sėkmingai atstatytas",
+        "message": "Jūsų slaptažodis buvo sėkmingai atstatytas!"
+      },
+      "callbackFailed": {
+        "type": "Autentifikacija nepavyko",
+        "message": "Nepavyko užbaigti autentifikacijos. Bandykite dar kartą."
+      },
+      "callbackError": {
+        "type": "Autentifikacijos klaida",
+        "message": "Autentifikacijos metu įvyko klaida. Bandykite dar kartą."
+      }
+    },
+    "hooks": {
+      "lastEvent": "Reikalingas bent vienas įvykis. Negalima ištrinti paskutinio įvykio."
+    },
+    "generic": {
+      "unexpected": "Įvyko klaida. Bandykite dar kartą.",
+      "unexpectedRetry": "Įvyko netikėta klaida. Bandykite dar kartą.",
+      "unexpectedShort": "Įvyko netikėta klaida."
+    },
+    "holiday": {
+      "invalidDate": "Pasirinkta neteisinga data. Pasirinkite teisingą datą.",
+      "invalidRepaymentDate": "Neteisinga grąžinimo perplanavimo data. Pasirinkite teisingą datą."
+    },
+    "report": {
+      "type": "Ataskaitos generavimas",
+      "generated": "Ataskaita: {{reportName}} duomenys sugeneruoti",
+      "generatedNoData": "Ataskaita: {{reportName}} sugeneruota be duomenų"
+    },
+    "clipboard": {
+      "type": "Iškarpinė",
+      "copied": "Nukopijuota: {{value}}"
+    },
+    "tenant": {
+      "changed": {
+        "type": "Nuomininkas pakeistas"
+      }
+    },
+    "config": {
+      "setConfig": "{{type}} konfigūracija nustatyta"
+    },
+    "loans": {
+      "undoWriteOff": {
+        "type": "Nurašymo atšaukimas nepavyko",
+        "message": "Apdorojant nurašymo atšaukimą įvyko klaida. Bandykite dar kartą arba kreipkitės į palaikymą."
+      },
+      "alreadyAdjusted": "Kapitalizuotų pajamų suma jau pakoreguota",
+      "adjustment": "Koregavimas {{type}} Sandoris",
+      "capitalizedIncomeLimit": "Kapitalizuotų pajamų koregavimo suma turi būti mažesnė arba lygi",
+      "buyDownFeeAdjusted": "Buy Down mokesčio suma jau pakoreguota",
+      "buyDownFeeLimit": "Buy Down mokesčio koregavimo suma turi būti mažesnė arba lygi",
+      "businessRule": "Verslo taisyklė",
+      "alertWithAmount": "{{label}}: {{amount}}"
+    },
+    "error.auth.type": "Autentifikacijos klaida",
+    "error.auth.message": "Jūsų sesija baigėsi arba prisijungimo duomenys neteisingi.",
+    "error.token.invalid.type": "Neteisingas žetonas",
+    "error.token.invalid.message": "Pateiktas vienkartinis žetonas yra neteisingas.",
+    "error.bad.request.type": "Bloga užklausa",
+    "error.bad.request.message": "Užklausoje buvo perduoti neteisingi parametrai!",
+    "error.unauthorized.type": "Neautorizuota",
+    "error.unauthorized.message": "Jūsų sesija baigėsi arba prisijungimo duomenys neteisingi.",
+    "error.resource.not.found.type": "Išteklius nerastas",
+    "error.resource.not.found.message": "Prašomas išteklius nerastas.",
+    "error.server.internal.type": "Vidinė serverio klaida",
+    "error.server.internal.message": "Serveryje įvyko netikėta klaida. Bandykite vėliau.",
+    "error.unknown.type": "Nežinoma klaida",
+    "error.unknown.message": "Įvyko netikėta klaida.",
+    "validation.required": "Šis laukas yra privalomas",
+    "validation.minLength": "Minimali ilgis yra {{requiredLength}}",
+    "validation.emailInvalid": "El. paštas neteisingas",
+    "validation.requiredField": "{{label}} yra privalomas laukas.",
+    "validation.mustBeAtLeast": "{{field}} turi būti bent {{min}}",
+    "validation.mustBePositive": "{{field}} turi būti teigiamas skaičius."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -335,6 +475,7 @@
     "accounting": {
       "Accrual (periodic)": "Kaupiamasis (periodinis)",
       "Accrual (upfront)": "Sukaupimas (išankstinis)",
+      "CASH_BASED": "Grynieji pinigai",
       "Cash": "Grynieji pinigai",
       "NONE": "Nė vienas",
       "financialActivity": {
@@ -479,6 +620,10 @@
       "Export to File": "Eksportuoti į failą",
       "Export CSV": "Eksportuoti CSV",
       "Export XLS": "Eksportuoti XLS",
+<<<<<<< HEAD
+=======
+      "Export to PDF": "Eksportuoti kaip PDF",
+>>>>>>> origin/dev
       "Export KYC": "Eksportuoti KYC",
       "Validate Documentation": "Patvirtinti dokumentaciją",
       "INCOMPLETE": "NEBAIGTA",
@@ -618,7 +763,12 @@
       "Retry": "Bandyti dar kartą",
       "PRINT": "Spausdinti",
       "DONE": "Atlikta",
+<<<<<<< HEAD
       "Submitting": "Pateikiama"
+=======
+      "Submitting": "Pateikiama",
+      "OK": "Gerai"
+>>>>>>> origin/dev
     },
     "catalogs": {
       "Interest payment waiver": "Palūkanų mokėjimo atsisakymas",
@@ -888,7 +1038,12 @@
       "DAYS": "DIENOS",
       "MONTHS": "MĖNESIŲ",
       "YEARS": "METAI",
+<<<<<<< HEAD
       "Loan Creation": "Paskolos sukūrimas"
+=======
+      "Loan Creation": "Paskolos sukūrimas",
+      "Account_transfer": "Sąskaitos perkėlimas"
+>>>>>>> origin/dev
     },
     "commons": {
       "50 characters long": "50 simbolių ilgio",
@@ -909,6 +1064,8 @@
       "are": "yra",
       "be larger than 0 and at most 100": "būti didesnis nei 0 ir daugiausia 100",
       "begin with a special character or number": "prasideda specialiu simboliu arba skaičiumi",
+      "can not be less than": "negali būti mažiau nei",
+      "can not be more than": "negali būti daugiau nei",
       "cannot begin with a special character or number": "negali prasidėti specialiuoju simboliu ar skaičiumi",
       "decimal places": "po kablelio",
       "do not match": "nesutampa",
@@ -936,6 +1093,10 @@
       "on": "įjungta",
       "every": "kiekvienas",
       "Password validation": "Slaptažodį turi sudaryti ne mažiau kaip {{minchar}} simbolių, iš kurių turi būti 1 didžioji, mažoji raidė ir specialus simbolis, o jį neturėtų sudaryti pasikartojantys simboliai ar tarpai",
+<<<<<<< HEAD
+=======
+      "Must be a positive integer": "Turi būti teigiamas sveikasis skaičius",
+>>>>>>> origin/dev
       "Must be at least": "Turi būti bent jau",
       "Must be less or equal to": "Turi būti mažesnis arba lygus",
       "must be after or equal to start date": "turi būti po pradžios datos arba jai lygi",
@@ -996,6 +1157,7 @@
       "Beneficiary": "Gavėjas",
       "Beneficiary Selection": "Gavėjo pasirinkimas",
       "Block Savings Account": "Blokuoti taupomąją sąskaitą",
+      "Breach Configuration": "Pažeidimo konfigūracija",
       "Bulk Import": "Masinis importas",
       "Bulk Loan Reassignment": "Masinės paskolos perskirstymas",
       "Business Rule Parameters": "Verslo taisyklių parametrai",
@@ -1164,6 +1326,7 @@
       "Loan Delinquency Classification": "Paskolos nusikalstamumo klasifikacija",
       "Loan Delinquency Tags": "Paskolų vėlavimo žymos",
       "Loan Delinquency Installment Tags": "Paskolos nusikalstamumo įmokos žymos",
+      "Loan Delinquency Range Schedule": "Paskolos Nusikalstamumo Diapazono Grafikas",
       "Loan Details": "Paskolos informacija",
       "Loan Disbursal": "Paskolos išmokimas",
       "Loan Originators": "Paskolų teikėjai",
@@ -1207,6 +1370,7 @@
       "Minimum Active Period": "Minimalus aktyvus laikotarpis",
       "Minimum Deposit Term": "Minimalus indėlio terminas",
       "Moratorium": "Moratoriumas",
+      "Near Breach Configuration": "Artimo pažeidimo konfigūracija",
       "Nominal Interest Rate by loan cycle": "Nominali palūkanų norma pagal paskolos ciklą",
       "Notes": "Pastabos",
       "Notification External Service": "Pranešimų išorinė tarnyba",
@@ -1399,7 +1563,12 @@
       "Payout Assignment": "Išmokos priskyrimas",
       "Identification": "Identifikacija",
       "Professional Information": "Profesinė informacija",
+<<<<<<< HEAD
       "Add Profile Entry": "Pridėti profilio įrašą"
+=======
+      "Add Profile Entry": "Pridėti profilio įrašą",
+      "Recipient Summary": "Gavėjo suvestinė"
+>>>>>>> origin/dev
     },
     "inputs": {
       "Loan Account Status": "Paskolos sąskaitos būsena",
@@ -1556,6 +1725,7 @@
       "Beneficiary": "Naudos gavėjas",
       "Branch": "Filialas",
       "Branch Office": "Filialas",
+      "Breach": "Pažeidimas",
       "Breakdown": "Palaužti",
       "Boolean": "Būlio",
       "Business Date": "Darbo data",
@@ -1768,6 +1938,7 @@
       "Delinquency Grace Days": "Delspinigių dienos",
       "Delinquency Start Type": "Delspinigių pradžios tipas",
       "Delinquency Tags": "Nusikaltimų žymos",
+      "Delinquent Amount": "Pradelsta Suma",
       "Delinquent Days": "Nusikaltėlių dienos",
       "Delivery Method": "Pristatymo būdas",
       "Deposit Account": "Indėlio sąskaita",
@@ -1836,6 +2007,7 @@
       "Enable Down Payment": "Įgalinti pradinį įnašą",
       "Enable Lock-in Period": "Įgalinti užrakinimo laikotarpį",
       "Enable Multiple Disbursals": "Įgalinti kelias išmokas",
+      "Enable Near Breach": "Įgalinti artėjantį pažeidimą",
       "Enabled": "Įjungtas",
       "End Date": "Pabaigos data",
       "End Point": "Pabaigos taškas",
@@ -1860,6 +2032,7 @@
       "Execution Time": "Vykdymo laikas",
       "Existing Client": "Esamas Klientas",
       "Existing Meeting Date": "Esamo susitikimo data",
+      "Expected Amount": "Numatoma Suma",
       "Expected Disbursement On": "Numatoma išmokėti",
       "Expected disbursement on": "Numatomas išmokėjimas",
       "Expense Account": "Išlaidų sąskaita",
@@ -1986,6 +2159,7 @@
       "Incentive Type": "Paskatinimo tipas",
       "Include in Customer Loan Counter": "Įtraukti į klientų paskolų skaitiklį",
       "Income Account": "Pajamų sąskaita",
+      "Income From Discount Fee": "Pajamos iš nuolaidų mokesčio",
       "Income capitalization": "Pajamų kapitalizacija",
       "INCOME CAPITALIZATION": "PAJAMŲ KAPITALIZAVIMAS",
       "Income from Charge": "Pajamos iš mokesčių",
@@ -2205,6 +2379,10 @@
       "Minimum Opening Balance": "Minimalus pradinis likutis",
       "Minimum Overdraft Required for Interest Calculation": "Palūkanoms apskaičiuoti reikalingas minimalus overdraftas",
       "Minimum Payment": "Minimali įmoka",
+<<<<<<< HEAD
+=======
+      "Minimum Payment Criteria Met": "Minimalaus Mokėjimo Kriterijai Įvykdyti",
+>>>>>>> origin/dev
       "Minimum Payment Type": "Minimalus mokėjimo tipas",
       "Minimum Required Balance": "Minimalus reikiamas balansas",
       "Minimum Value": "Minimali vertė",
@@ -2226,6 +2404,10 @@
       "Name": "vardas",
       "Name Decorated": "Vardas Dekoruotas",
       "Name of the Organization": "Organizacijos pavadinimas",
+      "Near Breach": "Artėjantis pažeidimas",
+      "Near Breach Evaluation Frequency": "Artėjančio pažeidimo vertinimo dažnumas",
+      "Near Breach Evaluation Frequency Type": "Artėjančio pažeidimo vertinimo dažnumo tipas",
+      "Near Breach Threshold": "Artėjančio pažeidimo slenkstis",
       "Net Cash": "Grynieji pinigai",
       "New Interest Rate": "Nauja palūkanų norma",
       "Next Meeting Date": "Kito susitikimo data",
@@ -2300,6 +2482,7 @@
       "Original Schedule": "Originalus tvarkaraštis",
       "Output Type": "Išvesties tipas",
       "Outstanding": "išskirtinis",
+      "Outstanding Amount": "Neapmokėta Suma",
       "Overdraft": "Overdraftas",
       "Over Amount": "Virš Sumos",
       "Over Amount Calculation Type": "Virš sumos apskaičiavimo tipas",
@@ -2323,6 +2506,7 @@
       "PDF format": "PDF formatu",
       "PREVIEW": "PERŽIŪRA",
       "Paid": "Mokama",
+      "Paid Amount": "Sumokėta Suma",
       "Paid Date": "Apmokėjimo data",
       "Parameter": "Parametras",
       "Parameter Name Passed to Pentaho": "Ataskaitos parametro pavadinimas",
@@ -2362,6 +2546,10 @@
       "Percentage to Base": "Procentai iki bazės",
       "Period": "Laikotarpis",
       "Period From": "Laikotarpis Nuo",
+<<<<<<< HEAD
+=======
+      "Period Number": "Laikotarpio Numeris",
+>>>>>>> origin/dev
       "Period Payment Rate": "Laikotarpio mokėjimo norma",
       "Period To": "Laikotarpis iki",
       "Period Type": "Laikotarpio tipas",
@@ -2630,6 +2818,7 @@
       "Text": "Tekstas",
       "Theme": "tema",
       "Theme and Font": "Tema ir šriftas",
+      "Threshold": "Slenkstis",
       "Thursday": "ketvirtadienis",
       "Time": "Laikas",
       "To": "Į",
@@ -2849,7 +3038,48 @@
       "Period Payment Frequency Type": "Laikotarpio mokėjimo dažnumo tipas",
       "Payment Allocation Transactions": "Mokėjimų paskirstymo operacijos",
       "Net Present Value day count": "Grynosios dabartinės vertės dienų skaičius",
+<<<<<<< HEAD
       "Installment": "Įmoka"
+=======
+      "Installment": "Įmoka",
+      "Beneficiary Selection": "Gavėjo pasirinkimas",
+      "Confirmation Number": "Patvirtinimo numeris",
+      "Sub Status": "Papildomas statusas",
+      "Document": "Dokumentas",
+      "Document Number": "Dokumento numeris",
+      "Document number is required": "Dokumento numeris yra privalomas",
+      "Allow full term for each tranche": "Leisti visą terminą kiekvienai tranšei",
+      "Failed to load vendors": "Nepavyko įkelti tiekėjų",
+      "First name is required": "Vardas yra privalomas",
+      "Last name is required": "Pavardė yra privaloma",
+      "Search Client": "Ieškoti kliento",
+      "Type client name or account number": "Įveskite kliento vardą arba sąskaitos numerį",
+      "Confirmed At": "Patvirtinta",
+      "Full Name": "Pilnas vardas",
+      "Loading vendors": {
+        "": {
+          "": {
+            "": "Kraunami tiekėjai..."
+          }
+        }
+      },
+      "Minimum 3 characters": "Mažiausiai 3 simboliai",
+      "National ID": "Asmens kodas",
+      "Nationality": "Pilietybė",
+      "Payout Amount": "Išmokos suma",
+      "Payout Country": "Išmokos šalis",
+      "Payout Token": "Išmokos žetonas",
+      "Recipient Name": "Gavėjo vardas",
+      "Send Amount": "Siuntimo suma",
+      "Send Country": "Siuntimo šalis",
+      "Sender": "Siuntėjas",
+      "Sender Name": "Siuntėjo vardas",
+      "Sent By": "Siuntė",
+      "Deposited At": "Įnešta",
+      "Passport": "Pasas",
+      "Driver's License": "Vairuotojo pažymėjimas",
+      "Mothers Maiden Name": "Motinos mergautinė pavardė"
+>>>>>>> origin/dev
     },
     "links": {
       "Community": "bendruomenė",
@@ -2989,7 +3219,12 @@
       "Reject Additional Shares": "Atmesti papildomas akcijas",
       "Tasks": "Užduotys",
       "Remittances": "Pervedimai",
+<<<<<<< HEAD
       "Process Remittance": "Apdoroti pervedimą"
+=======
+      "Process Remittance": "Apdoroti pervedimą",
+      "Undo Write-off": "Atšaukti nurašymą"
+>>>>>>> origin/dev
     },
     "placeholders": {
       "Add new server": "Pridėti naują serverį",
@@ -3112,6 +3347,10 @@
       "Audit logs of all the activities": "Audito žurnalus apie visas veiklas, tokias kaip kliento kūrimas, paskolų išmokėjimas ir kt",
       "Bar": "Baras",
       "BIRT": "Mifos Reporting Plugin for Eclipse Birt",
+<<<<<<< HEAD
+=======
+      "Breach Configurations": "Pažeidimų Konfigūracijos",
+>>>>>>> origin/dev
       "Bulk Import": "Masinis importas",
       "Bulk Loan Reassignment": "Masinės paskolos perskirstymas",
       "Bulk data import using excel spreadsheet templates": "Masinis duomenų importavimas naudojant „Excel“ skaičiuoklės šablonus klientams, biurams ir kt.",
@@ -3162,6 +3401,7 @@
       "Create Accounting Closure": "Sukurti apskaitos uždarymą",
       "Create Accounting Rule": "Sukurkite apskaitos taisyklę",
       "Create Adhoc Query": "Sukurkite Adhoc užklausą",
+      "Create Breach": "Sukurti Pažeidimą",
       "Create Center": "Sukurti centrą",
       "Create Charge": "Sukurti mokestį",
       "Create Client": "Sukurti klientą",
@@ -3187,7 +3427,13 @@
       "Create Journal Entry": "Sukurti žurnalo įrašą",
       "Create Loan Product": "Sukurti paskolos produktą",
       "Create Loan Originator": "Sukurti paskolos teikėją",
+<<<<<<< HEAD
+=======
+      "View Loan Originator": "Peržiūrėti paskolos teikėją",
+      "Edit Loan Originator": "Redaguoti paskolos teikėją",
+>>>>>>> origin/dev
       "Create Loans Account": "Sukurti paskolų sąskaitą",
+      "Create Near Breach": "Sukurti Beveik Pažeidimą",
       "Create New GL Account": "Ši parinktis leidžia kurti naujas GL paskyras.",
       "Create Office": "Sukurkite biurą",
       "Create Payment Type": "Sukurti mokėjimo tipą",
@@ -3249,6 +3495,7 @@
       "Define Tax Groups": "Apibrėžkite mokesčių grupes",
       "Define Tax components": "Apibrėžkite mokesčių komponentus",
       "Define Tax components and Tax groups": "Apibrėžkite mokesčių komponentus ir mokesčių grupes",
+      "Define breaches for working capital products": "Apibrėžkite apyvartinio kapitalo produktų pažeidimus",
       "Define charges/penalties for loan products, savings and deposit products": "Apibrėžkite mokesčius / baudas už paskolų produktus, taupymo ir indėlių produktus",
       "Define collaterals for Collateral Management": "Apibrėžkite užstatus užstato valdymui",
       "Define delinquency bucket as set of ranges": "Apibrėžkite nusikalstamų veikų grupę kaip diapazonų rinkinį",
@@ -3256,6 +3503,7 @@
       "Define delinquency day ranges and bucket set for loan products": "Apibrėžkite paskolų produktų nusikalstamų veikų dienų intervalus ir segmentų rinkinį",
       "Define floating rates for loan products": "Apibrėžkite paskolų produktų kintamąsias palūkanų normas",
       "Define holidays for office": "Apibrėžkite biuro šventes",
+      "Define near breaches for working capital products": "Apibrėžti artimus pažeidimus darbo kapitalo produktams",
       "Define or modify Maker Checker tasks": "Apibrėžkite arba pakeiskite Maker Checker užduotis",
       "Define or modify entity to entity mappings": "Apibrėžkite arba pakeiskite objektą į objektų susiejimą",
       "Define or modify roles and associated permissions": "Apibrėžkite arba keiskite vaidmenis ir susijusius leidimus",
@@ -3275,6 +3523,7 @@
       "Edit Accounting Rules": "Redaguoti apskaitos taisykles",
       "Edit Adhoc Query": "Redaguoti Adhoc užklausą",
       "Edit Amazon S3 Configuration": "Redaguoti Amazon S3 konfigūraciją",
+      "Edit Breach": "Redaguoti Pažeidimą",
       "Edit Cashier": "Redaguoti kasininką",
       "Edit Center": "Redagavimo centras",
       "Edit Charge": "Redaguoti mokestį",
@@ -3296,7 +3545,9 @@
       "Edit Group": "Redaguoti grupę",
       "Edit Holidays": "Redaguoti šventes",
       "Edit Hook": "Redaguoti kabliuką",
+      "Edit Loan Originator": "Redaguoti Paskolos Teikėją",
       "Edit Loan Product": "Redaguoti paskolos produktą",
+      "Edit Near Breach": "Redaguoti Beveik Pažeidimą",
       "Edit Notification Configuration": "Redaguoti pranešimų konfigūraciją",
       "Edit Office": "Redaguoti biurą",
       "Edit Payment Type": "Redaguoti mokėjimo tipą",
@@ -3403,6 +3654,7 @@
       "LoanAccountCustomSnapshotBusinessEvent": "LoanAccountCustomSnapshotBusinessEvent",
       "LoanAccountDelinquencyPauseChangedBusinessEvent": "LoanAccountDelinquencyPauseChangedBusinessEvent",
       "LoanAccountSnapshotBusinessEvent": "LoanAccountSnapshotBusinessEvent",
+      "Loan Account Details": "Paskolos sąskaitos rekvizitai",
       "Loan Account Actions": "Paskolos sąskaitos veiksmai",
       "Loan Collateral Details": "Paskolos užstato informacija",
       "Loan Disbursal": "Paskolos išmokėjimas",
@@ -3471,6 +3723,7 @@
       "N/A": "N/A",
       "Navigate system selecting entity": "Tai leis vartotojui greitai naršyti sistemos pasirinkimo objektą, o ieškant naršymas tampa patikimesnis.",
       "Navigation": "Navigacija",
+      "Near Breach Configurations": "Beveik Pažeidimų Konfigūracijos",
       "No Data": "Nėra duomenų",
       "Not Activated": "Neaktyvinta",
       "No Description": "Nėra aprašymo",
@@ -3528,6 +3781,7 @@
       "Provisioning criteria definitions": "Užpildykite visus teikimo kriterijų apibrėžimus.",
       "Precedes of": "Prieštaravimai",
       "Recurring Deposit Account Charges": "Pasikartojantys indėlio sąskaitos mokesčiai",
+      "Recurring Deposit Account Details": "Reguliariųjų indėlių sąskaitos rekvizitai",
       "Recurring Deposit Account Interest Rate Chart": "Periodinio indėlio sąskaitos palūkanų normų diagrama",
       "Recurring Deposit Account Standing Instructions": "Periodinio indėlio sąskaitos nuolatinės instrukcijos",
       "Recurring Deposit Account Transactions": "Periodinės indėlio sąskaitos operacijos",
@@ -3538,6 +3792,7 @@
       "Recurring Deposits Account Transactions": "Periodinių indėlių sąskaitos operacijos",
       "RecurringDeposit Account View": "Pasikartojantis indėlio sąskaitos vaizdas",
       "Red asterisk field": "Laukus su raudona žvaigždute (*) būtina užpildyti. Norėdami sužinoti daugiau, spustelėkite:",
+      "Remittances": "Pervedimai",
       "Repayment Schedule": "Grąžinimo grafikas",
       "Repeats' and 'Repeats every": "Pastaba: „Pasikartoja“ ir „Pasikartoja kas“ negalima keisti, jei yra aktyvių sąskaitų (JLG paskolos, pasikartojantys indėliai ir kt.), priklausančių nuo šio susitikimo.",
       "Report Parameters": "Ataskaitos parametrai",
@@ -3593,6 +3848,7 @@
       "Share Products Dividends": "Dalintis produktais dividendais",
       "Share products define the rules, default settings": "Bendrinimo produktai apibrėžia taisykles, numatytuosius nustatymus ir apribojimus finansų įstaigos akcijoms ir dividendams. Dalijimosi produktas suteikia šabloną kelioms paskyroms, kurias turi arba turės finansų įstaigos klientai.",
       "Shares": "Akcijos",
+      "Shares Account Details": "Akcijų sąskaitos informacija",
       "Shares Account Actions": "Bendrina paskyros veiksmus",
       "Shares Account Charges": "Dalijasi sąskaitos mokesčiais",
       "Shares Account Dividends": "Dalina sąskaitos dividendus",
@@ -3665,6 +3921,7 @@
       "View Adhoc Query": "Peržiūrėkite Adhoc užklausą",
       "View Amazon S3 Configuration": "Peržiūrėkite „Amazon S3“ konfigūraciją",
       "View Audit": "Žiūrėti auditą",
+      "View Breach": "Peržiūrėti Pažeidimą",
       "View Bulk Import": "Peržiūrėti masinį importavimą",
       "View Cashier": "Peržiūrėti kasininkę",
       "View Charges": "Peržiūrėti mokesčius",
@@ -3687,7 +3944,9 @@
       "View Group": "Peržiūrėti grupę",
       "View Holidays": "Žiūrėti šventes",
       "View Hook": "Žiūrėti kabliuką",
+      "View Loan Originator": "Peržiūrėti Paskolos Teikėją",
       "View Loan Product": "Peržiūrėkite paskolos produktą",
+      "View Near Breach": "Peržiūrėti Beveik Pažeidimą",
       "View Notification Configuration": "Peržiūrėkite pranešimų konfigūraciją",
       "View Office": "Žiūrėti biurą",
       "View Product Mix": "Žiūrėti produktų mišinį",
@@ -3760,7 +4019,15 @@
       "Failed to update payment type. Please try again.": "Nepavyko atnaujinti mokėjimo tipo. Bandykite dar kartą.",
       "Search and assign this beneficiary to an existing Mifos client account": "Ieškokite ir priskirkite šį gavėją esamai Mifos kliento paskyrai",
       "Failed to search clients. Please try again.": "Nepavyko ieškoti klientų. Bandykite dar kartą.",
+<<<<<<< HEAD
       "Process Remittance": "Apdoroti pervedimą"
+=======
+      "Process Remittance": "Apdoroti pervedimą",
+      "Loan Originators": "Paskolų teikėjai",
+      "Loan Reschedules": "Paskolų atidėjimas",
+      "Settings saved successfully": "Nustatymai sėkmingai išsaugoti.",
+      "Undo Write-off Description": "Šis veiksmas atšauks nurašymo operaciją ir atkurs paskolą į ankstesnę aktyvią būseną. Pateikite pastabą, paaiškinančią šio veiksmo priežastį."
+>>>>>>> origin/dev
     },
     "permissions": {
       "actions": {
@@ -4277,7 +4544,12 @@
     "ACTIVE": "AKTYVUS",
     "PENDING": "LAUKIAMA",
     "INACTIVE": "NEAKTYVUS",
+<<<<<<< HEAD
     "Process Remittance": "Apdoroti pervedimą"
+=======
+    "Process Remittance": "Apdoroti pervedimą",
+    "Allow full term length for each tranche disbursement": "Kai įjungta, kiekvienas tranšės išmokėjimas bus vykdomas pagal visą paskolos termino grafiką, o ne likusio termino ribose. Pasiekiama tik PROGRESYVIOJO paskolos grafiko tipui."
+>>>>>>> origin/dev
   },
   "countries": {
     "AF": "Afganistanas",
@@ -4397,5 +4669,71 @@
     "ZW": "Zimbabvė"
   },
   "Deactivate Role": "Deaktyvuoti vaidmenį",
+<<<<<<< HEAD
   "Delete Role": "Ištrinti vaidmenį"
+=======
+  "Delete Role": "Ištrinti vaidmenį",
+  "clients": {
+    "actions": {
+      "close": {
+        "success": "Klientas sėkmingai uždarytas."
+      },
+      "reject": {
+        "success": "Klientas sėkmingai atmestas."
+      },
+      "withdraw": {
+        "success": "Klientas sėkmingai atšauktas."
+      },
+      "reactivate": {
+        "success": "Klientas sėkmingai reaktyvuotas.",
+        "failure": "Nepavyko reaktyvuoti kliento."
+      },
+      "activate": {
+        "success": "Klientas sėkmingai aktyvuotas.",
+        "failure": "Nepavyko aktyvuoti kliento."
+      },
+      "acceptTransfer": {
+        "success": "Kliento pervedimas sėkmingai priimtas."
+      },
+      "rejectTransfer": {
+        "success": "Kliento pervedimas sėkmingai atmestas."
+      },
+      "undoTransfer": {
+        "success": "Kliento pervedimas sėkmingai atšauktas."
+      },
+      "undoRejection": {
+        "success": "Kliento atmetimas sėkmingai atšauktas."
+      },
+      "transfer": {
+        "success": "Kliento pervedimas sėkmingai pasiūlytas.",
+        "failure": "Nepavyko pasiūlyti kliento pervedimo."
+      },
+      "addCharge": {
+        "success": "Kliento mokestis sėkmingai pridėtas."
+      },
+      "addCollateral": {
+        "success": "Kliento užstatas sėkmingai pridėtas."
+      },
+      "assignStaff": {
+        "success": "Darbuotojas sėkmingai priskirtas klientui.",
+        "failure": "Nepavyko priskirti darbuotojo klientui."
+      },
+      "updateSavingsAccount": {
+        "success": "Kliento taupomoji sąskaita sėkmingai atnaujinta."
+      },
+      "takeSurvey": {
+        "success": "Apklausa sėkmingai pateikta.",
+        "failure": "Nepavyko pateikti apklausos."
+      }
+    }
+  },
+  "error": {
+    "resource": {
+      "notImplemented": {
+        "type": "Neįgyvendintos klaidos",
+        "message": "Neįgyvendinta funkcija!"
+      }
+    }
+  }
+>>>>>>> origin/dev
 }

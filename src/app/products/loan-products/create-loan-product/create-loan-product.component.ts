@@ -86,7 +86,11 @@ export class CreateLoanProductComponent extends LoanProductBaseComponent impleme
   loanProductSettingsStep: LoanProductSettingsStepComponent;
   @ViewChild(LoanProductChargesStepComponent, { static: false })
   loanProductChargesStep: LoanProductChargesStepComponent;
+<<<<<<< HEAD
   @ViewChild(LoanProductAccountingStepComponent, { static: false })
+=======
+  @ViewChild(LoanProductAccountingStepComponent, { static: true })
+>>>>>>> origin/dev
   loanProductAccountingStep: LoanProductAccountingStepComponent;
 
   loanProductsTemplate: any;
@@ -127,10 +131,13 @@ export class CreateLoanProductComponent extends LoanProductBaseComponent impleme
   }
 
   ngOnInit() {
-    this.accountingRuleData = this.accounting.getAccountingRulesForLoans();
+    this.accountingRuleData = this.accounting.getAccountingRulesForLoans(this.loanProductService.isLoanProduct);
     this.buildAdvancedPaymentAllocation();
     if (this.loanProductService.isWorkingCapital) {
+<<<<<<< HEAD
       this.accountingRuleData = ['NONE'];
+=======
+>>>>>>> origin/dev
       this.loanProductsTemplate['creditAllocationTransactionTypes'] = [];
     }
   }
@@ -249,9 +256,13 @@ export class CreateLoanProductComponent extends LoanProductBaseComponent impleme
   }
 
   get loanProductAccountingForm() {
+<<<<<<< HEAD
     if (this.loanProductService.isLoanProduct) {
       return this.loanProductAccountingStep?.loanProductAccountingForm;
     }
+=======
+    return this.loanProductAccountingStep?.loanProductAccountingForm;
+>>>>>>> origin/dev
   }
 
   get loanProductFormValid() {
@@ -280,7 +291,12 @@ export class CreateLoanProductComponent extends LoanProductBaseComponent impleme
         this.loanProductDetailsForm.valid &&
         this.loanProductCurrencyForm.valid &&
         this.loanProductTermsForm.valid &&
+<<<<<<< HEAD
         this.loanProductSettingsForm.valid
+=======
+        this.loanProductSettingsForm.valid &&
+        this.loanProductAccountingForm?.valid
+>>>>>>> origin/dev
       );
     }
   }
@@ -328,7 +344,12 @@ export class CreateLoanProductComponent extends LoanProductBaseComponent impleme
         ...this.loanProductDetailsStep.loanProductDetails,
         ...this.loanProductCurrencyStep.loanProductCurrency,
         ...this.loanProductTermsStep.loanProductTerms,
+<<<<<<< HEAD
         ...this.loanProductSettingsStep.loanProductSettings
+=======
+        ...this.loanProductSettingsStep.loanProductSettings,
+        ...this.loanProductAccountingStep.loanProductAccounting
+>>>>>>> origin/dev
       };
       loanProduct['paymentAllocation'] = this.paymentAllocation;
       return loanProduct;

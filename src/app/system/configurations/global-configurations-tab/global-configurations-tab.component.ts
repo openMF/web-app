@@ -31,6 +31,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SystemService } from '../../system.service';
 import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
+import { TranslateService } from '@ngx-translate/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
@@ -71,6 +72,10 @@ export class GlobalConfigurationsTabComponent implements OnInit, AfterViewInit {
   private router = inject(Router);
   private configurationWizardService = inject(ConfigurationWizardService);
   private popoverService = inject(PopoverService);
+<<<<<<< HEAD
+=======
+  private translateService = inject(TranslateService);
+>>>>>>> origin/dev
 
   /** Configuration data. */
   configurationData: any;
@@ -150,8 +155,15 @@ export class GlobalConfigurationsTabComponent implements OnInit, AfterViewInit {
       .subscribe((response: any) => {
         configuration.enabled = response.changes.enabled;
         if (configuration.name === SettingsService.businessDateConfigName) {
-          const msg = configuration.enabled ? 'enabled' : 'disabled';
-          this.alertService.alert({ type: SettingsService.businessDateType + ' Set Config', message: msg });
+          const msg = configuration.enabled
+            ? this.translateService.instant('labels.inputs.Enabled')
+            : this.translateService.instant('labels.inputs.Disabled');
+          // Do not change Type, It is linked to other stuffs
+          this.alertService.alert({
+            type: SettingsService.businessDateType + ' Set Config',
+            message: msg,
+            enabled: configuration.enabled
+          });
         }
       });
   }

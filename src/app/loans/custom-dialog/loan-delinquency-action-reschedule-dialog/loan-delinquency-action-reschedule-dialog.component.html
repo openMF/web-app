@@ -1,0 +1,62 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h2 mat-dialog-title>{{ 'labels.heading.Loan Delinquency Actions' | translate }}</h2>
+
+<div mat-dialog-content [formGroup]="delinquencyActionForm">
+  <div class="layout-column">
+    <mat-form-field class="flex-98">
+      <mat-label>{{ 'labels.inputs.Minimum Payment' | translate }}</mat-label>
+      <input type="number" matInput formControlName="minimumPayment" />
+    </mat-form-field>
+
+    <mat-form-field class="flex-98">
+      <mat-label>{{ 'labels.inputs.Minimum Payment Type' | translate }}</mat-label>
+      <mat-select formControlName="minimumPaymentType">
+        @for (minimumPaymentType of minimumPaymentTypeOptions; track minimumPaymentType) {
+          <mat-option [value]="minimumPaymentType.id">
+            {{ minimumPaymentType.value | translateKey: 'catalogs' }}
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="flex-98">
+      <mat-label>{{ 'labels.inputs.Period Payment Frequency' | translate }}</mat-label>
+      <input
+        type="number"
+        matInput
+        formControlName="frequency"
+        matTooltip="{{ 'tooltips.Fields are input to calculating the repayment schedule' | translate }}"
+      />
+    </mat-form-field>
+
+    <mat-form-field class="flex-98">
+      <mat-label>{{ 'labels.inputs.Period Payment Frequency Type' | translate }}</mat-label>
+      <mat-select formControlName="frequencyType">
+        @for (frequencyType of frequencyTypeOptions; track frequencyType) {
+          <mat-option [value]="frequencyType.id">
+            {{ frequencyType.value | translateKey: 'catalogs' }}
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+
+<mat-dialog-actions class="layout-row layout-xs-column layout-align-center gap-2percent">
+  <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [mat-dialog-close]="{ data: delinquencyActionForm }"
+    [disabled]="!delinquencyActionForm.valid || delinquencyActionForm.pristine"
+  >
+    {{ 'labels.buttons.Reschedule' | translate }}
+  </button>
+</mat-dialog-actions>

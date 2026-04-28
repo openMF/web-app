@@ -41,7 +41,7 @@ const routes: Routes = [
         {
           path: 'create',
           component: CreateEditComponent,
-          data: { mode: 'create', breadcrumb: 'Create Template' },
+          data: { title: 'Create Template', mode: 'create', breadcrumb: 'Create Template' },
           resolve: { templateData: CreateTemplateResolver }
         },
         {

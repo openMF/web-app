@@ -6,10 +6,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+<<<<<<< HEAD
 import { Component, OnInit, Input, inject } from '@angular/core';
+=======
+import { Component, OnInit, Input, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+>>>>>>> origin/dev
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { MatCheckbox } from '@angular/material/checkbox';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProductService } from '../../services/loan-product.service';
@@ -23,16 +29,21 @@ import { LoanProductService } from '../../services/loan-product.service';
     MatTooltip,
     MatStepperPrevious,
     FaIconComponent,
-    MatStepperNext
+    MatStepperNext,
+    MatCheckbox
   ]
 })
 export class LoanProductCurrencyStepComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   protected loanProductService = inject(LoanProductService);
+<<<<<<< HEAD
+=======
+  private destroyRef = inject(DestroyRef);
+>>>>>>> origin/dev
 
   @Input() loanProductsTemplate: any;
 
-  loanProductCurrencyForm: UntypedFormGroup;
+  loanProductCurrencyForm!: UntypedFormGroup;
 
   currencyData: any;
 
@@ -45,9 +56,14 @@ export class LoanProductCurrencyStepComponent implements OnInit {
     const currency = this.loanProductsTemplate.currency ? this.loanProductsTemplate.currency : this.currencyData[0];
 
     let decimalPlacesValue = '';
+<<<<<<< HEAD
     if (this.loanProductService.isWorkingCapital && !this.loanProductsTemplate.id) {
       decimalPlacesValue = '';
     } else {
+=======
+    // Only populate decimal places for existing products (when editing)
+    if (this.loanProductsTemplate.id) {
+>>>>>>> origin/dev
       decimalPlacesValue =
         currency.decimalPlaces === undefined || currency.decimalPlaces === null ? '' : currency.decimalPlaces;
     }
@@ -55,6 +71,7 @@ export class LoanProductCurrencyStepComponent implements OnInit {
     this.loanProductCurrencyForm.patchValue({
       currencyCode: currency.code,
       digitsAfterDecimal: decimalPlacesValue,
+<<<<<<< HEAD
       inMultiplesOf:
         currency.inMultiplesOf === 0 || currency.inMultiplesOf === undefined || currency.inMultiplesOf === null
           ? ''
@@ -65,7 +82,14 @@ export class LoanProductCurrencyStepComponent implements OnInit {
         this.loanProductsTemplate.installmentAmountInMultiplesOf === null
           ? ''
           : this.loanProductsTemplate.installmentAmountInMultiplesOf
+=======
+      setMultiples: !!(this.loanProductsTemplate.inMultiplesOf || this.loanProductsTemplate.installmentInMultiplesOf),
+      inMultiplesOf: this.loanProductsTemplate.inMultiplesOf ?? '',
+      installmentInMultiplesOf: this.loanProductsTemplate.installmentInMultiplesOf ?? ''
+>>>>>>> origin/dev
     });
+
+    this.setupConditionalValidation();
   }
 
   createLoanProductCurrencyForm() {
@@ -81,7 +105,52 @@ export class LoanProductCurrencyStepComponent implements OnInit {
           Validators.min(0)
         ]
       ],
+<<<<<<< HEAD
       inMultiplesOf: ['']
+=======
+      setMultiples: [false],
+      inMultiplesOf: [''],
+      installmentInMultiplesOf: ['']
+    });
+  }
+
+  setupConditionalValidation() {
+    const inMultiplesOfControl = this.loanProductCurrencyForm.get('inMultiplesOf');
+    const installmentInMultiplesOfControl = this.loanProductCurrencyForm.get('installmentInMultiplesOf');
+    const setMultiplesControl = this.loanProductCurrencyForm.get('setMultiples');
+
+    if (setMultiplesControl?.value) {
+      inMultiplesOfControl?.setValidators([
+        Validators.required,
+        Validators.min(1)
+      ]);
+      inMultiplesOfControl?.updateValueAndValidity();
+      installmentInMultiplesOfControl?.setValidators([
+        Validators.required,
+        Validators.min(1)
+      ]);
+      installmentInMultiplesOfControl?.updateValueAndValidity();
+    }
+
+    setMultiplesControl?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((checked) => {
+      if (checked) {
+        inMultiplesOfControl?.setValidators([
+          Validators.required,
+          Validators.min(1)
+        ]);
+        installmentInMultiplesOfControl?.setValidators([
+          Validators.required,
+          Validators.min(1)
+        ]);
+      } else {
+        inMultiplesOfControl?.clearValidators();
+        inMultiplesOfControl?.setValue('');
+        installmentInMultiplesOfControl?.clearValidators();
+        installmentInMultiplesOfControl?.setValue('');
+      }
+      inMultiplesOfControl?.updateValueAndValidity();
+      installmentInMultiplesOfControl?.updateValueAndValidity();
+>>>>>>> origin/dev
     });
 
     if (this.loanProductService.isLoanProduct) {
@@ -92,9 +161,33 @@ export class LoanProductCurrencyStepComponent implements OnInit {
   get loanProductCurrency() {
     const formValue = this.loanProductCurrencyForm.value;
     const result: any = {
+<<<<<<< HEAD
       ...formValue
     };
 
+=======
+      currencyCode: formValue.currencyCode,
+      digitsAfterDecimal: formValue.digitsAfterDecimal
+    };
+
+    // Always include inMultiplesOf: null when unchecked to explicitly clear server value
+    if (formValue.setMultiples) {
+      result.inMultiplesOf =
+        formValue.inMultiplesOf !== '' && formValue.inMultiplesOf !== null && formValue.inMultiplesOf !== undefined
+          ? formValue.inMultiplesOf
+          : null;
+      result.installmentInMultiplesOf =
+        formValue.installmentInMultiplesOf !== '' &&
+        formValue.installmentInMultiplesOf !== null &&
+        formValue.installmentInMultiplesOf !== undefined
+          ? formValue.installmentInMultiplesOf
+          : null;
+    } else {
+      result.inMultiplesOf = null;
+      result.installmentInMultiplesOf = null;
+    }
+
+>>>>>>> origin/dev
     return result;
   }
 }

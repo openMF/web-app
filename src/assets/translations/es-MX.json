@@ -6,7 +6,11 @@
     "accountingRule": {
       "duplicateName": "Lo sentimos, pero ya existe una regla contable con este nombre."
     },
+<<<<<<< HEAD
     "error.resource.notImplemented.type": "Error no implementado",
+=======
+    "error.resource.notImplemented.type": "No implementado",
+>>>>>>> origin/dev
     "error.resource.notImplemented.message": "¡Funcionalidad no implementada!",
     "linkedSavingsAccountOwnership": "La cuenta de ahorro vinculada no pertenece al cliente seleccionado.",
     "clientNotInGSIM": "El cliente con ID {{id}} no está presente en GSIM.",
@@ -25,9 +29,14 @@
     "error.msg.charge.attach.to.savings.product.invalid.currency": "El Producto de Cargo y Ahorro debe tener la misma moneda.",
     "error.msg.charge.cannot.be.applied.to.savings.product": "El cargo con identificador `{{params[0].value}} no se puede aplicar al producto de ahorro.",
     "error.msg.charge.cannot.be.deleted.it.is.already.used.in.loan": "Este cargo no se puede eliminar porque ya está asociado con un Producto de Crédito y/o un Crédito.",
+<<<<<<< HEAD
     "error.msg.charge.due.at.disbursement.cannot.be.penalty": "El cargo no se puede configurar como una penalización adeudada en el momento de la dispersión.",
+=======
+    "error.msg.charge.due.at.disbursement.cannot.be.penalty": "El cargo no se puede configurar como una penalización adeudada en el momento de la ministración.",
+>>>>>>> origin/dev
     "error.msg.charge.duplicate.name": "El cargo con ese nombre ya existe.",
     "error.msg.charge.update.of.charge.applies.to.is.not.supported": "No se admite la actualización del cargo aplicable.",
+    "error.msg.data.integrity.issue": "La solicitud provocó un problema de integridad de datos en la base de datos",
     "error.msg.loan.product.close.date.cannot.be.before.start.date": "La fecha de cierre del producto crediticio no puede ser anterior a la fecha de inicio.",
     "error.msg.product.loan.duplicate.charge": "El producto de Crédito sólo podrá tener un cargo de cada tipo.",
     "error.msg.product.loan.duplicate.name": "El producto de Crédito con nombre `{{params[0].value}}` ya existe.",
@@ -35,6 +44,7 @@
     "error.msg.product.savings.duplicate.name": "El producto de ahorro con nombre `{{params[0].value}}` ya existe.",
     "error.msg.product.savings.duplicate.short.name": "El producto de ahorro con nombre corto {{params[0].value}} ya existe.",
     "error.msg.savingsproduct.unknown.data.integrity.issue": "Ocurrió un problema inesperado al crear/actualizar el producto de ahorro. Error al iniciar sesión en el servidor.",
+    "error.msg.reporting.error": "Se produjo un error al generar el informe.",
     "validation.msg.charge.amount.cannot.be.blank": "El monto no puede estar en blanco.",
     "validation.msg.charge.amount.not.greater.than.zero": "El monto del cargo debe ser mayor que cero.",
     "validation.msg.charge.chargeAppliesTo.cannot.be.blank": "El cargo se aplica a no puede estar en blanco.",
@@ -75,7 +85,7 @@
     "validation.msg.loan.interestRatePerPeriod.is.less.than.min": "La tasa de interés nominal {{params[0].value}} no es válida. Debe ser un número mayor o igual a la tasa de interés nominal mínima {{params[1].value}}.",
     "validation.msg.loan.isInterestRecalculationEnabled.not.supported.for.selected.interest.calculation.type": "El recálculo de intereses debe usarse con el cálculo de intereses diario o permitir el cálculo de intereses parcial.",
     "validation.msg.loan.isLinkedToFloatingInterestRates.not.supported.for.selected.interest.calculation.type": "La tasa variable vinculada debe usarse con el cálculo de interés diario o permitir el cálculo de interés parcial.",
-    "validation.msg.loan.multiDisburseLoan.not.supported.for.selected.interest.calculation.type": "Se deben utilizar dispersiones múltiples con cálculo de interés diario o permitir el cálculo de interés parcial.",
+    "validation.msg.loan.multiDisburseLoan.not.supported.for.selected.interest.calculation.type": "Se deben utilizar ministraciones múltiples con cálculo de interés diario o permitir el cálculo de interés parcial.",
     "validation.msg.loan.numberOfRepayments.is.greater.than.max": "El número de reembolsos {{params[0].value}} no es válido. Debe ser un número menor o igual al Número máximo de reembolsos {{params[1].value}}.",
     "validation.msg.loan.numberOfRepayments.is.less.than.min": "El número de reembolsos {{params[0].value}} no es válido. Debe ser un número mayor o igual al Número mínimo de reembolsos {{params[1].value}}.",
     "validation.msg.loan.numberOfRepayments.is.not.within.expected.range": "El número de reembolsos {{params[0].value}} no es válido. Debe ser un número entre {{params[1].value}} y {{params[2].value}} inclusive.",
@@ -170,7 +180,7 @@
     "validation.msg.loanproduct.minPrincipal.not.greater.than.zero": "El monto mínimo de capital debe ser mayor que cero, si se proporciona.",
     "validation.msg.loanproduct.minPrincipalPerCycle.is.greater.than.max": "El importe mínimo de capital {{params[0].value}} no es válido. Debe ser un monto menor o igual al monto máximo de capital {{params[1].value}}.",
     "validation.msg.loanproduct.minimumGap.is.mandatory.when.allowVariableInstallments.is.true": "La brecha mínima es obligatoria cuando se marca permitir variable.",
-    "validation.msg.loanproduct.multiDisburseLoan.not.supported.for.selected.interest.calculation.type": "Se deben utilizar dispersiones múltiples con cálculo de interés diario o permitir el cálculo de interés parcial.",
+    "validation.msg.loanproduct.multiDisburseLoan.not.supported.for.selected.interest.calculation.type": "Se deben utilizar ministraciones múltiples con cálculo de interés diario o permitir el cálculo de interés parcial.",
     "validation.msg.loanproduct.name.cannot.be.blank": "El nombre es obligatorio.",
     "validation.msg.loanproduct.numberOfRepayments.cannot.be.blank": "El número de pagos es obligatorio.",
     "validation.msg.loanproduct.numberOfRepayments.is.greater.than.max": "El número de reembolsos {{params[0].value}} no es válido. Debe ser un número menor o igual al Número máximo de reembolsos {{params[1].value}}.",
@@ -285,7 +295,140 @@
     "validation.msg.savingsproduct.shortName.exceeds.max.length": "El nombre corto no puede tener más de {{params[0].value}} caracteres.",
     "validation.msg.savingsproduct.withdrawalFeeAmount.cannot.be.blank": "El monto de la comisión de retiro es obligatorio.",
     "validation.msg.savingsproduct.withdrawalFeeAmount.not.zero.or.greater": "El monto de la comisión de retiro debe ser mayor o igual a cero, si se proporciona.",
-    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "El tipo de período de comisión de retiro es obligatorio."
+    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "El tipo de tarifa de retiro seleccionado no es válido.",
+    "http": {
+      "connection": {
+        "title": "Error de conexión",
+        "message": "No se puede conectar al servidor. Por favor verifique su conexión a internet."
+      },
+      "badRequest": {
+        "title": "Solicitud inválida",
+        "message": "Por favor verifique su entrada e intente nuevamente."
+      },
+      "unauthorized": {
+        "title": "No autorizado",
+        "message": "Su sesión ha expirado. Por favor inicie sesión nuevamente.",
+        "action": "Iniciar sesión"
+      },
+      "forbidden": {
+        "title": "Acceso denegado",
+        "message": "No tiene permiso para realizar esta acción."
+      },
+      "notFound": {
+        "title": "No encontrado",
+        "message": "El recurso solicitado no fue encontrado.",
+        "contextMessage": "{{context}} no encontrado."
+      },
+      "conflict": {
+        "title": "Conflicto",
+        "message": "El recurso ya existe o hay un conflicto."
+      },
+      "serverError": {
+        "title": "Error del servidor",
+        "message": "Ocurrió un error inesperado. Por favor intente más tarde."
+      },
+      "serviceUnavailable": {
+        "title": "Servicio no disponible",
+        "message": "El servicio no está disponible temporalmente. Por favor intente más tarde."
+      },
+      "default": {
+        "title": "Error",
+        "message": "Ocurrió un error inesperado."
+      }
+    },
+    "interceptor": {
+      "invalidParams": "¡Se pasaron parámetros inválidos en la solicitud!"
+    },
+    "auth": {
+      "pleaseWait": "Por favor espere...",
+      "startType": "Inicio de autenticación",
+      "twoFactor": {
+        "type": "Autenticación de dos factores requerida",
+        "message": "Autenticación de dos factores requerida"
+      },
+      "passwordExpired": {
+        "type": "Contraseña expirada",
+        "message": "¡Su contraseña ha expirado, por favor restablezca su contraseña!"
+      },
+      "success": {
+        "type": "Autenticación exitosa",
+        "message": "¡{{username}} inició sesión exitosamente!"
+      },
+      "passwordReset": {
+        "type": "Contraseña restablecida exitosamente",
+        "message": "¡Su contraseña fue restablecida exitosamente!"
+      },
+      "callbackFailed": {
+        "type": "Autenticación fallida",
+        "message": "No se pudo completar la autenticación. Por favor intente nuevamente."
+      },
+      "callbackError": {
+        "type": "Error de autenticación",
+        "message": "Ocurrió un error durante la autenticación. Por favor intente nuevamente."
+      }
+    },
+    "hooks": {
+      "lastEvent": "Se requiere al menos un evento. No se puede eliminar el último evento."
+    },
+    "generic": {
+      "unexpected": "Ocurrió un error. Por favor intente nuevamente.",
+      "unexpectedRetry": "Ocurrió un error inesperado. Por favor intente nuevamente.",
+      "unexpectedShort": "Ocurrió un error inesperado."
+    },
+    "holiday": {
+      "invalidDate": "Fecha seleccionada inválida. Por favor seleccione una fecha válida.",
+      "invalidRepaymentDate": "Fecha de reprogramación de pago inválida. Por favor seleccione una fecha válida."
+    },
+    "report": {
+      "type": "Generación de reporte",
+      "generated": "Reporte: datos de {{reportName}} generados",
+      "generatedNoData": "Reporte: {{reportName}} generado sin datos"
+    },
+    "clipboard": {
+      "type": "Portapapeles",
+      "copied": "Copiado: {{value}}"
+    },
+    "tenant": {
+      "changed": {
+        "type": "Inquilino cambiado"
+      }
+    },
+    "config": {
+      "setConfig": "{{type}} configuración establecida"
+    },
+    "loans": {
+      "undoWriteOff": {
+        "type": "Error al revertir castigo",
+        "message": "Ocurrió un error al procesar la reversión del castigo. Por favor intente nuevamente o contacte soporte."
+      },
+      "alreadyAdjusted": "Monto de ingreso capitalizado ya ajustado",
+      "adjustment": "Ajuste {{type}} Transacción",
+      "capitalizedIncomeLimit": "El monto de ajuste de ingreso capitalizado debe ser menor o igual a",
+      "buyDownFeeAdjusted": "Monto de tarifa Buy Down ya ajustado",
+      "buyDownFeeLimit": "El monto de ajuste de tarifa Buy Down debe ser menor o igual a",
+      "businessRule": "Regla de negocio",
+      "alertWithAmount": "{{label}}: {{amount}}"
+    },
+    "error.auth.type": "Error de autenticación",
+    "error.auth.message": "Su sesión ha expirado o las credenciales son inválidas.",
+    "error.token.invalid.type": "Token inválido",
+    "error.token.invalid.message": "El token de un solo uso proporcionado es inválido.",
+    "error.bad.request.type": "Solicitud incorrecta",
+    "error.bad.request.message": "¡Se pasaron parámetros inválidos en la solicitud!",
+    "error.unauthorized.type": "No autorizado",
+    "error.unauthorized.message": "Su sesión ha expirado o las credenciales son inválidas.",
+    "error.resource.not.found.type": "Recurso no encontrado",
+    "error.resource.not.found.message": "El recurso solicitado no fue encontrado.",
+    "error.server.internal.type": "Error interno del servidor",
+    "error.server.internal.message": "Ocurrió un error inesperado en el servidor. Por favor intente más tarde.",
+    "error.unknown.type": "Error desconocido",
+    "error.unknown.message": "Ocurrió un error inesperado.",
+    "validation.required": "Este campo es obligatorio",
+    "validation.minLength": "La longitud mínima es {{requiredLength}}",
+    "validation.emailInvalid": "Correo electrónico no válido",
+    "validation.requiredField": "{{label}} es un campo obligatorio.",
+    "validation.mustBeAtLeast": "{{field}} debe ser al menos {{min}}",
+    "validation.mustBePositive": "{{field}} debe ser un número positivo."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -335,6 +478,7 @@
     "accounting": {
       "Accrual (periodic)": "Devengo (periódico)",
       "Accrual (upfront)": "Devengo (adelantado)",
+      "CASH_BASED": "Efectivo",
       "Cash": "Efectivo",
       "NONE": "Ninguno",
       "financialActivity": {
@@ -479,6 +623,10 @@
       "Export to File": "Exportar Archivo",
       "Export CSV": "Exportar CSV",
       "Export XLS": "Exportar XLS",
+<<<<<<< HEAD
+=======
+      "Export to PDF": "Exportar a PDF",
+>>>>>>> origin/dev
       "Export KYC": "Exportar KYC",
       "Validate Documentation": "Validar Documentación",
       "INCOMPLETE": "INCOMPLETO",
@@ -618,7 +766,12 @@
       "Retry": "Reintentar",
       "PRINT": "Imprimir",
       "DONE": "Hecho",
+<<<<<<< HEAD
       "Submitting": "Enviando"
+=======
+      "Submitting": "Enviando",
+      "OK": "OK"
+>>>>>>> origin/dev
     },
     "catalogs": {
       "Interest payment waiver": "Exención de pago de intereses",
@@ -700,7 +853,11 @@
       "% Amount": "% Monto",
       "% Interest": "% Interés",
       "% Loan Amount + Interest": "% Monto del Crédito + Interés",
+<<<<<<< HEAD
       "Disbursement": "dispersión",
+=======
+      "Disbursement": "ministración",
+>>>>>>> origin/dev
       "Specified due date": "Fecha de Vencimiento",
       "Installment Fee": "Cuota de pago",
       "Overdue Fees": "Cuotas vencidas",
@@ -746,7 +903,11 @@
       "Annually": "Anual",
       "Weekly": "Semanal",
       "Daily Balance": "Saldo Diario",
+<<<<<<< HEAD
       "% Disbursement Amount": "% de monto de dispersión",
+=======
+      "% Disbursement Amount": "% de monto de ministración",
+>>>>>>> origin/dev
       "Average Daily Balance": "Saldo Diario Promedio",
       "BiAnnual": "Semestral",
       "360 Days": "360 Días",
@@ -754,7 +915,11 @@
       "30 Days": "30 Dias",
       "364 Days": "364 Días",
       "Actual": "Actual",
+<<<<<<< HEAD
       "Disbursement Date": "Fecha de dispersión",
+=======
+      "Disbursement Date": "Fecha de ministración",
+>>>>>>> origin/dev
       "Submitted On Date": "Fecha de Registro",
       "Per year": "Por Año",
       "Per month": "Por Mes",
@@ -811,7 +976,11 @@
       "Due penalty, interest, principal, fee, In advance penalty, interest, principal, fee": "Penalización vencida, Intereses, Capital, Comisiones, Penalización por adelantado, Intereses, Capital, Comisiones",
       "Principal": "Capital",
       "Repayment": "Reembolso",
+<<<<<<< HEAD
       "Repayment (at time of disbursement)": "Reembolso (al momento del dispersión)",
+=======
+      "Repayment (at time of disbursement)": "Reembolso (al momento de la ministración)",
+>>>>>>> origin/dev
       "Down payment": "Auto Pago",
       "Charge refund": "Reembolso de cargo",
       "Charge adjustment": "Ajuste de cargo",
@@ -913,6 +1082,8 @@
       "are": "son",
       "be larger than 0 and at most 100": "ser mayor que 0 y como máximo 100",
       "begin with a special character or number": "comenzar con un carácter especial o número",
+      "can not be less than": "no puede ser menos que",
+      "can not be more than": "no puede ser más que",
       "cannot begin with a special character or number": "no puede comenzar con un carácter o número especial",
       "decimal places": "lugares decimales",
       "do not match": "no coinciden",
@@ -940,6 +1111,10 @@
       "on": "en",
       "every": "cada",
       "Password validation": "La contraseña debe contener un mínimo de {{minchar}} caracteres, que deben incluir 1 carácter mayúscula, minúscula y especial y no debe constar de caracteres repetidos ni espacios en blanco.",
+<<<<<<< HEAD
+=======
+      "Must be a positive integer": "Debe ser un número entero positivo",
+>>>>>>> origin/dev
       "Must be at least": "Debe ser al menos",
       "Must be less or equal to": "Debe ser menor o igual a",
       "must be after or equal to start date": "debe ser posterior o igual a la fecha de inicio",
@@ -1000,6 +1175,7 @@
       "Beneficiary": "Beneficiario",
       "Beneficiary Selection": "Selección de Beneficiario",
       "Block Savings Account": "Bloquear Cuenta de Ahorros",
+      "Breach Configuration": "Configuración de Incumplimiento",
       "Bulk Import": "Importación masiva",
       "Bulk Loan Reassignment": "Reasignación de Créditos másiva",
       "Business Rule Parameters": "Parámetros de reglas de negocio",
@@ -1168,8 +1344,14 @@
       "Loan Delinquency Classification": "Clasificación de morosidad de créditos",
       "Loan Delinquency Tags": "Clasificación de morosidad de Créditos",
       "Loan Delinquency Installment Tags": "Clasificación de morosidad de cuotas",
+<<<<<<< HEAD
       "Loan Details": "Detalles del Crédito",
       "Loan Disbursal": "Dispersión de créditos",
+=======
+      "Loan Delinquency Range Schedule": "Calendario de Rango de Morosidad del Crédito",
+      "Loan Details": "Detalles del Crédito",
+      "Loan Disbursal": "Ministración de créditos",
+>>>>>>> origin/dev
       "Loan Originators": "Comisionistas de créditos",
       "Loan Product": "Producto de Crédito",
       "Loan Products": "Productos de Crédito",
@@ -1179,8 +1361,8 @@
       "Loan Repayments": "Pagos de Créditos",
       "Loan Reschedule": "Reprogramación de créditos",
       "Loan Summary": "Resumen del Crédito",
-      "Loan Tranche Details": "Detalles del dispersión de Crédito",
-      "Loan Tranche Details are not allowed for this Loan Product": "Los detalles del dispersión de Crédito no están permitidos para este producto de Crédito.",
+      "Loan Tranche Details": "Detalles del ministración de Crédito",
+      "Loan Tranche Details are not allowed for this Loan Product": "Los detalles del ministración de Crédito no están permitidos para este producto de Crédito.",
       "Lock-in Period": "Período de bloqueo",
       "Manage Codes": "Administrar códigos",
       "Manage Data Tables": "Administrar tablas de datos",
@@ -1211,6 +1393,7 @@
       "Minimum Active Period": "Período mínimo activo",
       "Minimum Deposit Term": "Plazo mínimo de depósito",
       "Moratorium": "Moratoria",
+      "Near Breach Configuration": "Configuración de Incumplimiento Cercano",
       "Nominal Interest Rate by loan cycle": "Tasa de Interés Nominal por ciclo de Crédito",
       "Notes": "Notas",
       "Notification External Service": "Notificación Servicio Externo",
@@ -1257,7 +1440,7 @@
       "Savings Accounts": "Guardando cuentas",
       "Savings Account": "Cuenta de Ahorros",
       "Savings Details": "Detalles de ahorro",
-      "Savings Linkage": "Vinculación de ahorro",
+      "Savings Linkage": "Vincular Cuenta de Ahorro",
       "Savings Products": "Productos de Ahorro",
       "Savings Transactions": "Transacciones de ahorro",
       "savings-transaction-datatable-tab works": "La pestaña de tabla de datos de transacciones de ahorro funciona",
@@ -1403,7 +1586,12 @@
       "Confirmation Details": "Detalles de Confirmación",
       "Payment Successful": "Pago Exitoso",
       "Transaction Status": "Estado de la Transacción",
+<<<<<<< HEAD
       "Transaction Summary": "Resumen de la Transacción"
+=======
+      "Transaction Summary": "Resumen de la Transacción",
+      "Recipient Summary": "Resumen del destinatario"
+>>>>>>> origin/dev
     },
     "inputs": {
       "Loan Account Status": "Estado de la cuenta",
@@ -1490,7 +1678,11 @@
       "All": "Todo",
       "Allocate Cash": "Asignar efectivo",
       "Allocation": "Asignación",
+<<<<<<< HEAD
       "Allow approval / disbursal above loan applied amount": "Permitir aprobación/dispersión por encima del monto aplicado del crédito",
+=======
+      "Allow approval / disbursal above loan applied amount": "Permitir aprobación/ministración por encima del monto aplicado del crédito",
+>>>>>>> origin/dev
       "Allow Approved / Disbursed Amounts Over Applied": "Permitir montos aprobados/desembolsados ​​por encima de los aplicados",
       "Allow Partial Interest Calculation with same as repayment": "Permitir el cálculo de interés parcial con el mismo pago",
       "Allow Withdrawals": "Permitir retiros",
@@ -1524,10 +1716,10 @@
       "Approved Amount": "Monto aprobado",
       "Approved By": "Aprobado por",
       "Approved Date": "Fecha aprobada",
-      "Approved On": "Aprobado en",
-      "Approved On Date": "Aprobado en la fecha",
+      "Approved On": "Fecha de Aprobación",
+      "Approved On Date": "Fecha de Aprobación",
       "Approved Shares": "Acciones aprobadas",
-      "Approved on": "Aprobado en",
+      "Approved on": "Fecha de Aprobación",
       "Are Variable Installments allowed?": "¿Se permiten cuotas variables?",
       "Arrears By": "Atrasos por",
       "Arrears Since": "Atrasos desde",
@@ -1536,7 +1728,11 @@
       "Assignment Period": "Período de asignación",
       "Associated Center": "Centro Asociado",
       "Associated Office": "Sucursal asociada",
+<<<<<<< HEAD
       "Associated Officer": "Oficial asociado",
+=======
+      "Associated Officer": "Promotor asociado",
+>>>>>>> origin/dev
       "Associated Staff": "Asesor Asociado",
       "Associated With": "Asociado con",
       "At least": "Al menos",
@@ -1560,6 +1756,7 @@
       "Beneficiary": "Beneficiario",
       "Branch": "Sucursal",
       "Branch Office": "Sucursal",
+      "Breach": "Incumplimiento",
       "Breakdown": "Descomponer",
       "Boolean": "Booleano",
       "Business Date": "Fecha del sistema",
@@ -1627,7 +1824,11 @@
       "Client Name": "Nombre del cliente",
       "Client Parameters": "Parámetros del cliente",
       "Client Principal Loan": "Crédito principal del cliente",
+<<<<<<< HEAD
       "Create standing instructions at disbursement": "Crear instrucciones permanentes en la dispersión",
+=======
+      "Create standing instructions at disbursement": "Crear instrucciones permanentes en la ministración",
+>>>>>>> origin/dev
       "Client Screen Reports": "Reportes de pantalla del cliente",
       "CLIENT STATUS": "ESTADO DEL CLIENTE",
       "Client Status": "Estado del cliente",
@@ -1772,6 +1973,10 @@
       "Delinquency Grace Days": "Días de gracia para morosidad",
       "Delinquency Start Type": "Tipo de inicio de la morosidad",
       "Delinquency Tags": "Clasificación de morosidad",
+<<<<<<< HEAD
+=======
+      "Delinquent Amount": "Monto Moroso",
+>>>>>>> origin/dev
       "Delinquent Days": "Días morosos",
       "Delivery Method": "Método de entrega",
       "Deposit Account": "Cuenta de depósito",
@@ -1802,9 +2007,15 @@
       "Disbursed On": "Desembolsado el",
       "Disbursed On Date": "Desembolsado en la fecha",
       "Disbursed on": "Desembolsado el",
+<<<<<<< HEAD
       "Disbursement Date": "Fecha de Dispersión",
       "Disbursement On": "Dispersión en",
       "Disbursement on": "Dispersión en",
+=======
+      "Disbursement Date": "Fecha de Ministración",
+      "Disbursement On": "Fecha de Ministración",
+      "Disbursement on": "Fecha de Ministración",
+>>>>>>> origin/dev
       "Discount": "Descuento",
       "Discount must be greater than or equal to 0": "El descuento debe ser mayor o igual a 0",
       "Display Name": "Nombre para mostrar",
@@ -1826,7 +2037,11 @@
       "Due days for repayment event": "Días de vencimiento para el evento de pago",
       "Due for collection on": "Vencimiento para su cobro el",
       "Dropdown": "Desplegable",
+<<<<<<< HEAD
       "Expected Disbursement Date": "Fecha de dispersión esperada",
+=======
+      "Expected Disbursement Date": "Fecha de ministración esperada",
+>>>>>>> origin/dev
       "Effective Date": "Fecha efectiva",
       "Effective From": "Válido desde",
       "Email": "Correo electrónico",
@@ -1840,6 +2055,7 @@
       "Enable Down Payment": "Habilitar Pago inicial",
       "Enable Lock-in Period": "Habilitar período de bloqueo",
       "Enable Multiple Disbursals": "Habilitar múltiples desembolsos",
+      "Enable Near Breach": "Habilitar incumplimiento inminente",
       "Enabled": "Activado",
       "End Date": "Fecha final",
       "End Point": "Punto final",
@@ -1864,8 +2080,14 @@
       "Execution Time": "Tiempo de ejecución",
       "Existing Client": "Cliente existente",
       "Existing Meeting Date": "Fecha de reunión existente",
+<<<<<<< HEAD
       "Expected Disbursement On": "Dispersión esperada el",
       "Expected disbursement on": "Dispersión esperada el",
+=======
+      "Expected Amount": "Monto Esperado",
+      "Expected Disbursement On": "Fecha esperada de Ministración",
+      "Expected disbursement on": "Fecha esperada de Ministración",
+>>>>>>> origin/dev
       "Expense Account": "Cuenta de gastos",
       "Expense Account (DR)": "Cuenta de gastos (DR)",
       "Expenses from Goodwill Credit": "Gastos del crédito de buena voluntad",
@@ -1937,7 +2159,7 @@
       "From Date": "Desde la fecha",
       "From Email": "Desde el correo",
       "From Name": "Del nombre",
-      "From loan officer": "Del oficial de Créditos",
+      "From loan officer": "Del Promotor de Crédito",
       "Full Day": "Día completo",
       "Full Day/Time": "Día completo/Hora",
       "Fund": "Fondo",
@@ -1991,6 +2213,7 @@
       "Incentive Type": "Tipo de incentivo",
       "Include in Customer Loan Counter": "Incluir en el contador de Créditos al cliente",
       "Income Account": "Cuenta de Ingresos",
+      "Income From Discount Fee": "Ingresos por tarifa de descuento",
       "Income capitalization": "Capitalización de ingresos",
       "INCOME CAPITALIZATION": "CAPITALIZACIÓN DE INGRESOS",
       "Income from Charge": "Ingresos por cargo",
@@ -2010,7 +2233,7 @@
       "Incorporation Number": "Número de constitución",
       "Incorporation Validity Till Date": "Validez de constitución hasta la fecha",
       "Indexed": "Indexado",
-      "Inherit Group Loan Officer": "Oficial de Créditos del grupo heredado",
+      "Inherit Group Loan Officer": "Promotor de Crédito del grupo heredado",
       "Initiate Dividend": "Iniciar dividendo",
       "Insert into table": "Insertar en la mesa",
       "Installment Amount": "Monto de la cuota",
@@ -2067,9 +2290,13 @@
       "Is Floating Rate": "¿Es tasa variable",
       "Is Floating calculation allowed?": "¿Se permite el cálculo flotante?",
       "Is Interest Posting required on closure date": "¿Se requiere la publicación de intereses en la fecha de cierre?",
+<<<<<<< HEAD
       "Is interest recognition on disbursement date?": "¿El reconocimiento de intereses se realiza en la fecha de dispersión?",
+=======
+      "Is interest recognition on disbursement date?": "¿El reconocimiento de intereses se realiza en la fecha de ministración?",
+>>>>>>> origin/dev
       "Is Linked to floating interest rates?": "¿Está vinculado a tasas de interés flotantes?",
-      "Is Loan Officer": "Es oficial de Créditos",
+      "Is Loan Officer": "Es Promotor de Crédito",
       "Is Mandatory Deposit": "Es depósito obligatorio",
       "Is Notification": "es notificación",
       "Is Overdraft Allowed": "¿Se permite el sobregiro?",
@@ -2100,7 +2327,7 @@
       "Liability Account": "Cuenta de responsabilidad",
       "Liability Account (CR)": "Cuenta de Pasivo (CR)",
       "Lifted On": "levantado",
-      "Link savings": "Ahorro de enlaces",
+      "Link savings": "Cuenta de Ahorro",
       "Linked Savings Account": "Cuenta de Ahorros vinculada",
       "Linked Savings Account(Dividend Posting)": "Cuenta de Ahorros vinculada (publicación de dividendos)",
       "Linked to floating interest rates": "Vinculado a tasa de interés variable",
@@ -2116,10 +2343,17 @@
       "Loan Charge-off behaviour": "Comportamiento de cancelación de créditos",
       "Loan Collateral Details": "Detalles de la garantía del Crédito",
       "Loan Cycle": "Ciclo de Crédito",
+<<<<<<< HEAD
       "Loan Disbursal": "Dispersión del Crédito",
       "Loan Documents": "Documentos de Crédito",
       "Loan Id": "Id del Crédito",
       "Loan Officer": "Oficial de Créditos",
+=======
+      "Loan Disbursal": "Ministración del Crédito",
+      "Loan Documents": "Documentos de Crédito",
+      "Loan Id": "Id del Crédito",
+      "Loan Officer": "Promotor de Crédito",
+>>>>>>> origin/dev
       "Loan Originator": "Originador de Créditos",
       "Loan Outstanding Amount": "Monto pendiente del Crédito",
       "Loan Outstanding Percentage": "Porcentaje pendiente del Crédito",
@@ -2133,9 +2367,9 @@
       "Loan Screen Reports": "Reportes de pantalla de Créditos",
       "Loan Status": "Estado del Crédito",
       "Loan Term": "Plazo del Crédito",
-      "Loan Tranche Details": "Detalles de Dispersión de Crédito",
+      "Loan Tranche Details": "Detalles de Ministración de Crédito",
       "Loan closed with Topup": "Crédito cerrado con Topup",
-      "Loan officer": "oficial de Crédito",
+      "Loan officer": "Promotor de Crédito",
       "Loan portfolio": "Cartera de Créditos",
       "Loans daily repayment schedule": "Ampliar el plazo de los Créditos siguiendo un calendario de pagos diario",
       "Lock Owner": "Propietario de bloqueo",
@@ -2210,10 +2444,18 @@
       "Minimum Opening Balance": "Saldo mínimo de apertura",
       "Minimum Overdraft Required for Interest Calculation": "Sobregiro mínimo requerido para el cálculo de intereses",
       "Minimum Payment": "Pago mínimo",
+<<<<<<< HEAD
       "Minimum Payment Type": "Tipo de pago mínimo",
       "Minimum Required Balance": "Balance mínimo requerido",
       "Minimum Value": "Valor mínimo",
       "Minimum days between disbursal and first repayment date": "Días mínimos entre la dispersión y la primera fecha de amortización",
+=======
+      "Minimum Payment Criteria Met": "Criterio de Pago Mínimo Cumplido",
+      "Minimum Payment Type": "Tipo de pago mínimo",
+      "Minimum Required Balance": "Balance mínimo requerido",
+      "Minimum Value": "Valor mínimo",
+      "Minimum days between disbursal and first repayment date": "Días mínimos entre la ministración y la primera fecha de amortización",
+>>>>>>> origin/dev
       "Minimum gap between Installments": "Brecha mínima entre Cuotas",
       "Minute": "Minuto",
       "Mobile": "Móvil",
@@ -2232,6 +2474,10 @@
       "Name": "Nombre",
       "Name Decorated": "Nombre decorado",
       "Name of the Organization": "Nombre de la organización",
+      "Near Breach": "Incumplimiento inminente",
+      "Near Breach Evaluation Frequency": "Frecuencia de evaluación de incumplimiento inminente",
+      "Near Breach Evaluation Frequency Type": "Tipo de frecuencia de evaluación de incumplimiento inminente",
+      "Near Breach Threshold": "Umbral de incumplimiento inminente",
       "Net Cash": "Efectivo neto",
       "New Interest Rate": "Nueva tasa de interés",
       "Next Meeting Date": "Fecha de la próxima reunión",
@@ -2282,7 +2528,11 @@
       "OTP": "OTP",
       "Office": "Sucursal",
       "Office Name": "Nombre de Sucursal",
+<<<<<<< HEAD
       "Officer": "Oficial",
+=======
+      "Officer": "Promotor",
+>>>>>>> origin/dev
       "Offices Charges/Fees": "Sucursales --> Comisiones/Tarifas",
       "Offices Loan Products": "Sucursales --> Productos de Crédito",
       "Offices Savings Products": "Sucursales --> Productos de Ahorro",
@@ -2306,6 +2556,7 @@
       "Original Schedule": "Calendario original",
       "Output Type": "Tipo de salida",
       "Outstanding": "Pendiente",
+      "Outstanding Amount": "Monto Pendiente",
       "Overdraft": "Sobregiro",
       "Over Amount": "Monto extra",
       "Over Amount Calculation Type": "Tipo de cálculo",
@@ -2329,6 +2580,7 @@
       "PDF format": "formato PDF",
       "PREVIEW": "RESUMEN",
       "Paid": "Pagado",
+      "Paid Amount": "Monto Pagado",
       "Paid Date": "Fecha de pago",
       "Parameter": "Parámetro",
       "Parameter Name Passed to Pentaho": "Nombre del parámetro del informe",
@@ -2368,6 +2620,10 @@
       "Percentage to Base": "Porcentaje a la base",
       "Period": "Período",
       "Period From": "Periodo desde",
+<<<<<<< HEAD
+=======
+      "Period Number": "Número de Período",
+>>>>>>> origin/dev
       "Period Payment Rate": "Tasa de pago del período",
       "Period To": "Período hasta",
       "Period Type": "Tipo de período",
@@ -2607,7 +2863,7 @@
       "Submission Date": "Día de entrega",
       "Submitted On": "Registrado el día",
       "Submitted On Date": "Registrado el día",
-      "Submitted on": "Registrado el",
+      "Submitted on": "Fecha de solicitud",
       "Submitted on Date From": "Registrado en fecha de",
       "Submitted on Date To": "Registrado el día hasta",
       "Submitted on date": "Enviado el día",
@@ -2638,6 +2894,7 @@
       "Text": "Texto",
       "Theme": "Tema",
       "Theme and Font": "Tema y fuente",
+      "Threshold": "Umbral",
       "Thursday": "Jueves",
       "Time": "Tiempo",
       "To": "A",
@@ -2645,10 +2902,17 @@
       "To Account Type": "Al tipo de cuenta",
       "To Client": "Al cliente",
       "To Date": "Hasta la fecha",
+<<<<<<< HEAD
       "To Loan Officer": "Al oficial de Créditos",
       "To Office": "A la sucursal",
       "To Savings Officer": "Al oficial de ahorros",
       "To loan officer": "Al oficial de créditos",
+=======
+      "To Loan Officer": "Al Promotor de Crédito",
+      "To Office": "A la sucursal",
+      "To Savings Officer": "Al Promotor de Cuentas de Ahorro",
+      "To loan officer": "Al Promotor de Crédito",
+>>>>>>> origin/dev
       "Current Price": "Precio Actual",
       "Topup closure amount": "Importe de cierre de recarga",
       "Total": "Total",
@@ -2817,7 +3081,11 @@
       "Buy down fee Expense": "Gastos por comisiones de compra inicial",
       "Skip Interest Refund Transaction Posting": "Omitir el registro de la devolución de intereses",
       "Incorporation Date": "Fecha de Constitución",
+<<<<<<< HEAD
       "Available Disbursement Amount (with Over Applied)": "Monto disponible para dispersión (con sobreaplicación)",
+=======
+      "Available Disbursement Amount (with Over Applied)": "Monto disponible para ministración (con sobreaplicación)",
+>>>>>>> origin/dev
       "Overdue": "Vencido",
       "Overdue Fees": "Cargos vencidos",
       "From date": "Desde fecha",
@@ -2866,7 +3134,26 @@
       "Period Payment Frequency Type": "Tipo de frecuencia de pago por período",
       "Payment Allocation Transactions": "Transacciones de asignación de pagos",
       "Net Present Value day count": "Recuento de días del valor presente neto",
+<<<<<<< HEAD
       "Installment": "Cuota"
+=======
+      "Installment": "Cuota",
+      "Beneficiary Selection": "Selección de beneficiario",
+      "Confirmation Number": "Número de confirmación",
+      "Sub Status": "Subestado",
+      "Allow full term for each tranche": "Permitir plazo completo para cada tramo",
+      "Confirmed At": "Confirmado el",
+      "Full Name": "Nombre completo",
+      "National ID": "CURP / INE",
+      "Nationality": "Nacionalidad",
+      "Payout Country": "País de pago",
+      "Payout Token": "Token de pago",
+      "Send Amount": "Monto a enviar",
+      "Send Country": "País de envío",
+      "Voter ID": "Credencial de elector",
+      "Passport": "Pasaporte",
+      "Driver's License": "Licencia de conducir"
+>>>>>>> origin/dev
     },
     "links": {
       "Community": "Comunidad",
@@ -2911,7 +3198,11 @@
       "Capitalized Income": "Ingreso capitalizado",
       "Capitalized Income Adjustment": "Ajuste de ingresos capitalizados",
       "Centers": "Centros",
+<<<<<<< HEAD
       "Change Loan Officer": "Cambiar oficial de Créditos",
+=======
+      "Change Loan Officer": "Cambiar Promotor de Crédito",
+>>>>>>> origin/dev
       "Charge-Off": "Cancelación",
       "Chart of Accounts": "Catálogo de cuentas",
       "Checker Inbox and Tasks": "Bandeja de entrada y tareas de Checker",
@@ -2986,9 +3277,15 @@
       "Unblock Withdrawal": "Desbloquear retiros",
       "Undo Activation": "Reversar la activación",
       "Undo Approval": "Reversar aprobación",
+<<<<<<< HEAD
       "Undo Disbursal": "Reversar dispersión",
       "Undo Charge-Off": "Reversar Cancelación",
       "Undo Last Disbursal": "Reversar la última dispersión",
+=======
+      "Undo Disbursal": "Reversar ministración",
+      "Undo Charge-Off": "Reversar Cancelación",
+      "Undo Last Disbursal": "Reversar la última ministración",
+>>>>>>> origin/dev
       "Undo Re-Age": "Reversar Envejecimiento",
       "Undo Re-Amortize": "Reversar reamortización",
       "User Management": "Gestión de usuarios",
@@ -3005,7 +3302,13 @@
       "Redeem Shares": "Canjear acciones",
       "Approve Additional Shares": "Aprobar acciones adicionales",
       "Reject Additional Shares": "Rechazar acciones adicionales",
+<<<<<<< HEAD
       "Tasks": "Tareas"
+=======
+      "Tasks": "Tareas",
+      "Process Remittance": "Procesar remesa",
+      "Undo Write-off": "Deshacer castigo contable"
+>>>>>>> origin/dev
     },
     "placeholders": {
       "# Remittance": "# Remesa",
@@ -3144,6 +3447,10 @@
       "Audit logs of all the activities": "Registros de auditoría de todas las actividades, como crear clientes, ministrar Créditos, etc.",
       "Bar": "Bar",
       "BIRT": "Mifos Plugin para generar informes usando Eclipse Birt",
+<<<<<<< HEAD
+=======
+      "Breach Configurations": "Configuraciones de Incumplimiento",
+>>>>>>> origin/dev
       "Bulk Import": "Importación masiva",
       "Bulk Loan Reassignment": "Reasignación de Créditos a granel",
       "Bulk data import using excel spreadsheet templates": "Importación masiva de datos mediante plantillas de hojas de cálculo excel para clientes, sucursales, etc.",
@@ -3194,6 +3501,7 @@
       "Create Accounting Closure": "Crear cierre contable",
       "Create Accounting Rule": "Crear regla de contabilidad",
       "Create Adhoc Query": "Crear consulta ad hoc",
+      "Create Breach": "Crear Incumplimiento",
       "Create Center": "Crear centro",
       "Create Charge": "Crear cargo",
       "Create Client": "Crear cliente",
@@ -3219,7 +3527,13 @@
       "Create Journal Entry": "Crear entrada de diario",
       "Create Loan Product": "Crear producto de Crédito",
       "Create Loan Originator": "Crear Originador de Créditos",
+<<<<<<< HEAD
+=======
+      "View Loan Originator": "Ver Originador de Créditos",
+      "Edit Loan Originator": "Editar Originador de Créditos",
+>>>>>>> origin/dev
       "Create Loans Account": "Crear cuenta de Créditos",
+      "Create Near Breach": "Crear Cuasi Incumplimiento",
       "Create New GL Account": "Esta opción le permite crear nuevas cuentas GL.",
       "Create Office": "Crear sucursal",
       "Create Payment Type": "Crear tipo de pago",
@@ -3247,7 +3561,11 @@
       "Create new offices": "Esta opción le permite crear nuevas sucursales en su organización.",
       "Create new report": "Esta opción le permite crear un nuevo reporte.",
       "Create provisioning entries": "Crear entradas de aprovisionamiento",
+<<<<<<< HEAD
       "Create standing instructions at disbursement": "Crear instrucciones permanentes en el momento de la dispersión",
+=======
+      "Create standing instructions at disbursement": "Crear instrucciones permanentes en el momento de la ministración",
+>>>>>>> origin/dev
       "Currencies available across organization": "Monedas disponibles en toda la organización para diferentes productos",
       "Currency Configuration": "Configuración de moneda",
       "Current Business Date": "Fecha del sistema actual",
@@ -3281,6 +3599,7 @@
       "Define Tax Groups": "Definir grupos de impuestos",
       "Define Tax components": "Definir componentes de impuestos",
       "Define Tax components and Tax groups": "Definir componentes de impuestos y grupos de impuestos",
+      "Define breaches for working capital products": "Definir incumplimientos para productos de capital de trabajo",
       "Define charges/penalties for loan products, savings and deposit products": "Definir cargos/penalizaciones para productos de Crédito, ahorro y depósito.",
       "Define collaterals for Collateral Management": "Definir garantías para la gestión de garantías",
       "Define delinquency bucket as set of ranges": "Definir el segmento de morosidad como un conjunto de rangos",
@@ -3288,6 +3607,10 @@
       "Define delinquency day ranges and bucket set for loan products": "Definir rangos de días de morosidad y conjuntos de categorías para productos de Crédito",
       "Define floating rates for loan products": "Definir tasas flotantes para productos crediticios",
       "Define holidays for office": "Definir días festivos para la sucursal.",
+<<<<<<< HEAD
+=======
+      "Define near breaches for working capital products": "Definir incumplimientos cercanos para productos de capital de trabajo",
+>>>>>>> origin/dev
       "Define or modify Maker Checker tasks": "Definir o modificar tareas de Realizador Aprobador",
       "Define or modify entity to entity mappings": "Definir o modificar asignaciones de entidad a entidad",
       "Define or modify roles and associated permissions": "Definir o modificar roles y permisos asociados.",
@@ -3307,6 +3630,7 @@
       "Edit Accounting Rules": "Editar reglas de contabilidad",
       "Edit Adhoc Query": "Editar consulta ad hoc",
       "Edit Amazon S3 Configuration": "Editar la configuración de Amazon S3",
+      "Edit Breach": "Editar Incumplimiento",
       "Edit Cashier": "Editar cajero",
       "Edit Center": "Centro de edición",
       "Edit Charge": "Editar cargo",
@@ -3328,7 +3652,9 @@
       "Edit Group": "Editar grupo",
       "Edit Holidays": "Editar días festivos",
       "Edit Hook": "Editar gancho",
+      "Edit Loan Originator": "Editar Originador de Préstamo",
       "Edit Loan Product": "Editar producto de Crédito",
+      "Edit Near Breach": "Editar Cuasi Incumplimiento",
       "Edit Notification Configuration": "Editar configuración de notificación",
       "Edit Office": "Editar sucursal",
       "Edit Payment Type": "Editar tipo de pago",
@@ -3437,14 +3763,23 @@
       "LoanAccountCustomSnapshotBusinessEvent": "PréstamoCuentaPersonalizadoInstantáneaNegocioEvento",
       "LoanAccountDelinquencyPauseChangedBusinessEvent": "PréstamoCuentaMorosidadPausaCambiadoNegocioEvento",
       "LoanAccountSnapshotBusinessEvent": "PréstamoCuentaInstantáneaNegocioEvento",
+      "Loan Account Details": "Detalles de la cuenta de préstamo",
       "Loan Account Actions": "Acciones de la cuenta de Crédito",
       "Loan Collateral Details": "Detalles de la garantía del Crédito",
+<<<<<<< HEAD
       "Loan Disbursal": "Dispersión del Crédito",
+=======
+      "Loan Disbursal": "Ministración del Crédito",
+>>>>>>> origin/dev
       "Loan Documents": "Documentos de Crédito",
       "Loan Originators are associated with loan accounts": "Los Comisionistas de créditos están asociados con cuentas de créditos",
       "Loan Products": "Productos de Crédito",
       "Loan Provisioning Criteria Organization": "Definir criterios de concesión de Créditos para la organización",
+<<<<<<< HEAD
       "Loan Tranche Details": "Detalles de la Dispersión de Crédito",
+=======
+      "Loan Tranche Details": "Detalles de la Ministración de Crédito",
+>>>>>>> origin/dev
       "Loan Term Variations": "Variaciones de Términos del Crédito",
       "Loan View": "Vista de Crédito",
       "Loan products define the rules, default settings": "Los productos crediticios definen las reglas, la configuración predeterminada y las restricciones para las ofertas de Créditos de una institución financiera. Un producto de Crédito proporciona una plantilla para múltiples cuentas de Crédito para los clientes de la institución financiera.",
@@ -3505,6 +3840,7 @@
       "N/A": "N/A",
       "Navigate system selecting entity": "Esto permitirá al usuario navegar rápidamente por el sistema seleccionando la entidad mientras la búsqueda hace que la navegación sea más sólida.",
       "Navigation": "Navegación",
+      "Near Breach Configurations": "Configuraciones de Cuasi Incumplimiento",
       "Not Activated": "No Activado",
       "No Data": "Sin datos",
       "No Description": "Sin descripción",
@@ -3521,7 +3857,11 @@
       "No Loan Product was found": "No se encontró ningún producto de crédito",
       "No loan locked available": "No se encontraron créditos bloqueados.",
       "No notifications": "Sin notificaciones",
+<<<<<<< HEAD
       "No pending loan available for disbursal": "No hay Crédito pendiente disponible para dispersión.",
+=======
+      "No pending loan available for disbursal": "No hay Crédito pendiente disponible para ministración.",
+>>>>>>> origin/dev
       "No pending loans for approval": "No hay Créditos pendientes de aprobación.",
       "No pending rescheduled loan available for this account": "No se encontraron créditos reprogramados pendientes para esta cuenta.",
       "No repayments and disbursal": "No se encontraron reembolsos ni desembolsos para el cliente seleccionado y la fecha de reunión",
@@ -3562,6 +3902,7 @@
       "Provisioning criteria definitions": "Complete todas las definiciones de criterios de aprovisionamiento.",
       "Precedes of": "Precede de",
       "Recurring Deposit Account Charges": "Comisiones recurrentes de la cuenta de depósito",
+      "Recurring Deposit Account Details": "Detalles de la cuenta de depósito recurrente",
       "Recurring Deposit Account Interest Rate Chart": "Tabla de tasas de interés de cuentas de Depósito Recurrentes",
       "Recurring Deposit Account Standing Instructions": "Instrucciones para la situación de la cuenta de Depósito Recurrente",
       "Recurring Deposit Account Transactions": "Transacciones recurrentes en cuentas de depósito",
@@ -3572,6 +3913,7 @@
       "Recurring Deposits Account Transactions": "Transacciones de cuentas de depósitos recurrentes",
       "RecurringDeposit Account View": "Vista de cuenta de Depósito Recurrente",
       "Red asterisk field": "Los campos con un asterisco rojo (*) son obligatorios. Para saber más haga clic en:",
+      "Remittances": "Remesas",
       "Repayment Schedule": "Calendario de pagos",
       "Repeats' and 'Repeats every": "Nota: 'Repeticiones' y 'Repeticiones cada' no se pueden modificar si hay cuentas activas (Créditos JLG, depósitos recurrentes, etc.) que dependen de esta reunión.",
       "Report Parameters": "Parámetros del reporte",
@@ -3627,6 +3969,7 @@
       "Share Products Dividends": "Dividendos de Productos de Acciones",
       "Share products define the rules, default settings": "Los productos de acciones definen las reglas, la configuración predeterminada y las restricciones para las acciones y los dividendos de una institución financiera. Un producto de acciones proporciona una plantilla para múltiples cuentas que son o serán propiedad de los clientes de la institución financiera.",
       "Shares": "Acciones",
+      "Shares Account Details": "Detalles de la cuenta de acciones",
       "Shares Account Actions": "Acciones de la cuenta de acciones",
       "Shares Account Charges": "Comisiones de la cuenta de acciones",
       "Shares Account Dividends": "Dividendos de cuentas de acciones",
@@ -3676,7 +4019,11 @@
       "Transaction": "Transacción",
       "Transactions": "Transacciones",
       "Two Factor Authentication": "Autenticación de dos factores",
+<<<<<<< HEAD
       "Two types of charges—fees and penalties": "Mifos admite dos tipos de cargos: comisiones y penalizaciones. Se cobran comisiones por los servicios, por ejemplo, cuotas de membresía, comisiones de dispersión de Créditos y comisiones de retiro. Se cobran penalizaciones para disuadir a los clientes de desviarse de los términos de un producto.",
+=======
+      "Two types of charges—fees and penalties": "Mifos admite dos tipos de cargos: comisiones y penalizaciones. Se cobran comisiones por los servicios, por ejemplo, cuotas de membresía, comisiones de ministración de Créditos y comisiones de retiro. Se cobran penalizaciones para disuadir a los clientes de desviarse de los términos de un producto.",
+>>>>>>> origin/dev
       "Two-factor authentication configuration": "Ajustes de configuración de autenticación de dos factores",
       "Unassign Staff client": "¿Está seguro de que desea desasignar el asesor de este cliente?",
       "Unassign role for client member": "¿Está seguro de que desea cancelar la asignación del rol del miembro cliente con ID?",
@@ -3699,6 +4046,7 @@
       "View Adhoc Query": "Ver consulta ad hoc",
       "View Amazon S3 Configuration": "Ver la configuración de Amazon S3",
       "View Audit": "Ver auditoría",
+      "View Breach": "Ver Incumplimiento",
       "View Bulk Import": "Ver importación masiva",
       "View Cashier": "Ver cajero",
       "View Charges": "Ver cargos",
@@ -3721,7 +4069,9 @@
       "View Group": "Ver grupo",
       "View Holidays": "Ver festivos",
       "View Hook": "Ver gancho",
+      "View Loan Originator": "Ver Originador de Préstamo",
       "View Loan Product": "Ver producto de Crédito",
+      "View Near Breach": "Ver Cuasi Incumplimiento",
       "View Notification Configuration": "Ver configuración de notificación",
       "View Office": "Ver Sucursal",
       "View Product Mix": "Ver mezcla de productos",
@@ -3777,7 +4127,15 @@
       "“Maker-Checker” principle requires every tasks": "El principio \"Maker-Checker\" requiere que dos personas completen cada tarea para reducir la posibilidad de errores y uso indebido. Una persona inicia el proceso y la segunda lo completa.",
       "Buy Down Fees": "Tarifas de compra",
       "UploadDocumentHint": "Suba un PDF o imagen para generar una vista previa.",
+<<<<<<< HEAD
       "Process Remittance": "Procesar Remesa"
+=======
+      "Process Remittance": "Procesar Remesa",
+      "Loan Originators": "Comisionistas de créditos",
+      "Loan Reschedules": "Reprogramaciones de Créditos",
+      "Settings saved successfully": "Configuración guardada exitosamente.",
+      "Undo Write-off Description": "Esta acción revertirá la transacción de castigo contable y restaurará el préstamo a su estado activo anterior. Por favor, proporcione una nota explicando el motivo de esta acción."
+>>>>>>> origin/dev
     },
     "permissions": {
       "actions": {
@@ -3818,8 +4176,13 @@
         "DELETECASHIER": "Eliminar Cajero",
         "DEPOSIT": "Depositar",
         "DETACH": "Desvincular",
+<<<<<<< HEAD
         "DISBURSALUNDO": "Reversar dispersión",
         "DISBURSALLASTUNDO": "Reversar Última dispersión",
+=======
+        "DISBURSALUNDO": "Reversar ministración",
+        "DISBURSALLASTUNDO": "Reversar Última ministración",
+>>>>>>> origin/dev
         "DISBURSE": "Ministrar",
         "DISBURSETOSAVINGS": "Ministrar a Ahorros",
         "EXECUTE": "Ejecutar",
@@ -3842,7 +4205,11 @@
         "REJECT": "Rechazar",
         "REJECTADDITIONAL": "Rechazar Adicional",
         "RELEASEAMOUNT": "Liberar Monto",
+<<<<<<< HEAD
         "REMOVESAVINGSOFFICER": "Remover Oficial de Ahorros",
+=======
+        "REMOVESAVINGSOFFICER": "Remover Promotor de Cuentas de Ahorro",
+>>>>>>> origin/dev
         "REOPEN": "Reabrir",
         "REPAYMENT": "Reembolso",
         "RESCHEDULE": "Reprogramar",
@@ -3867,9 +4234,15 @@
         "UNDOWRITEOFF": "Reversar Castigo por Incobrable",
         "UPDATE": "Actualizar",
         "UPDATECASHIERALLOCATION": "Actualizar Asignación de Cajero",
+<<<<<<< HEAD
         "UPDATELOANOFFICER": "Actualizar Oficial de Crédito",
         "UPDATESAVINGSACCOUNT": "Actualizar Cuenta de Ahorros",
         "UPDATESAVINGSOFFICER": "Actualizar Oficial de Ahorros",
+=======
+        "UPDATELOANOFFICER": "Actualizar Promotor de Crédito",
+        "UPDATESAVINGSACCOUNT": "Actualizar Cuenta de Ahorros",
+        "UPDATESAVINGSOFFICER": "Actualizar al Promotor de Cuentas de Ahorro",
+>>>>>>> origin/dev
         "UPDATEWITHHOLDTAX": "Actualizar Retención de Impuestos",
         "VIEW": "Ver",
         "WAIVE": "Exonerar",
@@ -4182,7 +4555,11 @@
     "Interest rate mentioned is added to base lending rate": "Si está marcada, la tasa de interés mencionada se suma a la tasa de Crédito base a partir de la fecha de este período; en caso contrario, es absoluta.",
     "Keyboard Shortcuts": "Atajos de teclado",
     "Leave this checkbox checked if the loan has Down Payment": "Deje esta casilla marcada si el crédito tiene un pago inicial. Un pago inicial es una suma que el comprador paga por adelantado al comprar un bien. Representa un porcentaje del precio total de compra y el saldo generalmente se financia",
+<<<<<<< HEAD
     "Leave this checkbox unchecked": "Deje esta casilla sin marcar si el Crédito es de dispersión única. Marque esta casilla de verificación si el Crédito es un Crédito de ministraciones múltiples. Consulte los campos adicionales para obtener información adicional requerida para este tipo de Crédito.",
+=======
+    "Leave this checkbox unchecked": "Deje esta casilla sin marcar si el Crédito es de ministración única. Marque esta casilla de verificación si el Crédito es un Crédito de ministraciones múltiples. Consulte los campos adicionales para obtener información adicional requerida para este tipo de Crédito.",
+>>>>>>> origin/dev
     "Loan Account": "Cuenta de Crédito",
     "Loan Product can be used to apply for Topup Loans": "Si se selecciona, el Producto de Crédito se puede utilizar para solicitar Créditos Recargables.",
     "Loan products may be assigned": "Los productos de Crédito pueden asignarse a un fondo creado por su institución financiera. Si está disponible, el campo de fondo se puede utilizar para realizar un seguimiento y generar reportes sobre grupos de Créditos.",
@@ -4214,7 +4591,11 @@
     "Recurring Deposits Account": "Cuenta de depósitos recurrentes",
     "Remove Period": "Eliminar período",
     "Resume Delinquency Classification": "Reanudar la clasificación de la morosidad",
+<<<<<<< HEAD
     "Repayment schedule will start the installment": "El calendario de pagos comenzará las fechas de pago a partir de la fecha de presentación o la fecha de dispersión.",
+=======
+    "Repayment schedule will start the installment": "El calendario de pagos comenzará las fechas de pago a partir de la fecha de presentación o la fecha de ministración.",
+>>>>>>> origin/dev
     "Savings Account": "Cuenta de Ahorros",
     "Sets the balance required for interest calculation": "Establece el saldo requerido para el cálculo de intereses.",
     "Sets the maximum allowed overdraft amount": "Establece el monto máximo de sobregiro permitido para una cuenta de ahorro a la que se le permite tener un sobregiro",
@@ -4294,7 +4675,12 @@
     "Create Interest Refund": "Crear reembolso de intereses",
     "ACTIVE": "ACTIVO",
     "PENDING": "PENDIENTE",
+<<<<<<< HEAD
     "INACTIVE": "INACTIVO"
+=======
+    "INACTIVE": "INACTIVO",
+    "Allow full term length for each tranche disbursement": "Cuando está habilitado, cada desembolso de tramo seguirá el cronograma completo del préstamo en lugar de ajustarse al plazo restante. Solo disponible para el tipo de cronograma PROGRESIVO."
+>>>>>>> origin/dev
   },
   "countries": {
     "AF": "Afganistán",
@@ -4412,5 +4798,70 @@
     "YE": "Yemen",
     "ZM": "Zambia",
     "ZW": "Zimbabue"
+<<<<<<< HEAD
+=======
+  },
+  "clients": {
+    "actions": {
+      "close": {
+        "success": "Cliente cerrado con éxito."
+      },
+      "reject": {
+        "success": "Cliente rechazado con éxito."
+      },
+      "withdraw": {
+        "success": "Cliente retirado con éxito."
+      },
+      "reactivate": {
+        "success": "Cliente reactivado con éxito.",
+        "failure": "Error al reactivar al cliente."
+      },
+      "activate": {
+        "success": "Cliente activado con éxito.",
+        "failure": "Error al activar el cliente."
+      },
+      "acceptTransfer": {
+        "success": "Transferencia de cliente aceptada con éxito."
+      },
+      "rejectTransfer": {
+        "success": "Transferencia de cliente rechazada con éxito."
+      },
+      "undoTransfer": {
+        "success": "Transferencia de cliente deshecha con éxito."
+      },
+      "undoRejection": {
+        "success": "Rechazo de cliente deshecho con éxito."
+      },
+      "transfer": {
+        "success": "Transferencia de cliente propuesta con éxito.",
+        "failure": "Error al proponer la transferencia del cliente."
+      },
+      "addCharge": {
+        "success": "Cargo del cliente añadido con éxito."
+      },
+      "addCollateral": {
+        "success": "Garantía del cliente añadida con éxito."
+      },
+      "assignStaff": {
+        "success": "Asesor asignado al cliente con éxito.",
+        "failure": "Error al asignar asesor al cliente."
+      },
+      "updateSavingsAccount": {
+        "success": "Cuenta de ahorros del cliente actualizada con éxito."
+      },
+      "takeSurvey": {
+        "success": "Encuesta enviada con éxito.",
+        "failure": "Error al enviar la encuesta."
+      }
+    }
+  },
+  "error": {
+    "resource": {
+      "notImplemented": {
+        "type": "Error no implementado",
+        "message": "¡Funcionalidad no implementada!"
+      }
+    }
+>>>>>>> origin/dev
   }
 }

@@ -608,4 +608,81 @@ export class ProductsService {
     const httpParams = new HttpParams().set('genericResultSet', 'true');
     return this.http.delete(`/datatables/${datatableName}/${productId}`, { params: httpParams });
   }
+
+  /**
+   * @returns {Observable<any>} Working Capital Breach Template data.
+   */
+  getWorkingCapitalBreachTemplate(): Observable<any> {
+    return this.http.get('/working-capital/breach/template');
+  }
+
+  /**
+   * @returns {Observable<any>} Working Capital Breaches data.
+   */
+  getWorkingCapitalBreaches(): Observable<any> {
+    return this.http.get('/working-capital/breach/breaches');
+  }
+
+  /**
+   * @returns {Observable<any>} Working Capital Breach data.
+   */
+  getWorkingCapitalBreach(breachId: string): Observable<any> {
+    return this.http.get(`/working-capital/breach/breaches/${breachId}`);
+  }
+
+  /**
+   * @returns {Observable<any>} Working Capital Breach creation.
+   */
+  createWrokingCapitalBreach(payload: any): Observable<any> {
+    return this.http.post(`/working-capital/breach/breaches`, payload);
+  }
+
+  /**
+   * @returns {Observable<any>} Working Capital Breach update.
+   */
+  updateWrokingCapitalBreach(breachId: number, payload: any): Observable<any> {
+    return this.http.put(`/working-capital/breach/breaches/${breachId}`, payload);
+  }
+
+  /**
+   * @returns {Observable<any>} Working Capital Breach delete.
+   */
+  deleteWrokingCapitalBreach(breachId: number): Observable<any> {
+    return this.http.delete(`/working-capital/breach/breaches/${breachId}`);
+  }
+
+  /**
+   * @returns {Observable<any>} Working Capital Near Breaches data.
+   */
+  getWorkingCapitalNearBreaches(): Observable<any> {
+    return this.http.get('/working-capital/near-breach');
+  }
+
+  /**
+   * @returns {Observable<any>} Working Capital Near Breach data.
+   */
+  getWorkingCapitalNearBreach(nearBreachId: string): Observable<any> {
+    return this.http.get(`/working-capital/near-breach/${nearBreachId}`);
+  }
+
+  /**
+   * @returns {Observable<any>} Working Capital Near Breach creation.
+   */
+  createWrokingCapitalNearBreach(payload: any): Observable<any> {
+    return this.http.post(`/working-capital/near-breach`, payload);
+  }
+
+  /**
+   * @returns {Observable<any>} Working Capital Near Breach update.
+   */
+  updateWrokingCapitalNearBreach(nearBreachId: number, payload: any): Observable<any> {
+    return this.http.put(`/working-capital/near-breach/${nearBreachId}`, payload);
+  }
+
+  /**
+   * @returns {Observable<any>} Working Capital NearBreach delete.
+   */
+  deleteWrokingCapitalNearBreach(nearBreachId: number): Observable<any> {
+    return this.http.delete(`/working-capital/near-breach/${nearBreachId}`);
+  }
 }

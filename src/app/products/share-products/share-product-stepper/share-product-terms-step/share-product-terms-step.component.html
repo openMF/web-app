@@ -26,7 +26,14 @@
       }
       @if (shareProductTermsForm.get('totalShares').hasError('min')) {
         <mat-error>
+<<<<<<< HEAD
           {{ 'labels.inputs.Total Number of Shares' | translate }} must be at least <strong>1</strong>
+=======
+          {{
+            'errors.validation.mustBeAtLeast'
+              | translate: { field: ('labels.inputs.Total Number of Shares' | translate), min: 1 }
+          }}
+>>>>>>> origin/dev
         </mat-error>
       }
     </mat-form-field>
@@ -49,7 +56,14 @@
       }
       @if (shareProductTermsForm.get('sharesIssued').hasError('min')) {
         <mat-error>
+<<<<<<< HEAD
           {{ 'labels.inputs.Shares to be Issued' | translate }} must be at least <strong>1</strong>
+=======
+          {{
+            'errors.validation.mustBeAtLeast'
+              | translate: { field: ('labels.inputs.Shares to be Issued' | translate), min: 1 }
+          }}
+>>>>>>> origin/dev
         </mat-error>
       }
     </mat-form-field>
@@ -71,7 +85,13 @@
         </mat-error>
       }
       @if (shareProductTermsForm.get('unitPrice').hasError('min')) {
+<<<<<<< HEAD
         <mat-error> {{ 'labels.inputs.Nominal Price' | translate }} must be at least <strong>1</strong> </mat-error>
+=======
+        <mat-error>{{
+          'errors.validation.mustBeAtLeast' | translate: { field: ('labels.inputs.Nominal Price' | translate), min: 1 }
+        }}</mat-error>
+>>>>>>> origin/dev
       }
     </mat-form-field>
 

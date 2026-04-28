@@ -19,6 +19,10 @@ import { VersionService } from 'app/system/version.service';
 /** Environment Configuration */
 import { environment } from '../../../environments/environment';
 import { Subscription } from 'rxjs';
+<<<<<<< HEAD
+=======
+import { TranslateService } from '@ngx-translate/core';
+>>>>>>> origin/dev
 import { NgClass, DatePipe } from '@angular/common';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -42,6 +46,10 @@ export class FooterComponent implements OnInit, OnDestroy {
   private alertService = inject(AlertService);
   private dateUtils = inject(Dates);
   private versionService = inject(VersionService);
+<<<<<<< HEAD
+=======
+  private translateService = inject(TranslateService);
+>>>>>>> origin/dev
 
   username: string = '';
   name: string = '';
@@ -85,7 +93,7 @@ export class FooterComponent implements OnInit, OnDestroy {
       this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
         const alertType = alertEvent.type;
         if (alertType === SettingsService.businessDateType + ' Set Config') {
-          this.isBusinessDateEnabled = alertEvent.message === 'enabled' ? true : false;
+          this.isBusinessDateEnabled = alertEvent.enabled ? true : false;
           this.isBusinessDateDefined = false;
           if (this.isBusinessDateEnabled) {
             this.setBusinessDate();
@@ -94,7 +102,7 @@ export class FooterComponent implements OnInit, OnDestroy {
           if (this.isBusinessDateEnabled) {
             this.setBusinessDate();
           }
-        } else if (alertType === 'Authentication Start') {
+        } else if (alertType === this.translateService.instant('errors.auth.startType')) {
           this.timer = setTimeout(() => {
             this.getConfigurations();
           }, 60000);

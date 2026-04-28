@@ -78,7 +78,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 export class AuditTrailsComponent implements OnInit, AfterViewInit {
   private route = inject(ActivatedRoute);
   private systemService = inject(SystemService);
+<<<<<<< HEAD
   private auditsService = inject(AuditsService);
+=======
+>>>>>>> origin/dev
   private dateUtils = inject(Dates);
   private settingsService = inject(SettingsService);
 

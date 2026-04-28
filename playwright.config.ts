@@ -18,6 +18,10 @@ import { defineConfig, devices } from '@playwright/test';
  * @see https://playwright.dev/docs/test-configuration
  */
 export default defineConfig({
+<<<<<<< HEAD
+=======
+  globalSetup: process.env.CI ? './playwright/global-setup.ts' : undefined,
+>>>>>>> origin/dev
   // Test directory
   testDir: './playwright/tests',
 
@@ -43,8 +47,13 @@ export default defineConfig({
 
   // Global test settings
   use: {
+<<<<<<< HEAD
     // Base URL for the Angular app
     baseURL: 'http://localhost:4200',
+=======
+    // Base URL for the Angular app (aligned with global-setup.ts and configurable via env for CI)
+    baseURL: process.env.E2E_BASE_URL || 'http://localhost:4200',
+>>>>>>> origin/dev
 
     // Handle self-signed certificates from Fineract backend
     ignoreHTTPSErrors: true,
@@ -73,16 +82,33 @@ export default defineConfig({
   // Global test timeout (per test)
   timeout: process.env.CI ? 180000 : 120000,
 
+<<<<<<< HEAD
   // Configure projects for different browsers
   projects: [
     {
       name: 'chromium',
       use: {
         ...devices['Desktop Chrome'],
+=======
+  // Configure projects for authentication setup and browser testing
+  projects: [
+    {
+      name: 'setup',
+      testMatch: /.*\.setup\.ts/,
+      testDir: './playwright',
+      retries: process.env.CI ? 2 : 0
+    },
+    {
+      name: 'chromium',
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: 'playwright/.auth/user.json',
+>>>>>>> origin/dev
         // Launch options for handling SSL in headed mode
         launchOptions: {
           args: ['--ignore-certificate-errors']
         }
+<<<<<<< HEAD
       }
     }
   ],
@@ -102,4 +128,19 @@ export default defineConfig({
       stderr: 'pipe'
     })
   }
+=======
+      },
+      dependencies: ['setup']
+    }
+  ],
+
+  webServer: process.env.CI
+    ? undefined
+    : {
+        command: 'npm run start',
+        url: 'http://localhost:4200',
+        reuseExistingServer: true,
+        timeout: 180000
+      }
+>>>>>>> origin/dev
 });

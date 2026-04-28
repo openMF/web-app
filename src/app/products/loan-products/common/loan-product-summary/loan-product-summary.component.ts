@@ -7,7 +7,11 @@
  */
 
 import { Component, Input, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
+<<<<<<< HEAD
 import { DelinquencyBucket, LoanProduct } from '../../models/loan-product.model';
+=======
+import { Breach, DelinquencyBucket, LoanProduct, NearBreach } from '../../models/loan-product.model';
+>>>>>>> origin/dev
 import {
   AccountingMapping,
   Charge,
@@ -52,6 +56,10 @@ import { YesnoPipe } from '../../../../pipes/yesno.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProductService } from '../../services/loan-product.service';
 import { LoanProductBaseComponent } from '../loan-product-base.component';
+<<<<<<< HEAD
+=======
+import { BreachDisplayComponent } from 'app/shared/loan/breach-display/breach-display.component';
+>>>>>>> origin/dev
 
 @Component({
   selector: 'mifosx-loan-product-summary',
@@ -77,7 +85,8 @@ import { LoanProductBaseComponent } from '../loan-product-base.component';
     ChargesPenaltyFilterPipe,
     DateFormatPipe,
     FormatNumberPipe,
-    YesnoPipe
+    YesnoPipe,
+    BreachDisplayComponent
   ]
 })
 export class LoanProductSummaryComponent extends LoanProductBaseComponent implements OnInit, OnChanges {
@@ -133,7 +142,7 @@ export class LoanProductSummaryComponent extends LoanProductBaseComponent implem
   writeOffReasonsToExpenseMappings: ChargeOffReasonToExpenseAccountMapping[] = [];
 
   ngOnInit() {
-    this.accountingRuleData = this.accounting.getAccountingRulesForLoans();
+    this.accountingRuleData = this.accounting.getAccountingRulesForLoans(this.loanProductService.isLoanProduct);
     this.setCurrentValues();
   }
 
@@ -178,6 +187,7 @@ export class LoanProductSummaryComponent extends LoanProductBaseComponent implem
         }
       }
 
+<<<<<<< HEAD
       if (this.loanProductService.isLoanProduct) {
         if (
           (this.loanProduct.accountingRule && this.loanProduct.accountingRule > 1) ||
@@ -258,6 +268,83 @@ export class LoanProductSummaryComponent extends LoanProductBaseComponent implem
               liabilityAccountData
             )
           };
+=======
+      const assetAccountData = this.loanProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
+      const incomeAccountData = this.loanProductsTemplate.accountingMappingOptions.incomeAccountOptions || [];
+      const expenseAccountData = this.loanProductsTemplate.accountingMappingOptions.expenseAccountOptions || [];
+      const liabilityAccountData = this.loanProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
+      const assetAndLiabilityAccountData = assetAccountData.concat(liabilityAccountData);
+      const chargeOffReasonOptions: any = this.loanProductsTemplate.chargeOffReasonOptions || [];
+      const writeOffReasonOptions: any = this.loanProductsTemplate.writeOffReasonOptions || [];
+
+      this.accountingMappings = {
+        fundSourceAccount: this.glAccountLookUp(this.loanProduct.fundSourceAccountId, assetAndLiabilityAccountData),
+        loanPortfolioAccount: this.glAccountLookUp(this.loanProduct.loanPortfolioAccountId, assetAccountData),
+        receivableInterestAccount: this.glAccountLookUp(this.loanProduct.receivableInterestAccountId, assetAccountData),
+        receivableFeeAccount: this.glAccountLookUp(this.loanProduct.receivableFeeAccountId, assetAccountData),
+        receivablePenaltyAccount: this.glAccountLookUp(this.loanProduct.receivablePenaltyAccountId, assetAccountData),
+        transfersInSuspenseAccount: this.glAccountLookUp(
+          this.loanProduct.transfersInSuspenseAccountId,
+          assetAccountData
+        ),
+
+        interestOnLoanAccount: this.glAccountLookUp(this.loanProduct.interestOnLoanAccountId, incomeAccountData),
+        incomeFromDiscountFeeAccount: this.glAccountLookUp(
+          this.loanProduct.incomeFromDiscountFeeAccountId,
+          incomeAccountData
+        ),
+        incomeFromFeeAccount: this.glAccountLookUp(this.loanProduct.incomeFromFeeAccountId, incomeAccountData),
+        incomeFromPenaltyAccount: this.glAccountLookUp(this.loanProduct.incomeFromPenaltyAccountId, incomeAccountData),
+        incomeFromRecoveryAccount: this.glAccountLookUp(
+          this.loanProduct.incomeFromRecoveryAccountId,
+          incomeAccountData
+        ),
+        incomeFromChargeOffInterestAccount: this.glAccountLookUp(
+          this.loanProduct.incomeFromChargeOffInterestAccountId,
+          incomeAccountData
+        ),
+        incomeFromChargeOffFeesAccount: this.glAccountLookUp(
+          this.loanProduct.incomeFromChargeOffFeesAccountId,
+          incomeAccountData
+        ),
+        incomeFromChargeOffPenaltyAccount: this.glAccountLookUp(
+          this.loanProduct.incomeFromChargeOffPenaltyAccountId,
+          incomeAccountData
+        ),
+        incomeFromCapitalizationAccount: this.glAccountLookUp(
+          this.loanProduct.incomeFromCapitalizationAccountId,
+          incomeAccountData
+        ),
+        incomeFromBuyDownAccount: this.glAccountLookUp(this.loanProduct.incomeFromBuyDownAccountId, incomeAccountData),
+
+        writeOffAccount: this.glAccountLookUp(this.loanProduct.writeOffAccountId, expenseAccountData),
+        goodwillCreditAccount: this.glAccountLookUp(this.loanProduct.goodwillCreditAccountId, expenseAccountData),
+        chargeOffExpenseAccount: this.glAccountLookUp(this.loanProduct.chargeOffExpenseAccountId, expenseAccountData),
+        chargeOffFraudExpenseAccount: this.glAccountLookUp(
+          this.loanProduct.chargeOffFraudExpenseAccountId,
+          expenseAccountData
+        ),
+        buyDownExpenseAccount: this.glAccountLookUp(this.loanProduct.buyDownExpenseAccountId, expenseAccountData),
+
+        overpaymentLiabilityAccount: this.glAccountLookUp(
+          this.loanProduct.overpaymentLiabilityAccountId,
+          liabilityAccountData
+        ),
+        deferredIncomeLiabilityAccount: this.glAccountLookUp(
+          this.loanProduct.deferredIncomeLiabilityAccountId,
+          liabilityAccountData
+        )
+      };
+
+      if (this.loanProductService.isLoanProduct) {
+        if (
+          (this.loanProduct.accountingRule && this.loanProduct.accountingRule > 1) ||
+          this.loanProductsTemplate.accountingRule.value !== 'NONE'
+        ) {
+          const buydownFeeClassificationOptions: any = this.loanProductsTemplate.buydownFeeClassificationOptions || [];
+          const capitalizedIncomeClassificationOptions: any =
+            this.loanProductsTemplate.capitalizedIncomeClassificationOptions || [];
+>>>>>>> origin/dev
 
           this.paymentChannelToFundSourceMappings = [];
           if (this.loanProduct.paymentChannelToFundSourceMappings?.length > 0) {
@@ -404,6 +491,27 @@ export class LoanProductSummaryComponent extends LoanProductBaseComponent implem
           optionValue = this.optionDataLookUp(
             this.loanProduct.repaymentFrequencyType,
             this.loanProductsTemplate.repaymentFrequencyTypeOptions
+<<<<<<< HEAD
+          );
+          this.loanProduct.repaymentFrequencyType = optionValue;
+        }
+
+        optionValue = this.optionDataLookUp(
+          this.loanProduct.daysInMonthType,
+          this.loanProductsTemplate.daysInMonthTypeOptions
+        );
+        this.loanProduct.daysInMonthType = optionValue;
+        optionValue = this.optionDataLookUp(
+          this.loanProduct.daysInYearType,
+          this.loanProductsTemplate.daysInYearTypeOptions
+        );
+        this.loanProduct.daysInYearType = optionValue;
+        if (this.isAdvancedPaymentAllocation && this.loanProduct.daysInYearType?.id == 1) {
+          optionValue = this.optionDataLookUp(
+            this.loanProduct.daysInYearCustomStrategy,
+            this.loanProductsTemplate.daysInYearCustomStrategyOptions
+=======
+>>>>>>> origin/dev
           );
           this.loanProduct.repaymentFrequencyType = optionValue;
         }
@@ -535,6 +643,130 @@ export class LoanProductSummaryComponent extends LoanProductBaseComponent implem
               this.loanProductsTemplate.advancedPaymentAllocationFutureInstallmentAllocationRules
           };
         }
+<<<<<<< HEAD
+        this.loanProduct.daysInYearCustomStrategy = optionValue;
+        if (this.isAdvancedPaymentAllocation && this.loanProduct.enableIncomeCapitalization) {
+          optionValue = this.optionDataLookUp(
+            this.loanProduct.capitalizedIncomeCalculationType,
+            this.loanProductsTemplate.capitalizedIncomeCalculationTypeOptions
+          );
+          this.loanProduct.capitalizedIncomeCalculationType = optionValue;
+          optionValue = this.optionDataLookUp(
+            this.loanProduct.capitalizedIncomeStrategy,
+            this.loanProductsTemplate.capitalizedIncomeStrategyOptions
+          );
+          this.loanProduct.capitalizedIncomeStrategy = optionValue;
+          optionValue = this.optionDataLookUp(
+            this.loanProduct.capitalizedIncomeType,
+            this.loanProductsTemplate.capitalizedIncomeTypeOptions
+          );
+          this.loanProduct.capitalizedIncomeType = optionValue;
+        }
+        if (this.isAdvancedPaymentAllocation && this.loanProduct.enableBuyDownFee) {
+          optionValue = this.optionDataLookUp(
+            this.loanProduct.buyDownFeeCalculationType,
+            this.loanProductsTemplate.buyDownFeeCalculationTypeOptions
+          );
+          this.loanProduct.buyDownFeeCalculationType = optionValue;
+          optionValue = this.optionDataLookUp(
+            this.loanProduct.buyDownFeeStrategy,
+            this.loanProductsTemplate.buyDownFeeStrategyOptions
+          );
+          this.loanProduct.buyDownFeeStrategy = optionValue;
+          optionValue = this.optionDataLookUp(
+            this.loanProduct.buyDownFeeIncomeType,
+            this.loanProductsTemplate.buyDownFeeIncomeTypeOptions
+          );
+          this.loanProduct.buyDownFeeIncomeType = optionValue;
+        }
+        optionValue = this.optionDataLookUp(
+          this.loanProduct.interestRateFrequencyType,
+          this.loanProductsTemplate.interestRateFrequencyTypeOptions
+        );
+        this.loanProduct.interestRateFrequencyType = optionValue;
+
+        optionValue = this.optionDataLookUp(
+          this.loanProduct.repaymentStartDateType,
+          this.loanProductsTemplate.repaymentStartDateTypeOptions
+        );
+        this.loanProduct.repaymentStartDateType = optionValue;
+
+        if (this.loanProduct.delinquencyBucketId) {
+          this.loanProduct.delinquencyBucket = this.delinquencyBucketLookUp(
+            this.loanProduct.delinquencyBucketId,
+            this.loanProductsTemplate.delinquencyBucketOptions
+          );
+        }
+
+        const codeValue: CodeName = this.codeNameLookUpByCode(
+          this.loanProduct.transactionProcessingStrategyCode,
+          this.loanProductsTemplate.transactionProcessingStrategyOptions
+        );
+        this.loanProduct.transactionProcessingStrategyName = codeValue.name;
+
+        if (!this.loanProduct.loanScheduleType || !this.loanProduct.loanScheduleType.value) {
+          this.loanProduct.loanScheduleType = this.optionDataLookUpByCode(
+            this.loanProduct.loanScheduleType,
+            this.loanProductsTemplate.loanScheduleTypeOptions
+          );
+        }
+
+        if (this.isAdvancedPaymentAllocation) {
+          if (!this.loanProduct.loanScheduleProcessingType || !this.loanProduct.loanScheduleProcessingType.value) {
+            this.loanProduct.loanScheduleProcessingType = this.optionDataLookUpByCode(
+              this.loanProduct.loanScheduleProcessingType,
+              this.loanProductsTemplate.loanScheduleProcessingTypeOptions
+            );
+          }
+          if (!this.loanProduct.chargeOffBehaviour.value) {
+            this.loanProduct.chargeOffBehaviour = this.stringEnumOptionDataLookUp(
+              this.loanProduct.chargeOffBehaviour,
+              this.loanProductsTemplate.chargeOffBehaviourOptions
+            );
+          }
+        }
+
+        if (this.loanProduct.advancedPaymentAllocationTransactionTypes) {
+          const advancedAllocationTransactionTypes: OptionData[] =
+            this.loanProduct.advancedPaymentAllocationTransactionTypes.concat(
+              this.loanProduct.creditAllocationTransactionTypes
+            );
+          const advancedPaymentAllocationTypes: OptionData[] = this.loanProduct.advancedPaymentAllocationTypes.concat(
+            this.loanProduct.creditAllocationAllocationTypes
+          );
+          this.advancePaymentAllocationData = {
+            transactionTypes: advancedAllocationTransactionTypes,
+            allocationTypes: advancedPaymentAllocationTypes,
+            futureInstallmentAllocationRules: this.loanProduct.advancedPaymentAllocationFutureInstallmentAllocationRules
+          };
+        } else {
+          const advancedAllocationTransactionTypes: OptionData[] =
+            this.loanProductsTemplate.advancedPaymentAllocationTransactionTypes.concat(
+              this.loanProductsTemplate.creditAllocationTransactionTypes
+            );
+          const advancedPaymentAllocationTypes: OptionData[] =
+            this.loanProductsTemplate.advancedPaymentAllocationTypes.concat(
+              this.loanProductsTemplate.creditAllocationAllocationTypes
+            );
+          this.advancePaymentAllocationData = {
+            transactionTypes: advancedAllocationTransactionTypes,
+            allocationTypes: advancedPaymentAllocationTypes,
+            futureInstallmentAllocationRules:
+              this.loanProductsTemplate.advancedPaymentAllocationFutureInstallmentAllocationRules
+          };
+        }
+=======
+      }
+
+      if (this.loanProductService.isWorkingCapital) {
+        /*
+        let optionValue: OptionData = this.optionDataLookUp(
+          this.loanProduct.nearBreach.frequencyType,
+          this.loanProductsTemplate.periodFrequencyTypeOptions
+        );
+        this.loanProduct.nearBreachEvalFrequencyType = optionValue;
+        */
+>>>>>>> origin/dev
       }
     }
   }
@@ -646,10 +878,14 @@ export class LoanProductSummaryComponent extends LoanProductBaseComponent implem
     return delinquencyBucketData;
   }
 
+<<<<<<< HEAD
   accountingRule(): number {
     if (this.loanProductService.isWorkingCapital) {
       return 0;
     }
+=======
+  accountingRule(): any {
+>>>>>>> origin/dev
     return this.loanProduct.accountingRule.id ? this.loanProduct.accountingRule.id : this.loanProduct.accountingRule;
   }
 
@@ -658,7 +894,7 @@ export class LoanProductSummaryComponent extends LoanProductBaseComponent implem
   }
 
   isAccountingEnabled(): boolean {
-    return this.accountingRule() >= 2;
+    return this.loanProductService.isLoanProduct ? this.accountingRule() >= 2 : this.accountingRule() !== 'NONE';
   }
 
   isAdvancedAccountingEnabled(): boolean {
@@ -673,11 +909,37 @@ export class LoanProductSummaryComponent extends LoanProductBaseComponent implem
     );
   }
 
+  enableNearBreach(): boolean {
+    return this.loanProductService.isWorkingCapital && this.getNearBreach() !== null;
+  }
+
   getAccountingRuleName(value: string): string {
     return this.loanProductService.isWorkingCapital ? '' : this.accounting.getAccountRuleName(value.toUpperCase());
   }
 
   mapHumanReadableValueStringEnumOptionDataList(incomingParameter: StringEnumOptionData[]): string[] {
     return incomingParameter.map((v) => v.value);
+  }
+
+  getBreach(): Breach | null {
+    if (this.loanProduct.breach) {
+      return this.loanProduct.breach;
+    }
+    if (this.loanProduct.breachId === null || this.loanProduct.breachId === undefined) {
+      return null;
+    }
+    return this.loanProductsTemplate.breachOptions?.find((b: Breach) => b.id === this.loanProduct.breachId) || null;
+  }
+
+  getNearBreach(): NearBreach | null {
+    if (this.loanProduct.nearBreach) {
+      return this.loanProduct.nearBreach;
+    }
+    if (this.loanProduct.nearBreachId === null || this.loanProduct.nearBreachId === undefined) {
+      return null;
+    }
+    return (
+      this.loanProductsTemplate.nearBreachOptions?.find((b: Breach) => b.id === this.loanProduct.nearBreachId) || null
+    );
   }
 }

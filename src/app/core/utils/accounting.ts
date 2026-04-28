@@ -29,13 +29,20 @@ export class Accounting {
     ];
   }
 
-  public getAccountingRulesForLoans(): string[] {
-    return [
-      'NONE',
-      'Cash',
-      'Accrual (periodic)',
-      'Accrual (upfront)'
-    ];
+  public getAccountingRulesForLoans(isLoanProduct: boolean): string[] {
+    if (isLoanProduct) {
+      return [
+        'NONE',
+        'Cash',
+        'Accrual (periodic)',
+        'Accrual (upfront)'
+      ];
+    } else {
+      return [
+        'NONE',
+        'CASH_BASED'
+      ];
+    }
   }
 
   public getAccountRuleName(value: string): string {

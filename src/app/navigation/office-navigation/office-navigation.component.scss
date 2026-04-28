@@ -45,7 +45,11 @@ mat-card-content {
     display: flex;
     align-items: center;
     font-size: 0.875rem;
+<<<<<<< HEAD
     word-wrap: break-word;
+=======
+    overflow-wrap: break-word;
+>>>>>>> origin/dev
     line-height: 1.6;
 
     &.mat-body-strong {

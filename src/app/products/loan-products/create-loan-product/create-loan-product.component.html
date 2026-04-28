@@ -151,6 +151,7 @@
       </mat-step>
     }
 
+<<<<<<< HEAD
     @if (loanProductService.isLoanProduct) {
       <mat-step [stepControl]="loanProductAccountingForm">
         <ng-template matStepLabel
@@ -166,6 +167,21 @@
         </mifosx-loan-product-accounting-step>
       </mat-step>
     }
+=======
+    <mat-step>
+      <ng-template matStepLabel
+        ><strong>{{ getProductTypeLabel(true) }} : </strong>{{ 'labels.inputs.ACCOUNTING' | translate }}</ng-template
+      >
+
+      <mifosx-loan-product-accounting-step
+        [loanProductsTemplate]="loanProductsTemplate"
+        [accountingRuleData]="accountingRuleData"
+        [loanProductFormValid]="loanProductFormValid"
+        [deferredIncomeRecognition]="deferredIncomeRecognition"
+      >
+      </mifosx-loan-product-accounting-step>
+    </mat-step>
+>>>>>>> origin/dev
 
     @if (loanProductFormValid) {
       <mat-step state="preview" completed>

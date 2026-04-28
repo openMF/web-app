@@ -6,7 +6,11 @@
     "accountingRule": {
       "duplicateName": "Désolé, mais une règle comptable portant ce nom existe déjà."
     },
+<<<<<<< HEAD
     "error.resource.notImplemented.type": "Erreur non implémentée",
+=======
+    "error.resource.notImplemented.type": "Non implémenté",
+>>>>>>> origin/dev
     "error.resource.notImplemented.message": "Fonctionnalité non implémentée !",
     "linkedSavingsAccountOwnership": "Le compte d'épargne lié n'appartient pas au client sélectionné.",
     "clientNotInGSIM": "Le client avec l'ID {{id}} n'est pas membre du GSIM.",
@@ -28,6 +32,7 @@
     "error.msg.charge.due.at.disbursement.cannot.be.penalty": "Les frais ne peuvent pas être établis comme une pénalité due au décaissement.",
     "error.msg.charge.duplicate.name": "Une charge portant ce nom existe déjà.",
     "error.msg.charge.update.of.charge.applies.to.is.not.supported": "La mise à jour des frais s'applique à n'est pas prise en charge.",
+    "error.msg.data.integrity.issue": "La requête a provoqué un problème d'intégrité des données dans la base de données",
     "error.msg.loan.product.close.date.cannot.be.before.start.date": "La date de clôture du produit de prêt ne peut pas être antérieure à la date de début.",
     "error.msg.product.loan.duplicate.charge": "Le produit de prêt ne peut comporter qu’un seul frais de chaque type.",
     "error.msg.product.loan.duplicate.name": "Le produit de prêt portant le nom `{{params[0].value}}` existe déjà.",
@@ -35,6 +40,7 @@
     "error.msg.product.savings.duplicate.name": "Le produit d'épargne portant le nom `{{params[0].value}}` existe déjà.",
     "error.msg.product.savings.duplicate.short.name": "Le produit d'épargne portant le nom court {{params[0].value}} existe déjà.",
     "error.msg.savingsproduct.unknown.data.integrity.issue": "Un problème inattendu est survenu lors de la création/mise à jour du produit d'épargne. Erreur enregistrée sur le serveur.",
+    "error.msg.reporting.error": "Une erreur s'est produite lors de la génération du rapport.",
     "validation.msg.charge.amount.cannot.be.blank": "Le montant ne peut pas être vide.",
     "validation.msg.charge.amount.not.greater.than.zero": "Le montant des frais doit être supérieur à zéro.",
     "validation.msg.charge.chargeAppliesTo.cannot.be.blank": "Les frais s'appliquent à ne peuvent pas être vides.",
@@ -285,7 +291,140 @@
     "validation.msg.savingsproduct.shortName.exceeds.max.length": "Le nom court ne peut pas contenir plus de {{params[0].value}} caractères.",
     "validation.msg.savingsproduct.withdrawalFeeAmount.cannot.be.blank": "Le montant des frais de retrait est obligatoire.",
     "validation.msg.savingsproduct.withdrawalFeeAmount.not.zero.or.greater": "Le montant des frais de retrait doit être supérieur ou égal à zéro s’il est indiqué.",
-    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Le type de période de frais de retrait est obligatoire."
+    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Le type de frais de retrait sélectionné n'est pas valide.",
+    "http": {
+      "connection": {
+        "title": "Erreur de connexion",
+        "message": "Impossible de se connecter au serveur. Veuillez vérifier votre connexion internet."
+      },
+      "badRequest": {
+        "title": "Requête invalide",
+        "message": "Veuillez vérifier votre saisie et réessayer."
+      },
+      "unauthorized": {
+        "title": "Non autorisé",
+        "message": "Votre session a expiré. Veuillez vous reconnecter.",
+        "action": "Connexion"
+      },
+      "forbidden": {
+        "title": "Accès refusé",
+        "message": "Vous n'avez pas la permission d'effectuer cette action."
+      },
+      "notFound": {
+        "title": "Introuvable",
+        "message": "La ressource demandée est introuvable.",
+        "contextMessage": "{{context}} introuvable."
+      },
+      "conflict": {
+        "title": "Conflit",
+        "message": "La ressource existe déjà ou il y a un conflit."
+      },
+      "serverError": {
+        "title": "Erreur serveur",
+        "message": "Une erreur inattendue s'est produite. Veuillez réessayer plus tard."
+      },
+      "serviceUnavailable": {
+        "title": "Service indisponible",
+        "message": "Le service est temporairement indisponible. Veuillez réessayer plus tard."
+      },
+      "default": {
+        "title": "Erreur",
+        "message": "Une erreur inattendue s'est produite."
+      }
+    },
+    "interceptor": {
+      "invalidParams": "Des paramètres invalides ont été transmis dans la requête !"
+    },
+    "auth": {
+      "pleaseWait": "Veuillez patienter...",
+      "startType": "Début de l'authentification",
+      "twoFactor": {
+        "type": "Authentification à deux facteurs requise",
+        "message": "Authentification à deux facteurs requise"
+      },
+      "passwordExpired": {
+        "type": "Mot de passe expiré",
+        "message": "Votre mot de passe a expiré, veuillez le réinitialiser !"
+      },
+      "success": {
+        "type": "Authentification réussie",
+        "message": "{{username}} connecté avec succès !"
+      },
+      "passwordReset": {
+        "type": "Mot de passe réinitialisé avec succès",
+        "message": "Votre mot de passe a été réinitialisé avec succès !"
+      },
+      "callbackFailed": {
+        "type": "Authentification échouée",
+        "message": "Impossible de terminer l'authentification. Veuillez réessayer."
+      },
+      "callbackError": {
+        "type": "Erreur d'authentification",
+        "message": "Une erreur s'est produite lors de l'authentification. Veuillez réessayer."
+      }
+    },
+    "hooks": {
+      "lastEvent": "Au moins un événement est requis. Impossible de supprimer le dernier événement."
+    },
+    "generic": {
+      "unexpected": "Une erreur s'est produite. Veuillez réessayer.",
+      "unexpectedRetry": "Une erreur inattendue s'est produite. Veuillez réessayer.",
+      "unexpectedShort": "Une erreur inattendue s'est produite."
+    },
+    "holiday": {
+      "invalidDate": "Date sélectionnée invalide. Veuillez sélectionner une date valide.",
+      "invalidRepaymentDate": "Date de rééchelonnement de remboursement invalide. Veuillez sélectionner une date valide."
+    },
+    "report": {
+      "type": "Génération de rapport",
+      "generated": "Rapport : données de {{reportName}} générées",
+      "generatedNoData": "Rapport : {{reportName}} généré sans données"
+    },
+    "clipboard": {
+      "type": "Presse-papiers",
+      "copied": "Copié : {{value}}"
+    },
+    "tenant": {
+      "changed": {
+        "type": "Locataire modifié"
+      }
+    },
+    "config": {
+      "setConfig": "{{type}} configuration définie"
+    },
+    "loans": {
+      "undoWriteOff": {
+        "type": "Échec de l'annulation de la radiation",
+        "message": "Une erreur s'est produite lors du traitement de l'annulation de la radiation. Veuillez réessayer ou contacter le support."
+      },
+      "alreadyAdjusted": "Montant du revenu capitalisé déjà ajusté",
+      "adjustment": "Ajustement {{type}} Transaction",
+      "capitalizedIncomeLimit": "Le montant d'ajustement du revenu capitalisé doit être inférieur ou égal à",
+      "buyDownFeeAdjusted": "Montant des frais Buy Down déjà ajusté",
+      "buyDownFeeLimit": "Le montant d'ajustement des frais Buy Down doit être inférieur ou égal à",
+      "businessRule": "Règle métier",
+      "alertWithAmount": "{{label}} : {{amount}}"
+    },
+    "error.auth.type": "Erreur d'authentification",
+    "error.auth.message": "Votre session a expiré ou les identifiants sont invalides.",
+    "error.token.invalid.type": "Jeton invalide",
+    "error.token.invalid.message": "Le jeton à usage unique fourni est invalide.",
+    "error.bad.request.type": "Requête incorrecte",
+    "error.bad.request.message": "Des paramètres invalides ont été transmis dans la requête !",
+    "error.unauthorized.type": "Non autorisé",
+    "error.unauthorized.message": "Votre session a expiré ou les identifiants sont invalides.",
+    "error.resource.not.found.type": "Ressource introuvable",
+    "error.resource.not.found.message": "La ressource demandée est introuvable.",
+    "error.server.internal.type": "Erreur interne du serveur",
+    "error.server.internal.message": "Une erreur inattendue s'est produite sur le serveur. Veuillez réessayer plus tard.",
+    "error.unknown.type": "Erreur inconnue",
+    "error.unknown.message": "Une erreur inattendue s'est produite.",
+    "validation.required": "Ce champ est obligatoire",
+    "validation.minLength": "La longueur minimale est {{requiredLength}}",
+    "validation.emailInvalid": "E-mail non valide",
+    "validation.requiredField": "{{label}} est un champ obligatoire.",
+    "validation.mustBeAtLeast": "{{field}} doit être au moins {{min}}",
+    "validation.mustBePositive": "{{field}} doit être un nombre positif."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -335,6 +474,7 @@
     "accounting": {
       "Accrual (periodic)": "Accumulation (périodique)",
       "Accrual (upfront)": "Accumulation (d'avance)",
+      "CASH_BASED": "Espèces",
       "Cash": "Espèces",
       "NONE": "Aucun",
       "financialActivity": {
@@ -479,6 +619,10 @@
       "Export to File": "Exporter vers un fichier",
       "Export CSV": "Exporter au format CSV",
       "Export XLS": "Exporter au format XLS",
+<<<<<<< HEAD
+=======
+      "Export to PDF": "Exporter en PDF",
+>>>>>>> origin/dev
       "Export KYC": "Exporter KYC",
       "Validate Documentation": "Valider la documentation",
       "INCOMPLETE": "INCOMPLET",
@@ -618,7 +762,12 @@
       "Retry": "Réessayer",
       "PRINT": "Imprimer",
       "DONE": "Terminer",
+<<<<<<< HEAD
       "Submitting": "Envoi en cours"
+=======
+      "Submitting": "Envoi en cours",
+      "OK": "OK"
+>>>>>>> origin/dev
     },
     "catalogs": {
       "Interest payment waiver": "Renonciation au paiement des intérêts",
@@ -912,6 +1061,8 @@
       "be": "être",
       "be larger than 0 and at most 100": "être supérieur à 0 et au maximum 100",
       "begin with a special character or number": "commencer par un caractère spécial ou un chiffre",
+      "can not be less than": "ne peut pas être inférieur à",
+      "can not be more than": "ne peut pas être supérieur à",
       "cannot begin with a special character or number": "ne peut pas commencer par un caractère spécial ou un chiffre",
       "decimal places": "décimales",
       "do not match": "ne correspondent pas",
@@ -941,6 +1092,10 @@
       "on": "sur",
       "every": "chaque",
       "Password validation": "Le mot de passe doit contenir au minimum {{minchar}} caractères, dont 1 majuscule, 1 minuscule et un caractère spécial et ne doit pas être composé de caractères répétés ou d'espaces blancs.",
+<<<<<<< HEAD
+=======
+      "Must be a positive integer": "Doit être un entier positif",
+>>>>>>> origin/dev
       "Must be at least": "Doit être au moins",
       "Must be less or equal to": "Doit être inférieur ou égal à",
       "must be after or equal to start date": "doit être postérieure ou égale à la date de début",
@@ -1001,6 +1156,7 @@
       "Beneficiary": "Bénéficiaire",
       "Beneficiary Selection": "Sélection du bénéficiaire",
       "Block Savings Account": "Bloquer le compte d'épargne",
+      "Breach Configuration": "Configuration de violation",
       "Bulk Import": "Importation en masse",
       "Bulk Loan Reassignment": "Réaffectation groupée de prêts",
       "Business Rule Parameters": "Paramètres des règles métier",
@@ -1169,6 +1325,7 @@
       "Loan Delinquency Classification": "Classification de délinquance de prêt",
       "Loan Delinquency Tags": "Étiquettes de délinquance de prêt",
       "Loan Delinquency Installment Tags": "Étiquettes de versement de délinquance de prêt",
+      "Loan Delinquency Range Schedule": "Calendrier de Plage de Délinquance du Prêt",
       "Loan Details": "Détails du prêt",
       "Loan Disbursal": "Disquations du prêt",
       "Loan Originators": "Les courtiers en prêts",
@@ -1212,6 +1369,7 @@
       "Minimum Active Period": "Période d'activité minimale",
       "Minimum Deposit Term": "Durée de dépôt minimale",
       "Moratorium": "Moratoire",
+      "Near Breach Configuration": "Configuration de quasi-violation",
       "Nominal Interest Rate by loan cycle": "Taux d'intérêt nominal par cycle de prêt",
       "Notes": "Remarques",
       "Notification External Service": "Service externe de notification",
@@ -1404,7 +1562,12 @@
       "Payout Assignment": "Attribution du versement",
       "Identification": "Identification",
       "Professional Information": "Informations professionnelles",
+<<<<<<< HEAD
       "Add Profile Entry": "Ajouter une entrée de profil"
+=======
+      "Add Profile Entry": "Ajouter une entrée de profil",
+      "Recipient Summary": "Récapitulatif du destinataire"
+>>>>>>> origin/dev
     },
     "inputs": {
       "Loan Account Status": "Statut du compte de prêt",
@@ -1561,6 +1724,7 @@
       "Beneficiary": "Bénéficiaire",
       "Branch": "Bifurquer",
       "Branch Office": "Succursale",
+      "Breach": "Violation",
       "Breakdown": "Panne",
       "Boolean": "Booléen",
       "Business Date": "Date d'affaires",
@@ -1773,6 +1937,7 @@
       "Delinquency Grace Days": "Jours de grâce pour la délinquance",
       "Delinquency Start Type": "Type de début de délinquance",
       "Delinquency Tags": "Étiquettes de délinquance",
+      "Delinquent Amount": "Montant en Souffrance",
       "Delinquent Days": "Jours de délinquance",
       "Delivery Method": "méthode de livraison",
       "Deposit Account": "Compte de dépôt",
@@ -1841,6 +2006,7 @@
       "Enable Down Payment": "Activer l'acompte",
       "Enable Lock-in Period": "Activer la période de blocage",
       "Enable Multiple Disbursals": "Activer les décaissements multiples",
+      "Enable Near Breach": "Activer la violation proche",
       "Enabled": "Activé",
       "End Date": "Date de fin",
       "End Point": "Point final",
@@ -1865,6 +2031,7 @@
       "Execution Time": "Temps d'exécution",
       "Existing Client": "Client existant",
       "Existing Meeting Date": "Date de réunion actuelle",
+      "Expected Amount": "Montant Prévu",
       "Expected Disbursement On": "Décaissement prévu le",
       "Expected disbursement on": "Décaissement attendu pour",
       "Expense Account": "Compte de dépenses",
@@ -1991,6 +2158,7 @@
       "Incentive Type": "Type d'incitation",
       "Include in Customer Loan Counter": "Inclure dans le compteur de prêts clients",
       "Income Account": "Compte de revenu",
+      "Income From Discount Fee": "Revenus de frais d'escompte",
       "Income capitalization": "Capitalisation des revenus",
       "INCOME CAPITALIZATION": "CAPITALISATION DES REVENUS",
       "Income from Charge": "Revenu de Charge",
@@ -2210,6 +2378,10 @@
       "Minimum Opening Balance": "Solde d'ouverture minimum",
       "Minimum Overdraft Required for Interest Calculation": "Découvert minimum requis pour le calcul des intérêts",
       "Minimum Payment": "Paiement minimum",
+<<<<<<< HEAD
+=======
+      "Minimum Payment Criteria Met": "Critère de Paiement Minimum Atteint",
+>>>>>>> origin/dev
       "Minimum Payment Type": "Type de paiement minimum",
       "Minimum Required Balance": "Équilibre minimum requis",
       "Minimum Value": "Valeur minimum",
@@ -2231,6 +2403,10 @@
       "Name": "Nom",
       "Name Decorated": "Nom décoré",
       "Name of the Organization": "Nom de l'organisation",
+      "Near Breach": "Violation proche",
+      "Near Breach Evaluation Frequency": "Fréquence d'évaluation de violation proche",
+      "Near Breach Evaluation Frequency Type": "Type de fréquence d'évaluation de violation proche",
+      "Near Breach Threshold": "Seuil de violation proche",
       "Net Cash": "Trésorerie nette",
       "New Interest Rate": "Nouveau taux d'intérêt",
       "Next Meeting Date": "Date de la prochaine réunion",
@@ -2305,6 +2481,7 @@
       "Original Schedule": "Calendrier original",
       "Output Type": "Le type de sortie",
       "Outstanding": "Remarquable",
+      "Outstanding Amount": "Montant Impayé",
       "Overdraft": "Découvert",
       "Over Amount": "Surmontant",
       "Over Amount Calculation Type": "Type de calcul du montant supérieur",
@@ -2328,6 +2505,7 @@
       "PDF format": "Format PDF",
       "PREVIEW": "APERÇU",
       "Paid": "Payé",
+      "Paid Amount": "Montant Payé",
       "Paid Date": "La date de paiement",
       "Parameter": "Paramètre",
       "Parameter Name Passed to Pentaho": "Nom du paramètre de rapport",
@@ -2367,6 +2545,10 @@
       "Percentage to Base": "Pourcentage à la base",
       "Period": "Période",
       "Period From": "Période de",
+<<<<<<< HEAD
+=======
+      "Period Number": "Numéro de Période",
+>>>>>>> origin/dev
       "Period Payment Rate": "Taux de paiement périodique",
       "Period To": "Période jusqu'à",
       "Period Type": "Type de période",
@@ -2636,6 +2818,7 @@
       "Text": "Texte",
       "Theme": "Thème",
       "Theme and Font": "Thème et police",
+      "Threshold": "Seuil",
       "Thursday": "Jeudi",
       "Time": "Temps",
       "To": "À",
@@ -2852,7 +3035,50 @@
       "Period Payment Frequency Type": "Type de fréquence de paiement périodique",
       "Payment Allocation Transactions": "Transactions d'affectation des paiements",
       "Net Present Value day count": "Nombre de jours de la valeur actuelle nette",
+<<<<<<< HEAD
       "Installment": "Versement"
+=======
+      "Installment": "Versement",
+      "Beneficiary Selection": "Sélection du bénéficiaire",
+      "Confirmation Number": "Numéro de confirmation",
+      "Sub Status": "Sous-statut",
+      "Document": "Document",
+      "Document Number": "Numéro de document",
+      "Document number is required": "Le numéro de document est obligatoire",
+      "Allow full term for each tranche": "Autoriser la durée totale pour chaque tranche",
+      "Failed to load vendors": "Échec du chargement des fournisseurs",
+      "First name is required": "Le prénom est obligatoire",
+      "Last name is required": "Le nom de famille est obligatoire",
+      "Search Client": "Rechercher un client",
+      "Type client name or account number": "Saisissez le nom du client ou le numéro de compte",
+      "Overdue": "En retard",
+      "Overdue Fees": "Frais en retard",
+      "Confirmed At": "Confirmé le",
+      "Full Name": "Nom complet",
+      "Loading vendors": {
+        "": {
+          "": {
+            "": "Chargement des fournisseurs..."
+          }
+        }
+      },
+      "Minimum 3 characters": "Minimum 3 caractères",
+      "National ID": "Carte d'identité nationale",
+      "Nationality": "Nationalité",
+      "Payout Amount": "Montant du paiement",
+      "Payout Country": "Pays de paiement",
+      "Payout Token": "Jeton de paiement",
+      "Recipient Name": "Nom du destinataire",
+      "Send Amount": "Montant à envoyer",
+      "Send Country": "Pays d'envoi",
+      "Sender": "Expéditeur",
+      "Sender Name": "Nom de l'expéditeur",
+      "Sent By": "Envoyé par",
+      "Deposited At": "Déposé le",
+      "Passport": "Passeport",
+      "Driver's License": "Permis de conduire",
+      "Mothers Maiden Name": "Nom de jeune fille de la mère"
+>>>>>>> origin/dev
     },
     "links": {
       "Community": "Communauté",
@@ -2992,7 +3218,12 @@
       "Reject Additional Shares": "Rejeter les partages supplémentaires",
       "Tasks": "Tâches",
       "Remittances": "Transferts",
+<<<<<<< HEAD
       "Process Remittance": "Traiter le transfert"
+=======
+      "Process Remittance": "Traiter le transfert",
+      "Undo Write-off": "Annuler l'abandon de créance"
+>>>>>>> origin/dev
     },
     "placeholders": {
       "Add new server": "Ajouter un nouveau serveur",
@@ -3115,6 +3346,10 @@
       "Audit logs of all the activities": "Journaux d'audit de toutes les activités, telles que la création de clients, le décaissement des prêts, etc.",
       "Bar": "Bar",
       "BIRT": "Mifos Reporting Plugin for Eclipse Birt",
+<<<<<<< HEAD
+=======
+      "Breach Configurations": "Configurations de Dépassement",
+>>>>>>> origin/dev
       "Bulk Import": "Importation en masse",
       "Bulk Loan Reassignment": "Réaffectation groupée de prêts",
       "Bulk data import using excel spreadsheet templates": "Importation de données en masse à l'aide de modèles de feuilles de calcul Excel pour les clients, les bureaux, etc.",
@@ -3165,6 +3400,7 @@
       "Create Accounting Closure": "Créer une clôture comptable",
       "Create Accounting Rule": "Créer une règle comptable",
       "Create Adhoc Query": "Créer une requête ad hoc",
+      "Create Breach": "Créer un Dépassement",
       "Create Center": "Créer un centre",
       "Create Charge": "Créer des frais",
       "Create Client": "Créer un client",
@@ -3190,7 +3426,13 @@
       "Create Journal Entry": "Créer une entrée de journal",
       "Create Loan Product": "Créer un produit de prêt",
       "Create Loan Originator": "Créer un courtier en prêts",
+<<<<<<< HEAD
+=======
+      "View Loan Originator": "Voir le courtier en prêts",
+      "Edit Loan Originator": "Modifier le courtier en prêts",
+>>>>>>> origin/dev
       "Create Loans Account": "Créer un compte de prêts",
+      "Create Near Breach": "Créer un Quasi-Dépassement",
       "Create New GL Account": "Cette option vous permet de créer de nouveaux comptes GL.",
       "Create Office": "Créer un bureau",
       "Create Payment Type": "Créer un type de paiement",
@@ -3252,6 +3494,7 @@
       "Define Tax Groups": "Définir des groupes de taxes",
       "Define Tax components": "Définir les composants fiscaux",
       "Define Tax components and Tax groups": "Définir les composants de taxe et les groupes de taxes",
+      "Define breaches for working capital products": "Définir les violations pour les produits de fonds de roulement",
       "Define charges/penalties for loan products, savings and deposit products": "Définir les frais/pénalités pour les produits de prêt, d'épargne et de dépôt",
       "Define collaterals for Collateral Management": "Définir les garanties pour la gestion des garanties",
       "Define delinquency bucket as set of ranges": "Définir la tranche de délinquance comme un ensemble de plages",
@@ -3259,6 +3502,7 @@
       "Define delinquency day ranges and bucket set for loan products": "Définir des plages de jours de délinquance et un ensemble de catégories pour les produits de prêt",
       "Define floating rates for loan products": "Définir des taux variables pour les produits de prêt",
       "Define holidays for office": "Définir les jours fériés pour le bureau",
+      "Define near breaches for working capital products": "Définir les quasi-violations pour les produits de fonds de roulement",
       "Define or modify Maker Checker tasks": "Définir ou modifier les tâches de Maker Checker",
       "Define or modify entity to entity mappings": "Définir ou modifier les mappages d'entité à entité",
       "Define or modify roles and associated permissions": "Définir ou modifier les rôles et les autorisations associées",
@@ -3278,6 +3522,7 @@
       "Edit Accounting Rules": "Modifier les règles comptables",
       "Edit Adhoc Query": "Modifier une requête ad hoc",
       "Edit Amazon S3 Configuration": "Modifier la configuration d'Amazon S3",
+      "Edit Breach": "Modifier un Dépassement",
       "Edit Cashier": "Modifier le caissier",
       "Edit Center": "Centre d'édition",
       "Edit Charge": "Modifier les frais",
@@ -3299,7 +3544,9 @@
       "Edit Group": "Modifier le groupe",
       "Edit Holidays": "Modifier les jours fériés",
       "Edit Hook": "Modifier le crochet",
+      "Edit Loan Originator": "Modifier l'Initiateur de Prêt",
       "Edit Loan Product": "Modifier le produit de prêt",
+      "Edit Near Breach": "Modifier un Quasi-Dépassement",
       "Edit Notification Configuration": "Modifier la configuration des notifications",
       "Edit Office": "Modifier le bureau",
       "Edit Payment Type": "Modifier le type de paiement",
@@ -3405,6 +3652,7 @@
       "LoanAccountCustomSnapshotBusinessEvent": "LoanAccountCustomSnapshotBusinessEvent",
       "LoanAccountDelinquencyPauseChangedBusinessEvent": "LoanAccountDelinquencyPauseChangedBusinessEvent",
       "LoanAccountSnapshotBusinessEvent": "LoanAccountSnapshotBusinessEvent",
+      "Loan Account Details": "Détails du compte de prêt",
       "Loan Account Actions": "Actions sur le compte de prêt",
       "Loan Collateral Details": "Détails de la garantie de prêt",
       "Loan Disbursal": "Décaissement du prêt",
@@ -3473,6 +3721,7 @@
       "N/A": "N / A",
       "Navigate system selecting entity": "Cela permettra à l'utilisateur de naviguer rapidement dans l'entité de sélection du système tandis que la recherche rendra la navigation plus robuste.",
       "Navigation": "La navigation",
+      "Near Breach Configurations": "Configurations de Quasi-Dépassement",
       "Not Activated": "Non activé",
       "No Data": "Pas de données",
       "No Description": "Pas de description",
@@ -3530,6 +3779,7 @@
       "Provisioning criteria definitions": "Veuillez remplir toutes les définitions des critères de provisionnement.",
       "Precedes of": "Précède de",
       "Recurring Deposit Account Charges": "Frais de compte de dépôt récurrents",
+      "Recurring Deposit Account Details": "Détails du compte de dépôt récurrent",
       "Recurring Deposit Account Interest Rate Chart": "Tableau des taux d’intérêt des comptes de dépôt récurrents",
       "Recurring Deposit Account Standing Instructions": "Instructions permanentes pour les comptes de dépôt récurrents",
       "Recurring Deposit Account Transactions": "Opérations récurrentes sur le compte de dépôt",
@@ -3540,6 +3790,7 @@
       "Recurring Deposits Account Transactions": "Opérations récurrentes sur le compte de dépôt",
       "RecurringDeposit Account View": "Vue du compte de dépôt récurrent",
       "Red asterisk field": "Les champs marqués d'un astérisque rouge (*) sont obligatoires. Pour en savoir plus cliquez :",
+      "Remittances": "Remises",
       "Repayment Schedule": "Calendrier de remboursement",
       "Repeats' and 'Repeats every": "Remarque : « Répétitions » et « Répétitions tous les » ne peuvent pas être modifiés s'il existe des comptes actifs (prêts JLG, dépôts récurrents, etc.) dépendant de cette réunion.",
       "Report Parameters": "Paramètres du rapport",
@@ -3595,6 +3846,7 @@
       "Share Products Dividends": "Partager les dividendes des produits",
       "Share products define the rules, default settings": "Les produits d'actions définissent les règles, les paramètres par défaut et les contraintes applicables aux actions et aux dividendes d'une institution financière. Un produit d'actions fournit un modèle pour plusieurs comptes qui sont ou seront détenus par les clients de l'institution financière.",
       "Shares": "Actions",
+      "Shares Account Details": "Détails du compte d'actions",
       "Shares Account Actions": "Actions sur le compte de partage",
       "Shares Account Charges": "Frais de compte d’actions",
       "Shares Account Dividends": "Dividendes du compte d'actions",
@@ -3667,6 +3919,7 @@
       "View Adhoc Query": "Afficher la requête ad hoc",
       "View Amazon S3 Configuration": "Afficher la configuration d'Amazon S3",
       "View Audit": "Afficher l'audit",
+      "View Breach": "Afficher un Dépassement",
       "View Bulk Import": "Afficher l'importation groupée",
       "View Cashier": "Afficher le caissier",
       "View Charges": "Afficher les frais",
@@ -3689,7 +3942,9 @@
       "View Group": "Afficher le groupe",
       "View Holidays": "Voir les jours fériés",
       "View Hook": "Voir le crochet",
+      "View Loan Originator": "Afficher l'Initiateur de Prêt",
       "View Loan Product": "Voir le produit de prêt",
+      "View Near Breach": "Afficher un Quasi-Dépassement",
       "View Notification Configuration": "Afficher la configuration des notifications",
       "View Office": "Voir le bureau",
       "View Product Mix": "Voir la gamme de produits",
@@ -3762,7 +4017,15 @@
       "Failed to update payment type. Please try again.": "Échec de la mise à jour du type de paiement. Veuillez réessayer.",
       "Search and assign this beneficiary to an existing Mifos client account": "Rechercher et attribuer ce bénéficiaire à un compte client Mifos existant",
       "Failed to search clients. Please try again.": "Échec de la recherche de clients. Veuillez réessayer.",
+<<<<<<< HEAD
       "Process Remittance": "Traiter le transfert"
+=======
+      "Process Remittance": "Traiter le transfert",
+      "Loan Originators": "Les courtiers en prêts",
+      "Loan Reschedules": "Rééchelonnements de prêt",
+      "Settings saved successfully": "Paramètres enregistrés avec succès.",
+      "Undo Write-off Description": "Cette action annulera la transaction d'abandon de créance et rétablira le prêt à son statut actif précédent. Veuillez fournir une note expliquant la raison de cette action."
+>>>>>>> origin/dev
     },
     "permissions": {
       "actions": {
@@ -4279,7 +4542,12 @@
     "ACTIVE": "ACTIF",
     "PENDING": "EN ATTENTE",
     "INACTIVE": "INACTIF",
+<<<<<<< HEAD
     "Process Remittance": "Traiter le transfert"
+=======
+    "Process Remittance": "Traiter le transfert",
+    "Allow full term length for each tranche disbursement": "Lorsqu'activé, chaque décaissement de tranche suivra le calendrier complet du prêt au lieu de s'adapter à la durée restante. Disponible uniquement pour le type de calendrier PROGRESSIF."
+>>>>>>> origin/dev
   },
   "countries": {
     "AF": "Afghanistan",
@@ -4399,5 +4667,72 @@
     "ZW": "Zimbabwe"
   },
   "Deactivate Role": "Désactiver le rôle",
+<<<<<<< HEAD
   "Delete Role": "Supprimer le rôle"
+=======
+  "Delete Role": "Supprimer le rôle",
+  "clients": {
+    "actions": {
+      "close": {
+        "success": "Client clôturé avec succès."
+      },
+      "reject": {
+        "success": "Client rejeté avec succès."
+      },
+      "withdraw": {
+        "success": "Client retiré avec succès."
+      },
+      "reactivate": {
+        "success": "Client réactivé avec succès.",
+        "failure": "Échec de la réactivation du client."
+      },
+      "activate": {
+        "success": "Client activé avec succès.",
+        "failure": "Échec de l'activation du client."
+      },
+      "acceptTransfer": {
+        "success": "Transfert du client accepté avec succès."
+      },
+      "rejectTransfer": {
+        "success": "Transfert du client rejeté avec succès."
+      },
+      "undoTransfer": {
+        "success": "Transfert du client annulé avec succès."
+      },
+      "undoRejection": {
+        "success": "Rejet du client annulé avec succès."
+      },
+      "transfer": {
+        "success": "Transfert du client proposé avec succès.",
+        "failure": "Échec de la proposition de transfert du client."
+      },
+      "addCharge": {
+        "success": "Frais du client ajoutés avec succès.",
+        "failure": "Échec de l'ajout des frais du client."
+      },
+      "addCollateral": {
+        "success": "Garantie du client ajoutée avec succès."
+      },
+      "assignStaff": {
+        "success": "Personnel assigné au client avec succès.",
+        "failure": "Échec de l'assignation du personnel au client."
+      },
+      "updateSavingsAccount": {
+        "success": "Compte d'épargne du client mis à jour avec succès."
+      },
+      "takeSurvey": {
+        "success": "Enquête soumise avec succès.",
+        "failure": "Échec de la soumission de l'enquête."
+      }
+    }
+  },
+  "error": {
+    "resource": {
+      "notImplemented": {
+        "type": "Erreur non implémentée",
+        "message": "Fonctionnalité non implémentée !"
+      }
+    }
+  }
+>>>>>>> origin/dev
 }

@@ -68,7 +68,7 @@ export class BusinessDateTabComponent implements OnInit {
     this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
       const alertType = alertEvent.type;
       if (alertType === SettingsService.businessDateType + ' Set Config') {
-        this.isBusinessDateEnabled = alertEvent.message === 'enabled' ? true : false;
+        this.isBusinessDateEnabled = alertEvent.enabled ? true : false;
         if (this.isBusinessDateEnabled) {
           this.setBusinessDates();
           this.createBusinessDateForm();

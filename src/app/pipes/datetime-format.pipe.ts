@@ -40,6 +40,12 @@ export class DatetimeFormatPipe implements PipeTransform, OnDestroy {
 
     let dateVal: Moment;
     if (Array.isArray(value)) {
+<<<<<<< HEAD
+=======
+      if (value.length < 3) {
+        return '';
+      }
+>>>>>>> origin/dev
       const [
         y,
         m,

@@ -113,16 +113,27 @@
 
       <mat-form-field class="flex-31">
         <mat-label>{{ 'labels.inputs.Minimum' | translate }}</mat-label>
+<<<<<<< HEAD
         <input type="number" matInput formControlName="minPeriodPaymentRate" [min]="0.01" step="0.01" />
         <mat-error *ngIf="loanProductTermsForm.get('minPeriodPaymentRate')?.hasError('min')">
           {{ 'labels.commons.Minimum Value must be' | translate }}
           <strong>{{ loanProductTermsForm.get('minPeriodPaymentRate')?.errors?.['min']?.min || 0.01 }}</strong>
+=======
+        <input type="number" matInput formControlName="minPeriodPaymentRate" [min]="0" step="0.01" />
+        <mat-error *ngIf="loanProductTermsForm.get('minPeriodPaymentRate')?.hasError('min')">
+          {{ 'labels.commons.Minimum Value must be' | translate }}
+          <strong>{{ loanProductTermsForm.get('minPeriodPaymentRate')?.errors?.['min']?.min || 0 }}</strong>
+>>>>>>> origin/dev
         </mat-error>
       </mat-form-field>
 
       <mat-form-field class="flex-31">
         <mat-label>{{ 'labels.inputs.Default' | translate }}</mat-label>
+<<<<<<< HEAD
         <input type="number" matInput formControlName="periodPaymentRate" required [min]="0.01" step="0.01" />
+=======
+        <input type="number" matInput formControlName="periodPaymentRate" required [min]="0" step="0.01" />
+>>>>>>> origin/dev
         <mat-error
           *ngIf="
             loanProductTermsForm.get('periodPaymentRate')?.hasError('required') &&
@@ -136,16 +147,27 @@
         <mat-error *ngIf="loanProductTermsForm.get('periodPaymentRate')?.hasError('min')">
           {{ 'labels.catalogs.Default' | translate }} {{ 'labels.inputs.Period Payment Rate' | translate }}
           {{ 'labels.commons.is' | translate }}
+<<<<<<< HEAD
           <strong>{{ loanProductTermsForm.get('periodPaymentRate')?.errors?.['min']?.min || 0.01 }}</strong>
+=======
+          <strong>{{ loanProductTermsForm.get('periodPaymentRate')?.errors?.['min']?.min || 0 }}</strong>
+>>>>>>> origin/dev
         </mat-error>
       </mat-form-field>
 
       <mat-form-field class="flex-31">
         <mat-label>{{ 'labels.inputs.Maximum' | translate }}</mat-label>
+<<<<<<< HEAD
         <input type="number" matInput formControlName="maxPeriodPaymentRate" [min]="0.01" step="0.01" />
         <mat-error *ngIf="loanProductTermsForm.get('maxPeriodPaymentRate')?.hasError('min')">
           {{ 'labels.commons.Minimum Value must be' | translate }}
           <strong>{{ loanProductTermsForm.get('maxPeriodPaymentRate')?.errors?.['min']?.min || 0.01 }}</strong>
+=======
+        <input type="number" matInput formControlName="maxPeriodPaymentRate" [min]="0" step="0.01" />
+        <mat-error *ngIf="loanProductTermsForm.get('maxPeriodPaymentRate')?.hasError('min')">
+          {{ 'labels.commons.Minimum Value must be' | translate }}
+          <strong>{{ loanProductTermsForm.get('maxPeriodPaymentRate')?.errors?.['min']?.min || 0 }}</strong>
+>>>>>>> origin/dev
         </mat-error>
       </mat-form-field>
 

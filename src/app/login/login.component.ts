@@ -31,6 +31,10 @@ import { Alert } from '../core/alert/alert.model';
 /** Custom Services */
 import { AlertService } from '../core/alert/alert.service';
 import { ThemingService } from '../shared/theme-toggle/theming.service';
+<<<<<<< HEAD
+=======
+import { TranslateService } from '@ngx-translate/core';
+>>>>>>> origin/dev
 
 /** Environment Imports */
 import { environment } from '../../environments/environment';
@@ -86,6 +90,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   private router = inject(Router);
 
   private versionService = inject(VersionService);
+<<<<<<< HEAD
+=======
+  private translateService = inject(TranslateService);
+>>>>>>> origin/dev
 
   public environment = environment;
 
@@ -131,17 +139,21 @@ export class LoginComponent implements OnInit, OnDestroy {
     // Subscribe to alerts
     this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
       const alertType = alertEvent.type;
-      if (alertType === 'Password Expired') {
+      if (alertType === this.translateService.instant('errors.auth.passwordExpired.type')) {
         this.twoFactorAuthenticationRequired = false;
         this.resetPassword = true;
-      } else if (alertType === 'Two Factor Authentication Required') {
+      } else if (alertType === this.translateService.instant('errors.auth.twoFactor.type')) {
         this.resetPassword = false;
         this.twoFactorAuthenticationRequired = true;
-      } else if (alertType === 'Authentication Success') {
+      } else if (alertType === this.translateService.instant('errors.auth.success.type')) {
         this.resetPassword = false;
         this.twoFactorAuthenticationRequired = false;
         this.router.navigate(['/'], { replaceUrl: true });
+<<<<<<< HEAD
       } else if (alertType === 'Tenant Changed') {
+=======
+      } else if (alertType === this.translateService.instant('errors.tenant.changed.type')) {
+>>>>>>> origin/dev
         this.updateLogo();
       }
     });
@@ -211,6 +223,40 @@ export class LoginComponent implements OnInit, OnDestroy {
       return false;
     }
     return true;
+<<<<<<< HEAD
+=======
+  }
+
+  allowServerSwitch(): boolean {
+    return environment.allowServerSwitch === 'false' ? false : true;
+  }
+
+  updateLogo(): void {
+    const tenant = this.settingsService.tenantIdentifier;
+    const isTenantSpecific = tenant && tenant !== 'default';
+
+    // Set light mode logo (env override takes priority)
+    if (environment.tenantLogoUrl && environment.tenantLogoUrl.trim() !== '') {
+      this.logoPath = environment.tenantLogoUrl;
+    } else {
+      this.logoPath = isTenantSpecific ? `assets/images/${tenant}_home.png` : 'assets/images/default_home.png';
+    }
+
+    // Set dark mode logo (env override takes priority)
+    if (environment.tenantLogoUrlDark && environment.tenantLogoUrlDark.trim() !== '') {
+      this.logoPathDark = environment.tenantLogoUrlDark;
+    } else {
+      this.logoPathDark = isTenantSpecific ? `assets/images/${tenant}_home_dark.png` : 'assets/images/white-mifos.png';
+    }
+  }
+
+  onLogoError(): void {
+    this.logoPath = 'assets/images/default_home.png';
+  }
+
+  onLogoErrorDark(): void {
+    this.logoPathDark = 'assets/images/white-mifos.png';
+>>>>>>> origin/dev
   }
 
   allowServerSwitch(): boolean {

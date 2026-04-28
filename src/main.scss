@@ -650,7 +650,6 @@ mat-stepper {
 .menu-explanation {
   font-size: 14px;
   margin: 0;
-  word-wrap: break-word;
   overflow-wrap: break-word;
 }
 
@@ -885,5 +884,19 @@ mat-card {
   @page {
     /* stylelint-disable-next-line unit-allowed-list */
     margin: 1.5cm;
+  }
+}
+
+// Breach select panel
+.breach-select-panel {
+  min-width: min(480px, calc(100vw - 32px)) !important;
+  max-width: calc(100vw - 32px);
+
+  .mat-mdc-option {
+    .mdc-list-item__primary-text {
+      display: flex;
+      width: 100%;
+      min-width: 0;
+    }
   }
 }

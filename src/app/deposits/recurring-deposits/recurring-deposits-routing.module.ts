@@ -68,7 +68,7 @@ const routes: Routes = [
               {
                 path: 'general',
                 component: GeneralTabComponent,
-                data: { title: 'Recurring Deposit Account Details', breadcrumb: 'General', routeParamBreadcrumb: false }
+                data: { title: 'General', breadcrumb: 'General', routeParamBreadcrumb: false }
               },
               {
                 path: 'interest-rate-chart',

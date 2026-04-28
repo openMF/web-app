@@ -89,8 +89,6 @@ export class CreateFloatingRateComponent implements OnInit {
 
   /** Floating Rate Period Data. */
   floatingRatePeriodsData: any[] = [];
-  /** Minimum floating rate period date allowed. */
-  minDate = new Date();
   /** Floating Rate Form. */
   floatingRateForm: UntypedFormGroup;
   /** Columns to be displayed in floating rate periods table. */
@@ -164,9 +162,7 @@ export class CreateFloatingRateComponent implements OnInit {
    */
   addFloatingRatePeriod() {
     const floatingRatePeriodDialogRef = this.dialog.open(FloatingRatePeriodDialogComponent, {
-      data: {
-        fromDate: this.settingsService.businessDate
-      }
+      data: {}
     });
     floatingRatePeriodDialogRef.afterClosed().subscribe((response: any) => {
       if (response) {

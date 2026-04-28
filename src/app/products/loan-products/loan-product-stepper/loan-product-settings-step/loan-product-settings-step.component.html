@@ -56,6 +56,110 @@
           }
         </mat-select>
       </mat-form-field>
+<<<<<<< HEAD
+=======
+
+      <mat-form-field class="flex-48">
+        <mat-label>{{ 'labels.inputs.Delinquency Bucket' | translate }}</mat-label>
+        <mat-select formControlName="delinquencyBucketId">
+          @for (delinquencyBucket of delinquencyBucketData; track delinquencyBucket) {
+            <mat-option [value]="delinquencyBucket.id">
+              {{ delinquencyBucket.name }}
+            </mat-option>
+          }
+        </mat-select>
+        @if (loanProductSettingsForm.controls.delinquencyBucketId) {
+          <button matSuffix mat-icon-button aria-label="Clear" (click)="clearProperty($event, 'delinquencyBucketId')">
+            <fa-icon icon="close" size="md"></fa-icon>
+          </button>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="flex-48">
+        <mat-label>{{ 'labels.inputs.Breach' | translate }}</mat-label>
+        <mat-select formControlName="breachId" class="breach-id-select" panelClass="breach-select-panel">
+          <mat-select-trigger>
+            @if (selectedBreach) {
+              <mifosx-breach-display [singleRow]="true" [breach]="selectedBreach" />
+            }
+          </mat-select-trigger>
+          @for (breach of breachOptions; track breach) {
+            <mat-option [value]="breach.id">
+              <mifosx-breach-display [singleRow]="true" [breach]="breach" />
+            </mat-option>
+          }
+        </mat-select>
+        @if (loanProductSettingsForm.controls.breachId) {
+          <button matSuffix mat-icon-button aria-label="Clear" (click)="clearProperty($event, 'breachId')">
+            <fa-icon icon="close" size="md"></fa-icon>
+          </button>
+        }
+      </mat-form-field>
+
+      @if (loanProductSettingsForm.value.breachId) {
+        <mat-form-field class="flex-48">
+          <mat-label>{{ 'labels.inputs.Near Breach' | translate }}</mat-label>
+          <mat-select formControlName="nearBreachId" class="breach-id-select" panelClass="breach-select-panel">
+            <mat-select-trigger>
+              @if (selectedNearBreach) {
+                <mifosx-breach-display [singleRow]="true" [nearBreach]="selectedNearBreach" />
+              }
+            </mat-select-trigger>
+            @for (nearBreach of nearBreachOptions; track nearBreach) {
+              <mat-option [value]="nearBreach.id">
+                <mifosx-breach-display [singleRow]="true" [nearBreach]="nearBreach" />
+              </mat-option>
+            }
+          </mat-select>
+          @if (loanProductSettingsForm.controls.nearBreachId) {
+            <button matSuffix mat-icon-button aria-label="Clear" (click)="clearProperty($event, 'nearBreachId')">
+              <fa-icon icon="close" size="md"></fa-icon>
+            </button>
+          }
+        </mat-form-field>
+      }
+
+      @if (loanProductSettingsForm.value.enableNearBreach) {
+        <mat-form-field class="flex-23">
+          <mat-label>{{ 'labels.inputs.Near Breach Threshold' | translate }} %</mat-label>
+          <input
+            type="number"
+            matInput
+            required
+            mifosxPositiveNumber
+            formControlName="nearBreachThreshold"
+            min="0.01"
+            max="100.00"
+            step="0.01"
+          />
+          @if (loanProductSettingsForm.controls.nearBreachThreshold.hasError('required')) {
+            <mat-error>
+              {{ 'labels.inputs.Near Breach Threshold' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          }
+        </mat-form-field>
+
+        <mifosx-input-positive-integer
+          class="flex-23"
+          [inputFormControl]="loanProductSettingsForm.controls.nearBreachEvalFrequency"
+          [inputLabel]="'Near Breach Evaluation Frequency'"
+          [isRequired]="true"
+          [minVal]="'1'"
+        ></mifosx-input-positive-integer>
+
+        <mat-form-field class="flex-23">
+          <mat-label>{{ 'labels.inputs.Near Breach Evaluation Frequency Type' | translate }}</mat-label>
+          <mat-select formControlName="nearBreachEvalFrequencyType" required>
+            @for (nearBreachEvalFrequencyType of frequencyTypesOptions; track nearBreachEvalFrequencyType) {
+              <mat-option [value]="nearBreachEvalFrequencyType.id">
+                {{ nearBreachEvalFrequencyType.value | translateKey: 'catalogs' }}
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      }
+>>>>>>> origin/dev
     } @else if (loanProductService.isLoanProduct) {
       <mat-form-field class="flex-30">
         <mat-label>{{ 'labels.inputs.products.loan.Amortization' | translate }}</mat-label>
@@ -203,6 +307,10 @@
               matTooltip="{{ 'tooltips.Maximum number of disbursements' | translate }}"
               formControlName="maxTrancheCount"
               required
+<<<<<<< HEAD
+=======
+              min="0"
+>>>>>>> origin/dev
             />
             @if (loanProductSettingsForm.controls.maxTrancheCount.hasError('required')) {
               <mat-error>
@@ -218,6 +326,10 @@
               matInput
               matTooltip="{{ 'tooltips.Maximum outstanding loan account balance' | translate }}"
               formControlName="outstandingLoanBalance"
+<<<<<<< HEAD
+=======
+              min="0"
+>>>>>>> origin/dev
             />
           </mat-form-field>
           <mat-checkbox class="flex-48 margin-v" labelPosition="before" formControlName="disallowExpectedDisbursements">
@@ -323,6 +435,7 @@
       </mat-form-field>
 
       <mat-divider class="flex-98"></mat-divider>
+<<<<<<< HEAD
     }
 
     <mat-form-field class="flex-48">
@@ -340,6 +453,25 @@
         </button>
       }
     </mat-form-field>
+=======
+
+      <mat-form-field class="flex-48">
+        <mat-label>{{ 'labels.inputs.Delinquency Bucket' | translate }}</mat-label>
+        <mat-select formControlName="delinquencyBucketId">
+          @for (delinquencyBucket of delinquencyBucketData; track delinquencyBucket) {
+            <mat-option [value]="delinquencyBucket.id">
+              {{ delinquencyBucket.name }}
+            </mat-option>
+          }
+        </mat-select>
+        @if (loanProductSettingsForm.controls.delinquencyBucketId) {
+          <button matSuffix mat-icon-button aria-label="Clear" (click)="clearProperty($event, 'delinquencyBucketId')">
+            <fa-icon icon="close" size="md"></fa-icon>
+          </button>
+        }
+      </mat-form-field>
+    }
+>>>>>>> origin/dev
 
     @if (loanProductService.isLoanProduct && loanProductSettingsForm.value.delinquencyBucketId) {
       <mat-checkbox class="flex-48 margin-v" labelPosition="before" formControlName="enableInstallmentLevelDelinquency">
@@ -486,7 +618,11 @@
           <h4 class="mat-h4 flex-98">{{ 'labels.inputs.Variable Installments' | translate }}</h4>
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Minimum gap between Installments' | translate }}</mat-label>
+<<<<<<< HEAD
             <input type="number" matInput formControlName="minimumGap" required />
+=======
+            <input type="number" matInput formControlName="minimumGap" required min="0" />
+>>>>>>> origin/dev
             <mat-error>
               {{ 'labels.inputs.Minimum gap between Installments' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -494,7 +630,11 @@
           </mat-form-field>
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Maximum gap between Installments' | translate }}</mat-label>
+<<<<<<< HEAD
             <input type="number" matInput formControlName="maximumGap" required />
+=======
+            <input type="number" matInput formControlName="maximumGap" required min="0" />
+>>>>>>> origin/dev
             <mat-error>
               {{ 'labels.inputs.Maximum gap between Installments' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -774,7 +914,11 @@
         <div class="flex-fill layout-row-wrap gap-2percent responsive-column">
           <mat-form-field class="flex-31">
             <mat-label>{{ 'labels.inputs.Mandatory Guarantee(%)' | translate }}</mat-label>
+<<<<<<< HEAD
             <input type="number" matInput formControlName="mandatoryGuarantee" required />
+=======
+            <input type="number" matInput formControlName="mandatoryGuarantee" required min="0" />
+>>>>>>> origin/dev
             <mat-error>
               {{ 'labels.inputs.Mandatory Guarantee' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -782,11 +926,19 @@
           </mat-form-field>
           <mat-form-field class="flex-31">
             <mat-label>{{ 'labels.inputs.Minimum Guarantee from Own Funds(%)' | translate }}</mat-label>
+<<<<<<< HEAD
             <input type="number" matInput formControlName="minimumGuaranteeFromOwnFunds" />
           </mat-form-field>
           <mat-form-field class="flex-31">
             <mat-label>{{ 'labels.inputs.Minimum Guarantee from Guarantor Funds(%)' | translate }}</mat-label>
             <input type="number" matInput formControlName="minimumGuaranteeFromGuarantor" />
+=======
+            <input type="number" matInput formControlName="minimumGuaranteeFromOwnFunds" min="0" />
+          </mat-form-field>
+          <mat-form-field class="flex-31">
+            <mat-label>{{ 'labels.inputs.Minimum Guarantee from Guarantor Funds(%)' | translate }}</mat-label>
+            <input type="number" matInput formControlName="minimumGuaranteeFromGuarantor" min="0" />
+>>>>>>> origin/dev
           </mat-form-field>
         </div>
       }
@@ -883,6 +1035,12 @@
       }
       @if (loanProductService.isWorkingCapital) {
         <div formGroupName="allowAttributeOverrides" class="flex-fill layout-row-wrap gap-2percent responsive-column">
+<<<<<<< HEAD
+=======
+          <mat-checkbox labelPosition="before" formControlName="breach" class="margin-v flex-48">
+            {{ 'labels.inputs.Breach' | translate }}
+          </mat-checkbox>
+>>>>>>> origin/dev
           <mat-checkbox
             labelPosition="before"
             formControlName="delinquencyBucketClassification"

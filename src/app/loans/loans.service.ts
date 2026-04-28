@@ -127,14 +127,33 @@ export class LoansService {
   getLoanDelinquencyDataForTemplate(loanId: string): Observable<any> {
     const httpParams = new HttpParams().set('associations', 'delinquency');
     return this.http.get(`/loans/${loanId}`, { params: httpParams });
+<<<<<<< HEAD
+  }
+
+  getDelinquencyActions(productType: string, loanId: string) {
+    return this.http.get(`/${productType}/${loanId}/delinquency-actions`);
+=======
+>>>>>>> origin/dev
   }
 
   getDelinquencyActions(productType: string, loanId: string) {
     return this.http.get(`/${productType}/${loanId}/delinquency-actions`);
   }
 
-  createDelinquencyActions(loanId: string, delinquencyActions: any) {
-    return this.http.post(`/loans/${loanId}/delinquency-actions`, delinquencyActions);
+  createDelinquencyActions(productType: string, loanId: string, delinquencyActions: any) {
+    return this.http.post(`/${productType}/${loanId}/delinquency-actions`, delinquencyActions);
+  }
+
+  getDeferredIncomeData(loanId: string) {
+    return this.http.get(`/loans/${loanId}/deferredincome`);
+  }
+
+  getBuyDownFeeData(loanId: string): Observable<any> {
+    return this.http.get(`/loans/${loanId}/buydown-fees`);
+  }
+
+  getWorkingCapitalLoanDelinquencyRangeSchedule(loanId: string) {
+    return this.http.get(`/working-capital-loans/${loanId}/delinquency-range-schedule`);
   }
 
   getDeferredIncomeData(loanId: string) {

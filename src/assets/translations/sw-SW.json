@@ -6,8 +6,13 @@
     "accountingRule": {
       "duplicateName": "Samahani, lakini Kanuni ya Uhasibu yenye jina hili tayari ipo."
     },
+<<<<<<< HEAD
     "error.resource.notImplemented.type": "Hitilafu ya Kukamilika Haijatimizwa",
     "error.resource.notImplemented.message": "Utendakazi haujatekelezwa!",
+=======
+    "error.resource.notImplemented.type": "Haijatekelezwa",
+    "error.resource.notImplemented.message": "Utendaji haujatekelezwa!",
+>>>>>>> origin/dev
     "linkedSavingsAccountOwnership": "Akaunti ya akiba iliyounganishwa haimilikiwi na mteja aliyechaguliwa.",
     "clientNotInGSIM": "Mteja mwenye kitambulisho {{id}} hayupo kwenye GSIM.",
     "Capitalized Income amount adjusted already adjusted": "Kiasi cha Mapato ya Mtaji kilichorekebishwa tayari kimerekebishwa",
@@ -28,6 +33,7 @@
     "error.msg.charge.due.at.disbursement.cannot.be.penalty": "Malipo hayawezi kuanzishwa kama adhabu kutokana na ulipaji.",
     "error.msg.charge.duplicate.name": "Malipo yenye jina hilo tayari yapo.",
     "error.msg.charge.update.of.charge.applies.to.is.not.supported": "Usasishaji wa Malipo unatumika kwa halitumiki.",
+    "error.msg.data.integrity.issue": "Ombi lilileta tatizo la uadilifu wa data kwenye hifadhidata",
     "error.msg.loan.product.close.date.cannot.be.before.start.date": "Tarehe ya kufunga bidhaa ya mkopo haiwezi kabla ya tarehe ya kuanza.",
     "error.msg.product.loan.duplicate.charge": "Bidhaa ya mkopo inaweza kuwa na malipo moja tu ya kila aina.",
     "error.msg.product.loan.duplicate.name": "Bidhaa ya mkopo yenye jina `{{params[0].value}}` tayari ipo.",
@@ -35,6 +41,7 @@
     "error.msg.product.savings.duplicate.name": "Bidhaa ya akiba yenye jina `{{params[0].value}}` tayari ipo.",
     "error.msg.product.savings.duplicate.short.name": "Bidhaa ya akiba yenye jina fupi {{params[0].value}} tayari ipo.",
     "error.msg.savingsproduct.unknown.data.integrity.issue": "Tatizo lisilotarajiwa limetokea wakati wa kuunda/kusasisha bidhaa ya akiba. Hitilafu imeingia kwenye seva.",
+    "error.msg.reporting.error": "Hitilafu ilitokea wakati wa kuzalisha ripoti.",
     "validation.msg.charge.amount.cannot.be.blank": "Kiasi hakiwezi kuwa tupu.",
     "validation.msg.charge.amount.not.greater.than.zero": "Kiasi cha malipo lazima kiwe kikubwa kuliko sifuri.",
     "validation.msg.charge.chargeAppliesTo.cannot.be.blank": "Ada inatumika kwa haiwezi kuwa tupu.",
@@ -285,7 +292,140 @@
     "validation.msg.savingsproduct.shortName.exceeds.max.length": "Jina fupi haliwezi kuwa zaidi ya vibambo {{params[0].value}} kwa urefu.",
     "validation.msg.savingsproduct.withdrawalFeeAmount.cannot.be.blank": "Kiasi cha ada ya uondoaji ni lazima.",
     "validation.msg.savingsproduct.withdrawalFeeAmount.not.zero.or.greater": "Ada ya uondoaji lazima iwe kubwa kuliko au sawa na sufuri ikiwa imetolewa.",
-    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Aina ya muda wa ada ya kujiondoa ni ya lazima."
+    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "Aina ya ada ya kujiondoa iliyochaguliwa si sahihi.",
+    "http": {
+      "connection": {
+        "title": "Hitilafu ya muunganisho",
+        "message": "Haiwezi kuunganisha na seva. Tafadhali angalia muunganisho wako wa intaneti."
+      },
+      "badRequest": {
+        "title": "Ombi batili",
+        "message": "Tafadhali angalia maingizo yako na ujaribu tena."
+      },
+      "unauthorized": {
+        "title": "Haukuidhinishwa",
+        "message": "Kipindi chako kimeisha. Tafadhali ingia tena.",
+        "action": "Ingia"
+      },
+      "forbidden": {
+        "title": "Ufikiaji umekataliwa",
+        "message": "Huna ruhusa ya kufanya kitendo hiki."
+      },
+      "notFound": {
+        "title": "Haijapatikana",
+        "message": "Rasilimali iliyoombwa haijapatikana.",
+        "contextMessage": "{{context}} haijapatikana."
+      },
+      "conflict": {
+        "title": "Mgongano",
+        "message": "Rasilimali tayari ipo au kuna mgongano."
+      },
+      "serverError": {
+        "title": "Hitilafu ya seva",
+        "message": "Hitilafu isiyotarajiwa ilitokea. Tafadhali jaribu tena baadaye."
+      },
+      "serviceUnavailable": {
+        "title": "Huduma haipatikani",
+        "message": "Huduma haipatikani kwa muda. Tafadhali jaribu tena baadaye."
+      },
+      "default": {
+        "title": "Hitilafu",
+        "message": "Hitilafu isiyotarajiwa ilitokea."
+      }
+    },
+    "interceptor": {
+      "invalidParams": "Vigezo batili vilitumwa katika ombi!"
+    },
+    "auth": {
+      "pleaseWait": "Tafadhali subiri...",
+      "startType": "Kuanza uthibitishaji",
+      "twoFactor": {
+        "type": "Uthibitishaji wa hatua mbili unahitajika",
+        "message": "Uthibitishaji wa hatua mbili unahitajika"
+      },
+      "passwordExpired": {
+        "type": "Nenosiri limeisha",
+        "message": "Nenosiri lako limeisha, tafadhali weka upya nenosiri lako!"
+      },
+      "success": {
+        "type": "Uthibitishaji umefanikiwa",
+        "message": "{{username}} ameingia kwa mafanikio!"
+      },
+      "passwordReset": {
+        "type": "Nenosiri limewekwa upya kwa mafanikio",
+        "message": "Nenosiri lako limewekwa upya kwa mafanikio!"
+      },
+      "callbackFailed": {
+        "type": "Uthibitishaji umeshindwa",
+        "message": "Haiwezekani kukamilisha uthibitishaji. Tafadhali jaribu tena."
+      },
+      "callbackError": {
+        "type": "Hitilafu ya uthibitishaji",
+        "message": "Hitilafu ilitokea wakati wa uthibitishaji. Tafadhali jaribu tena."
+      }
+    },
+    "hooks": {
+      "lastEvent": "Angalau tukio moja linahitajika. Haiwezekani kufuta tukio la mwisho."
+    },
+    "generic": {
+      "unexpected": "Hitilafu ilitokea. Tafadhali jaribu tena.",
+      "unexpectedRetry": "Hitilafu isiyotarajiwa ilitokea. Tafadhali jaribu tena.",
+      "unexpectedShort": "Hitilafu isiyotarajiwa ilitokea."
+    },
+    "holiday": {
+      "invalidDate": "Tarehe iliyochaguliwa si sahihi. Tafadhali chagua tarehe sahihi.",
+      "invalidRepaymentDate": "Tarehe ya kupanga upya malipo si sahihi. Tafadhali chagua tarehe sahihi."
+    },
+    "report": {
+      "type": "Uzalishaji wa ripoti",
+      "generated": "Ripoti: data ya {{reportName}} imezalishwa",
+      "generatedNoData": "Ripoti: {{reportName}} imezalishwa bila data"
+    },
+    "clipboard": {
+      "type": "Ubao wa kunakili",
+      "copied": "Imenakiliwa: {{value}}"
+    },
+    "tenant": {
+      "changed": {
+        "type": "Mpangaji amebadilishwa"
+      }
+    },
+    "config": {
+      "setConfig": "{{type}} usanidi umewekwa"
+    },
+    "loans": {
+      "undoWriteOff": {
+        "type": "Kushindwa kutengua uandishi",
+        "message": "Hitilafu ilitokea wakati wa kusindika kutengua uandishi. Tafadhali jaribu tena au wasiliana na msaada."
+      },
+      "alreadyAdjusted": "Kiasi cha mapato yaliyohifadhiwa tayari kimerekebishwa",
+      "adjustment": "Marekebisho {{type}} Muamala",
+      "capitalizedIncomeLimit": "Kiasi cha marekebisho ya mapato yaliyohifadhiwa lazima kiwe kidogo au sawa na",
+      "buyDownFeeAdjusted": "Kiasi cha ada ya Buy Down tayari kimerekebishwa",
+      "buyDownFeeLimit": "Kiasi cha marekebisho ya ada ya Buy Down lazima kiwe kidogo au sawa na",
+      "businessRule": "Kanuni ya biashara",
+      "alertWithAmount": "{{label}}: {{amount}}"
+    },
+    "error.auth.type": "Hitilafu ya uthibitishaji",
+    "error.auth.message": "Kipindi chako kimeisha au vithibitisho si sahihi.",
+    "error.token.invalid.type": "Tokeni batili",
+    "error.token.invalid.message": "Tokeni ya matumizi moja iliyotolewa si sahihi.",
+    "error.bad.request.type": "Ombi baya",
+    "error.bad.request.message": "Vigezo batili vilitumwa katika ombi!",
+    "error.unauthorized.type": "Haukuidhinishwa",
+    "error.unauthorized.message": "Kipindi chako kimeisha au vithibitisho si sahihi.",
+    "error.resource.not.found.type": "Rasilimali haijapatikana",
+    "error.resource.not.found.message": "Rasilimali iliyoombwa haijapatikana.",
+    "error.server.internal.type": "Hitilafu ya ndani ya seva",
+    "error.server.internal.message": "Hitilafu isiyotarajiwa ilitokea kwenye seva. Tafadhali jaribu tena baadaye.",
+    "error.unknown.type": "Hitilafu isiyojulikana",
+    "error.unknown.message": "Hitilafu isiyotarajiwa ilitokea.",
+    "validation.required": "Sehemu hii inahitajika",
+    "validation.minLength": "Urefu wa chini ni {{requiredLength}}",
+    "validation.emailInvalid": "Barua pepe si sahihi",
+    "validation.requiredField": "{{label}} ni sehemu inayohitajika.",
+    "validation.mustBeAtLeast": "{{field}} lazima iwe angalau {{min}}",
+    "validation.mustBePositive": "{{field}} lazima iwe nambari chanya."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -335,6 +475,7 @@
     "accounting": {
       "Accrual (periodic)": "Accrual (mara kwa mara)",
       "Accrual (upfront)": "Accrual (mbele)",
+      "CASH_BASED": "Fedha taslimu",
       "Cash": "Fedha taslimu",
       "NONE": "Hakuna",
       "financialActivity": {
@@ -479,6 +620,10 @@
       "Export to File": "Hamisha kwa FILE",
       "Export CSV": "Hamisha CSV",
       "Export XLS": "Hamisha XLS",
+<<<<<<< HEAD
+=======
+      "Export to PDF": "Hamisha kwa PDF",
+>>>>>>> origin/dev
       "Export KYC": "Hamisha KYC",
       "Validate Documentation": "Thibitisha Nyaraka",
       "INCOMPLETE": "HAIJAKAMILIKA",
@@ -618,7 +763,12 @@
       "Retry": "Jaribu tena",
       "PRINT": "Chapisha",
       "DONE": "Imekamilika",
+<<<<<<< HEAD
       "Submitting": "Inatuma"
+=======
+      "Submitting": "Inatuma",
+      "OK": "Sawa"
+>>>>>>> origin/dev
     },
     "catalogs": {
       "Interest payment waiver": "Msamaha wa Malipo ya Riba",
@@ -909,6 +1059,8 @@
       "are": "ni",
       "be larger than 0 and at most 100": "kuwa kubwa kuliko 0 na angalau 100",
       "begin with a special character or number": "anza na herufi maalum au nambari",
+      "can not be less than": "haiwezi kuwa chini ya",
+      "can not be more than": "haiwezi kuwa zaidi ya",
       "cannot begin with a special character or number": "haiwezi kuanza na herufi maalum au nambari",
       "decimal places": "maeneo ya desimali",
       "do not match": "hailingani",
@@ -936,6 +1088,10 @@
       "on": "juu",
       "every": "kila",
       "Password validation": "Nenosiri lazima liwe na herufi {{minchar}}, ambazo zinafaa kuingiza herufi 1 kubwa, ndogo na maalum na haipaswi kuwa na herufi zinazorudiwa au nafasi nyeupe.",
+<<<<<<< HEAD
+=======
+      "Must be a positive integer": "Lazima iwe nambari nzima chanya",
+>>>>>>> origin/dev
       "Must be at least": "Lazima iwe angalau",
       "Must be less or equal to": "Lazima iwe chini au sawa na",
       "must be after or equal to start date": "lazima iwe baada ya au sawa na tarehe ya kuanza",
@@ -996,6 +1152,7 @@
       "Beneficiary": "Mnufaika",
       "Beneficiary Selection": "Uchaguzi wa Mnufaika",
       "Block Savings Account": "Zuia Akaunti ya Akiba",
+      "Breach Configuration": "Usanidi wa Ukiukaji",
       "Bulk Import": "Ingiza Wingi",
       "Bulk Loan Reassignment": "Ugawaji upya wa mkopo kwa wingi",
       "Business Rule Parameters": "Vigezo vya Sheria ya Biashara",
@@ -1163,6 +1320,7 @@
       "Loan Delinquency Classification": "Uainishaji wa mkopo wa mkopo",
       "Loan Delinquency Tags": "Lebo za Uhalifu wa Mkopo",
       "Loan Delinquency Installment Tags": "Vitambulisho vya Usanidi wa Mikopo ya Mkopo",
+      "Loan Delinquency Range Schedule": "Ratiba ya Anuwai ya Uhalifu wa Mkopo",
       "Loan Details": "Maelezo ya Mkopo",
       "Loan Disbursal": "Utoaji wa mkopo",
       "Loan Originators": "Waanzilishi wa Mikopo",
@@ -1206,6 +1364,7 @@
       "Minimum Active Period": "Kipindi cha Amilifu cha Chini",
       "Minimum Deposit Term": "Muda wa chini wa Amana",
       "Moratorium": "Kusitishwa",
+      "Near Breach Configuration": "Mipangilio ya Ukiukaji wa Karibu",
       "Nominal Interest Rate by loan cycle": "Kiwango cha Riba cha Kawaida kwa mzunguko wa mkopo",
       "Notes": "Vidokezo",
       "Notification External Service": "Huduma ya Nje ya Arifa",
@@ -1397,7 +1556,13 @@
       "Payout Assignment": "Ugawaji wa malipo",
       "Identification": "Utambulisho",
       "Professional Information": "Taarifa za kitaaluma",
+<<<<<<< HEAD
       "Add Profile Entry": "Ongeza ingizo la wasifu"
+=======
+      "Add Profile Entry": "Ongeza ingizo la wasifu",
+      "Id": "Kitambulisho",
+      "Recipient Summary": "Muhtasari wa Mpokeaji"
+>>>>>>> origin/dev
     },
     "inputs": {
       "Loan Account Status": "Hali ya akaunti ya mkopo",
@@ -1554,6 +1719,7 @@
       "Beneficiary": "Anayefaidika",
       "Branch": "Tawi",
       "Branch Office": "Ofisi ya tawi",
+      "Breach": "Ukiukaji",
       "Breakdown": "Kuvunja",
       "Boolean": "Boolean",
       "Business Date": "Tarehe ya Biashara",
@@ -1766,6 +1932,7 @@
       "Delinquency Grace Days": "Siku za Neema za Uhalifu",
       "Delinquency Start Type": "Aina ya Mwanzo wa Uhalifu",
       "Delinquency Tags": "Lebo za Uhalifu",
+      "Delinquent Amount": "Kiasi Kilichochelewa",
       "Delinquent Days": "Siku za Uhalifu",
       "Delivery Method": "Njia ya Utoaji",
       "Deposit Account": "Akaunti ya Amana",
@@ -1834,6 +2001,7 @@
       "Enable Down Payment": "Washa Malipo ya Chini",
       "Enable Lock-in Period": "Washa Kipindi cha Kufunga",
       "Enable Multiple Disbursals": "Washa Utoaji Nyingi",
+      "Enable Near Breach": "Wezesha ukiukaji unaokaribia",
       "Enabled": "Imewashwa",
       "End Date": "Tarehe ya mwisho",
       "End Point": "Sehemu ya Mwisho",
@@ -1858,6 +2026,7 @@
       "Execution Time": "Muda wa Utekelezaji",
       "Existing Client": "Mteja Aliyepo",
       "Existing Meeting Date": "Tarehe ya Mkutano uliopo",
+      "Expected Amount": "Kiasi Kinachotarajiwa",
       "Expected Disbursement On": "Ulipaji Unaotarajiwa Umewashwa",
       "Expected disbursement on": "Ulipaji unaotarajiwa umewashwa",
       "Expense Account": "Akaunti ya Gharama",
@@ -1984,6 +2153,7 @@
       "Incentive Type": "Aina ya motisha",
       "Include in Customer Loan Counter": "Jumuisha katika Kaunta ya Mkopo kwa Wateja",
       "Income Account": "Akaunti ya Mapato",
+      "Income From Discount Fee": "Mapato kutoka ada ya punguzo",
       "Income capitalization": "Mtaji wa mapato",
       "INCOME CAPITALIZATION": "MTAJI WA KIPATO",
       "Income from Charge": "Mapato kutoka kwa Malipo",
@@ -2203,6 +2373,10 @@
       "Minimum Opening Balance": "Salio la chini la Ufunguzi",
       "Minimum Overdraft Required for Interest Calculation": "Kiwango cha Chini cha Overdrafti Inahitajika kwa Kukokotoa Riba",
       "Minimum Payment": "Malipo ya Chini Zaidi",
+<<<<<<< HEAD
+=======
+      "Minimum Payment Criteria Met": "Vigezo vya Malipo ya Chini Zaidi Vimekutana",
+>>>>>>> origin/dev
       "Minimum Payment Type": "Aina ya Malipo ya Chini Zaidi",
       "Minimum Required Balance": "Mizani ya chini inayohitajika",
       "Minimum Value": "Thamani ya chini",
@@ -2224,6 +2398,10 @@
       "Name": "Jina",
       "Name Decorated": "Jina Limepambwa",
       "Name of the Organization": "Jina la Shirika",
+      "Near Breach": "Ukiukaji unaokaribia",
+      "Near Breach Evaluation Frequency": "Mzunguko wa tathmini ya ukiukaji unaokaribia",
+      "Near Breach Evaluation Frequency Type": "Aina ya mzunguko wa tathmini ya ukiukaji unaokaribia",
+      "Near Breach Threshold": "Kiwango cha ukiukaji unaokaribia",
       "Net Cash": "Pesa Net",
       "New Interest Rate": "Kiwango Kipya cha Riba",
       "Next Meeting Date": "Tarehe Inayofuata ya Mkutano",
@@ -2298,6 +2476,7 @@
       "Original Schedule": "Ratiba ya Asili",
       "Output Type": "Aina ya Pato",
       "Outstanding": "Bora",
+      "Outstanding Amount": "Kiasi Kinachobaki",
       "Overdraft": "Overdraft",
       "Over Amount": "Zaidi ya Kiasi",
       "Over Amount Calculation Type": "Aina ya Kukokotoa Zaidi ya Kiasi",
@@ -2321,6 +2500,7 @@
       "PDF format": "Umbizo la PDF",
       "PREVIEW": "ANGALIA",
       "Paid": "Imelipwa",
+      "Paid Amount": "Kiasi Kilicholipwa",
       "Paid Date": "Tarehe ya Kulipwa",
       "Parameter": "Kigezo",
       "Parameter Name Passed to Pentaho": "Jina la Kigezo cha Ripoti",
@@ -2360,6 +2540,10 @@
       "Percentage to Base": "Asilimia kwa Msingi",
       "Period": "Kipindi",
       "Period From": "Kipindi Kutoka",
+<<<<<<< HEAD
+=======
+      "Period Number": "Nambari ya Kipindi",
+>>>>>>> origin/dev
       "Period Payment Rate": "Kiwango cha Malipo ya Kipindi",
       "Period To": "Kipindi Kwa",
       "Period Type": "Aina ya Kipindi",
@@ -2629,6 +2813,7 @@
       "Text": "Maandishi",
       "Theme": "Mandhari",
       "Theme and Font": "Mandhari na Fonti",
+      "Threshold": "Kizingiti",
       "Thursday": "Alhamisi",
       "Time": "Wakati",
       "To": "Kwa",
@@ -2845,7 +3030,50 @@
       "Period Payment Frequency Type": "Aina ya Mara kwa Mara za Malipo ya Kipindi",
       "Payment Allocation Transactions": "Miamala ya Ugawaji wa Malipo",
       "Net Present Value day count": "Idadi halisi ya siku za Thamani ya Sasa",
+<<<<<<< HEAD
       "Installment": "Awamu"
+=======
+      "Installment": "Awamu",
+      "Beneficiary Selection": "Uchaguzi wa Mpokeaji",
+      "Confirmation Number": "Nambari ya Uthibitisho",
+      "Sub Status": "Hali Ndogo",
+      "Document": "Hati",
+      "Document Number": "Nambari ya Hati",
+      "Document number is required": "Nambari ya hati inahitajika",
+      "Allow full term for each tranche": "Ruhusu muda wote kwa kila tranche",
+      "Failed to load vendors": "Imeshindwa kupakia wauzaji",
+      "First name is required": "Jina la kwanza linahitajika",
+      "Last name is required": "Jina la ukoo linahitajika",
+      "Search Client": "Tafuta Mteja",
+      "Type client name or account number": "Andika jina la mteja au nambari ya akaunti",
+      "Overdue": "Imechelewa",
+      "Overdue Fees": "Ada Zilizochelewa",
+      "Confirmed At": "Imethibitishwa",
+      "Full Name": "Jina Kamili",
+      "Loading vendors": {
+        "": {
+          "": {
+            "": "Inapakia wauzaji..."
+          }
+        }
+      },
+      "Minimum 3 characters": "Angalau herufi 3",
+      "National ID": "Kitambulisho cha Taifa",
+      "Nationality": "Utaifa",
+      "Payout Amount": "Kiasi cha Malipo",
+      "Payout Country": "Nchi ya Malipo",
+      "Payout Token": "Tokeni ya Malipo",
+      "Recipient Name": "Jina la Mpokeaji",
+      "Send Amount": "Kiasi cha Kutuma",
+      "Send Country": "Nchi ya Kutuma",
+      "Sender": "Mtumaji",
+      "Sender Name": "Jina la Mtumaji",
+      "Sent By": "Imetumwa na",
+      "Deposited At": "Iliwekwa",
+      "Passport": "Pasipoti",
+      "Driver's License": "Leseni ya Udereva",
+      "Mothers Maiden Name": "Jina la Mama Kabla ya Ndoa"
+>>>>>>> origin/dev
     },
     "links": {
       "Community": "Jumuiya",
@@ -2984,7 +3212,12 @@
       "Reject Additional Shares": "Kataa Hisa za Ziada",
       "Tasks": "Kazi",
       "Remittances": "Uhawilishaji",
+<<<<<<< HEAD
       "Process Remittance": "Chakata uhawilishaji"
+=======
+      "Process Remittance": "Chakata uhawilishaji",
+      "Undo Write-off": "Futa Kuandika-mbali"
+>>>>>>> origin/dev
     },
     "placeholders": {
       "Add new server": "Ongeza seva mpya",
@@ -3107,6 +3340,10 @@
       "Audit logs of all the activities": "Kagua kumbukumbu za shughuli zote, kama vile kuunda mteja, kutoa mikopo n.k",
       "Bar": "Baa",
       "BIRT": "Mifos Reporting Plugin for Eclipse Birt",
+<<<<<<< HEAD
+=======
+      "Breach Configurations": "Mipangilio ya Uvunjaji",
+>>>>>>> origin/dev
       "Bulk Import": "Ingiza Wingi",
       "Bulk Loan Reassignment": "Ugawaji upya wa mkopo kwa wingi",
       "Bulk data import using excel spreadsheet templates": "Leta data kwa wingi kwa kutumia violezo vya lahajedwali bora kwa wateja, ofisi, n.k.",
@@ -3157,6 +3394,7 @@
       "Create Accounting Closure": "Unda Kufungwa kwa Uhasibu",
       "Create Accounting Rule": "Tengeneza Kanuni ya Uhasibu",
       "Create Adhoc Query": "Unda Hoja ya Adhoc",
+      "Create Breach": "Unda Uvunjaji",
       "Create Center": "Unda Kituo",
       "Create Charge": "Unda Malipo",
       "Create Client": "Unda Mteja",
@@ -3182,7 +3420,13 @@
       "Create Journal Entry": "Unda Ingizo la Jarida",
       "Create Loan Product": "Tengeneza Bidhaa ya Mkopo",
       "Create Loan Originator": "Unda Mwanzilishi wa Mkopo",
+<<<<<<< HEAD
+=======
+      "View Loan Originator": "Angalia Mwanzilishi wa Mkopo",
+      "Edit Loan Originator": "Hariri Mwanzilishi wa Mkopo",
+>>>>>>> origin/dev
       "Create Loans Account": "Unda Akaunti ya Mikopo",
+      "Create Near Breach": "Unda Karibu Uvunjaji",
       "Create New GL Account": "Chaguo hili hukuruhusu kuunda akaunti mpya za GL.",
       "Create Office": "Unda Ofisi",
       "Create Payment Type": "Unda Aina ya Malipo",
@@ -3244,6 +3488,7 @@
       "Define Tax Groups": "Bainisha Vikundi vya Ushuru",
       "Define Tax components": "Bainisha vipengele vya Ushuru",
       "Define Tax components and Tax groups": "Bainisha vipengele vya Ushuru na vikundi vya Ushuru",
+      "Define breaches for working capital products": "Bainisha ukiukaji kwa bidhaa za mtaji wa uendeshaji",
       "Define charges/penalties for loan products, savings and deposit products": "Bainisha ada/adhabu kwa bidhaa za mkopo, akiba na bidhaa za amana",
       "Define collaterals for Collateral Management": "Bainisha dhamana za Usimamizi wa Dhamana",
       "Define delinquency bucket as set of ranges": "Bainisha ndoo ya uhalifu kama seti ya masafa",
@@ -3251,6 +3496,7 @@
       "Define delinquency day ranges and bucket set for loan products": "Bainisha safu za siku za uhalifu na ndoo zilizowekwa kwa bidhaa za mkopo",
       "Define floating rates for loan products": "Bainisha viwango vinavyoelea vya bidhaa za mkopo",
       "Define holidays for office": "Fafanua likizo kwa ofisi",
+      "Define near breaches for working capital products": "Fafanua ukiukaji wa karibu kwa bidhaa za mtaji wa uendeshaji",
       "Define or modify Maker Checker tasks": "Bainisha au urekebishe kazi za Kikagua Kitengeneza",
       "Define or modify entity to entity mappings": "Bainisha au urekebishe huluki kwa mpangilio wa huluki",
       "Define or modify roles and associated permissions": "Bainisha au urekebishe majukumu na ruhusa zinazohusiana",
@@ -3270,6 +3516,7 @@
       "Edit Accounting Rules": "Badilisha Sheria za Uhasibu",
       "Edit Adhoc Query": "Hariri Hoja ya Adhoc",
       "Edit Amazon S3 Configuration": "Hariri Usanidi wa Amazon S3",
+      "Edit Breach": "Hariri Uvunjaji",
       "Edit Cashier": "Badilisha Cashier",
       "Edit Center": "Hariri Kituo",
       "Edit Charge": "Badilisha Malipo",
@@ -3291,7 +3538,9 @@
       "Edit Group": "Badilisha Kikundi",
       "Edit Holidays": "Hariri Likizo",
       "Edit Hook": "Hariri Hook",
+      "Edit Loan Originator": "Hariri Mwanzilishi wa Mkopo",
       "Edit Loan Product": "Hariri Bidhaa ya Mkopo",
+      "Edit Near Breach": "Hariri Karibu Uvunjaji",
       "Edit Notification Configuration": "Badilisha Usanidi wa Arifa",
       "Edit Office": "Badilisha Ofisi",
       "Edit Payment Type": "Badilisha Aina ya Malipo",
@@ -3398,6 +3647,7 @@
       "LoanAccountCustomSnapshotBusinessEvent": "LoanAccountCustomSnapshotBusinessEvent",
       "LoanAccountDelinquencyPauseChangedBusinessEvent": "LoanAccountDelinquencyPauseChangedBusinessEvent",
       "LoanAccountSnapshotBusinessEvent": "LoanAccountSnapshotBusinessEvent",
+      "Loan Account Details": "Maelezo ya Akaunti ya Mkopo",
       "Loan Account Actions": "Vitendo vya Akaunti ya Mkopo",
       "Loan Collateral Details": "Maelezo ya Dhamana ya Mkopo",
       "Loan Disbursal": "Utoaji wa mkopo",
@@ -3466,6 +3716,7 @@
       "N/A": "N/A",
       "Navigate system selecting entity": "Hii itamruhusu mtumiaji kuabiri kwa haraka huluki ya kuchagua mfumo huku akitafuta hufanya urambazaji kuwa thabiti zaidi.",
       "Navigation": "Urambazaji",
+      "Near Breach Configurations": "Mipangilio ya Karibu Uvunjaji",
       "No Data": "Hakuna Data",
       "Not Activated": "Haijawezeshwa",
       "No Description": "Hakuna maelezo",
@@ -3523,6 +3774,7 @@
       "Provisioning criteria definitions": "Tafadhali jaza ufafanuzi wa vigezo vyote vya utoaji.",
       "Precedes of": "Hutangulia",
       "Recurring Deposit Account Charges": "Malipo ya Akaunti ya Amana ya Mara kwa Mara",
+      "Recurring Deposit Account Details": "Maelezo ya Akaunti ya Amana Inayojirudia",
       "Recurring Deposit Account Interest Rate Chart": "Chati ya Kiwango cha Riba cha Akaunti ya Amana ya Mara kwa Mara",
       "Recurring Deposit Account Standing Instructions": "Maagizo ya Kudumu ya Akaunti ya Amana",
       "Recurring Deposit Account Transactions": "Miamala ya Akaunti ya Amana ya Mara kwa Mara",
@@ -3533,6 +3785,7 @@
       "Recurring Deposits Account Transactions": "Miamala ya Akaunti ya Amana ya Mara kwa Mara",
       "RecurringDeposit Account View": "Mwonekano wa Akaunti ya Amana unaorudiwa",
       "Red asterisk field": "Sehemu zilizo na nyota nyekundu (*) zinahitajika. Kujua zaidi bofya:",
+      "Remittances": "Uhamisho wa Fedha",
       "Repayment Schedule": "Ratiba ya Marejesho",
       "Repeats' and 'Repeats every": "Kumbuka: 'Rudia' na 'Rudia kila' haziwezi kubadilishwa ikiwa kuna akaunti zinazotumika (Mikopo ya JLG, Amana Zinazorudiwa n.k) zinategemea mkutano huu.",
       "Report Parameters": "Vigezo vya Ripoti",
@@ -3588,6 +3841,7 @@
       "Share Products Dividends": "Shiriki Gawio la Bidhaa",
       "Share products define the rules, default settings": "Bidhaa zinazoshirikiwa hufafanua sheria, mipangilio chaguo-msingi na vikwazo vya Hisa na gawio la taasisi ya fedha. Bidhaa inayoshirikiwa hutoa kiolezo cha akaunti nyingi ambazo zinashikiliwa au zitashikiliwa na wateja wa taasisi ya fedha.",
       "Shares": "Hisa",
+      "Shares Account Details": "Maelezo ya Akaunti ya Hisa",
       "Shares Account Actions": "Vitendo vya Akaunti ya Hisa",
       "Shares Account Charges": "Inashiriki Malipo ya Akaunti",
       "Shares Account Dividends": "Gawio la Akaunti ya Hisa",
@@ -3660,6 +3914,7 @@
       "View Adhoc Query": "Tazama Hoja ya Adhoc",
       "View Amazon S3 Configuration": "Tazama Usanidi wa Amazon S3",
       "View Audit": "Angalia Ukaguzi",
+      "View Breach": "Tazama Uvunjaji",
       "View Bulk Import": "Tazama Uingizaji Wingi",
       "View Cashier": "Tazama Keshia",
       "View Charges": "Tazama Malipo",
@@ -3682,7 +3937,9 @@
       "View Group": "Tazama Kikundi",
       "View Holidays": "Tazama Likizo",
       "View Hook": "Tazama ndoano",
+      "View Loan Originator": "Tazama Mwanzilishi wa Mkopo",
       "View Loan Product": "Tazama Bidhaa ya Mkopo",
+      "View Near Breach": "Tazama Karibu Uvunjaji",
       "View Notification Configuration": "Tazama Usanidi wa Arifa",
       "View Office": "Angalia Ofisi",
       "View Product Mix": "Tazama Mchanganyiko wa Bidhaa",
@@ -3755,7 +4012,15 @@
       "Failed to update payment type. Please try again.": "Imeshindwa kusasisha aina ya malipo. Tafadhali jaribu tena.",
       "Search and assign this beneficiary to an existing Mifos client account": "Tafuta na uweke mpokeaji huyu kwenye akaunti ya mteja wa Mifos iliyopo",
       "Failed to search clients. Please try again.": "Imeshindwa kutafuta wateja. Tafadhali jaribu tena.",
+<<<<<<< HEAD
       "Process Remittance": "Chakata uhawilishaji"
+=======
+      "Process Remittance": "Chakata uhawilishaji",
+      "Loan Originators": "Waanzilishi wa Mikopo",
+      "Loan Reschedules": "Ratiba za Mikopo",
+      "Settings saved successfully": "Mipangilio imehifadhiwa.",
+      "Undo Write-off Description": "Kitendo hiki kitabatilisha muamala wa kuandika-mbali na kurejesha mkopo kwa hali yake ya awali ya kazi. Tafadhali toa maelezo yanayoelezea sababu ya kitendo hiki."
+>>>>>>> origin/dev
     },
     "permissions": {
       "actions": {
@@ -4272,7 +4537,12 @@
     "ACTIVE": "INAYOENDELEA",
     "PENDING": "INAKARIBISHWA",
     "INACTIVE": "HAITUMIKI",
+<<<<<<< HEAD
     "Process Remittance": "Chakata uhawilishaji"
+=======
+    "Process Remittance": "Chakata uhawilishaji",
+    "Allow full term length for each tranche disbursement": "Inapowezeshwa, kila usambazaji wa tranche utafuata ratiba kamili ya mkopo badala ya kulingana na muda uliobaki. Inapatikana tu kwa aina ya ratiba ya mkopo ya MAENDELEO."
+>>>>>>> origin/dev
   },
   "countries": {
     "AF": "Afghanistani",
@@ -4392,5 +4662,71 @@
     "ZW": "Zimbabwe"
   },
   "Deactivate Role": "Zima Jukumu",
+<<<<<<< HEAD
   "Delete Role": "Futa Jukumu"
+=======
+  "Delete Role": "Futa Jukumu",
+  "clients": {
+    "actions": {
+      "close": {
+        "success": "Mteja amefungwa kwa mafanikio."
+      },
+      "reject": {
+        "success": "Mteja amekataliwa kwa mafanikio."
+      },
+      "withdraw": {
+        "success": "Mteja ameondolewa kwa mafanikio."
+      },
+      "reactivate": {
+        "success": "Mteja amerejeshwa kwa mafanikio.",
+        "failure": "Imeshindwa kumrejesha mteja."
+      },
+      "activate": {
+        "success": "Mteja amewashwa kwa mafanikio.",
+        "failure": "Imeshindikana kumwezesha mteja."
+      },
+      "acceptTransfer": {
+        "success": "Uhamisho wa mteja umekubaliwa kwa mafanikio."
+      },
+      "rejectTransfer": {
+        "success": "Uhamisho wa mteja umekataliwa kwa mafanikio."
+      },
+      "undoTransfer": {
+        "success": "Uhamisho wa mteja umetenguliwa kwa mafanikio."
+      },
+      "undoRejection": {
+        "success": "Kukataliwa kwa mteja umetenguliwa kwa mafanikio."
+      },
+      "transfer": {
+        "success": "Uhamisho wa mteja umependekezwa kwa mafanikio.",
+        "failure": "Imeshindwa kupendekeza uhamisho wa mteja."
+      },
+      "addCharge": {
+        "success": "Malipo ya mteja yameongezwa kwa mafanikio."
+      },
+      "addCollateral": {
+        "success": "Dhamana ya mteja imeongezwa kwa mafanikio."
+      },
+      "assignStaff": {
+        "success": "Mfanyakazi amepangiwa mteja kwa mafanikio.",
+        "failure": "Imeshindwa kumpangia mfanyakazi kwa mteja."
+      },
+      "updateSavingsAccount": {
+        "success": "Akaunti ya akiba ya mteja imesasishwa kwa mafanikio."
+      },
+      "takeSurvey": {
+        "success": "Utafiti umewasilishwa kwa mafanikio.",
+        "failure": "Imeshindwa kuwasilisha utafiti."
+      }
+    }
+  },
+  "error": {
+    "resource": {
+      "notImplemented": {
+        "type": "Hitilafu Isiyotekelezwa",
+        "message": "Utendakazi ambao haujatekelezwa!"
+      }
+    }
+  }
+>>>>>>> origin/dev
 }

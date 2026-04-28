@@ -46,7 +46,11 @@ export class SavingProductCurrencyStepComponent implements OnInit {
     this.currencyData = this.savingProductsTemplate.currencyOptions;
 
     this.savingProductCurrencyForm.patchValue({
+<<<<<<< HEAD
       currencyCode: this.savingProductsTemplate.currency.code || this.currencyData[0].code,
+=======
+      currencyCode: this.savingProductsTemplate?.currency?.code || this.currencyData?.[0]?.code || '',
+>>>>>>> origin/dev
       digitsAfterDecimal: this.savingProductsTemplate.digitsAfterDecimal ?? '',
       setMultiples: !!this.savingProductsTemplate.inMultiplesOf,
       inMultiplesOf: this.savingProductsTemplate.inMultiplesOf ?? ''

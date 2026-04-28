@@ -6,7 +6,11 @@
     "accountingRule": {
       "duplicateName": "죄송합니다. 이미 동일한 이름의 회계 규칙이 존재합니다."
     },
+<<<<<<< HEAD
     "error.resource.notImplemented.type": "구현되지 않은 오류",
+=======
+    "error.resource.notImplemented.type": "구현되지 않음",
+>>>>>>> origin/dev
     "error.resource.notImplemented.message": "구현되지 않은 기능입니다!",
     "linkedSavingsAccountOwnership": "연결된 저축 계좌가 선택한 클라이언트에 속하지 않습니다.",
     "clientNotInGSIM": "ID가 {{id}}인 클라이언트가 GSIM에 없습니다.",
@@ -28,6 +32,7 @@
     "error.msg.charge.due.at.disbursement.cannot.be.penalty": "지불 시 부과되는 벌금을 벌금으로 설정할 수 없습니다.",
     "error.msg.charge.duplicate.name": "해당 이름의 청구가 이미 존재합니다.",
     "error.msg.charge.update.of.charge.applies.to.is.not.supported": "요금 적용 대상 업데이트는 지원되지 않습니다.",
+    "error.msg.data.integrity.issue": "요청이 데이터베이스에서 데이터 무결성 문제를 일으켰습니다",
     "error.msg.loan.product.close.date.cannot.be.before.start.date": "대출상품 마감일은 시작일보다 이전일 수 없습니다.",
     "error.msg.product.loan.duplicate.charge": "대출 상품은 각 유형별로 한 번만 청구할 수 있습니다.",
     "error.msg.product.loan.duplicate.name": "'{{params[0].value}}' 이름의 대출 상품이 이미 존재합니다.",
@@ -35,6 +40,7 @@
     "error.msg.product.savings.duplicate.name": "이름이 `{{params[0].value}}`인 저축 상품이 이미 존재합니다.",
     "error.msg.product.savings.duplicate.short.name": "닉네임이 {{params[0].value}}인 저축 상품이 이미 존재합니다.",
     "error.msg.savingsproduct.unknown.data.integrity.issue": "적금 상품 생성/업데이트 시 예상치 못한 문제가 발생했습니다. 서버에 오류가 기록되었습니다.",
+    "error.msg.reporting.error": "보고서를 생성하는 동안 오류가 발생했습니다.",
     "validation.msg.charge.amount.cannot.be.blank": "금액은 비워둘 수 없습니다.",
     "validation.msg.charge.amount.not.greater.than.zero": "청구 금액은 0보다 커야 합니다.",
     "validation.msg.charge.chargeAppliesTo.cannot.be.blank": "요금이 적용되는 항목은 비워둘 수 없습니다.",
@@ -285,7 +291,140 @@
     "validation.msg.savingsproduct.shortName.exceeds.max.length": "짧은 이름은 {{params[0].value}}자를 초과할 수 없습니다.",
     "validation.msg.savingsproduct.withdrawalFeeAmount.cannot.be.blank": "출금수수료 금액은 필수입니다.",
     "validation.msg.savingsproduct.withdrawalFeeAmount.not.zero.or.greater": "출금 수수료 금액은 제공된 경우 0보다 크거나 같아야 합니다.",
-    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "출금 수수료 기간 유형은 필수입니다."
+    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "선택한 출금 수수료 유형이 유효하지 않습니다.",
+    "http": {
+      "connection": {
+        "title": "연결 오류",
+        "message": "서버에 연결할 수 없습니다. 인터넷 연결을 확인해 주세요."
+      },
+      "badRequest": {
+        "title": "잘못된 요청",
+        "message": "입력 내용을 확인하고 다시 시도해 주세요."
+      },
+      "unauthorized": {
+        "title": "권한 없음",
+        "message": "세션이 만료되었습니다. 다시 로그인해 주세요.",
+        "action": "로그인"
+      },
+      "forbidden": {
+        "title": "접근 거부",
+        "message": "이 작업을 수행할 권한이 없습니다."
+      },
+      "notFound": {
+        "title": "찾을 수 없음",
+        "message": "요청한 리소스를 찾을 수 없습니다.",
+        "contextMessage": "{{context}}을(를) 찾을 수 없습니다."
+      },
+      "conflict": {
+        "title": "충돌",
+        "message": "리소스가 이미 존재하거나 충돌이 있습니다."
+      },
+      "serverError": {
+        "title": "서버 오류",
+        "message": "예기치 않은 오류가 발생했습니다. 나중에 다시 시도해 주세요."
+      },
+      "serviceUnavailable": {
+        "title": "서비스 이용 불가",
+        "message": "서비스를 일시적으로 이용할 수 없습니다. 나중에 다시 시도해 주세요."
+      },
+      "default": {
+        "title": "오류",
+        "message": "예기치 않은 오류가 발생했습니다."
+      }
+    },
+    "interceptor": {
+      "invalidParams": "요청에 잘못된 매개변수가 전달되었습니다!"
+    },
+    "auth": {
+      "pleaseWait": "잠시 기다려 주세요...",
+      "startType": "인증 시작",
+      "twoFactor": {
+        "type": "2단계 인증 필요",
+        "message": "2단계 인증이 필요합니다"
+      },
+      "passwordExpired": {
+        "type": "비밀번호 만료",
+        "message": "비밀번호가 만료되었습니다. 비밀번호를 재설정해 주세요!"
+      },
+      "success": {
+        "type": "인증 성공",
+        "message": "{{username}} 로그인 성공!"
+      },
+      "passwordReset": {
+        "type": "비밀번호 재설정 성공",
+        "message": "비밀번호가 성공적으로 재설정되었습니다!"
+      },
+      "callbackFailed": {
+        "type": "인증 실패",
+        "message": "인증을 완료할 수 없습니다. 다시 시도해 주세요."
+      },
+      "callbackError": {
+        "type": "인증 오류",
+        "message": "인증 중 오류가 발생했습니다. 다시 시도해 주세요."
+      }
+    },
+    "hooks": {
+      "lastEvent": "최소 하나의 이벤트가 필요합니다. 마지막 이벤트를 삭제할 수 없습니다."
+    },
+    "generic": {
+      "unexpected": "오류가 발생했습니다. 다시 시도해 주세요.",
+      "unexpectedRetry": "예기치 않은 오류가 발생했습니다. 다시 시도해 주세요.",
+      "unexpectedShort": "예기치 않은 오류가 발생했습니다."
+    },
+    "holiday": {
+      "invalidDate": "선택한 날짜가 유효하지 않습니다. 유효한 날짜를 선택해 주세요.",
+      "invalidRepaymentDate": "상환 재조정 날짜가 유효하지 않습니다. 유효한 날짜를 선택해 주세요."
+    },
+    "report": {
+      "type": "보고서 생성",
+      "generated": "보고서: {{reportName}} 데이터 생성됨",
+      "generatedNoData": "보고서: {{reportName}} 데이터 없이 생성됨"
+    },
+    "clipboard": {
+      "type": "클립보드",
+      "copied": "복사됨: {{value}}"
+    },
+    "tenant": {
+      "changed": {
+        "type": "테넌트 변경됨"
+      }
+    },
+    "config": {
+      "setConfig": "{{type}} 구성 설정"
+    },
+    "loans": {
+      "undoWriteOff": {
+        "type": "대손상각 취소 실패",
+        "message": "대손상각 취소 처리 중 오류가 발생했습니다. 다시 시도하거나 지원팀에 문의해 주세요."
+      },
+      "alreadyAdjusted": "자본화 수입 금액이 이미 조정되었습니다",
+      "adjustment": "조정 {{type}} 거래",
+      "capitalizedIncomeLimit": "자본화 수입 조정 금액은 다음 이하여야 합니다",
+      "buyDownFeeAdjusted": "Buy Down 수수료 금액이 이미 조정되었습니다",
+      "buyDownFeeLimit": "Buy Down 수수료 조정 금액은 다음 이하여야 합니다",
+      "businessRule": "비즈니스 규칙",
+      "alertWithAmount": "{{label}}: {{amount}}"
+    },
+    "error.auth.type": "인증 오류",
+    "error.auth.message": "세션이 만료되었거나 자격 증명이 유효하지 않습니다.",
+    "error.token.invalid.type": "유효하지 않은 토큰",
+    "error.token.invalid.message": "제공된 일회용 토큰이 유효하지 않습니다.",
+    "error.bad.request.type": "잘못된 요청",
+    "error.bad.request.message": "요청에 잘못된 매개변수가 전달되었습니다!",
+    "error.unauthorized.type": "권한 없음",
+    "error.unauthorized.message": "세션이 만료되었거나 자격 증명이 유효하지 않습니다.",
+    "error.resource.not.found.type": "리소스를 찾을 수 없음",
+    "error.resource.not.found.message": "요청한 리소스를 찾을 수 없습니다.",
+    "error.server.internal.type": "내부 서버 오류",
+    "error.server.internal.message": "서버에서 예기치 않은 오류가 발생했습니다. 나중에 다시 시도해 주세요.",
+    "error.unknown.type": "알 수 없는 오류",
+    "error.unknown.message": "예기치 않은 오류가 발생했습니다.",
+    "validation.required": "이 필드는 필수입니다",
+    "validation.minLength": "최소 길이는 {{requiredLength}}입니다",
+    "validation.emailInvalid": "유효하지 않은 이메일",
+    "validation.requiredField": "{{label}}은(는) 필수 필드입니다.",
+    "validation.mustBeAtLeast": "{{field}}은(는) 최소 {{min}}이어야 합니다",
+    "validation.mustBePositive": "{{field}}은(는) 양수여야 합니다."
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -335,6 +474,7 @@
     "accounting": {
       "Accrual (periodic)": "발생(정기적)",
       "Accrual (upfront)": "발생(선불)",
+      "CASH_BASED": "현금",
       "Cash": "현금",
       "NONE": "없음",
       "financialActivity": {
@@ -479,6 +619,10 @@
       "Export to File": "파일로 내보내기",
       "Export CSV": "CSV 내보내기",
       "Export XLS": "XLS 내보내기",
+<<<<<<< HEAD
+=======
+      "Export to PDF": "PDF로 내보내기",
+>>>>>>> origin/dev
       "Export KYC": "KYC 내보내기",
       "Validate Documentation": "문서 검증",
       "INCOMPLETE": "미완료",
@@ -618,7 +762,12 @@
       "Retry": "재시도",
       "PRINT": "인쇄",
       "DONE": "완료",
+<<<<<<< HEAD
       "Submitting": "제출 중"
+=======
+      "Submitting": "제출 중",
+      "OK": "확인"
+>>>>>>> origin/dev
     },
     "catalogs": {
       "Interest payment waiver": "이자 지급 면제",
@@ -911,6 +1060,8 @@
       "are": "~이다",
       "be larger than 0 and at most 100": "0보다 크고 최대 100이어야 합니다.",
       "begin with a special character or number": "특수 문자나 숫자로 시작",
+      "can not be less than": "보다 작을 수 없습니다",
+      "can not be more than": "보다 클 수 없습니다",
       "cannot begin with a special character or number": "특수 문자나 숫자로 시작할 수 없습니다.",
       "decimal places": "소수점 자리",
       "do not match": "일치하지 않는",
@@ -938,6 +1089,10 @@
       "on": "~에",
       "every": "매",
       "Password validation": "비밀번호는 최소 자여야 하며 대문자, 소문자 및 특수 문자 1개가 포함되어야 하며 반복되는 문자나 공백으로 구성되어서는 안 됩니다.",
+<<<<<<< HEAD
+=======
+      "Must be a positive integer": "양의 정수여야 합니다",
+>>>>>>> origin/dev
       "Must be at least": "최소한이어야 합니다",
       "Must be less or equal to": "이보다 작거나 같아야 합니다.",
       "must be after or equal to start date": "시작 날짜 이후이거나 같아야 합니다",
@@ -998,6 +1153,7 @@
       "Beneficiary": "수익자",
       "Beneficiary Selection": "수익자 선택",
       "Block Savings Account": "블록저축계좌",
+      "Breach Configuration": "위반 구성",
       "Bulk Import": "대량 가져오기",
       "Bulk Loan Reassignment": "대량대출 재할당",
       "Business Rule Parameters": "비즈니스 규칙 매개변수",
@@ -1166,6 +1322,7 @@
       "Loan Delinquency Classification": "대출 연체 분류",
       "Loan Delinquency Tags": "대출 연체 태그",
       "Loan Delinquency Installment Tags": "대출 연체 설치 태그",
+      "Loan Delinquency Range Schedule": "대출 연체 범위 일정",
       "Loan Details": "대출내역",
       "Loan Disbursal": "대출 지시",
       "Loan Originators": "대출 담당자",
@@ -1209,6 +1366,7 @@
       "Minimum Active Period": "최소 활동 기간",
       "Minimum Deposit Term": "최소 예금 기간",
       "Moratorium": "모라토리엄",
+      "Near Breach Configuration": "근접 위반 구성",
       "Nominal Interest Rate by loan cycle": "대출주기별 명목이자율",
       "Notes": "노트",
       "Notification External Service": "알림 외부 서비스",
@@ -1402,7 +1560,12 @@
       "Payout Assignment": "지급 배정 정보",
       "Identification": "신원 확인",
       "Professional Information": "직업 정보",
+<<<<<<< HEAD
       "Add Profile Entry": "프로필 항목 추가"
+=======
+      "Add Profile Entry": "프로필 항목 추가",
+      "Recipient Summary": "수취인 요약"
+>>>>>>> origin/dev
     },
     "inputs": {
       "Loan Account Status": "대출 계좌 상태",
@@ -1559,6 +1722,7 @@
       "Beneficiary": "수익자",
       "Branch": "나뭇가지",
       "Branch Office": "지점",
+      "Breach": "위반",
       "Breakdown": "고장",
       "Boolean": "부울",
       "Business Date": "사업일",
@@ -1771,6 +1935,7 @@
       "Delinquency Grace Days": "비행 청소년 사면 기간",
       "Delinquency Start Type": "비행 시작 유형",
       "Delinquency Tags": "연체 태그",
+      "Delinquent Amount": "연체 금액",
       "Delinquent Days": "연체일수",
       "Delivery Method": "배달 방법",
       "Deposit Account": "예금 계좌",
@@ -1839,6 +2004,7 @@
       "Enable Down Payment": "계약금 활성화",
       "Enable Lock-in Period": "잠금 기간 활성화",
       "Enable Multiple Disbursals": "다중 지불 활성화",
+      "Enable Near Breach": "임박한 위반 활성화",
       "Enabled": "활성화됨",
       "End Date": "종료일",
       "End Point": "종료점",
@@ -1863,6 +2029,7 @@
       "Execution Time": "실행 시간",
       "Existing Client": "기존 클라이언트",
       "Existing Meeting Date": "기존 회의 날짜",
+      "Expected Amount": "예상 금액",
       "Expected Disbursement On": "예상 지불 날짜",
       "Expected disbursement on": "예상 지급액:",
       "Expense Account": "지출 계좌",
@@ -1989,6 +2156,7 @@
       "Incentive Type": "인센티브 유형",
       "Include in Customer Loan Counter": "고객 대출 카운터에 포함",
       "Income Account": "소득 계정",
+      "Income From Discount Fee": "할인 수수료 수입",
       "Income capitalization": "소득 자본화",
       "INCOME CAPITALIZATION": "소득 자본화",
       "Income from Charge": "수수료 수입",
@@ -2208,6 +2376,10 @@
       "Minimum Opening Balance": "최소 기초 잔액",
       "Minimum Overdraft Required for Interest Calculation": "이자 계산에 필요한 최소 초과인월",
       "Minimum Payment": "최소 지불액",
+<<<<<<< HEAD
+=======
+      "Minimum Payment Criteria Met": "최소 납부 기준 충족",
+>>>>>>> origin/dev
       "Minimum Payment Type": "최소 지불 유형",
       "Minimum Required Balance": "최소 필요한 잔액",
       "Minimum Value": "최소값",
@@ -2229,6 +2401,10 @@
       "Name": "이름",
       "Name Decorated": "이름 장식",
       "Name of the Organization": "조직 이름",
+      "Near Breach": "위반 임박",
+      "Near Breach Evaluation Frequency": "임박한 위반 평가 빈도",
+      "Near Breach Evaluation Frequency Type": "임박한 위반 평가 빈도 유형",
+      "Near Breach Threshold": "임박한 위반 임계값",
       "Net Cash": "순현금",
       "New Interest Rate": "새로운 이자율",
       "Next Meeting Date": "다음 회의 날짜",
@@ -2303,6 +2479,7 @@
       "Original Schedule": "원래 일정",
       "Output Type": "출력 유형",
       "Outstanding": "뛰어난",
+      "Outstanding Amount": "미결제 금액",
       "Overdraft": "당좌 대월",
       "Over Amount": "초과 금액",
       "Over Amount Calculation Type": "초과 금액 계산 유형",
@@ -2326,6 +2503,7 @@
       "PDF format": "PDF 형식",
       "PREVIEW": "시사",
       "Paid": "유급의",
+      "Paid Amount": "납부 금액",
       "Paid Date": "지급일",
       "Parameter": "매개변수",
       "Parameter Name Passed to Pentaho": "보고서 매개변수 이름",
@@ -2365,6 +2543,10 @@
       "Percentage to Base": "베이스에 대한 백분율",
       "Period": "기간",
       "Period From": "기간: 부터",
+<<<<<<< HEAD
+=======
+      "Period Number": "기간 번호",
+>>>>>>> origin/dev
       "Period Payment Rate": "기간별 지급률",
       "Period To": "기간: 까지",
       "Period Type": "기간 유형",
@@ -2634,6 +2816,7 @@
       "Text": "텍스트",
       "Theme": "주제",
       "Theme and Font": "테마 및 글꼴",
+      "Threshold": "임계값",
       "Thursday": "목요일",
       "Time": "시간",
       "To": "에게",
@@ -2849,7 +3032,50 @@
       "Period Payment Frequency Type": "기간별 지급 빈도 유형",
       "Payment Allocation Transactions": "지불 할당 거래",
       "Net Present Value day count": "순현재가치 일수 계산",
+<<<<<<< HEAD
       "Installment": "할부"
+=======
+      "Installment": "할부",
+      "Beneficiary Selection": "수익자 선택",
+      "Confirmation Number": "확인 번호",
+      "Sub Status": "하위 상태",
+      "Document": "문서",
+      "Document Number": "문서 번호",
+      "Document number is required": "문서 번호는 필수입니다",
+      "Allow full term for each tranche": "각 트란셰에 전체 기간 허용",
+      "Failed to load vendors": "공급업체를 불러오지 못했습니다",
+      "First name is required": "이름은 필수입니다",
+      "Last name is required": "성은 필수입니다",
+      "Search Client": "고객 검색",
+      "Type client name or account number": "고객명 또는 계좌번호를 입력하세요",
+      "Overdue": "연체",
+      "Overdue Fees": "연체 수수료",
+      "Confirmed At": "확인 날짜",
+      "Full Name": "전체 이름",
+      "Loading vendors": {
+        "": {
+          "": {
+            "": "공급업체 불러오는 중..."
+          }
+        }
+      },
+      "Minimum 3 characters": "최소 3자 이상",
+      "National ID": "주민등록번호",
+      "Nationality": "국적",
+      "Payout Amount": "지급 금액",
+      "Payout Country": "지급 국가",
+      "Payout Token": "지급 토큰",
+      "Recipient Name": "수취인 이름",
+      "Send Amount": "송금액",
+      "Send Country": "발송 국가",
+      "Sender": "발신자",
+      "Sender Name": "발신자 이름",
+      "Sent By": "발송인",
+      "Deposited At": "입금일",
+      "Passport": "여권",
+      "Driver's License": "운전면허증",
+      "Mothers Maiden Name": "어머니 결혼 전 성"
+>>>>>>> origin/dev
     },
     "links": {
       "Community": "지역 사회",
@@ -2988,7 +3214,12 @@
       "Reject Additional Shares": "추가 공유 거부",
       "Tasks": "작업",
       "Remittances": "송금",
+<<<<<<< HEAD
       "Process Remittance": "송금 처리"
+=======
+      "Process Remittance": "송금 처리",
+      "Undo Write-off": "상각 취소"
+>>>>>>> origin/dev
     },
     "placeholders": {
       "Add new server": "새 서버 추가",
@@ -3111,6 +3342,10 @@
       "Audit logs of all the activities": "클라이언트 생성, 대출 지급 등과 같은 모든 활동에 대한 감사 로그",
       "Bar": "술집",
       "BIRT": "Mifos Reporting Plugin for Eclipse Birt",
+<<<<<<< HEAD
+=======
+      "Breach Configurations": "위반 구성",
+>>>>>>> origin/dev
       "Bulk Import": "대량 가져오기",
       "Bulk Loan Reassignment": "대량대출 재할당",
       "Bulk data import using excel spreadsheet templates": "고객, 사무실 등을 위한 Excel 스프레드시트 템플릿을 사용하여 대량 데이터 가져오기",
@@ -3161,6 +3396,7 @@
       "Create Accounting Closure": "회계 마감 생성",
       "Create Accounting Rule": "회계 규칙 생성",
       "Create Adhoc Query": "임시 쿼리 만들기",
+      "Create Breach": "위반 생성",
       "Create Center": "센터 만들기",
       "Create Charge": "청구 생성",
       "Create Client": "클라이언트 생성",
@@ -3186,7 +3422,13 @@
       "Create Journal Entry": "분개 항목 만들기",
       "Create Loan Product": "대출상품 생성",
       "Create Loan Originator": "대출 담당자 생성",
+<<<<<<< HEAD
+=======
+      "View Loan Originator": "대출 담당자 보기",
+      "Edit Loan Originator": "대출 담당자 수정",
+>>>>>>> origin/dev
       "Create Loans Account": "대출 계좌 만들기",
+      "Create Near Breach": "근접 위반 생성",
       "Create New GL Account": "이 옵션을 사용하면 새 GL 계정을 만들 수 있습니다.",
       "Create Office": "사무실 만들기",
       "Create Payment Type": "결제 유형 생성",
@@ -3248,6 +3490,7 @@
       "Define Tax Groups": "세금 그룹 정의",
       "Define Tax components": "세금 구성요소 정의",
       "Define Tax components and Tax groups": "세금 구성요소 및 세금 그룹 정의",
+      "Define breaches for working capital products": "운전자본 상품에 대한 위반 정의",
       "Define charges/penalties for loan products, savings and deposit products": "대출 상품, 저축 및 예금 상품에 대한 수수료/벌금 정의",
       "Define collaterals for Collateral Management": "담보 관리를 위한 담보 정의",
       "Define delinquency bucket as set of ranges": "연체 버킷을 범위 집합으로 정의",
@@ -3255,6 +3498,7 @@
       "Define delinquency day ranges and bucket set for loan products": "대출 상품에 대한 연체 기간 및 버킷 세트 정의",
       "Define floating rates for loan products": "대출 상품에 대한 변동 금리 정의",
       "Define holidays for office": "사무실의 휴일을 정의하세요.",
+      "Define near breaches for working capital products": "운전자본 상품에 대한 근접 위반 정의",
       "Define or modify Maker Checker tasks": "Maker Checker 작업 정의 또는 수정",
       "Define or modify entity to entity mappings": "엔터티 대 엔터티 매핑 정의 또는 수정",
       "Define or modify roles and associated permissions": "역할 및 관련 권한 정의 또는 수정",
@@ -3274,6 +3518,7 @@
       "Edit Accounting Rules": "회계 규칙 편집",
       "Edit Adhoc Query": "임시 쿼리 편집",
       "Edit Amazon S3 Configuration": "Amazon S3 구성 편집",
+      "Edit Breach": "위반 수정",
       "Edit Cashier": "계산원 편집",
       "Edit Center": "편집 센터",
       "Edit Charge": "청구 수정",
@@ -3295,7 +3540,9 @@
       "Edit Group": "그룹 편집",
       "Edit Holidays": "공휴일 수정",
       "Edit Hook": "후크 편집",
+      "Edit Loan Originator": "대출 담당자 수정",
       "Edit Loan Product": "대출상품 수정",
+      "Edit Near Breach": "근접 위반 수정",
       "Edit Notification Configuration": "알림 구성 편집",
       "Edit Office": "사무실 편집",
       "Edit Payment Type": "결제 유형 수정",
@@ -3402,6 +3649,7 @@
       "LoanAccountCustomSnapshotBusinessEvent": "대출계정CustomSnapshotBusinessEvent",
       "LoanAccountDelinquencyPauseChangedBusinessEvent": "대출계정연체 일시중지ChangedBusinessEvent",
       "LoanAccountSnapshotBusinessEvent": "대출계정스냅샷비즈니스이벤트",
+      "Loan Account Details": "대출 계좌 세부 정보",
       "Loan Account Actions": "대출 계정 작업",
       "Loan Collateral Details": "대출 담보 세부정보",
       "Loan Disbursal": "대출금 지급",
@@ -3470,6 +3718,7 @@
       "N/A": "해당 없음",
       "Navigate system selecting entity": "이를 통해 사용자는 시스템 선택 엔터티를 빠르게 탐색할 수 있으며 검색은 탐색을 더욱 강력하게 만듭니다.",
       "Navigation": "항해",
+      "Near Breach Configurations": "근접 위반 구성",
       "No Data": "데이터 없음",
       "Not Activated": "활성화되지 않음",
       "No Description": "설명이 없습니다",
@@ -3527,6 +3776,7 @@
       "Provisioning criteria definitions": "모든 프로비저닝 기준 정의를 입력하세요.",
       "Precedes of": "앞선",
       "Recurring Deposit Account Charges": "반복 예금 계좌 수수료",
+      "Recurring Deposit Account Details": "정기 적금 계좌 세부 정보",
       "Recurring Deposit Account Interest Rate Chart": "정기예금 계좌 이자율 차트",
       "Recurring Deposit Account Standing Instructions": "정기예금 계좌 유지 지침",
       "Recurring Deposit Account Transactions": "반복 예금 계좌 거래",
@@ -3537,6 +3787,7 @@
       "Recurring Deposits Account Transactions": "정기예금 계좌거래",
       "RecurringDeposit Account View": "정기예금 계좌조회",
       "Red asterisk field": "빨간색 별표(*)가 있는 필드는 필수입니다. 자세한 내용을 보려면 다음을 클릭하세요.",
+      "Remittances": "송금",
       "Repayment Schedule": "상환 일정",
       "Repeats' and 'Repeats every": "참고: 이 회의에 종속된 활성 계좌(JLG 대출, 정기 예금 등)가 있는 경우 '반복' 및 '반복 간격'은 수정할 수 없습니다.",
       "Report Parameters": "보고서 매개변수",
@@ -3592,6 +3843,7 @@
       "Share Products Dividends": "제품 배당금 공유",
       "Share products define the rules, default settings": "주식 상품은 금융 기관의 주식 및 배당금에 대한 규칙, 기본 설정 및 제약 조건을 정의합니다. 공유 상품은 금융 기관의 고객이 보유하고 있거나 보유하게 될 여러 계좌에 대한 템플릿을 제공합니다.",
       "Shares": "주식",
+      "Shares Account Details": "주식 계좌 세부 정보",
       "Shares Account Actions": "공유 계정 작업",
       "Shares Account Charges": "주식 계정 비용",
       "Shares Account Dividends": "주식 계좌 배당금",
@@ -3664,6 +3916,7 @@
       "View Adhoc Query": "임시 쿼리 보기",
       "View Amazon S3 Configuration": "Amazon S3 구성 보기",
       "View Audit": "감사 보기",
+      "View Breach": "위반 보기",
       "View Bulk Import": "대량 가져오기 보기",
       "View Cashier": "계산원 보기",
       "View Charges": "요금 보기",
@@ -3686,7 +3939,9 @@
       "View Group": "그룹 보기",
       "View Holidays": "휴일 보기",
       "View Hook": "후크 보기",
+      "View Loan Originator": "대출 담당자 보기",
       "View Loan Product": "대출상품 보기",
+      "View Near Breach": "근접 위반 보기",
       "View Notification Configuration": "알림 구성 보기",
       "View Office": "사무실 보기",
       "View Product Mix": "제품 믹스 보기",
@@ -3759,7 +4014,15 @@
       "Failed to update payment type. Please try again.": "결제 유형 업데이트에 실패했습니다. 다시 시도하세요.",
       "Search and assign this beneficiary to an existing Mifos client account": "이 수취인을 검색하여 기존 Mifos 고객 계정에 배정하세요",
       "Failed to search clients. Please try again.": "고객 검색에 실패했습니다. 다시 시도하세요.",
+<<<<<<< HEAD
       "Process Remittance": "송금 처리"
+=======
+      "Process Remittance": "송금 처리",
+      "Loan Originators": "대출 담당자",
+      "Loan Reschedules": "대출 일정 변경",
+      "Settings saved successfully": "설정이 성공적으로 저장되었습니다.",
+      "Undo Write-off Description": "이 작업은 상각 거래를 취소하고 대출을 이전 활성 상태로 복원합니다. 이 작업의 이유를 설명하는 메모를 제공해 주세요."
+>>>>>>> origin/dev
     },
     "permissions": {
       "actions": {
@@ -4276,7 +4539,12 @@
     "ACTIVE": "활동적인",
     "PENDING": "보류 중",
     "INACTIVE": "비활성",
+<<<<<<< HEAD
     "Process Remittance": "송금 처리"
+=======
+    "Process Remittance": "송금 처리",
+    "Allow full term length for each tranche disbursement": "활성화되면 각 트란셰 지급은 남은 기간에 맞추는 대신 전체 대출 기간 일정을 따릅니다. PROGRESSIVE 대출 일정 유형에만 사용 가능합니다."
+>>>>>>> origin/dev
   },
   "countries": {
     "AF": "아프가니스탄",
@@ -4396,5 +4664,71 @@
     "ZW": "짐바브웨"
   },
   "Deactivate Role": "역할 비활성화",
+<<<<<<< HEAD
   "Delete Role": "역할 삭제"
+=======
+  "Delete Role": "역할 삭제",
+  "clients": {
+    "actions": {
+      "close": {
+        "success": "고객이 성공적으로 해지되었습니다."
+      },
+      "reject": {
+        "success": "고객이 성공적으로 거절되었습니다."
+      },
+      "withdraw": {
+        "success": "고객이 성공적으로 탈퇴되었습니다."
+      },
+      "reactivate": {
+        "success": "고객이 성공적으로 재활성화되었습니다.",
+        "failure": "고객 재활성화에 실패했습니다."
+      },
+      "activate": {
+        "success": "고객이 성공적으로 활성화되었습니다.",
+        "failure": "고객 활성화에 실패했습니다."
+      },
+      "acceptTransfer": {
+        "success": "고객 이체가 성공적으로 수락되었습니다."
+      },
+      "rejectTransfer": {
+        "success": "고객 이체가 성공적으로 거절되었습니다."
+      },
+      "undoTransfer": {
+        "success": "고객 이체가 성공적으로 취소되었습니다."
+      },
+      "undoRejection": {
+        "success": "고객 거절이 성공적으로 취소되었습니다."
+      },
+      "transfer": {
+        "success": "고객 이체가 성공적으로 제안되었습니다.",
+        "failure": "고객 이체 제안에 실패했습니다."
+      },
+      "addCharge": {
+        "success": "고객 수수료가 성공적으로 추가되었습니다."
+      },
+      "addCollateral": {
+        "success": "고객 담보가 성공적으로 추가되었습니다."
+      },
+      "assignStaff": {
+        "success": "직원이 고객에게 성공적으로 배정되었습니다.",
+        "failure": "직원 배정에 실패했습니다."
+      },
+      "updateSavingsAccount": {
+        "success": "고객 저축 계좌가 성공적으로 업데이트되었습니다."
+      },
+      "takeSurvey": {
+        "success": "설문조사가 성공적으로 제출되었습니다.",
+        "failure": "설문조사 제출에 실패했습니다."
+      }
+    }
+  },
+  "error": {
+    "resource": {
+      "notImplemented": {
+        "type": "구현되지 않은 오류",
+        "message": "구현되지 않은 기능입니다!"
+      }
+    }
+  }
+>>>>>>> origin/dev
 }

@@ -6,8 +6,13 @@
     "accountingRule": {
       "duplicateName": "माफ गर्नुहोस्, यो नामको लेखा नियम पहिले नै अवस्थित छ।"
     },
+<<<<<<< HEAD
     "error.resource.notImplemented.type": "लागू नभएको त्रुटि",
     "error.resource.notImplemented.message": "कार्यक्षमता लागू गरिएको छैन!",
+=======
+    "error.resource.notImplemented.type": "कार्यान्वयन भएको छैन",
+    "error.resource.notImplemented.message": "कार्यान्वयन नभएको कार्यक्षमता!",
+>>>>>>> origin/dev
     "linkedSavingsAccountOwnership": "लिंक गरिएको बचत खाता चयनित ग्राहकको होइन।",
     "clientNotInGSIM": "आईडी {{id}} भएको ग्राहक GSIM मा उपस्थित छैन।",
     "Capitalized Income amount adjusted already adjusted": "क्यापिटलाइज्ड आय रकम पहिले नै समायोजन गरिएको छ",
@@ -28,6 +33,7 @@
     "error.msg.charge.due.at.disbursement.cannot.be.penalty": "भुक्तानी गर्दा शुल्कलाई जरिवानाको रूपमा सेटअप गर्न सकिँदैन।",
     "error.msg.charge.duplicate.name": "त्यो नामको चार्ज पहिले नै अवस्थित छ।",
     "error.msg.charge.update.of.charge.applies.to.is.not.supported": "मा लागू हुने शुल्कको अद्यावधिक समर्थित छैन।",
+    "error.msg.data.integrity.issue": "अनुरोधले डाटाबेसमा डेटा अखण्डता समस्या उत्पन्न गर्‍यो",
     "error.msg.loan.product.close.date.cannot.be.before.start.date": "ऋण उत्पादन बन्द मिति सुरु मिति भन्दा पहिले हुन सक्दैन।",
     "error.msg.product.loan.duplicate.charge": "ऋण उत्पादन प्रत्येक प्रकारको मात्र एक शुल्क हुन सक्छ।",
     "error.msg.product.loan.duplicate.name": "`{{params[0].value}}` नामको ऋण उत्पादन पहिले नै अवस्थित छ।",
@@ -35,6 +41,7 @@
     "error.msg.product.savings.duplicate.name": "`{{params[0].value}}` नामको बचत उत्पादन पहिले नै अवस्थित छ।",
     "error.msg.product.savings.duplicate.short.name": "छोटो नाम {{params[0].value}} भएको बचत उत्पादन पहिले नै अवस्थित छ।",
     "error.msg.savingsproduct.unknown.data.integrity.issue": "बचत उत्पादन सिर्जना / अद्यावधिक गर्दा एक अप्रत्याशित समस्या भयो। सर्भरमा लगइन त्रुटि भयो।",
+    "error.msg.reporting.error": "रिपोर्ट उत्पन्न गर्दा त्रुटि भयो।",
     "validation.msg.charge.amount.cannot.be.blank": "रकम खाली हुन सक्दैन।",
     "validation.msg.charge.amount.not.greater.than.zero": "शुल्क रकम शून्य भन्दा बढी हुनुपर्छ।",
     "validation.msg.charge.chargeAppliesTo.cannot.be.blank": "शुल्क खाली हुन सक्दैन मा लागू हुन्छ।",
@@ -285,7 +292,140 @@
     "validation.msg.savingsproduct.shortName.exceeds.max.length": "छोटो नाम {{params[0].value}} वर्णभन्दा लामो हुन सक्दैन।",
     "validation.msg.savingsproduct.withdrawalFeeAmount.cannot.be.blank": "निकासी शुल्क रकम अनिवार्य छ।",
     "validation.msg.savingsproduct.withdrawalFeeAmount.not.zero.or.greater": "निकासी शुल्क रकम प्रदान गरिएको भएमा शून्य भन्दा बढी वा बराबर हुनुपर्छ।",
-    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "निकासी शुल्क अवधि प्रकार अनिवार्य छ।"
+    "validation.msg.savingsproduct.withdrawalFeeType.is.not.one.of.expected.enumerations": "चयन गरिएको निकासी शुल्क प्रकार मान्य छैन।",
+    "http": {
+      "connection": {
+        "title": "जडान त्रुटि",
+        "message": "सर्भरमा जडान गर्न सकिएन। कृपया आफ्नो इन्टरनेट जडान जाँच गर्नुहोस्।"
+      },
+      "badRequest": {
+        "title": "अमान्य अनुरोध",
+        "message": "कृपया आफ्नो इनपुट जाँच गर्नुहोस् र पुन: प्रयास गर्नुहोस्।"
+      },
+      "unauthorized": {
+        "title": "अनधिकृत",
+        "message": "तपाईंको सत्र समाप्त भएको छ। कृपया पुन: लग इन गर्नुहोस्।",
+        "action": "लग इन"
+      },
+      "forbidden": {
+        "title": "पहुँच अस्वीकृत",
+        "message": "तपाईंलाई यो कार्य गर्ने अनुमति छैन।"
+      },
+      "notFound": {
+        "title": "फेला परेन",
+        "message": "अनुरोध गरिएको स्रोत फेला परेन।",
+        "contextMessage": "{{context}} फेला परेन।"
+      },
+      "conflict": {
+        "title": "द्वन्द्व",
+        "message": "स्रोत पहिले नै अवस्थित छ वा द्वन्द्व छ।"
+      },
+      "serverError": {
+        "title": "सर्भर त्रुटि",
+        "message": "अप्रत्याशित त्रुटि भयो। कृपया पछि पुन: प्रयास गर्नुहोस्।"
+      },
+      "serviceUnavailable": {
+        "title": "सेवा उपलब्ध छैन",
+        "message": "सेवा अस्थायी रूपमा उपलब्ध छैन। कृपया पछि पुन: प्रयास गर्नुहोस्।"
+      },
+      "default": {
+        "title": "त्रुटि",
+        "message": "अप्रत्याशित त्रुटि भयो।"
+      }
+    },
+    "interceptor": {
+      "invalidParams": "अनुरोधमा अमान्य प्यारामिटरहरू पठाइयो!"
+    },
+    "auth": {
+      "pleaseWait": "कृपया पर्खनुहोस्...",
+      "startType": "प्रमाणीकरण सुरु",
+      "twoFactor": {
+        "type": "दुई-कारक प्रमाणीकरण आवश्यक",
+        "message": "दुई-कारक प्रमाणीकरण आवश्यक छ"
+      },
+      "passwordExpired": {
+        "type": "पासवर्ड समाप्त भयो",
+        "message": "तपाईंको पासवर्ड समाप्त भएको छ, कृपया पासवर्ड रिसेट गर्नुहोस्!"
+      },
+      "success": {
+        "type": "प्रमाणीकरण सफल",
+        "message": "{{username}} सफलतापूर्वक लग इन भयो!"
+      },
+      "passwordReset": {
+        "type": "पासवर्ड सफलतापूर्वक रिसेट भयो",
+        "message": "तपाईंको पासवर्ड सफलतापूर्वक रिसेट भयो!"
+      },
+      "callbackFailed": {
+        "type": "प्रमाणीकरण असफल",
+        "message": "प्रमाणीकरण पूरा गर्न सकिएन। कृपया पुन: प्रयास गर्नुहोस्।"
+      },
+      "callbackError": {
+        "type": "प्रमाणीकरण त्रुटि",
+        "message": "प्रमाणीकरणको क्रममा त्रुटि भयो। कृपया पुन: प्रयास गर्नुहोस्।"
+      }
+    },
+    "hooks": {
+      "lastEvent": "कम्तिमा एउटा घटना आवश्यक छ। अन्तिम घटना मेटाउन सकिँदैन।"
+    },
+    "generic": {
+      "unexpected": "त्रुटि भयो। कृपया पुन: प्रयास गर्नुहोस्।",
+      "unexpectedRetry": "अप्रत्याशित त्रुटि भयो। कृपया पुन: प्रयास गर्नुहोस्।",
+      "unexpectedShort": "अप्रत्याशित त्रुटि भयो।"
+    },
+    "holiday": {
+      "invalidDate": "अमान्य मिति चयन गरिएको छ। कृपया मान्य मिति चयन गर्नुहोस्।",
+      "invalidRepaymentDate": "अमान्य भुक्तानी पुनर्तालिका मिति। कृपया मान्य मिति चयन गर्नुहोस्।"
+    },
+    "report": {
+      "type": "प्रतिवेदन उत्पादन",
+      "generated": "प्रतिवेदन: {{reportName}} डाटा उत्पन्न भयो",
+      "generatedNoData": "प्रतिवेदन: {{reportName}} डाटा बिना उत्पन्न भयो"
+    },
+    "clipboard": {
+      "type": "क्लिपबोर्ड",
+      "copied": "प्रतिलिपि गरियो: {{value}}"
+    },
+    "tenant": {
+      "changed": {
+        "type": "भाडावाल परिवर्तन भयो"
+      }
+    },
+    "config": {
+      "setConfig": "{{type}} कन्फिगरेसन सेट गरियो"
+    },
+    "loans": {
+      "undoWriteOff": {
+        "type": "ऋण माफी रद्द गर्न असफल",
+        "message": "ऋण माफी रद्द प्रक्रियामा त्रुटि भयो। कृपया पुन: प्रयास गर्नुहोस् वा सहायतामा सम्पर्क गर्नुहोस्।"
+      },
+      "alreadyAdjusted": "पुँजीकृत आय रकम पहिले नै समायोजित भइसकेको छ",
+      "adjustment": "समायोजन {{type}} कारोबार",
+      "capitalizedIncomeLimit": "पुँजीकृत आय समायोजन रकम बराबर वा कम हुनुपर्छ",
+      "buyDownFeeAdjusted": "Buy Down शुल्क रकम पहिले नै समायोजित भइसकेको छ",
+      "buyDownFeeLimit": "Buy Down शुल्क समायोजन रकम बराबर वा कम हुनुपर्छ",
+      "businessRule": "व्यापार नियम",
+      "alertWithAmount": "{{label}}: {{amount}}"
+    },
+    "error.auth.type": "प्रमाणीकरण त्रुटि",
+    "error.auth.message": "तपाईंको सत्र समाप्त भएको छ वा प्रमाणपत्रहरू अमान्य छन्।",
+    "error.token.invalid.type": "अमान्य टोकन",
+    "error.token.invalid.message": "प्रदान गरिएको एक पटकको टोकन अमान्य छ।",
+    "error.bad.request.type": "खराब अनुरोध",
+    "error.bad.request.message": "अनुरोधमा अमान्य प्यारामिटरहरू पठाइयो!",
+    "error.unauthorized.type": "अनधिकृत",
+    "error.unauthorized.message": "तपाईंको सत्र समाप्त भएको छ वा प्रमाणपत्रहरू अमान्य छन्।",
+    "error.resource.not.found.type": "स्रोत फेला परेन",
+    "error.resource.not.found.message": "अनुरोध गरिएको स्रोत फेला परेन।",
+    "error.server.internal.type": "आन्तरिक सर्भर त्रुटि",
+    "error.server.internal.message": "सर्भरमा अप्रत्याशित त्रुटि भयो। कृपया पछि पुन: प्रयास गर्नुहोस्।",
+    "error.unknown.type": "अज्ञात त्रुटि",
+    "error.unknown.message": "अप्रत्याशित त्रुटि भयो।",
+    "validation.required": "यो फिल्ड आवश्यक छ",
+    "validation.minLength": "न्यूनतम लम्बाइ {{requiredLength}} हो",
+    "validation.emailInvalid": "इमेल मान्य छैन",
+    "validation.requiredField": "{{label}} एक आवश्यक फिल्ड हो।",
+    "validation.mustBeAtLeast": "{{field}} कम्तिमा {{min}} हुनुपर्छ",
+    "validation.mustBePositive": "{{field}} धनात्मक संख्या हुनुपर्छ।"
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -335,6 +475,7 @@
     "accounting": {
       "Accrual (periodic)": "उपार्जन (आवधिक)",
       "Accrual (upfront)": "उपार्जन (अगाडि)",
+      "CASH_BASED": "नगद",
       "Cash": "नगद",
       "NONE": "कुनै पनि छैन",
       "financialActivity": {
@@ -479,6 +620,10 @@
       "Export to File": "फाइलमा निर्यात गर्नुहोस्",
       "Export CSV": "CSV निर्यात गर्नुहोस्",
       "Export XLS": "XLS निर्यात गर्नुहोस्",
+<<<<<<< HEAD
+=======
+      "Export to PDF": "PDF को रूपमा निर्यात गर्नुहोस्",
+>>>>>>> origin/dev
       "Export KYC": "KYC निर्यात गर्नुहोस्",
       "Validate Documentation": "कागजात प्रमाणित गर्नुहोस्",
       "INCOMPLETE": "अपूर्ण",
@@ -618,7 +763,12 @@
       "Retry": "पुनः प्रयास गर्नुहोस्",
       "PRINT": "छाप्नुहोस्",
       "DONE": "सम्पन्न",
+<<<<<<< HEAD
       "Submitting": "पेश गर्दै"
+=======
+      "Submitting": "पेश गर्दै",
+      "OK": "ठीक छ"
+>>>>>>> origin/dev
     },
     "catalogs": {
       "Interest payment waiver": "ब्याज भुक्तानी माफी",
@@ -888,7 +1038,12 @@
       "DAYS": "दिनहरू",
       "MONTHS": "महिनाहरू",
       "YEARS": "वर्षहरू",
+<<<<<<< HEAD
       "Loan Creation": "ऋण सिर्जना"
+=======
+      "Loan Creation": "ऋण सिर्जना",
+      "Account_transfer": "खाता स्थानान्तरण"
+>>>>>>> origin/dev
     },
     "commons": {
       "50 characters long": "५० वर्ण लामो",
@@ -909,6 +1064,8 @@
       "are": "छन्",
       "be larger than 0 and at most 100": "० भन्दा ठुलो र बढीमा १००",
       "begin with a special character or number": "एक विशेष वर्ण वा संख्या संग सुरु गर्नुहोस्",
+      "can not be less than": "भन्दा कम हुन सक्दैन",
+      "can not be more than": "भन्दा बढी हुन सक्दैन",
       "cannot begin with a special character or number": "विशेष वर्ण वा संख्याबाट सुरु गर्न सकिँदैन",
       "decimal places": "दशमलव स्थानहरू",
       "do not match": "मिल्दैन",
@@ -936,6 +1093,10 @@
       "on": "मा",
       "every": "प्रत्येक",
       "Password validation": "पासवर्डमा कम्तिमा १२ क्यारेक्टरहरू हुनुपर्छ, जसमा १ अपरकेस, लोअरकेस र स्पेशल क्यारेक्टरहरू हुनुपर्छ र दोहोरिएका क्यारेक्टरहरू वा सेतो-स्पेसहरू समावेश हुनु हुँदैन।",
+<<<<<<< HEAD
+=======
+      "Must be a positive integer": "सकारात्मक पूर्णांक हुनुपर्छ",
+>>>>>>> origin/dev
       "Must be at least": "कम्तिमा हुनुपर्छ",
       "Must be less or equal to": "कम वा बराबर हुनुपर्छ",
       "must be after or equal to start date": "सुरु मिति पछि वा बराबर हुनुपर्छ",
@@ -996,6 +1157,7 @@
       "Beneficiary": "लाभग्राही",
       "Beneficiary Selection": "लाभग्राही छनोट",
       "Block Savings Account": "बचत खाता रोक्नुहोस्",
+      "Breach Configuration": "उल्लंघन कन्फिगरेसन",
       "Bulk Import": "थोक आयात",
       "Bulk Loan Reassignment": "बल्क ऋण पुन: असाइनमेन्ट",
       "Business Rule Parameters": "व्यापार नियम प्यारामिटरहरू",
@@ -1164,6 +1326,7 @@
       "Loan Delinquency Classification": "कर्जा दुस्तुरी वर्गीकरण",
       "Loan Delinquency Tags": "ऋण अपराध ट्यागहरू",
       "Loan Delinquency Installment Tags": "ण दिक्विर्याज किग ट्यागहरू",
+      "Loan Delinquency Range Schedule": "ऋण बाँकी दायरा तालिका",
       "Loan Details": "ऋण विवरण",
       "Loan Disbursal": "Loan ण विभेदत्मक",
       "Loan Originators": "ऋण सुरुवातकर्ताहरू",
@@ -1207,6 +1370,7 @@
       "Minimum Active Period": "न्यूनतम सक्रिय अवधि",
       "Minimum Deposit Term": "न्यूनतम जम्मा अवधि",
       "Moratorium": "मोरेटोरियम",
+      "Near Breach Configuration": "नजिकको उल्लङ्घन कन्फिगरेसन",
       "Nominal Interest Rate by loan cycle": "ऋण चक्र द्वारा नाममात्र ब्याज दर",
       "Notes": "नोटहरू",
       "Notification External Service": "सूचना बाह्य सेवा",
@@ -1398,7 +1562,13 @@
       "Payout Assignment": "भुक्तानी तोकिएको",
       "Identification": "पहिचान",
       "Professional Information": "पेशागत जानकारी",
+<<<<<<< HEAD
       "Add Profile Entry": "प्रोफाइल प्रविष्टि थप्नुहोस्"
+=======
+      "Add Profile Entry": "प्रोफाइल प्रविष्टि थप्नुहोस्",
+      "Id": "आईडी",
+      "Recipient Summary": "प्राप्तकर्ता सारांश"
+>>>>>>> origin/dev
     },
     "inputs": {
       "Loan Account Status": "ऋण खाता स्थिति",
@@ -1555,6 +1725,7 @@
       "Beneficiary": "लाभार्थी",
       "Branch": "साखा",
       "Branch Office": "साखा कार्यालय",
+      "Breach": "उल्लंघन",
       "Breakdown": "ब्रेकडाउन",
       "Boolean": "बुलियन",
       "Business Date": "व्यापार मिति",
@@ -1767,6 +1938,7 @@
       "Delinquency Grace Days": "अपराध अनुग्रह दिनहरू",
       "Delinquency Start Type": "डिलिंक्वेन्सी सुरुवात प्रकार",
       "Delinquency Tags": "अपराध ट्यागहरू",
+      "Delinquent Amount": "बाँकी रकम",
       "Delinquent Days": "अपराधी दिनहरू",
       "Delivery Method": "वितरण विधि",
       "Deposit Account": "निक्षेप खाता",
@@ -1835,6 +2007,7 @@
       "Enable Down Payment": "डाउन पेमेन्ट सक्षम गर्नुहोस्",
       "Enable Lock-in Period": "लक-इन अवधि सक्षम गर्नुहोस्",
       "Enable Multiple Disbursals": "बहुविध वितरण सक्षम गर्नुहोस्",
+      "Enable Near Breach": "नजिकको उल्लंघन सक्षम गर्नुहोस्",
       "Enabled": "सक्षम गरियो",
       "End Date": "अन्त्य मिति",
       "End Point": "अन्त्य बिन्दु",
@@ -1859,6 +2032,7 @@
       "Execution Time": "कार्यान्वयन समय",
       "Existing Client": "अवस्थित ग्राहक",
       "Existing Meeting Date": "अवस्थित बैठक मिति",
+      "Expected Amount": "अपेक्षित रकम",
       "Expected Disbursement On": "अपेक्षित वितरण चालू",
       "Expected disbursement on": "अपेक्षित वितरण मा",
       "Expense Account": "खर्च लेखा",
@@ -1985,6 +2159,7 @@
       "Incentive Type": "प्रोत्साहन प्रकार",
       "Include in Customer Loan Counter": "ग्राहक ऋण काउन्टरमा समावेश गर्नुहोस्",
       "Income Account": "आय खाता",
+      "Income From Discount Fee": "छुट शुल्कबाट आय",
       "Income capitalization": "आय पूंजीकरण",
       "INCOME CAPITALIZATION": "आय पूंजीकरण",
       "Income from Charge": "शुल्कबाट आम्दानी",
@@ -2204,6 +2379,10 @@
       "Minimum Opening Balance": "न्यूनतम ओपनिङ ब्यालेन्स",
       "Minimum Overdraft Required for Interest Calculation": "ब्याज गणनाको लागि न्यूनतम ओभरड्राफ्ट आवश्यक छ",
       "Minimum Payment": "न्यूनतम भुक्तानी",
+<<<<<<< HEAD
+=======
+      "Minimum Payment Criteria Met": "न्यूनतम भुक्तानी मापदण्ड पूरा भयो",
+>>>>>>> origin/dev
       "Minimum Payment Type": "न्यूनतम भुक्तानी प्रकार",
       "Minimum Required Balance": "न्यूनतम आवश्यक ब्यालेन्स",
       "Minimum Value": "न्यूनतम मान",
@@ -2225,6 +2404,10 @@
       "Name": "नाम",
       "Name Decorated": "नाम सजाइएको",
       "Name of the Organization": "संस्थाको नाम",
+      "Near Breach": "नजिकको उल्लंघन",
+      "Near Breach Evaluation Frequency": "नजिकको उल्लंघन मूल्यांकन आवृत्ति",
+      "Near Breach Evaluation Frequency Type": "नजिकको उल्लंघन मूल्यांकन आवृत्ति प्रकार",
+      "Near Breach Threshold": "नजिकको उल्लंघन सीमा",
       "Net Cash": "नेट नगद",
       "New Interest Rate": "नयाँ ब्याजदर",
       "Next Meeting Date": "अर्को बैठक मिति",
@@ -2299,6 +2482,7 @@
       "Original Schedule": "मूल तालिका",
       "Output Type": "आउटपुट प्रकार",
       "Outstanding": "उत्कृष्ट",
+      "Outstanding Amount": "बाँकी रकम",
       "Overdraft": "ओभरड्राफ्ट",
       "Over Amount": "रकम भन्दा बढी",
       "Over Amount Calculation Type": "ओभर अमाउन्ट गणना प्रकार",
@@ -2322,6 +2506,7 @@
       "PDF format": "PDF ढाँचा",
       "PREVIEW": "पूर्वावलोकन",
       "Paid": "भुक्तान गरियो",
+      "Paid Amount": "भुक्तानी रकम",
       "Paid Date": "भुक्तानी मिति",
       "Parameter": "प्यारामिटर",
       "Parameter Name Passed to Pentaho": "रिपोर्ट प्यारामिटर नाम",
@@ -2361,6 +2546,10 @@
       "Percentage to Base": "आधार को प्रतिशत",
       "Period": "अवधि",
       "Period From": "बाट अवधि",
+<<<<<<< HEAD
+=======
+      "Period Number": "अवधि संख्या",
+>>>>>>> origin/dev
       "Period Payment Rate": "अवधि भुक्तानी दर",
       "Period To": "को अवधि",
       "Period Type": "अवधि प्रकार",
@@ -2630,6 +2819,7 @@
       "Text": "पाठ",
       "Theme": "विषयवस्तु",
       "Theme and Font": "विषयवस्तु र फन्ट",
+      "Threshold": "थ्रेसहोल्ड",
       "Thursday": "बिहीबार",
       "Time": "समय",
       "To": "को",
@@ -2846,7 +3036,50 @@
       "Period Payment Frequency Type": "अवधि भुक्तानी आवृत्ति प्रकार",
       "Payment Allocation Transactions": "भुक्तानी विनियोजन लेनदेन",
       "Net Present Value day count": "खुद वर्तमान मूल्य दिन गणना",
+<<<<<<< HEAD
       "Installment": "किस्ता"
+=======
+      "Installment": "किस्ता",
+      "Beneficiary Selection": "लाभार्थी चयन",
+      "Confirmation Number": "पुष्टि नम्बर",
+      "Sub Status": "उप-स्थिति",
+      "Document": "कागजात",
+      "Document Number": "कागजात नम्बर",
+      "Document number is required": "कागजात नम्बर आवश्यक छ",
+      "Allow full term for each tranche": "प्रत्येक किस्तालाई पूर्ण अवधि अनुमति दिनुहोस्",
+      "Failed to load vendors": "विक्रेताहरू लोड गर्न असफल भयो",
+      "First name is required": "पहिलो नाम आवश्यक छ",
+      "Last name is required": "थर आवश्यक छ",
+      "Search Client": "ग्राहक खोज्नुहोस्",
+      "Type client name or account number": "ग्राहकको नाम वा खाता नम्बर टाइप गर्नुहोस्",
+      "Overdue": "म्याद गुज्रेको",
+      "Overdue Fees": "म्याद गुज्रेको शुल्क",
+      "Confirmed At": "पुष्टि मिति",
+      "Full Name": "पूरा नाम",
+      "Loading vendors": {
+        "": {
+          "": {
+            "": "विक्रेताहरू लोड हुँदैछ..."
+          }
+        }
+      },
+      "Minimum 3 characters": "कम्तीमा ३ अक्षर",
+      "National ID": "राष्ट्रिय परिचयपत्र",
+      "Nationality": "राष्ट्रियता",
+      "Payout Amount": "भुक्तानी रकम",
+      "Payout Country": "भुक्तानी देश",
+      "Payout Token": "भुक्तानी टोकन",
+      "Recipient Name": "प्राप्तकर्ताको नाम",
+      "Send Amount": "पठाउने रकम",
+      "Send Country": "पठाउने देश",
+      "Sender": "प्रेषक",
+      "Sender Name": "प्रेषकको नाम",
+      "Sent By": "द्वारा पठाइएको",
+      "Deposited At": "जम्मा मिति",
+      "Passport": "राहदानी",
+      "Driver's License": "सवारी चालक अनुमतिपत्र",
+      "Mothers Maiden Name": "आमाको कुमारी नाम"
+>>>>>>> origin/dev
     },
     "links": {
       "Community": "समुदाय",
@@ -2986,7 +3219,12 @@
       "Reject Additional Shares": "अतिरिक्त शेयरहरू अस्वीकार गर्नुहोस्",
       "Tasks": "कार्यहरू",
       "Remittances": "रेमिट्यान्स",
+<<<<<<< HEAD
       "Process Remittance": "रेमिट्यान्स प्रक्रिया"
+=======
+      "Process Remittance": "रेमिट्यान्स प्रक्रिया",
+      "Undo Write-off": "राइट-अफ पूर्ववत गर्नुहोस्"
+>>>>>>> origin/dev
     },
     "placeholders": {
       "Add new server": "नयाँ सर्भर थप्नुहोस्",
@@ -3109,6 +3347,10 @@
       "Audit logs of all the activities": "सबै गतिविधिहरूको अडिट लगहरू, जस्तै ग्राहक सिर्जना, ऋण वितरण आदि",
       "Bar": "बार",
       "BIRT": "Mifos Reporting Plugin for Eclipse Birt",
+<<<<<<< HEAD
+=======
+      "Breach Configurations": "उल्लंघन कन्फिगरेसन",
+>>>>>>> origin/dev
       "Bulk Import": "थोक आयात",
       "Bulk Loan Reassignment": "बल्क ऋण पुन: असाइनमेन्ट",
       "Bulk data import using excel spreadsheet templates": "ग्राहकहरू, कार्यालयहरू, इत्यादिका लागि एक्सेल स्प्रेडसिट टेम्प्लेटहरू प्रयोग गरेर बल्क डाटा आयात।",
@@ -3159,6 +3401,7 @@
       "Create Accounting Closure": "लेखा बन्द सिर्जना गर्नुहोस्",
       "Create Accounting Rule": "लेखा नियम बनाउनुहोस्",
       "Create Adhoc Query": "Adhoc क्वेरी सिर्जना गर्नुहोस्",
+      "Create Breach": "उल्लंघन सिर्जना गर्नुहोस्",
       "Create Center": "केन्द्र सिर्जना गर्नुहोस्",
       "Create Charge": "चार्ज सिर्जना गर्नुहोस्",
       "Create Client": "ग्राहक सिर्जना गर्नुहोस्",
@@ -3184,7 +3427,13 @@
       "Create Journal Entry": "जर्नल प्रविष्टि सिर्जना गर्नुहोस्",
       "Create Loan Product": "ऋण उत्पादन सिर्जना गर्नुहोस्",
       "Create Loan Originator": "ऋण सुरुवातकर्ता सिर्जना गर्नुहोस्",
+<<<<<<< HEAD
+=======
+      "View Loan Originator": "ऋण सुरुवातकर्ता हेर्नुहोस्",
+      "Edit Loan Originator": "ऋण सुरुवातकर्ता सम्पादन गर्नुहोस्",
+>>>>>>> origin/dev
       "Create Loans Account": "ऋण खाता सिर्जना गर्नुहोस्",
+      "Create Near Breach": "लगभग उल्लंघन सिर्जना गर्नुहोस्",
       "Create New GL Account": "यो विकल्पले तपाईंलाई नयाँ GL खाताहरू सिर्जना गर्न अनुमति दिन्छ।",
       "Create Office": "कार्यालय सिर्जना गर्नुहोस्",
       "Create Payment Type": "भुक्तानी प्रकार सिर्जना गर्नुहोस्",
@@ -3246,6 +3495,7 @@
       "Define Tax Groups": "कर समूहहरू परिभाषित गर्नुहोस्",
       "Define Tax components": "कर घटकहरू परिभाषित गर्नुहोस्",
       "Define Tax components and Tax groups": "कर घटक र कर समूह परिभाषित गर्नुहोस्",
+      "Define breaches for working capital products": "कार्यशील पूँजी उत्पादनहरूको लागि उल्लंघनहरू परिभाषित गर्नुहोस्",
       "Define charges/penalties for loan products, savings and deposit products": "ऋण उत्पादनहरू, बचत र निक्षेप उत्पादनहरूको लागि शुल्क/दण्ड परिभाषित गर्नुहोस्",
       "Define collaterals for Collateral Management": "संपार्श्विक व्यवस्थापनको लागि संपार्श्विक परिभाषित गर्नुहोस्",
       "Define delinquency bucket as set of ranges": "दायराहरूको सेटको रूपमा अपराध बाल्टी परिभाषित गर्नुहोस्",
@@ -3253,6 +3503,7 @@
       "Define delinquency day ranges and bucket set for loan products": "ऋण उत्पादनहरूको लागि अपराध दिन दायरा र बाल्टिन सेट परिभाषित गर्नुहोस्",
       "Define floating rates for loan products": "ऋण उत्पादनहरूको लागि फ्लोटिंग दरहरू परिभाषित गर्नुहोस्",
       "Define holidays for office": "कार्यालयका लागि छुट्टिहरू परिभाषित गर्नुहोस्",
+      "Define near breaches for working capital products": "कार्यशील पूँजी उत्पादहरूको लागि नजिकको उल्लङ्घन परिभाषित गर्नुहोस्",
       "Define or modify Maker Checker tasks": "मेकर जाँचकर्ता कार्यहरू परिभाषित वा परिमार्जन गर्नुहोस्",
       "Define or modify entity to entity mappings": "इकाई म्यापिङहरूमा इकाई परिभाषित वा परिमार्जन गर्नुहोस्",
       "Define or modify roles and associated permissions": "भूमिका र सम्बन्धित अनुमतिहरू परिभाषित वा परिमार्जन गर्नुहोस्",
@@ -3272,6 +3523,7 @@
       "Edit Accounting Rules": "लेखा नियमहरू सम्पादन गर्नुहोस्",
       "Edit Adhoc Query": "Adhoc क्वेरी सम्पादन गर्नुहोस्",
       "Edit Amazon S3 Configuration": "Amazon S3 कन्फिगरेसन सम्पादन गर्नुहोस्",
+      "Edit Breach": "उल्लंघन सम्पादन गर्नुहोस्",
       "Edit Cashier": "क्यासियर सम्पादन गर्नुहोस्",
       "Edit Center": "केन्द्र सम्पादन गर्नुहोस्",
       "Edit Charge": "शुल्क सम्पादन गर्नुहोस्",
@@ -3293,7 +3545,9 @@
       "Edit Group": "समूह सम्पादन गर्नुहोस्",
       "Edit Holidays": "बिदाहरू सम्पादन गर्नुहोस्",
       "Edit Hook": "हुक सम्पादन गर्नुहोस्",
+      "Edit Loan Originator": "ऋण सुरुवातकर्ता सम्पादन गर्नुहोस्",
       "Edit Loan Product": "ऋण उत्पादन सम्पादन गर्नुहोस्",
+      "Edit Near Breach": "लगभग उल्लंघन सम्पादन गर्नुहोस्",
       "Edit Notification Configuration": "सूचना कन्फिगरेसन सम्पादन गर्नुहोस्",
       "Edit Office": "कार्यालय सम्पादन गर्नुहोस्",
       "Edit Payment Type": "भुक्तानी प्रकार सम्पादन गर्नुहोस्",
@@ -3400,6 +3654,7 @@
       "LoanAccountCustomSnapshotBusinessEvent": "LoanAccountCustomSnapshotBusinessEvent",
       "LoanAccountDelinquencyPauseChangedBusinessEvent": "LoanAccountDelinquencyPauseChangedBusinessEvent",
       "LoanAccountSnapshotBusinessEvent": "LoanAccountSnapshotBusinessEvent",
+      "Loan Account Details": "ऋण खाता विवरण",
       "Loan Account Actions": "ऋण खाता कार्यहरू",
       "Loan Collateral Details": "ऋण संपार्श्विक विवरण",
       "Loan Disbursal": "ऋण वितरण",
@@ -3468,6 +3723,7 @@
       "N/A": "N/A",
       "Navigate system selecting entity": "यसले प्रयोगकर्तालाई प्रणाली चयन गर्ने निकायलाई द्रुत रूपमा नेभिगेट गर्न अनुमति दिनेछ जब खोजी गर्दा नेभिगेसनलाई अझ बलियो बनाउँछ।",
       "Navigation": "नेभिगेसन",
+      "Near Breach Configurations": "लगभग उल्लंघन कन्फिगरेसन",
       "No Data": "डाटा छैन",
       "Not Activated": "सक्रिय छैन",
       "No Description": "विवरण छैन",
@@ -3525,6 +3781,7 @@
       "Provisioning criteria definitions": "कृपया सबै प्रावधान मापदण्ड परिभाषाहरू भर्नुहोस्।",
       "Precedes of": "को पूर्ववर्ती",
       "Recurring Deposit Account Charges": "आवर्ती जम्मा खाता शुल्कहरू",
+      "Recurring Deposit Account Details": "आवर्ती निक्षेप खाता विवरण",
       "Recurring Deposit Account Interest Rate Chart": "आवर्ती जम्मा खाता ब्याज दर चार्ट",
       "Recurring Deposit Account Standing Instructions": "आवर्ती जम्मा खाता स्थायी निर्देशनहरू",
       "Recurring Deposit Account Transactions": "आवर्ती जम्मा खाता लेनदेन",
@@ -3535,6 +3792,7 @@
       "Recurring Deposits Account Transactions": "आवर्ती जम्मा खाता लेनदेन",
       "RecurringDeposit Account View": "आवर्ती जम्मा खाता दृश्य",
       "Red asterisk field": "रातो तारा चिन्ह (*) भएका क्षेत्रहरू आवश्यक छन्। थप जान्नको लागि क्लिक गर्नुहोस्:",
+      "Remittances": "रेमिट्यान्स",
       "Repayment Schedule": "पुन: भुक्तानी तालिका",
       "Repeats' and 'Repeats every": "नोट: यस बैठकमा निर्भर सक्रिय खाताहरू (JLG Loans, Recurring Deposits आदि) छन् भने 'दोहोर्याउने' र 'हरेक दोहोर्याउने' परिमार्जन गर्न सकिँदैन।",
       "Report Parameters": "रिपोर्ट प्यारामिटरहरू",
@@ -3590,6 +3848,7 @@
       "Share Products Dividends": "शेयर उत्पादन लाभांश",
       "Share products define the rules, default settings": "शेयर उत्पादनहरूले वित्तीय संस्थाको शेयर र लाभांशका लागि नियमहरू, पूर्वनिर्धारित सेटिङहरू, र अवरोधहरू परिभाषित गर्दछ। एक सेयर उत्पादनले वित्तीय संस्थाका ग्राहकहरूद्वारा आयोजित वा राख्ने बहु खाताहरूको लागि टेम्प्लेट प्रदान गर्दछ।",
       "Shares": "सेयरहरू",
+      "Shares Account Details": "सेयर खाता विवरण",
       "Shares Account Actions": "साझेदारी खाता कार्यहरू",
       "Shares Account Charges": "शेयर खाता शुल्कहरू",
       "Shares Account Dividends": "शेयर खाता लाभांश",
@@ -3662,6 +3921,7 @@
       "View Adhoc Query": "Adhoc क्वेरी हेर्नुहोस्",
       "View Amazon S3 Configuration": "Amazon S3 कन्फिगरेसन हेर्नुहोस्",
       "View Audit": "लेखापरीक्षण हेर्नुहोस्",
+      "View Breach": "उल्लंघन हेर्नुहोस्",
       "View Bulk Import": "बल्क आयात हेर्नुहोस्",
       "View Cashier": "क्यासियर हेर्नुहोस्",
       "View Charges": "शुल्कहरू हेर्नुहोस्",
@@ -3684,7 +3944,9 @@
       "View Group": "समूह हेर्नुहोस्",
       "View Holidays": "बिदाहरू हेर्नुहोस्",
       "View Hook": "हुक हेर्नुहोस्",
+      "View Loan Originator": "ऋण सुरुवातकर्ता हेर्नुहोस्",
       "View Loan Product": "ऋण उत्पादन हेर्नुहोस्",
+      "View Near Breach": "लगभग उल्लंघन हेर्नुहोस्",
       "View Notification Configuration": "सूचना कन्फिगरेसन हेर्नुहोस्",
       "View Office": "कार्यालय हेर्नुहोस्",
       "View Product Mix": "उत्पादन मिक्स हेर्नुहोस्",
@@ -3757,7 +4019,15 @@
       "Failed to update payment type. Please try again.": "भुक्तानी प्रकार अद्यावधिक गर्न असफल भयो। कृपया पुनः प्रयास गर्नुहोस्।",
       "Search and assign this beneficiary to an existing Mifos client account": "यो लाभग्राहीलाई खोजेर अवस्थित Mifos ग्राहक खातामा तोक्नुहोस्",
       "Failed to search clients. Please try again.": "ग्राहकहरू खोज्न असफल भयो। कृपया पुनः प्रयास गर्नुहोस्।",
+<<<<<<< HEAD
       "Process Remittance": "रेमिट्यान्स प्रक्रिया गर्नुहोस्"
+=======
+      "Process Remittance": "रेमिट्यान्स प्रक्रिया गर्नुहोस्",
+      "Loan Originators": "ऋण सुरुवातकर्ताहरू",
+      "Loan Reschedules": "ऋण पुन: तालिका",
+      "Settings saved successfully": "सेटिङहरू सफलतापूर्वक सेभ गरियो।",
+      "Undo Write-off Description": "यो कार्यले राइट-अफ ट्रान्जेक्सन फिर्ता गर्नेछ र ऋणलाई यसको अघिल्लो सक्रिय अवस्थामा पुनर्स्थापित गर्नेछ। कृपया यस कार्यको कारण बताउने नोट प्रदान गर्नुहोस्।"
+>>>>>>> origin/dev
     },
     "permissions": {
       "actions": {
@@ -3859,7 +4129,12 @@
         "ALL": "सबै",
         "BYPASS": "बाइपास",
         "CHECKER": "जाँचकर्ता",
+<<<<<<< HEAD
         "REPORTING": "रिपोर्टिङ"
+=======
+        "REPORTING": "रिपोर्टिङ",
+        "UNASSIGNSTAFF": "कर्मचारी हटाउनुहोस्"
+>>>>>>> origin/dev
       },
       "entities": {
         "ACCOUNTINGRULE": "लेखा नियम",
@@ -3966,7 +4241,15 @@
         "STANDINGINSTRUCTION": "स्थायी निर्देशन",
         "FUNCTIONS": "कार्यहरू",
         "TWOFACTOR": "दुई-कारक",
+<<<<<<< HEAD
         "SUPER_USER": "सुपर प्रयोगकर्ता"
+=======
+        "SUPER_USER": "सुपर प्रयोगकर्ता",
+        "REPAYMENT_SCHEDULE": "भुक्तानी तालिका",
+        "SHARESACCOUNTCHARGE": "सेयर खाता शुल्क",
+        "TAXCOMPONENT": "कर घटक",
+        "TAXGROUP": "कर समूह"
+>>>>>>> origin/dev
       }
     },
     "auditTrail": {
@@ -4269,7 +4552,12 @@
     "ACTIVE": "सक्रिय",
     "PENDING": "पेन्डिङ",
     "INACTIVE": "निष्क्रिय",
+<<<<<<< HEAD
     "Process Remittance": "रेमिट्यान्स प्रक्रिया"
+=======
+    "Process Remittance": "रेमिट्यान्स प्रक्रिया",
+    "Allow full term length for each tranche disbursement": "सक्षम गरिएमा, प्रत्येक किस्ता वितरण बाँकी अवधिमा फिट हुनुको सट्टा पूर्ण ऋण अवधि तालिका अनुसरण गर्नेछ। केवल PROGRESSIVE ऋण तालिका प्रकारको लागि उपलब्ध।"
+>>>>>>> origin/dev
   },
   "countries": {
     "AF": "अफगानिस्तान",
@@ -4389,5 +4677,71 @@
     "ZW": "जिम्बावे"
   },
   "Deactivate Role": "भूमिका निष्क्रिय गर्नुहोस्",
+<<<<<<< HEAD
   "Delete Role": "भूमिका मेटाउनुहोस्"
+=======
+  "Delete Role": "भूमिका मेटाउनुहोस्",
+  "clients": {
+    "actions": {
+      "close": {
+        "success": "ग्राहक सफलतापूर्वक बन्द गरियो।"
+      },
+      "reject": {
+        "success": "ग्राहक सफलतापूर्वक अस्वीकार गरियो।"
+      },
+      "withdraw": {
+        "success": "ग्राहक सफलतापूर्वक फिर्ता गरियो।"
+      },
+      "reactivate": {
+        "success": "ग्राहक सफलतापूर्वक पुन: सक्रिय गरियो।",
+        "failure": "ग्राहक पुन: सक्रिय गर्न असफल भयो।"
+      },
+      "activate": {
+        "success": "ग्राहक सफलतापूर्वक सक्रिय गरियो।",
+        "failure": "ग्राहक सक्रिय गर्न असफल भयो।"
+      },
+      "acceptTransfer": {
+        "success": "ग्राहक स्थानान्तरण सफलतापूर्वक स्वीकार गरियो।"
+      },
+      "rejectTransfer": {
+        "success": "ग्राहक स्थानान्तरण सफलतापूर्वक अस्वीकार गरियो।"
+      },
+      "undoTransfer": {
+        "success": "ग्राहक स्थानान्तरण सफलतापूर्वक रद्द गरियो।"
+      },
+      "undoRejection": {
+        "success": "ग्राहक अस्वीकार सफलतापूर्वक रद्द गरियो।"
+      },
+      "transfer": {
+        "success": "ग्राहक स्थानान्तरण सफलतापूर्वक प्रस्ताव गरियो।",
+        "failure": "ग्राहक स्थानान्तरण प्रस्ताव गर्न असफल भयो।"
+      },
+      "addCharge": {
+        "success": "ग्राहक शुल्क सफलतापूर्वक थपियो।"
+      },
+      "addCollateral": {
+        "success": "ग्राहक धितो सफलतापूर्वक थपियो।"
+      },
+      "assignStaff": {
+        "success": "कर्मचारी सफलतापूर्वक ग्राहकलाई खटाइयो।",
+        "failure": "ग्राहकलाई कर्मचारी खटाउन असफल भयो।"
+      },
+      "updateSavingsAccount": {
+        "success": "ग्राहक बचत खाता सफलतापूर्वक अद्यावधिक गरियो।"
+      },
+      "takeSurvey": {
+        "success": "सर्वेक्षण सफलतापूर्वक बुझाइयो।",
+        "failure": "सर्वेक्षण बुझाउन असफल भयो।"
+      }
+    }
+  },
+  "error": {
+    "resource": {
+      "notImplemented": {
+        "type": "कार्यान्वयन नभएको त्रुटि",
+        "message": "कार्यान्वयन नभएको कार्यक्षमता!"
+      }
+    }
+  }
+>>>>>>> origin/dev
 }

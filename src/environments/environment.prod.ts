@@ -97,6 +97,13 @@ export const environment = {
   mifosRemittanceApiHeader: loadedEnv['mifosRemittanceApiClientHeader'] || '',
   mifosRemittanceApiKey: loadedEnv['mifosRemittanceApiClientKey'] || '',
 
+  /**
+   * Postal Code Lookup — auto-fill city/state/country from postal code.
+   * Uses external Zippopotam.us API. Disable for deployments with strict privacy requirements.
+   */
+  enablePostalCodeLookup:
+    loadedEnv['enablePostalCodeLookup'] === 'true' || loadedEnv['enablePostalCodeLookup'] === true || false,
+
   minPasswordLength: resolvedMinPasswordLength,
   passwordRegex:
     loadedEnv.passwordRegex ||

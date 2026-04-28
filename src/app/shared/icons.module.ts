@@ -136,7 +136,18 @@ import {
   faCodeBranch,
   faHandHoldingHand,
   faHandHoldingHeart,
+<<<<<<< HEAD
   faCaretDown
+=======
+  faCaretDown,
+  faBucket,
+  faHeartCrack,
+  faNotEqual,
+  faPercent,
+  faMoneyCheckDollar,
+  faSackDollar,
+  faCheckDouble
+>>>>>>> origin/dev
 } from '@fortawesome/free-solid-svg-icons';
 
 /**
@@ -163,6 +174,7 @@ export class IconsModule {
       faBookOpen,
       faBriefcase,
       faBuilding,
+      faBucket,
       faCalculator,
       faCalendar,
       faCalendarAlt,
@@ -171,12 +183,14 @@ export class IconsModule {
       faChartBar,
       faCheck,
       faCheckCircle,
+      faCheckDouble,
       faChevronDown,
       faChevronLeft,
       faChevronRight,
       faCircle,
       faComments,
       faHeartBroken,
+      faHeartCrack,
       faClock,
       faCloud,
       faCode,
@@ -222,14 +236,19 @@ export class IconsModule {
       faMoneyBillAlt,
       faMoneyBillWave,
       faMoneyCheck,
+      faMoneyCheckDollar,
+      faNotEqual,
       faPause,
       faPencilAlt,
+      faPercent,
+      faPiggyBank,
       faPlay,
       faPlus,
       faPlusCircle,
       faQuestionCircle,
       faRandom,
       faRoad,
+      faSackDollar,
       faSearch,
       faShieldAlt,
       faSignOutAlt,

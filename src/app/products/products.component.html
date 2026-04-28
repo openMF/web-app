@@ -20,7 +20,7 @@
               <div class="menu-list-item-content">
                 <div class="menu-left-section" [routerLink]="['loan-products']" [queryParams]="{ productType: 'loan' }">
                   <mat-icon matListIcon>
-                    <fa-icon icon="briefcase" size="sm"></fa-icon>
+                    <fa-icon icon="money-check-dollar" size="sm"></fa-icon>
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Loan Products' | translate }}
@@ -51,6 +51,7 @@
                       size="md"
                     ></fa-icon>
                   }
+<<<<<<< HEAD
                 </div>
               </div>
             </mat-list-item>
@@ -123,6 +124,8 @@
                       size="md"
                     ></fa-icon>
                   }
+=======
+>>>>>>> origin/dev
                 </div>
               </div>
             </mat-list-item>
@@ -137,7 +140,11 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Charges' | translate }}
+<<<<<<< HEAD
                     @if (arrowBooleans[3]) {
+=======
+                    @if (arrowBooleans[1]) {
+>>>>>>> origin/dev
                       <p matLine [routerLink]="['charges']" class="menu-explanation">
                         {{
                           'labels.text.Define charges/penalties for loan products, savings and deposit products'
@@ -148,14 +155,22 @@
                   </div>
                 </div>
                 <div class="menu-right-section">
+<<<<<<< HEAD
                   @if (!arrowBooleans[3]) {
+=======
+                  @if (!arrowBooleans[1]) {
+>>>>>>> origin/dev
                     <fa-icon
                       (click)="arrowBooleansToggle(3); $event.stopPropagation()"
                       icon="arrow-down"
                       size="md"
                     ></fa-icon>
                   }
+<<<<<<< HEAD
                   @if (arrowBooleans[3]) {
+=======
+                  @if (arrowBooleans[1]) {
+>>>>>>> origin/dev
                     <fa-icon
                       (click)="arrowBooleansToggle(3); $event.stopPropagation()"
                       icon="arrow-up"
@@ -175,7 +190,11 @@
                 </mat-icon>
                 <div matLine>
                   {{ 'labels.heading.Collateral Management' | translate }}
+<<<<<<< HEAD
                   @if (arrowBooleans[4]) {
+=======
+                  @if (arrowBooleans[2]) {
+>>>>>>> origin/dev
                     <p matLine [routerLink]="['collaterals']" class="menu-explanation">
                       {{ 'labels.text.Define collaterals for Collateral Management' | translate }}
                     </p>
@@ -183,14 +202,22 @@
                 </div>
               </div>
               <div class="menu-right-section">
+<<<<<<< HEAD
                 @if (!arrowBooleans[4]) {
+=======
+                @if (!arrowBooleans[2]) {
+>>>>>>> origin/dev
                   <fa-icon
                     (click)="arrowBooleansToggle(4); $event.stopPropagation()"
                     icon="arrow-down"
                     size="md"
                   ></fa-icon>
                 }
+<<<<<<< HEAD
                 @if (arrowBooleans[4]) {
+=======
+                @if (arrowBooleans[2]) {
+>>>>>>> origin/dev
                   <fa-icon
                     (click)="arrowBooleansToggle(4); $event.stopPropagation()"
                     icon="arrow-up"
@@ -208,11 +235,15 @@
             <div class="menu-list-item-content">
               <div class="menu-left-section" [routerLink]="['delinquency-bucket-configurations']">
                 <mat-icon matListIcon>
-                  <fa-icon icon="briefcase" size="sm"></fa-icon>
+                  <fa-icon icon="bucket" size="sm"></fa-icon>
                 </mat-icon>
                 <div matLine>
                   {{ 'labels.heading.Delinquency Buckets' | translate }}
+<<<<<<< HEAD
                   @if (arrowBooleans[5]) {
+=======
+                  @if (arrowBooleans[3]) {
+>>>>>>> origin/dev
                     <p matLine [routerLink]="['delinquency-bucket-configurations']" class="menu-explanation">
                       {{ 'labels.text.Define delinquency day ranges and bucket set for loan products' | translate }}
                     </p>
@@ -220,6 +251,77 @@
                 </div>
               </div>
               <div class="menu-right-section">
+<<<<<<< HEAD
+=======
+                @if (!arrowBooleans[3]) {
+                  <fa-icon
+                    (click)="arrowBooleansToggle(5); $event.stopPropagation()"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                }
+                @if (arrowBooleans[3]) {
+                  <fa-icon
+                    (click)="arrowBooleansToggle(5); $event.stopPropagation()"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
+                }
+              </div>
+            </div>
+          </mat-list-item>
+
+          <mat-list-item [routerLink]="['floating-rates']" *mifosxHasPermission="'READ_FLOATINGRATE'">
+            <div class="menu-list-item-content">
+              <div class="menu-left-section" [routerLink]="['floating-rates']">
+                <mat-icon matListIcon>
+                  <fa-icon icon="percent" size="sm"></fa-icon>
+                </mat-icon>
+                <div matLine>
+                  {{ 'labels.heading.Floating Rates' | translate }}
+                  @if (arrowBooleans[4]) {
+                    <p matLine [routerLink]="['floating-rates']">
+                      {{ 'labels.text.Define floating rates for loan products' | translate }}
+                    </p>
+                  }
+                </div>
+              </div>
+              <div class="menu-right-section">
+                @if (!arrowBooleans[4]) {
+                  <fa-icon
+                    (click)="arrowBooleansToggle(10); $event.stopPropagation()"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                }
+                @if (arrowBooleans[4]) {
+                  <fa-icon
+                    (click)="arrowBooleansToggle(10); $event.stopPropagation()"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
+                }
+              </div>
+            </div>
+          </mat-list-item>
+
+          <mat-list-item [routerLink]="['breach-configurations']" *mifosxHasPermission="'READ_WORKINGCAPITALBREACH'">
+            <div class="menu-list-item-content">
+              <div class="menu-left-section" [routerLink]="['breach-configurations']">
+                <mat-icon matListIcon>
+                  <fa-icon icon="not-equal" size="sm"></fa-icon>
+                </mat-icon>
+                <div matLine>
+                  {{ 'labels.heading.Breach Configuration' | translate }}
+                  @if (arrowBooleans[5]) {
+                    <p matLine [routerLink]="['breach-configurations']" class="menu-explanation">
+                      {{ 'labels.text.Define breaches for working capital products' | translate }}
+                    </p>
+                  }
+                </div>
+              </div>
+              <div class="menu-right-section">
+>>>>>>> origin/dev
                 @if (!arrowBooleans[5]) {
                   <fa-icon
                     (click)="arrowBooleansToggle(5); $event.stopPropagation()"
@@ -234,6 +336,46 @@
                     size="md"
                   ></fa-icon>
                 }
+<<<<<<< HEAD
+=======
+              </div>
+            </div>
+          </mat-list-item>
+
+          <mat-list-item
+            [routerLink]="['near-breach-configurations']"
+            *mifosxHasPermission="'READ_WORKINGCAPITALNEARBREACH'"
+          >
+            <div class="menu-list-item-content">
+              <div class="menu-left-section" [routerLink]="['near-breach-configurations']">
+                <mat-icon matListIcon>
+                  <fa-icon icon="check-double" size="sm"></fa-icon>
+                </mat-icon>
+                <div matLine>
+                  {{ 'labels.heading.Near Breach Configuration' | translate }}
+                  @if (arrowBooleans[12]) {
+                    <p matLine [routerLink]="['near-breach-configurations']" class="menu-explanation">
+                      {{ 'labels.text.Define near breaches for working capital products' | translate }}
+                    </p>
+                  }
+                </div>
+              </div>
+              <div class="menu-right-section">
+                @if (!arrowBooleans[12]) {
+                  <fa-icon
+                    (click)="arrowBooleansToggle(12); $event.stopPropagation()"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                }
+                @if (arrowBooleans[12]) {
+                  <fa-icon
+                    (click)="arrowBooleansToggle(12); $event.stopPropagation()"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
+                }
+>>>>>>> origin/dev
               </div>
             </div>
           </mat-list-item>
@@ -242,6 +384,7 @@
 
       <div class="flex-50">
         <mat-nav-list>
+<<<<<<< HEAD
           <mat-list-item [routerLink]="['products-mix']" *mifosxHasPermission="'READ_PRODUCTMIX'">
             <div class="menu-list-item-content">
               <div class="menu-left-section" [routerLink]="['products-mix']">
@@ -275,6 +418,43 @@
               </div>
             </div>
           </mat-list-item>
+=======
+          <div #savingsProducts>
+            <mat-list-item [routerLink]="['saving-products']" *mifosxHasPermission="'READ_SAVINGSPRODUCT'">
+              <div class="menu-list-item-content">
+                <div class="menu-left-section" [routerLink]="['saving-products']">
+                  <mat-icon matListIcon>
+                    <fa-icon icon="piggy-bank" size="sm"></fa-icon>
+                  </mat-icon>
+                  <div matLine>
+                    {{ 'labels.heading.Savings Products' | translate }}
+                    @if (arrowBooleans[6]) {
+                      <p matLine [routerLink]="['saving-products']" class="menu-explanation">
+                        {{ 'labels.text.Add new savings product or modify or inactivate savings product' | translate }}
+                      </p>
+                    }
+                  </div>
+                </div>
+                <div class="menu-right-section">
+                  @if (!arrowBooleans[6]) {
+                    <fa-icon
+                      (click)="arrowBooleansToggle(1); $event.stopPropagation()"
+                      icon="arrow-down"
+                      size="md"
+                    ></fa-icon>
+                  }
+                  @if (arrowBooleans[6]) {
+                    <fa-icon
+                      (click)="arrowBooleansToggle(1); $event.stopPropagation()"
+                      icon="arrow-up"
+                      size="md"
+                    ></fa-icon>
+                  }
+                </div>
+              </div>
+            </mat-list-item>
+          </div>
+>>>>>>> origin/dev
 
           <div #fixedDepositProducts>
             <mat-list-item [routerLink]="['fixed-deposit-products']" *mifosxHasPermission="'READ_FIXEDDEPOSITPRODUCT'">
@@ -351,6 +531,76 @@
             </mat-list-item>
           </div>
 
+          <div #shareProducts>
+            <mat-list-item [routerLink]="['share-products']" *mifosxHasPermission="'READ_SHAREPRODUCT'">
+              <div class="menu-list-item-content">
+                <div class="menu-left-section" [routerLink]="['share-products']">
+                  <mat-icon matListIcon>
+                    <fa-icon icon="briefcase" size="sm"></fa-icon>
+                  </mat-icon>
+                  <div matLine>
+                    {{ 'labels.heading.Share Products' | translate }}
+                    @if (arrowBooleans[9]) {
+                      <p matLine [routerLink]="['share-products']" class="menu-explanation">
+                        {{ 'labels.text.Add new share product or modify or inactivate share product' | translate }}
+                      </p>
+                    }
+                  </div>
+                </div>
+                <div class="menu-right-section">
+                  @if (!arrowBooleans[9]) {
+                    <fa-icon
+                      (click)="arrowBooleansToggle(2); $event.stopPropagation()"
+                      icon="arrow-down"
+                      size="md"
+                    ></fa-icon>
+                  }
+                  @if (arrowBooleans[9]) {
+                    <fa-icon
+                      (click)="arrowBooleansToggle(2); $event.stopPropagation()"
+                      icon="arrow-up"
+                      size="md"
+                    ></fa-icon>
+                  }
+                </div>
+              </div>
+            </mat-list-item>
+          </div>
+
+          <mat-list-item [routerLink]="['products-mix']" *mifosxHasPermission="'READ_PRODUCTMIX'">
+            <div class="menu-list-item-content">
+              <div class="menu-left-section" [routerLink]="['products-mix']">
+                <mat-icon matListIcon>
+                  <fa-icon icon="random" size="sm"></fa-icon>
+                </mat-icon>
+                <div matLine>
+                  {{ 'labels.heading.Products Mix' | translate }}
+                  @if (arrowBooleans[10]) {
+                    <p matLine [routerLink]="['products-mix']" class="menu-explanation">
+                      {{ 'labels.text.Defines rules for taking multiple rules' | translate }}
+                    </p>
+                  }
+                </div>
+              </div>
+              <div class="menu-right-section">
+                @if (!arrowBooleans[10]) {
+                  <fa-icon
+                    (click)="arrowBooleansToggle(6); $event.stopPropagation()"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                }
+                @if (arrowBooleans[10]) {
+                  <fa-icon
+                    (click)="arrowBooleansToggle(6); $event.stopPropagation()"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
+                }
+              </div>
+            </div>
+          </mat-list-item>
+
           <mat-list-item [routerLink]="['tax-configurations']" *mifosxHasPermission="'READ_TAXGROUP'">
             <div class="menu-list-item-content">
               <div class="menu-left-section" [routerLink]="['tax-configurations']">
@@ -359,7 +609,11 @@
                 </mat-icon>
                 <div matLine>
                   {{ 'labels.heading.Manage Tax Configurations' | translate }}
+<<<<<<< HEAD
                   @if (arrowBooleans[9]) {
+=======
+                  @if (arrowBooleans[11]) {
+>>>>>>> origin/dev
                     <p matLine [routerLink]="['tax-configurations']" class="menu-explanation">
                       {{ 'labels.text.Define Tax components and Tax groups' | translate }}
                     </p>
@@ -367,20 +621,29 @@
                 </div>
               </div>
               <div class="menu-right-section">
+<<<<<<< HEAD
                 @if (!arrowBooleans[9]) {
+=======
+                @if (!arrowBooleans[11]) {
+>>>>>>> origin/dev
                   <fa-icon
                     (click)="arrowBooleansToggle(9); $event.stopPropagation()"
                     icon="arrow-down"
                     size="md"
                   ></fa-icon>
                 }
+<<<<<<< HEAD
                 @if (arrowBooleans[9]) {
+=======
+                @if (arrowBooleans[11]) {
+>>>>>>> origin/dev
                   <fa-icon
                     (click)="arrowBooleansToggle(9); $event.stopPropagation()"
                     icon="arrow-up"
                     size="md"
                   ></fa-icon>
                 }
+<<<<<<< HEAD
               </div>
             </div>
           </mat-list-item>
@@ -415,6 +678,8 @@
                     size="md"
                   ></fa-icon>
                 }
+=======
+>>>>>>> origin/dev
               </div>
             </div>
           </mat-list-item>

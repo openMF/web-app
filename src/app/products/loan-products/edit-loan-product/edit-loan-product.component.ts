@@ -89,7 +89,11 @@ export class EditLoanProductComponent extends LoanProductBaseComponent implement
   loanProductSettingsStep: LoanProductSettingsStepComponent;
   @ViewChild(LoanProductChargesStepComponent, { static: false })
   loanProductChargesStep: LoanProductChargesStepComponent;
+<<<<<<< HEAD
   @ViewChild(LoanProductAccountingStepComponent, { static: false })
+=======
+  @ViewChild(LoanProductAccountingStepComponent, { static: true })
+>>>>>>> origin/dev
   loanProductAccountingStep: LoanProductAccountingStepComponent;
 
   loanProductAndTemplate: any;
@@ -129,7 +133,7 @@ export class EditLoanProductComponent extends LoanProductBaseComponent implement
   }
 
   ngOnInit() {
-    this.accountingRuleData = this.accounting.getAccountingRulesForLoans();
+    this.accountingRuleData = this.accounting.getAccountingRulesForLoans(this.loanProductService.isLoanProduct);
     this.buildAdvancedPaymentAllocation();
     if (this.loanProductService.isLoanProduct) {
       this.advancePaymentStrategy(this.loanProductAndTemplate.transactionProcessingStrategyCode);
@@ -264,9 +268,13 @@ export class EditLoanProductComponent extends LoanProductBaseComponent implement
   }
 
   get loanProductAccountingForm() {
+<<<<<<< HEAD
     if (this.loanProductService.isLoanProduct) {
       return this.loanProductAccountingStep?.loanProductAccountingForm;
     }
+=======
+    return this.loanProductAccountingStep?.loanProductAccountingForm;
+>>>>>>> origin/dev
   }
 
   get loanProductFormValid(): boolean {
@@ -295,7 +303,12 @@ export class EditLoanProductComponent extends LoanProductBaseComponent implement
         this.loanProductDetailsForm.valid &&
         this.loanProductCurrencyForm.valid &&
         this.loanProductTermsForm.valid &&
+<<<<<<< HEAD
         this.loanProductSettingsForm.valid
+=======
+        this.loanProductSettingsForm.valid &&
+        this.loanProductAccountingForm?.valid
+>>>>>>> origin/dev
       );
     }
   }
@@ -330,6 +343,10 @@ export class EditLoanProductComponent extends LoanProductBaseComponent implement
         !this.loanProductCurrencyForm.pristine ||
         !this.loanProductTermsForm.pristine ||
         !this.loanProductSettingsForm.pristine ||
+<<<<<<< HEAD
+=======
+        !(this.loanProductAccountingForm?.pristine ?? true) ||
+>>>>>>> origin/dev
         this.wasPaymentAllocationChanged
       );
     }
@@ -389,7 +406,12 @@ export class EditLoanProductComponent extends LoanProductBaseComponent implement
         ...this.loanProductDetailsStep.loanProductDetails,
         ...this.loanProductCurrencyStep.loanProductCurrency,
         ...this.loanProductTermsStep.loanProductTerms,
+<<<<<<< HEAD
         ...this.loanProductSettingsStep.loanProductSettings
+=======
+        ...this.loanProductSettingsStep.loanProductSettings,
+        ...this.loanProductAccountingStep.loanProductAccounting
+>>>>>>> origin/dev
       };
       loanProduct['paymentAllocation'] = this.paymentAllocation;
       return loanProduct;
