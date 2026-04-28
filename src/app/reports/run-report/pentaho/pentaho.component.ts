@@ -11,7 +11,7 @@ import { Component, OnChanges, OnDestroy, Input, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 /** Custom Services */
-import { ReportsService } from '../../reports.service';
+import { ReportsService } from 'app/reporting-plugin/services/reports.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { ProgressBarService } from 'app/core/progress-bar/progress-bar.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';

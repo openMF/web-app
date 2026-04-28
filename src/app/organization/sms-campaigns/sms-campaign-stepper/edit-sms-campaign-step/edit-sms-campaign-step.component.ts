@@ -17,10 +17,10 @@ import {
 } from '@angular/forms';
 
 /** Custom Services */
-import { ReportsService } from 'app/reports/reports.service';
+import { ReportsService } from 'app/reporting-plugin/services/reports.service';
 
 /** Custom Models */
-import { ReportParameter } from 'app/reports/common-models/report-parameter.model';
+import { ReportParameter } from 'app/reporting-plugin/models/report-parameter.model';
 import { SettingsService } from 'app/settings/settings.service';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { EditBusinessRuleParametersComponent } from './edit-business-rule-parameters/edit-business-rule-parameters.component';

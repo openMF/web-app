@@ -14,12 +14,12 @@ import { Validators, UntypedFormGroup, UntypedFormControl, ReactiveFormsModule }
 import { distinctUntilChanged } from 'rxjs/operators';
 
 /** Custom Services */
-import { ReportsService } from 'app/reports/reports.service';
+import { ReportsService } from 'app/reporting-plugin/services/reports.service';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Models */
-import { ReportParameter } from 'app/reports/common-models/report-parameter.model';
-import { SelectOption } from 'app/reports/common-models/select-option.model';
+import { ReportParameter } from 'app/reporting-plugin/models/report-parameter.model';
+import { SelectOption } from 'app/reporting-plugin/models/select-option.model';
 import { Dates } from 'app/core/utils/dates';
 import { MatDivider } from '@angular/material/divider';
 import { NgFor, NgSwitch, NgIf, NgSwitchCase } from '@angular/common';
