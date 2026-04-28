@@ -576,7 +576,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
           'interestRatePerPeriod',
           new UntypedFormControl({ value: 0, disabled: true }, [
             Validators.required,
-            Validators.min(0.01)
+            Validators.min(0)
           ])
         );
         this.loansAccountTermsForm.addControl(
@@ -588,7 +588,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
           'interestRatePerPeriod',
           new UntypedFormControl(this.loansAccountTermsData.interestRatePerPeriod, [
             Validators.required,
-            Validators.min(0.01)
+            Validators.min(0)
           ])
         );
       }
@@ -649,7 +649,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
         interestChargedFromDate: [''],
         interestRatePerPeriod: [
           '',
-          Validators.min(0.01)
+          Validators.min(0)
         ],
         interestType: [''],
         isFloatingInterestRate: [null],
