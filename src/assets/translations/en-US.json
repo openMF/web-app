@@ -1,4 +1,4 @@
-{
+﻿{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "Logged in as",
   "Remember me": "Remember me",
@@ -2678,6 +2678,7 @@
       "Revised Meeting Date": "Revised Meeting Date",
       "Role": "Role",
       "Role Description": "Role Description",
+      "This role provides all application permissions": "This role provides all application permissions.",
       "Role Name": "Role Name",
       "Roles": "Roles",
       "Roles Loan Products": "Roles --> Loan Products",
@@ -3502,7 +3503,6 @@
       "Edit Group": "Edit Group",
       "Edit Holidays": "Edit Holidays",
       "Edit Hook": "Edit Hook",
-      "Edit Loan Originator": "Edit Loan Originator",
       "Edit Loan Product": "Edit Loan Product",
       "Edit Near Breach": "Edit Near Breach",
       "Edit Notification Configuration": "Edit Notification Configuration",
@@ -4000,7 +4000,6 @@
       "View Group": "View Group",
       "View Holidays": "View Holidays",
       "View Hook": "View Hook",
-      "View Loan Originator": "View Loan Originator",
       "View Loan Product": "View Loan Product",
       "View Near Breach": "View Near Breach",
       "View Notification Configuration": "View Notification Configuration",

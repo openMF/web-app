@@ -1,4 +1,4 @@
-{
+﻿{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "ielogojies Kā",
   "Remember me": "Atceries mani",
@@ -2657,6 +2657,7 @@
       "Revised Meeting Date": "Pārskatīts sanāksmes datums",
       "Role": "Loma",
       "Role Description": "Lomas apraksts",
+      "This role provides all application permissions": "Šī loma nodrošina visas lietojumprogrammas atļaujas.",
       "Role Name": "Lomas nosaukums",
       "Roles": "Lomas",
       "Roles Loan Products": "Lomas --> Aizdevuma produkti",
@@ -3502,7 +3503,6 @@
       "Edit Group": "Rediģēt grupu",
       "Edit Holidays": "Rediģēt brīvdienas",
       "Edit Hook": "Rediģēt Āķi",
-      "Edit Loan Originator": "Rediģēt Aizdevuma Izsniedzēju",
       "Edit Loan Product": "Rediģēt aizdevuma produktu",
       "Edit Near Breach": "Rediģēt Gandrīz Pārkāpumu",
       "Edit Notification Configuration": "Rediģēt paziņojumu konfigurāciju",
@@ -3901,7 +3901,6 @@
       "View Group": "Skatīt grupu",
       "View Holidays": "Skatīt brīvdienas",
       "View Hook": "Skatīt Āķi",
-      "View Loan Originator": "Skatīt Aizdevuma Izsniedzēju",
       "View Loan Product": "Skatīt aizdevuma produktu",
       "View Near Breach": "Skatīt Gandrīz Pārkāpumu",
       "View Notification Configuration": "Skatīt paziņojumu konfigurāciju",

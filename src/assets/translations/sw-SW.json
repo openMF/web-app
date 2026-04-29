@@ -1,4 +1,4 @@
-{
+﻿{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "Imeingia kama",
   "Remember me": "Nikumbuke",
@@ -2654,6 +2654,7 @@
       "Revised Meeting Date": "Tarehe ya Mkutano Iliyorekebishwa",
       "Role": "Jukumu",
       "Role Description": "Maelezo ya Wajibu",
+      "This role provides all application permissions": "Jukumu hili linatoa ruhusa zote za programu.",
       "Role Name": "Jina la jukumu",
       "Roles": "Majukumu",
       "Roles Loan Products": "Majukumu --> Bidhaa za Mkopo",
@@ -3499,7 +3500,6 @@
       "Edit Group": "Badilisha Kikundi",
       "Edit Holidays": "Hariri Likizo",
       "Edit Hook": "Hariri Hook",
-      "Edit Loan Originator": "Hariri Mwanzilishi wa Mkopo",
       "Edit Loan Product": "Hariri Bidhaa ya Mkopo",
       "Edit Near Breach": "Hariri Karibu Uvunjaji",
       "Edit Notification Configuration": "Badilisha Usanidi wa Arifa",
@@ -3898,7 +3898,6 @@
       "View Group": "Tazama Kikundi",
       "View Holidays": "Tazama Likizo",
       "View Hook": "Tazama ndoano",
-      "View Loan Originator": "Tazama Mwanzilishi wa Mkopo",
       "View Loan Product": "Tazama Bidhaa ya Mkopo",
       "View Near Breach": "Tazama Karibu Uvunjaji",
       "View Notification Configuration": "Tazama Usanidi wa Arifa",

@@ -1,4 +1,4 @@
-{
+﻿{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "prisijungęs kaip",
   "Remember me": "Prisimink mane",
@@ -2656,6 +2656,7 @@
       "Revised Meeting Date": "Patikslinta susirinkimo data",
       "Role": "Vaidmuo",
       "Role Description": "Vaidmenų aprašymas",
+      "This role provides all application permissions": "Šis vaidmuo suteikia visus programos leidimus.",
       "Role Name": "Vaidmens pavadinimas",
       "Roles": "Vaidmenys",
       "Roles Loan Products": "Vaidmenys --> Paskolos produktai",
@@ -3502,7 +3503,6 @@
       "Edit Group": "Redaguoti grupę",
       "Edit Holidays": "Redaguoti šventes",
       "Edit Hook": "Redaguoti kabliuką",
-      "Edit Loan Originator": "Redaguoti Paskolos Teikėją",
       "Edit Loan Product": "Redaguoti paskolos produktą",
       "Edit Near Breach": "Redaguoti Beveik Pažeidimą",
       "Edit Notification Configuration": "Redaguoti pranešimų konfigūraciją",

@@ -1,4 +1,4 @@
-{
+﻿{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "को रूपमा लग इन गरियो",
   "Remember me": "मलाई सम्झनुहोस्",
@@ -2656,6 +2656,7 @@
       "Revised Meeting Date": "परिमार्जित बैठक मिति",
       "Role": "भूमिका",
       "Role Description": "भूमिका विवरण",
+      "This role provides all application permissions": "यो भूमिकाले सबै अनुप्रयोग अनुमतिहरू प्रदान गर्दछ।",
       "Role Name": "भूमिकाको नाम",
       "Roles": "भूमिकाहरू",
       "Roles Loan Products": "भूमिकाहरू --> ऋण उत्पादनहरू",
@@ -3502,7 +3503,6 @@
       "Edit Group": "समूह सम्पादन गर्नुहोस्",
       "Edit Holidays": "बिदाहरू सम्पादन गर्नुहोस्",
       "Edit Hook": "हुक सम्पादन गर्नुहोस्",
-      "Edit Loan Originator": "ऋण सुरुवातकर्ता सम्पादन गर्नुहोस्",
       "Edit Loan Product": "ऋण उत्पादन सम्पादन गर्नुहोस्",
       "Edit Near Breach": "लगभग उल्लंघन सम्पादन गर्नुहोस्",
       "Edit Notification Configuration": "सूचना कन्फिगरेसन सम्पादन गर्नुहोस्",
@@ -3901,7 +3901,6 @@
       "View Group": "समूह हेर्नुहोस्",
       "View Holidays": "बिदाहरू हेर्नुहोस्",
       "View Hook": "हुक हेर्नुहोस्",
-      "View Loan Originator": "ऋण सुरुवातकर्ता हेर्नुहोस्",
       "View Loan Product": "ऋण उत्पादन हेर्नुहोस्",
       "View Near Breach": "लगभग उल्लंघन हेर्नुहोस्",
       "View Notification Configuration": "सूचना कन्फिगरेसन हेर्नुहोस्",
