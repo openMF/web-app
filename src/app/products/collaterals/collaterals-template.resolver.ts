@@ -1,32 +1,23 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
-/** Custom services */
-import { ProductsService } from '../products.service';
+import { CollateralManagementService } from '@fineract/client';
 
 /**
  * Collaterals Template Resolver
  */
 @Injectable()
 export class CollateralTemplateResolver {
-  private productsService = inject(ProductsService);
+  constructor(private collateralManagementService: CollateralManagementService) {}
 
   /**
    * Returns the product Data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.productsService.getCollateralTemplate();
+    return this.collateralManagementService.getCollateralTemplate();
   }
 }

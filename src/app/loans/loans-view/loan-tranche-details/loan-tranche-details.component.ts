@@ -1,16 +1,8 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { LoanDisbursementDetailsService } from '@fineract/client';
 import { Dates } from 'app/core/utils/dates';
-import { LoansService } from 'app/loans/loans.service';
 import { DisbursementData } from 'app/loans/models/loan-account.model';
 import { SettingsService } from 'app/settings/settings.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
@@ -18,7 +10,7 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
-import { MatIconButton } from '@angular/material/button';
+import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import {
   MatTable,
@@ -35,9 +27,7 @@ import {
 import { MatTooltip } from '@angular/material/tooltip';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
-import { YesnoPipe } from '../../../pipes/yesno.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { LoanAccountTabBaseComponent } from '../loan-account-tab-base.component';
 
 @Component({
   selector: 'mifosx-loan-tranche-details',
@@ -59,17 +49,10 @@ import { LoanAccountTabBaseComponent } from '../loan-account-tab-base.component'
     MatRowDef,
     MatRow,
     DateFormatPipe,
-    FormatNumberPipe,
-    YesnoPipe
+    FormatNumberPipe
   ]
 })
-export class LoanTrancheDetailsComponent extends LoanAccountTabBaseComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private dialog = inject(MatDialog);
-  private loanServices = inject(LoansService);
-  private settingsService = inject(SettingsService);
-  private dateUtils = inject(Dates);
-
+export class LoanTrancheDetailsComponent implements OnInit {
   loanDetails: any;
   return: any;
   status: any;
@@ -98,8 +81,14 @@ export class LoanTrancheDetailsComponent extends LoanAccountTabBaseComponent imp
    * Retrieves the loans data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor() {
-    super();
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private dialog: MatDialog,
+    private loanDisbursementDetailsService: LoanDisbursementDetailsService,
+    private settingsService: SettingsService,
+    private dateUtils: Dates
+  ) {
     this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
       this.loanId = data.loanDetailsData.id;
       this.loanDetails = data.loanDetailsData;
@@ -111,7 +100,8 @@ export class LoanTrancheDetailsComponent extends LoanAccountTabBaseComponent imp
   ngOnInit() {
     this.maxDate = this.settingsService.maxFutureDate;
     this.status = this.loanDetails.status.value;
-    this.disbursementDataSource = this.loanServices.getLoanDisbursementDetailsData();
+    // this.disbursementDataSource = this.loanServices.getLoanDisbursementDetailsData();
+    this.disbursementDataSource = []; // TODO: Replace with proper data source
     this.disbursementDataSource.forEach((data: DisbursementData) => {
       if (!data.id) {
         this.pristine = false;
@@ -188,6 +178,7 @@ export class LoanTrancheDetailsComponent extends LoanAccountTabBaseComponent imp
         required: true,
         order: 2
       })
+
     ];
     return formBase;
   }
@@ -209,7 +200,8 @@ export class LoanTrancheDetailsComponent extends LoanAccountTabBaseComponent imp
         const principal = response.data.value.principal * 1;
         if (this.totalMultiDisbursed + principal <= this.currentPrincipalAmount) {
           this.disbursementDataSource = this.disbursementDataSource.concat(response.data.value);
-          this.loanServices.saveLoanDisbursementDetailsData(this.disbursementDataSource);
+          // this.loanServices.saveLoanDisbursementDetailsData(this.disbursementDataSource);
+          // TODO: Replace with proper data persistence
           this.pristine = false;
         }
       }
@@ -276,12 +268,19 @@ export class LoanTrancheDetailsComponent extends LoanAccountTabBaseComponent imp
       dateFormat: this.settingsService.dateFormat,
       locale: this.settingsService.language.code
     };
-    this.loanServices
-      .editDisbursements(this.loanId, payload)
-      .toPromise()
-      .then((result) => {
+    this.loanDisbursementDetailsService
+      .addAndDeleteDisbursementDetail({
+        loanId: Number(this.loanId),
+        postAddAndDeleteDisbursementDetailRequest: payload
+      })
+      .subscribe((result: any) => {
         this.reload();
         this.pristine = true;
       });
+  }
+
+  reload() {
+    const url: string = this.router.url;
+    this.router.navigateByUrl(`/clients`, { skipLocationChange: true }).then(() => this.router.navigate([url]));
   }
 }

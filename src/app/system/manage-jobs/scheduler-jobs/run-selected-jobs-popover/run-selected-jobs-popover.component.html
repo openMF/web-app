@@ -1,11 +1,3 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <h1 mat-dialog-title>{{ 'labels.heading.Selected Jobs' | translate }}:</h1>
 
 <mat-dialog-content>
@@ -16,11 +8,9 @@
 </mat-dialog-content>
 
 <mat-list>
-  @for (message of messages; track message) {
-    <mat-list-item class="message" ngClass]="{'green' : message.status}">
-      {{ message.message }}
-    </mat-list-item>
-  }
+  <mat-list-item *ngFor="let message of messages" class="message" ngClass]="{'green' : message.status}">
+    {{ message.message }}
+  </mat-list-item>
 </mat-list>
 <mat-dialog-actions>
   <button mat-raised-button color="primary" (click)="runSelectedJobs()">

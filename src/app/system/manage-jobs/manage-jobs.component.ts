@@ -1,14 +1,6 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatTabChangeEvent, MatTabGroup, MatTab } from '@angular/material/tabs';
-import { SystemService } from '../system.service';
+import { LoanCOBCatchUpService } from '@fineract/client';
 import { TranslateService } from '@ngx-translate/core';
 import { ManageSchedulerJobsComponent } from './scheduler-jobs/manage-scheduler-jobs.component';
 import { WorkflowJobsComponent } from './workflow-jobs/workflow-jobs.component';
@@ -29,15 +21,17 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ManageJobsComponent {
-  private systemService = inject(SystemService);
-  private translateService = inject(TranslateService);
-
   /** Process running flag */
   isCatchUpRunning = true;
 
+  constructor(
+    private loanCOBCatchUpService: LoanCOBCatchUpService,
+    private translateService: TranslateService
+  ) {}
+
   onJobTabChange(event: MatTabChangeEvent) {
     if (event.index === 2) {
-      this.systemService.getCOBCatchUpStatus().subscribe((response: any) => {
+      this.loanCOBCatchUpService.isCatchUpRunning().subscribe((response: any) => {
         this.isCatchUpRunning = response.isCatchUpRunning;
       });
     }

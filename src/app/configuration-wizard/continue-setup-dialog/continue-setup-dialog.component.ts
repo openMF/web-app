@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -36,18 +28,16 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ContinueSetupDialogComponent {
-  dialogRef = inject<MatDialogRef<ContinueSetupDialogComponent>>(MatDialogRef);
-  data = inject(MAT_DIALOG_DATA);
-
   /* Current Step Name*/
   stepName: number;
 
   /**
    * @param {MatDialogRef<ContinueSetupDialogComponent>} dialogRef MatDialogRef<ContinueSetupDialogComponent>.
    */
-  constructor() {
-    const data = this.data;
-
+  constructor(
+    public dialogRef: MatDialogRef<ContinueSetupDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
     this.stepName = data.stepName;
   }
 }

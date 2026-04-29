@@ -1,11 +1,3 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <div class="container mat-elevation-z8">
   <mat-card>
     <mat-card-content>
@@ -23,7 +15,7 @@
       </div>
 
       <mat-card-actions class="layout-row align-center gap-5px responsive-column">
-        <button type="button" mat-raised-button (click)="gotoLoanDefaultView()">
+        <button type="button" mat-raised-button [routerLink]="['../../general']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>
         <button mat-raised-button color="primary" (click)="submit()" *mifosxHasPermission="'DISBURSALUNDO_LOAN'">

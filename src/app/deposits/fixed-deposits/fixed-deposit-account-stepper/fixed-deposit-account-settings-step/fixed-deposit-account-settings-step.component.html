@@ -1,11 +1,3 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <form [formGroup]="fixedDepositAccountSettingsForm">
   <div class="layout-row-wrap gap-2px responsive-column">
     <h4 class="mat-h4 flex-98">{{ 'labels.heading.Lock-in Period' | translate }}</h4>
@@ -18,11 +10,12 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="lockinPeriodFrequencyType">
-        @for (lockinPeriodFrequencyType of lockinPeriodFrequencyTypeData; track lockinPeriodFrequencyType) {
-          <mat-option [value]="lockinPeriodFrequencyType.id">
-            {{ lockinPeriodFrequencyType.value | translateKey: 'catalogs' }}
-          </mat-option>
-        }
+        <mat-option
+          *ngFor="let lockinPeriodFrequencyType of lockinPeriodFrequencyTypeData"
+          [value]="lockinPeriodFrequencyType.id"
+        >
+          {{ lockinPeriodFrequencyType.value | translateKey: 'catalogs' }}
+        </mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -40,11 +33,9 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency Type' | translate }}</mat-label>
       <mat-select formControlName="minDepositTermTypeId" required>
-        @for (periodFrequencyType of periodFrequencyTypeData; track periodFrequencyType) {
-          <mat-option [value]="periodFrequencyType.id">
-            {{ periodFrequencyType.value | translateKey: 'catalogs' }}
-          </mat-option>
-        }
+        <mat-option *ngFor="let periodFrequencyType of periodFrequencyTypeData" [value]="periodFrequencyType.id">
+          {{ periodFrequencyType.value | translateKey: 'catalogs' }}
+        </mat-option>
       </mat-select>
       <mat-error>
         {{ 'labels.inputs.Minimum Deposit Term Frequency Type' | translate }} {{ 'labels.commons.is' | translate }}
@@ -62,11 +53,9 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="inMultiplesOfDepositTermTypeId">
-        @for (periodFrequencyType of periodFrequencyTypeData; track periodFrequencyType) {
-          <mat-option [value]="periodFrequencyType.id">
-            {{ periodFrequencyType.value | translateKey: 'catalogs' }}
-          </mat-option>
-        }
+        <mat-option *ngFor="let periodFrequencyType of periodFrequencyTypeData" [value]="periodFrequencyType.id">
+          {{ periodFrequencyType.value | translateKey: 'catalogs' }}
+        </mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -80,11 +69,9 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="maxDepositTermTypeId">
-        @for (periodFrequencyType of periodFrequencyTypeData; track periodFrequencyType) {
-          <mat-option [value]="periodFrequencyType.id">
-            {{ periodFrequencyType.value | translateKey: 'catalogs' }}
-          </mat-option>
-        }
+        <mat-option *ngFor="let periodFrequencyType of periodFrequencyTypeData" [value]="periodFrequencyType.id">
+          {{ periodFrequencyType.value | translateKey: 'catalogs' }}
+        </mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -96,48 +83,42 @@
       {{ 'labels.inputs.Transfer Interest to Linked Savings Account' | translate }}?
     </mat-checkbox>
 
-    @if (fixedDepositAccountSettingsForm.contains('linkAccountId')) {
-      <mat-form-field class="margin-b flex-48">
-        <mat-label>{{ 'labels.inputs.Linked Savings Account' | translate }}</mat-label>
-        <mat-select formControlName="linkAccountId" required>
-          @for (account of savingsAccountsData; track account) {
-            <mat-option [value]="account.id"> ({{ account.accountNo }}) {{ account.savingsProductName }} </mat-option>
-          }
-        </mat-select>
-        <mat-error>
-          {{ 'labels.inputs.Linked Savings Account' | translate }} {{ 'labels.commons.is' | translate }}
-          <strong>{{ 'labels.commons.required' | translate }}</strong>
-        </mat-error>
-      </mat-form-field>
-    }
+    <mat-form-field *ngIf="fixedDepositAccountSettingsForm.contains('linkAccountId')" class="margin-b flex-48">
+      <mat-label>{{ 'labels.inputs.Linked Savings Account' | translate }}</mat-label>
+      <mat-select formControlName="linkAccountId" required>
+        <mat-option *ngFor="let account of savingsAccountsData" [value]="account.id">
+          ({{ account.accountNo }}) {{ account.savingsProductName }}
+        </mat-option>
+      </mat-select>
+      <mat-error>
+        {{ 'labels.inputs.Linked Savings Account' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
+      </mat-error>
+    </mat-form-field>
 
     <mat-divider class="flex-98"></mat-divider>
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Maturity Instructions' | translate }}</mat-label>
       <mat-select formControlName="maturityInstructionId">
-        @for (maturityInstruction of maturityInstructionOptions; track maturityInstruction) {
-          <mat-option [value]="maturityInstruction.id">
-            {{ maturityInstruction.value | translateKey: 'catalogs' }}
-          </mat-option>
-        }
+        <mat-option *ngFor="let maturityInstruction of maturityInstructionOptions" [value]="maturityInstruction.id">
+          {{ maturityInstruction.value | translateKey: 'catalogs' }}
+        </mat-option>
       </mat-select>
     </mat-form-field>
 
-    @if (fixedDepositAccountSettingsForm.contains('transferToSavingsId')) {
-      <mat-form-field class="flex-48 margin-b">
-        <mat-label>{{ 'labels.inputs.Transfer to savings account' | translate }}</mat-label>
-        <mat-select formControlName="transferToSavingsId" required>
-          @for (account of savingsAccountsData; track account) {
-            <mat-option [value]="account.id"> ({{ account.accountNo }}) {{ account.savingsProductName }} </mat-option>
-          }
-        </mat-select>
-        <mat-error>
-          {{ 'labels.inputs.Transfer to savings account' | translate }} {{ 'labels.commons.is' | translate }}
-          <strong>{{ 'labels.commons.required' | translate }}</strong>
-        </mat-error>
-      </mat-form-field>
-    }
+    <mat-form-field class="flex-48 margin-b" *ngIf="fixedDepositAccountSettingsForm.contains('transferToSavingsId')">
+      <mat-label>{{ 'labels.inputs.Transfer to savings account' | translate }}</mat-label>
+      <mat-select formControlName="transferToSavingsId" required>
+        <mat-option *ngFor="let account of savingsAccountsData" [value]="account.id">
+          ({{ account.accountNo }}) {{ account.savingsProductName }}
+        </mat-option>
+      </mat-select>
+      <mat-error>
+        {{ 'labels.inputs.Transfer to savings account' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
+      </mat-error>
+    </mat-form-field>
 
     <mat-divider class="flex-98"></mat-divider>
 
@@ -155,26 +136,27 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Period' | translate }}</mat-label>
       <mat-select formControlName="preClosurePenalInterestOnTypeId">
-        @for (preClosurePenalInterestOnType of preClosurePenalInterestOnTypeData; track preClosurePenalInterestOnType) {
-          <mat-option [value]="preClosurePenalInterestOnType.id">
-            {{ preClosurePenalInterestOnType.value | translateKey: 'catalogs' }}
-          </mat-option>
-        }
+        <mat-option
+          *ngFor="let preClosurePenalInterestOnType of preClosurePenalInterestOnTypeData"
+          [value]="preClosurePenalInterestOnType.id"
+        >
+          {{ preClosurePenalInterestOnType.value | translateKey: 'catalogs' }}
+        </mat-option>
       </mat-select>
     </mat-form-field>
 
-    @if (fixedDepositAccountSettingsForm.controls.withHoldTax) {
+    <ng-container *ngIf="fixedDepositAccountSettingsForm.controls.withHoldTax">
       <mat-divider class="flex-98"></mat-divider>
+
       <mat-checkbox labelPosition="before" formControlName="withHoldTax" class="margin-p flex-48">
         {{ 'labels.inputs.Is Withhold Tax Applicable' | translate }}?
       </mat-checkbox>
-      @if (fixedDepositAccountSettingsForm.controls.taxGroupId) {
-        <mat-form-field class="p-b-25 flex-48">
-          <mat-label>{{ 'labels.inputs.Tax Group' | translate }}</mat-label>
-          <input matInput formControlName="taxGroupId" />
-        </mat-form-field>
-      }
-    }
+
+      <mat-form-field *ngIf="fixedDepositAccountSettingsForm.controls.taxGroupId" class="p-b-25 flex-48">
+        <mat-label>{{ 'labels.inputs.Tax Group' | translate }}</mat-label>
+        <input matInput formControlName="taxGroupId" />
+      </mat-form-field>
+    </ng-container>
   </div>
 
   <div class="layout-row align-center gap-2percent margin-t responsive-column">

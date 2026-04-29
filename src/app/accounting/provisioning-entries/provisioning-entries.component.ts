@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -26,7 +18,7 @@ import {
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { AccountingService } from '../accounting.service';
+import { ProvisioningEntriesService } from '@fineract/client';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -58,10 +50,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ProvisioningEntriesComponent implements OnInit {
-  private accountingService = inject(AccountingService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-
   /** Provisioning entry data. */
   provisioningEntryData: any;
   /** Columns to be displayed in provisioning entries table. */
@@ -87,7 +75,11 @@ export class ProvisioningEntriesComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor() {
+  constructor(
+    private provisioningEntriesService: ProvisioningEntriesService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { provisioningEntries: any }) => {
       this.provisioningEntryData = data.provisioningEntries.pageItems;
     });
@@ -123,15 +115,17 @@ export class ProvisioningEntriesComponent implements OnInit {
    * @param {string} provisioningEntryId Provisioning entry id.
    */
   recreateProvisioning($event: Event, provisioningEntryId: string) {
-    this.accountingService.recreateProvisioningEntries(provisioningEntryId).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          'view',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.provisioningEntriesService
+      .modifyProvisioningEntry({ entryId: Number(provisioningEntryId), command: 'recreateprovisioningentry' })
+      .subscribe((response: any) => {
+        this.router.navigate(
+          [
+            'view',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      });
     $event.stopPropagation();
   }
 

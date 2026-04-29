@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, ViewChild, inject } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Components */
@@ -46,12 +38,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateSavingsAccountComponent {
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private dateUtils = inject(Dates);
-  private savingsService = inject(SavingsService);
-  private settingsService = inject(SettingsService);
-
   /** Savings Account Template */
   savingsAccountTemplate: any;
   /** Savings Account Product Template */
@@ -75,7 +61,13 @@ export class CreateSavingsAccountComponent {
    * @param {SavingsService} savingsService Savings Service
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates,
+    private savingsService: SavingsService,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { savingsAccountTemplate: any }) => {
       this.savingsAccountTemplate = data.savingsAccountTemplate;
     });
@@ -134,10 +126,8 @@ export class CreateSavingsAccountComponent {
       charges: this.savingsAccount.charges.map((charge: any) => ({
         chargeId: charge.id,
         amount: charge.amount,
-        dueDate: charge.dueDate ? this.dateUtils.formatDate(charge.dueDate, dateFormat) : charge.dueDate,
-        feeOnMonthDay: charge.feeOnMonthDay
-          ? this.dateUtils.formatDate(charge.feeOnMonthDay, monthDayFormat)
-          : charge.feeOnMonthDay,
+        dueDate: charge.dueDate,
+        feeOnMonthDay: charge.feeOnMonthDay,
         feeInterval: charge.feeInterval
       })),
       submittedOnDate: this.dateUtils.formatDate(this.savingsAccount.submittedOnDate, dateFormat),

@@ -1,11 +1,3 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <div class="layout-row-wrap responsive-column">
   <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Details' | translate }}</h3>
 
@@ -24,16 +16,12 @@
 
   <div class="flex-fill">
     <span class="flex-40">{{ 'labels.inputs.External Id' | translate }}</span>
-    @if (sharesAccount.externalId) {
-      <span class="flex-60">
-        <mifosx-external-identifier externalId="{{ sharesAccount.externalId }}"></mifosx-external-identifier>
-      </span>
-    }
-    @if (!sharesAccount.externalId) {
-      <span class="flex-60">
-        {{ 'labels.inputs.Unassigned' | translate }}
-      </span>
-    }
+    <span class="flex-60" *ngIf="sharesAccount.externalId">
+      <mifosx-external-identifier externalId="{{ sharesAccount.externalId }}"></mifosx-external-identifier>
+    </span>
+    <span class="flex-60" *ngIf="!sharesAccount.externalId">
+      {{ 'labels.inputs.Unassigned' | translate }}
+    </span>
   </div>
 
   <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Terms' | translate }}</h3>
@@ -71,31 +59,27 @@
     }}</span>
   </div>
 
-  @if (sharesAccount.minimumActivePeriod) {
-    <div class="flex-fill">
-      <span class="flex-40">{{ 'labels.inputs.Minimum Active Period' | translate }}</span>
-      <span class="flex-60"
-        >{{ sharesAccount.minimumActivePeriod }}&nbsp;{{
-          sharesAccount.minimumActivePeriodFrequencyType
-            | find: sharesAccountProductTemplate.minimumActivePeriodFrequencyTypeOptions : 'id' : 'value'
-            | translateKey: 'catalogs'
-        }}</span
-      >
-    </div>
-  }
+  <div class="flex-fill" *ngIf="sharesAccount.minimumActivePeriod">
+    <span class="flex-40">{{ 'labels.inputs.Minimum Active Period' | translate }}</span>
+    <span class="flex-60"
+      >{{ sharesAccount.minimumActivePeriod }}&nbsp;{{
+        sharesAccount.minimumActivePeriodFrequencyType
+          | find: sharesAccountProductTemplate.minimumActivePeriodFrequencyTypeOptions : 'id' : 'value'
+          | translateKey: 'catalogs'
+      }}</span
+    >
+  </div>
 
-  @if (sharesAccount.lockinPeriodFrequency) {
-    <div class="flex-fill">
-      <span class="flex-40">{{ 'labels.inputs.Lock-in Period' | translate }}</span>
-      <span class="flex-60"
-        >{{ sharesAccount.lockinPeriodFrequency }}&nbsp;{{
-          sharesAccount.lockinPeriodFrequencyType
-            | find: sharesAccountProductTemplate.lockinPeriodFrequencyTypeOptions : 'id' : 'value'
-            | translateKey: 'catalogs'
-        }}</span
-      >
-    </div>
-  }
+  <div class="flex-fill" *ngIf="sharesAccount.lockinPeriodFrequency">
+    <span class="flex-40">{{ 'labels.inputs.Lock-in Period' | translate }}</span>
+    <span class="flex-60"
+      >{{ sharesAccount.lockinPeriodFrequency }}&nbsp;{{
+        sharesAccount.lockinPeriodFrequencyType
+          | find: sharesAccountProductTemplate.lockinPeriodFrequencyTypeOptions : 'id' : 'value'
+          | translateKey: 'catalogs'
+      }}</span
+    >
+  </div>
 
   <div class="flex-fill">
     <span class="flex-40">{{ 'labels.inputs.Application Date' | translate }}</span>
@@ -107,40 +91,43 @@
     <span class="flex-60">{{ sharesAccount.allowDividendCalculationForInactiveClients | yesNo }}</span>
   </div>
 
-  @if (sharesAccount.charges.length) {
-    <div class="layout-row-wrap responsive-column flex-fill">
-      <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Charges' | translate }}</h3>
-      <mat-divider class="flex-fill"></mat-divider>
-      <table class="flex-fill mat-elevation-z1" mat-table [dataSource]="sharesAccount.charges">
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
-          <td mat-cell *matCellDef="let charge">
-            {{ charge.name + ', ' + charge.currency.displaySymbol }}
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="chargeCalculationType">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Type' | translate }}</th>
-          <td mat-cell *matCellDef="let charge">
-            {{ charge.chargeCalculationType.value | translateKey: 'catalogs' }}
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="amount">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
-          <td mat-cell *matCellDef="let charge">
-            {{ charge.amount || charge.amountOrPercentage }}
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="chargeTimeType">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Collected On' | translate }}</th>
-          <td mat-cell *matCellDef="let charge">
-            {{ charge.chargeTimeType.value | translateKey: 'catalogs' }}
-          </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="chargesDisplayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: chargesDisplayedColumns"></tr>
-      </table>
-    </div>
-  }
+  <div *ngIf="sharesAccount.charges.length" class="layout-row-wrap responsive-column flex-fill">
+    <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Charges' | translate }}</h3>
+
+    <mat-divider class="flex-fill"></mat-divider>
+    <table class="flex-fill mat-elevation-z1" mat-table [dataSource]="sharesAccount.charges">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
+        <td mat-cell *matCellDef="let charge">
+          {{ charge.name + ', ' + charge.currency.displaySymbol }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="chargeCalculationType">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Type' | translate }}</th>
+        <td mat-cell *matCellDef="let charge">
+          {{ charge.chargeCalculationType.value | translateKey: 'catalogs' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
+        <td mat-cell *matCellDef="let charge">
+          {{ charge.amount || charge.amountOrPercentage }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="chargeTimeType">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Collected On' | translate }}</th>
+        <td mat-cell *matCellDef="let charge">
+          {{ charge.chargeTimeType.value | translateKey: 'catalogs' }}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="chargesDisplayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: chargesDisplayedColumns"></tr>
+    </table>
+  </div>
 </div>
 
 <div class="layout-row responsive-column align-center gap-2px margin-t">

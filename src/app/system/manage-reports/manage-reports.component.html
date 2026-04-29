@@ -1,11 +1,3 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <div class="container m-b-20 layout-row align-end gap-20px">
   <div #buttonCreateReport class="in-block">
     <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_REPORT'">
@@ -56,48 +48,44 @@
       <ng-container matColumnDef="coreReport">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Core Report' | translate }}</th>
         <td mat-cell *matCellDef="let report">
-          @if (report.coreReport) {
-            <fa-icon
-              icon="check-circle"
-              size="lg"
-              class="true"
-              [matTooltip]="'tooltips.Yes' | translate"
-              matTooltipPosition="right"
-            ></fa-icon>
-          }
-          @if (!report.coreReport) {
-            <fa-icon
-              icon="times-circle"
-              size="lg"
-              class="false"
-              [matTooltip]="'tooltips.No' | translate"
-              matTooltipPosition="right"
-            ></fa-icon>
-          }
+          <fa-icon
+            *ngIf="report.coreReport"
+            icon="check-circle"
+            size="lg"
+            class="true"
+            [matTooltip]="'tooltips.Yes' | translate"
+            matTooltipPosition="right"
+          ></fa-icon>
+          <fa-icon
+            *ngIf="!report.coreReport"
+            icon="times-circle"
+            size="lg"
+            class="false"
+            [matTooltip]="'tooltips.No' | translate"
+            matTooltipPosition="right"
+          ></fa-icon>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="userReport">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.User Report' | translate }}</th>
         <td mat-cell *matCellDef="let report">
-          @if (report.useReport) {
-            <fa-icon
-              icon="check-circle"
-              size="lg"
-              class="true"
-              [matTooltip]="'tooltips.Yes' | translate"
-              matTooltipPosition="right"
-            ></fa-icon>
-          }
-          @if (!report.useReport) {
-            <fa-icon
-              icon="times-circle"
-              size="lg"
-              class="false"
-              [matTooltip]="'tooltips.No' | translate"
-              matTooltipPosition="right"
-            ></fa-icon>
-          }
+          <fa-icon
+            *ngIf="report.useReport"
+            icon="check-circle"
+            size="lg"
+            class="true"
+            [matTooltip]="'tooltips.Yes' | translate"
+            matTooltipPosition="right"
+          ></fa-icon>
+          <fa-icon
+            *ngIf="!report.useReport"
+            icon="times-circle"
+            size="lg"
+            class="false"
+            [matTooltip]="'tooltips.No' | translate"
+            matTooltipPosition="right"
+          ></fa-icon>
         </td>
       </ng-container>
 
@@ -155,7 +143,7 @@
 <ng-template #templateReportsTable let-popover="popover">
   <h4 class="mw300">
     {{ 'labels.heading.List of all currently available reports' | translate }}:
-    <a [href]="'manageReports' | documentationLink" target="_blank" rel="noopener noreferrer">{{
+    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895354/Manage+Reports" target="_blank">{{
       'labels.heading.Manage Reports' | translate
     }}</a>
   </h4>

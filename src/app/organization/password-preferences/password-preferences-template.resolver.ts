@@ -1,32 +1,27 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import { PasswordPreferencesService } from '@fineract/client';
 
 /**
  * Password Preferences Template data resolver.
  */
 @Injectable()
 export class PasswordPreferencesTemplateResolver {
-  private organizationService = inject(OrganizationService);
+  /**
+   * @param {PasswordPreferencesService} passwordPreferencesService Password Preferences service.
+   */
+  constructor(private passwordPreferencesService: PasswordPreferencesService) {}
 
   /**
    * Returns the password preferences template data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.organizationService.getPasswordPreferencesTemplate();
+    return this.passwordPreferencesService.template21();
   }
 }

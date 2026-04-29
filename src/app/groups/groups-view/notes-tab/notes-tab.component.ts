@@ -1,18 +1,10 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
 import { AuthenticationService } from '../../../core/authentication/authentication.service';
-import { GroupsService } from '../../groups.service';
+import { NotesService } from '@fineract/client';
 import { EntityNotesTabComponent } from '../../../shared/tabs/entity-notes-tab/entity-notes-tab.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -31,10 +23,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class NotesTabComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private authenticationService = inject(AuthenticationService);
-  private groupsService = inject(GroupsService);
-
   /** Group ID */
   entityId: string;
   /** Username */
@@ -48,7 +36,11 @@ export class NotesTabComponent implements OnInit {
    * @param {GroupsService} groupsService Groups Service
    * @param {AuthenticationService} authenticationService Authentication Service.
    */
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private authenticationService: AuthenticationService,
+    private notesService: NotesService
+  ) {
     this.entityId = this.route.parent.snapshot.params['groupId'];
     this.addNote = this.addNote.bind(this);
   }
@@ -65,7 +57,12 @@ export class NotesTabComponent implements OnInit {
    * Adds a new note.
    */
   addNote(noteContent: any) {
-    this.groupsService.createGroupNote(this.entityId, noteContent).subscribe((response: any) => {
+    const params = {
+      resourceType: 'groups',
+      resourceId: parseInt(this.entityId, 10),
+      noteRequest: noteContent
+    };
+    this.notesService.addNewNote(params).subscribe((response: any) => {
       this.entityNotes.push({
         id: response.resourceId,
         createdByUsername: this.username,
@@ -81,7 +78,13 @@ export class NotesTabComponent implements OnInit {
    * @param {any} noteContent Note's content.
    */
   editNote(noteId: string, noteContent: any, index: number) {
-    this.groupsService.editGroupNote(this.entityId, noteId, noteContent).subscribe(() => {
+    const params = {
+      resourceType: 'groups',
+      resourceId: parseInt(this.entityId, 10),
+      noteId: parseInt(noteId, 10),
+      noteRequest: noteContent
+    };
+    this.notesService.updateNote(params).subscribe(() => {
       this.entityNotes[index].note = noteContent.note;
     });
   }
@@ -91,7 +94,12 @@ export class NotesTabComponent implements OnInit {
    * @param {string} noteId Note Id.
    */
   deleteNote(noteId: string, index: number) {
-    this.groupsService.deleteGroupNote(this.entityId, noteId).subscribe(() => {
+    const params = {
+      resourceType: 'groups',
+      resourceId: parseInt(this.entityId, 10),
+      noteId: parseInt(noteId, 10)
+    };
+    this.notesService.deleteNote(params).subscribe(() => {
       this.entityNotes.splice(index, 1);
     });
   }

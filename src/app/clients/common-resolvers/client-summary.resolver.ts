@@ -1,27 +1,24 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
+import { HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 /** Custom Services */
-import { ClientsService } from '../clients.service';
+import { RunReportsService } from '@fineract/client';
 
 /**
  * Client Summary resolver.
  */
 @Injectable()
 export class ClientSummaryResolver {
-  private clientsService = inject(ClientsService);
+  /**
+   * @param {RunReportsService} runReportsService Reports service.
+   */
+  constructor(private runReportsService: RunReportsService) {}
 
   /**
    * Returns the Client Summary data.
@@ -29,6 +26,8 @@ export class ClientSummaryResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const clientId = route.parent.paramMap.get('clientId');
-    return this.clientsService.getClientSummary(clientId);
+    return this.runReportsService.runReport({
+      reportName: `ClientSummary?R_clientId=${clientId}&genericResultSet=false`
+    });
   }
 }

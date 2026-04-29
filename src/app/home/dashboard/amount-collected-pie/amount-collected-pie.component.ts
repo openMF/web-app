@@ -1,36 +1,24 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /** Custom Services */
-import { HomeService } from '../../home.service';
-import { ThemingService } from 'app/shared/theme-toggle/theming.service';
+import { HomeService } from 'app/customApis.service';
 
 /** Charting Imports */
-import { Chart, registerables } from 'chart.js';
+import Chart from 'chart.js';
 import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { NgStyle } from '@angular/common';
+import { NgFor, NgStyle, NgIf } from '@angular/common';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-
-// Register Chart.js components
-Chart.register(...registerables);
 
 /**
  * Amount Collected Pie Chart Component
  */
 @Component({
   selector: 'mifosx-amount-collected-pie',
+  standalone: true,
   templateUrl: './amount-collected-pie.component.html',
   styleUrls: ['./amount-collected-pie.component.scss'],
   imports: [
@@ -41,14 +29,6 @@ Chart.register(...registerables);
   ]
 })
 export class AmountCollectedPieComponent implements OnInit {
-  private homeService = inject(HomeService);
-  private route = inject(ActivatedRoute);
-  private themingService = inject(ThemingService);
-  private destroyRef = inject(DestroyRef);
-
-  /** Current theme */
-  private currentTheme = 'light-theme';
-
   /** Static Form control for office Id */
   officeId = new UntypedFormControl();
   /** Office Data */
@@ -65,7 +45,10 @@ export class AmountCollectedPieComponent implements OnInit {
    * @param {HomeService} homeService Home Service.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor() {
+  constructor(
+    private homeService: HomeService,
+    private route: ActivatedRoute
+  ) {
     this.route.data.subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });
@@ -78,13 +61,6 @@ export class AmountCollectedPieComponent implements OnInit {
   ngOnInit() {
     this.getChartData();
     this.officeId.patchValue(1);
-    // Subscribe to theme changes to update chart legend colors
-    this.themingService.theme.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((theme) => {
-      this.currentTheme = theme;
-      if (this.chart) {
-        this.updateChartColors();
-      }
-    });
   }
 
   /**
@@ -112,8 +88,6 @@ export class AmountCollectedPieComponent implements OnInit {
    * @param {any} data Chart Data.
    */
   setChart(data: any) {
-    const legendColor = this.getLegendColor();
-
     if (!this.chart) {
       this.chart = new Chart('collection-pie', {
         type: 'doughnut',
@@ -133,13 +107,6 @@ export class AmountCollectedPieComponent implements OnInit {
           ]
         },
         options: {
-          plugins: {
-            legend: {
-              labels: {
-                color: legendColor
-              }
-            }
-          },
           layout: {
             padding: {
               top: 10,
@@ -150,25 +117,6 @@ export class AmountCollectedPieComponent implements OnInit {
       });
     } else {
       this.chart.data.datasets[0].data = data;
-      this.chart.update();
-    }
-  }
-
-  /**
-   * Gets the legend color based on the current theme.
-   */
-  private getLegendColor(): string {
-    return this.currentTheme === 'dark-theme' ? 'white' : '#666';
-  }
-
-  /**
-   * Updates chart colors based on the current theme.
-   */
-  updateChartColors() {
-    const legendColor = this.getLegendColor();
-
-    if (this.chart?.options?.plugins?.legend?.labels) {
-      this.chart.options.plugins.legend.labels.color = legendColor;
       this.chart.update();
     }
   }

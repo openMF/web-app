@@ -1,19 +1,11 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
 import { RecurringDepositsService } from '../recurring-deposits.service';
-import { SavingsService } from 'app/savings/savings.service';
+import { SavingsAccountService } from '@fineract/client';
 
 /** Custom Buttons Configuration */
 import { RecurringDepositsButtonsConfiguration } from './recurring-deposits-buttons.config';
@@ -32,7 +24,7 @@ import {
   MatCardContent
 } from '@angular/material/card';
 import { MatTooltip } from '@angular/material/tooltip';
-import { NgClass, DecimalPipe, CurrencyPipe } from '@angular/common';
+import { NgClass, NgIf, NgFor, DecimalPipe, CurrencyPipe } from '@angular/common';
 import { AccountNumberComponent } from '../../../shared/account-number/account-number.component';
 import { MatIconButton } from '@angular/material/button';
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
@@ -75,13 +67,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class RecurringDepositsAccountViewComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private recurringDepositsService = inject(RecurringDepositsService);
-  private savingsService = inject(SavingsService);
-  dialog = inject(MatDialog);
-  private translateService = inject(TranslateService);
-
   /** RecurringDeposits Account Data */
   recurringDepositsAccountData: any;
   /** Button Configuration */
@@ -99,9 +84,18 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
    * Fetches recurringDeposits account data from `resolve`
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
-   * @param {RecurringDepositsService} recurringDepositsService RecurringDeposits Service
+   * @param {RecurringDepositsService} recurringDepositsService
+   * @param {SavingsAccountService} savingsAccountService
+   *  RecurringDeposits Service
    */
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private recurringDepositsService: RecurringDepositsService,
+    private savingsAccountService: SavingsAccountService,
+    public dialog: MatDialog,
+    private translateService: TranslateService
+  ) {
     this.route.data.subscribe((data: { recurringDepositsAccountData: any; savingsDatatables: any }) => {
       this.recurringDepositsAccountData = data.recurringDepositsAccountData;
       this.charges = this.recurringDepositsAccountData.charges;
@@ -317,9 +311,13 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
     });
     deleteSavingsAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService
-          .executeSavingsAccountUpdateCommand(this.recurringDepositsAccountData.id, 'updateWithHoldTax', {
-            withHoldTax: true
+        this.savingsAccountService
+          .update20({
+            accountId: this.recurringDepositsAccountData.id,
+            putSavingsAccountsAccountIdRequest: {
+              changes: { withHoldTax: true }
+            } as any,
+            command: 'updateWithHoldTax'
           })
           .subscribe(() => {
             this.reload();
@@ -341,9 +339,13 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
     });
     disableWithHoldTaxDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService
-          .executeSavingsAccountUpdateCommand(this.recurringDepositsAccountData.id, 'updateWithHoldTax', {
-            withHoldTax: false
+        this.savingsAccountService
+          .update20({
+            accountId: this.recurringDepositsAccountData.id,
+            putSavingsAccountsAccountIdRequest: {
+              changes: { withHoldTax: false }
+            } as any,
+            command: 'updateWithHoldTax'
           })
           .subscribe(() => {
             this.reload();

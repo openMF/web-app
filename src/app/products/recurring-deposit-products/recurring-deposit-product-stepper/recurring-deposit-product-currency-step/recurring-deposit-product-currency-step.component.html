@@ -1,11 +1,3 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <form [formGroup]="recurringDepositProductCurrencyForm">
   <div class="layout-row-wrap gap-2px responsive-column">
     <mat-form-field class="flex-48">
@@ -15,11 +7,9 @@
         matTooltip="{{ 'tooltips.The currency in which the deposit will be disbursed' | translate }}"
         required
       >
-        @for (currency of currencyData; track currency) {
-          <mat-option [value]="currency.code">
-            {{ currency.name }}
-          </mat-option>
-        }
+        <mat-option *ngFor="let currency of currencyData" [value]="currency.code">
+          {{ currency.name }}
+        </mat-option>
       </mat-select>
       <mat-error>
         {{ 'labels.inputs.Currency' | translate }} {{ 'labels.commons.is' | translate }}
@@ -31,42 +21,30 @@
       <mat-label>{{ 'labels.inputs.Decimal Places' | translate }}</mat-label>
       <input
         type="number"
-        min="0"
         matInput
         formControlName="digitsAfterDecimal"
         matTooltip="{{ 'tooltips.Decimal places to be used to track and report' | translate }}"
         required
       />
-      <mat-error *ngIf="recurringDepositProductCurrencyForm.get('digitsAfterDecimal')?.hasError('required')">
+      <mat-error>
         {{ 'labels.inputs.Decimal Places' | translate }} {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
-      <mat-error *ngIf="recurringDepositProductCurrencyForm.get('digitsAfterDecimal')?.hasError('min')">
-        {{ 'labels.inputs.Decimal Places' | translate }} {{ 'labels.commons.Minimum Value must be' | translate }}
-        <strong>0</strong>
-      </mat-error>
     </mat-form-field>
 
-    <mat-checkbox labelPosition="before" formControlName="setMultiples" class="flex-98 margin-t align-items-center">
-      {{ 'labels.inputs.Set the recurring deposit installment in multiples of' | translate }}
-    </mat-checkbox>
-
-    @if (recurringDepositProductCurrencyForm.value.setMultiples) {
-      <mat-form-field class="flex-48">
-        <mat-label>{{ 'labels.inputs.Currency in multiples of' | translate }}</mat-label>
-        <input
-          type="number"
-          min="1"
-          matInput
-          formControlName="inMultiplesOf"
-          matTooltip="{{ 'tooltips.Enter multiples of currency value' | translate }}"
-        />
-        <mat-error>
-          {{ 'labels.inputs.Currency in multiples of' | translate }} {{ 'labels.commons.is' | translate }}
-          <strong>{{ 'labels.commons.required' | translate }}</strong>
-        </mat-error>
-      </mat-form-field>
-    }
+    <mat-form-field class="flex-48">
+      <mat-label>{{ 'labels.inputs.Currency in multiples of' | translate }}</mat-label>
+      <input
+        type="number"
+        matInput
+        formControlName="inMultiplesOf"
+        matTooltip="{{ 'tooltips.Enter multiples of currency value' | translate }}"
+      />
+      <mat-error>
+        {{ 'labels.inputs.Currency in multiples of' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
+      </mat-error>
+    </mat-form-field>
   </div>
 
   <div class="layout-row align-center gap-2percent margin-t responsive-column">

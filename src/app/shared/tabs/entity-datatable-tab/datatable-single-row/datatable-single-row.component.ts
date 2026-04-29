@@ -1,12 +1,4 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Datatables } from 'app/core/utils/datatables';
@@ -15,12 +7,11 @@ import { SettingsService } from 'app/settings/settings.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
-import { SystemService } from 'app/system/system.service';
-import { NgClass } from '@angular/common';
+import { DataTablesService } from '@fineract/client';
+import { NgIf, NgFor, NgClass, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatDivider } from '@angular/material/divider';
-import { MatCard, MatCardContent } from '@angular/material/card';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MatTooltip } from '@angular/material/tooltip';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
@@ -28,7 +19,6 @@ import { DatetimeFormatPipe } from '../../../../pipes/datetime-format.pipe';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
 import { PrettyPrintPipe } from '../../../../pipes/pretty-print.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { formatTabLabel } from 'app/shared/utils/format-tab-label.util';
 
 @Component({
   selector: 'mifosx-datatable-single-row',
@@ -38,10 +28,11 @@ import { formatTabLabel } from 'app/shared/utils/format-tab-label.util';
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     MatDivider,
-    MatCard,
-    MatCardContent,
     NgClass,
+    NgSwitch,
+    NgSwitchCase,
     CdkTextareaAutosize,
+    NgSwitchDefault,
     MatIconButton,
     MatTooltip,
     DateFormatPipe,
@@ -51,21 +42,26 @@ import { formatTabLabel } from 'app/shared/utils/format-tab-label.util';
   ]
 })
 export class DatatableSingleRowComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private dateUtils = inject(Dates);
-  private dialog = inject(MatDialog);
-  private settingsService = inject(SettingsService);
-  public datatables = inject(Datatables);
-  private systemService = inject(SystemService);
-
   @Input() dataObject: any;
   @Input() entityId: string;
   @Input() entityType: string;
   datatableName: string;
 
-  formatTabLabel(label: string): string {
-    return formatTabLabel(label);
-  }
+  /**
+   * @param {ActivatedRoute} route Activated Route.
+   * @param {Dates} dateUtils Date Utils.
+   * @param {DataTablesService} dataTablesService Data Tables Service.
+   * @param {SettingsService} settingsService Settings Service
+   * @param {Datatables} datatables Datatable utils
+   */
+  constructor(
+    private route: ActivatedRoute,
+    private dateUtils: Dates,
+    private dialog: MatDialog,
+    private settingsService: SettingsService,
+    private datatables: Datatables,
+    private dataTablesService: DataTablesService
+  ) {}
 
   ngOnInit() {
     this.route.params.subscribe((routeParams: any) => {
@@ -85,7 +81,7 @@ export class DatatableSingleRowComponent implements OnInit {
       dataTableEntryObject
     );
     const data = {
-      title: 'Add ' + formatTabLabel(this.datatableName) + ' for ' + this.entityType,
+      title: 'Add ' + this.datatableName + ' for ' + this.entityType,
       formfields: formfields
     };
     const addDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
@@ -98,12 +94,20 @@ export class DatatableSingleRowComponent implements OnInit {
           );
         });
         dataTableEntryObject = { ...response.data.value, ...dataTableEntryObject };
-        this.systemService
-          .addEntityDatatableEntry(this.entityId, this.datatableName, dataTableEntryObject)
+        this.dataTablesService
+          .createDatatableEntry({
+            datatable: this.datatableName,
+            apptableId: Number(this.entityId),
+            body: JSON.stringify(dataTableEntryObject)
+          })
           .subscribe(() => {
-            this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
-              this.dataObject = dataObject;
-            });
+            this.dataTablesService
+              .getDatatables({
+                apptable: String(this.entityId)
+              })
+              .subscribe((dataObject: any) => {
+                this.dataObject = dataObject;
+              });
           });
       }
     });
@@ -137,10 +141,9 @@ export class DatatableSingleRowComponent implements OnInit {
       return formfield;
     });
     const data = {
-      title: 'Edit ' + formatTabLabel(this.datatableName) + ' for ' + this.entityType,
+      title: 'Edit ' + this.datatableName + ' for ' + this.entityType,
       formfields: formfields,
-      layout: { addButtonText: 'Submit' },
-      pristine: false
+      layout: { addButtonText: 'Save' }
     };
     const editDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
     editDialogRef.afterClosed().subscribe((response: any) => {
@@ -152,12 +155,20 @@ export class DatatableSingleRowComponent implements OnInit {
           );
         });
         dataTableEntryObject = { ...response.data.value, ...dataTableEntryObject };
-        this.systemService
-          .editEntityDatatableEntry(this.entityId, this.datatableName, dataTableEntryObject)
+        this.dataTablesService
+          .updateDatatableEntryOnetoOne({
+            apptableId: Number(this.entityId),
+            datatable: this.datatableName,
+            body: JSON.stringify(dataTableEntryObject)
+          })
           .subscribe(() => {
-            this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
-              this.dataObject = dataObject;
-            });
+            this.dataTablesService
+              .getDatatables({
+                apptable: String(this.entityId)
+              })
+              .subscribe((dataObject: any) => {
+                this.dataObject = dataObject;
+              });
           });
       }
     });
@@ -165,15 +176,24 @@ export class DatatableSingleRowComponent implements OnInit {
 
   delete() {
     const deleteDataTableDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: ` the contents of ${formatTabLabel(this.datatableName)}` }
+      data: { deleteContext: ` the contents of ${this.datatableName}` }
     });
     deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
-      if (response?.delete) {
-        this.systemService.deleteDatatableContent(this.entityId, this.datatableName).subscribe(() => {
-          this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
-            this.dataObject = dataObject;
+      if (response.delete) {
+        this.dataTablesService
+          .deleteDatatableEntries({
+            apptableId: Number(this.entityId),
+            datatable: this.datatableName
+          })
+          .subscribe(() => {
+            this.dataTablesService
+              .getDatatables({
+                apptable: String(this.entityId)
+              })
+              .subscribe((dataObject: any) => {
+                this.dataObject = dataObject;
+              });
           });
-        });
       }
     });
   }
@@ -186,15 +206,6 @@ export class DatatableSingleRowComponent implements OnInit {
   }
 
   getColumnType(columnDisplayType: string, columnType: string) {
-    if (
-      columnType &&
-      (columnType.toLowerCase().includes('timestamp') ||
-        columnType.toLowerCase() === 'created_at' ||
-        columnType.toLowerCase() === 'updated_at')
-    ) {
-      return 'DATETIME';
-    }
-
     switch (columnDisplayType) {
       case 'DATE': {
         return columnDisplayType;
@@ -206,9 +217,6 @@ export class DatatableSingleRowComponent implements OnInit {
         return columnDisplayType;
       }
       case 'DECIMAL': {
-        return columnDisplayType;
-      }
-      case 'CODELOOKUP': {
         return columnDisplayType;
       }
       case 'TEXT': {
@@ -233,6 +241,6 @@ export class DatatableSingleRowComponent implements OnInit {
   }
 
   openSite(siteUrl: string) {
-    window.open(siteUrl, '_blank', 'noopener,noreferrer');
+    window.open(siteUrl, '_blank');
   }
 }

@@ -1,21 +1,16 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { LoansService } from '../loans.service';
+import { RescheduleLoansService } from '@fineract/client';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoanReschedulesResolver {
-  private loansService = inject(LoansService);
+  /**
+   * @param {RescheduleLoansService} rescheduleLoansService Reschedule loans service.
+   */
+  constructor(private rescheduleLoansService: RescheduleLoansService) {}
 
   /**
    * Returns the Loans data.
@@ -23,6 +18,8 @@ export class LoanReschedulesResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const loanId = route.paramMap.get('loanId') || route.parent.paramMap.get('loanId');
-    return this.loansService.loanRescheduleRequests(loanId);
+    return this.rescheduleLoansService.retrieveAllRescheduleRequest({
+      loanId: Number(loanId)
+    });
   }
 }

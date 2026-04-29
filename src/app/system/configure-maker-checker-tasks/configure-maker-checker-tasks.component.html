@@ -1,11 +1,3 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <div class="layout-row align-end gap-2px responsive-column container m-b-20">
   <div #buttonEdit class="in-block">
     <button
@@ -26,16 +18,15 @@
       <div class="layout-row">
         <div #mcTable class="layout-column flex-30">
           <mat-list>
-            @for (grouping of groupings; track grouping) {
-              <mat-list-item
-                [ngClass]="selectedItem === grouping ? 'active' : 'inactive'"
-                (click)="showPermissions(grouping)"
-              >
-                <span class="grouping-name">
-                  {{ formatName(grouping) }}
-                </span>
-              </mat-list-item>
-            }
+            <mat-list-item
+              [ngClass]="selectedItem === grouping ? 'active' : 'inactive'"
+              *ngFor="let grouping of groupings"
+              (click)="showPermissions(grouping)"
+            >
+              <span class="grouping-name">
+                {{ formatName(grouping) }}
+              </span>
+            </mat-list-item>
           </mat-list>
         </div>
 
@@ -43,33 +34,29 @@
         <div class="list-permission layout-column flex-70">
           <form [formGroup]="formGroup" (submit)="submit()">
             <div formArrayName="roster">
-              @for (permission of permissions.permissions; track permission; let i = $index) {
-                <div class="display-permissions">
-                  <div [formGroupName]="i">
-                    <mat-checkbox name="cp" id="{{ permission.code }}" formControlName="selected">
-                      {{ permissionName(permission.code) }}
-                    </mat-checkbox>
-                  </div>
+              <div *ngFor="let permission of permissions.permissions; let i = index" class="display-permissions">
+                <div [formGroupName]="i">
+                  <mat-checkbox name="cp" id="{{ permission.code }}" formControlName="selected">
+                    {{ permissionName(permission.code) }}
+                  </mat-checkbox>
                 </div>
-              }
+              </div>
             </div>
           </form>
         </div>
       </div>
     </ng-container>
 
-    @if (!isDisabled) {
-      <div class="layout-row layout-align-center gap-5px layout-xs-column">
-        <mat-card-actions>
-          <button type="button" mat-raised-button (click)="cancel(); restoreCheckboxes()">
-            {{ 'labels.buttons.Cancel' | translate }}
-          </button>
-          <button mat-raised-button color="primary" (click)="submit()" *mifosxHasPermission="'UPDATE_PERMISSION'">
-            {{ 'labels.buttons.Submit' | translate }}
-          </button>
-        </mat-card-actions>
-      </div>
-    }
+    <div class="layout-row layout-align-center gap-5px layout-xs-column" *ngIf="!isDisabled">
+      <mat-card-actions>
+        <button type="button" mat-raised-button (click)="cancel(); restoreCheckboxes()">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button mat-raised-button color="primary" (click)="submit()" *mifosxHasPermission="'UPDATE_PERMISSION'">
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
+      </mat-card-actions>
+    </div>
   </mat-card>
 </div>
 
@@ -96,9 +83,11 @@
 <ng-template #templateMcTable let-popover="popover">
   <h4 class="mw300">
     {{ 'labels.heading.List of all maker checker tasks' | translate }}:
-    <a [href]="'configureMakerCheckerTasks' | documentationLink" target="_blank" rel="noopener noreferrer">{{
-      'labels.inputs.Configure Maker-Checker Tasks' | translate
-    }}</a>
+    <a
+      href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895359/Configure+Maker-Checker+Tasks"
+      target="_blank"
+      >{{ 'labels.inputs.Configure Maker-Checker Tasks' | translate }}</a
+    >
   </h4>
   <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">

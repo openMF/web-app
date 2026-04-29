@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -27,7 +19,11 @@ import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, ReactiveForms
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import {
+  StandingInstructionHistoryData,
+  StandingInstructionsHistoryService,
+  StandingInstructionsService
+} from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -63,13 +59,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class StandingInstructionsHistoryComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private organizationService = inject(OrganizationService);
-  private settingsService = inject(SettingsService);
-  private router = inject(Router);
-  private route = inject(ActivatedRoute);
-  private dateUtils = inject(Dates);
-
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
@@ -103,13 +92,20 @@ export class StandingInstructionsHistoryComponent implements OnInit {
   /**
    * Retrieves the instructions template from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {StandingInstructionsHistoryService} standingInstructionsHistoryService Standing Instructions History Service.
    * @param {SettingsService} settingsService Settings Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {Dates} dateUtils Date Utils to format date.
    */
-  constructor() {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private standingHistoryService: StandingInstructionsHistoryService,
+    private settingsService: SettingsService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private dateUtils: Dates
+  ) {
     this.route.data.subscribe((data: { standingInstructionsTemplate: any }) => {
       this.standingInstructionsTemplate = data.standingInstructionsTemplate;
     });
@@ -175,7 +171,7 @@ export class StandingInstructionsHistoryComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.organizationService.getStandingInstructions(data).subscribe((response: any) => {
+    this.standingHistoryService.retrieveAll20(data).subscribe((response: any) => {
       this.setInstructions(response.pageItems);
     });
   }

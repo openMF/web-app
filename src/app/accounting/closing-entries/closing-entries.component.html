@@ -1,11 +1,3 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <div class="container m-b-20 layout-row align-end gap-20px">
   <div #buttonCreateClosure>
     <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_GLCLOSURE'">
@@ -24,11 +16,9 @@
 
 <!-- Autocomplete data -->
 <mat-autocomplete autoActiveFirstOption #officeNameAutocomplete="matAutocomplete">
-  @for (office of filteredOfficeData | async; track office) {
-    <mat-option [value]="office.name">
-      {{ office.name }}
-    </mat-option>
-  }
+  <mat-option *ngFor="let office of filteredOfficeData | async" [value]="office.name">
+    {{ office.name }}
+  </mat-option>
 </mat-autocomplete>
 
 <div class="container">
@@ -113,7 +103,7 @@
 <ng-template #templateClosuresTable let-popover="popover">
   <h4>
     {{ 'labels.heading.List of closures. To know more click' | translate }}:
-    <a [href]="'closingEntries' | documentationLink" target="_blank" rel="noopener noreferrer">{{
+    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895316/Closing+Entries" target="_blank">{{
       'labels.inputs.Closing Entries' | translate
     }}</a>
   </h4>

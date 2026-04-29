@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -25,7 +17,8 @@ import {
   MatRow
 } from '@angular/material/table';
 import { Dates } from 'app/core/utils/dates';
-import { LoansService } from 'app/loans/loans.service';
+import { LoanTransactionsService, LoansService } from '@fineract/client';
+import { LoansService as CustomLoansService } from 'app/customApis.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsService } from 'app/settings/settings.service';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
@@ -47,7 +40,6 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
 
 @Component({
   selector: 'mifosx-transactions-tab',
@@ -80,15 +72,7 @@ import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan
     FormatNumberPipe
   ]
 })
-export class TransactionsTabComponent extends LoanProductBaseComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private dateUtils = inject(Dates);
-  private dialog = inject(MatDialog);
-  private loansService = inject(LoansService);
-  private translateService = inject(TranslateService);
-  private settingsService = inject(SettingsService);
-  private alertService = inject(AlertService);
-
+export class TransactionsTabComponent implements OnInit {
   /** Loan Details Data */
   transactionsData: LoanTransaction[] = [];
   loanDetailsData: any;
@@ -144,8 +128,18 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
    * Retrieves the loans with associations data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor() {
-    super();
+  constructor(
+    private route: ActivatedRoute,
+    private dateUtils: Dates,
+    private router: Router,
+    private dialog: MatDialog,
+    private loanTransactionsService: LoanTransactionsService,
+    private loansService: LoansService,
+    private customLoansService: CustomLoansService,
+    private translateService: TranslateService,
+    private settingsService: SettingsService,
+    private alertService: AlertService
+  ) {
     this.route.parent.parent.data.subscribe((data: { loanDetailsData: any }) => {
       this.loanDetailsData = data.loanDetailsData;
       this.status = data.loanDetailsData.status.value;
@@ -220,12 +214,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
    */
   showTransactions(transactionsData: LoanTransaction) {
     if (this.showTransaction(transactionsData)) {
-      this.router.navigate([transactionsData.id], {
-        queryParams: {
-          productType: this.loanProductService.productType.value
-        },
-        relativeTo: this.route
-      });
+      this.router.navigate([transactionsData.id], { relativeTo: this.route });
     }
   }
 
@@ -384,7 +373,11 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
           transactionId = null;
         }
         this.loansService
-          .executeLoansAccountTransactionsCommand(loanId, command, payload, transactionId)
+          .stateTransitions({
+            loanId: parseInt(loanId, 10),
+            postLoansLoanIdRequest: payload,
+            command: command
+          })
           .subscribe((responseCmd: any) => {
             transaction.manuallyReversed = true;
             this.reload();
@@ -407,9 +400,15 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
     undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
         const undoCommand = actionName === 'Re-Age' ? 'undoReAge' : 'undoReAmortize';
-        this.loansService.executeLoansAccountTransactionsCommand(String(this.loanId), undoCommand, {}).subscribe(() => {
-          this.reload();
-        });
+        this.loansService
+          .stateTransitions({
+            loanId: this.loanId,
+            postLoansLoanIdRequest: {},
+            command: undoCommand
+          })
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }
@@ -491,8 +490,12 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
 
   openInterestRefundDialog(transaction: LoanTransaction) {
     const loanId = this.loanId;
-    this.loansService
-      .getLoanTransactionActionTemplate(String(loanId), 'interest-refund', String(transaction.id))
+    this.loanTransactionsService
+      .retrieveTransactionTemplate({
+        loanId: loanId,
+        command: 'interest-refund',
+        transactionId: transaction.id
+      })
       .subscribe((template: any) => {
         const paymentTypeField = new FormfieldBase({
           controlType: 'select',
@@ -534,6 +537,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
             required: false,
             order: 4
           })
+
         ];
         const data = {
           title: this.translateService.instant('labels.buttons.Create Interest Refund'),
@@ -550,7 +554,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
               locale: this.settingsService.language.code,
               dateFormat: this.settingsService.dateFormat
             };
-            this.loansService
+            this.customLoansService
               .executeLoansAccountTransactionsCommand(
                 String(loanId),
                 'interest-refund',
@@ -565,6 +569,12 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
       });
   }
 
+  private reload() {
+    const clientId = this.route.parent.parent.snapshot.params['clientId'];
+    const url: string = this.router.url;
+    this.router.navigateByUrl(`/clients`, { skipLocationChange: true }).then(() => this.router.navigate([url]));
+  }
+
   displaySubMenu(transaction: LoanTransaction): boolean {
     if (this.isReAgoeOrReAmortize(transaction.type) && transaction.manuallyReversed) {
       return false;
@@ -574,8 +584,12 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
 
   capitalizedIncomeAdjustmentTransaction(transaction: LoanTransaction) {
     const accountId = `${this.loanId}`;
-    this.loansService
-      .getLoanTransactionActionTemplate(accountId, 'capitalizedIncomeAdjustment', `${transaction.id}`)
+    this.loanTransactionsService
+      .retrieveTransactionTemplate({
+        loanId: Number(accountId),
+        command: 'capitalizedIncomeAdjustment',
+        transactionId: Number(transaction.id)
+      })
       .subscribe((response: any) => {
         const transactionDate = response.date || transaction.date;
         if (response.amount == 0) {
@@ -602,10 +616,10 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
               max: transactionAmount,
               validators: [
                 Validators.min(0.001),
-                Validators.max(transactionAmount)
-              ],
+                Validators.max(transactionAmount)],
               order: 2
             })
+
           ];
           const data = {
 <<<<<<< HEAD
@@ -634,12 +648,11 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
                   dateFormat
                 };
                 this.loansService
-                  .executeLoansAccountTransactionsCommand(
-                    accountId,
-                    'capitalizedIncomeAdjustment',
-                    payload,
-                    transaction.id
-                  )
+                  .stateTransitions({
+                    loanId: parseInt(accountId, 10),
+                    postLoansLoanIdRequest: payload,
+                    command: 'capitalizedIncomeAdjustment'
+                  })
                   .subscribe(() => {
                     this.reload();
                   });
@@ -733,8 +746,12 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
 
   buyDownFeeAdjustmentTransaction(transaction: LoanTransaction) {
     const accountId = `${this.loanId}`;
-    this.loansService
-      .getLoanTransactionActionTemplate(accountId, 'buyDownFeeAdjustment', `${transaction.id}`)
+    this.loanTransactionsService
+      .retrieveTransactionTemplate({
+        loanId: Number(accountId),
+        command: 'buyDownFeeAdjustment',
+        transactionId: Number(transaction.id)
+      })
       .subscribe((response: any) => {
         const transactionDate = response.date || transaction.date;
         if (response.amount == 0) {
@@ -761,10 +778,10 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
               max: transactionAmount,
               validators: [
                 Validators.min(0.001),
-                Validators.max(transactionAmount)
-              ],
+                Validators.max(transactionAmount)],
               order: 2
             })
+
           ];
           const data = {
             title: `Adjustment ${transaction.type.value} Transaction`,
@@ -785,7 +802,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
                   locale,
                   dateFormat
                 };
-                this.loansService
+                this.customLoansService
                   .executeLoansAccountTransactionsCommand(accountId, 'buyDownFeeAdjustment', payload, transaction.id)
                   .subscribe(() => {
                     this.reload();

@@ -1,11 +1,3 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 import { OptionData } from 'app/shared/models/option-data.model';
 
 /** Recurring Deposits Account Buttons Configuration */
@@ -90,11 +82,6 @@ export class LoansAccountButtonConfiguration {
             name: 'Reject',
             icon: 'times',
             taskPermissionName: 'REJECT_LOAN'
-          },
-          {
-            name: 'Attach Loan Originator',
-            icon: 'edit',
-            taskPermissionName: 'ATTACH_LOAN_ORIGINATOR'
           }
         ];
         break;
@@ -120,11 +107,6 @@ export class LoansAccountButtonConfiguration {
       case 'Overpaid':
         this.buttonsArray = [
           {
-            name: 'Add Loan Charge',
-            icon: 'plus',
-            taskPermissionName: 'CREATE_LOANCHARGE'
-          },
-          {
             name: 'Transfer Funds',
             icon: 'exchange',
             taskPermissionName: 'CREATE_ACCOUNTTRANSFER'
@@ -133,11 +115,6 @@ export class LoansAccountButtonConfiguration {
             name: 'Credit Balance Refund',
             icon: 'coins',
             taskPermissionName: 'CREATE_CREDIT_BALANCE_REFUND'
-          },
-          {
-            name: 'Make Repayment',
-            icon: 'coins',
-            taskPermissionName: 'REPAYMENT_LOAN'
           }
         ];
         break;

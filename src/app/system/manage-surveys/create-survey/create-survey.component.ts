@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -20,7 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { SpmSurveysService } from '@fineract/client';
 
 /** Custom Components */
 import { CancelDialogComponent } from '../../../shared/cancel-dialog/cancel-dialog.component';
@@ -50,14 +42,23 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateSurveyComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private systemService = inject(SystemService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  dialog = inject(MatDialog);
-
   /** Survey form. */
   surveyForm: UntypedFormGroup;
+
+  /**
+   * @param {FormBuilder} formBuilder Form Builder.
+   * @param {SpmSurveysService} spmSurveysService Spm Surveys Service.
+   * @param {ActivatedRoute} route Activated Route.
+   * @param {Router} router Router for navigation.
+   * @param {MatDialog} dialog Dialog reference.
+   */
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private spmSurveysService: SpmSurveysService,
+    private route: ActivatedRoute,
+    private router: Router,
+    public dialog: MatDialog
+  ) {}
 
   /**
    * Creates the survey form.
@@ -83,8 +84,7 @@ export class CreateSurveyComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern('^\\s*([A-Za-z]{2})?\\s*$')
-        ]
+          Validators.pattern('^\\s*([A-Za-z]{2})?\\s*$')]
       ],
       description: [''],
       questionDatas: this.formBuilder.array([])
@@ -163,8 +163,7 @@ export class CreateSurveyComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern('^\\s*[-]?\\d{0,4}\\s*$')
-        ]
+          Validators.pattern('^\\s*[-]?\\d{0,4}\\s*$')]
       ],
       sequenceNo: ['']
     });
@@ -243,7 +242,7 @@ export class CreateSurveyComponent implements OnInit {
     this.surveyForm.patchValue({
       countryCode: this.surveyForm.value.countryCode.toUpperCase()
     });
-    this.systemService.createSurvey(this.surveyForm.value).subscribe((response: any) => {
+    this.spmSurveysService.createSurvey(this.surveyForm.value).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

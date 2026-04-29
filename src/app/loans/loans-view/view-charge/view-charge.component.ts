@@ -1,18 +1,10 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { LoansService } from 'app/loans/loans.service';
+import { LoanChargesService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Dialogs */
@@ -26,12 +18,11 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { Dates } from 'app/core/utils/dates';
 import { TranslateService } from '@ngx-translate/core';
-import { NgClass } from '@angular/common';
+import { NgIf, NgClass } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { LoanAccountTabBaseComponent } from '../loan-account-tab-base.component';
 
 /**
  * View Charge Component.
@@ -48,14 +39,7 @@ import { LoanAccountTabBaseComponent } from '../loan-account-tab-base.component'
     FormatNumberPipe
   ]
 })
-export class ViewChargeComponent extends LoanAccountTabBaseComponent {
-  private loansService = inject(LoansService);
-  private route = inject(ActivatedRoute);
-  private dateUtils = inject(Dates);
-  private translateService = inject(TranslateService);
-  dialog = inject(MatDialog);
-  private settingsService = inject(SettingsService);
-
+export class ViewChargeComponent {
   /** Charge data. */
   chargeData: any;
   /** Loans Account Data */
@@ -64,16 +48,23 @@ export class ViewChargeComponent extends LoanAccountTabBaseComponent {
   allowWaive = true;
 
   /**
-   * Retrieves the Charge data from `resolve`.
-   * @param {LoansService} loansService Loans Service
+   * Retrieves the loan charge data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
+   * @param {LoanChargesService} loanChargesService Loan Charges Service.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    * @param {Dates} dateUtils Date Utils.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor() {
-    super();
+  constructor(
+    private loanChargesService: LoanChargesService,
+    private route: ActivatedRoute,
+    private dateUtils: Dates,
+    private router: Router,
+    private translateService: TranslateService,
+    public dialog: MatDialog,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { loansAccountCharge: any; loanDetailsData: any }) => {
       this.chargeData = data.loansAccountCharge;
       this.allowPayCharge = this.chargeData.chargePayable && !this.chargeData.paid;
@@ -94,6 +85,7 @@ export class ViewChargeComponent extends LoanAccountTabBaseComponent {
         type: 'date',
         required: true
       })
+
     ];
     const data = {
       title: `Pay Charge ${this.chargeData.id}`,
@@ -111,8 +103,13 @@ export class ViewChargeComponent extends LoanAccountTabBaseComponent {
           dateFormat,
           locale
         };
-        this.loansService
-          .executeLoansAccountChargesCommand(this.chargeData.loanId, 'pay', dataObject, this.chargeData.id)
+        this.loanChargesService
+          .executeLoanCharge2({
+            loanId: Number(this.chargeData.loanId),
+            loanChargeId: Number(this.chargeData.id),
+            command: 'pay',
+            postLoansLoanIdChargesChargeIdRequest: dataObject
+          })
           .subscribe(() => {
             this.reload();
           });
@@ -135,8 +132,13 @@ export class ViewChargeComponent extends LoanAccountTabBaseComponent {
     });
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.loansService
-          .executeLoansAccountChargesCommand(this.chargeData.loanId, 'waive', {}, this.chargeData.id)
+        this.loanChargesService
+          .executeLoanCharge2({
+            loanId: Number(this.chargeData.loanId),
+            loanChargeId: Number(this.chargeData.id),
+            command: 'waive',
+            postLoansLoanIdChargesChargeIdRequest: {}
+          })
           .subscribe(() => {
             this.reload();
           });
@@ -164,6 +166,7 @@ export class ViewChargeComponent extends LoanAccountTabBaseComponent {
         maxDate: this.settingsService.maxAllowedDate,
         required: true
       })
+
     ];
     const data = {
       title: 'Edit Charge',
@@ -183,8 +186,12 @@ export class ViewChargeComponent extends LoanAccountTabBaseComponent {
           dateFormat,
           locale
         };
-        this.loansService
-          .editLoansAccountCharge(this.loansAccountData.id, dataObject, this.chargeData.id)
+        this.loanChargesService
+          .updateLoanCharge({
+            loanId: Number(this.loansAccountData.id),
+            loanChargeId: Number(this.chargeData.id),
+            putLoansLoanIdChargesChargeIdRequest: dataObject
+          })
           .subscribe(() => {
             this.reload();
           });
@@ -201,9 +208,14 @@ export class ViewChargeComponent extends LoanAccountTabBaseComponent {
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.loansService.deleteLoansAccountCharge(this.loansAccountData.id, this.chargeData.id).subscribe(() => {
-          this.reload();
-        });
+        this.loanChargesService
+          .deleteLoanCharge({
+            loanId: Number(this.loansAccountData.id),
+            loanChargeId: Number(this.chargeData.id)
+          })
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }
@@ -213,11 +225,18 @@ export class ViewChargeComponent extends LoanAccountTabBaseComponent {
   }
 
   adjustmentCharge(): void {
-    this.router.navigate(['adjustment'], {
-      queryParams: {
-        productType: this.loanProductService.productType.value
-      },
-      relativeTo: this.route
-    });
+    this.router.navigate(['adjustment'], { relativeTo: this.route });
+  }
+
+  /**
+   * Refetches data fot the component
+   * TODO: Replace by a custom reload component instead of hard-coded back-routing.
+   */
+  private reload() {
+    const clientId = this.loansAccountData.clientId;
+    const url: string = this.router.url;
+    this.router
+      .navigateByUrl(`/clients/${clientId}/loans-accounts`, { skipLocationChange: true })
+      .then(() => this.router.navigate([url]));
   }
 }

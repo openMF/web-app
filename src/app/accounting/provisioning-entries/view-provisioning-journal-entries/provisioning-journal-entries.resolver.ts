@@ -1,27 +1,22 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { AccountingService } from '../../accounting.service';
+import { JournalEntriesService } from '@fineract/client';
 
 /**
  * Provisioning journal entries data resolver.
  */
 @Injectable()
 export class ProvisioningJournalEntriesResolver {
-  private accountingService = inject(AccountingService);
+  /**
+   * @param {JournalEntriesService} journalEntriesService Journal Entries service.
+   */
+  constructor(private journalEntriesService: JournalEntriesService) {}
 
   /**
    * Returns the provisioning journal entries data.
@@ -29,6 +24,6 @@ export class ProvisioningJournalEntriesResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const id = route.paramMap.get('id');
-    return this.accountingService.getProvisioningJournalEntries(id);
+    return this.journalEntriesService.retrieveJournalEntries({ entryId: Number(id) });
   }
 }

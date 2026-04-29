@@ -1,12 +1,4 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -56,9 +48,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class SavingProductChargesStepComponent implements OnInit {
-  dialog = inject(MatDialog);
-  private translateService = inject(TranslateService);
-
   @Input() savingProductsTemplate: any;
   @Input() currencyCode: UntypedFormControl;
 
@@ -74,6 +63,11 @@ export class SavingProductChargesStepComponent implements OnInit {
   ];
 
   pristine = true;
+
+  constructor(
+    public dialog: MatDialog,
+    private translateService: TranslateService
+  ) {}
 
   ngOnInit() {
     this.chargeData = this.savingProductsTemplate.chargeOptions;

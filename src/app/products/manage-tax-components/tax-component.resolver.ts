@@ -1,27 +1,18 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
-/** Custom Services */
-import { ProductsService } from '../products.service';
+import { TaxComponentsService } from '@fineract/client';
 
 /**
  * tax Component data resolver.
  */
 @Injectable()
 export class TaxComponentResolver {
-  private productsService = inject(ProductsService);
+  constructor(private taxComponentsService: TaxComponentsService) {}
 
   /**
    * Returns the tax Component data.
@@ -29,6 +20,6 @@ export class TaxComponentResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const taxComponentId = route.paramMap.get('id');
-    return this.productsService.getTaxComponent(taxComponentId);
+    return this.taxComponentsService.retrieveTaxComponent({ taxComponentId: +taxComponentId });
   }
 }

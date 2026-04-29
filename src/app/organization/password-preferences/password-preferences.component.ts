@@ -1,18 +1,10 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import { PasswordPreferencesService } from '@fineract/client';
 import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -30,11 +22,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class PasswordPreferencesComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private organizationService = inject(OrganizationService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-
   /** Password preferences form. */
   passwordPreferencesForm: UntypedFormGroup;
   /** Password preferences data. */
@@ -43,11 +30,16 @@ export class PasswordPreferencesComponent implements OnInit {
   /**
    * Retrieves the password preferences data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {PasswordPreferencesService} passwordPreferencesService Password Preferences Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor() {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private passwordPreferencesService: PasswordPreferencesService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { passwordPreferencesTemplate: any }) => {
       this.passwordPreferencesData = data.passwordPreferencesTemplate;
     });
@@ -75,35 +67,10 @@ export class PasswordPreferencesComponent implements OnInit {
    */
   setPasswordPreferencesForm() {
     for (const passwordPreference of this.passwordPreferencesData) {
-      if (passwordPreference.active) {
+      if (passwordPreference.active === true) {
         this.passwordPreferencesForm.get('validationPolicyId').setValue(passwordPreference.id);
       }
     }
-  }
-
-  /**
-   * TrackBy function for ngFor optimization.
-   * @param index Index of the item.
-   * @param item Password preference item.
-   * @returns Unique identifier for the item.
-   */
-  trackByPasswordPreference(index: number, item: any): any {
-    return item.id || index;
-  }
-
-  /**
-   * Gets the password preference label based on ID.
-   * @param preference Password preference object.
-   * @returns Translation key for the password preference label.
-   */
-  getPasswordLabel(preference: any): string {
-    // Map based on ID to ensure robustness
-    const labelMap: { [key: number]: string } = {
-      1: 'labels.inputs.Basic',
-      2: 'labels.inputs.Standard',
-      3: 'labels.inputs.Strong'
-    };
-    return labelMap[preference.id] || 'labels.inputs.Unknown';
   }
 
   /**
@@ -112,7 +79,7 @@ export class PasswordPreferencesComponent implements OnInit {
    */
   submit() {
     const passwordPreferences = this.passwordPreferencesForm.value;
-    this.organizationService.updatePasswordPreferences(passwordPreferences).subscribe((response: any) => {
+    this.passwordPreferencesService.update25(passwordPreferences).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

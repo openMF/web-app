@@ -1,12 +1,4 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { SettingsService } from 'app/settings/settings.service';
 import { CheckboxBase } from 'app/shared/form-dialog/formfield/model/checkbox-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
@@ -19,9 +11,6 @@ import { Dates } from './dates';
   providedIn: 'root'
 })
 export class Datatables {
-  private dateUtils = inject(Dates);
-  private settingsService = inject(SettingsService);
-
   systemFields: string[] = [
     'id',
     'created_at',
@@ -41,41 +30,29 @@ export class Datatables {
     'share_product_id'
   ];
 
+  constructor(
+    private dateUtils: Dates,
+    private settingsService: SettingsService
+  ) {}
+
   public getFormfields(columns: any, dateTransformColumns: string[], dataTableEntryObject: any) {
     return columns.map((column: any) => {
-      const displayLabel = this.toDisplayLabel(column.columnName);
-      const colName = column.columnName ? column.columnName.toLowerCase().replace(/[_\s]+/g, '') : '';
-      const isMinSavingsAmount = colName.includes('minimumsavingsamountpermeeting');
-      const isPriceOneShare = colName.includes('priceofoneshare');
-      const isRestrictedField = [
-        'mtn',
-        'airtel',
-        'officephone',
-        'office_phone',
-        'office phone'
-      ].some((name) => colName.includes(name.replace(/[_\s]+/g, '')));
-      const isNumericField = column.columnDisplayType === 'INTEGER' || column.columnDisplayType === 'DECIMAL';
       switch (column.columnDisplayType) {
         case 'INTEGER':
         case 'STRING':
         case 'DECIMAL':
-        case 'TEXT': {
-          const inputOptions: any = {
+        case 'TEXT':
+          return new InputBase({
             controlName: column.columnName,
-            label: displayLabel,
+            label: column.columnName,
             value: '',
             type: column.columnDisplayType === 'INTEGER' || column.columnDisplayType === 'DECIMAL' ? 'number' : 'text',
             required: column.isColumnNullable ? false : true
-          };
-          if (isMinSavingsAmount || isPriceOneShare || isRestrictedField || isNumericField) {
-            inputOptions.min = 0;
-          }
-          return new InputBase(inputOptions);
-        }
+          });
         case 'BOOLEAN':
           return new CheckboxBase({
             controlName: column.columnName,
-            label: displayLabel,
+            label: column.columnName,
             value: '',
             type: 'checkbox',
             required: column.isColumnNullable ? false : true
@@ -83,7 +60,7 @@ export class Datatables {
         case 'CODELOOKUP':
           return new SelectBase({
             controlName: column.columnName,
-            label: displayLabel,
+            label: column.columnName,
             value: '',
             options: { label: 'value', value: 'id', data: column.columnValues },
             required: column.isColumnNullable ? false : true
@@ -95,7 +72,7 @@ export class Datatables {
           }
           return new DatepickerBase({
             controlName: column.columnName,
-            label: displayLabel,
+            label: column.columnName,
             value: '',
             maxDate: this.settingsService.maxAllowedDate,
             required: column.isColumnNullable ? false : true
@@ -106,7 +83,7 @@ export class Datatables {
           dataTableEntryObject.dateFormat = Dates.DEFAULT_DATETIMEFORMAT;
           return new DateTimepickerBase({
             controlName: column.columnName,
-            label: displayLabel,
+            label: column.columnName,
             value: '',
             maxDate: this.settingsService.maxAllowedDate,
             required: column.isColumnNullable ? false : true
@@ -199,57 +176,6 @@ export class Datatables {
     return columnName;
   }
 
-  public toDisplayLabel(columnName: string): string {
-    if (!columnName) {
-      return '';
-    }
-
-    // Handle CODELOOKUP pattern: extract the part after _cd_
-    if (columnName.includes('_cd_')) {
-      const parts = columnName.split('_cd_');
-      // Ensure parts[1] exists and is not empty before processing
-      if (parts.length > 1 && parts[1] && parts[1].trim()) {
-        // Return the part after _cd_ converted to Title Case
-        // Filter out standalone "cd" or "CD" words that are artifacts from naming convention
-        // This only affects display, not database column names
-        const displayWords = parts[1]
-          .split('_')
-          .filter((word) => word.trim() && word.toLowerCase() !== 'cd') // Remove empty strings and standalone "cd" artifacts
-          .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-          .join(' ');
-
-        // Return empty string if all words were filtered out, otherwise return formatted label
-        return displayWords || parts[1].trim();
-      }
-    }
-
-    if (columnName.includes('_')) {
-      return (
-        columnName
-          .split('_')
-          .filter((word) => word.trim() && word.toLowerCase() !== 'cd')
-          .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-          .join(' ') || columnName
-      );
-    }
-    return columnName;
-  }
-
-  public getCodeLookupValue(columnHeader: any, id: number): string {
-    if (!columnHeader?.columnValues || id === null || id === undefined) {
-      return '';
-    }
-    const codeValue = columnHeader.columnValues.find((cv: any) => cv.id === id);
-    return codeValue ? codeValue.value : id.toString();
-  }
-
-  public getCodeName(columnName: string): string {
-    if (columnName && columnName.includes('_cd_')) {
-      return columnName.split('_cd_')[0];
-    }
-    return '';
-  }
-
   public isValidUrl(urlString: string): boolean {
     try {
       const url = new URL(urlString);
@@ -257,26 +183,5 @@ export class Datatables {
     } catch (e) {
       return false;
     }
-  }
-
-  public isPhoneNumberField(columnName: string): boolean {
-    if (!columnName) {
-      return false;
-    }
-    const normalizedName = columnName.toLowerCase().replace(/[_\s]+/g, '');
-    const phonePatterns = [
-      /\bphone\b/,
-      /\btelefono\b/,
-      /\bcelular\b/,
-      /\bmobile(?:phone|no|num|number)?\b/,
-      /\bfijo\b/,
-      /\blandline\b/,
-      /\bcellphone\b/,
-      /\bofficephone\b/,
-      /\bhomephone\b/,
-      /\bmtn\b/,
-      /\bairtel\b/
-    ];
-    return phonePatterns.some((pattern) => pattern.test(normalizedName));
   }
 }

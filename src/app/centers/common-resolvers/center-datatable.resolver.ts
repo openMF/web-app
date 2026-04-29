@@ -1,35 +1,34 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { CentersService } from '../centers.service';
+import { DataTablesService } from '@fineract/client';
 
 /**
- * Centers notes data resolver.
+ * Center datatable resolver.
  */
 @Injectable()
 export class CenterDatatableResolver {
-  private centersService = inject(CentersService);
+  /**
+   * @param {DataTablesService} dataTablesService DataTables service.
+   */
+  constructor(private dataTablesService: DataTablesService) {}
 
   /**
-   * Returns the Centers Notes Data.
+   * Returns the Center datatable data.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const centerId = route.parent.parent.paramMap.get('centerId');
     const datatableName = route.paramMap.get('datatableName');
-    return this.centersService.getCenterDatatable(centerId, datatableName);
+    const centerId = route.parent.parent.paramMap.get('centerId');
+    return this.dataTablesService.advancedQuery({
+      datatable: datatableName,
+      apptableId: parseInt(centerId, 10),
+      genericResultSet: true
+    } as any);
   }
 }

@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -19,7 +11,7 @@ import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
-import { SavingsService } from 'app/savings/savings.service';
+import { ChargesService, SavingsAccountService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -36,13 +28,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class AddChargeFixedDepositsAccountComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private dateUtils = inject(Dates);
-  private savingsService = inject(SavingsService);
-  private settingsService = inject(SettingsService);
-
   /** Minimum Due Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Due Date allowed. */
@@ -62,10 +47,19 @@ export class AddChargeFixedDepositsAccountComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {Dates} dateUtils Date Utils
-   * @param {SavingsService} savingsService Savings Service
+   * @param {ChargesService} chargesService Charges Service
+   * @param {SavingsAccountService} savingsAccountService Savings Account Service
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor() {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates,
+    private chargesService: ChargesService,
+    private savingsAccountService: SavingsAccountService,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { fixedDepositsAccountActionData: any }) => {
       this.savingsChargeOptions = data.fixedDepositsAccountActionData.chargeOptions;
     });
@@ -83,7 +77,7 @@ export class AddChargeFixedDepositsAccountComponent implements OnInit {
 
   buildDependencies() {
     this.fixedDepositsChargeForm.controls.chargeId.valueChanges.subscribe((chargeId) => {
-      this.savingsService.getChargeTemplate(chargeId).subscribe((data: any) => {
+      this.chargesService.retrieveCharge(chargeId).subscribe((data: any) => {
         this.chargeDetails = data;
         const chargeTimeType = data.chargeTimeType.id;
         if (data.chargeTimeType.value === 'Withdrawal Fee' || data.chargeTimeType.value === 'Saving No Activity Fee') {
@@ -147,7 +141,7 @@ export class AddChargeFixedDepositsAccountComponent implements OnInit {
       savingsCharge.feeInterval = this.chargeDetails.feeInterval;
     }
     if (this.chargeDetails.dueDateNotRequired !== true) {
-      if (this.chargeDetails.chargeTimeTypeAnnualOrMonth) {
+      if (this.chargeDetails.chargeTimeTypeAnnualOrMonth === true) {
         const monthDayFormat = 'MMMM-dd'; // TODO: Update once language and date settings are setup
         savingsCharge.monthDayFormat = monthDayFormat;
         if (savingsCharge.feeOnMonthDay) {
@@ -163,8 +157,14 @@ export class AddChargeFixedDepositsAccountComponent implements OnInit {
         }
       }
     }
-    this.savingsService.createSavingsCharge(this.fixedDepositAccountId, 'charges', savingsCharge).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.savingsAccountService
+      .handleCommands6({
+        accountId: Number(this.fixedDepositAccountId),
+        command: 'charges',
+        postSavingsAccountsAccountIdRequest: savingsCharge
+      })
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }

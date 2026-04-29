@@ -1,18 +1,8 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <div class="container mat-elevation-z8">
   <mat-card>
-    @if (maturityDate) {
-      <div class="m-b-20 layout-column">
-        <span class="m-r-10">{{ 'Maturity Date' | translateKey: 'inputs' }} : {{ maturityDate | dateFormat }}</span>
-      </div>
-    }
+    <div class="m-b-20 layout-column" *ngIf="maturityDate">
+      <span class="m-r-10">{{ 'Maturity Date' | translateKey: 'inputs' }} : {{ maturityDate | dateFormat }}</span>
+    </div>
     <form [formGroup]="interestPauseLoanForm" (ngSubmit)="submit()">
       <mat-card-content>
         <div class="layout-column">
@@ -28,11 +18,9 @@
             />
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #startDatePicker></mat-datepicker>
-            @if (interestPauseLoanForm.controls.startDate.hasError('required')) {
-              <mat-error>
-                {{ 'labels.inputs.Start Date' | translate }}<strong>{{ 'labels.commons.required' | translate }}</strong>
-              </mat-error>
-            }
+            <mat-error *ngIf="interestPauseLoanForm.controls.startDate.hasError('required')">
+              {{ 'labels.inputs.Start Date' | translate }}<strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field (click)="endDatePicker.open()">
@@ -47,16 +35,14 @@
             />
             <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #endDatePicker></mat-datepicker>
-            @if (interestPauseLoanForm.controls.endDate.hasError('required')) {
-              <mat-error>
-                {{ 'labels.inputs.End Date' | translate }}<strong>{{ 'labels.commons.required' | translate }}</strong>
-              </mat-error>
-            }
+            <mat-error *ngIf="interestPauseLoanForm.controls.endDate.hasError('required')">
+              {{ 'labels.inputs.End Date' | translate }}<strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
           </mat-form-field>
         </div>
 
         <mat-card-actions class="layout-row align-center gap-5px responsive-column">
-          <button type="button" mat-raised-button (click)="gotoLoanDefaultView()">
+          <button type="button" mat-raised-button [routerLink]="['../../general']">
             {{ 'labels.buttons.Cancel' | translate }}
           </button>
           <button

@@ -1,11 +1,3 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /* Angular Imports */
 import {
   ComponentType,
@@ -15,7 +7,7 @@ import {
   ConnectionPositionPair
 } from '@angular/cdk/overlay';
 import { ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
-import { Injectable, InjectionToken, Injector, TemplateRef, ElementRef, inject } from '@angular/core';
+import { Injectable, InjectionToken, Injector, TemplateRef, ElementRef } from '@angular/core';
 
 /* Custom Imports */
 import { PopoverConfig } from './popover-config';
@@ -43,8 +35,14 @@ const defaultConfig: PopoverConfig = {
   providedIn: 'root'
 })
 export class PopoverService {
-  private overlay = inject(Overlay);
-  private injector = inject(Injector);
+  /**
+   * @param {Injector} injector Injector.
+   * @param {overlay} overlay Overlay.
+   */
+  constructor(
+    private overlay: Overlay,
+    private injector: Injector
+  ) {}
 
   /**
    * Opens the popover at target element
@@ -183,7 +181,7 @@ export class PopoverService {
         }
       ];
     }
-    if (backdrop) {
+    if (backdrop === true) {
       showbackdrop = true;
     } else {
       showbackdrop = false;

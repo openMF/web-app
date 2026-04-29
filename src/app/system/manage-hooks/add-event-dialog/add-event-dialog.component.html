@@ -1,11 +1,3 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <h1 mat-dialog-title>{{ 'labels.buttons.Add Event' | translate }}</h1>
 
 <mat-dialog-content>
@@ -14,59 +6,47 @@
       <mat-form-field>
         <mat-label>{{ 'labels.inputs.Select Grouping' | translate }}</mat-label>
         <mat-select required formControlName="grouping">
-          @for (grouping of data.groupings; track grouping) {
-            <mat-option [value]="grouping.name">
-              {{ grouping.name | translateKey: 'catalogs' }}
-            </mat-option>
-          }
+          <mat-option *ngFor="let grouping of data.groupings" [value]="grouping.name">
+            {{ grouping.name | translateKey: 'catalogs' }}
+          </mat-option>
         </mat-select>
-        @if (eventForm.controls.grouping.hasError('required')) {
-          <mat-error>
-            {{ 'labels.inputs.Grouping' | translate }} {{ 'labels.commons.is' | translate }}
-            <strong>{{ 'labels.commons.required' | translate }}</strong>
-          </mat-error>
-        }
+        <mat-error *ngIf="eventForm.controls.grouping.hasError('required')">
+          {{ 'labels.inputs.Grouping' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>{{ 'labels.inputs.Select Entity' | translate }}</mat-label>
         <mat-select required formControlName="entity">
-          @for (entity of entityData; track entity) {
-            <mat-option [value]="entity.name">
-              {{ entity.name }}
-            </mat-option>
-          }
+          <mat-option *ngFor="let entity of entityData" [value]="entity.name">
+            {{ entity.name }}
+          </mat-option>
         </mat-select>
-        @if (eventForm.controls.entity.hasError('required')) {
-          <mat-error>
-            {{ 'labels.inputs.Entity' | translate }} {{ 'labels.commons.is' | translate }}
-            <strong>{{ 'labels.commons.required' | translate }}</strong>
-          </mat-error>
-        }
+        <mat-error *ngIf="eventForm.controls.entity.hasError('required')">
+          {{ 'labels.inputs.Entity' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>{{ 'labels.inputs.Select Action' | translate }}</mat-label>
         <mat-select required formControlName="action">
-          @for (action of actionData; track action) {
-            <mat-option [value]="action">
-              {{ action }}
-            </mat-option>
-          }
+          <mat-option *ngFor="let action of actionData" [value]="action">
+            {{ action }}
+          </mat-option>
         </mat-select>
-        @if (eventForm.controls.action.hasError('required')) {
-          <mat-error>
-            {{ 'labels.inputs.Action' | translate }} {{ 'labels.commons.is' | translate }}
-            <strong>{{ 'labels.commons.required' | translate }}</strong>
-          </mat-error>
-        }
+        <mat-error *ngIf="eventForm.controls.action.hasError('required')">
+          {{ 'labels.inputs.Action' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
       </mat-form-field>
     </div>
   </form>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
+  <button mat-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
   <button mat-raised-button color="primary" [disabled]="!eventForm.valid || eventForm.pristine" (click)="submit()">
     {{ 'labels.buttons.Submit' | translate }}
   </button>

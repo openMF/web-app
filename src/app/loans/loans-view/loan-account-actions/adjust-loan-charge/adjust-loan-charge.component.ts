@@ -1,19 +1,17 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Component, OnInit, inject } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { OrganizationService } from 'app/organization/organization.service';
+import { Component, OnInit } from '@angular/core';
+import {
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { LoansService, LoanChargesService, PaymentTypeService } from '@fineract/client';
+import { SettingsService } from 'app/settings/settings.service';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
-import { InputAmountComponent } from 'app/shared/input-amount/input-amount.component';
 
 @Component({
   selector: 'mifosx-adjust-loan-charge',
@@ -22,14 +20,10 @@ import { InputAmountComponent } from 'app/shared/input-amount/input-amount.compo
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     MatSlideToggle,
-    CdkTextareaAutosize,
-    InputAmountComponent
+    CdkTextareaAutosize
   ]
 })
-export class AdjustLoanChargeComponent extends LoanAccountActionsBaseComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private organizationService = inject(OrganizationService);
-
+export class AdjustLoanChargeComponent implements OnInit {
   /** Loan Id */
   loanId: string;
   chargeId: string;
@@ -50,9 +44,22 @@ export class AdjustLoanChargeComponent extends LoanAccountActionsBaseComponent i
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
+   * @param {LoansService} loanService Loan Service.
+   * @param {ActivatedRoute} route Activated Route.
+   * @param {Router} router Router for navigation.
+   * @param {SettingsService} settingsService Settings Service
+   * @param {PaymentTypeService} paymentTypeService Payment Type Service
    */
-  constructor() {
-    super();
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private loanService: LoansService,
+    private loanChargesService: LoanChargesService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private settingsService: SettingsService,
+    private paymentTypeService: PaymentTypeService
+  ) {
+    this.loanId = this.route.snapshot.params['loanId'];
     this.chargeId = this.route.snapshot.params['id'];
     this.route.data.subscribe((data: { loansAccountCharge: any; loanDetailsData: any }) => {
       this.chargeData = data.loansAccountCharge;
@@ -86,7 +93,7 @@ export class AdjustLoanChargeComponent extends LoanAccountActionsBaseComponent i
   }
 
   setRepaymentLoanDetails() {
-    this.organizationService.getPaymentTypes().subscribe((paymentTypes: any) => {
+    this.paymentTypeService.getAllPaymentTypes().subscribe((paymentTypes: any) => {
       this.paymentTypes = paymentTypes;
     });
   }
@@ -120,15 +127,15 @@ export class AdjustLoanChargeComponent extends LoanAccountActionsBaseComponent i
       locale
     };
     const command = 'adjustment';
-    this.loanService.executeLoansAccountChargesCommand(this.loanId, command, data, this.chargeId).subscribe({
-      next: (response: any) => {
-        this.gotoLoanChargesView();
-      },
-      error: (error) => {}
-    });
-  }
-
-  gotoLoanChargesView(): void {
-    this.gotoLoanView('../charges');
+    this.loanChargesService
+      .executeLoanCharge2({
+        loanId: Number(this.loanId),
+        loanChargeId: Number(this.chargeId),
+        postLoansLoanIdChargesChargeIdRequest: data,
+        command: command
+      })
+      .subscribe((response: any) => {
+        this.router.navigate(['../..'], { relativeTo: this.route });
+      });
   }
 }

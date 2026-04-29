@@ -1,12 +1,4 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Component, OnInit, Input, inject } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatDivider } from '@angular/material/divider';
@@ -28,8 +20,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class FixedDepositProductTermsStepComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-
   @Input() fixedDepositProductsTemplate: any;
 
   fixedDepositProductTermsForm: UntypedFormGroup;
@@ -39,7 +29,7 @@ export class FixedDepositProductTermsStepComponent implements OnInit {
   interestCalculationTypeData: any;
   interestCalculationDaysInYearTypeData: any;
 
-  constructor() {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.createFixedDepositProductTermsForm();
   }
 
@@ -68,21 +58,12 @@ export class FixedDepositProductTermsStepComponent implements OnInit {
 
   createFixedDepositProductTermsForm() {
     this.fixedDepositProductTermsForm = this.formBuilder.group({
-      minDepositAmount: [
-        '',
-        Validators.min(0)
-      ],
+      minDepositAmount: [''],
       depositAmount: [
         '',
-        [
-          Validators.required,
-          Validators.min(0)
-        ]
+        Validators.required
       ],
-      maxDepositAmount: [
-        '',
-        Validators.min(0)
-      ],
+      maxDepositAmount: [''],
       interestCompoundingPeriodType: [
         '',
         Validators.required

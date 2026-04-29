@@ -1,18 +1,10 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { OrganizationService } from 'app/organization/organization.service';
+import { AdhocQueryApiService } from '@fineract/client';
 
 /** Custom Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
@@ -32,22 +24,22 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewAdhocQueryComponent {
-  private organizationService = inject(OrganizationService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private dialog = inject(MatDialog);
-
   /** Adhoc query data. */
   adhocQueryData: any;
 
   /**
    * Retrieves the adhoc query data from `resolve`.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {AdhocQueryApiService} adhocQueryApiService Adhoc Query API Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor() {
+  constructor(
+    private adhocQueryApiService: AdhocQueryApiService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dialog: MatDialog
+  ) {
     this.route.data.subscribe((data: { adhocQuery: any }) => {
       this.adhocQueryData = data.adhocQuery;
     });
@@ -74,7 +66,7 @@ export class ViewAdhocQueryComponent {
     });
     deleteAdhocQueryDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.organizationService.deleteAdhocQuery(this.adhocQueryData.id).subscribe(() => {
+        this.adhocQueryApiService.retrieveAll2(this.adhocQueryData.id).subscribe(() => {
           this.router.navigate(['/organization/adhoc-query']);
         });
       }

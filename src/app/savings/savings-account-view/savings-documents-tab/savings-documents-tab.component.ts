@@ -1,15 +1,7 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { SavingsService } from 'app/savings/savings.service';
+import { DocumentsService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { environment } from '../../../../environments/environment';
 import { EntityDocumentsTabComponent } from '../../../shared/tabs/entity-documents-tab/entity-documents-tab.component';
@@ -25,11 +17,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class SavingsDocumentsTabComponent {
-  private route = inject(ActivatedRoute);
-  private savingsService = inject(SavingsService);
-  private settingsService = inject(SettingsService);
-  dialog = inject(MatDialog);
-
   /** Stores the resolved savings documents data */
   entityDocuments: any;
   /** Stores the saving Account Id */
@@ -39,8 +26,14 @@ export class SavingsDocumentsTabComponent {
   /**
    * Retrieves the savings data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
+   * @param {DocumentsService} documentsService Documents Service.
    */
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private documentsService: DocumentsService,
+    private settingsService: SettingsService,
+    public dialog: MatDialog
+  ) {
     this.route.data.subscribe((data: { savingsDocuments: any }) => {
       this.setSavingsDocumentsData(data.savingsDocuments);
     });
@@ -75,11 +68,38 @@ export class SavingsDocumentsTabComponent {
     this.entityDocuments = data;
   }
 
+  downloadDocument(documentId: string) {
+    this.documentsService
+      .downloadFile({
+        entityType: this.entityType,
+        entityId: parseInt(this.entityId, 10),
+        documentId: parseInt(documentId, 10)
+      })
+      .subscribe((res) => {
+        const url = window.URL.createObjectURL(res);
+        window.open(url);
+      });
+  }
+
   uploadDocument(formData: FormData): any {
-    return this.savingsService.loadSavingsDocument(this.entityId, formData);
+    return this.documentsService.createDocument({
+      entityType: this.entityType,
+      entityId: parseInt(this.entityId, 10),
+      uploadedInputStream: formData.get('file') as Blob,
+      name: formData.get('name') as string,
+      description: formData.get('description') as string
+    });
   }
 
   deleteDocument(documentId: any) {
-    this.savingsService.deleteSavingsDocument(this.entityId, documentId).subscribe((res: any) => {});
+    this.documentsService
+      .deleteDocument({
+        entityType: this.entityType,
+        entityId: parseInt(this.entityId, 10),
+        documentId: parseInt(documentId, 10)
+      })
+      .subscribe(() => {
+        this.entityDocuments = this.entityDocuments.filter((doc: any) => doc.id !== documentId);
+      });
   }
 }

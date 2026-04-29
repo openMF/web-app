@@ -1,17 +1,8 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 import { SelectionModel } from '@angular/cdk/collections';
-import { DecimalPipe, NgClass } from '@angular/common';
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild, inject } from '@angular/core';
+import { DecimalPipe, NgIf, NgFor, NgClass } from '@angular/common';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { MatCheckboxChange as MatCheckboxChange, MatCheckbox } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
-import { formatTabLabel } from 'app/shared/utils/format-tab-label.util';
 import {
   MatTable,
   MatColumnDef,
@@ -25,7 +16,6 @@ import {
   MatRow
 } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { MatCard, MatCardContent } from '@angular/material/card';
 import { Datatables } from 'app/core/utils/datatables';
 import { Dates } from 'app/core/utils/dates';
 import { DateFormatPipe } from 'app/pipes/date-format.pipe';
@@ -34,7 +24,7 @@ import { SettingsService } from 'app/settings/settings.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
-import { SystemService } from 'app/system/system.service';
+import { DataTablesService } from '@fineract/client';
 import * as _ from 'lodash';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -46,8 +36,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatCard,
-    MatCardContent,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -63,19 +51,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges {
-  formatTabLabel(label: string): string {
-    return formatTabLabel(label);
-  }
-  private route = inject(ActivatedRoute);
-  private dateUtils = inject(Dates);
-  private systemService = inject(SystemService);
-  private settingsService = inject(SettingsService);
-  private dialog = inject(MatDialog);
-  private datatables = inject(Datatables);
-  private dateFormat = inject(DateFormatPipe);
-  private dateTimeFormat = inject(DatetimeFormatPipe);
-  private numberFormat = inject(DecimalPipe);
-
   SELECT_NAME_FIELD = 'select';
   /** Data Object */
   @Input() dataObject: any;
@@ -98,6 +73,27 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
 
   /** Data Table Reference */
   @ViewChild('dataTable') dataTableRef: MatTable<Element>;
+
+  /**
+   * Fetches center Id from parent route params.
+   * @param {ActivatedRoute} route Activated Route.
+   * @param {Dates} dateUtils Date Utils.
+   * @param {DataTablesService} dataTablesService Data Tables Service.
+   * @param {SettingsService} settingsService Settings Service.
+   * @param {MatDialog} dialog Mat Dialog.
+   * @param {Datatables} datatables Datatable utils
+   */
+  constructor(
+    private route: ActivatedRoute,
+    private dateUtils: Dates,
+    private dataTablesService: DataTablesService,
+    private settingsService: SettingsService,
+    private dialog: MatDialog,
+    private datatables: Datatables,
+    private dateFormat: DateFormatPipe,
+    private dateTimeFormat: DatetimeFormatPipe,
+    private numberFormat: DecimalPipe
+  ) {}
 
   /**
    * Fetches data table name from route params.
@@ -143,7 +139,7 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
 
   getData() {
     this.isLoading = true;
-    this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
+    this.dataTablesService.getDatatables({ apptable: this.datatableName }).subscribe((dataObject: any) => {
       this.dataObject.data = dataObject.data;
       this.showDeleteBotton = false;
       if (this.dataTableRef) {
@@ -167,7 +163,7 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
       dataTableEntryObject
     );
     const data = {
-      title: 'Add ' + formatTabLabel(this.datatableName) + ' for ' + this.entityType,
+      title: 'Add ' + this.datatableName + ' for ' + this.entityType,
       formfields: formfields
     };
     const addDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
@@ -180,8 +176,11 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
           );
         });
         dataTableEntryObject = { ...response.data.value, ...dataTableEntryObject };
-        this.systemService
-          .addEntityDatatableEntry(this.entityId, this.datatableName, dataTableEntryObject)
+        this.dataTablesService
+          .deleteDatatableEntries({
+            apptableId: Number(this.entityId),
+            datatable: this.datatableName
+          })
           .subscribe((result: any) => {
             this.getData();
           });
@@ -194,13 +193,18 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
    */
   delete() {
     const deleteDataTableDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `the contents of ${formatTabLabel(this.datatableName)}` }
+      data: { deleteContext: `the contents of ${this.datatableName}` }
     });
     deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.systemService.deleteDatatableContent(this.entityId, this.datatableName).subscribe(() => {
-          this.getData();
-        });
+        this.dataTablesService
+          .deleteDatatableEntries({
+            apptableId: Number(this.entityId),
+            datatable: this.datatableName
+          })
+          .subscribe(() => {
+            this.getData();
+          });
       }
     });
   }
@@ -210,24 +214,27 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
    */
   deleteSelected() {
     const deleteDataTableDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: {
-        deleteContext: `the ${this.selection.selected.length} items selected of ${formatTabLabel(this.datatableName)}`
-      }
+      data: { deleteContext: `the ${this.selection.selected.length} items selected of ${this.datatableName}` }
     });
     deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
         this.isSelected = false;
         this.selection.selected.forEach((data) => {
-          this.systemService.deleteDatatableEntry(this.entityId, data.row[0], this.datatableName).subscribe(() => {
-            this.datatableData.forEach((item: any, index: any) => {
-              if (item.row[0] === data.row[0]) {
-                this.datatableData.splice(index, 1);
-                this.dataTableRef.renderRows();
-                this.selection = new SelectionModel(true, []);
-                this.isSelected = this.selection.selected.length > 0;
-              }
+          this.dataTablesService
+            .deleteDatatableEntries({
+              datatable: this.datatableName,
+              apptableId: data.row[0]
+            })
+            .subscribe(() => {
+              this.datatableData.forEach((item: any, index: any) => {
+                if (item.row[0] === data.row[0]) {
+                  this.datatableData.splice(index, 1);
+                  this.dataTableRef.renderRows();
+                  this.selection = new SelectionModel(true, []);
+                  this.isSelected = this.selection.selected.length > 0;
+                }
+              });
             });
-          });
         });
       } else {
         this.selection = new SelectionModel(true, []);
@@ -250,14 +257,7 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
             value = this.dateTimeFormat.transform(value);
           } else if (columnDisplayType === 'INTEGER' || columnDisplayType === 'DECIMAL') {
             if (typeof value === 'number') {
-              if (!this.datatables.isPhoneNumberField(columnName)) {
-                value = this.numberFormat.transform(value);
-              }
-            }
-          } else if (columnDisplayType === 'CODELOOKUP') {
-            if (columnHeader.columnValues && value !== null && value !== undefined) {
-              const codeValue = columnHeader.columnValues.find((cv: any) => cv.id === value);
-              value = codeValue ? codeValue.value : value;
+              value = this.numberFormat.transform(value);
             }
           }
           return true;

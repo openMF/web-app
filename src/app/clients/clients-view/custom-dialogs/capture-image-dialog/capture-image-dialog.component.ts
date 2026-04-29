@@ -1,15 +1,7 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, ViewChild, ElementRef, AfterViewInit, Renderer2, OnDestroy, inject } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, Renderer2, OnDestroy } from '@angular/core';
 import { MatDialogRef, MatDialogTitle, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
-import { NgStyle } from '@angular/common';
+import { NgStyle, NgIf } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -30,9 +22,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {
-  dialogRef = inject<MatDialogRef<CaptureImageDialogComponent>>(MatDialogRef);
-  private renderer = inject(Renderer2);
-
   /** Video element reference */
   @ViewChild('video', { static: true }) video: ElementRef;
   /** Canvas element reference */
@@ -46,6 +35,15 @@ export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {
   isCaptured = false;
   /** Client image file */
   clientImageDataURL: string;
+
+  /**
+   * @param {MatDialogRef} dialogRef Mat Dialog Reference
+   * @param {Renderer2} renderer Template Renderer
+   */
+  constructor(
+    public dialogRef: MatDialogRef<CaptureImageDialogComponent>,
+    private renderer: Renderer2
+  ) {}
 
   ngAfterViewInit() {
     this.startCamera();
@@ -62,13 +60,8 @@ export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {
    */
   startCamera() {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      const videoConstraints: MediaTrackConstraints = {
-        width: { ideal: 640 },
-        height: { ideal: 480 },
-        facingMode: 'user'
-      };
       navigator.mediaDevices
-        .getUserMedia({ video: videoConstraints })
+        .getUserMedia({ video: true })
         .then((stream: MediaStream) => {
           this.renderer.setProperty(this.video.nativeElement, 'srcObject', stream);
           this.video.nativeElement.play();
@@ -108,26 +101,13 @@ export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {
 
   /**
    * Captures the image by drawing video state on canvas, then converts canvas state to data URL.
-   * Uses actual video dimensions to prevent aspect ratio distortion.
    * See https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL for details.
    */
   capture() {
     this.isCaptured = true;
     this.video.nativeElement.pause();
-
-    // Get actual video stream dimensions to preserve aspect ratio
-    const videoWidth = this.video.nativeElement.videoWidth;
-    const videoHeight = this.video.nativeElement.videoHeight;
-
-    // Set canvas dimensions to match video stream
-    this.canvas.nativeElement.width = videoWidth;
-    this.canvas.nativeElement.height = videoHeight;
-
-    // Draw the video frame at full resolution without distortion
-    this.canvas.nativeElement.getContext('2d').drawImage(this.video.nativeElement, 0, 0, videoWidth, videoHeight);
-
-    // Convert to data URL with JPEG format for smaller file size
-    this.clientImageDataURL = this.canvas.nativeElement.toDataURL('image/jpeg', 0.9);
+    this.canvas.nativeElement.getContext('2d').drawImage(this.video.nativeElement, 0, 0, 150, 150);
+    this.clientImageDataURL = this.canvas.nativeElement.toDataURL();
   }
 
   /**

@@ -1,32 +1,27 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { AccountingService } from '../../accounting.service';
+import { MappingFinancialActivitiesToAccountsService } from '@fineract/client';
 
 /**
  * Financial activity mappings template data resolver.
  */
 @Injectable()
 export class FinancialActivityMappingsTemplateResolver {
-  private accountingService = inject(AccountingService);
+  /**
+   * @param {MappingFinancialActivitiesToAccountsService} mappingFinancialActivitiesToAccountsService Mapping Financial Activities to Accounts service.
+   */
+  constructor(private mappingFinancialActivitiesToAccountsService: MappingFinancialActivitiesToAccountsService) {}
 
   /**
    * Returns the financial activity mappings template data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.accountingService.getFinancialActivityAccountsTemplate();
+    return this.mappingFinancialActivitiesToAccountsService.retrieveTemplate();
   }
 }

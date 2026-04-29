@@ -1,84 +1,35 @@
-﻿<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-@if (variant === 'compact') {
-  <!-- Compact mode for Login -->
-  <div class="footer-compact">
-    @if (displayBackEndInfo) {
-      <div class="footer-info">
-        <span class="info-item">
-          <span class="info-label">{{ 'APP_NAME' | translate }}</span>
-          <span class="info-value">{{ versions.mifos }}</span>
-        </span>
-        <span class="info-separator">â€¢</span>
-        <span class="info-item">
-          <span class="info-label">{{ 'labels.text.Fineract' | translate }}:</span>
-          <span class="info-value">{{ versions.fineract.version }}</span>
-        </span>
-        <span class="info-separator">â€¢</span>
-        <span class="info-item">
-          <span class="info-label">{{ 'labels.inputs.Server' | translate }}:</span>
-          <span class="info-value">{{ server }}</span>
-        </span>
-      </div>
-    }
+<div class="layout-column m-b-20 f12" ngClass="{{ styleClass }}" id="footer" *ngIf="displayBackEndInfo">
+  <mat-divider class="divider align-center"></mat-divider>
+  <div class="layout-column m-b-20 content-wrapper footer-center">
+    <table class="versions">
+      <tr>
+        <td class="footer-content">Mifos</td>
+        <td class="right footer-content">
+          {{ versions.mifos }} - <b>{{ hash }}</b>
+        </td>
+      </tr>
+      <tr>
+        <td class="footer-content">{{ 'labels.text.Fineract' | translate }}</td>
+        <td class="right footer-content">
+          {{ versions.fineract.version }} - <b>{{ versions.fineract.hash }}</b>
+        </td>
+      </tr>
+      <tr *ngIf="displayBackEndInfo">
+        <td class="footer-content">{{ 'labels.inputs.Server' | translate }}</td>
+        <td class="right footer-content">
+          {{ server }}
+        </td>
+      </tr>
+      <tr *ngIf="isBusinessDateDefined">
+        <td class="footer-content">{{ 'labels.text.Current Business Date' | translate }}:</td>
+        <td class="center footer-content business-date">
+          <b>{{ businessDate | date: 'EEEE, MMMM dd, y' }}</b>
+        </td>
+      </tr>
+    </table>
   </div>
-} @else {
-  <!-- Default mode for Shell -->
-  @if (displayBackEndInfo) {
-    <div class="layout-column m-b-20 f12" ngClass="{{ styleClass }}" id="footer">
-      <div class="layout-column m-t-10 m-b-10 content-wrapper footer-center">
-        <table class="versions">
-          <tr>
-            <td class="footer-content">{{ 'APP_NAME' | translate }}</td>
-            <td class="right footer-content">
-              {{ versions.mifos }} - <b>{{ hash }}</b>
-            </td>
-          </tr>
-          <tr>
-            <td class="footer-content">{{ 'labels.text.Fineract' | translate }}</td>
-            <td class="right footer-content">
-              {{ versions.fineract.version }} - <b>{{ versions.fineract.hash }}</b>
-            </td>
-          </tr>
-          <tr>
-            <td class="footer-content">{{ 'labels.inputs.Server' | translate }}</td>
-            <td class="right footer-content">
-              {{ server }}
-            </td>
-          </tr>
-          <tr>
-            <td class="footer-content">{{ 'labels.version.Username' | translate }}</td>
-            <td class="right footer-content">
-              {{ username }}
-            </td>
-          </tr>
-          <tr>
-            <td class="footer-content">{{ 'labels.version.Name' | translate }}</td>
-            <td class="right footer-content">
-              {{ name }}
-            </td>
-          </tr>
-          <tr>
-            <td class="footer-content">{{ 'labels.version.Render Time' | translate }}</td>
-            <td class="right footer-content">
-              {{ renderTime | date: 'dd MMMM yyyy HH:mm:ss' }}
-            </td>
-          </tr>
-          @if (isBusinessDateDefined) {
-            <tr>
-              <td class="footer-content">{{ 'labels.text.Current Business Date' | translate }}:</td>
-              <td class="right footer-content business-date">
-                <b>{{ businessDate | date: 'EEEE, MMMM dd, y' }}</b>
-              </td>
-            </tr>
-          }
-        </table>
-      </div>
-    </div>
-  }
-}
+  <mat-divider class="divider align-center"></mat-divider>
+</div>
+<div class="layout-column m-b-20 copy-label">
+  <p class="footer-content align-center">{{ 'APP_NAME' | translate }} {{ 'labels.text.by' | translate }} Mifos</p>
+</div>

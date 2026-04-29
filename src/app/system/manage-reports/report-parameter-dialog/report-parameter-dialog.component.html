@@ -1,11 +1,3 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <h1 mat-dialog-title>
   {{ data.parameterName ? ('labels.buttons.Edit' | translate) : ('labels.buttons.Add' | translate) }}
   {{ 'labels.heading.Report Parameter' | translate }}
@@ -17,22 +9,18 @@
       <mat-form-field>
         <mat-label>{{ 'labels.inputs.Select allowed parameter' | translate }}</mat-label>
         <mat-select required formControlName="parameterName">
-          @for (allowedParameter of data.allowedParameters; track allowedParameter) {
-            <mat-option [value]="allowedParameter.id">
-              {{ allowedParameter.parameterName }}
-            </mat-option>
-          }
+          <mat-option *ngFor="let allowedParameter of data.allowedParameters" [value]="allowedParameter.id">
+            {{ allowedParameter.parameterName }}
+          </mat-option>
         </mat-select>
-        @if (reportParameterForm.controls.parameterName.hasError('required')) {
-          <mat-error>
-            {{ 'labels.inputs.Report Parameters' | translate }} {{ 'labels.commons.is' | translate }}
-            <strong>{{ 'labels.commons.required' | translate }}</strong>
-          </mat-error>
-        }
+        <mat-error *ngIf="reportParameterForm.controls.parameterName.hasError('required')">
+          {{ 'labels.inputs.Report Parameters' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field>
-        <mat-label>{{ 'labels.inputs.Parameter Name Passed to Report Engine' | translate }}</mat-label>
+        <mat-label>{{ 'labels.inputs.Parameter Name Passed to Pentaho' | translate }}</mat-label>
         <input matInput formControlName="reportParameterName" />
       </mat-form-field>
     </div>
@@ -40,7 +28,7 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
+  <button mat-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
   <button
     mat-raised-button
     color="primary"

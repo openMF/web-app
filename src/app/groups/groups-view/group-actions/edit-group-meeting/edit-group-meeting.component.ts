@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -39,13 +31,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditGroupMeetingComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private groupsService = inject(GroupsService);
-  private dateUtils = inject(Dates);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private settingsService = inject(SettingsService);
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -74,7 +59,14 @@ export class EditGroupMeetingComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService SettingsService
    */
-  constructor() {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private groupsService: GroupsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { groupActionData: any }) => {
       this.calendarTemplate = data.groupActionData;
       this.frequencyOptions = this.calendarTemplate.frequencyOptions;

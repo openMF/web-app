@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnChanges, Input, Output, EventEmitter, OnInit, inject } from '@angular/core';
+import { Component, OnChanges, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Validators, UntypedFormGroup, UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
@@ -39,10 +31,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class BusinessRuleParametersComponent implements OnInit, OnChanges {
-  private reportsService = inject(ReportsService);
-  private settingsService = inject(SettingsService);
-  private dateUtils = inject(Dates);
-
   /** Run Report Parameters Data */
   @Input() paramData: any;
 
@@ -59,6 +47,17 @@ export class BusinessRuleParametersComponent implements OnInit, OnChanges {
 
   /** Template Parameters Event Emitter */
   @Output() templateParameters = new EventEmitter();
+
+  /**
+   * @param {ReportsService} reportsService Reports Service.
+   * @param {SettingsService} settingsService Settings Service.
+   * @param {Dates} dateUtils Date Utils.
+   */
+  constructor(
+    private reportsService: ReportsService,
+    private settingsService: SettingsService,
+    private dateUtils: Dates
+  ) {}
 
   ngOnInit(): void {
     this.maxDate = this.settingsService.businessDate;

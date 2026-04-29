@@ -1,68 +1,53 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <div class="container">
   <mat-card>
     <form [formGroup]="reportForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <div class="layout-row-wrap responsive-column gap-2percent">
+        <div class="layout-row-wrap responsive-column">
           <mat-form-field class="flex-100">
             <mat-label>{{ 'labels.inputs.Report Name' | translate }}</mat-label>
             <input matInput required formControlName="reportName" />
-            @if (reportForm.controls.reportName.hasError('required')) {
-              <mat-error>
-                {{ 'labels.inputs.Report Name' | translate }} {{ 'labels.commons.is' | translate }}
-                <strong>{{ 'labels.commons.required' | translate }}</strong>
-              </mat-error>
-            }
+            <mat-error *ngIf="reportForm.controls.reportName.hasError('required')">
+              {{ 'labels.inputs.Report Name' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
           </mat-form-field>
 
-          <mat-form-field class="flex-48">
+          <mat-form-field class="flex-50">
             <mat-label>{{ 'labels.inputs.Report Type' | translate }}</mat-label>
             <mat-select required formControlName="reportType">
-              @for (allowedReportType of reportData.allowedReportTypes; track allowedReportType) {
-                <mat-option [value]="allowedReportType">
-                  {{ allowedReportType | translateKey: 'text' }}
-                </mat-option>
-              }
+              <mat-option *ngFor="let allowedReportType of reportData.allowedReportTypes" [value]="allowedReportType">
+                {{ allowedReportType | translateKey: 'text' }}
+              </mat-option>
             </mat-select>
-            @if (reportForm.controls.reportType.hasError('required')) {
-              <mat-error>
-                {{ 'labels.inputs.Report Type' | translate }} {{ 'labels.commons.is' | translate }}
-                <strong>{{ 'labels.commons.required' | translate }}</strong>
-              </mat-error>
-            }
+            <mat-error *ngIf="reportForm.controls.reportType.hasError('required')">
+              {{ 'labels.inputs.Report Type' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
           </mat-form-field>
 
-          <mat-form-field class="flex-48">
+          <mat-form-field class="flex-50">
             <mat-label>{{ 'labels.inputs.Report Sub Type' | translate }}</mat-label>
             <mat-select formControlName="reportSubType">
-              @for (allowedReportSubType of reportData.allowedReportSubTypes; track allowedReportSubType) {
-                <mat-option [value]="allowedReportSubType">
-                  {{ allowedReportSubType | translateKey: 'text' }}
-                </mat-option>
-              }
+              <mat-option
+                *ngFor="let allowedReportSubType of reportData.allowedReportSubTypes"
+                [value]="allowedReportSubType"
+              >
+                {{ allowedReportSubType | translateKey: 'text' }}
+              </mat-option>
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field class="flex-48">
+          <mat-form-field class="flex-50">
             <mat-label>{{ 'labels.inputs.Report Category' | translate }}</mat-label>
             <mat-select formControlName="reportCategory">
-              @for (reportCategoryType of reportCategoryTypeOptions; track reportCategoryType) {
-                <mat-option [value]="reportCategoryType">
-                  {{ reportCategoryType | translateKey: 'catalogs' }}
-                </mat-option>
-              }
+              <mat-option *ngFor="let reportCategoryType of reportCategoryTypeOptions" [value]="reportCategoryType">
+                {{ reportCategoryType | translateKey: 'catalogs' }}
+              </mat-option>
             </mat-select>
           </mat-form-field>
 
-          <div class="flex-48">
-            <mat-checkbox labelPosition="after" formControlName="useReport">
+          <div class="flex-50">
+            <mat-checkbox class="user-report" labelPosition="after" formControlName="useReport">
               {{ 'labels.inputs.User Report (UI)' | translate }}
             </mat-checkbox>
           </div>
@@ -81,12 +66,10 @@
               cdkTextareaAutosize
               cdkAutosizeMinRows="6"
             ></textarea>
-            @if (reportForm.controls.reportSql.hasError('required')) {
-              <mat-error>
-                {{ 'labels.inputs.SQL' | translate }} {{ 'labels.commons.is' | translate }}
-                <strong>{{ 'labels.commons.required' | translate }}</strong>
-              </mat-error>
-            }
+            <mat-error *ngIf="reportForm.controls.reportSql.hasError('required')">
+              {{ 'labels.inputs.SQL' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
           </mat-form-field>
         </div>
 
@@ -95,12 +78,17 @@
         <div class="layout-row-wrap gap-60percent layout-lt-md-column">
           <p class="mat-title flex-20">{{ 'labels.inputs.Report Parameters' | translate }}</p>
 
-          @if (!reportData.coreReport) {
-            <button mat-raised-button class="flex-20" type="button" color="primary" (click)="addReportParameter()">
-              <fa-icon icon="plus" class="m-r-10"></fa-icon>
-              {{ 'labels.buttons.Add Report Parameter' | translate }}
-            </button>
-          }
+          <button
+            mat-raised-button
+            class="flex-20"
+            type="button"
+            *ngIf="!reportData.coreReport"
+            color="primary"
+            (click)="addReportParameter()"
+          >
+            <fa-icon icon="plus" class="m-r-10"></fa-icon>
+            {{ 'labels.buttons.Add Report Parameter' | translate }}
+          </button>
         </div>
 
         <table mat-table [dataSource]="dataSource" matSort>
@@ -111,7 +99,7 @@
 
           <ng-container matColumnDef="parameterNamePassed">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-              {{ 'labels.inputs.Parameter Name Passed to Report Engine' | translate }}
+              {{ 'labels.inputs.Parameter Name Passed to Pentaho' | translate }}
             </th>
             <td mat-cell *matCellDef="let reportParameter">{{ reportParameter.reportParameterName }}</td>
           </ng-container>
@@ -119,28 +107,26 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
             <td mat-cell *matCellDef="let reportParameter" class="gap-15percent">
-              @if (!reportData.coreReport) {
-                <button
-                  type="button"
-                  class="flex-8"
-                  color="primary"
-                  mat-icon-button
-                  (click)="editReportParameter(reportParameter)"
-                >
-                  <fa-icon icon="edit" size="lg"></fa-icon>
-                </button>
-              }
-              @if (!reportData.coreReport) {
-                <button
-                  type="button"
-                  class="flex-8"
-                  color="warn"
-                  mat-icon-button
-                  (click)="deleteReportParameter(reportParameter)"
-                >
-                  <fa-icon icon="trash" size="lg"></fa-icon>
-                </button>
-              }
+              <button
+                *ngIf="!reportData.coreReport"
+                type="button"
+                class="flex-8"
+                color="primary"
+                mat-icon-button
+                (click)="editReportParameter(reportParameter)"
+              >
+                <fa-icon icon="edit" size="lg"></fa-icon>
+              </button>
+              <button
+                *ngIf="!reportData.coreReport"
+                type="button"
+                class="flex-8"
+                color="warn"
+                mat-icon-button
+                (click)="deleteReportParameter(reportParameter)"
+              >
+                <fa-icon icon="trash" size="lg"></fa-icon>
+              </button>
             </td>
           </ng-container>
 

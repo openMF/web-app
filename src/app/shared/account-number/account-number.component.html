@@ -1,28 +1,12 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <span (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()">
-  @if (displayL && iconVisible) {
-    <span class="m-l-5" (click)="copyValue()"
-      ><b><fa-icon icon="copy" size="sm" title="{{ 'labels.text.Copy Account Number' | translate }}"></fa-icon></b
-    ></span>
-  }
-  @if (accountType) {
-    <span class="m-l-5">
-      <a href="{{ getAccountLink() }}">{{ accountNo }}</a>
-    </span>
-  }
-  @if (!accountType) {
-    <span class="m-l-5">{{ accountNo }}</span>
-  }
-  @if (displayR && iconVisible) {
-    <span class="m-l-3" (click)="copyValue()"
-      ><b><fa-icon icon="copy" size="sm" title="{{ 'labels.text.Copy Account Number' | translate }}"></fa-icon></b
-    ></span>
-  }
+  <span class="m-l-5" *ngIf="displayL && iconVisible" (click)="copyValue()"
+    ><b><fa-icon icon="copy" size="sm" title="{{ 'labels.text.Copy Account Number' | translate }}"></fa-icon></b
+  ></span>
+  <span class="m-l-5" *ngIf="accountType">
+    <a href="{{ getAccountLink() }}">{{ accountNo }}</a>
+  </span>
+  <span class="m-l-5" *ngIf="!accountType">{{ accountNo }}</span>
+  <span class="m-l-3" *ngIf="displayR && iconVisible" (click)="copyValue()"
+    ><b><fa-icon icon="copy" size="sm" title="{{ 'labels.text.Copy Account Number' | translate }}"></fa-icon></b
+  ></span>
 </span>

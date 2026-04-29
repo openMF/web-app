@@ -1,15 +1,7 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { ProductsService } from 'app/products/products.service';
+import { DelinquencyRangeAndBucketsManagementService } from '@fineract/client';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -24,15 +16,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewRangeComponent {
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private dialog = inject(MatDialog);
-  private productsService = inject(ProductsService);
-
   /** Delinquency Range Data. */
   delinquencyRangeData: any;
 
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private dialog: MatDialog,
+    private delinquencyService: DelinquencyRangeAndBucketsManagementService
+  ) {
     this.route.data.subscribe((data: { delinquencyRange: any }) => {
       this.delinquencyRangeData = data.delinquencyRange;
     });
@@ -44,9 +36,11 @@ export class ViewRangeComponent {
     });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.productsService.deleteDelinquencyRange(this.delinquencyRangeData.id).subscribe(() => {
-          this.router.navigate(['../'], { relativeTo: this.route });
-        });
+        this.delinquencyService
+          .deleteDelinquencyRange({ delinquencyRangeId: this.delinquencyRangeData.id })
+          .subscribe(() => {
+            this.router.navigate(['../'], { relativeTo: this.route });
+          });
       }
     });
   }

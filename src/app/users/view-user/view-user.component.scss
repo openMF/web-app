@@ -1,11 +1,3 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 .container {
   max-width: 37rem;
   margin: 0 auto;
@@ -84,32 +76,6 @@
 
   .back-button-container {
     margin-top: 2rem;
-  }
-
-  .self-service-indicator {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    margin-right: 0.5rem;
-    vertical-align: middle;
-    box-sizing: border-box;
-  }
-
-  .self-service-true {
-    background-color: #43a047;
-    border: 1px solid #388e3c;
-  }
-
-  .self-service-false {
-    background-color: #e53935;
-    border: 1px solid #b71c1c;
-  }
-
-  .self-service-container {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
   }
 
   button {

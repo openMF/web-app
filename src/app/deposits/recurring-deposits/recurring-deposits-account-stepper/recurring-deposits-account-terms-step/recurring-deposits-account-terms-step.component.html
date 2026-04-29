@@ -1,21 +1,14 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <form [formGroup]="recurringDepositAccountTermsForm">
   <div class="layout-row-wrap gap-2px responsive-column">
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Interest Compounding Period' | translate }}</mat-label>
       <mat-select formControlName="interestCompoundingPeriodType" required>
-        @for (interestCompoundingPeriodType of interestCompoundingPeriodTypeData; track interestCompoundingPeriodType) {
-          <mat-option [value]="interestCompoundingPeriodType.id">
-            {{ interestCompoundingPeriodType.value | translateKey: 'catalogs' }}
-          </mat-option>
-        }
+        <mat-option
+          *ngFor="let interestCompoundingPeriodType of interestCompoundingPeriodTypeData"
+          [value]="interestCompoundingPeriodType.id"
+        >
+          {{ interestCompoundingPeriodType.value | translateKey: 'catalogs' }}
+        </mat-option>
       </mat-select>
       <mat-error>
         {{ 'labels.inputs.Interest Compounding Period' | translate }} {{ 'labels.commons.is' | translate }}
@@ -26,11 +19,12 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Interest Posting Period' | translate }}</mat-label>
       <mat-select formControlName="interestPostingPeriodType" required>
-        @for (interestPostingPeriodType of interestPostingPeriodTypeData; track interestPostingPeriodType) {
-          <mat-option [value]="interestPostingPeriodType.id">
-            {{ interestPostingPeriodType.value | translateKey: 'catalogs' }}
-          </mat-option>
-        }
+        <mat-option
+          *ngFor="let interestPostingPeriodType of interestPostingPeriodTypeData"
+          [value]="interestPostingPeriodType.id"
+        >
+          {{ interestPostingPeriodType.value | translateKey: 'catalogs' }}
+        </mat-option>
       </mat-select>
       <mat-error>
         {{ 'labels.inputs.Interest Posting Period' | translate }} {{ 'labels.commons.is' | translate }}
@@ -41,11 +35,12 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Interest Calculated using' | translate }}</mat-label>
       <mat-select formControlName="interestCalculationType" required>
-        @for (interestCalculationType of interestCalculationTypeData; track interestCalculationType) {
-          <mat-option [value]="interestCalculationType.id">
-            {{ interestCalculationType.value | translateKey: 'catalogs' }}
-          </mat-option>
-        }
+        <mat-option
+          *ngFor="let interestCalculationType of interestCalculationTypeData"
+          [value]="interestCalculationType.id"
+        >
+          {{ interestCalculationType.value | translateKey: 'catalogs' }}
+        </mat-option>
       </mat-select>
       <mat-error>
         {{ 'labels.inputs.Interest Calculated using' | translate }} {{ 'labels.commons.is' | translate }}
@@ -56,14 +51,12 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Days in Year' | translate }}</mat-label>
       <mat-select formControlName="interestCalculationDaysInYearType" required>
-        @for (
-          interestCalculationDaysInYearType of interestCalculationDaysInYearTypeData;
-          track interestCalculationDaysInYearType
-        ) {
-          <mat-option [value]="interestCalculationDaysInYearType.id">
-            {{ interestCalculationDaysInYearType.value | translateKey: 'catalogs' }}
-          </mat-option>
-        }
+        <mat-option
+          *ngFor="let interestCalculationDaysInYearType of interestCalculationDaysInYearTypeData"
+          [value]="interestCalculationDaysInYearType.id"
+        >
+          {{ interestCalculationDaysInYearType.value | translateKey: 'catalogs' }}
+        </mat-option>
       </mat-select>
       <mat-error>
         {{ 'labels.inputs.Days in Year' | translate }} {{ 'labels.commons.is' | translate }}

@@ -1,19 +1,11 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
-import { GroupsService } from 'app/groups/groups.service';
+import { GroupsService, MeetingsService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Dialogs */
@@ -72,13 +64,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class GroupAttendanceComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private dateUtils = inject(Dates);
-  private router = inject(Router);
-  private groupsService = inject(GroupsService);
-  dialog = inject(MatDialog);
-  private settingsService = inject(SettingsService);
-
   /** Members data. */
   membersData: any;
   /** Group Data */
@@ -106,7 +91,15 @@ export class GroupAttendanceComponent implements OnInit {
    * @param {MatDialog} dialog Mat Dialog
    * @param {SettingsService} settingsService SettingsService
    */
-  constructor() {
+  constructor(
+    private route: ActivatedRoute,
+    private dateUtils: Dates,
+    private router: Router,
+    private groupsService: GroupsService,
+    public dialog: MatDialog,
+    private settingsService: SettingsService,
+    private meetingService: MeetingsService
+  ) {
     this.route.data.subscribe((data: { groupActionData: any }) => {
       this.groupData = data.groupActionData;
       this.membersData = data.groupActionData.clientMembers;
@@ -129,7 +122,7 @@ export class GroupAttendanceComponent implements OnInit {
    */
   getAttendanceOptions() {
     this.groupsService
-      .getMeetingsTemplate(this.groupData.id, this.groupData.collectionMeetingCalendar.id)
+      .retrieveOne15(this.groupData.id, this.groupData.collectionMeetingCalendar.id)
       .subscribe((response: any) => {
         this.attendanceTypeOptions = response.attendanceTypeOptions;
       });
@@ -148,6 +141,7 @@ export class GroupAttendanceComponent implements OnInit {
         options: { label: 'value', value: 'id', data: this.attendanceTypeOptions },
         required: false
       })
+
     ];
     const data = {
       title: 'Assign Member Attendance',
@@ -179,10 +173,15 @@ export class GroupAttendanceComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.groupsService
-      .assignGroupAttendance(this.groupData.id, this.groupData.collectionMeetingCalendar.id, data)
-      .subscribe(() => {
-        this.router.navigate(['../../'], { relativeTo: this.route });
-      });
+    const requestParams = {
+      groupId: this.groupData.id,
+      calendarId: this.groupData.collectionMeetingCalendar.id,
+      entityType: 'groups',
+      entityId: this.groupData.id,
+      ...data
+    };
+    this.meetingService.retrieveMeetings(requestParams).subscribe(() => {
+      this.router.navigate(['../../'], { relativeTo: this.route });
+    });
   }
 }

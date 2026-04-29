@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 
 /** rxjs Imports */
@@ -21,7 +13,10 @@ import { SettingsService } from 'app/settings/settings.service';
  */
 @Injectable()
 export class ApiPrefixInterceptor implements HttpInterceptor {
-  private settingsService = inject(SettingsService);
+  /**
+   * @param {SettingsService} settingsService Settings Service
+   */
+  constructor(private settingsService: SettingsService) {}
 
   /**
    * Intercepts a Http request and prefixes it with `serverUrl`.
@@ -39,7 +34,6 @@ export class ApiPrefixInterceptor implements HttpInterceptor {
 
     /**
      * Ignore URLs that are complete for i18n
-     * **__NOTE__** OAuth2 endpoints are handled by angular-oauth2-oidc library
      */
     if (!request.url.includes('http:') && !request.url.includes('https:')) {
       request = request.clone({ url: baseUrl + request.url });

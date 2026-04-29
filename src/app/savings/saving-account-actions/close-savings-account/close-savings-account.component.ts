@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -19,7 +11,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
-import { SavingsService } from 'app/savings/savings.service';
+import { SavingsAccountService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
@@ -41,13 +33,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CloseSavingsAccountComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private savingsService = inject(SavingsService);
-  private dateUtils = inject(Dates);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private settingsService = inject(SettingsService);
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -65,13 +50,20 @@ export class CloseSavingsAccountComponent implements OnInit {
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
-   * @param {SavingsService} savingsService Savings Service
+   * @param {SavingsAccountService} savingsAccountService Savings Account Service
    * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
    */
-  constructor() {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private savingsAccountService: SavingsAccountService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
       this.paymentTypeOptions = data.savingsAccountActionData[0].paymentTypeOptions;
       this.transactionAmount = data.savingsAccountActionData[1].summary.accountBalance;
@@ -158,7 +150,12 @@ export class CloseSavingsAccountComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.savingsService.executeSavingsAccountCommand(this.accountId, 'close', data).subscribe(() => {
+    const requestParameters = {
+      accountId: this.accountId,
+      command: 'close',
+      postSavingsAccountsAccountIdRequest: data
+    };
+    this.savingsAccountService.handleCommands6(requestParameters).subscribe(() => {
       this.router.navigate(['../../transactions'], { relativeTo: this.route });
     });
   }

@@ -1,18 +1,10 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute, NavigationExtras, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationExtras, Router, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { LoansService } from '../loans.service';
+import { LoansService, LoanTransactionsService } from '@fineract/client';
 
 /** Custom Buttons Configuration */
 import { LoansAccountButtonConfiguration } from './loan-accounts-button-config';
@@ -32,7 +24,6 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { NgClass, CurrencyPipe } from '@angular/common';
 import { LongTextComponent } from '../../shared/long-text/long-text.component';
 import { AccountNumberComponent } from '../../shared/account-number/account-number.component';
-import { ExternalIdentifierComponent } from '../../shared/external-identifier/external-identifier.component';
 import { MatIconButton } from '@angular/material/button';
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { MatIcon } from '@angular/material/icon';
@@ -43,7 +34,6 @@ import { DateFormatPipe } from '../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProducts } from 'app/products/loan-products/loan-products';
-import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
 
 @Component({
   selector: 'mifosx-loans-view',
@@ -59,7 +49,6 @@ import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan
     NgClass,
     LongTextComponent,
     AccountNumberComponent,
-    ExternalIdentifierComponent,
     MatIconButton,
     MatMenuTrigger,
     MatIcon,
@@ -77,18 +66,11 @@ import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan
     FormatNumberPipe
   ]
 })
-export class LoansViewComponent extends LoanProductBaseComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  loansService = inject(LoansService);
-  private translateService = inject(TranslateService);
-  dialog = inject(MatDialog);
-
+export class LoansViewComponent implements OnInit {
   /** Loan Details Data */
   loanDetailsData: any;
   /** Loan Datatables */
   loanDatatables: any;
-  /** Whether datatable filtering has completed */
-  datatablesReady = false;
   /** Recalculate Interest */
   recalculateInterest: any;
   /** loan Arrears Delinquency config value */
@@ -112,42 +94,39 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
   loanReAged = false;
   loanReAmortized = false;
 
-  constructor() {
-    super();
-    const loansService = this.loansService;
-    this.loanProductService.initialize(LoanProductBaseComponent.resolveProductTypeDefault(this.route, 'loan'));
-
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    public loansService: LoansService,
+    public loanTransactionsService: LoanTransactionsService,
+    private translateService: TranslateService,
+    public dialog: MatDialog
+  ) {
     this.route.data.subscribe(
       (data: { loanDetailsData: any; loanDatatables: any; loanArrearsDelinquencyConfig: any }) => {
         this.loanDetailsData = data.loanDetailsData;
-        if (!this.loanDetailsData.loanProductName) {
-          this.loanDetailsData.loanProductName = this.loanDetailsData.product.name;
-        }
-        this.loanDatatables = this.loanProductService.isLoanProduct ? data.loanDatatables : [];
+        this.loanDatatables = data.loanDatatables;
+        this.loanDisplayArrearsDelinquency = data.loanArrearsDelinquencyConfig.value || 0;
         this.loanStatus = this.loanDetailsData.status;
+        this.loanSubStatus = this.loanDetailsData.subStatus === undefined ? null : this.loanDetailsData.subStatus;
         this.currency = this.loanDetailsData.currency;
-        if (this.loanProductService.isLoanProduct) {
-          this.loanDisplayArrearsDelinquency = data.loanArrearsDelinquencyConfig.value || 0;
-          this.loanSubStatus = this.loanDetailsData.subStatus === undefined ? null : this.loanDetailsData.subStatus;
-          loansService.saveLoanDisbursementDetailsData(this.loanDetailsData.disbursementDetails);
-          if (this.loanStatus.active) {
-            this.loanDetailsData.transactions.forEach((lt: LoanTransaction) => {
-              if (!lt.manuallyReversed) {
-                if (lt.type.reAge) {
-                  this.loanReAged = true;
-                } else if (lt.type.reAmortize) {
-                  this.loanReAmortized = true;
-                }
+        //loansService.saveLoanDisbursementDetailsData(this.loanDetailsData.disbursementDetails); there is no such method in the openapi service
+        if (this.loanStatus.active) {
+          this.loanDetailsData.transactions.forEach((lt: LoanTransaction) => {
+            if (!lt.manuallyReversed) {
+              if (lt.type.reAge) {
+                this.loanReAged = true;
+              } else if (lt.type.reAmortize) {
+                this.loanReAmortized = true;
               }
-            });
-          }
-          // Filter datatables based on entity datatable checks
-          this.filterDatatablesByProduct();
+            }
+          });
         }
         this.setConditionalButtons();
       }
     );
     this.loanId = this.route.snapshot.params['loanId'];
+    this.clientId = this.loanDetailsData.clientId;
   }
 
   ngOnInit() {
@@ -157,11 +136,11 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
         this.reload();
       }
     });
-    this.recalculateInterest = this.loanDetailsData?.recalculateInterest || true;
-    this.status = this.loanDetailsData?.status?.value;
-    this.loanStatus = this.loanDetailsData?.status;
-    this.loanSubStatus = this.loanDetailsData?.subStatus === undefined ? null : this.loanDetailsData?.subStatus;
-    if (this.loanStatus?.active && this.loanDetailsData?.multiDisburseLoan) {
+    this.recalculateInterest = this.loanDetailsData.recalculateInterest || true;
+    this.status = this.loanDetailsData.status.value;
+    this.loanStatus = this.loanDetailsData.status;
+    this.loanSubStatus = this.loanDetailsData.subStatus === undefined ? null : this.loanDetailsData.subStatus;
+    if (this.loanStatus.active && this.loanDetailsData.multiDisburseLoan) {
       if (this.loanDetailsData && this.loanDetailsData.transactions) {
         this.loanDetailsData.transactions.forEach((transaction: any) => {
           if (transaction.type.disbursement) {
@@ -181,95 +160,15 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
     this.loanDelinquencyClassification();
   }
 
-  /**
-   * Filter datatables based on entity datatable checks configuration.
-   * Only shows datatables that are linked to the current loan's product.
-   *
-   * Logic:
-   * - If a datatable has product-specific entity checks for ANY loan product,
-   *   it is only shown for products where it is explicitly configured.
-   * - If a datatable has NO product-specific entity checks at all,
-   *   it is shown for all products (backward compatibility).
-   */
-  filterDatatablesByProduct(): void {
-    this.datatablesReady = false;
-
-    if (!this.loanDatatables || this.loanDatatables.length === 0) {
-      this.datatablesReady = true;
-      return;
-    }
-
-    const loanProductId = this.loanDetailsData?.loanProductId;
-
-    if (!loanProductId || loanProductId <= 0) {
-      this.datatablesReady = true;
-      return; // Keep all datatables if product ID is not available or invalid
-    }
-
-    this.loansService.getEntityDataTableChecks().subscribe({
-      next: (response: any) => {
-        const entityChecks = response?.pageItems || [];
-
-        // Get all entity checks for the m_loan entity
-        const loanEntityChecks = entityChecks.filter((check: any) => check.entity === 'm_loan');
-
-        if (loanEntityChecks.length === 0) {
-          this.datatablesReady = true;
-          return; // No entity datatable checks configured at all, keep all datatables
-        }
-
-        // Collect datatable names that have product-specific configurations (for ANY product)
-        const productSpecificDatatables = new Set<string>(
-          loanEntityChecks
-            .filter((check: any) => check.productId && check.productId > 0)
-            .map((check: any) => check.datatableName)
-        );
-
-        // Collect datatable names allowed for the current product
-        const allowedForCurrentProduct = new Set<string>(
-          loanEntityChecks
-            .filter((check: any) => check.productId === loanProductId)
-            .map((check: any) => check.datatableName)
-        );
-
-        // Filter: keep a datatable if:
-        // 1. It has no product-specific configuration anywhere → show for all products
-        // 2. It is explicitly configured for the current product
-        this.loanDatatables = this.loanDatatables.filter((datatable: any) => {
-          const tableName = datatable.registeredTableName;
-          if (!productSpecificDatatables.has(tableName)) {
-            return true;
-          }
-          return allowedForCurrentProduct.has(tableName);
-        });
-        this.datatablesReady = true;
-      },
-      error: () => {
-        // If API fails, keep all datatables (fallback to current behavior)
-        this.datatablesReady = true;
-      }
-    });
-  }
-
   // Defines the buttons based on the status of the loan account
   setConditionalButtons() {
-    if (!this.loanDetailsData) {
-      return;
-    }
     this.buttonConfig = new LoansAccountButtonConfiguration(this.status, this.loanSubStatus);
-    if (this.canShowWorkingCapitalDiscountUpdate()) {
-      this.buttonConfig.addButton({
-        name: 'Update discount',
-        icon: 'edit',
-        taskPermissionName: 'UPDATEDISCOUNT_WORKINGCAPITALLOAN'
-      });
-    }
 
     if (this.status === 'Submitted and pending approval') {
       this.buttonConfig.addOption({
         name: this.loanDetailsData.loanOfficerName ? 'Change Loan Officer' : 'Assign Loan Officer',
         icon: 'user-tie',
-        taskPermissionName: 'UPDATELOANOFFICER_LOAN'
+        taskPermissionName: 'DISBURSE_LOAN'
       });
 
       if (this.loanDetailsData.isVariableInstallmentsAllowed) {
@@ -283,7 +182,7 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
       this.buttonConfig.addButton({
         name: this.loanDetailsData.loanOfficerName ? 'Change Loan Officer' : 'Assign Loan Officer',
         icon: 'user-tie',
-        taskPermissionName: 'UPDATELOANOFFICER_LOAN'
+        taskPermissionName: 'DISBURSE_LOAN'
       });
     } else if (this.status === 'Active') {
       if (this.loanDetailsData.enableBuyDownFee) {
@@ -417,10 +316,7 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
         this.deleteLoanAccount();
         break;
       case 'Modify Application':
-        this.router.navigate(['edit-loans-account'], {
-          queryParams: { productType: this.loanProductService.productType.value },
-          relativeTo: this.route
-        });
+        this.router.navigate(['edit-loans-account'], { relativeTo: this.route });
         break;
       case 'Transfer Funds':
         const queryParams: any = { loanId: this.loanId, accountType: 'fromloans' };
@@ -436,9 +332,6 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
         break;
       default:
         const navigationExtras: NavigationExtras = {
-          queryParams: {
-            productType: this.loanProductService.productType.value
-          },
           relativeTo: this.route,
           state: {
             data: this.loanDetailsData
@@ -470,16 +363,22 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
     });
     recoverFromGuarantorDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.loansService.loanActionButtons(this.loanId, 'recoverGuarantees').subscribe(() => {
-          this.reload();
-        });
+        this.loansService
+          .stateTransitions({
+            loanId: this.loanId,
+            postLoansLoanIdRequest: {},
+            command: 'recoverGuarantees'
+          })
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }
 
   loanDelinquencyClassification(): void {
     this.loanDelinquencyClassificationStyle = '';
-    if (this.loanDetailsData?.delinquent && this.loanDetailsData.delinquent.delinquencyPausePeriods) {
+    if (this.loanDetailsData.delinquent && this.loanDetailsData.delinquent.delinquencyPausePeriods) {
       this.loanDetailsData.delinquent.delinquencyPausePeriods.some((period: DelinquencyPausePeriod) => {
         if (period.active) {
           this.loanDelinquencyClassificationStyle = 'fa fa-stop status-pending';
@@ -513,17 +412,20 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
             undoCommand = 'undo-charge-off';
             break;
         }
-        this.loansService.executeLoansAccountTransactionsCommand(String(this.loanId), undoCommand, {}).subscribe(() => {
-          this.reload();
-        });
+        this.loanTransactionsService
+          .executeLoanTransaction({
+            loanId: this.loanId,
+            command: undoCommand,
+            postLoansLoanIdTransactionsRequest: {}
+          })
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }
 
   iconLoanStatusColor() {
-    if (!this.loanDetailsData) {
-      return '';
-    }
     if (this.loanDetailsData.chargedOff) {
       return 'loanStatusType.chargeoff';
     }
@@ -533,20 +435,17 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
     if (this.loanDetailsData.inArrears) {
       return 'loanStatusType.activeOverdue';
     }
-    return this.loanDetailsData.status?.code;
+    return this.loanDetailsData.status.code;
   }
 
   loanStatusTooltip() {
-    if (!this.loanDetailsData) {
-      return '';
-    }
     if (this.loanDetailsData.chargedOff) {
       return 'Chargeoff';
     }
     if (this.loanDetailsData.inArrears) {
       return 'activeOverdue';
     }
-    return this.loanDetailsData.status?.code;
+    return this.loanDetailsData.status.code;
   }
 
   loanSubStatusTooltip() {
@@ -565,11 +464,23 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
     });
     deleteGuarantorDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.loansService.deleteLoanAccount(this.loanId).subscribe(() => {
+        this.loansService.deleteLoanApplication({ loanId: this.loanId }).subscribe(() => {
           this.router.navigate(['../../'], { relativeTo: this.route });
         });
       }
     });
+  }
+
+  /**
+   * Refetches data for the component
+   * TODO: Replace by a custom reload component instead of hard-coded back-routing.
+   */
+  private reload() {
+    const clientId = this.clientId;
+    const url: string = this.router.url;
+    this.router
+      .navigateByUrl(`/clients/${clientId}/loans-accounts`, { skipLocationChange: true })
+      .then(() => this.router.navigate([url]));
   }
 
   private isContractTermination(substatus: OptionData): boolean {
@@ -577,12 +488,5 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
       return false;
     }
     return substatus.code === 'loanSubStatus.loanSubStatusType.contractTermination';
-  }
-
-  private canShowWorkingCapitalDiscountUpdate(): boolean {
-    if (!this.loanProductService.isWorkingCapital || !this.loanDetailsData) {
-      return false;
-    }
-    return this.loanDetailsData?.status?.active === true;
   }
 }

@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -43,8 +35,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class SharesAccountActionsComponent {
-  private route = inject(ActivatedRoute);
-
   /** Shares Account Data */
   sharesAccountData: any;
   /** Flag object to store possible actions and render appropriate UI to the user */
@@ -73,7 +63,7 @@ export class SharesAccountActionsComponent {
   /**
    * @param {ActivatedRoute} route Activated Route
    */
-  constructor() {
+  constructor(private route: ActivatedRoute) {
     const name = this.route.snapshot.params['name'];
     if (name && name in this.actions) {
       this.actions[name as keyof typeof this.actions] = true;

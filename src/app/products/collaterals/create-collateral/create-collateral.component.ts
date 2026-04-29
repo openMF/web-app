@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { OrganizationService } from 'app/organization/organization.service';
 <<<<<<< HEAD
 import { UntypedFormGroup, UntypedFormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -18,7 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 >>>>>>> origin/dev
 
 /** Custom Services */
-import { ProductsService } from '../../products.service';
+import { CollateralManagementService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -34,13 +26,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateCollateralComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private productsService = inject(ProductsService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private settingsService = inject(SettingsService);
-  private organizationService = inject(OrganizationService);
-
   /** Collateral form */
   collateralForm: UntypedFormGroup;
   /** Charges Template data */
@@ -54,7 +39,14 @@ export class CreateCollateralComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor() {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private collateralManagementService: CollateralManagementService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private settingsService: SettingsService,
+    private organizationService: OrganizationService
+  ) {
     this.route.data.subscribe((data: { collateralTemplate: any }) => {
       this.organizationService.getCurrencies().subscribe((orgCurrencies: any) => {
         let orgCurrencyList = Array.isArray(orgCurrencies.selectedCurrencyOptions)
@@ -116,8 +108,10 @@ export class CreateCollateralComponent implements OnInit {
       ...collateralFormData,
       locale
     };
-    this.productsService.createCollateral(data).subscribe((response: any) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.collateralManagementService
+      .createCollateral1({ collateralManagementProductRequest: data })
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
 }

@@ -1,8 +1,8 @@
-# Mifos® X Web App ![build](https://github.com/openMF/web-app/actions/workflows/build.yml/badge.svg)
+# Mifos X Web App ![build](https://github.com/openMF/web-app/actions/workflows/build.yml/badge.svg)
 
 ## Overview
 
-Mifos® X Web App is a modern single-page application (SPA) built on top of the Mifos® X platform for financial inclusion. It serves as the default web interface for the Mifos® user community.
+Mifos X Web App is a modern single-page application (SPA) built on top of the Mifos X platform for financial inclusion. It serves as the default web interface for the Mifos user community.
 
 **Technologies Used:**
 
@@ -49,32 +49,32 @@ Mifos® X Web App is a modern single-page application (SPA) built on top of the 
 
 ## Quick Links
 
-- [Live Demo](https://demo.mifos.community/#/login) (Updated nightly — sandbox data is reset every 6 hours; test data and transient state may be cleared.)
+- [Live Demo](https://sandbox.mifos.community/#/login) (Updated nightly ** System is restored every 6 hours **)
 - [GitHub Repository](https://github.com/openMF/web-app)
 - [Slack Channel](https://app.slack.com/client/T0F5GHE8Y/CJJGJLN10)
 - [Jira Board of Mifos](https://mifosforge.jira.com/jira/your-work)
 - [Jira Board of Mifos Web App Project](https://mifosforge.jira.com/jira/software/c/projects/WEB/boards/62)
-- [AI Assistance Test Results](./AI.md)
 
 ## Installation Guide
 
 ### Prerequisites for All Methods
 
 - Git: [Download here](https://git-scm.com/downloads)
-- Mifos® X Backend (Apache Fineract®) - **Required before running the web app**
+- Mifos X Backend (Fineract) - **Required before running the web app**
 
 ### Backend Setup (REQUIRED FIRST)
 
-Before installing the web app, you need to set up the Apache Fineract® backend server:
+Before installing the web app, you need to set up the Fineract backend server:
 
 1. **Choose ONE of these backend options:**
    - **Option A: Use existing remote server**
-   - Use the [demo (MariaDB)](https://demo.mifos.community) — sandbox data is reset every 6 hours; test data and transient state may be cleared.
-   - Use the [demo (Keycloak)](https://oauth.mifos.community)
-   - Use the [demo (2FA)](https://2fa.mifos.community)
-   - Use the [demo (Oidc)](https://oidc.mifos.community)
-   - Use the [demo (Postgres)](https://elephant.mifos.community)
-   - Configure to your server by updating API URLs in environment files
+     - Use the sandbox (MariaDB) at https://sandbox.mifos.community ** System is restored every 6 hours **
+     - Use the demo (MariaDB) at https://demo.mifos.community
+     - Use the demo (Keycloak) at https://oauth.mifos.community
+     - Use the demo (2FA) at https://2fa.mifos.community
+     - Use the demo (Oidc) at https://oidc.mifos.community
+     - Use the demo (Postgres) at https://elephant.mifos.community
+     - Configure to your server by updating API URLs in environment files
 
    - **Option B: Install local Fineract server**
 
@@ -135,7 +135,7 @@ Choose ONE of the following methods to install the web app:
 
 #### Method 3: Docker Compose (Frontend + Backend)
 
-This sets up both the Mifos® X Web App and Apache Fineract® backend:
+This sets up both the Mifos X Web App and Fineract backend:
 
 1. Clone the repository:
    ```
@@ -169,101 +169,6 @@ When using the development server with basic authentication:
 - **Build for production:** `ng build --configuration production` or `npm run build:prod`
 - **Get Angular CLI help:** `ng help`
 
-## Proxy Configuration
-
-The web app includes a proxy configuration (`proxy.conf.js`) that allows you to forward API requests to a remote Fineract backend during local development. This helps avoid CORS issues and enables you to work against production-like environments.
-
-### Using the Sandbox Proxy (Default)
-
-By default, the proxy forwards `/fineract-provider` requests to the Mifos sandbox environment:
-
-- **Target:** `https://demo.mifos.community`
-- **API Endpoint:** `https://apis.mifos.community` (exposed in the demo environment)
-- **System Reset:** Demo test data and transient state are reset every 6 hours (expect data to be periodically cleared).
-
-**Sandbox Environment Variables:**
-
-```bash
-FINERACT_API_URLS=https://apis.mifos.community
-FINERACT_API_URL=https://apis.mifos.community
-FINERACT_API_PROVIDER=/fineract-provider/api
-FINERACT_API_ACTUATOR=/fineract-provider
-FINERACT_API_VERSION=/v1
-FINERACT_PLATFORM_TENANT_IDENTIFIER=default
-MIFOS_DEFAULT_LANGUAGE=en-US
-MIFOS_SUPPORTED_LANGUAGES=cs-CS,de-DE,en-US,es-MX,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,ne-NE,pt-PT,sw-SW
-MIFOS_PRELOAD_CLIENTS=true
-MIFOS_DEFAULT_CHAR_DELIMITER=,
-```
-
-### Using a Local Fineract Instance
-
-To proxy to a local Fineract server instead:
-
-Use the provided localhost proxy file (recommended for `ng serve`):
-
-1. Start the dev server with the localhost proxy:
-
-   ```bash
-   ng serve --proxy-config proxy.localhost.conf.js
-   ```
-
-2. Ensure your local Fineract instance is running on `http://localhost:8443`.
-
-Notes:
-
-- `proxy.localhost.conf.js` forwards `/fineract-provider` to your local backend to avoid CORS during development.
-- The `HttpsProxyAgent` / `setupForProxy` logic (present in `proxy.conf.js`) is only necessary when an upstream corporate/HTTP proxy must be used (set via `HTTP_PROXY`/`http_proxy`). It is not required for a direct `localhost` backend.
-
-### Proxy Features
-
-- **CORS Avoidance:** Eliminates cross-origin issues during local development
-- **Error Handling:** Gracefully handles proxy failures with detailed logging
-- **Corporate Proxy Support:** Maintains support for corporate proxy agents via `HTTP_PROXY` environment variable
-- **Debug Logging:** All proxy requests are logged for troubleshooting
-
-The proxy is configured to work with Fineract endpoints as described in this section.
-
-### Testing the Proxy
-
-To verify the proxy is working correctly, start the development server (`ng serve`) and test with curl:
-
-**Successful proxy request:**
-
-```bash
-curl -i "http://localhost:4200/fineract-provider/api/v1/runreports/FullClientReport?R_officeId=1&output-type=HTML&R_loanOfficerId=-1"
-```
-
-Expected: HTTP 200 response with proxied data from the demo environment. Server console shows:
-
-```text
-[Proxy] Proxying: GET /fineract-provider/api/v1/runreports/... -> https://demo.mifos.community/api/v1/runreports/...
-```
-
-**Simulated proxy error (backend unreachable):**
-
-If the backend is unreachable or returns an error, the proxy returns HTTP 502:
-
-```bash
-# Stop your Fineract backend (if using localhost) or test with an invalid target
-# The proxy will log the error and return:
-```
-
-Server console (example):
-
-```text
-[Proxy] Error while proxying request: GET /fineract-provider/... -> https://demo.mifos.community - ECONNREFUSED
-```
-
-HTTP response:
-
-```http
-HTTP/1.1 502 Bad Gateway
-Content-Type: text/plain
-
-Proxy error: connect ECONNREFUSED
-```
-
 ## Configuration Options
 
 ### Environment Variables for Docker
@@ -272,13 +177,12 @@ All these environment variables can be set when using Docker or Docker Compose:
 
 #### Fineract Backend Settings
 
-| Variable                             | Description                                                          | Default Value                                       |
-| ------------------------------------ | -------------------------------------------------------------------- | --------------------------------------------------- |
-| FINERACT_API_URLS                    | Fineract server list                                                 | https://demo.mifos.community,https://localhost:8443 |
-| FINERACT_API_URL                     | Default Fineract server                                              | https://localhost:8443                              |
-| FINERACT_API_ACTUATOR                | Default Fineract Actuator endpoint                                   | /fineract-provider                                  |
-| FINERACT_PLATFORM_TENANT_IDENTIFIER  | Default tenant identifier (must align with Fineract `tenants` table) | default                                             |
-| FINERACT_PLATFORM_TENANTS_IDENTIFIER | Tenant identifier list (must align with Fineract `tenants` table)    | -                                                   |
+| Variable                             | Description                                                          | Default Value                                                                       |
+| ------------------------------------ | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| FINERACT_API_URLS                    | Fineract server list                                                 | https://sandbox.mifos.community,https://demo.mifos.community,https://localhost:8443 |
+| FINERACT_API_URL                     | Default Fineract server                                              | https://localhost:8443                                                              |
+| FINERACT_PLATFORM_TENANT_IDENTIFIER  | Default tenant identifier (must align with Fineract `tenants` table) | default                                                                             |
+| FINERACT_PLATFORM_TENANTS_IDENTIFIER | Tenant identifier list (must align with Fineract `tenants` table)    | -                                                                                   |
 
 #### Language Settings (i18n)
 
@@ -286,40 +190,6 @@ All these environment variables can be set when using Docker or Docker Compose:
 | ------------------------- | --------------------------- | ----------------------------------------------------------------------- |
 | MIFOS_DEFAULT_LANGUAGE    | Default language            | en-US                                                                   |
 | MIFOS_SUPPORTED_LANGUAGES | List of supported languages | cs-CS,de-DE,en-US,es-MX,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,ne-NE,pt-PT,sw-SW |
-
-#### Date and Datetime Format Settings
-
-| Variable                      | Description                                 | Default Value         |
-| ----------------------------- | ------------------------------------------- | --------------------- |
-| MIFOS_DEFAULT_FORMAT_DATE     | Default date format for the application     | dd MMMM yyyy          |
-| MIFOS_DEFAULT_FORMAT_DATETIME | Default datetime format for the application | dd MMMM yyyy HH:mm:ss |
-
-These environment variables control the default date and datetime formats used throughout the Mifos® X Web App. They can be set in your Docker environment, in the `env.js`/`env.template.js` files, or in your deployment environment.
-
-- `MIFOS_DEFAULT_FORMAT_DATE` sets the default format for displaying dates (e.g., `15 February 2026`).
-- `MIFOS_DEFAULT_FORMAT_DATETIME` sets the default format for displaying date and time (e.g., `15 February 2026 14:30:00`).
-
-If a user does not select a custom format in the UI, these values are used as the fallback. You can override them per user in the Settings screen.
-
-**How to set:**
-
-In Docker Compose or Docker:
-
-```bash
-MIFOS_DEFAULT_FORMAT_DATE=yyyy-MM-dd
-MIFOS_DEFAULT_FORMAT_DATETIME=yyyy-MM-dd HH:mm
-```
-
-In `src/assets/env.template.js`:
-
-```js
-window['env']['defaultFormatDate'] = '$MIFOS_DEFAULT_FORMAT_DATE';
-window['env']['defaultFormatDatetime'] = '$MIFOS_DEFAULT_FORMAT_DATETIME';
-```
-
-**Where used:**
-
-These values are read by the application when it starts and are used as the default for date and datetime display in forms, tables, and reports.
 
 Available languages:
 
@@ -332,7 +202,7 @@ Available languages:
 | French     | fr   | fr-FR.json |
 | Italian    | it   | it-IT.json |
 | Korean     | ko   | ko-KO.json |
-| Lithuanian | lt   | lt-LT.json |
+| Lithuanian | li   | li-LI.json |
 | Latvian    | lv   | lv-LV.json |
 | Nepali     | ne   | ne-NE.json |
 | Portuguese | pt   | pt-PT.json |
@@ -347,54 +217,24 @@ Available languages:
 | MIFOS_DEFAULT_CHAR_DELIMITER      | Character delimiter for CSV exports                  | ,             |
 | MIFOS_WAIT_TIME_FOR_NOTIFICATIONS | Wait time in seconds for reading notifications       | 60            |
 | MIFOS_WAIT_TIME_FOR_CATCHUP       | Wait time in seconds for reading COB Catch-Up status | 30            |
+| MIFOS_MIN_PASSWORD_LENGTH         | Minimum length for user passwords                    | 12            |
 | MIFOS_HTTP_CACHE_ENABLED          | whether to use HTTP Get calls with cache             | false         |
-
-#### Password Policy Settings
-
-Password validation for Basic Authentication can be configured via environment variables.
-
-| Variable                  | Description                                      | Default Value  |
-| ------------------------- | ------------------------------------------------ | -------------- |
-| MIFOS_MIN_PASSWORD_LENGTH | Minimum required password length                 | 8              |
-| MIFOS_PASSWORD_REGEX      | Regex pattern used to validate password strength | Default policy |
-
-**Behavior:**
-
-- If `MIFOS_MIN_PASSWORD_LENGTH` is not set, it defaults to `8`.
-- If `MIFOS_PASSWORD_REGEX` is not set, the application falls back to the built-in password validation policy.
-- These settings apply only to Basic Authentication login and user password validation.
-- OAuth/OIDC flows are not affected.
-
-**Docker Example:**
-
-```bash
-MIFOS_MIN_PASSWORD_LENGTH=8
-MIFOS_PASSWORD_REGEX=^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,50}$
-```
 
 #### UI Display Settings
 
-| Variable                           | Description                                        | Default Value |
-| ---------------------------------- | -------------------------------------------------- | ------------- |
-| MIFOS_DISPLAY_TENANT_SELECTOR      | Display tenant selector in Login view              | true          |
-| MIFOS_DISPLAY_BACKEND_INFO         | Display backend info in footer                     | true          |
-| MIFOS_PRODUCTION_MODE              | Show minimal production hero on login page         | false         |
-| MIFOS_ALLOW_SERVER_SWITCH_SELECTOR | Display DNS server list                            | true          |
-| MIFOS_COMPLIANCE_HIDE_CLIENT_DATA  | Hide client names in UI (mask with \*)             | false         |
-| MIFOS_PRODUCTION_MODE_ENABLE_RBAC  | Enable Role-Based Access Control for menus/buttons | false         |
+| Variable                           | Description                           | Default Value |
+| ---------------------------------- | ------------------------------------- | ------------- |
+| MIFOS_DISPLAY_TENANT_SELECTOR      | Display tenant selector in Login view | true          |
+| MIFOS_DISPLAY_BACKEND_INFO         | Display backend info in footer        | true          |
+| MIFOS_ALLOW_SERVER_SWITCH_SELECTOR | Display DNS server list               | true          |
 
 #### OAUTH Settings
 
-| Variable                      | Description                                      | Default Value |
-| ----------------------------- | ------------------------------------------------ | ------------- |
-| MIFOS_OAUTH_SERVER_ENABLED    | Enable the use of OAuth2 server                  | false         |
-| MIFOS_OAUTH_SERVER_URL        | Set the OAuth2 server URL (issuer)               |               |
-| MIFOS_OAUTH_SERVER_LOGOUT_URL | Set the OAuth2 server logout URL                 |               |
-| MIFOS_OAUTH_CLIENT_ID         | Set the OAuth2 Client Id                         |               |
-| MIFOS_OAUTH_AUTHORIZE_URL     | Set the OAuth2 authorization endpoint URL        |               |
-| MIFOS_OAUTH_TOKEN_URL         | Set the OAuth2 token endpoint URL                |               |
-| MIFOS_OAUTH_REDIRECT_URI      | Set the OAuth2 redirect URI after authentication |               |
-| MIFOS_OAUTH_SCOPE             | Set the OAuth2 scopes (e.g., openid profile)     |               |
+| Variable                   | Description                    | Default Value |
+| -------------------------- | ------------------------------ | ------------- |
+| MIFOS_OAUTH_SERVER_ENABLED | Enable the use of Oauth server | false         |
+| MIFOS_OAUTH_SERVER_URL     | Set the Oauth server URL       |               |
+| MIFOS_OAUTH_CLIENT_ID      | Set the Client Id              |               |
 
 #### OIDC Settings
 
@@ -406,147 +246,15 @@ MIFOS_PASSWORD_REGEX=^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,50}$
 | FINERACT_PLUGIN_OIDC_API_URL      | Set the Client API URL         |               |
 | FINERACT_PLUGIN_OIDC_FRONTEND_URL | Set the Front End URL callback |               |
 
-#### External National ID System Integration
-
-These variables enable automatic lookup and auto-fill of client data from an external National ID system (e.g., Mexico's CURP) during client creation and editing.
-
-| Variable                               | Description                                                                  | Default Value |
-| -------------------------------------- | ---------------------------------------------------------------------------- | ------------- |
-| ENABLE_EXTERNAL_NATIONAL_ID_SYSTEM     | Set to `true` to enable External National ID lookup                          | false         |
-| EXTERNAL_NATIONAL_ID_SYSTEM_URL        | URL of the external National ID API                                          |               |
-| EXTERNAL_NATIONAL_ID_SYSTEM_API_HEADER | Header name for the external API key (e.g., `X-Gravitee-Api-Key`)            |               |
-| EXTERNAL_NATIONAL_ID_SYSTEM_API_KEY    | API key value (injected server-side via nginx; keep empty in source control) |               |
-| EXTERNAL_NATIONAL_ID_REGEX             | Regex pattern to validate the external ID format (e.g., CURP)                |               |
-| EXTERNAL_NATIONALID_API_URL            | Full upstream URL for nginx proxy_pass                                       |               |
-
-When `ENABLE_EXTERNAL_NATIONAL_ID_SYSTEM` is set to `true`, the following fields are auto-filled and disabled during client creation/editing after a successful lookup:
-
-- First Name
-- Middle Name
-- Last Name
-- Date of Birth
-- Gender
-
-The user types the External ID value, and if it matches the configured regex, the system calls the external API to retrieve and auto-fill client information.
-
-**Docker Compose with External National ID:**
-
-```bash
-docker-compose -f docker-compose.yml -f docker-compose.external-nationalid.yml up -d
-```
-
 For more detailed configuration options, refer to the `env.sample` file in the root directory of the project.
-
-#### Interbank Transfers Settings
-
-| Variable                               | Description                         | Default Value                |
-| -------------------------------------- | ----------------------------------- | ---------------------------- |
-| MIFOS_INTERBANK_TRANSFERS_API_URL      | The Interbank server url            | https://apis.mifos.community |
-| MIFOS_INTERBANK_TRANSFERS_API_PROVIDER | The Interbank server endpoint       | /vnext2                      |
-| MIFOS_INTERBANK_TRANSFERS_API_VERSION  | The Interbank server api version    | /v1.0                        |
-| MIFOS_INTERBANK_TRANSFERS_ENABLED      | If the Interbank feature is enabled | true                         |
-
-#### Remittance Module Settings
-
-These variables configure the Remittance Module, which provides a 7-step wizard for processing remittance payouts (search, validate recipient, assign payout, confirm payment, and generate receipt).
-
-| Variable                      | Description                            | Default Value                |
-| ----------------------------- | -------------------------------------- | ---------------------------- |
-| MIFOS_REMITTANCE_API_URL      | The Remittance Microservice server URL | https://apis.mifos.community |
-| MIFOS_REMITTANCE_API_PROVIDER | The Remittance server endpoint         | /1.0/remittance              |
-| MIFOS_REMITTANCE_API_VERSION  | The Remittance server API version      | /v1                          |
-| MIFOS_REMITTANCE_ENABLED      | If the Remittance feature is enabled   | false                        |
-| MIFOS_REMITTANCE_API_HEADER   | API gateway auth header name           | X-Gravitee-Api-Key           |
-| MIFOS_REMITTANCE_API_KEY      | API key for the Remittance gateway     |                              |
-
-When `MIFOS_REMITTANCE_ENABLED` is set to `true`, a "Remittances" menu item appears in the sidenav and the `/remittances` route becomes accessible. The module supports the following workflow:
-
-1. **Search Remittance** — Look up a transaction by vendor and external reference ID
-2. **Remittance Details** — Review transaction details and status
-3. **Search Beneficiary** — Validate the recipient's identity documents
-4. **Beneficiary Details** — Review validated recipient info and assign to a Mifos client
-5. **Transactional Profile** — Register the transactional profile and assign payout
-6. **Confirm Payment** — Final confirmation before payout
-7. **Payment Receipt** — View and print the payment receipt
-
-### Client Data Masking Example
-
-When `MIFOS_COMPLIANCE_HIDE_CLIENT_DATA=false` (default):
-
-EMANUEL CASTILLO
-MIGUEL TECO
-
-When `MIFOS_COMPLIANCE_HIDE_CLIENT_DATA=true`:
-
-E**\*** C**\*\*\***
-M**\*** T\*\*\*
-
-This applies to client name display, e.g. in Institution/Clients list.
-
-## Interbank Transfer Menu
-
-By default, the “Interbank Transfer” menu will be displayed in the hamburger menu of the Savings account.
-
-### Role-Based Access Control (RBAC)
-
-**What is RBAC?**
-Role-Based Access Control restricts system access and functionality based on user roles and permissions. When enabled, menus and buttons in the WebApp are shown/hidden based on the user's assigned permissions.
-
-**When to enable RBAC:**
-
-- **Production environments** where strict access control is required
-- **Multi-tenant systems** with different user roles (Teller, Field Officer, Loan Reviewer, etc.)
-- **Compliance requirements** that mandate role-based permissions
-
-**Default Behavior (RBAC Disabled):**
-By default, `MIFOS_PRODUCTION_MODE_ENABLE_RBAC=false` maintains **backward compatibility**:
-
-- All menus and buttons are visible to all logged-in users
-- Existing deployments continue to work without configuration changes
-- Suitable for development, testing, or single-user scenarios
-
-**When RBAC is Enabled:**
-Set `MIFOS_PRODUCTION_MODE_ENABLE_RBAC=true` to activate permission-based UI control:
-
-- Menus (Institution, Admin, Reports, Accounting) require specific READ permissions
-- Buttons (Create, Edit, Delete, Approve, etc.) require corresponding permissions
-- Users see only features they have permissions for
-- **Important:** You must configure roles in Apache Fineract® before enabling RBAC
-
-**How to enable RBAC:**
-
-1. **Configure environment variable:**
-
-   ```bash
-   MIFOS_PRODUCTION_MODE_ENABLE_RBAC=true
-   ```
-
-2. **Create roles in Fineract Admin Panel:**
-   - Navigate to: Admin → System → Manage Roles
-   - Create roles (e.g., Teller, Field Officer, Loan Reviewer, etc.)
-   - Assign appropriate permissions to each role
-
-3. **Assign roles to users:**
-   - Navigate to: Admin → Users → Edit User
-   - Select appropriate role for each user
-
-**Common role examples include:**
-
-- **Teller**: Cash operations (deposits, withdrawals, repayments)
-- **Field Officer**: Client onboarding, loan origination
-- **Loan Reviewer**: Credit analysis, loan approval/rejection
-- **Treasurer**: Disbursement, accounting, fund movements
-- **KYC Officer**: Client identity verification
-- **PLD Officer (AML)**: Anti-money laundering monitoring
-- **Product Owner**: Product and system configuration
 
 ## Releases
 
 ### 1.0.0 (Tag: 1.0.0-fineract1.11)
 
-This is the first official release of the Mifos® X web application:
+This is the first official release of the Mifos X web application:
 
-- Developed for Apache Fineract® 1.11
+- Developed for Fineract 1.11
 - No Self Service area
 - GLIM support limited
 - JLG not yet supported
@@ -558,4 +266,4 @@ We welcome contributions! Please read our [contribution guidelines](./CONTRIBUTI
 
 ## Related Projects
 
-[Apache Fineract](https://github.com/apache/fineract) - Apache Fineract® provides open APIs and affordable core banking solution for financial institutions and is the backend for all UIs of the Mifos®.
+[Apache Fineract](https://github.com/apache/fineract) - Apache Fineract provides open APIs and affordable core banking solution for financial institutions and is the backend for all UIs of the Mifos.

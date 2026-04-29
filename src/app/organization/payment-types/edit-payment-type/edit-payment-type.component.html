@@ -1,11 +1,3 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
 <div class="container">
   <mat-card>
     <form [formGroup]="paymentTypeForm" (ngSubmit)="submit()">
@@ -14,12 +6,10 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Payment Type' | translate }}</mat-label>
             <input required matInput formControlName="name" />
-            @if (paymentTypeForm.controls.name.hasError('required')) {
-              <mat-error>
-                {{ 'labels.inputs.Payment Type' | translate }} {{ 'labels.commons.is' | translate }}
-                <strong>{{ 'labels.commons.required' | translate }}</strong>
-              </mat-error>
-            }
+            <mat-error *ngIf="paymentTypeForm.controls.name.hasError('required')">
+              {{ 'labels.inputs.Payment Type' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field>
@@ -27,28 +17,18 @@
             <textarea matInput formControlName="description" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
           </mat-form-field>
 
-          @if (!isSystemDefined) {
-            <mat-checkbox labelPosition="before" formControlName="isCashPayment" class="status">
-              {{ 'labels.inputs.Is Cash Payment' | translate }}?
-            </mat-checkbox>
+          <mat-checkbox labelPosition="before" formControlName="isCashPayment" class="status">
+            {{ 'labels.inputs.Is Cash Payment' | translate }}?
+          </mat-checkbox>
 
-            <mat-form-field>
-              <mat-label>{{ 'labels.inputs.Position' | translate }}</mat-label>
-              <input required matInput type="number" min="1" formControlName="position" />
-              @if (paymentTypeForm.controls.position.hasError('min')) {
-                <mat-error>
-                  {{ 'labels.inputs.Position' | translate }} {{ 'labels.commons.must be' | translate }}
-                  {{ 'labels.commons.a positive number' | translate }}.
-                </mat-error>
-              }
-              @if (paymentTypeForm.controls.position.hasError('required')) {
-                <mat-error>
-                  {{ 'labels.inputs.Position' | translate }} {{ 'labels.commons.is' | translate }}
-                  <strong>{{ 'labels.commons.required' | translate }}</strong>
-                </mat-error>
-              }
-            </mat-form-field>
-          }
+          <mat-form-field>
+            <mat-label>{{ 'labels.inputs.Position' | translate }}</mat-label>
+            <input required matInput formControlName="position" />
+            <mat-error *ngIf="paymentTypeForm.controls.position.hasError('required')">
+              {{ 'labels.inputs.Position' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
         </div>
       </mat-card-content>
 

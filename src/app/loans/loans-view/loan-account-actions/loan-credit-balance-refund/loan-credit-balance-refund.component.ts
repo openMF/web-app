@@ -1,19 +1,13 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Component, OnInit, inject } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
+import { LoansService } from '@fineract/client';
+import { SettingsService } from 'app/settings/settings.service';
 import { Currency } from 'app/shared/models/general.model';
 import { InputAmountComponent } from '../../../../shared/input-amount/input-amount.component';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 
 @Component({
   selector: 'mifosx-loan-credit-balance-refund',
@@ -25,10 +19,10 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
     CdkTextareaAutosize
   ]
 })
-export class LoanCreditBalanceRefundComponent extends LoanAccountActionsBaseComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private dateUtils = inject(Dates);
-
+export class LoanCreditBalanceRefundComponent implements OnInit {
+  @Input() dataObject: any;
+  /** Loan Id */
+  loanId: string;
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
@@ -37,8 +31,22 @@ export class LoanCreditBalanceRefundComponent extends LoanAccountActionsBaseComp
   creditBalanceLoanForm: UntypedFormGroup;
   currency: Currency;
 
-  constructor() {
-    super();
+  /**
+   * @param {FormBuilder} formBuilder Form Builder.
+   * @param {LoansService} loanService Loan Service.
+   * @param {ActivatedRoute} route Activated Route.
+   * @param {Router} router Router for navigation.
+   * @param {SettingsService} settingsService Settings Service
+   */
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private loanService: LoansService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates,
+    private settingsService: SettingsService
+  ) {
+    this.loanId = this.route.snapshot.params['loanId'];
   }
 
   /**
@@ -94,8 +102,14 @@ export class LoanCreditBalanceRefundComponent extends LoanAccountActionsBaseComp
     };
     const command = this.dataObject.type.code.split('.')[1];
     data['transactionAmount'] = data['transactionAmount'] * 1;
-    this.loanService.submitLoanActionButton(this.loanId, data, command).subscribe((response: any) => {
-      this.gotoLoanView('transactions');
-    });
+    this.loanService
+      .stateTransitions({
+        loanId: Number(this.loanId),
+        postLoansLoanIdRequest: data,
+        command: command
+      })
+      .subscribe((response: any) => {
+        this.router.navigate(['../../transactions'], { relativeTo: this.route });
+      });
   }
 }

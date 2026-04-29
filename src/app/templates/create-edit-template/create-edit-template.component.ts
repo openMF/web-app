@@ -1,14 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, ViewChild, inject, DestroyRef } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -18,14 +9,16 @@ import {
 } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
+/** CKEditor5 Imports */
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 /** Custom Imports */
 import { clientParameterLabels, loanParameterLabels, repaymentParameterLabels } from '../template-parameter-labels';
 
 /** Custom Services */
-import { TemplatesService } from '../templates.service';
+import { UserGeneratedDocumentsService } from '@fineract/client';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { ThemingService } from 'app/shared/theme-toggle/theming.service';
-import { EditorComponent, EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import {
   MatAccordion,
   MatExpansionPanel,
@@ -44,54 +37,18 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    EditorModule,
+    CKEditorModule,
     MatAccordion,
     MatExpansionPanel,
     MatExpansionPanelHeader,
     MatExpansionPanelTitle
-  ],
-  providers: [
-    {
-      provide: TINYMCE_SCRIPT_SRC,
-      useValue: 'assets/tinymce/tinymce.min.js'
-    }
   ]
 })
 export class CreateEditComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private templateService = inject(TemplatesService);
-  private themingService = inject(ThemingService);
-  private destroyRef = inject(DestroyRef);
-
-  themeKey = 'light';
-
-  editorVisible = true;
-
-  get tinymceConfig() {
-    const isDark = this.themeKey === 'dark-theme';
-    return {
-      base_url: 'assets/tinymce',
-      suffix: '.min',
-      menubar: false,
-      branding: false,
-      height: 320,
-      forced_root_block: false,
-      statusbar: false,
-      elementpath: false,
-      resize: false,
-      skin: isDark ? 'oxide-dark' : 'oxide',
-      content_css: isDark ? 'dark' : 'default',
-      content_style: isDark ? 'body { background-color: transparent !important; }' : '',
-      body_class: isDark ? 'dark-theme' : '',
-      plugins: 'lists link table media codesample',
-      toolbar:
-        'undo redo | blocks | bold italic underline | link | numlist bullist outdent indent | alignleft aligncenter alignright alignjustify | table media | removeformat'
-    };
-  }
-  /** TinyMCE component reference */
-  @ViewChild('tinymceEditor', { static: false }) tinymceEditor: EditorComponent;
+  /** CKEditor5 */
+  public Editor = ClassicEditor;
+  /** CKEditor5 Template Reference */
+  @ViewChild('ckEditor', { static: true }) ckEditor: any;
 
   /** Template form. */
   templateForm: UntypedFormGroup;
@@ -116,27 +73,24 @@ export class CreateEditComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
-   * @param {TemplateService} templateService Templates Service
+   * @param {UserGeneratedDocumentsService} userGeneratedDocumentsService User Generated Documents Service
    */
-  constructor() {
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { templateData: any; mode: 'create' | 'edit' }) => {
-        this.templateData = data.templateData;
-        this.mode = data.mode;
-        if (this.mode === 'edit') {
-          this.mappers = this.templateData.template.mappers.map((mapper: any) => ({
-            mappersorder: mapper.mapperorder,
-            mapperskey: new UntypedFormControl(mapper.mapperkey),
-            mappersvalue: new UntypedFormControl(mapper.mappervalue)
-          }));
-        }
-      });
-
-    this.themingService.theme.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((theme) => {
-      this.themeKey = theme;
-      this.editorVisible = false;
-      setTimeout(() => (this.editorVisible = true));
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private userGeneratedDocumentsService: UserGeneratedDocumentsService
+  ) {
+    this.route.data.subscribe((data: { templateData: any; mode: 'create' | 'edit' }) => {
+      this.templateData = data.templateData;
+      this.mode = data.mode;
+      if (this.mode === 'edit') {
+        this.mappers = this.templateData.template.mappers.map((mapper: any) => ({
+          mappersorder: mapper.mapperorder,
+          mapperskey: new UntypedFormControl(mapper.mapperkey),
+          mappersvalue: new UntypedFormControl(mapper.mappervalue)
+        }));
+      }
     });
   }
 
@@ -195,30 +149,24 @@ export class CreateEditComponent implements OnInit {
    */
   buildDependencies() {
     const tenantIdentifier = 'default'; // update once global settings are setup.
-    this.templateForm
-      .get('entity')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((value: any) => {
-        if (value === 0) {
-          // client
-          this.mappers.splice(0, 1, {
-            mappersorder: 0,
-            mapperskey: new UntypedFormControl('client'),
-            mappersvalue: new UntypedFormControl('clients/{{clientId}}?tenantIdentifier=' + tenantIdentifier)
-          });
-        } else {
-          // loan
-          this.mappers.splice(0, 1, {
-            mappersorder: 0,
-            mapperskey: new UntypedFormControl('loan'),
-            mappersvalue: new UntypedFormControl(
-              'loans/{{loanId}}?associations=all&tenantIdentifier=' + tenantIdentifier
-            )
-          });
-        }
-        this.setEditorContent('');
-        this.templateForm.get('text').setValue('');
-      });
+    this.templateForm.get('entity').valueChanges.subscribe((value: any) => {
+      if (value === 0) {
+        // client
+        this.mappers.splice(0, 1, {
+          mappersorder: 0,
+          mapperskey: new UntypedFormControl('client'),
+          mappersvalue: new UntypedFormControl('clients/{{clientId}}?tenantIdentifier=' + tenantIdentifier)
+        });
+      } else {
+        // loan
+        this.mappers.splice(0, 1, {
+          mappersorder: 0,
+          mapperskey: new UntypedFormControl('loan'),
+          mappersvalue: new UntypedFormControl('loans/{{loanId}}?associations=all&tenantIdentifier=' + tenantIdentifier)
+        });
+      }
+      this.setEditorContent('');
+    });
     if (this.mode === 'create') {
       this.templateForm.get('entity').patchValue(0);
     }
@@ -244,29 +192,42 @@ export class CreateEditComponent implements OnInit {
   }
 
   /**
-   * Adds text to the editor at cursor position.
+   * Adds text to CKEditor at cursor position.
    * @param {string} label Template parameter label.
    */
   addText(label: string) {
-    this.tinymceEditor?.editor?.insertContent(label);
+    if (this.ckEditor && this.ckEditor.editorInstance) {
+      this.ckEditor.editorInstance.model.change((writer: any) => {
+        const insertPosition = this.ckEditor.editorInstance.model.document.selection.getFirstPosition();
+        writer.insertText(label, insertPosition);
+      });
+    }
   }
 
   /**
-   * Gets the contents of the editor.
+   * Gets the contents of CKEditor.
    */
   getEditorContent() {
-    return this.tinymceEditor?.editor?.getContent({ format: 'html' }) || '';
+    if (this.ckEditor && this.ckEditor.editorInstance) {
+      return this.ckEditor.editorInstance.getData();
+    }
+    return '';
   }
 
   /**
-   * Sets the contents of the editor.
+   * Sets the contents of CKEditor.
    * @param {string} content Editor Content
    */
   setEditorContent(content: string) {
-    if (this.tinymceEditor?.editor) {
-      this.tinymceEditor.editor.setContent(content || '');
+    if (this.ckEditor && this.ckEditor.editorInstance) {
+      return this.ckEditor.editorInstance.setData(content);
     }
     return '';
+  }
+
+  onEditorChange(event: any) {
+    const editorContent = event.editor.getData();
+    this.templateForm.get('text').setValue(editorContent);
   }
 
   /**
@@ -283,19 +244,26 @@ export class CreateEditComponent implements OnInit {
       text: this.getEditorContent()
     };
     if (this.mode === 'create') {
-      this.templateService.createTemplate(template).subscribe((response: any) => {
-        this.router.navigate(
-          [
-            '../',
-            response.resourceId
-          ],
-          { relativeTo: this.route }
-        );
-      });
+      this.userGeneratedDocumentsService
+        .createTemplate({ postTemplatesRequest: template })
+        .subscribe((response: any) => {
+          this.router.navigate(
+            [
+              '../',
+              response.resourceId
+            ],
+            { relativeTo: this.route }
+          );
+        });
     } else {
-      this.templateService.updateTemplate(template, this.templateData.template.id).subscribe(() => {
-        this.router.navigate(['../'], { relativeTo: this.route });
-      });
+      this.userGeneratedDocumentsService
+        .saveTemplate({
+          templateId: this.templateData.template.id,
+          putTemplatesTemplateIdRequest: template
+        })
+        .subscribe(() => {
+          this.router.navigate(['../'], { relativeTo: this.route });
+        });
     }
   }
 

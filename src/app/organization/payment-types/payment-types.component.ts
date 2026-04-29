@@ -1,13 +1,5 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -27,7 +19,7 @@ import {
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import { PaymentTypeService } from '@fineract/client';
 
 /** Custom Components */
 import { DeleteDialogComponent } from '../../shared/delete-dialog/delete-dialog.component';
@@ -62,10 +54,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class PaymentTypesComponent implements OnInit {
-  private organizationService = inject(OrganizationService);
-  private route = inject(ActivatedRoute);
-  private dialog = inject(MatDialog);
-
   /** Payment Types data. */
   paymentTypesData: any;
   /** Columns to be displayed in payment types table. */
@@ -88,11 +76,15 @@ export class PaymentTypesComponent implements OnInit {
 
   /**
    * Retrieves the payment types data from `resolve`.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {PaymentTypeService} paymentTypeService Payment Type Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor() {
+  constructor(
+    private paymentTypeService: PaymentTypeService,
+    private route: ActivatedRoute,
+    private dialog: MatDialog
+  ) {
     this.route.data.subscribe((data: { paymentTypes: any }) => {
       this.paymentTypesData = data.paymentTypes;
     });
@@ -124,15 +116,15 @@ export class PaymentTypesComponent implements OnInit {
 
   /**
    * Deletes the payment type
-   * @param {string} paymentTypeId Payment Type ID of payment type to be deleted.
+   * @param {number} paymentTypeId Payment Type ID of payment type to be deleted.
    */
-  deletePaymentType(paymentTypeId: string) {
+  deletePaymentType(paymentTypeId: number) {
     const deletePaymentTypeDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `payment type ${paymentTypeId}` }
     });
     deletePaymentTypeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.organizationService.deletePaymentType(paymentTypeId).subscribe(() => {
+        this.paymentTypeService.deleteCode1({ paymentTypeId }).subscribe(() => {
           this.paymentTypesData = this.paymentTypesData.filter((paymentType: any) => paymentType.id !== paymentTypeId);
           this.setPaymentTypes();
         });

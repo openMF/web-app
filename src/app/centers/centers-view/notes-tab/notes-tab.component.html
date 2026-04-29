@@ -1,16 +1,47 @@
-<!--
-  Copyright since 2025 Mifos Initiative
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
-
-<mifosx-entity-notes-tab
-  [entityId]="entityId"
-  [entityNotes]="entityNotes"
-  [callbackAdd]="addNote"
-  [callbackEdit]="editNote"
-  [callbackDelete]="deleteNote"
->
-</mifosx-entity-notes-tab>
+<div class="tab-container mat-typography">
+  <h3>{{ 'labels.heading.Notes' | translate }}</h3>
+  <div>
+    <form
+      #formRef="ngForm"
+      [formGroup]="noteForm"
+      class="layout-row align-start-baseline gap-20px"
+      (ngSubmit)="submit()"
+    >
+      <mat-form-field class="flex-90-minus-20px">
+        <textarea
+          formControlName="note"
+          matInput
+          placeholder="{{ 'labels.text.Write a note' | translate }} ...."
+        ></textarea>
+      </mat-form-field>
+      <button
+        mat-raised-button
+        class="flex-fill"
+        color="primary"
+        [disabled]="!noteForm.valid"
+        *mifosxHasPermission="'CREATE_GROUPNOTE'"
+      >
+        <fa-icon icon="plus" class="m-r-10"></fa-icon> {{ 'labels.buttons.Add' | translate }}
+      </button>
+    </form>
+  </div>
+  <mat-list>
+    <mat-list-item *ngFor="let centerNote of centerNotes; let i = index">
+      <fa-icon icon="sticky-note" matListIcon></fa-icon>
+      <h3 matLine>{{ centerNote.note }}</h3>
+      <p matLine>
+        <span>{{ 'labels.inputs.Created By' | translate }}: {{ centerNote.createdByUsername }}</span
+        ><br />
+        <span>{{ 'labels.inputs.Date' | translate }}: {{ centerNote.createdOn | dateFormat }}</span>
+      </p>
+      <div class="layout-row align-start">
+        <button mat-button color="primary" (click)="editNote(centerNote.id, centerNote.note, i)">
+          <fa-icon icon="edit"></fa-icon>
+        </button>
+        <button mat-button color="warn" (click)="deleteNote(centerNote.id, i)">
+          <fa-icon icon="trash"></fa-icon>
+        </button>
+      </div>
+    </mat-list-item>
+  </mat-list>
+</div>

@@ -1,21 +1,14 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
-import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { LoanInterestPauseService } from '@fineract/client';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
+import { AnyKindOfDictionary } from 'cypress/types/lodash';
 import {
   MatTable,
   MatColumnDef,
@@ -34,7 +27,6 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { LoanAccountTabBaseComponent } from '../loan-account-tab-base.component';
 
 @Component({
   selector: 'mifosx-loan-term-variations-tab',
@@ -59,13 +51,7 @@ import { LoanAccountTabBaseComponent } from '../loan-account-tab-base.component'
     FormatNumberPipe
   ]
 })
-export class LoanTermVariationsTabComponent extends LoanAccountTabBaseComponent {
-  private route = inject(ActivatedRoute);
-  private dates = inject(Dates);
-  private settingsService = inject(SettingsService);
-  private loansService = inject(LoansService);
-  private dialog = inject(MatDialog);
-
+export class LoanTermVariationsTabComponent {
   /** Loan Term Variation Data */
   loanTermVariationsData: any[] = [];
   loanDTermVariationsColumns: string[] = [
@@ -90,18 +76,23 @@ export class LoanTermVariationsTabComponent extends LoanAccountTabBaseComponent 
   invalidData: any[] = [];
 
   loanId: number;
-  clientId: string;
+  clientId: AnyKindOfDictionary;
 
-  constructor() {
-    super();
-
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private dates: Dates,
+    private settingsService: SettingsService,
+    private dialog: MatDialog,
+    private loanInterestPauseService: LoanInterestPauseService
+  ) {
     this.interestPausesData = [];
     this.clientId = this.route.parent.parent.snapshot.paramMap.get('clientId');
-    this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
+    this.route.data.subscribe((data: { loanDetailsData: any }) => {
       this.loanId = data.loanDetailsData.id;
       this.loanTermVariationsData = [];
       data.loanDetailsData.loanTermVariations?.forEach((item: any) => {
-        item.days = this.dates.calculateDiff(new Date(item.termVariationApplicableFrom), new Date(item.dateValue)) + 1;
+        item.days = dates.calculateDiff(new Date(item.termVariationApplicableFrom), new Date(item.dateValue)) + 1;
         switch (item.termType.value) {
           case 'emiAmount':
             this.emiAmountData.push(item);
@@ -225,9 +216,14 @@ export class LoanTermVariationsTabComponent extends LoanAccountTabBaseComponent 
     });
     deleteStandingInstructionDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.loansService.deleteInterestPause(this.loanId, variation.id).subscribe((response: any) => {
-          this.reload();
-        });
+        this.loanInterestPauseService
+          .deleteInterestPause({
+            loanId: Number(this.loanId),
+            variationId: Number(variation.id)
+          })
+          .subscribe((response: any) => {
+            this.reload();
+          });
       }
     });
   }
@@ -250,6 +246,7 @@ export class LoanTermVariationsTabComponent extends LoanAccountTabBaseComponent 
         maxDate: this.settingsService.maxFutureDate,
         required: true
       })
+
     ];
 
     const data = {
@@ -269,12 +266,25 @@ export class LoanTermVariationsTabComponent extends LoanAccountTabBaseComponent 
             locale,
             dateFormat
           };
-          this.loansService.updateInterestPause(this.loanId, variation.id, payload).subscribe((response: any) => {
-            this.reload();
-          });
+          this.loanInterestPauseService
+            .updateInterestPause({
+              loanId: Number(this.loanId),
+              variationId: Number(variation.id),
+              interestPauseRequestDto: payload
+            })
+            .subscribe((response: any) => {
+              this.reload();
+            });
         }
       }
     });
+  }
+
+  private reload() {
+    const url: string = this.router.url;
+    this.router
+      .navigateByUrl(`/clients/${this.clientId}/loans-accounts`, { skipLocationChange: true })
+      .then(() => this.router.navigate([url]));
   }
 
   allowActions(termType: string): boolean {

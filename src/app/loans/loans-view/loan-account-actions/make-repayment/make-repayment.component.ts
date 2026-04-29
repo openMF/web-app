@@ -1,26 +1,18 @@
-/**
- * Copyright since 2025 Mifos Initiative
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
+import { LoanTransactionsService } from '@fineract/client';
+import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { Currency } from 'app/shared/models/general.model';
-import { PenaltyManagementService } from 'app/loans/services/penalty-management.service';
 import { InputAmountComponent } from '../../../../shared/input-amount/input-amount.component';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
-import { MatCheckbox } from '@angular/material/checkbox';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
 
 /**
  * Loan Make Repayment Component
@@ -33,28 +25,18 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
     ...STANDALONE_SHARED_IMPORTS,
     InputAmountComponent,
     MatSlideToggle,
-    MatCheckbox,
     CdkTextareaAutosize,
     FormatNumberPipe
   ]
 })
-export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
-  private dateUtils = inject(Dates);
-  private penaltyManagementService = inject(PenaltyManagementService);
-
+export class MakeRepaymentComponent implements OnInit {
+  @Input() dataObject: any;
+  /** Loan Id */
+  loanId: string;
   /** Payment Type Options */
   paymentTypes: any;
   /** Show payment details */
   showPaymentDetails = false;
-  /** Waive Penalties toggle */
-  waivePenalties = false;
-  /** Penalties list */
-  penalties: any[] = [];
-  /** Selected penalty IDs */
-  selectedPenalties: number[] = [];
-  /** Select all penalties checkbox */
-  selectAllPenalties = false;
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
@@ -69,13 +51,20 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {LoansService} loanService Loan Service.
+   * @param {LoanTransactionsService} loanTransactions Loan Transactions Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor() {
-    super();
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private loanTransactions: LoanTransactionsService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates,
+    private settingsService: SettingsService
+  ) {
+    this.loanId = this.route.snapshot.params['loanId'];
   }
 
   /**
@@ -84,13 +73,14 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
    */
   ngOnInit() {
     this.command = this.dataObject.type.code.split('.')[1];
+    console.log(this.command);
+    console.log(this.dataObject.type);
     this.maxDate = this.settingsService.businessDate;
     this.createRepaymentLoanForm();
     this.setRepaymentLoanDetails();
     if (this.dataObject.currency) {
       this.currency = this.dataObject.currency;
     }
-    this.loadPenalties();
   }
 
   /**
@@ -109,11 +99,21 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
     });
 
     if (this.isCapitalizedIncome()) {
-      this.repaymentLoanForm.addControl('transactionAmount', new UntypedFormControl('', []));
-      this.updateTransactionAmountValidators(false);
+      this.repaymentLoanForm.addControl(
+        'transactionAmount',
+        new UntypedFormControl('', [
+          Validators.required,
+          Validators.min(0.001),
+          Validators.max(this.dataObject.amount)])
+      );
+      this.repaymentLoanForm.addControl('classificationId', new UntypedFormControl(''));
     } else {
-      this.repaymentLoanForm.addControl('transactionAmount', new UntypedFormControl('', []));
-      this.updateTransactionAmountValidators(false);
+      this.repaymentLoanForm.addControl(
+        'transactionAmount',
+        new UntypedFormControl('', [
+          Validators.required,
+          Validators.min(0.001)])
+      );
     }
     if (this.isCapitalizedIncome() || this.isBuyDownFee()) {
       this.repaymentLoanForm.addControl('classificationId', new UntypedFormControl(''));
@@ -170,141 +170,6 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
     return code.includes('merchantissuedrefund') || code.includes('payoutrefund');
   }
 
-  /**
-   * Load penalties for the loan
-   * Penalties are charges calculated for installments in the payment schedule.
-   * Each penalty charge has a dueDate that corresponds to an installment due date.
-   */
-  loadPenalties() {
-    this.penaltyManagementService.loadPenalties(this.loanId).subscribe({
-      next: (penalties: any[]) => {
-        this.penalties = penalties;
-      },
-      error: (error: any) => {
-        console.error('Error loading penalties:', error);
-        this.penalties = [];
-      }
-    });
-  }
-
-  /**
-   * Toggle waive penalties
-   * Following the addPaymentDetails() pattern
-   */
-  toggleWaivePenalties() {
-    this.waivePenalties = !this.waivePenalties;
-    if (!this.waivePenalties) {
-      // Reset selections when toggling off
-      this.selectedPenalties = [];
-      this.selectAllPenalties = false;
-      this.updateTransactionAmountValidators(false);
-      this.recalculateTransactionAmount();
-    } else {
-      this.recalculateTransactionAmount();
-    }
-  }
-
-  /**
-   * Toggle select all penalties
-   * Following the toggleSelects() pattern from loans-active-client-members
-   */
-  toggleSelectAllPenalties() {
-    const result = this.penaltyManagementService.toggleSelectAllPenalties(this.selectAllPenalties, this.penalties);
-    this.selectAllPenalties = result.selectAllPenalties;
-    this.selectedPenalties = result.selectedPenalties;
-    this.recalculateTransactionAmount();
-  }
-
-  /**
-   * Toggle individual penalty selection
-   * Following the toggleSelect() pattern from loans-active-client-members
-   */
-  togglePenaltySelection(penaltyId: number) {
-    const result = this.penaltyManagementService.togglePenaltySelection(
-      penaltyId,
-      this.selectedPenalties,
-      this.penalties
-    );
-    this.selectedPenalties = result.selectedPenalties;
-    this.selectAllPenalties = result.selectAllPenalties;
-    this.recalculateTransactionAmount();
-  }
-
-  /**
-   * Check if penalty is selected
-   */
-  isPenaltySelected(penaltyId: number): boolean {
-    return this.penaltyManagementService.isPenaltySelected(penaltyId, this.selectedPenalties);
-  }
-
-  /**
-   * Get penalty display key or plain text for translation/output
-   * Normalizes common backend values (like MORA / labels.inputs.*) to translation keys
-   */
-  getPenaltyDisplayKey(penalty: any): string {
-    return this.penaltyManagementService.getPenaltyDisplayKey(penalty);
-  }
-
-  /**
-   * Recalculate transaction amount when penalties are waived
-   */
-  recalculateTransactionAmount() {
-    const currentAmountValue = this.repaymentLoanForm.value.transactionAmount;
-    const currentAmount =
-      currentAmountValue !== undefined && currentAmountValue !== null
-        ? Number(currentAmountValue)
-        : Number(this.dataObject.amount ?? 0);
-    const baseAmount = isNaN(currentAmount) ? Number(this.dataObject.amount ?? 0) : currentAmount;
-
-    if (!this.waivePenalties || this.selectedPenalties.length === 0) {
-      // Reset to original amount if no penalties selected
-      this.repaymentLoanForm.patchValue(
-        {
-          transactionAmount: baseAmount
-        },
-        { emitEvent: false }
-      );
-      return;
-    }
-
-    // Calculate total waived amount
-    let totalWaived = 0;
-    this.selectedPenalties.forEach((penaltyId: number) => {
-      const penalty = this.penalties.find((p: any) => p.id === penaltyId);
-      if (penalty) {
-        totalWaived += penalty.amountOutstanding || penalty.amount || 0;
-      }
-    });
-
-    // Calculate new transaction amount
-    const newAmount = Math.max(0, baseAmount - totalWaived);
-
-    // Allow zero when fully waived
-    this.updateTransactionAmountValidators(this.waivePenalties && newAmount === 0);
-
-    this.repaymentLoanForm.patchValue(
-      {
-        transactionAmount: newAmount
-      },
-      { emitEvent: false }
-    );
-  }
-
-  /**
-   * Update transaction amount validators to allow or disallow zero
-   */
-  private updateTransactionAmountValidators(allowZero: boolean) {
-    const validators = [
-      Validators.required,
-      Validators.min(allowZero ? 0 : 0.001)
-    ];
-    if (this.isCapitalizedIncome()) {
-      validators.push(Validators.max(this.dataObject.amount));
-    }
-    this.repaymentLoanForm.controls.transactionAmount.setValidators(validators);
-    this.repaymentLoanForm.controls.transactionAmount.updateValueAndValidity({ emitEvent: false });
-  }
-
   /** Submits the repayment form */
   submit() {
     const repaymentLoanFormData = this.repaymentLoanForm.value;
@@ -324,28 +189,14 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
       data.interestRefundCalculation = false;
     }
     delete data.skipInterestRefund;
-
-    // Waive penalties first if selected, then submit repayment
-    if (this.waivePenalties && this.selectedPenalties.length > 0) {
-      this.penaltyManagementService.waivePenalties(this.loanId, this.selectedPenalties).subscribe({
-        next: () => {
-          this.submitRepayment(data);
-        },
-        error: (error: any) => {
-          console.error('Error waiving penalties:', error);
-          // Continue with repayment even if waive fails
-          this.submitRepayment(data);
-        }
+    this.loanTransactions
+      .executeLoanTransaction({
+        loanId: Number(this.loanId),
+        command: this.command,
+        ...data
+      })
+      .subscribe((response: any) => {
+        this.router.navigate(['../../transactions'], { relativeTo: this.route });
       });
-    } else {
-      this.submitRepayment(data);
-    }
-  }
-
-  /** Submit the repayment after penalties are waived */
-  private submitRepayment(data: any) {
-    this.loanService.submitLoanActionButton(this.loanId, data, this.command).subscribe((response: any) => {
-      this.gotoLoanView('transactions');
-    });
   }
 }
