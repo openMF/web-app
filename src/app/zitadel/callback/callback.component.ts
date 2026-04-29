@@ -10,23 +10,19 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../../core/authentication/authentication.service';
 import { AlertService } from '../../core/alert/alert.service';
-<<<<<<< HEAD
-=======
 import { TranslateService } from '@ngx-translate/core';
->>>>>>> origin/dev
+import { LoaderComponent } from '../../shared/components/loader/loader.component';
 
 @Component({
   selector: 'mifosx-callback',
-  templateUrl: './callback.component.html'
+  templateUrl: './callback.component.html',
+  imports: [LoaderComponent]
 })
 export class CallbackComponent implements OnInit {
   private router = inject(Router);
   private alertService = inject(AlertService);
   private authenticationService = inject(AuthenticationService);
-<<<<<<< HEAD
-=======
   private translateService = inject(TranslateService);
->>>>>>> origin/dev
 
   async ngOnInit(): Promise<void> {
     try {
@@ -36,26 +32,16 @@ export class CallbackComponent implements OnInit {
         this.router.navigate(['/home']);
       } else {
         this.alertService.alert({
-<<<<<<< HEAD
-          type: 'Authentication Failed',
-          message: 'Unable to complete authentication. Please try again.'
-=======
           type: this.translateService.instant('errors.auth.callbackFailed.type'),
           message: this.translateService.instant('errors.auth.callbackFailed.message')
->>>>>>> origin/dev
         });
         this.router.navigate(['/login']);
       }
     } catch (error) {
       console.error('Authentication callback failed:', error);
       this.alertService.alert({
-<<<<<<< HEAD
-        type: 'Authentication Error',
-        message: 'An error occurred during authentication. Please try again.'
-=======
         type: this.translateService.instant('errors.auth.callbackError.type'),
         message: this.translateService.instant('errors.auth.callbackError.message')
->>>>>>> origin/dev
       });
       this.router.navigate(['/login']);
     }
