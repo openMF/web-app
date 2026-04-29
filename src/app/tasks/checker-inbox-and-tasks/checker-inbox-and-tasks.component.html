@@ -18,7 +18,7 @@
           routerLinkActive
           #checkerInbox="routerLinkActive"
           [active]="checkerInbox.isActive"
-          *mifosxHasPermission="'ALL_FUNCTIONS_READ'"
+          *mifosxHasPermission="['ALL_FUNCTIONS_READ', 'READ_MAKERCHECKER', 'APPROVE_LOAN']"
         >
           {{ 'labels.inputs.Checker Inbox' | translate }}
         </a>
