@@ -7,6 +7,8 @@ import { takeUntil } from 'rxjs/operators';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { MatIconButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'mifosx-gl-account-selector',
@@ -15,6 +17,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     NgxMatSelectSearchModule,
+    MatIconButton,
+    FaIconComponent,
     AsyncPipe
   ]
 })
@@ -73,5 +77,13 @@ export class GlAccountSelectorComponent implements OnInit, OnChanges, OnDestroy 
         );
       }
     }
+  }
+
+  resetValue($event: Event): void {
+    $event.stopPropagation();
+    this.inputFormControl.setValue(null);
+    this.inputFormControl.markAsDirty();
+    this.inputFormControl.markAsTouched();
+    this.inputFormControl.updateValueAndValidity();
   }
 }

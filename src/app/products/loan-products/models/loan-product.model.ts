@@ -145,8 +145,11 @@ export interface LoanProduct {
   receivableFeeAccountId?: number;
   receivablePenaltyAccountId?: number;
   transfersInSuspenseAccountId?: number;
+  incomeFromDiscountFeeAccountId?: number;
   writeOffAccountId?: number;
   deferredIncomeLiabilityAccountId?: number;
+  chargeOffExpenseAccountId?: number;
+  chargeOffFraudExpenseAccountId?: number;
   // Advanced Accounting
   paymentChannelToFundSourceMappings?: PaymentChannelToFundSourceMapping[];
   feeToIncomeAccountMappings?: ChargeToIncomeAccountMapping[];
@@ -159,6 +162,15 @@ export interface LoanProduct {
   buydownFeeClassificationToIncomeAccountMappings?: ClassificationToIncomeAccountMapping[];
   capitalizedIncomeClassificationToIncomeAccountMappings?: ClassificationToIncomeAccountMapping[];
   writeOffReasonsToExpenseMappings?: ChargeOffReasonToExpenseAccountMapping[];
+<<<<<<< HEAD
+=======
+
+  // Working Capital attributes
+  breach?: Breach;
+  breachId?: number;
+  nearBreach?: NearBreach;
+  nearBreachId?: number;
+>>>>>>> origin/dev
 }
 
 export interface AllowAttributeOverrides {
@@ -210,3 +222,23 @@ export interface AccountingMappingDTO {
   value: CodeValue;
   glAccount: GLAccount;
 }
+<<<<<<< HEAD
+=======
+
+export interface Breach {
+  id: number;
+  name: string;
+  breachFrequency: number;
+  breachFrequencyType: StringEnumOptionData;
+  breachAmountCalculationType: StringEnumOptionData;
+  breachAmount: number;
+}
+
+export interface NearBreach {
+  id: number;
+  name: string;
+  frequency: number;
+  frequencyType: StringEnumOptionData;
+  threshold: number;
+}
+>>>>>>> origin/dev

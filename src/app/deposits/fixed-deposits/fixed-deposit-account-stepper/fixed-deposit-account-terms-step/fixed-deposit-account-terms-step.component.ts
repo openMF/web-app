@@ -8,6 +8,7 @@ import { MatDivider } from '@angular/material/divider';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { PositiveIntegerDirective } from 'app/directives/positive-integer.directive';
 
 /**
  * Fixed Deposits Terms Step
@@ -22,7 +23,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatDivider,
     MatStepperPrevious,
     FaIconComponent,
-    MatStepperNext
+    MatStepperNext,
+    PositiveIntegerDirective
   ]
 })
 export class FixedDepositAccountTermsStepComponent implements OnInit, OnChanges {
@@ -36,7 +38,7 @@ export class FixedDepositAccountTermsStepComponent implements OnInit, OnChanges 
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Fixed Deposits Account Terms Form */
-  fixedDepositAccountTermsForm: UntypedFormGroup;
+  fixedDepositAccountTermsForm!: UntypedFormGroup;
   /** Interest Compounding Period Type Data */
   interestCompoundingPeriodTypeData: any;
   /** Interest Posting Period Type Data */

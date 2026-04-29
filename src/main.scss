@@ -1,22 +1,97 @@
-// Version 1
-
-/*
- * Entry point of global application style.
- * Component-specific style should not go here and be included directly as part of the components.
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-// Import Default Theme for MifosX
 @use 'theme/mifosx-theme';
+@use 'theme/material-web' as *;
 @use 'theme/pictonblue-yellowgreen' as *;
 @use 'theme/indigo-pink' as *;
 @use 'theme/pink-bluegrey' as *;
 @use 'theme/deeppurple-amber' as *;
 @use 'theme/purple-green.scss' as *;
+@use 'assets/styles/helper';
+@use 'assets/styles/loader';
+@use 'lightgallery/scss/lightgallery' as *;
+@use 'lightgallery/scss/lg-thumbnail' as *;
+@use 'lightgallery/scss/lg-zoom' as *;
+@use 'lightgallery/scss/lg-fullscreen' as *;
+@use 'app/core/error-handler/error-handler.component';
 
 // Global Imports
 
 /* You can add global styles to this file, and also import other style files */
-@use 'assets/styles/helper';
+
+.custom-snackbar-top-right {
+  top: 48px !important;
+  right: 24px !important;
+  left: auto !important;
+  transform: none !important;
+  position: fixed !important;
+  z-index: 9999;
+}
+
+// ===== Material Select Panel Styles (Material Design 3) =====
+.mat-mdc-select-panel {
+  background: var(--md-sys-color-surface-container, #fff);
+  border-radius: 8px;
+  box-shadow:
+    0 2px 4px #00000014,
+    0 4px 12px #0000000f,
+    0 8px 24px #00000014;
+
+  .mat-mdc-option {
+    font-size: 0.875rem;
+    min-height: 48px;
+    padding: 0 16px;
+    color: var(--md-sys-color-on-surface, #1a1c1e);
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: #1074b914;
+    }
+
+    &.mat-mdc-option-active {
+      background-color: #1074b91f;
+    }
+
+    &.mdc-list-item--selected {
+      background-color: #1074b91f;
+      color: var(--md-sys-color-primary, #1074b9);
+      font-weight: 500;
+    }
+
+    .mdc-list-item__primary-text {
+      color: inherit;
+    }
+  }
+}
+
+// Dark theme select panel
+.dark-theme .mat-mdc-select-panel {
+  background: var(--md-sys-color-surface-container, #2c2f36);
+
+  .mat-mdc-option {
+    color: var(--md-sys-color-on-surface, #e2e2e5);
+
+    &:hover {
+      background-color: #5ba2ec14;
+    }
+
+    &.mat-mdc-option-active {
+      background-color: #5ba2ec1f;
+    }
+
+    &.mdc-list-item--selected {
+      background-color: #5ba2ec1f;
+      color: var(--md-sys-color-primary, #5ba2ec);
+      font-weight: 500;
+    }
+  }
+}
 
 .scrollbar-styling {
   scrollbar-width: thin;
@@ -73,7 +148,7 @@
 }
 
 .responsive-column {
-  @media (width <= 768px) {
+  @media (width <=768px) {
     flex-direction: column;
   }
 }
@@ -161,13 +236,13 @@
 }
 
 .layout-gt-sm-row {
-  @media (width >= 600px) {
+  @media (width >=600px) {
     flex-direction: row;
   }
 }
 
 .align-gt-sm-start-center {
-  @media (width >= 600px) {
+  @media (width >=600px) {
     justify-content: flex-start;
     align-items: center;
   }
@@ -295,7 +370,7 @@
   flex: 0 0 48%;
 }
 
-@media (width <= 768px) {
+@media (width <=768px) {
   .hide-lt-md {
     display: none !important;
   }
@@ -368,21 +443,21 @@
   flex: 0 0 96%;
 }
 
-@media screen and (width <= 599px) {
+@media screen and (width <=599px) {
   .flex-xs-15 {
     flex: 0 0 15%;
     max-width: 15%;
   }
 }
 
-@media screen and (width >= 600px) and (width <= 959px) {
+@media screen and (width >=600px) and (width <=959px) {
   .flex-sm-10 {
     flex: 0 0 10%;
     max-width: 10%;
   }
 }
 
-@media screen and (width >= 960px) and (width <= 1279px) {
+@media screen and (width >=960px) and (width <=1279px) {
   .flex-md-5 {
     flex: 0 0 5%;
     max-width: 5%;
@@ -390,7 +465,7 @@
 }
 
 .hide-lt-sm {
-  @media (width <= 599px) {
+  @media (width <=599px) {
     display: none !important;
   }
 }
@@ -474,24 +549,24 @@
 }
 
 .flex-gt-sm-30 {
-  @media (width >= 600px) {
+  @media (width >=600px) {
     flex: 1 0 30%;
   }
 }
 
-@media (width <= 1199px) {
+@media (width <=1199px) {
   .hide-lt-lg {
     display: none !important;
   }
 }
 
-@media (width <= 768px) {
+@media (width <=768px) {
   .flex-25 {
     flex: 0 0 50%;
   }
 }
 
-@media (width <= 599px) {
+@media (width <=599px) {
   .layout-xs-column {
     flex-direction: column;
   }
@@ -510,19 +585,19 @@
 }
 
 .layout-lt-md-column {
-  @media (width <= 768px) {
+  @media (width <=768px) {
     flex-direction: column;
   }
 }
 
 .layout-column.lt-md {
-  @media (width <= 599px) {
+  @media (width <=599px) {
     flex-direction: column !important;
   }
 }
 
 .responsive-flex-full {
-  @media (width <= 768px) {
+  @media (width <=768px) {
     flex: 0 0 100% !important;
   }
 }
@@ -533,6 +608,8 @@
 }
 
 .mat-mdc-form-field {
+  margin-bottom: 16px;
+
   .mat-mdc-input-element::placeholder {
     font-size: 14px !important;
     color: #999 !important;
@@ -543,19 +620,29 @@
   }
 }
 
-@media (width <= 768px) {
+mat-stepper {
+  ::ng-deep .mat-vertical-content {
+    padding: 16px;
+  }
+
+  ::ng-deep .mat-vertical-stepper-content {
+    padding-top: 16px;
+  }
+}
+
+@media (width <=768px) {
   .flex-lt-md-50 {
     flex: 0 0 50%;
   }
 }
 
-@media (width <= 768px) {
+@media (width <=768px) {
   .flex-50-lt-md {
     flex: 0 0 50%;
   }
 }
 
-@media (width <= 599px) {
+@media (width <=599px) {
   .layout-column-xs {
     flex-direction: column !important;
   }
@@ -564,11 +651,13 @@
 .menu-explanation {
   font-size: 14px;
   margin: 0;
+  overflow-wrap: break-word;
 }
 
 .menu-list-item-content {
   display: flex;
   width: 100%;
+  overflow: hidden;
 }
 
 .menu-left-section {
@@ -576,6 +665,9 @@
   align-items: center;
   width: 100%;
   gap: 10px;
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
 }
 
 .menu-right-section fa-icon {
@@ -587,6 +679,19 @@
   display: flex;
   gap: 4px;
   margin-right: 10px;
+  flex-shrink: 0;
+}
+
+mat-nav-list {
+  overflow: hidden;
+
+  mat-list-item {
+    overflow: hidden;
+
+    .mat-list-item-content {
+      overflow: hidden;
+    }
+  }
 }
 
 .content {
@@ -604,28 +709,195 @@ mifosx-notifications-page td {
   color: red;
 }
 
+// ===== Global Delete/Trash Icon Styling =====
+// Makes standalone delete icons red, but keeps them white inside warn (red) buttons
+.fa-trash {
+  color: #f44336 !important;
+}
+
+.mat-mdc-raised-button.mat-warn .fa-trash {
+  color: inherit !important;
+}
+
+// Keep tighter icon spacing only inside Material buttons
+.mat-mdc-button-base .m-r-10 {
+  margin-right: 4px;
+}
+
 .full-width-flex {
   display: flex;
   justify-content: flex-start;
   width: 100%;
 }
 
-//Re-positions account type field on list standing instructions page
-.type-field {
-  position: absolute;
-  left: 1px;
-  top: 20px;
+/* Global overflow helpers to avoid repeated component overrides */
+.overflow-hidden {
+  overflow: hidden;
 }
 
-//Re-positions account id field on list standing instructions page
-.account-Id-field {
-  position: absolute;
-  left: 490px;
-  top: 20px;
+mat-card {
+  overflow: hidden;
 }
 
-//Re-positions client name label on list standing instructions page
-.client-Name {
-  position: absolute;
-  left: 490px;
+.layout-row.responsive-column {
+  overflow: hidden;
+
+  > [class] {
+    overflow: hidden;
+  }
+}
+
+.dark-theme {
+  .tox.tox-tinymce {
+    border-color: #444 !important;
+  }
+
+  .tox .tox-editor-header,
+  .tox .tox-toolbar-overlord,
+  .tox .tox-toolbar,
+  .tox .tox-toolbar__overflow,
+  .tox .tox-toolbar__primary {
+    background-color: #303135 !important;
+  }
+
+  .tox .tox-tbtn {
+    background-color: transparent !important;
+    color: rgb(255 255 255 / 87%) !important;
+
+    svg {
+      fill: rgb(255 255 255 / 87%) !important;
+    }
+
+    &:hover {
+      background-color: rgb(255 255 255 / 12%) !important;
+    }
+
+    &:focus {
+      background-color: rgb(255 255 255 / 8%) !important;
+    }
+  }
+
+  .tox .tox-tbtn--bevel {
+    background: transparent !important;
+  }
+
+  .tox .tox-tbtn--select {
+    background-color: transparent !important;
+  }
+
+  .tox .tox-split-button {
+    background-color: transparent !important;
+
+    &:hover {
+      box-shadow: none !important;
+    }
+  }
+
+  .tox .tox-edit-area {
+    background-color: #303135 !important;
+
+    iframe {
+      background-color: transparent !important;
+    }
+  }
+
+  .tox .tox-sidebar-wrap {
+    background-color: #303135 !important;
+  }
+
+  .tox .tox-menubar {
+    background-color: #303135 !important;
+  }
+
+  .tox .tox-menu {
+    background-color: #303135 !important;
+    border-color: #444 !important;
+  }
+
+  .tox .tox-collection__item {
+    color: rgb(255 255 255 / 87%) !important;
+
+    &:hover {
+      background-color: rgb(255 255 255 / 8%) !important;
+    }
+  }
+
+  .tox .tox-statusbar {
+    background-color: #303135 !important;
+    border-color: #444 !important;
+    color: rgb(255 255 255 / 60%) !important;
+  }
+}
+
+.app-sidenav {
+  .mat-mdc-nav-list .mat-mdc-list-item {
+    .mdc-list-item__primary-text {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    [matlisticon] {
+      flex-shrink: 0;
+      width: 24px;
+      min-width: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      fa-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .fa {
+        display: inline-block;
+        width: 1em;
+        text-align: center;
+      }
+    }
+  }
+}
+
+/* Print styles — hide app shell, show only receipt content */
+@media print {
+  mat-sidenav,
+  mifosx-toolbar,
+  mifosx-breadcrumb,
+  mifosx-footer,
+  .sidebar-panel,
+  .mat-mdc-tab-header,
+  .mat-stepper-vertical-line,
+  .mat-step-header {
+    display: none !important;
+  }
+
+  mat-sidenav-content.sidenav {
+    margin-left: 0 !important;
+  }
+
+  body,
+  html {
+    background: #fff !important;
+  }
+
+  @page {
+    /* stylelint-disable-next-line unit-allowed-list */
+    margin: 1.5cm;
+  }
+}
+
+// Breach select panel
+.breach-select-panel {
+  min-width: min(480px, calc(100vw - 32px)) !important;
+  max-width: calc(100vw - 32px);
+
+  .mat-mdc-option {
+    .mdc-list-item__primary-text {
+      display: flex;
+      width: 100%;
+      min-width: 0;
+    }
+  }
 }

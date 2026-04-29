@@ -1,6 +1,14 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 /** Custom Components */
 import { LoanProductDetailsStepComponent } from '../loan-product-stepper/loan-product-details-step/loan-product-details-step.component';
@@ -12,7 +20,7 @@ import { LoanProductAccountingStepComponent } from '../loan-product-stepper/loan
 import { LoanProductInterestRefundStepComponent } from '../loan-product-stepper/loan-product-interest-refund-step/loan-product-interest-refund-step.component';
 
 /** Custom Services */
-import { LoanProductsService } from '@fineract/client';
+import { ProductsService } from 'app/products/products.service';
 import { LoanProducts } from '../loan-products';
 import {
   AdvancedPaymentAllocation,
@@ -32,6 +40,7 @@ import { LoanProductPaymentStrategyStepComponent } from '../loan-product-stepper
 import { StepperButtonsComponent } from '../../../shared/steppers/stepper-buttons/stepper-buttons.component';
 import { LoanProductPreviewStepComponent } from '../loan-product-stepper/loan-product-preview-step/loan-product-preview-step.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanProductBaseComponent } from '../common/loan-product-base.component';
 
 @Component({
   selector: 'mifosx-create-loan-product',
@@ -57,19 +66,31 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     LoanProductPreviewStepComponent
   ]
 })
-export class CreateLoanProductComponent implements OnInit {
+export class CreateLoanProductComponent extends LoanProductBaseComponent implements OnInit, AfterViewInit {
+  private route = inject(ActivatedRoute);
+  private productsService = inject(ProductsService);
+  private loanProducts = inject(LoanProducts);
+  private accounting = inject(Accounting);
+  private advancedPaymentStrategy = inject(AdvancedPaymentStrategy);
+  private cdr = inject(ChangeDetectorRef);
+
   @ViewChild(LoanProductDetailsStepComponent, { static: true }) loanProductDetailsStep: LoanProductDetailsStepComponent;
   @ViewChild(LoanProductCurrencyStepComponent, { static: true })
   loanProductCurrencyStep: LoanProductCurrencyStepComponent;
-  @ViewChild(LoanProductInterestRefundStepComponent, { static: true })
+  @ViewChild(LoanProductInterestRefundStepComponent, { static: false })
   loanProductInterestRefundStep: LoanProductInterestRefundStepComponent;
-  @ViewChild(LoanProductDeferredIncomeRecognitionStepComponent, { static: true })
+  @ViewChild(LoanProductDeferredIncomeRecognitionStepComponent, { static: false })
   loanProductDeferredIncomeRecognitionStep: LoanProductDeferredIncomeRecognitionStepComponent;
   @ViewChild(LoanProductTermsStepComponent, { static: true }) loanProductTermsStep: LoanProductTermsStepComponent;
   @ViewChild(LoanProductSettingsStepComponent, { static: true })
   loanProductSettingsStep: LoanProductSettingsStepComponent;
-  @ViewChild(LoanProductChargesStepComponent, { static: true }) loanProductChargesStep: LoanProductChargesStepComponent;
+  @ViewChild(LoanProductChargesStepComponent, { static: false })
+  loanProductChargesStep: LoanProductChargesStepComponent;
+<<<<<<< HEAD
+  @ViewChild(LoanProductAccountingStepComponent, { static: false })
+=======
   @ViewChild(LoanProductAccountingStepComponent, { static: true })
+>>>>>>> origin/dev
   loanProductAccountingStep: LoanProductAccountingStepComponent;
 
   loanProductsTemplate: any;
@@ -86,26 +107,22 @@ export class CreateLoanProductComponent implements OnInit {
   deferredIncomeRecognition: DeferredIncomeRecognition | null = null;
   loanIncomeCapitalizationForm: UntypedFormGroup | null = null;
 
-  /**
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {ProductsService} productsService Product Service.
-   * @param {LoanProducts} loanProducts LoanProducts
-   * @param {Router} router Router for navigation.
-   */
-  constructor(
-    private route: ActivatedRoute,
-    private loanProductsService: LoanProductsService,
-    private loanProducts: LoanProducts,
-    private router: Router,
-    private accounting: Accounting,
-    private advancedPaymentStrategy: AdvancedPaymentStrategy
-  ) {
+  constructor() {
+    super();
+    const loanProducts = this.loanProducts;
+
+    const productType = this.route.snapshot.queryParamMap.get('productType') || 'loan';
+    this.loanProductService.initialize(productType);
+
     this.route.data.subscribe((data: { loanProductsTemplate: any; configurations: any }) => {
       this.loanProductsTemplate = data.loanProductsTemplate;
-      const assetAccountData = this.loanProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
-      const liabilityAccountData = this.loanProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
-      this.loanProductsTemplate.accountingMappingOptions.assetAndLiabilityAccountOptions =
-        assetAccountData.concat(liabilityAccountData);
+
+      if (this.loanProductService.isLoanProduct) {
+        const assetAccountData = this.loanProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
+        const liabilityAccountData = this.loanProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
+        this.loanProductsTemplate.accountingMappingOptions.assetAndLiabilityAccountOptions =
+          assetAccountData.concat(liabilityAccountData);
+      }
 
       this.itemsByDefault = loanProducts.setItemsByDefault(data.configurations);
       this.loanProductsTemplate['itemsByDefault'] = this.itemsByDefault;
@@ -114,8 +131,19 @@ export class CreateLoanProductComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.accountingRuleData = this.accounting.getAccountingRulesForLoans();
+    this.accountingRuleData = this.accounting.getAccountingRulesForLoans(this.loanProductService.isLoanProduct);
     this.buildAdvancedPaymentAllocation();
+    if (this.loanProductService.isWorkingCapital) {
+<<<<<<< HEAD
+      this.accountingRuleData = ['NONE'];
+=======
+>>>>>>> origin/dev
+      this.loanProductsTemplate['creditAllocationTransactionTypes'] = [];
+    }
+  }
+
+  ngAfterViewInit() {
+    this.cdr.detectChanges();
   }
 
   get loanProductDetailsForm() {
@@ -174,7 +202,8 @@ export class CreateLoanProductComponent implements OnInit {
 
   buildAdvancedPaymentAllocation(): void {
     this.advancedPaymentAllocations = this.advancedPaymentStrategy.buildAdvancedPaymentAllocationList(
-      this.loanProductsTemplate
+      this.loanProductsTemplate,
+      this.loanProductService.isLoanProduct
     );
   }
 
@@ -227,69 +256,111 @@ export class CreateLoanProductComponent implements OnInit {
   }
 
   get loanProductAccountingForm() {
-    return this.loanProductAccountingStep.loanProductAccountingForm;
+<<<<<<< HEAD
+    if (this.loanProductService.isLoanProduct) {
+      return this.loanProductAccountingStep?.loanProductAccountingForm;
+    }
+=======
+    return this.loanProductAccountingStep?.loanProductAccountingForm;
+>>>>>>> origin/dev
   }
 
   get loanProductFormValid() {
-    if (this.isAdvancedPaymentStrategy) {
-      return (
-        this.loanProductDetailsForm.valid &&
-        this.loanProductCurrencyForm.valid &&
-        this.loanProductTermsForm.valid &&
-        this.loanProductSettingsForm.valid &&
-        this.loanIncomeCapitalizationForm.valid &&
-        this.loanProductAccountingForm.valid
-      );
+    if (this.loanProductService.isLoanProduct) {
+      if (this.isAdvancedPaymentStrategy) {
+        return (
+          this.loanProductDetailsForm.valid &&
+          this.loanProductCurrencyForm.valid &&
+          this.loanProductTermsForm.valid &&
+          this.loanProductSettingsForm.valid &&
+          this.loanIncomeCapitalizationForm != null &&
+          this.loanIncomeCapitalizationForm.valid &&
+          this.loanProductAccountingForm?.valid
+        );
+      } else {
+        return (
+          this.loanProductDetailsForm.valid &&
+          this.loanProductCurrencyForm.valid &&
+          this.loanProductTermsForm.valid &&
+          this.loanProductSettingsForm.valid &&
+          this.loanProductAccountingForm?.valid
+        );
+      }
     } else {
       return (
         this.loanProductDetailsForm.valid &&
         this.loanProductCurrencyForm.valid &&
         this.loanProductTermsForm.valid &&
+<<<<<<< HEAD
+        this.loanProductSettingsForm.valid
+=======
         this.loanProductSettingsForm.valid &&
-        this.loanProductAccountingForm.valid
+        this.loanProductAccountingForm?.valid
+>>>>>>> origin/dev
       );
     }
   }
 
   get loanProduct() {
-    const loanProduct = {
-      ...this.loanProductDetailsStep.loanProductDetails,
-      ...this.loanProductCurrencyStep.loanProductCurrency,
-      ...this.loanProductTermsStep.loanProductTerms,
-      ...this.loanProductSettingsStep.loanProductSettings,
-      ...this.loanProductChargesStep.loanProductCharges,
-      ...this.loanProductAccountingStep.loanProductAccounting
-    };
-    if (this.isAdvancedPaymentStrategy) {
+    if (this.loanProductService.isLoanProduct) {
+      const loanProduct = {
+        ...this.loanProductDetailsStep.loanProductDetails,
+        ...this.loanProductCurrencyStep.loanProductCurrency,
+        ...this.loanProductTermsStep.loanProductTerms,
+        ...this.loanProductSettingsStep.loanProductSettings,
+        ...this.loanProductChargesStep.loanProductCharges,
+        ...this.loanProductAccountingStep.loanProductAccounting
+      };
+      if (this.isAdvancedPaymentStrategy) {
+        loanProduct['paymentAllocation'] = this.paymentAllocation;
+        loanProduct['creditAllocation'] = this.creditAllocation;
+        loanProduct['supportedInterestRefundTypes'] = this.supportedInterestRefundTypes;
+        if (this.deferredIncomeRecognition.capitalizedIncome != null) {
+          loanProduct['enableIncomeCapitalization'] =
+            this.deferredIncomeRecognition.capitalizedIncome.enableIncomeCapitalization;
+          if (this.deferredIncomeRecognition.capitalizedIncome.enableIncomeCapitalization) {
+            loanProduct['capitalizedIncomeCalculationType'] =
+              this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeCalculationType;
+            loanProduct['capitalizedIncomeStrategy'] =
+              this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeStrategy;
+            loanProduct['capitalizedIncomeType'] =
+              this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeType;
+          }
+        }
+        if (this.deferredIncomeRecognition.buyDownFee != null) {
+          loanProduct['enableBuyDownFee'] = this.deferredIncomeRecognition.buyDownFee.enableBuyDownFee;
+          if (this.deferredIncomeRecognition.buyDownFee.enableBuyDownFee) {
+            loanProduct['buyDownFeeCalculationType'] =
+              this.deferredIncomeRecognition.buyDownFee.buyDownFeeCalculationType;
+            loanProduct['buyDownFeeStrategy'] = this.deferredIncomeRecognition.buyDownFee.buyDownFeeStrategy;
+            loanProduct['buyDownFeeIncomeType'] = this.deferredIncomeRecognition.buyDownFee.buyDownFeeIncomeType;
+            loanProduct['merchantBuyDownFee'] = this.deferredIncomeRecognition.buyDownFee.merchantBuyDownFee;
+          }
+        }
+      }
+      return loanProduct;
+    } else {
+      const loanProduct = {
+        ...this.loanProductDetailsStep.loanProductDetails,
+        ...this.loanProductCurrencyStep.loanProductCurrency,
+        ...this.loanProductTermsStep.loanProductTerms,
+<<<<<<< HEAD
+        ...this.loanProductSettingsStep.loanProductSettings
+=======
+        ...this.loanProductSettingsStep.loanProductSettings,
+        ...this.loanProductAccountingStep.loanProductAccounting
+>>>>>>> origin/dev
+      };
       loanProduct['paymentAllocation'] = this.paymentAllocation;
-      loanProduct['creditAllocation'] = this.creditAllocation;
-      loanProduct['supportedInterestRefundTypes'] = this.supportedInterestRefundTypes;
-      if (this.deferredIncomeRecognition.capitalizedIncome != null) {
-        loanProduct['enableIncomeCapitalization'] =
-          this.deferredIncomeRecognition.capitalizedIncome.enableIncomeCapitalization;
-        if (this.deferredIncomeRecognition.capitalizedIncome.enableIncomeCapitalization) {
-          loanProduct['capitalizedIncomeCalculationType'] =
-            this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeCalculationType;
-          loanProduct['capitalizedIncomeStrategy'] =
-            this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeStrategy;
-          loanProduct['capitalizedIncomeType'] = this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeType;
-        }
-      }
-      if (this.deferredIncomeRecognition.buyDownFee != null) {
-        loanProduct['enableBuyDownFee'] = this.deferredIncomeRecognition.buyDownFee.enableBuyDownFee;
-        if (this.deferredIncomeRecognition.buyDownFee.enableBuyDownFee) {
-          loanProduct['buyDownFeeCalculationType'] =
-            this.deferredIncomeRecognition.buyDownFee.buyDownFeeCalculationType;
-          loanProduct['buyDownFeeStrategy'] = this.deferredIncomeRecognition.buyDownFee.buyDownFeeStrategy;
-          loanProduct['buyDownFeeIncomeType'] = this.deferredIncomeRecognition.buyDownFee.buyDownFeeIncomeType;
-          loanProduct['merchantBuyDownFee'] = this.deferredIncomeRecognition.buyDownFee.merchantBuyDownFee;
-        }
-      }
+      return loanProduct;
     }
-    return loanProduct;
   }
 
   submit() {
+    this.loanProductService.isLoanProduct ? this.submitLoanProduct() : this.submitWCProduct();
+  }
+
+  submitLoanProduct(): void {
     const loanProduct = this.loanProducts.buildPayload(this.loanProduct, this.itemsByDefault);
     if (loanProduct['useDueForRepaymentsConfigurations'] === true) {
       loanProduct['dueDaysForRepaymentEvent'] = null;
@@ -305,15 +376,38 @@ export class CreateLoanProductComponent implements OnInit {
     }
     delete loanProduct['useDueForRepaymentsConfigurations'];
 
-    this.loanProductsService.createLoanProduct({ postLoanProductsRequest: loanProduct }).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          '../',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.productsService
+      .createLoanProduct(this.loanProductService.loanProductPath, loanProduct)
+      .subscribe((response: any) => {
+        this.router.navigate(
+          [
+            '../',
+            response.resourceId
+          ],
+          {
+            queryParams: {
+              productType: this.loanProductService.productType.value
+            },
+            relativeTo: this.route
+          }
+        );
+      });
+  }
+
+  submitWCProduct(): void {
+    const loanProduct = this.loanProducts.buildPayload(this.loanProduct, this.itemsByDefault);
+
+    this.productsService
+      .createLoanProduct(this.loanProductService.loanProductPath, loanProduct)
+      .subscribe((response: any) => {
+        this.router.navigate(
+          [
+            '../',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      });
   }
 
   mapStringEnumOptionToIdList(incomingValues: StringEnumOptionData[]): string[] {

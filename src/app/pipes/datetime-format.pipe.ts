@@ -7,6 +7,12 @@ export class DatetimeFormatPipe implements PipeTransform {
     if (value == null || value === '') return '';
     let dateVal: Moment;
     if (Array.isArray(value)) {
+<<<<<<< HEAD
+=======
+      if (value.length < 3) {
+        return '';
+      }
+>>>>>>> origin/dev
       const [
         y,
         m,

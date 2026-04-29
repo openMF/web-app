@@ -50,6 +50,7 @@ import { ThemeToggleComponent } from './theme-toggle/theme-toggle.component';
 import { LongTextComponent } from './long-text/long-text.component';
 import { DropdownComponent } from './dropdown/dropdown.component';
 import { InputAmountComponent } from './input-amount/input-amount.component';
+import { InputPositiveIntegerComponent } from './input-positive-integer/input-positive-integer.component';
 import { InputPasswordComponent } from './input-password/input-password.component';
 import { DatetimePickerStubComponent } from './datetime-picker-stub/datetime-picker-stub.component'; // import Datetime Picker Stub
 
@@ -107,6 +108,7 @@ import { DatetimePickerStubComponent } from './datetime-picker-stub/datetime-pic
     LongTextComponent,
     DropdownComponent,
     InputAmountComponent,
+    InputPositiveIntegerComponent,
     InputPasswordComponent,
     DatetimePickerStubComponent // temporarily added stub for datetime picker
   ],
@@ -144,6 +146,7 @@ import { DatetimePickerStubComponent } from './datetime-picker-stub/datetime-pic
     LongTextComponent,
     DropdownComponent,
     InputAmountComponent,
+    InputPositiveIntegerComponent,
     DatetimePickerStubComponent // Export stub for datetime picker
 
   ]

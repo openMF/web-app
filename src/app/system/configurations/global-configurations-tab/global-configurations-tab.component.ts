@@ -1,5 +1,13 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -20,9 +28,10 @@ import { SettingsService } from 'app/settings/settings.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { GlobalConfigurationService } from '@fineract/client';
+import { SystemService } from '../../system.service';
 import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
+import { TranslateService } from '@ngx-translate/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
@@ -57,6 +66,17 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class GlobalConfigurationsTabComponent implements OnInit, AfterViewInit {
+  private route = inject(ActivatedRoute);
+  private alertService = inject(AlertService);
+  private systemService = inject(SystemService);
+  private router = inject(Router);
+  private configurationWizardService = inject(ConfigurationWizardService);
+  private popoverService = inject(PopoverService);
+<<<<<<< HEAD
+=======
+  private translateService = inject(TranslateService);
+>>>>>>> origin/dev
+
   /** Configuration data. */
   configurationData: any;
   /** Columns to be displayed in configurations table. */
@@ -88,19 +108,12 @@ export class GlobalConfigurationsTabComponent implements OnInit, AfterViewInit {
   /**
    * Retrieves the configurations data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {GlobalConfigurationService} globalConfigurationService Global Configuration Service.
+   * @param {SystemService} systemService System Service.
    * @param {Router} router Router for navigation.
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private alertService: AlertService,
-    private globalConfigurationService: GlobalConfigurationService,
-    private router: Router,
-    private configurationWizardService: ConfigurationWizardService,
-    private popoverService: PopoverService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { configurations: any }) => {
       this.configurationData = data.configurations;
     });
@@ -117,7 +130,7 @@ export class GlobalConfigurationsTabComponent implements OnInit, AfterViewInit {
    * Initializes the data source, paginator and sorter for configurations table.
    */
   setConfigurationData(): void {
-    this.globalConfigurationService.retrieveConfiguration().subscribe((configurationData: any) => {
+    this.systemService.getConfigurations().subscribe((configurationData: any) => {
       this.configurationData = configurationData.globalConfiguration;
       this.dataSource = new MatTableDataSource(this.configurationData);
       this.dataSource.paginator = this.paginator;
@@ -137,16 +150,20 @@ export class GlobalConfigurationsTabComponent implements OnInit, AfterViewInit {
    * Enables/Disables respective configuration
    */
   toggleStatus(configuration: any) {
-    this.globalConfigurationService
-      .updateConfiguration1({
-        configId: configuration.id,
-        putGlobalConfigurationsRequest: { enabled: configuration.enabled }
-      })
+    this.systemService
+      .updateConfiguration(configuration.id, { enabled: configuration.enabled })
       .subscribe((response: any) => {
         configuration.enabled = response.changes.enabled;
         if (configuration.name === SettingsService.businessDateConfigName) {
-          const msg = configuration.enabled ? 'enabled' : 'disabled';
-          this.alertService.alert({ type: SettingsService.businessDateType + ' Set Config', message: msg });
+          const msg = configuration.enabled
+            ? this.translateService.instant('labels.inputs.Enabled')
+            : this.translateService.instant('labels.inputs.Disabled');
+          // Do not change Type, It is linked to other stuffs
+          this.alertService.alert({
+            type: SettingsService.businessDateType + ' Set Config',
+            message: msg,
+            enabled: configuration.enabled
+          });
         }
       });
   }
@@ -171,13 +188,13 @@ export class GlobalConfigurationsTabComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showConfigurationsPage === true) {
+    if (this.configurationWizardService.showConfigurationsPage) {
       setTimeout(() => {
         this.showPopover(this.templateFilter, this.filter.nativeElement, 'bottom', true);
       });
     }
 
-    if (this.configurationWizardService.showConfigurationsList === true) {
+    if (this.configurationWizardService.showConfigurationsList) {
       setTimeout(() => {
         this.showPopover(this.templateConfigurationsTable, this.configurationsTable.nativeElement, 'top', true);
       });

@@ -1,0 +1,84 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+@if (breach) {
+  @if (singleRow) {
+    <div class="breach-single-row">
+      <span class="breach-col frequency-col">
+        {{ breach.name }}
+      </span>
+      <span class="breach-col frequency-col">
+        {{ breach.breachFrequency | formatNumber: '' : 0 }}
+        {{ breach.breachFrequencyType.code | translateKey: 'catalogs' }}
+      </span>
+      <span class="breach-col calc-type-col">
+        {{ camalize(breach.breachAmountCalculationType.code) | translateKey: 'catalogs' }}
+      </span>
+      <span class="breach-col amount-col">
+        {{ breach.breachAmount | formatNumber }}
+      </span>
+    </div>
+  }
+  @if (!singleRow) {
+    <div class="breach-display-column">
+      <div class="flex-fill layout-row">
+        <span class="flex-30 attribute-name">{{ 'labels.inputs.Breach' | translate }}:</span>
+        <span class="flex-60">{{ breach.name }}</span>
+      </div>
+      <div class="flex-fill layout-row">
+        <span class="flex-30 attribute-name">{{ 'labels.inputs.Frequency' | translate }}:</span>
+        <span class="flex-60"
+          >{{ breach.breachFrequency | formatNumber: '' : 0 }}
+          {{ breach.breachFrequencyType.code | translateKey: 'catalogs' }}</span
+        >
+      </div>
+      <div class="flex-fill layout-row">
+        <span class="flex-30 attribute-name">{{ 'labels.inputs.Calculation Type' | translate }}:</span>
+        <span class="flex-60">{{ camalize(breach.breachAmountCalculationType.code) | translateKey: 'catalogs' }}</span>
+      </div>
+      <div class="flex-fill layout-row">
+        <span class="flex-30 attribute-name">{{ 'labels.inputs.Amount' | translate }}:</span>
+        <span class="flex-60">{{ breach.breachAmount | formatNumber }}</span>
+      </div>
+    </div>
+  }
+}
+
+@if (nearBreach) {
+  @if (singleRow) {
+    <div class="breach-single-row">
+      <span class="breach-col frequency-col">
+        {{ nearBreach.name }}
+      </span>
+      <span class="breach-col frequency-col">
+        {{ nearBreach.frequency | formatNumber: '' : 0 }}
+        {{ nearBreach.frequencyType.code | translateKey: 'catalogs' }}
+      </span>
+      <span class="breach-col amount-col"> {{ nearBreach.threshold | formatNumber }} % </span>
+    </div>
+  }
+  @if (!singleRow) {
+    <div class="breach-display-column">
+      <div class="flex-fill layout-row">
+        <span class="flex-30 attribute-name">{{ 'labels.inputs.Near Breach' | translate }}:</span>
+        <span class="flex-60">{{ nearBreach.name }}</span>
+      </div>
+      <div class="flex-fill layout-row">
+        <span class="flex-30 attribute-name">{{ 'labels.inputs.Frequency' | translate }}:</span>
+        <span class="flex-60"
+          >{{ nearBreach.frequency | formatNumber: '' : 0 }}
+          {{ nearBreach.frequencyType.code | translateKey: 'catalogs' }}</span
+        >
+      </div>
+      <div class="flex-fill layout-row">
+        <span class="flex-30 attribute-name">{{ 'labels.inputs.Threshold' | translate }}:</span>
+        <span class="flex-60">{{ nearBreach.threshold | formatNumber }} %</span>
+      </div>
+    </div>
+  }
+}

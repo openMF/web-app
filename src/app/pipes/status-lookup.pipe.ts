@@ -34,7 +34,7 @@ export class StatusLookupPipe implements PipeTransform {
       'clientStatusType.withdraw': 'status-withdraw', // write
       'clientStatusType.active': 'status-active',
       'clientStatusType.submitted.and.pending.approval': 'status-pending',
-      'clientStatusTYpe.approved': 'status-approved',
+      'clientStatusType.approved': 'status-approved',
       'clientStatusType.transfer.in.progress': 'status-transfer-progress', // write
       'clientStatusType.transfer.on.hold': 'status-transfer-hold', // write
       'groupingStatusType.active': 'status-active',

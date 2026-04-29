@@ -24,7 +24,7 @@ export class HasPermissionDirective {
     private authenticationService: AuthenticationService
   ) {
     const savedCredentials = this.authenticationService.getCredentials();
-    this.userPermissions = savedCredentials.permissions;
+    this.userPermissions = savedCredentials?.permissions ?? [];
   }
 
   /**
