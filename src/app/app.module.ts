@@ -68,6 +68,7 @@ import { AuthService } from './zitadel/auth.service';
 import { environment } from '../environments/environment';
 import { CallbackComponent } from './zitadel/callback/callback.component';
 import { OAuthModule } from 'angular-oauth2-oidc';
+import { provideLottieOptions } from 'ngx-lottie';
 
 export class CustomMissingTranslationHandler implements MissingTranslationHandler {
   handle(params: MissingTranslationHandlerParams): string {
@@ -141,7 +142,10 @@ export function HttpLoaderFactory(http: HttpClient) {
       provide: HTTP_INTERCEPTORS,
       useClass: !environment.OIDC.oidcServerEnabled ? TokenInterceptor : ZitadelTokenInterceptor,
       multi: true
-    }
+    },
+    provideLottieOptions({
+      player: () => import('lottie-web')
+    })
   ]
 })
 export class AppModule {}
