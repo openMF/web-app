@@ -7,15 +7,15 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, ViewChild, AfterViewInit, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy, inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 /** rxjs Imports */
-import { merge } from 'rxjs';
-import { tap, startWith, map, distinctUntilChanged, debounceTime } from 'rxjs/operators';
+import { merge, Subject } from 'rxjs';
+import { tap, startWith, map, distinctUntilChanged, debounceTime, takeUntil } from 'rxjs/operators';
 
 /** Custom Services */
 import { AccountingService } from '../accounting.service';
@@ -74,7 +74,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     FormatNumberPipe
   ]
 })
-export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
+export class SearchJournalEntryComponent implements OnInit, AfterViewInit, OnDestroy {
   private accountingService = inject(AccountingService);
   private settingsService = inject(SettingsService);
   private dateUtils = inject(Dates);
@@ -191,6 +191,8 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   /** Sorter for journal entries table. */
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  /** Subject that emits once when the component is destroyed, completing all takeUntil operators. */
+  private readonly destroy$ = new Subject<void>();
 
   /**
    * Retrieves the offices and gl accounts data from `resolve`.
@@ -228,7 +230,8 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap((filterValue) => {
           this.applyFilter(filterValue, 'officeId');
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe();
 
@@ -239,7 +242,8 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap((filterValue) => {
           this.applyFilter(filterValue, 'glAccountId');
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe();
 
@@ -249,7 +253,8 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap((filterValue) => {
           this.applyFilter(filterValue, 'transactionId');
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe();
 
@@ -259,7 +264,8 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap((filterValue) => {
           this.applyFilter(this.dateUtils.formatDate(filterValue, this.settingsService.dateFormat), 'fromDate');
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe();
 
@@ -269,7 +275,8 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap((filterValue) => {
           this.applyFilter(this.dateUtils.formatDate(filterValue, this.settingsService.dateFormat), 'toDate');
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe();
 
@@ -282,7 +289,8 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
             this.dateUtils.formatDate(filterValue, this.settingsService.dateFormat),
             'submittedOnDateFrom'
           );
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe();
 
@@ -295,15 +303,27 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
             this.dateUtils.formatDate(filterValue, this.settingsService.dateFormat),
             'submittedOnDateTo'
           );
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe();
 
-    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
+    this.sort.sortChange.pipe(takeUntil(this.destroy$)).subscribe(() => (this.paginator.pageIndex = 0));
 
     merge(this.sort.sortChange, this.paginator.page)
-      .pipe(tap(() => this.loadJournalEntriesPage()))
+      .pipe(
+        tap(() => this.loadJournalEntriesPage()),
+        takeUntil(this.destroy$)
+      )
       .subscribe();
+  }
+
+  /**
+   * Completes all active subscriptions to prevent memory leaks.
+   */
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   /**
