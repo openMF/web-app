@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, AfterViewInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, AfterViewInit, inject } from '@angular/core';
 import { FormGroup, FormBuilder, UntypedFormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -43,7 +43,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatNavList,
     MatLine,
     MatTooltip
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageGroupMembersComponent implements AfterViewInit {
   private route = inject(ActivatedRoute);

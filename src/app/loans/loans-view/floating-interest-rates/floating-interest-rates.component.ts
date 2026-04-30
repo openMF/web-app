@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   MatTable,
@@ -40,7 +40,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRowDef,
     MatRow,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FloatingInterestRatesComponent implements OnInit {
   private route = inject(ActivatedRoute);

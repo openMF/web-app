@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Input, OnChanges, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, OnChanges, inject } from '@angular/core';
 // import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -71,7 +71,8 @@ import { LoanCharge } from 'app/loans/models/loan-charge.model';
     MatStepperNext,
     DateFormatPipe,
     FormatNumberPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
   dialog = inject(MatDialog);

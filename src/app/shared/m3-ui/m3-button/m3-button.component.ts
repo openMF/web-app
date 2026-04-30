@@ -5,7 +5,15 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-import { Component, Input, Output, EventEmitter, CUSTOM_ELEMENTS_SCHEMA, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  CUSTOM_ELEMENTS_SCHEMA,
+  ViewEncapsulation
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // Import Material Web Components
@@ -74,7 +82,8 @@ export type M3ButtonVariant = 'filled' | 'outlined' | 'elevated' | 'text' | 'ton
     CommonModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class M3ButtonComponent {
   /**

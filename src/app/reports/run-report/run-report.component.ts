@@ -7,16 +7,9 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import {
-  AbstractControl,
-  UntypedFormControl,
-  UntypedFormGroup,
-  ValidatorFn,
-  Validators,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AbstractControl, UntypedFormControl, UntypedFormGroup, ValidatorFn, Validators } from '@angular/forms';
 
 /** Custom Services */
 import { ReportsService } from '../reports.service';
@@ -31,7 +24,7 @@ import { GlobalConfiguration } from 'app/system/configurations/global-configurat
 import * as ExcelJS from 'exceljs';
 import { AlertService } from 'app/core/alert/alert.service';
 import { TranslateService } from '@ngx-translate/core';
-import { NgIf, NgFor, NgSwitch, NgSwitchCase } from '@angular/common';
+import { NgSwitch, NgSwitchCase } from '@angular/common';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TableAndSmsComponent } from './table-and-sms/table-and-sms.component';

@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 
@@ -36,7 +36,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     CenterNavigationComponent,
     GroupNavigationComponent,
     ClientNavigationComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NavigationComponent implements OnInit {
   private navigationService = inject(NavigationService);

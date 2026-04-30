@@ -8,7 +8,17 @@
 
 import { SelectionModel } from '@angular/cdk/collections';
 import { DecimalPipe, NgClass } from '@angular/common';
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+  inject
+} from '@angular/core';
 import { MatCheckboxChange as MatCheckboxChange, MatCheckbox } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
 import { formatTabLabel } from 'app/shared/utils/format-tab-label.util';
@@ -60,7 +70,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatHeaderRow,
     MatRowDef,
     MatRow
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges {
   formatTabLabel(label: string): string {

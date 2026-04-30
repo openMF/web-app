@@ -20,7 +20,7 @@ import { ProfileComponent } from './profile.component';
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'profile',
+      path: '',
       component: ProfileComponent,
       data: { title: 'Profile', breadcrumb: 'Profile' }
     }

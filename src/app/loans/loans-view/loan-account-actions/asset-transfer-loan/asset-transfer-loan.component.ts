@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Dates } from 'app/core/utils/dates';
 import { ExternalAssetOwnerService } from 'app/loans/services/external-asset-owner.service';
@@ -20,7 +20,8 @@ import { rangeValidator } from 'app/shared/validators/percentage.validator';
   styleUrls: ['./asset-transfer-loan.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AssetTransferLoanComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);

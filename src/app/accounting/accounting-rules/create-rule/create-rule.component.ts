@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -36,7 +36,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRadioButton,
     MatCheckbox,
     CdkTextareaAutosize
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateRuleComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);

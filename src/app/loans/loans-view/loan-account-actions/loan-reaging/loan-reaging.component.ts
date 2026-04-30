@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Dates } from 'app/core/utils/dates';
@@ -30,7 +30,8 @@ import { positiveIntegerValidator } from 'app/shared/validators/positive-integer
     InputAmountComponent,
     MatSlideToggle,
     InputPositiveIntegerComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanReagingComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);

@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import {
@@ -85,7 +85,8 @@ interface GroupData {
     MatCard,
     MatCardContent,
     StatusLookupPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GsimAccountComponent implements OnInit {
   private route = inject(ActivatedRoute);

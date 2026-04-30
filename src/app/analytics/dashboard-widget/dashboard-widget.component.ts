@@ -8,6 +8,7 @@
 
 /** Angular Imports nice thingy */
 import {
+  ChangeDetectionStrategy,
   AfterViewInit,
   Component,
   DestroyRef,
@@ -44,7 +45,8 @@ Chart.register(...registerables);
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardWidgetComponent implements AfterViewInit, OnChanges, OnDestroy {
   private themingService = inject(ThemingService);

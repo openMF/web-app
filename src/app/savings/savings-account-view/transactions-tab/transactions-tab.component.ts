@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -78,7 +78,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatPaginator,
     DateFormatPipe,
     CurrencyPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TransactionsTabComponent implements OnInit {
   private route = inject(ActivatedRoute);

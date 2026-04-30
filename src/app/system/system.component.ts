@@ -7,7 +7,15 @@
  */
 
 /** Angular Imports */
-import { AfterViewInit, Component, ElementRef, TemplateRef, ViewChild, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  TemplateRef,
+  ViewChild,
+  inject
+} from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -32,7 +40,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     FaIconComponent,
     MatLine,
     NgClass
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SystemComponent implements AfterViewInit {
   private router = inject(Router);

@@ -7,7 +7,16 @@
  */
 
 /** Angular Imports */
-import { Component, OnChanges, Input, Output, EventEmitter, OnInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnChanges,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  inject
+} from '@angular/core';
 import { Validators, UntypedFormGroup, UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
@@ -36,7 +45,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     NgSwitch,
     NgSwitchCase,
     MatStepperNext
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BusinessRuleParametersComponent implements OnInit, OnChanges {
   private reportsService = inject(ReportsService);

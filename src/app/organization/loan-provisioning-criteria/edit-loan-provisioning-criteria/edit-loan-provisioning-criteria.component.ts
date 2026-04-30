@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -64,7 +64,8 @@ import { TranslateService } from '@ngx-translate/core';
     MatRowDef,
     MatRow,
     FindPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditLoanProvisioningCriteriaComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);

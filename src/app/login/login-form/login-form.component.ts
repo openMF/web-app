@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -39,7 +39,8 @@ import { environment } from '../../../environments/environment';
     M3ButtonComponent,
     MatProgressBar,
     MatProgressSpinner
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginFormComponent implements OnInit {
   private formBuilder = inject(FormBuilder);

@@ -6,7 +6,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  inject
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import lightGallery from 'lightgallery';
 import lgFullscreen from 'lightgallery/plugins/fullscreen';
@@ -32,7 +41,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
   dialog = inject(MatDialog);

@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, ViewChild } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -44,7 +44,8 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
     CdkTextareaAutosize,
     MatStepperModule,
     FaIconComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SavingsAccountTransactionsComponent implements OnInit {
   @ViewChild('stepper') stepper: MatStepper;

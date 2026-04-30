@@ -7,8 +7,8 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 import { Alert } from 'app/core/alert/alert.model';
 import { AlertService } from 'app/core/alert/alert.service';
@@ -18,11 +18,12 @@ import { Subscription } from 'rxjs';
 
 /** Custom Services */
 import { SystemService } from '../../system.service';
-import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatIconButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { MatDivider } from '@angular/material/divider';
 
 @Component({
   selector: 'mifosx-business-date-tab',
@@ -32,9 +33,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ...STANDALONE_SHARED_IMPORTS,
     MatIconButton,
     MatTooltip,
+    MatDivider,
     FaIconComponent,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BusinessDateTabComponent implements OnInit {
   private systemService = inject(SystemService);
@@ -42,6 +45,7 @@ export class BusinessDateTabComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   private dateUtils = inject(Dates);
   private alertService = inject(AlertService);
+  private cdr = inject(ChangeDetectorRef);
 
   /** Subscription to alerts. */
   alert$: Subscription;
@@ -63,6 +67,7 @@ export class BusinessDateTabComponent implements OnInit {
   userDateFormat: '';
   isBusinessDateEnabled = false;
   isEditInProgress = false;
+  configurationName = SettingsService.businessDateConfigName;
 
   ngOnInit(): void {
     this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
@@ -73,6 +78,7 @@ export class BusinessDateTabComponent implements OnInit {
           this.setBusinessDates();
           this.createBusinessDateForm();
         }
+        this.cdr.markForCheck();
       }
     });
     this.userDateFormat = this.settingsService.dateFormat;
@@ -91,6 +97,7 @@ export class BusinessDateTabComponent implements OnInit {
         if (this.isBusinessDateEnabled) {
           this.setBusinessDates();
         }
+        this.cdr.markForCheck();
       });
   }
 
@@ -109,6 +116,7 @@ export class BusinessDateTabComponent implements OnInit {
           });
         }
       });
+      this.cdr.markForCheck();
     });
   }
 
@@ -139,13 +147,11 @@ export class BusinessDateTabComponent implements OnInit {
   submit() {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    const prevBusinessDate: Date = this.businessDateForm.value.businessDate;
-    let dateType = SettingsService.businessDateType;
-    if (this.dateIndex === 1) {
-      dateType = SettingsService.cobDateType;
-    }
+    const isCob = this.dateIndex === 1;
+    const dateValue: Date = isCob ? this.businessDateForm.value.cobDate : this.businessDateForm.value.businessDate;
+    const dateType = isCob ? SettingsService.cobDateType : SettingsService.businessDateType;
     const data = {
-      date: this.dateUtils.formatDate(prevBusinessDate, dateFormat),
+      date: this.dateUtils.formatDate(dateValue, dateFormat),
       type: dateType,
       dateFormat,
       locale

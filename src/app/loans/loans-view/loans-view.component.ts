@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -75,7 +75,8 @@ import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan
     StatusLookupPipe,
     DateFormatPipe,
     FormatNumberPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoansViewComponent extends LoanProductBaseComponent implements OnInit {
   private route = inject(ActivatedRoute);
@@ -524,14 +525,20 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
     if (!this.loanDetailsData) {
       return '';
     }
-    if (this.loanDetailsData.chargedOff) {
-      return 'loanStatusType.chargeoff';
-    }
-    if (this.isContractTermination(this.loanSubStatus)) {
-      return 'loanSubStatusType.contractTermination';
-    }
-    if (this.loanDetailsData.inArrears) {
-      return 'loanStatusType.activeOverdue';
+    if (this.loanProductService.isLoanProduct) {
+      if (this.loanDetailsData.chargedOff) {
+        return 'loanStatusType.chargeoff';
+      }
+      if (this.isContractTermination(this.loanSubStatus)) {
+        return 'loanSubStatusType.contractTermination';
+      }
+      if (this.loanDetailsData.inArrears) {
+        return 'loanStatusType.activeOverdue';
+      }
+    } else if (this.loanProductService.isWorkingCapital) {
+      if (this.loanDetailsData.collectionData?.delinquentDays > 0) {
+        return 'loanStatusType.activeOverdue';
+      }
     }
     return this.loanDetailsData.status?.code;
   }
@@ -543,8 +550,14 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
     if (this.loanDetailsData.chargedOff) {
       return 'Chargeoff';
     }
-    if (this.loanDetailsData.inArrears) {
-      return 'activeOverdue';
+    if (this.loanProductService.isWorkingCapital) {
+      if (this.loanDetailsData.collectionData?.delinquentDays > 0) {
+        return 'activeOverdue';
+      }
+    } else {
+      if (this.loanDetailsData.inArrears) {
+        return 'activeOverdue';
+      }
     }
     return this.loanDetailsData.status?.code;
   }
@@ -583,6 +596,6 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
     if (!this.loanProductService.isWorkingCapital || !this.loanDetailsData) {
       return false;
     }
-    return this.loanDetailsData?.status?.active === true;
+    return !this.loanDetailsData?.discount && this.loanDetailsData?.status?.active === true;
   }
 }

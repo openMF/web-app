@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
@@ -27,7 +27,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./language-selector.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LanguageSelectorComponent {
   private translateService = inject(TranslateService);

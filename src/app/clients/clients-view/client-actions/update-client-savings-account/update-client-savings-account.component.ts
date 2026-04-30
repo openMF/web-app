@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -25,7 +25,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./update-client-savings-account.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UpdateClientSavingsAccountComponent implements OnInit {
   private readonly formBuilder = inject(UntypedFormBuilder);

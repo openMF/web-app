@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { OrganizationService } from 'app/organization/organization.service';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
@@ -24,7 +24,8 @@ import { InputAmountComponent } from 'app/shared/input-amount/input-amount.compo
     MatSlideToggle,
     CdkTextareaAutosize,
     InputAmountComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AdjustLoanChargeComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);

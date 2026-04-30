@@ -7,7 +7,16 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Renderer2, ViewChild, ElementRef, SecurityContext, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  Renderer2,
+  ViewChild,
+  ElementRef,
+  SecurityContext,
+  inject
+} from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 
 /** Custom Services */
@@ -26,7 +35,8 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanScreenReportsComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);

@@ -8,7 +8,7 @@
 
 /* eslint-disable @angular-eslint/prefer-inject */
 /** Angular Imports */
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Subscription, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -38,7 +38,8 @@ import { DashboardWidgetComponent } from '../dashboard-widget/dashboard-widget.c
     MatButtonToggleGroup,
     MatButtonToggle,
     DashboardWidgetComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardEngineComponent implements OnInit, OnChanges, OnDestroy {
   @Input({ required: true }) dashboard!: AnalyticsDashboardDefinition;

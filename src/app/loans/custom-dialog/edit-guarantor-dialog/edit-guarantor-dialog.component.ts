@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -31,7 +31,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatDialogActions,
     MatDialogClose,
     ReactiveFormsModule
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditGuarantorDialogComponent implements OnInit {
   dialogRef = inject<MatDialogRef<EditGuarantorDialogComponent>>(MatDialogRef);

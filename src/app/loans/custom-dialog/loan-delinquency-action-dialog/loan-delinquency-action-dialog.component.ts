@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import {
   MAT_DIALOG_DATA,
@@ -30,7 +30,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatDialogContent,
     MatDialogActions,
     MatDialogClose
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanDelinquencyActionDialogComponent {
   dialogRef = inject<MatDialogRef<LoanDelinquencyActionDialogComponent>>(MatDialogRef);

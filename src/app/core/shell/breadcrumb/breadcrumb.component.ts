@@ -7,7 +7,17 @@
  */
 
 /** Angular Imports */
-import { Component, TemplateRef, ElementRef, ViewChild, AfterViewInit, OnDestroy, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  OnDestroy,
+  inject
+} from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd, Data } from '@angular/router';
 
 /** rxjs Imports */
@@ -21,6 +31,7 @@ import { Breadcrumb } from './breadcrumb.model';
 import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
 import { TranslateService } from '@ngx-translate/core';
+import { MatIcon } from '@angular/material/icon';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { formatTabLabel } from 'app/shared/utils/format-tab-label.util';
 
@@ -61,8 +72,10 @@ const routeAddBreadcrumbLink = 'addBreadcrumbLink';
   templateUrl: './breadcrumb.component.html',
   styleUrls: ['./breadcrumb.component.scss'],
   imports: [
-    ...STANDALONE_SHARED_IMPORTS
-  ]
+    ...STANDALONE_SHARED_IMPORTS,
+    MatIcon
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BreadcrumbComponent implements AfterViewInit, OnDestroy {
   private activatedRoute = inject(ActivatedRoute);
@@ -70,6 +83,7 @@ export class BreadcrumbComponent implements AfterViewInit, OnDestroy {
   private configurationWizardService = inject(ConfigurationWizardService);
   private popoverService = inject(PopoverService);
   private translateService = inject(TranslateService);
+  private cdr = inject(ChangeDetectorRef);
   private destroy$ = new Subject<void>();
 
   /** Array of breadcrumbs. */
@@ -239,6 +253,7 @@ export class BreadcrumbComponent implements AfterViewInit, OnDestroy {
             }
           });
         }
+        this.cdr.markForCheck();
       });
   }
 

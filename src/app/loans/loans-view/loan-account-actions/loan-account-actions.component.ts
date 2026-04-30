@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports. */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoansAccountCloseComponent } from './loans-account-close/loans-account-close.component';
 import { UndoApprovalComponent } from './undo-approval/undo-approval.component';
@@ -85,7 +85,8 @@ import { UpdateDiscountComponent } from './update-discount/update-discount.compo
     UndoWriteOffComponent,
     AttachOriginatorComponent,
     UpdateDiscountComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanAccountActionsComponent {
   private route = inject(ActivatedRoute);

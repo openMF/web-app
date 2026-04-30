@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnChanges, OnInit, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnChanges, OnInit, Input, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 import { Currency } from 'app/shared/models/general.model';
@@ -31,7 +31,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     FaIconComponent,
     MatStepperNext,
     CurrencyPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SharesAccountTermsStepComponent implements OnChanges, OnInit {
   private formBuilder = inject(UntypedFormBuilder);

@@ -36,7 +36,7 @@ import { GetCheckerInboxDetailResolver } from './common-resolvers/getCheckerInbo
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'checker-inbox-and-tasks',
+      path: '',
       component: CheckerInboxAndTasksComponent,
       data: { title: 'Checker Inbox & Tasks', breadcrumb: 'Checker Inbox & Tasks' },
       children: [

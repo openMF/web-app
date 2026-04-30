@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-import { Component, Input, OnDestroy, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, inject } from '@angular/core';
 import { SystemService } from 'app/system/system.service';
 import { environment } from '../../../../environments/environment';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -20,7 +20,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     LoanLockedComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CobWorkflowComponent implements OnDestroy {
   private systemService = inject(SystemService);

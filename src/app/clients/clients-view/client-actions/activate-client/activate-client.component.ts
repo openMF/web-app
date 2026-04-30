@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -26,7 +26,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./activate-client.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ActivateClientComponent implements OnInit {
   private readonly formBuilder = inject(UntypedFormBuilder);

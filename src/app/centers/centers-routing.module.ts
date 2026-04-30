@@ -37,7 +37,7 @@ import { CenterDataAndTemplateResolver } from './common-resolvers/center-data-an
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'centers',
+      path: '',
       data: { title: 'Centers', breadcrumb: 'Centers' },
       children: [
         {

@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, ViewChild, inject, DestroyRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   UntypedFormGroup,
@@ -55,7 +55,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
       provide: TINYMCE_SCRIPT_SRC,
       useValue: 'assets/tinymce/tinymce.min.js'
     }
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateEditComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);

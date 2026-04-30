@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Dialog Components */
@@ -56,7 +56,8 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
     MatRow,
     AccountsFilterPipe,
     FormatNumberPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewGuarantorsComponent extends LoanAccountActionsBaseComponent implements OnInit {
   dialog = inject(MatDialog);

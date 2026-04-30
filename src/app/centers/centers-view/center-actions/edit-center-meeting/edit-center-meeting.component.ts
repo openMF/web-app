@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -36,7 +36,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     MatHint
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditCenterMeetingComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);

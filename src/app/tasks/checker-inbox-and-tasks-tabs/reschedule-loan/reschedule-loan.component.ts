@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import * as _ from 'lodash';
@@ -65,7 +65,8 @@ interface RescheduleFormData {
     MatRowDef,
     MatRow,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RescheduleLoanComponent {
   private route = inject(ActivatedRoute);

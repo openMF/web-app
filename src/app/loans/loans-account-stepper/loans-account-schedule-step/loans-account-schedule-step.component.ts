@@ -6,8 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, Input, inject } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { LoansService } from 'app/loans/loans.service';
 import { RepaymentSchedule } from 'app/loans/models/loan-account.model';
 import { SettingsService } from 'app/settings/settings.service';
@@ -26,12 +26,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     RepaymentScheduleTabComponent,
     MatStepperPrevious,
     MatStepperNext
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoansAccountScheduleStepComponent {
   private loansService = inject(LoansService);
   private settingsService = inject(SettingsService);
   private route = inject(ActivatedRoute);
+  private cdr = inject(ChangeDetectorRef);
 
   /** Currency Code */
   @Input() currencyCode: string;
@@ -63,9 +65,11 @@ export class LoansAccountScheduleStepComponent {
     );
     delete payload['enableInstallmentLevelDelinquency'];
     delete payload['externalId'];
+    console.log(payload);
 
     this.loansService.calculateLoanSchedule(payload).subscribe((response: RepaymentSchedule) => {
       this.repaymentScheduleDetails = response;
+      this.cdr.markForCheck();
     });
   }
 }

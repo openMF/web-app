@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   MatDialogRef,
   MatDialogTitle,
@@ -32,7 +32,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatDialogContent,
     MatDialogActions,
     MatDialogClose
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CalculateInterestDialogComponent {
   dialogRef = inject<MatDialogRef<CalculateInterestDialogComponent>>(MatDialogRef);

@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild, inject } from '@angular/core';
 
 import { MatPaginator } from '@angular/material/paginator';
 import {
@@ -51,7 +51,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatPaginator,
     DateFormatPipe,
     YesnoPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ListTransactionsComponent {
   private route = inject(ActivatedRoute);

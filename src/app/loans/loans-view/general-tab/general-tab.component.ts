@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   MatTableDataSource,
@@ -49,7 +49,8 @@ import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan
     CurrencyPipe,
     DateFormatPipe,
     FormatNumberPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GeneralTabComponent extends LoanProductBaseComponent implements OnInit {
   private route = inject(ActivatedRoute);

@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { CollectionsService } from '../collections.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -28,7 +28,8 @@ import { Logger } from 'app/core/logger/logger.service';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CollectionSheetComponent implements OnInit {
   private readonly log = new Logger('CollectionSheetComponent');

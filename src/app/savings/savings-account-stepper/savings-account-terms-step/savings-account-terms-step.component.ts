@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnChanges, OnInit, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnChanges, OnInit, Input, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -36,7 +36,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatStepperPrevious,
     FaIconComponent,
     MatStepperNext
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SavingsAccountTermsStepComponent implements OnChanges, OnInit {
   private formBuilder = inject(UntypedFormBuilder);

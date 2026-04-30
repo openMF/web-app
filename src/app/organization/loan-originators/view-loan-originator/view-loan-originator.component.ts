@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -23,7 +23,8 @@ import { LoanOriginator } from 'app/loans/models/loan-account.model';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewLoanOriginatorComponent {
   private route = inject(ActivatedRoute);

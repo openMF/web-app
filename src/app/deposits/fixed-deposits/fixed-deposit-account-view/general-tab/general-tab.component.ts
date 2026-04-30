@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Currency } from 'app/shared/models/general.model';
 import { CurrencyPipe } from '@angular/common';
@@ -23,7 +23,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ExternalIdentifierComponent,
     CurrencyPipe,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GeneralTabComponent {
   private route = inject(ActivatedRoute);

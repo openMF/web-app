@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -45,7 +45,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ClientAddressStepComponent,
     ClientDatatableStepComponent,
     ClientPreviewStepComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateClientComponent {
   private route = inject(ActivatedRoute);

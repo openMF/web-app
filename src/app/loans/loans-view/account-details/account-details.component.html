@@ -16,8 +16,17 @@
         <span class="flex-50">{{ loanDetails.transactionProcessingStrategyName | translateKey: 'catalogs' }}</span>
       </div>
     }
+    <div class="flex-fill layout-row">
+      <span class="flex-50">{{ 'labels.inputs.Currency' | translate }}</span>
+      <span class="flex-50">{{ loanDetails.currency?.code }}</span>
+    </div>
 
     @if (loanProductService.isWorkingCapital) {
+      <div class="flex-fill layout-row">
+        <span class="flex-50"> {{ 'labels.inputs.Amortization Type' | translate }} </span>
+        <span class="flex-50"> {{ loanDetails.product.amortizationType?.value | translateKey: 'catalogs' }} </span>
+      </div>
+
       <div class="flex-fill layout-row">
         <span class="flex-50">{{ 'labels.inputs.Period Payment Frequency' | translate }}</span>
         <span class="flex-50">
@@ -33,9 +42,21 @@
         </div>
       }
 
+      @if (loanDetails.discountProposed) {
+        <div class="flex-fill layout-row">
+          <span class="flex-50">{{ 'labels.inputs.Proposed Discount' | translate }}:</span>
+          <span class="flex-50">{{ loanDetails.discountProposed | formatNumber }}</span>
+        </div>
+      }
+      @if (loanDetails.discountApproved) {
+        <div class="flex-fill layout-row">
+          <span class="flex-50">{{ 'labels.inputs.Approved Discount' | translate }}:</span>
+          <span class="flex-50">{{ loanDetails.discountApproved | formatNumber }}</span>
+        </div>
+      }
       @if (loanDetails.discount) {
         <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Discount' | translate }} </span>
+          <span class="flex-50">{{ 'labels.inputs.Discount' | translate }}:</span>
           <span class="flex-50">{{ loanDetails.discount | formatNumber }}</span>
         </div>
       }

@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
@@ -26,7 +26,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     CdkTextareaAutosize
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditClosureComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);

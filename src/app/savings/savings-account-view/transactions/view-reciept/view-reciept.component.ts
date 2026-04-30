@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -24,7 +24,8 @@ import { HttpResponse } from '@angular/common/http';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewRecieptComponent implements OnInit, OnDestroy {
   private sanitizer = inject(DomSanitizer);

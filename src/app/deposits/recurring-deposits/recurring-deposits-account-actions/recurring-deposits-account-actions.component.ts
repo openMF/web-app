@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Currency } from 'app/shared/models/general.model';
 import { ActivateRecurringDepositsAccountComponent } from './activate-recurring-deposits-account/activate-recurring-deposits-account.component';
@@ -35,7 +35,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     PrematureCloseRecurringDepositAccountComponent,
     CloseRecurringDepositsAccountComponent,
     DepositRecurringDepositsAccountComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecurringDepositsAccountActionsComponent {
   private route = inject(ActivatedRoute);

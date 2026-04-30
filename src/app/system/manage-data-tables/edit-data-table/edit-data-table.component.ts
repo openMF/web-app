@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -68,7 +68,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRowDef,
     MatRow,
     MatPaginator
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditDataTableComponent implements OnInit {
   private systemService = inject(SystemService);

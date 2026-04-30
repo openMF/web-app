@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { CommonModule } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { AccountsFilterPipe } from './accounts-filter.pipe';
 import { ChargesFilterPipe } from './charges-filter.pipe';
@@ -55,7 +55,8 @@ import { YesnoPipe } from './yesno.pipe';
     YesnoPipe,
     PrettyPrintPipe,
     TranslatePipe,
-    TruncateTextPipe
+    TruncateTextPipe,
+    DecimalPipe
   ],
   exports: [
     StatusLookupPipe,
@@ -71,7 +72,8 @@ import { YesnoPipe } from './yesno.pipe';
     YesnoPipe,
     PrettyPrintPipe,
     TranslatePipe,
-    TruncateTextPipe
+    TruncateTextPipe,
+    DecimalPipe
   ]
 })
 export class PipesModule {}

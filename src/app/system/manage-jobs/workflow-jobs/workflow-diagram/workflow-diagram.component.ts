@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { DagreNodesOnlyLayout, Edge, Layout, Node, GraphModule } from '@swimlane/ngx-graph';
 import * as shape from 'd3-shape';
 import { Subject } from 'rxjs';
@@ -25,7 +25,8 @@ export class JobStep {
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     GraphModule
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WorkflowDiagramComponent implements OnInit {
   @Input() jobStepsData: JobStep[] = [];

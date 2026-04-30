@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnChanges, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnChanges, Input, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 /** rxjs Imports */
@@ -28,7 +28,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   templateUrl: './birt.component.html',
   imports: [
     ...STANDALONE_SHARED_IMPORTS
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BirtComponent implements OnChanges {
   private sanitizer = inject(DomSanitizer);

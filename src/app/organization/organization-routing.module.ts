@@ -122,7 +122,7 @@ import { LoanOriginatorsTemplateResolver } from './loan-originators/loan-origina
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'organization',
+      path: '',
       data: { title: 'Organization', breadcrumb: 'Organization' },
       children: [
         {

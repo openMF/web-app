@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { Dates } from 'app/core/utils/dates';
 
@@ -30,7 +30,8 @@ import { LoanAccountActionsBaseComponent } from '../../loan-account-actions/loan
     ...STANDALONE_SHARED_IMPORTS,
     InputAmountComponent,
     MatSlideToggle
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditTransactionComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);

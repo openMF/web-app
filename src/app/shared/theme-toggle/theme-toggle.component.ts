@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
 import { ThemingService } from './theming.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { MatIconButton } from '@angular/material/button';
@@ -21,7 +21,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ...STANDALONE_SHARED_IMPORTS,
     MatIconButton,
     M3IconComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ThemeToggleComponent implements OnInit, OnChanges {
   private themingService = inject(ThemingService);

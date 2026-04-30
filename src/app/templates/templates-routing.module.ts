@@ -28,7 +28,7 @@ import { CreateTemplateResolver } from './common-resolvers/create-template.resol
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'templates',
+      path: '',
       data: { title: 'Templates', breadcrumb: 'Templates' },
       children: [
         {

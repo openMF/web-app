@@ -1,0 +1,55 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container p-b-20">
+  <h3>{{ 'labels.heading.Working Capital Loan Balances' | translate }}</h3>
+
+  @if (loanBalances) {
+    <div class="responsive-column">
+      <div class="flex-fill layout-row">
+        <span class="flex-30"> {{ 'labels.inputs.Principal Outstanding' | translate }} </span>
+        <span class="flex-30 r-amount">{{
+          loanBalances.principalOutstanding | currency: currencyCode : 'symbol-narrow' : '1.2-2'
+        }}</span>
+      </div>
+
+      <div class="flex-fill layout-row">
+        <span class="flex-30"> {{ 'labels.inputs.Total Paid Principal' | translate }} </span>
+        <span class="flex-30 r-amount">{{
+          loanBalances.totalPaidPrincipal | currency: currencyCode : 'symbol-narrow' : '1.2-2'
+        }}</span>
+      </div>
+
+      <div class="flex-fill layout-row">
+        <span class="flex-30"> {{ 'labels.inputs.Total Payment' | translate }} </span>
+        <span class="flex-30 r-amount">{{
+          loanBalances.totalPayment | currency: currencyCode : 'symbol-narrow' : '1.2-2'
+        }}</span>
+      </div>
+
+      @if (loanBalances.overpaymentAmount > 0) {
+        <div class="flex-fill layout-row">
+          <span class="flex-30"> {{ 'labels.inputs.Overpayment Amount' | translate }} </span>
+          <span class="flex-30 r-amount">{{
+            loanBalances.overpaymentAmount | currency: currencyCode : 'symbol-narrow' : '1.2-2'
+          }}</span>
+        </div>
+      }
+
+      <div class="flex-fill layout-row">
+        <span class="flex-30"> {{ 'labels.inputs.Realized Income' | translate }} </span>
+        <span class="flex-30 r-amount">{{ loanBalances.realizedIncome | formatNumber }}</span>
+      </div>
+
+      <div class="flex-fill layout-row">
+        <span class="flex-30"> {{ 'labels.inputs.Unrealized Income' | translate }} </span>
+        <span class="flex-30 r-amount">{{ loanBalances.unrealizedIncome | formatNumber }}</span>
+      </div>
+    </div>
+  }
+</div>

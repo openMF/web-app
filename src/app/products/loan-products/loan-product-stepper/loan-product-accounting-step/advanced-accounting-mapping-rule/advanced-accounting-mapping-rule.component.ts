@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { UntypedFormArray } from '@angular/forms';
 import { MatIconButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -50,7 +50,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRow
   ],
   templateUrl: './advanced-accounting-mapping-rule.component.html',
-  styleUrl: './advanced-accounting-mapping-rule.component.scss'
+  styleUrl: './advanced-accounting-mapping-rule.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AdvancedAccountingMappingRuleComponent implements OnInit {
   dialog = inject(MatDialog);

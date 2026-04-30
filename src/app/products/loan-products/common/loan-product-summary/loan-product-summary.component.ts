@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, Input, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
 import { Breach, DelinquencyBucket, LoanProduct, NearBreach } from '../../models/loan-product.model';
 import {
   AccountingMapping,
@@ -82,7 +82,8 @@ import { LoanProductSummaryAdvAccountingComponent } from './loan-product-summary
     YesnoPipe,
     BreachDisplayComponent,
     LoanProductSummaryAdvAccountingComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanProductSummaryComponent extends LoanProductBaseComponent implements OnInit, OnChanges {
   private accounting = inject(Accounting);

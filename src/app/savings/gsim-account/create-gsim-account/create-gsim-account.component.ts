@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild, inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Components */
@@ -44,7 +44,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     SavingsAccountChargesStepComponent,
     SavingsActiveClientMembersComponent,
     SavingsAccountPreviewStepComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateGsimAccountComponent {
   private route = inject(ActivatedRoute);

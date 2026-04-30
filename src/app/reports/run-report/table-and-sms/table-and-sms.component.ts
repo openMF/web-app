@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, Input, ViewChild, OnChanges, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, ViewChild, OnChanges, inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import {
   MatTableDataSource,

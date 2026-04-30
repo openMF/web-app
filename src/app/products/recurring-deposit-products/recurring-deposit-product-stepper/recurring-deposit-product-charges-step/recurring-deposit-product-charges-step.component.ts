@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, inject } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -51,7 +51,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatStepperPrevious,
     MatStepperNext,
     ChargesFilterPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecurringDepositProductChargesStepComponent implements OnInit {
   dialog = inject(MatDialog);

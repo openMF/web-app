@@ -6,7 +6,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  inject
+} from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { GLAccount } from 'app/shared/models/general.model';
@@ -28,7 +37,8 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
     MatIconButton,
     FaIconComponent,
     AsyncPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GlAccountSelectorComponent implements OnInit, OnChanges, OnDestroy {
   private translateService = inject(TranslateService);

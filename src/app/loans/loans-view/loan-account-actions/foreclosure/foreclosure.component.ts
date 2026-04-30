@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 /** Custom Services */
@@ -22,7 +22,8 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     CdkTextareaAutosize
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ForeclosureComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);

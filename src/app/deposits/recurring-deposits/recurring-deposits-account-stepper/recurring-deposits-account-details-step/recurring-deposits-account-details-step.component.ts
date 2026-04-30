@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Input, Output, EventEmitter, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, Output, EventEmitter, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 
@@ -31,7 +31,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatStepperPrevious,
     FaIconComponent,
     MatStepperNext
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecurringDepositsAccountDetailsStepComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);

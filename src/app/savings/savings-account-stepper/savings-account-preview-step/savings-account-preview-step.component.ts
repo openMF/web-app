@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, Input, Output, EventEmitter, OnChanges, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter, OnChanges, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import {
   MatTableDataSource,
@@ -59,7 +59,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     DateFormatPipe,
     FormatNumberPipe,
     YesnoPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SavingsAccountPreviewStepComponent implements OnChanges {
   private translateService = inject(TranslateService);

@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports  */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, FormArray, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -49,7 +49,8 @@ import { AuthService } from 'app/zitadel/auth.service';
     MatCheckbox,
     MatIcon,
     MatIconButton
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewRoleComponent implements OnInit {
   private route = inject(ActivatedRoute);

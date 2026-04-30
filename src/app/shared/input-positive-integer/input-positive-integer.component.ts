@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { PositiveIntegerDirective } from '../../directives/positive-integer.directive';
@@ -20,7 +20,8 @@ import { positiveIntegerValidator } from '../validators/positive-integer.validat
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     PositiveIntegerDirective
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InputPositiveIntegerComponent implements OnInit {
   @Input() isRequired = false;

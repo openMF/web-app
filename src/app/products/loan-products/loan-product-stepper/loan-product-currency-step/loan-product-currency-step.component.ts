@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, Input, inject, DestroyRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, inject, DestroyRef } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
@@ -24,7 +24,8 @@ import { LoanProductService } from '../../services/loan-product.service';
     MatStepperPrevious,
     FaIconComponent,
     MatStepperNext
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanProductCurrencyStepComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);

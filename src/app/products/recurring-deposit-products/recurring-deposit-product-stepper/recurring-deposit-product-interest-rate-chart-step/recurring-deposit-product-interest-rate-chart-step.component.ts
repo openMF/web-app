@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -84,7 +84,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatStepperPrevious,
     MatStepperNext,
     FindPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecurringDepositProductInterestRateChartStepComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);

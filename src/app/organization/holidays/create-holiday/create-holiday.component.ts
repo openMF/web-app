@@ -8,7 +8,7 @@
 
 /** Angular Imports. */
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, OnInit, ViewChild, Injectable, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, Injectable, inject } from '@angular/core';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
@@ -58,7 +58,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatIconButton,
     MatCheckbox,
     MatIcon
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateHolidayComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);

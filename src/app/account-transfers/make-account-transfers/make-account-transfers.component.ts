@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, AfterViewInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, AfterViewInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   AbstractControl,
@@ -66,7 +66,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     FaIconComponent,
     CdkTextareaAutosize,
     MatProgressSpinner
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
   private formBuilder = inject(UntypedFormBuilder);

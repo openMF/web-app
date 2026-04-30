@@ -17,7 +17,8 @@ import { SettingsService } from 'app/settings/settings.service';
 import { DisbursementData } from './models/loan-account.model';
 
 export interface WorkingCapitalLoanDiscountUpdateRequest {
-  discountAmount: number;
+  transactionAmount: number;
+  relatedResourceId: number;
   note?: string;
   locale: string;
   dateFormat: string;
@@ -147,6 +148,10 @@ export class LoansService {
 
   getWorkingCapitalLoanDelinquencyRangeSchedule(loanId: string) {
     return this.http.get(`/working-capital-loans/${loanId}/delinquency-range-schedule`);
+  }
+
+  getWorkingCapitalLoanAmortizationSchedule(loanId: string) {
+    return this.http.get(`/working-capital-loans/${loanId}/amortization-schedule`);
   }
 
   /**
@@ -569,13 +574,6 @@ export class LoansService {
   getWorkingCapitalLoanActionTemplate(loanId: string, actionName: string): Observable<any> {
     const httpParams = new HttpParams().set('templateType', actionName);
     return this.http.get(`/working-capital-loans/${loanId}/template`, { params: httpParams });
-  }
-
-  updateWorkingCapitalLoanDiscount(
-    loanId: string | number,
-    data: WorkingCapitalLoanDiscountUpdateRequest
-  ): Observable<any> {
-    return this.http.put(`/working-capital-loans/${loanId}/discount`, data);
   }
 
   guarantorAccountResource(loanId: string, clientId: any): Observable<any> {

@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -75,7 +75,8 @@ import { LoanAccountActionsBaseComponent } from '../../loan-account-actions/loan
     TransactionPaymentDetailComponent,
     CurrencyPipe,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewTransactionComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private loansService = inject(LoansService);

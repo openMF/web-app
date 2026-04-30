@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { Alert } from 'app/core/alert/alert.model';
 import { AlertService } from 'app/core/alert/alert.service';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
@@ -34,7 +34,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ...STANDALONE_SHARED_IMPORTS,
     NgClass,
     DatePipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FooterComponent implements OnInit, OnDestroy {
   private systemService = inject(SystemService);

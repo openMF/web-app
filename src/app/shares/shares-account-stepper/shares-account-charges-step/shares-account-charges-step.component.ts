@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, OnChanges, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, OnChanges, Input, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UntypedFormControl } from '@angular/forms';
 
@@ -61,7 +61,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatStepperPrevious,
     MatStepperNext,
     ChargesFilterPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
   private dialog = inject(MatDialog);

@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports. */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
@@ -34,7 +34,8 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./edit-holiday.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditHolidayComponent implements OnInit {
   private alertService = inject(AlertService);

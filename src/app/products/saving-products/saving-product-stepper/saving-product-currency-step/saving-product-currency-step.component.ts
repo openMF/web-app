@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, Input, inject, DestroyRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, inject, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
@@ -26,7 +26,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     FaIconComponent,
     MatStepperNext,
     MatCheckbox
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SavingProductCurrencyStepComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);

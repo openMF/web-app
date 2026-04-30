@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import {
@@ -58,7 +58,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRow,
     MatPaginator,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ListStandingInstructionsComponent {
   private route = inject(ActivatedRoute);

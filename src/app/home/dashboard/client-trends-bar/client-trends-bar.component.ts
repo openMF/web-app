@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -46,7 +46,8 @@ Chart.register(...registerables);
     NgStyle,
     MatButtonToggleGroup,
     MatButtonToggle
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClientTrendsBarComponent implements OnInit {
   private homeService = inject(HomeService);

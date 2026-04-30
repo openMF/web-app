@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 import {
   AdvancePaymentAllocationData,
   CreditAllocation,
@@ -25,7 +25,8 @@ import { LoanProductService } from 'app/products/loan-products/services/loan-pro
     MatExpansionPanel,
     MatExpansionPanelHeader,
     MatExpansionPanelTitle
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewAdvancePaymenyAllocationComponent {
   protected loanProductService = inject(LoanProductService);

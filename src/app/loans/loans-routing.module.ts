@@ -79,6 +79,9 @@ import { LoanOriginatorsTabComponent } from './loans-view/loan-originators-tab/l
 import { LoanOriginatorsResolver } from './common-resolvers/loan-originators.resolver';
 import { LoanProductsResolver } from './common-resolvers/loan-products.resolver';
 import { LoanDelinquencyRangeScheduleResolver } from './common-resolvers/working-capital/loan-delinquency-actions.resolver';
+import { LoanAmortizationScheduleTabComponent } from './loans-view/working-capital/loan-amortization-schedule-tab/loan-amortization-schedule-tab.component';
+import { LoanAmortizationScheduleResolver } from './common-resolvers/working-capital/loan-amortization-schedule.resolver';
+import { LoanBalancesTabComponent } from './loans-view/working-capital/loan-balances-tab/loan-balances-tab.component';
 
 /** Loans Route. */
 const routes: Routes = [
@@ -135,6 +138,19 @@ const routes: Routes = [
             path: 'repayment-schedule',
             component: RepaymentScheduleTabComponent,
             data: { title: 'Repayment Schedule', breadcrumb: 'Repayment Schedule', routeParamBreadcrumb: false }
+          },
+          {
+            path: 'balances',
+            component: LoanBalancesTabComponent,
+            data: { title: 'Balances', breadcrumb: 'Balances', routeParamBreadcrumb: false }
+          },
+          {
+            path: 'amortization-schedule',
+            component: LoanAmortizationScheduleTabComponent,
+            data: { title: 'Amortization Schedule', breadcrumb: 'Amortization Schedule', routeParamBreadcrumb: false },
+            resolve: {
+              amortizationSchedule: LoanAmortizationScheduleResolver
+            }
           },
           {
             path: 'transactions',
@@ -449,7 +465,8 @@ const routes: Routes = [
     LoanTermVariationsResolver,
     LoanDeferredIncomeDataResolver,
     LoanBuyDownFeesDataResolver,
-    LoanProductsResolver
+    LoanProductsResolver,
+    LoanAmortizationScheduleResolver
   ]
 })
 export class LoansRoutingModule {}

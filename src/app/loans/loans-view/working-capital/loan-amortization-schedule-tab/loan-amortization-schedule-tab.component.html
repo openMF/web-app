@@ -1,0 +1,114 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container">
+  <div class="toolbar layout-row m-t-20 align-end align-items-center">
+    <span class="record-count">
+      {{ 'labels.inputs.Total Records' | translate }}: <strong>{{ dataSource.data.length | formatNumber }}</strong>
+    </span>
+    <button mat-raised-button color="primary" (click)="exportToPDF()">
+      <fa-icon icon="download" class="m-r-10"></fa-icon>{{ 'labels.buttons.Export to PDF' | translate }}
+    </button>
+  </div>
+
+  <div class="table-wrapper">
+    <table mat-table [dataSource]="dataSource" id="amortizationSchedule" class="amortization-table">
+      <ng-container matColumnDef="number">
+        <th mat-header-cell class="center mat-header-cell" *matHeaderCellDef>#</th>
+        <td mat-cell class="right" *matCellDef="let item">{{ item.paymentNo }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="paymentDate">
+        <th mat-header-cell class="center mat-header-cell" *matHeaderCellDef>
+          {{ 'labels.inputs.Payment Date' | translate }}
+        </th>
+        <td mat-cell class="m-r-5" *matCellDef="let item">{{ item.paymentDate | dateFormat }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="expectedPaymentAmount">
+        <th mat-header-cell class="r-amount mat-header-cell" *matHeaderCellDef>
+          {{ 'labels.inputs.Expected Payment Amount' | translate }}
+        </th>
+        <td mat-cell class="r-amount" *matCellDef="let item">{{ item.expectedPaymentAmount | formatNumber }}</td>
+        <td mat-footer-cell class="r-amount footer-total" *matFooterCellDef>
+          <b>{{ amortizationSchedule?.totalPaymentValue | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}</b>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="discountFactor">
+        <th mat-header-cell class="r-amount mat-header-cell" *matHeaderCellDef>
+          {{ 'labels.inputs.Discount Factor' | translate }}
+        </th>
+        <td mat-cell class="r-amount" *matCellDef="let item">{{ item.discountFactor | formatNumber }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="npvValue">
+        <th mat-header-cell class="r-amount mat-header-cell" *matHeaderCellDef>
+          {{ 'labels.inputs.NPV Value' | translate }}
+        </th>
+        <td mat-cell class="r-amount" *matCellDef="let item">{{ item.npvValue | formatNumber }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="deferredBalance">
+        <th mat-header-cell class="r-amount mat-header-cell" *matHeaderCellDef>
+          {{ 'labels.inputs.Deferred Balance' | translate }}
+        </th>
+        <td mat-cell class="r-amount" *matCellDef="let item">{{ item.deferredBalance | formatNumber }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="forecastPaymentAmount">
+        <th mat-header-cell class="r-amount mat-header-cell" *matHeaderCellDef>
+          {{ 'labels.inputs.Forecast Payment Amount' | translate }}
+        </th>
+        <td mat-cell class="r-amount" *matCellDef="let item">{{ item.forecastPaymentAmount | formatNumber }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="expectedAmortizationAmount">
+        <th mat-header-cell class="r-amount mat-header-cell" *matHeaderCellDef>
+          {{ 'labels.inputs.Expected Amortization Amount' | translate }}
+        </th>
+        <td mat-cell class="r-amount" *matCellDef="let item">{{ item.expectedAmortizationAmount | formatNumber }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="netAmortizationAmount">
+        <th mat-header-cell class="r-amount mat-header-cell" *matHeaderCellDef>
+          {{ 'labels.inputs.Net Amortization Amount' | translate }}
+        </th>
+        <td mat-cell class="r-amount" *matCellDef="let item">{{ item.netAmortizationAmount | formatNumber }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="incomeModification">
+        <th mat-header-cell class="r-amount mat-header-cell" *matHeaderCellDef>
+          {{ 'labels.inputs.Income Modification' | translate }}
+        </th>
+        <td mat-cell class="r-amount" *matCellDef="let item">{{ item.incomeModification | formatNumber }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="balance">
+        <th mat-header-cell class="r-amount mat-header-cell" *matHeaderCellDef>
+          {{ 'labels.inputs.Balance' | translate }}
+        </th>
+        <td mat-cell class="r-amount" *matCellDef="let item">{{ item.balance | formatNumber }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns" class="table-row"></tr>
+      <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr>
+    </table>
+  </div>
+</div>

@@ -7,7 +7,16 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  OnDestroy,
+  Input,
+  Output,
+  EventEmitter,
+  inject
+} from '@angular/core';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
@@ -47,7 +56,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatStepperPrevious,
     FaIconComponent,
     MatStepperNext
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClientGeneralStepComponent implements OnInit, OnDestroy {
   private formBuilder = inject(UntypedFormBuilder);

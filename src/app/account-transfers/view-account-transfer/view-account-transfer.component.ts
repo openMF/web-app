@@ -8,7 +8,7 @@
 
 /** Angular Imports */
 import { Location, NgIf, NgClass } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatDivider } from '@angular/material/divider';
@@ -27,7 +27,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatDivider,
     DateFormatPipe,
     FormatNumberPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewAccountTransferComponent {
   private route = inject(ActivatedRoute);

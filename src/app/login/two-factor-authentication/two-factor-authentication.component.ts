@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** rxjs Imports */
@@ -38,7 +38,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatPrefix,
     FaIconComponent,
     MatHint
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TwoFactorAuthenticationComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);

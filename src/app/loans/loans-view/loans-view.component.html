@@ -80,7 +80,7 @@
                     </tbody>
                   </table>
                 </div>
-                @if (loanDisplayArrearsDelinquency !== 1) {
+                @if (loanProductService.isLoanProduct && loanDisplayArrearsDelinquency !== 1) {
                   <div>
                     <table class="account-overview">
                       <tbody>
@@ -109,6 +109,29 @@
                             <td>{{ loanDetailsData?.delinquent.delinquentDays | formatNumber }}</td>
                           </tr>
                         }
+                      </tbody>
+                    </table>
+                  </div>
+                }
+                @if (
+                  loanProductService.isWorkingCapital &&
+                  loanDetailsData?.collectionData &&
+                  loanDetailsData.collectionData.delinquentDays > 0
+                ) {
+                  <div>
+                    <table class="account-overview">
+                      <tbody>
+                        <tr>
+                          <td>{{ 'labels.inputs.Delinquency Classification' | translate }} :</td>
+                          <td>
+                            <span class="m-r-3"><i [ngClass]="loanDelinquencyClassificationStyle"></i></span>
+                            {{ loanDetailsData?.delinquencyBucket?.name }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>{{ 'labels.inputs.Delinquent Days' | translate }} :</td>
+                          <td>{{ loanDetailsData?.collectionData.delinquentDays | formatNumber }}</td>
+                        </tr>
                       </tbody>
                     </table>
                   </div>
@@ -158,6 +181,36 @@
                           <td>{{ 'labels.inputs.Overpaid By' | translate }}</td>
                           <td class="r-amount">
                             {{ loanDetailsData.totalOverpaid | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+                          </td>
+                        </tr>
+                      }
+                    </tbody>
+                  </table>
+                </div>
+              }
+
+              @if (loanDetailsData.balance) {
+                <div class="loans-overview mat-typography flex-30">
+                  <h3>{{ 'labels.heading.Account Overview' | translate }}</h3>
+                  <table class="account-overview">
+                    <tbody>
+                      <tr>
+                        <td>{{ 'labels.inputs.Current Balance' | translate }}</td>
+                        <td class="r-amount">
+                          {{
+                            loanDetailsData.balance.principalOutstanding
+                              | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                          }}
+                        </td>
+                      </tr>
+                      @if (loanDetailsData.balance?.overpaymentAmount > 0) {
+                        <tr>
+                          <td>{{ 'labels.inputs.Overpaid By' | translate }}</td>
+                          <td class="r-amount">
+                            {{
+                              loanDetailsData.balance.overpaymentAmount
+                                | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                            }}
                           </td>
                         </tr>
                       }
@@ -287,18 +340,48 @@
             {{ 'labels.inputs.General' | translate }}
           </a>
         }
-        <a
-          mat-tab-link
-          [routerLink]="['./repayment-schedule']"
-          [queryParams]="{
-            productType: loanProductService.productType.value
-          }"
-          routerLinkActive
-          #repaymentSchedule="routerLinkActive"
-          [active]="repaymentSchedule.isActive"
-        >
-          {{ 'labels.inputs.Repayment Schedule' | translate }}
-        </a>
+        @if (loanProductService.isLoanProduct) {
+          <a
+            mat-tab-link
+            [routerLink]="['./repayment-schedule']"
+            [queryParams]="{
+              productType: loanProductService.productType.value
+            }"
+            routerLinkActive
+            #repaymentSchedule="routerLinkActive"
+            [active]="repaymentSchedule.isActive"
+          >
+            {{ 'labels.inputs.Repayment Schedule' | translate }}
+          </a>
+        }
+        @if (loanProductService.isWorkingCapital) {
+          <a
+            mat-tab-link
+            [routerLink]="['./balances']"
+            [queryParams]="{
+              productType: loanProductService.productType.value
+            }"
+            routerLinkActive
+            #balances="routerLinkActive"
+            [active]="balances.isActive"
+          >
+            {{ 'labels.inputs.Balances' | translate }}
+          </a>
+          @if (loanStatus.active) {
+            <a
+              mat-tab-link
+              [routerLink]="['./amortization-schedule']"
+              [queryParams]="{
+                productType: loanProductService.productType.value
+              }"
+              routerLinkActive
+              #amortizationSchedule="routerLinkActive"
+              [active]="amortizationSchedule.isActive"
+            >
+              {{ 'labels.inputs.Amortization Schedule' | translate }}
+            </a>
+          }
+        }
         @if (loanDetailsData.transactions) {
           <a
             mat-tab-link

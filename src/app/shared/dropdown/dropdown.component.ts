@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { MatIconButton } from '@angular/material/button';
@@ -21,7 +21,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ...STANDALONE_SHARED_IMPORTS,
     MatIconButton,
     MatIcon
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DropdownComponent {
   private translateService = inject(TranslateService);

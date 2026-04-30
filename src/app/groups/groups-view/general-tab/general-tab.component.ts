@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
 import {
@@ -53,7 +53,8 @@ import { GroupsService } from '../../groups.service';
     StatusLookupPipe,
     AccountsFilterPipe,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GeneralTabComponent {
   private route = inject(ActivatedRoute);

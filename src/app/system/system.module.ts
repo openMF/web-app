@@ -74,7 +74,6 @@ import { ManageJobsComponent } from './manage-jobs/manage-jobs.component';
 import { ManageSchedulerJobsComponent } from './manage-jobs/scheduler-jobs/manage-scheduler-jobs.component';
 import { WorkflowDiagramComponent } from './manage-jobs/workflow-jobs/workflow-diagram/workflow-diagram.component';
 import { NgxGraphModule } from '@swimlane/ngx-graph';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WorkflowJobsComponent } from './manage-jobs/workflow-jobs/workflow-jobs.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ManageExternalEventsComponent } from './manage-external-events/manage-external-events.component';
@@ -94,7 +93,6 @@ import { AboutUsComponent } from './about-us/about-us.component';
     SharedModule,
     PipesModule,
     NgxGraphModule,
-    BrowserAnimationsModule,
     DragDropModule,
     DirectivesModule,
     SystemComponent,

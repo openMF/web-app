@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, OnDestroy, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, ViewChild, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
@@ -71,7 +71,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRowDef,
     MatRow,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewCampaignComponent implements OnInit, OnDestroy {
   private router = inject(Router);

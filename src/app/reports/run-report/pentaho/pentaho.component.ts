@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnChanges, OnDestroy, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnChanges, OnDestroy, Input, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 /** Custom Services */
@@ -25,7 +25,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./pentaho.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PentahoComponent implements OnChanges, OnDestroy {
   private sanitizer = inject(DomSanitizer);

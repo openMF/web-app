@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, ViewChild, AfterViewInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, AfterViewInit, inject } from '@angular/core';
 import { MatCheckbox } from '@angular/material/checkbox';
 
 import { MatPaginator } from '@angular/material/paginator';
@@ -67,7 +67,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatPaginator,
     AsyncPipe,
     StatusLookupPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GroupsComponent implements OnInit, AfterViewInit {
   private groupsService = inject(GroupsService);

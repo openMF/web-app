@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
 import { I18nService } from 'app/core/i18n/i18n.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -47,7 +47,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     LoansAccountScheduleStepComponent,
     LoansAccountDatatableStepComponent,
     LoansAccountPreviewStepComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateGlimAccountComponent {
   private route = inject(ActivatedRoute);

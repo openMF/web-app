@@ -7,7 +7,16 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Input, OnChanges, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  inject
+} from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
@@ -86,12 +95,14 @@ interface DisbursementData {
     DateFormatPipe,
     YesnoPipe,
     BreachDisplayComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoansAccountTermsStepComponent extends LoanProductBaseComponent implements OnInit, OnChanges {
   private formBuilder = inject(UntypedFormBuilder);
   private settingsService = inject(SettingsService);
   private route = inject(ActivatedRoute);
+  private cdr = inject(ChangeDetectorRef);
   dialog = inject(MatDialog);
 
   /** Loans Product Options */
@@ -189,7 +200,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
   /**
    * Executes on change of input values
    */
-  ngOnChanges() {
+  ngOnChanges(changes: SimpleChanges) {
     if (this.loanProductService.isLoanProduct) {
       if (this.loansAccountProductTemplate) {
         this.currency = this.loansAccountProductTemplate.currency;
@@ -332,10 +343,16 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
       this.delinquencyStartTypeOptions = this.loansAccountTermsData.options?.delinquencyStartTypeOptions;
       this.breachOptions = this.loansAccountTermsData.options?.breachOptions ?? [];
       this.nearBreachOptions = this.loansAccountTermsData.options?.nearBreachOptions ?? [];
+      const templateChange = changes['loansAccountProductTemplate'];
+      const productChanged =
+        !!templateChange &&
+        (templateChange.isFirstChange() ||
+          templateChange.previousValue?.product?.id !== templateChange.currentValue?.product?.id);
+      // Edit Loan
       if (this.loanId != null && 'accountNo' in this.loansAccountTemplate) {
         this.loansAccountTermsData = this.loansAccountTemplate;
         this.loansAccountTermsForm.patchValue({
-          discount: this.loansAccountTermsData.discount || '',
+          discount: this.loansAccountTermsData.discountProposed || this.loansAccountTermsData.discount || '',
           principalAmount: this.loansAccountTermsData.proposedPrincipal,
           periodPaymentRate: this.loansAccountTermsData.periodPaymentRate,
           totalPayment: this.loansAccountTermsData.balance?.totalPayment,
@@ -346,7 +363,8 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
           breachId: this.loansAccountTermsData.breach?.id,
           nearBreachId: this.loansAccountTermsData.nearBreach?.id
         });
-      } else {
+        // New Loan — solo inicializar si el producto realmente cambió
+      } else if (productChanged) {
         this.loansAccountTermsForm.patchValue({
           discount: this.loansAccountTermsData.product.discount || '',
           principalAmount: this.loansAccountTermsData.product.principal,
@@ -355,6 +373,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
           breachId: this.loansAccountTermsData.product.breach?.id || '',
           nearBreachId: this.loansAccountTermsData.product.nearBreach?.id || ''
         });
+        this.cdr.markForCheck();
       }
       this.allowAttributeOverrides = this.loansAccountProductTemplate.product.allowAttributeOverrides;
       if (

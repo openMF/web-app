@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, Input, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
 import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -47,7 +47,8 @@ import { LoanProductBaseComponent } from '../../common/loan-product-base.compone
     MatStepperPrevious,
     MatStepperNext,
     AdvancedAccountingMappingRuleComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanProductAccountingStepComponent extends LoanProductBaseComponent implements OnInit, OnChanges {
   private formBuilder = inject(UntypedFormBuilder);
