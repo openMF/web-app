@@ -1086,7 +1086,7 @@
       "No classification data available": "Nejsou nalezeny žádná klasifikační data",
       "No": "Ne",
       "Yes": "Ano",
-      "Caps Lock is on": "Caps Lock is on"
+      "Caps Lock is on": "Caps Lock je zapnutý"
     },
     "passwordPreferences": {
       "Password most be at least 1 character and not more that 50 characters long": "Heslo musí obsahovat alespoň 1 znak a ne více než 50 znaků",

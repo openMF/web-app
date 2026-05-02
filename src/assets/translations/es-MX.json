@@ -1087,7 +1087,7 @@
       "No classification data available": "No se encontraron datos de clasificación",
       "No": "No",
       "Yes": "Sí",
-      "Caps Lock is on": "Caps Lock is on"
+      "Caps Lock is on": "El bloqueo de mayúsculas está activado"
     },
     "passwordPreferences": {
       "Password most be at least 1 character and not more that 50 characters long": "La contraseña debe tener al menos 1 carácter y no más de 50 caracteres",
