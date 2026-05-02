@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright since 2025 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -182,6 +182,12 @@
       color: var(--md-sys-color-error, #ba1a1a);
     }
   }
+}
+
+.caps-lock-warning {
+  color: var(--md-sys-color-error, #ba1a1a);
+  margin-right: 8px;
+  cursor: help;
 }
 
 // ===== Loading Progress =====

@@ -57,6 +57,8 @@ export class LoginFormComponent implements OnInit {
   oauthEnabled = environment.OIDC.oidcServerEnabled || environment.oauth.enabled;
   /** Whether remember me functionality is enabled */
   enableRememberMe = environment.enableRememberMe === true;
+  /** True if Caps Lock is on. */
+  isCapsLockOn = false;
 
   /**
    * Creates login form.
@@ -158,5 +160,13 @@ export class LoginFormComponent implements OnInit {
 
   onEnter(event: any): void {
     this.login();
+  }
+
+  /**
+   * Checks the state of the Caps Lock key.
+   * @param {KeyboardEvent} event - Keyboard event.
+   */
+  checkCapsLock(event: KeyboardEvent) {
+    this.isCapsLockOn = event.getModifierState('CapsLock');
   }
 }

@@ -1068,6 +1068,7 @@
       "Is": "is",
       "is required": "is required",
       "pass is required": "is required (min length {{min}})",
+      "Caps Lock is on": "Caps Lock is on",
       "least one uppercase": "least one uppercase",
       "lowercase and special character": "lowercase and special character",
       "must be": "must be",

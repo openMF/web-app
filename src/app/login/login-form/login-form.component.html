@@ -38,8 +38,18 @@
           formControlName="password"
           [placeholder]="'labels.placeholders.Enter your password' | translate"
           (keyup.enter)="onEnter($event)"
+          (keydown)="checkCapsLock($event)"
+          (keyup)="checkCapsLock($event)"
         />
         <mifosx-m3-icon matIconPrefix name="lock"></mifosx-m3-icon>
+        @if (isCapsLockOn) {
+          <mifosx-m3-icon
+            matSuffix
+            name="keyboard_capslock"
+            [matTooltip]="'labels.commons.Caps Lock is on' | translate"
+            class="caps-lock-warning"
+          ></mifosx-m3-icon>
+        }
         @if (loginForm.controls.password.value && !loading) {
           <button
             type="button"
