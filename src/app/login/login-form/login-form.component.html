@@ -40,6 +40,7 @@
           (keyup.enter)="onEnter($event)"
           (keydown)="checkCapsLock($event)"
           (keyup)="checkCapsLock($event)"
+          (blur)="isCapsLockOn = false"
         />
         <mifosx-m3-icon matIconPrefix name="lock"></mifosx-m3-icon>
         @if (isCapsLockOn) {
@@ -47,6 +48,9 @@
             matSuffix
             name="keyboard_capslock"
             [matTooltip]="'labels.commons.Caps Lock is on' | translate"
+            role="status"
+            aria-live="polite"
+            [attr.aria-label]="'labels.commons.Caps Lock is on' | translate"
             class="caps-lock-warning"
           ></mifosx-m3-icon>
         }
