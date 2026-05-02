@@ -1083,7 +1083,8 @@
       "must be after or equal to start date": "सुरु मिति पछि वा बराबर हुनुपर्छ",
       "No classification data available": "कुनै वर्गीकरण डाटा उपलब्ध छैन",
       "No": "छैन",
-      "Yes": "हो"
+      "Yes": "हो",
+      "Caps Lock is on": "Caps Lock is on"
     },
     "passwordPreferences": {
       "Password most be at least 1 character and not more that 50 characters long": "पासवर्ड कम्तिमा १ क्यारेक्टर र ५० क्यारेक्टरभन्दा बढी नहुने हुनुपर्छ",
@@ -3495,7 +3496,6 @@
       "Edit Group": "समूह सम्पादन गर्नुहोस्",
       "Edit Holidays": "बिदाहरू सम्पादन गर्नुहोस्",
       "Edit Hook": "हुक सम्पादन गर्नुहोस्",
-      "Edit Loan Originator": "ऋण सुरुवातकर्ता सम्पादन गर्नुहोस्",
       "Edit Loan Product": "ऋण उत्पादन सम्पादन गर्नुहोस्",
       "Edit Near Breach": "लगभग उल्लंघन सम्पादन गर्नुहोस्",
       "Edit Notification Configuration": "सूचना कन्फिगरेसन सम्पादन गर्नुहोस्",
@@ -3894,7 +3894,6 @@
       "View Group": "समूह हेर्नुहोस्",
       "View Holidays": "बिदाहरू हेर्नुहोस्",
       "View Hook": "हुक हेर्नुहोस्",
-      "View Loan Originator": "ऋण सुरुवातकर्ता हेर्नुहोस्",
       "View Loan Product": "ऋण उत्पादन हेर्नुहोस्",
       "View Near Breach": "लगभग उल्लंघन हेर्नुहोस्",
       "View Notification Configuration": "सूचना कन्फिगरेसन हेर्नुहोस्",

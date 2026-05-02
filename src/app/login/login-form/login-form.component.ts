@@ -164,9 +164,11 @@ export class LoginFormComponent implements OnInit {
 
   /**
    * Checks the state of the Caps Lock key.
-   * @param {KeyboardEvent} event - Keyboard event.
+   * @param {KeyboardEvent | MouseEvent} event - Keyboard or Mouse event.
    */
-  checkCapsLock(event: KeyboardEvent) {
-    this.isCapsLockOn = event.getModifierState('CapsLock');
+  checkCapsLock(event: any) {
+    if (event instanceof KeyboardEvent || event instanceof MouseEvent) {
+      this.isCapsLockOn = event.getModifierState('CapsLock');
+    }
   }
 }

@@ -40,6 +40,8 @@
           (keyup.enter)="onEnter($event)"
           (keydown)="checkCapsLock($event)"
           (keyup)="checkCapsLock($event)"
+          (focus)="checkCapsLock($event)"
+          (click)="checkCapsLock($event)"
           (blur)="isCapsLockOn = false"
         />
         <mifosx-m3-icon matIconPrefix name="lock"></mifosx-m3-icon>

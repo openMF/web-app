@@ -1083,7 +1083,8 @@
       "must be after or equal to start date": "debe ser posterior o igual a la fecha de inicio",
       "No classification data available": "No hay datos de clasificación encontradas",
       "No": "No",
-      "Yes": "Sí"
+      "Yes": "Sí",
+      "Caps Lock is on": "Caps Lock is on"
     },
     "passwordPreferences": {
       "Password most be at least 1 character and not more that 50 characters long": "La contraseña debe tener al menos 1 carácter y no más de 50 caracteres",
@@ -3382,8 +3383,8 @@
       "Create Journal Entry": "Crear entrada de diario",
       "Create Loan Product": "Crear producto de Crédito",
       "Create Loan Originator": "Crear Originador de Créditos",
-      "View Loan Originator": "Ver Originador de Créditos",
-      "Edit Loan Originator": "Editar Originador de Créditos",
+      "View Loan Originator": "Ver Originador de Préstamo",
+      "Edit Loan Originator": "Editar Originador de Préstamo",
       "Create Loans Account": "Crear cuenta de Créditos",
       "Create Near Breach": "Crear Cuasi Incumplimiento",
       "Create New GL Account": "Esta opción le permite crear nuevas cuentas GL.",
@@ -3497,7 +3498,6 @@
       "Edit Group": "Editar grupo",
       "Edit Holidays": "Editar días festivos",
       "Edit Hook": "Editar gancho",
-      "Edit Loan Originator": "Editar Originador de Préstamo",
       "Edit Loan Product": "Editar producto de Crédito",
       "Edit Near Breach": "Editar Cuasi Incumplimiento",
       "Edit Notification Configuration": "Editar configuración de notificación",
@@ -3896,7 +3896,6 @@
       "View Group": "Ver grupo",
       "View Holidays": "Ver festivos",
       "View Hook": "Ver gancho",
-      "View Loan Originator": "Ver Originador de Préstamo",
       "View Loan Product": "Ver producto de Crédito",
       "View Near Breach": "Ver Cuasi Incumplimiento",
       "View Notification Configuration": "Ver configuración de notificación",

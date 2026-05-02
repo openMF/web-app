@@ -1085,7 +1085,8 @@
       "must be after or equal to start date": "musí být po nebo rovno datu zahájení",
       "No classification data available": "Nejsou nalezeny žádná klasifikační data",
       "No": "Ne",
-      "Yes": "Ano"
+      "Yes": "Ano",
+      "Caps Lock is on": "Caps Lock is on"
     },
     "passwordPreferences": {
       "Password most be at least 1 character and not more that 50 characters long": "Heslo musí obsahovat alespoň 1 znak a ne více než 50 znaků",
@@ -3381,8 +3382,8 @@
       "Create Journal Entry": "Vytvořit položku deníku",
       "Create Loan Product": "Vytvořte produkt půjčky",
       "Create Loan Originator": "Vytvořit poskytovatele úvěrů",
-      "View Loan Originator": "Zobrazit poskytovatele úvěrů",
-      "Edit Loan Originator": "Upravit poskytovatele úvěrů",
+      "View Loan Originator": "Zobrazit Původce Úvěru",
+      "Edit Loan Originator": "Upravit Původce Úvěru",
       "Create Loans Account": "Vytvořit úvěrový účet",
       "Create Near Breach": "Vytvořit Téměř Porušení",
       "Create New GL Account": "Tato možnost umožňuje vytvářet nové účty hlavní knihy.",
@@ -3496,7 +3497,6 @@
       "Edit Group": "Upravit skupinu",
       "Edit Holidays": "Upravit svátky",
       "Edit Hook": "Upravit Hook",
-      "Edit Loan Originator": "Upravit Původce Úvěru",
       "Edit Loan Product": "Upravit produkt půjčky",
       "Edit Near Breach": "Upravit Téměř Porušení",
       "Edit Notification Configuration": "Upravit konfiguraci oznámení",
@@ -3894,7 +3894,6 @@
       "View Group": "Zobrazit skupinu",
       "View Holidays": "Zobrazit svátky",
       "View Hook": "Zobrazit Hook",
-      "View Loan Originator": "Zobrazit Původce Úvěru",
       "View Loan Product": "Zobrazit produkt půjčky",
       "View Near Breach": "Zobrazit Téměř Porušení",
       "View Notification Configuration": "Zobrazit konfiguraci oznámení",

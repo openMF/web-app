@@ -1087,7 +1087,8 @@
       "must be after or equal to start date": "doit être postérieure ou égale à la date de début",
       "No classification data available": "Aucune donnée de classification trouvé",
       "No": "Non",
-      "Yes": "Oui"
+      "Yes": "Oui",
+      "Caps Lock is on": "Caps Lock is on"
     },
     "passwordPreferences": {
       "Password most be at least 1 character and not more that 50 characters long": "Le mot de passe doit contenir au moins 1 caractère et pas plus de 50 caractères",
@@ -3384,8 +3385,8 @@
       "Create Journal Entry": "Créer une entrée de journal",
       "Create Loan Product": "Créer un produit de prêt",
       "Create Loan Originator": "Créer un courtier en prêts",
-      "View Loan Originator": "Voir le courtier en prêts",
-      "Edit Loan Originator": "Modifier le courtier en prêts",
+      "View Loan Originator": "Afficher l'Initiateur de Prêt",
+      "Edit Loan Originator": "Modifier l'Initiateur de Prêt",
       "Create Loans Account": "Créer un compte de prêts",
       "Create Near Breach": "Créer un Quasi-Dépassement",
       "Create New GL Account": "Cette option vous permet de créer de nouveaux comptes GL.",
@@ -3499,7 +3500,6 @@
       "Edit Group": "Modifier le groupe",
       "Edit Holidays": "Modifier les jours fériés",
       "Edit Hook": "Modifier le crochet",
-      "Edit Loan Originator": "Modifier l'Initiateur de Prêt",
       "Edit Loan Product": "Modifier le produit de prêt",
       "Edit Near Breach": "Modifier un Quasi-Dépassement",
       "Edit Notification Configuration": "Modifier la configuration des notifications",
@@ -3897,7 +3897,6 @@
       "View Group": "Afficher le groupe",
       "View Holidays": "Voir les jours fériés",
       "View Hook": "Voir le crochet",
-      "View Loan Originator": "Afficher l'Initiateur de Prêt",
       "View Loan Product": "Voir le produit de prêt",
       "View Near Breach": "Afficher un Quasi-Dépassement",
       "View Notification Configuration": "Afficher la configuration des notifications",

@@ -1083,7 +1083,8 @@
       "must be after or equal to start date": "turi būti po pradžios datos arba jai lygi",
       "No classification data available": "Nėra klasifikacijos duomenų",
       "No": "Ne",
-      "Yes": "Taip"
+      "Yes": "Taip",
+      "Caps Lock is on": "Caps Lock is on"
     },
     "passwordPreferences": {
       "Password most be at least 1 character and not more that 50 characters long": "Slaptažodis turi būti ne mažiau kaip 1 simbolis ir ne daugiau kaip 50 simbolių",
@@ -3380,8 +3381,8 @@
       "Create Journal Entry": "Sukurti žurnalo įrašą",
       "Create Loan Product": "Sukurti paskolos produktą",
       "Create Loan Originator": "Sukurti paskolos teikėją",
-      "View Loan Originator": "Peržiūrėti paskolos teikėją",
-      "Edit Loan Originator": "Redaguoti paskolos teikėją",
+      "View Loan Originator": "Peržiūrėti Paskolos Teikėją",
+      "Edit Loan Originator": "Redaguoti Paskolos Teikėją",
       "Create Loans Account": "Sukurti paskolų sąskaitą",
       "Create Near Breach": "Sukurti Beveik Pažeidimą",
       "Create New GL Account": "Ši parinktis leidžia kurti naujas GL paskyras.",
@@ -3495,7 +3496,6 @@
       "Edit Group": "Redaguoti grupę",
       "Edit Holidays": "Redaguoti šventes",
       "Edit Hook": "Redaguoti kabliuką",
-      "Edit Loan Originator": "Redaguoti Paskolos Teikėją",
       "Edit Loan Product": "Redaguoti paskolos produktą",
       "Edit Near Breach": "Redaguoti Beveik Pažeidimą",
       "Edit Notification Configuration": "Redaguoti pranešimų konfigūraciją",
@@ -3894,7 +3894,6 @@
       "View Group": "Peržiūrėti grupę",
       "View Holidays": "Žiūrėti šventes",
       "View Hook": "Žiūrėti kabliuką",
-      "View Loan Originator": "Peržiūrėti Paskolos Teikėją",
       "View Loan Product": "Peržiūrėkite paskolos produktą",
       "View Near Breach": "Peržiūrėti Beveik Pažeidimą",
       "View Notification Configuration": "Peržiūrėkite pranešimų konfigūraciją",
