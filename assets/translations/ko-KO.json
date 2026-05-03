@@ -1,4 +1,4 @@
-{
+﻿{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "다음 계정으로 로그인됨",
   "Remember me": "날 기억해",
@@ -2658,6 +2658,7 @@
       "Revised Meeting Date": "수정된 회의 날짜",
       "Role": "역할",
       "Role Description": "역할 설명",
+      "This role provides all application permissions": "이 역할은 모든 애플리케이션 권한을 제공합니다.",
       "Role Name": "역할 이름",
       "Roles": "역할",
       "Roles Loan Products": "역할 --> 대출 상품",
@@ -3502,7 +3503,6 @@
       "Edit Group": "그룹 편집",
       "Edit Holidays": "공휴일 수정",
       "Edit Hook": "후크 편집",
-      "Edit Loan Originator": "대출 담당자 수정",
       "Edit Loan Product": "대출상품 수정",
       "Edit Near Breach": "근접 위반 수정",
       "Edit Notification Configuration": "알림 구성 편집",
@@ -3901,7 +3901,6 @@
       "View Group": "그룹 보기",
       "View Holidays": "휴일 보기",
       "View Hook": "후크 보기",
-      "View Loan Originator": "대출 담당자 보기",
       "View Loan Product": "대출상품 보기",
       "View Near Breach": "근접 위반 보기",
       "View Notification Configuration": "알림 구성 보기",

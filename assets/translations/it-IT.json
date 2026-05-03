@@ -1,4 +1,4 @@
-{
+﻿{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "Collegato come",
   "Remember me": "Ricordati di me",
@@ -2657,6 +2657,7 @@
       "Revised Meeting Date": "Data della riunione modificata",
       "Role": "Ruolo",
       "Role Description": "Descrizione del ruolo",
+      "This role provides all application permissions": "Questo ruolo fornisce tutte le autorizzazioni dell'applicazione.",
       "Role Name": "Nome del ruolo",
       "Roles": "Ruoli",
       "Roles Loan Products": "Ruoli --> Prodotti di prestito",
@@ -3502,7 +3503,6 @@
       "Edit Group": "Modifica gruppo",
       "Edit Holidays": "Modifica festività",
       "Edit Hook": "Modifica gancio",
-      "Edit Loan Originator": "Modifica Originatore Prestito",
       "Edit Loan Product": "Modifica prodotto di prestito",
       "Edit Near Breach": "Modifica Quasi Violazione",
       "Edit Notification Configuration": "Modifica configurazione di notifica",
