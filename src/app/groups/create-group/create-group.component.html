@@ -165,7 +165,14 @@
         <button type="button" mat-raised-button [routerLink]="['../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>
-        <button mat-raised-button color="primary" [disabled]="!groupForm.valid" (click)="submit()">
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!groupForm.valid"
+          [mifosxNgBusy]="loading"
+          [busyText]="'labels.buttons.Creating...' | translate"
+          (click)="submit()"
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

@@ -3251,6 +3251,7 @@
     },
     "text": {
       "Loading data": "Cargando datos",
+      "no-data": "-",
       "withoutCategory": "Sin categoría",
       "No repayment schedule available": "No hay cronograma de pagos encontrado",
       "About Us": "Sobre Nosotros",

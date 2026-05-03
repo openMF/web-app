@@ -3250,6 +3250,7 @@
     },
     "text": {
       "Loading data": "Načítání dat",
+      "no-data": "-",
       "withoutCategory": "Bez kategorie",
       "No repayment schedule available": "Není nalezeny žádný splátkový kalendář",
       "About Us": "O Nás",

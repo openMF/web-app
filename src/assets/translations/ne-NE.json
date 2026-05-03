@@ -3249,6 +3249,7 @@
     },
     "text": {
       "Loading data": "डाटा लोड गर्दै",
+      "no-data": "-",
       "No repayment schedule available": "कुनै पुनर्भुक्तानी तालिका उपलब्ध छैन",
       "About Us": "हाम्रो बारेमा",
       "Account Transfers": "खाता स्थानान्तरण",

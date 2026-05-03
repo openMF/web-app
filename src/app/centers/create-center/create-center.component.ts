@@ -28,6 +28,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatNavList, MatListSubheaderCssMatStyler } from '@angular/material/list';
 import { MatLine } from '@angular/material/grid-list';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { NgBusyDirective } from '../../shared/directives/ng-busy.directive';
 
 /**
  * Create Center component.
@@ -40,6 +41,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ...STANDALONE_SHARED_IMPORTS,
     MatCheckbox,
     MatIconButton,
+    NgBusyDirective,
     FaIconComponent,
     MatNavList,
     MatListSubheaderCssMatStyler,
@@ -71,6 +73,8 @@ export class CreateCenterComponent implements OnInit {
   groupMembers: any[] = [];
   /** Group Choice. */
   groupChoice = new UntypedFormControl('');
+  /** True if loading. */
+  loading = false;
 
   /**
    * Retrieves the offices data from `resolve`.
@@ -194,8 +198,15 @@ export class CreateCenterComponent implements OnInit {
     };
     data.groupMembers = [];
     this.groupMembers.forEach((group: any) => data.groupMembers.push(group.id));
-    this.centerService.createCenter(data).subscribe((response: any) => {
-      this.router.navigate(['../centers']);
+
+    this.loading = true;
+    this.centerService.createCenter(data).subscribe({
+      next: (response: any) => {
+        this.router.navigate(['../centers']);
+      },
+      error: () => {
+        this.loading = false;
+      }
     });
   }
 }

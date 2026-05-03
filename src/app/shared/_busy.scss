@@ -1,0 +1,43 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+// ng-busy directive styles
+.busy-loading {
+  position: relative;
+  pointer-events: none;
+
+  .css-spinner {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+// Button specific busy styles
+button.busy-loading {
+  cursor: not-allowed;
+}
+
+// Dots animation for loading indicator
+@keyframes dots {
+  0%,
+  20% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  80%,
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
