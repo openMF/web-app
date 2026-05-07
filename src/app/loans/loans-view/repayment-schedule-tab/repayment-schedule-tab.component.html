@@ -27,7 +27,9 @@
         <td mat-cell class="center" *matCellDef="let item" [ngClass]="installmentStyle(item)">
           {{ item.daysInPeriod }}
         </td>
-        <td mat-footer-cell class="center" *matFooterCellDef><b> Total</b></td>
+        <td mat-footer-cell class="center" *matFooterCellDef>
+          <b>{{ 'labels.inputs.Total' | translate }}</b>
+        </td>
       </ng-container>
       <ng-container matColumnDef="date">
         <th mat-header-cell class="center mat-header-cell" *matHeaderCellDef>{{ 'labels.inputs.Date' | translate }}</th>
