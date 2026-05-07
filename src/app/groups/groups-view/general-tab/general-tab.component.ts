@@ -132,6 +132,8 @@ export class GeneralTabComponent {
   ];
   /** Boolean for toggling loan accounts table */
   showClosedLoanAccounts = false;
+  /** Show hidden savings account sections when the full account interface is needed again. */
+  showNonLoanAccounts = false;
   /** Boolean for toggling savings accounts table */
   showClosedSavingAccounts = false;
 

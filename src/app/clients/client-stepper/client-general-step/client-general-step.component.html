@@ -300,29 +300,6 @@
         }
       </mat-form-field>
     }
-
-    <mat-checkbox labelPosition="before" formControlName="addSavings" class="margin-v flex-48">
-      {{ 'labels.inputs.Open Savings Account' | translate }}?
-    </mat-checkbox>
-
-    @if (createClientForm.contains('savingsProductId')) {
-      <mat-form-field class="flex-48">
-        <mat-label>{{ 'labels.inputs.Savings Product' | translate }}</mat-label>
-        <mat-select required formControlName="savingsProductId">
-          @for (product of savingProductOptions; track product) {
-            <mat-option [value]="product.id">
-              {{ product.name }}
-            </mat-option>
-          }
-        </mat-select>
-        @if (createClientForm.controls.savingsProductId.hasError('required')) {
-          <mat-error>
-            {{ 'labels.inputs.Savings Product' | translate }} {{ 'labels.commons.is' | translate }}
-            <strong>{{ 'labels.commons.required' | translate }}</strong>
-          </mat-error>
-        }
-      </mat-form-field>
-    }
   </div>
 
   <div class="layout-row align-center gap-2percent margin-t responsive-column">

@@ -60,8 +60,6 @@ interface ClientViewData {
   officeName?: string;
   staffId?: number;
   staffName?: string;
-  savingsProductId?: number;
-  savingsProductName?: string;
   [key: string]: any; // Allow additional properties from API
 }
 

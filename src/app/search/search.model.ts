@@ -9,6 +9,7 @@
 export interface SearchData {
   entityId: number;
   entityAccountNo: string;
+  entityNumber?: string | number;
   entityExternalId: string;
   entityName: string;
   entityType: string;

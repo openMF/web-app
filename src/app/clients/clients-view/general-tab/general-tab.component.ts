@@ -255,6 +255,8 @@ export class GeneralTabComponent implements OnDestroy {
 
   /** Show Closed Loan Accounts */
   showClosedLoanAccounts = false;
+  /** Show hidden deposit/share account sections when the full account interface is needed again. */
+  showNonLoanAccounts = false;
   /** Show Closed Saving Accounts */
   showClosedSavingAccounts = false;
   /** Show Closed Share Accounts */

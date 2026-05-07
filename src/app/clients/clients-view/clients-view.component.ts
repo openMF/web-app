@@ -12,6 +12,8 @@ import { environment } from '../../../environments/environment';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
+import { forkJoin, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 /** Custom Dialogs */
 import { UnassignStaffDialogComponent } from './custom-dialogs/unassign-staff-dialog/unassign-staff-dialog.component';
@@ -142,6 +144,12 @@ export class ClientsViewComponent implements OnInit {
   clientDatatables: any;
   clientImage: any;
   clientTemplateData: any;
+  headerEntityId: string | number | null = null;
+  private readonly headerEntityIdColumnNames = [
+    'EntityID',
+    'Entity Id',
+    'entity_id'
+  ];
 
   constructor() {
     this.route.data.subscribe((data: { clientViewData: any; clientTemplateData: any; clientDatatables: any }) => {
@@ -151,6 +159,7 @@ export class ClientsViewComponent implements OnInit {
         data.clientViewData?.legalForm?.id
       );
       this.clientTemplateData = data.clientTemplateData;
+      this.loadHeaderEntityId();
     });
   }
 
@@ -164,6 +173,60 @@ export class ClientsViewComponent implements OnInit {
     }
     const subtype = legalFormId === LegalFormId.PERSON ? 'person' : 'entity';
     return datatables.filter((dt: any) => !dt.entitySubType || dt.entitySubType.toLowerCase() === subtype);
+  }
+
+  private loadHeaderEntityId(): void {
+    this.headerEntityId = null;
+    const clientId = this.clientViewData?.id?.toString();
+    const datatableNames = (this.clientDatatables || [])
+      .map((datatable: any) => datatable.registeredTableName)
+      .filter((datatableName: string) => !!datatableName);
+
+    if (!clientId || datatableNames.length === 0) {
+      return;
+    }
+
+    const datatableRequests = datatableNames.map((datatableName: string) =>
+      this.clientsService.getClientDatatable(clientId, datatableName).pipe(catchError(() => of(null)))
+    );
+
+    forkJoin(datatableRequests).subscribe((datatables: any[]) => {
+      this.headerEntityId = this.getFirstHeaderEntityId(datatables);
+    });
+  }
+
+  private getFirstHeaderEntityId(datatables: any[]): string | number | null {
+    for (const datatable of datatables) {
+      const entityId = this.getDatatableColumnValue(datatable, this.headerEntityIdColumnNames);
+      if (entityId !== null) {
+        return entityId;
+      }
+    }
+    return null;
+  }
+
+  private getDatatableColumnValue(datatable: any, columnNames: string[]): string | number | null {
+    const row = datatable?.data?.[0]?.row;
+    const columnHeaders = datatable?.columnHeaders || [];
+    if (!row || columnHeaders.length === 0) {
+      return null;
+    }
+
+    const normalizedColumnNames = columnNames.map((columnName: string) => this.normalizeColumnName(columnName));
+    const columnIndex = columnHeaders.findIndex((columnHeader: any) =>
+      normalizedColumnNames.includes(this.normalizeColumnName(columnHeader?.columnName))
+    );
+
+    if (columnIndex === -1) {
+      return null;
+    }
+
+    const value = row[columnIndex];
+    return value === undefined || value === null || value === '' ? null : value;
+  }
+
+  private normalizeColumnName(columnName: string): string {
+    return (columnName || '').replace(/[_\s-]/g, '').toLowerCase();
   }
 
   ngOnInit() {
@@ -200,7 +263,6 @@ export class ClientsViewComponent implements OnInit {
       case 'Reject':
       case 'Activate':
       case 'Withdraw':
-      case 'Update Default Savings':
       case 'Transfer Client':
       case 'Undo Transfer':
       case 'Accept Transfer':

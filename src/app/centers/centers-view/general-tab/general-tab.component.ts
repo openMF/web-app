@@ -57,6 +57,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 export class GeneralTabComponent {
   private route = inject(ActivatedRoute);
 
+  /** Show hidden savings account section when the full account interface is needed again. */
+  showNonLoanAccounts = false;
+
   /** Savings Account Table Columns */
   savingsAccountColumns: string[] = [
     'Account No',

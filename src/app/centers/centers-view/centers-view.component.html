@@ -126,21 +126,6 @@
           </mat-icon>
           <span>{{ 'labels.buttons.Manage Groups' | translate }}</span>
         </button>
-        @if (centerViewData.active) {
-          <span>
-            <button
-              [disabled]="true"
-              mat-menu-item
-              *mifosxHasPermission="'CREATE_SAVINGSACCOUNT'"
-              [routerLink]="['savings-accounts', 'create']"
-            >
-              <mat-icon matListIcon>
-                <fa-icon icon="file" size="sm"></fa-icon>
-              </mat-icon>
-              <span>{{ 'labels.buttons.Centers Saving Application' | translate }}</span>
-            </button>
-          </span>
-        }
         <button mat-menu-item [matMenuTriggerFor]="More">{{ 'labels.buttons.More' | translate }}</button>
         <mat-menu #More="matMenu">
           @if (centerViewData.collectionMeetingCalendar) {

@@ -89,15 +89,6 @@
     </div>
   }
 
-  @if (client.savingsProductId) {
-    <div class="flex-fill">
-      <span class="flex-40">{{ 'labels.inputs.Savings Product' | translate }}</span>
-      <span class="flex-60">{{
-        client.savingsProductId | find: clientTemplate.savingProductOptions : 'id' : 'name'
-      }}</span>
-    </div>
-  }
-
   @if (client.submittedOnDate) {
     <div class="flex-fill">
       <span class="flex-40">{{ 'labels.inputs.Submitted On Date' | translate }}</span>

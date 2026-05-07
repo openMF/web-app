@@ -90,9 +90,6 @@ export class ClientGeneralStepComponent implements OnInit, OnDestroy {
   constitutionOptions: any;
   /** Gender Options */
   genderOptions: any;
-  /** Saving Product Options */
-  savingProductOptions: any;
-
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {Dates} dateUtils Date Utils
@@ -126,7 +123,6 @@ export class ClientGeneralStepComponent implements OnInit, OnDestroy {
       ],
       isStaff: [false],
       active: [false],
-      addSavings: [false],
       accountNo: [''],
       externalId: [''],
       genderId: [''],
@@ -157,7 +153,6 @@ export class ClientGeneralStepComponent implements OnInit, OnDestroy {
     this.businessLineOptions = this.clientTemplate.clientNonPersonMainBusinessLineOptions;
     this.constitutionOptions = this.clientTemplate.clientNonPersonConstitutionOptions;
     this.genderOptions = this.clientTemplate.genderOptions;
-    this.savingProductOptions = this.clientTemplate.savingProductOptions;
   }
 
   /**
@@ -225,16 +220,6 @@ export class ClientGeneralStepComponent implements OnInit, OnDestroy {
         }
       });
     this.createClientForm
-      .get('addSavings')
-      .valueChanges.pipe(takeUntil(this.destroy$))
-      .subscribe((active: boolean) => {
-        if (active) {
-          this.createClientForm.addControl('savingsProductId', new UntypedFormControl('', Validators.required));
-        } else {
-          this.createClientForm.removeControl('savingsProductId');
-        }
-      });
-    this.createClientForm
       .get('officeId')
       .valueChanges.pipe(
         filter((officeId: number) => !!officeId),
@@ -263,7 +248,7 @@ export class ClientGeneralStepComponent implements OnInit, OnDestroy {
     const dateFormat = this.settingsService.dateFormat;
     const locale = this.settingsService.language.code;
     for (const key in generalDetails) {
-      if (generalDetails[key] === '' || key === 'addSavings') {
+      if (generalDetails[key] === '') {
         delete generalDetails[key];
       }
     }

@@ -104,13 +104,5 @@
         <mifosx-loan-account-table [loanAccountData]="groupAccountsData.loanAccounts"></mifosx-loan-account-table>
       </mat-tab>
     }
-
-    @if (groupAccountsData && groupAccountsData.savingsAccounts) {
-      <mat-tab label="Savings Accounts">
-        <mifosx-savings-account-table
-          [savingsAccountData]="groupAccountsData.savingsAccounts"
-        ></mifosx-savings-account-table>
-      </mat-tab>
-    }
   </mat-tab-group>
 </mat-card-content>

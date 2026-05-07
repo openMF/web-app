@@ -11,7 +11,6 @@ import { Component, Input, ViewChild } from '@angular/core';
 
 /** Custom Components */
 import { LoanAccountTableComponent } from '../loan-account-table/loan-account-table.component';
-import { SavingsAccountTableComponent } from '../savings-account-table/savings-account-table.component';
 import {
   MatCardHeader,
   MatCardTitleGroup,
@@ -41,14 +40,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatTabGroup,
     MatTab,
     LoanAccountTableComponent,
-    SavingsAccountTableComponent,
     StatusLookupPipe,
     DateFormatPipe
   ]
 })
 export class GroupNavigationComponent {
   @ViewChild(LoanAccountTableComponent) loanAccountTableComponent: LoanAccountTableComponent;
-  @ViewChild(SavingsAccountTableComponent) savingsAccountTableComponent: SavingsAccountTableComponent;
 
   @Input() groupData: any;
   @Input() groupAccountsData: any;

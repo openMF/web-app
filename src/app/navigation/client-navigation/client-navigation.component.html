@@ -137,20 +137,6 @@
       </mat-tab>
     }
 
-    @if (clientAccountsData && clientAccountsData.savingsAccounts) {
-      <mat-tab label="Savings Accounts">
-        <mifosx-savings-account-table
-          [savingsAccountData]="clientAccountsData.savingsAccounts"
-        ></mifosx-savings-account-table>
-      </mat-tab>
-    }
-
-    @if (clientAccountsData && clientAccountsData.shareAccounts) {
-      <mat-tab label="Share Accounts">
-        <mifosx-share-account-table [shareAccountData]="clientAccountsData.shareAccounts"></mifosx-share-account-table>
-      </mat-tab>
-    }
-
     @if (clientData.groups && clientData.groups.length !== 0) {
       <mat-tab label="Group Members">
         <mifosx-member-groups [memberGroupData]="clientData.groups"></mifosx-member-groups>

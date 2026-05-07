@@ -59,119 +59,121 @@
     </table>
   }
 
-  <!-- savings overview table -->
-  @if (!(savingsAccountData === undefined)) {
-    @if (savingsAccountData.length > 0) {
-      <h3>{{ 'labels.heading.Savings Account Overview' | translate }}</h3>
-      <table mat-table [dataSource]="savingsAccountData" matSort>
-        <ng-container matColumnDef="Account No">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account No' | translate }}</th>
-          <td mat-cell *matCellDef="let element">
-            <i
-              class="fa fa-stop"
-              matTooltip="{{ element.status.value }}"
-              [ngClass]="element.status.code | statusLookup"
-            ></i>
-            {{ element.accountNo }}
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="Products">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Products' | translate }}</th>
-          <td mat-cell *matCellDef="let element">{{ element.productName }}</td>
-        </ng-container>
-        <ng-container matColumnDef="Balance">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Balance' | translate }}</th>
-          <td mat-cell *matCellDef="let element">{{ element.accountBalance }}</td>
-        </ng-container>
-        <ng-container matColumnDef="Actions">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
-          <td mat-cell *matCellDef="let element">
-            @if (element.status.active) {
-              @if (element.depositType.id === 100) {
+  @if (showNonLoanAccounts) {
+    <!-- savings overview table -->
+    @if (!(savingsAccountData === undefined)) {
+      @if (savingsAccountData.length > 0) {
+        <h3>{{ 'labels.heading.Savings Account Overview' | translate }}</h3>
+        <table mat-table [dataSource]="savingsAccountData" matSort>
+          <ng-container matColumnDef="Account No">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account No' | translate }}</th>
+            <td mat-cell *matCellDef="let element">
+              <i
+                class="fa fa-stop"
+                matTooltip="{{ element.status.value }}"
+                [ngClass]="element.status.code | statusLookup"
+              ></i>
+              {{ element.accountNo }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="Products">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Products' | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.productName }}</td>
+          </ng-container>
+          <ng-container matColumnDef="Balance">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Balance' | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.accountBalance }}</td>
+          </ng-container>
+          <ng-container matColumnDef="Actions">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
+            <td mat-cell *matCellDef="let element">
+              @if (element.status.active) {
+                @if (element.depositType.id === 100) {
+                  <button
+                    class="account-action-button"
+                    mat-raised-button
+                    color="primary"
+                    (click)="routeEdit($event)"
+                    [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Deposit']"
+                  >
+                    <i class="fa fa-arrow-right" matTooltip="{{ 'tooltips.Deposit' | translate }}"></i>
+                  </button>
+                }
+                @if (element.depositType.id === 300) {
+                  <button
+                    class="account-action-button"
+                    mat-raised-button
+                    color="primary"
+                    (click)="routeEdit($event)"
+                    [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Deposit']"
+                  >
+                    <i class="fa fa-arrow-right" matTooltip="{{ 'tooltips.Deposit' | translate }}"></i>
+                  </button>
+                }
+                @if (element.depositType.id === 100) {
+                  <button
+                    class="account-action-button"
+                    mat-raised-button
+                    color="primary"
+                    (click)="routeEdit($event)"
+                    [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Withdrawal']"
+                  >
+                    <i class="fa fa-arrow-left" matTooltip="{{ 'tooltips.Withdraw' | translate }}"></i>
+                  </button>
+                }
+                @if (element.depositType.id === 300) {
+                  <button
+                    class="account-action-button"
+                    mat-raised-button
+                    color="primary"
+                    (click)="routeEdit($event)"
+                    [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Withdrawal']"
+                  >
+                    <i class="fa fa-arrow-left" matTooltip="{{ 'tooltips.Withdraw' | translate }}"></i>
+                  </button>
+                }
+              }
+              @if (element.status.submittedAndPendingApproval) {
                 <button
                   class="account-action-button"
                   mat-raised-button
                   color="primary"
                   (click)="routeEdit($event)"
-                  [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Deposit']"
+                  [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Approve']"
                 >
-                  <i class="fa fa-arrow-right" matTooltip="{{ 'tooltips.Deposit' | translate }}"></i>
+                  <i class="fa fa-check" matTooltip="{{ 'tooltips.Approve' | translate }}"></i>
                 </button>
               }
-              @if (element.depositType.id === 300) {
+              @if (!element.status.submittedAndPendingApproval && !element.status.active) {
                 <button
                   class="account-action-button"
                   mat-raised-button
                   color="primary"
                   (click)="routeEdit($event)"
-                  [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Deposit']"
+                  [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Undo Approval']"
                 >
-                  <i class="fa fa-arrow-right" matTooltip="{{ 'tooltips.Deposit' | translate }}"></i>
+                  <i class="fa fa-undo" matTooltip="{{ 'tooltips.Undo Approve' | translate }}"></i>
                 </button>
-              }
-              @if (element.depositType.id === 100) {
                 <button
                   class="account-action-button"
                   mat-raised-button
                   color="primary"
                   (click)="routeEdit($event)"
-                  [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Withdrawal']"
+                  [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Activate']"
                 >
-                  <i class="fa fa-arrow-left" matTooltip="{{ 'tooltips.Withdraw' | translate }}"></i>
+                  <i class="fa fa-power-off" matTooltip="{{ 'tooltips.Activate' | translate }}"></i>
                 </button>
               }
-              @if (element.depositType.id === 300) {
-                <button
-                  class="account-action-button"
-                  mat-raised-button
-                  color="primary"
-                  (click)="routeEdit($event)"
-                  [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Withdrawal']"
-                >
-                  <i class="fa fa-arrow-left" matTooltip="{{ 'tooltips.Withdraw' | translate }}"></i>
-                </button>
-              }
-            }
-            @if (element.status.submittedAndPendingApproval) {
-              <button
-                class="account-action-button"
-                mat-raised-button
-                color="primary"
-                (click)="routeEdit($event)"
-                [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Approve']"
-              >
-                <i class="fa fa-check" matTooltip="{{ 'tooltips.Approve' | translate }}"></i>
-              </button>
-            }
-            @if (!element.status.submittedAndPendingApproval && !element.status.active) {
-              <button
-                class="account-action-button"
-                mat-raised-button
-                color="primary"
-                (click)="routeEdit($event)"
-                [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Undo Approval']"
-              >
-                <i class="fa fa-undo" matTooltip="{{ 'tooltips.Undo Approve' | translate }}"></i>
-              </button>
-              <button
-                class="account-action-button"
-                mat-raised-button
-                color="primary"
-                (click)="routeEdit($event)"
-                [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Activate']"
-              >
-                <i class="fa fa-power-off" matTooltip="{{ 'tooltips.Activate' | translate }}"></i>
-              </button>
-            }
-          </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="savingsAccountColumns"></tr>
-        <tr
-          mat-row
-          *matRowDef="let row; columns: savingsAccountColumns"
-          [routerLink]="['../', 'savings-accounts', row.id, 'transactions']"
-        ></tr>
-      </table>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="savingsAccountColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: savingsAccountColumns"
+            [routerLink]="['../', 'savings-accounts', row.id, 'transactions']"
+          ></tr>
+        </table>
+      }
     }
   }
 </div>

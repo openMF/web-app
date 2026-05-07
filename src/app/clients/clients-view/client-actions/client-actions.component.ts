@@ -15,7 +15,6 @@ import { ViewSurveyComponent } from './view-survey/view-survey.component';
 import { RejectClientComponent } from './reject-client/reject-client.component';
 import { ActivateClientComponent } from './activate-client/activate-client.component';
 import { WithdrawClientComponent } from './withdraw-client/withdraw-client.component';
-import { UpdateClientSavingsAccountComponent } from './update-client-savings-account/update-client-savings-account.component';
 import { TransferClientComponent } from './transfer-client/transfer-client.component';
 import { UndoClientTransferComponent } from './undo-client-transfer/undo-client-transfer.component';
 import { RejectClientTransferComponent } from './reject-client-transfer/reject-client-transfer.component';
@@ -43,7 +42,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     RejectClientComponent,
     ActivateClientComponent,
     WithdrawClientComponent,
-    UpdateClientSavingsAccountComponent,
     TransferClientComponent,
     UndoClientTransferComponent,
     RejectClientTransferComponent,
@@ -67,7 +65,6 @@ export class ClientActionsComponent {
     Reject: boolean;
     Survey: boolean;
     Withdraw: boolean;
-    'Update Default Savings': boolean;
     'Transfer Client': boolean;
     'Undo Transfer': boolean;
     'Accept Transfer': boolean;
@@ -85,7 +82,6 @@ export class ClientActionsComponent {
     Reject: false,
     Survey: false,
     Withdraw: false,
-    'Update Default Savings': false,
     'Transfer Client': false,
     'Undo Transfer': false,
     'Accept Transfer': false,

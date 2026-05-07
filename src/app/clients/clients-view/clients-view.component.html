@@ -93,20 +93,14 @@
                     </td>
                     <td><mifosx-account-number accountNo="{{ clientViewData.accountNo }}"></mifosx-account-number></td>
                   </tr>
-                  <tr>
-                    <td>
-                      <b>{{ 'labels.inputs.External Id' | translate }}</b>
-                    </td>
-                    <td>
-                      <mifosx-external-identifier
-                        [externalId]="
-                          complianceHideClientData ? maskValue(clientViewData.externalId) : clientViewData.externalId
-                        "
-                        [completed]="true"
-                        [hideCopy]="complianceHideClientData"
-                      ></mifosx-external-identifier>
-                    </td>
-                  </tr>
+                  @if (headerEntityId !== null) {
+                    <tr>
+                      <td>
+                        <b>{{ 'labels.inputs.EntityID' | translate }}</b>
+                      </td>
+                      <td>{{ headerEntityId }}</td>
+                    </tr>
+                  }
                   @if (clientViewData.activationDate) {
                     <tr>
                       <td>
@@ -208,17 +202,7 @@
         </button>
 
         @if (isActive()) {
-          <button
-            mat-menu-item
-            [matMenuTriggerFor]="accountApplications"
-            *mifosxHasPermission="[
-              'CREATE_LOAN',
-              'CREATE_SAVINGSACCOUNT',
-              'CREATE_SHAREACCOUNT',
-              'CREATE_RECURRINGDEPOSITACCOUNT',
-              'CREATE_FIXEDDEPOSITACCOUNT'
-            ]"
-          >
+          <button mat-menu-item [matMenuTriggerFor]="accountApplications" *mifosxHasPermission="'CREATE_LOAN'">
             <mat-icon matListIcon>
               <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
             </mat-icon>
@@ -259,30 +243,6 @@
       <mat-menu #accountApplications="matMenu">
         <button mat-menu-item *mifosxHasPermission="'CREATE_LOAN'" [routerLink]="['loans-accounts', 'create']">
           {{ 'labels.buttons.New Loan Account' | translate }}
-        </button>
-        <button
-          mat-menu-item
-          *mifosxHasPermission="'CREATE_SAVINGSACCOUNT'"
-          [routerLink]="['savings-accounts', 'create']"
-        >
-          {{ 'labels.buttons.New Savings Account' | translate }}
-        </button>
-        <button mat-menu-item *mifosxHasPermission="'CREATE_SHAREACCOUNT'" [routerLink]="['shares-accounts', 'create']">
-          {{ 'labels.buttons.New Share Account' | translate }}
-        </button>
-        <button
-          mat-menu-item
-          *mifosxHasPermission="'CREATE_RECURRINGDEPOSITACCOUNT'"
-          [routerLink]="['recurring-deposits-accounts', 'create-recurring-deposits-account']"
-        >
-          {{ 'labels.buttons.New Recurring Deposit Account' | translate }}
-        </button>
-        <button
-          mat-menu-item
-          *mifosxHasPermission="'CREATE_FIXEDDEPOSITACCOUNT'"
-          [routerLink]="['fixed-deposits-accounts', 'create']"
-        >
-          {{ 'labels.buttons.New Fixed Deposits Account' | translate }}
         </button>
       </mat-menu>
 
@@ -363,13 +323,6 @@
         </button>
         <button mat-menu-item (click)="doAction('Survey')" [disabled]="true">
           {{ 'labels.buttons.Survey' | translate }}
-        </button>
-        <button
-          mat-menu-item
-          (click)="doAction('Update Default Savings')"
-          *mifosxHasPermission="'UPDATESAVINGSACCOUNT_CLIENT'"
-        >
-          {{ 'labels.buttons.Update Default Savings' | translate }}
         </button>
         <button mat-menu-item (click)="doAction('Upload Signature')" *mifosxHasPermission="'CREATE_CLIENTIMAGE'">
           {{ 'labels.buttons.Upload Signature' | translate }}
