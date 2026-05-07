@@ -281,10 +281,10 @@
               productType: loanProductService.productType.value
             }"
             routerLinkActive
-            #general="routerLinkActive"
-            [active]="general.isActive"
+            #originalSchedule="routerLinkActive"
+            [active]="originalSchedule.isActive"
           >
-            {{ 'labels.inputs.General' | translate }}
+            {{ 'labels.inputs.Original Schedule' | translate }}
           </a>
         }
         <a
@@ -307,8 +307,8 @@
               productType: loanProductService.productType.value
             }"
             routerLinkActive
-            #dashboard="routerLinkActive"
-            [active]="dashboard.isActive"
+            #transactions="routerLinkActive"
+            [active]="transactions.isActive"
           >
             {{ 'labels.inputs.Transactions' | translate }}
           </a>
@@ -321,10 +321,10 @@
               productType: loanProductService.productType.value
             }"
             routerLinkActive
-            #accountdetail="routerLinkActive"
-            [active]="accountdetail.isActive"
+            #deferredIncome="routerLinkActive"
+            [active]="deferredIncome.isActive"
           >
-            {{ 'labels.inputs.Account Details' | translate }}
+            {{ 'labels.inputs.Deferred income' | translate }}
           </a>
         }
         @if (loanProductService.isLoanProduct && loanDetailsData.enableBuyDownFee) {
