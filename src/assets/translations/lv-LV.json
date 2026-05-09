@@ -1084,7 +1084,8 @@
       "must be after or equal to start date": "jābūt pēc sākuma datuma vai vienādam ar to",
       "No classification data available": "Nav pieejami klasifikācijas dati",
       "No": "Nē",
-      "Yes": "Jā"
+      "Yes": "Jā",
+      "Caps Lock is on": "Caps Lock ir ieslēgts"
     },
     "passwordPreferences": {
       "Password most be at least 1 character and not more that 50 characters long": "Parolei jābūt vismaz 1 rakstzīmei un ne vairāk kā 50 rakstzīmēm",
@@ -3388,8 +3389,8 @@
       "Create Journal Entry": "Izveidojiet žurnāla ierakstu",
       "Create Loan Product": "Izveidojiet aizdevuma produktu",
       "Create Loan Originator": "Izveidot aizdevuma izsniedzēju",
-      "View Loan Originator": "Skatīt aizdevuma izsniedzēju",
-      "Edit Loan Originator": "Rediģēt aizdevuma izsniedzēju",
+      "View Loan Originator": "Skatīt Aizdevuma Izsniedzēju",
+      "Edit Loan Originator": "Rediģēt Aizdevuma Izsniedzēju",
       "Create Loans Account": "Izveidojiet aizdevuma kontu",
       "Create Near Breach": "Izveidot Gandrīz Pārkāpumu",
       "Create New GL Account": "Šī opcija ļauj izveidot jaunus GL kontus.",

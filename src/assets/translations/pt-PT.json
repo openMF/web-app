@@ -1084,7 +1084,8 @@
       "must be after or equal to start date": "deve ser posterior ou igual à data de início",
       "No classification data available": "Nenhum dado de classificação encontrada",
       "No": "Não",
-      "Yes": "Sim"
+      "Yes": "Sim",
+      "Caps Lock is on": "O Caps Lock está ativado"
     },
     "passwordPreferences": {
       "Password most be at least 1 character and not more that 50 characters long": "A senha deve ter pelo menos 1 caractere e não mais que 50 caracteres",
@@ -3389,8 +3390,8 @@
       "Create Journal Entry": "Criar lançamento contábil manual",
       "Create Loan Product": "Criar produto de empréstimo",
       "Create Loan Originator": "Criar Agente de Crédito",
-      "View Loan Originator": "Ver Originador de Empréstimo",
-      "Edit Loan Originator": "Editar Originador de Empréstimo",
+      "View Loan Originator": "Ver Agente de Crédito",
+      "Edit Loan Originator": "Editar Agente de Crédito",
       "Create Loans Account": "Criar conta de empréstimos",
       "Create Near Breach": "Criar Quase Incumprimento",
       "Create New GL Account": "Esta opção permite criar novas contas contábeis.",
