@@ -30,6 +30,13 @@ export interface WorkingCapitalLoanDiscountUpdateRequest {
   providedIn: 'root'
 })
 export class LoansService {
+  private static readonly FORBIDDEN_LOAN_PAYLOAD_KEYS: ReadonlySet<string> = new Set([
+    'linkAccountId',
+    'linkAccountOwnerId',
+    'linkAccountOwnerName',
+    'linkedSavingsAccount'
+  ]);
+
   private http = inject(HttpClient);
   private settingsService = inject(SettingsService);
   private dateUtils = inject(Dates);
@@ -701,8 +708,29 @@ export class LoansService {
     return this.http.post('/batches?enclosingTransaction=true', payload);
   }
 
+  /**
+   * Calculate repayment schedule preview.
+   * Sanitize payload to avoid sending GSIM-linked fields that may crash backend.
+   */
   calculateLoanSchedule(payload: any): Observable<any> {
-    return this.http.post('/loans?command=calculateLoanSchedule', payload);
+    const sanitized = this.sanitizeLoanPayload(payload);
+    return this.http.post('/loans?command=calculateLoanSchedule', sanitized);
+  }
+
+  /**
+   * Remove potentially unsafe GSIM linkage fields from payload recursively.
+   * This is a defensive workaround until backend validation is fixed in Fineract.
+   * Does not mutate the caller's payload; returns a new sanitized copy.
+   */
+  private sanitizeLoanPayload(obj: any): any {
+    if (obj === null || typeof obj !== 'object') return obj;
+    if (Array.isArray(obj)) return obj.map((item) => this.sanitizeLoanPayload(item));
+    const out: Record<string, any> = {};
+    for (const key of Object.keys(obj)) {
+      if (LoansService.FORBIDDEN_LOAN_PAYLOAD_KEYS.has(key)) continue;
+      out[key] = this.sanitizeLoanPayload(obj[key]);
+    }
+    return out;
   }
 
   attachLoanOriginator(loanId: string, originatorId: string): Observable<any> {
