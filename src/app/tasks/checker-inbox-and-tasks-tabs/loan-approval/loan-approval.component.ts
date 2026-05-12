@@ -7,10 +7,20 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  QueryList,
+  ViewChildren,
+  inject
+} from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import * as _ from 'lodash';
+import { Subscription } from 'rxjs';
+import { MatPaginator } from '@angular/material/paginator';
 import {
   MatTableDataSource,
   MatTable,
@@ -63,11 +73,12 @@ interface OfficeNode {
     MatHeaderRow,
     MatRowDef,
     MatRow,
+    MatPaginator,
     FormatNumberPipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoanApprovalComponent {
+export class LoanApprovalComponent implements AfterViewInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private dialog = inject(MatDialog);
   private dateUtils = inject(Dates);
@@ -84,6 +95,7 @@ export class LoanApprovalComponent {
   showData = false;
   /** Data source for loans approval table. */
   dataSource: MatTableDataSource<any>;
+  officeDataSources: Record<number, MatTableDataSource<any>> = {};
   /** Row Selection Data */
   selection: SelectionModel<any>;
   /** Map data */
@@ -92,6 +104,8 @@ export class LoanApprovalComponent {
   officesArray: any[];
   /** List of Requests */
   batchRequests: any[];
+  private paginatorChangesSub?: Subscription;
+  @ViewChildren(MatPaginator) paginators!: QueryList<MatPaginator>;
   /** Displayed Columns */
   displayedColumns: string[] = [
     'select',
@@ -116,6 +130,15 @@ export class LoanApprovalComponent {
       this.loans = data.loansData.pageItems;
       this.setOfficeData();
     });
+  }
+
+  ngAfterViewInit() {
+    this.bindPaginators();
+    this.paginatorChangesSub = this.paginators.changes.subscribe(() => this.bindPaginators());
+  }
+
+  ngOnDestroy() {
+    this.paginatorChangesSub?.unsubscribe();
   }
 
   /** Group Office Data */
@@ -146,7 +169,10 @@ export class LoanApprovalComponent {
       }
     });
     this.officesArray = finalArray;
-    this.dataSource = new MatTableDataSource(this.officesArray);
+    this.officeDataSources = {};
+    this.officesArray.forEach((office: any) => {
+      this.officeDataSources[office.id] = new MatTableDataSource(office.loans);
+    });
     this.selection = new SelectionModel(true, []);
   }
 
@@ -224,7 +250,11 @@ export class LoanApprovalComponent {
   }
 
   applyFilter(filterValue: string = '') {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    const normalizedFilter = filterValue.trim().toLowerCase();
+    Object.values(this.officeDataSources).forEach((dataSource) => {
+      dataSource.filter = normalizedFilter;
+      dataSource.paginator?.firstPage();
+    });
   }
 
   loanResource() {
@@ -247,5 +277,15 @@ export class LoanApprovalComponent {
     this.router
       .navigateByUrl(`/checker-inbox-and-tasks`, { skipLocationChange: true })
       .then(() => this.router.navigate([url]));
+  }
+
+  private bindPaginators() {
+    const paginatorList = this.paginators?.toArray() ?? [];
+    this.officesArray?.forEach((office: any, index: number) => {
+      const dataSource = this.officeDataSources[office.id];
+      if (dataSource) {
+        dataSource.paginator = paginatorList[index];
+      }
+    });
   }
 }

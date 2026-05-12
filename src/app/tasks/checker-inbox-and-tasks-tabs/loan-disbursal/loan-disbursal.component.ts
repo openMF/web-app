@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
@@ -23,6 +23,7 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Dialog Imports */
@@ -56,11 +57,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatHeaderRow,
     MatRowDef,
     MatRow,
+    MatPaginator,
     FormatNumberPipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoanDisbursalComponent {
+export class LoanDisbursalComponent implements AfterViewInit {
   private route = inject(ActivatedRoute);
   private dialog = inject(MatDialog);
   private dateUtils = inject(Dates);
@@ -104,6 +106,7 @@ export class LoanDisbursalComponent {
       this.selection = new SelectionModel(true, []);
     });
   }
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
@@ -181,11 +184,23 @@ export class LoanDisbursalComponent {
         return account.status.waitingForDisbursal;
       });
       this.dataSource = new MatTableDataSource(this.loans);
+      this.bindPaginator();
       this.selection = new SelectionModel(true, []);
     });
   }
 
+  ngAfterViewInit() {
+    this.bindPaginator();
+  }
+
   applyFilter(filterValue: string = '') {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.paginator?.firstPage();
+  }
+
+  private bindPaginator() {
+    if (this.dataSource) {
+      this.dataSource.paginator = this.paginator;
+    }
   }
 }

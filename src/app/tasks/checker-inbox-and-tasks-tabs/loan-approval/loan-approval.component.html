@@ -26,17 +26,17 @@
         <fa-icon icon="check" class="m-r-10"></fa-icon>{{ 'labels.buttons.Approve' | translate }}
       </button>
     </div>
-    @for (office of officesArray; track office) {
+    @for (office of officesArray; track office.id) {
       <h3 class="mat-h3">{{ office.name }}</h3>
-      @if (office.loans.length > 0) {
-        <table mat-table [dataSource]="office.loans">
+      @if (office.loans.length > 0 && officeDataSources[office.id]) {
+        <table mat-table [dataSource]="officeDataSources[office.id]">
           <ng-container matColumnDef="select">
             <th mat-header-cell *matHeaderCellDef>
               <mat-checkbox
-                (change)="$event ? masterToggle(office.loans) : null"
-                [checked]="selection.hasValue() && isAllSelected(office.loans)"
-                [indeterminate]="selection.hasValue() && !isAllSelected(office.loans)"
-                [aria-label]="checkboxLabel(office.loans)"
+                (change)="$event ? masterToggle(officeDataSources[office.id].filteredData) : null"
+                [checked]="selection.hasValue() && isAllSelected(officeDataSources[office.id].filteredData)"
+                [indeterminate]="selection.hasValue() && !isAllSelected(officeDataSources[office.id].filteredData)"
+                [aria-label]="checkboxLabel(officeDataSources[office.id].filteredData)"
               >
               </mat-checkbox>
             </th>
@@ -67,7 +67,7 @@
               mat-cell
               *matCellDef="let loan"
               class="view-details"
-              [routerLink]="['../../clients', loan.clientId, 'loans-accounts', 'loan.id']"
+              [routerLink]="['../../clients', loan.clientId, 'loans-accounts', loan.id]"
             >
               {{ loan.loanProductName }}({{ loan.accountNo }})
             </td>
@@ -83,6 +83,7 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="selection.toggle(row)"></tr>
         </table>
+        <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>
       }
     }
   </div>
