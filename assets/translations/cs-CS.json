@@ -3615,6 +3615,8 @@
       "Journal Entries Transactions": "Záznamy deníku jsou v podstatě záznamy všech transakcí ve vaší organizaci, které mají účetní důsledky.",
       "Journal entries made at the end of accounting period": "Zápisy do deníku provedené na konci účetního období",
       "Journal entry reverse transaction": "Pro zrušení této transakce byl vytvořen nový deník:",
+      "Council Approval": "Schválení radou",
+      "No pending loans for Council Approval": "Žádné půjčky čekající na schválení radou",
       "Laon Approval": "Laon Approval",
       "Launch a page that create new data table": "Tím se spustí stránka, která vám umožní vytvořit novou datovou tabulku.",
       "Launch an alternative view for office hierarchy": "Tím se spustí alternativní zobrazení, které vám umožní zobrazit hierarchii kanceláře pro vaši organizaci.",

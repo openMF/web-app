@@ -3614,6 +3614,8 @@
       "Journal Entries Transactions": "Žurnalo įrašai iš esmės yra visų jūsų organizacijos operacijų, turinčių įtakos apskaitai, žurnalai.",
       "Journal entries made at the end of accounting period": "Ataskaitinio laikotarpio pabaigoje padaryti žurnalo įrašai",
       "Journal entry reverse transaction": "Šiai operacijai atšaukti buvo sukurtas naujas žurnalo įrašas:",
+      "Council Approval": "Tarybos patvirtinimas",
+      "No pending loans for Council Approval": "Nėra paskolų, laukiančių Tarybos patvirtinimo",
       "Laon Approval": "Laono patvirtinimas",
       "Launch a page that create new data table": "Bus paleistas puslapis, kuriame galėsite sukurti naują duomenų lentelę.",
       "Launch an alternative view for office hierarchy": "Bus paleistas alternatyvus rodinys, leidžiantis peržiūrėti jūsų organizacijos biuro hierarchiją.",

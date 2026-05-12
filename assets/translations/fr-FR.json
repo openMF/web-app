@@ -3618,6 +3618,8 @@
       "Journal Entries Transactions": "Les entrées de journal sont essentiellement des journaux de toutes les transactions de votre organisation qui ont des implications comptables.",
       "Journal entries made at the end of accounting period": "Écritures au journal effectuées à la fin de la période comptable",
       "Journal entry reverse transaction": "Une nouvelle écriture de journal a été créée pour annuler cette transaction :",
+      "Council Approval": "Approbation du Conseil",
+      "No pending loans for Council Approval": "Aucun prêt en attente d'approbation du Conseil",
       "Laon Approval": "Agrément Laon",
       "Launch a page that create new data table": "Cela lancera une page qui vous permettra de créer un nouveau tableau de données.",
       "Launch an alternative view for office hierarchy": "Cela lancera une vue alternative qui vous permettra de visualiser la hiérarchie des bureaux de votre organisation.",

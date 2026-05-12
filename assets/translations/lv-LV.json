@@ -3614,6 +3614,8 @@
       "Journal Entries Transactions": "Žurnāla ieraksti būtībā ir visu jūsu organizācijā veikto darījumu žurnāli, kuriem ir grāmatvedības nozīme.",
       "Journal entries made at the end of accounting period": "Žurnāla ieraksti, kas veikti pārskata perioda beigās",
       "Journal entry reverse transaction": "Ir izveidots jauns žurnāla ieraksts, lai atsauktu šo darījumu:",
+      "Council Approval": "Padomes apstiprinājums",
+      "No pending loans for Council Approval": "Nav aizdevumu, kas gaida Padomes apstiprinājumu",
       "Laon Approval": "Laonas apstiprinājums}",
       "Launch a page that create new data table": "Tiks atvērta lapa, kurā varēsit izveidot jaunu datu tabulu.",
       "Launch an alternative view for office hierarchy": "Tiks atvērts alternatīvs skats, kas ļauj skatīt jūsu organizācijas biroja hierarhiju.",

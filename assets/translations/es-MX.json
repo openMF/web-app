@@ -3609,6 +3609,8 @@
       "Journal Entries Transactions": "Los asientos de diario son esencialmente registros de todas las transacciones de su organización que tienen implicaciones contables.",
       "Journal entries made at the end of accounting period": "Asientos de diario realizados al final del período contable",
       "Journal entry reverse transaction": "Se ha creado un nuevo asiento de diario para revertir esta transacción:",
+      "Council Approval": "Aprobación del Consejo",
+      "No pending loans for Council Approval": "No hay préstamos pendientes de aprobación del Consejo",
       "Laon Approval": "Aprobación de Laon",
       "Launch a page that create new data table": "Esto abrirá una página que le permitirá crear una nueva tabla de datos.",
       "Launch an alternative view for office hierarchy": "Esto iniciará una vista alternativa que le permitirá ver la jerarquía de sucursales de su organización.",

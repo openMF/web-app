@@ -3611,6 +3611,8 @@
       "Journal Entries Transactions": "Journal Entries are essentially logs of all the transactions in your organization that have accounting implications.",
       "Journal entries made at the end of accounting period": "Journal entries made at the end of accounting period",
       "Journal entry reverse transaction": "A new journal entry has been created to reverse this transaction:",
+      "Council Approval": "Council Approval",
+      "No pending loans for Council Approval": "No pending loans for Council Approval",
       "Laon Approval": "Laon Approval",
       "Launch a page that create new data table": "This will launch a page that will allow you to create a new data table.",
       "Launch an alternative view for office hierarchy": "This will launch an alternative view which allows you to view the office hierarchy for your organization.",

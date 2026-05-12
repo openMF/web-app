@@ -3614,6 +3614,8 @@
       "Journal Entries Transactions": "분개 항목은 본질적으로 회계에 영향을 미치는 조직의 모든 거래에 대한 로그입니다.",
       "Journal entries made at the end of accounting period": "회계기간 말에 작성된 분개",
       "Journal entry reverse transaction": "이 거래를 취소하기 위해 새 분개가 생성되었습니다.",
+      "Council Approval": "의회 승인",
+      "No pending loans for Council Approval": "의회 승인을 기다리는 대출이 없습니다",
       "Laon Approval": "라온 승인",
       "Launch a page that create new data table": "그러면 새 데이터 테이블을 생성할 수 있는 페이지가 시작됩니다.",
       "Launch an alternative view for office hierarchy": "그러면 조직의 사무실 계층 구조를 볼 수 있는 대체 보기가 시작됩니다.",
