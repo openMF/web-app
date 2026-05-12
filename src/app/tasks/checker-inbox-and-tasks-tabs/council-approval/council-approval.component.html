@@ -27,9 +27,9 @@
       </button>
     </div>
     @for (office of officesArray; track office) {
-      <h3 class="mat-h3">{{ office.name }}</h3>
-      @if (office.loans.length > 0) {
-        <table mat-table [dataSource]="office.loans">
+      @if (office.dataSource.filteredData.length > 0) {
+        <h3 class="mat-h3">{{ office.name }}</h3>
+        <table mat-table [dataSource]="office.dataSource">
           <ng-container matColumnDef="select">
             <th mat-header-cell *matHeaderCellDef>
               <mat-checkbox
@@ -92,7 +92,7 @@
   <div class="alert">
     <div class="message">
       <i class="fa fa-exclamation-circle alert-check"></i>
-      {{ 'labels.text.No pending loans for approval' | translate }}
+      {{ 'labels.text.No pending loans for Council Approval' | translate }}
     </div>
   </div>
 }

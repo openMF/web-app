@@ -44,6 +44,16 @@
         </a>
         <a
           mat-tab-link
+          [routerLink]="['./council-approval']"
+          routerLinkActive
+          #councilApproval="routerLinkActive"
+          [active]="councilApproval.isActive"
+          *mifosxHasPermission="['ALL_FUNCTIONS_READ', 'READ_MAKERCHECKER', 'APPROVE_LOAN']"
+        >
+          {{ 'labels.text.Council Approval' | translate }}
+        </a>
+        <a
+          mat-tab-link
           [routerLink]="['./loan-disbursal']"
           routerLinkActive
           #loanDisbursal="routerLinkActive"

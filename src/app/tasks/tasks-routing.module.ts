@@ -18,6 +18,7 @@ import { CheckerInboxAndTasksComponent } from './checker-inbox-and-tasks/checker
 import { CheckerInboxComponent } from './checker-inbox-and-tasks-tabs/checker-inbox/checker-inbox.component';
 import { ClientApprovalComponent } from './checker-inbox-and-tasks-tabs/client-approval/client-approval.component';
 import { LoanApprovalComponent } from './checker-inbox-and-tasks-tabs/loan-approval/loan-approval.component';
+import { CouncilApprovalComponent } from './checker-inbox-and-tasks-tabs/council-approval/council-approval.component';
 import { LoanDisbursalComponent } from './checker-inbox-and-tasks-tabs/loan-disbursal/loan-disbursal.component';
 import { RescheduleLoanComponent } from './checker-inbox-and-tasks-tabs/reschedule-loan/reschedule-loan.component';
 import { ViewCheckerInboxComponent } from './view-checker-inbox/view-checker-inbox.component';
@@ -60,7 +61,16 @@ const routes: Routes = [
         {
           path: 'loan-approval',
           component: LoanApprovalComponent,
-          data: { title: 'Laon Approval' },
+          data: { title: 'Loan Approval' },
+          resolve: {
+            officesData: GetOffices,
+            loansData: GetLoansToBeApproved
+          }
+        },
+        {
+          path: 'council-approval',
+          component: CouncilApprovalComponent,
+          data: { title: 'Council Approval' },
           resolve: {
             officesData: GetOffices,
             loansData: GetLoansToBeApproved
