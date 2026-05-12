@@ -208,8 +208,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
     const tenantIds = environment.fineractPlatformTenantIds
       .split(',')
-      .map((id) => id.trim())
-      .filter((id) => id.length > 0);
+      .map((id: string) => id.trim())
+      .filter((id: string) => id.length > 0);
     if (tenantIds.length === 0 || (tenantIds.length === 1 && tenantIds[0] === 'default')) {
       return false;
     }

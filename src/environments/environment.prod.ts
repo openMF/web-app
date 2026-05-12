@@ -17,6 +17,13 @@ const provider = loadedEnv['apiProvider'];
 const parsedMinLength = Number(loadedEnv.minPasswordLength);
 const resolvedMinPasswordLength = Number.isInteger(parsedMinLength) && parsedMinLength > 0 ? parsedMinLength : 8;
 
+// Validate and normalize apiGatewayHeaderName (RFC 7230 token format)
+const resolvedApiGatewayHeaderName =
+  typeof loadedEnv.apiGatewayHeaderName === 'string' &&
+  /^[!#$%&'*+\-.^_`|~0-9A-Za-z]+$/.test(loadedEnv.apiGatewayHeaderName.trim())
+    ? loadedEnv.apiGatewayHeaderName.trim()
+    : 'Fineract-Platform-TenantId';
+
 export const environment = {
   production: true,
   version: env.mifos_x.version,
@@ -145,7 +152,13 @@ export const environment = {
     oidcClientId: loadedEnv['oidcClientId'] || loadedEnv['FINERACT_PLUGIN_OIDC_CLIENT_ID'] || '',
     oidcApiUrl: loadedEnv['oidcApiUrl'] || loadedEnv['FINERACT_PLUGIN_OIDC_API_URL'] || '',
     oidcFrontUrl: loadedEnv['oidcFrontUrl'] || loadedEnv['FINERACT_PLUGIN_OIDC_FRONTEND_URL'] || ''
-  }
+  },
+  /**
+   * Name of the header used to signal the tenant/platform to the API gateway
+   * Default kept for backward compatibility with existing deployments and tests
+   * Validated against RFC 7230 token format; whitespace trimmed; invalid values fallback to default.
+   */
+  apiGatewayHeaderName: resolvedApiGatewayHeaderName
 };
 
 // Server URL

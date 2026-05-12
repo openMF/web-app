@@ -19,11 +19,15 @@ export class TokenInterceptor implements HttpInterceptor {
 
   public environment = environment;
   FINERACT_PLATFORM_TENANT_IDENTIFIER = environment.fineractPlatformTenantId;
+  // Name used to send the Fineract tenant identifier header.
+  // The runtime key is `apiGatewayHeaderName` to allow gateway/runtime injection,
+  // but this value represents the Fineract tenant header name.
+  FINERACT_TENANT_HEADER_NAME = environment.apiGatewayHeaderName || 'Fineract-Platform-TenantId';
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.authService.getAccessToken();
     let headersConfig: { [key: string]: string } = {
-      'Fineract-Platform-TenantId': this.FINERACT_PLATFORM_TENANT_IDENTIFIER,
+      [this.FINERACT_TENANT_HEADER_NAME]: this.FINERACT_PLATFORM_TENANT_IDENTIFIER,
       'Content-Type': req.headers.get('Content-Type') || 'application/json'
     };
     const publicEndpoints = [
@@ -56,7 +60,7 @@ export class TokenInterceptor implements HttpInterceptor {
         const retriedReq = request.clone({
           setHeaders: {
             Authorization: `Bearer ${newToken}`,
-            'Fineract-Platform-TenantId': this.FINERACT_PLATFORM_TENANT_IDENTIFIER,
+            [this.FINERACT_TENANT_HEADER_NAME]: this.FINERACT_PLATFORM_TENANT_IDENTIFIER,
             'Content-Type': request.headers.get('Content-Type') || 'application/json'
           }
         });
