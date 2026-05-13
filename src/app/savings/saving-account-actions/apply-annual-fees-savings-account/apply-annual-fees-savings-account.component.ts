@@ -92,7 +92,7 @@ export class ApplyAnnualFeesSavingsAccountComponent implements OnInit {
   applyCharge() {
     const charges: any[] = this.savingsAccountData.charges;
     charges.forEach((charge: any) => {
-      if (charge.name === 'Annual fee - INR') {
+      if (charge.chargeTimeType?.id === 7) {
         this.chargeId = charge.id;
         this.applyAnnualFeesForm.get('amount').patchValue(charge.amount);
       }

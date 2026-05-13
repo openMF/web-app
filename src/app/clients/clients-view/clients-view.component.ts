@@ -276,6 +276,9 @@ export class ClientsViewComponent implements OnInit {
       data: { deleteContext: `client with id: ${this.clientViewData.id}` }
     });
     deleteClientDialogRef.afterClosed().subscribe((response: any) => {
+      if (!response) {
+        return;
+      }
       if (response.delete) {
         this.clientsService.deleteClient(this.clientViewData.id).subscribe(() => {
           this.router.navigate(['/clients'], { relativeTo: this.route });
@@ -290,6 +293,9 @@ export class ClientsViewComponent implements OnInit {
   private unassignStaff() {
     const unAssignStaffDialogRef = this.dialog.open(UnassignStaffDialogComponent);
     unAssignStaffDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
+      if (!response) {
+        return;
+      }
       if (response.confirm) {
         this.clientsService
           .executeClientCommand(this.clientViewData.id, 'unassignStaff', { staffId: this.clientViewData.staffId })
@@ -312,6 +318,9 @@ export class ClientsViewComponent implements OnInit {
         }
       });
       viewSignatureDialogRef.afterClosed().subscribe((response: any) => {
+        if (!response) {
+          return;
+        }
         if (response.upload) {
           this.uploadSignature();
         } else if (response.draw) {
@@ -360,6 +369,9 @@ export class ClientsViewComponent implements OnInit {
         data: documents
       });
       deleteSignatureDialogRef.afterClosed().subscribe((response: any) => {
+        if (!response) {
+          return;
+        }
         if (response.delete) {
           this.clientsService.deleteClientDocument(this.clientViewData.id, response.id).subscribe(() => {
             this.reload();
