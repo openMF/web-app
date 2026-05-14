@@ -518,6 +518,7 @@
       "Adjustment": "Adjustment",
       "Advanced Options": "Advanced Options",
       "Advanced Search": "Advanced Search",
+      "undo_account_transfer": "Undo Account Transfer",
       "Show advanced search": "Show advanced search",
       "Hide advanced search": "Hide advanced search",
       "Allocate Cash": "Allocate Cash",
@@ -1554,7 +1555,8 @@
       "You have created": "You have created",
       "identifier id": "identifier id",
       "savings-transaction-datatable-tab works": "savings-transaction-datatable-tab works",
-      "successfully select option": "successfully. Please select from the options below to proceed further."
+      "successfully select option": "successfully. Please select from the options below to proceed further.",
+      "undo_account_transfer": "Undo Account Transfer"
     },
     "inputs": {
       "# Remittance": "# Remittance",
@@ -3263,6 +3265,7 @@
       "Are you sure you want to delete checker": "Are you sure you want to delete checker",
       "Are you sure you want to Approve Loan": "Are you sure you want to Approve Loan",
       "Are you sure you want to Disburse Loan": "Are you sure you want to Disburse Loan",
+      "undo_account_transfer": "Are you sure you want to undo this account transfer?",
       "Are you sure you want to": "Are you sure you want to ",
       "the productmix component with id": "the productmix component with id",
       "the Reschedule Loan": " the Reschedule Loan",

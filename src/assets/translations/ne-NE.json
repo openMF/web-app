@@ -756,7 +756,8 @@
       "PRINT": "छाप्नुहोस्",
       "DONE": "सम्पन्न",
       "Submitting": "पेश गर्दै",
-      "OK": "ठीक छ"
+      "OK": "ठीक छ",
+      "undo_account_transfer": "खाता स्थानान्तरण रद्द गर्नुहोस्"
     },
     "catalogs": {
       "Interest payment waiver": "ब्याज भुक्तानी माफी",
@@ -1547,7 +1548,8 @@
       "You have created": "तपाईंले सिर्जना गर्नुभयो",
       "identifier id": "पहिचानकर्ता आईडी",
       "savings-transaction-datatable-tab works": "बचत-लेनदेन-डेटाटेबल-ट्याब काम गर्दछ",
-      "successfully select option": "सफलतापूर्वक। अगाडि बढ्नको लागि कृपया तलका विकल्पहरूबाट चयन गर्नुहोस्।"
+      "successfully select option": "सफलतापूर्वक। अगाडि बढ्नको लागि कृपया तलका विकल्पहरूबाट चयन गर्नुहोस्।",
+      "undo_account_transfer": "खाता स्थानान्तरण रद्द गर्नुहोस्"
     },
     "inputs": {
       "# Remittance": "# रेमिट्यान्स",
@@ -3269,7 +3271,8 @@
       "Are you sure you want to": "के तपाईं निश्चित हुनुहुन्छ कि तपाईं",
       "the productmix component with id": "आईडीको साथ उत्पादन मिश्रण घटक",
       "the Reschedule Loan": "कर्जा पुनर्योजना",
-      "the Transaction Type": "लेनदेन प्रकार"
+      "the Transaction Type": "लेनदेन प्रकार",
+      "undo_account_transfer": "के तपाईं यो खाता स्थानान्तरण रद्द गर्न निश्चित हुनुहुन्छ?"
     },
     "text": {
       "A": "ए",

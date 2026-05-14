@@ -44,6 +44,9 @@ import { MatIcon } from '@angular/material/icon';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
+import { AccountTransfersService } from 'app/account-transfers/account-transfers.service';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Transactions Tab Component.
@@ -88,6 +91,8 @@ export class TransactionsTabComponent implements OnInit {
   private settingsService = inject(SettingsService);
   private dialog = inject(MatDialog);
   private dateUtils = inject(Dates);
+  private accountTransfersService = inject(AccountTransfersService);
+  private translateService = inject(TranslateService);
 
   /** Savings Account Status */
   status: any;
@@ -257,6 +262,22 @@ export class TransactionsTabComponent implements OnInit {
           .subscribe(() => {
             this.reload();
           });
+      }
+    });
+  }
+
+  undoTransfer(transactionData: SavingsAccountTransaction): void {
+    const undoAccountTransferDialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        heading: this.translateService.instant('labels.heading.undo_account_transfer'),
+        dialogContext: this.translateService.instant('labels.dialogContext.undo_account_transfer')
+      }
+    });
+    undoAccountTransferDialogRef.afterClosed().subscribe((response: any) => {
+      if (response?.confirm) {
+        this.accountTransfersService.undoAccountTransfer(transactionData.transfer.id).subscribe(() => {
+          this.reload();
+        });
       }
     });
   }

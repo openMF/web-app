@@ -756,7 +756,8 @@
       "PRINT": "Chapisha",
       "DONE": "Imekamilika",
       "Submitting": "Inatuma",
-      "OK": "Sawa"
+      "OK": "Sawa",
+      "undo_account_transfer": "Futa uhamisho wa akaunti"
     },
     "catalogs": {
       "Interest payment waiver": "Msamaha wa Malipo ya Riba",
@@ -1545,7 +1546,8 @@
       "You have created": "Umeunda",
       "identifier id": "kitambulisho",
       "savings-transaction-datatable-tab works": "Savings-transaction-datatable-tab inafanya kazi",
-      "successfully select option": "kwa mafanikio. Tafadhali chagua kutoka kwa chaguo zilizo hapa chini ili kuendelea zaidi."
+      "successfully select option": "kwa mafanikio. Tafadhali chagua kutoka kwa chaguo zilizo hapa chini ili kuendelea zaidi.",
+      "undo_account_transfer": "Futa uhamisho wa akaunti"
     },
     "inputs": {
       "# Remittance": "# Uhawilishaji",
@@ -3266,7 +3268,8 @@
       "Are you sure you want to": "Je, una uhakika unataka",
       "the productmix component with id": "sehemu ya mchanganyiko wa bidhaa na kitambulisho",
       "the Reschedule Loan": "kupanga upya mkopo",
-      "the Transaction Type": "Aina ya Muamala"
+      "the Transaction Type": "Aina ya Muamala",
+      "undo_account_transfer": "Una uhakika unataka kufuta uhamisho huu wa akaunti?"
     },
     "text": {
       "A": "A",

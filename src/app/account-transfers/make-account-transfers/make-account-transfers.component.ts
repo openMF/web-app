@@ -313,6 +313,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
           this.clientsService.getFilteredClients('displayName', 'ASC', true, value).subscribe((data: any) => {
             this.clientsData = data.pageItems;
           });
+        } else if (typeof value === 'number') {
           this.changeEvent();
         }
       });
