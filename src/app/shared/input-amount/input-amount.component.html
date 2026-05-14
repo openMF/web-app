@@ -12,7 +12,7 @@
     <div class="input-group">
       <span>{{ currency.code }}</span>
       <input
-        mifosxFormatAmount="{{ currency.code }}:{{ currency.displaySymbol }}"
+        mifosxFormatAmount="{{ currency.code }}:{{ currency.displaySymbol }}:1.2-10"
         class="right-input"
         [formControl]="inputFormControl"
         (keypress)="numberOnly($event)"
@@ -31,7 +31,7 @@
     }
     @if (displayHint) {
       <mat-hint class="right-hint">{{
-        inputFormControl.value | currency: currency.code : currency.displaySymbol : '1.2-2'
+        inputFormControl.value | currency: currency.code : currency.displaySymbol : '1.2-10'
       }}</mat-hint>
     }
     @if (minVal && inputFormControl.hasError('min')) {
@@ -58,7 +58,7 @@
     <div class="input-group">
       <span>{{ currency.code }}</span>
       <input
-        mifosxFormatAmount="{{ currency.code }}:{{ currency.displaySymbol }}"
+        mifosxFormatAmount="{{ currency.code }}:{{ currency.displaySymbol }}:1.2-10"
         class="right-input"
         [formControl]="inputFormControl"
         (keypress)="numberOnly($event)"
@@ -70,7 +70,7 @@
     </div>
     @if (displayHint) {
       <mat-hint class="right-hint">{{
-        inputFormControl.value | currency: currency.code : currency.displaySymbol : '1.2-2'
+        inputFormControl.value | currency: currency.code : currency.displaySymbol : '1.2-10'
       }}</mat-hint>
     }
     @if (minVal && inputFormControl.hasError('min')) {
