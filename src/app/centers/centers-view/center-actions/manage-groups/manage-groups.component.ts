@@ -7,7 +7,15 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, AfterViewInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  AfterViewInit,
+  DestroyRef,
+  inject
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -46,6 +54,8 @@ export class ManageGroupsComponent implements AfterViewInit {
   private centersService = inject(CentersService);
   private groupsService = inject(GroupsService);
   dialog = inject(MatDialog);
+  private destroyRef = inject(DestroyRef);
+  private cdr = inject(ChangeDetectorRef);
 
   /** Center Data */
   centerData: any;
@@ -74,12 +84,13 @@ export class ManageGroupsComponent implements AfterViewInit {
    * Subscribes to Groups search filter:
    */
   ngAfterViewInit() {
-    this.groupChoice.valueChanges.subscribe((value: string) => {
+    this.groupChoice.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value: string) => {
       if (value.length >= 2) {
         this.groupsService
           .getFilteredGroups('name', 'ASC', value, this.centerData.officeId, 'true')
           .subscribe((data: any) => {
             this.groupsData = data;
+            this.cdr.markForCheck();
           });
       }
     });

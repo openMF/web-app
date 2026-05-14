@@ -7,7 +7,16 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, AfterViewInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  OnInit,
+  AfterViewInit,
+  inject
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormGroup, UntypedFormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
@@ -41,6 +50,8 @@ export class GroupTransferClientsComponent implements OnInit, AfterViewInit {
   private router = inject(Router);
   private groupsService = inject(GroupsService);
   private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
+  private cdr = inject(ChangeDetectorRef);
 
   /** Transfer Clients form. */
   transferClientsForm: UntypedFormGroup;
@@ -76,13 +87,17 @@ export class GroupTransferClientsComponent implements OnInit, AfterViewInit {
    * Subscribes to Groups search filter:
    */
   ngAfterViewInit() {
-    this.transferClientsForm.get('destinationGroupId').valueChanges.subscribe((value: string) => {
-      if (value.length >= 2) {
-        this.groupsService.getFilteredGroups('name', 'ASC', value, this.groupData.officeId).subscribe((data: any) => {
-          this.groupsData = data;
-        });
-      }
-    });
+    this.transferClientsForm
+      .get('destinationGroupId')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((value: string) => {
+        if (value.length >= 2) {
+          this.groupsService.getFilteredGroups('name', 'ASC', value, this.groupData.officeId).subscribe((data: any) => {
+            this.groupsData = data;
+            this.cdr.markForCheck();
+          });
+        }
+      });
   }
 
   /**

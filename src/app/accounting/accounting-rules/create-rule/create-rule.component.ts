@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -40,6 +41,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateRuleComponent implements OnInit {
+  private destroyRef = inject(DestroyRef);
   private formBuilder = inject(UntypedFormBuilder);
   private accountingService = inject(AccountingService);
   private route = inject(ActivatedRoute);
@@ -107,24 +109,30 @@ export class CreateRuleComponent implements OnInit {
    * Sets accounting rule form for selected accounting rule type.
    */
   setAccountingRulesForm() {
-    this.accountingRuleForm.get('debitRuleType').valueChanges.subscribe((debitRuleType: string) => {
-      if (debitRuleType === 'fixedAccount') {
-        this.accountingRuleForm.get('debitTags').reset();
-        this.accountingRuleForm.get('allowMultipleDebitEntries').reset();
-      } else {
-        this.accountingRuleForm.get('accountToDebit').reset();
-        this.accountingRuleForm.get('allowMultipleDebitEntries').setValue(false);
-      }
-    });
-    this.accountingRuleForm.get('creditRuleType').valueChanges.subscribe((creditRuleType: string) => {
-      if (creditRuleType === 'fixedAccount') {
-        this.accountingRuleForm.get('creditTags').reset();
-        this.accountingRuleForm.get('allowMultipleCreditEntries').reset();
-      } else {
-        this.accountingRuleForm.get('accountToCredit').reset();
-        this.accountingRuleForm.get('allowMultipleCreditEntries').setValue(false);
-      }
-    });
+    this.accountingRuleForm
+      .get('debitRuleType')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((debitRuleType: string) => {
+        if (debitRuleType === 'fixedAccount') {
+          this.accountingRuleForm.get('debitTags').reset();
+          this.accountingRuleForm.get('allowMultipleDebitEntries').reset();
+        } else {
+          this.accountingRuleForm.get('accountToDebit').reset();
+          this.accountingRuleForm.get('allowMultipleDebitEntries').setValue(false);
+        }
+      });
+    this.accountingRuleForm
+      .get('creditRuleType')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((creditRuleType: string) => {
+        if (creditRuleType === 'fixedAccount') {
+          this.accountingRuleForm.get('creditTags').reset();
+          this.accountingRuleForm.get('allowMultipleCreditEntries').reset();
+        } else {
+          this.accountingRuleForm.get('accountToCredit').reset();
+          this.accountingRuleForm.get('allowMultipleCreditEntries').setValue(false);
+        }
+      });
   }
 
   /**

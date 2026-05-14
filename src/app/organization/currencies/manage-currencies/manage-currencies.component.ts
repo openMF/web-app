@@ -15,7 +15,7 @@ import {
   ElementRef,
   ViewChild,
   AfterViewInit,
-  OnDestroy,
+  DestroyRef,
   OnChanges,
   SimpleChanges,
   inject
@@ -35,8 +35,8 @@ import { ConfigurationWizardService } from '../../../configuration-wizard/config
 
 /** Custom Dialog Component */
 import { ContinueSetupDialogComponent } from '../../../configuration-wizard/continue-setup-dialog/continue-setup-dialog.component';
-import { takeUntil } from 'rxjs/operators';
-import { ReplaySubject, Subject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Currency } from 'app/shared/models/general.model';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { AsyncPipe } from '@angular/common';
@@ -61,7 +61,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
+export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnChanges {
   private route = inject(ActivatedRoute);
   private formBuilder = inject(UntypedFormBuilder);
   private organizationservice = inject(OrganizationService);
@@ -92,8 +92,7 @@ export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnDestr
   /** control for the filter select */
   protected filterFormCtrl: UntypedFormControl = new UntypedFormControl('');
 
-  /** Subject that emits when the component has been destroyed. */
-  protected _onDestroy = new Subject<void>();
+  private destroyRef = inject(DestroyRef);
 
   /**
    * Retrieves the currency data from `resolve`.
@@ -112,15 +111,10 @@ export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnDestr
   ngOnInit() {
     this.placeHolderLabel = this.translateService.instant('labels.text.Search');
     this.noEntriesFoundLabel = this.translateService.instant('labels.text.No data found');
-    this.filterFormCtrl.valueChanges.pipe(takeUntil(this._onDestroy)).subscribe(() => {
+    this.filterFormCtrl.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.searchItem();
     });
     this.createCurrencyForm();
-  }
-
-  ngOnDestroy(): void {
-    this._onDestroy.next();
-    this._onDestroy.complete();
   }
 
   ngOnChanges(changes: SimpleChanges): void {

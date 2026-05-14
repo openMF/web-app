@@ -9,14 +9,17 @@
 /** Angular Imports */
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   AfterViewInit,
   Component,
+  DestroyRef,
   ElementRef,
   OnInit,
   TemplateRef,
   ViewChild,
   inject
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -96,6 +99,8 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
   private configurationWizardService = inject(ConfigurationWizardService);
   private popoverService = inject(PopoverService);
   private translateService = inject(TranslateService);
+  private destroyRef = inject(DestroyRef);
+  private cdr = inject(ChangeDetectorRef);
 
   /** Data Table Form */
   dataTableForm: UntypedFormGroup;
@@ -165,10 +170,13 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.createDataTableForm();
     this.setColumns();
-    this.dataTableForm.controls.apptableName.valueChanges.subscribe((value: any) => {
-      this.showEntitySubType = value === 'm_client';
-      this.showSavingsSubType = value === 'm_savings_product';
-    });
+    this.dataTableForm.controls.apptableName.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((value: any) => {
+        this.showEntitySubType = value === 'm_client';
+        this.showSavingsSubType = value === 'm_savings_product';
+        this.cdr.markForCheck();
+      });
   }
 
   /**

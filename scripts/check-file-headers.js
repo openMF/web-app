@@ -62,6 +62,7 @@ const EXCLUDE_PATTERNS = [
   'proxy.conf.js',
   'proxy.localhost.conf.js',
   'version.js',
+  '.env.ts',
   'environment.ts',
   'environment.prod.ts',
   'polyfills.ts',

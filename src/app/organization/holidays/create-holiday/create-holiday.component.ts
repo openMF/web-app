@@ -8,7 +8,8 @@
 
 /** Angular Imports. */
 import { SelectionModel } from '@angular/cdk/collections';
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, Injectable, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, ViewChild, Injectable, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
@@ -70,6 +71,7 @@ export class CreateHolidayComponent implements OnInit {
   private router = inject(Router);
   private _database = inject(ChecklistDatabase);
   private createHoliday = inject(CreateHoliday);
+  private destroyRef = inject(DestroyRef);
 
   /** Create Holiday form. */
   holidayForm: UntypedFormGroup;
@@ -325,13 +327,16 @@ export class CreateHolidayComponent implements OnInit {
    * Sets the conditional controls.
    */
   buildDependencies() {
-    this.holidayForm.get('reschedulingType').valueChanges.subscribe((option: any) => {
-      if (option === 2) {
-        this.holidayForm.addControl('repaymentsRescheduledTo', new UntypedFormControl('', Validators.required));
-      } else {
-        this.holidayForm.removeControl('repaymentsRescheduledTo');
-      }
-    });
+    this.holidayForm
+      .get('reschedulingType')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((option: any) => {
+        if (option === 2) {
+          this.holidayForm.addControl('repaymentsRescheduledTo', new UntypedFormControl('', Validators.required));
+        } else {
+          this.holidayForm.removeControl('repaymentsRescheduledTo');
+        }
+      });
   }
 
   /**

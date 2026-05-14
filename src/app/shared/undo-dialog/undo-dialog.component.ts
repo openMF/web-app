@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -22,6 +22,7 @@ import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
   selector: 'mifosx-undo-dialog',
   templateUrl: './undo-dialog.component.html',
   styleUrl: './undo-dialog.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     MatDialogTitle,
@@ -30,7 +31,7 @@ import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
     MatDialogClose
   ]
 })
-export class UndoDialogComponent {
+export class UndoDialogComponent implements OnInit {
   dialogRef = inject<MatDialogRef<UndoDialogComponent>>(MatDialogRef);
   data = inject(MAT_DIALOG_DATA);
   private formBuilder = inject(UntypedFormBuilder);

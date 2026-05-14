@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatDivider } from '@angular/material/divider';
 import {
   MatCell,
@@ -32,6 +32,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   selector: 'mifosx-loan-product-summary-adv-accounting',
   templateUrl: './loan-product-summary-adv-accounting.component.html',
   styleUrl: './loan-product-summary-adv-accounting.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     MatDivider,

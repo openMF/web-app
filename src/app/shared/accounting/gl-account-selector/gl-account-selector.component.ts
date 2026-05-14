@@ -9,9 +9,9 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   Input,
   OnChanges,
-  OnDestroy,
   OnInit,
   SimpleChanges,
   inject
@@ -19,8 +19,8 @@ import {
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { GLAccount } from 'app/shared/models/general.model';
-import { ReplaySubject, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { ReplaySubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AsyncPipe } from '@angular/common';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -40,7 +40,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GlAccountSelectorComponent implements OnInit, OnChanges, OnDestroy {
+export class GlAccountSelectorComponent implements OnInit, OnChanges {
   private translateService = inject(TranslateService);
 
   @Input() inputFormControl: UntypedFormControl;
@@ -54,15 +54,14 @@ export class GlAccountSelectorComponent implements OnInit, OnChanges, OnDestroy 
   /** control for the filter select */
   protected filterFormCtrl: UntypedFormControl = new UntypedFormControl('');
 
-  /** Subject that emits when the component has been destroyed. */
-  protected _onDestroy = new Subject<void>();
+  private destroyRef = inject(DestroyRef);
 
   placeHolderLabel = '';
   noEntriesFoundLabel = '';
 
   ngOnInit(): void {
     // listen for search field value changes
-    this.filterFormCtrl.valueChanges.pipe(takeUntil(this._onDestroy)).subscribe(() => {
+    this.filterFormCtrl.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.searchGLAccount();
     });
 
@@ -74,11 +73,6 @@ export class GlAccountSelectorComponent implements OnInit, OnChanges, OnDestroy 
     if (this.glAccountList) {
       this.glAccountData.next(this.glAccountList.slice());
     }
-  }
-
-  ngOnDestroy(): void {
-    this._onDestroy.next();
-    this._onDestroy.complete();
   }
 
   searchGLAccount(): void {

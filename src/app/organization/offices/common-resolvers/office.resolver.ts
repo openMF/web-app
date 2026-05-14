@@ -19,7 +19,7 @@ import { OrganizationService } from '../../organization.service';
 /**
  * Office data resolver.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class OfficeResolver {
   private organizationService = inject(OrganizationService);
 

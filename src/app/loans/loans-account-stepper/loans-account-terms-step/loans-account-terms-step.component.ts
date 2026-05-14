@@ -11,12 +11,14 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   OnInit,
   Input,
   OnChanges,
   SimpleChanges,
   inject
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
@@ -104,6 +106,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
   private route = inject(ActivatedRoute);
   private cdr = inject(ChangeDetectorRef);
   dialog = inject(MatDialog);
+  private destroyRef = inject(DestroyRef);
 
   /** Loans Product Options */
   @Input() loansProductOptions: any;
@@ -515,42 +518,57 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
     const repaymentFrequencyNthDayType = this.loansAccountTermsForm.get('repaymentFrequencyNthDayType');
     const repaymentFrequencyDayOfWeekType = this.loansAccountTermsForm.get('repaymentFrequencyDayOfWeekType');
 
-    this.loansAccountTermsForm.get('repaymentFrequencyType')?.valueChanges.subscribe((repaymentFrequencyType) => {
-      repaymentFrequencyNthDayType?.setValidators(null);
-      repaymentFrequencyDayOfWeekType?.setValidators(null);
+    this.loansAccountTermsForm
+      .get('repaymentFrequencyType')
+      ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((repaymentFrequencyType) => {
+        repaymentFrequencyNthDayType?.setValidators(null);
+        repaymentFrequencyDayOfWeekType?.setValidators(null);
 
-      setTimeout(() => {
-        repaymentFrequencyNthDayType?.updateValueAndValidity();
-        repaymentFrequencyDayOfWeekType?.updateValueAndValidity();
+        setTimeout(() => {
+          repaymentFrequencyNthDayType?.updateValueAndValidity();
+          repaymentFrequencyDayOfWeekType?.updateValueAndValidity();
+        });
       });
-    });
   }
 
   /** Custom Listeners for the form to calculate Loan Term */
   setLoanTermListener() {
-    this.loansAccountTermsForm.get('numberOfRepayments')?.valueChanges.subscribe((numberOfRepayments) => {
-      const repaymentEvery: number = this.loansAccountTermsForm.value.repaymentEvery;
-      this.calculateLoanTerm(numberOfRepayments, repaymentEvery);
-    });
+    this.loansAccountTermsForm
+      .get('numberOfRepayments')
+      ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((numberOfRepayments) => {
+        const repaymentEvery: number = this.loansAccountTermsForm.value.repaymentEvery;
+        this.calculateLoanTerm(numberOfRepayments, repaymentEvery);
+      });
 
-    this.loansAccountTermsForm.get('repaymentEvery')?.valueChanges.subscribe((repaymentEvery) => {
-      const numberOfRepayments: number = this.loansAccountTermsForm.value.numberOfRepayments;
-      this.calculateLoanTerm(numberOfRepayments, repaymentEvery);
-    });
+    this.loansAccountTermsForm
+      .get('repaymentEvery')
+      ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((repaymentEvery) => {
+        const numberOfRepayments: number = this.loansAccountTermsForm.value.numberOfRepayments;
+        this.calculateLoanTerm(numberOfRepayments, repaymentEvery);
+      });
 
-    this.loansAccountTermsForm.get('loanTermFrequencyType')?.valueChanges.subscribe((loanTermFrequencyType) => {
-      this.loansAccountTermsForm.patchValue({ repaymentFrequencyType: loanTermFrequencyType });
-    });
+    this.loansAccountTermsForm
+      .get('loanTermFrequencyType')
+      ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((loanTermFrequencyType) => {
+        this.loansAccountTermsForm.patchValue({ repaymentFrequencyType: loanTermFrequencyType });
+      });
 
-    this.loansAccountTermsForm.get('amortizationType')?.valueChanges.subscribe((amortizationType) => {
-      if (amortizationType === 0) {
-        // Equal Principal Payments
-        this.loansAccountTermsForm.addControl('fixedPrincipalPercentagePerInstallment', new UntypedFormControl(''));
-      } else {
-        // Equal Installments
-        this.loansAccountTermsForm.removeControl('fixedPrincipalPercentagePerInstallment');
-      }
-    });
+    this.loansAccountTermsForm
+      .get('amortizationType')
+      ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((amortizationType) => {
+        if (amortizationType === 0) {
+          // Equal Principal Payments
+          this.loansAccountTermsForm.addControl('fixedPrincipalPercentagePerInstallment', new UntypedFormControl(''));
+        } else {
+          // Equal Installments
+          this.loansAccountTermsForm.removeControl('fixedPrincipalPercentagePerInstallment');
+        }
+      });
   }
 
   /** Prevent negative values in numeric fields */
@@ -568,7 +586,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
     numericFieldsWithMinZero.forEach((fieldName) => {
       const control = this.loansAccountTermsForm.get(fieldName);
       if (control) {
-        control.valueChanges.subscribe((value) => {
+        control.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
           if (typeof value === 'number' && value < 0) {
             control.setValue(0, { emitEvent: false });
           }
@@ -577,7 +595,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
     });
     const interestRateControl = this.loansAccountTermsForm.get('interestRatePerPeriod');
     if (interestRateControl) {
-      interestRateControl.valueChanges.subscribe((value) => {
+      interestRateControl.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
         if (typeof value === 'number' && value < 0.01) {
           interestRateControl.setValue(0.01, { emitEvent: false });
         }

@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -46,6 +46,7 @@ export class AmountDisbursedPieComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private themingService = inject(ThemingService);
   private destroyRef = inject(DestroyRef);
+  private cdr = inject(ChangeDetectorRef);
 
   /** Current theme */
   private currentTheme = 'light-theme';
@@ -92,7 +93,7 @@ export class AmountDisbursedPieComponent implements OnInit {
    * Subscribes to value changes of office Id fetches chart data accordingly.
    */
   getChartData() {
-    this.officeId.valueChanges.subscribe((value: number) => {
+    this.officeId.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value: number) => {
       this.homeService.getDisbursedAmount(value).subscribe((response: any) => {
         const data = Object.entries(response[0]).map((entry) => entry[1]);
         if (!(data[0] === 0 && data[1] === 0)) {
@@ -103,6 +104,7 @@ export class AmountDisbursedPieComponent implements OnInit {
           this.showFallback = true;
           this.hideOutput = true;
         }
+        this.cdr.markForCheck();
       });
     });
   }

@@ -6,10 +6,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { inject, Injectable, OnDestroy } from '@angular/core';
+import { inject, Injectable, DestroyRef } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, switchMap, takeUntil, timeout, catchError } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, switchMap, timeout, catchError } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { of } from 'rxjs';
 import { environment } from 'environments/environment';
 import { ClientsService } from '../clients.service';
@@ -54,7 +54,7 @@ export interface GenderOption {
  * - Disables those fields so users cannot modify API-provided values
  */
 @Injectable()
-export class ExternalNationalIdService implements OnDestroy {
+export class ExternalNationalIdService {
   /** Whether the feature is enabled via env var */
   readonly enabled: boolean;
 
@@ -71,8 +71,7 @@ export class ExternalNationalIdService implements OnDestroy {
   /** Whether a lookup is currently in progress */
   isLoading = false;
 
-  private destroy$ = new Subject<void>();
-
+  private destroyRef = inject(DestroyRef);
   private clientsService = inject(ClientsService);
 
   constructor() {
@@ -163,7 +162,7 @@ export class ExternalNationalIdService implements OnDestroy {
             })
           );
         }),
-        takeUntil(this.destroy$)
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe((response: ExternalNationalIdResponse | null) => {
         this.isLoading = false;
@@ -299,10 +298,5 @@ export class ExternalNationalIdService implements OnDestroy {
     for (const field of PERSON_FIELD_NAMES) {
       form.get(field)?.disable();
     }
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

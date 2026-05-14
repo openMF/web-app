@@ -6,7 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -37,6 +38,7 @@ export class LoansAccountAddCollateralDialogComponent implements OnInit {
   dialogRef = inject<MatDialogRef<LoansAccountAddCollateralDialogComponent>>(MatDialogRef);
   data = inject(MAT_DIALOG_DATA);
   private formBuilder = inject(UntypedFormBuilder);
+  private destroyRef = inject(DestroyRef);
 
   layout: {
     addButtonText?: string;
@@ -81,16 +83,20 @@ export class LoansAccountAddCollateralDialogComponent implements OnInit {
    * Subscribe to Form controls value changes
    */
   buildDependencies() {
-    this.addCollateralForm.controls.collateral.valueChanges.subscribe((collateral: any) => {
-      this.collateralData = collateral;
-      this.maxQuantity = collateral.quantity;
-    });
-
-    this.addCollateralForm.controls.quantity.valueChanges.subscribe((quantity: any) => {
-      this.addCollateralForm.patchValue({
-        totalValue: this.collateralData.basePrice * quantity,
-        totalCollateralValue: (this.collateralData.basePrice * this.collateralData.pctToBase * quantity) / 100
+    this.addCollateralForm.controls.collateral.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((collateral: any) => {
+        this.collateralData = collateral;
+        this.maxQuantity = collateral.quantity;
       });
-    });
+
+    this.addCollateralForm.controls.quantity.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((quantity: any) => {
+        this.addCollateralForm.patchValue({
+          totalValue: this.collateralData.basePrice * quantity,
+          totalCollateralValue: (this.collateralData.basePrice * this.collateralData.pctToBase * quantity) / 100
+        });
+      });
   }
 }

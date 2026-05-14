@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, ViewChild, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -64,6 +65,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 export class TransactionsComponent implements OnInit {
   private organizationService = inject(OrganizationService);
   private route = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
 
   /** Currency selector. */
   currencySelector = new UntypedFormControl();
@@ -124,7 +126,7 @@ export class TransactionsComponent implements OnInit {
    * Retrieves the transactions data on changing currency and sets the transactions table.
    */
   onChangeCurrency() {
-    this.currencySelector.valueChanges.subscribe((currencyCode: any) => {
+    this.currencySelector.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((currencyCode: any) => {
       this.organizationService
         .getCashierSummaryAndTransactions(this.tellerId, this.cashierId, currencyCode)
         .subscribe((response: any) => {

@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import * as _ from 'lodash';
@@ -80,6 +80,7 @@ interface ResolverData {
   templateUrl: './council-approval.component.html',
   styleUrls: ['./council-approval.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
@@ -105,6 +106,7 @@ export class CouncilApprovalComponent {
   private translateService = inject(TranslateService);
   private settingsService = inject(SettingsService);
   private tasksService = inject(TasksService);
+  private cdr = inject(ChangeDetectorRef);
 
   /** Offices Data */
   offices: any[];
@@ -260,6 +262,7 @@ export class CouncilApprovalComponent {
     this.tasksService.getAllLoansToBeApproved().subscribe((response: any) => {
       this.loans = response.pageItems;
       this.setOfficeData();
+      this.cdr.markForCheck();
     });
   }
 

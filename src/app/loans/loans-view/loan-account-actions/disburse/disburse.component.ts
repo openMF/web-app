@@ -19,7 +19,6 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
-import { environment } from '../../../../../environments/environment';
 
 /**
  * Disburse Loan Option
@@ -41,8 +40,6 @@ export class DisburseComponent extends LoanAccountActionsBaseComponent implement
   private formBuilder = inject(UntypedFormBuilder);
   private dateUtils = inject(Dates);
 
-  /** Environment configuration */
-  protected environment = environment;
   /** Payment Type Options */
   paymentTypes: any;
   /** Show payment details */
@@ -89,8 +86,7 @@ export class DisburseComponent extends LoanAccountActionsBaseComponent implement
       ],
       externalId: '',
       paymentTypeId: [
-        '',
-        environment.productionMode ? Validators.required : []
+        ''
       ],
       note: ''
     });

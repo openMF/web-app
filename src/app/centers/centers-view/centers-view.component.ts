@@ -7,11 +7,10 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, DestroyRef, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /** Dialog Imports */
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
@@ -89,28 +88,28 @@ export class CentersViewComponent implements OnInit, OnDestroy {
   meetingData = false;
 
   private reloadContext!: string;
-  private destroy$ = new Subject<void>();
+  private destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
-    this.route.data.pipe(takeUntil(this.destroy$)).subscribe((data: { centerViewData: any; centerDatatables: any }) => {
-      this.centerViewData = data.centerViewData;
-      this.centerDatatables = data.centerDatatables;
-      this.meetingData = !!this.centerViewData?.collectionMeetingCalendar;
-      this.reloadContext = `center-${this.centerViewData.id}`;
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { centerViewData: any; centerDatatables: any }) => {
+        this.centerViewData = data.centerViewData;
+        this.centerDatatables = data.centerDatatables;
+        this.meetingData = !!this.centerViewData?.collectionMeetingCalendar;
+        this.reloadContext = `center-${this.centerViewData.id}`;
 
-      // Subscribe to reload events after we have the center ID
-      this.dataReloadService
-        .getReloadObservable(this.reloadContext)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(() => {
-          this.refreshData();
-        });
-    });
+        // Subscribe to reload events after we have the center ID
+        this.dataReloadService
+          .getReloadObservable(this.reloadContext)
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe(() => {
+            this.refreshData();
+          });
+      });
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
     if (this.reloadContext) {
       this.dataReloadService.cleanup(this.reloadContext);
     }
@@ -219,7 +218,7 @@ export class CentersViewComponent implements OnInit, OnDestroy {
   private refreshData(): void {
     this.centersService
       .getCenterData(this.centerViewData.id)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((data: any) => {
         this.centerViewData = data;
         this.meetingData = !!data?.collectionMeetingCalendar;

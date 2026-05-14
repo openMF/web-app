@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 
 /** Custom Services */
@@ -30,6 +31,7 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
 export class AddLoanChargeComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   private dateUtils = inject(Dates);
+  private destroyRef = inject(DestroyRef);
 
   /** Minimum Due Date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -73,21 +75,23 @@ export class AddLoanChargeComponent extends LoanAccountActionsBaseComponent impl
   ngOnInit() {
     this.maxDate = this.settingsService.maxFutureDate;
     this.createLoanChargeForm();
-    this.loanChargeForm.controls.chargeId.valueChanges.subscribe((chargeId) => {
-      const chargeDetails = this.loanChargeOptions.find((option) => {
-        return option.id === chargeId;
+    this.loanChargeForm.controls.chargeId.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((chargeId) => {
+        const chargeDetails = this.loanChargeOptions.find((option) => {
+          return option.id === chargeId;
+        });
+        if (chargeDetails.chargeTimeType.id === 2) {
+          this.loanChargeForm.addControl('dueDate', new UntypedFormControl('', Validators.required));
+        } else {
+          this.loanChargeForm.removeControl('dueDate');
+        }
+        this.loanChargeForm.patchValue({
+          amount: chargeDetails.amount,
+          chargeCalculation: chargeDetails.chargeCalculationType.value,
+          chargeTime: chargeDetails.chargeTimeType.value
+        });
       });
-      if (chargeDetails.chargeTimeType.id === 2) {
-        this.loanChargeForm.addControl('dueDate', new UntypedFormControl('', Validators.required));
-      } else {
-        this.loanChargeForm.removeControl('dueDate');
-      }
-      this.loanChargeForm.patchValue({
-        amount: chargeDetails.amount,
-        chargeCalculation: chargeDetails.chargeCalculationType.value,
-        chargeTime: chargeDetails.chargeTimeType.value
-      });
-    });
   }
 
   /**

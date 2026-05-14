@@ -8,15 +8,25 @@
 
 /* eslint-disable @angular-eslint/prefer-inject */
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, HostListener, HostBinding, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  HostListener,
+  HostBinding,
+  OnDestroy,
+  DestroyRef,
+  inject
+} from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 
 /** rxjs Imports */
-import { merge, Subscription, Subject } from 'rxjs';
-import { filter, map, mergeMap, takeUntil, take } from 'rxjs/operators';
+import { merge, Subscription } from 'rxjs';
+import { filter, map, mergeMap, take } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /** Translation Imports */
 import { TranslateService } from '@ngx-translate/core';
@@ -103,7 +113,7 @@ export class WebAppComponent implements OnInit, OnDestroy {
   i18nService: I18nService;
 
   private authSubscription: Subscription;
-  private destroy$ = new Subject<void>();
+  private destroyRef = inject(DestroyRef);
 
   /**
    * @param {Router} router Router for navigation.
@@ -186,7 +196,7 @@ export class WebAppComponent implements OnInit, OnDestroy {
         }),
         filter((route) => route.outlet === 'primary'),
         mergeMap((route) => route.data),
-        takeUntil(this.destroy$)
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe((event) => {
         const title = event['title'] ? `labels.text.${event['title']}` : 'APP_NAME';
@@ -206,7 +216,7 @@ export class WebAppComponent implements OnInit, OnDestroy {
       activities = length > 100 ? activitiesArray.slice(length - 100) : activitiesArray;
     }
     // Store route URLs array in local storage on navigation end.
-    onNavigationEnd.pipe(takeUntil(this.destroy$)).subscribe(() => {
+    onNavigationEnd.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       activities.push(this.router.url);
       localStorage.setItem('mifosXLocation', JSON.stringify(activities));
     });
@@ -311,8 +321,6 @@ export class WebAppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
     if (this.authSubscription) {
       this.authSubscription.unsubscribe();
     }

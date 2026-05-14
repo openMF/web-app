@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
@@ -32,6 +33,8 @@ export class CreateAccountNumberPreferenceComponent implements OnInit {
   private systemService = inject(SystemService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
+  private cdr = inject(ChangeDetectorRef);
 
   /** Account Number Preferences Form */
   accountNumberPreferenceForm: UntypedFormGroup;
@@ -66,12 +69,16 @@ export class CreateAccountNumberPreferenceComponent implements OnInit {
    * Subscribes on Form Controls to change Prefix Type data.
    */
   getPrefixTypeValue() {
-    this.accountNumberPreferenceForm.get('accountType').valueChanges.subscribe((accountId) => {
-      this.prefixTypeData =
-        this.accountNumberPreferencesTemplateData.prefixTypeOptions[
-          `accountType.${this.accountNumberPreferencesTemplateData.accountTypeOptions.find((accountType: any) => accountType.id === accountId).value.toLowerCase()}`
-        ];
-    });
+    this.accountNumberPreferenceForm
+      .get('accountType')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((accountId) => {
+        this.prefixTypeData =
+          this.accountNumberPreferencesTemplateData.prefixTypeOptions[
+            `accountType.${this.accountNumberPreferencesTemplateData.accountTypeOptions.find((accountType: any) => accountType.id === accountId).value.toLowerCase()}`
+          ];
+        this.cdr.markForCheck();
+      });
   }
 
   /**

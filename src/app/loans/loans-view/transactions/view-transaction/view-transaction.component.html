@@ -42,9 +42,6 @@
           <div class="flex-50 mat-body-strong">
             {{ 'Repayment Transaction' | translateKey: 'catalogs' }}
           </div>
-        }
-
-        @if (transactionData.toLoanTransactionRelation) {
           <div class="flex-50">
             <a [href]="loanTransactionRelatedLink(transactionData.toLoanTransactionRelation.fromLoanTransaction)">
               {{ transactionData.toLoanTransactionRelation.fromLoanTransaction }}
@@ -73,7 +70,7 @@
         </div>
 
         <div class="flex-50">
-          {{ transactionData.currency.name }}
+          {{ transactionData.currency.name || transactionData.currency.code }}
         </div>
 
         <div class="flex-50 mat-body-strong">
@@ -81,7 +78,14 @@
         </div>
 
         <div class="flex-50">
-          {{ transactionData.amount | currency: transactionData.currency.code : 'symbol-narrow' : '1.2-2' }}
+          @if (loanProductService.isLoanProduct) {
+            {{ transactionData.amount | currency: transactionData.currency.code : 'symbol-narrow' : '1.2-2' }}
+          }
+          @if (loanProductService.isWorkingCapital) {
+            {{
+              transactionData.transactionAmount | currency: transactionData.currency.code : 'symbol-narrow' : '1.2-2'
+            }}
+          }
         </div>
 
         @if (transactionData.externalId) {
@@ -153,7 +157,13 @@
       </div>
 
       <div class="layout-row layout-align-center gap-2percent column-on-mobile">
-        <button type="button" mat-raised-button color="primary" [routerLink]="['../']">
+        <button
+          type="button"
+          mat-raised-button
+          color="primary"
+          [routerLink]="['../']"
+          [queryParams]="{ productType: loanProductService.productType.value }"
+        >
           {{ 'labels.buttons.Back' | translate }}
         </button>
       </div>

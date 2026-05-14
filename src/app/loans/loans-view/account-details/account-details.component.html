@@ -41,6 +41,12 @@
           <span class="flex-50">{{ loanDetails.periodPaymentRate | formatNumber }} %</span>
         </div>
       }
+      @if (loanDetails.periodPaymentAmount) {
+        <div class="flex-fill layout-row">
+          <span class="flex-50">{{ 'labels.inputs.Period Payment Amount' | translate }}:</span>
+          <span class="flex-50">{{ loanDetails.periodPaymentAmount | formatNumber }}</span>
+        </div>
+      }
 
       @if (loanDetails.discountProposed) {
         <div class="flex-fill layout-row">
@@ -60,7 +66,18 @@
           <span class="flex-50">{{ loanDetails.discount | formatNumber }}</span>
         </div>
       }
-
+      @if (loanDetails.dailyEir) {
+        <div class="flex-fill layout-row">
+          <span class="flex-50">{{ 'labels.inputs.Daily EIR' | translate }}:</span>
+          <span class="flex-50">{{ loanDetails.dailyEir | formatNumber }}</span>
+        </div>
+      }
+      @if (loanDetails.calculatedAnnualEir) {
+        <div class="flex-fill layout-row">
+          <span class="flex-50">{{ 'labels.inputs.Annual EIR' | translate }}:</span>
+          <span class="flex-50">{{ loanDetails.calculatedAnnualEir | formatNumber }}</span>
+        </div>
+      }
       @if (loanDetails.delinquencyGraceDays !== null) {
         <div class="flex-fill layout-row">
           <span class="flex-50"> {{ 'labels.inputs.Delinquency Grace Days' | translate }} </span>

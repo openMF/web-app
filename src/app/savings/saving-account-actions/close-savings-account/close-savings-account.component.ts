@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -48,6 +49,7 @@ export class CloseSavingsAccountComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -108,18 +110,21 @@ export class CloseSavingsAccountComponent implements OnInit {
    * Subscribe to value changes of withdraw balance checkbox.
    */
   buildDependencies() {
-    this.closeSavingsAccountForm.get('withdrawBalance').valueChanges.subscribe((value: boolean) => {
-      if (value) {
-        this.closeSavingsAccountForm.addControl(
-          'amount',
-          new UntypedFormControl({ value: this.transactionAmount, disabled: true })
-        );
-        this.closeSavingsAccountForm.addControl('paymentTypeId', new UntypedFormControl(''));
-      } else {
-        this.closeSavingsAccountForm.removeControl('amount');
-        this.closeSavingsAccountForm.removeControl('paymentTypeId');
-      }
-    });
+    this.closeSavingsAccountForm
+      .get('withdrawBalance')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((value: boolean) => {
+        if (value) {
+          this.closeSavingsAccountForm.addControl(
+            'amount',
+            new UntypedFormControl({ value: this.transactionAmount, disabled: true })
+          );
+          this.closeSavingsAccountForm.addControl('paymentTypeId', new UntypedFormControl(''));
+        } else {
+          this.closeSavingsAccountForm.removeControl('amount');
+          this.closeSavingsAccountForm.removeControl('paymentTypeId');
+        }
+      });
   }
 
   /**

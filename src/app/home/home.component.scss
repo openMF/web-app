@@ -6,21 +6,553 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-.container {
-  max-width: 37rem;
+@use 'sass:color';
+@use 'sass:list';
 
-  .title {
-    font-size: 1.25rem;
-    font-weight: 500;
-    margin-left: -15px;
+// ── Brand token map (derived from material-palette.scss) ──────────
+// Hero background — deep brand blues rooted in primary-700
+$hero-950: #021929;
+$hero-900: #032a42;
+$hero-800: #004272;
+$hero-700: #015085;
+
+// Primary (blue)
+$primary-100: #5ba2ec;
+$primary-500: #1074b9;
+$primary-700: #004989;
+
+// Secondary / accent (green) — used as pop color on dark hero
+$accent-pop: #b4d575;
+
+// Surface & text tokens
+$surface: #f5f6fa;
+$surface-dark: #0f172a;
+$white: #fff;
+$text: #1a2332;
+$text-dark: #e2e8f0;
+$muted: #8892a4;
+$muted-dark: #94a3b8;
+$border: #eaecf4;
+$border-dark: #334155;
+$card-dark: #1e293b;
+
+// ── Host ─────────────────────────────────────────────────────────
+:host {
+  display: block;
+  font-family:
+    'Fira Sans',
+    system-ui,
+    -apple-system,
+    sans-serif;
+
+  --max-content: none;
+}
+
+.container {
+  max-width: none !important;
+  padding: 0 !important;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// HERO — brand deep-blue gradient with accent green highlights
+// ═══════════════════════════════════════════════════════════════
+.home-hero {
+  position: relative;
+  background: linear-gradient(140deg, $hero-950 0%, $hero-900 38%, $hero-800 72%, $hero-700 100%);
+  padding: 52px 48px 48px;
+  overflow: hidden;
+}
+
+.hero-dots {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba($primary-500, 0.18) 1px, transparent 1px);
+  background-size: 30px 30px;
+  pointer-events: none;
+}
+
+.hero-glow-tr {
+  position: absolute;
+  width: 520px;
+  height: 520px;
+  top: -160px;
+  right: -80px;
+  background: radial-gradient(ellipse at center, rgba($primary-500, 0.1) 0%, transparent 62%);
+  pointer-events: none;
+}
+
+.hero-glow-bl {
+  position: absolute;
+  width: 360px;
+  height: 360px;
+  bottom: -100px;
+  left: 40px;
+  background: radial-gradient(ellipse at center, rgba($primary-700, 0.14) 0%, transparent 62%);
+  pointer-events: none;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 580px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+// ── Logo + Greeting ───────────────────────────────────────────────
+.greeting {
+  text-align: center;
+  animation: hero-reveal 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-logo {
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+  opacity: 0.92;
+  margin-bottom: 4px;
+}
+
+.greeting-eyebrow {
+  display: block;
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba($accent-pop, 0.9);
+  margin-bottom: 2px;
+}
+
+.greeting-name {
+  font-family: Syne, system-ui, sans-serif;
+  font-size: 46px;
+  font-weight: 800;
+  color: $white;
+  line-height: 1.02;
+  margin: 0;
+  letter-spacing: -1px;
+}
+
+.greeting-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  font-size: 13px;
+  color: rgba($white, 0.48);
+}
+
+.online-pip {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 0 3px rgba(#4ade80, 0.22);
+  flex-shrink: 0;
+}
+
+.tenant-label {
+  color: rgba($white, 0.7);
+  font-weight: 500;
+}
+
+.meta-dot {
+  opacity: 0.3;
+}
+
+.platform-label {
+  font-size: 12px;
+  letter-spacing: 0.3px;
+}
+
+.greeting-business-date {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  background: rgba($accent-pop, 0.1);
+  border: 1px solid rgba($accent-pop, 0.3);
+  border-radius: 20px;
+  padding: 4px 14px;
+  margin-top: 2px;
+}
+
+.business-date-label {
+  color: rgba($white, 0.5);
+  font-weight: 400;
+}
+
+.business-date-value {
+  color: $accent-pop;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+// ── Search pill ───────────────────────────────────────────────────
+.search-wrap {
+  width: 100%;
+  animation: hero-reveal 0.65s 0.08s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.search-pill {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba($white, 0.06);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba($white, 0.11);
+  border-radius: 14px;
+  padding: 15px 20px;
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    box-shadow 0.2s;
+
+  &:focus-within {
+    background: rgba($white, 0.1);
+    border-color: rgba($accent-pop, 0.5);
+    box-shadow: 0 0 0 4px rgba($accent-pop, 0.1);
   }
 }
 
-.mat-list-base {
-  padding-top: 0;
+.search-lead-icon {
+  color: rgba($white, 0.35);
+  font-size: 15px;
+  flex-shrink: 0;
+  transition: color 0.2s;
+
+  .search-pill:focus-within & {
+    color: rgba($accent-pop, 0.9);
+  }
 }
 
-a {
+.search-input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  font-family: 'Fira Sans', system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: $white;
+  caret-color: $accent-pop;
+
+  &::placeholder {
+    color: rgba($white, 0.28);
+    font-weight: 300;
+  }
+}
+
+.search-kbd {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  background: rgba($white, 0.07);
+  border: 1px solid rgba($white, 0.1);
+  border-radius: 6px;
+  font-family: 'Fira Sans', system-ui, monospace;
+  font-size: 11px;
+  color: rgba($white, 0.28);
+  letter-spacing: 0.4px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.opt-arrow {
+  font-size: 10px;
+  opacity: 0.4;
+  margin-right: 8px;
+}
+
+// ── Hero Dashboard CTA ────────────────────────────────────────────
+.hero-dashboard-btn {
+  animation: hero-reveal 0.65s 0.16s cubic-bezier(0.22, 1, 0.36, 1) both;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 28px;
+  border-radius: 10px;
+
+  fa-icon {
+    font-size: 14px;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// BODY — light theme default
+// ═══════════════════════════════════════════════════════════════
+.home-body {
+  background: $surface;
+  padding: 36px 48px 52px;
+  transition: background 0.25s;
+}
+
+// ── Section header ────────────────────────────────────────────────
+.section-header {
+  margin-bottom: 22px;
+  animation: body-reveal 0.55s 0.25s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.section-title-block {
+  line-height: 1.2;
+}
+
+.section-title {
+  font-family: Syne, system-ui, sans-serif;
+  font-size: 21px;
+  font-weight: 700;
+  color: $text;
+  margin: 0 0 4px;
+  letter-spacing: -0.3px;
+  transition: color 0.25s;
+}
+
+.section-sub {
+  font-size: 13px;
+  color: $muted;
+  margin: 0;
+  transition: color 0.25s;
+}
+
+// ── Actions grid ──────────────────────────────────────────────────
+.actions-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+
+  @media (width <= 1100px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (width <= 800px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (width <= 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.action-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: $white;
+  border: 1px solid $border;
+  border-radius: 14px;
+  padding: 18px 16px;
   text-decoration: none;
-  color: black;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 4%);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s,
+    border-color 0.2s,
+    background 0.25s;
+
+  $delays: 0.28, 0.33, 0.38, 0.43, 0.48, 0.53, 0.58, 0.63;
+
+  @for $i from 1 through 8 {
+    &:nth-child(#{$i}) {
+      animation: body-reveal 0.55s #{list.nth($delays, $i)}s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgb(0 0 0 / 9%);
+    border-color: color.adjust($border, $lightness: -6%);
+
+    .ac-arrow {
+      transform: translateX(4px);
+      color: $primary-500;
+    }
+
+    .ac-icon {
+      transform: scale(1.07);
+    }
+  }
+
+  &:active {
+    transform: translateY(-1px);
+  }
+}
+
+.ac-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  background: var(--cb);
+  color: var(--c);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+
+  &--clients {
+    --c: #1074b9;
+    --cb: #deedf8;
+  }
+
+  &--groups {
+    --c: #16a34a;
+    --cb: #f0fdf4;
+  }
+
+  &--centers {
+    --c: #0891b2;
+    --cb: #ecfeff;
+  }
+
+  &--accounting {
+    --c: #7c3aed;
+    --cb: #f5f3ff;
+  }
+
+  &--loans {
+    --c: #ea580c;
+    --cb: #fff7ed;
+  }
+
+  &--savings {
+    --c: #5ba2ec;
+    --cb: #e5f2fb;
+  }
+
+  &--organization {
+    --c: #be185d;
+    --cb: #fdf2f8;
+  }
+
+  &--system {
+    --c: #475569;
+    --cb: #f8fafc;
+  }
+
+  &--reports {
+    --c: #0d9488;
+    --cb: #f0fdfa;
+  }
+}
+
+.ac-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.ac-title {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: $text;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.25s;
+}
+
+.ac-desc {
+  font-size: 11.5px;
+  color: $muted;
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.25s;
+}
+
+.ac-arrow {
+  color: #c8cede;
+  font-size: 12px;
+  flex-shrink: 0;
+  transition:
+    transform 0.2s,
+    color 0.2s;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// DARK THEME OVERRIDES
+// ThemingService adds `dark-theme` class to document.body
+// ═══════════════════════════════════════════════════════════════
+:host-context(body.dark-theme) {
+  .home-body {
+    background: $surface-dark;
+  }
+
+  .section-title {
+    color: $text-dark;
+  }
+
+  .section-sub {
+    color: $muted-dark;
+  }
+
+  .action-card {
+    background: $card-dark;
+    border-color: $border-dark;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 30%);
+
+    &:hover {
+      box-shadow: 0 10px 24px rgb(0 0 0 / 50%);
+      border-color: color.adjust($border-dark, $lightness: 8%);
+    }
+  }
+
+  .ac-title {
+    color: $text-dark;
+  }
+
+  .ac-desc {
+    color: $muted-dark;
+  }
+
+  .ac-arrow {
+    color: #475569;
+  }
+
+  // Icon backgrounds stay vivid but use dark-aware tints
+  .ac-icon {
+    filter: brightness(0.85) saturate(0.9);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ANIMATIONS
+// ═══════════════════════════════════════════════════════════════
+@keyframes hero-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes body-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

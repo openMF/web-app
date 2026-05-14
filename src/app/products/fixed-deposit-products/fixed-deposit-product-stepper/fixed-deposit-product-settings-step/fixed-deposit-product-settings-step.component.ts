@@ -6,7 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -38,6 +39,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class FixedDepositProductSettingsStepComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
+  private destroyRef = inject(DestroyRef);
 
   @Input() fixedDepositProductsTemplate: any;
 
@@ -135,13 +137,19 @@ export class FixedDepositProductSettingsStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.fixedDepositProductSettingsForm.get('withHoldTax').valueChanges.subscribe((withHoldTax: any) => {
-      if (withHoldTax) {
-        this.fixedDepositProductSettingsForm.addControl('taxGroupId', new UntypedFormControl('', Validators.required));
-      } else {
-        this.fixedDepositProductSettingsForm.removeControl('taxGroupId');
-      }
-    });
+    this.fixedDepositProductSettingsForm
+      .get('withHoldTax')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((withHoldTax: any) => {
+        if (withHoldTax) {
+          this.fixedDepositProductSettingsForm.addControl(
+            'taxGroupId',
+            new UntypedFormControl('', Validators.required)
+          );
+        } else {
+          this.fixedDepositProductSettingsForm.removeControl('taxGroupId');
+        }
+      });
   }
 
   get fixedDepositProductSettings() {

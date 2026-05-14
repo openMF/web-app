@@ -45,7 +45,7 @@
 <div #output class="container">
   <mat-card class="layout-column gap-3percent">
     <div class="layout-align-end">
-      <button mat-stroked-button color="primary" [disabled]="!template" (click)="print()" *ngIf="productionMode">
+      <button mat-stroked-button color="primary" [disabled]="!template" (click)="print()">
         <fa-icon icon="file" class="m-r-10"></fa-icon>
         {{ 'labels.buttons.Print' | translate }}
       </button>

@@ -88,7 +88,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
 
   /** Transaction data. */
   transactionData: any;
-  transactionType: LoanTransactionType;
+  transactionType: LoanTransactionType | null = null;
   /** Is Editable */
   allowEdition = true;
   /** Is Undoable */
@@ -124,6 +124,9 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
     super();
     this.route.data.subscribe((data: { loansAccountTransaction: any }) => {
       this.transactionData = data.loansAccountTransaction;
+      if (this.loanProductService.isWorkingCapital) {
+        this.transactionData.date = this.transactionData.transactionDate;
+      }
       this.transactionType = this.transactionData.type;
       this.allowEdition =
         !this.transactionData.manuallyReversed && !this.allowTransactionEdition(this.transactionData.type.id);

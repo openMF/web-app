@@ -66,6 +66,12 @@
                           }
                         </td>
                       </tr>
+                      @if (loanDetailsData.officeName) {
+                        <tr>
+                          <td>{{ 'labels.inputs.Office' | translate }}:</td>
+                          <td>{{ loanDetailsData.officeName }}</td>
+                        </tr>
+                      }
                       @if (loanDetailsData.externalId) {
                         <tr>
                           <td>{{ 'labels.inputs.External Id' | translate }}:</td>
@@ -138,11 +144,11 @@
                 }
               </div>
 
-              @if (loanDetailsData.summary) {
-                <div class="loans-overview mat-typography flex-30">
-                  <h3>{{ 'labels.heading.Account Overview' | translate }}</h3>
-                  <table class="account-overview">
-                    <tbody>
+              <div class="loans-overview mat-typography flex-30">
+                <h3>{{ 'labels.heading.Account Overview' | translate }}</h3>
+                <table class="account-overview">
+                  <tbody>
+                    @if (loanProductService.isLoanProduct && loanDetailsData.summary) {
                       <tr>
                         <td>{{ 'labels.inputs.Current Balance' | translate }}</td>
                         <td class="r-amount">
@@ -184,16 +190,9 @@
                           </td>
                         </tr>
                       }
-                    </tbody>
-                  </table>
-                </div>
-              }
+                    }
 
-              @if (loanDetailsData.balance) {
-                <div class="loans-overview mat-typography flex-30">
-                  <h3>{{ 'labels.heading.Account Overview' | translate }}</h3>
-                  <table class="account-overview">
-                    <tbody>
+                    @if (loanProductService.isWorkingCapital) {
                       <tr>
                         <td>{{ 'labels.inputs.Current Balance' | translate }}</td>
                         <td class="r-amount">
@@ -214,10 +213,10 @@
                           </td>
                         </tr>
                       }
-                    </tbody>
-                  </table>
-                </div>
-              }
+                    }
+                  </tbody>
+                </table>
+              </div>
 
               <div class="flex-5">
                 @if (buttonConfig.singleButtons.length > 0) {
@@ -506,7 +505,7 @@
             {{ 'labels.inputs.Term Variations' | translate }}
           </a>
         }
-        @if (loanProductService.isLoanProduct && loanDetailsData.overdueCharges.length > 0) {
+        @if (loanProductService.isLoanProduct && loanDetailsData.overdueCharges?.length > 0) {
           <a
             mat-tab-link
             [routerLink]="['./overdue-charges']"
