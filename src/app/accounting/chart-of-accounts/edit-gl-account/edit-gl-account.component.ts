@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
@@ -34,6 +35,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditGlAccountComponent implements OnInit {
+  private destroyRef = inject(DestroyRef);
+  private cdr = inject(ChangeDetectorRef);
   private formBuilder = inject(UntypedFormBuilder);
   private accountingService = inject(AccountingService);
   private route = inject(ActivatedRoute);
@@ -110,30 +113,34 @@ export class EditGlAccountComponent implements OnInit {
   setGLAccountForm() {
     this.accountTypeData = this.glAccount.accountTypeOptions;
     this.accountUsageData = this.glAccount.usageOptions;
-    this.glAccountForm.get('type').valueChanges.subscribe((accountTypeId) => {
-      switch (accountTypeId) {
-        case 1:
-          this.parentData = this.glAccount.assetHeaderAccountOptions;
-          this.tagData = this.glAccount.allowedAssetsTagOptions;
-          break;
-        case 2:
-          this.parentData = this.glAccount.liabilityHeaderAccountOptions;
-          this.tagData = this.glAccount.allowedLiabilitiesTagOptions;
-          break;
-        case 3:
-          this.parentData = this.glAccount.equityHeaderAccountOptions;
-          this.tagData = this.glAccount.allowedEquityTagOptions;
-          break;
-        case 4:
-          this.parentData = this.glAccount.incomeHeaderAccountOptions;
-          this.tagData = this.glAccount.allowedIncomeTagOptions;
-          break;
-        case 5:
-          this.parentData = this.glAccount.expenseHeaderAccountOptions;
-          this.tagData = this.glAccount.allowedExpensesTagOptions;
-          break;
-      }
-    });
+    this.glAccountForm
+      .get('type')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((accountTypeId) => {
+        switch (accountTypeId) {
+          case 1:
+            this.parentData = this.glAccount.assetHeaderAccountOptions;
+            this.tagData = this.glAccount.allowedAssetsTagOptions;
+            break;
+          case 2:
+            this.parentData = this.glAccount.liabilityHeaderAccountOptions;
+            this.tagData = this.glAccount.allowedLiabilitiesTagOptions;
+            break;
+          case 3:
+            this.parentData = this.glAccount.equityHeaderAccountOptions;
+            this.tagData = this.glAccount.allowedEquityTagOptions;
+            break;
+          case 4:
+            this.parentData = this.glAccount.incomeHeaderAccountOptions;
+            this.tagData = this.glAccount.allowedIncomeTagOptions;
+            break;
+          case 5:
+            this.parentData = this.glAccount.expenseHeaderAccountOptions;
+            this.tagData = this.glAccount.allowedExpensesTagOptions;
+            break;
+        }
+        this.cdr.markForCheck();
+      });
 
     this.glAccountForm.get('type').setValue(this.glAccount.type.id);
   }

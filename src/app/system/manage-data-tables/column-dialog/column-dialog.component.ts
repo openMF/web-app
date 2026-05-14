@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,
@@ -46,6 +47,7 @@ export class ColumnDialogComponent implements OnInit {
   dialogRef = inject<MatDialogRef<ColumnDialogComponent>>(MatDialogRef);
   formBuilder = inject(UntypedFormBuilder);
   data = inject(MAT_DIALOG_DATA);
+  private destroyRef = inject(DestroyRef);
 
   /** Column Form. */
   columnForm: UntypedFormGroup;
@@ -84,7 +86,8 @@ export class ColumnDialogComponent implements OnInit {
       ],
       mandatory: [{ value: this.data.isColumnNullable, disabled: this.data.type === 'existing' }],
       unique: [
-        { value: this.data.isColumnUnique, disabled: this.data.isColumnNullable || this.data.type === 'existing' }],
+        { value: this.data.isColumnUnique, disabled: this.data.isColumnNullable || this.data.type === 'existing' }
+      ],
       indexed: [{ value: this.data.isColumnIndexed, disabled: this.data.type === 'existing' }],
       code: [
         {
@@ -123,24 +126,27 @@ export class ColumnDialogComponent implements OnInit {
    * Watches on Column Type field to enable/diable certain fields.
    */
   onColumnTypeChanges() {
-    this.columnForm.get('type').valueChanges.subscribe((type) => {
-      switch (type) {
-        case 'String': {
-          this.columnForm.get('length').enable();
-          this.columnForm.get('code').disable();
-          break;
+    this.columnForm
+      .get('type')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((type) => {
+        switch (type) {
+          case 'String': {
+            this.columnForm.get('length').enable();
+            this.columnForm.get('code').disable();
+            break;
+          }
+          case 'Dropdown': {
+            this.columnForm.get('code').enable();
+            this.columnForm.get('length').disable();
+            break;
+          }
+          default: {
+            this.columnForm.get('code').disable();
+            this.columnForm.get('length').disable();
+          }
         }
-        case 'Dropdown': {
-          this.columnForm.get('code').enable();
-          this.columnForm.get('length').disable();
-          break;
-        }
-        default: {
-          this.columnForm.get('code').disable();
-          this.columnForm.get('length').disable();
-        }
-      }
-    });
+      });
   }
 
   /**

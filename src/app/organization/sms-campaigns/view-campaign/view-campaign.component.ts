@@ -7,11 +7,10 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, ViewChild, DestroyRef, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   MatTableDataSource,
   MatTable,
@@ -98,7 +97,7 @@ export class ViewCampaignComponent implements OnInit, OnDestroy {
   dataSource = new MatTableDataSource();
 
   private reloadContext!: string;
-  private destroy$ = new Subject<void>();
+  private destroyRef = inject(DestroyRef);
 
   /** Message Table Reference */
   @ViewChild('messageTable') messageTableRef: MatTable<Element>;
@@ -128,14 +127,14 @@ export class ViewCampaignComponent implements OnInit, OnDestroy {
   ];
 
   ngOnInit(): void {
-    this.route.data.pipe(takeUntil(this.destroy$)).subscribe((data: { smsCampaign: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { smsCampaign: any }) => {
       this.smsCampaignData = data.smsCampaign;
       this.reloadContext = `sms-campaign-${this.smsCampaignData.id}`;
 
       // Subscribe to reload events after we have the campaign ID
       this.dataReloadService
         .getReloadObservable(this.reloadContext)
-        .pipe(takeUntil(this.destroy$))
+        .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe(() => {
           this.refreshData();
         });
@@ -146,8 +145,6 @@ export class ViewCampaignComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
     if (this.reloadContext) {
       this.dataReloadService.cleanup(this.reloadContext);
     }
@@ -318,7 +315,7 @@ export class ViewCampaignComponent implements OnInit, OnDestroy {
   private refreshData(): void {
     this.organizationService
       .getSmsCampaign(this.smsCampaignData.id)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((data: any) => {
         this.smsCampaignData = data;
       });

@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, ViewChild, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -70,6 +71,7 @@ export class ViewBulkImportComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private formBuilder = inject(UntypedFormBuilder);
   private organizationService = inject(OrganizationService);
+  private destroyRef = inject(DestroyRef);
 
   /** offices Data */
   officeData: any;
@@ -145,13 +147,16 @@ export class ViewBulkImportComponent implements OnInit {
    * Subscribe to value changes and fetches select options accordingly.
    */
   buildDependencies() {
-    this.bulkImportForm.get('officeId').valueChanges.subscribe((value: any) => {
-      if (this.bulkImport.formFields >= 2) {
-        this.organizationService.getStaff(value).subscribe((data: any) => {
-          this.staffData = data;
-        });
-      }
-    });
+    this.bulkImportForm
+      .get('officeId')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((value: any) => {
+        if (this.bulkImport.formFields >= 2) {
+          this.organizationService.getStaff(value).subscribe((data: any) => {
+            this.staffData = data;
+          });
+        }
+      });
   }
 
   /**

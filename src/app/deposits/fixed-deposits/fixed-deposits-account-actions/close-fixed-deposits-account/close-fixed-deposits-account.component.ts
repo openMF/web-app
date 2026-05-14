@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -44,6 +45,7 @@ export class CloseFixedDepositsAccountComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -109,18 +111,21 @@ export class CloseFixedDepositsAccountComponent implements OnInit {
    * Subscribes to value changes of `onAccountClosureId` adds and removes transfer details accordingly.
    */
   addTransferDetails() {
-    this.closeOnMaturityAccountForm.get('onAccountClosureId').valueChanges.subscribe((id: any) => {
-      if (id === 200) {
-        this.closeOnMaturityAccountForm.addControl(
-          'toSavingsAccountId',
-          new UntypedFormControl('', Validators.required)
-        );
-        this.closeOnMaturityAccountForm.addControl('transferDescription', new UntypedFormControl(''));
-      } else {
-        this.closeOnMaturityAccountForm.removeControl('toSavingsAccountId');
-        this.closeOnMaturityAccountForm.removeControl('transferDescription');
-      }
-    });
+    this.closeOnMaturityAccountForm
+      .get('onAccountClosureId')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((id: any) => {
+        if (id === 200) {
+          this.closeOnMaturityAccountForm.addControl(
+            'toSavingsAccountId',
+            new UntypedFormControl('', Validators.required)
+          );
+          this.closeOnMaturityAccountForm.addControl('transferDescription', new UntypedFormControl(''));
+        } else {
+          this.closeOnMaturityAccountForm.removeControl('toSavingsAccountId');
+          this.closeOnMaturityAccountForm.removeControl('transferDescription');
+        }
+      });
   }
 
   /**

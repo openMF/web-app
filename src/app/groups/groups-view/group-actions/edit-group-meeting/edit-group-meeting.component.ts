@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -46,6 +47,8 @@ export class EditGroupMeetingComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
+  private cdr = inject(ChangeDetectorRef);
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -115,51 +118,55 @@ export class EditGroupMeetingComponent implements OnInit {
    * Subscribes to value changes of controls.
    */
   buildDependencies() {
-    this.groupEditMeetingForm.get('frequency').valueChanges.subscribe((frequency: any) => {
-      this.groupEditMeetingForm.removeControl('repeatsOnDay');
-      switch (frequency) {
-        case 1: // Daily
-          this.repetitionIntervals = [
-            '1',
-            '2',
-            '3'
-          ];
-          break;
-        case 2: // Weekly
-          this.repetitionIntervals = [
-            '1',
-            '2',
-            '3'
-          ];
-          this.groupEditMeetingForm.addControl('repeatsOnDay', new UntypedFormControl('', Validators.required));
-          this.groupEditMeetingForm.get('repeatsOnDay').patchValue(this.calendarTemplate.repeatsOnDay.id);
-          break;
-        case 3: // Monthly
-          this.repetitionIntervals = [
-            '1',
-            '2',
-            '3',
-            '4',
-            '5',
-            '6',
-            '7',
-            '8',
-            '9',
-            '10',
-            '11'
-          ];
-          break;
-        case 4: // Yearly
-          this.repetitionIntervals = [
-            '1',
-            '2',
-            '3',
-            '4',
-            '5'
-          ];
-          break;
-      }
-    });
+    this.groupEditMeetingForm
+      .get('frequency')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((frequency: any) => {
+        this.groupEditMeetingForm.removeControl('repeatsOnDay');
+        switch (frequency) {
+          case 1: // Daily
+            this.repetitionIntervals = [
+              '1',
+              '2',
+              '3'
+            ];
+            break;
+          case 2: // Weekly
+            this.repetitionIntervals = [
+              '1',
+              '2',
+              '3'
+            ];
+            this.groupEditMeetingForm.addControl('repeatsOnDay', new UntypedFormControl('', Validators.required));
+            this.groupEditMeetingForm.get('repeatsOnDay').patchValue(this.calendarTemplate.repeatsOnDay.id);
+            break;
+          case 3: // Monthly
+            this.repetitionIntervals = [
+              '1',
+              '2',
+              '3',
+              '4',
+              '5',
+              '6',
+              '7',
+              '8',
+              '9',
+              '10',
+              '11'
+            ];
+            break;
+          case 4: // Yearly
+            this.repetitionIntervals = [
+              '1',
+              '2',
+              '3',
+              '4',
+              '5'
+            ];
+            break;
+        }
+        this.cdr.markForCheck();
+      });
     this.groupEditMeetingForm.patchValue({
       startDate: this.calendarTemplate.startDate && new Date(this.calendarTemplate.startDate),
       frequency: this.calendarTemplate.frequency.id,

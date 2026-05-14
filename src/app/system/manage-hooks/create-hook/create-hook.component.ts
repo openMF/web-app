@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, ViewChild, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -74,6 +75,7 @@ export class CreateHookComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   private dialog = inject(MatDialog);
   private translateService = inject(TranslateService);
+  private destroyRef = inject(DestroyRef);
 
   /** Hooks Template Data. */
   hooksTemplateData: any;
@@ -112,21 +114,24 @@ export class CreateHookComponent implements OnInit {
    */
   ngOnInit() {
     this.createHookForm();
-    this.hookForm.get('name').valueChanges.subscribe((name) => {
-      if (name === 'Web') {
-        this.hookForm.get('contentType').enable();
-        this.hookForm.get('phoneNumber').disable();
-        this.hookForm.get('smsProvider').disable();
-        this.hookForm.get('smsProviderAccountId').disable();
-        this.hookForm.get('smsProviderToken').disable();
-      } else {
-        this.hookForm.get('contentType').disable();
-        this.hookForm.get('phoneNumber').enable();
-        this.hookForm.get('smsProvider').enable();
-        this.hookForm.get('smsProviderAccountId').enable();
-        this.hookForm.get('smsProviderToken').enable();
-      }
-    });
+    this.hookForm
+      .get('name')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((name) => {
+        if (name === 'Web') {
+          this.hookForm.get('contentType').enable();
+          this.hookForm.get('phoneNumber').disable();
+          this.hookForm.get('smsProvider').disable();
+          this.hookForm.get('smsProviderAccountId').disable();
+          this.hookForm.get('smsProviderToken').disable();
+        } else {
+          this.hookForm.get('contentType').disable();
+          this.hookForm.get('phoneNumber').enable();
+          this.hookForm.get('smsProvider').enable();
+          this.hookForm.get('smsProviderAccountId').enable();
+          this.hookForm.get('smsProviderToken').enable();
+        }
+      });
     this.setEvents();
   }
 

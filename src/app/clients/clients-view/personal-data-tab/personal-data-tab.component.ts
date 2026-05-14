@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, inject, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -24,8 +24,8 @@ import { ReportsService } from 'app/reports/reports.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { AlertService } from 'app/core/alert/alert.service';
 import { SystemService } from 'app/system/system.service';
-import { Subject, EMPTY } from 'rxjs';
-import { takeUntil, catchError } from 'rxjs/operators';
+import { EMPTY } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import {
   CustomerDataValidation,
   KYC_VALIDATION_DATATABLE,
@@ -98,7 +98,7 @@ export class PersonalDataTabComponent implements OnDestroy {
   showPdf = false;
   pdfUrl: SafeResourceUrl | null = null;
   rawPdfUrl: string | null = null;
-  private destroy$ = new Subject<void>();
+  private destroyRef = inject(DestroyRef);
 
   /** Whether the KYC validation feature is enabled via global configuration */
   isKycEnabled = false;
@@ -153,7 +153,7 @@ export class PersonalDataTabComponent implements OnDestroy {
     this.clientsService
       .getClientDatatable(this.clientViewData.id.toString(), datatableName)
       .pipe(
-        takeUntil(this.destroy$),
+        takeUntilDestroyed(this.destroyRef),
         catchError(() => {
           // Datatable may not exist yet — silently ignore
           this.hasDatatableEntry = false;
@@ -239,7 +239,7 @@ export class PersonalDataTabComponent implements OnDestroy {
         : this.clientsService.addClientDatatableEntry(clientId, datatableName, payload);
       save$
         .pipe(
-          takeUntil(this.destroy$),
+          takeUntilDestroyed(this.destroyRef),
           catchError(() => {
             this.alertService.alert({
               type: 'error',
@@ -330,7 +330,7 @@ export class PersonalDataTabComponent implements OnDestroy {
     this.reportsService
       .getPentahoRunReportData(reportName, formData, tenantIdentifier, locale, dateFormat)
       .pipe(
-        takeUntil(this.destroy$),
+        takeUntilDestroyed(this.destroyRef),
         catchError((error): any => {
           this.showPdf = false;
           if (this.rawPdfUrl) {
@@ -384,8 +384,6 @@ export class PersonalDataTabComponent implements OnDestroy {
    * Cleanup on component destroy
    */
   ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
     if (this.rawPdfUrl) {
       URL.revokeObjectURL(this.rawPdfUrl);
       this.rawPdfUrl = null;

@@ -80,7 +80,8 @@ export class EditPaymentTypeComponent implements OnInit {
       ],
       description: [this.paymentTypeData.description],
       isCashPayment: [
-        { value: this.paymentTypeData.isCashPayment, disabled: this.isSystemDefined }],
+        { value: this.paymentTypeData.isCashPayment, disabled: this.isSystemDefined }
+      ],
       position: [
         { value: this.paymentTypeData.position, disabled: this.isSystemDefined },
         [

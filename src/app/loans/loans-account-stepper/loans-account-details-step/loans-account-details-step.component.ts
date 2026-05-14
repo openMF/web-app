@@ -15,7 +15,7 @@ import {
   Input,
   Output,
   EventEmitter,
-  OnDestroy,
+  DestroyRef,
   inject
 } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
@@ -26,8 +26,8 @@ import { TranslateService } from '@ngx-translate/core';
 /** Custom Services */
 import { LoansService } from '../../loans.service';
 import { Commons } from 'app/core/utils/commons';
-import { takeUntil } from 'rxjs/operators';
-import { ReplaySubject, Subject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatTooltip } from '@angular/material/tooltip';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { AsyncPipe } from '@angular/common';
@@ -62,7 +62,7 @@ import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoansAccountDetailsStepComponent extends LoanProductBaseComponent implements OnInit, OnDestroy {
+export class LoansAccountDetailsStepComponent extends LoanProductBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   private loansService = inject(LoansService);
   private route = inject(ActivatedRoute);
@@ -106,8 +106,7 @@ export class LoansAccountDetailsStepComponent extends LoanProductBaseComponent i
   protected productData: ReplaySubject<string[]> = new ReplaySubject<string[]>(1);
   /** control for the filter select */
   protected filterFormCtrl: UntypedFormControl = new UntypedFormControl('');
-  /** Subject that emits when the component has been destroyed. */
-  protected _onDestroy = new Subject<void>();
+  private destroyRef = inject(DestroyRef);
 
   productSelected: LoanProductBasicDetails | null = null;
 
@@ -167,15 +166,10 @@ export class LoansAccountDetailsStepComponent extends LoanProductBaseComponent i
         this.getProductTemplate(false);
       }
     }
-    this.filterFormCtrl.valueChanges.pipe(takeUntil(this._onDestroy)).subscribe(() => {
+    this.filterFormCtrl.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.searchItem();
     });
     this.productData.next(this.productList.slice());
-  }
-
-  ngOnDestroy(): void {
-    this._onDestroy.next();
-    this._onDestroy.complete();
   }
 
   searchItem(): void {

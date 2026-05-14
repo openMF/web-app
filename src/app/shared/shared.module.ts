@@ -48,6 +48,7 @@ import { SvgIconComponent } from './svg-icon/svg-icon.component';
 import { ViewJournalEntryComponent } from './accounting/view-journal-entry/view-journal-entry.component';
 import { ViewJournalEntryTransactionComponent } from './accounting/view-journal-entry-transaction/view-journal-entry-transaction.component';
 import { AccountNumberComponent } from './account-number/account-number.component';
+import { AccountHeaderComponent } from './account-header/account-header.component';
 import { EntityNameComponent } from './entity-name/entity-name.component';
 import { TransactionPaymentDetailComponent } from './transaction-payment-detail/transaction-payment-detail.component';
 import { StepperButtonsComponent } from './steppers/stepper-buttons/stepper-buttons.component';
@@ -106,6 +107,7 @@ import { DatetimePickerStubComponent } from './datetime-picker-stub/datetime-pic
     ViewJournalEntryComponent,
     ViewJournalEntryTransactionComponent,
     AccountNumberComponent,
+    AccountHeaderComponent,
     EntityNameComponent,
     TransactionPaymentDetailComponent,
     StepperButtonsComponent,
@@ -138,6 +140,7 @@ import { DatetimePickerStubComponent } from './datetime-picker-stub/datetime-pic
     TenantSelectorComponent,
     ExternalIdentifierComponent,
     AccountNumberComponent,
+    AccountHeaderComponent,
     EntityNotesTabComponent,
     EntityDocumentsTabComponent,
     EntityDatatableTabComponent,

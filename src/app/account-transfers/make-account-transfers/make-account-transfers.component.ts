@@ -7,7 +7,17 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, AfterViewInit, ViewChild, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  inject
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   AbstractControl,
@@ -78,6 +88,8 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
   private settingsService = inject(SettingsService);
   private clientsService = inject(ClientsService);
   private translateService = inject(TranslateService);
+  private destroyRef = inject(DestroyRef);
+  private cdr = inject(ChangeDetectorRef);
 
   /** Stepper reference */
   @ViewChild('transferStepper') transferStepper: MatStepper;
@@ -308,15 +320,17 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
    */
   ngAfterViewInit() {
     if (!this.interbank && this.beneficiaryForm) {
-      this.beneficiaryForm.controls.toClientId.valueChanges.subscribe((value: any) => {
-        if (typeof value === 'string' && value.length >= 2) {
-          this.clientsService.getFilteredClients('displayName', 'ASC', true, value).subscribe((data: any) => {
-            this.clientsData = data.pageItems;
-          });
-        } else if (typeof value === 'number') {
-          this.changeEvent();
-        }
-      });
+      this.beneficiaryForm.controls.toClientId.valueChanges
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((value: any) => {
+          if (typeof value === 'string' && value.length >= 2) {
+            this.clientsService.getFilteredClients('displayName', 'ASC', true, value).subscribe((data: any) => {
+              this.clientsData = data.pageItems;
+              this.cdr.markForCheck();
+            });
+            this.changeEvent();
+          }
+        });
     }
   }
 

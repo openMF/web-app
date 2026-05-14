@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports. */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
@@ -46,6 +47,7 @@ export class EditHolidayComponent implements OnInit {
   private settingsService = inject(SettingsService);
   private router = inject(Router);
   private translateService = inject(TranslateService);
+  private destroyRef = inject(DestroyRef);
 
   /** Edit Holiday form. */
   holidayForm: UntypedFormGroup;
@@ -128,14 +130,20 @@ export class EditHolidayComponent implements OnInit {
    * Get Rescheduling Type.
    */
   getReschedulingType() {
-    this.holidayForm.get('reschedulingType').valueChanges.subscribe((option: any) => {
-      this.reSchedulingType = option;
-      if (option === 2) {
-        this.holidayForm.addControl('repaymentsRescheduledTo', new UntypedFormControl(new Date(), Validators.required));
-      } else {
-        this.holidayForm.removeControl('repaymentsRescheduledTo');
-      }
-    });
+    this.holidayForm
+      .get('reschedulingType')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((option: any) => {
+        this.reSchedulingType = option;
+        if (option === 2) {
+          this.holidayForm.addControl(
+            'repaymentsRescheduledTo',
+            new UntypedFormControl(new Date(), Validators.required)
+          );
+        } else {
+          this.holidayForm.removeControl('repaymentsRescheduledTo');
+        }
+      });
   }
 
   /**

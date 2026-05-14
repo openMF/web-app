@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnChanges, OnInit, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnChanges, OnInit, Input, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -42,6 +43,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 export class SavingsAccountTermsStepComponent implements OnChanges, OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Savings Account and Product Template */
   @Input() savingsAccountProductTemplate: any;
@@ -188,29 +190,32 @@ export class SavingsAccountTermsStepComponent implements OnChanges, OnInit {
   buildDependencies() {
     const nominalInterestControl = this.savingsAccountTermsForm.get('nominalAnnualInterestRate');
     if (nominalInterestControl) {
-      nominalInterestControl.valueChanges.subscribe((value) => {
+      nominalInterestControl.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
         if (typeof value === 'number' && value < 0) {
           nominalInterestControl.setValue(0, { emitEvent: false });
         }
       });
     }
-    this.savingsAccountTermsForm.get('allowOverdraft').valueChanges.subscribe((allowOverdraft: any) => {
-      if (allowOverdraft) {
-        this.savingsAccountTermsForm.addControl(
-          'minOverdraftForInterestCalculation',
-          new UntypedFormControl('', Validators.min(0))
-        );
-        this.savingsAccountTermsForm.addControl(
-          'nominalAnnualInterestRateOverdraft',
-          new UntypedFormControl('', Validators.min(0))
-        );
-        this.savingsAccountTermsForm.addControl('overdraftLimit', new UntypedFormControl('', Validators.min(0)));
-      } else {
-        this.savingsAccountTermsForm.removeControl('minOverdraftForInterestCalculation');
-        this.savingsAccountTermsForm.removeControl('nominalAnnualInterestRateOverdraft');
-        this.savingsAccountTermsForm.removeControl('overdraftLimit');
-      }
-    });
+    this.savingsAccountTermsForm
+      .get('allowOverdraft')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((allowOverdraft: any) => {
+        if (allowOverdraft) {
+          this.savingsAccountTermsForm.addControl(
+            'minOverdraftForInterestCalculation',
+            new UntypedFormControl('', Validators.min(0))
+          );
+          this.savingsAccountTermsForm.addControl(
+            'nominalAnnualInterestRateOverdraft',
+            new UntypedFormControl('', Validators.min(0))
+          );
+          this.savingsAccountTermsForm.addControl('overdraftLimit', new UntypedFormControl('', Validators.min(0)));
+        } else {
+          this.savingsAccountTermsForm.removeControl('minOverdraftForInterestCalculation');
+          this.savingsAccountTermsForm.removeControl('nominalAnnualInterestRateOverdraft');
+          this.savingsAccountTermsForm.removeControl('overdraftLimit');
+        }
+      });
   }
 
   /**

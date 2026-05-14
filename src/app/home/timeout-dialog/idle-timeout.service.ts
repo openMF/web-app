@@ -9,7 +9,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { fromEvent, merge, Subject, timer, Observable, Subscription } from 'rxjs';
-import { switchMap, takeUntil, tap, map } from 'rxjs/operators';
 
 /**
  *  Idle timeout service used to track idle user

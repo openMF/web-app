@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import {
   MatTable,
@@ -34,6 +34,7 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
   selector: 'mifosx-loan-period-payment-rates',
   templateUrl: './loan-period-payment-rates.component.html',
   styleUrl: './loan-period-payment-rates.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     MatTable,
@@ -55,6 +56,7 @@ export class LoanPeriodPaymentRatesComponent implements OnInit {
   private translateService = inject(TranslateService);
   private loanService = inject(LoansService);
   private settingsService = inject(SettingsService);
+  private cdr = inject(ChangeDetectorRef);
 
   loanPaymentRatesData: PeriodPaymentRateChange[] = [];
 
@@ -115,6 +117,7 @@ export class LoanPeriodPaymentRatesComponent implements OnInit {
         this.loanService.addWorkingCapitalPeriodPaymentRate(this.loanId, payload).subscribe((response: any) => {
           this.loanService.getWorkingCapitalPeriodPaymentRates(this.loanId).subscribe((data: any) => {
             this.loanPaymentRatesData = data;
+            this.cdr.markForCheck();
           });
         });
       }

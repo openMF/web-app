@@ -639,12 +639,13 @@ export class LoansService {
   }
 
   /**
+   * @param {string} productType Product Type path
    * @param {string} accountId Loans Account Id
    * @param {string} transactionId Transaction Id
    * @returns {Observable<any>}
    */
-  getLoansAccountTransaction(accountId: string, transactionId: string): Observable<any> {
-    return this.http.get(`/loans/${accountId}/transactions/${transactionId}`);
+  getLoansAccountTransaction(productType: string, accountId: string, transactionId: string): Observable<any> {
+    return this.http.get(`/${productType}/${accountId}/transactions/${transactionId}`);
   }
 
   /**

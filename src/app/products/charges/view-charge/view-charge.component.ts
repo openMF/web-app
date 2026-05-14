@@ -21,6 +21,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { GlAccountDisplayComponent } from '../../../shared/accounting/gl-account-display/gl-account-display.component';
 import { YesnoPipe } from '../../../pipes/yesno.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { FormatNumberPipe } from '@pipes/format-number.pipe';
 
 /**
  * View Charge Component.
@@ -33,6 +34,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     GlAccountDisplayComponent,
+    FormatNumberPipe,
     YesnoPipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush

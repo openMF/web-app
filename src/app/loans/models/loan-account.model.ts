@@ -195,3 +195,19 @@ export interface DelinquencyRangeSchedule {
   delinquentDays?: number;
   delinquentAmount?: number;
 }
+
+export interface LoanSummaryTableData {
+  property: string;
+  original: number;
+  adjustment?: number;
+  paid: number;
+  waived?: number;
+  writtenOff?: number;
+  outstanding: number;
+  overdue?: number;
+}
+
+export interface LoanViewAttribute {
+  key: string;
+  value?: string;
+}

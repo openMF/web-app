@@ -99,42 +99,9 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
   /** Stores the status of the loan account */
   status: string;
   /** Columns to be displayed in original schedule table. */
-  displayedColumns: string[] = [
-    'row',
-    'id',
-    'office',
-    'externalId',
-    'date',
-    'transactionType',
-    'amount',
-    'principal',
-    'interest',
-    'fee',
-    'penalties',
-    'loanBalance',
-    'actions'
-  ];
-  displayedHeader1Columns: string[] = [
-    'h1-row',
-    'h1-id',
-    'h1-office',
-    'h1-external-id',
-    'h1-transaction-date',
-    'h1-transaction-type',
-    'h1-space',
-    'h1-breakdown',
-    'h1-loan-balance',
-    'h1-actions'
-  ];
-  displayedHeader2Columns: string[] = [
-    'h2-space',
-    'h2-amount',
-    'h2-principal',
-    'h2-interest',
-    'h2-fees',
-    'h2-penalties',
-    'h2-action'
-  ];
+  displayedColumns: string[] = [];
+  displayedHeader1Columns: string[] = [];
+  displayedHeader2Columns: string[] = [];
 
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -155,8 +122,75 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
   }
 
   ngOnInit() {
+    if (this.loanProductService.isLoanProduct) {
+      this.displayedColumns = [
+        'row',
+        'id',
+        'externalId',
+        'date',
+        'transactionType',
+        'amount',
+        'principal',
+        'interest',
+        'fee',
+        'penalties',
+        'loanBalance',
+        'actions'
+      ];
+      this.displayedHeader1Columns = [
+        'h1-row',
+        'h1-id',
+        'h1-external-id',
+        'h1-transaction-date',
+        'h1-transaction-type',
+        'h1-space',
+        'h1-breakdown',
+        'h1-loan-balance',
+        'h1-actions'
+      ];
+      this.displayedHeader2Columns = [
+        'h2-space',
+        'h2-amount',
+        'h2-principal',
+        'h2-interest',
+        'h2-fees',
+        'h2-penalties',
+        'h2-action'
+      ];
+    } else {
+      this.displayedColumns = [
+        'row',
+        'id',
+        'externalId',
+        'date',
+        'transactionType',
+        'amount',
+        'principal',
+        'fee',
+        'penalties',
+        'actions'
+      ];
+      this.displayedHeader1Columns = [
+        'h1-row',
+        'h1-id',
+        'h1-external-id',
+        'h1-transaction-date',
+        'h1-transaction-type',
+        'h1-space',
+        'h1-breakdown',
+        'h1-actions'
+      ];
+      this.displayedHeader2Columns = [
+        'h2-space',
+        'h2-amount',
+        'h2-principal',
+        'h2-fees',
+        'h2-penalties',
+        'h2-action'
+      ];
+    }
     this.transactionsData = this.loanDetailsData.transactions;
-    this.hideAccrualsParam = new UntypedFormControl(false);
+    this.hideAccrualsParam = new UntypedFormControl(true);
     this.hideReversedParam = new UntypedFormControl(false);
     this.setLoanTransactions();
   }
@@ -261,6 +295,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
    * BUY_DOWN_FEE:40
    * BUY_DOWN_FEE_ADJUSTMENT:41
    * BUY_DOWN_FEE_AMORTIZATION:42
+   * DISCOUNT_FEE:44
    */
   showTransaction(transactionsData: LoanTransaction): boolean {
     return [
@@ -285,7 +320,8 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
       38,
       40,
       41,
-      42
+      42,
+      44
     ].includes(transactionsData.type.id);
   }
 

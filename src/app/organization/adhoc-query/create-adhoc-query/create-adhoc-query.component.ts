@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -38,6 +39,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 export class CreateAdhocQueryComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   private organizationService = inject(OrganizationService);
+  private destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
@@ -104,19 +106,22 @@ export class CreateAdhocQueryComponent implements OnInit {
    * Sets the conditional controls of the adhoc query form
    */
   setConditionalControls() {
-    this.adhocQueryForm.get('reportRunFrequency').valueChanges.subscribe((reportRunFrequencyId) => {
-      if (reportRunFrequencyId === 5) {
-        this.adhocQueryForm.addControl(
-          'reportRunEvery',
-          new UntypedFormControl('', [
-            Validators.required,
-            Validators.min(1)
-          ])
-        );
-      } else {
-        this.adhocQueryForm.removeControl('reportRunEvery');
-      }
-    });
+    this.adhocQueryForm
+      .get('reportRunFrequency')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((reportRunFrequencyId) => {
+        if (reportRunFrequencyId === 5) {
+          this.adhocQueryForm.addControl(
+            'reportRunEvery',
+            new UntypedFormControl('', [
+              Validators.required,
+              Validators.min(1)
+            ])
+          );
+        } else {
+          this.adhocQueryForm.removeControl('reportRunEvery');
+        }
+      });
   }
 
   /**

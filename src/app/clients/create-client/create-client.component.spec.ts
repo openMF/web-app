@@ -43,9 +43,11 @@ describe('CreateClientComponent - Integration Tests', () => {
       }
     ],
     officeOptions: [
-      { id: 1, name: 'Head Office' }],
+      { id: 1, name: 'Head Office' }
+    ],
     staffOptions: [
-      { id: 1, displayName: 'John Doe' }],
+      { id: 1, displayName: 'John Doe' }
+    ],
     savingsProductOptions: [] as any[],
     genderOptions: [] as any[],
     clientTypeOptions: [] as any[],
@@ -60,7 +62,8 @@ describe('CreateClientComponent - Integration Tests', () => {
 
   const mockAddressConfig = {
     addressTypeIdOptions: [
-      { id: 1, name: 'Home' }]
+      { id: 1, name: 'Home' }
+    ]
   };
 
   beforeEach(async () => {
@@ -206,7 +209,8 @@ describe('CreateClientComponent - Integration Tests', () => {
         Object.defineProperty(component.clientFamilyMembersStep, 'familyMembers', {
           get: jest.fn(() => ({
             familyMembers: [
-              { firstName: 'Jane', relationship: 'Spouse' }]
+              { firstName: 'Jane', relationship: 'Spouse' }
+            ]
           })),
           configurable: true
         });
@@ -236,7 +240,8 @@ describe('CreateClientComponent - Integration Tests', () => {
         Object.defineProperty(component.clientFamilyMembersStep, 'familyMembers', {
           get: jest.fn(() => ({
             familyMembers: [
-              { firstName: 'Jane', relationship: 'Spouse' }]
+              { firstName: 'Jane', relationship: 'Spouse' }
+            ]
           })),
           configurable: true
         });
@@ -246,7 +251,8 @@ describe('CreateClientComponent - Integration Tests', () => {
         Object.defineProperty(component.clientAddressStep, 'address', {
           get: jest.fn(() => ({
             address: [
-              { addressTypeId: 1, street: '123 Main St' }]
+              { addressTypeId: 1, street: '123 Main St' }
+            ]
           })),
           configurable: true
         });
@@ -373,7 +379,8 @@ describe('CreateClientComponent - Integration Tests', () => {
         Object.defineProperty(component.clientAddressStep, 'address', {
           get: jest.fn(() => ({
             address: [
-              { addressTypeId: 1, street: '123 Main St', city: 'New York' }]
+              { addressTypeId: 1, street: '123 Main St', city: 'New York' }
+            ]
           })),
           configurable: true
         });
@@ -518,7 +525,8 @@ describe('CreateClientComponent - Integration Tests', () => {
         Object.defineProperty(component.clientFamilyMembersStep, 'familyMembers', {
           get: jest.fn(() => ({
             familyMembers: [
-              { firstName: 'John', relationship: 'Spouse' }]
+              { firstName: 'John', relationship: 'Spouse' }
+            ]
           })),
           configurable: true
         });
@@ -529,7 +537,8 @@ describe('CreateClientComponent - Integration Tests', () => {
         Object.defineProperty(component.clientAddressStep, 'address', {
           get: jest.fn(() => ({
             address: [
-              { addressTypeId: 1, street: '456 Oak Ave', city: 'Boston' }]
+              { addressTypeId: 1, street: '456 Oak Ave', city: 'Boston' }
+            ]
           })),
           configurable: true
         });

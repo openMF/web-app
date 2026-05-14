@@ -7,7 +7,17 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, Input, Output, EventEmitter, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  inject
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
@@ -36,6 +46,7 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   private savingsService = inject(SavingsService);
   private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Savings Account Template */
   @Input() savingsAccountTemplate: any;
@@ -112,21 +123,26 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
    */
   buildDependencies() {
     const entityId = this.savingsAccountTemplate.groupId || this.savingsAccountTemplate.clientId;
-    this.savingsAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
-      this.savingsService
-        .getSavingsAccountTemplate(entityId, productId, this.savingsAccountTemplate.groupId ? true : false)
-        .subscribe((response: any) => {
-          this.savingsAccountProductTemplate.emit(response);
-          this.fieldOfficerData = response.fieldOfficerOptions;
-          this.savingsProductSelected = true;
-          if (!this.isFieldOfficerPatched && this.savingsAccountTemplate.fieldOfficerId) {
-            this.savingsAccountDetailsForm.get('fieldOfficerId').patchValue(this.savingsAccountTemplate.fieldOfficerId);
-            this.isFieldOfficerPatched = true;
-          } else {
-            this.savingsAccountDetailsForm.get('fieldOfficerId').patchValue('');
-          }
-        });
-    });
+    this.savingsAccountDetailsForm
+      .get('productId')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((productId: string) => {
+        this.savingsService
+          .getSavingsAccountTemplate(entityId, productId, this.savingsAccountTemplate.groupId ? true : false)
+          .subscribe((response: any) => {
+            this.savingsAccountProductTemplate.emit(response);
+            this.fieldOfficerData = response.fieldOfficerOptions;
+            this.savingsProductSelected = true;
+            if (!this.isFieldOfficerPatched && this.savingsAccountTemplate.fieldOfficerId) {
+              this.savingsAccountDetailsForm
+                .get('fieldOfficerId')
+                .patchValue(this.savingsAccountTemplate.fieldOfficerId);
+              this.isFieldOfficerPatched = true;
+            } else {
+              this.savingsAccountDetailsForm.get('fieldOfficerId').patchValue('');
+            }
+          });
+      });
   }
 
   /**

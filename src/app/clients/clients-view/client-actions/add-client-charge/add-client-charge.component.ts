@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -43,6 +44,8 @@ export class AddClientChargeComponent implements OnInit {
   private readonly clientsService = inject(ClientsService);
   private readonly settingsService = inject(SettingsService);
   private readonly notifier = inject(ClientActionNotifierService);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   /** Minimum Due Date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -77,41 +80,47 @@ export class AddClientChargeComponent implements OnInit {
    * Subscribe to form controls value changes
    */
   buildDependencies() {
-    this.clientChargeForm.controls.chargeId.valueChanges.subscribe((chargeId) => {
-      this.clientsService.getChargeAndTemplate(chargeId).subscribe((data: any) => {
-        this.chargeDetails = data;
-        const chargeTimeType = data.chargeTimeType.id;
-        if (data.chargeTimeType.value === 'Withdrawal Fee' || data.chargeTimeType.value === 'Saving No Activity Fee') {
-          this.chargeDetails.dueDateNotRequired = true;
-        }
-        if (data.chargeTimeType.value === 'Annual Fee' || data.chargeTimeType.value === 'Monthly Fee') {
-          this.chargeDetails.chargeTimeTypeAnnualOrMonth = true;
-        }
-        if (!this.chargeDetails.dueDateNotRequired && !this.chargeDetails.chargeTimeTypeAnnualOrMonth) {
-          this.clientChargeForm.addControl('dueDate', new UntypedFormControl('', Validators.required));
-        } else {
-          this.clientChargeForm.removeControl('dueDate');
-        }
-        if (!this.chargeDetails.dueDateNotRequired && this.chargeDetails.chargeTimeTypeAnnualOrMonth) {
-          this.clientChargeForm.addControl('feeOnMonthDay', new UntypedFormControl('', Validators.required));
-        } else {
-          this.clientChargeForm.removeControl('feeOnMonthDay');
-        }
-        if (chargeTimeType.value === 'Monthly Fee') {
-          this.clientChargeForm.addControl(
-            'feeInterval',
-            new UntypedFormControl(data.feeInterval, Validators.required)
-          );
-        } else {
-          this.clientChargeForm.removeControl('feeInterval');
-        }
-        this.clientChargeForm.patchValue({
-          amount: data.amount,
-          chargeCalculationType: data.chargeCalculationType.id,
-          chargeTimeType: data.chargeTimeType.id
+    this.clientChargeForm.controls.chargeId.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((chargeId) => {
+        this.clientsService.getChargeAndTemplate(chargeId).subscribe((data: any) => {
+          this.chargeDetails = data;
+          const chargeTimeType = data.chargeTimeType.id;
+          if (
+            data.chargeTimeType.value === 'Withdrawal Fee' ||
+            data.chargeTimeType.value === 'Saving No Activity Fee'
+          ) {
+            this.chargeDetails.dueDateNotRequired = true;
+          }
+          if (data.chargeTimeType.value === 'Annual Fee' || data.chargeTimeType.value === 'Monthly Fee') {
+            this.chargeDetails.chargeTimeTypeAnnualOrMonth = true;
+          }
+          if (!this.chargeDetails.dueDateNotRequired && !this.chargeDetails.chargeTimeTypeAnnualOrMonth) {
+            this.clientChargeForm.addControl('dueDate', new UntypedFormControl('', Validators.required));
+          } else {
+            this.clientChargeForm.removeControl('dueDate');
+          }
+          if (!this.chargeDetails.dueDateNotRequired && this.chargeDetails.chargeTimeTypeAnnualOrMonth) {
+            this.clientChargeForm.addControl('feeOnMonthDay', new UntypedFormControl('', Validators.required));
+          } else {
+            this.clientChargeForm.removeControl('feeOnMonthDay');
+          }
+          if (chargeTimeType.value === 'Monthly Fee') {
+            this.clientChargeForm.addControl(
+              'feeInterval',
+              new UntypedFormControl(data.feeInterval, Validators.required)
+            );
+          } else {
+            this.clientChargeForm.removeControl('feeInterval');
+          }
+          this.clientChargeForm.patchValue({
+            amount: data.amount,
+            chargeCalculationType: data.chargeCalculationType.id,
+            chargeTimeType: data.chargeTimeType.id
+          });
+          this.cdr.markForCheck();
         });
       });
-    });
   }
 
   /**

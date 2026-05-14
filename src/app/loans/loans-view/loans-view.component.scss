@@ -6,13 +6,32 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-.loans-overview {
-  font-size: 14px;
+// Brand tokens
+$white: #fff;
+
+// Loan icon frame — projected into <mifosx-account-header> image slot
+.loan-icon-frame {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  border: 2px solid rgba($white, 0.4);
+  border-radius: 12px;
+  background: rgba($white, 0.12);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 35%);
 }
 
+// Account overview tables — projected into <mifosx-account-header> metadata slot
 .account-overview {
+  color: $white;
   min-width: 80%;
   font-weight: 400;
+}
+
+// Right-side overview panel — projected into <mifosx-account-header> metadata slot
+.loans-overview {
+  font-size: 14px;
+  color: $white;
 }
 
 .datatable-scroll-x {
@@ -33,10 +52,6 @@
       &:first-child {
         font-weight: 500;
         width: 180px;
-      }
-
-      i.fa-stop {
-        font-size: 14px;
       }
     }
   }

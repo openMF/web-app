@@ -10,6 +10,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   OnChanges,
   Input,
   Output,
@@ -17,6 +18,7 @@ import {
   OnInit,
   inject
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Validators, UntypedFormGroup, UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Rxjs Imports */
@@ -58,6 +60,7 @@ export class EditBusinessRuleParametersComponent implements OnInit, OnChanges {
   private reportsService = inject(ReportsService);
   private settingsService = inject(SettingsService);
   private dateUtils = inject(Dates);
+  private destroyRef = inject(DestroyRef);
 
   /** Run Report Parameters Data */
   @Input() paramData: any;
@@ -145,19 +148,21 @@ export class EditBusinessRuleParametersComponent implements OnInit, OnChanges {
    */
   setChildControls() {
     this.parentParameters.forEach((param: ReportParameter) => {
-      this.ReportForm.get(param.name).valueChanges.subscribe((option: any) => {
-        param.childParameters.forEach((child: ReportParameter) => {
-          if (child.displayType === 'none') {
-            this.ReportForm.addControl(child.name, new UntypedFormControl(child.defaultVal));
-          } else {
-            this.ReportForm.addControl(child.name, new UntypedFormControl('', Validators.required));
-          }
-          if (child.displayType === 'select') {
-            const inputstring = `${child.name}?${param.inputName}=${option.id}`;
-            this.fetchSelectOptions(child, inputstring);
-          }
+      this.ReportForm.get(param.name)
+        .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((option: any) => {
+          param.childParameters.forEach((child: ReportParameter) => {
+            if (child.displayType === 'none') {
+              this.ReportForm.addControl(child.name, new UntypedFormControl(child.defaultVal));
+            } else {
+              this.ReportForm.addControl(child.name, new UntypedFormControl('', Validators.required));
+            }
+            if (child.displayType === 'select') {
+              const inputstring = `${child.name}?${param.inputName}=${option.id}`;
+              this.fetchSelectOptions(child, inputstring);
+            }
+          });
         });
-      });
     });
   }
 
@@ -192,11 +197,13 @@ export class EditBusinessRuleParametersComponent implements OnInit, OnChanges {
    * Disable the Report Form once all values are patched.
    */
   disableFormWhenValid() {
-    this.ReportForm.statusChanges.pipe(distinctUntilChanged()).subscribe((status: string) => {
-      if (status === 'VALID') {
-        this.ReportForm.disable();
-      }
-    });
+    this.ReportForm.statusChanges
+      .pipe(distinctUntilChanged(), takeUntilDestroyed(this.destroyRef))
+      .subscribe((status: string) => {
+        if (status === 'VALID') {
+          this.ReportForm.disable();
+        }
+      });
   }
 
   /**

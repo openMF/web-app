@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
@@ -38,6 +39,7 @@ export class AddFamilyMemberComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private clientsService = inject(ClientsService);
   private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Maximum Due Date allowed. */
   maxDate = new Date();
@@ -68,14 +70,17 @@ export class AddFamilyMemberComponent implements OnInit {
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;
     this.createAddFamilyMemberForm();
-    this.addFamilyMemberForm.get('dateOfBirth').valueChanges.subscribe((dateOfBirth: any) => {
-      if (dateOfBirth) {
-        const age = this.calculateAge(dateOfBirth);
-        this.addFamilyMemberForm.get('age').setValue(age);
-      } else {
-        this.addFamilyMemberForm.get('age').setValue('');
-      }
-    });
+    this.addFamilyMemberForm
+      .get('dateOfBirth')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((dateOfBirth: any) => {
+        if (dateOfBirth) {
+          const age = this.calculateAge(dateOfBirth);
+          this.addFamilyMemberForm.get('age').setValue(age);
+        } else {
+          this.addFamilyMemberForm.get('age').setValue('');
+        }
+      });
   }
 
   /**
@@ -112,7 +117,8 @@ export class AddFamilyMemberComponent implements OnInit {
       ],
       qualification: [''],
       age: [
-        { value: '', disabled: true }],
+        { value: '', disabled: true }
+      ],
       isDependent: [''],
       relationshipId: [
         '',

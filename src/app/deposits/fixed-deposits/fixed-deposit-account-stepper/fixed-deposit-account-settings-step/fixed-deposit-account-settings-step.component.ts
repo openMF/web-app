@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, Input, OnChanges, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, Input, OnChanges, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -45,6 +46,7 @@ import { PositiveIntegerDirective } from 'app/directives/positive-integer.direct
 export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChanges {
   private formBuilder = inject(UntypedFormBuilder);
   private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Fixed deposits account template */
   @Input() fixedDepositsAccountTemplate: any;
@@ -101,22 +103,25 @@ export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChang
       });
       if (this.fixedDepositsAccountProductTemplate.withHoldTax) {
         this.fixedDepositAccountSettingsForm.addControl('withHoldTax', new UntypedFormControl(false));
-        this.fixedDepositAccountSettingsForm.get('withHoldTax')!.valueChanges.subscribe((value: boolean) => {
-          if (value) {
-            this.fixedDepositAccountSettingsForm.addControl(
-              'taxGroupId',
-              new UntypedFormControl({ value: '', disabled: true })
-            );
-            this.fixedDepositAccountSettingsForm
-              .get('taxGroupId')!
-              .patchValue(
-                this.fixedDepositsAccountProductTemplate.taxGroup &&
-                  this.fixedDepositsAccountProductTemplate.taxGroup.name
+        this.fixedDepositAccountSettingsForm
+          .get('withHoldTax')!
+          .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe((value: boolean) => {
+            if (value) {
+              this.fixedDepositAccountSettingsForm.addControl(
+                'taxGroupId',
+                new UntypedFormControl({ value: '', disabled: true })
               );
-          } else {
-            this.fixedDepositAccountSettingsForm.removeControl('taxGroupId');
-          }
-        });
+              this.fixedDepositAccountSettingsForm
+                .get('taxGroupId')!
+                .patchValue(
+                  this.fixedDepositsAccountProductTemplate.taxGroup &&
+                    this.fixedDepositsAccountProductTemplate.taxGroup.name
+                );
+            } else {
+              this.fixedDepositAccountSettingsForm.removeControl('taxGroupId');
+            }
+          });
         this.fixedDepositAccountSettingsForm
           .get('withHoldTax')!
           .patchValue(this.fixedDepositsAccountTemplate.withHoldTax);
@@ -165,37 +170,43 @@ export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChang
    * Subscribes to value changes and sets new form controls accordingly.
    */
   buildDependencies() {
-    this.fixedDepositAccountSettingsForm.get('transferInterestToSavings')!.valueChanges.subscribe((value: boolean) => {
-      if (value) {
-        this.fixedDepositAccountSettingsForm.addControl(
-          'linkAccountId',
-          new UntypedFormControl('', Validators.required)
-        );
-        this.fixedDepositAccountSettingsForm
-          .get('linkAccountId')!
-          .patchValue(
-            this.fixedDepositsAccountTemplate.linkedAccount && this.fixedDepositsAccountTemplate.linkedAccount.id
+    this.fixedDepositAccountSettingsForm
+      .get('transferInterestToSavings')!
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((value: boolean) => {
+        if (value) {
+          this.fixedDepositAccountSettingsForm.addControl(
+            'linkAccountId',
+            new UntypedFormControl('', Validators.required)
           );
-      } else {
-        this.fixedDepositAccountSettingsForm.removeControl('linkAccountId');
-      }
-    });
-    this.fixedDepositAccountSettingsForm.get('maturityInstructionId')!.valueChanges.subscribe((value: number) => {
-      if (value > 100) {
-        this.fixedDepositAccountSettingsForm.addControl(
-          'transferToSavingsId',
-          new UntypedFormControl('', Validators.required)
-        );
-        this.fixedDepositAccountSettingsForm
-          .get('transferToSavingsId')!
-          .patchValue(
-            this.fixedDepositsAccountTemplate.transferToSavingsId &&
-              this.fixedDepositsAccountTemplate.transferToSavingsId.id
+          this.fixedDepositAccountSettingsForm
+            .get('linkAccountId')!
+            .patchValue(
+              this.fixedDepositsAccountTemplate.linkedAccount && this.fixedDepositsAccountTemplate.linkedAccount.id
+            );
+        } else {
+          this.fixedDepositAccountSettingsForm.removeControl('linkAccountId');
+        }
+      });
+    this.fixedDepositAccountSettingsForm
+      .get('maturityInstructionId')!
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((value: number) => {
+        if (value > 100) {
+          this.fixedDepositAccountSettingsForm.addControl(
+            'transferToSavingsId',
+            new UntypedFormControl('', Validators.required)
           );
-      } else {
-        this.fixedDepositAccountSettingsForm.removeControl('transferToSavingsId');
-      }
-    });
+          this.fixedDepositAccountSettingsForm
+            .get('transferToSavingsId')!
+            .patchValue(
+              this.fixedDepositsAccountTemplate.transferToSavingsId &&
+                this.fixedDepositsAccountTemplate.transferToSavingsId.id
+            );
+        } else {
+          this.fixedDepositAccountSettingsForm.removeControl('transferToSavingsId');
+        }
+      });
   }
 
   /**

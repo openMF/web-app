@@ -250,7 +250,10 @@ export class AnalyticsDataSourceService {
     return request$;
   }
 
-  private extractAmountPair(response: any[], reportName: string): [number, number] {
+  private extractAmountPair(response: any[], reportName: string): [
+    number,
+    number
+  ] {
     const firstRow = response?.[0] || {};
     const numericEntries = Object.entries(firstRow)
       .map(

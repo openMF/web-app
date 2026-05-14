@@ -765,7 +765,7 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [
     LoanProvisioningCriteriaResolver,
-    OfficesResolver,
+    // OfficesResolver → providedIn: 'root', no declaration needed
     EmployeesResolver,
     EmployeeResolver,
     EditEmployeeResolver,
@@ -788,7 +788,7 @@ const routes: Routes = [
     CashierResolver,
     CashiersResolver,
     HolidayResolver,
-    OfficeResolver,
+    // OfficeResolver → providedIn: 'root', no declaration needed
     OfficeDatatableResolver,
     OfficeDatatablesResolver,
     ManageFundsResolver,

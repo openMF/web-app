@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports. */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
@@ -38,6 +39,7 @@ export class CreateEntityDataTableChecksComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private organizationService = inject(OrganizationService);
   private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
 
   /** Create Entity Datatable Checks form. */
   createEntityForm: UntypedFormGroup;
@@ -102,40 +104,43 @@ export class CreateEntityDataTableChecksComponent implements OnInit {
    * @param entity Selected Entity.
    */
   getEntityType() {
-    this.createEntityForm.get('entity').valueChanges.subscribe((option: any) => {
-      switch (option) {
-        case 'm_client': {
-          this.entityType = 'm_client';
-          this.dataTableList = this.createEntityData.datatables.filter((data: any) => data.entity === 'm_client');
-          this.statusList = this.createEntityData.statusClient;
-          this.createEntityForm.removeControl('productId');
-          break;
+    this.createEntityForm
+      .get('entity')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((option: any) => {
+        switch (option) {
+          case 'm_client': {
+            this.entityType = 'm_client';
+            this.dataTableList = this.createEntityData.datatables.filter((data: any) => data.entity === 'm_client');
+            this.statusList = this.createEntityData.statusClient;
+            this.createEntityForm.removeControl('productId');
+            break;
+          }
+          case 'm_loan': {
+            this.entityType = 'm_loan';
+            this.dataTableList = this.createEntityData.datatables.filter((data: any) => data.entity === 'm_loan');
+            this.statusList = this.createEntityData.statusLoans;
+            this.createEntityForm.addControl('productId', new UntypedFormControl('', Validators.required));
+            break;
+          }
+          case 'm_group': {
+            this.entityType = 'm_group';
+            this.dataTableList = this.createEntityData.datatables.filter((data: any) => data.entity === 'm_group');
+            this.statusList = this.createEntityData.statusGroup;
+            this.createEntityForm.removeControl('productId');
+            break;
+          }
+          default: {
+            this.entityType = 'm_savings_account';
+            this.dataTableList = this.createEntityData.datatables.filter(
+              (data: any) => data.entity === 'm_savings_account'
+            );
+            this.statusList = this.createEntityData.statusSavings;
+            this.createEntityForm.addControl('productId', new UntypedFormControl('', Validators.required));
+            break;
+          }
         }
-        case 'm_loan': {
-          this.entityType = 'm_loan';
-          this.dataTableList = this.createEntityData.datatables.filter((data: any) => data.entity === 'm_loan');
-          this.statusList = this.createEntityData.statusLoans;
-          this.createEntityForm.addControl('productId', new UntypedFormControl('', Validators.required));
-          break;
-        }
-        case 'm_group': {
-          this.entityType = 'm_group';
-          this.dataTableList = this.createEntityData.datatables.filter((data: any) => data.entity === 'm_group');
-          this.statusList = this.createEntityData.statusGroup;
-          this.createEntityForm.removeControl('productId');
-          break;
-        }
-        default: {
-          this.entityType = 'm_savings_account';
-          this.dataTableList = this.createEntityData.datatables.filter(
-            (data: any) => data.entity === 'm_savings_account'
-          );
-          this.statusList = this.createEntityData.statusSavings;
-          this.createEntityForm.addControl('productId', new UntypedFormControl('', Validators.required));
-          break;
-        }
-      }
-    });
+      });
   }
 
   /**

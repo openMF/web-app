@@ -6,7 +6,17 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  inject
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormBuilder, UntypedFormGroup, ReactiveFormsModule } from '@angular/forms';
 import { StringEnumOptionData } from '../../../../shared/models/option-data.model';
 import { MatTooltip } from '@angular/material/tooltip';
@@ -24,6 +34,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class LoanProductInterestRefundStepComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
+  private destroyRef = inject(DestroyRef);
 
   @Input() loanProductsTemplate: any;
   @Output() supportedInterestRefundTypes = new EventEmitter<StringEnumOptionData[]>();
@@ -54,11 +65,14 @@ export class LoanProductInterestRefundStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.loanProductInterestRefundForm.get('supportedInterestRefundTypes').valueChanges.subscribe((value) => {
-      this.supportedInterestRefundTypes.emit(
-        this.mapIdToStringEnumOptionList(value, this.loanProductsTemplate.supportedInterestRefundTypesOptions)
-      );
-    });
+    this.loanProductInterestRefundForm
+      .get('supportedInterestRefundTypes')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((value) => {
+        this.supportedInterestRefundTypes.emit(
+          this.mapIdToStringEnumOptionList(value, this.loanProductsTemplate.supportedInterestRefundTypesOptions)
+        );
+      });
   }
 
   mapStringEnumOptionToIdList(incomingValues: StringEnumOptionData[]): string[] {

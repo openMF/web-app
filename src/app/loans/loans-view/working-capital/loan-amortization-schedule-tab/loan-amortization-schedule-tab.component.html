@@ -26,7 +26,7 @@
 
       <ng-container matColumnDef="paymentDate">
         <th mat-header-cell class="center mat-header-cell" *matHeaderCellDef>
-          {{ 'labels.inputs.Payment Date' | translate }}
+          {{ 'Payment Date' | translateKey: 'inputs' }}
         </th>
         <td mat-cell class="m-r-5" *matCellDef="let item">{{ item.paymentDate | dateFormat }}</td>
         <td mat-footer-cell *matFooterCellDef></td>
@@ -46,7 +46,7 @@
         <th mat-header-cell class="r-amount mat-header-cell" *matHeaderCellDef>
           {{ 'labels.inputs.Discount Factor' | translate }}
         </th>
-        <td mat-cell class="r-amount" *matCellDef="let item">{{ item.discountFactor | formatNumber }}</td>
+        <td mat-cell class="r-amount" *matCellDef="let item">{{ item.discountFactor | formatNumber: '' : '6' }}</td>
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
 

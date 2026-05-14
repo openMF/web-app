@@ -70,3 +70,5 @@ src/environments/.env.ts
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+dist-electron/*

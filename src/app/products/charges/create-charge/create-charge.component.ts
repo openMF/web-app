@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -52,6 +53,7 @@ export class CreateChargeComponent implements OnInit {
   private router = inject(Router);
   private dateUtils = inject(Dates);
   private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Charge form. */
   chargeForm: UntypedFormGroup;
@@ -156,35 +158,40 @@ export class CreateChargeComponent implements OnInit {
    * Sets the charge calculation type and charge time type data
    */
   setChargeForm() {
-    this.chargeForm.get('chargeAppliesTo').valueChanges.subscribe((chargeAppliesTo) => {
-      switch (chargeAppliesTo) {
-        case 1:
-          this.chargeCalculationTypeData = this.chargesTemplateData.loanChargeCalculationTypeOptions;
-          this.chargeTimeTypeData = this.chargesTemplateData.loanChargeTimeTypeOptions;
-          break;
-        case 2:
-          this.chargeCalculationTypeData = this.chargesTemplateData.savingsChargeCalculationTypeOptions;
-          this.chargeTimeTypeData = this.chargesTemplateData.savingsChargeTimeTypeOptions;
-          break;
-        case 3:
-          this.chargeCalculationTypeData = this.chargesTemplateData.clientChargeCalculationTypeOptions;
-          this.chargeTimeTypeData = this.chargesTemplateData.clientChargeTimeTypeOptions;
-          break;
-        case 4:
-          this.chargeCalculationTypeData = this.chargesTemplateData.shareChargeCalculationTypeOptions;
-          this.chargeTimeTypeData = this.chargesTemplateData.shareChargeTimeTypeOptions;
-          break;
-        case 5:
-          this.chargeCalculationTypeData = this.chargesTemplateData.loanChargeCalculationTypeOptions;
-          this.chargeTimeTypeData = this.chargesTemplateData.loanChargeTimeTypeOptions.filter((chargeTimeType: any) => {
-            return [2].includes(chargeTimeType.id); // Only Specific Due Date
-          });
-          this.chargePaymentModeData = this.chargePaymentModeData.filter((chargePaymentMode: any) => {
-            return chargePaymentMode.id === 0;
-          });
-          break;
-      }
-    });
+    this.chargeForm
+      .get('chargeAppliesTo')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((chargeAppliesTo) => {
+        switch (chargeAppliesTo) {
+          case 1:
+            this.chargeCalculationTypeData = this.chargesTemplateData.loanChargeCalculationTypeOptions;
+            this.chargeTimeTypeData = this.chargesTemplateData.loanChargeTimeTypeOptions;
+            break;
+          case 2:
+            this.chargeCalculationTypeData = this.chargesTemplateData.savingsChargeCalculationTypeOptions;
+            this.chargeTimeTypeData = this.chargesTemplateData.savingsChargeTimeTypeOptions;
+            break;
+          case 3:
+            this.chargeCalculationTypeData = this.chargesTemplateData.clientChargeCalculationTypeOptions;
+            this.chargeTimeTypeData = this.chargesTemplateData.clientChargeTimeTypeOptions;
+            break;
+          case 4:
+            this.chargeCalculationTypeData = this.chargesTemplateData.shareChargeCalculationTypeOptions;
+            this.chargeTimeTypeData = this.chargesTemplateData.shareChargeTimeTypeOptions;
+            break;
+          case 5:
+            this.chargeCalculationTypeData = this.chargesTemplateData.loanChargeCalculationTypeOptions;
+            this.chargeTimeTypeData = this.chargesTemplateData.loanChargeTimeTypeOptions.filter(
+              (chargeTimeType: any) => {
+                return [2].includes(chargeTimeType.id); // Only Specific Due Date
+              }
+            );
+            this.chargePaymentModeData = this.chargePaymentModeData.filter((chargePaymentMode: any) => {
+              return chargePaymentMode.id === 0;
+            });
+            break;
+        }
+      });
   }
 
   /**
@@ -245,95 +252,107 @@ export class CreateChargeComponent implements OnInit {
    * Sets the conditional controls of the user form
    */
   setConditionalControls() {
-    this.chargeForm.get('chargeAppliesTo').valueChanges.subscribe((chargeAppliesTo) => {
-      this.chargeForm.get('penalty').enable();
-      switch (chargeAppliesTo) {
-        case 1: // Loan
-          this.chargeForm.addControl('chargePaymentMode', new UntypedFormControl('', Validators.required));
-          this.chargeForm.removeControl('incomeAccountId');
-          break;
-        case 2: // Savings
-          this.chargeForm.removeControl('chargePaymentMode');
-          this.chargeForm.removeControl('incomeAccountId');
-          break;
-        case 3: // Client
-          this.chargeForm.removeControl('chargePaymentMode');
-          this.chargeForm.addControl('incomeAccountId', new UntypedFormControl(''));
-          break;
-        case 4: // Shares
-          this.chargeForm.removeControl('chargePaymentMode');
-          this.chargeForm.removeControl('incomeAccountId');
-          this.chargeForm.get('penalty').setValue(false);
-          break;
-        case 5: // Working Capital Loans
-          this.chargeForm.addControl('chargePaymentMode', new UntypedFormControl('', Validators.required));
-          this.chargeForm.removeControl('incomeAccountId');
-          break;
-      }
-      this.chargeForm.get('chargeCalculationType').reset();
-      this.chargeForm.get('chargeTimeType').reset();
-    });
-    this.chargeForm.get('chargeTimeType').valueChanges.subscribe((chargeTimeType) => {
-      this.chargeForm.removeControl('feeFrequency');
-      this.chargeForm.removeControl('feeInterval');
-      this.chargeForm.removeControl('feeOnMonthDay');
-      this.chargeForm.removeControl('addFeeFrequency');
-      if (this.chargeForm.get('chargeAppliesTo').value !== 4) {
+    this.chargeForm
+      .get('chargeAppliesTo')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((chargeAppliesTo) => {
         this.chargeForm.get('penalty').enable();
-      }
-      switch (chargeTimeType) {
-        case 6: // Annual Fee
-          this.chargeForm.addControl('feeOnMonthDay', new UntypedFormControl('', Validators.required));
-          break;
-        case 7: // Monthly Fee
-          this.chargeForm.addControl('feeOnMonthDay', new UntypedFormControl(''));
-          this.chargeForm.addControl(
-            'feeInterval',
-            new UntypedFormControl('', [
-              Validators.required,
-              Validators.min(1),
-              Validators.max(12),
-              Validators.pattern('^[1-9]\\d*$')
-            ])
-          );
-          this.repeatEveryLabel = 'Months';
-          break;
-        case 9: // Overdue Fee
-          this.chargeForm.get('penalty').setValue(true);
-          this.chargeForm.addControl('addFeeFrequency', new UntypedFormControl(false));
-          this.chargeForm.get('addFeeFrequency').valueChanges.subscribe((addFeeFrequency) => {
-            if (addFeeFrequency) {
-              this.chargeForm.addControl('feeFrequency', new UntypedFormControl('', Validators.required));
-              this.chargeForm.addControl(
-                'feeInterval',
-                new UntypedFormControl('', [
-                  Validators.required,
-                  Validators.pattern('^[1-9]\\d*$')
-                ])
-              );
-            } else {
-              this.chargeForm.removeControl('feeFrequency');
-              this.chargeForm.removeControl('feeInterval');
-            }
-          });
-          break;
-        case 11: // Weekly Fee
-          this.chargeForm.addControl(
-            'feeInterval',
-            new UntypedFormControl('', [
-              Validators.required,
-              Validators.pattern('^[1-9]\\d*$')
-            ])
-          );
-          this.repeatEveryLabel = 'Weeks';
-          break;
-      }
-    });
-    this.chargeForm.get('currencyCode').valueChanges.subscribe((currencyCode) => {
-      this.currencyDecimalPlaces = this.chargesTemplateData.currencyOptions.find(
-        (currency: any) => currency.code === currencyCode
-      ).decimalPlaces;
-    });
+        switch (chargeAppliesTo) {
+          case 1: // Loan
+            this.chargeForm.addControl('chargePaymentMode', new UntypedFormControl('', Validators.required));
+            this.chargeForm.removeControl('incomeAccountId');
+            break;
+          case 2: // Savings
+            this.chargeForm.removeControl('chargePaymentMode');
+            this.chargeForm.removeControl('incomeAccountId');
+            break;
+          case 3: // Client
+            this.chargeForm.removeControl('chargePaymentMode');
+            this.chargeForm.addControl('incomeAccountId', new UntypedFormControl(''));
+            break;
+          case 4: // Shares
+            this.chargeForm.removeControl('chargePaymentMode');
+            this.chargeForm.removeControl('incomeAccountId');
+            this.chargeForm.get('penalty').setValue(false);
+            break;
+          case 5: // Working Capital Loans
+            this.chargeForm.addControl('chargePaymentMode', new UntypedFormControl('', Validators.required));
+            this.chargeForm.removeControl('incomeAccountId');
+            break;
+        }
+        this.chargeForm.get('chargeCalculationType').reset();
+        this.chargeForm.get('chargeTimeType').reset();
+      });
+    this.chargeForm
+      .get('chargeTimeType')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((chargeTimeType) => {
+        this.chargeForm.removeControl('feeFrequency');
+        this.chargeForm.removeControl('feeInterval');
+        this.chargeForm.removeControl('feeOnMonthDay');
+        this.chargeForm.removeControl('addFeeFrequency');
+        if (this.chargeForm.get('chargeAppliesTo').value !== 4) {
+          this.chargeForm.get('penalty').enable();
+        }
+        switch (chargeTimeType) {
+          case 6: // Annual Fee
+            this.chargeForm.addControl('feeOnMonthDay', new UntypedFormControl('', Validators.required));
+            break;
+          case 7: // Monthly Fee
+            this.chargeForm.addControl('feeOnMonthDay', new UntypedFormControl(''));
+            this.chargeForm.addControl(
+              'feeInterval',
+              new UntypedFormControl('', [
+                Validators.required,
+                Validators.min(1),
+                Validators.max(12),
+                Validators.pattern('^[1-9]\\d*$')
+              ])
+            );
+            this.repeatEveryLabel = 'Months';
+            break;
+          case 9: // Overdue Fee
+            this.chargeForm.get('penalty').setValue(true);
+            this.chargeForm.addControl('addFeeFrequency', new UntypedFormControl(false));
+            this.chargeForm
+              .get('addFeeFrequency')
+              .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+              .subscribe((addFeeFrequency) => {
+                if (addFeeFrequency) {
+                  this.chargeForm.addControl('feeFrequency', new UntypedFormControl('', Validators.required));
+                  this.chargeForm.addControl(
+                    'feeInterval',
+                    new UntypedFormControl('', [
+                      Validators.required,
+                      Validators.pattern('^[1-9]\\d*$')
+                    ])
+                  );
+                } else {
+                  this.chargeForm.removeControl('feeFrequency');
+                  this.chargeForm.removeControl('feeInterval');
+                }
+              });
+            break;
+          case 11: // Weekly Fee
+            this.chargeForm.addControl(
+              'feeInterval',
+              new UntypedFormControl('', [
+                Validators.required,
+                Validators.pattern('^[1-9]\\d*$')
+              ])
+            );
+            this.repeatEveryLabel = 'Weeks';
+            break;
+        }
+      });
+    this.chargeForm
+      .get('currencyCode')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((currencyCode) => {
+        this.currencyDecimalPlaces = this.chargesTemplateData.currencyOptions.find(
+          (currency: any) => currency.code === currencyCode
+        ).decimalPlaces;
+      });
   }
 
   /**

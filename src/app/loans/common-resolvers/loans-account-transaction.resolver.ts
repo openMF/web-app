@@ -15,13 +15,18 @@ import { Observable } from 'rxjs';
 
 /** Custom Services */
 import { LoansService } from '../loans.service';
+import { LoanBaseResolver } from './loan-base.resolver';
 
 /**
  * Loans Account Transaction data resolver.
  */
 @Injectable()
-export class LoansAccountTransactionResolver {
+export class LoansAccountTransactionResolver extends LoanBaseResolver {
   private loansService = inject(LoansService);
+
+  constructor() {
+    super();
+  }
 
   /**
    * Returns the Loans Account Transaction data.
@@ -29,8 +34,11 @@ export class LoansAccountTransactionResolver {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    this.initialize(route);
     const loanId = route.paramMap.get('loanId');
     const transactionId = route.paramMap.get('id');
-    return this.loansService.getLoansAccountTransaction(loanId, transactionId);
+    if (!isNaN(+loanId) && !isNaN(+transactionId)) {
+      return this.loansService.getLoansAccountTransaction(this.loanAccountPath, loanId, transactionId);
+    }
   }
 }

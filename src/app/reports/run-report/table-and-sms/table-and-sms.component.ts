@@ -7,7 +7,15 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, Input, ViewChild, OnChanges, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  ViewChild,
+  OnChanges,
+  inject
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import {
   MatTableDataSource,
@@ -45,6 +53,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   selector: 'mifosx-table-and-sms',
   templateUrl: './table-and-sms.component.html',
   styleUrls: ['./table-and-sms.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     MatTable,
@@ -66,6 +75,7 @@ export class TableAndSmsComponent implements OnChanges {
   dialog = inject(MatDialog);
   private decimalPipe = inject(DecimalPipe);
   private progressBarService = inject(ProgressBarService);
+  private cdr = inject(ChangeDetectorRef);
 
   /** Run Report Data */
   @Input() dataObject: any;
@@ -113,6 +123,7 @@ export class TableAndSmsComponent implements OnChanges {
         }
         this.hideOutput = false;
         this.progressBarService.decrease();
+        this.cdr.markForCheck();
       });
   }
 

@@ -7,7 +7,17 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, Input, Output, EventEmitter, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  inject
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 
@@ -36,6 +46,7 @@ export class SharesAccountDetailsStepComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   private sharesService = inject(SharesService);
   private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Shares Account Template */
   @Input() sharesAccountTemplate: any;
@@ -101,11 +112,14 @@ export class SharesAccountDetailsStepComponent implements OnInit {
    */
   buildDependencies() {
     const clientId = this.sharesAccountTemplate.clientId;
-    this.sharesAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
-      this.sharesService.getSharesAccountTemplate(clientId, productId).subscribe((response: any) => {
-        this.sharesAccountProductTemplate.emit(response);
+    this.sharesAccountDetailsForm
+      .get('productId')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((productId: string) => {
+        this.sharesService.getSharesAccountTemplate(clientId, productId).subscribe((response: any) => {
+          this.sharesAccountProductTemplate.emit(response);
+        });
       });
-    });
   }
 
   /**

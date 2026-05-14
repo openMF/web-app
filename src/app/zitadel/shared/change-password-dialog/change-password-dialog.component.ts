@@ -6,7 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogActions } from '@angular/material/dialog';
 import { UntypedFormBuilder, Validators, AbstractControl, ValidationErrors, FormGroup } from '@angular/forms';
 import { confirmPasswordValidator } from 'app/login/reset-password/confirm-password.validator';
@@ -37,6 +38,7 @@ export class ChangePasswordDialogComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   private http = inject(HttpClient);
   private translateService = inject(TranslateService);
+  private destroyRef = inject(DestroyRef);
 
   minPasswordLength: number = environment.minPasswordLength || 12;
   changePasswordForm: FormGroup;
@@ -74,9 +76,12 @@ export class ChangePasswordDialogComponent implements OnInit {
   }
 
   setupPasswordMatchValidation(): void {
-    this.changePasswordForm.get('password')?.valueChanges.subscribe(() => {
-      this.changePasswordForm.get('repeatPassword')?.updateValueAndValidity();
-    });
+    this.changePasswordForm
+      .get('password')
+      ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.changePasswordForm.get('repeatPassword')?.updateValueAndValidity();
+      });
 
     this.changePasswordForm.get('repeatPassword')?.setValidators([
       Validators.required,

@@ -18,7 +18,7 @@ import { OrganizationService } from '../../organization.service';
 /**
  * Manage Offices data resolver.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class OfficesResolver {
   private organizationService = inject(OrganizationService);
 
