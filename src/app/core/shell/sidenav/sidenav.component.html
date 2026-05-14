@@ -99,7 +99,7 @@
           matTooltip="{{ 'tooltips.Checker Inbox and Tasks' | translate }}"
           routerLinkActive="active-menu"
           [routerLinkActiveOptions]="{ exact: false }"
-          *mifosxHasPermission="['READ_MAKERCHECKER', 'APPROVE_LOAN']"
+          *mifosxHasPermission="['ALL_FUNCTIONS_READ', 'READ_MAKERCHECKER', 'APPROVE_LOAN', 'APPROVE_LOAN_CHECKER']"
         >
           <mat-icon matListIcon>
             <i class="fa fa-check"></i>

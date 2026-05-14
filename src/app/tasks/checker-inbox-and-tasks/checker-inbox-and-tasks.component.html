@@ -18,7 +18,7 @@
           routerLinkActive
           #checkerInbox="routerLinkActive"
           [active]="checkerInbox.isActive"
-          *mifosxHasPermission="['ALL_FUNCTIONS_READ', 'READ_MAKERCHECKER', 'APPROVE_LOAN']"
+          *mifosxHasPermission="['ALL_FUNCTIONS_READ', 'READ_MAKERCHECKER', 'APPROVE_LOAN', 'APPROVE_LOAN_CHECKER']"
         >
           {{ 'labels.inputs.Checker Inbox' | translate }}
         </a>
@@ -48,7 +48,7 @@
           routerLinkActive
           #councilApproval="routerLinkActive"
           [active]="councilApproval.isActive"
-          *mifosxHasPermission="['ALL_FUNCTIONS_READ', 'READ_MAKERCHECKER', 'APPROVE_LOAN']"
+          *mifosxHasPermission="['ALL_FUNCTIONS_READ', 'READ_MAKERCHECKER', 'APPROVE_LOAN', 'APPROVE_LOAN_CHECKER']"
         >
           {{ 'labels.text.Council Approval' | translate }}
         </a>

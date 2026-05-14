@@ -20,7 +20,7 @@
       <button
         mat-raised-button
         color="success"
-        *mifosxHasPermission="'APPROVE_LOAN'"
+        *mifosxHasPermission="['APPROVE_LOAN', 'APPROVE_LOAN_CHECKER']"
         (click)="disburseLoan()"
         class="tasks-action-btn"
       >
