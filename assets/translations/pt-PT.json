@@ -756,7 +756,8 @@
       "PRINT": "Imprimir",
       "DONE": "Concluir",
       "Submitting": "Enviando",
-      "OK": "OK"
+      "OK": "OK",
+      "undo_account_transfer": "Reverter transferência de conta"
     },
     "catalogs": {
       "Interest payment waiver": "Isenção de pagamento de juros",
@@ -1547,7 +1548,8 @@
       "You have created": "Você criou",
       "identifier id": "ID do identificador",
       "savings-transaction-datatable-tab works": "poupança-transação-datatable-tab funciona",
-      "successfully select option": "com sucesso. Selecione uma das opções abaixo para prosseguir."
+      "successfully select option": "com sucesso. Selecione uma das opções abaixo para prosseguir.",
+      "undo_account_transfer": "Reverter transferência de conta"
     },
     "inputs": {
       "# Remittance": "# Remessa",
@@ -3269,7 +3271,8 @@
       "Are you sure you want to": "Tem a certeza que deseja",
       "the productmix component with id": "o componente productmix com id",
       "the Reschedule Loan": "o Empréstimo Reagendado",
-      "the Transaction Type": "o tipo de transação"
+      "the Transaction Type": "o tipo de transação",
+      "undo_account_transfer": "Tem a certeza de que pretende reverter esta transferência de conta?"
     },
     "text": {
       "A": "A",
