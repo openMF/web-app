@@ -35,7 +35,7 @@ jobs:
           args: --verbose --no-progress './**/*.md'
           fail: true
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.HUB_TOKEN }}
 
       - name: Report Broken Links (Idempotent Issue Management)
         if: steps.lychee.outcome == 'failure'

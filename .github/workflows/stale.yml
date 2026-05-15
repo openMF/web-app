@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/stale@b5d41d4e1d5dceea10e7104786b73624c18a190f # v10
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ secrets.HUB_TOKEN }}
           # stale-issue-message: 'Stale issue message'
           # stale-issue-label: 'no-issue-activity'
           stale-pr-message: 'This pull request seems to be stale.  Are you still planning to work on it?  We will automatically close it in 30 days.'

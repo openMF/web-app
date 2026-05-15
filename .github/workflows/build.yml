@@ -86,7 +86,7 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.HUB_TOKEN }}
           BRANCH: gh-pages
           FOLDER: dist/web-app/browser
           #without preserve it only builds if you have untracked files
