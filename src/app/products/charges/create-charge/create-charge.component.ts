@@ -197,6 +197,7 @@ export class CreateChargeComponent implements OnInit {
         if (
           !(
             this.chargeForm.get('chargeTimeType').value === 5 ||
+            this.chargeForm.get('chargeTimeType').value === 7 ||
             this.chargeForm.get('chargeTimeType').value === 16 ||
             this.chargeForm.get('chargeTimeType').value === 17
           ) &&
