@@ -63,6 +63,8 @@ export class CreateChargeComponent implements OnInit {
   chargeCalculationTypeData: any = '';
   /** Income and liability account data */
   incomeAndLiabilityAccountData: any;
+  /** Payment type data. */
+  paymentTypeData: any[] = [];
   /** Minimum due date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum due date allowed. */
@@ -82,8 +84,9 @@ export class CreateChargeComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data.subscribe((data: { chargesTemplate: any }) => {
+    this.route.data.subscribe((data: { chargesTemplate: any; paymentTypes: any[] }) => {
       this.chargesTemplateData = data.chargesTemplate;
+      this.paymentTypeData = data.paymentTypes;
       const incomeOptions = data.chargesTemplate.incomeOrLiabilityAccountOptions.incomeAccountOptions || [];
       const liabilityOptions = data.chargesTemplate.incomeOrLiabilityAccountOptions.liabilityAccountOptions || [];
       if (liabilityOptions.length > 0) {
@@ -138,6 +141,7 @@ export class CreateChargeComponent implements OnInit {
       active: [false],
       penalty: [false],
       taxGroupId: [null],
+      paymentTypeId: [null],
       minCap: [
         null,
         [maxNumberValueValidator('maxCap')]
@@ -336,6 +340,9 @@ export class CreateChargeComponent implements OnInit {
     delete data.addFeeFrequency;
     if (!data.taxGroupId) {
       delete data.taxGroupId;
+    }
+    if (!data.paymentTypeId) {
+      delete data.paymentTypeId;
     }
     if (!data.minCap) {
       delete data.minCap;

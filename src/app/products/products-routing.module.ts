@@ -148,6 +148,7 @@ import { NearBreachTemplateResolver } from './loan-products/working-capital/near
 import { ViewNearBreachConfigurationComponent } from './loan-products/working-capital/near-breach-configuration/view-near-breach-configuration/view-near-breach-configuration.component';
 import { NearBreachResolver } from './loan-products/working-capital/near-breach-configuration/near-breach.resolver';
 import { EditNearBreachConfigurationComponent } from './loan-products/working-capital/near-breach-configuration/edit-near-breach-configuration/edit-near-breach-configuration.component';
+import { PaymentTypesResolver } from '../accounting/common-resolvers/payment-types.resolver';
 
 /** Products Routes */
 const routes: Routes = [
@@ -822,7 +823,8 @@ const routes: Routes = [
               component: CreateChargeComponent,
               data: { title: 'Create Charge', breadcrumb: 'Create Charge' },
               resolve: {
-                chargesTemplate: ChargesTemplateResolver
+                chargesTemplate: ChargesTemplateResolver,
+                paymentTypes: PaymentTypesResolver
               }
             },
             {
@@ -1053,7 +1055,8 @@ const routes: Routes = [
     BreachesResolver,
     BreachResolver,
     NearBreachesResolver,
-    NearBreachResolver
+    NearBreachResolver,
+    PaymentTypesResolver
   ]
 })
 export class ProductsRoutingModule {}

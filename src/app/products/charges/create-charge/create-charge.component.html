@@ -259,6 +259,17 @@
                   }
                 </mat-select>
               </mat-form-field>
+              <mat-form-field class="flex-48">
+                <mat-label>{{ 'labels.inputs.Payment Type' | translate }}</mat-label>
+                <mat-select formControlName="paymentTypeId">
+                  <mat-option [value]="null">{{ 'labels.commons.None' | translate }}</mat-option>
+                  @for (paymentType of paymentTypeData; track paymentType) {
+                    <mat-option [value]="paymentType.id">
+                      {{ paymentType.name }}
+                    </mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
               <div class="flex-48 layout-row gap-2percent layout-lt-md-column">
                 <div class="flex-50 active-wrapper">
                   <mat-checkbox labelPosition="before" formControlName="active">
