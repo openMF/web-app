@@ -756,7 +756,8 @@
       "PRINT": "Drukāt",
       "DONE": "Gatavs",
       "Submitting": "Iesniedz",
-      "OK": "Labi"
+      "OK": "Labi",
+      "undo_account_transfer": "Atcelt konta pārskaitījumu"
     },
     "catalogs": {
       "Interest payment waiver": "Atteikšanās no procentu maksājumiem",
@@ -1548,7 +1549,8 @@
       "You have created": "Jūs esat izveidojis",
       "identifier id": "identifikatora id",
       "savings-transaction-datatable-tab works": "ietaupījums-transaction-datatable-tab darbojas",
-      "successfully select option": "veiksmīgi. Lūdzu, atlasiet kādu no tālāk norādītajām opcijām, lai turpinātu."
+      "successfully select option": "veiksmīgi. Lūdzu, atlasiet kādu no tālāk norādītajām opcijām, lai turpinātu.",
+      "undo_account_transfer": "Atcelt konta pārskaitījumu"
     },
     "inputs": {
       "# Remittance": "# Pārvedums",
@@ -3269,7 +3271,8 @@
       "Are you sure you want to": "Vai tiešām vēlaties",
       "the productmix component with id": "Productmix komponents ar id",
       "the Reschedule Loan": "aizdevuma pārkārtošanu",
-      "the Transaction Type": "Darījuma veids"
+      "the Transaction Type": "Darījuma veids",
+      "undo_account_transfer": "Vai tiešām vēlaties atcelt šo konta pārskaitījumu?"
     },
     "text": {
       "A": "A",

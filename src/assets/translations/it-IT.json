@@ -756,7 +756,8 @@
       "DONE": "Fatto",
       "Submitting": "Invio in corso",
       "OK": "OK",
-      "Is Self Service": "Self Service"
+      "Is Self Service": "Self Service",
+      "undo_account_transfer": "Annulla trasferimento conto"
     },
     "catalogs": {
       "Interest payment waiver": "Rinuncia al pagamento degli interessi",
@@ -1548,7 +1549,8 @@
       "You have created": "Hai creato",
       "identifier id": "identificativo identificativo",
       "savings-transaction-datatable-tab works": "la scheda datatable-transazioni-risparmio funziona",
-      "successfully select option": "con successo. Seleziona una delle opzioni seguenti per procedere ulteriormente."
+      "successfully select option": "con successo. Seleziona una delle opzioni seguenti per procedere ulteriormente.",
+      "undo_account_transfer": "Annulla trasferimento conto"
     },
     "inputs": {
       "# Remittance": "# Rimessa",
@@ -3269,7 +3271,8 @@
       "Are you sure you want to": "Sei sicuro di voler",
       "the productmix component with id": "il componente productmix con id",
       "the Reschedule Loan": "la Riorganizzazione del Prestito",
-      "the Transaction Type": "il tipo di transazione"
+      "the Transaction Type": "il tipo di transazione",
+      "undo_account_transfer": "Sei sicuro di voler annullare questo trasferimento conto?"
     },
     "text": {
       "A": "UN",

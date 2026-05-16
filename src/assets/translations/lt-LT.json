@@ -756,7 +756,8 @@
       "PRINT": "Spausdinti",
       "DONE": "Atlikta",
       "Submitting": "Pateikiama",
-      "OK": "Gerai"
+      "OK": "Gerai",
+      "undo_account_transfer": "Atšaukti sąskaitos pervedimą"
     },
     "catalogs": {
       "Interest payment waiver": "Palūkanų mokėjimo atsisakymas",
@@ -1547,7 +1548,8 @@
       "You have created": "Jūs sukūrėte",
       "identifier id": "identifikatoriaus id",
       "savings-transaction-datatable-tab works": "taupymo-operacijų-duomenų lentelės-skirtukas veikia",
-      "successfully select option": "sėkmingai. Jei norite tęsti, pasirinkite iš toliau pateiktų parinkčių."
+      "successfully select option": "sėkmingai. Jei norite tęsti, pasirinkite iš toliau pateiktų parinkčių.",
+      "undo_account_transfer": "Atšaukti sąskaitos pervedimą"
     },
     "inputs": {
       "# Remittance": "# Pervedimas",
@@ -3269,7 +3271,8 @@
       "Are you sure you want to": "Ar tikrai norite",
       "the productmix component with id": "Productmix komponentas su id",
       "the Reschedule Loan": "skolos tvarkaraštį iš naujo",
-      "the Transaction Type": "operacijos tipas"
+      "the Transaction Type": "operacijos tipas",
+      "undo_account_transfer": "Ar tikrai norite atšaukti šį sąskaitos pervedimą?"
     },
     "text": {
       "A": "A",
