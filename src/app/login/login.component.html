@@ -39,6 +39,7 @@
               {{ 'labels.text.Mifos Initiative' | translate }}
               <fa-icon icon="external-link-alt" size="sm"></fa-icon>
             </a>
+            <!-- 'Get involved' link hidden from the login screen
             <a
               [href]="'mifosVolunteer' | documentationLink"
               target="_blank"
@@ -48,6 +49,7 @@
               {{ 'labels.text.Get involved' | translate }}
               <fa-icon icon="external-link-alt" size="sm"></fa-icon>
             </a>
+            -->
           </div>
         </div>
       }
@@ -120,7 +122,7 @@
               <span class="version-label">{{ 'labels.version.Tenant' | translate }}</span>
               <span class="version-value">{{ tenantDisplayName }}</span>
             </div>
-            <div class="version-item" hidden>
+            <div class="version-item">
               <span class="version-label">{{ 'labels.version.Mifos WebApp' | translate }}</span>
               <span class="version-value">{{ versions?.mifos }}</span>
             </div>
@@ -135,7 +137,7 @@
           </div>
         </div>
 
-        <!-- Resources Links (hidden in production mode) -->
+        <!-- Resources Links (hidden in production mode) 
         @if (!productionMode) {
           <div class="resources-section">
             <div class="resources-branding">
@@ -162,6 +164,7 @@
             </div>
           </div>
         }
+        -->
       </div>
 
       <!-- Footer -->
@@ -181,7 +184,7 @@
   </div>
 </div>
 
-<!-- Resource Menus -->
+<!-- Resource Menus 
 <mat-menu #resourcesMenu="matMenu" class="modern-menu">
   <a [href]="'userManual' | documentationLink" target="_blank" rel="noopener noreferrer" mat-menu-item>
     <fa-icon icon="book-open" class="menu-icon"></fa-icon>
@@ -225,4 +228,4 @@
     <fa-icon icon="hand-holding-heart" class="menu-icon"></fa-icon>
     {{ 'labels.links.Donate' | translate }}
   </a>
-</mat-menu>
+</mat-menu>-->
