@@ -136,10 +136,11 @@ test.describe('Login Page - Responsive Layout', () => {
     const buttonBox = await loginButton.boundingBox();
     expect(buttonBox).toBeTruthy();
 
-    // Resources section should be visible
+    // Resources section should be not be visible
     const resourcesSection = page.locator('.resources-section');
     const resourcesBox = await resourcesSection.boundingBox();
-    expect(resourcesBox).toBeTruthy();
+    // expect(resourcesBox).toBeTruthy();
+    expect(resourcesBox).toBeFalsy();
 
     // Footer should be visible
     const footer = loginPage.divLocator('.login-footer');
@@ -186,10 +187,11 @@ test.describe('Login Page - Responsive Layout', () => {
       await expect(logo).toBeVisible();
       await expect(form).toBeVisible();
 
-      if (viewport.width > 1024) {
-        const resources = loginPage.divLocator('.resources-section');
-        await expect(resources).toBeVisible();
-      }
+      // hide resources section completely
+      // if (viewport.width > 1024) {
+      //   const resources = loginPage.divLocator('.resources-section');
+      //   await expect(resources).toBeVisible();
+      // }
 
       // Get bounding boxes
       const logoBox = await logo.boundingBox();

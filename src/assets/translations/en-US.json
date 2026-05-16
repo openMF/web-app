@@ -429,8 +429,8 @@
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
     "version": {
       "Tenant": "Tenant",
-      "Mifos WebApp": "Spade® Version",
-      "Apache Fineract": "Apache Fineract®",
+      "Mifos WebApp": "Spade Portal",
+      "Apache Fineract": "Spade Core",
       "Server": "Server",
       "Username": "Username",
       "Name": "Name",
