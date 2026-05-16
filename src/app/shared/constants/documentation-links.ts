@@ -73,16 +73,16 @@ export const DOCUMENTATION_PATHS: Record<DocumentationPage, string> = {
   manageOffices: 'spaces/docs/pages/67141727/Manage+Offices',
   manageFunds: 'spaces/docs/pages/67141736/Manage+Funds',
   // External links (full URLs)
-  mifosHome: 'https://mifos.org/',
-  mifosCommunity: 'https://mifos.org/resources/community/',
-  mifosVolunteer: 'https://mifos.org/take-action/volunteer/',
+  mifosHome: 'https://spadecorebanking.com/',
+  mifosCommunity: 'https://spadecorebanking.com/resources/community/',
+  mifosVolunteer: 'https://spadecorebanking.com/take-action/volunteer/',
   fineractFunctionalSpecs:
     'https://cwiki.apache.org/confluence/display/FINERACT/Apache+Fineract+1.0+Functional+Specifications',
   fineractContributorZone: 'https://cwiki.apache.org/confluence/display/FINERACT/Contributor%27s+Zone',
   mifosUserGroup: 'https://groups.google.com/forum/#!forum/mifosusers',
   mifosDeveloperGroup: 'https://groups.google.com/forum/#!forum/mifosdeveloper',
-  mifosIrc: 'https://mifos.org/resources/community/communications/#mifos-irc',
+  mifosIrc: 'https://spadecorebanking.com/resources/community/communications/#mifos-irc',
   sourceforgeMifos: 'https://sourceforge.net/projects/mifos/',
-  mifosDonate: 'https://mifos.org/donate/',
+  mifosDonate: 'https://spadecorebanking.com/donate/',
   cronmaker: 'http://www.cronmaker.com/'
 };
