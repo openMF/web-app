@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -46,7 +46,8 @@ import { LoanAccountTabBaseComponent } from '../loan-account-tab-base.component'
     NgClass,
     DateFormatPipe,
     FormatNumberPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewChargeComponent extends LoanAccountTabBaseComponent {
   private loansService = inject(LoansService);

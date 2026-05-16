@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { LottieComponent, AnimationOptions } from 'ngx-lottie';
 
 @Component({
@@ -28,7 +28,8 @@ import { LottieComponent, AnimationOptions } from 'ngx-lottie';
         background-color: transparent;
       }
     `
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoaderComponent {
   options: AnimationOptions = {

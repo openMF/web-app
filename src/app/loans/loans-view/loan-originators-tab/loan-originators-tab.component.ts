@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatIconButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -48,7 +48,8 @@ import { LoanAccountTabBaseComponent } from '../loan-account-tab-base.component'
     MatRow,
     MatIconButton,
     FaIconComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanOriginatorsTabComponent extends LoanAccountTabBaseComponent {
   private route = inject(ActivatedRoute);

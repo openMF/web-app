@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
 
 /** Custom Model */
 import { Theme } from './theme.model';
@@ -41,7 +41,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatGridList,
     MatGridTile,
     MatMenuItem
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ThemePickerComponent implements OnInit {
   themeStorageService = inject(ThemeStorageService);

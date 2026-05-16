@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, inject, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -78,7 +78,8 @@ interface ClientViewData {
     ...STANDALONE_SHARED_IMPORTS,
     DateFormatPipe,
     MatIcon
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PersonalDataTabComponent implements OnDestroy {
   private route = inject(ActivatedRoute);

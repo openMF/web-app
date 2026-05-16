@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -31,7 +31,8 @@ import { FormatNumberPipe } from 'app/pipes/format-number.pipe';
     MatDialogActions,
     MatDialogClose,
     FormatNumberPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoansAccountViewGuarantorDetailsDialogComponent implements OnInit {
   dialogRef = inject<MatDialogRef<LoansAccountViewGuarantorDetailsDialogComponent>>(MatDialogRef);

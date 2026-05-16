@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnDestroy, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
@@ -79,7 +79,8 @@ import { LoanProductService } from 'app/products/loan-products/services/loan-pro
     DateFormatPipe,
     FormatNumberPipe,
     CurrencyPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GeneralTabComponent implements OnDestroy {
   private destroy$ = new Subject<void>();

@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ProductsService } from 'app/products/products.service';
@@ -24,7 +24,8 @@ import { FormatNumberPipe } from '@pipes/format-number.pipe';
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     FormatNumberPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewBucketComponent extends DelinquencyBucketBaseComponent {
   private router = inject(Router);

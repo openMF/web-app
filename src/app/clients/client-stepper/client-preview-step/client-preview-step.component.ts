@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Output, EventEmitter, Input } from '@angular/core';
 import { MatDivider } from '@angular/material/divider';
 import { ExternalIdentifierComponent } from '../../../shared/external-identifier/external-identifier.component';
 import {
@@ -46,7 +46,8 @@ import { LegalFormId } from 'app/clients/models/legal-form.enum';
     FindPipe,
     DateFormatPipe,
     YesnoPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClientPreviewStepComponent {
   /** Client Address field configuration */

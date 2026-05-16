@@ -42,7 +42,7 @@ import { GSIMAccountsResolver } from './common-resolvers/gsim-account-resolver';
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'groups',
+      path: '',
       data: { title: 'Groups', breadcrumb: 'Groups', routeParamBreadcrumb: false },
       children: [
         {

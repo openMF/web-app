@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Datatables } from 'app/core/utils/datatables';
@@ -48,7 +48,8 @@ import { formatTabLabel } from 'app/shared/utils/format-tab-label.util';
     DatetimeFormatPipe,
     FormatNumberPipe,
     PrettyPrintPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DatatableSingleRowComponent implements OnInit {
   private route = inject(ActivatedRoute);

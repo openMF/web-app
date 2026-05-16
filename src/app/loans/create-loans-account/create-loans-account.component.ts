@@ -7,7 +7,16 @@
  */
 
 /** Angular Imports */
-import { AfterViewInit, ChangeDetectorRef, Component, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+  inject
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -49,7 +58,8 @@ import { Dates } from 'app/core/utils/dates';
     LoansAccountScheduleStepComponent,
     LoansAccountDatatableStepComponent,
     LoansAccountPreviewStepComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateLoansAccountComponent extends LoanProductBaseComponent implements AfterViewInit {
   private route = inject(ActivatedRoute);
@@ -302,7 +312,6 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
 
     // No Empty values to be sent
     [
-      'discount',
       'delinquencyGraceDays',
       'delinquencyStartType'
     ].forEach((attr: string) => {

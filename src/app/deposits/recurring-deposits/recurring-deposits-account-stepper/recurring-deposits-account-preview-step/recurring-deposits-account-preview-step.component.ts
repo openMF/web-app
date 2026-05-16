@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatDivider } from '@angular/material/divider';
 import { NgIf, NgSwitch, TitleCasePipe } from '@angular/common';
@@ -66,7 +66,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     DateFormatPipe,
     FormatNumberPipe,
     YesnoPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecurringDepositsAccountPreviewStepComponent implements OnChanges {
   /** Input Data */

@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApproveFixedDepositsAccountComponent } from './approve-fixed-deposits-account/approve-fixed-deposits-account.component';
 import { RejectFixedDepositsAccountComponent } from './reject-fixed-deposits-account/reject-fixed-deposits-account.component';
@@ -38,7 +38,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     PrematureCloseFixedDepositsAccountComponent,
     CloseFixedDepositsAccountComponent,
     FixedDepositsCashTransactionComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FixedDepositsAccountActionsComponent {
   private route = inject(ActivatedRoute);

@@ -1,0 +1,24 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h1 mat-dialog-title>{{ 'labels.heading.Undo' | translate }} {{ data.undoContext }}</h1>
+<div>
+  <form [formGroup]="undoActionForm">
+    <mat-dialog-content>
+      <mat-form-field class="flex-100">
+        <textarea formControlName="note" matInput placeholder="{{ 'labels.inputs.Notes' | translate }}"></textarea>
+      </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
+      <button mat-raised-button color="primary" [mat-dialog-close]="{ confirm: true, data: undoActionForm.value }">
+        {{ 'labels.buttons.Undo' | translate }}
+      </button>
+    </mat-dialog-actions>
+  </form>
+</div>

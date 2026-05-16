@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -56,7 +56,8 @@ import { EnumOptionData, StringEnumOptionData } from 'app/shared/models/option-d
     MatRowDef,
     MatRow,
     FindPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditBucketComponent extends DelinquencyBucketBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);

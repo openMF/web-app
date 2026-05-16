@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, AfterViewInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, AfterViewInit, inject } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -38,7 +38,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatListSubheaderCssMatStyler,
     MatNavList,
     MatLine
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageGroupsComponent implements AfterViewInit {
   private route = inject(ActivatedRoute);

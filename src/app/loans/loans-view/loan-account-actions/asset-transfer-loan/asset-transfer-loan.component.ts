@@ -6,12 +6,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Dates } from 'app/core/utils/dates';
 import { ExternalAssetOwnerService } from 'app/loans/services/external-asset-owner.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
+import { rangeValidator } from 'app/shared/validators/percentage.validator';
 
 @Component({
   selector: 'mifosx-asset-transfer-loan',
@@ -19,7 +20,8 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
   styleUrls: ['./asset-transfer-loan.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AssetTransferLoanComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
@@ -35,7 +37,7 @@ export class AssetTransferLoanComponent extends LoanAccountActionsBaseComponent 
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Sell Loan Form */
-  saleLoanForm: UntypedFormGroup;
+  saleLoanForm!: UntypedFormGroup;
 
   constructor() {
     super();
@@ -68,7 +70,10 @@ export class AssetTransferLoanComponent extends LoanAccountActionsBaseComponent 
       ],
       purchasePriceRatio: [
         '',
-        Validators.required
+        [
+          Validators.required,
+          rangeValidator(0, 100)
+        ]
       ],
       transferExternalId: '',
       ownerExternalId: [

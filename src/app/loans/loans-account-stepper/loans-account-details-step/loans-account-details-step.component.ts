@@ -7,7 +7,17 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  OnDestroy,
+  inject
+} from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { SettingsService } from 'app/settings/settings.service';
@@ -49,7 +59,8 @@ import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan
     MatStepperNext,
     MatSelectTrigger,
     AsyncPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoansAccountDetailsStepComponent extends LoanProductBaseComponent implements OnInit, OnDestroy {
   private formBuilder = inject(UntypedFormBuilder);
@@ -58,6 +69,7 @@ export class LoansAccountDetailsStepComponent extends LoanProductBaseComponent i
   private translateService = inject(TranslateService);
   private settingsService = inject(SettingsService);
   private commons = inject(Commons);
+  private cdr = inject(ChangeDetectorRef);
 
   //** Defining PlaceHolders for the search bar */
   placeHolderLabel = '';
@@ -259,6 +271,7 @@ export class LoansAccountDetailsStepComponent extends LoanProductBaseComponent i
                 .get('createStandingInstructionAtDisbursement')
                 .patchValue(response.createStandingInstructionAtDisbursement);
             }
+            this.cdr.markForCheck();
           });
       } else if (this.loanProductService.isWorkingCapital) {
         const entityId = this.loansAccountTemplate.client
@@ -275,6 +288,7 @@ export class LoansAccountDetailsStepComponent extends LoanProductBaseComponent i
               });
             }
             this.loanProductSelected = true;
+            this.cdr.markForCheck();
           });
       } else {
         console.log(this.productSelected.productType + ' not implemented');

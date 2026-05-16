@@ -121,7 +121,7 @@ const selectedRoutes = !environment.OIDC.oidcServerEnabled ? mifosRoutes : zitad
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'appusers',
+      path: '',
       data: { title: 'Users', breadcrumb: 'Users' },
       children: selectedRoutes
     }

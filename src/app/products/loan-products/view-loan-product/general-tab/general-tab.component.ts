@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LoanProduct } from '../../models/loan-product.model';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -22,7 +22,8 @@ import { LoanProductBaseComponent } from '../../common/loan-product-base.compone
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     LoanProductSummaryComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GeneralTabComponent extends LoanProductBaseComponent implements OnInit {
   private route = inject(ActivatedRoute);

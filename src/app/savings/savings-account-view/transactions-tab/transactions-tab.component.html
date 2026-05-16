@@ -136,7 +136,7 @@
               <mat-icon><fa-icon icon="eye" size="sm"></fa-icon></mat-icon>
               <span>{{ 'labels.text.View Transaction' | translate }}</span>
             </button>
-            @if (!transaction.reversed) {
+            @if (!transaction.reversed && !transaction.transfer) {
               <span>
                 <button
                   mat-menu-item
@@ -145,6 +145,18 @@
                 >
                   <mat-icon><fa-icon icon="undo" size="sm"></fa-icon></mat-icon>
                   <span>{{ 'tooltips.Undo Transaction' | translate }}</span>
+                </button>
+              </span>
+            }
+            @if (!transaction.reversed && transaction.transfer) {
+              <span>
+                <button
+                  mat-menu-item
+                  *mifosxHasPermission="'ADJUST_ACCOUNTTRANSFER'"
+                  (click)="undoTransfer(transaction, $event)"
+                >
+                  <mat-icon><fa-icon icon="undo" size="sm"></fa-icon></mat-icon>
+                  <span>{{ 'buttons.undo_account_transfer' | translate }}</span>
                 </button>
               </span>
             }

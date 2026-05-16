@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClientAssignStaffComponent } from './client-assign-staff/client-assign-staff.component';
 import { CloseClientComponent } from './close-client/close-client.component';
@@ -54,7 +54,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     TakeSurveyComponent,
     ClientScreenReportsComponent,
     AddClientCollateralComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClientActionsComponent {
   private route = inject(ActivatedRoute);

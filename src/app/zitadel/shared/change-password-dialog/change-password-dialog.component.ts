@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogActions } from '@angular/material/dialog';
 import { UntypedFormBuilder, Validators, AbstractControl, ValidationErrors, FormGroup } from '@angular/forms';
 import { confirmPasswordValidator } from 'app/login/reset-password/confirm-password.validator';
@@ -28,7 +28,8 @@ import { TranslateService } from '@ngx-translate/core';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     MatDialogActions
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChangePasswordDialogComponent implements OnInit {
   dialogRef = inject<MatDialogRef<ChangePasswordDialogComponent>>(MatDialogRef);

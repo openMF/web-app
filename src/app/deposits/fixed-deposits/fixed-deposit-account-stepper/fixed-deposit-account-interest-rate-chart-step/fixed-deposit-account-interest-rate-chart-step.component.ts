@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, Input, OnChanges, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, ViewChild } from '@angular/core';
 import {
   MatTableDataSource,
   MatTable,
@@ -60,7 +60,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatStepperNext,
     TitleCasePipe,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FixedDepositAccountInterestRateChartStepComponent implements OnChanges {
   /** Fixed deposits account template */

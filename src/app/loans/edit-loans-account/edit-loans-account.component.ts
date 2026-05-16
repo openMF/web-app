@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LoansService } from '../loans.service';
 import { LoansAccountDetailsStepComponent } from '../loans-account-stepper/loans-account-details-step/loans-account-details-step.component';
@@ -43,7 +43,8 @@ import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan
     LoansAccountChargesStepComponent,
     LoansAccountScheduleStepComponent,
     LoansAccountPreviewStepComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditLoansAccountComponent extends LoanProductBaseComponent {
   private route = inject(ActivatedRoute);
@@ -316,10 +317,15 @@ export class EditLoansAccountComponent extends LoanProductBaseComponent {
       }
     }
 
-    // No Empty discount value to be sent
-    if (payload['discount'] == null || payload['discount'] === '') {
-      delete payload['discount'];
-    }
+    // No Empty values to be sent
+    [
+      'delinquencyGraceDays',
+      'delinquencyStartType'
+    ].forEach((attr: string) => {
+      if (payload[attr] === null || payload[attr] === '') {
+        delete payload[attr];
+      }
+    });
 
     this.loansService
       .updateLoansAccount(this.loanProductService.loanAccountPath, this.loanId, payload)

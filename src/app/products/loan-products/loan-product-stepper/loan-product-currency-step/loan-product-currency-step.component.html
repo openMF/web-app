@@ -51,53 +51,38 @@
       }
     </mat-form-field>
 
-    <mat-checkbox labelPosition="before" formControlName="setMultiples" class="flex-98 margin-t checkbox-align-center">
-      {{ 'labels.inputs.Set the multiples of the loan and its installment' | translate }}
-    </mat-checkbox>
+    <mat-form-field class="flex-48">
+      <mat-label>{{ 'labels.inputs.Currency in multiples of' | translate }}</mat-label>
+      <input
+        type="number"
+        min="1"
+        matInput
+        required
+        matTooltip="{{ 'tooltips.Enter multiples of currency value' | translate }}"
+        formControlName="inMultiplesOf"
+      />
+      @if (loanProductCurrencyForm.get('inMultiplesOf')?.hasError('min')) {
+        <mat-error>
+          {{ 'labels.inputs.Currency in multiples of' | translate }}
+          {{ 'labels.commons.Minimum Value must be' | translate }} <strong>1</strong>
+        </mat-error>
+      }
+      @if (loanProductCurrencyForm.get('inMultiplesOf')?.hasError('required')) {
+        <mat-error>
+          {{ 'labels.inputs.Currency in multiples of' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
+    </mat-form-field>
 
-    @if (loanProductCurrencyForm.value.setMultiples) {
-      <mat-form-field class="flex-48">
-        <mat-label>{{ 'labels.inputs.Currency in multiples of' | translate }}</mat-label>
-        <input
-          type="number"
-          min="1"
-          matInput
-          matTooltip="{{ 'tooltips.Enter multiples of currency value' | translate }}"
-          formControlName="inMultiplesOf"
-        />
-        @if (loanProductCurrencyForm.get('inMultiplesOf')?.hasError('min')) {
-          <mat-error>
-            {{ 'labels.inputs.Currency in multiples of' | translate }}
-            {{ 'labels.commons.Minimum Value must be' | translate }} <strong>1</strong>
-          </mat-error>
-        }
-        @if (loanProductCurrencyForm.get('inMultiplesOf')?.hasError('required')) {
-          <mat-error>
-            {{ 'labels.inputs.Currency in multiples of' | translate }} {{ 'labels.commons.is' | translate }}
-            <strong>{{ 'labels.commons.required' | translate }}</strong>
-          </mat-error>
-        }
-      </mat-form-field>
-
+    @if (loanProductService.isLoanProduct) {
       <mat-form-field class="flex-48">
         <mat-label>{{ 'labels.inputs.Installment in multiples of' | translate }}</mat-label>
-        <input
-          type="number"
-          min="1"
-          matInput
-          matTooltip="{{ 'tooltips.Enter multiples of installment value' | translate }}"
-          formControlName="installmentInMultiplesOf"
-        />
-        @if (loanProductCurrencyForm.get('installmentInMultiplesOf')?.hasError('min')) {
+        <input type="number" min="1" matInput formControlName="installmentAmountInMultiplesOf" />
+        @if (loanProductCurrencyForm.get('installmentAmountInMultiplesOf')?.hasError('min')) {
           <mat-error>
             {{ 'labels.inputs.Installment in multiples of' | translate }}
             {{ 'labels.commons.Minimum Value must be' | translate }} <strong>1</strong>
-          </mat-error>
-        }
-        @if (loanProductCurrencyForm.get('installmentInMultiplesOf')?.hasError('required')) {
-          <mat-error>
-            {{ 'labels.inputs.Installment in multiples of' | translate }} {{ 'labels.commons.is' | translate }}
-            <strong>{{ 'labels.commons.required' | translate }}</strong>
           </mat-error>
         }
       </mat-form-field>

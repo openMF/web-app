@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle, MatDialogContent } from '@angular/material/dialog';
 import { KeyboardShortcutsConfiguration } from '../../keyboards-shortcut-config';
 import { CdkScrollable } from '@angular/cdk/scrolling';
@@ -26,7 +26,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     CdkScrollable,
     MatDialogContent,
     MatDivider
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class KeyboardShortcutsDialogComponent implements OnInit {
   dialogRef = inject<MatDialogRef<KeyboardShortcutsDialogComponent>>(MatDialogRef);

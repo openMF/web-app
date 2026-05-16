@@ -92,12 +92,27 @@
 
 .white-text-search ::ng-deep mifosx-search-tool {
   color: white !important;
-  /* stylelint-disable-next-line selector-max-universal */
-  * {
+
+  // Target only Material form-field internals — leave custom elements free to set their own backgrounds
+  /* stylelint-disable selector-class-pattern */
+  .mat-mdc-text-field-wrapper,
+  .mat-mdc-form-field-flex,
+  .mat-mdc-form-field-infix,
+  .mat-mdc-floating-label,
+  .mdc-text-field,
+  mat-label,
+  input {
     background-color: transparent !important;
     color: white !important;
     margin-bottom: 0;
   }
+
+  .mat-mdc-select-value,
+  .mat-mdc-select-arrow,
+  .mat-mdc-select-trigger {
+    color: white !important;
+  }
+  /* stylelint-enable selector-class-pattern */
 }
 
 .white-text-language {

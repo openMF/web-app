@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports  */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, FormArray, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -49,7 +49,8 @@ import { AuthService } from 'app/zitadel/auth.service';
     MatCheckbox,
     MatIcon,
     MatIconButton
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewRoleComponent implements OnInit {
   private route = inject(ActivatedRoute);
@@ -63,7 +64,7 @@ export class ViewRoleComponent implements OnInit {
   /** Role Permissions Data */
   rolePermissionService: any;
   /** Stores the current grouping */
-  currentGrouping: string;
+  currentGrouping: string = '';
   /** Stores the previous grouping */
   previousGrouping = '';
   /** Stores Grouping Data */
@@ -79,9 +80,9 @@ export class ViewRoleComponent implements OnInit {
   /** Role ID */
   roleId: any;
   /** Creates permission form  */
-  formGroup: UntypedFormGroup;
+  formGroup!: UntypedFormGroup;
   /** Creates Backup form */
-  backupform: UntypedFormGroup;
+  backupform!: UntypedFormGroup;
   /** Temporarily stores Permission data */
   tempPermissionUIData: {
     [key: string]: {
@@ -114,7 +115,7 @@ export class ViewRoleComponent implements OnInit {
    * @param {TranslateService} translateService Translate Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { roledetails: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.rolePermissionService = data.roledetails;
     });
   }
@@ -222,6 +223,21 @@ export class ViewRoleComponent implements OnInit {
     }
     string = string.charAt(0).toUpperCase() + string.slice(1);
     return string;
+  }
+
+  /**
+   * Gets the translated role description
+   * @param description Role description
+   */
+  getTranslatedRoleDescription(description: string): string {
+    const translationKey = 'labels.inputs.This role provides all application permissions';
+    const plainEnglishDescription = 'This role provides all application permissions';
+    const normalized = (description || '').trim().replace(/\.$/, '');
+
+    if (normalized === plainEnglishDescription) {
+      return translationKey;
+    }
+    return description;
   }
 
   /**
@@ -361,7 +377,7 @@ export class ViewRoleComponent implements OnInit {
    * Submits the modified permissions
    */
   submit() {
-    const value = this.formGroup.get('roster').value;
+    const value = this.formGroup.get('roster')?.value;
     const data: { [key: string]: boolean } = {};
     const permissionData = {
       permissions: {}
@@ -380,7 +396,8 @@ export class ViewRoleComponent implements OnInit {
    * Selects all the permission of a particular role
    */
   selectAll() {
-    const roster = this.formGroup.get('roster') as FormArray;
+    const roster = this.formGroup.get('roster') as FormArray | null;
+    if (!roster) return;
     for (let i = 0; i < this.permissions.permissions.length; i++) {
       roster.at(this.permissions.permissions[i].id).patchValue({
         selected: true
@@ -392,7 +409,8 @@ export class ViewRoleComponent implements OnInit {
    * Deselects all the permissions of a particular role
    */
   deselectAll() {
-    const roster = this.formGroup.get('roster') as FormArray;
+    const roster = this.formGroup.get('roster') as FormArray | null;
+    if (!roster) return;
     for (let i = 0; i < this.permissions.permissions.length; i++) {
       roster.at(this.permissions.permissions[i].id).patchValue({
         selected: false

@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, TemplateRef, ElementRef, ViewChild, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -26,7 +26,8 @@ import { LoanOriginator } from 'app/loans/models/loan-account.model';
   styleUrl: './edit-loan-originator.component.scss',
   imports: [
     ...STANDALONE_SHARED_IMPORTS
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditLoanOriginatorComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);

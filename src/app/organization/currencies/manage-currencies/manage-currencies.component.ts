@@ -8,6 +8,7 @@
 
 /** Angular Imports */
 import {
+  ChangeDetectionStrategy,
   Component,
   OnInit,
   TemplateRef,
@@ -57,7 +58,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatGridList,
     MatGridTile,
     AsyncPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   private route = inject(ActivatedRoute);

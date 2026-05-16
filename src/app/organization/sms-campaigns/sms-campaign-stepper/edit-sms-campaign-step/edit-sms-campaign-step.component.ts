@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Output, Input, EventEmitter, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Output, Input, EventEmitter, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   Validators,
@@ -37,7 +37,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ...STANDALONE_SHARED_IMPORTS,
     MatCheckbox,
     EditBusinessRuleParametersComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditSmsCampaignStepComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
