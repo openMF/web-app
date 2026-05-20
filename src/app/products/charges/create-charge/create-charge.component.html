@@ -90,11 +90,11 @@
                   </mat-error>
                 }
               </mat-form-field>
-              @if (chargeForm.controls.chargeAppliesTo.value === 1) {
+              @if (chargeForm.controls.chargeAppliesTo.value === 1 || chargeForm.controls.chargeAppliesTo.value === 5) {
                 <mat-form-field class="flex-48">
                   <mat-label>{{ 'labels.inputs.Charge Payment Mode' | translate }}</mat-label>
                   <mat-select required formControlName="chargePaymentMode">
-                    @for (chargePaymentMode of chargesTemplateData.chargePaymetModeOptions; track chargePaymentMode) {
+                    @for (chargePaymentMode of chargePaymentModeData; track chargePaymentMode) {
                       <mat-option [value]="chargePaymentMode.id">
                         {{ chargePaymentMode.value | translateKey: 'catalogs' }}
                       </mat-option>
@@ -249,16 +249,18 @@
                 >
                 </mifosx-gl-account-selector>
               }
-              <mat-form-field class="flex-48">
-                <mat-label>{{ 'labels.inputs.Tax Group' | translate }}</mat-label>
-                <mat-select formControlName="taxGroupId">
-                  @for (taxGroup of chargesTemplateData.taxGroupOptions; track taxGroup) {
-                    <mat-option [value]="taxGroup.id">
-                      {{ taxGroup.name }}
-                    </mat-option>
-                  }
-                </mat-select>
-              </mat-form-field>
+              @if (chargeForm.controls.chargeAppliesTo.value !== 5) {
+                <mat-form-field class="flex-48">
+                  <mat-label>{{ 'labels.inputs.Tax Group' | translate }}</mat-label>
+                  <mat-select formControlName="taxGroupId">
+                    @for (taxGroup of chargesTemplateData.taxGroupOptions; track taxGroup) {
+                      <mat-option [value]="taxGroup.id">
+                        {{ taxGroup.name }}
+                      </mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              }
               <div class="flex-48 layout-row gap-2percent layout-lt-md-column">
                 <div class="flex-50 active-wrapper">
                   <mat-checkbox labelPosition="before" formControlName="active">

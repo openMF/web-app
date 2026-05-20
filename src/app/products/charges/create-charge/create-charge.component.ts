@@ -59,6 +59,8 @@ export class CreateChargeComponent implements OnInit {
   chargesTemplateData: any;
   /** Charge time type data. */
   chargeTimeTypeData: any;
+  /** Charge Payment Mode */
+  chargePaymentModeData: any;
   /** Charge calculation type data. */
   chargeCalculationTypeData: any = '';
   /** Income and liability account data */
@@ -84,6 +86,7 @@ export class CreateChargeComponent implements OnInit {
   constructor() {
     this.route.data.subscribe((data: { chargesTemplate: any }) => {
       this.chargesTemplateData = data.chargesTemplate;
+      this.chargePaymentModeData = this.chargesTemplateData.chargePaymetModeOptions;
       const incomeOptions = data.chargesTemplate.incomeOrLiabilityAccountOptions.incomeAccountOptions || [];
       const liabilityOptions = data.chargesTemplate.incomeOrLiabilityAccountOptions.liabilityAccountOptions || [];
       if (liabilityOptions.length > 0) {
@@ -171,6 +174,15 @@ export class CreateChargeComponent implements OnInit {
           this.chargeCalculationTypeData = this.chargesTemplateData.shareChargeCalculationTypeOptions;
           this.chargeTimeTypeData = this.chargesTemplateData.shareChargeTimeTypeOptions;
           break;
+        case 5:
+          this.chargeCalculationTypeData = this.chargesTemplateData.loanChargeCalculationTypeOptions;
+          this.chargeTimeTypeData = this.chargesTemplateData.loanChargeTimeTypeOptions.filter((chargeTimeType: any) => {
+            return [2].includes(chargeTimeType.id); // Only Specific Due Date
+          });
+          this.chargePaymentModeData = this.chargePaymentModeData.filter((chargePaymentMode: any) => {
+            return chargePaymentMode.id === 0;
+          });
+          break;
       }
     });
   }
@@ -200,6 +212,10 @@ export class CreateChargeComponent implements OnInit {
         ) {
           return false;
         }
+      }
+      if (this.chargeForm.get('chargeAppliesTo').value === 5) {
+        // Flat for now
+        return [1].includes(chargeCalculationType.id);
       }
       return true;
     });
@@ -248,6 +264,10 @@ export class CreateChargeComponent implements OnInit {
           this.chargeForm.removeControl('chargePaymentMode');
           this.chargeForm.removeControl('incomeAccountId');
           this.chargeForm.get('penalty').setValue(false);
+          break;
+        case 5: // Working Capital Loans
+          this.chargeForm.addControl('chargePaymentMode', new UntypedFormControl('', Validators.required));
+          this.chargeForm.removeControl('incomeAccountId');
           break;
       }
       this.chargeForm.get('chargeCalculationType').reset();

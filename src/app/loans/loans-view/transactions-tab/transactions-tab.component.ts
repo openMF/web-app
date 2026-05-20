@@ -303,7 +303,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
   }
 
   loanTransactionColor(transaction: LoanTransaction): string {
-    if (transaction.manuallyReversed) {
+    if (transaction.manuallyReversed || transaction.reversed) {
       return 'strike';
     }
     if (transaction.transactionRelations && transaction.transactionRelations.length > 0) {

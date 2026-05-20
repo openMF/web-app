@@ -29,6 +29,7 @@ export interface LoanTransaction {
   outstandingLoanBalance: number;
   submittedOnDate: number[];
   manuallyReversed: boolean;
+  reversed?: boolean;
   loanChargePaidByList: any[];
   numberOfRepayments: number;
   transactionRelations: any[];

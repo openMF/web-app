@@ -87,8 +87,8 @@ export class ChargesComponent implements OnInit, AfterViewInit {
   chargeData: Charge[] = [];
   /** Columns to be displayed in charges table. */
   displayedColumns: string[] = [
-    'name',
     'chargeAppliesTo',
+    'name',
     'chargeTimeType',
     'chargeCalculationType',
     'amount',
@@ -134,6 +134,7 @@ export class ChargesComponent implements OnInit, AfterViewInit {
    */
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.paginator = this.paginator;
   }
 
   /**
@@ -218,5 +219,6 @@ export class ChargesComponent implements OnInit, AfterViewInit {
       return charge.chargeAppliesTo.id === chargeAppliesTo;
     });
     this.dataSource = new MatTableDataSource(filteredCharges);
+    this.dataSource.paginator = this.paginator;
   }
 }

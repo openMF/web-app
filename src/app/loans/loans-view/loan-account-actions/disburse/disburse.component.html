@@ -69,12 +69,6 @@
                 </mat-option>
               }
             </mat-select>
-            @if (environment.productionMode && disbursementLoanForm.controls.paymentTypeId.hasError('required')) {
-              <mat-error>
-                {{ 'labels.inputs.Payment Type' | translate }}
-                <strong>{{ 'labels.commons.required' | translate }}</strong>
-              </mat-error>
-            }
           </mat-form-field>
 
           <div class="flex-fill">
