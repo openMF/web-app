@@ -59,7 +59,7 @@ export class LoanProductCurrencyStepComponent implements OnInit {
       digitsAfterDecimal: decimalPlacesValue,
       inMultiplesOf:
         currency.inMultiplesOf === 0 || currency.inMultiplesOf === undefined || currency.inMultiplesOf === null
-          ? ''
+          ? 0
           : currency.inMultiplesOf
     });
     if (this.loanProductService.isLoanProduct) {
@@ -68,7 +68,7 @@ export class LoanProductCurrencyStepComponent implements OnInit {
           this.loanProductsTemplate.installmentAmountInMultiplesOf === 0 ||
           this.loanProductsTemplate.installmentAmountInMultiplesOf === undefined ||
           this.loanProductsTemplate.installmentAmountInMultiplesOf === null
-            ? ''
+            ? 0
             : this.loanProductsTemplate.installmentAmountInMultiplesOf
       });
     }
@@ -88,7 +88,7 @@ export class LoanProductCurrencyStepComponent implements OnInit {
         ]
       ],
       inMultiplesOf: [
-        '',
+        0,
         [
           Validators.required,
           Validators.min(0)

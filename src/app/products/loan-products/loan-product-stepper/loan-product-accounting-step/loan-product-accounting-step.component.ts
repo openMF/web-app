@@ -313,12 +313,6 @@ export class LoanProductAccountingStepComponent extends LoanProductBaseComponent
             incomeFromChargeOffFeesAccountId: accountingMappings.incomeFromChargeOffFeesAccount
               ? accountingMappings.incomeFromChargeOffFeesAccount.id
               : '',
-            incomeFromChargeOffInterestAccountId: accountingMappings.incomeFromChargeOffInterestAccount
-              ? accountingMappings.incomeFromChargeOffInterestAccount.id
-              : '',
-            incomeFromGoodwillCreditInterestAccountId: accountingMappings.incomeFromGoodwillCreditInterestAccount
-              ? accountingMappings.incomeFromGoodwillCreditInterestAccount.id
-              : '',
             incomeFromGoodwillCreditFeesAccountId: accountingMappings.incomeFromGoodwillCreditFeesAccount
               ? accountingMappings.incomeFromGoodwillCreditFeesAccount.id
               : '',
@@ -335,6 +329,8 @@ export class LoanProductAccountingStepComponent extends LoanProductBaseComponent
               : '',
             overpaymentLiabilityAccountId: accountingMappings.overpaymentLiabilityAccount.id,
             deferredIncomeLiabilityAccountId: accountingMappings.deferredIncomeLiabilityAccount.id,
+            receivableFeeAccountId: accountingMappings.receivableFeeAccount.id,
+            receivablePenaltyAccountId: accountingMappings.receivablePenaltyAccount.id,
             advancedAccountingRules:
               (this.loanProductsTemplate.paymentChannelToFundSourceMappings?.length ?? 0) > 0 ||
               (this.loanProductsTemplate.feeToIncomeAccountMappings?.length ?? 0) > 0 ||
@@ -594,10 +590,8 @@ export class LoanProductAccountingStepComponent extends LoanProductBaseComponent
           this.loanProductAccountingForm.removeControl('incomeFromPenaltyAccountId');
           this.loanProductAccountingForm.removeControl('incomeFromRecoveryAccountId');
 
-          this.loanProductAccountingForm.removeControl('incomeFromChargeOffInterestAccountId');
           this.loanProductAccountingForm.removeControl('incomeFromChargeOffFeesAccountId');
           this.loanProductAccountingForm.removeControl('incomeFromChargeOffPenaltyAccountId');
-          this.loanProductAccountingForm.removeControl('incomeFromGoodwillCreditInterestAccountId');
           this.loanProductAccountingForm.removeControl('incomeFromGoodwillCreditFeesAccountId');
           this.loanProductAccountingForm.removeControl('incomeFromGoodwillCreditPenaltyAccountId');
 
@@ -608,6 +602,8 @@ export class LoanProductAccountingStepComponent extends LoanProductBaseComponent
 
           this.loanProductAccountingForm.removeControl('overpaymentLiabilityAccountId');
           this.loanProductAccountingForm.removeControl('deferredIncomeLiabilityAccountId');
+          this.loanProductAccountingForm.removeControl('receivableFeeAccountId');
+          this.loanProductAccountingForm.removeControl('receivablePenaltyAccountId');
 
           this.loanProductAccountingForm.removeControl('advancedAccountingRules');
         } else if (accountingRule === 'CASH_BASED') {
@@ -639,13 +635,8 @@ export class LoanProductAccountingStepComponent extends LoanProductBaseComponent
             'incomeFromRecoveryAccountId',
             new UntypedFormControl('', Validators.required)
           );
-          this.loanProductAccountingForm.addControl('incomeFromChargeOffInterestAccountId', new UntypedFormControl(''));
           this.loanProductAccountingForm.addControl('incomeFromChargeOffFeesAccountId', new UntypedFormControl(''));
           this.loanProductAccountingForm.addControl('incomeFromChargeOffPenaltyAccountId', new UntypedFormControl(''));
-          this.loanProductAccountingForm.addControl(
-            'incomeFromGoodwillCreditInterestAccountId',
-            new UntypedFormControl('')
-          );
           this.loanProductAccountingForm.addControl(
             'incomeFromGoodwillCreditFeesAccountId',
             new UntypedFormControl('')
@@ -669,6 +660,14 @@ export class LoanProductAccountingStepComponent extends LoanProductBaseComponent
           );
           this.loanProductAccountingForm.addControl(
             'deferredIncomeLiabilityAccountId',
+            new UntypedFormControl('', Validators.required)
+          );
+          this.loanProductAccountingForm.addControl(
+            'receivableFeeAccountId',
+            new UntypedFormControl('', Validators.required)
+          );
+          this.loanProductAccountingForm.addControl(
+            'receivablePenaltyAccountId',
             new UntypedFormControl('', Validators.required)
           );
           this.loanProductAccountingForm.addControl('advancedAccountingRules', new UntypedFormControl(false));

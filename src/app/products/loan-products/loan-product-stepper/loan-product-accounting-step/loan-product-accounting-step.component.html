@@ -368,6 +368,23 @@
         >
         </mifosx-gl-account-selector>
 
+        <mifosx-gl-account-selector
+          class="flex-48"
+          [inputFormControl]="loanProductAccountingForm.controls.receivableFeeAccountId"
+          [glAccountList]="assetAccountData"
+          [required]="true"
+          [inputLabel]="'Fees Receivable'"
+        >
+        </mifosx-gl-account-selector>
+        <mifosx-gl-account-selector
+          class="flex-48"
+          [inputFormControl]="loanProductAccountingForm.controls.receivablePenaltyAccountId"
+          [glAccountList]="assetAccountData"
+          [required]="true"
+          [inputLabel]="'Penalties Receivable'"
+        >
+        </mifosx-gl-account-selector>
+
         <h4 class="mat-h4 flex-98">{{ 'labels.heading.Income' | translate }}</h4>
         <mifosx-gl-account-selector
           class="flex-48"
@@ -403,14 +420,6 @@
         </mifosx-gl-account-selector>
         <mifosx-gl-account-selector
           class="flex-48"
-          [inputFormControl]="loanProductAccountingForm.controls.incomeFromChargeOffInterestAccountId"
-          [glAccountList]="incomeAccountData"
-          [required]="false"
-          [inputLabel]="'Income from ChargeOff Interest'"
-        >
-        </mifosx-gl-account-selector>
-        <mifosx-gl-account-selector
-          class="flex-48"
           [inputFormControl]="loanProductAccountingForm.controls.incomeFromChargeOffFeesAccountId"
           [glAccountList]="incomeAccountData"
           [required]="false"
@@ -423,14 +432,6 @@
           [glAccountList]="incomeAccountData"
           [required]="false"
           [inputLabel]="'Income from ChargeOff Penalty'"
-        >
-        </mifosx-gl-account-selector>
-        <mifosx-gl-account-selector
-          class="flex-48"
-          [inputFormControl]="loanProductAccountingForm.controls.incomeFromGoodwillCreditInterestAccountId"
-          [glAccountList]="incomeAccountData"
-          [required]="false"
-          [inputLabel]="'Income from Goodwill Credit Interest'"
         >
         </mifosx-gl-account-selector>
         <mifosx-gl-account-selector
