@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, AfterViewInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, AfterViewInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 
 /** Custom Services */
@@ -30,7 +30,8 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
     MatCheckbox,
     MatAutocompleteTrigger,
     MatAutocomplete
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateGuarantorComponent extends LoanAccountActionsBaseComponent implements OnInit, AfterViewInit {
   private formBuilder = inject(UntypedFormBuilder);

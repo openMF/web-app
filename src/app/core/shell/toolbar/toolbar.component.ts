@@ -8,6 +8,7 @@
 
 /** Angular Imports */
 import {
+  ChangeDetectionStrategy,
   Component,
   OnInit,
   Input,
@@ -72,7 +73,8 @@ import { DocumentationLinksService } from 'app/shared/services/documentation-lin
     ThemeToggleComponent,
     MatMenu,
     MatMenuItem
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChecked {
   private breakpointObserver = inject(BreakpointObserver);

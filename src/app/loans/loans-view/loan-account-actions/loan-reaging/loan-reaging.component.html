@@ -12,14 +12,16 @@
       <form [formGroup]="reagingLoanForm" (ngSubmit)="submit()">
         <mat-card-content>
           <div class="layout-column">
-            <mat-form-field>
-              <mat-label>{{ 'labels.inputs.Number of Installments' | translate }}</mat-label>
-              <input type="number" matInput required formControlName="numberOfInstallments" />
-            </mat-form-field>
-            <mat-form-field>
-              <mat-label>{{ 'labels.inputs.Frequency Number' | translate }}</mat-label>
-              <input type="number" matInput required formControlName="frequencyNumber" />
-            </mat-form-field>
+            <mifosx-input-positive-integer
+              [inputFormControl]="reagingLoanForm.controls.numberOfInstallments"
+              [inputLabel]="'Number of Installments'"
+              [isRequired]="true"
+            ></mifosx-input-positive-integer>
+            <mifosx-input-positive-integer
+              [inputFormControl]="reagingLoanForm.controls.frequencyNumber"
+              [inputLabel]="'Frequency Number'"
+              [isRequired]="true"
+            ></mifosx-input-positive-integer>
             <mat-form-field>
               <mat-label>{{ 'labels.inputs.Frequency Type' | translate }}</mat-label>
               <mat-select formControlName="frequencyType" required>

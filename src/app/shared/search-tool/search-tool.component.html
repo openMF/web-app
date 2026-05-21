@@ -6,29 +6,58 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<div class="flex-100 layout-row">
-  @if (searchVisible) {
-    <div class="search-bar flex-90 layout-row hide-lt-sm" [@fadeInOut]>
-      <mat-form-field class="search flex-45">
-        <mat-label>{{ 'labels.text.Search' | translate }}</mat-label>
-        <input matInput type="text" [formControl]="query" (keydown.enter)="search()" />
-      </mat-form-field>
-      <mat-form-field class="resource flex-50">
-        <mat-label>{{ 'labels.inputs.Resource' | translate }}</mat-label>
-        <mat-select [formControl]="resource">
-          @for (option of resourceOptions; track option) {
-            <mat-option [value]="option.value">
-              {{ 'labels.text.' + option.name | translate }}
-            </mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-    </div>
-  }
+<!-- Toolbar icon — always visible -->
+<button
+  mat-icon-button
+  class="search-toggle hide-lt-sm"
+  (click)="toggleSearchVisibility()"
+  [matTooltip]="'labels.text.Search' | translate"
+>
+  <fa-icon icon="search" size="lg"></fa-icon>
+</button>
 
-  <div class="search-icon flex-10">
-    <button mat-icon-button (click)="toggleSearchVisibility()" class="hide-lt-sm">
-      <fa-icon icon="search" size="lg" matTooltip="{{ 'labels.text.Search' | translate }}"></fa-icon>
-    </button>
+<!-- Spotlight modal -->
+@if (searchVisible) {
+  <div class="search-backdrop" [@backdropFade] (click)="closeModal()" role="dialog" aria-modal="true">
+    <div class="spotlight-wrap" [@modalSlide] (click)="$event.stopPropagation()">
+      <!-- Input row -->
+      <div class="spotlight-row">
+        <fa-icon icon="search" class="spotlight-icon"></fa-icon>
+
+        <input
+          #queryInput
+          class="spotlight-input"
+          type="text"
+          [formControl]="query"
+          [placeholder]="'labels.text.Search' | translate"
+          (keydown.enter)="search()"
+          autocomplete="off"
+          spellcheck="false"
+        />
+
+        <button
+          class="spotlight-go"
+          type="button"
+          (click)="search()"
+          [attr.aria-label]="'labels.text.Search' | translate"
+        >
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+
+      <!-- Resource filter chips -->
+      <div class="filter-row">
+        @for (option of resourceOptions; track option) {
+          <button
+            class="filter-chip"
+            [class.filter-chip--active]="resource.value === option.value"
+            (click)="resource.patchValue(option.value)"
+            type="button"
+          >
+            {{ 'labels.text.' + option.name | translate }}
+          </button>
+        }
+      </div>
+    </div>
   </div>
-</div>
+}

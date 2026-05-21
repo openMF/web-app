@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -76,7 +76,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     RouterOutlet,
     CurrencyPipe,
     StatusLookupPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SavingsAccountViewComponent implements OnInit {
   private route = inject(ActivatedRoute);
@@ -281,6 +282,9 @@ export class SavingsAccountViewComponent implements OnInit {
       data: { deleteContext: `savings account with id: ${this.savingsAccountData.id}` }
     });
     deleteSavingsAccountDialogRef.afterClosed().subscribe((response: any) => {
+      if (!response) {
+        return;
+      }
       if (response.delete) {
         this.savingsService.deleteSavingsAccount(this.savingsAccountData.id).subscribe(() => {
           this.router.navigate(['../../'], { relativeTo: this.route });
@@ -295,6 +299,9 @@ export class SavingsAccountViewComponent implements OnInit {
   private calculateInterest() {
     const calculateInterestAccountDialogRef = this.dialog.open(CalculateInterestDialogComponent);
     calculateInterestAccountDialogRef.afterClosed().subscribe((response: any) => {
+      if (!response) {
+        return;
+      }
       if (response.confirm) {
         this.savingsService
           .executeSavingsAccountCommand(this.savingsAccountData.id, 'calculateInterest', {})
@@ -311,6 +318,9 @@ export class SavingsAccountViewComponent implements OnInit {
   private postInterest() {
     const postInterestAccountDialogRef = this.dialog.open(PostInterestDialogComponent);
     postInterestAccountDialogRef.afterClosed().subscribe((response: any) => {
+      if (!response) {
+        return;
+      }
       if (response.confirm) {
         this.savingsService
           .executeSavingsAccountCommand(this.savingsAccountData.id, 'postInterest', {})
@@ -329,6 +339,9 @@ export class SavingsAccountViewComponent implements OnInit {
       data: { isEnable: true }
     });
     deleteSavingsAccountDialogRef.afterClosed().subscribe((response: any) => {
+      if (!response) {
+        return;
+      }
       if (response.confirm) {
         this.savingsService
           .executeSavingsAccountUpdateCommand(this.savingsAccountData.id, 'updateWithHoldTax', { withHoldTax: true })
@@ -347,6 +360,9 @@ export class SavingsAccountViewComponent implements OnInit {
       data: { isEnable: false }
     });
     disableWithHoldTaxDialogRef.afterClosed().subscribe((response: any) => {
+      if (!response) {
+        return;
+      }
       if (response.confirm) {
         this.savingsService
           .executeSavingsAccountUpdateCommand(this.savingsAccountData.id, 'updateWithHoldTax', { withHoldTax: false })
@@ -378,6 +394,9 @@ export class SavingsAccountViewComponent implements OnInit {
       command = 'unblockDebit';
     }
     unblockSavingsAccountDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
+      if (!response) {
+        return;
+      }
       if (response.confirm) {
         this.savingsService.executeSavingsAccountCommand(this.savingsAccountData.id, command, {}).subscribe(() => {
           this.reload();

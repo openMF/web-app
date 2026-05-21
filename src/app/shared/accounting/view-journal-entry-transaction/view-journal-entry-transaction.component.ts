@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ViewJournalEntryComponent } from '../view-journal-entry/view-journal-entry.component';
 import { RevertTransactionComponent } from 'app/accounting/revert-transaction/revert-transaction.component';
 import { AccountingService } from 'app/accounting/accounting.service';
@@ -58,7 +58,8 @@ import { YesnoPipe } from '@pipes/yesno.pipe';
     DatetimeFormatPipe,
     FormatNumberPipe,
     YesnoPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewJournalEntryTransactionComponent implements OnInit {
   private accountingService = inject(AccountingService);

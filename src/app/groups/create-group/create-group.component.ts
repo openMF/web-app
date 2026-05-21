@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, AfterViewInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, AfterViewInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -47,7 +47,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatNavList,
     MatListSubheaderCssMatStyler,
     MatLine
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateGroupComponent implements OnInit, AfterViewInit {
   private formBuilder = inject(UntypedFormBuilder);

@@ -1,0 +1,119 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+@use 'assets/styles/helper';
+@use 'assets/styles/colours' as *;
+
+.container {
+  padding-bottom: 2%;
+  width: 98%;
+}
+
+.toolbar {
+  gap: 16px;
+  margin-bottom: 8px;
+
+  .record-count {
+    flex: 1;
+    font-size: 13px;
+    color: rgb(0 0 0 / 60%);
+  }
+}
+
+.table-wrapper {
+  overflow: auto;
+  max-height: 600px;
+  border: 1px solid rgb(0 0 0 / 12%);
+  border-radius: 4px 4px 0 0;
+}
+
+.amortization-table {
+  width: 100%;
+
+  .mat-mdc-header-row {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: #f5f5f5;
+  }
+
+  .mat-mdc-footer-row {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    background-color: #fafafa;
+    border-top: 2px solid rgb(0 0 0 / 20%);
+  }
+
+  .mat-mdc-row:nth-child(even) {
+    background-color: rgb(0 0 0 / 2%);
+  }
+
+  .mat-mdc-row:hover {
+    background-color: rgb(0 0 0 / 6%);
+    transition: background-color 0.15s ease;
+  }
+}
+
+.table-row {
+  font-size: small;
+}
+
+.footer-total {
+  font-weight: 600;
+  color: rgb(0 0 0 / 87%);
+}
+
+.mat-header-cell {
+  color: rgb(0 0 0 / 54%);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+mat-paginator {
+  border: 1px solid rgb(0 0 0 / 12%);
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+}
+
+:host-context(.dark-theme) {
+  .toolbar .record-count {
+    color: rgb(255 255 255 / 60%);
+  }
+
+  .table-wrapper {
+    border-color: rgb(255 255 255 / 12%);
+  }
+
+  .amortization-table {
+    .mat-mdc-header-row {
+      background-color: #303030;
+    }
+
+    .mat-mdc-footer-row {
+      background-color: #272727;
+      border-top-color: rgb(255 255 255 / 20%);
+    }
+
+    .mat-mdc-row:nth-child(even) {
+      background-color: rgb(255 255 255 / 3%);
+    }
+
+    .mat-mdc-row:hover {
+      background-color: rgb(255 255 255 / 8%);
+    }
+  }
+
+  .mat-header-cell {
+    color: rgb(255 255 255 / 70%);
+  }
+
+  mat-paginator {
+    border-color: rgb(255 255 255 / 12%);
+  }
+}

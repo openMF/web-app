@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Input, OnChanges, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, OnChanges, inject } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -66,7 +66,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatStepperNext,
     DateFormatPipe,
     FormatNumberPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecurringDepositsAccountChargesStepComponent implements OnInit, OnChanges {
   dialog = inject(MatDialog);

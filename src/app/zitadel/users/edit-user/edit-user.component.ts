@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 /** Custom Services */
@@ -25,7 +25,8 @@ import { ZITADEL_LANGUAGES } from 'app/zitadel/constants/languages';
   styleUrls: ['./edit-user.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditUserComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);

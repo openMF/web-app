@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
@@ -24,7 +24,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     RouterLinkActive,
     MatTabNavPanel,
     RouterOutlet
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewTransactionComponent {
   private route = inject(ActivatedRoute);

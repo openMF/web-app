@@ -69,7 +69,22 @@
         </div>
 
         <div class="flex-60 flex-lt-md-50">
-          {{ rolePermissionService.description }}
+          <ng-container
+            *ngIf="
+              getTranslatedRoleDescription(rolePermissionService.description) ===
+              'labels.inputs.This role provides all application permissions'
+            "
+          >
+            {{ 'labels.inputs.This role provides all application permissions' | translate }}
+          </ng-container>
+          <ng-container
+            *ngIf="
+              getTranslatedRoleDescription(rolePermissionService.description) !==
+              'labels.inputs.This role provides all application permissions'
+            "
+          >
+            {{ getTranslatedRoleDescription(rolePermissionService.description) }}
+          </ng-container>
         </div>
       </div>
     </mat-card-content>

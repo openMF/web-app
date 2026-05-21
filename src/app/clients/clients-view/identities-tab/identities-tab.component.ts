@@ -7,7 +7,15 @@
  */
 
 /** Angular Imports */
-import { Component, DestroyRef, ElementRef, inject, OnDestroy, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  ElementRef,
+  inject,
+  OnDestroy,
+  ViewChild
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -69,7 +77,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatFooterCell,
     MatFooterRowDef,
     MatFooterRow
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IdentitiesTabComponent implements OnDestroy {
   private route = inject(ActivatedRoute);

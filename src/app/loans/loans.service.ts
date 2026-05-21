@@ -17,7 +17,8 @@ import { SettingsService } from 'app/settings/settings.service';
 import { DisbursementData } from './models/loan-account.model';
 
 export interface WorkingCapitalLoanDiscountUpdateRequest {
-  discountAmount: number;
+  transactionAmount: number;
+  relatedResourceId: number;
   note?: string;
   locale: string;
   dateFormat: string;
@@ -147,6 +148,10 @@ export class LoansService {
 
   getWorkingCapitalLoanDelinquencyRangeSchedule(loanId: string) {
     return this.http.get(`/working-capital-loans/${loanId}/delinquency-range-schedule`);
+  }
+
+  getWorkingCapitalLoanAmortizationSchedule(loanId: string) {
+    return this.http.get(`/working-capital-loans/${loanId}/amortization-schedule`);
   }
 
   /**
@@ -571,13 +576,6 @@ export class LoansService {
     return this.http.get(`/working-capital-loans/${loanId}/template`, { params: httpParams });
   }
 
-  updateWorkingCapitalLoanDiscount(
-    loanId: string | number,
-    data: WorkingCapitalLoanDiscountUpdateRequest
-  ): Observable<any> {
-    return this.http.put(`/working-capital-loans/${loanId}/discount`, data);
-  }
-
   guarantorAccountResource(loanId: string, clientId: any): Observable<any> {
     const httpParams = new HttpParams().set('clientId', clientId);
     return this.http.get(`/loans/${loanId}/guarantors/accounts/template`, { params: httpParams });
@@ -846,5 +844,19 @@ export class LoansService {
   getEntityDataTableChecks(offset: number = 0, limit: number = -1): Observable<any> {
     const httpParams = new HttpParams().set('offset', offset.toString()).set('limit', limit.toString());
     return this.http.get('/entityDatatableChecks', { params: httpParams });
+  }
+
+  /**
+   * Returns the Working Capital Loan Payment Rates data
+   */
+  getWorkingCapitalPeriodPaymentRates(loanId: any) {
+    return this.http.get(`/working-capital-loans/${loanId}/rate-changes`);
+  }
+
+  /**
+   * Add a Working Capital Loan Payment Rates
+   */
+  addWorkingCapitalPeriodPaymentRate(loanId: any, payload: any) {
+    return this.http.put(`/working-capital-loans/${loanId}/payment-rate`, payload);
   }
 }

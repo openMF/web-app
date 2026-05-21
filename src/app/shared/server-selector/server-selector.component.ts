@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, Input } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
@@ -28,7 +28,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ...STANDALONE_SHARED_IMPORTS,
     MatPrefix,
     MatIcon
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ServerSelectorComponent implements OnInit {
   private settingsService = inject(SettingsService);

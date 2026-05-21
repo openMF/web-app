@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -51,7 +51,8 @@ import { NotificationsService } from '../notifications.service';
     MatRow,
     MatNoDataRow,
     MatPaginator
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NotificationsPageComponent implements OnInit {
   private route = inject(ActivatedRoute);

@@ -6,31 +6,47 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<nav class="breadcrumb-wrapper">
-  <ul class="breadcrumb">
-    <span #breadcrumb class="breadcrumb-title">{{ getTranslate(breadcrumbs[breadcrumbs?.length - 1].label) }}</span>
+<nav class="breadcrumb-wrapper" aria-label="Page navigation">
+  <div class="page-header">
+    <div class="title-row">
+      <span #breadcrumb class="breadcrumb-title">
+        {{ getTranslate(breadcrumbs[breadcrumbs?.length - 1].label) }}
+      </span>
+    </div>
+
     @if (breadcrumbs.length - 1 !== 0) {
-      <span class="separator">
-        @for (breadcrumb of breadcrumbs; track breadcrumb; let last = $last) {
-          <li class="breadcrumb-label">
-            @if (!last) {
-              <span class="breadcrumb-link">
-                @if (breadcrumb.url) {
-                  <a [routerLink]="breadcrumb.url">{{ getTranslate(breadcrumb.label) }}</a>
-                }
-                @if (!breadcrumb.url) {
-                  <span>{{ getTranslate(breadcrumb.label) }}</span>
-                }
-              </span>
+      <ol class="breadcrumb-trail" aria-label="breadcrumb">
+        @for (breadcrumb of breadcrumbs; track breadcrumb; let first = $first; let last = $last) {
+          <li class="breadcrumb-item" [class.breadcrumb-item--active]="last">
+            @if (first && breadcrumb.label === 'Home') {
+              @if (breadcrumb.url) {
+                <a class="breadcrumb-link breadcrumb-link--home" [routerLink]="breadcrumb.url" aria-label="Home">
+                  <mat-icon>home</mat-icon>
+                </a>
+              } @else {
+                <span class="breadcrumb-link breadcrumb-link--home">
+                  <mat-icon>home</mat-icon>
+                </span>
+              }
+            } @else if (!last) {
+              @if (breadcrumb.url) {
+                <a class="breadcrumb-link" [routerLink]="breadcrumb.url">
+                  {{ getTranslate(breadcrumb.label) }}
+                </a>
+              } @else {
+                <span class="breadcrumb-text">{{ getTranslate(breadcrumb.label) }}</span>
+              }
+            } @else {
+              <span class="breadcrumb-current">{{ getTranslate(breadcrumb.label) }}</span>
             }
-            @if (last) {
-              <span>{{ getTranslate(breadcrumb.label) }}</span>
+            @if (!last) {
+              <span class="breadcrumb-chevron" aria-hidden="true">›</span>
             }
           </li>
         }
-      </span>
+      </ol>
     }
-  </ul>
+  </div>
 </nav>
 
 <ng-template #templateBreadcrumb let-popover="popover">

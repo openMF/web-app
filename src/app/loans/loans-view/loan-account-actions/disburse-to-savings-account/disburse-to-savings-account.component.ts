@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Dates } from 'app/core/utils/dates';
 import { Currency } from 'app/shared/models/general.model';
@@ -25,7 +25,8 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
     InputAmountComponent,
     CdkTextareaAutosize,
     FormatNumberPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DisburseToSavingsAccountComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);

@@ -7,7 +7,16 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  inject
+} from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
@@ -69,7 +78,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRowDef,
     MatRow,
     MatPaginator
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageFundsComponent implements OnInit, AfterViewInit {
   private route = inject(ActivatedRoute);

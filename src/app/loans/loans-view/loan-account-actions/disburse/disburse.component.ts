@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 
 /** Custom Services */
@@ -19,6 +19,7 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.component';
+import { environment } from '../../../../../environments/environment';
 
 /**
  * Disburse Loan Option
@@ -33,12 +34,15 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
     MatSlideToggle,
     CdkTextareaAutosize,
     FormatNumberPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DisburseComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   private dateUtils = inject(Dates);
 
+  /** Environment configuration */
+  protected environment = environment;
   /** Payment Type Options */
   paymentTypes: any;
   /** Show payment details */
@@ -50,8 +54,8 @@ export class DisburseComponent extends LoanAccountActionsBaseComponent implement
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Disbursement Loan Form */
-  disbursementLoanForm: UntypedFormGroup;
-  currency: Currency;
+  disbursementLoanForm!: UntypedFormGroup;
+  currency!: Currency;
 
   constructor() {
     super();
@@ -84,7 +88,10 @@ export class DisburseComponent extends LoanAccountActionsBaseComponent implement
         Validators.required
       ],
       externalId: '',
-      paymentTypeId: '',
+      paymentTypeId: [
+        '',
+        environment.productionMode ? Validators.required : []
+      ],
       note: ''
     });
     if (this.isWorkingCapital) {

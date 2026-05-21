@@ -153,7 +153,7 @@ import { EditNearBreachConfigurationComponent } from './loan-products/working-ca
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'products',
+      path: '',
       data: { title: 'Products', breadcrumb: 'Products' },
       children: [
         {

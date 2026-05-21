@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
@@ -20,7 +20,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     CdkTextareaAutosize
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MakeAccountInterbankTransfersComponent {
   @Input() makeAccountTransferForm: FormGroup;

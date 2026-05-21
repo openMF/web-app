@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { UntypedFormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { FormfieldBase } from './model/formfield-base';
@@ -20,7 +20,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     MatCheckbox
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormfieldComponent {
   @Input() form: UntypedFormGroup;

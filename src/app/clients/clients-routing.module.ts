@@ -59,7 +59,7 @@ import { ClientCollateralResolver } from './common-resolvers/client-collateral.r
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'clients',
+      path: '',
       data: { title: 'Clients', breadcrumb: 'Clients', routeParamBreadcrumb: false },
       children: [
         {
@@ -193,7 +193,7 @@ const routes: Routes = [
       ]
     },
     {
-      path: 'clients',
+      path: '',
       data: { title: 'Clients', breadcrumb: 'Clients', routeParamBreadcrumb: false },
       children: [
         {

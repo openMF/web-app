@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Subject, merge } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -43,7 +43,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     FileUploadComponent,
     ThemePickerComponent,
     LanguageSelectorComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SettingsComponent implements OnInit, OnDestroy {
   private settingsService = inject(SettingsService);

@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import {
@@ -56,7 +56,8 @@ import { LoanProduct } from 'app/products/loan-products/models/loan-product.mode
     MatHeaderRow,
     MatRowDef,
     MatRow
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewLoanProvisioningCriteriaComponent implements OnInit {
   private organizationService = inject(OrganizationService);

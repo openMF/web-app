@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -40,7 +40,8 @@ const layoutGap = 2;
     FormfieldComponent,
     MatDialogActions,
     MatDialogClose
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormDialogComponent implements OnInit {
   dialogRef = inject<MatDialogRef<FormDialogComponent>>(MatDialogRef);

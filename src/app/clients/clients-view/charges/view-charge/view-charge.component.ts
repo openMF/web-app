@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ClientsService } from 'app/clients/clients.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -57,7 +57,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     StatusLookupPipe,
     DateFormatPipe,
     FormatNumberPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewChargeComponent {
   private route = inject(ActivatedRoute);

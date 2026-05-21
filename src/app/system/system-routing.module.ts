@@ -102,7 +102,7 @@ import { ViewRoleResolver } from './roles-and-permissions/view-role/view-role.re
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'system',
+      path: '',
       data: { title: 'System', breadcrumb: 'System' },
       children: [
         {
@@ -635,7 +635,6 @@ const routes: Routes = [
     RolesAndPermissionsResolver,
     ManageSurveysResolver,
     SurveyResolver,
-    GlobalConfigurationsResolver,
     GlobalConfigurationResolver,
     AmazonS3ConfigurationResolver,
     EmailConfigurationResolver,

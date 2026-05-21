@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Accounting } from 'app/core/utils/accounting';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -51,7 +51,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     DateFormatPipe,
     FormatNumberPipe,
     YesnoPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShareProductGeneralTabComponent {
   private route = inject(ActivatedRoute);

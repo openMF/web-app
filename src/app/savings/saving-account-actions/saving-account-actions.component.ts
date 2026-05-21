@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Currency } from 'app/shared/models/general.model';
 import { ApproveSavingsAccountComponent } from './approve-savings-account/approve-savings-account.component';
@@ -47,7 +47,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     CloseSavingsAccountComponent,
     ApplyAnnualFeesSavingsAccountComponent,
     ManageSavingsAccountComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SavingAccountActionsComponent {
   private route = inject(ActivatedRoute);

@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports. */
-import { Component, OnInit, OnDestroy, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, ViewChild, inject } from '@angular/core';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort, MatSortHeader } from '@angular/material/sort';
@@ -72,7 +72,8 @@ export const DEBOUNCE_MS = 500;
     StatusLookupPipe,
     MatIconButton,
     MatIcon
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClientsComponent implements OnInit, OnDestroy {
   private clientService = inject(ClientsService);

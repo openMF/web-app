@@ -7,7 +7,15 @@
  */
 
 /** Angular Imports */
-import { AfterViewInit, Component, ElementRef, TemplateRef, ViewChild, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  TemplateRef,
+  ViewChild,
+  inject
+} from '@angular/core';
 import { Router } from '@angular/router';
 
 /** Custom Services */
@@ -33,7 +41,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatIcon,
     FaIconComponent,
     MatLine
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductsComponent implements AfterViewInit {
   private router = inject(Router);

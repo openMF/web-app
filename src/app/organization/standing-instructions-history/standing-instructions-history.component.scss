@@ -11,6 +11,20 @@
 }
 
 .output {
+  mat-card {
+    > .m-b-20 {
+      padding: 16px;
+    }
+
+    > table {
+      margin: 0 16px;
+    }
+
+    > mat-paginator {
+      padding: 0 16px;
+    }
+  }
+
   .error-log {
     min-width: 26px;
     padding: 0 6px;

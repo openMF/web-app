@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports. */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormControl, UntypedFormBuilder } from '@angular/forms';
 
 /** Custom Services. */
@@ -22,7 +22,8 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
   styleUrls: ['./undo-approval.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UndoApprovalComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);

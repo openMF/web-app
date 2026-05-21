@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { MatCard } from '@angular/material/card';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { SettingsService } from 'app/settings/settings.service';
@@ -20,7 +20,8 @@ import { environment } from '../../../environments/environment';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     MatCard
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SystemInformationComponent implements OnInit {
   private settingsService = inject(SettingsService);

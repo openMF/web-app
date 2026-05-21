@@ -7,7 +7,16 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  inject
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
@@ -72,7 +81,8 @@ import { LoanProductBaseComponent } from './common/loan-product-base.component';
     MatMenuItem,
     StatusLookupPipe,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanProductsComponent extends LoanProductBaseComponent implements OnInit, AfterViewInit {
   private route = inject(ActivatedRoute);

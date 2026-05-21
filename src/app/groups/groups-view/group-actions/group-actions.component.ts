@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GroupAssignStaffComponent } from './group-assign-staff/group-assign-staff.component';
 import { CloseGroupComponent } from './close-group/close-group.component';
@@ -38,7 +38,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     EditGroupMeetingComponent,
     EditGroupMeetingScheduleComponent,
     GroupTransferClientsComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GroupActionsComponent {
   private route = inject(ActivatedRoute);

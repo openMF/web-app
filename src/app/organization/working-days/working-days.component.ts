@@ -7,7 +7,16 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  inject
+} from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -42,7 +51,8 @@ const recurrenceDefaultValue = 'FREQ=WEEKLY;INTERVAL=1;BYDAY=';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     MatCheckbox
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WorkingDaysComponent implements OnInit, AfterViewInit {
   private formBuilder = inject(UntypedFormBuilder);

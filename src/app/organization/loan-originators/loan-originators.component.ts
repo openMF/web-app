@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, TemplateRef, ElementRef, ViewChild, inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -63,7 +63,8 @@ import { ExternalIdentifierComponent } from 'app/shared/external-identifier/exte
     MatPaginator,
     MatIconButton,
     ExternalIdentifierComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanOriginatorsComponent implements OnInit {
   private route = inject(ActivatedRoute);

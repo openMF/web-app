@@ -7,7 +7,15 @@
  */
 
 /** Angular Imports */
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges
+} from '@angular/core';
 import {
   MatTableDataSource,
   MatTable,
@@ -69,7 +77,8 @@ import { BreachDisplayComponent } from 'app/shared/loan/breach-display/breach-di
     TranslatePipe,
     LongTextComponent,
     BreachDisplayComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoansAccountPreviewStepComponent extends LoanProductBaseComponent implements OnChanges {
   /** Loans Account Template */

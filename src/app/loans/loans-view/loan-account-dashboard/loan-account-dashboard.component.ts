@@ -6,7 +6,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, inject, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+  inject,
+  OnDestroy
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
@@ -31,7 +40,8 @@ Chart.register(...registerables);
     MatCardHeader,
     MatCardContent,
     MatCardTitle
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanAccountDashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   private route = inject(ActivatedRoute);

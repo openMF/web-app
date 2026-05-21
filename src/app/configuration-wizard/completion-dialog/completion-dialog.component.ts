@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -35,7 +35,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatProgressBar,
     MatDialogActions,
     MatDialogClose
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CompletionDialogComponent {
   dialogRef = inject<MatDialogRef<CompletionDialogComponent>>(MatDialogRef);

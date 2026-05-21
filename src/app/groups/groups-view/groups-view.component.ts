@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
@@ -68,7 +68,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     LowerCasePipe,
     StatusLookupPipe,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GroupsViewComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);

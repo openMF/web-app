@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 /** rxjs Imports */
@@ -71,7 +71,8 @@ import { VersionService } from '../system/version.service';
     MatMenu,
     MatMenuItem,
     M3IconComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent implements OnInit, OnDestroy {
   /** Whether to show the tenant selector dropdown */

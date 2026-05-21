@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Currency } from '../models/general.model';
 import { UntypedFormControl } from '@angular/forms';
 import { CurrencyPipe } from '@angular/common';
@@ -24,7 +24,8 @@ import { amountValueValidator } from '../validators/amount-value.validator';
     FormatAmountDirective,
     MatHint,
     CurrencyPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InputAmountComponent implements OnInit {
   @Input() isRequired = false;
@@ -46,7 +47,8 @@ export class InputAmountComponent implements OnInit {
   numberOnly(event: any): boolean {
     const charCode = event.which ? event.which : event.keyCode;
     if (charCode === 46) {
-      if (!(this.inputFormControl.value.indexOf('.') > -1)) {
+      const value = String(this.inputFormControl.value || '');
+      if (!(value.indexOf('.') > -1)) {
         return true;
       }
       return false;

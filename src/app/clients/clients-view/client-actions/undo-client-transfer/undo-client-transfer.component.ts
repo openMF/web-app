@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -29,7 +29,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     CdkTextareaAutosize
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UndoClientTransferComponent implements OnInit {
   private readonly formBuilder = inject(UntypedFormBuilder);

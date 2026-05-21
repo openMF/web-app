@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Components */
@@ -40,7 +40,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     SmsCampaignStepComponent,
     CampaignMessageStepComponent,
     CampaignPreviewStepComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateCampaignComponent {
   private route = inject(ActivatedRoute);

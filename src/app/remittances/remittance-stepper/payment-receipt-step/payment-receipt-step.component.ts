@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { STANDALONE_SHARED_IMPORTS } from '../../../standalone-shared.module';
 
@@ -28,7 +28,8 @@ import { TranslateService } from '@ngx-translate/core';
     MatIcon
   ],
   templateUrl: './payment-receipt-step.component.html',
-  styleUrls: ['./payment-receipt-step.component.scss']
+  styleUrls: ['./payment-receipt-step.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PaymentReceiptStepComponent {
   private authService = inject(AuthenticationService);

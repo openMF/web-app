@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild, inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Components */
@@ -42,7 +42,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     SavingsAccountTermsStepComponent,
     SavingsAccountChargesStepComponent,
     SavingsAccountPreviewStepComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditSavingsAccountComponent {
   private route = inject(ActivatedRoute);

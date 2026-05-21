@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
@@ -31,7 +31,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     TransactionPaymentDetailComponent,
     CurrencyPipe,
     DateFormatPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SavingsTransactionGeneralTabComponent {
   private savingsService = inject(SavingsService);

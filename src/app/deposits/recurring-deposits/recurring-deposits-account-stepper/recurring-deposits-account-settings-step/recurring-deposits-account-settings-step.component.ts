@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Input, OnChanges, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, OnChanges, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -43,7 +43,8 @@ import { PositiveIntegerDirective } from 'app/directives/positive-integer.direct
     FaIconComponent,
     MatStepperNext,
     PositiveIntegerDirective
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecurringDepositsAccountSettingsStepComponent implements OnInit, OnChanges {
   private formBuilder = inject(UntypedFormBuilder);

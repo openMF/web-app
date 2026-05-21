@@ -19,6 +19,7 @@
             [required]="formfield.required"
             [attr.min]="formfield.min"
             [attr.max]="formfield.max"
+            [attr.step]="formfield.step"
           />
         }
         @if (form.controls[formfield.controlName].hasError('max')) {

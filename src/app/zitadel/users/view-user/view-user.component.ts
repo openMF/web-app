@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -34,7 +34,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     FontAwesomeModule
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewUserComponent {
   private usersService = inject(UsersServiceZitadel);

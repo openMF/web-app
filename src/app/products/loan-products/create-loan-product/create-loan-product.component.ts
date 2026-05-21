@@ -7,7 +7,15 @@
  */
 
 /** Angular Imports */
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  inject
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Components */
@@ -64,7 +72,8 @@ import { LoanProductBaseComponent } from '../common/loan-product-base.component'
     LoanProductDeferredIncomeRecognitionStepComponent,
     LoanProductAccountingStepComponent,
     LoanProductPreviewStepComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateLoanProductComponent extends LoanProductBaseComponent implements OnInit, AfterViewInit {
   private route = inject(ActivatedRoute);

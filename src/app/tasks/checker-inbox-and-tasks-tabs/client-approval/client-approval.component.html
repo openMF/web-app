@@ -27,17 +27,19 @@
         <fa-icon icon="check" class="m-r-10"></fa-icon>{{ 'labels.buttons.Approve' | translate }}
       </button>
     </div>
-    @for (client of groupedClients | keyvalue; track client) {
+    @for (client of groupedClientEntries; track client.key) {
       <h3>{{ client.key }}</h3>
-      @if (client.value.length > 0) {
-        <table mat-table [dataSource]="client.value | accountsFilter: 'clientApproval'">
+      @if (client.value.length > 0 && groupedClientDataSources[client.key]) {
+        <table mat-table [dataSource]="groupedClientDataSources[client.key]">
           <ng-container matColumnDef="select">
             <th mat-header-cell *matHeaderCellDef>
               <mat-checkbox
-                (change)="$event ? masterToggle(client.value) : null"
-                [checked]="selection.hasValue() && isAllSelected(client.value)"
-                [indeterminate]="selection.hasValue() && !isAllSelected(client.value)"
-                [aria-label]="checkboxLabel(client.value)"
+                (change)="$event ? masterToggle(groupedClientDataSources[client.key].filteredData) : null"
+                [checked]="selection.hasValue() && isAllSelected(groupedClientDataSources[client.key].filteredData)"
+                [indeterminate]="
+                  selection.hasValue() && !isAllSelected(groupedClientDataSources[client.key].filteredData)
+                "
+                [aria-label]="checkboxLabel(groupedClientDataSources[client.key].filteredData)"
               >
               </mat-checkbox>
             </th>
@@ -72,6 +74,7 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="selection.toggle(row)"></tr>
         </table>
+        <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>
       }
     }
   </div>

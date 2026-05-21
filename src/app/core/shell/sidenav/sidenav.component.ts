@@ -7,7 +7,17 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Input, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  Input,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  inject
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
@@ -55,7 +65,8 @@ import { catchError, finalize, of, take } from 'rxjs';
     RouterLinkActive,
     MatIcon,
     MatLine
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidenavComponent implements OnInit, AfterViewInit {
   private router = inject(Router);

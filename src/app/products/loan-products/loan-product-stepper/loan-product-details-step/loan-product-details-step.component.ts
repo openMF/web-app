@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { Dates } from 'app/core/utils/dates';
 
@@ -33,7 +33,8 @@ import { LoanProductBaseComponent } from '../../common/loan-product-base.compone
     MatStepperPrevious,
     FaIconComponent,
     MatStepperNext
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanProductDetailsStepComponent extends LoanProductBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);

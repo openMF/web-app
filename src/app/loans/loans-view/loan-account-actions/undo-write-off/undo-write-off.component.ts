@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -31,7 +31,8 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     CdkTextareaAutosize
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UndoWriteOffComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);

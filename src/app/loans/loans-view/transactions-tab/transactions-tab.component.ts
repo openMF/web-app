@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
@@ -78,7 +78,8 @@ import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan
     MatPaginator,
     DateFormatPipe,
     FormatNumberPipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TransactionsTabComponent extends LoanProductBaseComponent implements OnInit {
   private route = inject(ActivatedRoute);
