@@ -29,16 +29,23 @@ setup('authenticate', async ({ page, browser }) => {
   await loginPage.navigate();
   await loginPage.loginAndWaitForDashboard(username, password);
 
-  console.log('Auth setup: copying mifosXCredentials from sessionStorage → localStorage');
-  const credsCopied = await page.evaluate(() => {
-    const creds = sessionStorage.getItem('mifosXCredentials');
-    if (!creds) return false;
-    localStorage.setItem('mifosXCredentials', creds);
-    return true;
+  // Ensure mifosXCredentials is persisted in localStorage so storageState
+  // captures a shareable, cross-tab session. AuthenticationService now
+  // writes to localStorage directly, but we still accept sessionStorage
+  // as a legacy source while older branches/builds are around.
+  const credsAvailable = await page.evaluate(() => {
+    const fromLocal = localStorage.getItem('mifosXCredentials');
+    if (fromLocal) return true;
+    const fromSession = sessionStorage.getItem('mifosXCredentials');
+    if (fromSession) {
+      localStorage.setItem('mifosXCredentials', fromSession);
+      return true;
+    }
+    return false;
   });
 
-  if (!credsCopied) {
-    throw new Error('CRITICAL: mifosXCredentials not found in sessionStorage. ' + 'Did the auth storage key change?');
+  if (!credsAvailable) {
+    throw new Error('CRITICAL: mifosXCredentials not found in either storage after login.');
   }
 
   await page.context().storageState({ path: authFile });

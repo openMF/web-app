@@ -8,7 +8,7 @@
 
 /** Angular Imports */
 import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /** rxjs Imports */
 
@@ -86,6 +86,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   private settingsService = inject(SettingsService);
   private themingService = inject(ThemingService);
   private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
 
   private versionService = inject(VersionService);
   private translateService = inject(TranslateService);
@@ -143,7 +144,19 @@ export class LoginComponent implements OnInit, OnDestroy {
       } else if (alertType === this.translateService.instant('errors.auth.success.type')) {
         this.resetPassword = false;
         this.twoFactorAuthenticationRequired = false;
-        this.router.navigate(['/'], { replaceUrl: true });
+        // Restore the originally requested deep link captured by the
+        // AuthenticationGuard. Validate the value before navigating so a
+        // crafted query param (e.g. `?returnUrl=/login`, an absolute URL
+        // or a non-relative scheme) cannot bounce the user back to the
+        // login screen or escape the app's origin.
+        const returnUrl = this.activatedRoute.snapshot.queryParamMap.get('returnUrl');
+        const isLoginTarget =
+          returnUrl === '/login' ||
+          returnUrl?.startsWith('/login?') === true ||
+          returnUrl?.startsWith('/login#') === true;
+        const isSafeReturnUrl =
+          !!returnUrl && returnUrl.startsWith('/') && !returnUrl.startsWith('//') && !isLoginTarget;
+        this.router.navigateByUrl(isSafeReturnUrl ? returnUrl! : '/', { replaceUrl: true });
       } else if (alertType === this.translateService.instant('errors.tenant.changed.type')) {
         this.updateLogo();
       }

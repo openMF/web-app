@@ -58,13 +58,17 @@ export class AuthenticationService {
   /** Denotes whether the user credentials should persist through sessions. */
   private rememberMe = false;
   /**
-   * Denotes the type of storage:
+   * Credentials are always persisted in localStorage so the authenticated
+   * session is shared across browser tabs and windows of the same origin.
+   * sessionStorage would scope the credentials to a single tab, which forces
+   * an unnecessary re-login when the user opens any internal link from an
+   * external program (email, chat, bookmark, target="_blank", etc.).
    *
-   * Session Storage: User credentials should not persist through sessions.
-   *
-   * Local Storage: User credentials should persist through sessions.
+   * The `rememberMe` flag still controls the token expiration policy on the
+   * backend; on logout (or when credentials are cleared explicitly) the
+   * storage is wiped from both localStorage and sessionStorage.
    */
-  private storage: Storage = sessionStorage;
+  private storage: Storage = localStorage;
   private credentials: Credentials;
   private dialogShown = false;
   private authMode: AuthMode = AuthMode.Basic;
@@ -76,6 +80,17 @@ export class AuthenticationService {
   private readonly credentialsStorageKey = 'mifosXCredentials';
   /** Key to store two factor authentication token in storage. */
   private readonly twoFactorAuthenticationTokenStorageKey = 'mifosXTwoFactorAuthenticationToken';
+
+  /**
+   * Broadcast channel used to synchronise login/logout events across browser
+   * tabs and windows of the same origin. Mirrors the pattern used by
+   * `@supabase/auth-js` (see supabase/auth-js GoTrueClient.ts) so that a
+   * logout in any tab propagates to the others without waiting for a page
+   * reload, and a login in a new tab updates already-open ones too.
+   * Falls back gracefully when BroadcastChannel is unavailable.
+   */
+  private readonly broadcastChannel: BroadcastChannel | null =
+    typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel('mifosXAuth') : null;
 
   /**
    * Initializes the type of storage and authorization headers depending on whether
@@ -93,6 +108,50 @@ export class AuthenticationService {
     }
 
     this.restoreSession();
+    this.listenForCrossTabAuthEvents();
+  }
+
+  /**
+   * Listens for login/logout events broadcast from other tabs and updates
+   * the local authentication state accordingly. This keeps the UI in sync
+   * (e.g. a logout in tab A removes the session from tab B in real-time).
+   */
+  private listenForCrossTabAuthEvents(): void {
+    if (!this.broadcastChannel) return;
+    this.broadcastChannel.onmessage = (event: MessageEvent<{ type: 'login' | 'logout' }>) =>
+      this.handleCrossTabAuthEvent(event);
+  }
+
+  /**
+   * Reacts to a `login` / `logout` broadcast from another tab. Extracted as
+   * a named method (rather than an inline arrow on `onmessage`) so it can
+   * be unit-tested without depending on the BroadcastChannel runtime.
+   */
+  private handleCrossTabAuthEvent(event: MessageEvent<{ type: 'login' | 'logout' }>): void {
+    if (event.data?.type === 'logout' && this.userLoggedIn$.getValue()) {
+      // Mirror the logout effects without re-broadcasting (avoid loops).
+      // Includes 2FA state to match what logout() clears on the active tab.
+      this.authenticationInterceptor.removeAuthorization();
+      this.authenticationInterceptor.removeTwoFactorAuthorization();
+      [
+        localStorage,
+        sessionStorage
+      ].forEach((store) => {
+        store.removeItem(this.credentialsStorageKey);
+        store.removeItem(this.twoFactorAuthenticationTokenStorageKey);
+      });
+      // For OAuth/OIDC modes, isAuthenticated() relies on
+      // oauthService.hasValidAccessToken(); clear the library's tokens
+      // too so this tab does not keep reporting a stale session.
+      // Pass `true` to avoid redirecting from the cross-tab listener.
+      if (this.authMode !== AuthMode.Basic) {
+        this.oauthService.logOut(true);
+      }
+      this.userLoggedIn$.next(false);
+    } else if (event.data?.type === 'login' && !this.userLoggedIn$.getValue()) {
+      // Another tab logged in: rehydrate from shared storage.
+      this.restoreSession();
+    }
   }
 
   /**
@@ -100,8 +159,12 @@ export class AuthenticationService {
    */
   private initializeOAuthService(): void {
     this.oauthService.configure(getOAuthConfig());
-    const oauthStorage = environment.enableRememberMe ? localStorage : sessionStorage;
-    this.oauthService.setStorage(oauthStorage);
+    // Use localStorage so OAuth tokens are shared across tabs, consistent
+    // with the storage chosen for the credentials envelope. Picking
+    // sessionStorage here while setCredentials() later forces localStorage
+    // would leave half of the OAuth tokens in the wrong store and break
+    // subsequent oauthService.logOut() cleanup.
+    this.oauthService.setStorage(localStorage);
 
     // Load the OIDC discovery document so the library knows the authorization/token endpoints.
     // This must complete before initCodeFlow() or tryLoginCodeFlow() can work.
@@ -182,12 +245,12 @@ export class AuthenticationService {
   }
 
   /**
-   * Reads the cached credentials from session or local storage, if present.
+   * Reads the cached credentials from localStorage, the single source of
+   * truth for the authenticated session (see class doc).
    * @returns {Credentials | null} Stored credentials or null when absent.
    */
   private getSavedCredentials(): Credentials | null {
-    const stored =
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey);
+    const stored = localStorage.getItem(this.credentialsStorageKey);
     return stored ? JSON.parse(stored) : null;
   }
 
@@ -220,7 +283,10 @@ export class AuthenticationService {
     }
 
     this.rememberMe = environment.enableRememberMe ? (loginContext?.remember ?? false) : false;
-    this.storage = this.rememberMe ? localStorage : sessionStorage;
+    // Always use localStorage so the authenticated session is visible
+    // to any tab/window opened against the same origin (links from
+    // email, chat, bookmarks, target="_blank", new browser windows, ...).
+    this.storage = localStorage;
 
     // Basic Auth: Direct authentication with Fineract
     return this.http
@@ -374,6 +440,7 @@ export class AuthenticationService {
     this.setCredentials();
     this.resetDialog();
     this.userLoggedIn$.next(false);
+    this.broadcastChannel?.postMessage({ type: 'logout' });
 
     if (this.authMode === AuthMode.OIDC) {
       // OIDC: Use library to handle logout (redirects to OIDC provider)
@@ -435,11 +502,19 @@ export class AuthenticationService {
    */
   private setCredentials(credentials?: Credentials): void {
     if (credentials) {
+      // Capture whether credentials were already persisted BEFORE we write
+      // them. We cannot rely on userLoggedIn$ here because onLoginSuccess()
+      // sets it to `true` before calling setCredentials(), which would make
+      // every login look like a no-op refresh and skip the cross-tab broadcast.
+      const hadPersistedCredentials = !!this.getSavedCredentials();
       credentials.rememberMe = this.rememberMe;
-      // Make sure we're using the correct storage based on rememberMe value
-      this.storage = credentials.rememberMe ? localStorage : sessionStorage;
+      // Credentials are always written to localStorage so the session is
+      // shared across tabs/windows of the same origin (see class doc).
+      this.storage = localStorage;
       this.oauthService.setStorage(this.storage);
       this.storage.setItem(this.credentialsStorageKey, JSON.stringify(credentials));
+      // Notify other tabs only on a NEW login (not on every credential refresh).
+      if (!hadPersistedCredentials) this.broadcastChannel?.postMessage({ type: 'login' });
     } else {
       // Clear credentials from both storage types to ensure complete logout
       [
@@ -533,13 +608,18 @@ export class AuthenticationService {
         message: this.translateService.instant('errors.auth.passwordExpired.message')
       });
     } else {
+      // Persist the 2FA token in shared storage BEFORE setCredentials so
+      // any other tab waking up from the cross-tab login broadcast (fired
+      // by setCredentials) rehydrates with the matching 2FA header. Using
+      // localStorage directly here keeps the order explicit and avoids
+      // depending on the current value of `this.storage`.
+      localStorage.setItem(this.twoFactorAuthenticationTokenStorageKey, JSON.stringify(response));
       this.setCredentials(this.credentials);
       this.alertService.alert({
         type: this.translateService.instant('errors.auth.success.type'),
         message: this.translateService.instant('errors.auth.success.message', { username: this.credentials.username })
       });
       delete this.credentials;
-      this.storage.setItem(this.twoFactorAuthenticationTokenStorageKey, JSON.stringify(response));
     }
   }
 
