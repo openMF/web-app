@@ -1,4 +1,4 @@
-﻿{
+{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "Logged in as",
   "Remember me": "Remember me",
@@ -1645,7 +1645,7 @@
       "Amount Range": "Amount Range",
       "Amount Range From": "Amount Range From",
       "Amount Range To": "Amount Range To",
-      "Amount Recieved/Returned": "Amount Received/Returned",
+      "Amount Received/Returned": "Amount Received/Returned",
       "Amount to be Reserved": "Amount to be Reserved",
       "Annual Fees Transaction Date": "Annual Fees Transaction Date",
       "Applicable From Date": "Applicable From Date",
@@ -2658,7 +2658,6 @@
       "Provisioning Criteria": "Provisioning Criteria",
       "Purchase Price Ratio": "Purchase Price Ratio",
       "Purchased/Redeemed Price": "Purchased/Redeemed Price",
-      "Purhcased/Redeemed Price": "Purchased/Redeemed Price",
       "Qualification": "Qualification",
       "Quantity": "Quantity",
       "Quantity can not be more than": "Quantity can not be more than",
