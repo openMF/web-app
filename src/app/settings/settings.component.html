@@ -91,7 +91,7 @@
 
         <mat-form-field>
           <mat-label>{{ 'labels.inputs.Default Font' | translate }}</mat-label>
-          <mat-select>
+          <mat-select [formControl]="fontFamily">
             @for (font of fonts; track font) {
               <mat-option [value]="font">
                 {{ font }}

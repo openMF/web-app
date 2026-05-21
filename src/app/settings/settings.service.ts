@@ -299,4 +299,16 @@ export class SettingsService {
   get themeDarkEnabled(): boolean {
     return JSON.parse(localStorage.getItem('mifosXThemeDarkEnabled'));
   }
+
+  setFontFamily(font: string) {
+    localStorage.setItem('mifosXFontFamily', JSON.stringify(font));
+  }
+
+  get fontFamily(): string {
+    const userSetting = localStorage.getItem('mifosXFontFamily');
+    if (userSetting) {
+      return JSON.parse(userSetting);
+    }
+    return 'Roboto';
+  }
 }

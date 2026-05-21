@@ -157,6 +157,12 @@ export class WebAppComponent implements OnInit, OnDestroy {
     this.themingService.setInitialDarkMode();
     this.themingService.setDarkMode(!!this.settingsService.themeDarkEnabled);
 
+    // Apply saved font preference
+    const activeFont = this.settingsService.fontFamily;
+    if (activeFont) {
+      document.body.style.fontFamily = `"${activeFont}", sans-serif`;
+    }
+
     // Setup logger
     if (environment.production) {
       Logger.enableProductionMode();
@@ -213,6 +219,12 @@ export class WebAppComponent implements OnInit, OnDestroy {
 
     // Setup alerts with hover behavior
     this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
+      if (alertEvent.type === 'Settings Update') {
+        const activeFont = this.settingsService.fontFamily;
+        if (activeFont) {
+          document.body.style.fontFamily = `"${activeFont}", sans-serif`;
+        }
+      }
       const snackBarRef = this.snackBar.open(
         `${alertEvent.message}`,
         this.translateService.instant('labels.buttons.Close'),

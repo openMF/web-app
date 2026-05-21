@@ -103,8 +103,14 @@ export class SettingsComponent implements OnInit, OnDestroy {
     '7',
     '8'
   ];
-  /** Placeholder for fonts. */
-  fonts: any;
+  /** List of available fonts. */
+  fonts: string[] = [
+    'Roboto',
+    'Inter',
+    'Open Sans',
+    'Outfit',
+    'Montserrat'
+  ];
 
   /** Date Format Setting */
   dateFormat = new FormControl('');
@@ -112,27 +118,37 @@ export class SettingsComponent implements OnInit, OnDestroy {
   datetimeFormat = new FormControl('');
   /** Decimals to Display Setting */
   decimalsToDisplay = new FormControl('');
+  /** Font Family Setting */
+  fontFamily = new FormControl('');
 
   private initialValues: {
     dateFormat: string;
     datetimeFormat: string;
     decimals: string;
+    fontFamily: string;
   };
 
   ngOnInit() {
     this.initialValues = {
       dateFormat: this.settingsService.dateFormat,
       datetimeFormat: this.settingsService.datetimeFormat,
-      decimals: this.settingsService.decimals
+      decimals: this.settingsService.decimals,
+      fontFamily: this.settingsService.fontFamily
     };
     this.dateFormat.patchValue(this.initialValues.dateFormat, { emitEvent: false });
     this.datetimeFormat.patchValue(this.initialValues.datetimeFormat, { emitEvent: false });
     this.decimalsToDisplay.patchValue(this.initialValues.decimals, { emitEvent: false });
+    this.fontFamily.patchValue(this.initialValues.fontFamily, { emitEvent: false });
     this.trackChanges();
   }
 
   trackChanges(): void {
-    merge(this.dateFormat.valueChanges, this.datetimeFormat.valueChanges, this.decimalsToDisplay.valueChanges)
+    merge(
+      this.dateFormat.valueChanges,
+      this.datetimeFormat.valueChanges,
+      this.decimalsToDisplay.valueChanges,
+      this.fontFamily.valueChanges
+    )
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.hasChanges = this.hasFormChanged();
@@ -143,7 +159,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
     return (
       (this.dateFormat.value ?? '') !== this.initialValues.dateFormat ||
       (this.datetimeFormat.value ?? '') !== this.initialValues.datetimeFormat ||
-      (this.decimalsToDisplay.value ?? '') !== this.initialValues.decimals
+      (this.decimalsToDisplay.value ?? '') !== this.initialValues.decimals ||
+      (this.fontFamily.value ?? '') !== this.initialValues.fontFamily
     );
   }
 
@@ -151,10 +168,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.settingsService.setDateFormat(this.dateFormat.value ?? this.initialValues.dateFormat);
     this.settingsService.setDatetimeFormat(this.datetimeFormat.value ?? this.initialValues.datetimeFormat);
     this.settingsService.setDecimalToDisplay(this.decimalsToDisplay.value ?? this.initialValues.decimals);
+    this.settingsService.setFontFamily(this.fontFamily.value ?? this.initialValues.fontFamily);
     this.initialValues = {
       dateFormat: this.dateFormat.value ?? '',
       datetimeFormat: this.datetimeFormat.value ?? '',
-      decimals: this.decimalsToDisplay.value ?? ''
+      decimals: this.decimalsToDisplay.value ?? '',
+      fontFamily: this.fontFamily.value ?? ''
     };
     this.hasChanges = false;
     this.alertService.alert({
