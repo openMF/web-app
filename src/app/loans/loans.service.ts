@@ -19,6 +19,7 @@ import { DisbursementData } from './models/loan-account.model';
 export interface WorkingCapitalLoanDiscountUpdateRequest {
   transactionAmount: number;
   relatedResourceId: number;
+  externalId?: string;
   note?: string;
   locale: string;
   dateFormat: string;

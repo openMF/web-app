@@ -43,6 +43,7 @@ export class UpdateDiscountComponent extends LoanAccountActionsBaseComponent imp
   private translateService = inject(TranslateService);
 
   readonly maxNoteLength = 500;
+  readonly maxExternalIdLength = 100;
 
   currency: Currency | null = null;
   disbursementTransactionId: number = 0;
@@ -68,6 +69,10 @@ export class UpdateDiscountComponent extends LoanAccountActionsBaseComponent imp
           amountValueValidator()
         ]
       ],
+      externalId: [
+        '',
+        Validators.maxLength(this.maxExternalIdLength)
+      ],
       note: [
         '',
         Validators.maxLength(this.maxNoteLength)
@@ -86,6 +91,7 @@ export class UpdateDiscountComponent extends LoanAccountActionsBaseComponent imp
     const payload: WorkingCapitalLoanDiscountUpdateRequest = {
       transactionAmount: Number(formValue.transactionAmount),
       relatedResourceId: this.disbursementTransactionId,
+      externalId: formValue.externalId,
       note: formValue.note,
       locale: this.settingsService.language.code,
       dateFormat: this.settingsService.dateFormat

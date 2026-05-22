@@ -53,6 +53,21 @@
               [inputLabel]="'Discount'"
             >
             </mifosx-input-amount>
+
+            @if (disbursementLoanForm.controls.discountAmount.value > 0) {
+              <mat-form-field>
+                <mat-label>{{ 'labels.inputs.Discount External Id' | translate }}</mat-label>
+                <input matInput formControlName="discountExternalId" />
+                @if (disbursementLoanForm.controls.discountExternalId.hasError('maxlength')) {
+                  <mat-error>{{ 'labels.inputs.External Id is too long' | translate }}</mat-error>
+                }
+              </mat-form-field>
+              @if (disbursementLoanForm.hasError('discountExternalIdEqualsExternalId')) {
+                <mat-error>
+                  {{ 'labels.inputs.Discount External Id must differ from External Id' | translate }}
+                </mat-error>
+              }
+            }
           }
 
           <mat-form-field>

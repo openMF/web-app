@@ -20,6 +20,14 @@
           </mifosx-input-amount>
 
           <mat-form-field>
+            <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
+            <input matInput formControlName="externalId" />
+            @if (updateDiscountForm.controls.externalId.hasError('maxlength')) {
+              <mat-error>{{ 'labels.inputs.External Id is too long' | translate }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field>
             <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>
             <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
             <mat-hint align="end">
