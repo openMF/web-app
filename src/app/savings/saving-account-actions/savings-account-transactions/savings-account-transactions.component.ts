@@ -24,6 +24,7 @@ import { SavingsService } from '../../savings.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { Currency } from 'app/shared/models/general.model';
+import { amountValueValidator } from 'app/shared/validators/amount-value.validator';
 import { InputAmountComponent } from '../../../shared/input-amount/input-amount.component';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
@@ -124,8 +125,12 @@ export class SavingsAccountTransactionsComponent implements OnInit {
         Validators.required
       ],
       transactionAmount: [
-        0,
-        Validators.required
+        '',
+        [
+          Validators.required,
+          amountValueValidator(),
+          Validators.min(0.001)
+        ]
       ],
       paymentTypeId: [
         '',
