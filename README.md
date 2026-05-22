@@ -78,7 +78,89 @@ Before installing the web app, you need to set up the Apache Fineract® backend 
 
    - **Option B: Install local Fineract server**
 
-     [Installation Guide](https://github.com/apache/fineract?tab=readme-ov-file#instructions-how-to-run-for-local-development)
+  [Installation Guide](https://github.com/apache/fineract?tab=readme-ov-file#instructions-how-to-run-for-local-development)
+
+  **Windows 11 — Step by step:**
+
+  1. Install [Java 21 (Temurin)](https://adoptium.net), [MySQL 8](https://dev.mysql.com/downloads/installer/), and [Git](https://git-scm.com)
+
+  2. Create the required databases:
+```sql
+     mysql -u root -p
+     CREATE DATABASE fineract_tenants;
+     CREATE DATABASE fineract_default;
+     EXIT;
+```
+
+  3. Clone Fineract and configure your MySQL password in
+     `fineract-provider/src/main/resources/application.properties`:
+```properties
+     spring.datasource.hikari.password=${FINERACT_HIKARI_PASSWORD:your_password}
+     fineract.tenant.password=${FINERACT_DEFAULT_TENANTDB_PWD:your_password}
+```
+
+  4. Run the backend (open Git Bash inside the fineract folder):
+```bash
+     export JAVA_OPTS="-Xms512m -Xmx2g"
+     ./gradlew :fineract-provider:bootRun
+```
+     > ⚠️ **First run takes 30–60 minutes** — Liquibase automatically runs
+     > 270+ database migrations. Do not interrupt it.
+
+  5. Verify the backend is running at
+     `https://localhost:8443/fineract-provider/actuator/health`
+     — click **Advanced → Proceed to localhost** to bypass the
+     self-signed certificate warning. You should see `{"status":"UP"}`.
+
+  6. Start the web app with the local proxy (in a new terminal):
+```bash
+     ng serve --proxy-config proxy.localhost.conf.js
+```
+
+  **Troubleshooting (Windows):**
+
+  - **Fineract hangs during migration** — release the Liquibase lock and retry:
+```sql
+    mysql -u root -p
+    USE fineract_tenants;
+    UPDATE DATABASECHANGELOGLOCK SET LOCKED=0, LOCKGRANTED=NULL, LOCKEDBY=NULL;
+    EXIT;
+```
+  - **`community-app` fails on Windows** — the older community-app requires
+    Ruby and Compass which are not supported on all Windows environments.
+    Use this `web-app` repository instead — it works out of the box with Node.js.
+  - **MySQL not found in Git Bash** — use Command Prompt (`cmd`) for all
+    MySQL commands instead of Git Bash.
+```
+
+---
+
+### How to submit
+
+1. Go to https://github.com/openMF/web-app
+2. Click `README.md` → pencil icon to edit
+3. Find `Option B: Install local Fineract server` and replace it with the text above
+4. Scroll down → **Propose changes** → write this commit message:
+```
+   docs: add Windows 11 local Fineract setup guide with troubleshooting tips
+```
+5. Click **Propose changes** → **Create Pull Request**
+6. Use this PR description:
+```
+   ## What this PR does
+   Expands Option B (local Fineract install) with a detailed 
+   Windows 11 step-by-step guide based on hands-on experience.
+
+   ## Why
+   The existing Option B only has a single link with no steps.
+   Windows users face several non-obvious issues including:
+   - MySQL password configuration in application.properties
+   - Liquibase lock hanging on first run (270+ migrations)
+   - community-app failing due to Ruby/Compass not being 
+     available on all Windows environments
+   - MySQL commands not working in Git Bash (use CMD instead)
+
+   This guide addresses all of these based on real setup experience.
 
    - **Option C: Docker Compose for full stack**
      - See Docker Compose section below for one-step backend+frontend setup
