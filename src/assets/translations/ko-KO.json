@@ -374,7 +374,8 @@
     "report": {
       "type": "보고서 생성",
       "generated": "보고서: {{reportName}} 데이터 생성됨",
-      "generatedNoData": "보고서: {{reportName}} 데이터 없이 생성됨"
+      "generatedNoData": "보고서: {{reportName}} 데이터 없이 생성됨",
+      "loadFailed": "보고서 데이터를 불러오지 못했습니다. 다시 시도해 주세요."
     },
     "clipboard": {
       "type": "클립보드",
@@ -3145,6 +3146,7 @@
       "Deposit": "보증금",
       "Disburse": "지불",
       "Disburse to Savings": "저축으로 지출",
+      "Discount Fee": "할인 수수료",
       "Edit Repayment Schedule": "상환 일정 편집",
       "Foreclosure": "유질",
       "Frequent Postings": "자주 게시되는 게시물",

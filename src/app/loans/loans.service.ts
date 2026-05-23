@@ -16,15 +16,6 @@ import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 import { DisbursementData } from './models/loan-account.model';
 
-export interface WorkingCapitalLoanDiscountUpdateRequest {
-  transactionAmount: number;
-  relatedResourceId: number;
-  externalId?: string;
-  note?: string;
-  locale: string;
-  dateFormat: string;
-}
-
 /**
  * Loans service.
  */

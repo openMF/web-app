@@ -10,6 +10,33 @@
   overflow: auto;
 }
 
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+
+  &__icon {
+    font-size: 64px;
+    width: 64px;
+    height: 64px;
+    color: rgb(0 0 0 / 38%);
+    margin-bottom: 16px;
+  }
+
+  &__message {
+    font-size: 16px;
+    color: rgb(0 0 0 / 60%);
+    margin: 0;
+  }
+
+  &--error .empty-state__icon {
+    color: #f44336;
+  }
+}
+
 .select-row:hover {
   cursor: pointer;
 }

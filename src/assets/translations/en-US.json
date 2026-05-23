@@ -375,7 +375,8 @@
     "report": {
       "type": "Report generation",
       "generated": "Report: {{reportName}} data generated",
-      "generatedNoData": "Report: {{reportName}} without data generated"
+      "generatedNoData": "Report: {{reportName}} without data generated",
+      "loadFailed": "Failed to load report data. Please try again."
     },
     "clipboard": {
       "type": "Clipboard",
@@ -3148,6 +3149,7 @@
       "Deposit": "Deposit",
       "Disburse": "Disburse",
       "Disburse to Savings": "Disburse to Savings",
+      "Discount Fee": "Discount Fee",
       "Edit Repayment Schedule": "Edit Repayment Schedule",
       "Foreclosure": "Foreclosure",
       "Frequent Postings": "Frequent Postings",

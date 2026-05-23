@@ -374,7 +374,8 @@
     "report": {
       "type": "Uzalishaji wa ripoti",
       "generated": "Ripoti: data ya {{reportName}} imezalishwa",
-      "generatedNoData": "Ripoti: {{reportName}} imezalishwa bila data"
+      "generatedNoData": "Ripoti: {{reportName}} imezalishwa bila data",
+      "loadFailed": "Imeshindwa kupakia data ya ripoti. Tafadhali jaribu tena."
     },
     "clipboard": {
       "type": "Ubao wa kunakili",
@@ -3141,6 +3142,7 @@
       "Deposit": "Amana",
       "Disburse": "Lipa",
       "Disburse to Savings": "Lipa kwa Akiba",
+      "Discount Fee": "Ada ya Punguzo",
       "Edit Repayment Schedule": "Badilisha Ratiba ya Ulipaji",
       "Foreclosure": "Kukamata Mali",
       "Frequent Postings": "Machapisho ya Mara kwa Mara",

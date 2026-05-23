@@ -374,7 +374,8 @@
     "report": {
       "type": "Generování reportu",
       "generated": "Report: data {{reportName}} vygenerována",
-      "generatedNoData": "Report: {{reportName}} vygenerován bez dat"
+      "generatedNoData": "Report: {{reportName}} vygenerován bez dat",
+      "loadFailed": "Nepodařilo se načíst data sestavy. Zkuste to prosím znovu."
     },
     "clipboard": {
       "type": "Schránka",
@@ -3145,6 +3146,7 @@
       "Deposit": "Vklad",
       "Disburse": "Vyplatit",
       "Disburse to Savings": "Výplata na Úspory",
+      "Discount Fee": "Poplatek za slevu",
       "Edit Repayment Schedule": "Upravit splátkový kalendář",
       "Foreclosure": "Exekuce",
       "Frequent Postings": "Časté příspěvky",

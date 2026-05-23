@@ -419,6 +419,8 @@ export class RunReportComponent implements OnInit {
     }
     if (this.reportToBeExportedInRepository) {
       formData['exportS3'] = true;
+    } else {
+      formData['exportS3'] = false;
     }
     this.dataObject = {
       formData: formData,

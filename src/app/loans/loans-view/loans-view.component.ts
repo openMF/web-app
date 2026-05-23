@@ -258,7 +258,7 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
     this.buttonConfig = new LoansAccountButtonConfiguration(this.status, this.loanSubStatus);
     if (this.canShowWorkingCapitalDiscountUpdate()) {
       this.buttonConfig.addButton({
-        name: 'Update discount',
+        name: 'Discount Fee',
         icon: 'edit',
         taskPermissionName: 'UPDATEDISCOUNT_WORKINGCAPITALLOAN'
       });

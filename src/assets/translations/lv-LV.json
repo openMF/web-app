@@ -374,7 +374,8 @@
     "report": {
       "type": "Atskaites ģenerēšana",
       "generated": "Atskaite: {{reportName}} dati ģenerēti",
-      "generatedNoData": "Atskaite: {{reportName}} ģenerēta bez datiem"
+      "generatedNoData": "Atskaite: {{reportName}} ģenerēta bez datiem",
+      "loadFailed": "Neizdevās ielādēt atskaites datus. Lūdzu, mēģiniet vēlreiz."
     },
     "clipboard": {
       "type": "Starpliktuve",
@@ -3144,6 +3145,7 @@
       "Deposit": "Depozīts",
       "Disburse": "Izmaksāt",
       "Disburse to Savings": "Izmaksa uzkrājumiem",
+      "Discount Fee": "Atlaides maksa",
       "Edit Repayment Schedule": "Rediģēt atmaksas grafiku",
       "Foreclosure": "Preces ierobežošana",
       "Frequent Postings": "Bieža publicēšana",

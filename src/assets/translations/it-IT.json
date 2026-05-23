@@ -374,7 +374,8 @@
     "report": {
       "type": "Generazione report",
       "generated": "Report: dati di {{reportName}} generati",
-      "generatedNoData": "Report: {{reportName}} generato senza dati"
+      "generatedNoData": "Report: {{reportName}} generato senza dati",
+      "loadFailed": "Impossibile caricare i dati del report. Si prega di riprovare."
     },
     "clipboard": {
       "type": "Appunti",
@@ -3144,6 +3145,7 @@
       "Deposit": "Depositare",
       "Disburse": "Sborsare",
       "Disburse to Savings": "Versare al risparmio",
+      "Discount Fee": "Commissione di Sconto",
       "Edit Repayment Schedule": "Modifica il piano di rimborso",
       "Foreclosure": "Pignoramento",
       "Frequent Postings": "Pubblicazioni frequenti",

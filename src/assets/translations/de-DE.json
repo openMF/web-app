@@ -374,7 +374,8 @@
     "report": {
       "type": "Berichterstellung",
       "generated": "Bericht: {{reportName}} Daten generiert",
-      "generatedNoData": "Bericht: {{reportName}} ohne Daten generiert"
+      "generatedNoData": "Bericht: {{reportName}} ohne Daten generiert",
+      "loadFailed": "Fehler beim Laden der Berichtsdaten. Bitte versuchen Sie es erneut."
     },
     "clipboard": {
       "type": "Zwischenablage",
@@ -3147,6 +3148,7 @@
       "Deposit": "Kaution",
       "Disburse": "Auszahlen",
       "Disburse to Savings": "An die Ersparnisse auszahlen",
+      "Discount Fee": "Rabattgebühr",
       "Edit Repayment Schedule": "Bearbeiten Sie den Rückzahlungsplan",
       "Foreclosure": "Zwangsvollstreckung",
       "Frequent Postings": "Häufige Beiträge",
