@@ -92,18 +92,17 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
         : nestedMessage
       : topLevelMessage;
     let parameterName: string | null = null;
-    if (response.error.errors) {
-      if (response.error.errors[0]) {
-        if (
-          response.error.errors[0].userMessageGlobalisationCode &&
-          this.databaseErrorCodes.indexOf(response.error.errors[0].userMessageGlobalisationCode) > -1
-        ) {
-          errorMessage = this.translate.instant('errors.error.msg.data.integrity.issue');
-        } else {
-          errorMessage =
-            response.error.errors[0].defaultUserMessage.replace(/\\./g, ' ') ||
-            response.error.errors[0].developerMessage.replace(/\\./g, ' ');
-        }
+    if (errorBody?.errors?.[0]) {
+      if (
+        errorBody.errors[0].userMessageGlobalisationCode &&
+        this.databaseErrorCodes.includes(errorBody.errors[0].userMessageGlobalisationCode)
+      ) {
+        errorMessage = this.translate.instant('errors.error.msg.data.integrity.issue');
+      } else {
+        errorMessage =
+          errorBody.errors[0].defaultUserMessage?.replace(/\\./g, ' ') ||
+          errorBody.errors[0].developerMessage?.replace(/\\./g, ' ') ||
+          errorMessage;
       }
       if ('parameterName' in errorBody.errors[0]) {
         parameterName = errorBody.errors[0].parameterName;
