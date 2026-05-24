@@ -15,6 +15,7 @@
             mat-card-md-image
             class="profile-image"
             [src]="clientImage ? clientImage : 'assets/images/user_placeholder.png'"
+            [alt]="clientViewData.displayName || ('labels.inputs.Display Name' | translate)"
           />
         </div>
         <div class="m-b-5 flex-center">
