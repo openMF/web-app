@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:18.3-alpine
+    image: postgres:18.4-alpine
     container_name: e2e-postgres
     environment:
       POSTGRES_USER: postgres
