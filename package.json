@@ -69,7 +69,7 @@
     "chart.js": "^4.5.1",
     "d3": "^7.9.0",
     "exceljs": "^4.4.0",
-    "hono": "^4.12.14",
+    "hono": "^4.12.23",
     "html2canvas": "^1.4.1",
     "jspdf": "^4.2.1",
     "jspdf-autotable": "^5.0.2",
