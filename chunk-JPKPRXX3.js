@@ -1,1 +1,0 @@
-import{I as i,L as a,Pc as o}from"./chunk-KFK4I7F5.js";var s=(()=>{class t{constructor(r){this.translateService=r}translate(r,e){return this.translateService.get(r,e)}static{this.\u0275fac=function(e){return new(e||t)(a(o))}}static{this.\u0275prov=i({token:t,factory:t.\u0275fac,providedIn:"root"})}}return t})();export{s as a};
