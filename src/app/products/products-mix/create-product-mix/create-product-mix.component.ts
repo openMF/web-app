@@ -7,8 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
@@ -33,7 +32,6 @@ export class CreateProductMixComponent implements OnInit {
   private productsService = inject(ProductsService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  private destroyRef = inject(DestroyRef);
 
   /** Product mix form. */
   productMixForm: UntypedFormGroup;
@@ -86,23 +84,20 @@ export class CreateProductMixComponent implements OnInit {
    * Sets the conditional controls of the product mix form.
    */
   setConditionalControls() {
-    this.productMixForm
-      .get('productId')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((productId) => {
-        this.productData = undefined;
-        this.productMixForm.get('restrictedProducts').reset();
-        this.productsService.getProductMixTemplate(productId).subscribe((productMixTemplateData: any) => {
-          const restrictedProductsData = productMixTemplateData.restrictedProducts;
-          this.productData = [
-            ...restrictedProductsData,
-            ...productMixTemplateData.allowedProducts
-          ];
-          this.productMixForm
-            .get('restrictedProducts')
-            .setValue([...restrictedProductsData.map((restrictedProduct: any) => restrictedProduct.id)]);
-        });
+    this.productMixForm.get('productId').valueChanges.subscribe((productId) => {
+      this.productData = undefined;
+      this.productMixForm.get('restrictedProducts').reset();
+      this.productsService.getProductMixTemplate(productId).subscribe((productMixTemplateData: any) => {
+        const restrictedProductsData = productMixTemplateData.restrictedProducts;
+        this.productData = [
+          ...restrictedProductsData,
+          ...productMixTemplateData.allowedProducts
+        ];
+        this.productMixForm
+          .get('restrictedProducts')
+          .setValue([...restrictedProductsData.map((restrictedProduct: any) => restrictedProduct.id)]);
       });
+    });
   }
 
   /**

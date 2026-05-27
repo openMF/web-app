@@ -7,8 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -45,7 +44,6 @@ export class CloseRecurringDepositsAccountComponent implements OnInit {
   private dateUtils = inject(Dates);
   private recurringDepositsService = inject(RecurringDepositsService);
   private settingsService = inject(SettingsService);
-  private destroyRef = inject(DestroyRef);
 
   /** Maturity Amount */
   maturityAmount: any;
@@ -131,21 +129,18 @@ export class CloseRecurringDepositsAccountComponent implements OnInit {
     this.showPaymentDetails = !this.showPaymentDetails;
   }
   addTransferDetails() {
-    this.closeRecurringDepositForm
-      .get('onAccountClosureId')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((id: any) => {
-        if (id === 200) {
-          this.closeRecurringDepositForm.addControl(
-            'toSavingsAccountId',
-            new UntypedFormControl('', Validators.required)
-          );
-          this.closeRecurringDepositForm.addControl('transferDescription', new UntypedFormControl(''));
-        } else {
-          this.closeRecurringDepositForm.removeControl('toSavingsAccountId');
-          this.closeRecurringDepositForm.removeControl('transferDescription');
-        }
-      });
+    this.closeRecurringDepositForm.get('onAccountClosureId').valueChanges.subscribe((id: any) => {
+      if (id === 200) {
+        this.closeRecurringDepositForm.addControl(
+          'toSavingsAccountId',
+          new UntypedFormControl('', Validators.required)
+        );
+        this.closeRecurringDepositForm.addControl('transferDescription', new UntypedFormControl(''));
+      } else {
+        this.closeRecurringDepositForm.removeControl('toSavingsAccountId');
+        this.closeRecurringDepositForm.removeControl('transferDescription');
+      }
+    });
   }
 
   /**

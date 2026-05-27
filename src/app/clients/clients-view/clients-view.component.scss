@@ -6,49 +6,40 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-// Brand tokens
-$white: #fff;
+.account-card {
+  .header {
+    .profile-image-container {
+      .client-image-button {
+        min-width: 26px;
+        padding: 0 6px;
+        margin: 4px;
+        line-height: 25px;
+      }
 
-// Profile image — projected into <mifosx-account-header>
-.profile-image {
-  border: 2px solid rgba($white, 0.4);
-  border-radius: 12px;
-  background: rgba($white, 0.12);
-  box-shadow: 0 4px 16px rgb(0 0 0 / 35%);
-}
+      .signature {
+        color: white;
+        text-align: center;
+        margin: 0;
+        padding: 2%;
 
-// Icon buttons below the profile image — projected into <mifosx-account-header>
-.client-image-button {
-  // Collapse MDC state layer to match button size
-  --mdc-icon-button-state-layer-size: 34px;
-
-  width: 34px;
-  height: 34px;
-  margin: 3px;
-  color: $white;
-  background: rgba($white, 0.1) !important;
-  box-shadow: none !important;
-
-  &:hover {
-    background: rgba($white, 0.2) !important;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
   }
 }
 
-// Signature link — projected into <mifosx-account-header>
-.signature {
-  color: $white;
-  text-align: center;
-  margin: 0;
-  padding: 2%;
-
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-// Metadata table inside mat-card-subtitle — projected into <mifosx-account-header>
 .account-overview {
-  color: $white;
+  color: white;
   min-width: 85%;
   margin-left: 10px;
+}
+
+.make-flex {
+  display: flex;
+}
+
+.mat-card-title-group {
+  width: 100%;
 }

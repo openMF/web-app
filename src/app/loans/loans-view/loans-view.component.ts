@@ -26,7 +26,7 @@ import { DelinquencyPausePeriod } from '../models/loan-account.model';
 import { TranslateService } from '@ngx-translate/core';
 import { LoanTransaction } from 'app/products/loan-products/models/loan-account.model';
 import { OptionData } from 'app/shared/models/option-data.model';
-import { AccountHeaderComponent } from '../../shared/account-header/account-header.component';
+import { MatCardHeader, MatCardTitleGroup, MatCardTitle } from '@angular/material/card';
 import { SvgIconComponent } from '../../shared/svg-icon/svg-icon.component';
 import { MatTooltip } from '@angular/material/tooltip';
 import { NgClass, CurrencyPipe } from '@angular/common';
@@ -38,6 +38,7 @@ import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { MatIcon } from '@angular/material/icon';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
+import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -50,9 +51,11 @@ import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan
   styleUrls: ['./loans-view.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    AccountHeaderComponent,
+    MatCardHeader,
+    MatCardTitleGroup,
     SvgIconComponent,
     MatTooltip,
+    MatCardTitle,
     NgClass,
     LongTextComponent,
     AccountNumberComponent,
@@ -69,6 +72,7 @@ import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan
     MatTabNavPanel,
     RouterOutlet,
     CurrencyPipe,
+    StatusLookupPipe,
     DateFormatPipe,
     FormatNumberPipe
   ],

@@ -7,8 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -56,8 +55,6 @@ export class CreateCenterComponent implements OnInit {
   private settingsService = inject(SettingsService);
   private groupService = inject(GroupsService);
   private dateUtils = inject(Dates);
-  private destroyRef = inject(DestroyRef);
-  private cdr = inject(ChangeDetectorRef);
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -132,39 +129,31 @@ export class CreateCenterComponent implements OnInit {
    * Adds form control Activation Date if active.
    */
   buildDependencies() {
-    this.centerForm
-      .get('officeId')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((option: any) => {
-        this.groupService.getGroupsByOfficeId(option).subscribe((data: any) => {
-          this.groupsData = data;
-          if (!this.groupsData.length) {
-            this.groupChoice.disable();
-          } else {
-            this.groupChoice.enable();
-          }
-          this.cdr.markForCheck();
-        });
-        this.centerService.getStaff(option).subscribe((data: any) => {
-          this.staffData = data['staffOptions'];
-          if (this.staffData === undefined) {
-            this.centerForm.controls['staffId'].disable();
-          } else {
-            this.centerForm.controls['staffId'].enable();
-          }
-          this.cdr.markForCheck();
-        });
-      });
-    this.centerForm
-      .get('active')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((bool: boolean) => {
-        if (bool) {
-          this.centerForm.addControl('activationDate', new UntypedFormControl('', Validators.required));
+    this.centerForm.get('officeId').valueChanges.subscribe((option: any) => {
+      this.groupService.getGroupsByOfficeId(option).subscribe((data: any) => {
+        this.groupsData = data;
+        if (!this.groupsData.length) {
+          this.groupChoice.disable();
         } else {
-          this.centerForm.removeControl('activationDate');
+          this.groupChoice.enable();
         }
       });
+      this.centerService.getStaff(option).subscribe((data: any) => {
+        this.staffData = data['staffOptions'];
+        if (this.staffData === undefined) {
+          this.centerForm.controls['staffId'].disable();
+        } else {
+          this.centerForm.controls['staffId'].enable();
+        }
+      });
+    });
+    this.centerForm.get('active').valueChanges.subscribe((bool: boolean) => {
+      if (bool) {
+        this.centerForm.addControl('activationDate', new UntypedFormControl('', Validators.required));
+      } else {
+        this.centerForm.removeControl('activationDate');
+      }
+    });
   }
 
   /**

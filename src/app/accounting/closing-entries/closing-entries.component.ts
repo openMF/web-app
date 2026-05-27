@@ -10,7 +10,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  DestroyRef,
   OnInit,
   TemplateRef,
   ElementRef,
@@ -18,7 +17,6 @@ import {
   AfterViewInit,
   inject
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -78,7 +76,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClosingEntriesComponent implements OnInit, AfterViewInit {
-  private destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private configurationWizardService = inject(ConfigurationWizardService);
@@ -143,7 +140,7 @@ export class ClosingEntriesComponent implements OnInit, AfterViewInit {
    * Filters data in closing entries table based on office name.
    */
   applyFilter() {
-    this.officeName.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((filterValue: string) => {
+    this.officeName.valueChanges.subscribe((filterValue: string) => {
       this.dataSource.filter = filterValue.trim().toLowerCase();
     });
   }

@@ -7,17 +7,7 @@
  */
 
 /** Angular Imports */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DestroyRef,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  inject
-} from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, Input, Output, EventEmitter, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 
@@ -48,7 +38,6 @@ export class FixedDepositAccountDetailsStepComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   private fixedDepositsService = inject(FixedDepositsService);
   private settingsService = inject(SettingsService);
-  private destroyRef = inject(DestroyRef);
 
   /** Fixed Deposits Account Template */
   @Input() fixedDepositsAccountTemplate: any;
@@ -121,24 +110,21 @@ export class FixedDepositAccountDetailsStepComponent implements OnInit {
    */
   buildDependencies() {
     const clientId = this.fixedDepositsAccountTemplate.clientId;
-    this.fixedDepositAccountDetailsForm
-      .get('productId')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((productId: string) => {
-        this.fixedDepositsService.getFixedDepositsAccountTemplate(clientId, productId).subscribe((response: any) => {
-          this.fixedDepositsAccountProductTemplate.emit(response);
-          this.isProductSelected = true;
-          this.fieldOfficerData = response.fieldOfficerOptions;
-          if (!this.isFieldOfficerPatched && this.fixedDepositsAccountTemplate.fieldOfficerId) {
-            this.fixedDepositAccountDetailsForm
-              .get('fieldOfficerId')
-              .patchValue(this.fixedDepositsAccountTemplate.fieldOfficerId);
-            this.isFieldOfficerPatched = true;
-          } else {
-            this.fixedDepositAccountDetailsForm.get('fieldOfficerId').patchValue('');
-          }
-        });
+    this.fixedDepositAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
+      this.fixedDepositsService.getFixedDepositsAccountTemplate(clientId, productId).subscribe((response: any) => {
+        this.fixedDepositsAccountProductTemplate.emit(response);
+        this.isProductSelected = true;
+        this.fieldOfficerData = response.fieldOfficerOptions;
+        if (!this.isFieldOfficerPatched && this.fixedDepositsAccountTemplate.fieldOfficerId) {
+          this.fixedDepositAccountDetailsForm
+            .get('fieldOfficerId')
+            .patchValue(this.fixedDepositsAccountTemplate.fieldOfficerId);
+          this.isFieldOfficerPatched = true;
+        } else {
+          this.fixedDepositAccountDetailsForm.get('fieldOfficerId').patchValue('');
+        }
       });
+    });
   }
 
   /**

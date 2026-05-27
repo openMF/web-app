@@ -7,16 +7,7 @@
  */
 
 /** Angular Imports */
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  DestroyRef,
-  OnInit,
-  AfterViewInit,
-  inject
-} from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, AfterViewInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -67,8 +58,6 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
   private groupService = inject(GroupsService);
   private dateUtils = inject(Dates);
   private settingsService = inject(SettingsService);
-  private destroyRef = inject(DestroyRef);
-  private cdr = inject(ChangeDetectorRef);
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -115,13 +104,12 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
    * Subscribes to Clients search filter:
    */
   ngAfterViewInit() {
-    this.clientChoice.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value: string) => {
+    this.clientChoice.valueChanges.subscribe((value: string) => {
       if (value.length >= 2) {
         this.clientsService
           .getFilteredClients('displayName', 'ASC', true, value, this.groupForm.get('officeId').value)
           .subscribe((data: any) => {
             this.clientsData = data.pageItems;
-            this.cdr.markForCheck();
           });
       }
     });
@@ -159,30 +147,23 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
    * Adds form control Activation Date if active.
    */
   buildDependencies() {
-    this.groupForm
-      .get('officeId')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((option: any) => {
-        this.groupService.getStaff(option).subscribe((data) => {
-          this.staffData = data['staffOptions'];
-          if (this.staffData === undefined) {
-            this.groupForm.controls['staffId'].disable();
-          } else {
-            this.groupForm.controls['staffId'].enable();
-          }
-          this.cdr.markForCheck();
-        });
-      });
-    this.groupForm
-      .get('active')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((bool: boolean) => {
-        if (bool) {
-          this.groupForm.addControl('activationDate', new UntypedFormControl('', Validators.required));
+    this.groupForm.get('officeId').valueChanges.subscribe((option: any) => {
+      this.groupService.getStaff(option).subscribe((data) => {
+        this.staffData = data['staffOptions'];
+        if (this.staffData === undefined) {
+          this.groupForm.controls['staffId'].disable();
         } else {
-          this.groupForm.removeControl('activationDate');
+          this.groupForm.controls['staffId'].enable();
         }
       });
+    });
+    this.groupForm.get('active').valueChanges.subscribe((bool: boolean) => {
+      if (bool) {
+        this.groupForm.addControl('activationDate', new UntypedFormControl('', Validators.required));
+      } else {
+        this.groupForm.removeControl('activationDate');
+      }
+    });
   }
 
   /**

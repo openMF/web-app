@@ -7,10 +7,9 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { AccountingService } from '../../accounting.service';
@@ -32,8 +31,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditFinancialActivityMappingComponent implements OnInit {
-  private destroyRef = inject(DestroyRef);
-  private cdr = inject(ChangeDetectorRef);
   private formBuider = inject(UntypedFormBuilder);
   private accountingService = inject(AccountingService);
   private route = inject(ActivatedRoute);
@@ -101,27 +98,23 @@ export class EditFinancialActivityMappingComponent implements OnInit {
    * Sets the gl account data on the basis of selected financial activity.
    */
   setGLAccountData() {
-    this.financialActivityMappingForm
-      .get('financialActivityId')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((financialActivityId) => {
-        switch (financialActivityId) {
-          case 100:
-          case 101:
-          case 102:
-          case 103:
-            this.glAccountData = this.glAccountOptions.assetAccountOptions;
-            break;
-          case 200:
-          case 201:
-            this.glAccountData = this.glAccountOptions.liabilityAccountOptions;
-            break;
-          case 300:
-            this.glAccountData = this.glAccountOptions.equityAccountOptions;
-            break;
-        }
-        this.cdr.markForCheck();
-      });
+    this.financialActivityMappingForm.get('financialActivityId').valueChanges.subscribe((financialActivityId) => {
+      switch (financialActivityId) {
+        case 100:
+        case 101:
+        case 102:
+        case 103:
+          this.glAccountData = this.glAccountOptions.assetAccountOptions;
+          break;
+        case 200:
+        case 201:
+          this.glAccountData = this.glAccountOptions.liabilityAccountOptions;
+          break;
+        case 300:
+          this.glAccountData = this.glAccountOptions.equityAccountOptions;
+          break;
+      }
+    });
   }
 
   /**

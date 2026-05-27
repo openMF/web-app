@@ -6,8 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 /** Custom Services */
@@ -29,7 +28,6 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
 export class ForeclosureComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   private dateUtils = inject(Dates);
-  private destroyRef = inject(DestroyRef);
 
   foreclosureForm: UntypedFormGroup;
   /** Minimum Date allowed. */
@@ -67,12 +65,9 @@ export class ForeclosureComponent extends LoanAccountActionsBaseComponent implem
   }
 
   onChanges(): void {
-    this.foreclosureForm
-      .get('transactionDate')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((val) => {
-        this.retrieveLoanForeclosureTemplate(val);
-      });
+    this.foreclosureForm.get('transactionDate').valueChanges.subscribe((val) => {
+      this.retrieveLoanForeclosureTemplate(val);
+    });
   }
 
   retrieveLoanForeclosureTemplate(val: any) {

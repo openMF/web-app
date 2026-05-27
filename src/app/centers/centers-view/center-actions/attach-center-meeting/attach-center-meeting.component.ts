@@ -7,8 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -45,8 +44,6 @@ export class AttachCenterMeetingComponent implements OnInit {
   private dateUtils = inject(Dates);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  private destroyRef = inject(DestroyRef);
-  private cdr = inject(ChangeDetectorRef);
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -106,70 +103,63 @@ export class AttachCenterMeetingComponent implements OnInit {
    * Subscribes to value changes of controls.
    */
   buildDependencies() {
-    this.centerMeetingForm
-      .get('repeating')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((value: boolean) => {
-        if (value) {
-          this.centerMeetingForm.addControl('frequency', new UntypedFormControl());
-          this.centerMeetingForm.addControl('interval', new UntypedFormControl());
-          this.centerMeetingForm
-            .get('frequency')
-            .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((frequency: any) => {
-              this.centerMeetingForm.removeControl('repeatsOnDay');
-              switch (frequency) {
-                case 1: // Daily
-                  this.repetitionIntervals = [
-                    '1',
-                    '2',
-                    '3'
-                  ];
-                  break;
-                case 2: // Weekly
-                  this.repetitionIntervals = [
-                    '1',
-                    '2',
-                    '3'
-                  ];
-                  this.centerMeetingForm.addControl('repeatsOnDay', new UntypedFormControl('', Validators.required));
-                  break;
-                case 3: // Monthly
-                  this.repetitionIntervals = [
-                    '1',
-                    '2',
-                    '3',
-                    '4',
-                    '5',
-                    '6',
-                    '7',
-                    '8',
-                    '9',
-                    '10',
-                    '11'
-                  ];
-                  break;
-                case 4: // Yearly
-                  this.repetitionIntervals = [
-                    '1',
-                    '2',
-                    '3',
-                    '4',
-                    '5'
-                  ];
-                  break;
-              }
-              this.cdr.markForCheck();
-            });
-          this.centerMeetingForm.patchValue({
-            frequency: 1,
-            interval: '1'
-          });
-        } else {
-          this.centerMeetingForm.removeControl('frequency');
-          this.centerMeetingForm.removeControl('interval');
-        }
-      });
+    this.centerMeetingForm.get('repeating').valueChanges.subscribe((value: boolean) => {
+      if (value) {
+        this.centerMeetingForm.addControl('frequency', new UntypedFormControl());
+        this.centerMeetingForm.addControl('interval', new UntypedFormControl());
+        this.centerMeetingForm.get('frequency').valueChanges.subscribe((frequency: any) => {
+          this.centerMeetingForm.removeControl('repeatsOnDay');
+          switch (frequency) {
+            case 1: // Daily
+              this.repetitionIntervals = [
+                '1',
+                '2',
+                '3'
+              ];
+              break;
+            case 2: // Weekly
+              this.repetitionIntervals = [
+                '1',
+                '2',
+                '3'
+              ];
+              this.centerMeetingForm.addControl('repeatsOnDay', new UntypedFormControl('', Validators.required));
+              break;
+            case 3: // Monthly
+              this.repetitionIntervals = [
+                '1',
+                '2',
+                '3',
+                '4',
+                '5',
+                '6',
+                '7',
+                '8',
+                '9',
+                '10',
+                '11'
+              ];
+              break;
+            case 4: // Yearly
+              this.repetitionIntervals = [
+                '1',
+                '2',
+                '3',
+                '4',
+                '5'
+              ];
+              break;
+          }
+        });
+        this.centerMeetingForm.patchValue({
+          frequency: 1,
+          interval: '1'
+        });
+      } else {
+        this.centerMeetingForm.removeControl('frequency');
+        this.centerMeetingForm.removeControl('interval');
+      }
+    });
   }
 
   /**

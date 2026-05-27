@@ -7,8 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AbstractControl, UntypedFormControl, UntypedFormGroup, ValidatorFn, Validators } from '@angular/forms';
 
@@ -51,8 +50,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ChartComponent,
     PentahoComponent,
     BirtComponent
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  ]
 })
 export class RunReportComponent implements OnInit {
   private route = inject(ActivatedRoute);
@@ -61,8 +59,6 @@ export class RunReportComponent implements OnInit {
   private alertService = inject(AlertService);
   private translateService = inject(TranslateService);
   private dateUtils = inject(Dates);
-  private cdr = inject(ChangeDetectorRef);
-  private destroyRef = inject(DestroyRef);
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -113,12 +109,10 @@ export class RunReportComponent implements OnInit {
    */
   constructor() {
     this.report.name = this.route.snapshot.params['name'];
-    this.route.queryParams
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((queryParams: { type: any; id: any }) => {
-        this.report.type = queryParams.type;
-        this.report.id = queryParams.id;
-      });
+    this.route.queryParams.subscribe((queryParams: { type: any; id: any }) => {
+      this.report.type = queryParams.type;
+      this.report.id = queryParams.id;
+    });
     this.route.data.subscribe((data: { reportParameters: ReportParameter[]; configurations: any }) => {
       this.paramData = data.reportParameters;
       if (this.isTableReport()) {
@@ -280,9 +274,7 @@ export class RunReportComponent implements OnInit {
 
     endControl.addValidators(this.endDateAfterStartValidator(startParam.name));
     endControl.updateValueAndValidity({ emitEvent: false });
-    startControl.valueChanges
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => endControl.updateValueAndValidity({ emitEvent: false }));
+    startControl.valueChanges.subscribe(() => endControl.updateValueAndValidity({ emitEvent: false }));
   }
 
   endDateAfterStartValidator(startControlName: string): ValidatorFn {
@@ -325,23 +317,19 @@ export class RunReportComponent implements OnInit {
    */
   setChildControls() {
     this.parentParameters.forEach((param: ReportParameter) => {
-      this.reportForm
-        .get(param.name)
-        .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe((option: any) => {
-          param.childParameters.forEach((child: ReportParameter) => {
-            if (child.displayType === 'none') {
-              this.reportForm.addControl(child.name, new UntypedFormControl(child.defaultVal));
-            } else {
-              this.reportForm.addControl(child.name, new UntypedFormControl('', Validators.required));
-            }
-            if (child.displayType === 'select') {
-              const inputstring = `${child.name}?${param.inputName}=${option.id}`;
-              this.fetchSelectOptions(child, inputstring);
-            }
-          });
-          this.cdr.markForCheck();
+      this.reportForm.get(param.name).valueChanges.subscribe((option: any) => {
+        param.childParameters.forEach((child: ReportParameter) => {
+          if (child.displayType === 'none') {
+            this.reportForm.addControl(child.name, new UntypedFormControl(child.defaultVal));
+          } else {
+            this.reportForm.addControl(child.name, new UntypedFormControl('', Validators.required));
+          }
+          if (child.displayType === 'select') {
+            const inputstring = `${child.name}?${param.inputName}=${option.id}`;
+            this.fetchSelectOptions(child, inputstring);
+          }
         });
+      });
     });
   }
 
@@ -356,7 +344,6 @@ export class RunReportComponent implements OnInit {
       if (param.selectAll === 'Y') {
         param.selectOptions.push({ id: '-1', name: 'All' });
       }
-      this.cdr.markForCheck();
     });
   }
 
@@ -486,7 +473,6 @@ export class RunReportComponent implements OnInit {
         });
       }
       this.isProcessing = false;
-      this.cdr.markForCheck();
     });
   }
 

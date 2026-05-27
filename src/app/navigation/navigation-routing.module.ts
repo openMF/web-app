@@ -17,7 +17,7 @@ import { Route } from '../core/route/route.service';
 import { NavigationComponent } from './navigation.component';
 
 /** Custom Resolvers */
-import { OfficesResolver } from 'app/organization/offices/common-resolvers/offices.resolver';
+import { OfficesResolver } from './offices.resolver';
 
 /** Navigation Routes */
 const routes: Routes = [
@@ -41,6 +41,8 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: []
+  providers: [
+    OfficesResolver
+  ]
 })
 export class NavigationRoutingModule {}

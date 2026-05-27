@@ -7,8 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, ViewChild, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -71,7 +70,6 @@ export class StandingInstructionsHistoryComponent implements OnInit {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private dateUtils = inject(Dates);
-  private destroyRef = inject(DestroyRef);
 
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -142,12 +140,9 @@ export class StandingInstructionsHistoryComponent implements OnInit {
    * Sets conditional child controls.
    */
   buildDependencies() {
-    this.instructionForm
-      .get('fromAccountType')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => {
-        this.instructionForm.addControl('fromAccountId', new UntypedFormControl(''));
-      });
+    this.instructionForm.get('fromAccountType').valueChanges.subscribe(() => {
+      this.instructionForm.addControl('fromAccountId', new UntypedFormControl(''));
+    });
   }
 
   /**

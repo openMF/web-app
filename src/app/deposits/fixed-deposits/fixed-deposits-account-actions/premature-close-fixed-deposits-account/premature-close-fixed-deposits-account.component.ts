@@ -7,8 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -45,7 +44,6 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private settingsService = inject(SettingsService);
-  private destroyRef = inject(DestroyRef);
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -99,14 +97,11 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
    * Subscribes to value changes of parent control.
    */
   buildDependencies() {
-    this.prematureCloseAccountForm
-      .get('closedOnDate')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((value: Date) => {
-        if (!this.isSubmitted) {
-          this.calculatePrematureAmount(value);
-        }
-      });
+    this.prematureCloseAccountForm.get('closedOnDate').valueChanges.subscribe((value: Date) => {
+      if (!this.isSubmitted) {
+        this.calculatePrematureAmount(value);
+      }
+    });
   }
 
   /**
@@ -144,21 +139,18 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
    * Subscribes to value changes of `onAccountClosureId` adds and removes transfer details accordingly.
    */
   addTransferDetails() {
-    this.prematureCloseAccountForm
-      .get('onAccountClosureId')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((id: any) => {
-        if (id === 200) {
-          this.prematureCloseAccountForm.addControl(
-            'toSavingsAccountId',
-            new UntypedFormControl('', Validators.required)
-          );
-          this.prematureCloseAccountForm.addControl('transferDescription', new UntypedFormControl(''));
-        } else {
-          this.prematureCloseAccountForm.removeControl('toSavingsAccountId');
-          this.prematureCloseAccountForm.removeControl('transferDescription');
-        }
-      });
+    this.prematureCloseAccountForm.get('onAccountClosureId').valueChanges.subscribe((id: any) => {
+      if (id === 200) {
+        this.prematureCloseAccountForm.addControl(
+          'toSavingsAccountId',
+          new UntypedFormControl('', Validators.required)
+        );
+        this.prematureCloseAccountForm.addControl('transferDescription', new UntypedFormControl(''));
+      } else {
+        this.prematureCloseAccountForm.removeControl('toSavingsAccountId');
+        this.prematureCloseAccountForm.removeControl('transferDescription');
+      }
+    });
   }
 
   /**

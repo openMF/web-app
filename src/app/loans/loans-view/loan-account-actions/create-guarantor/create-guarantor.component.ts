@@ -7,8 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, AfterViewInit, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, AfterViewInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 
 /** Custom Services */
@@ -38,7 +37,6 @@ export class CreateGuarantorComponent extends LoanAccountActionsBaseComponent im
   private formBuilder = inject(UntypedFormBuilder);
   private dateUtils = inject(Dates);
   private clientsService = inject(ClientsService);
-  private destroyRef = inject(DestroyRef);
 
   /** New Guarantor Form */
   newGuarantorForm: UntypedFormGroup;
@@ -99,39 +97,36 @@ export class CreateGuarantorComponent extends LoanAccountActionsBaseComponent im
    * Add guarantor detail fields to the UI.
    */
   buildDependencies() {
-    this.newGuarantorForm
-      .get('existingClient')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => {
-        this.showClientDetailsForm = !this.showClientDetailsForm;
-        if (this.showClientDetailsForm) {
-          this.newGuarantorForm.addControl('firstname', new UntypedFormControl(''));
-          this.newGuarantorForm.addControl('lastname', new UntypedFormControl(''));
-          this.newGuarantorForm.addControl('dob', new UntypedFormControl(''));
-          this.newGuarantorForm.addControl('addressLine1', new UntypedFormControl(''));
-          this.newGuarantorForm.addControl('addressLine2', new UntypedFormControl(''));
-          this.newGuarantorForm.addControl('city', new UntypedFormControl(''));
-          this.newGuarantorForm.addControl('zip', new UntypedFormControl(''));
-          this.newGuarantorForm.addControl('mobileNumber', new UntypedFormControl(''));
-          this.newGuarantorForm.addControl('housePhoneNumber', new UntypedFormControl(''));
-          this.newGuarantorForm.removeControl('name');
-          this.newGuarantorForm.removeControl('savingsId');
-          this.newGuarantorForm.removeControl('amount');
-        } else {
-          this.newGuarantorForm.addControl('name', new UntypedFormControl(''));
-          this.newGuarantorForm.addControl('savingsId', new UntypedFormControl(''));
-          this.newGuarantorForm.addControl('amount', new UntypedFormControl(''));
-          this.newGuarantorForm.removeControl('firstname');
-          this.newGuarantorForm.removeControl('lastname');
-          this.newGuarantorForm.removeControl('dob');
-          this.newGuarantorForm.removeControl('addressLine1');
-          this.newGuarantorForm.removeControl('addressLine2');
-          this.newGuarantorForm.removeControl('city');
-          this.newGuarantorForm.removeControl('zip');
-          this.newGuarantorForm.removeControl('mobileNumber');
-          this.newGuarantorForm.removeControl('housePhoneNumber');
-        }
-      });
+    this.newGuarantorForm.get('existingClient').valueChanges.subscribe(() => {
+      this.showClientDetailsForm = !this.showClientDetailsForm;
+      if (this.showClientDetailsForm) {
+        this.newGuarantorForm.addControl('firstname', new UntypedFormControl(''));
+        this.newGuarantorForm.addControl('lastname', new UntypedFormControl(''));
+        this.newGuarantorForm.addControl('dob', new UntypedFormControl(''));
+        this.newGuarantorForm.addControl('addressLine1', new UntypedFormControl(''));
+        this.newGuarantorForm.addControl('addressLine2', new UntypedFormControl(''));
+        this.newGuarantorForm.addControl('city', new UntypedFormControl(''));
+        this.newGuarantorForm.addControl('zip', new UntypedFormControl(''));
+        this.newGuarantorForm.addControl('mobileNumber', new UntypedFormControl(''));
+        this.newGuarantorForm.addControl('housePhoneNumber', new UntypedFormControl(''));
+        this.newGuarantorForm.removeControl('name');
+        this.newGuarantorForm.removeControl('savingsId');
+        this.newGuarantorForm.removeControl('amount');
+      } else {
+        this.newGuarantorForm.addControl('name', new UntypedFormControl(''));
+        this.newGuarantorForm.addControl('savingsId', new UntypedFormControl(''));
+        this.newGuarantorForm.addControl('amount', new UntypedFormControl(''));
+        this.newGuarantorForm.removeControl('firstname');
+        this.newGuarantorForm.removeControl('lastname');
+        this.newGuarantorForm.removeControl('dob');
+        this.newGuarantorForm.removeControl('addressLine1');
+        this.newGuarantorForm.removeControl('addressLine2');
+        this.newGuarantorForm.removeControl('city');
+        this.newGuarantorForm.removeControl('zip');
+        this.newGuarantorForm.removeControl('mobileNumber');
+        this.newGuarantorForm.removeControl('housePhoneNumber');
+      }
+    });
   }
 
   /**
@@ -139,16 +134,13 @@ export class CreateGuarantorComponent extends LoanAccountActionsBaseComponent im
    */
   ngAfterViewInit() {
     if (this.newGuarantorForm.value.existingClient) {
-      this.newGuarantorForm
-        .get('name')
-        .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe((value: string) => {
-          if (value.length >= 2) {
-            this.clientsService.getFilteredClients('displayName', 'ASC', true, value).subscribe((data: any) => {
-              this.clientsData = data.pageItems;
-            });
-          }
-        });
+      this.newGuarantorForm.get('name').valueChanges.subscribe((value: string) => {
+        if (value.length >= 2) {
+          this.clientsService.getFilteredClients('displayName', 'ASC', true, value).subscribe((data: any) => {
+            this.clientsData = data.pageItems;
+          });
+        }
+      });
     }
   }
 

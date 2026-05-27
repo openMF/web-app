@@ -69,7 +69,7 @@
               {{ renderTime | date: 'dd MMMM yyyy HH:mm:ss' }}
             </td>
           </tr>
-          @if (businessDate) {
+          @if (isBusinessDateDefined) {
             <tr>
               <td class="footer-content">{{ 'labels.text.Current Business Date' | translate }}:</td>
               <td class="right footer-content business-date">

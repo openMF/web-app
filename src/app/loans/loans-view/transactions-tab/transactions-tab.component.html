@@ -40,12 +40,20 @@
       </td>
     </ng-container>
 
+    <ng-container matColumnDef="office">
+      <td
+        mat-cell
+        *matCellDef="let transaction"
+        [ngClass]="loanTransactionColor(transaction)"
+        (click)="showTransactions(transaction)"
+      >
+        {{ transaction.officeName }}
+      </td>
+    </ng-container>
+
     <ng-container matColumnDef="externalId">
       <td mat-cell *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)">
-        <mifosx-external-identifier
-          externalId="{{ transaction.externalId }}"
-          [completed]="false"
-        ></mifosx-external-identifier>
+        <mifosx-external-identifier externalId="{{ transaction.externalId }}"></mifosx-external-identifier>
       </td>
     </ng-container>
 
@@ -79,12 +87,7 @@
         (click)="showTransactions(transaction)"
         [ngClass]="loanTransactionColor(transaction)"
       >
-        @if (loanProductService.isLoanProduct) {
-          {{ transaction.amount | formatNumber }}
-        }
-        @if (loanProductService.isWorkingCapital) {
-          {{ transaction.transactionAmount | formatNumber }}
-        }
+        {{ transaction.amount | formatNumber }}
       </td>
     </ng-container>
 
@@ -100,19 +103,17 @@
       </td>
     </ng-container>
 
-    @if (loanProductService.isLoanProduct) {
-      <ng-container matColumnDef="interest">
-        <td
-          mat-cell
-          class="r-amount td-min-space"
-          *matCellDef="let transaction"
-          (click)="showTransactions(transaction)"
-          [ngClass]="loanTransactionColor(transaction)"
-        >
-          {{ transaction.interestPortion | formatNumber }}
-        </td>
-      </ng-container>
-    }
+    <ng-container matColumnDef="interest">
+      <td
+        mat-cell
+        class="r-amount td-min-space"
+        *matCellDef="let transaction"
+        (click)="showTransactions(transaction)"
+        [ngClass]="loanTransactionColor(transaction)"
+      >
+        {{ transaction.interestPortion | formatNumber }}
+      </td>
+    </ng-container>
 
     <ng-container matColumnDef="fee">
       <td
@@ -138,19 +139,17 @@
       </td>
     </ng-container>
 
-    @if (loanProductService.isLoanProduct) {
-      <ng-container matColumnDef="loanBalance">
-        <td
-          mat-cell
-          class="r-amount td-min-space"
-          *matCellDef="let transaction"
-          (click)="showTransactions(transaction)"
-          [ngClass]="loanTransactionColor(transaction)"
-        >
-          {{ transaction.outstandingLoanBalance | formatNumber }}
-        </td>
-      </ng-container>
-    }
+    <ng-container matColumnDef="loanBalance">
+      <td
+        mat-cell
+        class="r-amount td-min-space"
+        *matCellDef="let transaction"
+        (click)="showTransactions(transaction)"
+        [ngClass]="loanTransactionColor(transaction)"
+      >
+        {{ transaction.outstandingLoanBalance | formatNumber }}
+      </td>
+    </ng-container>
 
     <ng-container matColumnDef="actions">
       <td mat-cell *matCellDef="let transaction" class="center">
@@ -266,6 +265,10 @@
       <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Id' | translate }}</th>
     </ng-container>
 
+    <ng-container matColumnDef="h1-office">
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Office' | translate }}</th>
+    </ng-container>
+
     <ng-container matColumnDef="h1-external-id">
       <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.External Id' | translate }}</th>
     </ng-container>
@@ -283,16 +286,14 @@
     </ng-container>
 
     <ng-container matColumnDef="h1-breakdown">
-      <th mat-header-cell *matHeaderCellDef class="center" [attr.colspan]="displayedHeader2Columns.length - 3">
+      <th mat-header-cell *matHeaderCellDef class="center" [attr.colspan]="4">
         {{ 'labels.inputs.Breakdown' | translate }}
       </th>
     </ng-container>
 
-    @if (loanProductService.isLoanProduct) {
-      <ng-container matColumnDef="h1-loan-balance">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Loan Balance' | translate }}</th>
-      </ng-container>
-    }
+    <ng-container matColumnDef="h1-loan-balance">
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Loan Balance' | translate }}</th>
+    </ng-container>
 
     <ng-container matColumnDef="h1-actions">
       <th mat-header-cell *matHeaderCellDef class="center">{{ 'labels.inputs.Actions' | translate }}</th>
@@ -300,7 +301,7 @@
 
     <!-- Sub header -->
     <ng-container matColumnDef="h2-space">
-      <th mat-header-cell *matHeaderCellDef [attr.colspan]="5"></th>
+      <th mat-header-cell *matHeaderCellDef [attr.colspan]="6"></th>
     </ng-container>
 
     <ng-container matColumnDef="h2-amount">
@@ -316,11 +317,9 @@
     </ng-container>
 
     <ng-container matColumnDef="h2-interest">
-      @if (loanProductService.isLoanProduct) {
-        <th mat-header-cell class="r-amount" *matHeaderCellDef [attr.colspan]="1">
-          {{ 'labels.inputs.Interest' | translate }}
-        </th>
-      }
+      <th mat-header-cell class="r-amount" *matHeaderCellDef [attr.colspan]="1">
+        {{ 'labels.inputs.Interest' | translate }}
+      </th>
     </ng-container>
 
     <ng-container matColumnDef="h2-fees">

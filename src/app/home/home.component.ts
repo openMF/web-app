@@ -9,9 +9,7 @@
 /** Angular Imports */
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  OnDestroy,
   OnInit,
   TemplateRef,
   ElementRef,
@@ -19,13 +17,13 @@ import {
   AfterViewInit,
   inject
 } from '@angular/core';
-import { Router } from '@angular/router';
-import { UntypedFormControl } from '@angular/forms';
+import { ActivatedRoute, Router, NavigationEnd, RouterLink } from '@angular/router';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 /** rxjs Imports */
-import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 
 /** Custom Imports. */
 import { activities } from './activities';
@@ -33,8 +31,6 @@ import { WarningDialogComponent } from './warning-dialog/warning-dialog.componen
 
 /** Custom Services */
 import { AuthenticationService } from '../core/authentication/authentication.service';
-import { AlertService } from 'app/core/alert/alert.service';
-import { Alert } from 'app/core/alert/alert.model';
 import { PopoverService } from '../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../configuration-wizard/configuration-wizard.service';
 import { SettingsService } from 'app/settings/settings.service';
@@ -42,8 +38,9 @@ import { SettingsService } from 'app/settings/settings.service';
 /** Custom Components */
 import { NextStepDialogComponent } from '../configuration-wizard/next-step-dialog/next-step-dialog.component';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
-import { AsyncPipe, DatePipe } from '@angular/common';
+import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardImage } from '@angular/material/card';
+import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
+import { AsyncPipe } from '@angular/common';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -57,32 +54,28 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
+    MatCardHeader,
+    MatCardTitle,
     MatAutocompleteTrigger,
     MatAutocomplete,
-    AsyncPipe,
-    DatePipe
+    MatCardImage,
+    AsyncPipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
+export class HomeComponent implements OnInit, AfterViewInit {
   private authenticationService = inject(AuthenticationService);
+  private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
   private dialog = inject(MatDialog);
   private configurationWizardService = inject(ConfigurationWizardService);
   private popoverService = inject(PopoverService);
   private settingsService = inject(SettingsService);
-  private alertService = inject(AlertService);
-  private cdr = inject(ChangeDetectorRef);
 
   /** Username of authenticated user. */
   username: string;
   /** Tenant name */
   tenant: string;
-  /** Business Date */
-  businessDate: Date | null = null;
-  isBusinessDateEnabled = false;
-
-  private alert$: Subscription;
   /** Activity Form. */
   activityForm: any;
   /** Search Text. */
@@ -117,29 +110,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.dialog.open(WarningDialogComponent);
       this.authenticationService.showDialog();
     }
-    this.isBusinessDateEnabled = this.settingsService.businessDateConfig === 'true';
-    if (this.isBusinessDateEnabled) {
-      this.businessDate = this.settingsService.businessDate;
-    }
-    this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
-      const alertType = alertEvent.type;
-      if (alertType === SettingsService.businessDateType + ' Set Config') {
-        this.isBusinessDateEnabled = alertEvent.enabled ? true : false;
-        if (!this.isBusinessDateEnabled) {
-          this.businessDate = null;
-        }
-        this.cdr.markForCheck();
-      } else if (alertType === SettingsService.businessDateType + ' Set') {
-        if (this.isBusinessDateEnabled) {
-          this.businessDate = this.settingsService.businessDate;
-          this.cdr.markForCheck();
-        }
-      }
-    });
-  }
-
-  ngOnDestroy() {
-    this.alert$?.unsubscribe();
   }
 
   /**

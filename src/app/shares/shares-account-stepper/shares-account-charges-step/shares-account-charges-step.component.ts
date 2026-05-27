@@ -7,17 +7,7 @@
  */
 
 /** Angular Imports */
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  DestroyRef,
-  OnInit,
-  OnChanges,
-  Input,
-  inject
-} from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, OnChanges, Input, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UntypedFormControl } from '@angular/forms';
 
@@ -77,8 +67,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
   private dialog = inject(MatDialog);
   private translateService = inject(TranslateService);
-  private destroyRef = inject(DestroyRef);
-  private cdr = inject(ChangeDetectorRef);
 
   /** Shares Account Product Template */
   @Input() sharesAccountProductTemplate: any;
@@ -105,14 +93,13 @@ export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
   ];
 
   ngOnInit() {
-    this.currencyCode.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+    this.currencyCode.valueChanges.subscribe(() => {
       if (!this.isChargesPatched && this.sharesAccountTemplate.charges) {
         this.chargesDataSource = this.sharesAccountTemplate.charges;
         this.isChargesPatched = true;
       } else {
         this.chargesDataSource = [];
       }
-      this.cdr.markForCheck();
     });
   }
 

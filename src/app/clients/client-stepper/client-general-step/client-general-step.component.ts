@@ -11,7 +11,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnInit,
-  DestroyRef,
+  OnDestroy,
   Input,
   Output,
   EventEmitter,
@@ -24,8 +24,8 @@ import {
   UntypedFormControl,
   ReactiveFormsModule
 } from '@angular/forms';
-import { filter, switchMap } from 'rxjs/operators';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Subject } from 'rxjs';
+import { filter, switchMap, takeUntil } from 'rxjs/operators';
 import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
 import { LegalFormId } from 'app/clients/models/legal-form.enum';
@@ -59,14 +59,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ClientGeneralStepComponent implements OnInit {
+export class ClientGeneralStepComponent implements OnInit, OnDestroy {
   private formBuilder = inject(UntypedFormBuilder);
   private dateUtils = inject(Dates);
   private settingsService = inject(SettingsService);
   private clientService = inject(ClientsService);
   externalNationalIdService = inject(ExternalNationalIdService);
 
-  private destroyRef = inject(DestroyRef);
+  /** Subject to trigger unsubscription on destroy */
+  private destroy$ = new Subject<void>();
 
   @Output() legalFormChangeEvent = new EventEmitter<{ legalForm: number }>();
 
@@ -175,7 +176,7 @@ export class ClientGeneralStepComponent implements OnInit {
   buildDependencies() {
     this.createClientForm
       .get('legalFormId')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe((legalFormId: number) => {
         this.legalFormChangeEvent.emit({ legalForm: legalFormId });
         if (legalFormId === LegalFormId.PERSON) {
@@ -225,7 +226,7 @@ export class ClientGeneralStepComponent implements OnInit {
     this.createClientForm.get('legalFormId').patchValue(LegalFormId.PERSON);
     this.createClientForm
       .get('active')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe((active: boolean) => {
         if (active) {
           this.createClientForm.addControl('activationDate', new UntypedFormControl('', Validators.required));
@@ -235,7 +236,7 @@ export class ClientGeneralStepComponent implements OnInit {
       });
     this.createClientForm
       .get('addSavings')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe((active: boolean) => {
         if (active) {
           this.createClientForm.addControl('savingsProductId', new UntypedFormControl('', Validators.required));
@@ -248,11 +249,16 @@ export class ClientGeneralStepComponent implements OnInit {
       .valueChanges.pipe(
         filter((officeId: number) => !!officeId),
         switchMap((officeId: number) => this.clientService.getClientWithOfficeTemplate(officeId)),
-        takeUntilDestroyed(this.destroyRef)
+        takeUntil(this.destroy$)
       )
       .subscribe((clientTemplate: any) => {
         this.staffOptions = clientTemplate.staffOptions;
       });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   getDateLabel(legalFormId: number, values: string[]): string {

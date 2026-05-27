@@ -13,20 +13,20 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from '../../organization.service';
+import { NavigationService } from './navigation.service';
 
 /**
- * Manage Offices data resolver.
+ * Offices data resolver.
  */
 @Injectable()
 export class OfficesResolver {
-  private organizationService = inject(OrganizationService);
+  private navigationService = inject(NavigationService);
 
   /**
-   * Returns the offices data.
+   * Returns the Offices data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.organizationService.getOffices();
+    return this.navigationService.getOffices();
   }
 }

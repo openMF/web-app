@@ -6,8 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { CollectionsService } from '../collections.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -42,8 +41,6 @@ export class CollectionSheetComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private settingsService = inject(SettingsService);
   private dateUtils = inject(Dates);
-  private destroyRef = inject(DestroyRef);
-  private cdr = inject(ChangeDetectorRef);
 
   /** Offices Data */
   officesData: any;
@@ -112,24 +109,18 @@ export class CollectionSheetComponent implements OnInit {
    * Checks for the office id value change
    */
   buildDependencies() {
-    this.collectionSheetForm
-      .get('officeId')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((officeId: any) => {
-        this.officeId = officeId;
-        this.organizationService.getStaffs(officeId).subscribe((response: any) => {
-          this.loanOfficerData = response;
-          this.cdr.markForCheck();
-        });
-        this.organizationService.getCenters(officeId).subscribe((response: any) => {
-          this.centersData = response;
-          this.cdr.markForCheck();
-        });
-        this.organizationService.getGroups(officeId).subscribe((response: any) => {
-          this.groupsData = response;
-          this.cdr.markForCheck();
-        });
+    this.collectionSheetForm.get('officeId').valueChanges.subscribe((officeId: any) => {
+      this.officeId = officeId;
+      this.organizationService.getStaffs(officeId).subscribe((response: any) => {
+        this.loanOfficerData = response;
       });
+      this.organizationService.getCenters(officeId).subscribe((response: any) => {
+        this.centersData = response;
+      });
+      this.organizationService.getGroups(officeId).subscribe((response: any) => {
+        this.groupsData = response;
+      });
+    });
   }
 
   previewCollectionSheet() {

@@ -7,16 +7,7 @@
  */
 
 /** Angular Imports */
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  DestroyRef,
-  OnInit,
-  ViewChild,
-  inject
-} from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 
@@ -52,8 +43,6 @@ export class NavigationComponent implements OnInit {
   private navigationService = inject(NavigationService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  private destroyRef = inject(DestroyRef);
-  private cdr = inject(ChangeDetectorRef);
 
   /** Navigation Components */
   @ViewChild(OfficeNavigationComponent) officeNavigationComponent: OfficeNavigationComponent;
@@ -119,7 +108,7 @@ export class NavigationComponent implements OnInit {
    * Sets the office selector
    */
   setOfficeSelector() {
-    this.officeSelector.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((officeId) => {
+    this.officeSelector.valueChanges.subscribe((officeId) => {
       this.employeeSelector.reset(null, { emitEvent: false });
       this.centerSelector.reset(null, { emitEvent: false });
       this.groupSelector.reset(null, { emitEvent: false });
@@ -130,7 +119,6 @@ export class NavigationComponent implements OnInit {
       this.clientData = null;
       this.selectedItem = this.officeData.find((office: any) => office.id === officeId);
       this.selectedItem.itemType = 'office';
-      this.cdr.markForCheck();
       this.navigationService.getEmployees(officeId).subscribe((employees: any) => {
         this.employeeData = employees;
         if (this.employeeData.length) {
@@ -138,7 +126,6 @@ export class NavigationComponent implements OnInit {
         } else {
           this.employeeSelector.disable();
         }
-        this.cdr.markForCheck();
       });
     });
   }
@@ -147,7 +134,7 @@ export class NavigationComponent implements OnInit {
    * Sets the employee selector
    */
   setEmployeeSelector() {
-    this.employeeSelector.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((employeeId) => {
+    this.employeeSelector.valueChanges.subscribe((employeeId) => {
       if (employeeId) {
         this.centerSelector.reset(null, { emitEvent: false });
         this.groupSelector.reset(null, { emitEvent: false });
@@ -157,7 +144,6 @@ export class NavigationComponent implements OnInit {
         this.clientData = null;
         this.selectedItem = this.employeeData.find((employee: any) => employee.id === employeeId);
         this.selectedItem.itemType = 'employee';
-        this.cdr.markForCheck();
         this.navigationService.getCentersFromStaffId(employeeId).subscribe((centers: any) => {
           this.centerData = centers;
           if (this.centerData.length) {
@@ -165,7 +151,6 @@ export class NavigationComponent implements OnInit {
           } else {
             this.centerSelector.disable();
           }
-          this.cdr.markForCheck();
         });
       }
     });
@@ -175,13 +160,12 @@ export class NavigationComponent implements OnInit {
    * Sets the center selector
    */
   setCenterSelector() {
-    this.centerSelector.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((centerId) => {
+    this.centerSelector.valueChanges.subscribe((centerId) => {
       if (centerId) {
         this.groupSelector.reset(null, { emitEvent: false });
         this.clientSelector.reset(null, { emitEvent: false });
         this.groupData = null;
         this.clientData = null;
-        this.cdr.markForCheck();
         this.navigationService.getCenter(centerId).subscribe((center: any) => {
           this.selectedItem = center;
           this.selectedItem.itemType = 'center';
@@ -191,17 +175,14 @@ export class NavigationComponent implements OnInit {
           } else {
             this.groupSelector.disable();
           }
-          this.cdr.markForCheck();
         });
         this.selectedItemAccounts = null;
         this.navigationService.getCenterAccounts(centerId).subscribe((centerAccounts: any) => {
           this.selectedItemAccounts = centerAccounts;
-          this.cdr.markForCheck();
         });
         this.selectedItemSummary = null;
         this.navigationService.getCenterSummary(centerId).subscribe((centerSummary: any) => {
           this.selectedItemSummary = centerSummary[0];
-          this.cdr.markForCheck();
         });
       }
     });
@@ -211,11 +192,10 @@ export class NavigationComponent implements OnInit {
    * Sets the group selector
    */
   setGroupSelector() {
-    this.groupSelector.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((groupId) => {
+    this.groupSelector.valueChanges.subscribe((groupId) => {
       if (groupId) {
         this.clientSelector.reset(null, { emitEvent: false });
         this.clientData = null;
-        this.cdr.markForCheck();
         this.navigationService.getGroup(groupId).subscribe((group: any) => {
           this.selectedItem = group;
           this.selectedItem.itemType = 'group';
@@ -225,12 +205,10 @@ export class NavigationComponent implements OnInit {
           } else {
             this.clientSelector.disable();
           }
-          this.cdr.markForCheck();
         });
         this.selectedItemAccounts = null;
         this.navigationService.getGroupAccounts(groupId).subscribe((groupAccounts: any) => {
           this.selectedItemAccounts = groupAccounts;
-          this.cdr.markForCheck();
         });
       }
     });
@@ -240,18 +218,15 @@ export class NavigationComponent implements OnInit {
    * Sets the client selector
    */
   setClientSelector() {
-    this.clientSelector.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((clientId) => {
+    this.clientSelector.valueChanges.subscribe((clientId) => {
       if (clientId) {
         this.selectedItemAccounts = null;
-        this.cdr.markForCheck();
         this.navigationService.getClient(clientId).subscribe((client: any) => {
           this.selectedItem = client;
           this.selectedItem.itemType = 'client';
-          this.cdr.markForCheck();
         });
         this.navigationService.getClientAccounts(clientId).subscribe((clientAccounts: any) => {
           this.selectedItemAccounts = clientAccounts;
-          this.cdr.markForCheck();
         });
       }
     });

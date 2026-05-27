@@ -7,8 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, Input, OnChanges, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, Input, OnChanges, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -50,7 +49,6 @@ import { PositiveIntegerDirective } from 'app/directives/positive-integer.direct
 export class RecurringDepositsAccountSettingsStepComponent implements OnInit, OnChanges {
   private formBuilder = inject(UntypedFormBuilder);
   private settingsService = inject(SettingsService);
-  private destroyRef = inject(DestroyRef);
 
   @Input() isNew = true;
   @Input() recurringDepositsAccountTemplate: any;
@@ -125,22 +123,19 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
       });
       if (recurringDepositsAccount.withHoldTax) {
         this.recurringDepositAccountSettingsForm.addControl('withHoldTax', new UntypedFormControl(false));
-        this.recurringDepositAccountSettingsForm
-          .get('withHoldTax')!
-          .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-          .subscribe((value: boolean) => {
-            if (value) {
-              this.recurringDepositAccountSettingsForm.addControl(
-                'taxGroupId',
-                new UntypedFormControl({ value: '', disabled: true })
-              );
-              this.recurringDepositAccountSettingsForm
-                .get('taxGroupId')!
-                .patchValue(recurringDepositsAccount.taxGroup && recurringDepositsAccount.taxGroup.name);
-            } else {
-              this.recurringDepositAccountSettingsForm.removeControl('taxGroupId');
-            }
-          });
+        this.recurringDepositAccountSettingsForm.get('withHoldTax')!.valueChanges.subscribe((value: boolean) => {
+          if (value) {
+            this.recurringDepositAccountSettingsForm.addControl(
+              'taxGroupId',
+              new UntypedFormControl({ value: '', disabled: true })
+            );
+            this.recurringDepositAccountSettingsForm
+              .get('taxGroupId')!
+              .patchValue(recurringDepositsAccount.taxGroup && recurringDepositsAccount.taxGroup.name);
+          } else {
+            this.recurringDepositAccountSettingsForm.removeControl('taxGroupId');
+          }
+        });
         this.recurringDepositAccountSettingsForm
           .get('withHoldTax')!
           .patchValue(this.recurringDepositsAccountTemplate.withHoldTax);
@@ -225,8 +220,7 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
   buildDependencies() {
     this.recurringDepositAccountSettingsForm
       .get('isCalendarInherited')!
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((isCalendarInherited: any) => {
+      .valueChanges.subscribe((isCalendarInherited: any) => {
         if (isCalendarInherited) {
           this.recurringDepositAccountSettingsForm.removeControl('expectedFirstDepositOnDate');
           this.recurringDepositAccountSettingsForm.removeControl('recurringFrequency');

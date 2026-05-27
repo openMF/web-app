@@ -6,177 +6,50 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<!-- ══════════════════════════════════════════════════════════════
-     HERO — dark navy banner with greeting + search + dashboard CTA
-══════════════════════════════════════════════════════════════ -->
-<div class="home-hero">
-  <div class="hero-dots" aria-hidden="true"></div>
-  <div class="hero-glow-tr" aria-hidden="true"></div>
-  <div class="hero-glow-bl" aria-hidden="true"></div>
+<div class="layout-row align-end gap-2px responsive-column container m-b-20">
+  <div #buttonDashboard class="in-block">
+    <button mat-raised-button color="primary" [routerLink]="['/dashboard']">
+      <fa-icon icon="tachometer-alt" class="m-r-10"></fa-icon>
+      {{ 'labels.buttons.Dashboard' | translate }}
+    </button>
+  </div>
+</div>
 
-  <div class="hero-inner">
-    <!-- Mifos logo + greeting block -->
-    <div class="greeting">
-      <img src="assets/images/white-mifos.png" class="hero-logo" alt="Mifos Initiative" />
-      <span class="greeting-eyebrow">{{ 'labels.text.Welcome' | translate }} {{ username }}</span>
-      <div class="greeting-meta">
-        <span class="online-pip"></span>
-        <span class="tenant-label">{{ tenant }}</span>
-      </div>
-      @if (businessDate) {
-        <div class="greeting-business-date">
-          <span class="business-date-label">{{ 'labels.text.Current Business Date' | translate }}:</span>
-          <span class="business-date-value">{{ businessDate | date: 'EEEE, MMMM dd, y' }}</span>
-        </div>
-      }
-    </div>
+<div class="container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title class="title">
+        {{ 'labels.text.Welcome' | translate }} {{ username }} {{ 'labels.text.To' | translate }}
+        {{ tenant | titlecase }}!
+      </mat-card-title>
+    </mat-card-header>
 
-    <!-- Search bar (keeps all existing autocomplete logic) -->
-    <div class="search-wrap" #searchActivity>
-      <div class="search-pill">
-        <fa-icon icon="search" class="search-lead-icon"></fa-icon>
-        <input
-          class="search-input"
-          [matAutocomplete]="activitySearch"
-          [formControl]="searchText"
-          placeholder="{{ 'labels.placeholders.Search Activity' | translate }}"
-          autocomplete="off"
-        />
-        <kbd class="search-kbd">⌘K</kbd>
+    <mat-card-content #searchActivity>
+      <div class="layout-column">
+        <mat-form-field>
+          <mat-label>{{ 'labels.placeholders.Search Activity' | translate }}</mat-label>
+          <input matInput [matAutocomplete]="activitySearch" [formControl]="searchText" />
+        </mat-form-field>
       </div>
+
       <mat-autocomplete #activitySearch="matAutocomplete">
         @for (activity of filteredActivities | async; track activity) {
           <mat-option [routerLink]="activity.path">
-            <fa-icon icon="chevron-right" class="opt-arrow"></fa-icon>
             <span>{{ activity.activity }}</span>
           </mat-option>
         }
       </mat-autocomplete>
-    </div>
+    </mat-card-content>
 
-    <!-- Dashboard CTA -->
-    <div #buttonDashboard>
-      <button mat-raised-button color="primary" [routerLink]="['/dashboard']" class="hero-dashboard-btn">
-        <fa-icon icon="tachometer-alt"></fa-icon>
-        {{ 'labels.buttons.Dashboard' | translate }}
-      </button>
-    </div>
-  </div>
+    <img
+      mat-card-image
+      [src]="'assets/images/' + tenant + '_home.png'"
+      (error)="onImageMissing($event)"
+      alt="Mifos X"
+    />
+  </mat-card>
 </div>
 
-<div class="home-body">
-  <div class="section-header">
-    <div class="section-title-block">
-      <h2 class="section-title">{{ 'labels.heading.Quick Access' | translate }}</h2>
-      <p class="section-sub">{{ 'labels.text.Navigate directly to any platform area' | translate }}</p>
-    </div>
-  </div>
-
-  <div class="actions-grid">
-    <a class="action-card" routerLink="/clients">
-      <div class="ac-icon ac-icon--clients">
-        <fa-icon icon="user"></fa-icon>
-      </div>
-      <div class="ac-body">
-        <div class="ac-title">{{ 'labels.menus.Clients' | translate }}</div>
-        <div class="ac-desc">{{ 'labels.text.Profiles and accounts' | translate }}</div>
-      </div>
-      <fa-icon icon="chevron-right" class="ac-arrow"></fa-icon>
-    </a>
-
-    <a class="action-card" routerLink="/groups">
-      <div class="ac-icon ac-icon--groups">
-        <fa-icon icon="users"></fa-icon>
-      </div>
-      <div class="ac-body">
-        <div class="ac-title">{{ 'labels.menus.Groups' | translate }}</div>
-        <div class="ac-desc">{{ 'labels.text.Group lending' | translate }}</div>
-      </div>
-      <fa-icon icon="chevron-right" class="ac-arrow"></fa-icon>
-    </a>
-
-    <a class="action-card" routerLink="/centers">
-      <div class="ac-icon ac-icon--centers">
-        <fa-icon icon="university"></fa-icon>
-      </div>
-      <div class="ac-body">
-        <div class="ac-title">{{ 'labels.menus.Centers' | translate }}</div>
-        <div class="ac-desc">{{ 'labels.text.Center banking' | translate }}</div>
-      </div>
-      <fa-icon icon="chevron-right" class="ac-arrow"></fa-icon>
-    </a>
-
-    <a class="action-card" routerLink="/accounting">
-      <div class="ac-icon ac-icon--accounting">
-        <fa-icon icon="chart-bar"></fa-icon>
-      </div>
-      <div class="ac-body">
-        <div class="ac-title">{{ 'labels.menus.Accounting' | translate }}</div>
-        <div class="ac-desc">{{ 'labels.text.Journals and ledger' | translate }}</div>
-      </div>
-      <fa-icon icon="chevron-right" class="ac-arrow"></fa-icon>
-    </a>
-
-    <a class="action-card" routerLink="/products/loan-products">
-      <div class="ac-icon ac-icon--loans">
-        <fa-icon icon="money-bill-wave"></fa-icon>
-      </div>
-      <div class="ac-body">
-        <div class="ac-title">{{ 'labels.heading.Loan Products' | translate }}</div>
-        <div class="ac-desc">{{ 'labels.text.Configure offerings' | translate }}</div>
-      </div>
-      <fa-icon icon="chevron-right" class="ac-arrow"></fa-icon>
-    </a>
-
-    <a class="action-card" routerLink="/products/saving-products">
-      <div class="ac-icon ac-icon--savings">
-        <fa-icon icon="piggy-bank"></fa-icon>
-      </div>
-      <div class="ac-body">
-        <div class="ac-title">{{ 'labels.heading.Savings Products' | translate }}</div>
-        <div class="ac-desc">{{ 'labels.text.Savings accounts' | translate }}</div>
-      </div>
-      <fa-icon icon="chevron-right" class="ac-arrow"></fa-icon>
-    </a>
-
-    <a class="action-card" routerLink="/organization">
-      <div class="ac-icon ac-icon--organization">
-        <fa-icon icon="sitemap"></fa-icon>
-      </div>
-      <div class="ac-body">
-        <div class="ac-title">{{ 'labels.menus.Organization' | translate }}</div>
-        <div class="ac-desc">{{ 'labels.text.Offices and staff' | translate }}</div>
-      </div>
-      <fa-icon icon="chevron-right" class="ac-arrow"></fa-icon>
-    </a>
-
-    <a class="action-card" routerLink="/system">
-      <div class="ac-icon ac-icon--system">
-        <fa-icon icon="cog"></fa-icon>
-      </div>
-      <div class="ac-body">
-        <div class="ac-title">{{ 'labels.menus.System' | translate }}</div>
-        <div class="ac-desc">{{ 'labels.text.System configuration' | translate }}</div>
-      </div>
-      <fa-icon icon="chevron-right" class="ac-arrow"></fa-icon>
-    </a>
-
-    <a class="action-card" routerLink="/reports">
-      <div class="ac-icon ac-icon--reports">
-        <fa-icon icon="table-cells"></fa-icon>
-      </div>
-      <div class="ac-body">
-        <div class="ac-title">{{ 'labels.menus.Reports' | translate }}</div>
-        <div class="ac-desc">{{ 'labels.text.System configuration' | translate }}</div>
-      </div>
-      <fa-icon icon="chevron-right" class="ac-arrow"></fa-icon>
-    </a>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════════════════════════
-     CONFIGURATION WIZARD TEMPLATES (unchanged)
-══════════════════════════════════════════════════════════════ -->
 <ng-template #popoverButtons let-popover="popover" let-prev="prev" let-next="next">
   <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">

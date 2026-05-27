@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { Alert } from 'app/core/alert/alert.model';
 import { AlertService } from 'app/core/alert/alert.service';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
@@ -45,7 +45,6 @@ export class FooterComponent implements OnInit, OnDestroy {
   private dateUtils = inject(Dates);
   private versionService = inject(VersionService);
   private translateService = inject(TranslateService);
-  private cdr = inject(ChangeDetectorRef);
 
   username: string = '';
   name: string = '';
@@ -66,11 +65,12 @@ export class FooterComponent implements OnInit, OnDestroy {
   hash: string = environment.hash;
   server = '';
   /** Business Date */
-  businessDate: Date | null = null;
+  businessDate: Date = null;
   /** Tenant name */
   tenant: string;
 
   isBusinessDateEnabled = false;
+  isBusinessDateDefined = false;
   /** Subscription to alerts. */
   alert$: Subscription;
   timer: any;
@@ -89,11 +89,9 @@ export class FooterComponent implements OnInit, OnDestroy {
         const alertType = alertEvent.type;
         if (alertType === SettingsService.businessDateType + ' Set Config') {
           this.isBusinessDateEnabled = alertEvent.enabled ? true : false;
+          this.isBusinessDateDefined = false;
           if (this.isBusinessDateEnabled) {
             this.setBusinessDate();
-          } else {
-            this.businessDate = null;
-            this.cdr.markForCheck();
           }
         } else if (alertType === SettingsService.businessDateType + ' Set') {
           if (this.isBusinessDateEnabled) {
@@ -153,7 +151,6 @@ export class FooterComponent implements OnInit, OnDestroy {
         .subscribe((configurationData: any) => {
           this.isBusinessDateEnabled = configurationData.enabled;
           this.settingsService.setBusinessDateConfig(configurationData.enabled);
-          this.cdr.markForCheck();
           if (this.isBusinessDateEnabled) {
             this.setBusinessDate();
             this.timer = setTimeout(() => {
@@ -177,7 +174,7 @@ export class FooterComponent implements OnInit, OnDestroy {
       this.settingsService.setBusinessDate(
         this.dateUtils.formatDate(this.businessDate, SettingsService.businessDateFormat)
       );
-      this.cdr.markForCheck();
+      this.isBusinessDateDefined = true;
     });
   }
 }

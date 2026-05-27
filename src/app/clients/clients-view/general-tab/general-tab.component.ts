@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnDestroy, DestroyRef, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
@@ -41,8 +41,8 @@ import { CurrencyPipe } from '@angular/common';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { ReportsService } from 'app/reports/reports.service';
 import { SettingsService } from 'app/settings/settings.service';
-import { catchError } from 'rxjs/operators';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Subject } from 'rxjs';
+import { takeUntil, catchError } from 'rxjs/operators';
 import { AlertService } from 'app/core/alert/alert.service';
 import { EMPTY } from 'rxjs';
 import { LoanProductService } from 'app/products/loan-products/services/loan-product.service';
@@ -83,7 +83,7 @@ import { LoanProductService } from 'app/products/loan-products/services/loan-pro
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GeneralTabComponent implements OnDestroy {
-  private destroyRef = inject(DestroyRef);
+  private destroy$ = new Subject<void>();
   private alertService = inject(AlertService);
   private sanitizer = inject(DomSanitizer);
   pdfUrl: SafeResourceUrl | null = null;
@@ -100,7 +100,7 @@ export class GeneralTabComponent implements OnDestroy {
     this.reportsService
       .getPentahoRunReportData('LoanApplicationReport', formData, tenantIdentifier, locale, dateFormat)
       .pipe(
-        takeUntilDestroyed(this.destroyRef),
+        takeUntil(this.destroy$),
         catchError((error): any => {
           this.showPdf = false;
           if (this.rawPdfUrl) {
@@ -139,6 +139,8 @@ export class GeneralTabComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
     if (this.rawPdfUrl) {
       URL.revokeObjectURL(this.rawPdfUrl);
       this.rawPdfUrl = null;

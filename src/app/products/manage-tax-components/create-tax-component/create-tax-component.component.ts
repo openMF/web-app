@@ -7,8 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -45,7 +44,6 @@ export class CreateTaxComponentComponent implements OnInit {
   private router = inject(Router);
   private dateUtils = inject(Dates);
   private settingsService = inject(SettingsService);
-  private destroyRef = inject(DestroyRef);
 
   /** Minimum start date allowed. */
   minDate = new Date();
@@ -120,20 +118,14 @@ export class CreateTaxComponentComponent implements OnInit {
    * Sets the conditional controls of the tax Component form
    */
   setConditionalControls() {
-    this.taxComponentForm
-      .get('debitAccountType')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((debitAccountTypeId) => {
-        this.debitAccountData = this.getAccountsData(debitAccountTypeId);
-        this.taxComponentForm.addControl('debitAccountId', new UntypedFormControl('', Validators.required));
-      });
-    this.taxComponentForm
-      .get('creditAccountType')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((creditAccountTypeId) => {
-        this.creditAccountData = this.getAccountsData(creditAccountTypeId);
-        this.taxComponentForm.addControl('creditAccountId', new UntypedFormControl('', Validators.required));
-      });
+    this.taxComponentForm.get('debitAccountType').valueChanges.subscribe((debitAccountTypeId) => {
+      this.debitAccountData = this.getAccountsData(debitAccountTypeId);
+      this.taxComponentForm.addControl('debitAccountId', new UntypedFormControl('', Validators.required));
+    });
+    this.taxComponentForm.get('creditAccountType').valueChanges.subscribe((creditAccountTypeId) => {
+      this.creditAccountData = this.getAccountsData(creditAccountTypeId);
+      this.taxComponentForm.addControl('creditAccountId', new UntypedFormControl('', Validators.required));
+    });
   }
 
   /**

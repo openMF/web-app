@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, ViewChild, DestroyRef, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -27,8 +27,7 @@ import {
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { switchMap, takeUntil } from 'rxjs/operators';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntil, switchMap } from 'rxjs/operators';
 
 /** Services Import */
 import { CollectionsService } from '../collections.service';
@@ -97,7 +96,7 @@ export class IndividualCollectionSheetComponent implements OnInit, OnDestroy {
   collectionSheetData: any;
 
   private reloadContext = 'individual-collection-sheet';
-  private destroyRef = inject(DestroyRef);
+  private destroy$ = new Subject<void>();
   private buildDependencies$ = new Subject<void>();
   /** checks and stores the local storage values */
   Success: boolean;
@@ -153,14 +152,14 @@ export class IndividualCollectionSheetComponent implements OnInit, OnDestroy {
    * @param {SettingsService} settingsService Settings Service
    */
   ngOnInit(): void {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { officesData: any }) => {
+    this.route.data.pipe(takeUntil(this.destroy$)).subscribe((data: { officesData: any }) => {
       this.officesData = data.officesData;
     });
 
     // Subscribe to reload events
     this.dataReloadService
       .getReloadObservable(this.reloadContext)
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.refreshData();
       });
@@ -178,6 +177,8 @@ export class IndividualCollectionSheetComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
     this.buildDependencies$.next();
     this.buildDependencies$.complete();
     if (this.reloadContext) {
@@ -213,7 +214,7 @@ export class IndividualCollectionSheetComponent implements OnInit, OnDestroy {
       .get('officeId')
       .valueChanges.pipe(
         takeUntil(this.buildDependencies$),
-        takeUntilDestroyed(this.destroyRef),
+        takeUntil(this.destroy$),
         switchMap((value: any) => this.organizationService.getStaffs(value))
       )
       .subscribe((response: any) => {

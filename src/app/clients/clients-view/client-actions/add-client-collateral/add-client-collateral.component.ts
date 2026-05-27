@@ -6,8 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -36,8 +35,6 @@ export class AddClientCollateralComponent implements OnInit {
   private readonly clientsService = inject(ClientsService);
   private readonly settingsService = inject(SettingsService);
   private readonly notifier = inject(ClientActionNotifierService);
-  private readonly destroyRef = inject(DestroyRef);
-  private readonly cdr = inject(ChangeDetectorRef);
 
   /** Client Collateral Form */
   clientCollateralForm: UntypedFormGroup;
@@ -70,29 +67,24 @@ export class AddClientCollateralComponent implements OnInit {
    * Subscribe to Form controls value changes
    */
   buildDependencies() {
-    this.clientCollateralForm.controls.collateralId.valueChanges
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((collateralId) => {
-        this.productsService.getCollateral(collateralId).subscribe((data: any) => {
-          this.collateralDetails = data;
-          this.clientCollateralForm.patchValue({
-            name: data.name,
-            quality: data.quality,
-            unitType: data.unitType,
-            basePrice: this.collateralDetails.basePrice,
-            pctToBase: this.collateralDetails.pctToBase
-          });
-          this.cdr.markForCheck();
-        });
-      });
-    this.clientCollateralForm.controls.quantity.valueChanges
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((quantity: any) => {
+    this.clientCollateralForm.controls.collateralId.valueChanges.subscribe((collateralId) => {
+      this.productsService.getCollateral(collateralId).subscribe((data: any) => {
+        this.collateralDetails = data;
         this.clientCollateralForm.patchValue({
-          totalValue: this.collateralDetails.basePrice * quantity,
-          totalCollateralValue: (this.collateralDetails.basePrice * this.collateralDetails.pctToBase * quantity) / 100
+          name: data.name,
+          quality: data.quality,
+          unitType: data.unitType,
+          basePrice: this.collateralDetails.basePrice,
+          pctToBase: this.collateralDetails.pctToBase
         });
       });
+    });
+    this.clientCollateralForm.controls.quantity.valueChanges.subscribe((quantity: any) => {
+      this.clientCollateralForm.patchValue({
+        totalValue: this.collateralDetails.basePrice * quantity,
+        totalCollateralValue: (this.collateralDetails.basePrice * this.collateralDetails.pctToBase * quantity) / 100
+      });
+    });
   }
 
   /**

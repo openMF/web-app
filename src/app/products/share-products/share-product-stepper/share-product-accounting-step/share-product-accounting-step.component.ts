@@ -6,8 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, Input, inject, DestroyRef } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, Input, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -40,7 +39,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class ShareProductAccountingStepComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
-  private destroyRef = inject(DestroyRef);
 
   @Input() shareProductsTemplate: any;
   @Input() accountingRuleData: any;
@@ -87,31 +85,22 @@ export class ShareProductAccountingStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.shareProductAccountingForm
-      .get('accountingRule')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((accountingRule: any) => {
-        if (accountingRule === 2) {
-          this.shareProductAccountingForm.addControl(
-            'shareReferenceId',
-            new UntypedFormControl('', Validators.required)
-          );
-          this.shareProductAccountingForm.addControl(
-            'shareSuspenseId',
-            new UntypedFormControl('', Validators.required)
-          );
-          this.shareProductAccountingForm.addControl('shareEquityId', new UntypedFormControl('', Validators.required));
-          this.shareProductAccountingForm.addControl(
-            'incomeFromFeeAccountId',
-            new UntypedFormControl('', Validators.required)
-          );
-        } else {
-          this.shareProductAccountingForm.removeControl('shareReferenceId');
-          this.shareProductAccountingForm.removeControl('shareSuspenseId');
-          this.shareProductAccountingForm.removeControl('shareEquityId');
-          this.shareProductAccountingForm.removeControl('incomeFromFeeAccountId');
-        }
-      });
+    this.shareProductAccountingForm.get('accountingRule').valueChanges.subscribe((accountingRule: any) => {
+      if (accountingRule === 2) {
+        this.shareProductAccountingForm.addControl('shareReferenceId', new UntypedFormControl('', Validators.required));
+        this.shareProductAccountingForm.addControl('shareSuspenseId', new UntypedFormControl('', Validators.required));
+        this.shareProductAccountingForm.addControl('shareEquityId', new UntypedFormControl('', Validators.required));
+        this.shareProductAccountingForm.addControl(
+          'incomeFromFeeAccountId',
+          new UntypedFormControl('', Validators.required)
+        );
+      } else {
+        this.shareProductAccountingForm.removeControl('shareReferenceId');
+        this.shareProductAccountingForm.removeControl('shareSuspenseId');
+        this.shareProductAccountingForm.removeControl('shareEquityId');
+        this.shareProductAccountingForm.removeControl('incomeFromFeeAccountId');
+      }
+    });
   }
 
   get shareProductAccounting() {

@@ -7,8 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -42,8 +41,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FrequentPostingsComponent implements OnInit {
-  private destroyRef = inject(DestroyRef);
-  private cdr = inject(ChangeDetectorRef);
   private formBuilder = inject(UntypedFormBuilder);
   private accountingService = inject(AccountingService);
   private settingsService = inject(SettingsService);
@@ -138,24 +135,20 @@ export class FrequentPostingsComponent implements OnInit {
    * Sets the affected gl entry form array.
    */
   setAffectedGLEntryForm() {
-    this.frequentPostingsForm
-      .get('accountingRule')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((accountingRule) => {
-        while (this.debits.length) {
-          this.debits.removeAt(0);
-        }
-        while (this.credits.length) {
-          this.credits.removeAt(0);
-        }
-        this.allowMultipleDebitEntries = accountingRule.allowMultipleDebitEntries;
-        this.allowMultipleCreditEntries = accountingRule.allowMultipleCreditEntries;
-        this.debitAccountData = accountingRule.debitAccounts;
-        this.creditAccountData = accountingRule.creditAccounts;
-        this.addAffectedGLEntry(this.debits);
-        this.addAffectedGLEntry(this.credits);
-        this.cdr.markForCheck();
-      });
+    this.frequentPostingsForm.get('accountingRule').valueChanges.subscribe((accountingRule) => {
+      while (this.debits.length) {
+        this.debits.removeAt(0);
+      }
+      while (this.credits.length) {
+        this.credits.removeAt(0);
+      }
+      this.allowMultipleDebitEntries = accountingRule.allowMultipleDebitEntries;
+      this.allowMultipleCreditEntries = accountingRule.allowMultipleCreditEntries;
+      this.debitAccountData = accountingRule.debitAccounts;
+      this.creditAccountData = accountingRule.creditAccounts;
+      this.addAffectedGLEntry(this.debits);
+      this.addAffectedGLEntry(this.credits);
+    });
   }
 
   /**

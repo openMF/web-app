@@ -9,9 +9,7 @@
 /** Angular Imports */
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  DestroyRef,
   OnInit,
   TemplateRef,
   ElementRef,
@@ -19,7 +17,6 @@ import {
   AfterViewInit,
   inject
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -58,8 +55,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
-  private destroyRef = inject(DestroyRef);
-  private cdr = inject(ChangeDetectorRef);
   private formBuilder = inject(UntypedFormBuilder);
   private accountingService = inject(AccountingService);
   private settingsService = inject(SettingsService);
@@ -138,12 +133,9 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
       glAccountEntries: this.formBuilder.array([])
     });
 
-    this.openingBalancesForm.controls.currencyCode.valueChanges
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((value: string) => {
-        this.currencyCode = value;
-        this.cdr.markForCheck();
-      });
+    this.openingBalancesForm.controls.currencyCode.valueChanges.subscribe((value: string) => {
+      this.currencyCode = value;
+    });
   }
 
   /**
@@ -192,14 +184,13 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
 
         this.openingBalancesData = openingBalancesData;
 
-        entry.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+        entry.valueChanges.subscribe(() => {
           this.debitsSum = 0;
           this.creditsSum = 0;
           entry.controls.forEach((value) => {
             this.debitsSum += value.value.debit;
             this.creditsSum += value.value.credit;
           });
-          this.cdr.markForCheck();
         });
       });
   }

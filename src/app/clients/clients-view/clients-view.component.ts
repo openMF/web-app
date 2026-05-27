@@ -26,9 +26,18 @@ import { CaptureImageDialogComponent } from './custom-dialogs/capture-image-dial
 /** Custom Services */
 import { ClientsService } from '../clients.service';
 import { LegalFormId } from '../models/legal-form.enum';
-import { MatCard, MatCardMdImage, MatCardContent } from '@angular/material/card';
+import {
+  MatCard,
+  MatCardHeader,
+  MatCardTitleGroup,
+  MatCardMdImage,
+  MatCardTitle,
+  MatCardSubtitle,
+  MatCardContent
+} from '@angular/material/card';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
+import { NgClass } from '@angular/common';
 import { EntityNameComponent } from '../../shared/entity-name/entity-name.component';
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { MatIcon } from '@angular/material/icon';
@@ -36,10 +45,10 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { AccountNumberComponent } from '../../shared/account-number/account-number.component';
 import { ExternalIdentifierComponent } from '../../shared/external-identifier/external-identifier.component';
 import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
+import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { formatTabLabel } from 'app/shared/utils/format-tab-label.util';
-import { AccountHeaderComponent } from '../../shared/account-header/account-header.component';
 
 @Component({
   selector: 'mifosx-clients-view',
@@ -47,14 +56,18 @@ import { AccountHeaderComponent } from '../../shared/account-header/account-head
   styleUrls: ['./clients-view.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    AccountHeaderComponent,
+    MatCardHeader,
+    MatCardTitleGroup,
     MatCardMdImage,
     MatTooltip,
+    MatCardTitle,
+    NgClass,
     EntityNameComponent,
     MatIconButton,
     MatMenuTrigger,
     MatIcon,
     FaIconComponent,
+    MatCardSubtitle,
     AccountNumberComponent,
     ExternalIdentifierComponent,
     MatMenu,
@@ -64,6 +77,7 @@ import { AccountHeaderComponent } from '../../shared/account-header/account-head
     RouterLinkActive,
     MatTabNavPanel,
     RouterOutlet,
+    StatusLookupPipe,
     DateFormatPipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush

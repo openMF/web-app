@@ -7,8 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -44,7 +43,6 @@ export class AddChargeRecurringDepositsAccountComponent implements OnInit {
   private dateUtils = inject(Dates);
   private savingsService = inject(SavingsService);
   private settingsService = inject(SettingsService);
-  private destroyRef = inject(DestroyRef);
 
   /** Minimum Due Date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -84,49 +82,41 @@ export class AddChargeRecurringDepositsAccountComponent implements OnInit {
   }
 
   buildDependencies() {
-    this.recurringDepositsChargeForm.controls.chargeId.valueChanges
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((chargeId) => {
-        this.savingsService.getChargeTemplate(chargeId).subscribe((data: any) => {
-          this.chargeDetails = data;
-          const chargeTimeType = data.chargeTimeType.id;
-          if (
-            data.chargeTimeType.value === 'Withdrawal Fee' ||
-            data.chargeTimeType.value === 'Saving No Activity Fee'
-          ) {
-            this.chargeDetails.dueDateNotRequired = true;
-          }
-          if (data.chargeTimeType.value === 'Annual Fee' || data.chargeTimeType.value === 'Monthly Fee') {
-            this.chargeDetails.chargeTimeTypeAnnualOrMonth = true;
-          }
-          if (!this.chargeDetails.dueDateNotRequired && !this.chargeDetails.chargeTimeTypeAnnualOrMonth) {
-            this.recurringDepositsChargeForm.addControl('dueDate', new UntypedFormControl('', Validators.required));
-          } else {
-            this.recurringDepositsChargeForm.removeControl('dueDate');
-          }
-          if (!this.chargeDetails.dueDateNotRequired && this.chargeDetails.chargeTimeTypeAnnualOrMonth) {
-            this.recurringDepositsChargeForm.addControl(
-              'feeOnMonthDay',
-              new UntypedFormControl('', Validators.required)
-            );
-          } else {
-            this.recurringDepositsChargeForm.removeControl('feeOnMonthDay');
-          }
-          if (chargeTimeType.value === 'Monthly Fee') {
-            this.recurringDepositsChargeForm.addControl(
-              'feeInterval',
-              new UntypedFormControl(data.feeInterval, Validators.required)
-            );
-          } else {
-            this.recurringDepositsChargeForm.removeControl('feeInterval');
-          }
-          this.recurringDepositsChargeForm.patchValue({
-            amount: data.amount,
-            chargeCalculationType: data.chargeCalculationType.id,
-            chargeTimeType: data.chargeTimeType.id
-          });
+    this.recurringDepositsChargeForm.controls.chargeId.valueChanges.subscribe((chargeId) => {
+      this.savingsService.getChargeTemplate(chargeId).subscribe((data: any) => {
+        this.chargeDetails = data;
+        const chargeTimeType = data.chargeTimeType.id;
+        if (data.chargeTimeType.value === 'Withdrawal Fee' || data.chargeTimeType.value === 'Saving No Activity Fee') {
+          this.chargeDetails.dueDateNotRequired = true;
+        }
+        if (data.chargeTimeType.value === 'Annual Fee' || data.chargeTimeType.value === 'Monthly Fee') {
+          this.chargeDetails.chargeTimeTypeAnnualOrMonth = true;
+        }
+        if (!this.chargeDetails.dueDateNotRequired && !this.chargeDetails.chargeTimeTypeAnnualOrMonth) {
+          this.recurringDepositsChargeForm.addControl('dueDate', new UntypedFormControl('', Validators.required));
+        } else {
+          this.recurringDepositsChargeForm.removeControl('dueDate');
+        }
+        if (!this.chargeDetails.dueDateNotRequired && this.chargeDetails.chargeTimeTypeAnnualOrMonth) {
+          this.recurringDepositsChargeForm.addControl('feeOnMonthDay', new UntypedFormControl('', Validators.required));
+        } else {
+          this.recurringDepositsChargeForm.removeControl('feeOnMonthDay');
+        }
+        if (chargeTimeType.value === 'Monthly Fee') {
+          this.recurringDepositsChargeForm.addControl(
+            'feeInterval',
+            new UntypedFormControl(data.feeInterval, Validators.required)
+          );
+        } else {
+          this.recurringDepositsChargeForm.removeControl('feeInterval');
+        }
+        this.recurringDepositsChargeForm.patchValue({
+          amount: data.amount,
+          chargeCalculationType: data.chargeCalculationType.id,
+          chargeTimeType: data.chargeTimeType.id
         });
       });
+    });
   }
 
   /**

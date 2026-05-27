@@ -7,8 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 
 /** Custom Services */
@@ -40,7 +39,6 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
 export class PrepayLoanComponent extends LoanAccountActionsBaseComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   private dateUtils = inject(Dates);
-  private destroyRef = inject(DestroyRef);
 
   /** Payment Types */
   paymentTypes: any;
@@ -123,19 +121,16 @@ export class PrepayLoanComponent extends LoanAccountActionsBaseComponent impleme
     this.prepayLoanForm.patchValue({
       transactionAmount: this.dataObject.amount
     });
-    this.prepayLoanForm
-      .get('transactionDate')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((transactionDate: string) => {
-        const prepayDate = this.dateUtils.formatDate(transactionDate, this.settingsService.dateFormat);
+    this.prepayLoanForm.get('transactionDate').valueChanges.subscribe((transactionDate: string) => {
+      const prepayDate = this.dateUtils.formatDate(transactionDate, this.settingsService.dateFormat);
 
-        this.loanService.getLoanPrepayLoanActionTemplate(this.loanId, prepayDate).subscribe((response: any) => {
-          this.prepayData = response;
-          this.prepayLoanForm.patchValue({
-            transactionAmount: this.prepayData.amount
-          });
+      this.loanService.getLoanPrepayLoanActionTemplate(this.loanId, prepayDate).subscribe((response: any) => {
+        this.prepayData = response;
+        this.prepayLoanForm.patchValue({
+          transactionAmount: this.prepayData.amount
         });
       });
+    });
   }
 
   /**

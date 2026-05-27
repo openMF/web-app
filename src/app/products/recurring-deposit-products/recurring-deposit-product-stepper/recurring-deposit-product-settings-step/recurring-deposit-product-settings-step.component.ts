@@ -6,8 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, Input, inject, DestroyRef } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, Input, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -39,7 +38,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class RecurringDepositProductSettingsStepComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
-  private destroyRef = inject(DestroyRef);
 
   @Input() recurringDepositProductsTemplate: any;
 
@@ -142,19 +140,16 @@ export class RecurringDepositProductSettingsStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.recurringDepositProductSettingsForm
-      .get('withHoldTax')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((withHoldTax: any) => {
-        if (withHoldTax) {
-          this.recurringDepositProductSettingsForm.addControl(
-            'taxGroupId',
-            new UntypedFormControl('', Validators.required)
-          );
-        } else {
-          this.recurringDepositProductSettingsForm.removeControl('taxGroupId');
-        }
-      });
+    this.recurringDepositProductSettingsForm.get('withHoldTax').valueChanges.subscribe((withHoldTax: any) => {
+      if (withHoldTax) {
+        this.recurringDepositProductSettingsForm.addControl(
+          'taxGroupId',
+          new UntypedFormControl('', Validators.required)
+        );
+      } else {
+        this.recurringDepositProductSettingsForm.removeControl('taxGroupId');
+      }
+    });
   }
 
   get recurringDepositProductSettings() {

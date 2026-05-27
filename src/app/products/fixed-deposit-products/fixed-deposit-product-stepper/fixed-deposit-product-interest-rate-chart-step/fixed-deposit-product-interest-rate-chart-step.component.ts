@@ -8,8 +8,7 @@
 
 /** Angular Imports */
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { ChangeDetectionStrategy, Component, DestroyRef, Input, OnInit, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, Input, OnInit, inject } from '@angular/core';
 import {
   UntypedFormArray,
   UntypedFormBuilder,
@@ -95,7 +94,6 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
   private dateUtils = inject(Dates);
   private settingsService = inject(SettingsService);
   private translateService = inject(TranslateService);
-  private destroyRef = inject(DestroyRef);
 
   @Input() fixedDepositProductsTemplate: any;
 
@@ -366,8 +364,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
     this.charts
       .at(chartIndex)
       .get('isPrimaryGroupingByAmount')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((isPrimaryGroupingByAmount: boolean) => {
+      .valueChanges.subscribe((isPrimaryGroupingByAmount: boolean) => {
         this.chartSlabsDisplayedColumns[chartIndex] = isPrimaryGroupingByAmount ? [
               'amountRange',
               'period'

@@ -7,8 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LegalFormId } from 'app/clients/models/legal-form.enum';
 import {
@@ -53,7 +52,6 @@ export class EditClientComponent implements OnInit {
   private dateUtils = inject(Dates);
   private settingsService = inject(SettingsService);
   externalNationalIdService = inject(ExternalNationalIdService);
-  private destroyRef = inject(DestroyRef);
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -183,52 +181,49 @@ export class EditClientComponent implements OnInit {
    * Adds controls conditionally.
    */
   buildDependencies() {
-    this.editClientForm
-      .get('legalFormId')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((legalFormId: any) => {
-        if (legalFormId === LegalFormId.PERSON) {
-          this.editClientForm.removeControl('fullname');
-          this.editClientForm.removeControl('clientNonPersonDetails');
-          this.editClientForm.addControl(
-            'firstname',
-            new UntypedFormControl(this.clientDataAndTemplate.firstname, Validators.required)
-          );
-          this.editClientForm.addControl('middlename', new UntypedFormControl(this.clientDataAndTemplate.middlename));
-          this.editClientForm.addControl(
-            'lastname',
-            new UntypedFormControl(this.clientDataAndTemplate.lastname, Validators.required)
-          );
-        } else {
-          this.editClientForm.removeControl('firstname');
-          this.editClientForm.removeControl('middlename');
-          this.editClientForm.removeControl('lastname');
-          this.editClientForm.addControl(
-            'fullname',
-            new UntypedFormControl(this.clientDataAndTemplate.fullname, Validators.required)
-          );
-          this.editClientForm.addControl(
-            'clientNonPersonDetails',
-            this.formBuilder.group({
-              constitutionId: [
-                this.clientDataAndTemplate.clientNonPersonDetails.constitution &&
-                  this.clientDataAndTemplate.clientNonPersonDetails.constitution.id,
-                Validators.required
-              ],
-              incorpValidityTillDate: [
-                this.clientDataAndTemplate.clientNonPersonDetails.incorpValidityTillDate &&
-                  new Date(this.clientDataAndTemplate.clientNonPersonDetails.incorpValidityTillDate)
-              ],
-              incorpNumber: [this.clientDataAndTemplate.clientNonPersonDetails.incorpNumber],
-              mainBusinessLineId: [
-                this.clientDataAndTemplate.clientNonPersonDetails.mainBusinessLine &&
-                  this.clientDataAndTemplate.clientNonPersonDetails.mainBusinessLine.id
-              ],
-              remarks: [this.clientDataAndTemplate.clientNonPersonDetails.remarks]
-            })
-          );
-        }
-      });
+    this.editClientForm.get('legalFormId').valueChanges.subscribe((legalFormId: any) => {
+      if (legalFormId === LegalFormId.PERSON) {
+        this.editClientForm.removeControl('fullname');
+        this.editClientForm.removeControl('clientNonPersonDetails');
+        this.editClientForm.addControl(
+          'firstname',
+          new UntypedFormControl(this.clientDataAndTemplate.firstname, Validators.required)
+        );
+        this.editClientForm.addControl('middlename', new UntypedFormControl(this.clientDataAndTemplate.middlename));
+        this.editClientForm.addControl(
+          'lastname',
+          new UntypedFormControl(this.clientDataAndTemplate.lastname, Validators.required)
+        );
+      } else {
+        this.editClientForm.removeControl('firstname');
+        this.editClientForm.removeControl('middlename');
+        this.editClientForm.removeControl('lastname');
+        this.editClientForm.addControl(
+          'fullname',
+          new UntypedFormControl(this.clientDataAndTemplate.fullname, Validators.required)
+        );
+        this.editClientForm.addControl(
+          'clientNonPersonDetails',
+          this.formBuilder.group({
+            constitutionId: [
+              this.clientDataAndTemplate.clientNonPersonDetails.constitution &&
+                this.clientDataAndTemplate.clientNonPersonDetails.constitution.id,
+              Validators.required
+            ],
+            incorpValidityTillDate: [
+              this.clientDataAndTemplate.clientNonPersonDetails.incorpValidityTillDate &&
+                new Date(this.clientDataAndTemplate.clientNonPersonDetails.incorpValidityTillDate)
+            ],
+            incorpNumber: [this.clientDataAndTemplate.clientNonPersonDetails.incorpNumber],
+            mainBusinessLineId: [
+              this.clientDataAndTemplate.clientNonPersonDetails.mainBusinessLine &&
+                this.clientDataAndTemplate.clientNonPersonDetails.mainBusinessLine.id
+            ],
+            remarks: [this.clientDataAndTemplate.clientNonPersonDetails.remarks]
+          })
+        );
+      }
+    });
   }
 
   getDateLabel(legalFormId: number, values: string[]): string {

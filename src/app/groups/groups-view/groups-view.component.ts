@@ -7,10 +7,11 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, DestroyRef, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 /** Custom Dialogs */
 import { UnassignStaffDialogComponent } from './custom-dialogs/unassign-staff-dialog/unassign-staff-dialog.component';
@@ -81,27 +82,27 @@ export class GroupsViewComponent implements OnInit, OnDestroy {
   groupDatatables: any;
 
   private reloadContext!: string;
-  private destroyRef = inject(DestroyRef);
+  private destroy$ = new Subject<void>();
 
   ngOnInit(): void {
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { groupViewData: any; groupDatatables: any }) => {
-        this.groupViewData = data.groupViewData;
-        this.groupDatatables = data.groupDatatables;
-        this.reloadContext = `group-${this.groupViewData.id}`;
+    this.route.data.pipe(takeUntil(this.destroy$)).subscribe((data: { groupViewData: any; groupDatatables: any }) => {
+      this.groupViewData = data.groupViewData;
+      this.groupDatatables = data.groupDatatables;
+      this.reloadContext = `group-${this.groupViewData.id}`;
 
-        // Subscribe to reload events after we have the group ID
-        this.dataReloadService
-          .getReloadObservable(this.reloadContext)
-          .pipe(takeUntilDestroyed(this.destroyRef))
-          .subscribe(() => {
-            this.refreshData();
-          });
-      });
+      // Subscribe to reload events after we have the group ID
+      this.dataReloadService
+        .getReloadObservable(this.reloadContext)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(() => {
+          this.refreshData();
+        });
+    });
   }
 
   ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
     if (this.reloadContext) {
       this.dataReloadService.cleanup(this.reloadContext);
     }
@@ -177,7 +178,7 @@ export class GroupsViewComponent implements OnInit, OnDestroy {
   private refreshData(): void {
     this.groupsService
       .getGroupData(this.groupViewData.id)
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         this.groupViewData = data;
       });

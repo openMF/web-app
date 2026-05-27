@@ -9,9 +9,7 @@
 /** Angular Imports */
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  DestroyRef,
   OnInit,
   TemplateRef,
   ElementRef,
@@ -19,7 +17,6 @@ import {
   AfterViewInit,
   inject
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -68,8 +65,6 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
   private configurationWizardService = inject(ConfigurationWizardService);
   private dialog = inject(MatDialog);
   private passwordsUtility = inject(PasswordsUtility);
-  private destroyRef = inject(DestroyRef);
-  private cdr = inject(ChangeDetectorRef);
 
   /** User form. */
   userForm: UntypedFormGroup;
@@ -189,44 +184,37 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
    * Sets the staff data each time the user selects a new office
    */
   setStaffData() {
-    this.userForm
-      .get('officeId')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((officeId: string) => {
-        this.staffData = [];
-        this.usersService2.getStaff(officeId).subscribe((staff: any) => {
-          this.staffData = staff;
-          this.cdr.markForCheck();
-        });
+    this.userForm.get('officeId').valueChanges.subscribe((officeId: string) => {
+      this.staffData = [];
+      this.usersService2.getStaff(officeId).subscribe((staff: any) => {
+        this.staffData = staff;
       });
+    });
   }
 
   /**
    * Sets the conditional controls of the user form
    */
   setConditionalControls() {
-    this.userForm
-      .get('sendPasswordToEmail')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((sendPasswordToEmail: boolean) => {
-        const passwordControl = this.userForm.get('password');
-        const repeatPasswordControl = this.userForm.get('repeatPassword');
+    this.userForm.get('sendPasswordToEmail').valueChanges.subscribe((sendPasswordToEmail: boolean) => {
+      const passwordControl = this.userForm.get('password');
+      const repeatPasswordControl = this.userForm.get('repeatPassword');
 
-        if (sendPasswordToEmail) {
-          passwordControl.disable();
-          repeatPasswordControl.disable();
-          this.userForm.get('email')?.setValidators([
-            Validators.required,
-            Validators.email
-          ]);
-        } else {
-          passwordControl.enable();
-          repeatPasswordControl.enable();
-          this.userForm.get('email')?.setValidators([Validators.email]);
-        }
+      if (sendPasswordToEmail) {
+        passwordControl.disable();
+        repeatPasswordControl.disable();
+        this.userForm.get('email')?.setValidators([
+          Validators.required,
+          Validators.email
+        ]);
+      } else {
+        passwordControl.enable();
+        repeatPasswordControl.enable();
+        this.userForm.get('email')?.setValidators([Validators.email]);
+      }
 
-        this.userForm.get('email')?.updateValueAndValidity();
-      });
+      this.userForm.get('email')?.updateValueAndValidity();
+    });
   }
 
   /**

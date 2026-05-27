@@ -7,8 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -42,8 +41,6 @@ export class AddEventDialogComponent implements OnInit {
   dialogRef = inject<MatDialogRef<AddEventDialogComponent>>(MatDialogRef);
   formBuilder = inject(UntypedFormBuilder);
   data = inject(MAT_DIALOG_DATA);
-  private destroyRef = inject(DestroyRef);
-  private cdr = inject(ChangeDetectorRef);
 
   /** Event Form. */
   eventForm: UntypedFormGroup;
@@ -78,26 +75,18 @@ export class AddEventDialogComponent implements OnInit {
    * Subscribes to the grouping dropdown to set entity data for that row accordingly.
    */
   setGroupingListener() {
-    this.eventForm
-      .get('grouping')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((changedGrouping) => {
-        this.entityData = this.data.groupings.find((grouping: any) => grouping.name === changedGrouping).entities;
-        this.cdr.markForCheck();
-      });
+    this.eventForm.get('grouping').valueChanges.subscribe((changedGrouping) => {
+      this.entityData = this.data.groupings.find((grouping: any) => grouping.name === changedGrouping).entities;
+    });
   }
 
   /**
    * Subscribes to the entity dropdown to set entity data for that row accordingly.
    */
   setEntityListener() {
-    this.eventForm
-      .get('entity')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((changedEntity) => {
-        this.actionData = this.entityData.find((entity: any) => entity.name === changedEntity).actions;
-        this.cdr.markForCheck();
-      });
+    this.eventForm.get('entity').valueChanges.subscribe((changedEntity) => {
+      this.actionData = this.entityData.find((entity: any) => entity.name === changedEntity).actions;
+    });
   }
 
   /**

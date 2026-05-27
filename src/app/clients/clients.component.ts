@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports. */
-import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, ViewChild, DestroyRef, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, ViewChild, inject } from '@angular/core';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort, MatSortHeader } from '@angular/material/sort';
@@ -29,8 +29,7 @@ import { MatIcon } from '@angular/material/icon';
 
 /** rxjs Imports */
 import { Subject, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
 /** Custom Services */
 import { environment } from '../../environments/environment';
@@ -79,7 +78,7 @@ export const DEBOUNCE_MS = 500;
 export class ClientsComponent implements OnInit, OnDestroy {
   private clientService = inject(ClientsService);
 
-  private destroyRef = inject(DestroyRef);
+  private destroy$ = new Subject<void>();
   private searchInput$ = new Subject<string>();
   private clientsRequestSub: Subscription | null = null;
   private isComposing = false;
@@ -127,7 +126,7 @@ export class ClientsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.searchInput$
-      .pipe(debounceTime(DEBOUNCE_MS), distinctUntilChanged(), takeUntilDestroyed(this.destroyRef))
+      .pipe(debounceTime(DEBOUNCE_MS), distinctUntilChanged(), takeUntil(this.destroy$))
       .subscribe((value) => {
         if (value !== this.filterText) {
           this.search(value);
@@ -141,6 +140,8 @@ export class ClientsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.clientsRequestSub?.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   onSearchInput(value: string) {

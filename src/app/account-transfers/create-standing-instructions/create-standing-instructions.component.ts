@@ -7,8 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 
@@ -37,8 +36,6 @@ export class CreateStandingInstructionsComponent implements OnInit {
   private accountTransfersService = inject(AccountTransfersService);
   private settingsService = inject(SettingsService);
   private dateUtils = inject(Dates);
-  private destroyRef = inject(DestroyRef);
-  private cdr = inject(ChangeDetectorRef);
 
   /** Standing Instructions Data */
   standingIntructionsTemplate: any;
@@ -243,30 +240,26 @@ export class CreateStandingInstructionsComponent implements OnInit {
    * Changes the value on change of destination value
    */
   buildDependencies() {
-    this.createStandingInstructionsForm
-      .get('destination')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((destination: any) => {
-        if (destination === 1) {
-          this.allowclientedit = false;
-          this.createStandingInstructionsForm.patchValue({
-            toOfficeId: this.officeId,
-            toClientId: this.clientId
-          });
-          this.ToOfficeId = true;
-          this.ToClientId = true;
-          this.changeEvent();
-        } else {
-          this.allowclientedit = true;
-          this.createStandingInstructionsForm.patchValue({
-            toOfficeId: '',
-            toClientId: ''
-          });
-          this.createStandingInstructionsForm.controls['toOfficeId'].enable();
-          this.createStandingInstructionsForm.controls['toClientId'].enable();
-        }
-        this.cdr.markForCheck();
-      });
+    this.createStandingInstructionsForm.get('destination').valueChanges.subscribe((destination: any) => {
+      if (destination === 1) {
+        this.allowclientedit = false;
+        this.createStandingInstructionsForm.patchValue({
+          toOfficeId: this.officeId,
+          toClientId: this.clientId
+        });
+        this.ToOfficeId = true;
+        this.ToClientId = true;
+        this.changeEvent();
+      } else {
+        this.allowclientedit = true;
+        this.createStandingInstructionsForm.patchValue({
+          toOfficeId: '',
+          toClientId: ''
+        });
+        this.createStandingInstructionsForm.controls['toOfficeId'].enable();
+        this.createStandingInstructionsForm.controls['toClientId'].enable();
+      }
+    });
   }
 
   /** Executes on change of various select options */
@@ -277,7 +270,6 @@ export class CreateStandingInstructionsComponent implements OnInit {
       .subscribe((response: any) => {
         this.standingIntructionsTemplate = response;
         this.setOptions();
-        this.cdr.markForCheck();
       });
   }
 

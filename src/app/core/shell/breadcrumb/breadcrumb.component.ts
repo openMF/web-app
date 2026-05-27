@@ -15,15 +15,14 @@ import {
   ElementRef,
   ViewChild,
   AfterViewInit,
-  DestroyRef,
+  OnDestroy,
   inject
 } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd, Data } from '@angular/router';
 
 /** rxjs Imports */
-import { filter } from 'rxjs/operators';
-import { merge } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { filter, takeUntil } from 'rxjs/operators';
+import { merge, Subject } from 'rxjs';
 
 /** Custom Model */
 import { Breadcrumb } from './breadcrumb.model';
@@ -78,14 +77,14 @@ const routeAddBreadcrumbLink = 'addBreadcrumbLink';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BreadcrumbComponent implements AfterViewInit {
+export class BreadcrumbComponent implements AfterViewInit, OnDestroy {
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
   private configurationWizardService = inject(ConfigurationWizardService);
   private popoverService = inject(PopoverService);
   private translateService = inject(TranslateService);
   private cdr = inject(ChangeDetectorRef);
-  private destroyRef = inject(DestroyRef);
+  private destroy$ = new Subject<void>();
 
   /** Array of breadcrumbs. */
   breadcrumbs: Breadcrumb[];
@@ -113,7 +112,7 @@ export class BreadcrumbComponent implements AfterViewInit {
 
     // Merge navigation events with language change events to regenerate breadcrumbs when language changes
     merge(onNavigationEnd, this.translateService.onLangChange)
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.breadcrumbs = [];
         let currentRoute = this.activatedRoute.root;
@@ -334,5 +333,13 @@ export class BreadcrumbComponent implements AfterViewInit {
 
     // If no translation found, return the original text
     return text;
+  }
+
+  /**
+   * Clean up subscriptions on component destroy.
+   */
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

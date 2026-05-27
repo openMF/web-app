@@ -7,8 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, ViewChild, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -75,7 +74,6 @@ export class EditReportComponent implements OnInit {
   private router = inject(Router);
   private systemService = inject(SystemService);
   private dialog = inject(MatDialog);
-  private destroyRef = inject(DestroyRef);
 
   /** Report Data. */
   reportData: any;
@@ -267,25 +265,22 @@ export class EditReportComponent implements OnInit {
    * Toggles the visibility status of Report Sub Type dropdown.
    */
   toggleVisibility() {
-    this.reportForm
-      .get('reportType')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((type) => {
-        switch (type) {
-          case 'Chart':
-            this.reportForm.get('reportSubType').enable();
-            this.reportForm.get('reportSql').enable();
-            break;
-          case 'Pentaho':
-          case 'BIRT':
-            this.reportForm.get('reportSql').disable();
-            this.reportForm.get('reportSubType').disable();
-            break;
-          default:
-            this.reportForm.get('reportSql').enable();
-            this.reportForm.get('reportSubType').disable();
-        }
-      });
+    this.reportForm.get('reportType').valueChanges.subscribe((type) => {
+      switch (type) {
+        case 'Chart':
+          this.reportForm.get('reportSubType').enable();
+          this.reportForm.get('reportSql').enable();
+          break;
+        case 'Pentaho':
+        case 'BIRT':
+          this.reportForm.get('reportSql').disable();
+          this.reportForm.get('reportSubType').disable();
+          break;
+        default:
+          this.reportForm.get('reportSql').enable();
+          this.reportForm.get('reportSubType').disable();
+      }
+    });
   }
 
   /**

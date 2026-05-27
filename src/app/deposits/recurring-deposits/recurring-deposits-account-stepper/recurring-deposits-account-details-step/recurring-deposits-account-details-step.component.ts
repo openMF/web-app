@@ -7,17 +7,7 @@
  */
 
 /** Angular Imports */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DestroyRef,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  inject
-} from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, Input, Output, EventEmitter, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 
@@ -48,7 +38,6 @@ export class RecurringDepositsAccountDetailsStepComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   private recurringDepositsService = inject(RecurringDepositsService);
   private settingsService = inject(SettingsService);
-  private destroyRef = inject(DestroyRef);
 
   /** Recurring Deposits Account Template */
   @Input() recurringDepositsAccountTemplate: any;
@@ -121,26 +110,23 @@ export class RecurringDepositsAccountDetailsStepComponent implements OnInit {
    */
   buildDependencies() {
     const clientId = this.recurringDepositsAccountTemplate.clientId;
-    this.recurringDepositAccountDetailsForm
-      .get('productId')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((productId: string) => {
-        this.recurringDepositsService
-          .getRecurringDepositsAccountTemplate(clientId, productId)
-          .subscribe((response: any) => {
-            this.recurringDepositsAccountProductTemplate.emit(response);
-            this.fieldOfficerData = response.fieldOfficerOptions;
-            this.isProductSelected = true;
-            if (!this.isFieldOfficerPatched && this.recurringDepositsAccountTemplate.fieldOfficerId) {
-              this.recurringDepositAccountDetailsForm
-                .get('fieldOfficerId')
-                .patchValue(this.recurringDepositsAccountTemplate.fieldOfficerId);
-              this.isFieldOfficerPatched = true;
-            } else {
-              this.recurringDepositAccountDetailsForm.get('fieldOfficerId').patchValue('');
-            }
-          });
-      });
+    this.recurringDepositAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
+      this.recurringDepositsService
+        .getRecurringDepositsAccountTemplate(clientId, productId)
+        .subscribe((response: any) => {
+          this.recurringDepositsAccountProductTemplate.emit(response);
+          this.fieldOfficerData = response.fieldOfficerOptions;
+          this.isProductSelected = true;
+          if (!this.isFieldOfficerPatched && this.recurringDepositsAccountTemplate.fieldOfficerId) {
+            this.recurringDepositAccountDetailsForm
+              .get('fieldOfficerId')
+              .patchValue(this.recurringDepositsAccountTemplate.fieldOfficerId);
+            this.isFieldOfficerPatched = true;
+          } else {
+            this.recurringDepositAccountDetailsForm.get('fieldOfficerId').patchValue('');
+          }
+        });
+    });
   }
 
   /**

@@ -10,7 +10,6 @@ import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag } from '@angular/cdk
 import {
   ChangeDetectionStrategy,
   Component,
-  DestroyRef,
   EventEmitter,
   Input,
   OnInit,
@@ -18,7 +17,6 @@ import {
   ViewChild,
   inject
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -75,7 +73,6 @@ export class AdvancePaymentAllocationTabComponent implements OnInit {
   private advancedPaymentStrategy = inject(AdvancedPaymentStrategy);
   private translateService = inject(TranslateService);
   protected loanProductService = inject(LoanProductService);
-  private destroyRef = inject(DestroyRef);
 
   @Input() advancedPaymentAllocation: AdvancedPaymentAllocation;
   @Input() advancedCreditAllocation: AdvancedCreditAllocation;
@@ -110,18 +107,16 @@ export class AdvancePaymentAllocationTabComponent implements OnInit {
           this.advancedPaymentAllocation.futureInstallmentAllocationRule.code
         );
       }
-      this.futureInstallmentAllocationRule.valueChanges
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe((value: any) => {
-          this.advancedPaymentAllocation.futureInstallmentAllocationRules.forEach(
-            (item: FutureInstallmentAllocationRule) => {
-              if (value === item.code) {
-                this.advancedPaymentAllocation.futureInstallmentAllocationRule = item;
-                this.allocationChanged.emit(true);
-              }
+      this.futureInstallmentAllocationRule.valueChanges.subscribe((value: any) => {
+        this.advancedPaymentAllocation.futureInstallmentAllocationRules.forEach(
+          (item: FutureInstallmentAllocationRule) => {
+            if (value === item.code) {
+              this.advancedPaymentAllocation.futureInstallmentAllocationRule = item;
+              this.allocationChanged.emit(true);
             }
-          );
-        });
+          }
+        );
+      });
     }
   }
 

@@ -20,8 +20,7 @@ export class FormatNumberPipe implements PipeTransform {
       return defaultValue ? defaultValue : '';
     }
     const decimals = digits !== undefined ? digits : this.settingsService.decimals;
-    const maxDecimals = digits !== undefined ? decimals : 10;
-    const format = `1.${decimals}-${maxDecimals}`;
+    const format = `1.${decimals}-10`;
     return this.decimalFormat.transform(value, format);
   }
 }

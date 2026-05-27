@@ -88,7 +88,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
 
   /** Transaction data. */
   transactionData: any;
-  transactionType: LoanTransactionType | null = null;
+  transactionType: LoanTransactionType;
   /** Is Editable */
   allowEdition = true;
   /** Is Undoable */
@@ -124,16 +124,10 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
     super();
     this.route.data.subscribe((data: { loansAccountTransaction: any }) => {
       this.transactionData = data.loansAccountTransaction;
-      if (this.loanProductService.isWorkingCapital) {
-        this.transactionData.date = this.transactionData.transactionDate;
-      }
       this.transactionType = this.transactionData.type;
       this.allowEdition =
         !this.transactionData.manuallyReversed && !this.allowTransactionEdition(this.transactionData.type.id);
-      this.allowUndo = this.allowUndoTransaction(
-        this.transactionData.manuallyReversed || this.transactionData.reversed,
-        this.transactionType
-      );
+      this.allowUndo = this.allowUndoTransaction(this.transactionData.manuallyReversed, this.transactionType);
       this.allowChargeback =
         this.allowChargebackTransaction(this.transactionType) && !this.transactionData.manuallyReversed;
       let transactionsChargebackRelated = false;
@@ -364,7 +358,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
   }
 
   loanTransactionColor(): string {
-    if (this.transactionData.manuallyReversed || this.transactionData.reversed) {
+    if (this.transactionData.manuallyReversed) {
       return 'undo';
     }
     if (this.existTransactionRelations) {

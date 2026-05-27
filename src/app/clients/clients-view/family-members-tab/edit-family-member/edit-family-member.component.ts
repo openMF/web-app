@@ -7,8 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
@@ -39,7 +38,6 @@ export class EditFamilyMemberComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private clientsService = inject(ClientsService);
   private settingsService = inject(SettingsService);
-  private destroyRef = inject(DestroyRef);
 
   /** Maximum Due Date allowed. */
   maxDate = new Date();
@@ -68,17 +66,14 @@ export class EditFamilyMemberComponent implements OnInit {
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;
     this.createEditFamilyMemberForm(this.familyMemberDetails);
-    this.editFamilyMemberForm
-      .get('dateOfBirth')
-      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((dateOfBirth: any) => {
-        if (dateOfBirth) {
-          const age = this.calculateAge(dateOfBirth);
-          this.editFamilyMemberForm.get('age').setValue(age);
-        } else {
-          this.editFamilyMemberForm.get('age').setValue('');
-        }
-      });
+    this.editFamilyMemberForm.get('dateOfBirth').valueChanges.subscribe((dateOfBirth: any) => {
+      if (dateOfBirth) {
+        const age = this.calculateAge(dateOfBirth);
+        this.editFamilyMemberForm.get('age').setValue(age);
+      } else {
+        this.editFamilyMemberForm.get('age').setValue('');
+      }
+    });
   }
 
   /**
@@ -116,8 +111,7 @@ export class EditFamilyMemberComponent implements OnInit {
       ],
       qualification: [familyMember.qualification],
       age: [
-        { value: familyMember.age, disabled: true }
-      ],
+        { value: familyMember.age, disabled: true }],
       isDependent: [familyMember.isDependent],
       relationshipId: [
         familyMember.relationshipId,

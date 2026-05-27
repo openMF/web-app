@@ -7,16 +7,7 @@
  */
 
 /** Angular Imports */
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  DestroyRef,
-  OnInit,
-  ViewChild,
-  inject
-} from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -87,8 +78,6 @@ export class EditDataTableComponent implements OnInit {
   private router = inject(Router);
   private dialog = inject(MatDialog);
   private translateService = inject(TranslateService);
-  private destroyRef = inject(DestroyRef);
-  private cdr = inject(ChangeDetectorRef);
 
   /** Data Table Form. */
   dataTableForm: UntypedFormGroup;
@@ -221,12 +210,9 @@ export class EditDataTableComponent implements OnInit {
     this.initData();
     this.createDataTableForm();
     this.setColumns();
-    this.dataTableForm.controls.apptableName.valueChanges
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((value: any) => {
-        this.showEntitySubType = value === 'm_client';
-        this.cdr.markForCheck();
-      });
+    this.dataTableForm.controls.apptableName.valueChanges.subscribe((value: any) => {
+      this.showEntitySubType = value === 'm_client';
+    });
   }
 
   /**
