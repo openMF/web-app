@@ -7,7 +7,16 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, AfterViewInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+  DestroyRef,
+  inject
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
@@ -80,6 +89,7 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
   private settingsService = inject(SettingsService);
   private dateUtils = inject(Dates);
   private route = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
 
   /** Minimum transaction date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -200,7 +210,7 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
    * @param {SettingsService} settingsService Settings Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { offices: any; glAccounts: any }) => {
+    this.route.data.pipe(takeUntilDestroyed()).subscribe((data: { offices: any; glAccounts: any }) => {
       this.officeData = data.offices;
       this.glAccountData = data.glAccounts;
     });
@@ -229,7 +239,8 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap((filterValue) => {
           this.applyFilter(filterValue, 'officeId');
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
 
@@ -240,7 +251,8 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap((filterValue) => {
           this.applyFilter(filterValue, 'glAccountId');
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
 
@@ -250,7 +262,8 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap((filterValue) => {
           this.applyFilter(filterValue, 'transactionId');
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
 
@@ -260,7 +273,8 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap((filterValue) => {
           this.applyFilter(this.dateUtils.formatDate(filterValue, this.settingsService.dateFormat), 'fromDate');
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
 
@@ -270,7 +284,8 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap((filterValue) => {
           this.applyFilter(this.dateUtils.formatDate(filterValue, this.settingsService.dateFormat), 'toDate');
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
 
@@ -283,7 +298,8 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
             this.dateUtils.formatDate(filterValue, this.settingsService.dateFormat),
             'submittedOnDateFrom'
           );
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
 
@@ -296,14 +312,18 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
             this.dateUtils.formatDate(filterValue, this.settingsService.dateFormat),
             'submittedOnDateTo'
           );
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
 
-    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
+    this.sort.sortChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => (this.paginator.pageIndex = 0));
 
     merge(this.sort.sortChange, this.paginator.page)
-      .pipe(tap(() => this.loadJournalEntriesPage()))
+      .pipe(
+        tap(() => this.loadJournalEntriesPage()),
+        takeUntilDestroyed(this.destroyRef)
+      )
       .subscribe();
   }
 

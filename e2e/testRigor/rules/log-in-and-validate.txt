@@ -1,5 +1,0 @@
-wait 1 sec up to 10 times until page contains field "Username"
-check that page contains field "Password"
-login
-close-popup
-check that page contains string with parameters "Welcome, ${username}!"

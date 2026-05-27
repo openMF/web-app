@@ -7,7 +7,16 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, AfterViewInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+  DestroyRef,
+  inject
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatCheckbox } from '@angular/material/checkbox';
 
 import { MatPaginator } from '@angular/material/paginator';
@@ -72,6 +81,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class GroupsComponent implements OnInit, AfterViewInit {
   private groupsService = inject(GroupsService);
+  private destroyRef = inject(DestroyRef);
 
   @ViewChild('showClosedGroups', { static: true }) showClosedGroups: MatCheckbox;
 
@@ -116,14 +126,18 @@ export class GroupsComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap((filterValue) => {
           this.applyFilter(filterValue, 'name');
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
 
-    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
+    this.sort.sortChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => (this.paginator.pageIndex = 0));
 
     merge(this.sort.sortChange, this.paginator.page)
-      .pipe(tap(() => this.loadGroupsPage()))
+      .pipe(
+        tap(() => this.loadGroupsPage()),
+        takeUntilDestroyed(this.destroyRef)
+      )
       .subscribe();
   }
 

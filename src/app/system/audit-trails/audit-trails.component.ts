@@ -7,7 +7,16 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, AfterViewInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+  DestroyRef,
+  inject
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -80,6 +89,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
   private systemService = inject(SystemService);
   private dateUtils = inject(Dates);
   private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -208,7 +218,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data.subscribe((data: { auditTrailSearchTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed()).subscribe((data: { auditTrailSearchTemplate: any }) => {
       this.auditTrailSearchTemplateData = data.auditTrailSearchTemplate;
     });
   }
@@ -239,7 +249,8 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap((filterValue) => {
           this.applyFilter(filterValue, 'makerId');
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
 
@@ -249,7 +260,8 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap((filterValue) => {
           this.applyFilter(this.getDateTime(filterValue, this.fromTime.value), 'makerDateTimeFrom');
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
 
@@ -259,7 +271,8 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap((timeValue) => {
           this.applyFilter(this.getDateTime(this.fromDate.value, timeValue), 'makerDateTimeFrom');
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
 
@@ -269,7 +282,8 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap((filterValue) => {
           this.applyFilter(this.getDateTime(filterValue, this.toTime.value), 'makerDateTimeTo');
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
 
@@ -279,7 +293,8 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap((timeValue) => {
           this.applyFilter(this.getDateTime(this.toDate.value, timeValue), 'makerDateTimeTo');
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
 
@@ -289,7 +304,8 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap((filterValue) => {
           this.applyFilter(this.getDateTime(filterValue, this.checkedFromTime.value), 'checkerDateTimeFrom');
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
 
@@ -299,7 +315,8 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap((timeValue) => {
           this.applyFilter(this.getDateTime(this.checkedFromDate.value, timeValue), 'checkerDateTimeFrom');
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
 
@@ -309,7 +326,8 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap((filterValue) => {
           this.applyFilter(this.getDateTime(filterValue, this.checkedToTime.value), 'checkerDateTimeTo');
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
 
@@ -319,7 +337,8 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap((timeValue) => {
           this.applyFilter(this.getDateTime(this.checkedToDate.value, timeValue), 'checkerDateTimeTo');
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
 
@@ -329,7 +348,8 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap((filterValue) => {
           this.applyFilter(filterValue, 'resourceId');
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
 
@@ -340,7 +360,8 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap((filterValue) => {
           this.applyFilter(filterValue, 'actionName');
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
 
@@ -351,7 +372,8 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap((filterValue) => {
           this.applyFilter(filterValue, 'entityName');
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
 
@@ -362,15 +384,17 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap((filterValue) => {
           this.applyFilter(filterValue.id, 'checkerId');
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
 
-    //this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
-
     if (this.sort && this.paginator) {
       merge(this.sort.sortChange, this.paginator.page)
-        .pipe(tap(() => this.loadAuditTrailsPage()))
+        .pipe(
+          tap(() => this.loadAuditTrailsPage()),
+          takeUntilDestroyed(this.destroyRef)
+        )
         .subscribe();
     }
   }

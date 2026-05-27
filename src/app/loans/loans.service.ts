@@ -850,7 +850,7 @@ export class LoansService {
   }
 
   getLoanDisbursementDetailsData(): DisbursementData[] {
-    return JSON.parse(localStorage.getItem('disbursementData'));
+    return JSON.parse(localStorage.getItem('disbursementData') ?? '[]');
   }
 
   /**

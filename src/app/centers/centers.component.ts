@@ -7,7 +7,16 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, AfterViewInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+  DestroyRef,
+  inject
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatCheckbox } from '@angular/material/checkbox';
 
 import { MatPaginator } from '@angular/material/paginator';
@@ -73,6 +82,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class CentersComponent implements OnInit, AfterViewInit {
   private centersService = inject(CentersService);
+  private destroyRef = inject(DestroyRef);
 
   @ViewChild('showClosedCenters', { static: true }) showClosedCenters: MatCheckbox;
 
@@ -123,7 +133,8 @@ export class CentersComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap((filterValue) => {
           this.applyFilter(filterValue, 'name');
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
 
@@ -133,14 +144,18 @@ export class CentersComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap((filterValue) => {
           this.applyFilter(filterValue, 'externalId');
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
 
-    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
+    this.sort.sortChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => (this.paginator.pageIndex = 0));
 
     merge(this.sort.sortChange, this.paginator.page)
-      .pipe(tap(() => this.loadCentersPage()))
+      .pipe(
+        tap(() => this.loadCentersPage()),
+        takeUntilDestroyed(this.destroyRef)
+      )
       .subscribe();
   }
 

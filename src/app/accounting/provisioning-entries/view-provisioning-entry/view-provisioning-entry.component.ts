@@ -7,7 +7,16 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, AfterViewInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+  DestroyRef,
+  inject
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
@@ -69,6 +78,7 @@ export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
   private accountingService = inject(AccountingService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
 
   /** Provisioning entry id. */
   provisioningEntryId: string;
@@ -167,7 +177,8 @@ export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap((filterValue) => {
           this.applyFilter(filterValue, 'officeName');
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
 
@@ -178,7 +189,8 @@ export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap((filterValue) => {
           this.applyFilter(filterValue, 'productName');
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
 
@@ -189,7 +201,8 @@ export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap((filterValue) => {
           this.applyFilter(filterValue, 'categoryName');
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
   }

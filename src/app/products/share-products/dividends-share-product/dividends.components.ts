@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -39,6 +39,7 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
   selector: 'mifosx-dividends-share-product',
   templateUrl: './dividends.component.html',
   styleUrls: ['./dividends.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     HasPermissionDirective,
     MatButton,
@@ -67,6 +68,7 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 export class ShareProductsDividendsComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
 
   /** Dividends data. */
   dividendData: any;
@@ -93,6 +95,7 @@ export class ShareProductsDividendsComponent implements OnInit {
   constructor() {
     this.route.data.subscribe((data: { dividends: any }) => {
       this.dividendData = data.dividends.pageItems;
+      this.cdr.markForCheck();
     });
   }
 

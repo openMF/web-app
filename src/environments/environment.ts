@@ -62,7 +62,7 @@ export const environment = {
     loadedEnv.supportedLanguages || 'cs-CS,de-DE,en-US,es-MX,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,ne-NE,pt-PT,sw-SW',
   defaultFormatDate: loadedEnv.defaultFormatDate || '',
   defaultFormatDatetime: loadedEnv.defaultFormatDatetime || '',
-  preloadClients: loadedEnv['preloadClients'] || true,
+  preloadClients: loadedEnv['preloadClients'] !== false,
 
   defaultCharDelimiter: loadedEnv.defaultCharDelimiter || ',',
 
