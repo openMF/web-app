@@ -1,5 +1,5 @@
 /**
- * TinyMCE version 8.5.1 (2026-05-19)
+ * TinyMCE version 8.3.2 (2026-01-14)
  */
 
 (function () {
@@ -464,12 +464,12 @@
     const listSelector = listNames.join(',');
     const getParentList = (editor, node) => {
         const selectionStart = node || editor.selection.getStart(true);
-        return editor.dom.getParent(selectionStart, listSelector, getClosestListHost(editor, selectionStart, editor.selection.isCollapsed()));
+        return editor.dom.getParent(selectionStart, listSelector, getClosestListHost(editor, selectionStart));
     };
-    const getClosestListHost = (editor, elm, isCollapsed) => {
+    const getClosestListHost = (editor, elm) => {
         const parentBlocks = editor.dom.getParents(elm, editor.dom.isBlock);
         const isNotForcedRootBlock = (elm) => elm.nodeName.toLowerCase() !== getForcedRootBlock(editor);
-        const parentBlock = find(parentBlocks, (elm) => (!isCollapsed || isNotForcedRootBlock(elm)) && isListHost(editor.schema, elm));
+        const parentBlock = find(parentBlocks, (elm) => isNotForcedRootBlock(elm) && isListHost(editor.schema, elm));
         return parentBlock.getOr(editor.getBody());
     };
     const isListHost = (schema, node) => !isListNode(node) && !isListItemNode(node) && exists(listNames, (listName) => schema.isValidChild(node.nodeName, listName));

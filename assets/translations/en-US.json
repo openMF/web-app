@@ -1557,8 +1557,7 @@
       "identifier id": "identifier id",
       "savings-transaction-datatable-tab works": "savings-transaction-datatable-tab works",
       "successfully select option": "successfully. Please select from the options below to proceed further.",
-      "undo_account_transfer": "Undo Account Transfer",
-      "Quick Access": "Quick Access"
+      "undo_account_transfer": "Undo Account Transfer"
     },
     "inputs": {
       "# Remittance": "# Remittance",
@@ -1639,7 +1638,6 @@
       "Amortization Schedule": "Amortization Schedule",
       "Amortization Type": "Amortization Type",
       "Amortized Amount": "Amortized Amount",
-      "Amortized Income": "Amortized Income",
       "Amount": "Amount",
       "Amount Collected": "Amount Collected",
       "Amount Paid": "Amount Paid",
@@ -1649,7 +1647,6 @@
       "Amount Range To": "Amount Range To",
       "Amount Received/Returned": "Amount Received/Returned",
       "Amount to be Reserved": "Amount to be Reserved",
-      "Annual EIR": "Annual EIR",
       "Annual Fees Transaction Date": "Annual Fees Transaction Date",
       "Applicable From Date": "Applicable From Date",
       "Applicant": "Applicant",
@@ -1878,7 +1875,6 @@
       "DEFERRED INCOME RECOGNITION": "DEFERRED INCOME RECOGNITION",
       "DETAILS": "DETAILS",
       "Daily": "Daily",
-      "Daily EIR": "Daily EIR",
       "Dashboard": "Dashboard",
       "Data": "Data",
       "Data Table": "Data Table",
@@ -1968,7 +1964,6 @@
       "Discount": "Discount",
       "Discount Default": "Discount Default",
       "Discount Factor": "Discount Factor",
-      "Discount Fee": "Discount Fee",
       "Discount must be greater than or equal to 0": "Discount must be greater than or equal to 0",
       "Display Name": "Display Name",
       "Dividend Amount": "Dividend Amount",
@@ -2616,7 +2611,6 @@
       "Period": "Period",
       "Period From": "Period From",
       "Period Number": "Period Number",
-      "Period Payment Amount": "Period Payment Amount",
       "Period Payment Frequency": "Period Payment Frequency",
       "Period Payment Frequency Type": "Period Payment Frequency Type",
       "Period Payment Rate": "Period Payment Rate",
@@ -4108,16 +4102,7 @@
       "username": "username",
       "withhold tax for this account": "withhold tax for this account",
       "withoutCategory": "Without Category",
-      "“Maker-Checker” principle requires every tasks": "The “Maker-Checker” principle requires every tasks to be completed by two people to reduce the chance of errors and misuse. One person initiates the process and the second completes it.",
-      "Navigate directly to any platform area": "Navigate directly to any platform area",
-      "Profiles and accounts": "Profiles & accounts",
-      "Group lending": "Group lending",
-      "Center banking": "Center banking",
-      "Journals and ledger": "Journals & ledger",
-      "Configure offerings": "Configure offerings",
-      "Savings accounts": "Savings accounts",
-      "Offices and staff": "Offices & staff",
-      "System configuration": "Configuration"
+      "“Maker-Checker” principle requires every tasks": "The “Maker-Checker” principle requires every tasks to be completed by two people to reduce the chance of errors and misuse. One person initiates the process and the second completes it."
     },
     "permissions": {
       "actions": {

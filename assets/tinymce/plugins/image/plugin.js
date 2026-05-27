@@ -1,5 +1,5 @@
 /**
- * TinyMCE version 8.5.1 (2026-05-19)
+ * TinyMCE version 8.3.2 (2026-01-14)
  */
 
 (function () {
@@ -1126,9 +1126,6 @@
                 ])));
             });
         });
-        const alertErr = (message, callback) => {
-            editor.windowManager.alert(message, callback);
-        };
         const classList = ListUtils.sanitize(getClassList(editor));
         const hasAdvTab$1 = hasAdvTab(editor);
         const hasUploadTab$1 = hasUploadTab(editor);
@@ -1143,7 +1140,6 @@
         const automaticUploads = isAutomaticUploadsEnabled(editor);
         const prependURL = Optional.some(getPrependUrl(editor)).filter((preUrl) => isString(preUrl) && preUrl.length > 0);
         return futureImageList.then((imageList) => ({
-            alertErr,
             image,
             imageList,
             classList,
@@ -1244,12 +1240,11 @@
         makeItems
     };
 
-    const makeTab = (_info, onInvalidFiles) => {
+    const makeTab = (_info) => {
         const items = [
             {
                 type: 'dropzone',
-                name: 'fileinput',
-                onInvalidFiles
+                name: 'fileinput'
             }
         ];
         return {
@@ -1456,7 +1451,7 @@
                         finalize();
                     }).catch((err) => {
                         finalize();
-                        info.alertErr(err, () => {
+                        helpers.alertErr(err, () => {
                             api.focus('fileinput');
                         });
                     });
@@ -1496,7 +1491,7 @@
                 tabs: flatten([
                     [MainTab.makeTab(info)],
                     info.hasAdvTab ? [AdvTab.makeTab(info)] : [],
-                    info.hasUploadTab && (info.hasUploadUrl || info.hasUploadHandler) ? [UploadTab.makeTab(info, () => new Promise((r) => info.alertErr('Selected images do not have allowed extensions', r)))] : []
+                    info.hasUploadTab && (info.hasUploadUrl || info.hasUploadHandler) ? [UploadTab.makeTab(info)] : []
                 ])
             };
             return tabPanel;
@@ -1544,6 +1539,9 @@
     const addToBlobCache = (editor) => (blobInfo) => {
         editor.editorUpload.blobCache.add(blobInfo);
     };
+    const alertErr = (editor) => (message, callback) => {
+        editor.windowManager.alert(message, callback);
+    };
     const normalizeCss = (editor) => (cssText) => normalizeCss$1(editor, cssText);
     const parseStyle = (editor) => (cssText) => editor.dom.parseStyle(cssText);
     const serializeStyle = (editor) => (stylesArg, name) => editor.dom.serializeStyle(stylesArg, name);
@@ -1563,6 +1561,7 @@
             imageSize: imageSize(editor),
             addToBlobCache: addToBlobCache(editor),
             createBlobCache: createBlobCache(editor),
+            alertErr: alertErr(editor),
             normalizeCss: normalizeCss(editor),
             parseStyle: parseStyle(editor),
             serializeStyle: serializeStyle(editor),

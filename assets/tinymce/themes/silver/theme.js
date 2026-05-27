@@ -1,5 +1,5 @@
 /**
- * TinyMCE version 8.5.1 (2026-05-19)
+ * TinyMCE version 8.3.2 (2026-01-14)
  */
 
 (function () {
@@ -12115,7 +12115,6 @@
             if (extras !== undefined && extras.onOpen !== undefined) {
                 extras.onOpen(component, menu);
             }
-            tieredMenu.repositionMenus(menu);
         };
         const onClose = (component, menu) => {
             ariaControls.unlink(hotspot.element);
@@ -12479,7 +12478,7 @@
             },
             domModification: {
                 attributes: {
-                    role: 'toolbar'
+                    role: 'group'
                 }
             }
         };
@@ -13285,7 +13284,6 @@
         defaulted('useTabstopAt', always),
         defaulted('firstTabstop', 0),
         defaulted('eventOrder', {}),
-        defaultedStringEnum('role', 'dialog', ['dialog', 'alertdialog']),
         field('modalBehaviours', [Keying]),
         onKeyboardHandler('onExecute'),
         onStrictKeyboardHandler('onEscape')
@@ -13420,7 +13418,7 @@
             eventOrder,
             domModification: {
                 attributes: {
-                    'role': detail.role,
+                    'role': 'dialog',
                     'aria-modal': 'true'
                 }
             },
@@ -13441,13 +13439,11 @@
                         // TINY-10808 - Workaround to address the dialog header not being announced on VoiceOver with aria-labelledby, ideally we should use the aria-labelledby
                         const titleElm = getPartOrDie(c, detail, 'title').element;
                         const title = get$6(titleElm);
-                        if (isNonNullable(title) && title !== '') {
-                            if (browser.os.isMacOS()) {
-                                set$9(c.element, 'aria-label', title);
-                            }
-                            else {
-                                labelledBy(c.element, titleElm);
-                            }
+                        if (browser.os.isMacOS() && isNonNullable(title)) {
+                            set$9(c.element, 'aria-label', title);
+                        }
+                        else {
+                            labelledBy(c.element, titleElm);
                         }
                     })
                 ])
@@ -14592,7 +14588,7 @@
         ]),
         domModification: {
             attributes: {
-                role: 'group'
+                role: 'toolbar'
             }
         }
     });
@@ -15859,9 +15855,6 @@
         registerOption('sidebar_show', {
             processor: 'string'
         });
-        registerOption('view_show', {
-            processor: 'string'
-        });
         // This option is being registered in the theme instead of the help plugin as it cannot be accessed from the theme when registered there
         registerOption('help_accessibility', {
             processor: 'boolean',
@@ -15908,7 +15901,6 @@
     const getResize = option$2('resize');
     const getPasteAsText = option$2('paste_as_text');
     const getSidebarShow = option$2('sidebar_show');
-    const getViewShow = option$2('view_show');
     const promotionEnabled = option$2('promotion');
     const useHelpAccessibility = option$2('help_accessibility');
     const getDefaultFontStack = option$2('default_font_stack');
@@ -16041,7 +16033,6 @@
         getResize: getResize,
         getPasteAsText: getPasteAsText,
         getSidebarShow: getSidebarShow,
-        getViewShow: getViewShow,
         useHelpAccessibility: useHelpAccessibility,
         getDefaultFontStack: getDefaultFontStack
     });
@@ -16092,7 +16083,7 @@
         return sc.isFullscreen() ? win() : constrainByMany(box$1(sc.element), scrollableBoxes);
     };
 
-    /*! @license DOMPurify 3.3.2 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/3.3.2/LICENSE */
+    /*! @license DOMPurify 3.2.6 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/3.2.6/LICENSE */
 
     const {
       entries,
@@ -16121,18 +16112,12 @@
       };
     }
     if (!apply) {
-      apply = function apply(func, thisArg) {
-        for (var _len = arguments.length, args = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-          args[_key - 2] = arguments[_key];
-        }
-        return func.apply(thisArg, args);
+      apply = function apply(fun, thisValue, args) {
+        return fun.apply(thisValue, args);
       };
     }
     if (!construct) {
-      construct = function construct(Func) {
-        for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-          args[_key2 - 1] = arguments[_key2];
-        }
+      construct = function construct(Func, args) {
         return new Func(...args);
       };
     }
@@ -16161,8 +16146,8 @@
         if (thisArg instanceof RegExp) {
           thisArg.lastIndex = 0;
         }
-        for (var _len3 = arguments.length, args = new Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
-          args[_key3 - 1] = arguments[_key3];
+        for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+          args[_key - 1] = arguments[_key];
         }
         return apply(func, thisArg, args);
       };
@@ -16173,12 +16158,12 @@
      * @param func - The constructor function to be wrapped and called.
      * @returns A new function that constructs an instance of the given constructor function with the provided arguments.
      */
-    function unconstruct(Func) {
+    function unconstruct(func) {
       return function () {
-        for (var _len4 = arguments.length, args = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
-          args[_key4] = arguments[_key4];
+        for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+          args[_key2] = arguments[_key2];
         }
-        return construct(Func, args);
+        return construct(func, args);
       };
     }
     /**
@@ -16277,8 +16262,8 @@
       return fallbackValue;
     }
 
-    const html$1 = freeze(['a', 'abbr', 'acronym', 'address', 'area', 'article', 'aside', 'audio', 'b', 'bdi', 'bdo', 'big', 'blink', 'blockquote', 'body', 'br', 'button', 'canvas', 'caption', 'center', 'cite', 'code', 'col', 'colgroup', 'content', 'data', 'datalist', 'dd', 'decorator', 'del', 'details', 'dfn', 'dialog', 'dir', 'div', 'dl', 'dt', 'element', 'em', 'fieldset', 'figcaption', 'figure', 'font', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'header', 'hgroup', 'hr', 'html', 'i', 'img', 'input', 'ins', 'kbd', 'label', 'legend', 'li', 'main', 'map', 'mark', 'marquee', 'menu', 'menuitem', 'meter', 'nav', 'nobr', 'ol', 'optgroup', 'option', 'output', 'p', 'picture', 'pre', 'progress', 'q', 'rp', 'rt', 'ruby', 's', 'samp', 'search', 'section', 'select', 'shadow', 'slot', 'small', 'source', 'spacer', 'span', 'strike', 'strong', 'style', 'sub', 'summary', 'sup', 'table', 'tbody', 'td', 'template', 'textarea', 'tfoot', 'th', 'thead', 'time', 'tr', 'track', 'tt', 'u', 'ul', 'var', 'video', 'wbr']);
-    const svg$1 = freeze(['svg', 'a', 'altglyph', 'altglyphdef', 'altglyphitem', 'animatecolor', 'animatemotion', 'animatetransform', 'circle', 'clippath', 'defs', 'desc', 'ellipse', 'enterkeyhint', 'exportparts', 'filter', 'font', 'g', 'glyph', 'glyphref', 'hkern', 'image', 'inputmode', 'line', 'lineargradient', 'marker', 'mask', 'metadata', 'mpath', 'part', 'path', 'pattern', 'polygon', 'polyline', 'radialgradient', 'rect', 'stop', 'style', 'switch', 'symbol', 'text', 'textpath', 'title', 'tref', 'tspan', 'view', 'vkern']);
+    const html$1 = freeze(['a', 'abbr', 'acronym', 'address', 'area', 'article', 'aside', 'audio', 'b', 'bdi', 'bdo', 'big', 'blink', 'blockquote', 'body', 'br', 'button', 'canvas', 'caption', 'center', 'cite', 'code', 'col', 'colgroup', 'content', 'data', 'datalist', 'dd', 'decorator', 'del', 'details', 'dfn', 'dialog', 'dir', 'div', 'dl', 'dt', 'element', 'em', 'fieldset', 'figcaption', 'figure', 'font', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'header', 'hgroup', 'hr', 'html', 'i', 'img', 'input', 'ins', 'kbd', 'label', 'legend', 'li', 'main', 'map', 'mark', 'marquee', 'menu', 'menuitem', 'meter', 'nav', 'nobr', 'ol', 'optgroup', 'option', 'output', 'p', 'picture', 'pre', 'progress', 'q', 'rp', 'rt', 'ruby', 's', 'samp', 'section', 'select', 'shadow', 'small', 'source', 'spacer', 'span', 'strike', 'strong', 'style', 'sub', 'summary', 'sup', 'table', 'tbody', 'td', 'template', 'textarea', 'tfoot', 'th', 'thead', 'time', 'tr', 'track', 'tt', 'u', 'ul', 'var', 'video', 'wbr']);
+    const svg$1 = freeze(['svg', 'a', 'altglyph', 'altglyphdef', 'altglyphitem', 'animatecolor', 'animatemotion', 'animatetransform', 'circle', 'clippath', 'defs', 'desc', 'ellipse', 'filter', 'font', 'g', 'glyph', 'glyphref', 'hkern', 'image', 'line', 'lineargradient', 'marker', 'mask', 'metadata', 'mpath', 'path', 'pattern', 'polygon', 'polyline', 'radialgradient', 'rect', 'stop', 'style', 'switch', 'symbol', 'text', 'textpath', 'title', 'tref', 'tspan', 'view', 'vkern']);
     const svgFilters = freeze(['feBlend', 'feColorMatrix', 'feComponentTransfer', 'feComposite', 'feConvolveMatrix', 'feDiffuseLighting', 'feDisplacementMap', 'feDistantLight', 'feDropShadow', 'feFlood', 'feFuncA', 'feFuncB', 'feFuncG', 'feFuncR', 'feGaussianBlur', 'feImage', 'feMerge', 'feMergeNode', 'feMorphology', 'feOffset', 'fePointLight', 'feSpecularLighting', 'feSpotLight', 'feTile', 'feTurbulence']);
     // List of SVG elements that are disallowed by default.
     // We still need to know them so that we can do namespace
@@ -16291,8 +16276,8 @@
     const mathMlDisallowed = freeze(['maction', 'maligngroup', 'malignmark', 'mlongdiv', 'mscarries', 'mscarry', 'msgroup', 'mstack', 'msline', 'msrow', 'semantics', 'annotation', 'annotation-xml', 'mprescripts', 'none']);
     const text$1 = freeze(['#text']);
 
-    const html = freeze(['accept', 'action', 'align', 'alt', 'autocapitalize', 'autocomplete', 'autopictureinpicture', 'autoplay', 'background', 'bgcolor', 'border', 'capture', 'cellpadding', 'cellspacing', 'checked', 'cite', 'class', 'clear', 'color', 'cols', 'colspan', 'controls', 'controlslist', 'coords', 'crossorigin', 'datetime', 'decoding', 'default', 'dir', 'disabled', 'disablepictureinpicture', 'disableremoteplayback', 'download', 'draggable', 'enctype', 'enterkeyhint', 'exportparts', 'face', 'for', 'headers', 'height', 'hidden', 'high', 'href', 'hreflang', 'id', 'inert', 'inputmode', 'integrity', 'ismap', 'kind', 'label', 'lang', 'list', 'loading', 'loop', 'low', 'max', 'maxlength', 'media', 'method', 'min', 'minlength', 'multiple', 'muted', 'name', 'nonce', 'noshade', 'novalidate', 'nowrap', 'open', 'optimum', 'part', 'pattern', 'placeholder', 'playsinline', 'popover', 'popovertarget', 'popovertargetaction', 'poster', 'preload', 'pubdate', 'radiogroup', 'readonly', 'rel', 'required', 'rev', 'reversed', 'role', 'rows', 'rowspan', 'spellcheck', 'scope', 'selected', 'shape', 'size', 'sizes', 'slot', 'span', 'srclang', 'start', 'src', 'srcset', 'step', 'style', 'summary', 'tabindex', 'title', 'translate', 'type', 'usemap', 'valign', 'value', 'width', 'wrap', 'xmlns', 'slot']);
-    const svg = freeze(['accent-height', 'accumulate', 'additive', 'alignment-baseline', 'amplitude', 'ascent', 'attributename', 'attributetype', 'azimuth', 'basefrequency', 'baseline-shift', 'begin', 'bias', 'by', 'class', 'clip', 'clippathunits', 'clip-path', 'clip-rule', 'color', 'color-interpolation', 'color-interpolation-filters', 'color-profile', 'color-rendering', 'cx', 'cy', 'd', 'dx', 'dy', 'diffuseconstant', 'direction', 'display', 'divisor', 'dur', 'edgemode', 'elevation', 'end', 'exponent', 'fill', 'fill-opacity', 'fill-rule', 'filter', 'filterunits', 'flood-color', 'flood-opacity', 'font-family', 'font-size', 'font-size-adjust', 'font-stretch', 'font-style', 'font-variant', 'font-weight', 'fx', 'fy', 'g1', 'g2', 'glyph-name', 'glyphref', 'gradientunits', 'gradienttransform', 'height', 'href', 'id', 'image-rendering', 'in', 'in2', 'intercept', 'k', 'k1', 'k2', 'k3', 'k4', 'kerning', 'keypoints', 'keysplines', 'keytimes', 'lang', 'lengthadjust', 'letter-spacing', 'kernelmatrix', 'kernelunitlength', 'lighting-color', 'local', 'marker-end', 'marker-mid', 'marker-start', 'markerheight', 'markerunits', 'markerwidth', 'maskcontentunits', 'maskunits', 'max', 'mask', 'mask-type', 'media', 'method', 'mode', 'min', 'name', 'numoctaves', 'offset', 'operator', 'opacity', 'order', 'orient', 'orientation', 'origin', 'overflow', 'paint-order', 'path', 'pathlength', 'patterncontentunits', 'patterntransform', 'patternunits', 'points', 'preservealpha', 'preserveaspectratio', 'primitiveunits', 'r', 'rx', 'ry', 'radius', 'refx', 'refy', 'repeatcount', 'repeatdur', 'restart', 'result', 'rotate', 'scale', 'seed', 'shape-rendering', 'slope', 'specularconstant', 'specularexponent', 'spreadmethod', 'startoffset', 'stddeviation', 'stitchtiles', 'stop-color', 'stop-opacity', 'stroke-dasharray', 'stroke-dashoffset', 'stroke-linecap', 'stroke-linejoin', 'stroke-miterlimit', 'stroke-opacity', 'stroke', 'stroke-width', 'style', 'surfacescale', 'systemlanguage', 'tabindex', 'tablevalues', 'targetx', 'targety', 'transform', 'transform-origin', 'text-anchor', 'text-decoration', 'text-rendering', 'textlength', 'type', 'u1', 'u2', 'unicode', 'values', 'viewbox', 'visibility', 'version', 'vert-adv-y', 'vert-origin-x', 'vert-origin-y', 'width', 'word-spacing', 'wrap', 'writing-mode', 'xchannelselector', 'ychannelselector', 'x', 'x1', 'x2', 'xmlns', 'y', 'y1', 'y2', 'z', 'zoomandpan']);
+    const html = freeze(['accept', 'action', 'align', 'alt', 'autocapitalize', 'autocomplete', 'autopictureinpicture', 'autoplay', 'background', 'bgcolor', 'border', 'capture', 'cellpadding', 'cellspacing', 'checked', 'cite', 'class', 'clear', 'color', 'cols', 'colspan', 'controls', 'controlslist', 'coords', 'crossorigin', 'datetime', 'decoding', 'default', 'dir', 'disabled', 'disablepictureinpicture', 'disableremoteplayback', 'download', 'draggable', 'enctype', 'enterkeyhint', 'face', 'for', 'headers', 'height', 'hidden', 'high', 'href', 'hreflang', 'id', 'inputmode', 'integrity', 'ismap', 'kind', 'label', 'lang', 'list', 'loading', 'loop', 'low', 'max', 'maxlength', 'media', 'method', 'min', 'minlength', 'multiple', 'muted', 'name', 'nonce', 'noshade', 'novalidate', 'nowrap', 'open', 'optimum', 'pattern', 'placeholder', 'playsinline', 'popover', 'popovertarget', 'popovertargetaction', 'poster', 'preload', 'pubdate', 'radiogroup', 'readonly', 'rel', 'required', 'rev', 'reversed', 'role', 'rows', 'rowspan', 'spellcheck', 'scope', 'selected', 'shape', 'size', 'sizes', 'span', 'srclang', 'start', 'src', 'srcset', 'step', 'style', 'summary', 'tabindex', 'title', 'translate', 'type', 'usemap', 'valign', 'value', 'width', 'wrap', 'xmlns', 'slot']);
+    const svg = freeze(['accent-height', 'accumulate', 'additive', 'alignment-baseline', 'amplitude', 'ascent', 'attributename', 'attributetype', 'azimuth', 'basefrequency', 'baseline-shift', 'begin', 'bias', 'by', 'class', 'clip', 'clippathunits', 'clip-path', 'clip-rule', 'color', 'color-interpolation', 'color-interpolation-filters', 'color-profile', 'color-rendering', 'cx', 'cy', 'd', 'dx', 'dy', 'diffuseconstant', 'direction', 'display', 'divisor', 'dur', 'edgemode', 'elevation', 'end', 'exponent', 'fill', 'fill-opacity', 'fill-rule', 'filter', 'filterunits', 'flood-color', 'flood-opacity', 'font-family', 'font-size', 'font-size-adjust', 'font-stretch', 'font-style', 'font-variant', 'font-weight', 'fx', 'fy', 'g1', 'g2', 'glyph-name', 'glyphref', 'gradientunits', 'gradienttransform', 'height', 'href', 'id', 'image-rendering', 'in', 'in2', 'intercept', 'k', 'k1', 'k2', 'k3', 'k4', 'kerning', 'keypoints', 'keysplines', 'keytimes', 'lang', 'lengthadjust', 'letter-spacing', 'kernelmatrix', 'kernelunitlength', 'lighting-color', 'local', 'marker-end', 'marker-mid', 'marker-start', 'markerheight', 'markerunits', 'markerwidth', 'maskcontentunits', 'maskunits', 'max', 'mask', 'media', 'method', 'mode', 'min', 'name', 'numoctaves', 'offset', 'operator', 'opacity', 'order', 'orient', 'orientation', 'origin', 'overflow', 'paint-order', 'path', 'pathlength', 'patterncontentunits', 'patterntransform', 'patternunits', 'points', 'preservealpha', 'preserveaspectratio', 'primitiveunits', 'r', 'rx', 'ry', 'radius', 'refx', 'refy', 'repeatcount', 'repeatdur', 'restart', 'result', 'rotate', 'scale', 'seed', 'shape-rendering', 'slope', 'specularconstant', 'specularexponent', 'spreadmethod', 'startoffset', 'stddeviation', 'stitchtiles', 'stop-color', 'stop-opacity', 'stroke-dasharray', 'stroke-dashoffset', 'stroke-linecap', 'stroke-linejoin', 'stroke-miterlimit', 'stroke-opacity', 'stroke', 'stroke-width', 'style', 'surfacescale', 'systemlanguage', 'tabindex', 'tablevalues', 'targetx', 'targety', 'transform', 'transform-origin', 'text-anchor', 'text-decoration', 'text-rendering', 'textlength', 'type', 'u1', 'u2', 'unicode', 'values', 'viewbox', 'visibility', 'version', 'vert-adv-y', 'vert-origin-x', 'vert-origin-y', 'width', 'word-spacing', 'wrap', 'writing-mode', 'xchannelselector', 'ychannelselector', 'x', 'x1', 'x2', 'xmlns', 'y', 'y1', 'y2', 'z', 'zoomandpan']);
     const mathMl = freeze(['accent', 'accentunder', 'align', 'bevelled', 'close', 'columnsalign', 'columnlines', 'columnspan', 'denomalign', 'depth', 'dir', 'display', 'displaystyle', 'encoding', 'fence', 'frame', 'height', 'href', 'id', 'largeop', 'length', 'linethickness', 'lspace', 'lquote', 'mathbackground', 'mathcolor', 'mathsize', 'mathvariant', 'maxsize', 'minsize', 'movablelimits', 'notation', 'numalign', 'open', 'rowalign', 'rowlines', 'rowspacing', 'rowspan', 'rspace', 'rquote', 'scriptlevel', 'scriptminsize', 'scriptsizemultiplier', 'selection', 'separator', 'separators', 'stretchy', 'subscriptshift', 'supscriptshift', 'symmetric', 'voffset', 'width', 'xmlns']);
     const xml = freeze(['xlink:href', 'xml:id', 'xlink:title', 'xml:space', 'xmlns:xlink']);
 
@@ -16399,7 +16384,7 @@
     function createDOMPurify() {
       let window = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : getGlobal();
       const DOMPurify = root => createDOMPurify(root);
-      DOMPurify.version = '3.3.2';
+      DOMPurify.version = '3.2.6';
       DOMPurify.removed = [];
       if (!window || !window.document || window.document.nodeType !== NODE_TYPE.document || !window.Element) {
         // Not running in a browser, provide a factory function
@@ -16510,21 +16495,6 @@
       let FORBID_TAGS = null;
       /* Explicitly forbidden attributes (overrides ALLOWED_ATTR/ADD_ATTR) */
       let FORBID_ATTR = null;
-      /* Config object to store ADD_TAGS/ADD_ATTR functions (when used as functions) */
-      const EXTRA_ELEMENT_HANDLING = Object.seal(create$1(null, {
-        tagCheck: {
-          writable: true,
-          configurable: false,
-          enumerable: true,
-          value: null
-        },
-        attributeCheck: {
-          writable: true,
-          configurable: false,
-          enumerable: true,
-          value: null
-        }
-      }));
       /* Decide if ARIA attributes are okay */
       let ALLOW_ARIA_ATTR = true;
       /* Decide if custom data attributes are okay */
@@ -16694,7 +16664,7 @@
         /* Parse profile info */
         if (USE_PROFILES) {
           ALLOWED_TAGS = addToSet({}, text$1);
-          ALLOWED_ATTR = create$1(null);
+          ALLOWED_ATTR = [];
           if (USE_PROFILES.html === true) {
             addToSet(ALLOWED_TAGS, html$1);
             addToSet(ALLOWED_ATTR, html);
@@ -16715,33 +16685,18 @@
             addToSet(ALLOWED_ATTR, xml);
           }
         }
-        /* Prevent function-based ADD_ATTR / ADD_TAGS from leaking across calls */
-        if (!objectHasOwnProperty(cfg, 'ADD_TAGS')) {
-          EXTRA_ELEMENT_HANDLING.tagCheck = null;
-        }
-        if (!objectHasOwnProperty(cfg, 'ADD_ATTR')) {
-          EXTRA_ELEMENT_HANDLING.attributeCheck = null;
-        }
         /* Merge configuration parameters */
         if (cfg.ADD_TAGS) {
-          if (typeof cfg.ADD_TAGS === 'function') {
-            EXTRA_ELEMENT_HANDLING.tagCheck = cfg.ADD_TAGS;
-          } else {
-            if (ALLOWED_TAGS === DEFAULT_ALLOWED_TAGS) {
-              ALLOWED_TAGS = clone(ALLOWED_TAGS);
-            }
-            addToSet(ALLOWED_TAGS, cfg.ADD_TAGS, transformCaseFunc);
+          if (ALLOWED_TAGS === DEFAULT_ALLOWED_TAGS) {
+            ALLOWED_TAGS = clone(ALLOWED_TAGS);
           }
+          addToSet(ALLOWED_TAGS, cfg.ADD_TAGS, transformCaseFunc);
         }
         if (cfg.ADD_ATTR) {
-          if (typeof cfg.ADD_ATTR === 'function') {
-            EXTRA_ELEMENT_HANDLING.attributeCheck = cfg.ADD_ATTR;
-          } else {
-            if (ALLOWED_ATTR === DEFAULT_ALLOWED_ATTR) {
-              ALLOWED_ATTR = clone(ALLOWED_ATTR);
-            }
-            addToSet(ALLOWED_ATTR, cfg.ADD_ATTR, transformCaseFunc);
+          if (ALLOWED_ATTR === DEFAULT_ALLOWED_ATTR) {
+            ALLOWED_ATTR = clone(ALLOWED_ATTR);
           }
+          addToSet(ALLOWED_ATTR, cfg.ADD_ATTR, transformCaseFunc);
         }
         if (cfg.ADD_URI_SAFE_ATTR) {
           addToSet(URI_SAFE_ATTRIBUTES, cfg.ADD_URI_SAFE_ATTR, transformCaseFunc);
@@ -16751,12 +16706,6 @@
             FORBID_CONTENTS = clone(FORBID_CONTENTS);
           }
           addToSet(FORBID_CONTENTS, cfg.FORBID_CONTENTS, transformCaseFunc);
-        }
-        if (cfg.ADD_FORBID_CONTENTS) {
-          if (FORBID_CONTENTS === DEFAULT_FORBID_CONTENTS) {
-            FORBID_CONTENTS = clone(FORBID_CONTENTS);
-          }
-          addToSet(FORBID_CONTENTS, cfg.ADD_FORBID_CONTENTS, transformCaseFunc);
         }
         /* Add #text in case KEEP_CONTENT is set to true */
         if (KEEP_CONTENT) {
@@ -17055,7 +17004,7 @@
           return true;
         }
         /* Remove element if anything forbids its presence */
-        if (!(EXTRA_ELEMENT_HANDLING.tagCheck instanceof Function && EXTRA_ELEMENT_HANDLING.tagCheck(tagName)) && (!ALLOWED_TAGS[tagName] || FORBID_TAGS[tagName])) {
+        if (!ALLOWED_TAGS[tagName] || FORBID_TAGS[tagName]) {
           /* Check if we have a custom element to handle */
           if (!FORBID_TAGS[tagName] && _isBasicCustomElement(tagName)) {
             if (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, tagName)) {
@@ -17119,10 +17068,6 @@
        */
       // eslint-disable-next-line complexity
       const _isValidAttribute = function _isValidAttribute(lcTag, lcName, value) {
-        /* FORBID_ATTR must always win, even if ADD_ATTR predicate would allow it */
-        if (FORBID_ATTR[lcName]) {
-          return false;
-        }
         /* Make sure attribute cannot clobber */
         if (SANITIZE_DOM && (lcName === 'id' || lcName === 'name') && (value in document || value in formElement)) {
           return false;
@@ -17131,12 +17076,12 @@
             (https://html.spec.whatwg.org/multipage/dom.html#embedding-custom-non-visible-data-with-the-data-*-attributes)
             XML-compatible (https://html.spec.whatwg.org/multipage/infrastructure.html#xml-compatible and http://www.w3.org/TR/xml/#d0e804)
             We don't need to check the value; it's always URI safe. */
-        if (ALLOW_DATA_ATTR && !FORBID_ATTR[lcName] && regExpTest(DATA_ATTR, lcName)) ; else if (ALLOW_ARIA_ATTR && regExpTest(ARIA_ATTR, lcName)) ; else if (EXTRA_ELEMENT_HANDLING.attributeCheck instanceof Function && EXTRA_ELEMENT_HANDLING.attributeCheck(lcName, lcTag)) ; else if (!ALLOWED_ATTR[lcName] || FORBID_ATTR[lcName]) {
+        if (ALLOW_DATA_ATTR && !FORBID_ATTR[lcName] && regExpTest(DATA_ATTR, lcName)) ; else if (ALLOW_ARIA_ATTR && regExpTest(ARIA_ATTR, lcName)) ; else if (!ALLOWED_ATTR[lcName] || FORBID_ATTR[lcName]) {
           if (
           // First condition does a very basic check if a) it's basically a valid custom element tagname AND
           // b) if the tagName passes whatever the user has configured for CUSTOM_ELEMENT_HANDLING.tagNameCheck
           // and c) if the attribute name passes whatever the user has configured for CUSTOM_ELEMENT_HANDLING.attributeNameCheck
-          _isBasicCustomElement(lcTag) && (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, lcTag) || CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(lcTag)) && (CUSTOM_ELEMENT_HANDLING.attributeNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.attributeNameCheck, lcName) || CUSTOM_ELEMENT_HANDLING.attributeNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.attributeNameCheck(lcName, lcTag)) ||
+          _isBasicCustomElement(lcTag) && (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, lcTag) || CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(lcTag)) && (CUSTOM_ELEMENT_HANDLING.attributeNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.attributeNameCheck, lcName) || CUSTOM_ELEMENT_HANDLING.attributeNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.attributeNameCheck(lcName)) ||
           // Alternative, second condition checks if it's an `is`-attribute, AND
           // the value passes whatever the user has configured for CUSTOM_ELEMENT_HANDLING.tagNameCheck
           lcName === 'is' && CUSTOM_ELEMENT_HANDLING.allowCustomizedBuiltInElements && (CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof RegExp && regExpTest(CUSTOM_ELEMENT_HANDLING.tagNameCheck, value) || CUSTOM_ELEMENT_HANDLING.tagNameCheck instanceof Function && CUSTOM_ELEMENT_HANDLING.tagNameCheck(value))) ; else {
@@ -17215,12 +17160,7 @@
             value = SANITIZE_NAMED_PROPS_PREFIX + value;
           }
           /* Work around a security issue with comments inside attributes */
-          if (SAFE_FOR_XML && regExpTest(/((--!?|])>)|<\/(style|script|title|xmp|textarea|noscript|iframe|noembed|noframes)/i, value)) {
-            _removeAttribute(name, currentNode);
-            continue;
-          }
-          /* Make sure we cannot easily use animated hrefs, even if animations are allowed */
-          if (lcName === 'attributename' && stringMatch(value, 'href')) {
+          if (SAFE_FOR_XML && regExpTest(/((--!?|])>)|<\/(style|title)/i, value)) {
             _removeAttribute(name, currentNode);
             continue;
           }
@@ -18709,8 +18649,7 @@
         optionString('dropAreaLabel'),
         optionString('buttonLabel'),
         optionString('allowedFileTypes'),
-        optionArrayOf('allowedFileExtensions', string),
-        defaultedFunction('onInvalidFiles', () => Promise.resolve())
+        optionArrayOf('allowedFileExtensions', string)
     ]);
     const dropZoneSchema = objOf(dropZoneFields);
     const dropZoneDataProcessor = arrOfVal();
@@ -22792,14 +22731,8 @@
         };
         const handleFiles = (component, files) => {
             if (files) {
-                const filteredFiles = filterByExtension(files, providersBackstage, spec.allowedFileExtensions);
-                Representing.setValue(component, filteredFiles);
+                Representing.setValue(component, filterByExtension(files, providersBackstage, spec.allowedFileExtensions));
                 emitWith(component, formChangeEvent, { name: spec.name });
-                if (filteredFiles.length === 0) {
-                    spec.onInvalidFiles().finally(() => {
-                        component.element.dom.focus();
-                    }).catch(noop);
-                }
             }
         };
         const memInput = record({
@@ -26959,7 +26892,9 @@
     };
 
     const renderToolbarGroupCommon = (toolbarGroup) => {
-        const attributes = toolbarGroup.label.or(toolbarGroup.title).fold(() => ({}), (label) => ({ attributes: { 'aria-label': label } }));
+        const attributes = toolbarGroup.label.isNone() ?
+            toolbarGroup.title.fold(() => ({}), (title) => ({ attributes: { 'aria-label': title } }))
+            : toolbarGroup.label.fold(() => ({}), (label) => ({ attributes: { 'aria-label': label } }));
         return {
             dom: {
                 tag: 'div',
@@ -27535,14 +27470,10 @@
                     SilverMenubar.focus(menubar);
                 });
             },
-            setViews: (comp, viewConfigs, showView) => {
+            setViews: (comp, viewConfigs) => {
                 parts$g.getPart(comp, detail, 'viewWrapper').each((wrapper) => {
                     ViewWrapper.setViews(wrapper, viewConfigs);
                 });
-                const configKey = showView?.toLowerCase();
-                if (isString(configKey) && has$2(viewConfigs, configKey)) {
-                    apis.toggleView(comp, configKey);
-                }
             },
             toggleView: (comp, name) => {
                 return parts$g.getPart(comp, detail, 'viewWrapper').exists((wrapper) => ViewWrapper.toggleView(wrapper, () => apis.showMainView(comp), () => apis.hideMainView(comp), name));
@@ -27802,8 +27733,8 @@
             focusToolbar: (apis, comp) => {
                 apis.focusToolbar(comp);
             },
-            setViews: (apis, comp, views, showView) => {
-                apis.setViews(comp, views, showView);
+            setViews: (apis, comp, views) => {
+                apis.setViews(comp, views);
             },
             toggleView: (apis, comp, name) => {
                 return apis.toggleView(comp, name);
@@ -27821,7 +27752,7 @@
         view: { title: 'View', items: 'code suggestededits revisionhistory | visualaid visualchars visualblocks | spellchecker | preview fullscreen | showcomments' },
         insert: { title: 'Insert', items: 'image video link media addcomment pageembed inserttemplate codesample inserttable accordion math | charmap emoticons hr | pagebreak nonbreaking anchor tableofcontents footnotes | mergetags | insertdatetime' },
         format: { title: 'Format', items: 'bold italic underline strikethrough superscript subscript codeformat | styles blocks fontfamily fontsize align lineheight | forecolor backcolor | language | removeformat' },
-        tools: { title: 'Tools', items: 'tinymceai-chat tinymceai-review tinymceai-quickactions aidialog aishortcuts | spellchecker spellcheckerlanguage | autocorrect capitalization | a11ycheck code typography wordcount addtemplate' },
+        tools: { title: 'Tools', items: 'aidialog aishortcuts | spellchecker spellcheckerlanguage | autocorrect capitalization | a11ycheck code typography wordcount addtemplate' },
         table: { title: 'Table', items: 'inserttable | cell row column | advtablesort | tableprops deletetable' },
         help: { title: 'Help', items: 'help' }
     };
@@ -27967,17 +27898,25 @@
     const loadUiContentCSS = (editor, isInline, skinUrl) => {
         const filenameBase = isInline ? 'content.inline' : 'content';
         const decision = determineCSSDecision(editor, filenameBase, skinUrl);
-        if (!skinUrl) {
-            return Promise.resolve();
-        }
         switch (decision._kind) {
             case 'load-raw':
-                const { key } = decision;
-                editor.contentCSS.push(key);
+                const { key, css } = decision;
+                if (isInline) {
+                    loadRawCss(editor, key, css, editor.ui.styleSheetLoader);
+                }
+                else {
+                    // Need to wait until the iframe is in the DOM before trying to load
+                    // the style into the iframe document
+                    editor.on('PostRender', () => {
+                        loadRawCss(editor, key, css, editor.dom.styleSheetLoader);
+                    });
+                }
                 return Promise.resolve();
             case 'load-stylesheet':
                 const { url } = decision;
-                editor.contentCSS.push(url);
+                if (skinUrl) {
+                    editor.contentCSS.push(url);
+                }
                 return Promise.resolve();
             default:
                 return Promise.resolve();
@@ -29279,7 +29218,7 @@
             name: 'history', items: ['undo', 'redo']
         },
         {
-            name: 'ai', items: ['tinymceai-chat', 'tinymceai-review', 'tinymceai-quickactions', 'aidialog', 'aishortcuts']
+            name: 'ai', items: ['aidialog', 'aishortcuts']
         },
         {
             name: 'styles', items: ['styles']
@@ -29514,8 +29453,8 @@
         attachUiMotherships(editor, uiRoot, uiRefs);
         editor.on('PostRender', () => {
             OuterContainer.setSidebar(outerContainer, rawUiConfig.sidebar, getSidebarShow(editor));
-            OuterContainer.setViews(outerContainer, rawUiConfig.views, getViewShow(editor));
-        }, true);
+            OuterContainer.setViews(outerContainer, rawUiConfig.views);
+        });
         // TINY-10343: Using `SkinLoaded` instead of `PostRender` because if the skin loading takes too long you run in to rendering problems since things are measured before the CSS is being applied
         editor.on('SkinLoaded', () => {
             // Set the sidebar before the toolbar and menubar
@@ -32273,8 +32212,7 @@
                 tag: 'div',
                 classes: ['tox-statusbar__path'],
                 attributes: {
-                    'role': 'group',
-                    'aria-label': providersBackstage.translate('Element Path')
+                    role: 'navigation'
                 }
             },
             behaviours: derive$1([
@@ -33493,7 +33431,6 @@
         const blockerBackdropClass = blockerClass + '__backdrop';
         const scrollLockClass = dialogClass + '__disable-scroll';
         return ModalDialog.sketch({
-            role: spec.role,
             lazySink: spec.lazySink,
             onEscape: (comp) => {
                 spec.onEscape(comp);
@@ -33751,30 +33688,7 @@
         return acc;
     }, {});
 
-    const focusFirstTabbable = (getSink, component) => {
-        // TODO: add a test for focusIn (TINY-10125)
-        const focusIn = () => component.getSystem().isConnected() ? Keying.focusIn(component) : undefined;
-        const isDisabled = (focused) => has$1(focused, 'disabled') || getOpt(focused, 'aria-disabled').exists((val) => val === 'true');
-        const rootNode = getRootNode(component.element);
-        const current = active$1(rootNode);
-        active$1(rootNode).fold(focusIn, (focused) => {
-            // We need to check if the focused element is disabled because apparently firefox likes to leave focus on disabled elements.
-            if (isDisabled(focused)) {
-                focusIn();
-                // And we need the below check for IE, which likes to leave focus on the parent of disabled elements
-            }
-            else if (current.exists((cur) => contains(focused, cur) && isDisabled(cur))) {
-                focusIn();
-                // Lastly if something outside the sink has focus then return the focus back to the dialog
-            }
-            else {
-                getSink().toOptional()
-                    .filter((sink) => !contains(sink.element, focused))
-                    .each(focusIn);
-            }
-        });
-    };
-    const initCommonEvents = (fireApiEvent, extras, getSink) => [
+    const initCommonEvents = (fireApiEvent, extras) => [
         // When focus moves onto a tab-placeholder, skip to the next thing in the tab sequence
         runWithTarget(focusin(), onFocus),
         // TODO: Test if disabled first.
@@ -33792,13 +33706,10 @@
             spec.onCancel(api);
             emit(self, formCloseEvent);
         }),
-        run$1(formUnblockEvent, (component, _se) => {
-            extras.onUnblock();
-            focusFirstTabbable(getSink, component);
-        }),
+        run$1(formUnblockEvent, (_c, _se) => extras.onUnblock()),
         run$1(formBlockEvent, (_c, se) => extras.onBlock(se.event))
     ];
-    const initUrlDialog = (getInstanceApi, extras, getSink) => {
+    const initUrlDialog = (getInstanceApi, extras) => {
         const fireApiEvent = (eventName, f) => run$1(eventName, (c, se) => {
             withSpec(c, (spec, _c) => {
                 f(getInstanceApi(), spec, se.event, c);
@@ -33810,7 +33721,7 @@
             });
         };
         return [
-            ...initCommonEvents(fireApiEvent, extras, getSink),
+            ...initCommonEvents(fireApiEvent, extras),
             fireApiEvent(formActionEvent, (api, spec, event) => {
                 spec.onAction(api, { name: event.name });
             })
@@ -33828,14 +33739,34 @@
             });
         };
         return [
-            ...initCommonEvents(fireApiEvent, extras, getSink),
+            ...initCommonEvents(fireApiEvent, extras),
             fireApiEvent(formSubmitEvent, (api, spec) => spec.onSubmit(api)),
             fireApiEvent(formChangeEvent, (api, spec, event) => {
                 spec.onChange(api, { name: event.name });
             }),
             fireApiEvent(formActionEvent, (api, spec, event, component) => {
+                // TODO: add a test for focusIn (TINY-10125)
+                const focusIn = () => component.getSystem().isConnected() ? Keying.focusIn(component) : undefined;
+                const isDisabled = (focused) => has$1(focused, 'disabled') || getOpt(focused, 'aria-disabled').exists((val) => val === 'true');
+                const rootNode = getRootNode(component.element);
+                const current = active$1(rootNode);
                 spec.onAction(api, { name: event.name, value: event.value });
-                focusFirstTabbable(getSink, component);
+                active$1(rootNode).fold(focusIn, (focused) => {
+                    // We need to check if the focused element is disabled because apparently firefox likes to leave focus on disabled elements.
+                    if (isDisabled(focused)) {
+                        focusIn();
+                        // And we need the below check for IE, which likes to leave focus on the parent of disabled elements
+                    }
+                    else if (current.exists((cur) => contains(focused, cur) && isDisabled(cur))) {
+                        focusIn();
+                        // Lastly if something outside the sink has focus then return the focus back to the dialog
+                    }
+                    else {
+                        getSink().toOptional()
+                            .filter((sink) => !contains(sink.element, focused))
+                            .each(focusIn);
+                    }
+                });
             }),
             fireApiEvent(formTabChangeEvent, (api, spec, event) => {
                 spec.onTabChange(api, { newTabName: event.name, oldTabName: event.oldName });
@@ -34285,7 +34216,7 @@
                 return Optional.some(renderModalFooter({ buttons }, dialogId, backstage));
             }
         });
-        const dialogEvents = initUrlDialog(() => instanceApi, getEventExtras(() => dialog, backstage.shared.providers, extra), backstage.shared.getSink);
+        const dialogEvents = initUrlDialog(() => instanceApi, getEventExtras(() => dialog, backstage.shared.providers, extra));
         // Add the styles for the modal width/height
         const styles = {
             ...internalDialog.height.fold(() => ({}), (height) => ({ 'height': height + 'px', 'max-height': height + 'px' })),
@@ -34382,7 +34313,6 @@
             const titleSpec = pUntitled();
             const closeSpec = pClose(closeDialog, sharedBackstage.providers);
             const alertDialog = build$1(renderDialog$1({
-                role: 'alertdialog',
                 lazySink: () => sharedBackstage.getSink(),
                 header: hiddenHeader(titleSpec, closeSpec),
                 body: pBodyMessage(message, sharedBackstage.providers),
@@ -34394,11 +34324,7 @@
                 extraBehaviours: [],
                 extraStyles: {},
                 dialogEvents: [
-                    run$1(formCancelEvent, closeDialog),
-                    runOnAttached((c) => {
-                        const bodyElm = ModalDialog.getBody(c);
-                        describedBy(c.element, bodyElm.element);
-                    }),
+                    run$1(formCancelEvent, closeDialog)
                 ],
                 eventOrder: {}
             }));
@@ -34442,7 +34368,6 @@
             const titleSpec = pUntitled();
             const closeSpec = pClose(() => closeDialog(false), sharedBackstage.providers);
             const confirmDialog = build$1(renderDialog$1({
-                role: 'alertdialog',
                 lazySink: () => sharedBackstage.getSink(),
                 header: hiddenHeader(titleSpec, closeSpec),
                 body: pBodyMessage(message, sharedBackstage.providers),
@@ -34456,11 +34381,7 @@
                 extraStyles: {},
                 dialogEvents: [
                     run$1(formCancelEvent, () => closeDialog(false)),
-                    run$1(formSubmitEvent, () => closeDialog(true)),
-                    runOnAttached((c) => {
-                        const bodyElm = ModalDialog.getBody(c);
-                        describedBy(c.element, bodyElm.element);
-                    }),
+                    run$1(formSubmitEvent, () => closeDialog(true))
                 ],
                 eventOrder: {}
             }));
@@ -34808,13 +34729,11 @@
             const getPromotionElement = () => {
                 return descendant(SugarElement.fromDom(editor.getContainer()), '.tox-promotion').map((promotion) => promotion.dom).getOrNull();
             };
-            const getSinkElement = (type) => type === 'dialog' ? dialogs.getMothership().element.dom : popups.getMothership().element.dom;
             return {
                 renderUI,
                 getWindowManagerImpl: constant$1(windowMgr),
                 getNotificationManagerImpl,
-                getPromotionElement,
-                getSinkElement
+                getPromotionElement
             };
         });
     };

@@ -1,5 +1,5 @@
 /**
- * TinyMCE version 8.5.1 (2026-05-19)
+ * TinyMCE version 8.3.2 (2026-01-14)
  */
 
 (function () {
@@ -762,8 +762,8 @@
     };
     const unlinkSelection = (editor) => {
         const dom = editor.dom, selection = editor.selection;
-        const rng = selection.getRng().cloneRange();
         const bookmark = selection.getBookmark();
+        const rng = selection.getRng().cloneRange();
         // Extend the selection out to the entire anchor element
         const startAnchorElm = dom.getParent(rng.startContainer, 'a[href]', editor.getBody());
         const endAnchorElm = dom.getParent(rng.endContainer, 'a[href]', editor.getBody());
@@ -1158,7 +1158,7 @@
         collect
     };
 
-    const makeTab = (fileTypes, onInvalidFiles) => {
+    const makeTab = (fileTypes) => {
         const items = [
             {
                 type: 'dropzone',
@@ -1167,7 +1167,6 @@
                 dropAreaLabel: 'Drop a file here',
                 allowedFileTypes: fileTypes.map((e) => e.mimeType).join(','),
                 allowedFileExtensions: flatten(fileTypes.map((e) => e.extensions)),
-                onInvalidFiles
             }
         ];
         return {
@@ -1252,8 +1251,7 @@
         blobUri,
         name: file.name?.replace(/\.[^\.]+$/, ''),
         filename: file.name,
-        base64: dataUrl.split(',')[1],
-        allowEmptyFile: true
+        base64: dataUrl.split(',')[1]
     });
     const addToBlobCache = (editor) => (blobInfo) => {
         editor.editorUpload.blobCache.add(blobInfo);
@@ -1290,7 +1288,7 @@
             fileinput: []
         };
     };
-    const makeDialogBody = (urlInput, displayText, titleText, catalogs, hasUploadPanel, fileTypes, onInvalidFiles) => {
+    const makeDialogBody = (urlInput, displayText, titleText, catalogs, hasUploadPanel, fileTypes) => {
         const generalPanelItems = flatten([
             urlInput,
             displayText,
@@ -1312,7 +1310,7 @@
                             name: 'general',
                             items: generalPanelItems
                         }],
-                    [UploadTab.makeTab(fileTypes, onInvalidFiles)]
+                    [UploadTab.makeTab(fileTypes)]
                 ])
             };
             return tabPanel;
@@ -1350,6 +1348,7 @@
         const initialData = getInitialData(settings, defaultTarget);
         const catalogs = settings.catalogs;
         const dialogDelta = DialogChanges.init(initialData, catalogs);
+        const body = makeDialogBody(urlInput, displayText, titleText, catalogs, settings.hasUploadPanel, getDocumentsFileTypes(editor));
         const helpers = {
             addToBlobCache: addToBlobCache(editor),
             createBlobCache: createBlobCache(editor),
@@ -1357,7 +1356,6 @@
             uploadFile: uploadFile(editor),
             getExistingBlobInfo: getExistingBlobInfo(editor)
         };
-        const body = makeDialogBody(urlInput, displayText, titleText, catalogs, settings.hasUploadPanel, getDocumentsFileTypes(editor), () => new Promise((r) => helpers.alertErr('Selected files do not have allowed extensions', r)));
         return {
             title: 'Insert/Edit Link',
             size: 'normal',

@@ -1,5 +1,5 @@
 /**
- * TinyMCE version 8.5.1 (2026-05-19)
+ * TinyMCE version 8.3.2 (2026-01-14)
  */
 
 (function () {
@@ -6889,14 +6889,6 @@
             processor: 'boolean',
             default: true
         });
-        registerOption('table_default_header_rows', {
-            processor: 'number',
-            default: 0
-        });
-        registerOption('table_default_header_cols', {
-            processor: 'number',
-            default: 0
-        });
     };
     const getTableCloneElements = (editor) => {
         return Optional.from(editor.options.get('table_clone_elements'));
@@ -6916,8 +6908,6 @@
     const hasTableResizeBars = option('table_resize_bars');
     const shouldStyleWithCss = option('table_style_by_css');
     const shouldMergeContentOnPaste = option('table_merge_content_on_paste');
-    const defaultHeaderRows = option('table_default_header_rows');
-    const defaultHeaderCols = option('table_default_header_cols');
     const getTableDefaultAttributes = (editor) => {
         // Note: The we don't rely on the default here as we need to dynamically lookup the widths based on the current editor state
         const options = editor.options;
@@ -6950,18 +6940,14 @@
     const getSelectionStart = (editor) => SugarElement.fromDom(editor.selection.getStart());
     const getPixelWidth = (elm) => elm.getBoundingClientRect().width;
     const getPixelHeight = (elm) => elm.getBoundingClientRect().height;
-    const addPxSuffix = (size) => /^\d+(\.\d+)?$/.test(size) ? size + 'px' : size;
     const getRawValue = (prop) => (editor, elm) => {
         const raw = editor.dom.getStyle(elm, prop) || editor.dom.getAttrib(elm, prop);
-        // If a value has no unit, assume it is a pixel value
-        return Optional.from(raw)
-            .filter(isNotEmpty)
-            .map(addPxSuffix);
+        return Optional.from(raw).filter(isNotEmpty);
     };
-    const isPercentage$1 = (value) => /^(\d+(\.\d+)?)%$/.test(value);
-    const isPixel = (value) => /^(\d+(\.\d+)?)px$/.test(value);
     const getRawWidth = getRawValue('width');
     const getRawHeight = getRawValue('height');
+    const isPercentage$1 = (value) => /^(\d+(\.\d+)?)%$/.test(value);
+    const isPixel = (value) => /^(\d+(\.\d+)?)px$/.test(value);
     const isInEditableContext$1 = (cell) => closest$2(cell, isTag('table')).exists(isEditable$1);
 
     const lookupTable = (container) => {
@@ -8368,8 +8354,8 @@
     const insertTable = (editor, rows, columns, options = {}) => {
         const checkInput = (val) => isNumber(val) && val > 0;
         if (checkInput(rows) && checkInput(columns)) {
-            const headerRows = options.headerRows ?? defaultHeaderRows(editor);
-            const headerColumns = options.headerColumns ?? defaultHeaderCols(editor);
+            const headerRows = options.headerRows || 0;
+            const headerColumns = options.headerColumns || 0;
             return insert(editor, columns, rows, headerColumns, headerRows);
         }
         else {
