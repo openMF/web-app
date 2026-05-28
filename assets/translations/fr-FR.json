@@ -4311,6 +4311,45 @@
       "validationSaved": "Données de validation enregistrées avec succès.",
       "workingCapitalDiscountUpdated": "Le rabais du prêt de fonds de roulement a été mis à jour avec succès.",
       "unableToUpdateDiscount": "Impossible de mettre à jour le rabais."
+    },
+    "selections": {
+      "standingInstructions": {
+        "accountTransferType": {
+          "account.transfer": "Virement vers Compte d'Épargne",
+          "loan.repayment": "Remboursement de Prêt"
+        },
+        "standingInstructionPriority": {
+          "urgent": "Urgente",
+          "high": "Haute",
+          "medium": "Moyenne",
+          "low": "Basse"
+        },
+        "standingInstructionStatus": {
+          "active": "Active",
+          "disabled": "Désactivée",
+          "deleted": "Supprimée"
+        },
+        "accountType": {
+          "savings": "Compte d'Épargne",
+          "loan": "Compte de Prêt"
+        },
+        "standingInstructionType": {
+          "fixed": "Montant Fixe",
+          "dues": "Montant des Échéances"
+        },
+        "accountTransferRecurrenceType": {
+          "periodic": "Périodique",
+          "as.per.dues": "Selon les Échéances"
+        },
+        "frequencyperiodFrequencyType": {
+          "days": "Jours",
+          "weeks": "Semaines",
+          "months": "Mois",
+          "years": "Ans"
+        },
+        "own.account": "Compte Propre",
+        "other.bank": "Autre Banque"
+      }
     }
   },
   "languages": {

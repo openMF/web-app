@@ -4305,6 +4305,45 @@
       "validationSaved": "Data ya uthibitishaji imehifadhiwa kwa mafanikio.",
       "workingCapitalDiscountUpdated": "Punguzo la mkopo wa mtaji wa kufanya kazi limefanikiwa kusasishwa.",
       "unableToUpdateDiscount": "Haikuwezekana kusasisha punguzo."
+    },
+    "selections": {
+      "standingInstructions": {
+        "accountTransferType": {
+          "account.transfer": "Uhamisho kwenda Akaunti ya Akiba",
+          "loan.repayment": "Malipo ya Mkopo"
+        },
+        "standingInstructionPriority": {
+          "urgent": "Haraka Sana",
+          "high": "Juu",
+          "medium": "Kati",
+          "low": "Chini"
+        },
+        "standingInstructionStatus": {
+          "active": "Inafanya kazi",
+          "disabled": "Imezimwa",
+          "deleted": "Imefutwa"
+        },
+        "accountType": {
+          "savings": "Akaunti ya Akiba",
+          "loan": "Akaunti ya Mkopo"
+        },
+        "standingInstructionType": {
+          "fixed": "Kiasi Maalum",
+          "dues": "Kiasi cha Malipo yanayodaiwa"
+        },
+        "accountTransferRecurrenceType": {
+          "periodic": "Kila Baada ya Kipindi",
+          "as.per.dues": "Kulingana na Madeni"
+        },
+        "frequencyperiodFrequencyType": {
+          "days": "Siku",
+          "weeks": "Wiki",
+          "months": "Miezi",
+          "years": "Miaka"
+        },
+        "own.account": "Akaunti Yangu",
+        "other.bank": "Benki Nyingine"
+      }
     }
   },
   "languages": {

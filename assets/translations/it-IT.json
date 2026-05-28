@@ -4309,6 +4309,45 @@
       "validationSaved": "Dati di convalida salvati con successo.",
       "workingCapitalDiscountUpdated": "Lo sconto del prestito di capitale circolante è stato aggiornato correttamente.",
       "unableToUpdateDiscount": "Impossibile aggiornare lo sconto."
+    },
+    "selections": {
+      "standingInstructions": {
+        "accountTransferType": {
+          "account.transfer": "Giroconto su Conto Deposito",
+          "loan.repayment": "Rimborso Prestito"
+        },
+        "standingInstructionPriority": {
+          "urgent": "Urgente",
+          "high": "Alta",
+          "medium": "Media",
+          "low": "Bassa"
+        },
+        "standingInstructionStatus": {
+          "active": "Attiva",
+          "disabled": "Disattivata",
+          "deleted": "Eliminata"
+        },
+        "accountType": {
+          "savings": "Conto di Risparmio",
+          "loan": "Conto Finanziamento"
+        },
+        "standingInstructionType": {
+          "fixed": "Importo Fisso",
+          "dues": "Importo della Rata"
+        },
+        "accountTransferRecurrenceType": {
+          "periodic": "Periodica",
+          "as.per.dues": "In base alle Scadenze"
+        },
+        "frequencyperiodFrequencyType": {
+          "days": "Giorni",
+          "weeks": "Settimane",
+          "months": "Mesi",
+          "years": "Anni"
+        },
+        "own.account": "Conto Proprio",
+        "other.bank": "Altra Banca"
+      }
     }
   },
   "languages": {

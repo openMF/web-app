@@ -4310,6 +4310,45 @@
       "validationSaved": "Datos de validación guardados exitosamente.",
       "workingCapitalDiscountUpdated": "El descuento del préstamo de capital de trabajo se actualizó correctamente.",
       "unableToUpdateDiscount": "No se pudo actualizar el descuento."
+    },
+    "selections": {
+      "standingInstructions": {
+        "accountTransferType": {
+          "account.transfer": "Transferencia a Cuenta de Ahorro",
+          "loan.repayment": "Pago de Crédito"
+        },
+        "standingInstructionPriority": {
+          "urgent": "Urgente",
+          "high": "Alta",
+          "medium": "Media",
+          "low": "Baja"
+        },
+        "standingInstructionStatus": {
+          "active": "Activa",
+          "disabled": "Inactiva",
+          "deleted": "Eliminada"
+        },
+        "accountType": {
+          "savings": "Cuenta de Ahorro",
+          "loan": "Cuenta de Crédito"
+        },
+        "standingInstructionType": {
+          "fixed": "Monto Fijo",
+          "dues": "Monto de la Cuota"
+        },
+        "accountTransferRecurrenceType": {
+          "periodic": "Periódica",
+          "as.per.dues": "Según Vencimiento"
+        },
+        "frequencyperiodFrequencyType": {
+          "days": "Días",
+          "weeks": "Semanas",
+          "months": "Meses",
+          "years": "Años"
+        },
+        "own.account": "Cuenta Propia",
+        "other.bank": "Otros Bancos"
+      }
     }
   },
   "languages": {

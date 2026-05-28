@@ -4309,6 +4309,45 @@
       "validationSaved": "Patvirtinimo duomenys sėkmingai išsaugoti.",
       "workingCapitalDiscountUpdated": "Apyvartinio kapitalo paskolos nuolaida buvo sėkmingai atnaujinta.",
       "unableToUpdateDiscount": "Nepavyko atnaujinti nuolaidos."
+    },
+    "selections": {
+      "standingInstructions": {
+        "accountTransferType": {
+          "account.transfer": "Pervidimas į taupomąją sąskaitą",
+          "loan.repayment": "Paskolos grąžinimas"
+        },
+        "standingInstructionPriority": {
+          "urgent": "Skubu",
+          "high": "Aukštas",
+          "medium": "Vidutinis",
+          "low": "Žemas"
+        },
+        "standingInstructionStatus": {
+          "active": "Aktyvus",
+          "disabled": "Išjungta",
+          "deleted": "Ištrinta"
+        },
+        "accountType": {
+          "savings": "Taupomoji sąskaita",
+          "loan": "Paskolos sąskaita"
+        },
+        "standingInstructionType": {
+          "fixed": "Fiksuota suma",
+          "dues": "Mokėtina suma"
+        },
+        "accountTransferRecurrenceType": {
+          "periodic": "Periodiškai",
+          "as.per.dues": "Pagal mokėjimo terminą"
+        },
+        "frequencyperiodFrequencyType": {
+          "days": "Dienos",
+          "weeks": "Savaitės",
+          "months": "Mėnesiai",
+          "years": "Metai"
+        },
+        "own.account": "Sava sąskaita",
+        "other.bank": "Kitas bankas"
+      }
     }
   },
   "languages": {

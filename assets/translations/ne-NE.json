@@ -4308,6 +4308,45 @@
       "validationSaved": "प्रमाणीकरण डाटा सफलतापूर्वक बचत भयो।",
       "workingCapitalDiscountUpdated": "कार्यशील पूँजी ऋणको छुट सफलतापूर्वक अपडेट गरिएको छ।",
       "unableToUpdateDiscount": "छुट अपडेट गर्न सकिएन।"
+    },
+    "selections": {
+      "standingInstructions": {
+        "accountTransferType": {
+          "account.transfer": "बचत खाता स्थानान्तरण",
+          "loan.repayment": "कर्जा भुक्तानी"
+        },
+        "standingInstructionPriority": {
+          "urgent": "अत्यन्त जरुरी",
+          "high": "उच्च",
+          "medium": "मध्यम",
+          "low": "न्यून"
+        },
+        "standingInstructionStatus": {
+          "active": "सक्रिय",
+          "disabled": "निष्क्रिय",
+          "deleted": "हटाएको"
+        },
+        "accountType": {
+          "savings": "बचत खाता",
+          "loan": "कर्जा खाता"
+        },
+        "standingInstructionType": {
+          "fixed": "निश्चित रकम",
+          "dues": "बाँकी रकम"
+        },
+        "accountTransferRecurrenceType": {
+          "periodic": "आवधिक",
+          "as.per.dues": "भुक्तानी तालिका अनुसार"
+        },
+        "frequencyperiodFrequencyType": {
+          "days": "दिन",
+          "weeks": "हप्ता",
+          "months": "महिना",
+          "years": "वर्ष"
+        },
+        "own.account": "आफ्नै खाता",
+        "other.bank": "अन्य बैंक"
+      }
     }
   },
   "languages": {

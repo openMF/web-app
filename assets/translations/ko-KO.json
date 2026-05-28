@@ -4308,6 +4308,45 @@
       "validationSaved": "검증 데이터가 성공적으로 저장되었습니다.",
       "workingCapitalDiscountUpdated": "운전자금 대출 할인율이 성공적으로 업데이트되었습니다.",
       "unableToUpdateDiscount": "할인을 업데이트할 수 없습니다."
+    },
+    "selections": {
+      "standingInstructions": {
+        "accountTransferType": {
+          "account.transfer": "저축 계좌 이체",
+          "loan.repayment": "대출금 상환"
+        },
+        "standingInstructionPriority": {
+          "urgent": "긴급",
+          "high": "높음",
+          "medium": "보통",
+          "low": "낮음"
+        },
+        "standingInstructionStatus": {
+          "active": "활성",
+          "disabled": "비활성화됨",
+          "deleted": "삭제됨"
+        },
+        "accountType": {
+          "savings": "저축 계좌",
+          "loan": "대출 계좌"
+        },
+        "standingInstructionType": {
+          "fixed": "고정 금액",
+          "dues": "청구 금액"
+        },
+        "accountTransferRecurrenceType": {
+          "periodic": "정기적",
+          "as.per.dues": "일정/납입일 기준"
+        },
+        "frequencyperiodFrequencyType": {
+          "days": "일",
+          "weeks": "주",
+          "months": "월",
+          "years": "년"
+        },
+        "own.account": "본인 계좌",
+        "other.bank": "타행"
+      }
     }
   },
   "languages": {

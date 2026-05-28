@@ -4247,6 +4247,45 @@
       "workingCapitalDiscountUpdated": "Betriebskapitalrabatt wurde erfolgreich aktualisiert.",
       "unableToUpdateDiscount": "Rabatt konnte nicht aktualisiert werden."
     },
+    "selections": {
+      "standingInstructions": {
+        "accountTransferType": {
+          "account.transfer": "Umbuchung auf Sparkonto",
+          "loan.repayment": "Darlehensrückzahlung"
+        },
+        "standingInstructionPriority": {
+          "urgent": "Dringend",
+          "high": "Hoch",
+          "medium": "Mittel",
+          "low": "Niedrig"
+        },
+        "standingInstructionStatus": {
+          "active": "Aktiv",
+          "disabled": "Deaktiviert",
+          "deleted": "Gelöscht"
+        },
+        "accountType": {
+          "savings": "Sparkonto",
+          "loan": "Darlehenskonto"
+        },
+        "standingInstructionType": {
+          "fixed": "Fester Betrag",
+          "dues": "Fälliger Betrag"
+        },
+        "accountTransferRecurrenceType": {
+          "periodic": "Periodisch",
+          "as.per.dues": "Nach Fälligkeit"
+        },
+        "frequencyperiodFrequencyType": {
+          "days": "Tage",
+          "weeks": "Wochen",
+          "months": "Monate",
+          "years": "Jahre"
+        },
+        "own.account": "Eigenes Konto",
+        "other.bank": "Andere Bank"
+      }
+    },
     "auditTrail": {
       "actions": {
         "CREATE": "Erstellen",

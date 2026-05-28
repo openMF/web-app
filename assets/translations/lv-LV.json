@@ -4308,6 +4308,45 @@
       "validationSaved": "Validācijas dati veiksmīgi saglabāti.",
       "workingCapitalDiscountUpdated": "Apgrozāmo līdzekļu aizdevuma atlaide ir veiksmīgi atjaunināta.",
       "unableToUpdateDiscount": "Neizdevās atjaunināt atlaidi."
+    },
+    "selections": {
+      "standingInstructions": {
+        "accountTransferType": {
+          "account.transfer": "Pārskaitījums uz krājkontu",
+          "loan.repayment": "Aizdevuma atmaksa"
+        },
+        "standingInstructionPriority": {
+          "urgent": "Steidzama",
+          "high": "Augsta",
+          "medium": "Vidēja",
+          "low": "Zema"
+        },
+        "standingInstructionStatus": {
+          "active": "Aktīvs",
+          "disabled": "Deaktivizēts",
+          "deleted": "Dzēsts"
+        },
+        "accountType": {
+          "savings": "Krājkonts",
+          "loan": "Aizdevuma konts"
+        },
+        "standingInstructionType": {
+          "fixed": "Fiksēta summa",
+          "dues": "Maksājamā summa"
+        },
+        "accountTransferRecurrenceType": {
+          "periodic": "Periodiski",
+          "as.per.dues": "Atbilstoši maksājumu grafikam"
+        },
+        "frequencyperiodFrequencyType": {
+          "days": "Dienas",
+          "weeks": "Nedēļas",
+          "months": "Mēneši",
+          "years": "Gadi"
+        },
+        "own.account": "Savs konts",
+        "other.bank": "Cita banka"
+      }
     }
   },
   "languages": {

@@ -4308,6 +4308,45 @@
       "validationSaved": "Dados de validação guardados com sucesso.",
       "workingCapitalDiscountUpdated": "O desconto do empréstimo de fundo de maneio foi atualizado com sucesso.",
       "unableToUpdateDiscount": "Não foi possível atualizar o desconto."
+    },
+    "selections": {
+      "standingInstructions": {
+        "accountTransferType": {
+          "account.transfer": "Transferência para Conta Poupança",
+          "loan.repayment": "Amortização de Empréstimo"
+        },
+        "standingInstructionPriority": {
+          "urgent": "Urgente",
+          "high": "Alta",
+          "medium": "Média",
+          "low": "Baixa"
+        },
+        "standingInstructionStatus": {
+          "active": "Ativa",
+          "disabled": "Inativa",
+          "deleted": "Eliminada"
+        },
+        "accountType": {
+          "savings": "Conta Poupança",
+          "loan": "Conta de Empréstimo"
+        },
+        "standingInstructionType": {
+          "fixed": "Valor Fixo",
+          "dues": "Valor da Prestação"
+        },
+        "accountTransferRecurrenceType": {
+          "periodic": "Periódica",
+          "as.per.dues": "De Acordo com o Vencimento"
+        },
+        "frequencyperiodFrequencyType": {
+          "days": "Dias",
+          "weeks": "Semanas",
+          "months": "Meses",
+          "years": "Anos"
+        },
+        "own.account": "Conta Própria",
+        "other.bank": "Outro Banco"
+      }
     }
   },
   "languages": {

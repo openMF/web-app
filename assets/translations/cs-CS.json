@@ -4246,6 +4246,45 @@
       "workingCapitalDiscountUpdated": "Sleva provozního kapitálu byla úspěšně aktualizována.",
       "unableToUpdateDiscount": "Slevu nelze aktualizovat."
     },
+    "selections": {
+      "standingInstructions": {
+        "accountTransferType": {
+          "account.transfer": "Převod na spoření",
+          "loan.repayment": "Splátka úvěru"
+        },
+        "standingInstructionPriority": {
+          "urgent": "Urgentní",
+          "high": "Vysoká",
+          "medium": "Střední",
+          "low": "Nízká"
+        },
+        "standingInstructionStatus": {
+          "active": "Aktivní",
+          "disabled": "Deaktivováno",
+          "deleted": "Smazáno"
+        },
+        "accountType": {
+          "savings": "Spořicí účet",
+          "loan": "Úvěrový účet"
+        },
+        "standingInstructionType": {
+          "fixed": "Fixní částka",
+          "dues": "Dlužná částka"
+        },
+        "accountTransferRecurrenceType": {
+          "periodic": "Periodicky",
+          "as.per.dues": "Podle splatnosti"
+        },
+        "frequencyperiodFrequencyType": {
+          "days": "Dny",
+          "weeks": "Týdny",
+          "months": "Měsíce",
+          "years": "Roky"
+        },
+        "own.account": "Vlastní účet",
+        "other.bank": "Jiná banka"
+      }
+    },
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin pro Eclipse Birt",
     "auditTrail": {
       "actions": {
