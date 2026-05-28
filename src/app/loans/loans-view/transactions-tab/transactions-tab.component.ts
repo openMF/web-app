@@ -347,6 +347,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
       transaction.type.chargeoff ||
       this.isReAgoeOrReAmortize(transaction.type) ||
       transaction.type.interestRefund ||
+      this.isDiscountFee(transaction.type) ||
       transaction.type.contractTermination
     );
   }
@@ -565,6 +566,10 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
 
   private isReAgoeOrReAmortize(transactionType: LoanTransactionType): boolean {
     return this.isReAmortize(transactionType) || this.isReAge(transactionType);
+  }
+
+  private isDiscountFee(transactionType: LoanTransactionType): boolean {
+    return transactionType.discountFee || transactionType.code === 'loanTransactionType.discountFee';
   }
 
   isBuyDownFee(transactionType: LoanTransactionType): boolean {

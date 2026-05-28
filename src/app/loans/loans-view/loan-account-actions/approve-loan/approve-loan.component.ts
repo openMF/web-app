@@ -98,7 +98,13 @@ export class ApproveLoanComponent extends LoanAccountActionsBaseComponent implem
       note: ['']
     });
     if (this.isWorkingCapital) {
-      this.approveLoanForm.addControl('discountAmount', new UntypedFormControl());
+      this.approveLoanForm.addControl(
+        'discountAmount',
+        new UntypedFormControl({
+          value: this.loanData.discountAmount,
+          disabled: this.loanData.overrideDiscountDisabled
+        })
+      );
     }
   }
 

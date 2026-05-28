@@ -51,6 +51,7 @@ export interface LoanTransactionType {
   buyDownFee: boolean;
   buyDownFeeAdjustment: boolean;
   buyDownFeeAmortizationAdjustment: boolean;
+  discountFee: boolean;
 }
 
 export interface LoanTransactionTemplate {
