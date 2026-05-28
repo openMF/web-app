@@ -37,21 +37,10 @@ export interface Payment {
 
 export interface WorkingCapitalBalances {
   id: number;
-  principal?: number;
-  principalPaid?: number;
   principalOutstanding: number;
-  fee?: number;
-  feePaid?: number;
-  feeOutstanding?: number;
-  penalty?: number;
-  penaltyPaid?: number;
-  penaltyOutstanding?: number;
-  realizedIncomeFromDiscountFee?: number;
-  unrealizedIncomeFromDiscountFee?: number;
-  totalExpectedRepayment?: number;
-  totalRepayment?: number;
-  totalOutstanding?: number;
-  totalDisbursement?: number;
-  totalDiscountFee?: number;
-  overpaymentAmount?: number;
+  totalPaidPrincipal: number;
+  totalPayment: number;
+  realizedIncome: number;
+  unrealizedIncome: number;
+  overpaymentAmount: number;
 }

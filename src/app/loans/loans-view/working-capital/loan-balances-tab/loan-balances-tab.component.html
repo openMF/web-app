@@ -11,24 +11,6 @@
 
   @if (loanBalances) {
     <div class="responsive-column">
-      @if (loanBalances.principal !== undefined) {
-        <div class="flex-fill layout-row">
-          <span class="flex-30"> {{ 'labels.inputs.Principal' | translate }} </span>
-          <span class="flex-30 r-amount">{{
-            loanBalances.principal | currency: currencyCode : 'symbol-narrow' : '1.2-2'
-          }}</span>
-        </div>
-      }
-
-      @if (loanBalances.principalPaid !== undefined) {
-        <div class="flex-fill layout-row">
-          <span class="flex-30"> {{ 'labels.inputs.Principal Paid' | translate }} </span>
-          <span class="flex-30 r-amount">{{
-            loanBalances.principalPaid | currency: currencyCode : 'symbol-narrow' : '1.2-2'
-          }}</span>
-        </div>
-      }
-
       <div class="flex-fill layout-row">
         <span class="flex-30"> {{ 'labels.inputs.Principal Outstanding' | translate }} </span>
         <span class="flex-30 r-amount">{{
@@ -36,79 +18,21 @@
         }}</span>
       </div>
 
-      @if (loanBalances.fee !== undefined) {
-        <div class="flex-fill layout-row">
-          <span class="flex-30"> {{ 'labels.inputs.Fees' | translate }} </span>
-          <span class="flex-30 r-amount">{{
-            loanBalances.fee | currency: currencyCode : 'symbol-narrow' : '1.2-2'
-          }}</span>
-        </div>
-      }
+      <div class="flex-fill layout-row">
+        <span class="flex-30"> {{ 'labels.inputs.Total Paid Principal' | translate }} </span>
+        <span class="flex-30 r-amount">{{
+          loanBalances.totalPaidPrincipal | currency: currencyCode : 'symbol-narrow' : '1.2-2'
+        }}</span>
+      </div>
 
-      @if (loanBalances.feePaid !== undefined) {
-        <div class="flex-fill layout-row">
-          <span class="flex-30"> {{ 'labels.inputs.Fees Paid' | translate }} </span>
-          <span class="flex-30 r-amount">{{
-            loanBalances.feePaid | currency: currencyCode : 'symbol-narrow' : '1.2-2'
-          }}</span>
-        </div>
-      }
+      <div class="flex-fill layout-row">
+        <span class="flex-30"> {{ 'labels.inputs.Total Payment' | translate }} </span>
+        <span class="flex-30 r-amount">{{
+          loanBalances.totalPayment | currency: currencyCode : 'symbol-narrow' : '1.2-2'
+        }}</span>
+      </div>
 
-      @if (loanBalances.feeOutstanding !== undefined) {
-        <div class="flex-fill layout-row">
-          <span class="flex-30"> {{ 'labels.inputs.Fees Outstanding' | translate }} </span>
-          <span class="flex-30 r-amount">{{
-            loanBalances.feeOutstanding | currency: currencyCode : 'symbol-narrow' : '1.2-2'
-          }}</span>
-        </div>
-      }
-
-      @if (loanBalances.penalty !== undefined) {
-        <div class="flex-fill layout-row">
-          <span class="flex-30"> {{ 'labels.inputs.Penalty' | translate }} </span>
-          <span class="flex-30 r-amount">{{
-            loanBalances.penalty | currency: currencyCode : 'symbol-narrow' : '1.2-2'
-          }}</span>
-        </div>
-      }
-
-      @if (loanBalances.penaltyPaid !== undefined) {
-        <div class="flex-fill layout-row">
-          <span class="flex-30"> {{ 'labels.inputs.Penalties Paid' | translate }} </span>
-          <span class="flex-30 r-amount">{{
-            loanBalances.penaltyPaid | currency: currencyCode : 'symbol-narrow' : '1.2-2'
-          }}</span>
-        </div>
-      }
-
-      @if (loanBalances.penaltyOutstanding !== undefined) {
-        <div class="flex-fill layout-row">
-          <span class="flex-30"> {{ 'labels.inputs.Penalties Outstanding' | translate }} </span>
-          <span class="flex-30 r-amount">{{
-            loanBalances.penaltyOutstanding | currency: currencyCode : 'symbol-narrow' : '1.2-2'
-          }}</span>
-        </div>
-      }
-
-      @if (loanBalances.realizedIncomeFromDiscountFee !== undefined) {
-        <div class="flex-fill layout-row">
-          <span class="flex-30"> {{ 'labels.inputs.Realized Income From Discount Fee' | translate }} </span>
-          <span class="flex-30 r-amount">{{
-            loanBalances.realizedIncomeFromDiscountFee | currency: currencyCode : 'symbol-narrow' : '1.2-2'
-          }}</span>
-        </div>
-      }
-
-      @if (loanBalances.unrealizedIncomeFromDiscountFee !== undefined) {
-        <div class="flex-fill layout-row">
-          <span class="flex-30"> {{ 'labels.inputs.Unrealized Income From Discount Fee' | translate }} </span>
-          <span class="flex-30 r-amount">{{
-            loanBalances.unrealizedIncomeFromDiscountFee | currency: currencyCode : 'symbol-narrow' : '1.2-2'
-          }}</span>
-        </div>
-      }
-
-      @if (loanBalances.overpaymentAmount !== undefined) {
+      @if (loanBalances.overpaymentAmount > 0) {
         <div class="flex-fill layout-row">
           <span class="flex-30"> {{ 'labels.inputs.Overpayment Amount' | translate }} </span>
           <span class="flex-30 r-amount">{{
@@ -117,50 +41,15 @@
         </div>
       }
 
-      @if (loanBalances.totalExpectedRepayment !== undefined) {
-        <div class="flex-fill layout-row">
-          <span class="flex-30"> {{ 'labels.inputs.Total Expected Repayment' | translate }} </span>
-          <span class="flex-30 r-amount">{{
-            loanBalances.totalExpectedRepayment | currency: currencyCode : 'symbol-narrow' : '1.2-2'
-          }}</span>
-        </div>
-      }
+      <div class="flex-fill layout-row">
+        <span class="flex-30"> {{ 'labels.inputs.Realized Income' | translate }} </span>
+        <span class="flex-30 r-amount">{{ loanBalances.realizedIncome | formatNumber }}</span>
+      </div>
 
-      @if (loanBalances.totalRepayment !== undefined) {
-        <div class="flex-fill layout-row">
-          <span class="flex-30"> {{ 'labels.inputs.Total Repayment' | translate }} </span>
-          <span class="flex-30 r-amount">{{
-            loanBalances.totalRepayment | currency: currencyCode : 'symbol-narrow' : '1.2-2'
-          }}</span>
-        </div>
-      }
-
-      @if (loanBalances.totalOutstanding !== undefined) {
-        <div class="flex-fill layout-row">
-          <span class="flex-30"> {{ 'labels.inputs.Total Outstanding' | translate }} </span>
-          <span class="flex-30 r-amount">{{
-            loanBalances.totalOutstanding | currency: currencyCode : 'symbol-narrow' : '1.2-2'
-          }}</span>
-        </div>
-      }
-
-      @if (loanBalances.totalDisbursement !== undefined) {
-        <div class="flex-fill layout-row">
-          <span class="flex-30"> {{ 'labels.inputs.Total Disbursement' | translate }} </span>
-          <span class="flex-30 r-amount">{{
-            loanBalances.totalDisbursement | currency: currencyCode : 'symbol-narrow' : '1.2-2'
-          }}</span>
-        </div>
-      }
-
-      @if (loanBalances.totalDiscountFee !== undefined) {
-        <div class="flex-fill layout-row">
-          <span class="flex-30"> {{ 'labels.inputs.Total Discount Fee' | translate }} </span>
-          <span class="flex-30 r-amount">{{
-            loanBalances.totalDiscountFee | currency: currencyCode : 'symbol-narrow' : '1.2-2'
-          }}</span>
-        </div>
-      }
+      <div class="flex-fill layout-row">
+        <span class="flex-30"> {{ 'labels.inputs.Unrealized Income' | translate }} </span>
+        <span class="flex-30 r-amount">{{ loanBalances.unrealizedIncome | formatNumber }}</span>
+      </div>
     </div>
   }
 </div>

@@ -26,17 +26,9 @@
 
     @if (loanProductService.isWorkingCapital) {
       <mat-form-field class="flex-48">
-        <mat-label>{{ 'labels.inputs.Total Payment Volume' | translate }}</mat-label>
-        <input
-          type="number"
-          matInput
-          mifosxPositiveNumber
-          min="0"
-          required
-          formControlName="totalPaymentVolume"
-          step="any"
-        />
-        @if (loansAccountTermsForm.controls.totalPaymentVolume.hasError('highAmountValue')) {
+        <mat-label>{{ 'labels.inputs.Total Payment' | translate }} {{ 'labels.inputs.Volume' | translate }}</mat-label>
+        <input type="number" matInput mifosxPositiveNumber min="0" required formControlName="totalPayment" step="any" />
+        @if (loansAccountTermsForm.controls.totalPayment.hasError('highAmountValue')) {
           <mat-error>
             {{ 'labels.inputs.Total Payment' | translate }} {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.higher than allowed' | translate }}</strong>

@@ -355,7 +355,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
           discount: this.loansAccountTermsData.discountProposed || this.loansAccountTermsData.discount || '',
           principalAmount: this.loansAccountTermsData.proposedPrincipal,
           periodPaymentRate: this.loansAccountTermsData.periodPaymentRate,
-          totalPaymentVolume: this.loansAccountTermsData.totalPaymentVolume,
+          totalPayment: this.loansAccountTermsData.balance?.totalPayment,
           repaymentEvery: this.loansAccountTermsData.repaymentEvery,
           repaymentFrequencyType: this.loansAccountTermsData.repaymentFrequencyType?.id,
           delinquencyGraceDays: this.loansAccountTermsData.delinquencyGraceDays,
@@ -723,7 +723,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
             amountValueValidator()
           ]
         ],
-        totalPaymentVolume: [
+        totalPayment: [
           '',
           [
             Validators.required,
