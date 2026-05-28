@@ -8,9 +8,13 @@
 
 :host button {
   color: rgb(255 255 255 / 72%);
-  transition: color 0.15s ease;
+  border-radius: 50%;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 
   &:hover {
+    background-color: rgb(255 255 255 / 15%);
     color: #fff;
   }
 }

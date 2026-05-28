@@ -38,7 +38,9 @@ export class LoanActionButtonResolver {
     if (loanActionButton === 'Assign Loan Officer' || loanActionButton === 'Change Loan Officer') {
       return this.loansService.getLoanTemplate(loanId);
     } else if (loanActionButton === 'Make Repayment') {
-      return this.loansService.getLoanActionTemplate(loanId, 'repayment');
+      return this.loanProductService.isLoanProduct
+        ? this.loansService.getLoanActionTemplate(loanId, 'repayment')
+        : this.loansService.getWorkingCapitalLoanActionTemplate(loanId, 'repayment');
     } else if (loanActionButton === 'Goodwill Credit') {
       return this.loansService.getLoanActionTemplate(loanId, 'goodwillCredit');
     } else if (loanActionButton === 'Interest Payment Waiver') {

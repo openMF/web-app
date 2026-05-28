@@ -383,6 +383,18 @@ export class LoansService {
     return this.http.post(`/working-capital-loans/${loanId}`, data, { params: httpParams });
   }
 
+  applyWorkingCapitalLoanActionCommand(
+    loanId: string,
+    data: any,
+    command: string,
+    transactionId?: any
+  ): Observable<any> {
+    const httpParams = new HttpParams().set('command', command);
+    return transactionId
+      ? this.http.post(`/working-capital-loans/${loanId}/transactions/${transactionId}`, data, { params: httpParams })
+      : this.http.post(`/working-capital-loans/${loanId}/transactions`, data, { params: httpParams });
+  }
+
   addInterestPauseToLoan(loanId: any, data?: any): Observable<any> {
     return this.http.post(`/loans/${loanId}/interest-pauses`, data);
   }
@@ -639,12 +651,17 @@ export class LoansService {
   }
 
   /**
+   * @param {string} productType Loans Product Type
    * @param {string} accountId Loans Account Id
    * @param {string} transactionId Transaction Id
    * @returns {Observable<any>}
    */
-  getLoansAccountTransaction(accountId: string, transactionId: string): Observable<any> {
-    return this.http.get(`/loans/${accountId}/transactions/${transactionId}`);
+  getLoansAccountTransaction(
+    productType: 'loans' | 'working-capital-loans',
+    accountId: string,
+    transactionId: string
+  ): Observable<any> {
+    return this.http.get(`/${productType}/${accountId}/transactions/${transactionId}`);
   }
 
   /**
@@ -858,5 +875,13 @@ export class LoansService {
    */
   addWorkingCapitalPeriodPaymentRate(loanId: any, payload: any) {
     return this.http.put(`/working-capital-loans/${loanId}/payment-rate`, payload);
+  }
+
+  /**
+   * Returns the Working Capital Loan Transactions data
+   */
+  getWorkingCapitalTransactions(loanId: string, page: number = 0, size: number = 100) {
+    const httpParams = new HttpParams().set('page', page.toString()).set('size', size.toString());
+    return this.http.get(`/working-capital-loans/${loanId}/transactions`, { params: httpParams });
   }
 }

@@ -41,3 +41,22 @@
     }
   }
 }
+
+// White text and icons for all content projected into the account header.
+// Works for both light (#1074b9) and dark (#5ba2ec) theme primary backgrounds.
+mifosx-account-header {
+  td,
+  th,
+  b,
+  span:not(.status-dot),
+  h3,
+  p,
+  a {
+    color: var(--md-sys-color-on-primary, #fff);
+  }
+
+  // Action button (hamburger menu) and its icon
+  button.mat-mdc-icon-button {
+    color: var(--md-sys-color-on-primary, #fff);
+  }
+}

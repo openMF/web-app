@@ -1,0 +1,35 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<mat-card-header class="header layout-column">
+  <mat-card-title-group class="header-title-group">
+    <div class="profile-image-container">
+      <ng-content select="[accountImage]"></ng-content>
+      <ng-content select="[accountImageActions]"></ng-content>
+      <ng-content select="[accountImageFooter]"></ng-content>
+    </div>
+
+    <div class="mat-typography account-card-title">
+      <mat-card-title class="make-flex content">
+        <h3 class="flex-95">
+          @if (statusCode) {
+            <span class="status-dot m-r-10" [ngClass]="statusCode | statusLookup" [matTooltip]="statusTooltip"></span>
+          }
+          <ng-content select="[accountTitle]"></ng-content>
+        </h3>
+        <div class="flex-5 align-end-center">
+          <ng-content select="[accountMenu]"></ng-content>
+        </div>
+      </mat-card-title>
+
+      <mat-card-subtitle>
+        <ng-content select="[accountMetadata]"></ng-content>
+      </mat-card-subtitle>
+    </div>
+  </mat-card-title-group>
+</mat-card-header>

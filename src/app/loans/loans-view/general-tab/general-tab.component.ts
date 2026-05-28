@@ -12,12 +12,8 @@ import {
   MatTableDataSource,
   MatTable,
   MatColumnDef,
-  MatHeaderCellDef,
-  MatHeaderCell,
   MatCellDef,
   MatCell,
-  MatHeaderRowDef,
-  MatHeaderRow,
   MatRowDef,
   MatRow
 } from '@angular/material/table';
@@ -28,6 +24,7 @@ import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProductService } from 'app/products/loan-products/services/loan-product.service';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
+import { LoanSummaryBalanceComponentComponent } from './loan-summary-balance-component/loan-summary-balance-component.component';
 
 @Component({
   selector: 'mifosx-general-tab',
@@ -37,18 +34,15 @@ import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan
     ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatColumnDef,
-    MatHeaderCellDef,
-    MatHeaderCell,
     MatCellDef,
     MatCell,
-    MatHeaderRowDef,
-    MatHeaderRow,
     MatRowDef,
     MatRow,
     ExternalIdentifierComponent,
     CurrencyPipe,
     DateFormatPipe,
-    FormatNumberPipe
+    FormatNumberPipe,
+    LoanSummaryBalanceComponentComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -56,39 +50,18 @@ export class GeneralTabComponent extends LoanProductBaseComponent implements OnI
   private route = inject(ActivatedRoute);
 
   /** Currency Code */
-  currencyCode: string;
+  currencyCode: string | null = null;
   loanDetails: any;
   status: any;
-  loanSummaryColumns: string[] = [
-    'Empty',
-    'Original',
-    'Paid',
-    'Waived',
-    'Written Off',
-    'Outstanding',
-    'Over Due'
-  ];
+
   loanDetailsColumns: string[] = [
     'Key',
     'Value'
   ];
-  loanSummaryTableData: {
-    property: string;
-    original: number;
-    adjustment: number;
-    paid: number;
-    waived: number;
-    writtenOff: number;
-    outstanding: number;
-    overdue: number;
-  }[];
-  loanDetailsTableData: {
-    key: string;
-    value?: string;
-  }[];
+  loanDetailsTableData: { key: string; value?: string }[] = [];
+  hasChargeBack: boolean = false;
 
-  /** Data source for loans summary table. */
-  dataSource: MatTableDataSource<any>;
+  /** Data source for loans details table. */
   detailsDataSource: MatTableDataSource<any>;
 
   constructor() {
@@ -101,21 +74,9 @@ export class GeneralTabComponent extends LoanProductBaseComponent implements OnI
       this.loanDetails = data.loanDetailsData;
       this.currencyCode = this.loanDetails.currency.code;
       if (this.loanDetails.transactions) {
-        this.loanDetails.transactions.some((transaction: any) => {
-          if (transaction.type.code === 'loanTransactionType.chargeback') {
-            this.loanSummaryColumns = [
-              'Empty',
-              'Original',
-              'Adjustments',
-              'Paid',
-              'Waived',
-              'Written Off',
-              'Outstanding',
-              'Over Due'
-            ];
-            return;
-          }
-        });
+        this.hasChargeBack = this.loanDetails.transactions.some(
+          (transaction: any) => transaction.type.code === 'loanTransactionType.chargeback'
+        );
       }
     });
   }
@@ -123,67 +84,10 @@ export class GeneralTabComponent extends LoanProductBaseComponent implements OnI
   ngOnInit() {
     this.status = this.loanDetails.value;
     if (this.loanDetails.summary) {
-      this.setloanSummaryTableData();
       this.setloanDetailsTableData();
     } else {
       this.setloanNonDetailsTableData();
     }
-  }
-
-  setloanSummaryTableData() {
-    this.loanSummaryTableData = [
-      {
-        property: 'Principal',
-        original: this.loanDetails.summary.totalPrincipal,
-        adjustment: this.loanDetails.summary.principalAdjustments || 0,
-        paid: this.loanDetails.summary.principalPaid,
-        waived: this.loanDetails.summary.principalWaived || 0,
-        writtenOff: this.loanDetails.summary.principalWrittenOff,
-        outstanding: this.loanDetails.summary.principalOutstanding,
-        overdue: this.loanDetails.summary.principalOverdue
-      },
-      {
-        property: 'Interest',
-        original: this.loanDetails.summary.interestCharged,
-        adjustment: 0,
-        paid: this.loanDetails.summary.interestPaid,
-        waived: this.loanDetails.summary.interestWaived,
-        writtenOff: this.loanDetails.summary.interestWrittenOff,
-        outstanding: this.loanDetails.summary.interestOutstanding,
-        overdue: this.loanDetails.summary.interestOverdue
-      },
-      {
-        property: 'Fees',
-        original: this.loanDetails.summary.feeChargesCharged,
-        adjustment: 0,
-        paid: this.loanDetails.summary.feeChargesPaid,
-        waived: this.loanDetails.summary.feeChargesWaived,
-        writtenOff: this.loanDetails.summary.feeChargesWrittenOff,
-        outstanding: this.loanDetails.summary.feeChargesOutstanding,
-        overdue: this.loanDetails.summary.feeChargesOverdue
-      },
-      {
-        property: 'Penalties',
-        original: this.loanDetails.summary.penaltyChargesCharged,
-        adjustment: 0,
-        paid: this.loanDetails.summary.penaltyChargesPaid,
-        waived: this.loanDetails.summary.penaltyChargesWaived,
-        writtenOff: this.loanDetails.summary.penaltyChargesWrittenOff,
-        outstanding: this.loanDetails.summary.penaltyChargesOutstanding,
-        overdue: this.loanDetails.summary.penaltyChargesOverdue
-      },
-      {
-        property: 'Total',
-        original: this.loanDetails.summary.totalExpectedRepayment,
-        adjustment: this.loanDetails.summary.principalAdjustments || 0,
-        paid: this.loanDetails.summary.totalRepayment,
-        waived: this.loanDetails.summary.totalWaived,
-        writtenOff: this.loanDetails.summary.totalWrittenOff,
-        outstanding: this.loanDetails.summary.totalOutstanding,
-        overdue: this.loanDetails.summary.totalOverdue
-      }
-    ];
-    this.dataSource = new MatTableDataSource(this.loanSummaryTableData);
   }
 
   setloanDetailsTableData() {

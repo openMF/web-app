@@ -42,7 +42,7 @@ export class LoanBaseResolver {
     return this.isLoanProduct ? 'loanproducts' : 'working-capital-loan-products';
   }
 
-  get loanAccountPath(): string {
+  get loanAccountPath(): 'loans' | 'working-capital-loans' {
     return this.isLoanProduct ? 'loans' : 'working-capital-loans';
   }
 }

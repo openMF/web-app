@@ -7,13 +7,15 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit, inject, ChangeDetectorRef, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 /** Custom Services */
 import { Dates } from 'app/core/utils/dates';
-import { Currency } from 'app/shared/models/general.model';
+import { Currency, PaymentType } from 'app/shared/models/general.model';
 import { PenaltyManagementService } from 'app/loans/services/penalty-management.service';
+import { AlertService } from 'app/core/alert/alert.service';
 import { InputAmountComponent } from '../../../../shared/input-amount/input-amount.component';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -40,13 +42,15 @@ import { LoanAccountActionsBaseComponent } from '../loan-account-actions-base.co
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private dateUtils = inject(Dates);
   private penaltyManagementService = inject(PenaltyManagementService);
   private cdr = inject(ChangeDetectorRef);
+  private destroyRef = inject(DestroyRef);
+  private alertService = inject(AlertService);
 
   /** Payment Type Options */
-  paymentTypes: any;
+  paymentTypes: PaymentType[] = [];
   /** Show payment details */
   showPaymentDetails = false;
   /** Waive Penalties toggle */
@@ -64,12 +68,11 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Repayment Loan Form */
-  repaymentLoanForm: UntypedFormGroup;
+  repaymentLoanForm: FormGroup | null = null;
   currency: Currency | null = null;
-
-  command: string | null = null;
-
+  command = '';
   classificationOptions: any[] = [];
+  private originalAmount = 0;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -87,14 +90,42 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
    * and initialize with the required values
    */
   ngOnInit() {
-    this.command = this.dataObject.type.code.split('.')[1];
+    this.command = this.resolveCommandFromActionName(this.dataObject.actionName);
     this.maxDate = this.settingsService.businessDate;
     this.createRepaymentLoanForm();
     this.setRepaymentLoanDetails();
-    if (this.dataObject.currency) {
+    if (this.dataObject?.currency) {
       this.currency = this.dataObject.currency;
     }
-    this.loadPenalties();
+    if (this.loanProductService.isLoanProduct && this.isRepayment()) {
+      this.loadPenalties();
+    }
+  }
+
+  get requiredPermission(): string {
+    const map: Record<string, string> = {
+      repayment: 'REPAYMENT_LOAN',
+      goodwillCredit: 'CREATE_GOODWILL_TRANSACTION',
+      interestPaymentWaiver: 'CREATE_INTERESTPAYMENTWAIVER_TRANSACTION',
+      payoutRefund: 'CREATE_PAYOUT_REFUND',
+      merchantIssuedRefund: 'CREATE_MERCHANT_ISSUED_REFUND',
+      buyDownFee: 'BUYDOWNFEE_LOAN',
+      capitalizedIncome: 'CAPITALIZEDINCOME_LOAN'
+    };
+    return map[this.command] ?? 'REPAYMENT_LOAN';
+  }
+
+  private resolveCommandFromActionName(actionName: string | undefined): string {
+    const map: Record<string, string> = {
+      'Make Repayment': 'repayment',
+      'Capitalized Income': 'capitalizedIncome',
+      'Goodwill Credit': 'goodwillCredit',
+      'Buy Down Fee': 'buyDownFee',
+      'Interest Payment Waiver': 'interestPaymentWaiver',
+      'Payout Refund': 'payoutRefund',
+      'Merchant Issued Refund': 'merchantIssuedRefund'
+    };
+    return actionName ? (map[actionName] ?? '') : '';
   }
 
   /**
@@ -106,30 +137,28 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
         this.settingsService.businessDate,
         Validators.required
       ],
-      externalId: '',
-      paymentTypeId: '',
+      externalId: null,
+      paymentTypeId: null,
       note: '',
       skipInterestRefund: [false]
     });
 
-    if (this.isCapitalizedIncome()) {
-      this.repaymentLoanForm.addControl('transactionAmount', new UntypedFormControl('', []));
-      this.updateTransactionAmountValidators(false);
-    } else {
-      this.repaymentLoanForm.addControl('transactionAmount', new UntypedFormControl('', []));
-      this.updateTransactionAmountValidators(false);
-    }
+    this.repaymentLoanForm.addControl('transactionAmount', new FormControl(0, []));
+    this.updateTransactionAmountValidators(false);
     if (this.isCapitalizedIncome() || this.isBuyDownFee()) {
-      this.repaymentLoanForm.addControl('classificationId', new UntypedFormControl(''));
+      this.repaymentLoanForm.addControl('classificationId', new FormControl(null));
     }
   }
 
   setRepaymentLoanDetails() {
     this.paymentTypes = this.dataObject.paymentTypeOptions;
     this.classificationOptions = this.dataObject.classificationOptions;
-    this.repaymentLoanForm.patchValue({
-      transactionAmount: this.dataObject.amount
-    });
+    this.originalAmount = Number(this.dataObject.amount) || 0;
+    if (this.repaymentLoanForm) {
+      this.repaymentLoanForm.patchValue({
+        transactionAmount: this.originalAmount
+      });
+    }
   }
 
   /**
@@ -137,18 +166,20 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
    */
   addPaymentDetails() {
     this.showPaymentDetails = !this.showPaymentDetails;
-    if (this.showPaymentDetails) {
-      this.repaymentLoanForm.addControl('accountNumber', new UntypedFormControl(''));
-      this.repaymentLoanForm.addControl('checkNumber', new UntypedFormControl(''));
-      this.repaymentLoanForm.addControl('routingCode', new UntypedFormControl(''));
-      this.repaymentLoanForm.addControl('receiptNumber', new UntypedFormControl(''));
-      this.repaymentLoanForm.addControl('bankNumber', new UntypedFormControl(''));
-    } else {
-      this.repaymentLoanForm.removeControl('accountNumber');
-      this.repaymentLoanForm.removeControl('checkNumber');
-      this.repaymentLoanForm.removeControl('routingCode');
-      this.repaymentLoanForm.removeControl('receiptNumber');
-      this.repaymentLoanForm.removeControl('bankNumber');
+    if (this.repaymentLoanForm) {
+      if (this.showPaymentDetails) {
+        this.repaymentLoanForm.addControl('accountNumber', new FormControl(''));
+        this.repaymentLoanForm.addControl('checkNumber', new FormControl(''));
+        this.repaymentLoanForm.addControl('routingCode', new FormControl(''));
+        this.repaymentLoanForm.addControl('receiptNumber', new FormControl(''));
+        this.repaymentLoanForm.addControl('bankNumber', new FormControl(''));
+      } else {
+        this.repaymentLoanForm.removeControl('accountNumber');
+        this.repaymentLoanForm.removeControl('checkNumber');
+        this.repaymentLoanForm.removeControl('routingCode');
+        this.repaymentLoanForm.removeControl('receiptNumber');
+        this.repaymentLoanForm.removeControl('bankNumber');
+      }
     }
   }
 
@@ -169,6 +200,12 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
     ].includes(this.command);
   }
 
+  isRepayment(): boolean {
+    return [
+      'repayment'
+    ].includes(this.command);
+  }
+
   showInterestRefundCheckbox(): boolean {
     const code = this.dataObject?.type?.code?.toLowerCase() || '';
     return code.includes('merchantissuedrefund') || code.includes('payoutrefund');
@@ -180,14 +217,17 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
    * Each penalty charge has a dueDate that corresponds to an installment due date.
    */
   loadPenalties() {
-    this.penaltyManagementService.loadPenalties(this.loanId).subscribe({
-      next: (penalties: any[]) => {
-        this.penalties = penalties;
-      },
-      error: (error: any) => {
-        this.penalties = [];
-      }
-    });
+    this.penaltyManagementService
+      .loadPenalties(this.loanId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (penalties: any[]) => {
+          this.penalties = penalties;
+        },
+        error: () => {
+          this.penalties = [];
+        }
+      });
   }
 
   /**
@@ -252,16 +292,10 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
    * Recalculate transaction amount when penalties are waived
    */
   recalculateTransactionAmount() {
-    const currentAmountValue = this.repaymentLoanForm.value.transactionAmount;
-    const currentAmount =
-      currentAmountValue !== undefined && currentAmountValue !== null
-        ? Number(currentAmountValue)
-        : Number(this.dataObject.amount ?? 0);
-    const baseAmount = isNaN(currentAmount) ? Number(this.dataObject.amount ?? 0) : currentAmount;
+    const baseAmount = this.originalAmount;
 
     if (!this.waivePenalties || this.selectedPenalties.length === 0) {
-      // Reset to original amount if no penalties selected
-      this.repaymentLoanForm.patchValue(
+      this.repaymentLoanForm?.patchValue(
         {
           transactionAmount: baseAmount
         },
@@ -285,7 +319,7 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
     // Allow zero when fully waived
     this.updateTransactionAmountValidators(this.waivePenalties && newAmount === 0);
 
-    this.repaymentLoanForm.patchValue(
+    this.repaymentLoanForm?.patchValue(
       {
         transactionAmount: newAmount
       },
@@ -299,67 +333,110 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
   private updateTransactionAmountValidators(allowZero: boolean) {
     const validators = [
       Validators.required,
-      Validators.min(allowZero ? 0 : 0.001)
+      ...(allowZero ? [] : [Validators.min(0.001)])
     ];
     if (this.isCapitalizedIncome()) {
       validators.push(Validators.max(this.dataObject.amount));
     }
-    this.repaymentLoanForm.controls.transactionAmount.setValidators(validators);
-    this.repaymentLoanForm.controls.transactionAmount.updateValueAndValidity({ emitEvent: false });
+    this.repaymentLoanForm?.controls.transactionAmount.setValidators(validators);
+    this.repaymentLoanForm?.controls.transactionAmount.updateValueAndValidity({ emitEvent: false });
   }
 
   /** Submits the repayment form */
   submit() {
-    if (this.repaymentLoanForm.invalid || this.isSubmitting) {
+    if (this.repaymentLoanForm?.invalid || this.isSubmitting) {
       return;
     }
     this.isSubmitting = true;
     this.cdr.markForCheck();
 
-    const repaymentLoanFormData = this.repaymentLoanForm.value;
+    const repaymentLoanFormData: any = this.repaymentLoanForm?.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    const prevTransactionDate: Date = this.repaymentLoanForm.value.transactionDate;
+    const prevTransactionDate: Date = this.repaymentLoanForm?.value.transactionDate;
     if (repaymentLoanFormData.transactionDate instanceof Date) {
       repaymentLoanFormData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
     }
-    const data: any = {
+    const payload: any = {
       ...repaymentLoanFormData,
       dateFormat,
       locale
     };
-    data['transactionAmount'] = data['transactionAmount'] * 1;
+    payload['transactionAmount'] = payload['transactionAmount'] * 1;
     if (repaymentLoanFormData.skipInterestRefund) {
-      data.interestRefundCalculation = false;
+      payload.interestRefundCalculation = false;
     }
-    delete data.skipInterestRefund;
+    delete payload.skipInterestRefund;
 
-    // Waive penalties first if selected, then submit repayment
-    if (this.waivePenalties && this.selectedPenalties.length > 0) {
-      this.penaltyManagementService.waivePenalties(this.loanId, this.selectedPenalties).subscribe({
-        next: () => {
-          this.submitRepayment(data);
-        },
-        error: (error: any) => {
-          // Continue with repayment even if waive fails
-          this.submitRepayment(data);
+    if (this.loanProductService.isWorkingCapital) {
+      if (payload['paymentTypeId'] === null) {
+        delete payload['paymentTypeId'];
+      } else {
+        console.log(payload);
+        if ('paymentDetails' in payload) {
+          payload['paymentDetails']['paymentTypeId'] = payload['paymentTypeId'];
+        } else {
+          payload['paymentDetails'] = {
+            paymentTypeId: payload['paymentTypeId']
+          };
         }
-      });
+        delete payload['paymentTypeId'];
+      }
+    }
+
+    if (this.loanProductService.isLoanProduct && this.isRepayment()) {
+      // Waive penalties first if selected, then submit repayment
+      if (this.waivePenalties && this.selectedPenalties.length > 0) {
+        this.penaltyManagementService
+          .waivePenalties(this.loanId, this.selectedPenalties)
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe({
+            next: () => {
+              this.submitCommandAction(payload);
+            },
+            error: () => {
+              this.alertService.alert({
+                type: 'Warning',
+                message: 'Some penalties could not be waived. Proceeding with repayment.'
+              });
+            }
+          });
+      } else {
+        this.submitCommandAction(payload);
+      }
     } else {
-      this.submitRepayment(data);
+      this.submitCommandAction(payload);
     }
   }
 
-  /** Submit the repayment after penalties are waived */
-  private submitRepayment(data: any) {
-    this.loanService.submitLoanActionButton(this.loanId, data, this.command).subscribe({
-      next: (response: any) => {
-        this.gotoLoanView('transactions');
-      },
-      error: (error: any) => {
-        this.isSubmitting = false;
-        this.cdr.markForCheck();
-      }
-    });
+  private submitCommandAction(payload: any) {
+    if (this.loanProductService.isLoanProduct) {
+      this.loanService
+        .submitLoanActionButton(this.loanId, payload, this.command)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+          next: () => {
+            this.gotoLoanView('transactions');
+          },
+          error: () => {
+            this.isSubmitting = false;
+            this.cdr.markForCheck();
+          }
+        });
+    } else {
+      console.log(payload);
+      this.loanService
+        .applyWorkingCapitalLoanActionCommand(this.loanId, payload, this.command)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+          next: () => {
+            this.gotoLoanView('transactions');
+          },
+          error: () => {
+            this.isSubmitting = false;
+            this.cdr.markForCheck();
+          }
+        });
+    }
   }
 }

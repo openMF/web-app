@@ -21,6 +21,19 @@
   border-width: 0;
 }
 
+:host button.mat-mdc-icon-button {
+  color: rgb(255 255 255 / 80%);
+  border-radius: 50%;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+
+  &:hover {
+    background-color: rgb(255 255 255 / 15%);
+    color: #fff;
+  }
+}
+
 .mifosx-notifications-menu {
   margin-top: 8px;
   overflow: hidden;

@@ -11,17 +11,17 @@ import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 /** Custom Services */
 import { LoansService } from '../loans.service';
 import { LoanBaseResolver } from './loan-base.resolver';
 
 /**
- * Loans Account Transaction data resolver.
+ * Loan Transactions data resolver.
  */
 @Injectable()
-export class LoansAccountTransactionResolver extends LoanBaseResolver {
+export class LoanTransactionsResolver extends LoanBaseResolver {
   private loansService = inject(LoansService);
 
   constructor() {
@@ -29,22 +29,17 @@ export class LoansAccountTransactionResolver extends LoanBaseResolver {
   }
 
   /**
-   * Returns the Loans Account Transaction data.
-   * @param {ActivatedRouteSnapshot} route Route Snapshot
+   * Returns the Loan Transactions data.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     this.initialize(route);
-    const loanId = route.paramMap.get('loanId');
-    const transactionId = route.paramMap.get('id');
-    if (
-      loanId === null ||
-      transactionId === null ||
-      Number.isNaN(Number(loanId)) ||
-      Number.isNaN(Number(transactionId))
-    ) {
-      throw new Error('Invalid loan or transaction route params');
+    const loanId = route.paramMap.get('loanId') || route.parent?.paramMap.get('loanId');
+    if (loanId && !isNaN(+loanId)) {
+      if (this.isWorkingCapital) {
+        return this.loansService.getWorkingCapitalTransactions(loanId);
+      }
     }
-    return this.loansService.getLoansAccountTransaction(this.loanAccountPath, loanId, transactionId);
+    return of([]);
   }
 }

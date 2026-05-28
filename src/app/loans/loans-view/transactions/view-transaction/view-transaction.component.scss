@@ -9,12 +9,73 @@
 @use 'assets/styles/helper';
 @use 'assets/styles/colours' as *;
 
+/* ── Design tokens (mirrors transactions-tab) ────────────────── */
+:host {
+  --ch-blue-700: #1565c0;
+  --ch-blue-600: #1976d2;
+  --ch-blue-50: #e3f2fd;
+  --ch-surface-h: #ebf2fa;
+  --ch-border: #dde5f0;
+  --ch-text-3: #8fa5bc;
+  --ch-paid: #2e7d32;
+  --ch-paid-bg: #e8f5e9;
+  --ch-partial: #e65100;
+  --ch-partial-bg: #fff3e0;
+  --ch-alert: #c62828;
+  --ch-alert-bg: #ffebee;
+  --ch-shadow-sm: 0 2px 8px rgb(13 43 94 / 10%);
+
+  /* Transaction state tokens */
+  --tx-repayment: var(--ch-paid);
+  --tx-repayment-bg: var(--ch-paid-bg);
+  --tx-disbursement: var(--ch-blue-700);
+  --tx-disbursement-bg: var(--ch-blue-50);
+  --tx-accrual: var(--ch-text-3);
+  --tx-accrual-bg: var(--ch-surface-h);
+  --tx-reversed: var(--ch-alert);
+  --tx-reversed-bg: var(--ch-alert-bg);
+  --tx-downpayment: #6a1b9a;
+  --tx-downpayment-bg: #f3e5f5;
+  --tx-chargeoff: var(--ch-partial);
+  --tx-chargeoff-bg: var(--ch-partial-bg);
+  --tx-reage: #283593;
+  --tx-reage-bg: #e8eaf6;
+  --tx-reamortize: #00695c;
+  --tx-reamortize-bg: #e0f2f1;
+  --tx-linked: var(--ch-paid);
+  --tx-linked-bg: var(--ch-paid-bg);
+
+  font-family: 'DM Sans', system-ui, sans-serif;
+  display: block;
+}
+
+/* ── Dark mode ───────────────────────────────────────────────── */
+:host-context(.dark-theme) {
+  --ch-blue-700: #5b9bd5;
+  --ch-blue-50: #0a2040;
+  --ch-surface-h: #132032;
+  --ch-border: #1e3050;
+  --ch-text-3: #6a8fad;
+  --ch-paid: #66bb6a;
+  --ch-paid-bg: #172b1a;
+  --ch-partial: #ffa726;
+  --ch-partial-bg: #281c0b;
+  --ch-alert: #ef9a9a;
+  --ch-alert-bg: #2b1212;
+  --tx-downpayment: #ce93d8;
+  --tx-downpayment-bg: #1a0a26;
+  --tx-reage: #9fa8da;
+  --tx-reage-bg: #0d1230;
+  --tx-reamortize: #80cbc4;
+  --tx-reamortize-bg: #002420;
+}
+
 .container {
   max-width: 37rem;
 
   .card-content {
     div {
-      margin: 1rem 0;
+      margin: 0.5rem 0;
       overflow-wrap: break-word;
     }
 
@@ -33,17 +94,204 @@
   background-color: $mid-grey;
 }
 
-.active {
-  background-color: $status-active;
-  height: 4px;
+/* ── Card: shadow + border-left per transaction type ─────────── */
+.transaction-card {
+  box-shadow: var(--ch-shadow-sm) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+
+  &.card-tx--repayment {
+    border-left: 4px solid var(--tx-repayment);
+  }
+
+  &.card-tx--disbursement {
+    border-left: 4px solid var(--tx-disbursement);
+  }
+
+  &.card-tx--accrual {
+    border-left: 4px solid var(--tx-accrual);
+  }
+
+  &.card-tx--reversed {
+    border-left: 4px solid var(--tx-reversed);
+  }
+
+  &.card-tx--downpayment {
+    border-left: 4px solid var(--tx-downpayment);
+  }
+
+  &.card-tx--chargeoff {
+    border-left: 4px solid var(--tx-chargeoff);
+  }
+
+  &.card-tx--reage {
+    border-left: 4px solid var(--tx-reage);
+  }
+
+  &.card-tx--reamortize {
+    border-left: 4px solid var(--tx-reamortize);
+  }
+
+  &.card-tx--linked {
+    border-left: 4px solid var(--tx-linked);
+  }
 }
 
-.linked {
-  background-color: $status-approved;
-  height: 4px;
+/* ── Transaction header ──────────────────────────────────────── */
+.txn-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0 1rem;
+  border-bottom: 1px solid var(--ch-border);
+  margin-bottom: 0.25rem;
 }
 
-.undo {
-  background-color: $status-active-overdue;
-  height: 4px;
+/* ── Badge system (same as transactions-tab) ─────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  white-space: nowrap;
+
+  .badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+}
+
+.badge-repayment {
+  background: var(--tx-repayment-bg);
+  color: var(--tx-repayment);
+  border-color: var(--tx-repayment);
+
+  .badge-dot {
+    background: var(--tx-repayment);
+  }
+}
+
+.badge-disbursement {
+  background: var(--tx-disbursement-bg);
+  color: var(--tx-disbursement);
+  border-color: var(--tx-disbursement);
+
+  .badge-dot {
+    background: var(--tx-disbursement);
+  }
+}
+
+.badge-accrual {
+  background: var(--tx-accrual-bg);
+  color: var(--tx-accrual);
+  border-color: var(--tx-accrual);
+
+  .badge-dot {
+    background: var(--tx-accrual);
+  }
+}
+
+.badge-reversed {
+  background: var(--tx-reversed-bg);
+  color: var(--tx-reversed);
+  border-color: var(--tx-reversed);
+
+  .badge-dot {
+    background: var(--tx-reversed);
+  }
+}
+
+.badge-downpayment {
+  background: var(--tx-downpayment-bg);
+  color: var(--tx-downpayment);
+  border-color: var(--tx-downpayment);
+
+  .badge-dot {
+    background: var(--tx-downpayment);
+  }
+}
+
+.badge-chargeoff {
+  background: var(--tx-chargeoff-bg);
+  color: var(--tx-chargeoff);
+  border-color: var(--tx-chargeoff);
+
+  .badge-dot {
+    background: var(--tx-chargeoff);
+  }
+}
+
+.badge-reage {
+  background: var(--tx-reage-bg);
+  color: var(--tx-reage);
+  border-color: var(--tx-reage);
+
+  .badge-dot {
+    background: var(--tx-reage);
+  }
+}
+
+.badge-reamortize {
+  background: var(--tx-reamortize-bg);
+  color: var(--tx-reamortize);
+  border-color: var(--tx-reamortize);
+
+  .badge-dot {
+    background: var(--tx-reamortize);
+  }
+}
+
+.badge-linked {
+  background: var(--tx-linked-bg);
+  color: var(--tx-linked);
+  border-color: var(--tx-linked);
+
+  .badge-dot {
+    background: var(--tx-linked);
+  }
+}
+
+/* ── Status pill (reversed / linked state override) ──────────── */
+.txn-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+  border: 1px solid transparent;
+}
+
+.txn-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.txn-status-pill--reversed {
+  background: var(--tx-reversed-bg);
+  color: var(--tx-reversed);
+  border-color: var(--tx-reversed);
+
+  .txn-status-dot {
+    background: var(--tx-reversed);
+  }
+}
+
+.txn-status-pill--linked {
+  background: var(--tx-linked-bg);
+  color: var(--tx-linked);
+  border-color: var(--tx-linked);
+
+  .txn-status-dot {
+    background: var(--tx-linked);
+  }
 }

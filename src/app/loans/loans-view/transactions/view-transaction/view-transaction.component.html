@@ -10,26 +10,44 @@
   <div class="container m-b-20 transaction-buttons layout-align-end gap-2percent">
     <span *mifosxHasPermission="'ADJUST_LOAN'">
       <button mat-raised-button color="primary" [routerLink]="'edit'" [disabled]="!allowEdition">
-        <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'Edit' | translate }}
+        <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'labels.buttons.Edit' | translate }}
       </button>
+    </span>
+    <span *mifosxHasPermission="'ADJUST_LOAN'">
       <button mat-raised-button color="warn" (click)="undoTransaction()" [disabled]="!allowUndo">
-        <fa-icon icon="undo" class="m-r-10"></fa-icon>{{ 'Undo' | translate }}
+        <fa-icon icon="undo" class="m-r-10"></fa-icon>{{ 'labels.buttons.Undo' | translate }}
       </button>
     </span>
     <span *mifosxHasPermission="'CHARGEBACK_LOAN'">
       <button mat-raised-button color="warn" [disabled]="!allowChargeback" (click)="chargebackTransaction()">
-        <fa-icon icon="undo" class="m-r-10"></fa-icon>{{ 'Chargeback' | translate }}
+        <fa-icon icon="undo" class="m-r-10"></fa-icon>{{ 'labels.buttons.Chargeback' | translate }}
       </button>
     </span>
   </div>
 }
 
 <div class="container">
-  <mat-card>
+  <mat-card class="transaction-card" [ngClass]="transactionBorderClass">
     <mat-card-content>
-      <div class="layout-row-wrap card-content">
-        <div class="flex-100" [ngClass]="loanTransactionColor()"></div>
+      <div class="txn-header">
+        <span class="badge" [ngClass]="transactionBadgeClass">
+          <span class="badge-dot"></span>
+          {{ transactionData.type.value | translateKey: 'catalogs' }}
+        </span>
+        @if (transactionData.manuallyReversed || transactionData.reversed) {
+          <span class="txn-status-pill txn-status-pill--reversed">
+            <span class="txn-status-dot"></span>
+            {{ 'labels.inputs.Reversed' | translate }}
+          </span>
+        } @else if (existTransactionRelations) {
+          <span class="txn-status-pill txn-status-pill--linked">
+            <span class="txn-status-dot"></span>
+            {{ 'labels.inputs.Linked' | translate }}
+          </span>
+        }
+      </div>
 
+      <div class="layout-row-wrap card-content">
         <div class="flex-50 mat-body-strong">
           {{ 'Transaction Id' | translateKey: 'catalogs' }}
         </div>
@@ -42,23 +60,12 @@
           <div class="flex-50 mat-body-strong">
             {{ 'Repayment Transaction' | translateKey: 'catalogs' }}
           </div>
-        }
-
-        @if (transactionData.toLoanTransactionRelation) {
           <div class="flex-50">
             <a [href]="loanTransactionRelatedLink(transactionData.toLoanTransactionRelation.fromLoanTransaction)">
               {{ transactionData.toLoanTransactionRelation.fromLoanTransaction }}
             </a>
           </div>
         }
-
-        <div class="flex-50 mat-body-strong">
-          {{ 'Type' | translateKey: 'catalogs' }}
-        </div>
-
-        <div class="flex-50">
-          {{ transactionData.type.value | translateKey: 'catalogs' }}
-        </div>
 
         <div class="flex-50 mat-body-strong">
           {{ 'Transaction Date' | translateKey: 'catalogs' }}
@@ -73,7 +80,7 @@
         </div>
 
         <div class="flex-50">
-          {{ transactionData.currency.name }}
+          {{ transactionData.currency.name || transactionData.currency.code }}
         </div>
 
         <div class="flex-50 mat-body-strong">
@@ -81,16 +88,76 @@
         </div>
 
         <div class="flex-50">
-          {{ transactionData.amount | currency: transactionData.currency.code : 'symbol-narrow' : '1.2-2' }}
+          @if (loanProductService.isLoanProduct) {
+            {{ transactionData.amount | currency: transactionData.currency.code : 'symbol-narrow' : '1.2-2' }}
+          }
+          @if (loanProductService.isWorkingCapital) {
+            {{
+              transactionData.transactionAmount | currency: transactionData.currency.code : 'symbol-narrow' : '1.2-2'
+            }}
+          }
         </div>
+
+        @if (transactionData.principalPortion !== null) {
+          <div class="flex-50 mat-body-strong r-amount">
+            {{ 'Principal' | translateKey: 'inputs' }}
+          </div>
+
+          <div class="flex-50 r-amount">
+            {{ transactionData.principalPortion | currency: transactionData.currency.code : 'symbol-narrow' : '1.2-2' }}
+          </div>
+        }
+
+        @if (loanProductService.isLoanProduct && transactionData.interestPortion !== null) {
+          <div class="flex-50 mat-body-strong r-amount">
+            {{ 'Interest' | translateKey: 'inputs' }}
+          </div>
+
+          <div class="flex-50 r-amount">
+            {{ transactionData.interestPortion | currency: transactionData.currency.code : 'symbol-narrow' : '1.2-2' }}
+          </div>
+        }
+
+        @if (transactionData.feeChargesPortion !== null) {
+          <div class="flex-50 mat-body-strong r-amount">
+            {{ 'Fees' | translateKey: 'inputs' }}
+          </div>
+
+          <div class="flex-50 r-amount">
+            {{
+              transactionData.feeChargesPortion | currency: transactionData.currency.code : 'symbol-narrow' : '1.2-2'
+            }}
+          </div>
+        }
+
+        @if (transactionData.penaltyChargesPortion !== null) {
+          <div class="flex-50 mat-body-strong r-amount">
+            {{ 'Penalties' | translateKey: 'inputs' }}
+          </div>
+
+          <div class="flex-50 r-amount">
+            {{
+              transactionData.penaltyChargesPortion
+                | currency: transactionData.currency.code : 'symbol-narrow' : '1.2-2'
+            }}
+          </div>
+        }
+
+        @if (transactionData.submittedOnDate) {
+          <div class="flex-50 mat-body-strong">
+            {{ 'Submitted On Date' | translateKey: 'inputs' }}
+          </div>
+
+          <div class="flex-50">
+            {{ transactionData.submittedOnDate | dateFormat }}
+          </div>
+        }
 
         @if (transactionData.externalId) {
           <div class="flex-50 mat-body-strong">
             {{ 'External Id' | translate }}
           </div>
-        }
 
-        @if (transactionData.externalId) {
           <div class="flex-50">
             <mifosx-external-identifier
               externalId="{{ transactionData.externalId }}"
@@ -108,6 +175,27 @@
         @if (transactionData.classification) {
           <div class="flex-50 no-break-content">
             {{ transactionData.classification.name }}
+          </div>
+        }
+
+        @if (transactionData.reversed) {
+          <div class="flex-50 mat-body-strong">
+            {{ 'Reversed On Date' | translate }}
+          </div>
+
+          <div class="flex-50 no-break-content">
+            {{ transactionData.reversedOnDate | dateFormat }}
+          </div>
+
+          <div class="flex-50 mat-body-strong">
+            {{ 'Reversal External Id' | translate }}
+          </div>
+
+          <div class="flex-50">
+            <mifosx-external-identifier
+              externalId="{{ transactionData.reversalExternalId }}"
+              completed="true"
+            ></mifosx-external-identifier>
           </div>
         }
 
@@ -153,7 +241,13 @@
       </div>
 
       <div class="layout-row layout-align-center gap-2percent column-on-mobile">
-        <button type="button" mat-raised-button color="primary" [routerLink]="['../']">
+        <button
+          type="button"
+          mat-raised-button
+          color="primary"
+          [routerLink]="['../']"
+          [queryParams]="{ productType: loanProductService.productType.value }"
+        >
           {{ 'labels.buttons.Back' | translate }}
         </button>
       </div>
