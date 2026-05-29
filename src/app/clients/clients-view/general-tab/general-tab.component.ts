@@ -39,7 +39,7 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 import { CurrencyPipe } from '@angular/common';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { ReportsService } from 'app/reports/reports.service';
+import { ReportsService } from 'app/reporting-plugin/services/reports.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Subject } from 'rxjs';
 import { takeUntil, catchError } from 'rxjs/operators';

@@ -11,7 +11,7 @@ export class SelectOption {
   id: number;
   name: string;
 
-  constructor(options: any[]) {
+  constructor(options: [number, string]) {
     this.id = options[0];
     this.name = options[1];
   }

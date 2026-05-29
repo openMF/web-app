@@ -14,7 +14,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { ReportsService } from 'app/reports/reports.service';
+import { ReportsService } from 'app/reporting-plugin/services/reports.service';
 import { SettingsService } from 'app/settings/settings.service';
 
 /**

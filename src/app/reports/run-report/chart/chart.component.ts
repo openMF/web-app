@@ -10,10 +10,10 @@
 import { ChangeDetectionStrategy, Component, OnChanges, Input, inject } from '@angular/core';
 
 /** Custom Services */
-import { ReportsService } from '../../reports.service';
+import { ReportsService } from 'app/reporting-plugin/services/reports.service';
 
 /** Custom Models */
-import { ChartData } from '../../common-models/chart-data.model';
+import { ChartData } from 'app/reporting-plugin/models/chart-data.model';
 
 /** Charting Imports */
 import { Chart, registerables } from 'chart.js';

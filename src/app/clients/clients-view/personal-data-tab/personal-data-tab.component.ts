@@ -20,7 +20,7 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { LegalFormId } from 'app/clients/models/legal-form.enum';
 import { ClientsService } from 'app/clients/clients.service';
 import { MatIcon } from '@angular/material/icon';
-import { ReportsService } from 'app/reports/reports.service';
+import { ReportsService } from 'app/reporting-plugin/services/reports.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { AlertService } from 'app/core/alert/alert.service';
 import { SystemService } from 'app/system/system.service';

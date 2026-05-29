@@ -12,12 +12,12 @@ import { ActivatedRoute } from '@angular/router';
 import { AbstractControl, UntypedFormControl, UntypedFormGroup, ValidatorFn, Validators } from '@angular/forms';
 
 /** Custom Services */
-import { ReportsService } from '../reports.service';
+import { ReportsService } from 'app/reporting-plugin/services/reports.service';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Models */
-import { ReportParameter } from '../common-models/report-parameter.model';
-import { SelectOption } from '../common-models/select-option.model';
+import { ReportParameter } from 'app/reporting-plugin/models/report-parameter.model';
+import { SelectOption } from 'app/reporting-plugin/models/select-option.model';
 import { Dates } from 'app/core/utils/dates';
 import { GlobalConfiguration } from 'app/system/configurations/global-configurations-tab/configuration.model';
 

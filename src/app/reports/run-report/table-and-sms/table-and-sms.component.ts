@@ -25,7 +25,7 @@ import {
 import { DecimalPipe } from '@angular/common';
 
 /** Custom Servies */
-import { ReportsService } from '../../reports.service';
+import { ReportsService } from 'app/reporting-plugin/services/reports.service';
 import { MatDialog } from '@angular/material/dialog';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';

@@ -18,8 +18,8 @@ import { ReportsComponent } from './reports.component';
 import { RunReportComponent } from './run-report/run-report.component';
 
 /** Custom Resolvers */
-import { ReportsResolver } from './common-resolvers/reports.resolver';
-import { RunReportResolver } from './common-resolvers/run-report.resolver';
+import { ReportsResolver } from 'app/reporting-plugin/resolvers/reports.resolver';
+import { RunReportResolver } from 'app/reporting-plugin/resolvers/run-report.resolver';
 import { GlAccountsResolver } from '../accounting/common-resolvers/gl-accounts.resolver';
 import { GlobalConfigurationsResolver } from 'app/system/configurations/global-configurations-tab/global-configurations.resolver';
 
