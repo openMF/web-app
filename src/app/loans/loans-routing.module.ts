@@ -85,6 +85,7 @@ import { LoanBalancesTabComponent } from './loans-view/working-capital/loan-bala
 import { LoanPeriodPaymentRatesComponent } from './loans-view/working-capital/loan-period-payment-rates/loan-period-payment-rates.component';
 import { LoanPeriodPaymentRatesResolver } from './loans-view/working-capital/common-resolvers/loan-period-payment-rates.resolver';
 import { LoanTransactionsResolver } from './common-resolvers/loan-transactions.resolver';
+import { LoanChargesResolver } from './common-resolvers/loan-charges.resolver';
 
 /** Loans Route. */
 const routes: Routes = [
@@ -264,7 +265,10 @@ const routes: Routes = [
           {
             path: 'charges',
             data: { title: 'Loans Account Charges', breadcrumb: 'Charges', routeParamBreadcrumb: false },
-            component: ChargesTabComponent
+            component: ChargesTabComponent,
+            resolve: {
+              loanChargeData: LoanChargesResolver
+            }
           },
           {
             path: 'loan-documents',
@@ -482,7 +486,8 @@ const routes: Routes = [
     LoanProductsResolver,
     LoanAmortizationScheduleResolver,
     LoanPeriodPaymentRatesResolver,
-    LoanTransactionsResolver
+    LoanTransactionsResolver,
+    LoanChargesResolver
   ]
 })
 export class LoansRoutingModule {}

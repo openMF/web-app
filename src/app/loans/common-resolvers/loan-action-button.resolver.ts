@@ -84,7 +84,7 @@ export class LoanActionButtonResolver {
         ? this.loansService.getLoanApprovalTemplate(loanId)
         : this.loansService.getWorkingCapitalLoanActionTemplate(loanId, loanActionButton.toLowerCase());
     } else if (loanActionButton === 'Add Loan Charge') {
-      return this.loansService.getLoanChargeTemplateResource(loanId);
+      return this.loansService.getLoanChargeTemplateResource(this.loanProductService.loanAccountPath, loanId);
     } else if (loanActionButton === 'Foreclosure') {
       return this.loansService.getLoanForeclosureActionTemplate(loanId);
     } else if (loanActionButton === 'Charge-Off') {

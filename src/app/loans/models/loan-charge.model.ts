@@ -35,4 +35,5 @@ export interface LoanCharge {
   loanId: number;
   externalId: string;
   externalLoanId: string;
+  actionFlag?: boolean;
 }

@@ -125,12 +125,20 @@ export class AdjustLoanChargeComponent extends LoanAccountActionsBaseComponent i
       locale
     };
     const command = 'adjustment';
-    this.loanService.executeLoansAccountChargesCommand(this.loanId, command, data, this.chargeId).subscribe({
-      next: (response: any) => {
-        this.gotoLoanChargesView();
-      },
-      error: (error) => {}
-    });
+    this.loanService
+      .executeLoansAccountChargesCommand(
+        this.loanProductService.loanAccountPath,
+        this.loanId,
+        command,
+        data,
+        this.chargeId
+      )
+      .subscribe({
+        next: (response: any) => {
+          this.gotoLoanChargesView();
+        },
+        error: (error) => {}
+      });
   }
 
   gotoLoanChargesView(): void {

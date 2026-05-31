@@ -509,7 +509,7 @@
             {{ 'labels.inputs.Floating Interest Rates' | translate }}
           </a>
         }
-        @if (loanDetailsData.charges) {
+        @if (loanProductService.isWorkingCapital || loanDetailsData.charges?.length) {
           <a
             mat-tab-link
             [routerLink]="['./charges']"

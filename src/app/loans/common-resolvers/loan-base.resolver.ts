@@ -10,6 +10,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { LOAN_PRODUCT_TYPE, LoanProductType } from 'app/products/loan-products/models/loan-product.model';
 import { ActivatedRouteSnapshot } from '@angular/router';
+import { LoanAccountPath } from 'app/loans/loans.service';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +43,7 @@ export class LoanBaseResolver {
     return this.isLoanProduct ? 'loanproducts' : 'working-capital-loan-products';
   }
 
-  get loanAccountPath(): 'loans' | 'working-capital-loans' {
+  get loanAccountPath(): LoanAccountPath {
     return this.isLoanProduct ? 'loans' : 'working-capital-loans';
   }
 }
