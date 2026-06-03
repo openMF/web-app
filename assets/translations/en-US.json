@@ -1,4 +1,4 @@
-{
+﻿{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "Logged in as",
   "Remember me": "Remember me",
@@ -401,7 +401,11 @@
       "buyDownFeeAdjusted": "Buy Down Fee amount already adjusted",
       "buyDownFeeLimit": "Buy Down Fee Adjustment amount must be lower or equal to",
       "businessRule": "Business Rule",
-      "alertWithAmount": "{{label}}: {{amount}}"
+      "alertWithAmount": "{{label}}: {{amount}}",
+      "bulkWaiveCharge": {
+        "type": "Waive Charge Error",
+        "message": "{{count}} charge(s) could not be waived."
+      }
     },
     "error.auth.type": "Authentication Error",
     "error.auth.message": "Your session has expired or the credentials are invalid.",
@@ -519,6 +523,7 @@
       "Adjustment": "Adjustment",
       "Advanced Options": "Advanced Options",
       "Advanced Search": "Advanced Search",
+      "Pay Charge": "Pay Charge",
       "undo_account_transfer": "Undo Account Transfer",
       "Show advanced search": "Show advanced search",
       "Hide advanced search": "Hide advanced search",
@@ -745,6 +750,7 @@
       "View Transactions": "View Transactions",
       "Waive": "Waive",
       "Waive Charge": "Waive Charge",
+      "Waive Selected": "Waive Selected",
       "Week": "Week",
       "Withdraw": "Withdraw",
       "View Active Charges": "View Active Charges",
@@ -2093,6 +2099,7 @@
       "Filter": "Filter",
       "Filter By Version": "Filter By Version",
       "Financial Activity": "Financial Activity",
+      "Financial Summary": "Financial Summary",
       "First Name": "First Name",
       "First name is required": "First name is required",
       "First repayment on": "First repayment on",
@@ -2820,6 +2827,7 @@
       "Select and Add groups": "Select and Add groups",
       "Select applicable offices": "Select applicable offices",
       "Select entity": "Select entity",
+      "Selected": "Selected",
       "Selected Products": "Selected Products",
       "Send": "Send",
       "Send Amount": "Send Amount",
@@ -2939,6 +2947,7 @@
       "Total Interest Earned": "Total Interest Earned",
       "Total No. of Shares": "Total No. of Shares",
       "Total Number of Shares": "Total Number of Shares",
+      "Total Paid": "Total Paid",
       "Total Paid Principal": "Total Paid Principal",
       "Total Payment": "Total Payment",
       "Total Records": "Total Records",
@@ -3197,6 +3206,8 @@
       "Reports": "Reports",
       "Reschedule": "Reschedule",
       "Savings": "Savings",
+      "Select All": "Select All",
+      "Select Item": "Select Item",
       "Self Service": "Self Service",
       "Sell Loan": "Sell Loan",
       "Settings": "Settings",
@@ -3266,6 +3277,7 @@
       "Enable withhold tax for this account ?": "Enable withhold tax for this account ?",
       "Disable withhold tax for this account ?": "Disable withhold tax for this account ?",
       "Are you sure you want to waive charge with id:": "Are you sure you want to waive charge with id:",
+      "Are you sure you want to waive charges": "Are you sure you want to waive {{ count }} charges",
       "Are you sure you want to undo this transaction ?": "Are you sure you want to undo this transaction ?",
       "Are you sure you want recover from Guarantor": "Are you sure you want recover from Guarantor",
       "Are you sure you want recover the Original Schedule": "Are you sure you want recover the Original Schedule",
