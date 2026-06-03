@@ -1,5 +1,5 @@
 /**
- * TinyMCE version 8.3.2 (2026-01-14)
+ * TinyMCE version 8.6.0 (2026-06-03)
  */
 
 (function () {
@@ -3103,11 +3103,14 @@
             attrs.class = data.class;
         }
         styles.height = addPxSuffix(data.height);
+        // TINY-12797: Make sure only CSS width or attribute is applied based on `table_style_by_css` option
         if (shouldStyleWithCss$1) {
             styles.width = addPxSuffix(data.width);
+            attrs.width = null;
         }
-        else if (dom.getAttrib(tableElm, 'width')) {
+        else {
             attrs.width = removePxSuffix(data.width);
+            styles.width = '';
         }
         if (shouldStyleWithCss$1) {
             if (borderIsZero) {

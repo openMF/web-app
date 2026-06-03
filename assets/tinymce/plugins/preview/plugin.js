@@ -1,15 +1,39 @@
 /**
- * TinyMCE version 8.3.2 (2026-01-14)
+ * TinyMCE version 8.6.0 (2026-06-03)
  */
 
 (function () {
     'use strict';
 
-    var global$2 = tinymce.util.Tools.resolve('tinymce.PluginManager');
-
     /* eslint-disable @typescript-eslint/no-wrapper-object-types */
+    const hasProto = (v, constructor, predicate) => {
+        if (predicate(v, constructor.prototype)) {
+            return true;
+        }
+        else {
+            // String-based fallback time
+            return v.constructor?.name === constructor.name;
+        }
+    };
+    const typeOf = (x) => {
+        const t = typeof x;
+        if (x === null) {
+            return 'null';
+        }
+        else if (t === 'object' && Array.isArray(x)) {
+            return 'array';
+        }
+        else if (t === 'object' && hasProto(x, String, (o, proto) => proto.isPrototypeOf(o))) {
+            return 'string';
+        }
+        else {
+            return t;
+        }
+    };
+    const isType = (type) => (value) => typeOf(value) === type;
     const isSimpleType = (type) => (value) => typeof value === type;
     const eq = (t) => (a) => t === a;
+    const isString = isType('string');
     const isUndefined = eq(undefined);
     const isNullable = (a) => a === null || a === undefined;
     const isNonNullable = (a) => !isNullable(a);
@@ -387,6 +411,8 @@
         };
     };
 
+    var global$2 = tinymce.util.Tools.resolve('tinymce.PluginManager');
+
     const DeviceType = (os, browser, userAgent, mediaMatch) => {
         const isiPad = os.isiOS() && /ipad/i.test(userAgent) === true;
         const isiPhone = os.isiOS() && !isiPad;
@@ -741,14 +767,19 @@
             return `<script src="${editor.dom.encode(url)}"${attrs.join('')}></script>`;
         }).join('');
     };
-    const getPreviewHtml = (editor) => {
+    const getPreviewHtml = (editor, contentCssResources) => {
         let headHtml = '';
         const encode = editor.dom.encode;
         const contentStyle = getContentStyle(editor) ?? '';
         headHtml += `<base href="${encode(editor.documentBaseURI.getURI())}">`;
         const cors = shouldUseContentCssCors(editor) ? ' crossorigin="anonymous"' : '';
-        global.each(editor.contentCSS, (url) => {
-            headHtml += '<link type="text/css" rel="stylesheet" href="' + encode(editor.documentBaseURI.toAbsolute(url)) + '"' + cors + '>';
+        global.each(contentCssResources, (resource) => {
+            if (resource.type === 'bundled') {
+                headHtml += '<style type="text/css">' + resource.content + '</style>';
+            }
+            else {
+                headHtml += '<link type="text/css" rel="stylesheet" href="' + encode(resource.url) + '"' + cors + '>';
+            }
         });
         if (contentStyle) {
             headHtml += '<style type="text/css">' + contentStyle + '</style>';
@@ -771,8 +802,8 @@
         return previewHtml;
     };
 
-    const open = (editor) => {
-        const content = getPreviewHtml(editor);
+    const open = (editor, contentCssResources) => {
+        const content = getPreviewHtml(editor, contentCssResources);
         const dataApi = editor.windowManager.open({
             title: 'Preview',
             size: 'large',
@@ -804,9 +835,9 @@
         dataApi.focus('close');
     };
 
-    const register$1 = (editor) => {
+    const register$1 = (editor, getContentCssResources) => {
         editor.addCommand('mcePreview', () => {
-            open(editor);
+            open(editor, getContentCssResources());
         });
     };
 
@@ -828,7 +859,11 @@
 
     var Plugin = () => {
         global$2.add('preview', (editor) => {
-            register$1(editor);
+            const getContentCssResources = () => map(editor.contentCSS, (key) => Optional.from(tinymce.Resource.get(key))
+                .filter(isString)
+                .map((content) => ({ type: 'bundled', content }))
+                .getOr({ type: 'link', url: editor.documentBaseURI.toAbsolute(key) }));
+            register$1(editor, getContentCssResources);
             register(editor);
         });
     };

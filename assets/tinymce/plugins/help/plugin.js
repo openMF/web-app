@@ -1,5 +1,5 @@
 /**
- * TinyMCE version 8.3.2 (2026-01-14)
+ * TinyMCE version 8.6.0 (2026-06-03)
  */
 
 (function () {
@@ -618,6 +618,7 @@
         { key: 'revisionhistory', name: 'Revision History', type: "premium" /* PluginType.Premium */ },
         { key: 'tinymcespellchecker', name: 'Spell Checker', type: "premium" /* PluginType.Premium */, slug: 'introduction-to-tiny-spellchecker' },
         { key: 'suggestededits', name: 'Suggested Edits', type: "premium" /* PluginType.Premium */ },
+        { key: 'tinymceai', name: 'TinyMCE AI', type: "premium" /* PluginType.Premium */ },
         { key: 'autocorrect', name: 'Spelling Autocorrect', type: "premium" /* PluginType.Premium */ },
         { key: 'tableofcontents', name: 'Table of Contents', type: "premium" /* PluginType.Premium */ },
         { key: 'fullpagehtml', name: 'Fullpage HTML', type: "premium" /* PluginType.Premium */ },
