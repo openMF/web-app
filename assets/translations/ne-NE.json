@@ -374,7 +374,8 @@
     "report": {
       "type": "प्रतिवेदन उत्पादन",
       "generated": "प्रतिवेदन: {{reportName}} डाटा उत्पन्न भयो",
-      "generatedNoData": "प्रतिवेदन: {{reportName}} डाटा बिना उत्पन्न भयो"
+      "generatedNoData": "प्रतिवेदन: {{reportName}} डाटा बिना उत्पन्न भयो",
+      "loadFailed": "रिपोर्ट डाटा लोड गर्न असफल भयो। कृपया पुनः प्रयास गर्नुहोस्।"
     },
     "clipboard": {
       "type": "क्लिपबोर्ड",
@@ -3144,6 +3145,7 @@
       "Deposit": "जम्मा",
       "Disburse": "वितरण गर्नुहोस्",
       "Disburse to Savings": "बचतमा वितरण गर्नुहोस्",
+      "Discount Fee": "छुट शुल्क",
       "Edit Repayment Schedule": "पुन: भुक्तानी तालिका सम्पादन गर्नुहोस्",
       "Foreclosure": "फोरक्लोजर",
       "Frequent Postings": "बारम्बार पोस्टिंगहरू",

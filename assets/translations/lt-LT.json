@@ -374,7 +374,8 @@
     "report": {
       "type": "Ataskaitos generavimas",
       "generated": "Ataskaita: {{reportName}} duomenys sugeneruoti",
-      "generatedNoData": "Ataskaita: {{reportName}} sugeneruota be duomenų"
+      "generatedNoData": "Ataskaita: {{reportName}} sugeneruota be duomenų",
+      "loadFailed": "Nepavyko įkelti ataskaitos duomenų. Bandykite dar kartą."
     },
     "clipboard": {
       "type": "Iškarpinė",
@@ -3144,6 +3145,7 @@
       "Deposit": "Užstatas",
       "Disburse": "Išmokėti",
       "Disburse to Savings": "Išmokėkite santaupoms",
+      "Discount Fee": "Nuolaidų mokestis",
       "Edit Repayment Schedule": "Redaguoti grąžinimo grafiką",
       "Foreclosure": "Uždarymas",
       "Frequent Postings": "Dažni skelbimai",

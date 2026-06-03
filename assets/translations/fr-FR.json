@@ -374,7 +374,8 @@
     "report": {
       "type": "Génération de rapport",
       "generated": "Rapport : données de {{reportName}} générées",
-      "generatedNoData": "Rapport : {{reportName}} généré sans données"
+      "generatedNoData": "Rapport : {{reportName}} généré sans données",
+      "loadFailed": "Échec du chargement des données du rapport. Veuillez réessayer."
     },
     "clipboard": {
       "type": "Presse-papiers",
@@ -3148,6 +3149,7 @@
       "Deposit": "Dépôt",
       "Disburse": "Débourser",
       "Disburse to Savings": "Versement de l'épargne",
+      "Discount Fee": "Frais d'escompte",
       "Edit Repayment Schedule": "Modifier le calendrier de remboursement",
       "Foreclosure": "Forclusion",
       "Frequent Postings": "Publications fréquentes",

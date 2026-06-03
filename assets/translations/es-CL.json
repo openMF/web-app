@@ -374,7 +374,8 @@
     "report": {
       "type": "Generación de reporte",
       "generated": "Reporte: datos de {{reportName}} generados",
-      "generatedNoData": "Reporte: {{reportName}} generado sin datos"
+      "generatedNoData": "Reporte: {{reportName}} generado sin datos",
+      "loadFailed": "Error al cargar los datos del reporte. Por favor, inténtelo de nuevo."
     },
     "clipboard": {
       "type": "Portapapeles",
@@ -3146,6 +3147,7 @@
       "Deposit": "Depósito",
       "Disburse": "Desembolsar",
       "Disburse to Savings": "Desembolsar a Ahorros",
+      "Discount Fee": "Tarifa de Descuento",
       "Edit Repayment Schedule": "Editar calendario de pagos",
       "Foreclosure": "Juicio hipotecario",
       "Frequent Postings": "Publicaciones frecuentes",

@@ -374,7 +374,8 @@
     "report": {
       "type": "Geração de relatório",
       "generated": "Relatório: dados de {{reportName}} gerados",
-      "generatedNoData": "Relatório: {{reportName}} gerado sem dados"
+      "generatedNoData": "Relatório: {{reportName}} gerado sem dados",
+      "loadFailed": "Falha ao carregar os dados do relatório. Por favor, tente novamente."
     },
     "clipboard": {
       "type": "Área de transferência",
@@ -3144,6 +3145,7 @@
       "Deposit": "Depósito",
       "Disburse": "Desembolsar",
       "Disburse to Savings": "Desembolsar para poupança",
+      "Discount Fee": "Taxa de Desconto",
       "Edit Repayment Schedule": "Editar cronograma de reembolso",
       "Foreclosure": "Execução hipotecária",
       "Frequent Postings": "Postagens frequentes",
