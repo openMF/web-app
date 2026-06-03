@@ -1,0 +1,1 @@
+import{I as i,M as r,vg as n}from"./chunk-YCT4NEQ2.js";var f=(()=>{class t{constructor(){this.savingsService=r(n)}resolve(c){let e=c.paramMap.get("savingAccountId");return this.savingsService.getSavingsAccountData(e)}static{this.\u0275fac=function(e){return new(e||t)}}static{this.\u0275prov=i({token:t,factory:t.\u0275fac})}}return t})();export{f as a};
