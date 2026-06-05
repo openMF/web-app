@@ -58,11 +58,19 @@ Mifos® X Web App is a modern single-page application (SPA) built on top of the 
 
 ## Installation Guide
 
-### Prerequisites for All Methods
+## Prerequisites for All Methods
 
-- Git: [Download here](https://git-scm.com/downloads)
-- Mifos® X Backend (Apache Fineract®) - **Required before running the web app**
+| Tool | Required Version | Download |
+|------|-----------------|----------|
+| Git | Latest | [Download here](https://git-scm.com/downloads) |
+| Node.js | 16.x or 18.x ⚠️ | [Download here](https://nodejs.org/en/download) |
+| Angular CLI | 16.0.2 | Installed via npm (see below) |
+| Mifos® X Backend (Apache Fineract®) | Latest | Required before running the web app |
 
+> ⚠️ **Important:** Angular CLI 16.0.2 requires **Node.js v16.x or v18.x**.  
+> Node.js v20+ is **not compatible** and will cause installation errors.  
+> To check your Node.js version, run: `node -v`
+```
 ### Backend Setup (REQUIRED FIRST)
 
 Before installing the web app, you need to set up the Apache Fineract® backend server:
