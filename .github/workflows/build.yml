@@ -24,7 +24,7 @@ jobs:
       - name: Use Node.js 24
         uses: actions/setup-node@v6
         with:
-          node-version: '24.14.0'
+          node-version: '24.16.0'
 
       - name: Remove node_modules
         run: rm -rf node_modules
