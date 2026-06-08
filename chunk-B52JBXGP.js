@@ -1,0 +1,1 @@
+import{I as i,L as a,Qc as o}from"./chunk-5S436SAP.js";var s=(()=>{class t{constructor(r){this.translateService=r}translate(r,e){return this.translateService.get(r,e)}static{this.\u0275fac=function(e){return new(e||t)(a(o))}}static{this.\u0275prov=i({token:t,factory:t.\u0275fac,providedIn:"root"})}}return t})();export{s as a};
