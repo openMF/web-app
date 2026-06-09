@@ -6,8 +6,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, Input, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit, Input, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { combineLatest } from 'rxjs';
 import { MatFormField, MatLabel, MatError, MatHint } from '@angular/material/form-field';
 import { MatTooltip } from '@angular/material/tooltip';
@@ -30,11 +31,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShareProductTermsStepComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
+  private destroyRef = inject(DestroyRef);
 
   @Input() shareProductsTemplate: any;
 
-  shareProductTermsForm: UntypedFormGroup;
+  shareProductTermsForm: FormGroup;
 
   constructor() {
     this.createShareProductTermsForm();

@@ -10,6 +10,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   OnInit,
   TemplateRef,
   ElementRef,
@@ -17,6 +18,7 @@ import {
   AfterViewInit,
   inject
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -32,10 +34,7 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-
-/** rxjs Imports */
-import { of } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /* Custom Services */
 import { PopoverService } from '../../configuration-wizard/popover/popover.service';
@@ -74,6 +73,7 @@ export class FixedDepositProductsComponent implements OnInit, AfterViewInit {
   private router = inject(Router);
   private configurationWizardService = inject(ConfigurationWizardService);
   private popoverService = inject(PopoverService);
+  private destroyRef = inject(DestroyRef);
 
   /** Fixed deposit products data. */
   fixedDepositProductData: any;
@@ -107,7 +107,7 @@ export class FixedDepositProductsComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor() {
-    this.route.data.subscribe((data: { fixedDepositProducts: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { fixedDepositProducts: any }) => {
       this.fixedDepositProductData = data.fixedDepositProducts;
     });
   }

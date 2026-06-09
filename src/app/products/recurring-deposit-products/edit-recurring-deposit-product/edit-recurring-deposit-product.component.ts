@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, ViewChild, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Components */
@@ -56,6 +57,7 @@ export class EditRecurringDepositProductComponent {
   private router = inject(Router);
   private settingsService = inject(SettingsService);
   private accounting = inject(Accounting);
+  private destroyRef = inject(DestroyRef);
 
   @ViewChild(RecurringDepositProductDetailsStepComponent, { static: true })
   recurringDepositProductDetailsStep: RecurringDepositProductDetailsStepComponent;
@@ -83,9 +85,11 @@ export class EditRecurringDepositProductComponent {
    */
 
   constructor() {
-    this.route.data.subscribe((data: { recurringDepositProductAndTemplate: any }) => {
-      this.recurringDepositProductsTemplate = data.recurringDepositProductAndTemplate;
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { recurringDepositProductAndTemplate: any }) => {
+        this.recurringDepositProductsTemplate = data.recurringDepositProductAndTemplate;
+      });
     this.accountingRuleData = this.accounting.getAccountingRulesForSavings();
   }
 

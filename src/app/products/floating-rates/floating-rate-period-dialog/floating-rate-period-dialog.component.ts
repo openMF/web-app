@@ -16,7 +16,7 @@ import {
   MatDialogActions,
   MatDialogClose
 } from '@angular/material/dialog';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 import { CdkScrollable } from '@angular/cdk/scrolling';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -42,12 +42,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class FloatingRatePeriodDialogComponent implements OnInit {
   dialogRef = inject<MatDialogRef<FloatingRatePeriodDialogComponent>>(MatDialogRef);
-  formBuilder = inject(UntypedFormBuilder);
+  formBuilder = inject(FormBuilder);
   private settingsService = inject(SettingsService);
   data = inject(MAT_DIALOG_DATA);
 
   /** Floating Rate Period Form. */
-  floatingRatePeriodForm: UntypedFormGroup;
+  floatingRatePeriodForm: FormGroup;
   /** Minimum floating rate period date allowed. */
   minDate = new Date();
 

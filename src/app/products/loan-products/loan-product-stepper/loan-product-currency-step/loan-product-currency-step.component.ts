@@ -7,7 +7,7 @@
  */
 
 import { ChangeDetectionStrategy, Component, OnInit, Input, inject, DestroyRef } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -28,13 +28,13 @@ import { LoanProductService } from '../../services/loan-product.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanProductCurrencyStepComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   protected loanProductService = inject(LoanProductService);
   private destroyRef = inject(DestroyRef);
 
   @Input() loanProductsTemplate: any;
 
-  loanProductCurrencyForm!: UntypedFormGroup;
+  loanProductCurrencyForm!: FormGroup;
 
   currencyData: any;
 
@@ -97,7 +97,7 @@ export class LoanProductCurrencyStepComponent implements OnInit {
     });
 
     if (this.loanProductService.isLoanProduct) {
-      this.loanProductCurrencyForm.addControl('installmentAmountInMultiplesOf', new UntypedFormControl(''));
+      this.loanProductCurrencyForm.addControl('installmentAmountInMultiplesOf', new FormControl(''));
     }
   }
 

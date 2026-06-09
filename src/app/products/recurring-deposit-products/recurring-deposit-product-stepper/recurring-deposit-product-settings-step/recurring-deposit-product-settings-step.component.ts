@@ -6,14 +6,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, Input, inject } from '@angular/core';
-import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  UntypedFormControl,
-  Validators,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, Input, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatDivider } from '@angular/material/divider';
@@ -37,11 +32,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecurringDepositProductSettingsStepComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
+  private destroyRef = inject(DestroyRef);
 
   @Input() recurringDepositProductsTemplate: any;
 
-  recurringDepositProductSettingsForm: UntypedFormGroup;
+  recurringDepositProductSettingsForm: FormGroup;
 
   lockinPeriodFrequencyTypeData: any;
   periodFrequencyTypeData: any;
@@ -140,16 +136,16 @@ export class RecurringDepositProductSettingsStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.recurringDepositProductSettingsForm.get('withHoldTax').valueChanges.subscribe((withHoldTax: any) => {
-      if (withHoldTax) {
-        this.recurringDepositProductSettingsForm.addControl(
-          'taxGroupId',
-          new UntypedFormControl('', Validators.required)
-        );
-      } else {
-        this.recurringDepositProductSettingsForm.removeControl('taxGroupId');
-      }
-    });
+    this.recurringDepositProductSettingsForm
+      .get('withHoldTax')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((withHoldTax: any) => {
+        if (withHoldTax) {
+          this.recurringDepositProductSettingsForm.addControl('taxGroupId', new FormControl('', Validators.required));
+        } else {
+          this.recurringDepositProductSettingsForm.removeControl('taxGroupId');
+        }
+      });
   }
 
   get recurringDepositProductSettings() {

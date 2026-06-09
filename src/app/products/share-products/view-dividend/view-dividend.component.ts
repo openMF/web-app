@@ -6,7 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -54,6 +55,7 @@ export class ViewDividendComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private productsService = inject(ProductsService);
   private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
 
   dividendData: any;
   status: any;
@@ -70,7 +72,7 @@ export class ViewDividendComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
 
   constructor() {
-    this.route.data.subscribe((data: { dividendData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { dividendData: any }) => {
       this.dividendData = data.dividendData;
     });
     this.status = this.route.snapshot.queryParams['status'];

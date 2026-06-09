@@ -6,7 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -27,11 +28,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class ViewRecurringDepositProductComponent {
   private route = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
 
   recurringDepositDatatables: any = [];
 
   constructor() {
-    this.route.data.subscribe((data: { recurringDepositDatatables: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { recurringDepositDatatables: any }) => {
       this.recurringDepositDatatables = [];
       data.recurringDepositDatatables.forEach((datatable: any) => {
         if (datatable.entitySubType === 'Recurring Deposit') {

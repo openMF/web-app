@@ -10,6 +10,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   OnInit,
   TemplateRef,
   ElementRef,
@@ -17,6 +18,7 @@ import {
   AfterViewInit,
   inject
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -81,6 +83,7 @@ export class RecurringDepositProductsComponent implements OnInit, AfterViewInit 
   private dialog = inject(MatDialog);
   private configurationWizardService = inject(ConfigurationWizardService);
   private popoverService = inject(PopoverService);
+  private destroyRef = inject(DestroyRef);
 
   /** Data table data. */
   recurringDepositProductData: any;
@@ -114,7 +117,7 @@ export class RecurringDepositProductsComponent implements OnInit, AfterViewInit 
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor() {
-    this.route.data.subscribe((data: { recurringDepositProducts: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { recurringDepositProducts: any }) => {
       this.recurringDepositProductData = data.recurringDepositProducts;
     });
   }

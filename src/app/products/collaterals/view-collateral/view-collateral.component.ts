@@ -6,7 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
@@ -38,6 +39,7 @@ export class ViewCollateralComponent {
   private router = inject(Router);
   private dialog = inject(MatDialog);
   private translateService = inject(TranslateService);
+  private destroyRef = inject(DestroyRef);
 
   /** Collateral Data */
   collateralData: any;
@@ -51,7 +53,7 @@ export class ViewCollateralComponent {
    * @param {TranslateService} translateService Translate Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { collateral: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { collateral: any }) => {
       this.collateralData = data.collateral;
     });
   }

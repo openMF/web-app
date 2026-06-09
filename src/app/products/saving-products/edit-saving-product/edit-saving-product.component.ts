@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Components */
@@ -54,6 +55,7 @@ export class EditSavingProductComponent {
   private router = inject(Router);
   private settingsService = inject(SettingsService);
   private accounting = inject(Accounting);
+  private destroyRef = inject(DestroyRef);
 
   @ViewChild(SavingProductDetailsStepComponent, { static: true })
   savingProductDetailsStep: SavingProductDetailsStepComponent;
@@ -78,7 +80,7 @@ export class EditSavingProductComponent {
    */
 
   constructor() {
-    this.route.data.subscribe((data: { savingProductAndTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { savingProductAndTemplate: any }) => {
       this.savingProductAndTemplate = data.savingProductAndTemplate;
     });
     this.accountingRuleData = this.accounting.getAccountingRulesForSavings();

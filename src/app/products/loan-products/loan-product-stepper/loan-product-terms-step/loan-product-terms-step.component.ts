@@ -6,8 +6,18 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormArray, UntypedFormControl } from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  inject,
+  DestroyRef
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -69,17 +79,18 @@ import { LoanProductBaseComponent } from '../../common/loan-product-base.compone
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanProductTermsStepComponent extends LoanProductBaseComponent implements OnInit, OnChanges {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private processingStrategyService = inject(ProcessingStrategyService);
   private dialog = inject(MatDialog);
   private translateService = inject(TranslateService);
+  private destroyRef = inject(DestroyRef);
 
   @Input() loanProductsTemplate: any;
 
-  loanProductTermsForm!: UntypedFormGroup;
+  loanProductTermsForm!: FormGroup;
 
   /** Zero Interest control. */
-  zeroInterest = new UntypedFormControl(false);
+  zeroInterest = new FormControl(false);
 
   valueConditionTypeData: any;
   floatingRateData: any;
@@ -187,9 +198,11 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
           this.loanProductsTemplate.maxInterestRatePerPeriod === 0
       );
 
-      this.processingStrategyService.advancedTransactionProcessingStrategy.subscribe((value: boolean) => {
-        this.isAdvancedTransactionProcessingStrategy = value;
-      });
+      this.processingStrategyService.advancedTransactionProcessingStrategy
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((value: boolean) => {
+          this.isAdvancedTransactionProcessingStrategy = value;
+        });
       this.validateAdvancedPaymentStrategyControls();
     }
 
@@ -372,12 +385,13 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
     if (this.loanProductService.isLoanProduct) {
       this.loanProductTermsForm
         .get('allowApprovedDisbursedAmountsOverApplied')!
-        .valueChanges.subscribe((allowApprovedDisbursedAmountsOverApplied) => {
+        .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((allowApprovedDisbursedAmountsOverApplied) => {
           if (allowApprovedDisbursedAmountsOverApplied) {
             this.loanProductTermsForm.get('overAppliedCalculationType')!.enable();
             this.loanProductTermsForm.get('overAppliedNumber')!.enable();
             if (this.loanProductService.isLoanProduct) {
-              this.loanProductTermsForm.addControl('disallowExpectedDisbursements', new UntypedFormControl(true));
+              this.loanProductTermsForm.addControl('disallowExpectedDisbursements', new FormControl(true));
             }
           } else {
             this.loanProductTermsForm.get('overAppliedCalculationType')!.disable();
@@ -392,44 +406,39 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
 
       this.loanProductTermsForm
         .get('isLinkedToFloatingInterestRates')!
-        .valueChanges.subscribe((isLinkedToFloatingInterestRates) => {
+        .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((isLinkedToFloatingInterestRates) => {
           if (isLinkedToFloatingInterestRates) {
             this.loanProductTermsForm.removeControl('minInterestRatePerPeriod');
             this.loanProductTermsForm.removeControl('interestRatePerPeriod');
             this.loanProductTermsForm.removeControl('maxInterestRatePerPeriod');
             this.loanProductTermsForm.removeControl('interestRateFrequencyType');
-            this.loanProductTermsForm.addControl('floatingRatesId', new UntypedFormControl('', Validators.required));
-            this.loanProductTermsForm.addControl(
-              'interestRateDifferential',
-              new UntypedFormControl('', Validators.required)
-            );
-            this.loanProductTermsForm.addControl(
-              'isFloatingInterestRateCalculationAllowed',
-              new UntypedFormControl(false)
-            );
+            this.loanProductTermsForm.addControl('floatingRatesId', new FormControl('', Validators.required));
+            this.loanProductTermsForm.addControl('interestRateDifferential', new FormControl('', Validators.required));
+            this.loanProductTermsForm.addControl('isFloatingInterestRateCalculationAllowed', new FormControl(false));
             this.loanProductTermsForm.addControl(
               'minDifferentialLendingRate',
-              new UntypedFormControl('', Validators.required)
+              new FormControl('', Validators.required)
             );
             this.loanProductTermsForm.addControl(
               'defaultDifferentialLendingRate',
-              new UntypedFormControl('', Validators.required)
+              new FormControl('', Validators.required)
             );
             this.loanProductTermsForm.addControl(
               'maxDifferentialLendingRate',
-              new UntypedFormControl('', Validators.required)
+              new FormControl('', Validators.required)
             );
           } else {
             this.loanProductTermsForm.addControl(
               'minInterestRatePerPeriod',
-              new UntypedFormControl('', [
+              new FormControl('', [
                 Validators.min(0),
                 Validators.pattern(/^\d+([.,]\d{1,6})?$/)
               ])
             );
             this.loanProductTermsForm.addControl(
               'interestRatePerPeriod',
-              new UntypedFormControl('', [
+              new FormControl('', [
                 Validators.required,
                 Validators.min(0),
                 Validators.pattern(/^\d+([.,]\d{1,6})?$/)
@@ -437,14 +446,14 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
             );
             this.loanProductTermsForm.addControl(
               'maxInterestRatePerPeriod',
-              new UntypedFormControl('', [
+              new FormControl('', [
                 Validators.min(0),
                 Validators.pattern(/^\d+([.,]\d{1,6})?$/)
               ])
             );
             this.loanProductTermsForm.addControl(
               'interestRateFrequencyType',
-              new UntypedFormControl(
+              new FormControl(
                 this.loanProductsTemplate.interestRateFrequencyType?.id ?? +this.interestRateFrequencyTypeData[0]?.id,
                 Validators.required
               )
@@ -458,22 +467,25 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
           }
         });
 
-      this.loanProductTermsForm.get('useBorrowerCycle')!.valueChanges.subscribe((useBorrowerCycle) => {
-        if (useBorrowerCycle) {
-          this.loanProductTermsForm.addControl('principalVariationsForBorrowerCycle', this.formBuilder.array([]));
-          this.loanProductTermsForm.addControl(
-            'numberOfRepaymentVariationsForBorrowerCycle',
-            this.formBuilder.array([])
-          );
-          this.loanProductTermsForm.addControl('interestRateVariationsForBorrowerCycle', this.formBuilder.array([]));
-        } else {
-          this.loanProductTermsForm.removeControl('principalVariationsForBorrowerCycle');
-          this.loanProductTermsForm.removeControl('numberOfRepaymentVariationsForBorrowerCycle');
-          this.loanProductTermsForm.removeControl('interestRateVariationsForBorrowerCycle');
-        }
-      });
+      this.loanProductTermsForm
+        .get('useBorrowerCycle')!
+        .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((useBorrowerCycle) => {
+          if (useBorrowerCycle) {
+            this.loanProductTermsForm.addControl('principalVariationsForBorrowerCycle', this.formBuilder.array([]));
+            this.loanProductTermsForm.addControl(
+              'numberOfRepaymentVariationsForBorrowerCycle',
+              this.formBuilder.array([])
+            );
+            this.loanProductTermsForm.addControl('interestRateVariationsForBorrowerCycle', this.formBuilder.array([]));
+          } else {
+            this.loanProductTermsForm.removeControl('principalVariationsForBorrowerCycle');
+            this.loanProductTermsForm.removeControl('numberOfRepaymentVariationsForBorrowerCycle');
+            this.loanProductTermsForm.removeControl('interestRateVariationsForBorrowerCycle');
+          }
+        });
 
-      this.zeroInterest.valueChanges.subscribe((zeroInterest) => {
+      this.zeroInterest.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((zeroInterest) => {
         if (zeroInterest) {
           this.loanProductTermsForm.get('minInterestRatePerPeriod')!.patchValue(0);
           this.loanProductTermsForm.get('minInterestRatePerPeriod')!.disable();
@@ -500,16 +512,16 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
     }
   }
 
-  get principalVariationsForBorrowerCycle(): UntypedFormArray {
-    return this.loanProductTermsForm.get('principalVariationsForBorrowerCycle')! as UntypedFormArray;
+  get principalVariationsForBorrowerCycle(): FormArray {
+    return this.loanProductTermsForm.get('principalVariationsForBorrowerCycle')! as FormArray;
   }
 
-  get numberOfRepaymentVariationsForBorrowerCycle(): UntypedFormArray {
-    return this.loanProductTermsForm.get('numberOfRepaymentVariationsForBorrowerCycle')! as UntypedFormArray;
+  get numberOfRepaymentVariationsForBorrowerCycle(): FormArray {
+    return this.loanProductTermsForm.get('numberOfRepaymentVariationsForBorrowerCycle')! as FormArray;
   }
 
-  get interestRateVariationsForBorrowerCycle(): UntypedFormArray {
-    return this.loanProductTermsForm.get('interestRateVariationsForBorrowerCycle')! as UntypedFormArray;
+  get interestRateVariationsForBorrowerCycle(): FormArray {
+    return this.loanProductTermsForm.get('interestRateVariationsForBorrowerCycle')! as FormArray;
   }
 
   setLoanProductTermsFormDirty() {
@@ -518,7 +530,7 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
     }
   }
 
-  addVariationsForBorrowerCycle(formType: string, variationsForBorrowerCycleFormArray: UntypedFormArray) {
+  addVariationsForBorrowerCycle(formType: string, variationsForBorrowerCycleFormArray: FormArray) {
     const data = this.getData(formType);
     const addVariationsForBorrowerCycleDialogRef = this.dialog.open(FormDialogComponent, { data });
     addVariationsForBorrowerCycleDialogRef.afterClosed().subscribe((response: any) => {
@@ -529,11 +541,7 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
     });
   }
 
-  editVariationsForBorrowerCycle(
-    formType: string,
-    variationsForBorrowerCycleFormArray: UntypedFormArray,
-    index: number
-  ) {
+  editVariationsForBorrowerCycle(formType: string, variationsForBorrowerCycleFormArray: FormArray, index: number) {
     const data = {
       ...this.getData(formType, variationsForBorrowerCycleFormArray.at(index).value),
       layout: { addButtonText: 'Edit' }
@@ -547,7 +555,7 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
     });
   }
 
-  deleteVariationsForBorrowerCycle(variationsForBorrowerCycleFormArray: UntypedFormArray, index: number) {
+  deleteVariationsForBorrowerCycle(variationsForBorrowerCycleFormArray: FormArray, index: number) {
     const deleteVariationsForBorrowerCycleDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `this` }
     });

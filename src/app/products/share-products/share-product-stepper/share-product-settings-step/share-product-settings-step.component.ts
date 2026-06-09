@@ -7,7 +7,7 @@
  */
 
 import { ChangeDetectionStrategy, Component, OnInit, Input, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
@@ -29,11 +29,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShareProductSettingsStepComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
 
   @Input() shareProductsTemplate: any;
 
-  shareProductSettingsForm: UntypedFormGroup;
+  shareProductSettingsForm: FormGroup;
 
   minimumActivePeriodFrequencyTypeData: any;
   lockinPeriodFrequencyTypeData: any;
@@ -107,7 +107,7 @@ export class ShareProductSettingsStepComponent implements OnInit {
     );
   }
 
-  private validateSharesOrder(group: UntypedFormGroup): { [key: string]: any } | null {
+  private validateSharesOrder(group: FormGroup): { [key: string]: any } | null {
     const min = Number(group.get('minimumShares')?.value);
     const nominal = Number(group.get('nominalShares')?.value);
     const max = Number(group.get('maximumShares')?.value);

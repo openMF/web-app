@@ -5,8 +5,9 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from 'app/products/products.service';
 import { StringEnumOptionData } from 'app/shared/models/option-data.model';
@@ -31,16 +32,17 @@ import { catchError } from 'rxjs';
 export class CreateNearBreachConfigurationComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private productsService = inject(ProductsService);
   private errorHandler = inject(ErrorHandlerService);
+  private destroyRef = inject(DestroyRef);
 
-  nearBreachForm: UntypedFormGroup;
+  nearBreachForm: FormGroup;
   frequencyTypeOptions: StringEnumOptionData[] = [];
   maxThreshold: number = 100.0;
 
   constructor() {
-    this.route.data.subscribe((data: { breachTemplate?: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { breachTemplate?: any }) => {
       const breachTemplate = data.breachTemplate ?? {};
       this.frequencyTypeOptions = breachTemplate.breachFrequencyTypeOptions || [];
     });

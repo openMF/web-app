@@ -7,8 +7,9 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -27,17 +28,18 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class EditCollateralComponent implements OnInit {
   private productsService = inject(ProductsService);
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Colalteral Data */
   collateralData: any;
   /** Collateral Template */
   collateralTemplateData: any;
   /** Collateral Form */
-  collateralForm: UntypedFormGroup;
+  collateralForm: FormGroup;
 
   /**
    * Retrieves the Collateral Data from `resolve`
@@ -48,10 +50,12 @@ export class EditCollateralComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { collateral: any; collateralTemplate: any }) => {
-      this.collateralData = data.collateral;
-      this.collateralTemplateData = data.collateralTemplate;
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { collateral: any; collateralTemplate: any }) => {
+        this.collateralData = data.collateral;
+        this.collateralTemplateData = data.collateralTemplate;
+      });
   }
 
   ngOnInit(): void {

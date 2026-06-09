@@ -7,7 +7,7 @@
  */
 
 import { ChangeDetectionStrategy, Component, OnInit, Input, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -25,11 +25,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FixedDepositProductDetailsStepComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
 
   @Input() fixedDepositProductsTemplate: any;
 
-  fixedDepositProductDetailsForm: UntypedFormGroup;
+  fixedDepositProductDetailsForm: FormGroup;
 
   constructor() {
     this.createFixedDepositProductDetailsForm();

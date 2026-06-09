@@ -8,7 +8,7 @@
 
 import { ChangeDetectionStrategy, Component, OnInit, Input, inject, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -30,12 +30,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShareProductCurrencyStepComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);
 
   @Input() shareProductsTemplate: any;
 
-  shareProductCurrencyForm: UntypedFormGroup;
+  shareProductCurrencyForm: FormGroup;
 
   currencyData: any;
 

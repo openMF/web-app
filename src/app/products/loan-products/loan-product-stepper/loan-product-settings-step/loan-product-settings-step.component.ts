@@ -6,8 +6,18 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, Input, Output, EventEmitter, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  inject
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { LoanProducts } from '../../loan-products';
 import { rangeValidator } from 'app/shared/validators/percentage.validator';
 import { GlobalConfiguration } from 'app/system/configurations/global-configurations-tab/configuration.model';
@@ -46,18 +56,19 @@ import { InputPositiveIntegerComponent } from 'app/shared/input-positive-integer
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanProductSettingsStepComponent extends LoanProductBaseComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private processingStrategyService = inject(ProcessingStrategyService);
+  private destroyRef = inject(DestroyRef);
 
   DAYS_BEFORE_REPAYMENT_IS_DUE = LoanProducts.DAYS_BEFORE_REPAYMENT_IS_DUE;
   DAYS_AFTER_REPAYMENT_IS_OVERDUE = LoanProducts.DAYS_AFTER_REPAYMENT_IS_OVERDUE;
 
   @Input() toEdit: boolean;
   @Input() loanProductsTemplate: any;
-  @Input() isLinkedToFloatingInterestRates: UntypedFormControl | null;
+  @Input() isLinkedToFloatingInterestRates: FormControl | null;
   @Output() advancePaymentStrategy = new EventEmitter<string>();
 
-  loanProductSettingsForm: UntypedFormGroup;
+  loanProductSettingsForm: FormGroup;
 
   amortizationTypeData: any;
   interestTypeData: any;
@@ -512,7 +523,7 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
               : this.daysInYearCustomStrategyOptions[0].id;
             this.loanProductSettingsForm.addControl(
               'daysInYearCustomStrategy',
-              new UntypedFormControl(daysInYearCustomStrategy, Validators.required)
+              new FormControl(daysInYearCustomStrategy, Validators.required)
             );
           } else {
             this.loanProductSettingsForm.removeControl('daysInYearCustomStrategy');
@@ -534,14 +545,14 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
           if (allowVariableInstallments) {
             this.loanProductSettingsForm.addControl(
               'minimumGap',
-              new UntypedFormControl('', [
+              new FormControl('', [
                 Validators.required,
                 Validators.min(0)
               ])
             );
             this.loanProductSettingsForm.addControl(
               'maximumGap',
-              new UntypedFormControl('', [
+              new FormControl('', [
                 Validators.required,
                 Validators.min(0)
               ])
@@ -557,21 +568,21 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
           if (isInterestRecalculationEnabled) {
             this.loanProductSettingsForm.addControl(
               'preClosureInterestCalculationStrategy',
-              new UntypedFormControl(this.preClosureInterestCalculationStrategyData[0].id, Validators.required)
+              new FormControl(this.preClosureInterestCalculationStrategyData[0].id, Validators.required)
             );
             this.loanProductSettingsForm.addControl(
               'rescheduleStrategyMethod',
-              new UntypedFormControl(this.rescheduleStrategyTypeData[0].id, Validators.required)
+              new FormControl(this.rescheduleStrategyTypeData[0].id, Validators.required)
             );
             this.loanProductSettingsForm.addControl(
               'interestRecalculationCompoundingMethod',
-              new UntypedFormControl(this.interestRecalculationCompoundingTypeData[0].id, Validators.required)
+              new FormControl(this.interestRecalculationCompoundingTypeData[0].id, Validators.required)
             );
             this.loanProductSettingsForm.addControl(
               'recalculationRestFrequencyType',
-              new UntypedFormControl(this.interestRecalculationFrequencyTypeData[0].id, Validators.required)
+              new FormControl(this.interestRecalculationFrequencyTypeData[0].id, Validators.required)
             );
-            this.loanProductSettingsForm.addControl('isArrearsBasedOnOriginalSchedule', new UntypedFormControl(''));
+            this.loanProductSettingsForm.addControl('isArrearsBasedOnOriginalSchedule', new FormControl(''));
             if (this.loanProductSettingsForm.value.isInterestRecalculationEnabled) {
               this.setRescheduleStrategies();
             }
@@ -581,7 +592,7 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
                 if (interestRecalculationCompoundingMethod !== 0) {
                   this.loanProductSettingsForm.addControl(
                     'recalculationCompoundingFrequencyType',
-                    new UntypedFormControl(this.interestRecalculationFrequencyTypeData[0].id, Validators.required)
+                    new FormControl(this.interestRecalculationFrequencyTypeData[0].id, Validators.required)
                   );
 
                   this.loanProductSettingsForm
@@ -590,7 +601,7 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
                       if (recalculationCompoundingFrequencyType !== 1) {
                         this.loanProductSettingsForm.addControl(
                           'recalculationCompoundingFrequencyInterval',
-                          new UntypedFormControl('', Validators.required)
+                          new FormControl('', Validators.required)
                         );
                       } else {
                         this.loanProductSettingsForm.removeControl('recalculationCompoundingFrequencyInterval');
@@ -599,18 +610,18 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
                       if (recalculationCompoundingFrequencyType === 3) {
                         this.loanProductSettingsForm.addControl(
                           'recalculationCompoundingFrequencyDayOfWeekType',
-                          new UntypedFormControl('')
+                          new FormControl('')
                         );
                         this.loanProductSettingsForm.removeControl('recalculationCompoundingFrequencyNthDayType');
                         this.loanProductSettingsForm.removeControl('recalculationCompoundingFrequencyOnDayType');
                       } else if (recalculationCompoundingFrequencyType === 4) {
                         this.loanProductSettingsForm.addControl(
                           'recalculationCompoundingFrequencyNthDayType',
-                          new UntypedFormControl('')
+                          new FormControl('')
                         );
                         this.loanProductSettingsForm.addControl(
                           'recalculationCompoundingFrequencyDayOfWeekType',
-                          new UntypedFormControl('')
+                          new FormControl('')
                         );
 
                         this.loanProductSettingsForm
@@ -619,7 +630,7 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
                             if (recalculationCompoundingFrequencyNthDayType === -2) {
                               this.loanProductSettingsForm.addControl(
                                 'recalculationCompoundingFrequencyOnDayType',
-                                new UntypedFormControl('')
+                                new FormControl('')
                               );
                               this.loanProductSettingsForm.removeControl(
                                 'recalculationCompoundingFrequencyDayOfWeekType'
@@ -627,7 +638,7 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
                             } else {
                               this.loanProductSettingsForm.addControl(
                                 'recalculationCompoundingFrequencyDayOfWeekType',
-                                new UntypedFormControl('')
+                                new FormControl('')
                               );
                               this.loanProductSettingsForm.removeControl('recalculationCompoundingFrequencyOnDayType');
                             }
@@ -649,7 +660,7 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
                 if (recalculationRestFrequencyType !== 1) {
                   this.loanProductSettingsForm.addControl(
                     'recalculationRestFrequencyInterval',
-                    new UntypedFormControl('', Validators.required)
+                    new FormControl('', Validators.required)
                   );
                 } else {
                   this.loanProductSettingsForm.removeControl('recalculationRestFrequencyInterval');
@@ -658,18 +669,15 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
                 if (recalculationRestFrequencyType === 3) {
                   this.loanProductSettingsForm.addControl(
                     'recalculationRestFrequencyDayOfWeekType',
-                    new UntypedFormControl('')
+                    new FormControl('')
                   );
                   this.loanProductSettingsForm.removeControl('recalculationRestFrequencyNthDayType');
                   this.loanProductSettingsForm.removeControl('recalculationRestFrequencyOnDayType');
                 } else if (recalculationRestFrequencyType === 4) {
-                  this.loanProductSettingsForm.addControl(
-                    'recalculationRestFrequencyNthDayType',
-                    new UntypedFormControl('')
-                  );
+                  this.loanProductSettingsForm.addControl('recalculationRestFrequencyNthDayType', new FormControl(''));
                   this.loanProductSettingsForm.addControl(
                     'recalculationRestFrequencyDayOfWeekType',
-                    new UntypedFormControl('')
+                    new FormControl('')
                   );
 
                   this.loanProductSettingsForm
@@ -678,13 +686,13 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
                       if (recalculationRestFrequencyNthDayType === -2) {
                         this.loanProductSettingsForm.addControl(
                           'recalculationRestFrequencyOnDayType',
-                          new UntypedFormControl('')
+                          new FormControl('')
                         );
                         this.loanProductSettingsForm.removeControl('recalculationRestFrequencyDayOfWeekType');
                       } else {
                         this.loanProductSettingsForm.addControl(
                           'recalculationRestFrequencyDayOfWeekType',
-                          new UntypedFormControl('')
+                          new FormControl('')
                         );
                         this.loanProductSettingsForm.removeControl('recalculationRestFrequencyOnDayType');
                       }
@@ -709,18 +717,18 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
         if (holdGuaranteeFunds) {
           this.loanProductSettingsForm.addControl(
             'mandatoryGuarantee',
-            new UntypedFormControl('', [
+            new FormControl('', [
               Validators.required,
               Validators.min(0)
             ])
           );
           this.loanProductSettingsForm.addControl(
             'minimumGuaranteeFromOwnFunds',
-            new UntypedFormControl('', [Validators.min(0)])
+            new FormControl('', [Validators.min(0)])
           );
           this.loanProductSettingsForm.addControl(
             'minimumGuaranteeFromGuarantor',
-            new UntypedFormControl('', [Validators.min(0)])
+            new FormControl('', [Validators.min(0)])
           );
         } else {
           this.loanProductSettingsForm.removeControl('mandatoryGuarantee');
@@ -733,15 +741,12 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
         if (multiDisburseLoan) {
           this.loanProductSettingsForm.addControl(
             'maxTrancheCount',
-            new UntypedFormControl('', [
+            new FormControl('', [
               Validators.required,
               Validators.min(0)
             ])
           );
-          this.loanProductSettingsForm.addControl(
-            'outstandingLoanBalance',
-            new UntypedFormControl('', [Validators.min(0)])
-          );
+          this.loanProductSettingsForm.addControl('outstandingLoanBalance', new FormControl('', [Validators.min(0)]));
         } else {
           this.loanProductSettingsForm.removeControl('maxTrancheCount');
           this.loanProductSettingsForm.removeControl('outstandingLoanBalance');
@@ -756,15 +761,12 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
         if (enableDownPayment) {
           this.loanProductSettingsForm.addControl(
             'disbursedAmountPercentageForDownPayment',
-            new UntypedFormControl(0, [
+            new FormControl(0, [
               Validators.required,
               rangeValidator(0, 100)
             ])
           );
-          this.loanProductSettingsForm.addControl(
-            'enableAutoRepaymentForDownPayment',
-            new UntypedFormControl(false, [])
-          );
+          this.loanProductSettingsForm.addControl('enableAutoRepaymentForDownPayment', new FormControl(false, []));
         } else {
           this.loanProductSettingsForm.removeControl('disbursedAmountPercentageForDownPayment');
           this.loanProductSettingsForm.removeControl('enableAutoRepaymentForDownPayment');
@@ -832,7 +834,7 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
           this.isAdvancedTransactionProcessingStrategy = true;
           this.loanProductSettingsForm.addControl(
             'chargeOffBehaviour',
-            new UntypedFormControl(this.loanProductsTemplate.chargeOffBehaviour.id)
+            new FormControl(this.loanProductsTemplate.chargeOffBehaviour.id)
           );
           this.validateAdvancedPaymentStrategyControls();
         }
@@ -879,7 +881,7 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
     const isControlExists = this.loanProductSettingsForm.contains('disallowInterestCalculationOnPastDue');
 
     if (shouldControlExists && !isControlExists) {
-      this.loanProductSettingsForm.addControl('disallowInterestCalculationOnPastDue', new UntypedFormControl(''));
+      this.loanProductSettingsForm.addControl('disallowInterestCalculationOnPastDue', new FormControl(''));
       this.loanProductSettingsForm.patchValue({
         disallowInterestCalculationOnPastDue:
           this.loanProductsTemplate.interestRecalculationData?.disallowInterestCalculationOnPastDue ?? false
@@ -969,7 +971,7 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
       const daysInYearType: any = this.loanProductSettingsForm.get('daysInYearType').value;
       this.loanProductSettingsForm.addControl(
         'loanScheduleProcessingType',
-        new UntypedFormControl(
+        new FormControl(
           this.loanProductsTemplate.loanScheduleProcessingType.code ||
             LoanProducts.LOAN_SCHEDULE_PROCESSING_TYPE_HORIZONTAL,
           [Validators.required]
@@ -982,7 +984,7 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
           : this.daysInYearCustomStrategyOptions[0].id;
         this.loanProductSettingsForm.addControl(
           'daysInYearCustomStrategy',
-          new UntypedFormControl(daysInYearCustomStrategy, Validators.required)
+          new FormControl(daysInYearCustomStrategy, Validators.required)
         );
       }
     } else {

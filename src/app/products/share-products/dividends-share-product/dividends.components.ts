@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -67,6 +68,7 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 export class ShareProductsDividendsComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
 
   /** Dividends data. */
   dividendData: any;
@@ -91,7 +93,7 @@ export class ShareProductsDividendsComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.subscribe((data: { dividends: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { dividends: any }) => {
       this.dividendData = data.dividends.pageItems;
     });
   }

@@ -7,8 +7,9 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
@@ -71,7 +72,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditTaxGroupComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private productsService = inject(ProductsService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
@@ -79,13 +80,14 @@ export class EditTaxGroupComponent implements OnInit {
   dialog = inject(MatDialog);
   private settingsService = inject(SettingsService);
   private translateService = inject(TranslateService);
+  private destroyRef = inject(DestroyRef);
 
   /** Minimum start date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum start date allowed. */
   maxDate = new Date(2100, 0, 1);
   /** Tax Group form. */
-  taxGroupForm: UntypedFormGroup;
+  taxGroupForm: FormGroup;
   /** Tax Group template data. */
   taxGroupData: any;
   /** Tax Component Data Source */
@@ -112,7 +114,7 @@ export class EditTaxGroupComponent implements OnInit {
    * @param {TranslateService} translateService translate Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { taxGroup: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { taxGroup: any }) => {
       this.taxGroupData = data.taxGroup;
       this.taxComponentOptions = this.taxGroupData.taxComponents;
     });

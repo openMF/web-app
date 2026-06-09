@@ -8,14 +8,9 @@
 
 /** Angular Imports */
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { ChangeDetectionStrategy, Component, Input, OnInit, inject } from '@angular/core';
-import {
-  UntypedFormArray,
-  UntypedFormBuilder,
-  UntypedFormGroup,
-  Validators,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { ChangeDetectionStrategy, Component, DestroyRef, Input, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormArray, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Components */
@@ -89,15 +84,16 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FixedDepositProductInterestRateChartStepComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   dialog = inject(MatDialog);
   private dateUtils = inject(Dates);
   private settingsService = inject(SettingsService);
   private translateService = inject(TranslateService);
+  private destroyRef = inject(DestroyRef);
 
   @Input() fixedDepositProductsTemplate: any;
 
-  fixedDepositProductInterestRateChartForm: UntypedFormGroup;
+  fixedDepositProductInterestRateChartForm: FormGroup;
 
   periodTypeData: any;
   entityTypeData: any;
@@ -168,7 +164,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
     this.getChartsDetailsData();
 
     // Iterates for every chart in charts
-    this.charts.controls.forEach((chartDetailControl: UntypedFormGroup, i: number) => {
+    this.charts.controls.forEach((chartDetailControl: FormGroup, i: number) => {
       if (!this.chartsDetail[i]) {
         return;
       }
@@ -198,11 +194,11 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
           ],
           incentives: this.formBuilder.array([])
         });
-        const formArray = chartDetailControl.controls['chartSlabs'] as UntypedFormArray;
+        const formArray = chartDetailControl.controls['chartSlabs'] as FormArray;
         formArray.push(chartSlabInfo);
 
         // Iterate for every slab in chartSlab
-        const chartIncentiveControl = (chartDetailControl.controls['chartSlabs'] as UntypedFormArray).controls[j];
+        const chartIncentiveControl = (chartDetailControl.controls['chartSlabs'] as FormArray).controls[j];
 
         // Iterate to input all the incentive for particular chart slab
         this.chartsDetail[i].chartSlabs[j].incentives.forEach((chartIncentiveDetail: any) => {
@@ -232,7 +228,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
               Validators.required
             ]
           });
-          const newFormArray = (chartIncentiveControl as UntypedFormGroup).controls['incentives'] as UntypedFormArray;
+          const newFormArray = (chartIncentiveControl as FormGroup).controls['incentives'] as FormArray;
           newFormArray.push(incentiveInfo);
         });
       });
@@ -329,11 +325,11 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
     });
   }
 
-  get charts(): UntypedFormArray {
-    return this.fixedDepositProductInterestRateChartForm.get('charts') as UntypedFormArray;
+  get charts(): FormArray {
+    return this.fixedDepositProductInterestRateChartForm.get('charts') as FormArray;
   }
 
-  createChartForm(): UntypedFormGroup {
+  createChartForm(): FormGroup {
     return this.formBuilder.group({
       id: [null],
       name: [''],
@@ -364,7 +360,8 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
     this.charts
       .at(chartIndex)
       .get('isPrimaryGroupingByAmount')
-      .valueChanges.subscribe((isPrimaryGroupingByAmount: boolean) => {
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((isPrimaryGroupingByAmount: boolean) => {
         this.chartSlabsDisplayedColumns[chartIndex] = isPrimaryGroupingByAmount ? [
               'amountRange',
               'period'
@@ -376,11 +373,11 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
       });
   }
 
-  getIncentives(chartSlabs: UntypedFormArray, chartSlabIndex: number): UntypedFormArray {
-    return chartSlabs.at(chartSlabIndex).get('incentives') as UntypedFormArray;
+  getIncentives(chartSlabs: FormArray, chartSlabIndex: number): FormArray {
+    return chartSlabs.at(chartSlabIndex).get('incentives') as FormArray;
   }
 
-  addChartSlab(chartSlabs: UntypedFormArray) {
+  addChartSlab(chartSlabs: FormArray) {
     const data = { ...this.getData('Range') };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
@@ -391,7 +388,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
     });
   }
 
-  addIncentive(incentives: UntypedFormArray) {
+  addIncentive(incentives: FormArray) {
     const data = { ...this.getData('Incentive'), entityType: this.entityTypeData[0].id };
     const dialogRef = this.dialog.open(DepositProductIncentiveFormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
@@ -401,7 +398,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
     });
   }
 
-  editChartSlab(chartSlabs: UntypedFormArray, chartSlabIndex: number) {
+  editChartSlab(chartSlabs: FormArray, chartSlabIndex: number) {
     const data = {
       ...this.getData('Range', chartSlabs.at(chartSlabIndex).value),
       layout: { addButtonText: 'Submit' }
@@ -414,7 +411,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
     });
   }
 
-  editIncentive(incentives: UntypedFormArray, incentiveIndex: number) {
+  editIncentive(incentives: FormArray, incentiveIndex: number) {
     const data = {
       ...this.getData('Incentive', incentives.at(incentiveIndex).value),
       layout: { addButtonText: 'Submit' }
@@ -427,7 +424,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
     });
   }
 
-  delete(formArray: UntypedFormArray, index: number) {
+  delete(formArray: FormArray, index: number) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: this.translateService.instant('labels.text.this') }
     });

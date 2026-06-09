@@ -15,6 +15,7 @@ import { Observable } from 'rxjs';
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
+import { WorkingCapitalBreachRequest } from './loan-products/working-capital/working-capital-product.model';
 
 /**
  * Products service.
@@ -633,14 +634,14 @@ export class ProductsService {
   /**
    * @returns {Observable<any>} Working Capital Breach creation.
    */
-  createWrokingCapitalBreach(payload: any): Observable<any> {
+  createWrokingCapitalBreach(payload: WorkingCapitalBreachRequest): Observable<any> {
     return this.http.post(`/working-capital/breach/breaches`, payload);
   }
 
   /**
    * @returns {Observable<any>} Working Capital Breach update.
    */
-  updateWrokingCapitalBreach(breachId: number, payload: any): Observable<any> {
+  updateWrokingCapitalBreach(breachId: number, payload: WorkingCapitalBreachRequest): Observable<any> {
     return this.http.put(`/working-capital/breach/breaches/${breachId}`, payload);
   }
 

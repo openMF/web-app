@@ -5,8 +5,9 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from 'app/products/products.service';
 import { StringEnumOptionData } from 'app/shared/models/option-data.model';
@@ -15,6 +16,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { Router } from '@angular/router';
 import { Breach } from 'app/products/loan-products/models/loan-product.model';
 import { InputPositiveIntegerComponent } from 'app/shared/input-positive-integer/input-positive-integer.component';
+import { WorkingCapitalBreachRequest, WorkingCapitalBreachTemplate } from '../../working-capital-product.model';
 
 @Component({
   selector: 'mifosx-edit-breach-configuration',
@@ -29,22 +31,25 @@ import { InputPositiveIntegerComponent } from 'app/shared/input-positive-integer
 export class EditBreachConfigurationComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private productsService = inject(ProductsService);
+  private destroyRef = inject(DestroyRef);
 
-  breachForm: UntypedFormGroup;
+  breachForm: FormGroup;
 
   breachData: Breach | null = null;
   breachFrequencyTypeOptions: StringEnumOptionData[] = [];
   breachAmountCalculationTypeOptions: StringEnumOptionData[] = [];
 
   ngOnInit(): void {
-    this.route.data.subscribe((data: { breachData: Breach; breachTemplate: any }) => {
-      this.breachData = data.breachData;
-      this.breachFrequencyTypeOptions = data.breachTemplate.breachFrequencyTypeOptions || [];
-      this.breachAmountCalculationTypeOptions = data.breachTemplate.breachAmountCalculationTypeOptions || [];
-      this.initForm();
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { breachData: Breach; breachTemplate: WorkingCapitalBreachTemplate }) => {
+        this.breachData = data.breachData;
+        this.breachFrequencyTypeOptions = data.breachTemplate.breachFrequencyTypeOptions || [];
+        this.breachAmountCalculationTypeOptions = data.breachTemplate.breachAmountCalculationTypeOptions || [];
+        this.initForm();
+      });
   }
 
   private initForm(): void {
@@ -80,7 +85,7 @@ export class EditBreachConfigurationComponent implements OnInit {
   }
 
   submit(): void {
-    const payload = this.breachForm.getRawValue();
+    const payload: WorkingCapitalBreachRequest = this.breachForm.getRawValue();
     this.productsService.updateWrokingCapitalBreach(this.breachData.id, payload).subscribe({
       next: () => {
         this.router.navigate(['../'], { relativeTo: this.route });

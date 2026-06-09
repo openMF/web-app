@@ -6,7 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { trigger, state, transition, animate, style } from '@angular/animations';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -66,6 +67,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class FixedDepositGeneralTabComponent {
   private route = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
 
   /** Fixed Deposit Product data. */
   fixedDepositProductData: any;
@@ -107,9 +109,11 @@ export class FixedDepositGeneralTabComponent {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.subscribe((data: { fixedDepositProduct: any; fixedDepositProductsTemplate: any }) => {
-      this.fixedDepositProductData = data.fixedDepositProduct;
-      this.fixedDepositProductsTemplate = data.fixedDepositProductsTemplate;
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { fixedDepositProduct: any; fixedDepositProductsTemplate: any }) => {
+        this.fixedDepositProductData = data.fixedDepositProduct;
+        this.fixedDepositProductsTemplate = data.fixedDepositProductsTemplate;
+      });
   }
 }

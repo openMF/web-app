@@ -8,7 +8,7 @@
 
 /** Angular Imports */
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -80,7 +80,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class CreateFloatingRateComponent implements OnInit {
   private router = inject(Router);
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private productsService = inject(ProductsService);
   private route = inject(ActivatedRoute);
   private dateUtils = inject(Dates);
@@ -91,7 +91,7 @@ export class CreateFloatingRateComponent implements OnInit {
   /** Floating Rate Period Data. */
   floatingRatePeriodsData: any[] = [];
   /** Floating Rate Form. */
-  floatingRateForm: UntypedFormGroup;
+  floatingRateForm: FormGroup;
   /** Columns to be displayed in floating rate periods table. */
   displayedColumns: string[] = [
     'fromDate',
@@ -144,7 +144,7 @@ export class CreateFloatingRateComponent implements OnInit {
    * Creates the Floating Rate Periods Form.
    * @returns {FormGroup} Floating Rate Period Form.
    */
-  createFloatingRatePeriodsForm(): UntypedFormGroup {
+  createFloatingRatePeriodsForm(): FormGroup {
     return this.formBuilder.group({
       fromDate: [
         '',

@@ -7,7 +7,7 @@
  */
 
 import { ChangeDetectionStrategy, Component, OnInit, Input, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDivider } from '@angular/material/divider';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -27,11 +27,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecurringDepositProductTermsStepComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
 
   @Input() recurringDepositProductsTemplate: any;
 
-  recurringDepositProductTermsForm: UntypedFormGroup;
+  recurringDepositProductTermsForm: FormGroup;
 
   interestCompoundingPeriodTypeData: any;
   interestPostingPeriodTypeData: any;

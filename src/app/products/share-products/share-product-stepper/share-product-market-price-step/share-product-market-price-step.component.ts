@@ -8,7 +8,7 @@
 
 /** Angular Imports */
 import { ChangeDetectionStrategy, Component, OnInit, Input, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, UntypedFormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Dialog Components */
@@ -67,7 +67,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShareProductMarketPriceStepComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   dialog = inject(MatDialog);
   private dateUtils = inject(Dates);
   private settingsService = inject(SettingsService);
@@ -75,7 +75,7 @@ export class ShareProductMarketPriceStepComponent implements OnInit {
 
   @Input() shareProductsTemplate: any;
 
-  shareProductMarketPriceForm: UntypedFormGroup;
+  shareProductMarketPriceForm: FormGroup;
 
   /** For displaying required columns */
   displayedColumns: string[] = [
@@ -109,8 +109,8 @@ export class ShareProductMarketPriceStepComponent implements OnInit {
     });
   }
 
-  get marketPricePeriods(): UntypedFormArray {
-    return this.shareProductMarketPriceForm.get('marketPricePeriods') as UntypedFormArray;
+  get marketPricePeriods(): FormArray {
+    return this.shareProductMarketPriceForm.get('marketPricePeriods') as FormArray;
   }
 
   setShareProductMarketPriceFormDirty() {

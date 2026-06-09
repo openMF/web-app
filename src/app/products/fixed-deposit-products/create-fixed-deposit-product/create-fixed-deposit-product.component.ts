@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, ViewChild, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Components */
@@ -56,6 +57,7 @@ export class CreateFixedDepositProductComponent {
   private router = inject(Router);
   private settingsService = inject(SettingsService);
   private accounting = inject(Accounting);
+  private destroyRef = inject(DestroyRef);
 
   @ViewChild(FixedDepositProductDetailsStepComponent, { static: true })
   fixedDepositProductDetailsStep: FixedDepositProductDetailsStepComponent;
@@ -83,9 +85,11 @@ export class CreateFixedDepositProductComponent {
    */
 
   constructor() {
-    this.route.data.subscribe((data: { fixedDepositProductsTemplate: any }) => {
-      this.fixedDepositProductsTemplate = data.fixedDepositProductsTemplate;
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { fixedDepositProductsTemplate: any }) => {
+        this.fixedDepositProductsTemplate = data.fixedDepositProductsTemplate;
+      });
     this.accountingRuleData = this.accounting.getAccountingRulesForSavings();
   }
 

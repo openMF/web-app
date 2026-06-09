@@ -15,7 +15,7 @@ import {
   MatDialogActions,
   MatDialogClose
 } from '@angular/material/dialog';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CdkScrollable } from '@angular/cdk/scrolling';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -43,7 +43,7 @@ export class DepositProductIncentiveFormDialogComponent implements OnInit {
 
   data = inject(MAT_DIALOG_DATA);
 
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
 
   protected conditionLabelService = inject(ConditionLabelService);
 
@@ -53,7 +53,7 @@ export class DepositProductIncentiveFormDialogComponent implements OnInit {
     addButtonText: 'Add'
   };
 
-  depositProductIncentiveForm!: UntypedFormGroup;
+  depositProductIncentiveForm!: FormGroup;
   title!: string;
 
   entityTypeData: any;

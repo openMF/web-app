@@ -5,8 +5,9 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from 'app/products/products.service';
 import { StringEnumOptionData } from 'app/shared/models/option-data.model';
@@ -16,6 +17,7 @@ import { Router } from '@angular/router';
 import { InputPositiveIntegerComponent } from 'app/shared/input-positive-integer/input-positive-integer.component';
 import { ErrorHandlerService } from 'app/core/error-handler/error-handler.service';
 import { catchError } from 'rxjs';
+import { WorkingCapitalBreachRequest, WorkingCapitalBreachTemplate } from '../../working-capital-product.model';
 
 @Component({
   selector: 'mifosx-create-breach-configuration',
@@ -31,21 +33,23 @@ import { catchError } from 'rxjs';
 export class CreateBreachConfigurationComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private productsService = inject(ProductsService);
   private errorHandler = inject(ErrorHandlerService);
+  private destroyRef = inject(DestroyRef);
 
-  breachForm: UntypedFormGroup;
+  breachForm: FormGroup;
 
   breachFrequencyTypeOptions: StringEnumOptionData[] = [];
   breachAmountCalculationTypeOptions: StringEnumOptionData[] = [];
 
   constructor() {
-    this.route.data.subscribe((data: { breachTemplate?: any }) => {
-      const breachTemplate = data.breachTemplate ?? {};
-      this.breachFrequencyTypeOptions = breachTemplate.breachFrequencyTypeOptions || [];
-      this.breachAmountCalculationTypeOptions = breachTemplate.breachAmountCalculationTypeOptions || [];
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { breachTemplate: WorkingCapitalBreachTemplate }) => {
+        this.breachFrequencyTypeOptions = data.breachTemplate.breachFrequencyTypeOptions || [];
+        this.breachAmountCalculationTypeOptions = data.breachTemplate.breachAmountCalculationTypeOptions || [];
+      });
   }
 
   ngOnInit(): void {
@@ -81,7 +85,7 @@ export class CreateBreachConfigurationComponent implements OnInit {
   }
 
   submit(): void {
-    const payload = this.breachForm.getRawValue();
+    const payload: WorkingCapitalBreachRequest = this.breachForm.getRawValue();
     this.productsService
       .createWrokingCapitalBreach(payload)
       .pipe(catchError((error) => this.errorHandler.handleError(error, 'Breach Configuration Creation')))

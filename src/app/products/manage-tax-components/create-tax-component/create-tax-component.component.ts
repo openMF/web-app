@@ -7,14 +7,9 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  Validators,
-  UntypedFormControl,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -38,19 +33,20 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateTaxComponentComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private productsService = inject(ProductsService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private dateUtils = inject(Dates);
   private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Minimum start date allowed. */
   minDate = new Date();
   /** Maximum start date allowed. */
   maxDate = new Date();
   /** Tax Component form. */
-  taxComponentForm: UntypedFormGroup;
+  taxComponentForm: FormGroup;
   /** Tax Component template data. */
   taxComponentTemplateData: any;
   /** Credit Account Type data. */
@@ -72,7 +68,7 @@ export class CreateTaxComponentComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { taxComponentTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { taxComponentTemplate: any }) => {
       this.taxComponentTemplateData = data.taxComponentTemplate;
     });
   }
@@ -118,14 +114,28 @@ export class CreateTaxComponentComponent implements OnInit {
    * Sets the conditional controls of the tax Component form
    */
   setConditionalControls() {
-    this.taxComponentForm.get('debitAccountType').valueChanges.subscribe((debitAccountTypeId) => {
-      this.debitAccountData = this.getAccountsData(debitAccountTypeId);
-      this.taxComponentForm.addControl('debitAccountId', new UntypedFormControl('', Validators.required));
-    });
-    this.taxComponentForm.get('creditAccountType').valueChanges.subscribe((creditAccountTypeId) => {
-      this.creditAccountData = this.getAccountsData(creditAccountTypeId);
-      this.taxComponentForm.addControl('creditAccountId', new UntypedFormControl('', Validators.required));
-    });
+    this.taxComponentForm
+      .get('debitAccountType')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((debitAccountTypeId) => {
+        this.debitAccountData = this.getAccountsData(debitAccountTypeId);
+        if (debitAccountTypeId) {
+          this.taxComponentForm.setControl('debitAccountId', new FormControl('', Validators.required));
+        } else {
+          this.taxComponentForm.removeControl('debitAccountId');
+        }
+      });
+    this.taxComponentForm
+      .get('creditAccountType')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((creditAccountTypeId) => {
+        this.creditAccountData = this.getAccountsData(creditAccountTypeId);
+        if (creditAccountTypeId) {
+          this.taxComponentForm.setControl('creditAccountId', new FormControl('', Validators.required));
+        } else {
+          this.taxComponentForm.removeControl('creditAccountId');
+        }
+      });
   }
 
   /**

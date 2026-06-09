@@ -6,7 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { EntityDatatableTabComponent } from '../../../../shared/tabs/entity-datatable-tab/entity-datatable-tab.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -23,6 +24,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class ShareProductDatatableTabComponent {
   private route = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
 
   entityId: string;
   entityDatatable: any;
@@ -31,7 +33,7 @@ export class ShareProductDatatableTabComponent {
   constructor() {
     this.entityId = this.route.parent.parent.snapshot.paramMap.get('productId');
 
-    this.route.data.subscribe((data: { shareProductDatatable: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { shareProductDatatable: any }) => {
       this.entityDatatable = data.shareProductDatatable;
       this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
     });

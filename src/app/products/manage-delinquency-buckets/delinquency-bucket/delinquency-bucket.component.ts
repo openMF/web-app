@@ -6,7 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, ViewChild, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -54,6 +55,8 @@ import { DelinquencyBucketBaseComponent } from '../delinquency-base.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DelinquencyBucketComponent extends DelinquencyBucketBaseComponent implements OnInit {
+  private destroyRef = inject(DestroyRef);
+
   delinquencyBucketData: any;
   /** Columns to be displayed in delinquency bucket table. */
   displayedColumns: string[] = [
@@ -70,7 +73,7 @@ export class DelinquencyBucketComponent extends DelinquencyBucketBaseComponent i
 
   constructor() {
     super();
-    this.route.data.subscribe((data: { delinquencyBuckets: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { delinquencyBuckets: any }) => {
       this.delinquencyBucketData = data.delinquencyBuckets;
     });
   }

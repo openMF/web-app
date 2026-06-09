@@ -6,7 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ProductsService } from 'app/products/products.service';
@@ -31,13 +32,14 @@ export class ViewBucketComponent extends DelinquencyBucketBaseComponent {
   private router = inject(Router);
   private dialog = inject(MatDialog);
   private productsService = inject(ProductsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Delinquency Bucket Data. */
   delinquencyBucketData: any;
 
   constructor() {
     super();
-    this.route.data.subscribe((data: { delinquencyBucket: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { delinquencyBucket: any }) => {
       this.delinquencyBucketData = data.delinquencyBucket;
       if (this.isRegularBucket) {
         this.delinquencyBucketData.ranges = this.delinquencyBucketData.ranges.sort(

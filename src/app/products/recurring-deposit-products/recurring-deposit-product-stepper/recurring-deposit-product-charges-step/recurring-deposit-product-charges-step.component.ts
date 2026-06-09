@@ -6,8 +6,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnInit, inject } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, DestroyRef, Input, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 import { TranslateService } from '@ngx-translate/core';
@@ -57,9 +58,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 export class RecurringDepositProductChargesStepComponent implements OnInit {
   dialog = inject(MatDialog);
   private translateService = inject(TranslateService);
+  private destroyRef = inject(DestroyRef);
 
   @Input() recurringDepositProductsTemplate: any;
-  @Input() currencyCode: UntypedFormControl;
+  @Input() currencyCode: FormControl;
 
   chargeData: any;
 
@@ -79,7 +81,9 @@ export class RecurringDepositProductChargesStepComponent implements OnInit {
     } else {
       this.chargesDataSource = [];
     }
-    this.currencyCode.valueChanges.subscribe(() => (this.chargesDataSource = []));
+    this.currencyCode.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => (this.chargesDataSource = []));
   }
 
   addCharge(charge: any) {

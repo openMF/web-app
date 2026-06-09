@@ -6,14 +6,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, Input, inject } from '@angular/core';
-import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  UntypedFormControl,
-  Validators,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, Input, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatDivider } from '@angular/material/divider';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -37,11 +32,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FixedDepositProductSettingsStepComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
+  private destroyRef = inject(DestroyRef);
 
   @Input() fixedDepositProductsTemplate: any;
 
-  fixedDepositProductSettingsForm: UntypedFormGroup;
+  fixedDepositProductSettingsForm: FormGroup;
 
   lockinPeriodFrequencyTypeData: any;
   periodFrequencyTypeData: any;
@@ -135,13 +131,16 @@ export class FixedDepositProductSettingsStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.fixedDepositProductSettingsForm.get('withHoldTax').valueChanges.subscribe((withHoldTax: any) => {
-      if (withHoldTax) {
-        this.fixedDepositProductSettingsForm.addControl('taxGroupId', new UntypedFormControl('', Validators.required));
-      } else {
-        this.fixedDepositProductSettingsForm.removeControl('taxGroupId');
-      }
-    });
+    this.fixedDepositProductSettingsForm
+      .get('withHoldTax')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((withHoldTax: any) => {
+        if (withHoldTax) {
+          this.fixedDepositProductSettingsForm.addControl('taxGroupId', new FormControl('', Validators.required));
+        } else {
+          this.fixedDepositProductSettingsForm.removeControl('taxGroupId');
+        }
+      });
   }
 
   get fixedDepositProductSettings() {

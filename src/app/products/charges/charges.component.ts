@@ -15,8 +15,10 @@ import {
   ElementRef,
   ViewChild,
   AfterViewInit,
+  DestroyRef,
   inject
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -82,6 +84,7 @@ export class ChargesComponent implements OnInit, AfterViewInit {
   private configurationWizardService = inject(ConfigurationWizardService);
   private popoverService = inject(PopoverService);
   private charges = inject(Charges);
+  private destroyRef = inject(DestroyRef);
 
   /** Charge data. */
   chargeData: Charge[] = [];
@@ -122,7 +125,7 @@ export class ChargesComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor() {
-    this.route.data.subscribe((data: { charges: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { charges: any }) => {
       this.chargeData = data.charges;
     });
     this.chargeAppliesToOptions = this.charges.getChargeAppliesToOptions();

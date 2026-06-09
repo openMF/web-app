@@ -7,7 +7,7 @@
  */
 
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
-import { UntypedFormArray } from '@angular/forms';
+import { FormArray } from '@angular/forms';
 import { MatIconButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -58,7 +58,7 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
   translateService = inject(TranslateService);
 
   @Input() formType: string;
-  @Input() formArray: UntypedFormArray;
+  @Input() formArray: FormArray;
   @Input() textHeading: string;
   @Input() textField: string;
   @Input() allowAddAccountingMapping: boolean = true;

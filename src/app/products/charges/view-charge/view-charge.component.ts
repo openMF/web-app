@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
@@ -43,6 +44,7 @@ export class ViewChargeComponent {
   private router = inject(Router);
   private dialog = inject(MatDialog);
   private translateService = inject(TranslateService);
+  private destroyRef = inject(DestroyRef);
 
   /** Charge data. */
   chargeData: any;
@@ -58,7 +60,7 @@ export class ViewChargeComponent {
    * @param {TranslateService} translateService Translate Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { charge: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { charge: any }) => {
       this.chargeData = data.charge;
       if (this.chargeData.minCap) {
         this.minCap = true;

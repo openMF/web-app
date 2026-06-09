@@ -14,7 +14,7 @@ import {
   MatDialogClose,
   MatDialogContent
 } from '@angular/material/dialog';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FileUploadComponent } from '../../../shared/file-upload/file-upload.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -34,11 +34,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class ImportLoanProductDialogComponent implements OnInit {
   dialogRef = inject<MatDialogRef<ImportLoanProductDialogComponent>>(MatDialogRef);
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   data = inject(MAT_DIALOG_DATA);
 
   /** Import Loan Product form. */
-  importLoanProductForm: UntypedFormGroup;
+  importLoanProductForm: FormGroup;
 
   ngOnInit() {
     this.createImportLoanProductForm();

@@ -6,7 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { LoanProduct } from '../../models/loan-product.model';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -27,13 +28,14 @@ import { LoanProductBaseComponent } from '../../common/loan-product-base.compone
 })
 export class GeneralTabComponent extends LoanProductBaseComponent implements OnInit {
   private route = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
 
   loanProduct: LoanProduct;
   useDueForRepaymentsConfigurations = false;
 
   constructor() {
     super();
-    this.route.data.subscribe((data: { loanProduct: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanProduct: any }) => {
       this.loanProduct = data.loanProduct;
       this.useDueForRepaymentsConfigurations =
         !this.loanProduct.dueDaysForRepaymentEvent && !this.loanProduct.overDueDaysForRepaymentEvent;

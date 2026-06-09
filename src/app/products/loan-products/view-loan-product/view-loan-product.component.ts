@@ -6,7 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -28,6 +29,7 @@ import { LoanProductBaseComponent } from '../common/loan-product-base.component'
 })
 export class ViewLoanProductComponent extends LoanProductBaseComponent {
   private route = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
 
   loanProductDatatables: any = [];
 
@@ -38,7 +40,7 @@ export class ViewLoanProductComponent extends LoanProductBaseComponent {
       this.loanProductService.initialize(productType);
     }
 
-    this.route.data.subscribe((data: { loanProductDatatables: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanProductDatatables: any }) => {
       this.loanProductDatatables = data.loanProductDatatables;
     });
   }

@@ -7,8 +7,9 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -38,15 +39,16 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class EditChargeComponent implements OnInit {
   private productsService = inject(ProductsService);
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Selected Data. */
   chargeData: any;
   /** Charge form. */
-  chargeForm: UntypedFormGroup;
+  chargeForm: FormGroup;
   /** Select Income. */
   selectedIncome: any;
   /** Select Time Type. */
@@ -79,7 +81,7 @@ export class EditChargeComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data.subscribe((data: { chargesTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { chargesTemplate: any }) => {
       this.chargeData = data.chargesTemplate;
     });
   }
@@ -200,7 +202,7 @@ export class EditChargeComponent implements OnInit {
         this.formBuilder.control({ value: this.chargeData.taxGroup.id, disabled: true })
       );
     } else {
-      this.chargeForm.addControl('taxGroupId', this.formBuilder.control({ value: '' }));
+      this.chargeForm.addControl('taxGroupId', this.formBuilder.control(''));
     }
   }
 
@@ -224,7 +226,7 @@ export class EditChargeComponent implements OnInit {
   submit() {
     const charges = this.chargeForm.getRawValue();
     charges.locale = this.settingsService.language.code;
-    if (charges.taxGroupId.value === '') {
+    if (!charges.taxGroupId) {
       delete charges.taxGroupId;
     }
     if (!charges.minCap) {

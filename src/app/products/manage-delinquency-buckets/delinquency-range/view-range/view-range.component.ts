@@ -6,7 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ProductsService } from 'app/products/products.service';
@@ -29,12 +30,13 @@ export class ViewRangeComponent {
   private router = inject(Router);
   private dialog = inject(MatDialog);
   private productsService = inject(ProductsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Delinquency Range Data. */
   delinquencyRangeData: any;
 
   constructor() {
-    this.route.data.subscribe((data: { delinquencyRange: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { delinquencyRange: any }) => {
       this.delinquencyRangeData = data.delinquencyRange;
     });
   }

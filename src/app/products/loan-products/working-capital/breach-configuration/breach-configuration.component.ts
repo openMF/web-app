@@ -5,7 +5,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-import { ChangeDetectionStrategy, Component, inject, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, ViewChild } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -60,6 +61,7 @@ export class BreachConfigurationComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private productsService = inject(ProductsService);
   private dialog = inject(MatDialog);
+  private destroyRef = inject(DestroyRef);
 
   breachesData: Breach[] = [];
   /** Columns to be displayed in breaches table. */
@@ -79,7 +81,7 @@ export class BreachConfigurationComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor() {
-    this.route.data.subscribe((data: { breaches: Breach[] }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { breaches: Breach[] }) => {
       this.breachesData = data.breaches ?? [];
     });
   }

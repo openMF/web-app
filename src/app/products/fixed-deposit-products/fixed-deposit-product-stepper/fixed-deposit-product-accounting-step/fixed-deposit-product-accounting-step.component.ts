@@ -6,15 +6,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnInit, inject } from '@angular/core';
-import {
-  UntypedFormArray,
-  UntypedFormBuilder,
-  UntypedFormControl,
-  UntypedFormGroup,
-  Validators,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { ChangeDetectionStrategy, Component, DestroyRef, Input, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
@@ -28,7 +22,7 @@ import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
 import { MatDivider } from '@angular/material/divider';
 import { GlAccountSelectorComponent } from '../../../../shared/accounting/gl-account-selector/gl-account-selector.component';
 import { MatCheckbox } from '@angular/material/checkbox';
-import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import {
   MatTable,
@@ -76,16 +70,17 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FixedDepositProductAccountingStepComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   dialog = inject(MatDialog);
   private accounting = inject(Accounting);
   private translateService = inject(TranslateService);
+  private destroyRef = inject(DestroyRef);
 
   @Input() fixedDepositProductsTemplate: any;
   @Input() accountingRuleData: any;
   @Input() fixedDepositProductFormValid: boolean;
 
-  fixedDepositProductAccountingForm: UntypedFormGroup;
+  fixedDepositProductAccountingForm: FormGroup;
 
   chargeData: any;
   penaltyData: any;
@@ -173,7 +168,7 @@ export class FixedDepositProductAccountingStepComponent implements OnInit {
             });
             const formArray = this.fixedDepositProductAccountingForm.controls[
               'paymentChannelToFundSourceMappings'
-            ] as UntypedFormArray;
+            ] as FormArray;
             formArray.push(paymentChannelToFundSourceMappingData);
           }
         );
@@ -190,9 +185,7 @@ export class FixedDepositProductAccountingStepComponent implements OnInit {
               Validators.required
             ]
           });
-          const formArray = this.fixedDepositProductAccountingForm.controls[
-            'feeToIncomeAccountMappings'
-          ] as UntypedFormArray;
+          const formArray = this.fixedDepositProductAccountingForm.controls['feeToIncomeAccountMappings'] as FormArray;
           formArray.push(feeToIncomeAccountMappingData);
         });
       }
@@ -211,7 +204,7 @@ export class FixedDepositProductAccountingStepComponent implements OnInit {
             });
             const formArray = this.fixedDepositProductAccountingForm.controls[
               'penaltyToIncomeAccountMappings'
-            ] as UntypedFormArray;
+            ] as FormArray;
             formArray.push(penaltyToIncomeAccountMappingData);
           }
         );
@@ -230,103 +223,80 @@ export class FixedDepositProductAccountingStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.fixedDepositProductAccountingForm.get('accountingRule').valueChanges.subscribe((accountingRule: any) => {
-      if (accountingRule === 2 || accountingRule === 3) {
-        this.fixedDepositProductAccountingForm.addControl(
-          'savingsReferenceAccountId',
-          new UntypedFormControl('', Validators.required)
-        );
-        this.fixedDepositProductAccountingForm.addControl(
-          'savingsControlAccountId',
-          new UntypedFormControl('', Validators.required)
-        );
-        this.fixedDepositProductAccountingForm.addControl(
-          'transfersInSuspenseAccountId',
-          new UntypedFormControl('', Validators.required)
-        );
-        this.fixedDepositProductAccountingForm.addControl(
-          'interestOnSavingsAccountId',
-          new UntypedFormControl('', Validators.required)
-        );
-        this.fixedDepositProductAccountingForm.addControl(
-          'incomeFromFeeAccountId',
-          new UntypedFormControl('', Validators.required)
-        );
-        this.fixedDepositProductAccountingForm.addControl(
-          'incomeFromPenaltyAccountId',
-          new UntypedFormControl('', Validators.required)
-        );
-        this.fixedDepositProductAccountingForm.addControl('advancedAccountingRules', new UntypedFormControl(false));
+    this.fixedDepositProductAccountingForm
+      .get('accountingRule')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((accountingRule: any) => {
+        if (accountingRule === 2 || accountingRule === 3) {
+          this.ensureControl('savingsReferenceAccountId', new FormControl('', Validators.required));
+          this.ensureControl('savingsControlAccountId', new FormControl('', Validators.required));
+          this.ensureControl('transfersInSuspenseAccountId', new FormControl('', Validators.required));
+          this.ensureControl('interestOnSavingsAccountId', new FormControl('', Validators.required));
+          this.ensureControl('incomeFromFeeAccountId', new FormControl('', Validators.required));
+          this.ensureControl('incomeFromPenaltyAccountId', new FormControl('', Validators.required));
+          this.ensureControl('advancedAccountingRules', new FormControl(false));
 
-        if (accountingRule === 3) {
-          this.fixedDepositProductAccountingForm.addControl(
-            'feesReceivableAccountId',
-            new UntypedFormControl('', Validators.required)
-          );
-          this.fixedDepositProductAccountingForm.addControl(
-            'penaltiesReceivableAccountId',
-            new UntypedFormControl('', Validators.required)
-          );
-          this.fixedDepositProductAccountingForm.addControl(
-            'interestPayableAccountId',
-            new UntypedFormControl('', Validators.required)
-          );
+          if (accountingRule === 3) {
+            this.ensureControl('feesReceivableAccountId', new FormControl('', Validators.required));
+            this.ensureControl('penaltiesReceivableAccountId', new FormControl('', Validators.required));
+            this.ensureControl('interestPayableAccountId', new FormControl('', Validators.required));
+          }
+
+          this.fixedDepositProductAccountingForm
+            .get('advancedAccountingRules')
+            .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((advancedAccountingRules: boolean) => {
+              if (advancedAccountingRules) {
+                this.fixedDepositProductAccountingForm.addControl(
+                  'paymentChannelToFundSourceMappings',
+                  this.formBuilder.array([])
+                );
+                this.fixedDepositProductAccountingForm.addControl(
+                  'feeToIncomeAccountMappings',
+                  this.formBuilder.array([])
+                );
+                this.fixedDepositProductAccountingForm.addControl(
+                  'penaltyToIncomeAccountMappings',
+                  this.formBuilder.array([])
+                );
+              } else {
+                this.fixedDepositProductAccountingForm.removeControl('paymentChannelToFundSourceMappings');
+                this.fixedDepositProductAccountingForm.removeControl('feeToIncomeAccountMappings');
+                this.fixedDepositProductAccountingForm.removeControl('penaltyToIncomeAccountMappings');
+              }
+            });
+        } else {
+          this.fixedDepositProductAccountingForm.removeControl('savingsReferenceAccountId');
+          this.fixedDepositProductAccountingForm.removeControl('overdraftPortfolioControlId');
+          this.fixedDepositProductAccountingForm.removeControl('savingsControlAccountId');
+          this.fixedDepositProductAccountingForm.removeControl('transfersInSuspenseAccountId');
+          this.fixedDepositProductAccountingForm.removeControl('interestOnSavingsAccountId');
+          this.fixedDepositProductAccountingForm.removeControl('writeOffAccountId');
+          this.fixedDepositProductAccountingForm.removeControl('incomeFromFeeAccountId');
+          this.fixedDepositProductAccountingForm.removeControl('incomeFromPenaltyAccountId');
+          this.fixedDepositProductAccountingForm.removeControl('incomeFromInterestId');
+          this.fixedDepositProductAccountingForm.removeControl('advancedAccountingRules');
+          this.fixedDepositProductAccountingForm.removeControl('escheatLiabilityId');
+          this.fixedDepositProductAccountingForm.removeControl('feesReceivableAccountId');
+          this.fixedDepositProductAccountingForm.removeControl('penaltiesReceivableAccountId');
+          this.fixedDepositProductAccountingForm.removeControl('interestPayableAccountId');
         }
-
-        this.fixedDepositProductAccountingForm
-          .get('advancedAccountingRules')
-          .valueChanges.subscribe((advancedAccountingRules: boolean) => {
-            if (advancedAccountingRules) {
-              this.fixedDepositProductAccountingForm.addControl(
-                'paymentChannelToFundSourceMappings',
-                this.formBuilder.array([])
-              );
-              this.fixedDepositProductAccountingForm.addControl(
-                'feeToIncomeAccountMappings',
-                this.formBuilder.array([])
-              );
-              this.fixedDepositProductAccountingForm.addControl(
-                'penaltyToIncomeAccountMappings',
-                this.formBuilder.array([])
-              );
-            } else {
-              this.fixedDepositProductAccountingForm.removeControl('paymentChannelToFundSourceMappings');
-              this.fixedDepositProductAccountingForm.removeControl('feeToIncomeAccountMappings');
-              this.fixedDepositProductAccountingForm.removeControl('penaltyToIncomeAccountMappings');
-            }
-          });
-      } else {
-        this.fixedDepositProductAccountingForm.removeControl('savingsReferenceAccountId');
-        this.fixedDepositProductAccountingForm.removeControl('overdraftPortfolioControlId');
-        this.fixedDepositProductAccountingForm.removeControl('savingsControlAccountId');
-        this.fixedDepositProductAccountingForm.removeControl('transfersInSuspenseAccountId');
-        this.fixedDepositProductAccountingForm.removeControl('interestOnSavingsAccountId');
-        this.fixedDepositProductAccountingForm.removeControl('writeOffAccountId');
-        this.fixedDepositProductAccountingForm.removeControl('incomeFromFeeAccountId');
-        this.fixedDepositProductAccountingForm.removeControl('incomeFromPenaltyAccountId');
-        this.fixedDepositProductAccountingForm.removeControl('incomeFromInterestId');
-        this.fixedDepositProductAccountingForm.removeControl('advancedAccountingRules');
-        this.fixedDepositProductAccountingForm.removeControl('escheatLiabilityId');
-        this.fixedDepositProductAccountingForm.removeControl('feesReceivableAccountId');
-        this.fixedDepositProductAccountingForm.removeControl('penaltiesReceivableAccountId');
-        this.fixedDepositProductAccountingForm.removeControl('interestPayableAccountId');
-      }
-    });
+      });
   }
 
-  get paymentChannelToFundSourceMappings(): UntypedFormArray {
-    return this.fixedDepositProductAccountingForm.get('paymentChannelToFundSourceMappings') as UntypedFormArray;
+  get paymentChannelToFundSourceMappings(): FormArray {
+    return this.fixedDepositProductAccountingForm.get('paymentChannelToFundSourceMappings') as FormArray;
   }
 
-  get feeToIncomeAccountMappings(): UntypedFormArray {
-    return this.fixedDepositProductAccountingForm.get('feeToIncomeAccountMappings') as UntypedFormArray;
+  get feeToIncomeAccountMappings(): FormArray {
+    return this.fixedDepositProductAccountingForm.get('feeToIncomeAccountMappings') as FormArray;
   }
 
-  get penaltyToIncomeAccountMappings(): UntypedFormArray {
-    return this.fixedDepositProductAccountingForm.get('penaltyToIncomeAccountMappings') as UntypedFormArray;
+  get penaltyToIncomeAccountMappings(): FormArray {
+    return this.fixedDepositProductAccountingForm.get('penaltyToIncomeAccountMappings') as FormArray;
   }
 
-  add(formType: string, formArray: UntypedFormArray) {
+  add(formType: string, formArray: FormArray) {
     const data = { ...this.getData(formType), pristine: false };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
@@ -336,7 +306,7 @@ export class FixedDepositProductAccountingStepComponent implements OnInit {
     });
   }
 
-  edit(formType: string, formArray: UntypedFormArray, index: number) {
+  edit(formType: string, formArray: FormArray, index: number) {
     const data = { ...this.getData(formType, formArray.at(index).value), layout: { addButtonText: 'Edit' } };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
@@ -346,7 +316,7 @@ export class FixedDepositProductAccountingStepComponent implements OnInit {
     });
   }
 
-  delete(formArray: UntypedFormArray, index: number) {
+  delete(formArray: FormArray, index: number) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: this.translateService.instant('labels.text.this') }
     });
@@ -450,5 +420,11 @@ export class FixedDepositProductAccountingStepComponent implements OnInit {
 
   isAccrualAccounting(): boolean {
     return this.accounting.isAccrualAccountingRuleId(this.fixedDepositProductAccountingForm.value.accountingRule);
+  }
+
+  private ensureControl(name: string, control: FormControl | FormArray) {
+    if (!this.fixedDepositProductAccountingForm.contains(name)) {
+      this.fixedDepositProductAccountingForm.addControl(name, control);
+    }
   }
 }

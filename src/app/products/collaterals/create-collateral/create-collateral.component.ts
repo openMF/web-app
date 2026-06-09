@@ -7,9 +7,10 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { OrganizationService } from 'app/organization/organization.service';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -30,15 +31,16 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateCollateralComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private productsService = inject(ProductsService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private settingsService = inject(SettingsService);
   private organizationService = inject(OrganizationService);
+  private destroyRef = inject(DestroyRef);
 
   /** Collateral form */
-  collateralForm: UntypedFormGroup;
+  collateralForm: FormGroup;
   /** Charges Template data */
   collateralTemplateData: any;
 
@@ -51,7 +53,7 @@ export class CreateCollateralComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data.subscribe((data: { collateralTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { collateralTemplate: any }) => {
       this.organizationService.getCurrencies().subscribe((orgCurrencies: any) => {
         let orgCurrencyList = Array.isArray(orgCurrencies.selectedCurrencyOptions)
           ? orgCurrencies.selectedCurrencyOptions

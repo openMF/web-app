@@ -7,8 +7,9 @@
  */
 
 /** Angular Imports. */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -30,15 +31,16 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateDividendComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private route = inject(ActivatedRoute);
   private dateUtils = inject(Dates);
   private productService = inject(ProductsService);
   private router = inject(Router);
   private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Create Dividend Form. */
-  createDividendForm: UntypedFormGroup;
+  createDividendForm: FormGroup;
   /** Share Product data. */
   shareProductData: any;
   /** Minimum Date allowed. */
@@ -56,7 +58,7 @@ export class CreateDividendComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { shareProduct: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { shareProduct: any }) => {
       this.shareProductData = data.shareProduct;
     });
   }

@@ -6,8 +6,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnInit, inject } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, DestroyRef, Input, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 import { TranslateService } from '@ngx-translate/core';
@@ -64,10 +65,11 @@ import { LoanProductBaseComponent } from '../../common/loan-product-base.compone
 export class LoanProductChargesStepComponent extends LoanProductBaseComponent implements OnInit {
   dialog = inject(MatDialog);
   private translateService = inject(TranslateService);
+  private destroyRef = inject(DestroyRef);
 
   @Input() loanProductsTemplate: any;
-  @Input() currencyCode: UntypedFormControl;
-  @Input() multiDisburseLoan: UntypedFormControl | null;
+  @Input() currencyCode: FormControl;
+  @Input() multiDisburseLoan: FormControl | null;
 
   chargeData: any;
   overdueChargeData: any;
@@ -98,9 +100,13 @@ export class LoanProductChargesStepComponent extends LoanProductBaseComponent im
     this.chargesDataSource = this.loanProductsTemplate.charges || [];
     this.pristine = true;
 
-    this.currencyCode.valueChanges.subscribe(() => (this.chargesDataSource = []));
+    this.currencyCode.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => (this.chargesDataSource = []));
     if (this.loanProductService.isLoanProduct && this.multiDisburseLoan) {
-      this.multiDisburseLoan.valueChanges.subscribe(() => (this.chargesDataSource = []));
+      this.multiDisburseLoan.valueChanges
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe(() => (this.chargesDataSource = []));
     }
   }
 

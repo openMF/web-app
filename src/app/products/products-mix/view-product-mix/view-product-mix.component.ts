@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, ViewChild, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -66,6 +67,7 @@ export class ViewProductMixComponent implements OnInit {
   private productsService = inject(ProductsService);
   private router = inject(Router);
   private translateService = inject(TranslateService);
+  private destroyRef = inject(DestroyRef);
 
   /** Product mix data. */
   productMixData: any;
@@ -93,7 +95,7 @@ export class ViewProductMixComponent implements OnInit {
    * @param {TranslateService} translateService Translate Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { productMix: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { productMix: any }) => {
       this.productMixData = data.productMix;
     });
   }

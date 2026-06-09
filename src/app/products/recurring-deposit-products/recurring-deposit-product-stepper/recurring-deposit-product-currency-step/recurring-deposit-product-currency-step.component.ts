@@ -7,7 +7,7 @@
  */
 
 import { ChangeDetectionStrategy, Component, OnInit, Input, inject, DestroyRef } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -30,12 +30,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecurringDepositProductCurrencyStepComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);
 
   @Input() recurringDepositProductsTemplate: any;
 
-  recurringDepositProductCurrencyForm: UntypedFormGroup;
+  recurringDepositProductCurrencyForm: FormGroup;
 
   currencyData: any;
 

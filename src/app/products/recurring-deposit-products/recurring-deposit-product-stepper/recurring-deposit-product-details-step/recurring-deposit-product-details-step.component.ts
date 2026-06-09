@@ -7,7 +7,7 @@
  */
 
 import { ChangeDetectionStrategy, Component, OnInit, Input, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
@@ -29,11 +29,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecurringDepositProductDetailsStepComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
 
   @Input() recurringDepositProductsTemplate: any;
 
-  recurringDepositProductDetailsForm: UntypedFormGroup;
+  recurringDepositProductDetailsForm: FormGroup;
 
   constructor() {
     this.createrecurringDepositProductDetailsForm();

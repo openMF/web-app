@@ -15,8 +15,10 @@ import {
   ElementRef,
   ViewChild,
   AfterViewInit,
-  inject
+  inject,
+  DestroyRef
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
@@ -51,7 +53,7 @@ import { MatMenu, MatMenuTrigger, MatMenuItem } from '@angular/material/menu';
 import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { UntypedFormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { LOAN_PRODUCT_TYPE, PRODUCT_TYPES } from './models/loan-product.model';
 import { LoanProductBaseComponent } from './common/loan-product-base.component';
 
@@ -92,8 +94,9 @@ export class LoanProductsComponent extends LoanProductBaseComponent implements O
   private productsService = inject(ProductsService);
   private settingsService = inject(SettingsService);
   private errorHandler = inject(ErrorHandlerService);
+  private destroyRef = inject(DestroyRef);
 
-  loanProductSelector = new UntypedFormControl();
+  loanProductSelector = new FormControl();
 
   loanProductsData: any;
   displayedColumns: string[] = [
@@ -129,7 +132,7 @@ export class LoanProductsComponent extends LoanProductBaseComponent implements O
     const productType = this.route.snapshot.queryParamMap.get('productType') || 'loan';
     this.loanProductService.initialize(productType);
 
-    this.route.data.subscribe((data: { loanProducts: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanProducts: any }) => {
       this.loanProductsData = data.loanProducts;
     });
   }

@@ -6,7 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Accounting } from 'app/core/utils/accounting';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -55,6 +56,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 export class SavingProductGeneralTabComponent {
   private route = inject(ActivatedRoute);
   private accounting = inject(Accounting);
+  private destroyRef = inject(DestroyRef);
 
   savingProduct: any;
 
@@ -74,7 +76,7 @@ export class SavingProductGeneralTabComponent {
   ];
 
   constructor() {
-    this.route.data.subscribe((data: { savingProduct: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { savingProduct: any }) => {
       this.savingProduct = data.savingProduct;
     });
   }

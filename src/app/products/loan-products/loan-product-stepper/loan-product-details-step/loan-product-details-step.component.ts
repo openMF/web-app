@@ -8,7 +8,7 @@
 
 /** Angular Imports */
 import { ChangeDetectionStrategy, Component, OnInit, Input, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
@@ -37,13 +37,13 @@ import { LoanProductBaseComponent } from '../../common/loan-product-base.compone
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoanProductDetailsStepComponent extends LoanProductBaseComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private dateUtils = inject(Dates);
   private settingsService = inject(SettingsService);
 
   @Input() loanProductsTemplate: any;
 
-  loanProductDetailsForm: UntypedFormGroup;
+  loanProductDetailsForm: FormGroup;
 
   fundData: any;
 
@@ -97,7 +97,7 @@ export class LoanProductDetailsStepComponent extends LoanProductBaseComponent im
     });
 
     if (this.loanProductService.isLoanProduct) {
-      this.loanProductDetailsForm.addControl('includeInBorrowerCycle', new UntypedFormControl(false));
+      this.loanProductDetailsForm.addControl('includeInBorrowerCycle', new FormControl(false));
     }
   }
 

@@ -12,10 +12,12 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   OnInit,
   ViewChild,
   inject
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Components */
@@ -44,7 +46,7 @@ import { Accounting } from 'app/core/utils/accounting';
 import { LoanProductInterestRefundStepComponent } from '../loan-product-stepper/loan-product-interest-refund-step/loan-product-interest-refund-step.component';
 import { StringEnumOptionData } from '../../../shared/models/option-data.model';
 import { LoanProductDeferredIncomeRecognitionStepComponent } from '../loan-product-stepper/loan-product-capitalized-income-step/loan-product-deferred-income-recognition-step.component';
-import { UntypedFormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { StepperButtonsComponent } from '../../../shared/steppers/stepper-buttons/stepper-buttons.component';
@@ -85,6 +87,7 @@ export class EditLoanProductComponent extends LoanProductBaseComponent implement
   private accounting = inject(Accounting);
   private advancedPaymentStrategy = inject(AdvancedPaymentStrategy);
   private cdr = inject(ChangeDetectorRef);
+  private destroyRef = inject(DestroyRef);
 
   @ViewChild(LoanProductDetailsStepComponent, { static: true }) loanProductDetailsStep: LoanProductDetailsStepComponent;
   @ViewChild(LoanProductCurrencyStepComponent, { static: true })
@@ -114,7 +117,7 @@ export class EditLoanProductComponent extends LoanProductBaseComponent implement
   supportedInterestRefundTypes: StringEnumOptionData[] = [];
 
   deferredIncomeRecognition: DeferredIncomeRecognition | null = null;
-  loanIncomeCapitalizationForm: UntypedFormGroup | null = null;
+  loanIncomeCapitalizationForm: FormGroup | null = null;
 
   constructor() {
     super();
@@ -123,18 +126,21 @@ export class EditLoanProductComponent extends LoanProductBaseComponent implement
     const productType = this.route.snapshot.queryParamMap.get('productType') || 'loan';
     this.loanProductService.initialize(productType);
 
-    this.route.data.subscribe((data: { loanProductAndTemplate: any; configurations: any }) => {
-      this.loanProductAndTemplate = data.loanProductAndTemplate;
-      if (this.loanProductService.isLoanProduct) {
-        const assetAccountData = this.loanProductAndTemplate.accountingMappingOptions.assetAccountOptions || [];
-        const liabilityAccountData = this.loanProductAndTemplate.accountingMappingOptions.liabilityAccountOptions || [];
-        this.loanProductAndTemplate.accountingMappingOptions.assetAndLiabilityAccountOptions =
-          assetAccountData.concat(liabilityAccountData);
-      }
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { loanProductAndTemplate: any; configurations: any }) => {
+        this.loanProductAndTemplate = data.loanProductAndTemplate;
+        if (this.loanProductService.isLoanProduct) {
+          const assetAccountData = this.loanProductAndTemplate.accountingMappingOptions.assetAccountOptions || [];
+          const liabilityAccountData =
+            this.loanProductAndTemplate.accountingMappingOptions.liabilityAccountOptions || [];
+          this.loanProductAndTemplate.accountingMappingOptions.assetAndLiabilityAccountOptions =
+            assetAccountData.concat(liabilityAccountData);
+        }
 
-      this.itemsByDefault = loanProducts.setItemsByDefault(data.configurations);
-      this.loanProductAndTemplate['itemsByDefault'] = this.itemsByDefault;
-    });
+        this.itemsByDefault = loanProducts.setItemsByDefault(data.configurations);
+        this.loanProductAndTemplate['itemsByDefault'] = this.itemsByDefault;
+      });
   }
 
   ngOnInit() {
@@ -204,7 +210,7 @@ export class EditLoanProductComponent extends LoanProductBaseComponent implement
     }
   }
 
-  setViewChildForm(viewChildForm: UntypedFormGroup): void {
+  setViewChildForm(viewChildForm: FormGroup): void {
     this.loanIncomeCapitalizationForm = viewChildForm;
     const formValues: any = this.loanIncomeCapitalizationForm.getRawValue();
     const capitalizedIncome: CapitalizedIncome = formValues.enableIncomeCapitalization

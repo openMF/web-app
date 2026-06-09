@@ -7,8 +7,9 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, ViewChild, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -78,16 +79,17 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class EditFloatingRateComponent implements OnInit {
   private router = inject(Router);
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private productsService = inject(ProductsService);
   private route = inject(ActivatedRoute);
   private dateUtils = inject(Dates);
   private dialog = inject(MatDialog);
   private settingsService = inject(SettingsService);
   private translateService = inject(TranslateService);
+  private destroyRef = inject(DestroyRef);
 
   /** Floating Rate Form. */
-  floatingRateForm: UntypedFormGroup;
+  floatingRateForm: FormGroup;
   /** Floating Rate Data. */
   floatingRateData: any;
   /** Form Pristine Status. */
@@ -123,7 +125,7 @@ export class EditFloatingRateComponent implements OnInit {
    * @param {TranslateService} translateService Translate Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { floatingRate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { floatingRate: any }) => {
       this.floatingRateData = data.floatingRate;
       this.floatingRatePeriodsData = data.floatingRate.ratePeriods ? data.floatingRate.ratePeriods : [];
     });

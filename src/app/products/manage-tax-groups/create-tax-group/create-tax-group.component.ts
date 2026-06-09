@@ -7,15 +7,9 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  Validators,
-  FormControl,
-  FormArray,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, Validators, FormControl, FormArray, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -76,7 +70,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateTaxGroupComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private productsService = inject(ProductsService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
@@ -84,13 +78,14 @@ export class CreateTaxGroupComponent implements OnInit {
   private dialog = inject(MatDialog);
   private settingsService = inject(SettingsService);
   private translateService = inject(TranslateService);
+  private destroyRef = inject(DestroyRef);
 
   /** Minimum start date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum start date allowed. */
   maxDate = new Date(2100, 0, 1);
   /** Tax Group form. */
-  taxGroupForm: UntypedFormGroup;
+  taxGroupForm: FormGroup;
   /** Tax Group template data. */
   taxGroupTemplateData: any;
   /** Tax Component Data Source */
@@ -116,7 +111,7 @@ export class CreateTaxGroupComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { taxGroupTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { taxGroupTemplate: any }) => {
       this.taxGroupTemplateData = data.taxGroupTemplate;
       this.taxComponentOptions = this.taxGroupTemplateData.taxComponents;
     });

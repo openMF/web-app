@@ -15,8 +15,10 @@ import {
   ElementRef,
   ViewChild,
   AfterViewInit,
-  inject
+  inject,
+  DestroyRef
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -68,6 +70,7 @@ export class ShareProductsComponent implements OnInit, AfterViewInit {
   private router = inject(Router);
   private configurationWizardService = inject(ConfigurationWizardService);
   private popoverService = inject(PopoverService);
+  private destroyRef = inject(DestroyRef);
 
   shareProductsData: any;
   displayedColumns: string[] = [
@@ -96,7 +99,7 @@ export class ShareProductsComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor() {
-    this.route.data.subscribe((data: { shareProducts: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { shareProducts: any }) => {
       this.shareProductsData = data.shareProducts.pageItems;
     });
   }

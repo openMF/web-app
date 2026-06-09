@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Components */
@@ -56,6 +57,7 @@ export class EditShareProductComponent {
   private router = inject(Router);
   private settingsService = inject(SettingsService);
   private accounting = inject(Accounting);
+  private destroyRef = inject(DestroyRef);
 
   @ViewChild(ShareProductDetailsStepComponent, { static: true })
   shareProductDetailsStep: ShareProductDetailsStepComponent;
@@ -82,7 +84,7 @@ export class EditShareProductComponent {
    */
 
   constructor() {
-    this.route.data.subscribe((data: { shareProductAndTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { shareProductAndTemplate: any }) => {
       this.shareProductAndTemplate = data.shareProductAndTemplate;
     });
     this.accountingRuleData = this.accounting.getAccountingRulesForShares();

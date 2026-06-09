@@ -6,8 +6,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -60,14 +61,15 @@ import { EnumOptionData, StringEnumOptionData } from 'app/shared/models/option-d
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditBucketComponent extends DelinquencyBucketBaseComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private productsService = inject(ProductsService);
   private router = inject(Router);
   dialog = inject(MatDialog);
   private translateService = inject(TranslateService);
+  private destroyRef = inject(DestroyRef);
 
   /** Delinquency Bucket form. */
-  bucketForm: UntypedFormGroup;
+  bucketForm: FormGroup;
   /** Delinquency Bucket template data. */
   bucketTemplateData: any;
   /** Delinquency Range Data Source */
@@ -95,32 +97,34 @@ export class EditBucketComponent extends DelinquencyBucketBaseComponent implemen
 
   constructor() {
     super();
-    this.route.data.subscribe((data: { delinquencyBucket: any; delinquencyBucketsTemplateData: any }) => {
-      this.delinquencyRangesData = data.delinquencyBucketsTemplateData;
-      this.delinquencyBucketData = data.delinquencyBucket;
-      this.delinquencyBucketId = data.delinquencyBucket.id;
-      this.rangesDataSource = [];
-      this.delinquencyRangesIds = [];
-      if (this.isRegularBucket) {
-        this.delinquencyRangesData = this.delinquencyRangesData.sort(
-          (objA: { minimumAgeDays: number }, objB: { minimumAgeDays: number }) =>
-            objA.minimumAgeDays - objB.minimumAgeDays
-        );
-        this.rangesDataSource = this.delinquencyBucketData.ranges;
-      } else if (this.isWorkingCapitalBucket) {
-        this.delinquencyRangesData = data.delinquencyBucketsTemplateData.rangesOptions;
-        this.delinquencyRangesData = this.delinquencyRangesData.sort(
-          (objA: { minimumAgeDays: number }, objB: { minimumAgeDays: number }) =>
-            objA.minimumAgeDays - objB.minimumAgeDays
-        );
-        this.rangesDataSource = data.delinquencyBucket.ranges;
-        this.frequencyTypeOptions = data.delinquencyBucketsTemplateData.frequencyTypeOptions;
-        this.minimumPaymentOptions = data.delinquencyBucketsTemplateData.minimumPaymentOptions;
-      }
-      this.rangesDataSource.forEach((item: any) => {
-        this.delinquencyRangesIds.push(item.id);
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { delinquencyBucket: any; delinquencyBucketsTemplateData: any }) => {
+        this.delinquencyRangesData = data.delinquencyBucketsTemplateData;
+        this.delinquencyBucketData = data.delinquencyBucket;
+        this.delinquencyBucketId = data.delinquencyBucket.id;
+        this.rangesDataSource = [];
+        this.delinquencyRangesIds = [];
+        if (this.isRegularBucket) {
+          this.delinquencyRangesData = this.delinquencyRangesData.sort(
+            (objA: { minimumAgeDays: number }, objB: { minimumAgeDays: number }) =>
+              objA.minimumAgeDays - objB.minimumAgeDays
+          );
+          this.rangesDataSource = this.delinquencyBucketData.ranges;
+        } else if (this.isWorkingCapitalBucket) {
+          this.delinquencyRangesData = data.delinquencyBucketsTemplateData.rangesOptions;
+          this.delinquencyRangesData = this.delinquencyRangesData.sort(
+            (objA: { minimumAgeDays: number }, objB: { minimumAgeDays: number }) =>
+              objA.minimumAgeDays - objB.minimumAgeDays
+          );
+          this.rangesDataSource = data.delinquencyBucket.ranges;
+          this.frequencyTypeOptions = data.delinquencyBucketsTemplateData.frequencyTypeOptions;
+          this.minimumPaymentOptions = data.delinquencyBucketsTemplateData.minimumPaymentOptions;
+        }
+        this.rangesDataSource.forEach((item: any) => {
+          this.delinquencyRangesIds.push(item.id);
+        });
       });
-    });
   }
 
   ngOnInit(): void {
