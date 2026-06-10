@@ -87,7 +87,7 @@
 
       <mat-form-field class="flex-23">
         <mat-label>{{ 'labels.inputs.Delinquency Grace Days' | translate }}</mat-label>
-        <input type="number" min="0" matInput formControlName="delinquencyGraceDays" />
+        <input type="number" min="0" matInput mifosxPositiveNumber formControlName="delinquencyGraceDays" />
       </mat-form-field>
 
       <mat-form-field class="flex-23">
@@ -142,6 +142,11 @@
               <fa-icon icon="close" size="md"></fa-icon>
             </button>
           }
+        </mat-form-field>
+
+        <mat-form-field class="flex-23">
+          <mat-label>{{ 'labels.inputs.Breach Grace Days' | translate }}</mat-label>
+          <input type="number" min="0" matInput mifosxPositiveNumber formControlName="breachGraceDays" />
         </mat-form-field>
       }
     }

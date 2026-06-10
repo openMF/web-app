@@ -6,21 +6,94 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<div class="container">
-  <div class="toolbar layout-row m-t-20 align-end align-items-center">
-    <span class="record-count">
-      {{ 'labels.inputs.Total Records' | translate }}: <strong>{{ dataSource.data.length | formatNumber }}</strong>
-    </span>
-    <button mat-raised-button color="primary" (click)="exportToPDF()">
-      <fa-icon icon="download" class="m-r-10"></fa-icon>{{ 'labels.buttons.Export to PDF' | translate }}
+<div class="amortization-container">
+  @if (totalCount > 0) {
+    <div class="progress-strip">
+      <div class="progress-strip-top">
+        <span class="progress-strip-label">
+          <strong>{{ progressPercent | formatNumber: '' : '2' }} %</strong>
+          {{ 'labels.inputs.Completed' | translate | uppercase }}
+        </span>
+        <div class="progress-strip-meta">
+          @if (executedCount > 0) {
+            <span class="ps-pill executed">
+              <span class="ps-dot"></span>
+              <span class="ps-num">{{ executedCount }}</span>
+              {{ 'labels.inputs.Executed' | translate | uppercase }}
+            </span>
+          }
+          @if (projectedCount > 0) {
+            <span class="ps-pill projected">
+              <span class="ps-dot"></span>
+              <span class="ps-num">{{ projectedCount }}</span>
+              {{ 'labels.inputs.Projected' | translate | uppercase }}
+            </span>
+          }
+        </div>
+      </div>
+      <div class="progress-bar-outer">
+        @if (executedPercent > 0) {
+          <div class="pb-seg pb-executed" [style.width.%]="executedPercent"></div>
+        }
+        @if (currentPercent > 0) {
+          <div class="pb-seg pb-current" [style.width.%]="currentPercent"></div>
+        }
+        @if (projectedPercent > 0) {
+          <div class="pb-seg pb-projected" [style.width.%]="projectedPercent"></div>
+        }
+      </div>
+    </div>
+  }
+
+  <div class="toolbar">
+    <div class="toggle-group">
+      <mat-slide-toggle [checked]="hideProjected" (change)="toggleHideProjected($event)">
+        {{ 'labels.inputs.Hide Projected' | translate }}
+      </mat-slide-toggle>
+    </div>
+    <button mat-stroked-button type="button" class="btn-export" (click)="exportToPDF()">
+      <fa-icon icon="download" class="m-r-10"></fa-icon>
+      <span>{{ 'labels.buttons.Export to PDF' | translate }}</span>
     </button>
   </div>
 
   <div class="table-wrapper">
     <table mat-table [dataSource]="dataSource" id="amortizationSchedule" class="amortization-table">
+      <ng-container matColumnDef="grpBlank">
+        <th mat-header-cell *matHeaderCellDef class="grp-blank" [attr.colspan]="3"></th>
+      </ng-container>
+
+      <ng-container matColumnDef="grpExpected">
+        <th mat-header-cell *matHeaderCellDef class="grp-header grp-expected" [attr.colspan]="groupExpectedSpan">
+          {{ 'labels.inputs.Expected' | translate }}
+        </th>
+      </ng-container>
+
+      <ng-container matColumnDef="grpActual">
+        <th mat-header-cell *matHeaderCellDef class="grp-header grp-actual" [attr.colspan]="groupActualSpan">
+          {{ 'labels.inputs.Actual' | translate }}
+        </th>
+      </ng-container>
+
       <ng-container matColumnDef="number">
         <th mat-header-cell class="center mat-header-cell" *matHeaderCellDef>#</th>
-        <td mat-cell class="right" *matCellDef="let item">{{ item.paymentNo }}</td>
+        <td mat-cell class="cell-number" *matCellDef="let item">
+          @if (item.paymentNo > 0) {
+            {{ item.paymentNo }}
+          }
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell class="mat-header-cell" *matHeaderCellDef>
+          {{ 'labels.inputs.Status' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let item">
+          <span class="status-pill" [class]="'status-' + getStatus(item)">
+            <span class="dot"></span>{{ statusTranslateKey(item) | translate }}
+          </span>
+        </td>
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
 
@@ -33,73 +106,86 @@
       </ng-container>
 
       <ng-container matColumnDef="expectedPaymentAmount">
-        <th mat-header-cell class="r-amount mat-header-cell" *matHeaderCellDef>
-          {{ 'labels.inputs.Expected Payment Amount' | translate }}
+        <th mat-header-cell class="r-amount mat-header-cell col-expected col-grp-start" *matHeaderCellDef>
+          {{ 'labels.inputs.Payment Amount' | translate }}
         </th>
-        <td mat-cell class="r-amount" *matCellDef="let item">{{ item.expectedPaymentAmount | formatNumber }}</td>
-        <td mat-footer-cell class="r-amount footer-total" *matFooterCellDef>
+        <td mat-cell class="r-amount col-expected col-grp-start" *matCellDef="let item">
+          {{ item.expectedPaymentAmount | formatNumber }}
+        </td>
+        <td mat-footer-cell class="r-amount footer-total col-expected col-grp-start" *matFooterCellDef>
           <b>{{ amortizationSchedule?.totalPaymentValue | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}</b>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="expectedBalance">
-        <th mat-header-cell class="r-amount mat-header-cell" *matHeaderCellDef>
-          {{ 'labels.inputs.Expected Balance' | translate }}
+        <th mat-header-cell class="r-amount mat-header-cell col-expected" *matHeaderCellDef>
+          {{ 'labels.inputs.Balance' | translate }}
         </th>
-        <td mat-cell class="r-amount" *matCellDef="let item">{{ item.expectedBalance | formatNumber }}</td>
-        <td mat-footer-cell *matFooterCellDef></td>
+        <td mat-cell class="r-amount col-expected" *matCellDef="let item">{{ item.expectedBalance | formatNumber }}</td>
+        <td mat-footer-cell class="col-expected" *matFooterCellDef></td>
       </ng-container>
 
       <ng-container matColumnDef="expectedAmortizationAmount">
-        <th mat-header-cell class="r-amount mat-header-cell" *matHeaderCellDef>
-          {{ 'labels.inputs.Expected Amortization Amount' | translate }}
+        <th mat-header-cell class="r-amount mat-header-cell col-expected" *matHeaderCellDef>
+          {{ 'labels.inputs.Amortization Amount' | translate }}
         </th>
-        <td mat-cell class="r-amount" *matCellDef="let item">{{ item.expectedAmortizationAmount | formatNumber }}</td>
-        <td mat-footer-cell *matFooterCellDef></td>
+        <td mat-cell class="r-amount col-expected" *matCellDef="let item">
+          {{ item.expectedAmortizationAmount | formatNumber }}
+        </td>
+        <td mat-footer-cell class="col-expected" *matFooterCellDef></td>
       </ng-container>
 
       <ng-container matColumnDef="expectedDiscountFeeBalance">
-        <th mat-header-cell class="r-amount mat-header-cell" *matHeaderCellDef>
-          {{ 'labels.inputs.Expected Discount Fee Balance' | translate }}
+        <th mat-header-cell class="r-amount mat-header-cell col-expected col-grp-end" *matHeaderCellDef>
+          {{ 'labels.inputs.Discount Fee Balance' | translate }}
         </th>
-        <td mat-cell class="r-amount" *matCellDef="let item">{{ item.expectedDiscountFeeBalance | formatNumber }}</td>
-        <td mat-footer-cell *matFooterCellDef></td>
+        <td mat-cell class="r-amount col-expected col-grp-end" *matCellDef="let item">
+          {{ item.expectedDiscountFeeBalance | formatNumber }}
+        </td>
+        <td mat-footer-cell class="col-expected col-grp-end" *matFooterCellDef></td>
       </ng-container>
 
       <ng-container matColumnDef="actualPaymentAmount">
-        <th mat-header-cell class="r-amount mat-header-cell" *matHeaderCellDef>
-          {{ 'labels.inputs.Actual Payment' | translate }}
+        <th mat-header-cell class="r-amount mat-header-cell col-actual col-grp-start" *matHeaderCellDef>
+          {{ 'labels.inputs.Payment Amount' | translate }}
         </th>
-        <td mat-cell class="r-amount" *matCellDef="let item">{{ item.actualPaymentAmount | formatNumber }}</td>
-        <td mat-footer-cell *matFooterCellDef></td>
+        <td mat-cell class="r-amount col-actual col-grp-start" *matCellDef="let item">
+          {{ item.actualPaymentAmount | formatNumber }}
+        </td>
+        <td mat-footer-cell class="col-actual col-grp-start" *matFooterCellDef></td>
       </ng-container>
 
       <ng-container matColumnDef="actualBalance">
-        <th mat-header-cell class="r-amount mat-header-cell" *matHeaderCellDef>
-          {{ 'labels.inputs.Actual Balance' | translate }}
+        <th mat-header-cell class="r-amount mat-header-cell col-actual" *matHeaderCellDef>
+          {{ 'labels.inputs.Balance' | translate }}
         </th>
-        <td mat-cell class="r-amount" *matCellDef="let item">{{ item.actualBalance | formatNumber }}</td>
-        <td mat-footer-cell *matFooterCellDef></td>
+        <td mat-cell class="r-amount col-actual" *matCellDef="let item">{{ item.actualBalance | formatNumber }}</td>
+        <td mat-footer-cell class="col-actual" *matFooterCellDef></td>
       </ng-container>
 
       <ng-container matColumnDef="actualAmortizationAmount">
-        <th mat-header-cell class="r-amount mat-header-cell" *matHeaderCellDef>
-          {{ 'labels.inputs.Actual Amortization' | translate }}
+        <th mat-header-cell class="r-amount mat-header-cell col-actual" *matHeaderCellDef>
+          {{ 'labels.inputs.Amortization Amount' | translate }}
         </th>
-        <td mat-cell class="r-amount" *matCellDef="let item">{{ item.actualAmortizationAmount | formatNumber }}</td>
-        <td mat-footer-cell *matFooterCellDef></td>
+        <td mat-cell class="r-amount col-actual" *matCellDef="let item">
+          {{ item.actualAmortizationAmount | formatNumber }}
+        </td>
+        <td mat-footer-cell class="col-actual" *matFooterCellDef></td>
       </ng-container>
 
       <ng-container matColumnDef="actualDiscountFeeBalance">
-        <th mat-header-cell class="r-amount mat-header-cell" *matHeaderCellDef>
-          {{ 'labels.inputs.Actual Discount Fee Balance' | translate }}
+        <th mat-header-cell class="r-amount mat-header-cell col-actual col-grp-end" *matHeaderCellDef>
+          {{ 'labels.inputs.Discount Fee Balance' | translate }}
         </th>
-        <td mat-cell class="r-amount" *matCellDef="let item">{{ item.actualDiscountFeeBalance | formatNumber }}</td>
-        <td mat-footer-cell *matFooterCellDef></td>
+        <td mat-cell class="r-amount col-actual col-grp-end" *matCellDef="let item">
+          {{ item.actualDiscountFeeBalance | formatNumber }}
+        </td>
+        <td mat-footer-cell class="col-actual col-grp-end" *matFooterCellDef></td>
       </ng-container>
 
+      <tr mat-header-row *matHeaderRowDef="groupHeaderColumns; sticky: true" class="group-row"></tr>
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns" class="table-row"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns" [class]="'table-row row-' + getStatus(row)"></tr>
       <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr>
     </table>
   </div>

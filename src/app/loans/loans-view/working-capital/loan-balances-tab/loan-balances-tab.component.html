@@ -21,14 +21,14 @@
       <div class="flex-fill layout-row">
         <span class="flex-30"> {{ 'labels.inputs.Total Paid Principal' | translate }} </span>
         <span class="flex-30 r-amount">{{
-          loanBalances.totalPaidPrincipal | currency: currencyCode : 'symbol-narrow' : '1.2-2'
+          loanBalances.totalPaidPrincipal ?? 0 | currency: currencyCode : 'symbol-narrow' : '1.2-2'
         }}</span>
       </div>
 
       <div class="flex-fill layout-row">
         <span class="flex-30"> {{ 'labels.inputs.Total Payment' | translate }} </span>
         <span class="flex-30 r-amount">{{
-          loanBalances.totalPayment | currency: currencyCode : 'symbol-narrow' : '1.2-2'
+          loanBalances.totalPayment ?? 0 | currency: currencyCode : 'symbol-narrow' : '1.2-2'
         }}</span>
       </div>
 
@@ -43,12 +43,12 @@
 
       <div class="flex-fill layout-row">
         <span class="flex-30"> {{ 'labels.inputs.Realized Income' | translate }} </span>
-        <span class="flex-30 r-amount">{{ loanBalances.realizedIncome | formatNumber }}</span>
+        <span class="flex-30 r-amount">{{ loanBalances.realizedIncomeFromDiscountFee ?? 0 | formatNumber }}</span>
       </div>
 
       <div class="flex-fill layout-row">
         <span class="flex-30"> {{ 'labels.inputs.Unrealized Income' | translate }} </span>
-        <span class="flex-30 r-amount">{{ loanBalances.unrealizedIncome | formatNumber }}</span>
+        <span class="flex-30 r-amount">{{ loanBalances.unrealizedIncomeFromDiscountFee ?? 0 | formatNumber }}</span>
       </div>
     </div>
   }

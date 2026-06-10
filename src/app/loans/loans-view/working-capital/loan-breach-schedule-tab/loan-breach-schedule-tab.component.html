@@ -1,0 +1,215 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="breach-container">
+  <div class="kpi-strip">
+    <div class="kpi">
+      <span class="kpi-label">{{ 'labels.heading.Breach Periods' | translate }}</span>
+      <span class="kpi-value">{{ kpis.count }}</span>
+    </div>
+    <div class="kpi">
+      <span class="kpi-label">{{ 'labels.heading.Total Days in Breach' | translate }}</span>
+      <span class="kpi-value">{{ kpis.totalDays }}</span>
+    </div>
+    <div class="kpi">
+      <span class="kpi-label">{{ 'labels.heading.Peak Outstanding' | translate }}</span>
+      <span class="kpi-value peak">{{ kpis.peakOutstanding | formatNumber }}</span>
+    </div>
+    <div class="kpi">
+      <span class="kpi-label">{{ 'labels.heading.Average Gap' | translate }}</span>
+      <span class="kpi-value">+{{ kpis.avgGapPercent | formatNumber: '' : '1' }}%</span>
+    </div>
+    <div class="kpi-status">
+      @switch (kpis.status) {
+        @case ('in-breach') {
+          <span class="status-chip in-breach">
+            <span class="dot"></span>
+            {{ 'labels.text.In Breach' | translate }}
+          </span>
+        }
+        @case ('resolved') {
+          <span class="status-chip resolved">
+            <span class="dot"></span>
+            {{ 'labels.text.Resolved' | translate }}
+          </span>
+        }
+        @default {
+          <span class="status-chip compliant">
+            <span class="dot"></span>
+            {{ 'labels.text.Compliant' | translate }}
+          </span>
+        }
+      }
+    </div>
+  </div>
+
+  @if (breachPeriods.length > 0) {
+    <div class="timeline-section">
+      <div class="section-header">
+        <span class="section-title">{{ 'labels.text.Breach Timeline' | translate }} · {{ timelineYearLabel }}</span>
+        <div class="legend">
+          <span class="legend-item">
+            <span class="legend-swatch mild"></span>
+            {{ 'labels.text.Mild' | translate }} ({{ mildLabel }})
+          </span>
+          <span class="legend-item">
+            <span class="legend-swatch moderate"></span>
+            {{ 'labels.text.Moderate' | translate }} ({{ moderateLabel }})
+          </span>
+          <span class="legend-item">
+            <span class="legend-swatch severe"></span>
+            {{ 'labels.text.Severe' | translate }} ({{ severeLabel }})
+          </span>
+        </div>
+      </div>
+
+      <svg class="timeline" [attr.viewBox]="'0 0 ' + viewBoxWidth + ' ' + viewBoxHeight" preserveAspectRatio="none">
+        @for (mark of monthMarks; track $index) {
+          <line
+            class="month-grid"
+            [attr.x1]="mark.gridX"
+            [attr.y1]="topY"
+            [attr.x2]="mark.gridX"
+            [attr.y2]="baselineY"
+          ></line>
+          <text class="month-label" [attr.x]="mark.labelX" [attr.y]="monthLabelY" text-anchor="middle">
+            {{ mark.label }}
+          </text>
+        }
+
+        <line
+          class="baseline"
+          [attr.x1]="leftPad"
+          [attr.y1]="baselineY"
+          [attr.x2]="viewBoxWidth - rightPad"
+          [attr.y2]="baselineY"
+        ></line>
+
+        @for (period of breachPeriods; track period.id) {
+          <rect
+            class="breach-bar-edge"
+            [ngClass]="period.severity"
+            [attr.x]="period.barX"
+            [attr.y]="period.barY"
+            [attr.width]="period.barWidth"
+            [attr.height]="period.barHeight"
+            rx="2"
+          ></rect>
+          <rect
+            class="breach-bar"
+            [ngClass]="period.severity"
+            [attr.x]="period.barX"
+            [attr.y]="period.barY"
+            [attr.width]="period.barWidth"
+            [attr.height]="period.barHeight"
+            rx="2"
+          >
+            <title>{{ buildTooltip(period) }}</title>
+          </rect>
+          @if (period.showLabel) {
+            <text
+              class="bar-period"
+              [attr.x]="period.barX + period.barWidth / 2"
+              [attr.y]="period.barY + period.barHeight / 2 + 4"
+              text-anchor="middle"
+            >
+              P{{ period.periodNumber }}
+            </text>
+          }
+        }
+
+        @if (todayX !== null) {
+          <line
+            class="today-line"
+            [attr.x1]="todayX"
+            [attr.y1]="topY"
+            [attr.x2]="todayX"
+            [attr.y2]="todayLineBottomY"
+          ></line>
+          <text class="today-label" [attr.x]="todayX" [attr.y]="todayLabelY" text-anchor="middle">
+            {{ 'labels.text.Today' | translate }}
+          </text>
+        }
+      </svg>
+    </div>
+  }
+
+  <div class="table-section">
+    <div class="table-toolbar"></div>
+
+    <div class="table-wrap">
+      <table mat-table [dataSource]="dataSource" id="breachSchedule" class="breach-table">
+        <ng-container matColumnDef="periodNumber">
+          <th mat-header-cell class="col-c col-narrow" *matHeaderCellDef>#</th>
+          <td mat-cell class="col-c col-narrow" *matCellDef="let item">{{ item.periodNumber }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="severity">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.text.Severity' | translate }}</th>
+          <td mat-cell *matCellDef="let item">
+            <span class="severity-pill" [ngClass]="item.severity">
+              <span class="dot"></span>
+              {{ 'labels.text.' + severityLabel(item.severity) | translate }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fromDate">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.From Date' | translate }}</th>
+          <td mat-cell *matCellDef="let item">{{ item.fromDateObj | dateFormat }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="toDate">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.To Date' | translate }}</th>
+          <td mat-cell *matCellDef="let item">{{ item.toDateObj | dateFormat }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="numberOfDays">
+          <th mat-header-cell class="col-r" *matHeaderCellDef>{{ 'labels.inputs.Days' | translate }}</th>
+          <td mat-cell class="col-r" *matCellDef="let item">{{ item.numberOfDays | formatNumber }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="minPaymentAmount">
+          <th mat-header-cell class="col-r" *matHeaderCellDef>
+            {{ 'labels.inputs.Minimum Payment' | translate }}
+          </th>
+          <td mat-cell class="col-r" *matCellDef="let item">
+            {{ item.minPaymentAmount | formatNumber }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="outstandingAmount">
+          <th mat-header-cell class="col-r" *matHeaderCellDef>
+            {{ 'labels.inputs.Outstanding Amount' | translate }}
+          </th>
+          <td mat-cell class="col-r" *matCellDef="let item">
+            {{ item.outstandingAmount | formatNumber }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="gap">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.text.Gap' | translate }}</th>
+          <td mat-cell *matCellDef="let item">
+            <span class="gap-value">+{{ item.gapPercent | formatNumber: '' : '1' }}%</span>
+            <span class="gap-bar">
+              <span class="gap-bar-fill" [ngClass]="item.severity" [style.width.%]="item.gapBarWidth"></span>
+            </span>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          class="table-row"
+          [ngClass]="'row-' + row.severity"
+        ></tr>
+      </table>
+    </div>
+  </div>
+</div>

@@ -18,6 +18,7 @@ import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 import { DisbursementData } from './models/loan-account.model';
 import { PeriodPaymentRateChange } from './models/working-capital-loan-account.model';
+import { BreachSchedule } from './models/working-capital-loan-account.model';
 
 /**
  * Loans service.
@@ -147,6 +148,10 @@ export class LoansService {
 
   getWorkingCapitalLoanAmortizationSchedule(loanId: string) {
     return this.http.get(`/working-capital-loans/${loanId}/amortization-schedule`);
+  }
+
+  getWorkingCapitalLoanBreachSchedule(loanId: string): Observable<BreachSchedule[]> {
+    return this.http.get<BreachSchedule[]>(`/working-capital-loans/${loanId}/breach-schedule`);
   }
 
   /**

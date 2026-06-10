@@ -61,6 +61,13 @@
         </div>
       }
 
+      @if (loanDetails.breachGraceDays !== null) {
+        <div class="flex-fill layout-row">
+          <span class="flex-50"> {{ 'labels.inputs.Breach Grace Days' | translate }} </span>
+          <span class="flex-50">{{ loanDetails.breachGraceDays | formatNumber }}</span>
+        </div>
+      }
+
       @if (loanDetails.delinquencyGraceDays !== null) {
         <div class="flex-fill layout-row">
           <span class="flex-50"> {{ 'labels.inputs.Delinquency Grace Days' | translate }} </span>

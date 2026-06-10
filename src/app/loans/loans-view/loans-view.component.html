@@ -355,6 +355,18 @@
             >
               {{ 'labels.inputs.Amortization Schedule' | translate }}
             </a>
+            <a
+              mat-tab-link
+              [routerLink]="['./breach-schedule']"
+              [queryParams]="{
+                productType: loanProductService.productType.value
+              }"
+              routerLinkActive
+              #breachSchedule="routerLinkActive"
+              [active]="breachSchedule.isActive"
+            >
+              {{ 'labels.inputs.Breach Schedule' | translate }}
+            </a>
           }
         }
         @if (loanProductService.isWorkingCapital || loanDetailsData.transactions?.length) {
