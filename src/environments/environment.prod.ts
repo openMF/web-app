@@ -120,7 +120,8 @@ export const environment = {
   externalNationalIdRegex: loadedEnv['externalNationalIdRegex'] || '',
 
   /** Yente read-only screening integration */
-  enableYenteScreening: loadedEnv['enableYenteScreening'] === 'true' || loadedEnv['enableYenteScreening'] === true || false,
+  enableYenteScreening:
+    loadedEnv['enableYenteScreening'] === 'true' || loadedEnv['enableYenteScreening'] === true || false,
   yenteScreeningUrl: loadedEnv['yenteScreeningUrl'] || '',
   yenteScreeningDataset: loadedEnv['yenteScreeningDataset'] || 'sanctions',
   yenteMatchThreshold: loadedEnv['yenteMatchThreshold'] || 0.85,

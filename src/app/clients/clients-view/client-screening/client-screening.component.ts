@@ -6,7 +6,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  inject
+} from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
@@ -101,7 +108,7 @@ export class ClientScreeningComponent implements OnChanges {
   /**
    * Runs the name screening request using the visible client identity data.
    */
-  runNameScreening() {
+  runNameScreening(): void {
     if (!this.clientViewData?.id || this.isNameLoading) {
       return;
     }
@@ -135,7 +142,7 @@ export class ClientScreeningComponent implements OnChanges {
    * Runs the address screening request.
    * Address data is only fetched when the user explicitly requests the check.
    */
-  runAddressScreening() {
+  runAddressScreening(): void {
     if (!this.clientViewData?.id || this.isAddressLoading) {
       return;
     }
@@ -174,7 +181,10 @@ export class ClientScreeningComponent implements OnChanges {
       .getClientAddressData(String(this.clientViewData.id))
       .pipe(
         catchError(() => {
-          this.addressScreeningResult = this.buildErrorResult('address', 'errors.clientScreeningAddressLookupFailed');
+          this.addressScreeningResult = this.buildErrorResult(
+            'address',
+            'errors.clientScreeningAddressLookupFailed'
+          );
           this.isAddressLoading = false;
           return of(null);
         })
@@ -217,7 +227,10 @@ export class ClientScreeningComponent implements OnChanges {
     return (result.status === 'match' || result.status === 'possible-match') && result.matches.length > 0;
   }
 
-  private buildErrorResult(type: 'name' | 'address', errorMessageKey?: string): ClientScreeningResult {
+  private buildErrorResult(
+    type: 'name' | 'address',
+    errorMessageKey?: string
+  ): ClientScreeningResult {
     return {
       type,
       status: 'error',
@@ -235,7 +248,7 @@ export class ClientScreeningComponent implements OnChanges {
     };
   }
 
-  private resetScreeningState() {
+  private resetScreeningState(): void {
     this.clientAddresses = null;
     this.isNameLoading = false;
     this.isAddressLoading = false;

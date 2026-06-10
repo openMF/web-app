@@ -82,8 +82,8 @@ mat-chip {
 
   &.match,
   &.error {
-    background-color: rgba(c.$msg-error, 0.16);
-    color: c.$msg-error;
+    background-color: rgba(c.$msg-danger, 0.16);
+    color: c.$msg-danger;
   }
 }
 
@@ -108,8 +108,8 @@ mat-chip {
   }
 
   &.error {
-    background-color: rgba(c.$msg-error, 0.12);
-    color: c.$msg-error;
+    background-color: rgba(c.$msg-danger, 0.12);
+    color: c.$msg-danger;
   }
 }
 

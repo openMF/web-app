@@ -73,7 +73,10 @@ export class ClientScreeningService {
    * Address screening is deliberately isolated from name screening so users can
    * choose whether to evaluate this noisier signal.
    */
-  screenClientAddress(client: ScreenableClient, addresses: ClientAddressRecord[]): Observable<ClientScreeningResult> {
+  screenClientAddress(
+    client: ScreenableClient,
+    addresses: ClientAddressRecord[]
+  ): Observable<ClientScreeningResult> {
     const normalizedAddresses = this.getAddressCandidates(addresses);
     if (normalizedAddresses.length === 0) {
       return throwError(() => new Error('errors.clientScreeningMissingAddress'));
@@ -166,7 +169,8 @@ export class ClientScreeningService {
       return response.results;
     }
 
-    const queryResponse = response?.responses?.[queryId] ?? response?.responses?.[Object.keys(response?.responses || {})[0]];
+    const queryResponse =
+      response?.responses?.[queryId] ?? response?.responses?.[Object.keys(response?.responses || {})[0]];
     if (Array.isArray(queryResponse?.results)) {
       return queryResponse.results;
     }

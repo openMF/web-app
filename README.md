@@ -440,7 +440,8 @@ For more detailed configuration options, refer to the `env.sample` file in the r
 
 #### Yente Client Screening
 
-These variables enable read-only client screening with Yente from the selected client view. The feature is intentionally narrow:
+These variables enable read-only client screening with Yente from the selected
+client view. The feature is intentionally narrow:
 
 - screening runs only when a user opens a single client and manually clicks one of the screening buttons
 - screening results are not stored in the database
@@ -458,7 +459,9 @@ The UI normalizes Yente responses into three operator-facing outcomes:
 - `Possible Match`
 - `Clear`
 
-When Yente returns possible or confirmed matches, the web app displays the returned match list for review, including score, schema, datasets, countries, addresses, and source details when available.
+When Yente returns possible or confirmed matches, the web app displays the
+returned match list for review, including score, schema, datasets, countries,
+addresses, and source details when available.
 
 | Variable                              | Description                                                                 | Default Value                 |
 | ------------------------------------- | --------------------------------------------------------------------------- | ----------------------------- |
@@ -471,18 +474,23 @@ When Yente returns possible or confirmed matches, the web app displays the retur
 **Technical flow**
 
 1. The user opens a client record.
-2. The client view renders a `Client Screening` panel with `Screen Name` and `Screen Address`.
+2. The client view renders a `Client Screening` panel with `Screen Name` and
+   `Screen Address`.
 3. The web app sends a direct request to Yente. No web-app proxy is added for this feature.
 4. `Screen Name` uses the visible client name fields.
-5. `Screen Address` fetches client addresses only when the user explicitly requests the check.
+5. `Screen Address` fetches client addresses only when the user explicitly
+   requests the check.
 6. The response is normalized in the frontend and displayed immediately.
 7. The result remains in memory only for the current page session.
 
 **Implementation notes**
 
-- The feature is informational only and does not suspend, close, or otherwise mutate the client record.
-- Deployments concerned about browser CORS should place Yente on an accessible same-origin or otherwise CORS-compatible endpoint.
-- This feature reuses the existing external-system integration pattern of bypassing Fineract HTTP interceptors for outbound third-party requests.
+- The feature is informational only and does not suspend, close, or otherwise
+  mutate the client record.
+- Deployments concerned about browser CORS should place Yente on an accessible
+  same-origin or otherwise CORS-compatible endpoint.
+- This feature reuses the existing external-system integration pattern of
+  bypassing Fineract HTTP interceptors for outbound third-party requests.
 
 #### Interbank Transfers Settings
 
