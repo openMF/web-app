@@ -119,6 +119,13 @@ export const environment = {
   externalNationalIdSystemApiKey: loadedEnv['externalNationalIdSystemApiKey'] || '',
   externalNationalIdRegex: loadedEnv['externalNationalIdRegex'] || '',
 
+  /** Yente read-only screening integration */
+  enableYenteScreening: loadedEnv['enableYenteScreening'] === 'true' || loadedEnv['enableYenteScreening'] === true || false,
+  yenteScreeningUrl: loadedEnv['yenteScreeningUrl'] || '',
+  yenteScreeningDataset: loadedEnv['yenteScreeningDataset'] || 'sanctions',
+  yenteMatchThreshold: loadedEnv['yenteMatchThreshold'] || 0.85,
+  yentePossibleMatchThreshold: loadedEnv['yentePossibleMatchThreshold'] || 0.7,
+
   /**
    * Hide client data information (mask client names with *)
    * Set via MIFOS_COMPLIANCE_HIDE_CLIENT_DATA env var

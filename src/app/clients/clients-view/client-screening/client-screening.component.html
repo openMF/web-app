@@ -1,0 +1,204 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<mat-card class="screening-card">
+  <mat-card-header>
+    <mat-card-title>{{ 'labels.heading.Client Screening' | translate }}</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    @if (!isEnabled) {
+      <div class="screening-message info">
+        <mat-icon>info</mat-icon>
+        <span>{{ 'labels.messages.Client screening is not configured' | translate }}</span>
+      </div>
+    } @else {
+      <div class="screening-panels">
+        <section class="screening-panel">
+          <div class="panel-header">
+            <div>
+              <h3>{{ 'labels.heading.Name Screening' | translate }}</h3>
+              <p>{{ 'labels.messages.Screen the selected client name against Yente' | translate }}</p>
+            </div>
+            <button mat-raised-button color="primary" (click)="runNameScreening()" [disabled]="isNameLoading">
+              @if (!isNameLoading) {
+                <mat-icon>manage_search</mat-icon>
+              }
+              {{ 'labels.buttons.Screen Name' | translate }}
+            </button>
+          </div>
+
+          <div class="screening-status">
+            <span class="status-label">{{ 'labels.inputs.Status' | translate }}</span>
+            <mat-chip-set>
+              <mat-chip [class]="nameScreeningResult.status">
+                {{ statusLabelKey(nameScreeningResult.status) | translate }}
+              </mat-chip>
+            </mat-chip-set>
+            @if (nameScreeningResult.screenedAt) {
+              <span class="screened-at">
+                {{ 'labels.inputs.Last Screened' | translate }}: {{ nameScreeningResult.screenedAt }}
+              </span>
+            }
+          </div>
+
+          @if (isNameLoading) {
+            <div class="screening-progress">
+              <mat-progress-spinner diameter="28" mode="indeterminate"></mat-progress-spinner>
+              <span>{{ 'labels.messages.Screening request in progress' | translate }}</span>
+            </div>
+          }
+
+          @if (nameScreeningResult.errorMessageKey) {
+            <div class="screening-message error">
+              <mat-icon>error_outline</mat-icon>
+              <span>{{ nameScreeningResult.errorMessageKey | translate }}</span>
+            </div>
+          }
+
+          @if (nameScreeningResult.screenedText) {
+            <p class="screened-text">
+              <strong>{{ 'labels.inputs.Screened Value' | translate }}:</strong>
+              {{ nameScreeningResult.screenedText }}
+            </p>
+          }
+
+          @if (shouldShowMatches(nameScreeningResult)) {
+            <div class="matches-section">
+              <h4>{{ 'labels.heading.Returned Matches' | translate }}</h4>
+              @for (match of nameScreeningResult.matches; track match.id) {
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>{{ match.caption }}</mat-panel-title>
+                    <mat-panel-description>
+                      {{ 'labels.inputs.Score' | translate }}: {{ match.score | number: '1.2-2' }}
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+
+                  <div class="match-detail-grid">
+                    <div class="detail-row">
+                      <strong>{{ 'labels.inputs.Schema' | translate }}:</strong> {{ match.schema || '-' }}
+                    </div>
+                    <div class="detail-row">
+                      <strong>{{ 'labels.inputs.Datasets' | translate }}:</strong>
+                      {{ match.datasets.length ? match.datasets.join(', ') : '-' }}
+                    </div>
+                    <div class="detail-row">
+                      <strong>{{ 'labels.inputs.Countries' | translate }}:</strong>
+                      {{ match.countries.length ? match.countries.join(', ') : '-' }}
+                    </div>
+                    <div class="detail-row">
+                      <strong>{{ 'labels.inputs.Addresses' | translate }}:</strong>
+                      {{ match.addresses.length ? match.addresses.join('; ') : '-' }}
+                    </div>
+                    <div class="detail-row">
+                      <strong>{{ 'labels.inputs.Source' | translate }}:</strong>
+                      {{ match.sourceUrl || '-' }}
+                    </div>
+                  </div>
+                </mat-expansion-panel>
+              }
+            </div>
+          }
+        </section>
+
+        <section class="screening-panel">
+          <div class="panel-header">
+            <div>
+              <h3>{{ 'labels.heading.Address Screening' | translate }}</h3>
+              <p>{{ 'labels.messages.Screen the selected client address against Yente' | translate }}</p>
+            </div>
+            <button mat-raised-button color="primary" (click)="runAddressScreening()" [disabled]="isAddressLoading">
+              @if (!isAddressLoading) {
+                <mat-icon>location_searching</mat-icon>
+              }
+              {{ 'labels.buttons.Screen Address' | translate }}
+            </button>
+          </div>
+
+          <div class="screening-status">
+            <span class="status-label">{{ 'labels.inputs.Status' | translate }}</span>
+            <mat-chip-set>
+              <mat-chip [class]="addressScreeningResult.status">
+                {{ statusLabelKey(addressScreeningResult.status) | translate }}
+              </mat-chip>
+            </mat-chip-set>
+            @if (addressScreeningResult.screenedAt) {
+              <span class="screened-at">
+                {{ 'labels.inputs.Last Screened' | translate }}: {{ addressScreeningResult.screenedAt }}
+              </span>
+            }
+          </div>
+
+          @if (isAddressLoading) {
+            <div class="screening-progress">
+              <mat-progress-spinner diameter="28" mode="indeterminate"></mat-progress-spinner>
+              <span>{{ 'labels.messages.Screening request in progress' | translate }}</span>
+            </div>
+          }
+
+          @if (addressScreeningResult.errorMessageKey) {
+            <div
+              class="screening-message"
+              [class.error]="addressScreeningResult.status === 'error'"
+              [class.info]="addressScreeningResult.status !== 'error'"
+            >
+              <mat-icon>{{ addressScreeningResult.status === 'error' ? 'error_outline' : 'info' }}</mat-icon>
+              <span>{{ addressScreeningResult.errorMessageKey | translate }}</span>
+            </div>
+          }
+
+          @if (addressScreeningResult.screenedText) {
+            <p class="screened-text">
+              <strong>{{ 'labels.inputs.Screened Value' | translate }}:</strong>
+              {{ addressScreeningResult.screenedText }}
+            </p>
+          }
+
+          @if (shouldShowMatches(addressScreeningResult)) {
+            <div class="matches-section">
+              <h4>{{ 'labels.heading.Returned Matches' | translate }}</h4>
+              @for (match of addressScreeningResult.matches; track match.id) {
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>{{ match.caption }}</mat-panel-title>
+                    <mat-panel-description>
+                      {{ 'labels.inputs.Score' | translate }}: {{ match.score | number: '1.2-2' }}
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+
+                  <div class="match-detail-grid">
+                    <div class="detail-row">
+                      <strong>{{ 'labels.inputs.Schema' | translate }}:</strong> {{ match.schema || '-' }}
+                    </div>
+                    <div class="detail-row">
+                      <strong>{{ 'labels.inputs.Datasets' | translate }}:</strong>
+                      {{ match.datasets.length ? match.datasets.join(', ') : '-' }}
+                    </div>
+                    <div class="detail-row">
+                      <strong>{{ 'labels.inputs.Countries' | translate }}:</strong>
+                      {{ match.countries.length ? match.countries.join(', ') : '-' }}
+                    </div>
+                    <div class="detail-row">
+                      <strong>{{ 'labels.inputs.Addresses' | translate }}:</strong>
+                      {{ match.addresses.length ? match.addresses.join('; ') : '-' }}
+                    </div>
+                    <div class="detail-row">
+                      <strong>{{ 'labels.inputs.Source' | translate }}:</strong>
+                      {{ match.sourceUrl || '-' }}
+                    </div>
+                  </div>
+                </mat-expansion-panel>
+              }
+            </div>
+          }
+        </section>
+      </div>
+    }
+  </mat-card-content>
+</mat-card>

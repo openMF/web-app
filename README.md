@@ -38,6 +38,7 @@ Mifos® X Web App is a modern single-page application (SPA) built on top of the 
     - [OAUTH](#oauth-settings)
     - [OIDC](#oidc-settings)
     - [External National ID](#external-national-id-system-integration)
+    - [Yente Client Screening](#yente-client-screening)
     - [Interbank Transfers](#interbank-transfers-settings)
     - [Remittance Module](#remittance-module-settings)
   - [Client Data Masking](#client-data-masking-example)
@@ -436,6 +437,52 @@ docker-compose -f docker-compose.yml -f docker-compose.external-nationalid.yml u
 ```
 
 For more detailed configuration options, refer to the `env.sample` file in the root directory of the project.
+
+#### Yente Client Screening
+
+These variables enable read-only client screening with Yente from the selected client view. The feature is intentionally narrow:
+
+- screening runs only when a user opens a single client and manually clicks one of the screening buttons
+- screening results are not stored in the database
+- no audit trail is created by the web app
+- no account actions are triggered automatically
+
+Two separate user interactions are provided in the client view:
+
+1. `Screen Name` screens the client identity data shown on the page
+2. `Screen Address` screens collected client address data if any exists
+
+The UI normalizes Yente responses into three operator-facing outcomes:
+
+- `Match`
+- `Possible Match`
+- `Clear`
+
+When Yente returns possible or confirmed matches, the web app displays the returned match list for review, including score, schema, datasets, countries, addresses, and source details when available.
+
+| Variable                              | Description                                                                 | Default Value                 |
+| ------------------------------------- | --------------------------------------------------------------------------- | ----------------------------- |
+| ENABLE_YENTE_SCREENING                | Set to `true` to enable client screening in the selected client view        | false                         |
+| YENTE_SCREENING_URL                   | Base URL of the Yente deployment                                            |                               |
+| YENTE_SCREENING_DATASET               | Dataset appended to `/match/{dataset}`                                      | sanctions                     |
+| YENTE_MATCH_THRESHOLD                 | Score threshold treated as `Match`                                          | 0.85                          |
+| YENTE_POSSIBLE_MATCH_THRESHOLD        | Score threshold treated as `Possible Match`                                 | 0.70                          |
+
+**Technical flow**
+
+1. The user opens a client record.
+2. The client view renders a `Client Screening` panel with `Screen Name` and `Screen Address`.
+3. The web app sends a direct request to Yente. No web-app proxy is added for this feature.
+4. `Screen Name` uses the visible client name fields.
+5. `Screen Address` fetches client addresses only when the user explicitly requests the check.
+6. The response is normalized in the frontend and displayed immediately.
+7. The result remains in memory only for the current page session.
+
+**Implementation notes**
+
+- The feature is informational only and does not suspend, close, or otherwise mutate the client record.
+- Deployments concerned about browser CORS should place Yente on an accessible same-origin or otherwise CORS-compatible endpoint.
+- This feature reuses the existing external-system integration pattern of bypassing Fineract HTTP interceptors for outbound third-party requests.
 
 #### Interbank Transfers Settings
 

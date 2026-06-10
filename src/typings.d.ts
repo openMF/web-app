@@ -46,6 +46,11 @@ interface Window {
     externalNationalIdSystemApiHeader?: string;
     externalNationalIdSystemApiKey?: string;
     externalNationalIdRegex?: string;
+    enableYenteScreening?: string | boolean;
+    yenteScreeningUrl?: string;
+    yenteScreeningDataset?: string;
+    yenteMatchThreshold?: string | number;
+    yentePossibleMatchThreshold?: string | number;
     mifosRemittanceApiUrl?: string;
     mifosRemittanceApiProvider?: string;
     mifosRemittanceApiVersion?: string;

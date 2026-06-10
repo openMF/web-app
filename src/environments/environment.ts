@@ -112,6 +112,16 @@ export const environment = {
   externalNationalIdRegex: loadedEnv.externalNationalIdRegex || '',
 
   /**
+   * Yente screening integration.
+   * This is intentionally read-only and only used from selected client pages.
+   */
+  enableYenteScreening: loadedEnv.enableYenteScreening === 'true' || loadedEnv.enableYenteScreening === true || false,
+  yenteScreeningUrl: loadedEnv.yenteScreeningUrl || '',
+  yenteScreeningDataset: loadedEnv.yenteScreeningDataset || 'sanctions',
+  yenteMatchThreshold: loadedEnv.yenteMatchThreshold || 0.85,
+  yentePossibleMatchThreshold: loadedEnv.yentePossibleMatchThreshold || 0.7,
+
+  /**
    * Postal Code Lookup — auto-fill city/state/country from postal code.
    * Uses external Zippopotam.us API. Disable for deployments with strict privacy requirements.
    */

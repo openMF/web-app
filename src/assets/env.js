@@ -112,6 +112,14 @@
   window['env']['externalNationalIdSystemApiKey'] = '';
   window['env']['externalNationalIdRegex'] = '';
 
+  // Yente client screening
+  // This feature is read-only and screens only the selected client view.
+  window['env']['enableYenteScreening'] = 'false';
+  window['env']['yenteScreeningUrl'] = '';
+  window['env']['yenteScreeningDataset'] = 'sanctions';
+  window['env']['yenteMatchThreshold'] = '0.85';
+  window['env']['yentePossibleMatchThreshold'] = '0.70';
+
   // Postal Code Lookup (auto-fill address from postal code via external API)
   // Set to 'true' to enable, 'false' (default) to disable
   window['env']['enablePostalCodeLookup'] = 'false';

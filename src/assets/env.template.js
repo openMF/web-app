@@ -125,6 +125,13 @@
   window['env']['externalNationalIdSystemApiKey'] = '$EXTERNAL_NATIONAL_ID_SYSTEM_API_KEY';
   window['env']['externalNationalIdRegex'] = '$EXTERNAL_NATIONAL_ID_REGEX';
 
+  // Yente client screening
+  window['env']['enableYenteScreening'] = '$ENABLE_YENTE_SCREENING';
+  window['env']['yenteScreeningUrl'] = '$YENTE_SCREENING_URL';
+  window['env']['yenteScreeningDataset'] = '$YENTE_SCREENING_DATASET';
+  window['env']['yenteMatchThreshold'] = '$YENTE_MATCH_THRESHOLD';
+  window['env']['yentePossibleMatchThreshold'] = '$YENTE_POSSIBLE_MATCH_THRESHOLD';
+
   // OIDC Plugin Environment variables
   window['env']['oidcServerEnabled'] = '$FINERACT_PLUGIN_OIDC_ENABLED';
   window['env']['oidcBaseUrl'] = '$FINERACT_PLUGIN_OIDC_BASE_URL';

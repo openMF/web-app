@@ -1,0 +1,134 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+@use 'assets/styles/colours' as c;
+
+.screening-card {
+  margin-bottom: 16px;
+}
+
+.screening-panels {
+  display: grid;
+  gap: 16px;
+}
+
+.screening-panel {
+  border: 1px solid rgb(0 0 0 / 12%);
+  border-radius: 4px;
+  padding: 16px;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 16px;
+
+  h3 {
+    margin: 0 0 8px;
+  }
+
+  p {
+    margin: 0;
+    opacity: 0.75;
+  }
+
+  button mat-icon {
+    margin-right: 8px;
+  }
+
+  @media (width <=768px) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.screening-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.status-label,
+.screened-at {
+  font-size: 0.875rem;
+}
+
+mat-chip {
+  &.idle,
+  &.loading,
+  &.unavailable {
+    background-color: rgb(0 0 0 / 8%);
+    color: rgb(0 0 0 / 70%);
+  }
+
+  &.clear {
+    background-color: rgba(c.$msg-success, 0.15);
+    color: c.$nephritis;
+  }
+
+  &.possible-match {
+    background-color: rgba(c.$msg-warning, 0.16);
+    color: c.$pumpkin;
+  }
+
+  &.match,
+  &.error {
+    background-color: rgba(c.$msg-error, 0.16);
+    color: c.$msg-error;
+  }
+}
+
+.screening-progress,
+.screening-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding: 12px;
+  border-radius: 4px;
+}
+
+.screening-progress {
+  background-color: rgb(0 0 0 / 4%);
+}
+
+.screening-message {
+  &.info {
+    background-color: rgba(c.$belize-hole, 0.12);
+    color: c.$belize-hole;
+  }
+
+  &.error {
+    background-color: rgba(c.$msg-error, 0.12);
+    color: c.$msg-error;
+  }
+}
+
+.screened-text {
+  margin: 0 0 16px;
+  word-break: break-word;
+}
+
+.matches-section {
+  h4 {
+    margin: 0 0 8px;
+  }
+}
+
+.match-detail-grid {
+  display: grid;
+  gap: 8px;
+}
+
+.detail-row {
+  word-break: break-word;
+}
