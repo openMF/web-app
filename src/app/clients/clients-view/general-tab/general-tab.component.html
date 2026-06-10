@@ -6,1047 +6,654 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<div class="tab-container mat-typography">
-  <h3>{{ 'labels.heading.Performance History' | translate }}</h3>
-  <div class="layout-row gap-32px performance-history-container">
-    <table>
-      <tbody>
-        <tr>
-          <td>
-            <p>
-              {{ 'labels.inputs.No. Of Loan Cycles' | translate }} :{{ performanceHistory.loanCycle }} <br />
-              {{ 'labels.inputs.No. of Active Loans' | translate }} :{{ performanceHistory.activeLoans }} <br />
-              {{ 'labels.inputs.Last Loan Amount' | translate }} :{{ performanceHistory.lastLoanAmount | formatNumber }}
-              <br />
-            </p>
-          </td>
-          <td>
-            <p>
-              {{ 'labels.inputs.No. of Active Savings' | translate }} :{{ performanceHistory.activeSavings }} <br />
-              {{ 'labels.inputs.Total Savings' | translate }} :{{ performanceHistory.totalSavings | formatNumber }}
-              <br />
-            </p>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Upcoming Charges -->
-  <div class="heading-content">
-    <div class="layout-column flex-50">
-      <div class="heading-name">
-        <h3>{{ 'labels.heading.Upcoming Charges' | translate }}</h3>
+<div class="tab-container">
+  <!-- ════ PERFORMANCE HISTORY — KPI cards ════════════════════ -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-title">{{ 'labels.heading.Performance History' | translate }}</span>
+    </div>
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <span class="kpi-label">{{ 'labels.inputs.No. Of Loan Cycles' | translate }}</span>
+        <span class="kpi-value">{{ performanceHistory.loanCycle }}</span>
+        <span class="kpi-sub">{{ performanceHistory.activeLoans }} {{ 'labels.inputs.Active' | translate }}</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">{{ 'labels.inputs.No. of Active Loans' | translate }}</span>
+        <span class="kpi-value">{{ performanceHistory.activeLoans }}</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">{{ 'labels.inputs.Last Loan Amount' | translate }}</span>
+        <span class="kpi-value">{{ performanceHistory.lastLoanAmount | formatNumber }}</span>
+      </div>
+      <div class="kpi-card savings">
+        <span class="kpi-label">{{ 'labels.inputs.Total Savings' | translate }}</span>
+        <span class="kpi-value">{{ performanceHistory.totalSavings | formatNumber }}</span>
+        <span class="kpi-sub">{{ performanceHistory.activeSavings }} {{ 'labels.inputs.Active' | translate }}</span>
       </div>
     </div>
-    <div class="layout-column flex-50">
-      <div class="layout-row align-flex-end">
-        <button
-          mat-raised-button
-          class="f-right"
-          color="primary"
-          [routerLink]="['../', 'charges', 'overview']"
-          *mifosxHasPermission="'READ_CLIENTCHARGE'"
-        >
-          {{ 'labels.buttons.Charges Overview' | translate }}
-        </button>
-      </div>
+  </section>
+
+  <!-- ════ UPCOMING CHARGES ═══════════════════════════════════ -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-title">{{ 'labels.heading.Upcoming Charges' | translate }}</span>
+      <a class="section-link" [routerLink]="['../', 'charges', 'overview']" *mifosxHasPermission="'READ_CLIENTCHARGE'">
+        {{ 'labels.buttons.Charges Overview' | translate }} →
+      </a>
     </div>
-  </div>
 
-  <table mat-table [dataSource]="upcomingCharges">
-    <ng-container matColumnDef="Name">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
-      <td mat-cell *matCellDef="let element">
-        <i class="fa fa-stop" [ngClass]="!(element.isWaived || element.isPaid) | statusLookup"></i> {{ element.name }}
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="Due as of">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Due as of' | translate }}</th>
-      <td mat-cell *matCellDef="let element">{{ element.dueDate | dateFormat }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="Due">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Due' | translate }}</th>
-      <td mat-cell class="r-amount" *matCellDef="let element">{{ element.amount | formatNumber }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="Paid">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Paid' | translate }}</th>
-      <td mat-cell class="r-amount" *matCellDef="let element">{{ element.amountPaid | formatNumber }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="Waived">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Waived' | translate }}</th>
-      <td mat-cell class="r-amount" *matCellDef="let element">{{ element.amountWaived | formatNumber }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="Outstanding">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Outstanding' | translate }}</th>
-      <td mat-cell class="r-amount" *matCellDef="let element">{{ element.amountOutstanding | formatNumber }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="Actions">
-      <th mat-header-cell class="center" *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
-      <td mat-cell class="center" *matCellDef="let element">
-        <button
-          class="account-action-button"
-          mat-raised-button
-          color="primary"
-          (click)="routeEdit($event)"
-          [routerLink]="['../', 'charges', element.id, 'pay']"
-          *mifosxHasPermission="'PAY_CLIENTCHARGE'"
-        >
-          <i class="fa fa-dollar"></i>
-        </button>
-        <button
-          class="account-action-button"
-          mat-raised-button
-          color="primary"
-          (click)="routeEdit($event); waiveCharge(element.id, element.clientId)"
-          *mifosxHasPermission="'WAIVE_CLIENTCHARGE'"
-        >
-          <i class="fa fa-flag"></i>
-        </button>
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="no-data">
-      <td mat-footer-cell *matFooterCellDef [attr.colspan]="upcomingChargesColumns.length">
-        <div class="table-empty-state">
-          <p>{{ 'labels.messages.No Upcoming Charges Found' | translate }}</p>
+    @if (upcomingCharges?.length) {
+      <div class="data-card">
+        <div class="data-card-wrap">
+          <table mat-table [dataSource]="upcomingCharges" class="data-table">
+            <ng-container matColumnDef="Name">
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
+              <td mat-cell *matCellDef="let element">
+                <span class="row-dot" [ngClass]="!(element.isWaived || element.isPaid) | statusLookup"></span>
+                {{ element.name }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="Due as of">
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Due as of' | translate }}</th>
+              <td mat-cell *matCellDef="let element">{{ element.dueDate | dateFormat }}</td>
+            </ng-container>
+            <ng-container matColumnDef="Due">
+              <th mat-header-cell class="col-r" *matHeaderCellDef>{{ 'labels.inputs.Due' | translate }}</th>
+              <td mat-cell class="col-r" *matCellDef="let element">{{ element.amount | formatNumber }}</td>
+            </ng-container>
+            <ng-container matColumnDef="Paid">
+              <th mat-header-cell class="col-r" *matHeaderCellDef>{{ 'labels.inputs.Paid' | translate }}</th>
+              <td mat-cell class="col-r" *matCellDef="let element">{{ element.amountPaid | formatNumber }}</td>
+            </ng-container>
+            <ng-container matColumnDef="Waived">
+              <th mat-header-cell class="col-r" *matHeaderCellDef>{{ 'labels.inputs.Waived' | translate }}</th>
+              <td mat-cell class="col-r" *matCellDef="let element">{{ element.amountWaived | formatNumber }}</td>
+            </ng-container>
+            <ng-container matColumnDef="Outstanding">
+              <th mat-header-cell class="col-r" *matHeaderCellDef>{{ 'labels.inputs.Outstanding' | translate }}</th>
+              <td mat-cell class="col-r" *matCellDef="let element">
+                {{ element.amountOutstanding | formatNumber }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="Actions">
+              <th mat-header-cell class="col-c" *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
+              <td mat-cell class="col-c" *matCellDef="let element">
+                <button
+                  class="row-action primary"
+                  (click)="routeEdit($event)"
+                  [routerLink]="['../', 'charges', element.id, 'pay']"
+                  *mifosxHasPermission="'PAY_CLIENTCHARGE'"
+                  matTooltip="{{ 'tooltips.Make Payment' | translate }}"
+                >
+                  <i class="fa fa-dollar"></i>
+                </button>
+                <button
+                  class="row-action"
+                  (click)="routeEdit($event); waiveCharge(element.id, element.clientId)"
+                  *mifosxHasPermission="'WAIVE_CLIENTCHARGE'"
+                  matTooltip="{{ 'tooltips.Waive' | translate }}"
+                >
+                  <i class="fa fa-flag"></i>
+                </button>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="upcomingChargesColumns"></tr>
+            <tr
+              mat-row
+              *matRowDef="let row; columns: upcomingChargesColumns"
+              [routerLink]="['../', 'charges', row.id]"
+            ></tr>
+          </table>
         </div>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="upcomingChargesColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: upcomingChargesColumns" [routerLink]="['../', 'charges', row.id]"></tr>
-    <tr mat-footer-row *matFooterRowDef="upcomingCharges?.length === 0 ? ['no-data'] : []"></tr>
-  </table>
-
-  <!-- loans accounts overview table -->
-  <div class="heading-content">
-    <div class="layout-column flex-50">
-      <div class="heading-name">
-        <h3>{{ 'labels.heading.Loan Accounts' | translate }}</h3>
       </div>
-    </div>
-    <div class="layout-column flex-50">
-      <div class="layout-row align-flex-end">
-        <button mat-raised-button class="f-right" color="primary" (click)="toggleLoanAccountsOverview()">
-          {{ viewAccountsLabel(showClosedLoanAccounts) | translate }}
-        </button>
+    } @else {
+      <div class="info-banner">
+        <span class="info-banner-text">
+          <i class="fa fa-info-circle info-banner-icon"></i>
+          {{ 'labels.messages.No Upcoming Charges Found' | translate }}
+        </span>
       </div>
+    }
+  </section>
+
+  <!-- ════ ACCOUNTS — unified card with sub-tabs ══════════════ -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-title">{{ 'labels.heading.Accounts' | translate }}</span>
     </div>
-  </div>
 
-  @if (!showClosedLoanAccounts) {
-    <table mat-table [dataSource]="loanAccounts | accountsFilter: 'loan'">
-      <ng-container matColumnDef="Account No">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account No' | translate }}</th>
-        <td mat-cell *matCellDef="let element">
-          <i
-            class="fa fa-stop"
-            [ngClass]="element.inArrears ? 'status-active-overdue' : (element.status.code | statusLookup)"
-          ></i>
-          <mifosx-account-number accountNo="{{ element.accountNo }}"></mifosx-account-number>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Product Type">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Product Type' | translate }}</th>
-        <td mat-cell *matCellDef="let element">
-          {{ loanProductTypeLabel(element.productType) | translate }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Loan Account">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Loan Product' | translate }}</th>
-        <td mat-cell *matCellDef="let element">
-          <mifosx-long-text textValue="{{ element.productName }}" chars="35"></mifosx-long-text>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Original Loan">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Original Loan' | translate }}</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.originalLoan | currency: element.currency?.code || 'USD' : 'symbol-narrow' : '1.2-2' }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Loan Balance">
-        <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Loan Balance' | translate }}</th>
-        <td mat-cell class="r-amount" *matCellDef="let element">
-          {{ element.loanBalance | currency: element.currency?.code || 'USD' : 'symbol-narrow' : '1.2-2' }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Amount Paid">
-        <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Amount Paid' | translate }}</th>
-        <td mat-cell class="r-amount" *matCellDef="let element">
-          {{ element.amountPaid | currency: element.currency?.code || 'USD' : 'symbol-narrow' : '1.2-2' }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Type">
-        <th mat-header-cell class="center" *matHeaderCellDef>{{ 'labels.inputs.Type' | translate }}</th>
-        <td mat-cell class="center" *matCellDef="let element">
-          @if (element.productType === 'loan') {
-            <i
-              class="fa fa-large"
-              [ngClass]="element.loanType.value === 'Individual' ? 'fa-user' : 'fa-group'"
-              matTooltip="{{ element.loanType.value }}"
-              matTooltipPosition="above"
-            ></i>
-          }
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Actions">
-        <th mat-header-cell class="center" *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
-        <td mat-cell class="center" *matCellDef="let element">
-          @if (element.status.active) {
-            <button
-              class="account-action-button"
-              mat-raised-button
-              color="primary"
-              matTooltip="{{ 'tooltips.Make Repayment' | translate }}"
-              matTooltipPosition="above"
-              (click)="routeEdit($event)"
-              [routerLink]="['../', 'loans-accounts', element.id, 'actions', 'Make Repayment']"
-            >
-              <i class="fa fa-dollar"></i>
-            </button>
-          }
-          @if (element.status.pendingApproval) {
-            <span>
-              <button
-                class="account-action-button"
-                mat-raised-button
-                color="primary"
-                matTooltip="{{ 'tooltips.Approve' | translate }}"
-                matTooltipPosition="above"
-                *mifosxHasPermission="'APPROVE_LOAN'"
-                (click)="routeEdit($event)"
-                [routerLink]="['../', 'loans-accounts', element.id, 'actions', 'Approve']"
-              >
-                <i class="fa fa-check"></i>
-              </button>
-            </span>
-          }
-          @if (!element.status.pendingApproval && !element.status.active && !element.status.overpaid) {
-            <span>
-              <button
-                class="account-action-button"
-                mat-raised-button
-                color="primary"
-                matTooltip="{{ 'tooltips.Disburse' | translate }}"
-                matTooltipPosition="above"
-                *mifosxHasPermission="'DISBURSE_LOAN'"
-                (click)="routeEdit($event)"
-                [routerLink]="['../', 'loans-accounts', element.id, 'actions', 'Disburse']"
-              >
-                <i class="fa fa-flag"></i>
-              </button>
-            </span>
-          }
-          @if (!element.status.pendingApproval && !element.status.active && element.status.overpaid) {
-            <span>
-              <button
-                class="account-action-button"
-                mat-raised-button
-                color="primary"
-                matTooltip="{{ 'tooltips.Transfer Funds' | translate }}"
-                matTooltipPosition="above"
-                *mifosxHasPermission="'DISBURSE_LOAN'"
-                (click)="routeEdit($event); routeTransferFund(element.id)"
-              >
-                <i class="fa fa-exchange"></i>
-              </button>
-            </span>
-          }
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="no-data">
-        <td mat-footer-cell *matFooterCellDef [attr.colspan]="openLoansColumns.length">
-          <div class="table-empty-state">
-            <p>{{ 'labels.messages.No Active Loan Accounts Found' | translate }}</p>
-          </div>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="openLoansColumns"></tr>
-      <tr
-        mat-row
-        *matRowDef="let row; columns: openLoansColumns"
-        [routerLink]="['../', 'loans-accounts', row.id, 'general']"
-        [queryParams]="{ productType: row.productType }"
-        class="select-row"
-      ></tr>
-      <tr
-        mat-footer-row
-        *matFooterRowDef="(loanAccounts | accountsFilter: 'loan')?.length === 0 ? ['no-data'] : []"
-      ></tr>
-    </table>
-  }
-
-  <!-- Closed Loan Accounts -->
-  @if (showClosedLoanAccounts) {
-    <table mat-table [dataSource]="loanAccounts | accountsFilter: 'loan' : 'closed'">
-      <ng-container matColumnDef="Account No">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account No' | translate }}</th>
-        <td mat-cell *matCellDef="let element">
-          <i
-            class="fa fa-stop"
-            [ngClass]="element.inArrears ? 'status-active-overdue' : (element.status.code | statusLookup)"
-          ></i>
-          <mifosx-account-number accountNo="{{ element.accountNo }}"></mifosx-account-number>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Loan Account">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Loan Product' | translate }}</th>
-        <td mat-cell *matCellDef="let element">
-          <mifosx-long-text textValue="{{ element.productName }}" chars="35"></mifosx-long-text>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Product Type">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Product Type' | translate }}</th>
-        <td mat-cell *matCellDef="let element">
-          {{ loanProductTypeLabel(element.productType) | translate }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Original Loan">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Original Loan' | translate }}</th>
-        <td mat-cell *matCellDef="let element">{{ element.lastActiveTransactionDate | dateFormat }}</td>
-      </ng-container>
-      <ng-container matColumnDef="Loan Balance">
-        <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Loan Balance' | translate }}</th>
-        <td mat-cell class="r-amount" *matCellDef="let element">
-          {{ element.loanBalance | currency: element.currency?.code || 'USD' : 'symbol-narrow' : '1.2-2' }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Amount Paid">
-        <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Amount Paid' | translate }}</th>
-        <td mat-cell class="r-amount" *matCellDef="let element">
-          {{ element.accountBalance | currency: element.currency?.code || 'USD' : 'symbol-narrow' : '1.2-2' }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Type">
-        <th mat-header-cell class="center" *matHeaderCellDef>{{ 'labels.inputs.Type' | translate }}</th>
-        <td mat-cell class="center" *matCellDef="let element">
-          <i
-            class="fa fa-large"
-            [ngClass]="element.loanType.value === 'Individual' ? 'fa-user' : 'fa-group'"
-            matTooltip=" {{ element.loanType.value }}"
-            matTooltipPosition="above"
-          ></i>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Closed Date">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Closed Date' | translate }}</th>
-        <td mat-cell *matCellDef="let element">{{ element.timeline.closedOnDate | dateFormat }}</td>
-      </ng-container>
-      <ng-container matColumnDef="Actions">
-        <th mat-header-cell class="center" *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
-        <td mat-cell class="center" *matCellDef="let element"></td>
-      </ng-container>
-
-      <ng-container matColumnDef="no-data">
-        <td mat-footer-cell *matFooterCellDef [attr.colspan]="closedLoansColumns.length">
-          <div class="table-empty-state">
-            <p>{{ 'labels.messages.No Closed Loan Accounts Found' | translate }}</p>
-          </div>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="closedLoansColumns"></tr>
-      <tr
-        mat-row
-        *matRowDef="let row; columns: closedLoansColumns"
-        [routerLink]="['../', 'loans-accounts', row.id, 'general']"
-        [queryParams]="{ productType: row.productType }"
-        class="select-row"
-      ></tr>
-      <tr
-        mat-footer-row
-        *matFooterRowDef="(loanAccounts | accountsFilter: 'loan' : 'closed')?.length === 0 ? ['no-data'] : []"
-      ></tr>
-    </table>
-  }
-
-  <!-- Saving overview Table -->
-  <div class="heading-content">
-    <div class="layout-column flex-50">
-      <div class="heading-name">
-        <h3>{{ 'labels.heading.Saving Accounts' | translate }}</h3>
-      </div>
-    </div>
-    <div class="layout-column flex-50">
-      <div class="layout-row align-flex-end">
-        <button mat-raised-button class="f-right" color="primary" (click)="toggleSavingAccountsOverview()">
-          {{ viewAccountsLabel(showClosedSavingAccounts) | translate }}
-        </button>
-      </div>
-    </div>
-  </div>
-
-  @if (!showClosedSavingAccounts) {
-    <table mat-table [dataSource]="savingAccounts | accountsFilter: 'saving' : 'open' : 'isSavings'">
-      <ng-container matColumnDef="Account No">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account No' | translate }}</th>
-        <td mat-cell *matCellDef="let element">
-          <i class="fa fa-stop" [ngClass]="element.status.code | statusLookup"></i>
-          <mifosx-account-number accountNo="{{ element.accountNo }}"></mifosx-account-number>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Saving Account">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Savings Product' | translate }}</th>
-        <td mat-cell *matCellDef="let element">
-          <mifosx-long-text textValue="{{ element.productName }}" chars="35"></mifosx-long-text>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Last Active">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Last Active' | translate }}</th>
-        <td mat-cell *matCellDef="let element">{{ element.lastActiveTransactionDate | dateFormat }}</td>
-      </ng-container>
-      <ng-container matColumnDef="Balance">
-        <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Balance' | translate }}</th>
-        <td mat-cell class="r-amount" *matCellDef="let element">
-          {{ element.accountBalance | currency: element.currency?.code || 'USD' : 'symbol-narrow' : '1.2-2' }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Actions">
-        <th mat-header-cell class="center" *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
-        <td mat-cell class="center" *matCellDef="let element">
-          @if (element.status.active) {
-            <button
-              class="account-action-button"
-              mat-raised-button
-              color="primary"
-              (click)="routeEdit($event)"
-              [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Deposit']"
-            >
-              <i class="fa fa-arrow-up"></i>
-            </button>
-          }
-          @if (element.status.active) {
-            <button
-              class="account-action-button"
-              mat-raised-button
-              color="primary"
-              (click)="routeEdit($event)"
-              [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Withdrawal']"
-            >
-              <i class="fa fa-arrow-down"></i>
-            </button>
-          }
-          @if (element.status.submittedAndPendingApproval) {
-            <button
-              class="account-action-button"
-              mat-raised-button
-              color="primary"
-              (click)="routeEdit($event)"
-              [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Approve']"
-            >
-              <i class="fa fa-check"></i>
-            </button>
-          }
-          @if (!element.status.submittedAndPendingApproval && !element.status.active) {
-            <button
-              class="account-action-button"
-              mat-raised-button
-              color="primary"
-              [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Undo Approval']"
-            >
-              <i class="fa fa-undo"></i>
-            </button>
-          }
-          @if (!element.status.submittedAndPendingApproval && !element.status.active) {
-            <button
-              class="account-action-button"
-              mat-raised-button
-              color="primary"
-              [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Activate']"
-            >
-              <i class="fa fa-check-circle"></i>
-            </button>
-          }
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="no-data">
-        <td mat-footer-cell *matFooterCellDef [attr.colspan]="openSavingsColumns.length">
-          <div class="table-empty-state">
-            <p>{{ 'labels.messages.No Active Saving Accounts Found' | translate }}</p>
-          </div>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="openSavingsColumns"></tr>
-      <tr
-        mat-row
-        *matRowDef="let row; columns: openSavingsColumns"
-        [routerLink]="['../', 'savings-accounts', row.id, 'general']"
-      ></tr>
-      <tr
-        mat-footer-row
-        *matFooterRowDef="
-          (savingAccounts | accountsFilter: 'saving' : 'open' : 'isSavings')?.length === 0 ? ['no-data'] : []
-        "
-      ></tr>
-    </table>
-  }
-
-  <!-- Closed Saving Accounts -->
-  @if (showClosedSavingAccounts) {
-    <table mat-table [dataSource]="savingAccounts | accountsFilter: 'saving' : 'closed' : 'isSavings'">
-      <ng-container matColumnDef="Account No">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account No' | translate }}</th>
-        <td mat-cell *matCellDef="let element">
-          <i class="fa fa-stop" [ngClass]="element.status.code | statusLookup"></i>
-          <mifosx-account-number accountNo="{{ element.accountNo }}"></mifosx-account-number>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Saving Account">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Savings Product' | translate }}</th>
-        <td mat-cell *matCellDef="let element">
-          <mifosx-long-text textValue="{{ element.productName }}" chars="35"></mifosx-long-text>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Closed Date">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Closed Date' | translate }}</th>
-        <td mat-cell *matCellDef="let element">{{ element.timeline.closedOnDate | dateFormat }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="no-data">
-        <td mat-footer-cell *matFooterCellDef [attr.colspan]="closedSavingsColumns.length">
-          <div class="table-empty-state">
-            <p>{{ 'labels.messages.No Closed Saving Accounts Found' | translate }}</p>
-          </div>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="closedSavingsColumns"></tr>
-      <tr
-        mat-row
-        *matRowDef="let row; columns: closedSavingsColumns"
-        [routerLink]="['../', 'savings-accounts', row.id, 'general']"
-      ></tr>
-      <tr
-        mat-footer-row
-        *matFooterRowDef="
-          (savingAccounts | accountsFilter: 'saving' : 'closed' : 'isSavings')?.length === 0 ? ['no-data'] : []
-        "
-      ></tr>
-    </table>
-  }
-
-  <!-- Fixed Deposit Table -->
-  <div class="heading-content">
-    <div class="layout-column flex-50">
-      <div class="heading-name">
-        <h3>{{ 'labels.heading.Fixed Deposit Accounts' | translate }}</h3>
-      </div>
-    </div>
-    <div class="layout-column flex-50">
-      <div class="layout-row align-flex-end">
-        <button mat-raised-button class="f-right" color="primary" (click)="toggleFixedAccountsOverview()">
-          {{ viewAccountsLabel(showClosedFixedAccounts) | translate }}
-        </button>
-      </div>
-    </div>
-  </div>
-
-  @if (!showClosedFixedAccounts) {
-    <table mat-table [dataSource]="savingAccounts | accountsFilter: 'saving' : 'open' : 'isFixed'">
-      <ng-container matColumnDef="Account No">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account No' | translate }}</th>
-        <td mat-cell *matCellDef="let element">
-          <i class="fa fa-stop" [ngClass]="element.status.code | statusLookup"></i>
-          <mifosx-account-number accountNo="{{ element.accountNo }}"></mifosx-account-number>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Saving Account">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Fixed Deposit Product' | translate }}</th>
-        <td mat-cell *matCellDef="let element">{{ element.productName }}</td>
-      </ng-container>
-      <ng-container matColumnDef="Last Active">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Last Active' | translate }}</th>
-        <td mat-cell *matCellDef="let element">{{ element.lastActiveTransactionDate | dateFormat }}</td>
-      </ng-container>
-      <ng-container matColumnDef="Balance">
-        <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Balance' | translate }}</th>
-        <td mat-cell class="r-amount" *matCellDef="let element">
-          {{ element.accountBalance | currency: element.currency?.code || 'USD' : 'symbol-narrow' : '1.2-2' }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Actions">
-        <th mat-header-cell class="center" *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
-        <td mat-cell class="center" *matCellDef="let element">
-          @if (element.status.submittedAndPendingApproval) {
-            <button
-              class="account-action-button"
-              mat-raised-button
-              color="primary"
-              (click)="routeEdit($event)"
-              [routerLink]="['../', 'fixed-deposits-accounts', element.id, 'actions', 'Approve']"
-            >
-              <i class="fa fa-check"></i>
-            </button>
-          }
-          @if (!element.status.submittedAndPendingApproval && !element.status.active) {
-            <button
-              class="account-action-button"
-              mat-raised-button
-              color="primary"
-              [routerLink]="['../', 'fixed-deposits-accounts', element.id, 'actions', 'Undo Approval']"
-            >
-              <i class="fa fa-undo"></i>
-            </button>
-          }
-          @if (!element.status.submittedAndPendingApproval && !element.status.active) {
-            <button
-              class="account-action-button"
-              mat-raised-button
-              color="primary"
-              [routerLink]="['../', 'fixed-deposits-accounts', element.id, 'actions', 'Activate']"
-            >
-              <i class="fa fa-check-circle"></i>
-            </button>
-          }
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="no-data">
-        <td mat-footer-cell *matFooterCellDef [attr.colspan]="openSavingsColumns.length">
-          <div class="table-empty-state">
-            <p>{{ 'labels.messages.No Active Fixed Deposit Accounts Found' | translate }}</p>
-          </div>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="openSavingsColumns"></tr>
-      <tr
-        mat-row
-        *matRowDef="let row; columns: openSavingsColumns"
-        [routerLink]="['../', 'fixed-deposits-accounts', row.id, 'general']"
-      ></tr>
-      <tr
-        mat-footer-row
-        *matFooterRowDef="
-          (savingAccounts | accountsFilter: 'saving' : 'open' : 'isFixed')?.length === 0 ? ['no-data'] : []
-        "
-      ></tr>
-    </table>
-  }
-
-  <!-- Closed Fixed Deposit Accounts -->
-
-  @if (showClosedFixedAccounts) {
-    <table mat-table [dataSource]="savingAccounts | accountsFilter: 'saving' : 'closed' : 'isFixed'">
-      <ng-container matColumnDef="Account No">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account No' | translate }}</th>
-        <td mat-cell *matCellDef="let element">
-          <i class="fa fa-stop" [ngClass]="element.status.code | statusLookup"></i>
-          <mifosx-account-number accountNo="{{ element.accountNo }}"></mifosx-account-number>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Saving Account">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Fixed Deposit Product' | translate }}</th>
-        <td mat-cell *matCellDef="let element">
-          <mifosx-long-text textValue="{{ element.productName }}" chars="35"></mifosx-long-text>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Closed Date">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Closed Date' | translate }}</th>
-        <td mat-cell *matCellDef="let element">{{ element.timeline.closedOnDate | dateFormat }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="no-data">
-        <td mat-footer-cell *matFooterCellDef [attr.colspan]="closedSavingsColumns.length">
-          <div class="table-empty-state">
-            <p>{{ 'labels.messages.No Closed Fixed Deposit Accounts Found' | translate }}</p>
-          </div>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="closedSavingsColumns"></tr>
-      <tr
-        mat-row
-        *matRowDef="let row; columns: closedSavingsColumns"
-        [routerLink]="['../', 'fixed-deposits-accounts', row.id, 'general']"
-      ></tr>
-      <tr
-        mat-footer-row
-        *matFooterRowDef="
-          (savingAccounts | accountsFilter: 'saving' : 'closed' : 'isFixed')?.length === 0 ? ['no-data'] : []
-        "
-      ></tr>
-    </table>
-  }
-
-  <!-- Recurring Deposit Table -->
-  <div class="heading-content">
-    <div class="layout-column flex-50">
-      <div class="heading-name">
-        <h3>{{ 'labels.heading.Recurring Deposit Accounts' | translate }}</h3>
-      </div>
-    </div>
-    <div class="layout-column flex-50">
-      <div class="layout-row align-flex-end">
-        <button mat-raised-button class="f-right" color="primary" (click)="toggleRecurringAccountsOverview()">
-          {{ viewAccountsLabel(showClosedRecurringAccounts) | translate }}
-        </button>
-      </div>
-    </div>
-  </div>
-
-  @if (!showClosedRecurringAccounts) {
-    <table mat-table [dataSource]="savingAccounts | accountsFilter: 'saving' : 'open' : 'isRecurring'">
-      <ng-container matColumnDef="Account No">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account No' | translate }}</th>
-        <td mat-cell *matCellDef="let element">
-          <i class="fa fa-stop" [ngClass]="element.status.code | statusLookup"></i>
-          <mifosx-account-number accountNo="{{ element.accountNo }}"></mifosx-account-number>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Saving Account">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Recurring Deposit Product' | translate }}</th>
-        <td mat-cell *matCellDef="let element">
-          <mifosx-long-text textValue="{{ element.productName }}" chars="35"></mifosx-long-text>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Last Active">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Last Active' | translate }}</th>
-        <td mat-cell *matCellDef="let element">{{ element.lastActiveTransactionDate | dateFormat }}</td>
-      </ng-container>
-      <ng-container matColumnDef="Balance">
-        <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Balance' | translate }}</th>
-        <td mat-cell class="r-amount" *matCellDef="let element">
-          {{ element.accountBalance | currency: element.currency?.code || 'USD' : 'symbol-narrow' : '1.2-2' }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Actions">
-        <th mat-header-cell class="center" *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
-        <td mat-cell class="center" *matCellDef="let element">
-          @if (element.status.submittedAndPendingApproval) {
-            <button
-              class="account-action-button"
-              mat-raised-button
-              *mifosxHasPermission="'APPROVE_SAVINGSACCOUNT'"
-              [routerLink]="['../', 'recurring-deposits-accounts', element.id, 'actions', 'Approve']"
-              color="primary"
-            >
-              <i class="fa fa-check"></i>
-            </button>
-          }
-          @if (!element.status.submittedAndPendingApproval && !element.status.active) {
-            <button
-              class="account-action-button"
-              mat-raised-button
-              color="primary"
-              (click)="routeEdit($event)"
-              *mifosxHasPermission="'APPROVALUNDO_SAVINGSACCOUNT'"
-              [routerLink]="['../', 'recurring-deposits-accounts', element.id, 'actions', 'Undo Approval']"
-            >
-              <i class="fa fa-undo"></i>
-            </button>
-            <button
-              class="account-action-button"
-              mat-raised-button
-              color="primary"
-              (click)="routeEdit($event)"
-              *mifosxHasPermission="'ACTIVATE_SAVINGSACCOUNT'"
-              [routerLink]="['../', 'recurring-deposits-accounts', element.id, 'actions', 'Activate']"
-            >
-              <i class="fa fa-check-circle"></i>
-            </button>
-          }
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="no-data">
-        <td mat-footer-cell *matFooterCellDef [attr.colspan]="openSavingsColumns.length">
-          <div class="table-empty-state">
-            <p>{{ 'labels.messages.No Active Recurring Deposit Accounts Found' | translate }}</p>
-          </div>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="openSavingsColumns"></tr>
-      <tr
-        mat-row
-        *matRowDef="let row; columns: openSavingsColumns"
-        [routerLink]="['../', 'recurring-deposits-accounts', row.id, 'general']"
-        class="select-row"
-      ></tr>
-      <tr
-        mat-footer-row
-        *matFooterRowDef="
-          (savingAccounts | accountsFilter: 'saving' : 'open' : 'isRecurring')?.length === 0 ? ['no-data'] : []
-        "
-      ></tr>
-    </table>
-  }
-
-  <!-- Closed Recurring Deposit Accounts -->
-  @if (showClosedRecurringAccounts) {
-    <table mat-table [dataSource]="savingAccounts | accountsFilter: 'saving' : 'closed' : 'isRecurring'">
-      <ng-container matColumnDef="Account No">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account No' | translate }}</th>
-        <td mat-cell *matCellDef="let element">
-          <i class="fa fa-stop" [ngClass]="element.status.code | statusLookup"></i>
-          <mifosx-account-number accountNo="{{ element.accountNo }}"></mifosx-account-number>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Saving Account">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Recurring Deposit Product' | translate }}</th>
-        <td mat-cell *matCellDef="let element">
-          <mifosx-long-text textValue="{{ element.productName }}" chars="35"></mifosx-long-text>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Closed Date">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Closed Date' | translate }}</th>
-        <td mat-cell *matCellDef="let element">{{ element.timeline.closedOnDate | dateFormat }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="no-data">
-        <td mat-footer-cell *matFooterCellDef [attr.colspan]="closedSavingsColumns.length">
-          <div class="table-empty-state">
-            <p>{{ 'labels.messages.No Closed Recurring Deposit Accounts Found' | translate }}</p>
-          </div>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="closedSavingsColumns"></tr>
-      <tr
-        mat-row
-        *matRowDef="let row; columns: closedSavingsColumns"
-        [routerLink]="['../', 'recurring-deposits-accounts', row.id, 'general']"
-        class="select-row"
-      ></tr>
-      <tr
-        mat-footer-row
-        *matFooterRowDef="
-          (savingAccounts | accountsFilter: 'saving' : 'closed' : 'isRecurring')?.length === 0 ? ['no-data'] : []
-        "
-      ></tr>
-    </table>
-  }
-
-  <!-- Shares overview Table -->
-  <div class="heading-content">
-    <div class="layout-column flex-50">
-      <div class="heading-name">
-        <h3>{{ 'labels.inputs.Shares Accounts' | translate }}</h3>
-      </div>
-    </div>
-    <div class="layout-column flex-50">
-      <div class="layout-row align-flex-end">
-        <button mat-raised-button class="f-right" color="primary" (click)="toggleShareAccountsOverview()">
-          {{ viewAccountsLabel(showClosedShareAccounts) | translate }}
-        </button>
-      </div>
-    </div>
-  </div>
-
-  @if (!showClosedShareAccounts) {
-    <table mat-table [dataSource]="shareAccounts | accountsFilter: 'share'">
-      <ng-container matColumnDef="Account No">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account No' | translate }}</th>
-        <td mat-cell *matCellDef="let element">
-          <i class="fa fa-stop" [ngClass]="element.status.code | statusLookup"></i>
-          <mifosx-account-number accountNo="{{ element.accountNo }}"></mifosx-account-number>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Share Account">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Share Product' | translate }}</th>
-        <td mat-cell *matCellDef="let element">
-          <mifosx-long-text textValue="{{ element.productName }}" chars="35"></mifosx-long-text>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Approved Shares">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Approved Shares' | translate }}</th>
-        <td mat-cell *matCellDef="let element">{{ element.totalApprovedShares }}</td>
-      </ng-container>
-      <ng-container matColumnDef="Pending For Approval Shares">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Pending For Approval Shares' | translate }}</th>
-        <td mat-cell *matCellDef="let element">{{ element.totalPendingForApprovalShares }}</td>
-      </ng-container>
-      <ng-container matColumnDef="Actions">
-        <th mat-header-cell class="center" *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
-        <td mat-cell class="center" *matCellDef="let element">
-          @if (element.status.submittedAndPendingApproval) {
-            <button
-              class="account-action-button"
-              mat-raised-button
-              color="primary"
-              (click)="routeEdit($event)"
-              [routerLink]="['../', 'shares-accounts', element.id, 'actions', 'Approve']"
-            >
-              <i class="fa fa-check"></i>
-            </button>
-          }
-          @if (!element.status.submittedAndPendingApproval && !element.status.active) {
-            <button
-              class="account-action-button"
-              mat-raised-button
-              color="primary"
-              (click)="routeEdit($event)"
-              [routerLink]="['../', 'shares-accounts', element.id, 'actions', 'Undo Approval']"
-            >
-              <i class="fa fa-undo"></i>
-            </button>
-          }
-          @if (!element.status.submittedAndPendingApproval && !element.status.active) {
-            <button
-              class="account-action-button"
-              mat-raised-button
-              color="primary"
-              (click)="routeEdit($event)"
-              [routerLink]="['../', 'shares-accounts', element.id, 'actions', 'Activate']"
-            >
-              <i class="fa fa-check-circle"></i>
-            </button>
-          }
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="no-data">
-        <td mat-footer-cell *matFooterCellDef [attr.colspan]="openSharesColumns.length">
-          <div class="table-empty-state">
-            <p>{{ 'labels.messages.No Active Share Accounts Found' | translate }}</p>
-          </div>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="openSharesColumns"></tr>
-      <tr
-        mat-row
-        *matRowDef="let row; columns: openSharesColumns"
-        [routerLink]="['../', 'shares-accounts', row.id, 'general']"
-      ></tr>
-      <tr
-        mat-footer-row
-        *matFooterRowDef="(shareAccounts | accountsFilter: 'share')?.length === 0 ? ['no-data'] : []"
-      ></tr>
-    </table>
-  }
-
-  <!-- Closed Share Accounts -->
-  @if (showClosedShareAccounts) {
-    <table mat-table [dataSource]="shareAccounts | accountsFilter: 'share' : 'closed'">
-      <ng-container matColumnDef="Account No">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account No' | translate }}</th>
-        <td mat-cell *matCellDef="let element">
-          <i class="fa fa-stop" [ngClass]="element.status.code | statusLookup"></i>
-          <mifosx-account-number accountNo="{{ element.accountNo }}"></mifosx-account-number>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Share Account">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Share Product' | translate }}</th>
-        <td mat-cell *matCellDef="let element">{{ element.productName }}</td>
-      </ng-container>
-      <ng-container matColumnDef="Approved Shares">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Approved Shares' | translate }}</th>
-        <td mat-cell *matCellDef="let element">{{ element.totalApprovedShares }}</td>
-      </ng-container>
-      <ng-container matColumnDef="Pending For Approval Shares">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Pending For Approval Shares' | translate }}</th>
-        <td mat-cell *matCellDef="let element">{{ element.totalPendingForApprovalShares }}</td>
-      </ng-container>
-      <ng-container matColumnDef="Closed Date">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Closed Date' | translate }}</th>
-        <td mat-cell *matCellDef="let element">{{ element.timeline.closedOnDate | dateFormat }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="no-data">
-        <td mat-footer-cell *matFooterCellDef [attr.colspan]="closedSharesColumns.length">
-          <div class="table-empty-state">
-            <p>{{ 'labels.messages.No Closed Share Accounts Found' | translate }}</p>
-          </div>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="closedSharesColumns"></tr>
-      <tr
-        mat-row
-        *matRowDef="let row; columns: closedSharesColumns"
-        [routerLink]="['../', 'shares-accounts', row.id, 'general']"
-      ></tr>
-      <tr
-        mat-footer-row
-        *matFooterRowDef="(shareAccounts | accountsFilter: 'share' : 'closed')?.length === 0 ? ['no-data'] : []"
-      ></tr>
-    </table>
-  }
-
-  <!-- Collateral Data Table -->
-  <div class="heading-content">
-    <div class="layout-column flex-50">
-      <div class="heading-name">
-        <h3>{{ 'labels.heading.Collateral Data' | translate }}</h3>
-      </div>
-    </div>
-    <div class="layout-column flex-50">
-      <div class="layout-row align-flex-end">
-        <button mat-raised-button class="f-right" color="primary" disabled>
-          {{ 'labels.buttons.View Collaterals' | translate }}
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <table mat-table [dataSource]="collaterals">
-    <ng-container matColumnDef="ID">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.ID' | translate }}</th>
-      <td mat-cell *matCellDef="let element">{{ element.collateralId }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="Name">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
-      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="Quantity">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Quantity' | translate }}</th>
-      <td mat-cell class="r-amount" *matCellDef="let element">{{ element.quantity | formatNumber }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="Total Value">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Total Value' | translate }}</th>
-      <td mat-cell class="r-amount" *matCellDef="let element">
-        {{
-          element.basePrice * element.quantity | currency: element.currency?.code || 'USD' : 'symbol-narrow' : '1.2-2'
-        }}
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="Total Collateral Value">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef>
-        {{ 'labels.inputs.Total Collateral Value' | translate }}
-      </th>
-      <td mat-cell class="r-amount" *matCellDef="let element">
-        {{
-          (element.pctToBase * element.basePrice * element.quantity) / 100
-            | currency: element.currency?.code || 'USD' : 'symbol-narrow' : '1.2-2'
-        }}
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="no-data">
-      <td mat-footer-cell *matFooterCellDef [attr.colspan]="collateralsColumns.length">
-        <div class="table-empty-state">
-          <p>{{ 'labels.messages.No Collateral Data Found' | translate }}</p>
+    <div class="accounts-card">
+      <!-- Toolbar: type sub-tabs + closed toggle -->
+      <div class="accounts-toolbar">
+        <div class="account-type-tabs">
+          <button class="at-tab" [class.active]="currentAccountType === 'all'" (click)="selectAccountType('all')">
+            {{ 'labels.inputs.All' | translate }}
+            <span class="at-count">{{ accountCounts.total }}</span>
+          </button>
+          <button class="at-tab" [class.active]="currentAccountType === 'loan'" (click)="selectAccountType('loan')">
+            {{ 'labels.heading.Loan Accounts' | translate }}
+            <span class="at-count">{{ accountCounts.loan }}</span>
+          </button>
+          <button
+            class="at-tab"
+            [class.active]="currentAccountType === 'savings'"
+            (click)="selectAccountType('savings')"
+          >
+            {{ 'labels.heading.Saving Accounts' | translate }}
+            <span class="at-count">{{ accountCounts.savings }}</span>
+          </button>
+          <button class="at-tab" [class.active]="currentAccountType === 'fixed'" (click)="selectAccountType('fixed')">
+            {{ 'labels.heading.Fixed Deposit Accounts' | translate }}
+            <span class="at-count">{{ accountCounts.fixed }}</span>
+          </button>
+          <button
+            class="at-tab"
+            [class.active]="currentAccountType === 'recurring'"
+            (click)="selectAccountType('recurring')"
+          >
+            {{ 'labels.heading.Recurring Deposit Accounts' | translate }}
+            <span class="at-count">{{ accountCounts.recurring }}</span>
+          </button>
+          <button class="at-tab" [class.active]="currentAccountType === 'shares'" (click)="selectAccountType('shares')">
+            {{ 'labels.inputs.Shares Accounts' | translate }}
+            <span class="at-count">{{ accountCounts.shares }}</span>
+          </button>
         </div>
-      </td>
-    </ng-container>
+        <label class="toggle-pill" (click)="toggleShowClosedAccounts()">
+          <span class="switch" [class.on]="showClosedAccounts"></span>
+          <span>{{ 'labels.buttons.Show Closed Accounts' | translate }}</span>
+        </label>
+      </div>
 
-    <tr mat-header-row *matHeaderRowDef="collateralsColumns"></tr>
-    <tr
-      mat-row
-      *matRowDef="let row; columns: collateralsColumns"
-      [routerLink]="['../', 'client-collateral', row.collateralId]"
-    ></tr>
-    <tr mat-footer-row *matFooterRowDef="collaterals?.length === 0 ? ['no-data'] : []"></tr>
-  </table>
+      <!-- ── LOAN ACCOUNTS ────────────────────────────────────── -->
+      @if (currentAccountType === 'all' || currentAccountType === 'loan') {
+        @for (loan of loanAccounts | accountsFilter: 'loan' : (showClosedAccounts ? 'closed' : 'open'); track loan.id) {
+          <div
+            class="account-row"
+            [ngClass]="'sev-' + loanSeverity(loan)"
+            [routerLink]="['../', 'loans-accounts', loan.id, 'general']"
+            [queryParams]="{ productType: loan.productType }"
+          >
+            <div class="indicator loan"></div>
+            <div class="acc-identity">
+              <span class="acc-num">
+                <mifosx-account-number [accountNo]="loan.accountNo"></mifosx-account-number>
+              </span>
+              <div class="acc-status-row">
+                <span class="status-pill" [ngClass]="loanSeverity(loan)">
+                  <span class="dot"></span>
+                  {{
+                    'labels.catalogs.' + (loan.inArrears ? 'In Arrears' : loan.status?.value || 'Unknown') | translate
+                  }}
+                </span>
+                <span class="product-type-chip loan">
+                  {{ loanProductTypeLabel(loan.productType) | translate }}
+                </span>
+              </div>
+            </div>
+            <div class="acc-product">
+              <div class="acc-product-name">
+                <mifosx-long-text [textValue]="loan.productName" chars="40"></mifosx-long-text>
+              </div>
+              <div class="acc-product-meta">
+                @if (loan.loanType?.value) {
+                  <span class="meta-item">
+                    <i
+                      class="fa fa-large meta-icon"
+                      [ngClass]="loan.loanType.value === 'Individual' ? 'fa-user' : 'fa-group'"
+                      matTooltip="{{ loan.loanType.value }}"
+                    ></i>
+                    {{ loan.loanType.value }}
+                  </span>
+                }
+                @if (loan.originalLoan) {
+                  <span class="meta-item"
+                    >{{ 'labels.inputs.Original Loan' | translate }}:
+                    {{ loan.originalLoan | currency: loan.currency?.code : 'symbol-narrow' : '1.2-2' }}</span
+                  >
+                }
+                @if (loan.amountPaid !== null && loan.amountPaid !== undefined) {
+                  <span class="meta-item"
+                    >{{ 'labels.inputs.Amount Paid' | translate }}:
+                    {{ loan.amountPaid | currency: loan.currency?.code : 'symbol-narrow' : '1.2-2' }}</span
+                  >
+                }
+              </div>
+            </div>
+            <div class="acc-balance-block">
+              <div class="acc-balance-label">{{ 'labels.inputs.Loan Balance' | translate }}</div>
+              <div class="acc-balance-value">
+                {{ loan.loanBalance | currency: loan.currency?.code : 'symbol-narrow' : '1.2-2' }}
+              </div>
+              <div class="acc-balance-progress">
+                <span class="acc-progress-pct">{{ loanProgress(loan) | formatNumber: '' : '0' }}%</span>
+                <div class="acc-progress-bar">
+                  <div
+                    class="acc-progress-fill"
+                    [class.arrears]="loan.inArrears"
+                    [style.width.%]="loanProgress(loan)"
+                  ></div>
+                </div>
+              </div>
+            </div>
+            <div class="acc-actions" (click)="$event.stopPropagation()">
+              @if (loan.status?.active) {
+                <button
+                  class="row-action primary"
+                  matTooltip="{{ 'tooltips.Make Repayment' | translate }}"
+                  (click)="routeEdit($event)"
+                  [routerLink]="['../', 'loans-accounts', loan.id, 'actions', 'Make Repayment']"
+                >
+                  <i class="fa fa-dollar"></i>
+                </button>
+              }
+              @if (loan.status?.pendingApproval) {
+                <button
+                  class="row-action primary"
+                  *mifosxHasPermission="'APPROVE_LOAN'"
+                  matTooltip="{{ 'tooltips.Approve' | translate }}"
+                  (click)="routeEdit($event)"
+                  [routerLink]="['../', 'loans-accounts', loan.id, 'actions', 'Approve']"
+                >
+                  <i class="fa fa-check"></i>
+                </button>
+              }
+              @if (
+                !loan.status?.pendingApproval && !loan.status?.active && !loan.status?.overpaid && !loan.status?.closed
+              ) {
+                <button
+                  class="row-action primary"
+                  *mifosxHasPermission="'DISBURSE_LOAN'"
+                  matTooltip="{{ 'tooltips.Disburse' | translate }}"
+                  (click)="routeEdit($event)"
+                  [routerLink]="['../', 'loans-accounts', loan.id, 'actions', 'Disburse']"
+                >
+                  <i class="fa fa-flag"></i>
+                </button>
+              }
+              @if (loan.status?.overpaid) {
+                <button
+                  class="row-action primary"
+                  *mifosxHasPermission="'DISBURSE_LOAN'"
+                  matTooltip="{{ 'tooltips.Transfer Funds' | translate }}"
+                  (click)="routeEdit($event); routeTransferFund(loan.id)"
+                >
+                  <i class="fa fa-exchange"></i>
+                </button>
+              }
+            </div>
+          </div>
+        } @empty {
+          @if (currentAccountType === 'loan') {
+            <div class="acc-empty">
+              {{
+                (showClosedAccounts
+                  ? 'labels.messages.No Closed Loan Accounts Found'
+                  : 'labels.messages.No Active Loan Accounts Found'
+                ) | translate
+              }}
+            </div>
+          }
+        }
+      }
 
-  <!-- PDF Viewer Modal -->
+      <!-- ── SAVINGS ACCOUNTS ─────────────────────────────────── -->
+      @if (currentAccountType === 'all' || currentAccountType === 'savings') {
+        @for (
+          saving of savingAccounts | accountsFilter: 'saving' : (showClosedAccounts ? 'closed' : 'open') : 'isSavings';
+          track saving.id
+        ) {
+          <div class="account-row savings" [routerLink]="['../', 'savings-accounts', saving.id, 'general']">
+            <div class="indicator savings"></div>
+            <div class="acc-identity">
+              <span class="acc-num">
+                <mifosx-account-number [accountNo]="saving.accountNo"></mifosx-account-number>
+              </span>
+              <div class="acc-status-row">
+                <span class="status-pill" [ngClass]="accountSeverity(saving)">
+                  <span class="dot"></span>
+                  {{ 'labels.catalogs.' + (saving.status?.value || 'Unknown') | translate }}
+                </span>
+                <span class="product-type-chip savings">{{ 'labels.heading.Saving Accounts' | translate }}</span>
+              </div>
+            </div>
+            <div class="acc-product">
+              <div class="acc-product-name">
+                <mifosx-long-text [textValue]="saving.productName" chars="40"></mifosx-long-text>
+              </div>
+              @if (saving.lastActiveTransactionDate) {
+                <div class="acc-product-meta">
+                  <span
+                    >{{ 'labels.inputs.Last Active' | translate }}:
+                    {{ saving.lastActiveTransactionDate | dateFormat }}</span
+                  >
+                </div>
+              }
+            </div>
+            <div class="acc-balance-block">
+              <div class="acc-balance-label">{{ 'labels.inputs.Balance' | translate }}</div>
+              <div class="acc-balance-value savings">
+                {{ saving.accountBalance | currency: saving.currency?.code : 'symbol-narrow' : '1.2-2' }}
+              </div>
+            </div>
+            <div class="acc-actions" (click)="$event.stopPropagation()">
+              @if (saving.status?.active) {
+                <button
+                  class="row-action primary"
+                  matTooltip="{{ 'tooltips.Deposit' | translate }}"
+                  (click)="routeEdit($event)"
+                  [routerLink]="['../', 'savings-accounts', saving.id, 'actions', 'Deposit']"
+                >
+                  <i class="fa fa-arrow-up"></i>
+                </button>
+                <button
+                  class="row-action"
+                  matTooltip="{{ 'tooltips.Withdraw' | translate }}"
+                  (click)="routeEdit($event)"
+                  [routerLink]="['../', 'savings-accounts', saving.id, 'actions', 'Withdrawal']"
+                >
+                  <i class="fa fa-arrow-down"></i>
+                </button>
+              }
+              @if (saving.status?.submittedAndPendingApproval) {
+                <button
+                  class="row-action primary"
+                  matTooltip="{{ 'tooltips.Approve' | translate }}"
+                  (click)="routeEdit($event)"
+                  [routerLink]="['../', 'savings-accounts', saving.id, 'actions', 'Approve']"
+                >
+                  <i class="fa fa-check"></i>
+                </button>
+              }
+            </div>
+          </div>
+        } @empty {
+          @if (currentAccountType === 'savings') {
+            <div class="acc-empty">
+              {{
+                (showClosedAccounts
+                  ? 'labels.messages.No Closed Saving Accounts Found'
+                  : 'labels.messages.No Active Saving Accounts Found'
+                ) | translate
+              }}
+            </div>
+          }
+        }
+      }
+
+      <!-- ── FIXED DEPOSITS ──────────────────────────────────── -->
+      @if (currentAccountType === 'all' || currentAccountType === 'fixed') {
+        @for (
+          fixed of savingAccounts | accountsFilter: 'saving' : (showClosedAccounts ? 'closed' : 'open') : 'isFixed';
+          track fixed.id
+        ) {
+          <div class="account-row fixed" [routerLink]="['../', 'fixed-deposits-accounts', fixed.id, 'general']">
+            <div class="indicator fixed"></div>
+            <div class="acc-identity">
+              <span class="acc-num">
+                <mifosx-account-number [accountNo]="fixed.accountNo"></mifosx-account-number>
+              </span>
+              <div class="acc-status-row">
+                <span class="status-pill" [ngClass]="accountSeverity(fixed)">
+                  <span class="dot"></span>
+                  {{ 'labels.catalogs.' + (fixed.status?.value || 'Unknown') | translate }}
+                </span>
+                <span class="product-type-chip fixed">{{ 'labels.heading.Fixed Deposit Accounts' | translate }}</span>
+              </div>
+            </div>
+            <div class="acc-product">
+              <div class="acc-product-name">
+                <mifosx-long-text [textValue]="fixed.productName" chars="40"></mifosx-long-text>
+              </div>
+              @if (fixed.lastActiveTransactionDate) {
+                <div class="acc-product-meta">
+                  <span
+                    >{{ 'labels.inputs.Last Active' | translate }}:
+                    {{ fixed.lastActiveTransactionDate | dateFormat }}</span
+                  >
+                </div>
+              }
+            </div>
+            <div class="acc-balance-block">
+              <div class="acc-balance-label">{{ 'labels.inputs.Balance' | translate }}</div>
+              <div class="acc-balance-value fixed">
+                {{ fixed.accountBalance | currency: fixed.currency?.code : 'symbol-narrow' : '1.2-2' }}
+              </div>
+            </div>
+            <div class="acc-actions" (click)="$event.stopPropagation()">
+              @if (fixed.status?.submittedAndPendingApproval) {
+                <button
+                  class="row-action primary"
+                  matTooltip="{{ 'tooltips.Approve' | translate }}"
+                  (click)="routeEdit($event)"
+                  [routerLink]="['../', 'fixed-deposits-accounts', fixed.id, 'actions', 'Approve']"
+                >
+                  <i class="fa fa-check"></i>
+                </button>
+              }
+            </div>
+          </div>
+        } @empty {
+          @if (currentAccountType === 'fixed') {
+            <div class="acc-empty">
+              {{
+                (showClosedAccounts
+                  ? 'labels.messages.No Closed Fixed Deposit Accounts Found'
+                  : 'labels.messages.No Active Fixed Deposit Accounts Found'
+                ) | translate
+              }}
+            </div>
+          }
+        }
+      }
+
+      <!-- ── RECURRING DEPOSITS ──────────────────────────────── -->
+      @if (currentAccountType === 'all' || currentAccountType === 'recurring') {
+        @for (
+          recurring of savingAccounts
+            | accountsFilter: 'saving' : (showClosedAccounts ? 'closed' : 'open') : 'isRecurring';
+          track recurring.id
+        ) {
+          <div
+            class="account-row recurring"
+            [routerLink]="['../', 'recurring-deposits-accounts', recurring.id, 'general']"
+          >
+            <div class="indicator recurring"></div>
+            <div class="acc-identity">
+              <span class="acc-num">
+                <mifosx-account-number [accountNo]="recurring.accountNo"></mifosx-account-number>
+              </span>
+              <div class="acc-status-row">
+                <span class="status-pill" [ngClass]="accountSeverity(recurring)">
+                  <span class="dot"></span>
+                  {{ 'labels.catalogs.' + (recurring.status?.value || 'Unknown') | translate }}
+                </span>
+                <span class="product-type-chip recurring">{{
+                  'labels.heading.Recurring Deposit Accounts' | translate
+                }}</span>
+              </div>
+            </div>
+            <div class="acc-product">
+              <div class="acc-product-name">
+                <mifosx-long-text [textValue]="recurring.productName" chars="40"></mifosx-long-text>
+              </div>
+              @if (recurring.lastActiveTransactionDate) {
+                <div class="acc-product-meta">
+                  <span
+                    >{{ 'labels.inputs.Last Active' | translate }}:
+                    {{ recurring.lastActiveTransactionDate | dateFormat }}</span
+                  >
+                </div>
+              }
+            </div>
+            <div class="acc-balance-block">
+              <div class="acc-balance-label">{{ 'labels.inputs.Balance' | translate }}</div>
+              <div class="acc-balance-value recurring">
+                {{ recurring.accountBalance | currency: recurring.currency?.code : 'symbol-narrow' : '1.2-2' }}
+              </div>
+            </div>
+            <div class="acc-actions" (click)="$event.stopPropagation()">
+              @if (recurring.status?.submittedAndPendingApproval) {
+                <button
+                  class="row-action primary"
+                  *mifosxHasPermission="'APPROVE_SAVINGSACCOUNT'"
+                  matTooltip="{{ 'tooltips.Approve' | translate }}"
+                  (click)="routeEdit($event)"
+                  [routerLink]="['../', 'recurring-deposits-accounts', recurring.id, 'actions', 'Approve']"
+                >
+                  <i class="fa fa-check"></i>
+                </button>
+              }
+            </div>
+          </div>
+        } @empty {
+          @if (currentAccountType === 'recurring') {
+            <div class="acc-empty">
+              {{
+                (showClosedAccounts
+                  ? 'labels.messages.No Closed Recurring Deposit Accounts Found'
+                  : 'labels.messages.No Active Recurring Deposit Accounts Found'
+                ) | translate
+              }}
+            </div>
+          }
+        }
+      }
+
+      <!-- ── SHARES ──────────────────────────────────────────── -->
+      @if (currentAccountType === 'all' || currentAccountType === 'shares') {
+        @for (
+          share of shareAccounts | accountsFilter: 'share' : (showClosedAccounts ? 'closed' : 'open');
+          track share.id
+        ) {
+          <div class="account-row shares" [routerLink]="['../', 'shares-accounts', share.id, 'general']">
+            <div class="indicator shares"></div>
+            <div class="acc-identity">
+              <span class="acc-num">
+                <mifosx-account-number [accountNo]="share.accountNo"></mifosx-account-number>
+              </span>
+              <div class="acc-status-row">
+                <span class="status-pill" [ngClass]="accountSeverity(share)">
+                  <span class="dot"></span>
+                  {{ 'labels.catalogs.' + (share.status?.value || 'Unknown') | translate }}
+                </span>
+                <span class="product-type-chip shares">{{ 'labels.inputs.Shares Accounts' | translate }}</span>
+              </div>
+            </div>
+            <div class="acc-product">
+              <div class="acc-product-name">
+                <mifosx-long-text [textValue]="share.productName" chars="40"></mifosx-long-text>
+              </div>
+              <div class="acc-product-meta">
+                <span>{{ 'labels.inputs.Approved Shares' | translate }}: {{ share.totalApprovedShares }}</span>
+                @if (share.totalPendingForApprovalShares > 0) {
+                  <span class="acc-meta-sep">·</span>
+                  <span
+                    >{{ 'labels.inputs.Pending For Approval Shares' | translate }}:
+                    {{ share.totalPendingForApprovalShares }}</span
+                  >
+                }
+              </div>
+            </div>
+            <div class="acc-balance-block">
+              <div class="acc-balance-label">{{ 'labels.inputs.Approved Shares' | translate }}</div>
+              <div class="acc-balance-value shares">{{ share.totalApprovedShares }}</div>
+            </div>
+            <div class="acc-actions" (click)="$event.stopPropagation()">
+              @if (share.status?.submittedAndPendingApproval) {
+                <button
+                  class="row-action primary"
+                  matTooltip="{{ 'tooltips.Approve' | translate }}"
+                  (click)="routeEdit($event)"
+                  [routerLink]="['../', 'shares-accounts', share.id, 'actions', 'Approve']"
+                >
+                  <i class="fa fa-check"></i>
+                </button>
+              }
+            </div>
+          </div>
+        } @empty {
+          @if (currentAccountType === 'shares') {
+            <div class="acc-empty">
+              {{
+                (showClosedAccounts
+                  ? 'labels.messages.No Closed Share Accounts Found'
+                  : 'labels.messages.No Active Share Accounts Found'
+                ) | translate
+              }}
+            </div>
+          }
+        }
+      }
+
+      @if (currentAccountType === 'all' && accountCounts.total === 0 && !showClosedAccounts) {
+        <div class="acc-empty">{{ 'labels.messages.No Accounts Found' | translate }}</div>
+      }
+    </div>
+  </section>
+
+  <!-- ════ COLLATERAL ════════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-title">{{ 'labels.heading.Collateral Data' | translate }}</span>
+    </div>
+
+    @if (collaterals?.length) {
+      <div class="data-card">
+        <div class="data-card-wrap">
+          <table mat-table [dataSource]="collaterals" class="data-table">
+            <ng-container matColumnDef="ID">
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.ID' | translate }}</th>
+              <td mat-cell *matCellDef="let element">{{ element.collateralId }}</td>
+            </ng-container>
+            <ng-container matColumnDef="Name">
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
+              <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+            </ng-container>
+            <ng-container matColumnDef="Quantity">
+              <th mat-header-cell class="col-r" *matHeaderCellDef>{{ 'labels.inputs.Quantity' | translate }}</th>
+              <td mat-cell class="col-r" *matCellDef="let element">{{ element.quantity | formatNumber }}</td>
+            </ng-container>
+            <ng-container matColumnDef="Total Value">
+              <th mat-header-cell class="col-r" *matHeaderCellDef>{{ 'labels.inputs.Total Value' | translate }}</th>
+              <td mat-cell class="col-r" *matCellDef="let element">
+                {{
+                  element.basePrice * element.quantity | currency: element.currency?.code : 'symbol-narrow' : '1.2-2'
+                }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="Total Collateral Value">
+              <th mat-header-cell class="col-r" *matHeaderCellDef>
+                {{ 'labels.inputs.Total Collateral Value' | translate }}
+              </th>
+              <td mat-cell class="col-r" *matCellDef="let element">
+                {{
+                  (element.pctToBase * element.basePrice * element.quantity) / 100
+                    | currency: element.currency?.code : 'symbol-narrow' : '1.2-2'
+                }}
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="collateralsColumns"></tr>
+            <tr
+              mat-row
+              *matRowDef="let row; columns: collateralsColumns"
+              [routerLink]="['../', 'client-collateral', row.collateralId]"
+            ></tr>
+          </table>
+        </div>
+      </div>
+    } @else {
+      <div class="info-banner">
+        <span class="info-banner-text">
+          <i class="fa fa-info-circle info-banner-icon"></i>
+          {{ 'labels.messages.No Collateral Data Found' | translate }}
+        </span>
+      </div>
+    }
+  </section>
+
+  <!-- ════ PDF Viewer Modal (preserved) ══════════════════════ -->
   <div *ngIf="showPdf" class="pdf-modal-overlay">
     <div class="pdf-modal-content">
       <button mat-icon-button class="pdf-modal-close" (click)="closePdf()" aria-label="Close PDF">

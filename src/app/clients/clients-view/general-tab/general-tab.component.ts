@@ -24,11 +24,7 @@ import {
   MatHeaderRowDef,
   MatHeaderRow,
   MatRowDef,
-  MatRow,
-  MatFooterCellDef,
-  MatFooterCell,
-  MatFooterRowDef,
-  MatFooterRow
+  MatRow
 } from '@angular/material/table';
 import { NgClass } from '@angular/common';
 import { AccountNumberComponent } from '../../../shared/account-number/account-number.component';
@@ -67,10 +63,6 @@ import { LoanProductService } from 'app/products/loan-products/services/loan-pro
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatFooterCellDef,
-    MatFooterCell,
-    MatFooterRowDef,
-    MatFooterRow,
     AccountNumberComponent,
     LongTextComponent,
     MatTooltip,
@@ -263,6 +255,11 @@ export class GeneralTabComponent implements OnDestroy {
   /** Show Closed Fixed Deposits Accounts */
   showClosedFixedAccounts = false;
 
+  /** Unified accounts view state */
+  currentAccountType: 'all' | 'loan' | 'savings' | 'fixed' | 'recurring' | 'shares' = 'all';
+  showClosedAccounts = false;
+  accountCounts = { loan: 0, savings: 0, fixed: 0, recurring: 0, shares: 0, total: 0 };
+
   /** Client Id */
   clientid: any;
 
@@ -292,8 +289,99 @@ export class GeneralTabComponent implements OnDestroy {
 
           // Compute performance history from accounts data
           this.computePerformanceHistory(data.clientAccountsData ?? { loanAccounts: [], savingsAccounts: [] });
+          this.computeAccountCounts();
         }
       );
+  }
+
+  private computeAccountCounts(): void {
+    // Mirror AccountsFilterPipe so counts match what the rendered lists show.
+    const CLOSED_LOAN_CODES = new Set([
+      'loanStatusType.closed.written.off',
+      'loanStatusType.closed.obligations.met',
+      'loanStatusType.closed.reschedule.outstanding.amount',
+      'loanStatusType.withdrawn.by.client',
+      'loanStatusType.rejected'
+    ]);
+    const CLOSED_SAVING_CODES = new Set([
+      'savingsAccountStatusType.withdrawn.by.applicant',
+      'savingsAccountStatusType.closed',
+      'savingsAccountStatusType.pre.mature.closure',
+      'savingsAccountStatusType.rejected'
+    ]);
+    const CLOSED_SHARE_CODES = new Set([
+      'shareAccountStatusType.closed',
+      'shareAccountStatusType.rejected'
+    ]);
+
+    const isOpenLoan = (a: any) => !CLOSED_LOAN_CODES.has(a?.status?.code);
+    const isOpenSaving = (a: any) => !CLOSED_SAVING_CODES.has(a?.status?.code);
+    const isOpenShare = (a: any) => !CLOSED_SHARE_CODES.has(a?.status?.code);
+    const depositType = (a: any) => a?.depositType?.value;
+
+    this.accountCounts.loan = this.loanAccounts.filter(isOpenLoan).length;
+    this.accountCounts.savings = this.savingAccounts.filter(
+      (a) => depositType(a) === 'Savings' && isOpenSaving(a)
+    ).length;
+    this.accountCounts.fixed = this.savingAccounts.filter(
+      (a) => depositType(a) === 'Fixed Deposit' && isOpenSaving(a)
+    ).length;
+    this.accountCounts.recurring = this.savingAccounts.filter(
+      (a) => depositType(a) === 'Recurring Deposit' && isOpenSaving(a)
+    ).length;
+    this.accountCounts.shares = this.shareAccounts.filter(isOpenShare).length;
+    this.accountCounts.total =
+      this.accountCounts.loan +
+      this.accountCounts.savings +
+      this.accountCounts.fixed +
+      this.accountCounts.recurring +
+      this.accountCounts.shares;
+  }
+
+  selectAccountType(type: 'all' | 'loan' | 'savings' | 'fixed' | 'recurring' | 'shares'): void {
+    this.currentAccountType = type;
+  }
+
+  toggleShowClosedAccounts(): void {
+    this.showClosedAccounts = !this.showClosedAccounts;
+  }
+
+  /**
+   * Resolves a UI-level severity for a loan account.
+   * Returns one of: 'active' | 'arrears' | 'pending' | 'closed' | 'overpaid'
+   */
+  loanSeverity(loan: any): string {
+    if (loan.inArrears) return 'arrears';
+    if (loan.status?.overpaid) return 'overpaid';
+    if (loan.status?.pendingApproval) return 'pending';
+    if (loan.status?.active) return 'active';
+    if (loan.status?.closed) return 'closed';
+    return 'pending';
+  }
+
+  /**
+   * Generic status resolver for non-loan accounts.
+   */
+  accountSeverity(account: any): string {
+    if (account.status?.submittedAndPendingApproval) return 'pending';
+    if (account.status?.active) return 'active';
+    if (account.status?.closed) return 'closed';
+    return 'pending';
+  }
+
+  /** Repayment progress as a 0–100 percentage for a loan account. */
+  loanProgress(loan: any): number {
+    const paid = Number(loan.amountPaid ?? 0);
+    if (loan.productType === 'loan') {
+      const original = Number(loan.originalLoan ?? 0);
+      if (original <= 0) return 0;
+      return Math.min(Math.max((paid / original) * 100, 0), 100);
+    } else if (loan.productType === 'working-capital') {
+      const original = Number(loan.loanBalance ?? 0) + paid;
+      if (original <= 0) return 0;
+      return Math.min(Math.max((paid / original) * 100, 0), 100);
+    }
+    return 0;
   }
 
   private computePerformanceHistory(accountsData: any) {

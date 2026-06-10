@@ -6,53 +6,725 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/* ── Design tokens ──────────────────────────────────────────── */
+:host {
+  --ch-blue-700: #1565c0;
+  --ch-blue-600: #1976d2;
+  --ch-blue-100: #bbdefb;
+  --ch-blue-50: #e3f2fd;
+  --ch-blue-20: #f0f7ff;
+  --ch-surface: #fff;
+  --ch-surface-alt: #f4f7fb;
+  --ch-surface-h: #ebf2fa;
+  --ch-border: #dde5f0;
+  --ch-text-1: #0d1b2a;
+  --ch-text-2: #4a6785;
+  --ch-text-3: #8fa5bc;
+  --ch-paid: #2e7d32;
+  --ch-paid-bg: #e8f5e9;
+  --ch-partial: #e65100;
+  --ch-partial-bg: #fff3e0;
+  --ch-alert: #c62828;
+  --ch-alert-bg: #ffebee;
+  --pr-loan: #1976d2;
+  --pr-loan-bg: #e3f2fd;
+  --pr-savings: #2e7d32;
+  --pr-savings-bg: #e8f5e9;
+  --pr-fixed: #6a1b9a;
+  --pr-fixed-bg: #f3e5f5;
+  --pr-recurring: #00695c;
+  --pr-recurring-bg: #e0f2f1;
+  --pr-shares: #ef6c00;
+  --pr-shares-bg: #fff3e0;
+
+  display: block;
+}
+
+:host-context(.dark-theme) {
+  --ch-blue-700: #5b9bd5;
+  --ch-blue-600: #7ab3e0;
+  --ch-blue-100: #1a3a60;
+  --ch-blue-50: #0a2040;
+  --ch-blue-20: #0d1f35;
+  --ch-surface: #1a2535;
+  --ch-surface-alt: #101d2d;
+  --ch-surface-h: #132032;
+  --ch-border: #1e3050;
+  --ch-text-1: #e2ebf6;
+  --ch-text-2: #8baecf;
+  --ch-text-3: #6a8fad;
+  --ch-paid: #66bb6a;
+  --ch-paid-bg: #172b1a;
+  --ch-partial: #ffa726;
+  --ch-partial-bg: #281c0b;
+  --ch-alert: #ef9a9a;
+  --ch-alert-bg: #2b1212;
+  --pr-loan: #7ab3e0;
+  --pr-loan-bg: #0a2040;
+  --pr-savings: #66bb6a;
+  --pr-savings-bg: #172b1a;
+  --pr-fixed: #ce93d8;
+  --pr-fixed-bg: #1a0a26;
+  --pr-recurring: #80cbc4;
+  --pr-recurring-bg: #002f2b;
+  --pr-shares: #ffa726;
+  --pr-shares-bg: #281c0b;
+}
+
 .tab-container {
-  padding: 1%;
-  margin: 1%;
-
-  h3 {
-    margin: 1% auto;
-  }
-
-  .performance-history-container {
-    border: 1px solid;
-    padding: 1%;
-  }
-
-  table {
-    width: 100%;
-
-    td:hover {
-      cursor: pointer;
-    }
-
-    .account-action-button {
-      min-width: 26px;
-      padding: 0 6px;
-      margin: 4px;
-      line-height: 25px;
-    }
-
-    .select-row:hover {
-      cursor: pointer;
-    }
-  }
+  padding: 20px 24px;
+  background: var(--ch-surface-alt);
 }
 
-.heading-content {
-  display: flex; /* Use flexbox for alignment */
-  align-items: center; /* Align items vertically */
-  justify-content: space-between; /* Space out title and buttons */
-  margin-bottom: 1%;
-  margin-top: 1%;
+.section + .section {
+  margin-top: 24px;
 }
 
-.heading-name {
-  margin: 0; /* Reset margin to avoid misalignment */
-}
-
-.layout-row.align-flex-end {
+.section-head {
   display: flex;
-  align-items: center; /* Ensure buttons are vertically aligned */
-  gap: 0.5rem; /* Add spacing between buttons if needed */
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  gap: 12px;
+}
+
+.section-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ch-text-2);
+}
+
+.section-link {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ch-blue-700);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+/* ── KPI cards ──────────────────────────────────────────────── */
+.kpi-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.kpi-card {
+  flex: 1 1 0;
+  min-width: 180px;
+  background: var(--ch-surface);
+  border: 1px solid var(--ch-border);
+  border-radius: 6px;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--ch-blue-700);
+  }
+
+  &.savings::before {
+    background: var(--pr-savings);
+  }
+}
+
+.kpi-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ch-text-3);
+}
+
+.kpi-value {
+  font-family: 'JetBrains Mono', 'Cascadia Code', monospace;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--ch-text-1);
+  line-height: 1.1;
+}
+
+.kpi-sub {
+  font-size: 11px;
+  color: var(--ch-text-2);
+}
+
+/* ── Info banner (empty states) ─────────────────────────────── */
+.info-banner {
+  background: var(--ch-surface);
+  border: 1px solid var(--ch-border);
+  border-radius: 6px;
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.info-banner-text {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--ch-text-2);
+}
+
+.info-banner-icon {
+  font-size: 16px;
+  color: var(--ch-text-3);
+}
+
+/* ── Generic data card (for tables when populated) ──────────── */
+.data-card {
+  background: var(--ch-surface);
+  border: 1px solid var(--ch-border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.data-card-wrap {
+  overflow-x: auto;
+}
+
+:host ::ng-deep .data-table {
+  width: 100%;
+
+  .mat-mdc-header-row {
+    background: var(--ch-surface-h);
+  }
+
+  .mat-mdc-header-cell {
+    background: var(--ch-surface-h);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ch-text-2);
+    border-bottom: 2px solid var(--ch-border);
+    padding: 0 16px;
+    white-space: nowrap;
+  }
+
+  .mat-mdc-cell {
+    padding: 10px 16px;
+    font-size: 13px;
+    color: var(--ch-text-1);
+    background: var(--ch-surface);
+    border-bottom-color: var(--ch-border);
+  }
+
+  .mat-mdc-row:hover .mat-mdc-cell {
+    background: var(--ch-blue-20);
+    transition: background 0.12s ease;
+  }
+
+  .mat-mdc-row {
+    cursor: pointer;
+  }
+
+  .mat-mdc-header-cell.col-r,
+  .mat-mdc-cell.col-r {
+    text-align: right;
+    font-family: 'JetBrains Mono', 'Cascadia Code', monospace;
+    font-size: 12.5px;
+  }
+
+  .mat-mdc-header-cell.col-c,
+  .mat-mdc-cell.col-c {
+    text-align: center;
+  }
+}
+
+.row-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentcolor;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.row-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid var(--ch-border);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--ch-text-2);
+  cursor: pointer;
+  margin: 0 2px;
+  transition:
+    border-color 0.14s ease,
+    background 0.14s ease,
+    color 0.14s ease;
+
+  &:hover {
+    border-color: var(--ch-blue-700);
+    color: var(--ch-blue-700);
+    background: var(--ch-blue-50);
+  }
+
+  &.primary {
+    background: var(--ch-blue-50);
+    border-color: var(--ch-blue-100);
+    color: var(--ch-blue-700);
+  }
+
+  i.fa {
+    font-size: 13px;
+  }
+}
+
+/* ── Accounts card ──────────────────────────────────────────── */
+.accounts-card {
+  background: var(--ch-surface);
+  border: 1px solid var(--ch-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.accounts-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--ch-surface-h);
+  border-bottom: 1px solid var(--ch-border);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.account-type-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.at-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 100px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ch-text-2);
+  background: var(--ch-surface);
+  border: 1px solid var(--ch-border);
+  cursor: pointer;
+  transition:
+    background 0.14s ease,
+    color 0.14s ease,
+    border-color 0.14s ease;
+
+  &:hover {
+    color: var(--ch-blue-700);
+    border-color: var(--ch-blue-700);
+  }
+
+  &.active {
+    background: var(--ch-blue-700);
+    color: #fff;
+    border-color: var(--ch-blue-700);
+  }
+}
+
+.at-count {
+  font-family: 'JetBrains Mono', 'Cascadia Code', monospace;
+  font-weight: 700;
+  opacity: 0.85;
+  padding-left: 6px;
+  margin-left: 2px;
+  border-left: 1px solid currentcolor;
+}
+
+.toggle-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--ch-text-2);
+  cursor: pointer;
+  user-select: none;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 32px;
+  height: 18px;
+  background: var(--ch-border);
+  border-radius: 100px;
+  transition: background 0.14s ease;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 14px;
+    height: 14px;
+    background: #fff;
+    border-radius: 50%;
+    transition: left 0.14s ease;
+  }
+
+  &.on {
+    background: var(--ch-blue-700);
+
+    &::after {
+      left: 16px;
+    }
+  }
+}
+
+/* ── Account row ────────────────────────────────────────────── */
+.account-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 18px;
+  background: var(--ch-surface);
+  border-bottom: 1px solid var(--ch-border);
+  cursor: pointer;
+  transition: background 0.12s ease;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background: var(--ch-blue-20);
+  }
+}
+
+.indicator {
+  flex: 0 0 4px;
+  align-self: stretch;
+  border-radius: 4px;
+  background: var(--pr-loan);
+
+  &.savings {
+    background: var(--pr-savings);
+  }
+
+  &.fixed {
+    background: var(--pr-fixed);
+  }
+
+  &.recurring {
+    background: var(--pr-recurring);
+  }
+
+  &.shares {
+    background: var(--pr-shares);
+  }
+}
+
+.account-row.sev-arrears .indicator {
+  background: var(--ch-alert);
+}
+
+.acc-identity {
+  flex: 1 1 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.acc-num {
+  font-family: 'JetBrains Mono', 'Cascadia Code', monospace;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ch-text-1);
+}
+
+.acc-status-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 9px;
+  border-radius: 100px;
+  font-size: 10.5px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.status-pill .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.status-pill.active {
+  color: var(--ch-paid);
+  border-color: var(--ch-paid);
+  background: var(--ch-paid-bg);
+}
+
+.status-pill.active .dot {
+  background: var(--ch-paid);
+}
+
+.status-pill.pending {
+  color: var(--ch-partial);
+  border-color: var(--ch-partial);
+  background: var(--ch-partial-bg);
+}
+
+.status-pill.pending .dot {
+  background: var(--ch-partial);
+}
+
+.status-pill.arrears {
+  color: var(--ch-alert);
+  border-color: var(--ch-alert);
+  background: var(--ch-alert-bg);
+}
+
+.status-pill.arrears .dot {
+  background: var(--ch-alert);
+}
+
+.status-pill.overpaid {
+  color: var(--ch-blue-700);
+  border-color: var(--ch-blue-700);
+  background: var(--ch-blue-20);
+}
+
+.status-pill.overpaid .dot {
+  background: var(--ch-blue-700);
+}
+
+.status-pill.closed {
+  color: var(--ch-text-3);
+  border-color: var(--ch-text-3);
+  background: var(--ch-surface-h);
+}
+
+.status-pill.closed .dot {
+  background: var(--ch-text-3);
+}
+
+.product-type-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 7px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.product-type-chip.loan {
+  background: var(--pr-loan-bg);
+  color: var(--pr-loan);
+}
+
+.product-type-chip.savings {
+  background: var(--pr-savings-bg);
+  color: var(--pr-savings);
+}
+
+.product-type-chip.fixed {
+  background: var(--pr-fixed-bg);
+  color: var(--pr-fixed);
+}
+
+.product-type-chip.recurring {
+  background: var(--pr-recurring-bg);
+  color: var(--pr-recurring);
+}
+
+.product-type-chip.shares {
+  background: var(--pr-shares-bg);
+  color: var(--pr-shares);
+}
+
+.acc-product {
+  flex: 1.4 1 200px;
+  min-width: 0;
+}
+
+.acc-product-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ch-text-1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.acc-product-meta {
+  font-size: 11px;
+  color: var(--ch-text-2);
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.meta-item + .meta-item::before {
+  content: '·';
+  margin-right: 6px;
+  color: var(--ch-text-3);
+}
+
+.acc-meta-sep {
+  color: var(--ch-text-3);
+}
+
+.meta-icon {
+  font-size: 12px;
+  color: var(--ch-text-3);
+}
+
+.acc-balance-block {
+  flex: 1 1 180px;
+  text-align: right;
+  min-width: 0;
+}
+
+.acc-balance-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ch-text-3);
+}
+
+.acc-balance-value {
+  font-family: 'JetBrains Mono', 'Cascadia Code', monospace;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ch-text-1);
+  margin-top: 2px;
+}
+
+.acc-balance-value.savings {
+  color: var(--pr-savings);
+}
+
+.acc-balance-value.fixed {
+  color: var(--pr-fixed);
+}
+
+.acc-balance-value.recurring {
+  color: var(--pr-recurring);
+}
+
+.acc-balance-value.shares {
+  color: var(--pr-shares);
+}
+
+.acc-balance-progress {
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.acc-progress-bar {
+  width: 100px;
+  height: 4px;
+  background: var(--ch-border);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.acc-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--ch-paid), color-mix(in srgb, var(--ch-paid) 70%, white));
+}
+
+.acc-progress-fill.arrears {
+  background: linear-gradient(90deg, var(--ch-alert), color-mix(in srgb, var(--ch-alert) 70%, white));
+}
+
+.acc-progress-pct {
+  font-family: 'JetBrains Mono', 'Cascadia Code', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ch-text-2);
+}
+
+.acc-actions {
+  flex: 0 0 110px;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.acc-empty {
+  padding: 32px;
+  text-align: center;
+  color: var(--ch-text-3);
+  font-size: 13px;
+}
+
+/* ── PDF modal preserved ────────────────────────────────────── */
+.pdf-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.pdf-modal-content {
+  position: relative;
+  width: 80%;
+  max-width: 900px;
+  background: var(--ch-surface);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.pdf-modal-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--ch-text-2);
 }
