@@ -23,6 +23,7 @@ on:
       - main
       - dev
       - dev-angular-19
+      - yente
 
 permissions:
   contents: read

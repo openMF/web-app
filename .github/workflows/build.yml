@@ -4,7 +4,7 @@ name: build-run
 on:
   # Triggers the workflow on push or pull request events for specific branches
   push:
-    branches: [main, dev, dev-angular-19]
+    branches: [main, dev, dev-angular-19, yente]
   pull_request:
     branches: [main, dev, dev-angular-19]
 
