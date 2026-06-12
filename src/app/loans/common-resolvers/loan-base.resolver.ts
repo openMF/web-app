@@ -22,7 +22,7 @@ export class LoanBaseResolver {
 
   protected initialize(route: ActivatedRouteSnapshot): void {
     const productType = route.queryParams['productType'];
-    if (productType !== null) {
+    if (productType) {
       if (productType === 'loan') {
         this.productType.next(LOAN_PRODUCT_TYPE.LOAN);
       } else if (productType === 'working-capital') {

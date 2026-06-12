@@ -357,7 +357,7 @@
             </a>
           }
         }
-        @if (loanProductService.isWorkingCapital || loanDetailsData.transactions.length) {
+        @if (loanProductService.isWorkingCapital || loanDetailsData.transactions?.length) {
           <a
             mat-tab-link
             [routerLink]="['./transactions']"

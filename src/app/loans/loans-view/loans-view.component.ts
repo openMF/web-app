@@ -121,7 +121,7 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
       .subscribe((data: { loanDetailsData: any; loanDatatables: any; loanArrearsDelinquencyConfig: any }) => {
         this.loanDetailsData = data.loanDetailsData;
         if (!this.loanDetailsData.loanProductName) {
-          this.loanDetailsData.loanProductName = this.loanDetailsData.product.name;
+          this.loanDetailsData.loanProductName = this.loanDetailsData.product?.name;
         }
         this.loanDatatables = this.loanProductService.isLoanProduct ? data.loanDatatables : [];
         this.loanStatus = this.loanDetailsData.status;

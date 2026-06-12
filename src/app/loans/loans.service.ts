@@ -17,6 +17,7 @@ export type LoanAccountPath = 'loans' | 'working-capital-loans';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 import { DisbursementData } from './models/loan-account.model';
+import { PeriodPaymentRateChange } from './models/working-capital-loan-account.model';
 
 /**
  * Loans service.
@@ -604,8 +605,8 @@ export class LoansService {
    * @param {string} chargeId loans charge Id
    * @returns {Observable<any>}
    */
-  getLoansAccountCharge(accountId: string, chargeId: string): Observable<any> {
-    return this.http.get(`/loans/${accountId}/charges/${chargeId}`);
+  getLoansAccountCharge(loanAccountPath: LoanAccountPath, accountId: string, chargeId: string): Observable<any> {
+    return this.http.get(`/${loanAccountPath}/${accountId}/charges/${chargeId}`);
   }
 
   /**
@@ -875,8 +876,8 @@ export class LoansService {
   /**
    * Returns the Working Capital Loan Payment Rates data
    */
-  getWorkingCapitalPeriodPaymentRates(loanId: any) {
-    return this.http.get(`/working-capital-loans/${loanId}/rate-changes`);
+  getWorkingCapitalPeriodPaymentRates(loanId: any): Observable<PeriodPaymentRateChange[]> {
+    return this.http.get<PeriodPaymentRateChange[]>(`/working-capital-loans/${loanId}/rate-changes`);
   }
 
   /**
