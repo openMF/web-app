@@ -854,4 +854,8 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
       message: message
     });
   }
+
+  getProductTypePrefix(): string {
+    return this.loanProductService.isLoanProduct ? 'L' : 'WC';
+  }
 }

@@ -33,7 +33,6 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { DatetimeFormatPipe } from '../../../pipes/datetime-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { YesnoPipe } from '@pipes/yesno.pipe';
 
 @Component({
   selector: 'mifosx-view-journal-entry-transaction',
@@ -56,8 +55,7 @@ import { YesnoPipe } from '@pipes/yesno.pipe';
     MatRow,
     DateFormatPipe,
     DatetimeFormatPipe,
-    FormatNumberPipe,
-    YesnoPipe
+    FormatNumberPipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -95,6 +93,10 @@ export class ViewJournalEntryTransactionComponent implements OnInit {
 
   isManualJournalEntry = false;
 
+  totalDebit = 0;
+  totalCredit = 0;
+  currencySymbol = '';
+
   /**
    * Retrieves the transaction data from `resolve` and sets the transaction table.
    */
@@ -114,7 +116,57 @@ export class ViewJournalEntryTransactionComponent implements OnInit {
         this.isJournalEntryLoaded = true;
       }
       this.setTransaction();
+      this.computeTotals();
     });
+  }
+
+  /**
+   * Computes total debit/credit amounts to feed the trial balance strip.
+   */
+  computeTotals(): void {
+    if (!this.dataSource || !this.dataSource.data.length) {
+      return;
+    }
+    let debit = 0;
+    let credit = 0;
+    for (const entry of this.dataSource.data) {
+      const amount = Number(entry.amount) || 0;
+      if (entry.entryType?.value === 'DEBIT') {
+        debit += amount;
+      } else if (entry.entryType?.value === 'CREDIT') {
+        credit += amount;
+      }
+    }
+    this.totalDebit = debit;
+    this.totalCredit = credit;
+    const firstCurrency = this.dataSource.data[0]?.currency;
+    this.currencySymbol = firstCurrency?.displaySymbol || firstCurrency?.code || '';
+  }
+
+  get netBalance(): number {
+    return Math.abs(this.totalDebit - this.totalCredit);
+  }
+
+  get isBalanced(): boolean {
+    return this.netBalance < 0.005;
+  }
+
+  get firstEntry(): any {
+    return this.dataSource?.data?.[0];
+  }
+
+  get isReversed(): boolean {
+    return !!this.firstEntry?.reversed;
+  }
+
+  glAccountTypeClass(type?: string): string {
+    if (!type) return 'asset';
+    const normalized = type.toUpperCase();
+    if (normalized.includes('LIAB')) return 'liability';
+    if (normalized.includes('EQUITY')) return 'equity';
+    if (normalized.includes('INCOME') || normalized.includes('REVENUE')) return 'income';
+    if (normalized.includes('EXPENSE')) return 'expense';
+    return 'asset';
   }
 
   isViewTransaction(): boolean {
@@ -190,12 +242,5 @@ export class ViewJournalEntryTransactionComponent implements OnInit {
 
   goBack(): void {
     this.location.back();
-  }
-
-  journalEntryColor(): string {
-    if (this.isManualJournalEntry) {
-      return 'manual-entry';
-    }
-    return '';
   }
 }
