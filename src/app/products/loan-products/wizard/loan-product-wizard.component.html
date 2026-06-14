@@ -1,0 +1,156 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="landing-page">
+  <section class="landing-page__hero">
+    <div>
+      <p class="landing-page__eyebrow">Products</p>
+      <h1>Loan product creation</h1>
+      <p class="landing-page__copy">
+        Select a product below. Personal Loan is the only active option in this first version and opens the multi-step
+        creation form.
+      </p>
+    </div>
+
+    <div class="landing-page__badge">
+      <span>Version 1</span>
+      <strong>Personal Loan enabled</strong>
+    </div>
+  </section>
+
+  <section class="product-grid">
+    <mat-card
+      *ngFor="let product of productCards"
+      class="product-card"
+      [class.product-card--active]="product.active"
+      [class.product-card--disabled]="product.disabled"
+    >
+      <div class="product-card__header">
+        <div>
+          <p class="product-card__eyebrow">Product</p>
+          <h3>{{ product.name }}</h3>
+        </div>
+        <span class="product-chip" [class.product-chip--active]="product.active">
+          {{ product.active ? 'Active' : 'Disabled' }}
+        </span>
+      </div>
+
+      <p class="product-card__description">{{ product.description }}</p>
+
+      <button *ngIf="product.active" mat-raised-button color="primary" (click)="scrollToForm()">
+        Create Personal Loan
+      </button>
+      <button *ngIf="!product.active" mat-stroked-button disabled>Coming soon</button>
+    </mat-card>
+  </section>
+
+  <section #loanFormSection class="wizard-shell">
+    <div class="wizard-shell__header">
+      <div>
+        <p class="landing-page__eyebrow">Personal Loan</p>
+        <h2>Multi-step form</h2>
+      </div>
+      <div class="wizard-shell__hint">Hidden defaults are loaded from <code>loan-product.config.ts</code></div>
+    </div>
+
+    <mat-stepper orientation="vertical" [linear]="false" class="wizard-stepper">
+      <mat-step *ngFor="let step of steps; let i = index">
+        <ng-template matStepLabel>{{ step.title }}</ng-template>
+
+        <div [formGroup]="form" class="step-panel">
+          <ng-container *ngIf="step.id !== 7; else reviewStep">
+            <div class="field-grid">
+              <ng-container *ngFor="let field of visibleFields(step)">
+                <mat-form-field *ngIf="field.type !== 'checkbox'" appearance="outline">
+                  <mat-label>{{ field.label }}</mat-label>
+
+                  <input
+                    *ngIf="field.type === 'text' || field.type === 'number'"
+                    matInput
+                    [type]="field.type"
+                    [formControlName]="field.key"
+                    [placeholder]="field.placeholder"
+                  />
+
+                  <mat-select *ngIf="field.type === 'select'" [formControlName]="field.key">
+                    <mat-option *ngFor="let option of field.options" [value]="option.value">
+                      {{ option.label }}
+                    </mat-option>
+                  </mat-select>
+
+                  <mat-hint *ngIf="field.hint">{{ field.hint }}</mat-hint>
+                </mat-form-field>
+
+                <mat-checkbox *ngIf="field.type === 'checkbox'" [formControlName]="field.key">
+                  {{ field.label }}
+                </mat-checkbox>
+              </ng-container>
+            </div>
+          </ng-container>
+
+          <ng-template #reviewStep>
+            <div class="review-banner">
+              <div>
+                <p class="review-banner__name">{{ reviewPayload['name'] || '—' }}</p>
+                <div class="review-banner__chips">
+                  <span *ngIf="reviewPayload['shortName']" class="review-chip">{{ reviewPayload['shortName'] }}</span>
+                  <span class="review-chip">{{ formatValue('currencyCode', reviewPayload['currencyCode']) }}</span>
+                  <span *ngIf="reviewPayload['externalId']" class="review-chip"
+                    >ID: {{ reviewPayload['externalId'] }}</span
+                  >
+                </div>
+              </div>
+
+              <div class="review-metrics">
+                <div class="review-metric">
+                  <span class="review-metric__label">Principal</span>
+                  <span class="review-metric__value">{{ formattedPrincipal }}</span>
+                </div>
+                <div class="review-metric">
+                  <span class="review-metric__label">Schedule</span>
+                  <span class="review-metric__value">{{ scheduleLabel }}</span>
+                </div>
+                <div class="review-metric">
+                  <span class="review-metric__label">Interest</span>
+                  <span class="review-metric__value">{{ interestLabel }}</span>
+                </div>
+              </div>
+            </div>
+
+            <ng-container *ngFor="let section of reviewSections">
+              <div class="review-section" *ngIf="sectionRows(section).length">
+                <p class="review-section__title">{{ section.title }}</p>
+                <div class="review-row" *ngFor="let row of sectionRows(section)">
+                  <span class="review-row__label">{{ row.label }}</span>
+                  <span class="review-row__value">{{ row.display }}</span>
+                </div>
+              </div>
+            </ng-container>
+
+            <div class="review-defaults-pill">
+              <div>
+                <p class="review-defaults-pill__title">Template defaults are preloaded</p>
+                <p class="review-defaults-pill__sub">
+                  Hidden variables and predefined values are included in the final payload automatically.
+                </p>
+              </div>
+            </div>
+          </ng-template>
+
+          <div class="step-actions">
+            <button mat-stroked-button matStepperPrevious *ngIf="i > 0">Back</button>
+            <button mat-raised-button color="primary" matStepperNext *ngIf="i < steps.length - 1">Next</button>
+            <button mat-raised-button color="primary" *ngIf="i === steps.length - 1" (click)="submit()">
+              Create Loan Product
+            </button>
+          </div>
+        </div>
+      </mat-step>
+    </mat-stepper>
+  </section>
+</div>
