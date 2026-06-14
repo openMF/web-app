@@ -131,6 +131,7 @@ import { AdvancePaymentAllocationTabComponent } from './loan-products/loan-produ
 import { LoanProductSummaryComponent } from './loan-products/common/loan-product-summary/loan-product-summary.component';
 import { LoanProductDeferredIncomeRecognitionStepComponent } from './loan-products/loan-product-stepper/loan-product-capitalized-income-step/loan-product-deferred-income-recognition-step.component';
 import { AdvancedAccountingMappingRuleComponent } from './loan-products/loan-product-stepper/loan-product-accounting-step/advanced-accounting-mapping-rule/advanced-accounting-mapping-rule.component';
+import { LoanProductSelectionComponent } from './loan-products/create-loan-product/loan-product-selection.component';
 
 /**
  * Products Module
@@ -155,6 +156,7 @@ import { AdvancedAccountingMappingRuleComponent } from './loan-products/loan-pro
     LoanProductAccountingStepComponent,
     LoanProductPreviewStepComponent,
     CreateLoanProductComponent,
+    LoanProductSelectionComponent,
     ManageTaxConfigurationsComponent,
     RecurringDepositProductsComponent,
     ChargesComponent,

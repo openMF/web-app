@@ -21,6 +21,16 @@
   gap: 5px;
 }
 
+.input-indicator {
+  line-height: 1;
+  color: currentcolor;
+  opacity: 1;
+  visibility: visible;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
 .container {
   max-width: 37rem;
 }

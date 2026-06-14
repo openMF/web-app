@@ -573,7 +573,7 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
         };
       case 'NominalInterestRate':
         return {
-          title: this.translateService.instant('labels.heading.Nominal Interest Rate by loan cycle'),
+          title: 'Annual interest rate by loan cycle',
           formfields: this.getFormfields(values)
         };
     }

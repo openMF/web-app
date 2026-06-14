@@ -161,11 +161,11 @@
       </div>
       @if (!loanProduct.isLinkedToFloatingInterestRates) {
         <div class="flex-fill layout-row">
-          <span class="flex-40">{{ 'labels.inputs.Nominal interest rate' | translate }}:</span>
+          <span class="flex-40">Annual interest rate:</span>
           <span class="flex-60"
             >{{
               loanProduct.interestRatePerPeriod +
-                ' (Min: ' +
+                ' % (Min: ' +
                 (loanProduct.minInterestRatePerPeriod
                   ? loanProduct.minInterestRatePerPeriod
                   : loanProduct.interestRatePerPeriod) +
@@ -302,7 +302,7 @@
       }
       @if (loanProduct.interestRateVariationsForBorrowerCycle?.length) {
         <div class="flex-fill">
-          <h4 class="mat-h4 flex-fill">{{ 'labels.inputs.Nominal Interest Rate by loan cycle' | translate }}</h4>
+          <h4 class="mat-h4 flex-fill">Annual interest rate by loan cycle</h4>
           <table
             class="mat-elevation-z1 flex-fill"
             mat-table

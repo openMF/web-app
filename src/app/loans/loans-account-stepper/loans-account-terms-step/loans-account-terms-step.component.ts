@@ -206,7 +206,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
   ngOnChanges(changes: SimpleChanges) {
     if (this.loanProductService.isLoanProduct) {
       if (this.loansAccountProductTemplate) {
-        this.currency = this.loansAccountProductTemplate.currency;
+        this.currency = this.resolveCurrency(this.loansAccountProductTemplate);
 
         this.loansAccountTermsData = this.loansAccountProductTemplate;
         if (this.loanId != null && this.loansAccountTemplate?.accountNo) {
@@ -341,7 +341,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
       }
     } else if (this.loanProductService.isWorkingCapital && this.loansAccountProductTemplate) {
       this.loansAccountTermsData = this.loansAccountProductTemplate;
-      this.currency = this.loansAccountTermsData.currency;
+      this.currency = this.resolveCurrency(this.loansAccountTermsData);
       this.termFrequencyTypeData = this.loansAccountTermsData.options?.periodFrequencyTypeOptions;
       this.delinquencyStartTypeOptions = this.loansAccountTermsData.options?.delinquencyStartTypeOptions;
       this.breachOptions = this.loansAccountTermsData.options?.breachOptions ?? [];
@@ -405,6 +405,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
   ngOnInit() {
     this.maxDate = this.settingsService.maxFutureDate;
     this.loansAccountTermsData = this.loansAccountProductTemplate;
+    this.currency = this.resolveCurrency(this.loansAccountTermsData);
     if (this.loanProductService.isLoanProduct) {
       if (this.loanId != null && this.loansAccountTemplate.accountNo) {
         this.loansAccountTermsData = this.loansAccountTemplate;
@@ -504,6 +505,37 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
 
   allowAddDisbursementDetails() {
     return this.multiDisburseLoan && !this.loansAccountTermsData.disallowExpectedDisbursements;
+  }
+
+  private resolveCurrency(source: any): Currency | null {
+    const selectedCurrency = source?.currency;
+    if (selectedCurrency?.code) {
+      return {
+        ...selectedCurrency,
+        displaySymbol: selectedCurrency.displaySymbol || selectedCurrency.displayLabel || selectedCurrency.code
+      };
+    }
+
+    const currencyOptionCollections = [
+      source?.currencyOptions,
+      source?.currencies,
+      source?.product?.currencyOptions,
+      source?.product?.currencies,
+      source?.options?.currencyOptions
+    ];
+
+    for (const collection of currencyOptionCollections) {
+      if (Array.isArray(collection) && collection.length > 0) {
+        const firstCurrency = collection[0];
+        if (firstCurrency?.code) {
+          return {
+            ...firstCurrency,
+            displaySymbol: firstCurrency.displaySymbol || firstCurrency.displayLabel || firstCurrency.code
+          };
+        }
+      }
+    }
+    return null;
   }
 
   formatDateToDDMMYYYY(date: Date): string {

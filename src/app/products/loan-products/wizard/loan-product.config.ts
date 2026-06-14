@@ -64,6 +64,7 @@ export interface ProductCard {
   description: string;
   active: boolean;
   disabled?: boolean;
+  route?: string;
 }
 
 export type FieldType = 'text' | 'number' | 'select' | 'checkbox';
@@ -90,7 +91,13 @@ export interface FormStep {
 }
 
 export const PRODUCT_CARDS: ProductCard[] = [
-  { name: 'Personal Loan', description: 'First version of the loan product wizard.', active: true, disabled: false },
+  {
+    name: 'Personal Loan',
+    description: 'First version of the loan product wizard.',
+    active: true,
+    disabled: false,
+    route: 'personal-loan'
+  },
   { name: 'Two Wheeler Loan', description: 'Coming soon.', active: false, disabled: true },
   { name: 'JLG Loan', description: 'Coming soon.', active: false, disabled: true },
   { name: 'Education Loan', description: 'Coming soon.', active: false, disabled: true },
@@ -116,7 +123,7 @@ export const LABEL_MAP: Record<string, string> = {
   currencyCode: 'Currency',
   principal: 'Principal amount',
   numberOfRepayments: 'Number of repayments',
-  interestRatePerPeriod: 'Nominal interest rate',
+  interestRatePerPeriod: 'Annual interest rate',
   interestRateFrequencyType: 'Interest rate frequency',
   repaymentEvery: 'Repaid every',
   repaymentFrequencyType: 'Repayment period',
@@ -268,7 +275,7 @@ export const FORM_STEPS: FormStep[] = [
         placeholder: 'e.g. 12'
       },
       {
-        label: 'Nominal interest rate (%)',
+        label: 'Annual interest rate (%)',
         key: 'interestRatePerPeriod',
         type: 'number',
         required: true,
@@ -476,7 +483,7 @@ export const INITIAL_FORM_STATE = {
   name: '',
   shortName: '',
   externalId: '',
-  currencyCode: 'INR',
+  currencyCode: '',
   principal: '',
   numberOfRepayments: 12,
   interestRatePerPeriod: '',

@@ -1,0 +1,56 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="landing-page">
+  <section class="landing-page__hero">
+    <div>
+      <p class="landing-page__eyebrow">Products</p>
+      <h1>Loan product creation</h1>
+      <p class="landing-page__copy">
+        Select a product below. Personal Loan is the first active option and opens its dedicated creation page.
+      </p>
+    </div>
+
+    <div class="landing-page__badge">
+      <span>Version 1</span>
+      <strong>Personal Loan enabled</strong>
+    </div>
+  </section>
+
+  <section class="product-grid">
+    <mat-card
+      *ngFor="let product of productCards"
+      class="product-card"
+      [class.product-card--active]="product.active"
+      [class.product-card--disabled]="product.disabled"
+    >
+      <div class="product-card__header">
+        <div>
+          <p class="product-card__eyebrow">Product</p>
+          <h3>{{ product.name }}</h3>
+        </div>
+        <span class="product-chip" [class.product-chip--active]="product.active">
+          {{ product.active ? 'Active' : 'Disabled' }}
+        </span>
+      </div>
+
+      <p class="product-card__description">{{ product.description }}</p>
+
+      <button
+        *ngIf="product.active"
+        mat-raised-button
+        color="primary"
+        [routerLink]="['/products', 'loan-products', product.route]"
+        [queryParams]="{ productType: 'loan' }"
+      >
+        Create Personal Loan
+      </button>
+      <button *ngIf="!product.active" mat-stroked-button disabled>Coming soon</button>
+    </mat-card>
+  </section>
+</div>

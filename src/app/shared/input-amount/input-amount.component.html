@@ -9,20 +9,18 @@
 @if (isRequired) {
   <mat-form-field appearance="fill" class="flex-100 input-container" floatLabel="always">
     <mat-label>{{ 'labels.inputs.' + inputLabel | translate }}</mat-label>
-    <div class="input-group">
-      <span>{{ currency.code }}</span>
-      <input
-        mifosxFormatAmount="{{ currency.code }}:{{ currency.displaySymbol }}:1.2-10"
-        class="right-input"
-        [formControl]="inputFormControl"
-        (keypress)="numberOnly($event)"
-        required
-        matInput
-        mifosxPositiveNumber
-        (blur)="displayHint = false"
-        (focus)="displayHint = true"
-      />
-    </div>
+    <input
+      mifosxFormatAmount="{{ currency.code }}:{{ currency.displaySymbol || currency.code }}:1.2-10"
+      class="right-input"
+      [formControl]="inputFormControl"
+      (keypress)="numberOnly($event)"
+      required
+      matInput
+      mifosxPositiveNumber
+      (blur)="displayHint = false"
+      (focus)="displayHint = true"
+    />
+    <span matSuffix class="input-indicator">{{ currency.displaySymbol || currency.code }}</span>
     @if (inputFormControl.hasError('required')) {
       <mat-error>
         {{ 'labels.inputs.' + inputLabel | translate }} {{ 'labels.commons.is' | translate }}
@@ -55,19 +53,18 @@
 @if (!isRequired) {
   <mat-form-field appearance="fill" class="flex-100 input-container" floatLabel="always">
     <mat-label>{{ 'labels.inputs.' + inputLabel | translate }}</mat-label>
-    <div class="input-group">
-      <span>{{ currency.code }}</span>
-      <input
-        mifosxFormatAmount="{{ currency.code }}:{{ currency.displaySymbol }}:1.2-10"
-        class="right-input"
-        [formControl]="inputFormControl"
-        (keypress)="numberOnly($event)"
-        matInput
-        mifosxPositiveNumber
-        (blur)="displayHint = false"
-        (focus)="displayHint = true"
-      />
-    </div>
+    <span matPrefix class="input-indicator">{{ currency?.displaySymbol }}&nbsp;</span>
+    <input
+      mifosxFormatAmount="{{ currency.code }}:{{ currency.displaySymbol || currency.code }}:1.2-10"
+      class="right-input"
+      [formControl]="inputFormControl"
+      (keypress)="numberOnly($event)"
+      matInput
+      mifosxPositiveNumber
+      (blur)="displayHint = false"
+      (focus)="displayHint = true"
+    />
+    <span matSuffix class="input-indicator">{{ currency.displaySymbol || currency.code }}</span>
     @if (displayHint) {
       <mat-hint class="right-hint">{{
         inputFormControl.value | currency: currency.code : currency.displaySymbol : '1.2-10'

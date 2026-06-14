@@ -1,0 +1,116 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.landing-page {
+  display: grid;
+  gap: 1.5rem;
+  max-width: 86rem;
+  width: 96%;
+  margin: 0 auto;
+  padding-bottom: 2rem;
+}
+
+.landing-page__hero {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  border-radius: 1rem;
+  background: var(--mat-sys-surface-container, #2e2e2e);
+  padding: 1.25rem;
+}
+
+.landing-page__eyebrow {
+  margin: 0 0 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.landing-page__copy {
+  max-width: 48rem;
+  margin: 0.5rem 0 0;
+}
+
+.landing-page__badge,
+.product-chip {
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+.landing-page__badge {
+  display: grid;
+  gap: 0.25rem;
+  background: rgb(255 255 255 / 8%);
+  min-width: 12rem;
+}
+
+.product-grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 1rem;
+}
+
+.product-grid > mat-card {
+  flex: 1 1 14rem;
+  min-width: 14rem;
+}
+
+.product-card {
+  display: grid;
+  gap: 0.75rem;
+  min-height: 11rem;
+  border-radius: 1rem;
+  background: var(--mat-sys-surface-container, #2e2e2e);
+  padding: 1.25rem;
+}
+
+.product-card--active {
+  border: 1px solid var(--mat-sys-primary, #1e88e5);
+}
+
+.product-card--disabled {
+  opacity: 0.7;
+}
+
+.product-card__header {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.product-card__eyebrow {
+  margin: 0 0 0.25rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.product-card__description {
+  margin: 0;
+  line-height: 1.4;
+}
+
+.product-chip {
+  align-self: flex-start;
+  background: rgb(255 255 255 / 8%);
+}
+
+.product-chip--active {
+  background: rgb(30 136 229 / 22%);
+}
+
+@media (width <= 768px) {
+  .landing-page__hero {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
