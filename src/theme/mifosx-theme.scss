@@ -17,6 +17,7 @@
 @use '../app/home/dashboard/dashboard.component-theme.scss' as *;
 @use '../app/shares/shares-account-view/shares-account-view.component-theme.scss' as *;
 @use '../app/account-transfers/view-account-transfer/view-account-transfer.component-theme.scss' as *;
+@use '../app/copilot/copilot.component-theme.scss' as *;
 @use 'content' as *;
 @use 'dark_content' as *;
 
@@ -71,6 +72,7 @@ $mifosx-app-theme: mat.m2-define-light-theme(
 @include shares-account-view-component-theme($mifosx-app-theme);
 @include account-view-component-theme($mifosx-app-theme);
 @include view-account-transfer-component-theme($mifosx-app-theme);
+@include copilot-component-theme($mifosx-app-theme);
 
 /* ################################## Dark theme ################################### */
 
@@ -94,4 +96,5 @@ $mifosx-app-dark-theme: mat.m2-define-dark-theme(
   @include shares-account-view-component-theme($mifosx-app-dark-theme);
   @include account-view-component-dark-theme($mifosx-app-dark-theme);
   @include view-account-transfer-component-theme($mifosx-app-dark-theme);
+  @include copilot-component-theme($mifosx-app-dark-theme);
 }

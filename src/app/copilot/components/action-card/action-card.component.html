@@ -1,0 +1,38 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+<div class="card" [class.card--confirm]="card.type === 'confirmation'" [class.card--insight]="card.type === 'insight'">
+  <div class="card__head">
+    <div class="card__icon-wrap" [ngClass]="'card__icon-wrap--' + card.type">
+      <svg class="card__type-icon" viewBox="0 0 24 24"><path [attr.d]="cardTypeIcon(card.type)" /></svg>
+    </div>
+    <div class="card__head-text">
+      <span class="card__badge" [ngClass]="'card__badge--' + card.type">{{ card.type }}</span>
+      <span class="card__title">{{ card.title }}</span>
+    </div>
+  </div>
+  <div class="card__rows">
+    <div *ngFor="let entry of objectEntries(card.data)" class="card__row">
+      <span class="card__label">{{ entry[0] }}</span>
+      <span class="card__value">{{ entry[1] }}</span>
+    </div>
+  </div>
+  <div *ngIf="card.type === 'confirmation'" class="card__warn-stripe">
+    <svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" /></svg>
+    <span>This action involves real money. Please confirm.</span>
+  </div>
+  <div *ngIf="card.actions?.length" class="card__actions">
+    <button
+      type="button"
+      *ngFor="let btn of card.actions"
+      (click)="btn.route ? route.emit(btn.route) : action.emit(btn.action)"
+      class="card__btn card__btn--{{ btn.style }}"
+    >
+      {{ btn.label }}
+    </button>
+  </div>
+</div>

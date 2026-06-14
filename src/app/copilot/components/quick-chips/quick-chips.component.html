@@ -1,0 +1,21 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+<ng-container *ngFor="let p of prompts; trackBy: trackByPrompt">
+  <button
+    *ngIf="outline"
+    type="button"
+    mat-stroked-button
+    class="prompt-chip prompt-chip--outline"
+    (click)="selected.emit(p)"
+  >
+    {{ p }}
+  </button>
+  <button *ngIf="!outline" type="button" mat-button class="prompt-chip" (click)="selected.emit(p)">
+    {{ p }}
+  </button>
+</ng-container>

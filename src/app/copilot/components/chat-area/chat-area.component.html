@@ -1,0 +1,63 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+<div class="chat-body" #messageContainer>
+  <!-- Empty / welcome state -->
+  <div *ngIf="messages.length === 0" class="welcome">
+    <span class="welcome__badge">{{ greetingTime }}, {{ displayName }}</span>
+    <h1 class="welcome__heading">How can I help you support<br />your clients today?</h1>
+    <mifosx-quick-chips
+      class="welcome__prompts"
+      [prompts]="emptySuggestions"
+      [outline]="true"
+      (selected)="promptSelected.emit($event)"
+    >
+    </mifosx-quick-chips>
+  </div>
+
+  <!-- Message list -->
+  <ng-container *ngFor="let msg of messages; trackBy: trackByMessageId">
+    <div class="msg" [class.msg--user]="msg.role === 'user'" [class.msg--ai]="msg.role === 'assistant'">
+      <div *ngIf="msg.role === 'assistant' && !(msg.isStreaming && !msg.content?.trim())" class="msg__avatar">
+        <img src="assets/images/MifosX_logo.png" alt="Mifos AI" />
+      </div>
+      <div class="msg__content">
+        <div class="msg__bubble" *ngIf="msg.content?.trim() || msg.role === 'user'">
+          <span *ngIf="msg.role === 'user'">{{ msg.content }}</span>
+          <span *ngIf="msg.role === 'assistant'" [innerHTML]="msg.content | markdown"></span>
+        </div>
+        <span class="msg__time">{{ relativeTime(msg.timestamp) }}</span>
+
+        <!-- Action cards -->
+        <div *ngIf="msg.actionCards?.length" class="cards">
+          <mifosx-action-card
+            *ngFor="let card of msg.actionCards"
+            [card]="card"
+            (action)="cardAction.emit($event)"
+            (route)="cardRoute.emit($event)"
+          >
+          </mifosx-action-card>
+        </div>
+
+        <!-- Follow-up chips -->
+        <mifosx-quick-chips
+          *ngIf="msg.suggestedPrompts?.length && !isStreaming"
+          class="chips"
+          [prompts]="msg.suggestedPrompts || []"
+          (selected)="promptSelected.emit($event)"
+        >
+        </mifosx-quick-chips>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Typing indicator -->
+  <div *ngIf="isStreaming" class="typing">
+    <div class="msg__avatar"><img src="assets/images/MifosX_logo.png" alt="Mifos AI" /></div>
+    <div class="typing__dots"><span></span><span></span><span></span></div>
+  </div>
+</div>

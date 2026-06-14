@@ -88,6 +88,16 @@ export const environment = {
   mifosInterbankTransfersEnabled:
     loadedEnv['mifosInterbankTransfersEnabled'] !== 'false' && loadedEnv['mifosInterbankTransfersEnabled'] !== false,
 
+  /**
+   * Mifos Copilot AI assistant: deployment master switch (level 1 feature flag).
+   * Off => the panel never renders and its lazy chunk is never downloaded.
+   * Currently DISABLED. To re-enable (default on), restore:
+   *   loadedEnv['enableCopilot'] !== 'false' && loadedEnv['enableCopilot'] !== false
+   */
+  enableCopilot: false,
+  /** Base URL of the Mifos MCP server the Copilot talks to. */
+  copilotMcpBaseUrl: loadedEnv['copilotMcpBaseUrl'] || 'https://ai.mifos.community',
+
   /** Remittance Module Integration */
   mifosRemittanceApiUrl: loadedEnv['mifosRemittanceApiClientUrl'] || '',
   mifosRemittanceApiProvider: loadedEnv['mifosRemittanceApiProvider'] || '',
