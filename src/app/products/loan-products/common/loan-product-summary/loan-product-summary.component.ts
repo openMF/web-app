@@ -670,6 +670,45 @@ export class LoanProductSummaryComponent extends LoanProductBaseComponent implem
     return this.loanProductService.isLoanProduct ? this.accountingRule() >= 2 : this.accountingRule() !== 'NONE';
   }
 
+  /**
+   * Item 1 — Simplify the View page.
+   *
+   * The read-only View (`action === 'view'`) should mirror the wizard: internal/defaulted parameters
+   * that were never exposed during creation, and sections with no meaningful content, are hidden. The
+   * Classic create/edit Preview (`action === 'preview'`) is intentionally left complete — the user is
+   * about to submit and must see every configured value — so every gate below is a no-op unless we are
+   * in the View. This keeps the change view-only and non-destructive (data is untouched) and cannot
+   * regress the Classic create/edit flows.
+   */
+  get isViewAction(): boolean {
+    return this.action === 'view';
+  }
+
+  /**
+   * Hide an internal boolean toggle row in the View when it sits at its falsy default. In Preview the
+   * value is always shown. Used for the scattered "Yes/No" toggles the wizard never surfaces.
+   */
+  hideToggleInView(value: unknown): boolean {
+    return this.isViewAction && !value;
+  }
+
+  /** A section is shown in Preview always; in the View only when it has meaningful content. */
+  get showDownPaymentsSection(): boolean {
+    return !this.isViewAction || !!this.loanProduct.enableDownPayment;
+  }
+
+  get showInterestRecalculationSection(): boolean {
+    return !this.isViewAction || !!this.loanProduct.isInterestRecalculationEnabled;
+  }
+
+  get showGuaranteeSection(): boolean {
+    return !this.isViewAction || !!this.loanProduct.holdGuaranteeFunds;
+  }
+
+  get showTrancheSection(): boolean {
+    return !this.isViewAction || !!this.loanProduct.multiDisburseLoan;
+  }
+
   isAdvancedAccountingEnabled(): boolean {
     return (
       this.loanProduct.paymentChannelToFundSourceMappings?.length > 0 ||

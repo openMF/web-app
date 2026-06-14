@@ -583,6 +583,8 @@
       "Create Interest Refund": "Create Interest Refund",
       "Create Journal Entries": "Create Journal Entries",
       "Create Loan Product": "Create Loan Product",
+      "Create Loan Product (Classic)": "Create Loan Product (Classic)",
+      "Create Loan Product (Convenient)": "Create Loan Product (Convenient)",
       "Create Office": "Create Office",
       "Create Payment Type": "Create Payment Type",
       "Create Preference": "Create Preference",
@@ -1130,6 +1132,8 @@
       "Breach Actions": "Breach Actions",
       "Delinquency & Breach": "Delinquency & Breach",
       "Interest": "Interest",
+      "Multi-step form": "Multi-step form",
+      "Loan product creation": "Loan product creation",
       "Near Breach Actions": "Near Breach Actions",
       "About Us": "About Us",
       "Account Information": "Account Information",
@@ -1696,6 +1700,9 @@
       "Amount to be Reserved": "Amount to be Reserved",
       "Annual EIR": "Annual EIR",
       "Annual Fees Transaction Date": "Annual Fees Transaction Date",
+      "Annual interest rate": "Annual interest rate",
+      "Annual interest rate by loan cycle": "Annual interest rate by loan cycle",
+      "Annual interest rate frequency": "Annual interest rate frequency",
       "Applicable From Date": "Applicable From Date",
       "Applicant": "Applicant",
       "Application Date": "Application Date",
@@ -2828,6 +2835,7 @@
       "Revised Meeting Date": "Revised Meeting Date",
       "Role": "Role",
       "Role Description": "Role Description",
+      "Schedule": "Schedule",
       "System": "System",
       "This role provides all application permissions": "This role provides all application permissions.",
       "Role Name": "Role Name",
@@ -3156,6 +3164,20 @@
       "task-management component": "task-management component",
       "to": "to",
       "valid": "valid",
+      "Active Pause": "Active Pause",
+      "days": "days",
+      "Duration": "Duration",
+      "Expired": "Expired",
+      "Last Action": "Last Action",
+      "No breach actions have been recorded for this loan": "No breach actions have been recorded for this loan",
+      "No records match the selected filter": "No records match the selected filter",
+      "Ongoing": "Ongoing",
+      "Pause Active": "Pause Active",
+      "Pauses": "Pauses",
+      "Scheduled": "Scheduled",
+      "Today": "Today",
+      "Total Actions": "Total Actions",
+      "Total Days Paused": "Total Days Paused",
       "Bureau Readiness": "Bureau Readiness",
       "Your CB-ILD Role": "Your CB-ILD Role",
       "KYC Completeness Score": "KYC Completeness Score",
@@ -3372,6 +3394,7 @@
     },
     "text": {
       "Max": "Max",
+      "Hidden variables and predefined values are included in the final payload automatically.": "Hidden variables and predefined values are included in the final payload automatically.",
       "No Breach Actions": "No Breach Actions",
       "No Near Breach Actions": "No Near Breach Actions",
       "A": "A",
@@ -4081,6 +4104,11 @@
       "Table": "Table",
       "Tax Components": "Tax Components",
       "Tellers": "Tellers",
+      "Template defaults are preloaded": "Template defaults are preloaded",
+      "Select a product below": "Select a product below",
+      "Version 2": "Version 2",
+      "Personal and Custom Loan enabled": "Personal and Custom Loan enabled",
+      "Coming soon": "Coming soon",
       "Template I am trying to use": "This is the template I am trying to use. Is that fine.",
       "Templates": "Templates",
       "Tenant": "Tenant",
@@ -4562,6 +4590,45 @@
         "clientNotFound": "Client {{ clientId }} not found in Fineract.",
         "serviceUnavailable": "CDC or Fineract is unreachable. Please try again later.",
         "unexpected": "An unexpected error occurred. Please try again."
+      }
+    },
+    "selections": {
+      "standingInstructions": {
+        "accountTransferType": {
+          "account.transfer": "Savings Transfer",
+          "loan.repayment": "Loan Repayment"
+        },
+        "standingInstructionPriority": {
+          "urgent": "Urgent",
+          "high": "High",
+          "medium": "Medium",
+          "low": "Low"
+        },
+        "standingInstructionStatus": {
+          "active": "Active",
+          "disabled": "Disabled",
+          "deleted": "Deleted"
+        },
+        "accountType": {
+          "savings": "Savings Account",
+          "loan": "Loan Account"
+        },
+        "standingInstructionType": {
+          "fixed": "Fixed Amount",
+          "dues": "Dues Amount"
+        },
+        "accountTransferRecurrenceType": {
+          "periodic": "Periodic",
+          "as.per.dues": "As Per Dues"
+        },
+        "frequencyperiodFrequencyType": {
+          "days": "Days",
+          "weeks": "Weeks",
+          "months": "Months",
+          "years": "Years"
+        },
+        "own.account": "Own Account",
+        "other.bank": "Other Bank"
       }
     }
   },

@@ -17,6 +17,8 @@ import { Route } from '../core/route/route.service';
 import { ProductsComponent } from './products.component';
 import { LoanProductsComponent } from './loan-products/loan-products.component';
 import { CreateLoanProductComponent } from './loan-products/create-loan-product/create-loan-product.component';
+import { CreateLoanProductClassicComponent } from './loan-products/create-loan-product-classic/create-loan-product-classic.component';
+import { LoanProductSelectionComponent } from './loan-products/create-loan-product/loan-product-selection.component';
 import { ViewLoanProductComponent } from './loan-products/view-loan-product/view-loan-product.component';
 import { EditLoanProductComponent } from './loan-products/edit-loan-product/edit-loan-product.component';
 import { SavingProductsComponent } from './saving-products/saving-products.component';
@@ -170,8 +172,31 @@ const routes: Routes = [
             },
             {
               path: 'create',
-              component: CreateLoanProductComponent,
+              component: LoanProductSelectionComponent,
+              data: { title: 'Create Loan Product', breadcrumb: 'Create' }
+            },
+            {
+              path: 'create/classic',
+              component: CreateLoanProductClassicComponent,
               data: { title: 'Create Loan Product', breadcrumb: 'Create' },
+              resolve: {
+                loanProductsTemplate: LoanProductsTemplateResolver,
+                configurations: GlobalConfigurationsResolver
+              }
+            },
+            {
+              path: 'personal-loan',
+              component: CreateLoanProductComponent,
+              data: { title: 'Create Personal Loan', breadcrumb: 'Personal Loan' },
+              resolve: {
+                loanProductsTemplate: LoanProductsTemplateResolver,
+                configurations: GlobalConfigurationsResolver
+              }
+            },
+            {
+              path: 'custom-advanced',
+              component: CreateLoanProductComponent,
+              data: { title: 'Custom / Advanced Loan Configuration', breadcrumb: 'Custom / Advanced' },
               resolve: {
                 loanProductsTemplate: LoanProductsTemplateResolver,
                 configurations: GlobalConfigurationsResolver
