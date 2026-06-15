@@ -1,0 +1,1 @@
+import{I as a}from"./chunk-YR5GO3YX.js";var e=(()=>{class t{constructor(){}toggleExpandCollapse(r,o){return o?r.collapseAll():r.expandAll(),!o}static{this.\u0275fac=function(o){return new(o||t)}}static{this.\u0275prov=a({token:t,factory:t.\u0275fac,providedIn:"root"})}}return t})();export{e as a};
