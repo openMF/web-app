@@ -1,4 +1,4 @@
-﻿{
+{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "Conectado como",
   "Remember me": "Recordar me",
@@ -769,7 +769,9 @@
       "Week": "Semana",
       "Withdraw": "Retirar",
       "Yes": "Sí",
-      "undo_account_transfer": "Revertir transferencia de cuenta"
+      "undo_account_transfer": "Revertir transferencia de cuenta",
+      "All": "Todos",
+      "Pause Breach": "Pausar Incumplimiento"
     },
     "catalogs": {
       "% Amount": "% Monto",
@@ -1576,7 +1578,10 @@
       "identifier id": "identificación del identificador",
       "savings-transaction-datatable-tab works": "La pestaña de tabla de datos de transacciones de ahorro funciona",
       "successfully select option": "exitosamente. Seleccione una de las opciones siguientes para continuar.",
-      "undo_account_transfer": "Revertir transferencia de cuenta"
+      "undo_account_transfer": "Revertir transferencia de cuenta",
+      "Loan Breach Actions": "Acciones de Incumplimiento del Préstamo",
+      "No Breach Actions": "Sin Acciones sobre Brechas",
+      "Pause Timeline": "Línea de Tiempo de Pausas"
     },
     "inputs": {
       "# Remittance": "# Remesa",
@@ -3136,7 +3141,22 @@
       "s3_secret_key": "s3_clave_secreta",
       "task-management component": "componente de gestión de tareas",
       "to": "a",
-      "valid": "válido"
+      "valid": "válido",
+      "Active Pause": "Pausa Activa",
+      "Breach Actions": "Acciones de Incumplimiento",
+      "days": "días",
+      "Duration": "Duración",
+      "Expired": "Expirada",
+      "Last Action": "Última Acción",
+      "No breach actions have been recorded for this loan": "No se han registrado acciones sobre brechas para este préstamo",
+      "No records match the selected filter": "Ningún registro coincide con el filtro seleccionado",
+      "Ongoing": "En curso",
+      "Pause Active": "Pausa Activa",
+      "Pauses": "Pausas",
+      "Scheduled": "Programada",
+      "Today": "Hoy",
+      "Total Actions": "Acciones Totales",
+      "Total Days Paused": "Total de Días en Pausa"
     },
     "links": {
       "Community": "Comunidad",
@@ -4097,7 +4117,9 @@
       "username": "nombre de usuario",
       "withhold tax for this account": "retener impuestos para esta cuenta",
       "withoutCategory": "Sin categoría",
-      "Maker-Checker principle requires every tasks": "El principio Maker-Checker requiere que dos personas completen cada tarea para reducir la posibilidad de errores y uso indebido. Una persona inicia el proceso y la segunda lo completa."
+      "Maker-Checker principle requires every tasks": "El principio Maker-Checker requiere que dos personas completen cada tarea para reducir la posibilidad de errores y uso indebido. Una persona inicia el proceso y la segunda lo completa.",
+      "Breach Actions": "Acciones de Incumplimiento",
+      "“Maker-Checker” principle requires every tasks": "El principio \"Maker-Checker\" requiere que dos personas completen cada tarea para reducir la posibilidad de errores y uso indebido. Una persona inicia el proceso y la segunda lo completa."
     },
     "permissions": {
       "actions": {

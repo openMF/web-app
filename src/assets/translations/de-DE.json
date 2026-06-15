@@ -1,4 +1,4 @@
-﻿{
+{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "Angemeldet als",
   "Remember me": "Erinnere dich an mich",
@@ -771,7 +771,9 @@
       "Week": "Woche",
       "Withdraw": "Zurückziehen",
       "Yes": "Ja",
-      "undo_account_transfer": "Kontotransfer rückgängig machen"
+      "undo_account_transfer": "Kontotransfer rückgängig machen",
+      "All": "Alle",
+      "Pause Breach": "Verstoß pausieren"
     },
     "catalogs": {
       "% Amount": "Menge",
@@ -1578,7 +1580,10 @@
       "identifier id": "Identifikator-ID",
       "savings-transaction-datatable-tab works": "saving-transaction-datatable-tab funktioniert",
       "successfully select option": "erfolgreich. Bitte wählen Sie eine der folgenden Optionen aus, um fortzufahren.",
-      "undo_account_transfer": "Kontotransfer rückgängig machen"
+      "undo_account_transfer": "Kontotransfer rückgängig machen",
+      "Loan Breach Actions": "Kredit-Verstoß-Aktionen",
+      "No Breach Actions": "Keine Verstoßaktionen",
+      "Pause Timeline": "Pausen-Zeitleiste"
     },
     "inputs": {
       "# Remittance": "# Überweisung",
@@ -3137,7 +3142,22 @@
       "s3_secret_key": "s3_secret_key",
       "task-management component": "Aufgabenverwaltungskomponente",
       "to": "Zu",
-      "valid": "gültig"
+      "valid": "gültig",
+      "Active Pause": "Aktive Pause",
+      "Breach Actions": "Verstoß-Aktionen",
+      "days": "Tage",
+      "Duration": "Dauer",
+      "Expired": "Abgelaufen",
+      "Last Action": "Letzte Aktion",
+      "No breach actions have been recorded for this loan": "Für dieses Darlehen wurden keine Verstoßaktionen erfasst",
+      "No records match the selected filter": "Keine Einträge entsprechen dem ausgewählten Filter",
+      "Ongoing": "Laufend",
+      "Pause Active": "Pause aktiv",
+      "Pauses": "Pausen",
+      "Scheduled": "Geplant",
+      "Today": "Heute",
+      "Total Actions": "Gesamtaktionen",
+      "Total Days Paused": "Pausentage gesamt"
     },
     "links": {
       "Community": "Gemeinschaft",
@@ -4097,7 +4117,9 @@
       "username": "Nutzername",
       "withhold tax for this account": "für dieses Konto die Steuer einbehalten",
       "withoutCategory": "Ohne Kategorie",
-      "Maker-Checker principle requires every tasks": "Das Maker-Checker-Prinzip erfordert, dass jede Aufgabe von zwei Personen erledigt wird, um das Risiko von Fehlern und Missbrauch zu verringern. Eine Person leitet den Prozess ein und die zweite Person schließt ihn ab."
+      "Maker-Checker principle requires every tasks": "Das Maker-Checker-Prinzip erfordert, dass jede Aufgabe von zwei Personen erledigt wird, um das Risiko von Fehlern und Missbrauch zu verringern. Eine Person leitet den Prozess ein und die zweite Person schließt ihn ab.",
+      "Breach Actions": "Verstoß-Aktionen",
+      "“Maker-Checker” principle requires every tasks": "Das „Maker-Checker“-Prinzip erfordert, dass jede Aufgabe von zwei Personen erledigt wird, um das Risiko von Fehlern und Missbrauch zu verringern. Eine Person leitet den Prozess ein und die zweite Person schließt ihn ab."
     },
     "permissions": {
       "actions": {

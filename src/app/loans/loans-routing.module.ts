@@ -79,6 +79,8 @@ import { LoanOriginatorsTabComponent } from './loans-view/loan-originators-tab/l
 import { LoanOriginatorsResolver } from './common-resolvers/loan-originators.resolver';
 import { LoanProductsResolver } from './common-resolvers/loan-products.resolver';
 import { LoanDelinquencyRangeScheduleResolver } from './common-resolvers/working-capital/loan-delinquency-actions.resolver';
+import { LoanBreachActionsResolver } from './common-resolvers/working-capital/loan-breach-actions.resolver';
+import { LoanBreachActionsTabComponent } from './loans-view/working-capital/loan-breach-actions-tab/loan-breach-actions-tab.component';
 import { LoanAmortizationScheduleTabComponent } from './loans-view/working-capital/loan-amortization-schedule-tab/loan-amortization-schedule-tab.component';
 import { LoanAmortizationScheduleResolver } from './common-resolvers/working-capital/loan-amortization-schedule.resolver';
 import { LoanBalancesTabComponent } from './loans-view/working-capital/loan-balances-tab/loan-balances-tab.component';
@@ -217,6 +219,19 @@ const routes: Routes = [
               {
                 path: '',
                 component: LoanDelinquencyTagsTabComponent
+              }
+            ]
+          },
+          {
+            path: 'breach-actions',
+            data: { title: 'Breach Actions', breadcrumb: 'Breach Actions', routeParamBreadcrumb: false },
+            resolve: {
+              breachActions: LoanBreachActionsResolver
+            },
+            children: [
+              {
+                path: '',
+                component: LoanBreachActionsTabComponent
               }
             ]
           },

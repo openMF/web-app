@@ -1,4 +1,4 @@
-﻿{
+{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "다음 계정으로 로그인됨",
   "Remember me": "날 기억해",
@@ -769,7 +769,9 @@
       "Week": "주",
       "Withdraw": "철회하다",
       "Yes": "예",
-      "undo_account_transfer": "계좌 이체 취소"
+      "undo_account_transfer": "계좌 이체 취소",
+      "All": "전체",
+      "Pause Breach": "위반 일시중지"
     },
     "catalogs": {
       "% Amount": "양",
@@ -1577,7 +1579,10 @@
       "identifier id": "식별자 ID",
       "savings-transaction-datatable-tab works": "저축 거래 데이터 테이블 탭이 작동합니다.",
       "successfully select option": "성공적으로. 계속 진행하려면 아래 옵션 중에서 선택하세요.",
-      "undo_account_transfer": "계좌 이체 취소"
+      "undo_account_transfer": "계좌 이체 취소",
+      "Loan Breach Actions": "대출 위반 작업",
+      "No Breach Actions": "위반 작업 없음",
+      "Pause Timeline": "일시중지 타임라인"
     },
     "inputs": {
       "# Remittance": "# 송금",
@@ -3135,7 +3140,22 @@
       "s3_secret_key": "s3_비밀_키",
       "task-management component": "작업 관리 구성 요소",
       "to": "에게",
-      "valid": "유효한"
+      "valid": "유효한",
+      "Active Pause": "활성 일시중지",
+      "Breach Actions": "위반 작업",
+      "days": "일",
+      "Duration": "기간",
+      "Expired": "만료됨",
+      "Last Action": "마지막 작업",
+      "No breach actions have been recorded for this loan": "이 대출에 대한 위반 작업이 기록되지 않았습니다",
+      "No records match the selected filter": "선택한 필터와 일치하는 기록이 없습니다",
+      "Ongoing": "진행 중",
+      "Pause Active": "일시중지 활성",
+      "Pauses": "일시중지",
+      "Scheduled": "예약됨",
+      "Today": "오늘",
+      "Total Actions": "전체 작업",
+      "Total Days Paused": "총 일시중지 일수"
     },
     "links": {
       "Community": "지역 사회",
@@ -4095,7 +4115,9 @@
       "username": "사용자 이름",
       "withhold tax for this account": "이 계정에 대한 원천징수세",
       "withoutCategory": "카테고리 없음",
-      "Maker-Checker principle requires every tasks": "원칙은 오류와 오용 가능성을 줄이기 위해 모든 작업을 두 사람이 완료하도록 요구합니다. 한 사람이 프로세스를 시작하고 두 번째 사람이 프로세스를 완료합니다."
+      "Maker-Checker principle requires every tasks": "원칙은 오류와 오용 가능성을 줄이기 위해 모든 작업을 두 사람이 완료하도록 요구합니다. 한 사람이 프로세스를 시작하고 두 번째 사람이 프로세스를 완료합니다.",
+      "Breach Actions": "위반 작업",
+      "“Maker-Checker” principle requires every tasks": "\"Maker-Checker\" 원칙은 오류와 오용 가능성을 줄이기 위해 모든 작업을 두 사람이 완료하도록 요구합니다. 한 사람이 프로세스를 시작하고 두 번째 사람이 프로세스를 완료합니다."
     },
     "permissions": {
       "actions": {

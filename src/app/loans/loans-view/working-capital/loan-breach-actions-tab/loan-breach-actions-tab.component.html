@@ -1,0 +1,223 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="breach-actions-card">
+  <div class="kpi-strip">
+    <div class="kpi">
+      <span class="kpi-label">{{ 'labels.inputs.Total Actions' | translate }}</span>
+      <span class="kpi-value">{{ kpis().total }}</span>
+    </div>
+    <div class="kpi">
+      <span class="kpi-label">{{ 'labels.inputs.Active Pause' | translate }}</span>
+      <span class="kpi-value accent">{{ kpis().activeCount }}</span>
+    </div>
+    <div class="kpi">
+      <span class="kpi-label">{{ 'labels.inputs.Total Days Paused' | translate }}</span>
+      <span class="kpi-value">
+        {{ kpis().totalDays }}
+        <span class="unit">{{ 'labels.inputs.days' | translate }}</span>
+      </span>
+    </div>
+    <div class="kpi">
+      <span class="kpi-label">{{ 'labels.inputs.Last Action' | translate }}</span>
+      <span class="kpi-value">
+        @if (kpis().lastActionDate) {
+          {{ kpis().lastActionDate | dateFormat }}
+        } @else {
+          —
+        }
+      </span>
+    </div>
+    <div class="kpi-status">
+      @if (hasActivePause()) {
+        <span class="status-chip">
+          <span class="dot"></span>
+          {{ 'labels.inputs.Pause Active' | translate }}
+        </span>
+      }
+    </div>
+  </div>
+
+  @if (rows().length > 0) {
+    <div class="timeline-section">
+      <div class="section-header">
+        <span class="section-title"> {{ 'labels.heading.Pause Timeline' | translate }} · {{ timelineYear() }} </span>
+        <div class="legend">
+          <span class="legend-item">
+            <span class="legend-swatch legend-active"></span>{{ 'labels.inputs.Active' | translate }}
+          </span>
+          <span class="legend-item">
+            <span class="legend-swatch legend-scheduled"></span>{{ 'labels.inputs.Scheduled' | translate }}
+          </span>
+          <span class="legend-item">
+            <span class="legend-swatch legend-expired"></span>{{ 'labels.inputs.Expired' | translate }}
+          </span>
+        </div>
+      </div>
+
+      <svg class="timeline" viewBox="0 0 1200 180" preserveAspectRatio="none">
+        <text class="lane-label" x="6" y="92">{{ 'labels.inputs.Pauses' | translate }}</text>
+
+        <g class="grid-group">
+          @for (line of monthGridLines; track $index) {
+            <line class="month-grid" [attr.x1]="line" y1="28" [attr.x2]="line" y2="130" />
+          }
+        </g>
+
+        <line class="baseline" x1="60" y1="130" x2="1200" y2="130" />
+
+        <g>
+          @for (label of monthLabels; track label.name) {
+            <text class="month-label" [attr.x]="label.x" y="152" text-anchor="middle">{{ label.name }}</text>
+          }
+        </g>
+
+        <g>
+          @for (bar of timelineBars(); track trackByLabel($index, bar)) {
+            <rect
+              [attr.class]="'pause-bar-edge pause-bar-edge--' + bar.status"
+              [attr.x]="bar.x"
+              y="64"
+              [attr.width]="bar.width"
+              height="48"
+              rx="4"
+            />
+            <rect
+              [attr.class]="'pause-bar pause-bar--' + bar.status"
+              [attr.x]="bar.x"
+              y="68"
+              [attr.width]="bar.width"
+              height="40"
+              rx="4"
+            >
+              <title>{{ bar.tooltip }}</title>
+            </rect>
+            <text class="bar-tag" [attr.x]="bar.midX" y="92" text-anchor="middle">{{ bar.label }}</text>
+          }
+        </g>
+
+        @if (todayMarker() !== null) {
+          <line class="today-line" [attr.x1]="todayMarker()" y1="28" [attr.x2]="todayMarker()" y2="140" />
+          <text class="today-label" [attr.x]="todayMarker()" y="22" text-anchor="middle">
+            {{ 'labels.inputs.Today' | translate }}
+          </text>
+        }
+      </svg>
+    </div>
+  }
+
+  <div class="table-section">
+    <div class="table-toolbar">
+      <div class="toolbar-left">
+        <span class="record-count">
+          {{ 'labels.inputs.Total Records' | translate }}: <strong>{{ filteredRows().length }}</strong>
+        </span>
+        @if (rows().length > 0) {
+          <div class="filter-group" role="group">
+            @for (option of filters; track option.value) {
+              <button
+                type="button"
+                class="filter-chip"
+                [class.is-active]="filter() === option.value"
+                (click)="selectFilter(option.value)"
+              >
+                {{ option.label | translate }}
+              </button>
+            }
+          </div>
+        }
+      </div>
+      <div class="toolbar-right">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="createBreachActionPause()"
+          *mifosxHasPermission="'CREATE_WC_BREACH_ACTION'"
+        >
+          <fa-icon icon="pause"></fa-icon>
+          {{ 'labels.buttons.Pause Breach' | translate }}
+        </button>
+      </div>
+    </div>
+
+    @if (rows().length > 0) {
+      <div class="table-wrap">
+        <table class="breach-actions-table">
+          <thead>
+            <tr>
+              <th class="id-col">{{ 'labels.inputs.Id' | translate }}</th>
+              <th>{{ 'labels.inputs.Action' | translate }}</th>
+              <th>{{ 'labels.inputs.Status' | translate }}</th>
+              <th>{{ 'labels.inputs.Start Date' | translate }}</th>
+              <th>{{ 'labels.inputs.End Date' | translate }}</th>
+              <th>{{ 'labels.inputs.Duration' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of filteredRows(); track trackById($index, row)) {
+              <tr [attr.class]="'row-' + row.status">
+                <td>
+                  <span class="id-cell">#{{ row.id }}</span>
+                </td>
+                <td>
+                  <span class="action-badge">
+                    <fa-icon icon="pause"></fa-icon>
+                    {{ row.action | titlecase }}
+                  </span>
+                </td>
+                <td>
+                  <span [attr.class]="'status-pill status-pill--' + row.status">
+                    <span class="dot"></span>
+                    {{ row.statusLabelKey | translate }}
+                  </span>
+                </td>
+                <td>
+                  <span class="date-cell">{{ row.startDateObj | dateFormat }}</span>
+                </td>
+                <td>
+                  @if (row.endDateObj) {
+                    <span class="date-cell">{{ row.endDateObj | dateFormat }}</span>
+                  } @else {
+                    <span class="date-cell muted">{{ 'labels.inputs.Ongoing' | translate }}</span>
+                  }
+                </td>
+                <td>
+                  <span class="duration">
+                    <span class="days">{{ row.durationDays }}{{ row.isOngoing ? '+' : '' }}</span>
+                    <span class="duration-unit">{{ 'labels.inputs.days' | translate }}</span>
+                    <span class="duration-bar">
+                      <span
+                        [attr.class]="'duration-bar-fill duration-bar-fill--' + row.status"
+                        [style.width.%]="durationBarWidth(row)"
+                      ></span>
+                    </span>
+                  </span>
+                </td>
+              </tr>
+            }
+            @if (filteredRows().length === 0) {
+              <tr class="empty-row">
+                <td colspan="6">
+                  {{ 'labels.inputs.No records match the selected filter' | translate }}
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    } @else {
+      <div class="empty">
+        <div class="ico">
+          <fa-icon icon="pause"></fa-icon>
+        </div>
+        <h4>{{ 'labels.heading.No Breach Actions' | translate }}</h4>
+        <p>{{ 'labels.inputs.No breach actions have been recorded for this loan' | translate }}</p>
+      </div>
+    }
+  </div>
+</div>

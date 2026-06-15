@@ -1,4 +1,4 @@
-﻿{
+{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "Přihlášen jako",
   "Remember me": "Zapamatuj si mě",
@@ -770,7 +770,9 @@
       "Week": "Týden",
       "Withdraw": "Ustoupit",
       "Yes": "Ano",
-      "undo_account_transfer": "Vrátit převod účtu"
+      "undo_account_transfer": "Vrátit převod účtu",
+      "All": "Vše",
+      "Pause Breach": "Pozastavit porušení"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -1576,7 +1578,10 @@
       "identifier id": "identifikátor id",
       "savings-transaction-datatable-tab works": "spořicí-transakční-datatable-tab funguje",
       "successfully select option": "úspěšně. Chcete-li pokračovat dále, vyberte si z níže uvedených možností.",
-      "undo_account_transfer": "Vrátit převod účtu"
+      "undo_account_transfer": "Vrátit převod účtu",
+      "Loan Breach Actions": "Akce porušení úvěru",
+      "No Breach Actions": "Žádné akce při porušení",
+      "Pause Timeline": "Časová osa pauz"
     },
     "inputs": {
       "# Remittance": "# Remitence",
@@ -3135,7 +3140,22 @@
       "s3_secret_key": "s3_secret_key",
       "task-management component": "komponenta řízení úkolů",
       "to": "na",
-      "valid": "platný"
+      "valid": "platný",
+      "Active Pause": "Aktivní pauza",
+      "Breach Actions": "Akce porušení",
+      "days": "dní",
+      "Duration": "Doba trvání",
+      "Expired": "Vypršela",
+      "Last Action": "Poslední akce",
+      "No breach actions have been recorded for this loan": "Pro tento úvěr nebyly zaznamenány žádné akce při porušení",
+      "No records match the selected filter": "Žádné záznamy neodpovídají vybranému filtru",
+      "Ongoing": "Probíhá",
+      "Pause Active": "Pauza aktivní",
+      "Pauses": "Pauzy",
+      "Scheduled": "Naplánováno",
+      "Today": "Dnes",
+      "Total Actions": "Celkové akce",
+      "Total Days Paused": "Celkový počet dní v pauze"
     },
     "links": {
       "Community": "Společenství",
@@ -4096,7 +4116,9 @@
       "username": "uživatelské jméno",
       "withhold tax for this account": "srazit daň pro tento účet",
       "withoutCategory": "Bez kategorie",
-      "Maker-Checker principle requires every tasks": "Princip Maker-Checker vyžaduje, aby každý úkol prováděli dva lidé, aby se snížila pravděpodobnost chyb a zneužití. Jedna osoba proces iniciuje a druhá jej dokončí."
+      "Maker-Checker principle requires every tasks": "Princip Maker-Checker vyžaduje, aby každý úkol prováděli dva lidé, aby se snížila pravděpodobnost chyb a zneužití. Jedna osoba proces iniciuje a druhá jej dokončí.",
+      "Breach Actions": "Akce porušení",
+      "“Maker-Checker” principle requires every tasks": "Princip „Maker-Checker“ vyžaduje, aby každý úkol prováděli dva lidé, aby se snížila pravděpodobnost chyb a zneužití. Jedna osoba proces iniciuje a druhá jej dokončí."
     },
     "permissions": {
       "actions": {

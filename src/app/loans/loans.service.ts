@@ -146,6 +146,14 @@ export class LoansService {
     return this.http.get(`/working-capital-loans/${loanId}/delinquency-range-schedule`);
   }
 
+  getBreachActions(loanId: string) {
+    return this.http.get(`/working-capital-loans/${loanId}/breach-actions`);
+  }
+
+  createBreachAction(loanId: string, payload: any) {
+    return this.http.post(`/working-capital-loans/${loanId}/breach-actions`, payload);
+  }
+
   getWorkingCapitalLoanAmortizationSchedule(loanId: string) {
     return this.http.get(`/working-capital-loans/${loanId}/amortization-schedule`);
   }

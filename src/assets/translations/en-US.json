@@ -1,4 +1,4 @@
-﻿{
+{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "Logged in as",
   "Remember me": "Remember me",
@@ -772,7 +772,9 @@
       "Week": "Week",
       "Withdraw": "Withdraw",
       "Yes": "Yes",
-      "undo_account_transfer": "Undo Account Transfer"
+      "undo_account_transfer": "Undo Account Transfer",
+      "All": "All",
+      "Pause Breach": "Pause Breach"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -1583,7 +1585,10 @@
       "identifier id": "identifier id",
       "savings-transaction-datatable-tab works": "savings-transaction-datatable-tab works",
       "successfully select option": "successfully. Please select from the options below to proceed further.",
-      "undo_account_transfer": "Undo Account Transfer"
+      "undo_account_transfer": "Undo Account Transfer",
+      "Loan Breach Actions": "Loan Breach Actions",
+      "No Breach Actions": "No Breach Actions",
+      "Pause Timeline": "Pause Timeline"
     },
     "inputs": {
       "# Remittance": "# Remittance",
@@ -3138,7 +3143,22 @@
       "s3_secret_key": "s3_secret_key",
       "task-management component": "task-management component",
       "to": "to",
-      "valid": "valid"
+      "valid": "valid",
+      "Active Pause": "Active Pause",
+      "Breach Actions": "Breach Actions",
+      "days": "days",
+      "Duration": "Duration",
+      "Expired": "Expired",
+      "Last Action": "Last Action",
+      "No breach actions have been recorded for this loan": "No breach actions have been recorded for this loan",
+      "No records match the selected filter": "No records match the selected filter",
+      "Ongoing": "Ongoing",
+      "Pause Active": "Pause Active",
+      "Pauses": "Pauses",
+      "Scheduled": "Scheduled",
+      "Today": "Today",
+      "Total Actions": "Total Actions",
+      "Total Days Paused": "Total Days Paused"
     },
     "links": {
       "Community": "Community",
@@ -4204,7 +4224,9 @@
       "username": "username",
       "withhold tax for this account": "withhold tax for this account",
       "withoutCategory": "Without Category",
-      "Maker-Checker principle requires every tasks": "The Maker-Checker principle requires every task to be completed by two people to reduce the chance of errors and misuse. One person initiates the process and the second completes it."
+      "Maker-Checker principle requires every tasks": "The Maker-Checker principle requires every task to be completed by two people to reduce the chance of errors and misuse. One person initiates the process and the second completes it.",
+      "Breach Actions": "Breach Actions",
+      "“Maker-Checker” principle requires every tasks": "The “Maker-Checker” principle requires every task to be completed by two people to reduce the chance of errors and misuse. One person initiates the process and the second completes it."
     },
     "permissions": {
       "actions": {

@@ -1,4 +1,4 @@
-﻿{
+{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "को रूपमा लग इन गरियो",
   "Remember me": "मलाई सम्झनुहोस्",
@@ -769,7 +769,9 @@
       "Week": "हप्ता",
       "Withdraw": "निकाल्नु",
       "Yes": "हो",
-      "undo_account_transfer": "खाता स्थानान्तरण रद्द गर्नुहोस्"
+      "undo_account_transfer": "खाता स्थानान्तरण रद्द गर्नुहोस्",
+      "All": "सबै",
+      "Pause Breach": "उल्लङ्घन रोक्नुहोस्"
     },
     "catalogs": {
       "% Amount": "रकम",
@@ -1575,7 +1577,10 @@
       "identifier id": "पहिचानकर्ता आईडी",
       "savings-transaction-datatable-tab works": "बचत-लेनदेन-डेटाटेबल-ट्याब काम गर्दछ",
       "successfully select option": "सफलतापूर्वक। अगाडि बढ्नको लागि कृपया तलका विकल्पहरूबाट चयन गर्नुहोस्।",
-      "undo_account_transfer": "खाता स्थानान्तरण रद्द गर्नुहोस्"
+      "undo_account_transfer": "खाता स्थानान्तरण रद्द गर्नुहोस्",
+      "Loan Breach Actions": "ऋण उल्लङ्घन कार्यहरू",
+      "No Breach Actions": "कुनै उल्लंघन कार्यहरू छैनन्",
+      "Pause Timeline": "रोकावट समयरेखा"
     },
     "inputs": {
       "# Remittance": "# रेमिट्यान्स",
@@ -3134,7 +3139,22 @@
       "s3_secret_key": "s3_secret_key",
       "task-management component": "कार्य व्यवस्थापन घटक",
       "to": "को",
-      "valid": "मान्य"
+      "valid": "मान्य",
+      "Active Pause": "सक्रिय रोकावट",
+      "Breach Actions": "उल्लङ्घन कार्यहरू",
+      "days": "दिन",
+      "Duration": "अवधि",
+      "Expired": "समाप्त",
+      "Last Action": "अन्तिम कार्य",
+      "No breach actions have been recorded for this loan": "यो ऋणको लागि कुनै उल्लंघन कार्यहरू रेकर्ड गरिएको छैन",
+      "No records match the selected filter": "कुनै पनि रेकर्ड चयन गरिएको फिल्टरसँग मेल खाँदैन",
+      "Ongoing": "जारी",
+      "Pause Active": "रोकावट सक्रिय",
+      "Pauses": "रोकावटहरू",
+      "Scheduled": "तालिकाबद्ध",
+      "Today": "आज",
+      "Total Actions": "कुल कार्यहरू",
+      "Total Days Paused": "कुल रोकिएका दिनहरू"
     },
     "links": {
       "Community": "समुदाय",
@@ -4095,7 +4115,9 @@
       "username": "प्रयोगकर्ता नाम",
       "withhold tax for this account": "यस खाताको लागि कर रोक्नुहोस्",
       "withoutCategory": "बिना श्रेणी",
-      "Maker-Checker principle requires every tasks": "सिद्धान्तले त्रुटि र दुरुपयोगको सम्भावना कम गर्न प्रत्येक कार्यहरू दुई व्यक्तिद्वारा पूरा गर्न आवश्यक छ। एक व्यक्तिले प्रक्रिया सुरु गर्छ र दोस्रोले यसलाई पूरा गर्दछ।"
+      "Maker-Checker principle requires every tasks": "सिद्धान्तले त्रुटि र दुरुपयोगको सम्भावना कम गर्न प्रत्येक कार्यहरू दुई व्यक्तिद्वारा पूरा गर्न आवश्यक छ। एक व्यक्तिले प्रक्रिया सुरु गर्छ र दोस्रोले यसलाई पूरा गर्दछ।",
+      "Breach Actions": "उल्लङ्घन कार्यहरू",
+      "“Maker-Checker” principle requires every tasks": "\"मेकर-चेकर\" सिद्धान्तले त्रुटि र दुरुपयोगको सम्भावना कम गर्न प्रत्येक कार्यहरू दुई व्यक्तिद्वारा पूरा गर्न आवश्यक छ। एक व्यक्तिले प्रक्रिया सुरु गर्छ र दोस्रोले यसलाई पूरा गर्दछ।"
     },
     "permissions": {
       "actions": {

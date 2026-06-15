@@ -439,6 +439,20 @@
             {{ 'labels.inputs.Delinquency Tags' | translate }}
           </a>
         }
+        @if (loanProductService.isWorkingCapital && loanDetailsData.status.active && loanDetailsData.breach) {
+          <a
+            mat-tab-link
+            [routerLink]="['./breach-actions']"
+            [queryParams]="{
+              productType: loanProductService.productType.value
+            }"
+            routerLinkActive
+            #breachActions="routerLinkActive"
+            [active]="breachActions.isActive"
+          >
+            {{ 'labels.inputs.Breach Actions' | translate }}
+          </a>
+        }
         <a
           mat-tab-link
           [routerLink]="['./originators']"
