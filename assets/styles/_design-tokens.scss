@@ -1,0 +1,72 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+:root {
+  /* Brand blue scale */
+  --ds-blue-900: #0d2b5e;
+  --ds-blue-700: #1565c0;
+  --ds-blue-600: #1976d2;
+  --ds-blue-400: #42a5f5;
+  --ds-blue-100: #bbdefb;
+  --ds-blue-50: #e3f2fd;
+  --ds-blue-20: #f0f7ff;
+
+  /* Surfaces */
+  --ds-surface: #fff;
+  --ds-surface-alt: #f4f7fb;
+  --ds-surface-head: #ebf2fa;
+  --ds-border: #dde5f0;
+  --ds-border-strong: #c0d0e4;
+
+  /* Text scale */
+  --ds-text-1: #0d1b2a;
+  --ds-text-2: #4a6785;
+  --ds-text-3: #8fa5bc;
+
+  /* Financial-status colors */
+  --ds-paid: #2e7d32;
+  --ds-paid-bg: #e8f5e9;
+  --ds-partial: #e65100;
+  --ds-partial-bg: #fff3e0;
+  --ds-alert: #c62828;
+  --ds-alert-bg: #ffebee;
+  --ds-zero: #b0bec5;
+
+  /* Elevation */
+  --ds-shadow-xs: 0 1px 2px rgb(13 43 94 / 6%);
+  --ds-shadow-sm: 0 2px 8px rgb(13 43 94 / 10%);
+  --ds-shadow-md: 0 6px 20px rgb(13 43 94 / 14%);
+
+  /* Radii */
+  --ds-radius-sm: 4px;
+  --ds-radius: 8px;
+  --ds-radius-lg: 12px;
+}
+
+body.dark-theme {
+  --ds-blue-700: #5b9bd5;
+  --ds-blue-600: #7ab3e0;
+  --ds-blue-100: #1a3a60;
+  --ds-blue-50: #0a2040;
+  --ds-blue-20: #0d1f35;
+  --ds-surface: #1a2535;
+  --ds-surface-alt: #101d2d;
+  --ds-surface-head: #132032;
+  --ds-border: #1e3050;
+  --ds-border-strong: #2a4264;
+  --ds-text-1: #e2ebf6;
+  --ds-text-2: #8baecf;
+  --ds-text-3: #6a8fad;
+  --ds-paid: #66bb6a;
+  --ds-paid-bg: #172b1a;
+  --ds-partial: #ffa726;
+  --ds-partial-bg: #281c0b;
+  --ds-alert: #ef9a9a;
+  --ds-alert-bg: #2b1212;
+  --ds-zero: #6a8fad;
+}
