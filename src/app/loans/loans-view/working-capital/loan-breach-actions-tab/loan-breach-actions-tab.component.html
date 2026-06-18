@@ -221,3 +221,110 @@
     }
   </div>
 </div>
+
+@if (breachEnabled) {
+  @if (loanDetails?.breach) {
+    <div class="list-section">
+      <div class="list-section-header">
+        <h3>{{ 'labels.heading.Breach Actions' | translate }}</h3>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="loanAction('Update Breach')"
+          *mifosxHasPermission="'CREATE_WC_BREACH_ACTION'"
+        >
+          <fa-icon icon="not-equal"></fa-icon>
+          {{ 'labels.menus.Update Breach' | translate }}
+        </button>
+      </div>
+
+      @if (breachActionsList.length > 0) {
+        <table mat-table [dataSource]="breachActionsList">
+          <ng-container matColumnDef="identifier">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Id' | translate }}</th>
+            <td mat-cell *matCellDef="let item">{{ item.id }}</td>
+          </ng-container>
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Action' | translate }}</th>
+            <td mat-cell *matCellDef="let item">{{ item.action }}</td>
+          </ng-container>
+          <ng-container matColumnDef="startDate">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Start Date' | translate }}</th>
+            <td mat-cell *matCellDef="let item">{{ item.startDate | dateFormat }}</td>
+          </ng-container>
+          <ng-container matColumnDef="minimumPayment">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Minimum Payment' | translate }}</th>
+            <td mat-cell *matCellDef="let item">
+              @if (item.action === 'RESCHEDULE') {
+                {{ item.minimumPayment | formatNumber: '' : 0 }}
+                {{ item.minimumPaymentType | translateKey: 'catalogs' }}
+              }
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="frequency">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Frequency' | translate }}</th>
+            <td mat-cell *matCellDef="let item">
+              @if (item.action === 'RESCHEDULE') {
+                {{ item.frequency | formatNumber: '' : 0 }} {{ item.frequencyType | translateKey: 'catalogs' }}
+              }
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="breachActionsColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: breachActionsColumns"></tr>
+        </table>
+      } @else {
+        <p>{{ 'labels.text.No Breach Actions' | translate }}</p>
+      }
+    </div>
+  }
+}
+
+@if (nearBreachEnabled) {
+  @if (loanDetails?.nearBreach) {
+    <div class="list-section">
+      <div class="list-section-header">
+        <h3>{{ 'labels.heading.Near Breach Actions' | translate }}</h3>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="loanAction('Update Near Breach')"
+          *mifosxHasPermission="'CREATE_WC_NEAR_BREACH_ACTION'"
+        >
+          <fa-icon icon="not-equal"></fa-icon>
+          {{ 'labels.menus.Update Near Breach' | translate }}
+        </button>
+      </div>
+
+      @if (nearBreachActions.length > 0) {
+        <table mat-table [dataSource]="nearBreachActions">
+          <ng-container matColumnDef="identifier">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Id' | translate }}</th>
+            <td mat-cell *matCellDef="let item">{{ item.id }}</td>
+          </ng-container>
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Action' | translate }}</th>
+            <td mat-cell *matCellDef="let item">{{ item.action }}</td>
+          </ng-container>
+          <ng-container matColumnDef="threshold">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Threshold' | translate }}</th>
+            <td mat-cell *matCellDef="let item">{{ item.threshold | formatNumber }} %</td>
+          </ng-container>
+          <ng-container matColumnDef="frequency">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Frequency' | translate }}</th>
+            <td mat-cell *matCellDef="let item">
+              {{ item.frequency | formatNumber: '' : 0 }} {{ item.frequencyType | translateKey: 'catalogs' }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="createdDate">
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Created On' | translate }}</th>
+            <td mat-cell *matCellDef="let item">{{ item.createdDate | datetimeFormat }}</td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="nearBreachActionsColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: nearBreachActionsColumns"></tr>
+        </table>
+      } @else {
+        <p>{{ 'labels.text.No Near Breach Actions' | translate }}</p>
+      }
+    </div>
+  }
+}

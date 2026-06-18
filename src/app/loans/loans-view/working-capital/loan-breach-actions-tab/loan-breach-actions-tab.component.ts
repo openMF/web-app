@@ -10,15 +10,32 @@ import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, computed, injec
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import {
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { Dates } from 'app/core/utils/dates';
 import { LoanDelinquencyActionDialogComponent } from 'app/loans/custom-dialog/loan-delinquency-action-dialog/loan-delinquency-action-dialog.component';
 import { LoansService } from 'app/loans/loans.service';
 import { LoanDelinquencyAction } from 'app/loans/models/loan-account.model';
 import { SettingsService } from 'app/settings/settings.service';
-import { DateFormatPipe } from 'app/pipes/date-format.pipe';
+import { DatetimeFormatPipe } from 'app/pipes/datetime-format.pipe';
+import { FormatNumberPipe } from 'app/pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
+import {
+  WorkingCapitalBreachAction,
+  WorkingCapitalNearBreachActions
+} from 'app/loans/models/working-capital/working-capital-loan-account.model';
 
 type BreachActionStatus = 'active' | 'scheduled' | 'expired';
 type BreachActionFilter = 'all' | BreachActionStatus;
@@ -56,8 +73,19 @@ const MS_PER_DAY = 86_400_000;
   styleUrls: ['./loan-breach-actions-tab.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
     FaIconComponent,
-    DateFormatPipe
+    DatetimeFormatPipe,
+    FormatNumberPipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -69,12 +97,33 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
   private settingsService = inject(SettingsService);
   dialog = inject(MatDialog);
 
+  // Pause dashboard state
   breachActions = signal<LoanDelinquencyAction[]>([]);
   filter = signal<BreachActionFilter>('all');
 
   loanId: string;
   locale: string;
   dateFormat: string;
+
+  // Breach & Near Breach lists
+  loanDetails: any;
+  breachActionsList: WorkingCapitalBreachAction[] = [];
+  nearBreachActions: WorkingCapitalNearBreachActions[] = [];
+
+  breachActionsColumns: string[] = [
+    'identifier',
+    'action',
+    'startDate',
+    'minimumPayment',
+    'frequency'
+  ];
+  nearBreachActionsColumns: string[] = [
+    'identifier',
+    'action',
+    'threshold',
+    'frequency',
+    'createdDate'
+  ];
 
   rows = computed<BreachActionRow[]>(() => {
     const businessDate = this.settingsService.businessDate;
@@ -201,18 +250,52 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
 
   constructor() {
     super();
-    this.loanId = this.route.parent.parent.snapshot.params['loanId'];
+    this.loanProductService.initialize(LoanProductBaseComponent.resolveProductTypeDefault(this.route, 'loan'));
+    this.loanId = this.route.parent.snapshot.params['loanId'];
 
-    this.route.parent.data
+    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanDetailsData: any }) => {
+      this.loanDetails = data.loanDetailsData;
+    });
+
+    this.route.data
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { breachActions: LoanDelinquencyAction[] }) => {
-        this.setBreachActions(data.breachActions || []);
-      });
+      .subscribe(
+        (data: {
+          loanBreachActions: WorkingCapitalBreachAction[];
+          loanNearBreachActions: WorkingCapitalNearBreachActions[];
+        }) => {
+          this.breachActionsList = data.loanBreachActions || [];
+          this.nearBreachActions = data.loanNearBreachActions || [];
+          this.setBreachActions((data.loanBreachActions as unknown as LoanDelinquencyAction[]) || []);
+        }
+      );
   }
 
   ngOnInit(): void {
     this.locale = this.settingsService.language.code;
     this.dateFormat = this.settingsService.dateFormat;
+  }
+
+  get breachEnabled(): boolean {
+    return this.loanProductService.isWorkingCapital && this.loanDetails?.breach != null;
+  }
+
+  get nearBreachEnabled(): boolean {
+    return this.loanProductService.isWorkingCapital && this.loanDetails?.nearBreach != null;
+  }
+
+  loanAction(actionName: string): void {
+    this.router.navigate(
+      [
+        '../actions',
+        actionName
+      ],
+      {
+        queryParams: { productType: this.loanProductService.productType.value },
+        relativeTo: this.route,
+        state: { data: this.loanDetails }
+      }
+    );
   }
 
   selectFilter(value: BreachActionFilter): void {

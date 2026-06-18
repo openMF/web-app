@@ -693,3 +693,28 @@
     height: 220px;
   }
 }
+
+table {
+  width: 100%;
+}
+
+/* ───────────── Breach / Near Breach list sections ───────────── */
+.list-section {
+  margin-top: 24px;
+}
+
+.list-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+
+  h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ch-text-1);
+  }
+}

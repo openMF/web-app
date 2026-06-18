@@ -89,12 +89,23 @@
         </div>
       }
 
-      @if (loanDetails.nearBreach) {
+      @if (loanDetails.nearBreach || loanNearBreachActions.length) {
         <div class="flex-fill layout-row">
           <span class="flex-50"> {{ 'labels.inputs.Near Breach' | translate }} </span>
-          <span class="flex-50"
-            ><mifosx-breach-display [singleRow]="false" [nearBreach]="loanDetails.nearBreach"
-          /></span>
+          @if (loanNearBreachActions.length > 0) {
+            <button
+              mat-icon-button
+              color="primary"
+              class="m-l-10"
+              [matTooltip]="'labels.heading.Near Breach History' | translate"
+              [attr.aria-label]="'labels.heading.Near Breach History' | translate"
+              (click)="openNearBreachHistory()"
+            >
+              <mat-icon>
+                <fa-icon icon="history" size="sm"></fa-icon>
+              </mat-icon>
+            </button>
+          }
         </div>
       }
     }

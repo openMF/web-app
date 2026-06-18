@@ -399,6 +399,24 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
           });
         }
       }
+
+      // Only Available when Near Breach is set in the Loan
+      if (this.loanProductService.isWorkingCapital && this.loanDetailsData?.nearBreach != null) {
+        this.buttonConfig.addButton({
+          name: 'Update Near Breach',
+          icon: 'not-equal',
+          taskPermissionName: 'CREATE_WC_NEAR_BREACH_ACTION'
+        });
+      }
+
+      // Only Available when Breach is set in the Loan
+      if (this.loanProductService.isWorkingCapital && this.loanDetailsData?.breach != null) {
+        this.buttonConfig.addButton({
+          name: 'Update Breach',
+          icon: 'not-equal',
+          taskPermissionName: 'CREATE_WC_BREACH_ACTION'
+        });
+      }
     } else if (
       (this.loanProductService.isLoanProduct && this.status === 'Closed (obligations met)') ||
       this.status === 'Overpaid'

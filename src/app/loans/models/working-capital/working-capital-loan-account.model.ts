@@ -50,3 +50,40 @@ export interface WorkingCapitalLoanDiscountUpdateRequest {
   locale: string;
   dateFormat: string;
 }
+
+export interface WorkingCapitalBreachActionRequest {
+  action: string;
+  minimumPayment: number;
+  minimumPaymentType: string;
+  frequency: number;
+  frequencyType: string;
+  locale: string;
+}
+
+export interface WorkingCapitalBreachAction {
+  id: number;
+  action: string;
+  startDate: Date;
+  minimumPayment?: number;
+  minimumPaymentType?: string;
+  frequency?: number;
+  frequencyType?: string;
+}
+
+export interface WorkingCapitalNearBreachActionRequest {
+  action: string;
+  nearBreachThreshold: number;
+  nearBreachFrequency: number;
+  nearBreachFrequencyType: string;
+  locale: string;
+}
+
+export interface WorkingCapitalNearBreachActions {
+  id: number;
+  loanId: number;
+  action: string;
+  threshold: number;
+  frequency: number;
+  frequencyType: string;
+  createdDate: Date;
+}

@@ -1119,6 +1119,8 @@
       "NotEqual": "Nevienāds"
     },
     "heading": {
+      "Breach Actions": "Pārkāpums Darbības",
+      "Near Breach Actions": "Tuvu pārkāpumam Darbības",
       "About Us": "Par Mums",
       "Account Information": "Konta informācija",
       "Account Linked Financial": "Ar dažādām finanšu darbībām saistīto kontu saraksts. Lai uzzinātu vairāk, noklikšķiniet:",
@@ -1407,6 +1409,7 @@
       "Minimum Deposit Term": "Minimālais depozīta termiņš",
       "Moratorium": "Moratorijs",
       "Near Breach Configuration": "Tuvas pārkāpuma konfigurācija",
+      "Near Breach History": "Tuvu pārkāpumam vēsture",
       "Nominal Interest Rate by loan cycle": "Nominālā procentu likme pēc aizdevuma cikla",
       "Not Yet Amortized Amount": "Vel nav amortizeta summa",
       "Notes": "Piezīmes",
@@ -1584,6 +1587,7 @@
       "Pause Timeline": "Pauzes laika līnija"
     },
     "inputs": {
+      "Breach Actions": "Pārkāpums Darbības",
       "# Remittance": "# Pārvedums",
       "# Senders": "# Sūtītāji",
       "ACCOUNTING": "GRĀMATVEDĪBA",
@@ -2492,6 +2496,7 @@
       "Multiple Debit Entries Allowed": "Ir atļauti vairāki debeta ieraksti",
       "Municipality": "Pašvaldība",
       "N/A": "N/A",
+      "New": "Jaunais",
       "NID": "Nacionālais ID",
       "Name": "Vārds",
       "Name Decorated": "Nosaukums Dekorēts",
@@ -2690,6 +2695,7 @@
       "Prefix Type": "Prefiksa veids",
       "Premature Close Date": "Priekšlaicīga slēgšanas datums",
       "Present": "Klāt",
+      "Previous": "Iepriekšējais",
       "Previous Run": "Iepriekšējais skrējiens",
       "Previous Run Status": "Iepriekšējais palaišanas statuss",
       "Primary Grouping by Amount": "Primārā grupēšana pēc summas",
@@ -3173,6 +3179,7 @@
       "Working with Code": "Darbs ar kodu"
     },
     "menus": {
+      "Update Breach": "Atjaunināt pārkāpumu",
       "Unassign Staff": "Atcelt personāla piešķiršanu",
       "Accounting": "Grāmatvedība",
       "Account Overview": "Konta pārskats",
@@ -3292,6 +3299,7 @@
       "Withdrawn by Client": "Izņēmis klients",
       "Write Off": "Norakstīt",
       "Update discount": "Atjaunināt atlaidi",
+      "Update Near Breach": "Atjaunināt tuvo pārkāpumu",
       "Apply Additional Shares": "Lietot papildu",
       "Redeem Shares": "Izpirkt Akcijas",
       "Approve Additional Shares": "Apstipriniet papildu akcijas",
@@ -3361,6 +3369,8 @@
       "undo_account_transfer": "Vai tiešām vēlaties atcelt šo konta pārskaitījumu?"
     },
     "text": {
+      "No Breach Actions": "Nav Pārkāpums Darbības",
+      "No Near Breach Actions": "Nav Tuvu pārkāpumam Darbības",
       "A": "A",
       "Ability to manage holidays for individual offices": "Iespēja pārvaldīt brīvdienas atsevišķiem birojiem ir ļoti noderīgs rīks organizācijai, kas aptver vairākas atrašanās vietas. Izmantojiet šo opciju, lai pielāgotu brīvdienas katram savas organizācijas birojam.",
       "About Us": "Par Mums",

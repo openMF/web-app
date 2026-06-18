@@ -1119,6 +1119,8 @@
       "NotEqual": "Diferente de"
     },
     "heading": {
+      "Breach Actions": "Ações de violação",
+      "Near Breach Actions": "Ações de violação próxima",
       "About Us": "Sobre Nós",
       "Account Information": "Informações da Conta",
       "Account Linked Financial": "Lista de contas vinculadas a diferentes atividades financeiras. Para saber mais clique:",
@@ -1406,6 +1408,7 @@
       "Minimum Deposit Term": "Prazo mínimo de depósito",
       "Moratorium": "Moratória",
       "Near Breach Configuration": "Configuração de quase incumprimento",
+      "Near Breach History": "Histórico de violações próximas",
       "Nominal Interest Rate by loan cycle": "Taxa de juros nominal por ciclo de empréstimo",
       "Not Yet Amortized Amount": "Valor ainda nao amortizado",
       "Notes": "Notas",
@@ -1583,6 +1586,7 @@
       "Pause Timeline": "Cronologia de Pausas"
     },
     "inputs": {
+      "Breach Actions": "Ações de violação",
       "# Remittance": "# Remessa",
       "# Senders": "# Remetentes",
       "ACCOUNTING": "CONTABILIDADE",
@@ -2491,6 +2495,7 @@
       "Multiple Debit Entries Allowed": "Múltiplas entradas de débito permitidas",
       "Municipality": "Município",
       "N/A": "N / D",
+      "New": "Novo",
       "NID": "NID",
       "Name": "Nome",
       "Name Decorated": "Nome Decorado",
@@ -2689,6 +2694,7 @@
       "Prefix Type": "Tipo de prefixo",
       "Premature Close Date": "Data de fechamento prematura",
       "Present": "Presente",
+      "Previous": "Anterior",
       "Previous Run": "Execução Anterior",
       "Previous Run Status": "Status de execução anterior",
       "Primary Grouping by Amount": "Agrupamento primário por valor",
@@ -3172,6 +3178,7 @@
       "Working with Code": "Trabalhando com código"
     },
     "menus": {
+      "Update Breach": "Atualizar violação",
       "Unassign Staff": "Cancelar atribuição de equipe",
       "Accounting": "Contabilidade",
       "Account Overview": "visão geral da conta",
@@ -3292,6 +3299,7 @@
       "Withdrawn by Client": "Retirado pelo cliente",
       "Write Off": "Eliminar",
       "Update discount": "Atualizar desconto",
+      "Update Near Breach": "Atualizar violação próxima",
       "Apply Additional Shares": "Aplicar Adicional",
       "Redeem Shares": "Resgatar Ações",
       "Approve Additional Shares": "Aprovar ações adicionais",
@@ -3361,6 +3369,8 @@
       "undo_account_transfer": "Tem a certeza de que pretende reverter esta transferência de conta?"
     },
     "text": {
+      "No Breach Actions": "Nenhuma ação de violação",
+      "No Near Breach Actions": "Nenhuma ação de violação próxima",
       "A": "A",
       "Ability to manage holidays for individual offices": "A capacidade de gerenciar feriados para escritórios individuais é uma ferramenta muito útil para uma organização que abrange vários locais. Use esta opção para personalizar feriados para cada escritório da sua organização.",
       "About Us": "Sobre Nós",

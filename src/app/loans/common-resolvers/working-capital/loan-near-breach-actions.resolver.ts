@@ -11,12 +11,12 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { catchError, Observable, of } from 'rxjs';
 import { LoanBaseResolver } from '../loan-base.resolver';
 import { LoansService } from 'app/loans/loans.service';
-import { WorkingCapitalBreachAction } from 'app/loans/models/working-capital/working-capital-loan-account.model';
+import { WorkingCapitalNearBreachActions } from 'app/loans/models/working-capital/working-capital-loan-account.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoanBreachActionsResolver extends LoanBaseResolver {
+export class LoanNearBreachActionsResolver extends LoanBaseResolver {
   private loansService = inject(LoansService);
 
   constructor() {
@@ -24,15 +24,15 @@ export class LoanBreachActionsResolver extends LoanBaseResolver {
   }
 
   /**
-   * Returns the Breach actions history if exists.
-   * @returns {Observable<WorkingCapitalBreachAction[]> | null}
+   * Returns the Near Breach data if exists.
+   * @returns {Observable<any>}
    */
-  resolve(route: ActivatedRouteSnapshot): Observable<WorkingCapitalBreachAction[]> | null {
+  resolve(route: ActivatedRouteSnapshot): Observable<WorkingCapitalNearBreachActions[]> | null {
     this.initialize(route);
     const loanId = route.paramMap.get('loanId') ?? route.parent?.paramMap.get('loanId');
     const isValidLoanId = loanId !== null && loanId.trim() !== '' && Number.isFinite(Number(loanId));
     if (isValidLoanId && this.isWorkingCapital) {
-      return this.loansService.getWorkingCapitalLoanBreachActions(loanId).pipe(catchError(() => of([])));
+      return this.loansService.getWorkingCapitalLoanNearBreachActions(loanId).pipe(catchError(() => of([])));
     }
     return null;
   }

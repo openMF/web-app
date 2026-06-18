@@ -129,7 +129,6 @@ export class RunReportComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((data: { reportParameters: ReportParameter[]; configurations: any }) => {
         this.paramData = data.reportParameters;
-        console.log(this.paramData);
         this.createRunReportForm();
         if (this.isTableReport()) {
           const amazonS3Config = data.configurations.globalConfiguration.find(

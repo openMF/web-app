@@ -9,12 +9,17 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 import { YesnoPipe } from '../../../pipes/yesno.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
 import { BreachDisplayComponent } from 'app/shared/loan/breach-display/breach-display.component';
+import { WorkingCapitalNearBreachActions } from 'app/loans/models/working-capital/working-capital-loan-account.model';
 
 @Component({
   selector: 'mifosx-account-details',
@@ -25,7 +30,11 @@ import { BreachDisplayComponent } from 'app/shared/loan/breach-display/breach-di
     DateFormatPipe,
     FormatNumberPipe,
     YesnoPipe,
-    BreachDisplayComponent
+    BreachDisplayComponent,
+    MatIconButton,
+    MatIcon,
+    MatTooltip,
+    FaIconComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -33,6 +42,7 @@ export class AccountDetailsComponent extends LoanProductBaseComponent {
   private readonly destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
 
+  loanNearBreachActions: WorkingCapitalNearBreachActions[] = [];
   loanDetails: any;
   dataObject: {
     property: string;
@@ -45,6 +55,11 @@ export class AccountDetailsComponent extends LoanProductBaseComponent {
     this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanDetailsData: any }) => {
       this.loanDetails = data.loanDetailsData;
     });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { loanNearBreachActions: WorkingCapitalNearBreachActions[] }) => {
+        this.loanNearBreachActions = data.loanNearBreachActions || [];
+      });
   }
 
   camalize(word: string) {

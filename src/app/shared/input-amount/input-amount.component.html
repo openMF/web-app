@@ -9,27 +9,41 @@
 @if (isRequired) {
   <mat-form-field appearance="fill" class="flex-100 input-container" floatLabel="always">
     <mat-label>{{ 'labels.inputs.' + inputLabel | translate }}</mat-label>
-    <div class="input-group">
-      <span>{{ currency.code }}</span>
-      <input
-        mifosxFormatAmount="{{ currency.code }}:{{ currency.displaySymbol }}:1.2-10"
-        class="right-input"
-        [formControl]="inputFormControl"
-        (keypress)="numberOnly($event)"
-        required
-        matInput
-        mifosxPositiveNumber
-        (blur)="displayHint = false"
-        (focus)="displayHint = true"
-      />
-    </div>
+    @if (currency) {
+      <div class="input-group">
+        <span>{{ currency.code }}</span>
+        <input
+          mifosxFormatAmount="{{ currency.code }}:{{ currency.displaySymbol }}:1.2-10"
+          class="right-input"
+          [formControl]="inputFormControl"
+          (keypress)="numberOnly($event)"
+          required
+          matInput
+          mifosxPositiveNumber
+          (blur)="displayHint = false"
+          (focus)="displayHint = true"
+        />
+      </div>
+    } @else {
+      <div class="input-group">
+        <input
+          [formControl]="inputFormControl"
+          (keypress)="numberOnly($event)"
+          required
+          matInput
+          mifosxPositiveNumber
+          (blur)="displayHint = false"
+          (focus)="displayHint = true"
+        />
+      </div>
+    }
     @if (inputFormControl.hasError('required')) {
       <mat-error>
         {{ 'labels.inputs.' + inputLabel | translate }} {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     }
-    @if (displayHint) {
+    @if (displayHint && currency) {
       <mat-hint class="right-hint">{{
         inputFormControl.value | currency: currency.code : currency.displaySymbol : '1.2-10'
       }}</mat-hint>
@@ -55,20 +69,33 @@
 @if (!isRequired) {
   <mat-form-field appearance="fill" class="flex-100 input-container" floatLabel="always">
     <mat-label>{{ 'labels.inputs.' + inputLabel | translate }}</mat-label>
-    <div class="input-group">
-      <span>{{ currency.code }}</span>
-      <input
-        mifosxFormatAmount="{{ currency.code }}:{{ currency.displaySymbol }}:1.2-10"
-        class="right-input"
-        [formControl]="inputFormControl"
-        (keypress)="numberOnly($event)"
-        matInput
-        mifosxPositiveNumber
-        (blur)="displayHint = false"
-        (focus)="displayHint = true"
-      />
-    </div>
-    @if (displayHint) {
+    @if (currency) {
+      <div class="input-group">
+        <span>{{ currency.code }}</span>
+        <input
+          mifosxFormatAmount="{{ currency.code }}:{{ currency.displaySymbol }}:1.2-10"
+          class="right-input"
+          [formControl]="inputFormControl"
+          (keypress)="numberOnly($event)"
+          matInput
+          mifosxPositiveNumber
+          (blur)="displayHint = false"
+          (focus)="displayHint = true"
+        />
+      </div>
+    } @else {
+      <div class="input-group">
+        <input
+          [formControl]="inputFormControl"
+          (keypress)="numberOnly($event)"
+          matInput
+          mifosxPositiveNumber
+          (blur)="displayHint = false"
+          (focus)="displayHint = true"
+        />
+      </div>
+    }
+    @if (displayHint && currency) {
       <mat-hint class="right-hint">{{
         inputFormControl.value | currency: currency.code : currency.displaySymbol : '1.2-10'
       }}</mat-hint>

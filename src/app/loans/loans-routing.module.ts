@@ -90,6 +90,7 @@ import { LoanTransactionsResolver } from './common-resolvers/loan-transactions.r
 import { LoanChargesResolver } from './common-resolvers/loan-charges.resolver';
 import { LoanBreachScheduleResolver } from './common-resolvers/working-capital/loan-breach-schedule.resolver';
 import { LoanBreachScheduleTabComponent } from './loans-view/working-capital/loan-breach-schedule-tab/loan-breach-schedule-tab.component';
+import { LoanNearBreachActionsResolver } from './common-resolvers/working-capital/loan-near-breach-actions.resolver';
 
 /** Loans Route. */
 const routes: Routes = [
@@ -135,7 +136,10 @@ const routes: Routes = [
           {
             path: 'accountdetail',
             component: AccountDetailsComponent,
-            data: { title: 'Account Detail', breadcrumb: 'Account Detail', routeParamBreadcrumb: false }
+            data: { title: 'Account Detail', breadcrumb: 'Account Detail', routeParamBreadcrumb: false },
+            resolve: {
+              loanNearBreachActions: LoanNearBreachActionsResolver
+            }
           },
           {
             path: 'original-schedule',
@@ -166,6 +170,15 @@ const routes: Routes = [
             data: { title: 'Breach Schedule', breadcrumb: 'Breach Schedule', routeParamBreadcrumb: false },
             resolve: {
               breachSchedule: LoanBreachScheduleResolver
+            }
+          },
+          {
+            path: 'breach-actions',
+            component: LoanBreachActionsTabComponent,
+            data: { title: 'Breach Actions', breadcrumb: 'Breach Actions', routeParamBreadcrumb: false },
+            resolve: {
+              loanBreachActions: LoanBreachActionsResolver,
+              loanNearBreachActions: LoanNearBreachActionsResolver
             }
           },
           {
@@ -219,19 +232,6 @@ const routes: Routes = [
               {
                 path: '',
                 component: LoanDelinquencyTagsTabComponent
-              }
-            ]
-          },
-          {
-            path: 'breach-actions',
-            data: { title: 'Breach Actions', breadcrumb: 'Breach Actions', routeParamBreadcrumb: false },
-            resolve: {
-              breachActions: LoanBreachActionsResolver
-            },
-            children: [
-              {
-                path: '',
-                component: LoanBreachActionsTabComponent
               }
             ]
           },
@@ -513,7 +513,9 @@ const routes: Routes = [
     LoanPeriodPaymentRatesResolver,
     LoanTransactionsResolver,
     LoanChargesResolver,
-    LoanBreachScheduleResolver
+    LoanBreachScheduleResolver,
+    LoanNearBreachActionsResolver,
+    LoanBreachActionsResolver
   ]
 })
 export class LoansRoutingModule {}
