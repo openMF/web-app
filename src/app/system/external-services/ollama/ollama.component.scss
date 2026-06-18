@@ -1,0 +1,27 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.usage-hint {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: rgb(63 81 181 / 8%);
+  border-radius: 4px;
+  margin: 0;
+  font-size: 0.9rem;
+  color: rgb(0 0 0 / 70%);
+}
+
+.hint-icon {
+  font-size: 1.1rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  color: #3f51b5;
+  flex-shrink: 0;
+}

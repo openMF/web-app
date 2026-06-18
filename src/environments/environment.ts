@@ -118,6 +118,14 @@ export const environment = {
   enablePostalCodeLookup:
     loadedEnv.enablePostalCodeLookup === 'true' || loadedEnv.enablePostalCodeLookup === true || false,
 
+  /**
+   * Ollama AI Report Assistant — optional local LLM integration for generating report narratives.
+   * Disabled by default; users enable it per-browser via Settings and must provide the Ollama URL.
+   */
+  ollamaEnabled: loadedEnv.ollamaEnabled === 'true' || loadedEnv.ollamaEnabled === true || false,
+  ollamaUrl: loadedEnv.ollamaUrl || '',
+  ollamaModel: loadedEnv.ollamaModel || '',
+
   minPasswordLength: resolvedMinPasswordLength,
   passwordRegex:
     loadedEnv.passwordRegex ||

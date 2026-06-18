@@ -116,6 +116,13 @@
   // Set to 'true' to enable, 'false' (default) to disable
   window['env']['enablePostalCodeLookup'] = 'false';
 
+  // Ollama AI Report Assistant (optional local LLM integration)
+  // Set ollamaEnabled to 'true' to enable for all users by default.
+  // Users can also enable/configure it per-browser in the Settings page.
+  window['env']['ollamaEnabled'] = 'false';
+  window['env']['ollamaUrl'] = '';
+  window['env']['ollamaModel'] = '';
+
   // Password Configuration
   window['env']['minPasswordLength'] = 8;
 

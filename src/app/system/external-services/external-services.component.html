@@ -88,6 +88,24 @@
               </p>
             }
           </mat-list-item>
+
+          <mat-list-item [routerLink]="['ollama']">
+            <mat-icon matListIcon [routerLink]="['ollama']">
+              <fa-icon icon="robot" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine [routerLink]="['ollama']">{{ 'labels.heading.Ollama AI Report Assistant' | translate }}</h4>
+            @if (!arrowBooleans[4]) {
+              <fa-icon (click)="arrowBooleansToggle(4); $event.stopPropagation()" icon="arrow-down" size="md"></fa-icon>
+            }
+            @if (arrowBooleans[4]) {
+              <fa-icon (click)="arrowBooleansToggle(4); $event.stopPropagation()" icon="arrow-up" size="md"></fa-icon>
+            }
+            @if (arrowBooleans[4]) {
+              <p matLine [routerLink]="['ollama']">
+                {{ 'labels.text.Ollama AI Report Assistant Configuration' | translate }}
+              </p>
+            }
+          </mat-list-item>
         </mat-nav-list>
       </div>
     </div>

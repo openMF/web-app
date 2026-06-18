@@ -1,0 +1,65 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container">
+  <mat-card>
+    <form [formGroup]="ollamaForm" (ngSubmit)="submit()">
+      <mat-card-content>
+        <div class="layout-column">
+          <mat-slide-toggle formControlName="enabled">
+            {{ 'labels.inputs.Enable AI Report Assistant' | translate }}
+          </mat-slide-toggle>
+
+          <mat-form-field>
+            <mat-label>{{ 'labels.inputs.Ollama URL' | translate }}</mat-label>
+            <input matInput formControlName="url" placeholder="http://192.168.1.100:11434" />
+            @if (ollamaForm.controls['url'].hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Ollama URL' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'labels.inputs.Ollama Model' | translate }}</mat-label>
+            @if (availableModels.length > 0) {
+              <mat-select formControlName="model">
+                @for (model of availableModels; track model) {
+                  <mat-option [value]="model">{{ model }}</mat-option>
+                }
+              </mat-select>
+            } @else {
+              <input matInput formControlName="model" placeholder="llama3.2" />
+            }
+          </mat-form-field>
+
+          <div>
+            <button
+              type="button"
+              mat-stroked-button
+              [disabled]="!ollamaForm.get('url').value"
+              (click)="testConnection()"
+            >
+              {{ 'labels.buttons.Test Connection' | translate }}
+            </button>
+          </div>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions class="layout-row align-center gap-5px responsive-column">
+        <button type="button" mat-raised-button [routerLink]="['../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button mat-raised-button color="primary" [disabled]="!ollamaForm.valid || ollamaForm.pristine">
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>

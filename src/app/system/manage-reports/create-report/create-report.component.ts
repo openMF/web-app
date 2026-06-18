@@ -7,8 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, inject } from '@angular/core';
+import { FormControl, UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -29,6 +29,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { SystemService } from 'app/system/system.service';
+import { OllamaService } from 'app/shared/services/ollama.service';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
@@ -37,6 +38,8 @@ import { ReportParameterDialogComponent } from '../report-parameter-dialog/repor
 import { MatCheckbox } from '@angular/material/checkbox';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -52,6 +55,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatCheckbox,
     CdkTextareaAutosize,
     FaIconComponent,
+    MatIconModule,
+    MatProgressSpinnerModule,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -72,6 +77,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 export class CreateReportComponent implements OnInit {
   private formBuilder = inject(UntypedFormBuilder);
   private systemService = inject(SystemService);
+  private ollamaService = inject(OllamaService);
+  private cdr = inject(ChangeDetectorRef);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private dialog = inject(MatDialog);
@@ -109,6 +116,15 @@ export class CreateReportComponent implements OnInit {
     'Fund',
     'Accounting'
   ];
+
+  get ollamaEnabled(): boolean {
+    return this.ollamaService.enabled;
+  }
+  aiExpanded = false;
+  aiPrompt = new FormControl('');
+  aiSql = '';
+  aiLoading = false;
+  aiError = false;
 
   /**
    * Retrieves the report template data from `resolve`.
@@ -257,6 +273,34 @@ export class CreateReportComponent implements OnInit {
           this.reportForm.get('reportSubType').disable();
       }
     });
+  }
+
+  generateAiSql(): void {
+    const text = this.aiPrompt.value?.trim();
+    if (!text || this.aiLoading) return;
+    this.aiLoading = true;
+    this.aiSql = '';
+    this.aiError = false;
+    this.cdr.markForCheck();
+    this.ollamaService.generateSqlQuery(text).subscribe({
+      next: (sql) => {
+        this.aiSql = sql || '';
+        this.aiLoading = false;
+        this.aiError = !sql;
+        this.cdr.markForCheck();
+      },
+      error: () => {
+        this.aiLoading = false;
+        this.aiError = true;
+        this.cdr.markForCheck();
+      }
+    });
+  }
+
+  useGeneratedSql(): void {
+    if (!this.aiSql) return;
+    this.reportForm.get('reportSql').setValue(this.aiSql);
+    this.aiExpanded = false;
   }
 
   /**

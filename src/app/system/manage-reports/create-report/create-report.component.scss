@@ -5,3 +5,58 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
+.ai-sql-section {
+  margin-bottom: 0.5rem;
+}
+
+.ai-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.ai-panel {
+  margin-top: 0.75rem;
+  padding: 1rem;
+  border: 1px solid rgb(0 0 0 / 12%);
+  border-radius: 4px;
+  background: rgb(0 0 0 / 2%);
+}
+
+.ai-prompt-field {
+  width: 100%;
+}
+
+.ai-actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.ai-spinner {
+  display: inline-block;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+.ai-error {
+  color: var(--mdc-theme-error, #b00020);
+  margin: 0.5rem 0;
+  font-size: 0.875rem;
+}
+
+.ai-sql-preview {
+  margin: 0;
+  padding: 0.75rem;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: #1e1e1e;
+  color: #d4d4d4;
+  border-radius: 4px;
+  overflow-x: auto;
+}

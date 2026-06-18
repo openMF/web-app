@@ -345,8 +345,7 @@ describe('ErrorHandlerService', () => {
       providers: [
         ErrorHandlerService,
         { provide: MatSnackBar, useValue: snackBarSpy },
-        { provide: Router, useValue: routerSpy }
-      ]
+        { provide: Router, useValue: routerSpy }]
     });
 
     service = TestBed.inject(ErrorHandlerService);

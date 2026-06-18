@@ -72,6 +72,64 @@
             <textarea matInput formControlName="description" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
           </mat-form-field>
 
+          @if (ollamaEnabled) {
+            <div class="flex-98 ai-sql-section">
+              <button type="button" mat-stroked-button class="ai-toggle-btn" (click)="aiExpanded = !aiExpanded">
+                <mat-icon>smart_toy</mat-icon>
+                {{ 'labels.buttons.Generate SQL with AI' | translate }}
+                <mat-icon>{{ aiExpanded ? 'expand_less' : 'expand_more' }}</mat-icon>
+              </button>
+
+              @if (aiExpanded) {
+                <div class="ai-panel">
+                  <mat-form-field class="ai-prompt-field">
+                    <mat-label>{{ 'labels.inputs.Describe the report you want' | translate }}</mat-label>
+                    <textarea
+                      matInput
+                      [formControl]="aiPrompt"
+                      rows="2"
+                      (keydown.control.enter)="generateAiSql()"
+                      [placeholder]="
+                        'labels.text.e.g. Show all active clients with their outstanding loan balance grouped by branch'
+                          | translate
+                      "
+                    ></textarea>
+                  </mat-form-field>
+
+                  <div class="ai-actions">
+                    <button
+                      type="button"
+                      mat-raised-button
+                      color="primary"
+                      [disabled]="!aiPrompt.value?.trim() || aiLoading"
+                      (click)="generateAiSql()"
+                    >
+                      @if (aiLoading) {
+                        <mat-spinner diameter="16" class="ai-spinner"></mat-spinner>
+                      }
+                      {{ 'labels.buttons.Generate SQL' | translate }}
+                    </button>
+                    @if (aiSql) {
+                      <button type="button" mat-raised-button color="accent" (click)="useGeneratedSql()">
+                        {{ 'labels.buttons.Use this SQL' | translate }}
+                      </button>
+                    }
+                  </div>
+
+                  @if (aiError) {
+                    <p class="ai-error">
+                      {{ 'labels.text.Could not reach Ollama. Check your URL and model in Settings.' | translate }}
+                    </p>
+                  }
+
+                  @if (aiSql) {
+                    <pre class="ai-sql-preview">{{ aiSql }}</pre>
+                  }
+                </div>
+              }
+            </div>
+          }
+
           <mat-form-field class="flex-98">
             <mat-label>{{ 'labels.inputs.SQL' | translate }}</mat-label>
             <textarea

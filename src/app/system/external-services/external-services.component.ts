@@ -31,8 +31,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ExternalServicesComponent {
-  // Initialize an array of 4 boolean values, all set to false
-  arrowBooleans: boolean[] = new Array(4).fill(false);
+  // Initialize an array of 5 boolean values, all set to false
+  arrowBooleans: boolean[] = new Array(5).fill(false);
 
   constructor() {}
 

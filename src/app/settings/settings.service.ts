@@ -299,4 +299,30 @@ export class SettingsService {
   get themeDarkEnabled(): boolean {
     return JSON.parse(localStorage.getItem('mifosXThemeDarkEnabled'));
   }
+
+  setOllamaEnabled(enabled: boolean) {
+    localStorage.setItem('mifosXOllamaEnabled', String(enabled));
+  }
+
+  setOllamaUrl(url: string) {
+    localStorage.setItem('mifosXOllamaUrl', url);
+  }
+
+  setOllamaModel(model: string) {
+    localStorage.setItem('mifosXOllamaModel', model);
+  }
+
+  get ollamaEnabled(): boolean {
+    const stored = localStorage.getItem('mifosXOllamaEnabled');
+    if (stored !== null) return stored === 'true';
+    return environment.ollamaEnabled;
+  }
+
+  get ollamaUrl(): string {
+    return localStorage.getItem('mifosXOllamaUrl') || environment.ollamaUrl || '';
+  }
+
+  get ollamaModel(): string {
+    return localStorage.getItem('mifosXOllamaModel') || environment.ollamaModel || '';
+  }
 }

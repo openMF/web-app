@@ -26,6 +26,8 @@ import { ViewCodeComponent } from './codes/view-code/view-code.component';
 import { EntityToEntityMappingComponent } from './entity-to-entity-mapping/entity-to-entity-mapping.component';
 import { AmazonS3Component } from './external-services/amazon-s3/amazon-s3.component';
 import { EditAmazonS3Component } from './external-services/amazon-s3/edit-amazon-s3/edit-amazon-s3.component';
+import { OllamaComponent } from './external-services/ollama/ollama.component';
+import { EditOllamaComponent } from './external-services/ollama/edit-ollama/edit-ollama.component';
 import { EditEmailComponent } from './external-services/email/edit-email/edit-email.component';
 import { EmailComponent } from './external-services/email/email.component';
 import { ExternalServicesComponent } from './external-services/external-services.component';
@@ -259,6 +261,21 @@ const routes: Routes = [
                   resolve: {
                     notificationConfiguration: NotificationConfigurationResolver
                   }
+                }
+              ]
+            },
+            {
+              path: 'ollama',
+              data: { title: 'View Ollama AI Configuration', breadcrumb: 'Ollama AI' },
+              children: [
+                {
+                  path: '',
+                  component: OllamaComponent
+                },
+                {
+                  path: 'edit',
+                  component: EditOllamaComponent,
+                  data: { title: 'Edit Ollama AI Configuration', breadcrumb: 'Edit' }
                 }
               ]
             }
