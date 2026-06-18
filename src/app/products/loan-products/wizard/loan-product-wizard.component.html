@@ -20,7 +20,7 @@
       <ng-template matStepLabel>{{ step.title }}</ng-template>
 
       <div [formGroup]="form" class="step-panel">
-        <ng-container *ngIf="step.id !== 7; else reviewStep">
+        <ng-container *ngIf="step.id !== reviewStepId; else reviewStep">
           <div class="field-grid">
             <ng-container *ngFor="let field of visibleFields(step)">
               <mat-form-field *ngIf="field.type !== 'checkbox'" appearance="outline">
@@ -33,6 +33,23 @@
                   [formControlName]="field.key"
                   [placeholder]="field.placeholder"
                 />
+                <ng-container *ngIf="field.type === 'date'">
+                  <input
+                    matInput
+                    [matDatepicker]="picker"
+                    [formControlName]="field.key"
+                    [placeholder]="field.placeholder"
+                  />
+                  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </ng-container>
+                <textarea
+                  *ngIf="field.type === 'textarea'"
+                  matInput
+                  [formControlName]="field.key"
+                  [placeholder]="field.placeholder"
+                  rows="3"
+                ></textarea>
                 @if (field.key === 'interestRatePerPeriod') {
                   <span matSuffix>%</span>
                 }

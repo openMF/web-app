@@ -184,6 +184,15 @@ const routes: Routes = [
               }
             },
             {
+              path: 'custom-advanced',
+              component: CreateLoanProductComponent,
+              data: { title: 'Custom / Advanced Loan Configuration', breadcrumb: 'Custom / Advanced' },
+              resolve: {
+                loanProductsTemplate: LoanProductsTemplateResolver,
+                configurations: GlobalConfigurationsResolver
+              }
+            },
+            {
               path: ':productId',
               component: ViewLoanProductComponent,
               resolve: {

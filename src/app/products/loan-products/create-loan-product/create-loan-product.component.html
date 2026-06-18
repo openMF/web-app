@@ -7,8 +7,10 @@
 -->
 
 <div class="container">
+  <h1>{{ pageTitle }}</h1>
   <mifosx-loan-product-wizard
     [loanProductsTemplate]="loanProductsTemplate"
     [itemsByDefault]="itemsByDefault"
+    [profileMode]="profileMode"
   ></mifosx-loan-product-wizard>
 </div>

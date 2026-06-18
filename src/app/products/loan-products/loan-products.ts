@@ -76,7 +76,7 @@ export class LoanProducts {
     const loanProduct = this.loanProductService.isLoanProduct
       ? {
           ...loanProductData,
-          charges: loanProductData.charges.map((charge: any) => ({ id: charge.id })),
+          charges: (loanProductData.charges || []).map((charge: any) => ({ id: charge.id })),
           dateFormat,
           locale
         }

@@ -11,14 +11,12 @@
     <div>
       <p class="landing-page__eyebrow">Products</p>
       <h1>Loan product creation</h1>
-      <p class="landing-page__copy">
-        Select a product below. Personal Loan is the first active option and opens its dedicated creation page.
-      </p>
+      <p class="landing-page__copy">Select a product below.</p>
     </div>
 
     <div class="landing-page__badge">
-      <span>Version 1</span>
-      <strong>Personal Loan enabled</strong>
+      <span>Version 2</span>
+      <strong>Personal and Custom Loan enabled</strong>
     </div>
   </section>
 
@@ -48,7 +46,7 @@
         [routerLink]="['/products', 'loan-products', product.route]"
         [queryParams]="{ productType: 'loan' }"
       >
-        Create Personal Loan
+        {{ product.ctaLabel || 'Create Personal Loan' }}
       </button>
       <button *ngIf="!product.active" mat-stroked-button disabled>Coming soon</button>
     </mat-card>

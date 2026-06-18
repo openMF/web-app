@@ -8,6 +8,7 @@
 
 /** Angular Imports */
 import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { LoanWizardProfileMode } from '../wizard/loan-product.config';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -37,6 +38,8 @@ export class CreateLoanProductComponent extends LoanProductBaseComponent impleme
   loanProductsTemplate: any;
   accountingRuleData: string[] = [];
   itemsByDefault: any[] = [];
+  profileMode: LoanWizardProfileMode = 'personal';
+  pageTitle = 'Create Personal Loan';
 
   constructor() {
     super();
@@ -45,8 +48,13 @@ export class CreateLoanProductComponent extends LoanProductBaseComponent impleme
     const productType = this.route.snapshot.queryParamMap.get('productType') || 'loan';
     this.loanProductService.initialize(productType);
 
-    this.route.data.subscribe((data: { loanProductsTemplate: any; configurations: any }) => {
-      this.loanProductsTemplate = data.loanProductsTemplate;
+    const routePath = this.route.snapshot.routeConfig?.path;
+    this.profileMode = routePath === 'custom-advanced' ? 'custom-advanced' : 'personal';
+    this.pageTitle =
+      this.profileMode === 'custom-advanced' ? 'Custom / Advanced Loan Configuration' : 'Create Personal Loan';
+
+    this.route.data.subscribe((data) => {
+      this.loanProductsTemplate = data['loanProductsTemplate'];
 
       if (this.loanProductService.isLoanProduct) {
         const assetAccountData = this.loanProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
@@ -55,7 +63,7 @@ export class CreateLoanProductComponent extends LoanProductBaseComponent impleme
           assetAccountData.concat(liabilityAccountData);
       }
 
-      this.itemsByDefault = loanProducts.setItemsByDefault(data.configurations);
+      this.itemsByDefault = loanProducts.setItemsByDefault(data['configurations']);
       this.loanProductsTemplate['itemsByDefault'] = this.itemsByDefault;
       this.loanProductsTemplate = loanProducts.updateLoanProductDefaults(this.loanProductsTemplate, false);
     });
