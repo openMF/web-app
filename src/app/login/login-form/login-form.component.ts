@@ -72,6 +72,10 @@ export class LoginFormComponent implements OnInit {
    * Authenticates the user if the credentials are valid.
    */
   login() {
+    this.loginForm.markAllAsTouched();
+    if (this.loginForm.invalid) {
+      return;
+    }
     this.loading = true;
     this.loginForm.disable();
     this.authenticationService

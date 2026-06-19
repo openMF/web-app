@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright since 2025 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -6,149 +6,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-// ===
-/// ===== Version Info Section - Modern Card Style =====
-.login-version-info {
-  margin-bottom: 1rem;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.version-info-container {
-  width: 100%;
-  background: var(--md-sys-color-surface-container, #f3f3f6);
-  border-radius: 12px;
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--md-sys-color-outline-variant, #c4c6d0);
-}
-
-.version-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.4rem 0;
-  border-bottom: 1px solid var(--md-sys-color-outline-variant, #e0e0e0);
-
-  &:last-child {
-    border-bottom: none;
-  }
-}
-
-.version-label {
-  font-weight: 500;
-  font-size: 0.75rem;
-  color: var(--md-sys-color-on-surface-variant, #44474e);
-  flex-shrink: 0;
-}
-
-.version-value {
-  font-weight: 400;
-  font-size: 0.75rem;
-  color: var(--md-sys-color-on-surface, #1a1c1e);
-  text-align: right;
-  word-break: break-word;
-  max-width: 60%;
-}
-
-// ===== Resources Branding =====
-.resources-branding {
-  text-align: center;
-  margin-bottom: 0.75rem;
-
-  .branding-text {
-    font-size: 0.8rem;
-    color: var(--md-sys-color-on-surface-variant, #44474e);
-    font-weight: 400;
-
-    a {
-      color: var(--md-sys-color-primary, #1074b9);
-      text-decoration: none;
-      font-weight: 500;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-}
-
-// ===== Dark Mode Support =====
-:host-context(.dark-theme),
-:host-context([data-theme='dark']) {
-  .version-info-container {
-    background: var(--md-sys-color-surface-container-low, #2a2a2a);
-    border-color: var(--md-sys-color-outline-variant, #3d3d3d);
-  }
-
-  .version-item {
-    border-bottom-color: var(--md-sys-color-outline-variant, #3d3d3d);
-  }
-
-  .version-label {
-    color: var(--md-sys-color-on-surface-variant, #c4c6cf);
-  }
-
-  .version-value {
-    color: var(--md-sys-color-on-surface, #e2e2e5);
-  }
-
-  .resources-branding {
-    .branding-text {
-      color: var(--md-sys-color-on-surface-variant, #c4c6cf);
-
-      a {
-        color: var(--md-sys-color-primary, #a8c8ff);
-      }
-    }
-  }
-
-  .resource-button {
-    color: var(--md-sys-color-primary, #a8c8ff);
-
-    &:hover {
-      background: rgb(168 200 255 / 12%);
-    }
-  }
-
-  .login-card {
-    border: 1px solid var(--md-sys-color-outline-variant, #3d3d3d);
-  }
-
-  .login-header {
-    ::ng-deep mifosx-theme-toggle button,
-    ::ng-deep mifosx-server-selector,
-    ::ng-deep mifosx-language-selector {
-      color: var(--md-sys-color-on-surface, #e2e2e5);
-    }
-  }
-
-  .logo-section {
-    border-bottom-color: var(--md-sys-color-outline-variant, #3d3d3d);
-  }
-}
-
-// Responsive for version info
-/* stylelint-disable-next-line media-feature-range-notation -- Safari compatibility */
-@media (max-width: 768px) {
-  .version-info-container {
-    padding: 0.5rem 0.75rem;
-  }
-
-  .version-item {
-    padding: 0.35rem 0;
-  }
-
-  .version-label,
-  .version-value {
-    font-size: 0.7rem;
-  }
-}
-
-/**
- * Modern Material Design 3 Login Component Styles
- */
+// ===== Colors =====
+$brand-blue: #1074b9;
+$brand-blue-dark: #0a5a8f;
+$text-dark: #1e293b;
+$text-muted: #64748b;
+$input-bg: #f1f5f9;
+$input-border: #e2e8f0;
 
 // ===== Main Wrapper =====
 .login-wrapper {
@@ -156,215 +20,107 @@
   min-height: 100vh;
   height: 100%;
   width: 100%;
-  background: var(--md-sys-color-background, #fafafa);
   overflow-x: hidden;
 }
 
 // ===== Hero Panel (Left Side) =====
 .hero-panel {
-  flex: 0 0 70%;
+  flex: 0 0 50%;
   position: relative;
-  background: url('../../assets/images/cover_image_resized.webp') no-repeat center center;
-  background-size: cover;
   overflow: hidden;
+  background:
+    linear-gradient(150deg, rgb(8 60 120 / 90%) 0%, rgb(14 90 160 / 85%) 40%, rgb(16 116 185 / 80%) 100%),
+    url('/assets/images/hero.jpg') center / cover no-repeat;
+}
 
-  // Overlay removed for clean image view
-  .hero-overlay {
-    position: absolute;
-    /* stylelint-disable declaration-block-no-redundant-longhand-properties -- Safari compatibility */
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    /* stylelint-enable declaration-block-no-redundant-longhand-properties */
-    background: transparent;
-    z-index: 1;
-  }
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    radial-gradient(circle at 20% 80%, rgb(255 255 255 / 5%) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgb(255 255 255 / 4%) 0%, transparent 40%);
+  z-index: 0;
+}
 
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 4rem;
-  }
+// ===== Hero Content =====
+.hero-content {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3.5rem;
+}
 
-  .hero-text {
-    max-width: 550px;
-    color: #fff;
-    animation: fade-in-up 0.8s ease-out;
-    flex: 0 1 auto;
-    // Minimal backdrop - more image visibility
-    background: rgb(0 0 0 / 35%);
-    border-radius: 20px;
-    padding: 2rem;
-    border: 1px solid rgb(255 255 255 / 15%);
-    box-shadow: 0 4px 24px rgb(0 0 0 / 20%);
-  }
+.hero-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 1rem;
+  line-height: 1.15;
+}
 
-  // Footer in hero panel
-  mifosx-footer {
-    width: 100%;
-    margin-top: auto;
-    padding-top: 2rem;
+.hero-subtitle {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.7;
+  color: rgb(255 255 255 / 65%);
+  margin: 0 0 3rem;
+  max-width: 440px;
+}
 
-    ::ng-deep .footer-compact {
-      color: rgb(255 255 255 / 90%);
-      align-items: center;
-      text-align: center;
+// ===== Feature Items =====
+.hero-features {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: auto;
+}
 
-      .footer-info {
-        justify-content: center;
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.875rem;
+}
 
-        .info-label {
-          color: rgb(255 255 255 / 80%);
-          font-weight: 500;
-        }
+.feature-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgb(74 222 128 / 20%);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
 
-        .info-value {
-          color: rgb(255 255 255 / 95%);
-          font-weight: 400;
-        }
+.check-mark {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #4ade80;
+  line-height: 1;
+}
 
-        .info-separator {
-          color: rgb(255 255 255 / 50%);
-        }
-      }
+.feature-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
 
-      .footer-copyright {
-        color: rgb(255 255 255 / 75%);
-        font-size: 0.875rem;
-        text-align: center;
-      }
-    }
-  }
-
-  .hero-title {
-    font-size: 3.5rem;
-    font-weight: 700;
-    margin: 0 0 1.5rem;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-    color: #fff;
-    text-shadow:
-      0 2px 4px rgb(0 0 0 / 30%),
-      0 4px 12px rgb(0 0 0 / 15%);
-  }
-
-  .hero-subtitle {
-    font-size: 1.25rem;
-    line-height: 1.6;
-    margin: 0 0 2rem;
-    font-weight: 400;
-    color: rgb(255 255 255 / 95%);
-    text-shadow: 0 1px 3px rgb(0 0 0 / 40%);
-  }
-
-  .hero-highlight {
-    font-weight: 600;
-    color: #b4d575;
-    text-shadow: 0 1px 2px rgb(0 0 0 / 30%);
-  }
-
-  .hero-features {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .feature-item {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.5rem 0;
-    background: transparent;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-
-    &:hover {
-      transform: translateX(4px);
-    }
-  }
-
-  .feature-icon {
-    font-size: 1.25rem;
-    color: #b4d575;
-    filter: drop-shadow(0 1px 2px rgb(0 0 0 / 30%));
-  }
-
-  .feature-text {
+  strong {
     font-size: 0.95rem;
-    font-weight: 500;
-    color: rgb(255 255 255 / 95%);
-    text-shadow: 0 1px 2px rgb(0 0 0 / 30%);
-  }
-
-  .hero-links {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-top: 0.5rem;
-  }
-
-  .hero-link {
+    font-weight: 600;
     color: #fff;
-    text-decoration: none;
-    font-weight: 500;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    border: 1px solid rgb(255 255 255 / 30%);
-    border-radius: 24px;
-    background: rgb(255 255 255 / 10%);
-    /* stylelint-disable-next-line property-no-vendor-prefix -- Safari compatibility */
-    -webkit-backdrop-filter: blur(4px);
-    backdrop-filter: blur(4px);
-    transition: all 0.3s ease;
-    text-shadow: 0 1px 2px rgb(0 0 0 / 20%);
-    box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
-
-    &:hover {
-      background: rgb(255 255 255 / 20%);
-      border-color: rgb(255 255 255 / 50%);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgb(0 0 0 / 15%);
-    }
-
-    fa-icon {
-      opacity: 0.85;
-    }
   }
 
-  // ===== Production Mode Styles =====
-  &.production-mode {
-    .hero-content {
-      justify-content: flex-end;
-      padding-bottom: 3rem;
-    }
-  }
-
-  .hero-branding-bottom {
-    animation: fade-in-up 0.8s ease-out;
-  }
-
-  .hero-title-minimal {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #fff;
-    text-shadow:
-      0 2px 8px rgb(0 0 0 / 40%),
-      0 4px 16px rgb(0 0 0 / 20%);
-    letter-spacing: -0.01em;
-    margin: 0;
-    padding: 1.5rem 2rem;
-    background: rgb(0 0 0 / 30%);
-    border-radius: 16px;
-    border: 1px solid rgb(255 255 255 / 15%);
+  span {
+    font-size: 0.825rem;
+    color: rgb(255 255 255 / 55%);
+    line-height: 1.4;
   }
 }
 
@@ -373,197 +129,46 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: var(--md-sys-color-surface, #fff);
+  background: #fff;
   position: relative;
-  min-height: -webkit-fill-available; // Safari fix: use available height
   min-height: 100vh;
   overflow: hidden auto;
 }
 
-.login-header {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1rem;
-  background: transparent;
-  flex-shrink: 0; // Safari fix: prevent header from growing
-  max-height: 76px; // Safari fix: constrain header height
-  flex-wrap: nowrap;
-  overflow: hidden;
-
-  .header-control {
-    opacity: 0.8;
-    transition: opacity 0.2s ease;
-
-    &:hover {
-      opacity: 1;
-    }
-  }
-
-  .theme-toggle {
-    flex-shrink: 0; // Prevent toggle from growing
-  }
-
-  // Theme Toggle Button Styles
-  ::ng-deep mifosx-theme-toggle {
-    button {
-      color: var(--md-sys-color-on-surface, #1a1c1e);
-      transition: all 0.3s ease;
-
-      &:hover {
-        background: #1074b914;
-        color: var(--md-sys-color-primary, #1074b9);
-      }
-
-      mat-icon {
-        font-size: 24px;
-        width: 24px;
-        height: 24px;
-      }
-    }
-  }
-
-  // Language Selector Outlined Styles
-  ::ng-deep mifosx-language-selector {
-    min-width: 80px;
-    max-width: 100px;
-    flex-shrink: 0; // Safari fix
-
-    #language-selector.outlined-variant {
-      width: 100%;
-      margin: 0;
-      max-height: 56px; // Safari fix: constrain height
-
-      // Compact outlined field for header
-      .mat-mdc-form-field-flex {
-        height: 44px;
-        max-height: 44px; // Safari fix
-      }
-
-      .mat-mdc-form-field-infix {
-        padding: 10px 0;
-        min-height: 44px;
-        max-height: 44px; // Safari fix
-      }
-
-      // Rounded corners for Material Design 3
-      .mdc-notched-outline {
-        .mdc-notched-outline__leading {
-          border-radius: 12px 0 0 12px;
-          width: 12px;
-        }
-
-        .mdc-notched-outline__trailing {
-          border-radius: 0 12px 12px 0;
-        }
-      }
-    }
-  }
-
-  // Server Selector Outlined Styles
-  ::ng-deep mifosx-server-selector {
-    flex: 1;
-    min-width: 0;
-    max-width: 250px;
-
-    #server-selector.outlined-variant {
-      width: 100%;
-      margin: 0;
-      max-height: 56px; // Safari fix: constrain height
-
-      // Compact outlined field for header
-      .mat-mdc-form-field-flex {
-        height: 44px;
-        max-height: 44px; // Safari fix
-      }
-
-      .mat-mdc-form-field-infix {
-        padding: 10px 0;
-        min-height: 44px;
-        max-height: 44px; // Safari fix
-      }
-
-      // Rounded corners for Material Design 3
-      .mdc-notched-outline {
-        .mdc-notched-outline__leading {
-          border-radius: 12px 0 0 12px;
-          width: 12px;
-        }
-
-        .mdc-notched-outline__trailing {
-          border-radius: 0 12px 12px 0;
-        }
-      }
-    }
-  }
-}
-
-// ===== Login Card Container =====
+// ===== Login Card =====
 .login-card-container {
-  flex: 1 1 auto;
+  flex: 1;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: flex-start; // Safari fix: avoid center calculation issues
-  padding: 0 1rem 1rem;
-  min-height: 0; // Safari fix: allows flex item to shrink below content size
-  animation: fade-in 0.6s ease-out;
+  justify-content: center;
+  padding: 2rem 3rem;
 }
 
 .login-card {
   width: 100%;
-  max-width: 480px;
-  background: var(--md-sys-color-surface-container-low, #fff);
-  border-radius: 28px;
-  padding: 1.5rem;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  display: flex;
-  flex-direction: column;
-  margin-top: auto; // Safari fix: push card to center using margin
-  margin-bottom: auto;
-
-  &:hover {
-    box-shadow:
-      0 2px 4px #00000014,
-      0 4px 12px #0000000f,
-      0 12px 32px #0000001f;
-  }
+  max-width: 440px;
 }
 
-// ===== Logo Section =====
 .logo-section {
-  text-align: center;
-  margin-bottom: 0.75rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--md-sys-color-outline-variant, #e8eaed);
-  flex-shrink: 0;
-  animation: fade-in 0.5s ease-out 0.1s both;
+  margin-bottom: 1.25rem;
 }
 
 .logo-image {
-  height: 130px;
+  height: 64px;
   width: auto;
-  margin: 8px 24px;
-  opacity: 0.95;
-  transition: opacity 0.3s ease;
-
-  &:hover {
-    opacity: 1;
-  }
+  display: block;
 }
 
-// ===== Form Section =====
-.form-section {
-  margin-bottom: 1rem;
-  flex: 0 1 auto;
-  display: flex;
-  flex-direction: column;
-  animation: fade-in-up 0.6s ease-out 0.3s both;
+.card-subtitle {
+  font-size: 0.9rem;
+  color: $text-muted;
+  margin: 0 0 2rem;
+  line-height: 1.5;
 }
 
+// ===== Tenant Section =====
 .tenant-section {
   margin-bottom: 1rem;
-  flex-shrink: 0;
   width: 100%;
 
   ::ng-deep mifosx-tenant-selector {
@@ -580,101 +185,188 @@
   }
 }
 
-// ===== Resources Section =====
-.resources-section {
-  margin-top: auto;
-  padding-top: 1rem;
-  flex-shrink: 0;
-  animation: fade-in-up 0.6s ease-out 0.4s both;
-}
+// ===== Override form field styles for clean rounded inputs =====
+::ng-deep {
+  .login-card {
+    // Field container - rounded gray bg, no underline
+    .mat-mdc-text-field-wrapper {
+      background: $input-bg !important;
+      border-radius: 10px !important;
+      border: 1px solid $input-border !important;
+      transition: border-color 0.2s ease;
+    }
 
-.resources-links {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
+    .mat-focused .mat-mdc-text-field-wrapper {
+      border-color: $brand-blue !important;
+    }
 
-.resource-button {
-  font-size: 0.875rem;
-  color: var(--md-sys-color-primary, #1074b9);
-  transition: all 0.2s ease;
+    // Remove underline completely
+    .mdc-line-ripple::before,
+    .mdc-line-ripple::after {
+      border-bottom: none !important;
+    }
 
-  fa-icon {
-    margin-right: 0.4rem;
-    opacity: 0.7;
-  }
+    .mat-mdc-form-field-focus-overlay {
+      display: none !important;
+    }
 
-  &:hover {
-    background: #1074b914;
+    // Labels
+    .mat-mdc-floating-label {
+      color: $text-muted !important;
+    }
 
-    fa-icon {
-      opacity: 1;
+    // Input text
+    .mat-mdc-input-element {
+      color: $text-dark !important;
+      caret-color: $brand-blue;
+
+      &::placeholder {
+        color: #94a3b8 !important;
+      }
+    }
+
+    // Prefix icons
+    .mat-mdc-form-field-icon-prefix {
+      color: $text-muted !important;
+
+      mifosx-m3-icon,
+      mat-icon {
+        color: $text-muted !important;
+      }
+    }
+
+    // Suffix icons
+    .mat-mdc-form-field-icon-suffix {
+      button,
+      mifosx-m3-icon,
+      mat-icon {
+        color: $text-muted !important;
+      }
+    }
+
+    // Error messages
+    .mat-mdc-form-field-error {
+      color: #dc2626 !important;
+    }
+
+    // Select
+    .mat-mdc-select {
+      color: $text-dark !important;
+    }
+
+    .mat-mdc-select-arrow {
+      color: $text-muted !important;
+    }
+
+    // Submit button - blue filled
+    .login-submit-button {
+      md-filled-button,
+      [mat-raised-button] {
+        --md-filled-button-container-color: #{$brand-blue} !important;
+        --md-filled-button-label-text-color: #fff !important;
+
+        background: $brand-blue !important;
+        color: #fff !important;
+        border-radius: 10px !important;
+        font-weight: 600 !important;
+        font-size: 0.95rem !important;
+      }
+    }
+
+    // Progress bar
+    .login-progress {
+      .mdc-linear-progress__bar-inner {
+        border-color: $brand-blue !important;
+      }
     }
   }
 }
 
 // ===== Footer =====
 .login-footer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  padding: 0.75rem 1.5rem;
-  position: relative;
+  text-align: center;
+  padding: 1rem;
   margin-top: auto;
-  flex-shrink: 0;
+  font-size: 0.8rem;
+  color: $text-muted;
+  border-top: 1px solid $input-border;
 
-  .reload-button {
-    color: var(--mat-app-text-color, #c4c6d0);
-    opacity: 0.6;
-    transition: all 0.2s ease;
-    background: transparent;
-    border: none;
-    flex-shrink: 0;
+  a {
+    color: $brand-blue;
+    text-decoration: none;
+    font-weight: 500;
 
     &:hover {
-      opacity: 1;
-      transform: rotate(90deg);
+      text-decoration: underline;
     }
   }
 }
 
-// ===== Modern Menus =====
-::ng-deep .modern-menu {
-  border-radius: 12px;
-  box-shadow:
-    0 4px 12px #0000001a,
-    0 2px 4px #0000000f;
+// ===== Version Info =====
+.login-version-info {
+  margin-bottom: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 
-  .mat-mdc-menu-item {
-    border-radius: 8px;
-    margin: 4px 8px;
-    transition: all 0.2s ease;
+.version-info-container {
+  width: 100%;
+  background: $input-bg;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  border: 1px solid $input-border;
+}
 
-    .menu-icon {
-      margin-right: 0.75rem;
-      color: var(--md-sys-color-primary, #1074b9);
-      opacity: 0.7;
-    }
+.version-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid $input-border;
 
-    &:hover .menu-icon {
-      opacity: 1;
-    }
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.version-label {
+  font-weight: 500;
+  font-size: 0.75rem;
+  color: $text-muted;
+}
+
+.version-value {
+  font-weight: 400;
+  font-size: 0.75rem;
+  color: $text-dark;
+  text-align: right;
+  word-break: break-word;
+  max-width: 60%;
+}
+
+// ===== Dark Mode =====
+:host-context(.dark-theme),
+:host-context([data-theme='dark']) {
+  .login-panel {
+    background: #1e1e1e;
+  }
+
+  .card-title {
+    color: #e2e2e5;
+  }
+
+  .card-subtitle {
+    color: #a0a0a0;
+  }
+
+  .login-footer {
+    color: #a0a0a0;
+    border-top-color: #333;
   }
 }
 
 // ===== Animations =====
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
 @keyframes fade-in-up {
   from {
     opacity: 0;
@@ -687,88 +379,29 @@
   }
 }
 
-@keyframes fade-in-down {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
+// ===== Responsive =====
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-// ===== Responsive Design =====
-
-// Tablet
 /* stylelint-disable-next-line media-feature-range-notation -- Safari compatibility */
 @media (max-width: 1024px) {
   .hero-panel {
     display: none;
   }
 
-  .login-wrapper {
-    min-height: 100vh;
-    height: 100%;
-  }
-
   .login-panel {
     flex: 1;
     width: 100%;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .login-header {
-    flex-shrink: 0;
   }
 
   .login-card-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-    width: 100%;
-    height: 100%;
+    padding: 2rem;
   }
 
   .login-card {
-    flex: 1;
-    width: 100%;
-    max-width: 100%;
-    border-radius: 0;
-    padding: 1.5rem 2rem;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .logo-section {
-    flex-shrink: 0;
-  }
-
-  .form-section {
-    flex-shrink: 0;
-  }
-
-  .login-version-info {
-    margin-top: auto;
-  }
-
-  .login-footer {
-    flex-shrink: 0;
-  }
-
-  // Hide resources section on medium screens
-  .resources-section {
-    display: none;
+    max-width: 440px;
+    margin: 0 auto;
   }
 }
 
-// Mobile
 /* stylelint-disable-next-line media-feature-range-notation -- Safari compatibility */
 @media (max-width: 768px) {
   .login-wrapper {
@@ -779,142 +412,31 @@
     display: none;
   }
 
-  .login-panel {
-    min-height: 100vh;
-  }
-
   .login-card-container {
-    padding: 0 1rem 1rem;
-    justify-content: center;
-    height: auto;
-    min-height: calc(100vh - 56px); // 56px for header
-  }
-
-  .login-header {
-    padding: 0.75rem 1rem;
-    gap: 0.25rem;
-
-    ::ng-deep mifosx-language-selector {
-      width: 30%;
-
-      #language-selector.outlined-variant {
-        width: 100%;
-        font-size: 0.8rem;
-      }
-    }
-
-    ::ng-deep mifosx-server-selector {
-      width: 60%;
-
-      #server-selector.outlined-variant {
-        width: 100%;
-        font-size: 0.8rem;
-      }
-    }
-
-    ::ng-deep mifosx-theme-toggle {
-      button {
-        padding: 8px;
-
-        mat-icon {
-          font-size: 20px;
-          width: 20px;
-          height: 20px;
-        }
-      }
-    }
+    padding: 1.5rem 1rem;
   }
 
   .login-card {
-    padding: 0.75rem 1rem;
-    border-radius: 24px;
-    margin: 0;
-  }
-
-  .logo-section {
-    margin-bottom: 0.5rem;
-    padding-bottom: 0.5rem;
-  }
-
-  .logo-image {
-    height: 100px;
-    width: auto;
-    margin: 8px 20px;
-  }
-
-  // Hide resources section on medium and small screens
-  .resources-section {
-    display: none;
-  }
-
-  .form-section {
-    margin-bottom: 0.75rem;
-  }
-
-  .login-version-info {
-    margin-bottom: 0.75rem;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    font-size: 0.85rem;
+    max-width: 100%;
   }
 
   .login-footer {
-    flex-direction: column;
-    align-items: center;
-    padding: 0.5rem;
-
-    mifosx-footer {
-      text-align: center;
-    }
-
-    .reload-button {
-      color: var(--md-sys-color-on-surface-variant, #c4c6d0);
-      border: none;
-      margin-top: 0.5rem;
-    }
+    padding: 0.75rem;
   }
 }
 
-// Small mobile
 /* stylelint-disable-next-line media-feature-range-notation -- Safari compatibility */
 @media (max-width: 480px) {
-  .login-header {
-    padding: 0.5rem 0.75rem;
-    gap: 0.25rem;
-  }
-
   .login-card-container {
-    padding: 0 0.5rem 0.5rem;
-    justify-content: center;
+    padding: 1rem 0.75rem;
   }
 
-  .login-card {
-    padding: 0.75rem 0.875rem;
-  }
-
-  .logo-section {
-    margin-bottom: 0.5rem;
-    padding-bottom: 0.25rem;
-  }
-
-  .logo-image {
-    height: 80px;
-    width: auto;
-    margin: 4px 16px;
-  }
-
-  .form-section {
-    margin-bottom: 0.5rem;
-  }
-
-  // Hide resources section on small screens
-  .resources-section {
-    display: none;
+  .card-subtitle {
+    margin-bottom: 1.25rem;
   }
 
   .login-footer {
-    padding: 0.25rem 1rem;
+    padding: 0.5rem;
   }
 }
 

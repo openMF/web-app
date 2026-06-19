@@ -1,5 +1,5 @@
 ﻿{
-  "APP_NAME": "Mifos® X WebApp",
+  "APP_NAME": "COIMS",
   "Logged in as": "다음 계정으로 로그인됨",
   "Remember me": "날 기억해",
   "errors": {
@@ -432,6 +432,7 @@
     "version": {
       "Tenant": "임차인",
       "Mifos WebApp": "Mifos® WebApp",
+      "WebApp": "WebApp",
       "Apache Fineract": "Apache Fineract®",
       "Server": "서버",
       "Username": "사용자 이름",

@@ -1,5 +1,5 @@
 ﻿{
-  "APP_NAME": "Mifos® X WebApp",
+  "APP_NAME": "COIMS",
   "Logged in as": "को रूपमा लग इन गरियो",
   "Remember me": "मलाई सम्झनुहोस्",
   "errors": {
@@ -432,6 +432,7 @@
     "version": {
       "Tenant": "भाडामा लिने व्यक्ति",
       "Mifos WebApp": "Mifos® WebApp",
+      "WebApp": "WebApp",
       "Apache Fineract": "Apache Fineract®",
       "Server": "सर्भर",
       "Username": "प्रयोगकर्ता नाम",

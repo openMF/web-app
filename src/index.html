@@ -11,14 +11,14 @@
 <html lang="en" class="h-full bg-gray-100">
   <head>
     <meta charset="utf-8" />
-    <title>{{'APP_NAME' | translate}}</title>
+    <title>CoIMS</title>
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
 
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
-    <link rel="icon" type="image/png" href="assets/images/MifosX_logo.png" sizes="182x184" />
+    <link rel="icon" type="image/png" href="assets/images/debug-bg.png" sizes="182x184" />
     <link rel="apple-touch-icon" type="image/png" href="apple-touch-icon.png" sizes="182x184" />
     <link rel="manifest" href="manifest.json" />
 
@@ -104,18 +104,112 @@
       });
     </script>
 
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <mifosx-web-app>
       <div class="loader-wrapper">
-        <lottie-player
-          class="lottie-spinner"
-          src="assets/loading_animation.json"
-          background="transparent"
-          speed="1"
-          loop
-          autoplay
-        ></lottie-player>
+        <div class="loader-spinner">
+          <div class="spinner-ring"></div>
+          <div class="spinner-ring spinner-ring-2"></div>
+          <div class="spinner-dot"></div>
+        </div>
+        <div class="loader-text">CoIMS</div>
+        <div class="loader-subtext">Loading your workspace&hellip;</div>
+        <div class="loader-bar"><div class="loader-bar-fill"></div></div>
       </div>
+      <style>
+        .loader-wrapper {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          min-height: 100vh;
+          background: #f8fafc;
+          gap: 1.25rem;
+          font-family: 'Roboto', sans-serif;
+        }
+        .loader-spinner {
+          position: relative;
+          width: 72px;
+          height: 72px;
+        }
+        .spinner-ring {
+          position: absolute;
+          inset: 0;
+          border: 3.5px solid #e2e8f0;
+          border-top-color: #1074b9;
+          border-radius: 50%;
+          animation: spin 1s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+        }
+        .spinner-ring-2 {
+          inset: 8px;
+          border-color: #e2e8f0;
+          border-top-color: #0a5a8f;
+          animation-duration: 1.5s;
+          animation-direction: reverse;
+        }
+        .spinner-dot {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 10px;
+          height: 10px;
+          margin: -5px 0 0 -5px;
+          background: #1074b9;
+          border-radius: 50%;
+          animation: pulse-dot 1.2s ease-in-out infinite;
+        }
+        .loader-text {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: #1074b9;
+          letter-spacing: 0.06em;
+        }
+        .loader-subtext {
+          font-size: 0.85rem;
+          color: #94a3b8;
+          margin-top: -0.5rem;
+        }
+        .loader-bar {
+          width: 160px;
+          height: 3px;
+          background: #e2e8f0;
+          border-radius: 3px;
+          overflow: hidden;
+        }
+        .loader-bar-fill {
+          width: 40%;
+          height: 100%;
+          background: linear-gradient(90deg, #1074b9, #0a5a8f);
+          border-radius: 3px;
+          animation: bar-slide 1.4s ease-in-out infinite;
+        }
+        @keyframes spin {
+          to {
+            transform: rotate(360deg);
+          }
+        }
+        @keyframes pulse-dot {
+          0%,
+          100% {
+            transform: scale(1);
+            opacity: 1;
+          }
+          50% {
+            transform: scale(0.6);
+            opacity: 0.5;
+          }
+        }
+        @keyframes bar-slide {
+          0% {
+            transform: translateX(-100%);
+          }
+          50% {
+            transform: translateX(200%);
+          }
+          100% {
+            transform: translateX(-100%);
+          }
+        }
+      </style>
     </mifosx-web-app>
   </body>
 </html>

@@ -28,12 +28,11 @@ export const environment = {
   fineractPlatformTenantId: loadedEnv.fineractPlatformTenantId || 'default',
   fineractPlatformTenantIds: loadedEnv.fineractPlatformTenantIds || 'default',
   // For connecting to others servers running elsewhere update the base API URL
-  baseApiUrls:
-    loadedEnv.fineractApiUrls || 'https://demo.mifos.community,https://localhost:8443,' + window.location.origin,
+  baseApiUrls: loadedEnv.fineractApiUrls || 'https://103.175.192.233,' + window.location.origin,
   // For connecting to server running elsewhere set the base API URL
   baseApiUrl:
     loadedEnv.fineractApiUrl ||
-    (loadedEnv.fineractApiUrls?.length > 0 ? loadedEnv.fineractApiUrls.split(',')[0] : window.location.origin),
+    (loadedEnv.fineractApiUrls?.length > 0 ? loadedEnv.fineractApiUrls.split(',')[0] : 'https://103.175.192.233'),
   allowServerSwitch: loadedEnv.allowServerSwitch || 'true',
   apiProvider: loadedEnv.apiProvider || '/fineract-provider/api',
   apiVersion: loadedEnv.apiVersion || '/v1',
@@ -70,8 +69,8 @@ export const environment = {
   displayTenantSelector: loadedEnv.displayTenantSelector || 'true',
   /** Production mode - when true, shows minimal hero with only branding at bottom */
   productionMode: loadedEnv.productionMode === 'true' || loadedEnv.productionMode === true || false,
-  tenantLogoUrl: loadedEnv.tenantLogoUrl || 'assets/images/default_home.png',
-  tenantLogoUrlDark: loadedEnv.tenantLogoUrlDark || 'assets/images/white-mifos.png',
+  tenantLogoUrl: loadedEnv.tenantLogoUrl || 'assets/images/debug-bg.png',
+  tenantLogoUrlDark: loadedEnv.tenantLogoUrlDark || 'assets/images/debug-bg.png',
   documentationBaseUrl: loadedEnv.documentationBaseUrl || 'https://mifosforge.jira.com/wiki',
   // Time in seconds, default 60 seconds
   waitTimeForNotifications: loadedEnv.waitTimeForNotifications || 60,
