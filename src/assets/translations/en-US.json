@@ -1116,6 +1116,7 @@
       "NotEqual": "Not equal"
     },
     "heading": {
+      "About": "About",
       "About Us": "About Us",
       "Account Information": "Account Information",
       "Account Linked Financial": "List of accounts linked to different financial activities. To know more click:",
@@ -3113,6 +3114,7 @@
       "Working with Code": "Working with Code"
     },
     "menus": {
+      "About": "About",
       "Unassign Staff": "Unassign Staff",
       "Accounting": "Accounting",
       "Account Overview": "Account Overview",

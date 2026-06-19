@@ -1,0 +1,68 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.about-content {
+  padding: 16px 0;
+  min-width: 350px;
+}
+
+.about-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  tr {
+    border-bottom: 1px solid var(--md-sys-color-outline-variant, #e0e0e0);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  td {
+    padding: 12px 8px;
+  }
+
+  .info-label {
+    font-weight: 500;
+    color: var(--md-sys-color-on-surface-variant, #555);
+    width: 40%;
+  }
+
+  .info-value {
+    font-weight: 600;
+    color: var(--md-sys-color-on-surface, #333);
+    text-align: right;
+
+    .hash {
+      font-weight: 400;
+      font-size: 0.85em;
+      color: var(--md-sys-color-on-surface-variant, #666);
+    }
+  }
+}
+
+// Dark theme support
+:host-context(.dark-theme) {
+  .about-table {
+    tr {
+      border-bottom-color: rgb(255 255 255 / 30%);
+    }
+
+    .info-label {
+      color: rgb(255 255 255 / 70%);
+    }
+
+    .info-value {
+      color: rgb(255 255 255 / 87%);
+
+      .hash {
+        color: rgb(255 255 255 / 60%);
+      }
+    }
+  }
+}

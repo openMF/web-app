@@ -1,0 +1,50 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h2 mat-dialog-title>{{ 'labels.heading.About' | translate }}</h2>
+
+<mat-dialog-content>
+  <div class="about-content">
+    <table class="about-table">
+      <tr>
+        <td class="info-label">{{ 'labels.version.Mifos WebApp' | translate }}</td>
+        <td class="info-value">
+          {{ mifosVersion }} - <span class="hash">{{ mifosHash }}</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="info-label">{{ 'labels.version.Apache Fineract' | translate }}</td>
+        <td class="info-value">
+          {{ fineractVersion || '...' }}
+        </td>
+      </tr>
+      <tr>
+        <td class="info-label">{{ 'labels.inputs.Server' | translate }}</td>
+        <td class="info-value">{{ server }}</td>
+      </tr>
+      <tr>
+        <td class="info-label">{{ 'labels.version.Username' | translate }}</td>
+        <td class="info-value">{{ username }}</td>
+      </tr>
+      <tr>
+        <td class="info-label">{{ 'labels.version.Name' | translate }}</td>
+        <td class="info-value">{{ name }}</td>
+      </tr>
+      <tr>
+        <td class="info-label">{{ 'labels.version.Render Time' | translate }}</td>
+        <td class="info-value">{{ renderTime | date: 'dd MMMM yyyy HH:mm:ss' }}</td>
+      </tr>
+    </table>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close color="primary">
+    {{ 'labels.buttons.Close' | translate }}
+  </button>
+</mat-dialog-actions>

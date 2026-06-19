@@ -75,10 +75,11 @@ export class FooterComponent implements OnInit, OnDestroy {
   alert$: Subscription;
   timer: any;
 
-  displayBackEndInfo = true;
+  displayBackEndInfo = false;
 
   constructor() {
-    this.displayBackEndInfo = environment.displayBackEndInfo === 'true';
+    // Display backend info is now handled by About dialog
+    // Set to false to remove release details from footer
     this.setUserInfo();
     this.renderTime = new Date();
   }
