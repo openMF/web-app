@@ -41,6 +41,7 @@ import { ConfigurationWizardService } from '../../../configuration-wizard/config
 /** Custom Components */
 import { ConfigurationWizardComponent } from '../../../configuration-wizard/configuration-wizard.component';
 import { NotificationsTrayComponent } from 'app/shared/notifications-tray/notifications-tray.component';
+import { AboutDialogComponent } from 'app/shared/about-dialog/about-dialog.component';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatIconButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
@@ -162,6 +163,15 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
    */
   help() {
     this.documentationLinks.open('userManual');
+  }
+
+  /**
+   * Opens the About dialog.
+   */
+  openAboutDialog() {
+    this.dialog.open(AboutDialogComponent, {
+      width: '450px'
+    });
   }
   /**
    * Popover function

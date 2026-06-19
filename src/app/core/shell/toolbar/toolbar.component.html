@@ -234,6 +234,12 @@
     </mat-icon>
     <span>{{ 'labels.menus.Settings' | translate }}</span>
   </button>
+  <button mat-menu-item (click)="openAboutDialog()" tabindex="0">
+    <mat-icon>
+      <fa-icon icon="info-circle" size="sm"></fa-icon>
+    </mat-icon>
+    <span>{{ 'labels.menus.About' | translate }}</span>
+  </button>
   <button mat-menu-item (click)="logout()" id="logout" tabindex="0">
     <mat-icon>
       <fa-icon icon="sign-out-alt" size="sm"></fa-icon>
