@@ -1,1 +1,0 @@
-import{I as c,M as e,Wg as r}from"./chunk-MZK2CA5O.js";var f=(()=>{class t{constructor(){this.accountingService=e(r)}resolve(){return this.accountingService.getGlAccounts()}static{this.\u0275fac=function(i){return new(i||t)}}static{this.\u0275prov=c({token:t,factory:t.\u0275fac})}}return t})();export{f as a};
