@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright since 2025 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -6,22 +6,18 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/**
- * Modern Material Design 3 Login Form Styles
- */
+// ===== Colors =====
+$brand-blue: #1074b9;
+$text-dark: #1e293b;
+$text-muted: #64748b;
+$input-bg: #f1f5f9;
+$input-border: #e2e8f0;
 
 // ===== Main Form Container =====
-.modern-login-form {
-  width: 100%;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
 #login-form {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.75rem;
   animation: slide-in 0.4s ease-out;
   flex: 1;
 }
@@ -38,46 +34,35 @@
       width: 100%;
       margin-bottom: 0;
 
-      // Apply same styling as login fields
       .mat-mdc-text-field-wrapper {
-        border-radius: 12px 12px 0 0;
+        background: $input-bg;
+        border-radius: 10px;
+        border: 1px solid $input-border;
       }
 
       .mat-mdc-form-field-focus-overlay {
-        border-radius: 12px 12px 0 0;
-        background-color: var(--md-sys-color-on-surface, #1a1c1e);
-        opacity: 0.04;
+        display: none;
       }
 
-      &.mat-focused {
-        .mat-mdc-form-field-focus-overlay {
-          opacity: 0.12;
-        }
-      }
-
+      .mdc-line-ripple::before,
       .mdc-line-ripple::after {
-        border-bottom-color: var(--md-sys-color-primary, #1074b9);
+        border-bottom: none;
       }
 
       .mat-mdc-select {
-        font-size: 1rem;
+        font-size: 0.95rem;
         font-weight: 400;
-        color: var(--md-sys-color-on-surface, #1a1c1e);
+        color: $text-dark;
       }
 
       .mat-mdc-floating-label {
-        font-size: 1rem;
-        color: var(--md-sys-color-on-surface-variant, #44474e);
+        font-size: 0.95rem;
+        color: $text-muted;
       }
 
       .mat-mdc-form-field-icon-prefix {
         padding: 0 0.75rem 0 0.5rem;
-        color: var(--md-sys-color-on-surface-variant, #44474e);
-
-        fa-icon {
-          font-size: 1.25rem;
-          opacity: 0.7;
-        }
+        color: $text-muted;
       }
     }
 
@@ -93,93 +78,82 @@
   margin-bottom: 0;
 
   ::ng-deep {
-    // Field container
     .mat-mdc-text-field-wrapper {
-      border-radius: 12px 12px 0 0;
+      background: $input-bg !important;
+      border-radius: 10px !important;
+      border: 1px solid $input-border !important;
+      transition: border-color 0.2s ease;
     }
 
-    // Focus overlay
+    &.mat-focused .mat-mdc-text-field-wrapper {
+      border-color: $brand-blue !important;
+    }
+
     .mat-mdc-form-field-focus-overlay {
-      border-radius: 12px 12px 0 0;
-      background-color: var(--md-sys-color-on-surface, #1a1c1e);
-      opacity: 0.04;
+      display: none !important;
     }
 
-    // Focus state
-    &.mat-focused {
-      .mat-mdc-form-field-focus-overlay {
-        opacity: 0.12;
-      }
-    }
-
-    // Bottom indicator line
+    .mdc-line-ripple::before,
     .mdc-line-ripple::after {
-      border-bottom-color: var(--md-sys-color-primary, #1074b9);
+      border-bottom: none !important;
     }
 
-    // Input field
     .mat-mdc-input-element {
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 400;
-      color: var(--md-sys-color-on-surface, #1a1c1e);
+      color: $text-dark;
       padding: 0.875rem 0;
       margin-left: 0;
 
       &::placeholder {
-        color: var(--md-sys-color-on-surface-variant, #44474e);
-        opacity: 0.6;
+        color: #94a3b8;
+        opacity: 1;
       }
     }
 
-    // Label
     .mat-mdc-floating-label {
-      font-size: 1rem;
-      color: var(--md-sys-color-on-surface-variant, #44474e);
+      font-size: 0.95rem;
+      color: $text-muted;
       left: 0 !important;
     }
 
-    // Prefix icon
     .mat-mdc-form-field-icon-prefix {
       padding: 0 0.75rem 0 0.5rem;
-      color: var(--md-sys-color-on-surface-variant, #44474e);
+      color: $text-muted;
 
-      fa-icon {
-        font-size: 1.25rem;
-        opacity: 0.7;
+      mifosx-m3-icon,
+      mat-icon {
+        color: $text-muted;
       }
     }
 
-    // Form field infix - align label with input
     .mat-mdc-form-field-infix {
       padding-left: 0;
     }
 
-    // Suffix button (password toggle)
     .mat-mdc-form-field-icon-suffix {
       button {
         background: transparent;
         border: none;
-        color: var(--md-sys-color-on-surface-variant, #44474e);
-        transition: all 0.2s ease;
+        color: $text-muted;
+        transition: color 0.2s ease;
+
+        &:hover {
+          color: $text-dark;
+        }
       }
     }
 
-    // Error state
     &.mat-form-field-invalid {
-      .mdc-line-ripple::after {
-        border-bottom-color: var(--md-sys-color-error, #ba1a1a);
-      }
-
-      .mat-mdc-form-field-icon-prefix fa-icon {
-        color: var(--md-sys-color-error, #ba1a1a);
+      .mat-mdc-text-field-wrapper {
+        border-color: #dc2626 !important;
       }
     }
 
-    // Error message
     .mat-mdc-form-field-error {
       font-size: 0.75rem;
       margin-top: 0.25rem;
-      color: var(--md-sys-color-error, #ba1a1a);
+      color: #dc2626;
     }
   }
 }
@@ -188,11 +162,11 @@
 .login-progress {
   height: 3px;
   border-radius: 4px;
-  margin: -0.5rem 0 0.5rem;
+  margin: -0.25rem 0 0.5rem;
 
   ::ng-deep {
     .mdc-linear-progress__bar-inner {
-      border-color: var(--md-sys-color-primary, #1074b9);
+      border-color: $brand-blue;
     }
   }
 }
@@ -200,13 +174,18 @@
 // ===== Submit Button =====
 .login-submit-button {
   min-height: 48px;
-  color: var(--md-sys-color-on-surface-variant, #44474e);
-  margin-top: 0.5rem;
+  color: #fff;
+  margin-top: 0.75rem;
 
   ::ng-deep md-filled-button {
-    font-size: 1rem;
-    font-weight: 500;
-    letter-spacing: 0.01em;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+
+    --md-filled-button-container-color: #{$brand-blue};
+    --md-filled-button-label-text-color: #fff;
+
+    border-radius: 10px;
   }
 
   .button-spinner {
@@ -233,7 +212,7 @@
 
 .oidc-description {
   font-size: 0.95rem;
-  color: var(--md-sys-color-on-surface-variant, #44474e);
+  color: $text-muted;
   margin: 0;
   line-height: 1.5;
 }
@@ -250,19 +229,19 @@
   align-items: center;
   gap: 1rem;
   padding: 2rem;
-  background: var(--md-sys-color-primary-container, #d1e4ff);
-  border-radius: 16px;
+  background: #dbeafe;
+  border-radius: 12px;
 
   .success-icon {
     font-size: 3rem;
-    color: var(--md-sys-color-primary, #1074b9);
+    color: $brand-blue;
   }
 
   h3 {
     margin: 0;
     font-size: 1.25rem;
     font-weight: 600;
-    color: var(--md-sys-color-on-primary-container, #001d36);
+    color: $text-dark;
   }
 }
 
@@ -279,9 +258,9 @@
 
 .protected-data {
   padding: 1rem;
-  background: var(--md-sys-color-surface-container, #f3f3f3);
+  background: $input-bg;
   border-radius: 12px;
-  border: 1px solid var(--md-sys-color-outline-variant, #c4c6d0);
+  border: 1px solid $input-border;
   max-height: 300px;
   overflow: auto;
 
@@ -289,28 +268,32 @@
     margin: 0;
     font-size: 0.875rem;
     font-family: 'Courier New', monospace;
-    color: var(--md-sys-color-on-surface, #1a1c1e);
+    color: $text-dark;
     white-space: pre-wrap;
     overflow-wrap: break-word;
   }
 }
 
-// ===== Dark Theme Support =====
+// ===== Dark Theme =====
 :host-context(.dark-theme) {
-  // Tenant selector dark theme
   ::ng-deep .tenant-section {
     mifosx-tenant-selector {
       #tenant-selector {
+        .mat-mdc-text-field-wrapper {
+          background: #2a2a2a;
+          border-color: #444;
+        }
+
         .mat-mdc-select {
-          color: var(--md-sys-color-on-surface, #e2e2e5);
+          color: #e2e2e5;
         }
 
         .mat-mdc-floating-label {
-          color: var(--md-sys-color-on-surface-variant, #c4c6d0);
+          color: #c4c6d0;
         }
 
         .mat-mdc-form-field-icon-prefix {
-          color: var(--md-sys-color-on-surface-variant, #c4c6d0);
+          color: #c4c6d0;
         }
       }
     }
@@ -318,70 +301,68 @@
 
   .login-field {
     ::ng-deep {
+      .mat-mdc-text-field-wrapper {
+        background: #2a2a2a !important;
+        border-color: #444 !important;
+      }
+
       .mat-mdc-input-element {
-        color: var(--md-sys-color-on-surface, #e2e2e5);
+        color: #e2e2e5;
 
         &::placeholder {
-          color: var(--md-sys-color-on-surface-variant, #c4c6d0);
+          color: #888;
         }
       }
 
       .mat-mdc-floating-label {
-        color: var(--md-sys-color-on-surface-variant, #c4c6d0);
+        color: #c4c6d0;
       }
 
       .mat-mdc-form-field-icon-prefix {
-        color: var(--md-sys-color-on-surface-variant, #c4c6d0);
+        color: #c4c6d0;
+
+        mifosx-m3-icon,
+        mat-icon {
+          color: #c4c6d0;
+        }
       }
 
       .mat-mdc-form-field-icon-suffix button {
-        color: var(--md-sys-color-on-surface-variant, #c4c6d0);
+        color: #c4c6d0;
       }
     }
   }
 
-  .oidc-description {
-    color: var(--md-sys-color-on-surface-variant, #c4c6d0);
-  }
-
   .welcome-message {
-    background: var(--md-sys-color-primary-container, #003a6b);
+    background: #003a6b;
 
     .success-icon {
-      color: var(--md-sys-color-primary, #5ba2ec);
+      color: #5ba2ec;
     }
 
     h3 {
-      color: var(--md-sys-color-on-primary-container, #d1e4ff);
+      color: #d1e4ff;
     }
   }
 
   .protected-data {
-    background: var(--md-sys-color-surface-container, #2c2f36);
-    border-color: var(--md-sys-color-outline-variant, #44474e);
+    background: #2c2f36;
+    border-color: #44474e;
 
     pre {
-      color: var(--md-sys-color-on-surface, #e2e2e5);
+      color: #e2e2e5;
     }
   }
 }
 
-// ===== Responsive Design =====
+// ===== Responsive =====
 /* stylelint-disable-next-line media-feature-range-notation -- Safari compatibility */
 @media (max-width: 768px) {
   #login-form {
-    gap: 0.25rem;
-  }
-
-  .login-field {
-    margin-bottom: 0;
+    gap: 0.5rem;
   }
 
   .login-submit-button {
-    margin-top: 0.5rem;
-  }
-
-  .login-actions {
     margin-top: 0.5rem;
   }
 }
@@ -389,20 +370,18 @@
 /* stylelint-disable-next-line media-feature-range-notation -- Safari compatibility */
 @media (max-width: 480px) {
   #login-form {
-    gap: 0.15rem;
+    gap: 0.35rem;
   }
 
   .login-field {
-    margin-bottom: 0;
-
     ::ng-deep {
       .mat-mdc-input-element {
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         padding: 0.65rem 0.5rem;
       }
 
       .mat-mdc-floating-label {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
       }
 
       .mat-mdc-form-field-icon-prefix {

@@ -1,5 +1,5 @@
 ﻿{
-  "APP_NAME": "Mifos® X WebApp",
+  "APP_NAME": "COIMS",
   "Logged in as": "connecté en tant que",
   "Remember me": "Souviens-toi de moi",
   "errors": {
@@ -432,6 +432,7 @@
     "version": {
       "Tenant": "Locataire",
       "Mifos WebApp": "Mifos® WebApp",
+      "WebApp": "WebApp",
       "Apache Fineract": "Apache Fineract®",
       "Server": "Serveur",
       "Username": "Nom d'utilisateur",
