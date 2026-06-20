@@ -4836,5 +4836,71 @@
         "message": "구현되지 않은 기능입니다!"
       }
     }
+  },
+  "copilot": {
+    "brand": "Mifos Intelligence AI",
+    "currentSession": "현재 세션",
+    "newChat": "새 채팅",
+    "close": "닫기",
+    "greeting": {
+      "morning": "좋은 아침입니다",
+      "afternoon": "좋은 오후입니다",
+      "evening": "좋은 저녁입니다"
+    },
+    "welcomeHeading": "오늘 고객을 지원하는 데 어떻게 도와드릴까요?",
+    "suggestions": {
+      "clientDetails": "고객 John Doe의 세부 정보를 보여주세요",
+      "repaymentSchedule": "대출 #107의 상환 일정은 어떻게 되나요?",
+      "savingsBalance": "고객 #52의 예금 계좌 잔액을 보여주세요",
+      "overdueLoans": "이번 주에 연체된 대출은 몇 건인가요?"
+    },
+    "input": {
+      "placeholder": "고객, 대출 또는 계좌에 대해 질문하세요...",
+      "attach": "파일 첨부",
+      "voice": "음성 입력",
+      "send": "메시지 보내기",
+      "stop": "생성 중지"
+    },
+    "disclaimer": "Mifos Intelligence AI는 인간의 의사 결정을 대체하는 것이 아니라 지원하도록 설계되었습니다.",
+    "nav": {
+      "recentChats": "최근 채팅",
+      "chat": "채팅",
+      "preferences": "환경설정",
+      "helpCenter": "도움말 센터"
+    },
+    "preferencesHeading": "환경설정",
+    "recent": {
+      "emptyTitle": "최근 대화 없음",
+      "emptySubtitle": "채팅 기록이 여기에 표시됩니다",
+      "messages": "개의 메시지",
+      "delete": "대화 삭제"
+    },
+    "help": {
+      "capabilitiesTitle": "Mifos Intelligence AI는 무엇을 할 수 있나요?",
+      "capabilities": {
+        "lookup": "고객 정보 및 프로필 조회",
+        "loans": "대출 세부 정보 및 상환 일정 보기",
+        "savings": "예금 계좌 잔액 확인",
+        "portfolio": "고객 포트폴리오에 대한 인사이트 확인",
+        "navigate": "Mifos X의 특정 페이지로 이동"
+      },
+      "examplesTitle": "예시 질문",
+      "importantTitle": "중요",
+      "important": {
+        "assist": "AI 응답은 참고용일 뿐 최종 결정이 아닙니다",
+        "verify": "조치를 취하기 전에 항상 중요한 금융 데이터를 확인하세요",
+        "noExecute": "AI는 스스로 거래를 실행하지 않습니다"
+      }
+    },
+    "cardType": {
+      "client": "고객",
+      "loan": "대출",
+      "savings": "예금",
+      "insight": "인사이트",
+      "confirmation": "확인"
+    },
+    "confirmWarning": "이 작업은 실제 자금과 관련이 있습니다. 확인해 주세요.",
+    "openAssistant": "AI 어시스턴트 열기",
+    "newChatTitle": "새 대화"
   }
 }

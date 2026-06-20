@@ -4836,5 +4836,71 @@
         "message": "Funcionalidade não implementada!"
       }
     }
+  },
+  "copilot": {
+    "brand": "Mifos Intelligence AI",
+    "currentSession": "Sessão atual",
+    "newChat": "Nova conversa",
+    "close": "Fechar",
+    "greeting": {
+      "morning": "Bom dia",
+      "afternoon": "Boa tarde",
+      "evening": "Boa noite"
+    },
+    "welcomeHeading": "Como posso ajudá-lo a apoiar os seus clientes hoje?",
+    "suggestions": {
+      "clientDetails": "Mostre-me os detalhes do cliente John Doe",
+      "repaymentSchedule": "Qual é o plano de reembolso do empréstimo n.º 107?",
+      "savingsBalance": "Mostre o saldo da conta poupança do cliente n.º 52",
+      "overdueLoans": "Quantos empréstimos estão em atraso esta semana?"
+    },
+    "input": {
+      "placeholder": "Pergunte sobre clientes, empréstimos ou contas...",
+      "attach": "Anexar ficheiro",
+      "voice": "Entrada de voz",
+      "send": "Enviar mensagem",
+      "stop": "Parar geração"
+    },
+    "disclaimer": "O Mifos Intelligence AI foi concebido para auxiliar, não substituir, a tomada de decisões humana.",
+    "nav": {
+      "recentChats": "Conversas recentes",
+      "chat": "Conversa",
+      "preferences": "Preferências",
+      "helpCenter": "Centro de ajuda"
+    },
+    "preferencesHeading": "Preferências",
+    "recent": {
+      "emptyTitle": "Sem conversas recentes",
+      "emptySubtitle": "O seu histórico de conversas aparecerá aqui",
+      "messages": "mensagens",
+      "delete": "Eliminar conversa"
+    },
+    "help": {
+      "capabilitiesTitle": "O que pode o Mifos Intelligence AI fazer?",
+      "capabilities": {
+        "lookup": "Procurar informações e perfis de clientes",
+        "loans": "Ver detalhes de empréstimos e planos de reembolso",
+        "savings": "Consultar saldos de contas poupança",
+        "portfolio": "Obter informações sobre as carteiras de clientes",
+        "navigate": "Navegar para páginas específicas no Mifos X"
+      },
+      "examplesTitle": "Exemplos de perguntas",
+      "importantTitle": "Importante",
+      "important": {
+        "assist": "As respostas da IA servem apenas de apoio, não são decisões finais",
+        "verify": "Verifique sempre os dados financeiros críticos antes de agir",
+        "noExecute": "A IA não executa transações por si própria"
+      }
+    },
+    "cardType": {
+      "client": "Cliente",
+      "loan": "Empréstimo",
+      "savings": "Poupança",
+      "insight": "Análise",
+      "confirmation": "Confirmação"
+    },
+    "confirmWarning": "Esta ação envolve dinheiro real. Por favor, confirme.",
+    "openAssistant": "Abrir o assistente de IA",
+    "newChatTitle": "Nova conversa"
   }
 }

@@ -9,6 +9,7 @@
 /** Angular Imports */
 import { Component, Input, ViewEncapsulation, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 /** Models */
 import { ChatMessage, Conversation } from '../../core/models/chat-message.model';
@@ -40,6 +41,7 @@ export type CopilotTab = 'chat' | 'recent' | 'preferences' | 'help';
   selector: 'mifosx-copilot-panel',
   imports: [
     CommonModule,
+    TranslateModule,
     CopilotHeaderComponent,
     ChatAreaComponent,
     RecentChatsComponent,
@@ -51,6 +53,7 @@ export type CopilotTab = 'chat' | 'recent' | 'preferences' | 'help';
 })
 export class CopilotPanelComponent {
   private readonly featureService = inject(CopilotFeatureService);
+  private readonly translate = inject(TranslateService);
 
   /** Master enable check (deployment + role + user preference). */
   isEnabled = this.featureService.shouldShowPanel();
@@ -71,28 +74,26 @@ export class CopilotPanelComponent {
   /** Header context label, e.g. "Client: Rajesh Kumar". */
   contextLabel: string | null = null;
 
-  /** Welcome-state greeting. */
-  displayName = 'there';
-
-  /** Suggestions shown on the empty state. */
+  /** Suggestions shown on the empty state (translation keys). */
   emptySuggestions: string[] = [
-    'Show me details for client John Doe',
-    'What is the repayment schedule for loan #107?',
-    'Show savings account balance for client #52',
-    'How many loans are overdue this week?'
+    'copilot.suggestions.clientDetails',
+    'copilot.suggestions.repaymentSchedule',
+    'copilot.suggestions.savingsBalance',
+    'copilot.suggestions.overdueLoans'
   ];
 
   private seq = 0;
 
+  /** Returns the translation key for the time-of-day greeting. */
   get greetingTime(): string {
     const hour = new Date().getHours();
     if (hour < 12) {
-      return 'Good morning';
+      return 'copilot.greeting.morning';
     }
     if (hour < 17) {
-      return 'Good afternoon';
+      return 'copilot.greeting.afternoon';
     }
-    return 'Good evening';
+    return 'copilot.greeting.evening';
   }
 
   togglePanel(): void {
@@ -122,8 +123,13 @@ export class CopilotPanelComponent {
     this.respondMock(content);
   }
 
-  sendSuggestedPrompt(prompt: string): void {
-    this.sendMessage(prompt);
+  /**
+   * Suggestion chips and help prompts pass a translation key (or, for assistant
+   * follow-ups, plain text). Translate it so the actual prompt text is sent;
+   * TranslateService returns the input unchanged when it is not a known key.
+   */
+  sendSuggestedPrompt(promptKey: string): void {
+    this.sendMessage(this.translate.instant(promptKey));
   }
 
   stopStreaming(): void {

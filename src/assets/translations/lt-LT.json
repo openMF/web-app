@@ -4837,5 +4837,71 @@
         "message": "Neįgyvendinta funkcija!"
       }
     }
+  },
+  "copilot": {
+    "brand": "Mifos Intelligence AI",
+    "currentSession": "Dabartinė sesija",
+    "newChat": "Naujas pokalbis",
+    "close": "Uždaryti",
+    "greeting": {
+      "morning": "Labas rytas",
+      "afternoon": "Laba diena",
+      "evening": "Labas vakaras"
+    },
+    "welcomeHeading": "Kaip galiu padėti jums aptarnauti klientus šiandien?",
+    "suggestions": {
+      "clientDetails": "Parodykite kliento John Doe informaciją",
+      "repaymentSchedule": "Koks yra paskolos Nr. 107 grąžinimo grafikas?",
+      "savingsBalance": "Parodykite kliento Nr. 52 taupomosios sąskaitos likutį",
+      "overdueLoans": "Kiek paskolų yra pradelsta šią savaitę?"
+    },
+    "input": {
+      "placeholder": "Klauskite apie klientus, paskolas ar sąskaitas...",
+      "attach": "Pridėti failą",
+      "voice": "Balso įvestis",
+      "send": "Siųsti žinutę",
+      "stop": "Stabdyti generavimą"
+    },
+    "disclaimer": "Mifos Intelligence AI skirta padėti, o ne pakeisti žmogaus sprendimų priėmimą.",
+    "nav": {
+      "recentChats": "Naujausi pokalbiai",
+      "chat": "Pokalbis",
+      "preferences": "Nuostatos",
+      "helpCenter": "Pagalbos centras"
+    },
+    "preferencesHeading": "Nuostatos",
+    "recent": {
+      "emptyTitle": "Nėra naujausių pokalbių",
+      "emptySubtitle": "Jūsų pokalbių istorija bus rodoma čia",
+      "messages": "žinutės",
+      "delete": "Ištrinti pokalbį"
+    },
+    "help": {
+      "capabilitiesTitle": "Ką gali Mifos Intelligence AI?",
+      "capabilities": {
+        "lookup": "Ieškoti klientų informacijos ir profilių",
+        "loans": "Peržiūrėti paskolų informaciją ir grąžinimo grafikus",
+        "savings": "Tikrinti taupomųjų sąskaitų likučius",
+        "portfolio": "Gauti įžvalgų apie klientų portfelius",
+        "navigate": "Pereiti į konkrečius Mifos X puslapius"
+      },
+      "examplesTitle": "Užklausų pavyzdžiai",
+      "importantTitle": "Svarbu",
+      "important": {
+        "assist": "AI atsakymai skirti tik pagalbai, o ne galutiniams sprendimams",
+        "verify": "Prieš veikdami visada patikrinkite svarbius finansinius duomenis",
+        "noExecute": "AI pati nevykdo operacijų"
+      }
+    },
+    "cardType": {
+      "client": "Klientas",
+      "loan": "Paskola",
+      "savings": "Santaupos",
+      "insight": "Įžvalga",
+      "confirmation": "Patvirtinimas"
+    },
+    "confirmWarning": "Šis veiksmas susijęs su tikrais pinigais. Patvirtinkite.",
+    "openAssistant": "Atidaryti DI asistentą",
+    "newChatTitle": "Naujas pokalbis"
   }
 }

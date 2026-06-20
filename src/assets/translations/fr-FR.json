@@ -4840,5 +4840,71 @@
         "message": "Fonctionnalité non implémentée !"
       }
     }
+  },
+  "copilot": {
+    "brand": "Mifos Intelligence AI",
+    "currentSession": "Session actuelle",
+    "newChat": "Nouvelle discussion",
+    "close": "Fermer",
+    "greeting": {
+      "morning": "Bonjour",
+      "afternoon": "Bon après-midi",
+      "evening": "Bonsoir"
+    },
+    "welcomeHeading": "Comment puis-je vous aider à accompagner vos clients aujourd'hui ?",
+    "suggestions": {
+      "clientDetails": "Affichez les détails du client John Doe",
+      "repaymentSchedule": "Quel est l'échéancier de remboursement du prêt n° 107 ?",
+      "savingsBalance": "Affichez le solde du compte d'épargne du client n° 52",
+      "overdueLoans": "Combien de prêts sont en retard cette semaine ?"
+    },
+    "input": {
+      "placeholder": "Posez une question sur les clients, les prêts ou les comptes...",
+      "attach": "Joindre un fichier",
+      "voice": "Entrée vocale",
+      "send": "Envoyer le message",
+      "stop": "Arrêter la génération"
+    },
+    "disclaimer": "Mifos Intelligence AI est conçue pour assister, et non remplacer, la prise de décision humaine.",
+    "nav": {
+      "recentChats": "Discussions récentes",
+      "chat": "Discussion",
+      "preferences": "Préférences",
+      "helpCenter": "Centre d'aide"
+    },
+    "preferencesHeading": "Préférences",
+    "recent": {
+      "emptyTitle": "Aucune conversation récente",
+      "emptySubtitle": "Votre historique de discussion apparaîtra ici",
+      "messages": "messages",
+      "delete": "Supprimer la conversation"
+    },
+    "help": {
+      "capabilitiesTitle": "Que peut faire Mifos Intelligence AI ?",
+      "capabilities": {
+        "lookup": "Rechercher les informations et profils des clients",
+        "loans": "Consulter les détails des prêts et les échéanciers",
+        "savings": "Vérifier les soldes des comptes d'épargne",
+        "portfolio": "Obtenir des informations sur les portefeuilles clients",
+        "navigate": "Naviguer vers des pages spécifiques dans Mifos X"
+      },
+      "examplesTitle": "Exemples de questions",
+      "importantTitle": "Important",
+      "important": {
+        "assist": "Les réponses de l'IA sont fournies à titre indicatif, pas comme décisions finales",
+        "verify": "Vérifiez toujours les données financières critiques avant d'agir",
+        "noExecute": "L'IA n'exécute pas de transactions par elle-même"
+      }
+    },
+    "cardType": {
+      "client": "Client",
+      "loan": "Prêt",
+      "savings": "Épargne",
+      "insight": "Analyse",
+      "confirmation": "Confirmation"
+    },
+    "confirmWarning": "Cette action implique de l'argent réel. Veuillez confirmer.",
+    "openAssistant": "Ouvrir l'assistant IA",
+    "newChatTitle": "Nouvelle conversation"
   }
 }

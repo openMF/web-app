@@ -8,6 +8,7 @@
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 import moment from 'moment';
 import { ChatMessage } from '../../core/models/chat-message.model';
 import { MarkdownPipe } from '../../pipes/markdown.pipe';
@@ -19,6 +20,7 @@ import { QuickChipsComponent } from '../quick-chips/quick-chips.component';
   selector: 'mifosx-chat-area',
   imports: [
     CommonModule,
+    TranslateModule,
     MarkdownPipe,
     ActionCardComponent,
     QuickChipsComponent
@@ -30,7 +32,6 @@ export class ChatAreaComponent {
   @Input() messages: ChatMessage[] = [];
   @Input() isStreaming = false;
   @Input() greetingTime = '';
-  @Input() displayName = '';
   @Input() emptySuggestions: string[] = [];
 
   @Output() promptSelected = new EventEmitter<string>();

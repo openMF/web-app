@@ -4935,5 +4935,71 @@
         "failure": "Failed to submit survey."
       }
     }
+  },
+  "copilot": {
+    "brand": "Mifos Intelligence AI",
+    "currentSession": "Current Session",
+    "newChat": "New Chat",
+    "close": "Close",
+    "greeting": {
+      "morning": "Good morning",
+      "afternoon": "Good afternoon",
+      "evening": "Good evening"
+    },
+    "welcomeHeading": "How can I help you support your clients today?",
+    "suggestions": {
+      "clientDetails": "Show me details for client John Doe",
+      "repaymentSchedule": "What is the repayment schedule for loan #107?",
+      "savingsBalance": "Show savings account balance for client #52",
+      "overdueLoans": "How many loans are overdue this week?"
+    },
+    "input": {
+      "placeholder": "Ask about clients, loans, or accounts...",
+      "attach": "Attach file",
+      "voice": "Voice input",
+      "send": "Send message",
+      "stop": "Stop generating"
+    },
+    "disclaimer": "Mifos Intelligence AI is designed to assist, not replace, human decision making.",
+    "nav": {
+      "recentChats": "Recent Chats",
+      "chat": "Chat",
+      "preferences": "Preferences",
+      "helpCenter": "Help Center"
+    },
+    "preferencesHeading": "Preferences",
+    "recent": {
+      "emptyTitle": "No recent conversations",
+      "emptySubtitle": "Your chat history will appear here",
+      "messages": "messages",
+      "delete": "Delete conversation"
+    },
+    "help": {
+      "capabilitiesTitle": "What can Mifos Intelligence AI do?",
+      "capabilities": {
+        "lookup": "Look up client information and profiles",
+        "loans": "View loan details and repayment schedules",
+        "savings": "Check savings account balances",
+        "portfolio": "Get insights on client portfolios",
+        "navigate": "Navigate to specific pages in Mifos X"
+      },
+      "examplesTitle": "Example prompts",
+      "importantTitle": "Important",
+      "important": {
+        "assist": "AI responses are for assistance only, not final decisions",
+        "verify": "Always verify critical financial data before taking action",
+        "noExecute": "The AI does not execute transactions on its own"
+      }
+    },
+    "cardType": {
+      "client": "Client",
+      "loan": "Loan",
+      "savings": "Savings",
+      "insight": "Insight",
+      "confirmation": "Confirmation"
+    },
+    "confirmWarning": "This action involves real money. Please confirm.",
+    "openAssistant": "Open AI Assistant",
+    "newChatTitle": "New conversation"
   }
 }

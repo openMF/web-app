@@ -8,13 +8,17 @@
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 import moment from 'moment';
 import { Conversation } from '../../core/models/chat-message.model';
 
 /** Recent Chats tab: list of saved conversations with preview, meta and delete. */
 @Component({
   selector: 'mifosx-recent-chats',
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    TranslateModule
+  ],
   templateUrl: './recent-chats.component.html',
   styleUrls: ['./recent-chats.component.scss']
 })

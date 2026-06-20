@@ -9,6 +9,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { TranslateModule } from '@ngx-translate/core';
 
 /**
  * Context-aware suggested-prompt chips. Renders the chip buttons directly into
@@ -19,7 +20,8 @@ import { MatButtonModule } from '@angular/material/button';
   selector: 'mifosx-quick-chips',
   imports: [
     CommonModule,
-    MatButtonModule
+    MatButtonModule,
+    TranslateModule
   ],
   templateUrl: './quick-chips.component.html',
   styleUrls: ['./quick-chips.component.scss']

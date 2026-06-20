@@ -8,11 +8,15 @@
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 /** Topbar: logo + brand, current-session label, New Chat and Close buttons. */
 @Component({
   selector: 'mifosx-copilot-header',
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    TranslateModule
+  ],
   templateUrl: './copilot-header.component.html',
   styleUrls: ['./copilot-header.component.scss']
 })

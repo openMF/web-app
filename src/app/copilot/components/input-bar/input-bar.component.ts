@@ -9,13 +9,15 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 /** Glass input bar: attach (disabled), text input, mic (disabled), send / stop. */
 @Component({
   selector: 'mifosx-input-bar',
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    TranslateModule
   ],
   templateUrl: './input-bar.component.html',
   styleUrls: ['./input-bar.component.scss']

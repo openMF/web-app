@@ -8,12 +8,16 @@
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 import { ActionCard, ActionCardType } from '../../core/models/action-card.model';
 
 /** Renders a single structured ActionCard (client / loan / savings / insight / confirmation). */
 @Component({
   selector: 'mifosx-action-card',
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    TranslateModule
+  ],
   templateUrl: './action-card.component.html',
   styleUrls: ['./action-card.component.scss']
 })

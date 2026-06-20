@@ -8,8 +8,8 @@
 <div class="chat-body" #messageContainer>
   <!-- Empty / welcome state -->
   <div *ngIf="messages.length === 0" class="welcome">
-    <span class="welcome__badge">{{ greetingTime }}, {{ displayName }}</span>
-    <h1 class="welcome__heading">How can I help you support<br />your clients today?</h1>
+    <span class="welcome__badge">{{ greetingTime | translate }}</span>
+    <h1 class="welcome__heading">{{ 'copilot.welcomeHeading' | translate }}</h1>
     <mifosx-quick-chips
       class="welcome__prompts"
       [prompts]="emptySuggestions"

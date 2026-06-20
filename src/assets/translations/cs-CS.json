@@ -5126,5 +5126,71 @@
         "message": "Neimplementovaná funkce!"
       }
     }
+  },
+  "copilot": {
+    "brand": "Mifos Intelligence AI",
+    "currentSession": "Aktuální relace",
+    "newChat": "Nový chat",
+    "close": "Zavřít",
+    "greeting": {
+      "morning": "Dobré ráno",
+      "afternoon": "Dobré odpoledne",
+      "evening": "Dobrý večer"
+    },
+    "welcomeHeading": "Jak vám dnes mohu pomoci s obsluhou vašich klientů?",
+    "suggestions": {
+      "clientDetails": "Zobrazte mi údaje o klientovi John Doe",
+      "repaymentSchedule": "Jaký je splátkový kalendář úvěru č. 107?",
+      "savingsBalance": "Zobrazte zůstatek spořicího účtu klienta č. 52",
+      "overdueLoans": "Kolik úvěrů je tento týden po splatnosti?"
+    },
+    "input": {
+      "placeholder": "Zeptejte se na klienty, úvěry nebo účty...",
+      "attach": "Připojit soubor",
+      "voice": "Hlasový vstup",
+      "send": "Odeslat zprávu",
+      "stop": "Zastavit generování"
+    },
+    "disclaimer": "Mifos Intelligence AI je navržena tak, aby pomáhala, nikoli nahrazovala lidské rozhodování.",
+    "nav": {
+      "recentChats": "Nedávné chaty",
+      "chat": "Chat",
+      "preferences": "Předvolby",
+      "helpCenter": "Centrum nápovědy"
+    },
+    "preferencesHeading": "Předvolby",
+    "recent": {
+      "emptyTitle": "Žádné nedávné konverzace",
+      "emptySubtitle": "Zde se zobrazí historie vašich chatů",
+      "messages": "zpráv",
+      "delete": "Smazat konverzaci"
+    },
+    "help": {
+      "capabilitiesTitle": "Co umí Mifos Intelligence AI?",
+      "capabilities": {
+        "lookup": "Vyhledávat informace a profily klientů",
+        "loans": "Zobrazit podrobnosti úvěrů a splátkové kalendáře",
+        "savings": "Kontrolovat zůstatky spořicích účtů",
+        "portfolio": "Získat přehled o portfoliích klientů",
+        "navigate": "Přejít na konkrétní stránky v Mifos X"
+      },
+      "examplesTitle": "Příklady dotazů",
+      "importantTitle": "Důležité",
+      "important": {
+        "assist": "Odpovědi AI slouží pouze jako pomoc, nikoli jako konečná rozhodnutí",
+        "verify": "Před provedením akce vždy ověřte kritická finanční data",
+        "noExecute": "AI neprovádí transakce sama"
+      }
+    },
+    "cardType": {
+      "client": "Klient",
+      "loan": "Úvěr",
+      "savings": "Úspory",
+      "insight": "Přehled",
+      "confirmation": "Potvrzení"
+    },
+    "confirmWarning": "Tato akce se týká skutečných peněz. Potvrďte prosím.",
+    "openAssistant": "Otevřít asistenta AI",
+    "newChatTitle": "Nová konverzace"
   }
 }

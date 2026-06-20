@@ -13,9 +13,9 @@
     class="prompt-chip prompt-chip--outline"
     (click)="selected.emit(p)"
   >
-    {{ p }}
+    {{ p | translate }}
   </button>
   <button *ngIf="!outline" type="button" mat-button class="prompt-chip" (click)="selected.emit(p)">
-    {{ p }}
+    {{ p | translate }}
   </button>
 </ng-container>
