@@ -7,7 +7,17 @@
  */
 
 import { McpResponse } from './models/mcp-response.model';
-import { ActionCard } from './models/action-card.model';
+import { ActionCard, ActionCardType } from './models/action-card.model';
+
+const CARD_FENCE_RE = /```action_card\r?\n([\s\S]*?)\r?\n```/g;
+const SUGGEST_FENCE_RE = /```suggest\r?\n([\s\S]*?)\r?\n```/g;
+const VALID_TYPES = new Set<ActionCardType>([
+  'client',
+  'loan',
+  'savings',
+  'insight',
+  'confirmation'
+]);
 
 /**
  * Parses raw MCP/LLM output into structured action cards and follow-ups.
@@ -16,20 +26,56 @@ import { ActionCard } from './models/action-card.model';
  */
 export class ResponseParser {
   /** Extract action-card tokens from a completed response body. */
-  parseCards(_raw: string): ActionCard[] {
-    // TODO: implement ACTION_CARD token parsing.
-    throw new Error('Not implemented');
+  parseCards(raw: string): ActionCard[] {
+    const cards: ActionCard[] = [];
+    let match: RegExpExecArray | null;
+    CARD_FENCE_RE.lastIndex = 0;
+    while ((match = CARD_FENCE_RE.exec(raw)) !== null) {
+      try {
+        const parsed = JSON.parse(match[1]);
+        if (
+          parsed &&
+          typeof parsed === 'object' &&
+          typeof parsed.title === 'string' &&
+          VALID_TYPES.has(parsed.type) &&
+          parsed.data !== null &&
+          typeof parsed.data === 'object'
+        ) {
+          cards.push(parsed as ActionCard);
+        }
+      } catch {
+        // malformed JSON - skip silently
+      }
+    }
+    return cards;
   }
 
   /** Extract suggested follow-up prompts. */
-  parseSuggestions(_raw: string): string[] {
-    // TODO: implement follow-up extraction.
-    throw new Error('Not implemented');
+  parseSuggestions(raw: string): string[] {
+    const suggestions: string[] = [];
+    let match: RegExpExecArray | null;
+    SUGGEST_FENCE_RE.lastIndex = 0;
+    while ((match = SUGGEST_FENCE_RE.exec(raw)) !== null) {
+      const lines = match[1].split(/\r?\n/);
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (trimmed.length > 0) {
+          suggestions.push(trimmed);
+        }
+      }
+    }
+    return suggestions;
   }
 
   /** Assemble a full response object from accumulated stream text. */
-  parse(_raw: string): McpResponse {
-    // TODO: combine text + cards + suggestions.
-    throw new Error('Not implemented');
+  parse(raw: string): McpResponse {
+    const actionCards = this.parseCards(raw);
+    const suggestedPrompts = this.parseSuggestions(raw);
+    const text = raw
+      .replace(CARD_FENCE_RE, '')
+      .replace(SUGGEST_FENCE_RE, '')
+      .replace(/\n{3,}/g, '\n\n')
+      .trim();
+    return { text, actionCards, suggestedPrompts };
   }
 }
