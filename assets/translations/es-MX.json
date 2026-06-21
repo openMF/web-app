@@ -4850,5 +4850,71 @@
         "message": "¡Funcionalidad no implementada!"
       }
     }
+  },
+  "copilot": {
+    "brand": "Mifos Intelligence AI",
+    "currentSession": "Sesión actual",
+    "newChat": "Nuevo chat",
+    "close": "Cerrar",
+    "greeting": {
+      "morning": "Buenos días",
+      "afternoon": "Buenas tardes",
+      "evening": "Buenas noches"
+    },
+    "welcomeHeading": "¿Cómo puedo ayudarte a atender a tus clientes hoy?",
+    "suggestions": {
+      "clientDetails": "Muéstrame los detalles del cliente John Doe",
+      "repaymentSchedule": "¿Cuál es el calendario de pagos del préstamo n.º 107?",
+      "savingsBalance": "Muestra el saldo de la cuenta de ahorros del cliente n.º 52",
+      "overdueLoans": "¿Cuántos préstamos están vencidos esta semana?"
+    },
+    "input": {
+      "placeholder": "Pregunta sobre clientes, préstamos o cuentas...",
+      "attach": "Adjuntar archivo",
+      "voice": "Entrada de voz",
+      "send": "Enviar mensaje",
+      "stop": "Detener generación"
+    },
+    "disclaimer": "Mifos Intelligence AI está diseñada para ayudar, no para reemplazar, la toma de decisiones humana.",
+    "nav": {
+      "recentChats": "Chats recientes",
+      "chat": "Chat",
+      "preferences": "Preferencias",
+      "helpCenter": "Centro de ayuda"
+    },
+    "preferencesHeading": "Preferencias",
+    "recent": {
+      "emptyTitle": "No hay conversaciones recientes",
+      "emptySubtitle": "Tu historial de chat aparecerá aquí",
+      "messages": "mensajes",
+      "delete": "Eliminar conversación"
+    },
+    "help": {
+      "capabilitiesTitle": "¿Qué puede hacer Mifos Intelligence AI?",
+      "capabilities": {
+        "lookup": "Buscar información y perfiles de clientes",
+        "loans": "Ver detalles de préstamos y calendarios de pago",
+        "savings": "Consultar saldos de cuentas de ahorro",
+        "portfolio": "Obtener información sobre las carteras de clientes",
+        "navigate": "Navegar a páginas específicas en Mifos X"
+      },
+      "examplesTitle": "Ejemplos de preguntas",
+      "importantTitle": "Importante",
+      "important": {
+        "assist": "Las respuestas de la IA son solo de ayuda, no decisiones finales",
+        "verify": "Verifica siempre los datos financieros críticos antes de actuar",
+        "noExecute": "La IA no ejecuta transacciones por sí sola"
+      }
+    },
+    "cardType": {
+      "client": "Cliente",
+      "loan": "Préstamo",
+      "savings": "Ahorros",
+      "insight": "Información",
+      "confirmation": "Confirmación"
+    },
+    "confirmWarning": "Esta acción implica dinero real. Por favor, confirma.",
+    "openAssistant": "Abrir el asistente de IA",
+    "newChatTitle": "Nueva conversación"
   }
 }

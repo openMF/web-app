@@ -5126,5 +5126,71 @@
         "message": "Nicht implementierte Funktionalität!"
       }
     }
+  },
+  "copilot": {
+    "brand": "Mifos Intelligence AI",
+    "currentSession": "Aktuelle Sitzung",
+    "newChat": "Neuer Chat",
+    "close": "Schließen",
+    "greeting": {
+      "morning": "Guten Morgen",
+      "afternoon": "Guten Tag",
+      "evening": "Guten Abend"
+    },
+    "welcomeHeading": "Wie kann ich Sie heute bei der Betreuung Ihrer Kunden unterstützen?",
+    "suggestions": {
+      "clientDetails": "Zeige mir die Details des Kunden John Doe",
+      "repaymentSchedule": "Wie lautet der Tilgungsplan für Kredit Nr. 107?",
+      "savingsBalance": "Zeige den Kontostand des Sparkontos von Kunde Nr. 52",
+      "overdueLoans": "Wie viele Kredite sind diese Woche überfällig?"
+    },
+    "input": {
+      "placeholder": "Fragen Sie zu Kunden, Krediten oder Konten...",
+      "attach": "Datei anhängen",
+      "voice": "Spracheingabe",
+      "send": "Nachricht senden",
+      "stop": "Generierung stoppen"
+    },
+    "disclaimer": "Mifos Intelligence AI soll die menschliche Entscheidungsfindung unterstützen, nicht ersetzen.",
+    "nav": {
+      "recentChats": "Letzte Chats",
+      "chat": "Chat",
+      "preferences": "Einstellungen",
+      "helpCenter": "Hilfecenter"
+    },
+    "preferencesHeading": "Einstellungen",
+    "recent": {
+      "emptyTitle": "Keine kürzlichen Unterhaltungen",
+      "emptySubtitle": "Ihr Chatverlauf wird hier angezeigt",
+      "messages": "Nachrichten",
+      "delete": "Unterhaltung löschen"
+    },
+    "help": {
+      "capabilitiesTitle": "Was kann Mifos Intelligence AI?",
+      "capabilities": {
+        "lookup": "Kundeninformationen und -profile nachschlagen",
+        "loans": "Kreditdetails und Tilgungspläne anzeigen",
+        "savings": "Sparkontostände prüfen",
+        "portfolio": "Einblicke in Kundenportfolios erhalten",
+        "navigate": "Zu bestimmten Seiten in Mifos X navigieren"
+      },
+      "examplesTitle": "Beispielfragen",
+      "importantTitle": "Wichtig",
+      "important": {
+        "assist": "KI-Antworten dienen nur als Hilfe, nicht als endgültige Entscheidungen",
+        "verify": "Überprüfen Sie immer kritische Finanzdaten, bevor Sie handeln",
+        "noExecute": "Die KI führt keine Transaktionen selbstständig aus"
+      }
+    },
+    "cardType": {
+      "client": "Kunde",
+      "loan": "Kredit",
+      "savings": "Ersparnisse",
+      "insight": "Einblick",
+      "confirmation": "Bestätigung"
+    },
+    "confirmWarning": "Diese Aktion betrifft echtes Geld. Bitte bestätigen Sie.",
+    "openAssistant": "KI-Assistenten öffnen",
+    "newChatTitle": "Neue Unterhaltung"
   }
 }

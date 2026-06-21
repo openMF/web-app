@@ -4833,5 +4833,71 @@
         "message": "Utendakazi ambao haujatekelezwa!"
       }
     }
+  },
+  "copilot": {
+    "brand": "Mifos Intelligence AI",
+    "currentSession": "Kipindi cha sasa",
+    "newChat": "Mazungumzo mapya",
+    "close": "Funga",
+    "greeting": {
+      "morning": "Habari za asubuhi",
+      "afternoon": "Habari za mchana",
+      "evening": "Habari za jioni"
+    },
+    "welcomeHeading": "Ninawezaje kukusaidia kuhudumia wateja wako leo?",
+    "suggestions": {
+      "clientDetails": "Nionyeshe maelezo ya mteja John Doe",
+      "repaymentSchedule": "Je, ratiba ya ulipaji wa mkopo #107 ni ipi?",
+      "savingsBalance": "Onyesha salio la akaunti ya akiba ya mteja #52",
+      "overdueLoans": "Ni mikopo mingapi imechelewa wiki hii?"
+    },
+    "input": {
+      "placeholder": "Uliza kuhusu wateja, mikopo, au akaunti...",
+      "attach": "Ambatisha faili",
+      "voice": "Ingizo la sauti",
+      "send": "Tuma ujumbe",
+      "stop": "Simamisha uzalishaji"
+    },
+    "disclaimer": "Mifos Intelligence AI imeundwa kusaidia, si kuchukua nafasi ya, maamuzi ya binadamu.",
+    "nav": {
+      "recentChats": "Mazungumzo ya hivi karibuni",
+      "chat": "Mazungumzo",
+      "preferences": "Mapendeleo",
+      "helpCenter": "Kituo cha usaidizi"
+    },
+    "preferencesHeading": "Mapendeleo",
+    "recent": {
+      "emptyTitle": "Hakuna mazungumzo ya hivi karibuni",
+      "emptySubtitle": "Historia yako ya mazungumzo itaonekana hapa",
+      "messages": "ujumbe",
+      "delete": "Futa mazungumzo"
+    },
+    "help": {
+      "capabilitiesTitle": "Mifos Intelligence AI inaweza kufanya nini?",
+      "capabilities": {
+        "lookup": "Tafuta taarifa na wasifu wa wateja",
+        "loans": "Angalia maelezo ya mikopo na ratiba za ulipaji",
+        "savings": "Angalia salio la akaunti za akiba",
+        "portfolio": "Pata maarifa kuhusu portfolio za wateja",
+        "navigate": "Nenda kwenye kurasa mahususi katika Mifos X"
+      },
+      "examplesTitle": "Mifano ya maswali",
+      "importantTitle": "Muhimu",
+      "important": {
+        "assist": "Majibu ya AI ni kwa usaidizi tu, si maamuzi ya mwisho",
+        "verify": "Daima thibitisha data muhimu za kifedha kabla ya kuchukua hatua",
+        "noExecute": "AI haifanyi miamala yenyewe"
+      }
+    },
+    "cardType": {
+      "client": "Mteja",
+      "loan": "Mkopo",
+      "savings": "Akiba",
+      "insight": "Maarifa",
+      "confirmation": "Uthibitisho"
+    },
+    "confirmWarning": "Kitendo hiki kinahusisha pesa halisi. Tafadhali thibitisha.",
+    "openAssistant": "Fungua Msaidizi wa AI",
+    "newChatTitle": "Mazungumzo mapya"
   }
 }

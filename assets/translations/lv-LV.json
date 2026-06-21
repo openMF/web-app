@@ -4836,5 +4836,71 @@
         "message": "Neimplementēta funkcionalitāte!"
       }
     }
+  },
+  "copilot": {
+    "brand": "Mifos Intelligence AI",
+    "currentSession": "Pašreizējā sesija",
+    "newChat": "Jauna saruna",
+    "close": "Aizvērt",
+    "greeting": {
+      "morning": "Labrīt",
+      "afternoon": "Labdien",
+      "evening": "Labvakar"
+    },
+    "welcomeHeading": "Kā es varu jums šodien palīdzēt apkalpot klientus?",
+    "suggestions": {
+      "clientDetails": "Parādiet klienta John Doe informāciju",
+      "repaymentSchedule": "Kāds ir aizdevuma Nr. 107 atmaksas grafiks?",
+      "savingsBalance": "Parādiet klienta Nr. 52 krājkonta atlikumu",
+      "overdueLoans": "Cik aizdevumu šonedēļ ir nokavēti?"
+    },
+    "input": {
+      "placeholder": "Jautājiet par klientiem, aizdevumiem vai kontiem...",
+      "attach": "Pievienot failu",
+      "voice": "Balss ievade",
+      "send": "Sūtīt ziņojumu",
+      "stop": "Apturēt ģenerēšanu"
+    },
+    "disclaimer": "Mifos Intelligence AI ir paredzēta, lai palīdzētu, nevis aizstātu cilvēku lēmumu pieņemšanu.",
+    "nav": {
+      "recentChats": "Nesenās sarunas",
+      "chat": "Saruna",
+      "preferences": "Iestatījumi",
+      "helpCenter": "Palīdzības centrs"
+    },
+    "preferencesHeading": "Iestatījumi",
+    "recent": {
+      "emptyTitle": "Nav nesenu sarunu",
+      "emptySubtitle": "Jūsu sarunu vēsture parādīsies šeit",
+      "messages": "ziņojumi",
+      "delete": "Dzēst sarunu"
+    },
+    "help": {
+      "capabilitiesTitle": "Ko Mifos Intelligence AI var darīt?",
+      "capabilities": {
+        "lookup": "Meklēt klientu informāciju un profilus",
+        "loans": "Skatīt aizdevumu informāciju un atmaksas grafikus",
+        "savings": "Pārbaudīt krājkontu atlikumus",
+        "portfolio": "Iegūt ieskatu par klientu portfeļiem",
+        "navigate": "Pāriet uz konkrētām Mifos X lapām"
+      },
+      "examplesTitle": "Pieprasījumu piemēri",
+      "importantTitle": "Svarīgi",
+      "important": {
+        "assist": "AI atbildes ir paredzētas tikai kā palīdzība, nevis galīgie lēmumi",
+        "verify": "Pirms rīkojaties, vienmēr pārbaudiet svarīgus finanšu datus",
+        "noExecute": "AI pati neveic darījumus"
+      }
+    },
+    "cardType": {
+      "client": "Klients",
+      "loan": "Aizdevums",
+      "savings": "Uzkrājumi",
+      "insight": "Ieskats",
+      "confirmation": "Apstiprinājums"
+    },
+    "confirmWarning": "Šī darbība ir saistīta ar reālu naudu. Lūdzu, apstipriniet.",
+    "openAssistant": "Atvērt MI asistentu",
+    "newChatTitle": "Jauna saruna"
   }
 }
