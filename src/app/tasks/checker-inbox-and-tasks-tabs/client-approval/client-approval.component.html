@@ -55,19 +55,19 @@
           </ng-container>
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
-            <td mat-cell *matCellDef="let element" class="view-details" [routerLink]="['../../clients', element.id]">
+            <td mat-cell *matCellDef="let element" class="view-details" [routerLink]="['../../members', element.id]">
               {{ element.displayName }}
             </td>
           </ng-container>
           <ng-container matColumnDef="accountNumber">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account Number' | translate }}</th>
-            <td mat-cell *matCellDef="let element" class="view-details" [routerLink]="['../../clients', element.id]">
+            <td mat-cell *matCellDef="let element" class="view-details" [routerLink]="['../../members', element.id]">
               {{ element.accountNo }}
             </td>
           </ng-container>
           <ng-container matColumnDef="staff">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Staff' | translate }}</th>
-            <td mat-cell *matCellDef="let element" class="view-details" [routerLink]="['../../clients', element.id]">
+            <td mat-cell *matCellDef="let element" class="view-details" [routerLink]="['../../members', element.id]">
               {{ element.staffName }}
             </td>
           </ng-container>

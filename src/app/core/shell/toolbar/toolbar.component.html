@@ -42,10 +42,15 @@
       [matMenuTriggerFor]="institutionMenu"
       #institutionMenuTrigger="matMenuTrigger"
       tabindex="0"
-      *mifosxHasPermission="['READ_CLIENT', 'READ_GROUP', 'READ_CENTER']"
+      *mifosxHasPermission="['READ_GROUP', 'READ_CENTER']"
     >
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
       {{ 'labels.menus.Institution' | translate }}
+    </a>
+
+    <a class="tab-link" [routerLink]="['/members']" tabindex="0" *mifosxHasPermission="'READ_CLIENT'">
+      <fa-icon class="mr-05" icon="users" size="lg"></fa-icon>
+      {{ 'labels.menus.Clients' | translate }}
     </a>
 
     <span class="hide-lt-md">
@@ -100,27 +105,8 @@
     <mifosx-search-tool tabindex="0"></mifosx-search-tool>
   </div>
 
-  <div #languageSelector class="white-text-language">
-    <mifosx-language-selector class="ml-1 language hide-lt-md" tabindex="0"></mifosx-language-selector>
-  </div>
-
-  <button
-    mat-icon-button
-    [matMenuTriggerFor]="languageMenu"
-    class="show-lt-md"
-    tabindex="0"
-    [attr.aria-label]="'labels.menus.Language Selector' | translate"
-    matTooltip="{{ 'labels.menus.Language Selector' | translate }}"
-  >
-    <mat-icon>language</mat-icon>
-  </button>
-
   <div #notifications>
     <mifosx-notifications-tray #notificationsTray class="hide-lt-md" tabindex="0"></mifosx-notifications-tray>
-  </div>
-
-  <div #themeToggle>
-    <mifosx-theme-toggle tabindex="0"></mifosx-theme-toggle>
   </div>
 
   <div #appMenu>
@@ -130,48 +116,13 @@
   </div>
 </mat-toolbar>
 
-<!-- Language selector menu for small screen view -->
-<mat-menu #languageMenu="matMenu">
-  <mifosx-language-selector class="ml-1 language"></mifosx-language-selector>
-</mat-menu>
-
 <mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item routerLink="/clients" tabindex="0" *mifosxHasPermission="'READ_CLIENT'">
-    {{ 'labels.menus.Clients' | translate }}
-  </button>
   <button mat-menu-item routerLink="/groups" tabindex="0" *mifosxHasPermission="'READ_GROUP'">
     {{ 'labels.menus.Groups' | translate }}
   </button>
   <button mat-menu-item routerLink="/centers" tabindex="0" *mifosxHasPermission="'READ_CENTER'">
     {{ 'labels.menus.Centers' | translate }}
   </button>
-  <span class="hide-lt-md">
-    <button
-      mat-menu-item
-      [routerLink]="['/accounting']"
-      tabindex="0"
-      *mifosxHasPermission="[
-        'READ_JOURNALENTRY',
-        'READ_GLACCOUNT',
-        'READ_GLCLOSURE',
-        'READ_ACCOUNTINGRULE',
-        'READ_PROVISIONINGCRITERIA'
-      ]"
-    >
-      {{ 'labels.menus.Accounting' | translate }}
-    </button>
-    <button mat-menu-item [matMenuTriggerFor]="reportsMenu" tabindex="0" *mifosxHasPermission="'READ_REPORT'">
-      {{ 'labels.menus.Reports' | translate }}
-    </button>
-    <button
-      mat-menu-item
-      [matMenuTriggerFor]="adminMenu"
-      tabindex="0"
-      *mifosxHasPermission="['READ_USER', 'READ_ROLE']"
-    >
-      {{ 'labels.menus.Admin' | translate }}
-    </button>
-  </span>
 </mat-menu>
 
 <!-- Toolbar Menus -->

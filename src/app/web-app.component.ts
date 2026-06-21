@@ -188,14 +188,8 @@ export class WebAppComponent implements OnInit, OnDestroy {
         mergeMap((route) => route.data),
         takeUntil(this.destroy$)
       )
-      .subscribe((event) => {
-        const title = event['title'] ? `labels.text.${event['title']}` : 'APP_NAME';
-        this.i18nService
-          .translate(title)
-          .pipe(take(1))
-          .subscribe((titleTranslated: any) => {
-            this.titleService.setTitle(titleTranslated);
-          });
+      .subscribe(() => {
+        this.titleService.setTitle('COIMS');
       });
 
     // Stores top 100 user activites as local storage object.

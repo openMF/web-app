@@ -76,6 +76,7 @@ export class FooterComponent implements OnInit, OnDestroy {
   timer: any;
 
   displayBackEndInfo = true;
+  currentYear = new Date().getFullYear();
 
   constructor() {
     this.displayBackEndInfo = environment.displayBackEndInfo === 'true';

@@ -21,7 +21,7 @@ export abstract class LoanAccountTabBaseComponent {
   protected reload() {
     const url: string = this.router.url.split('?')[0];
     this.router
-      .navigateByUrl(`/clients`, { skipLocationChange: true })
+      .navigateByUrl(`/members`, { skipLocationChange: true })
       .then(() =>
         this.router.navigate([url], { queryParams: { productType: this.loanProductService.productType.value } })
       );

@@ -172,7 +172,7 @@ export class LoanLockedComponent implements OnInit {
     const loanId = loan.loanId;
     this.loansService.getLoanAccountDetails(loanId).subscribe((loanData: any) => {
       const clientId = loanData.clientId;
-      this.router.navigateByUrl(`/clients/${clientId}/loans-accounts/${loanId}/general`);
+      this.router.navigateByUrl(`/members/${clientId}/loans-accounts/${loanId}/general`);
     });
   }
 
