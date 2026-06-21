@@ -25,13 +25,14 @@ jobs:
       - name: Build for production
         run: npm run build
 
-      - name: Deploy to Plesk via SFTP
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
-        with:
-          server: ${{ secrets.PLESK_HOST }}
-          username: ${{ secrets.PLESK_USER }}
-          password: ${{ secrets.PLESK_PASSWORD }}
-          port: 22
-          local_path: ./dist/web-app/browser/*
-          remote_path: /httpdocs/
-          sftp_only: true
+      - name: Push built files to dist-staging branch
+        run: |
+          cd dist/web-app/browser
+          git init
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git checkout -b dist-staging
+          git add -A
+          git commit -m "deploy: built files from commit ${{ github.sha }}"
+          git push origin dist-staging --force
