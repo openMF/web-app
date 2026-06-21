@@ -33,7 +33,7 @@ jobs:
           password: ${{ secrets.PLESK_PASSWORD }}
           protocol: ftps
           port: 21
-          local-dir: ./dist/browser/
+          local-dir: ./dist/web-app/browser/
           server-dir: /httpdocs/
           exclude: |
             **/assets/env.js
