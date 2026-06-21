@@ -189,12 +189,22 @@ export class WebAppComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe((event) => {
-        const title = event['title'] ? `labels.text.${event['title']}` : 'APP_NAME';
+        const rawTitle = event['title'];
+        if (!rawTitle) {
+          this.i18nService
+            .translate('APP_NAME')
+            .pipe(take(1))
+            .subscribe((t: any) => this.titleService.setTitle(t));
+          return;
+        }
+        const translationKey = `labels.text.${rawTitle}`;
         this.i18nService
-          .translate(title)
+          .translate(translationKey)
           .pipe(take(1))
-          .subscribe((titleTranslated: any) => {
-            this.titleService.setTitle(titleTranslated);
+          .subscribe((translated: any) => {
+            // If the translation key was not found, ngx-translate returns the key itself
+            const finalTitle = translated === translationKey ? rawTitle : translated;
+            this.titleService.setTitle(finalTitle);
           });
       });
 

@@ -212,8 +212,7 @@ export class PopoverService {
         Injector.create({
           parent: this.injector,
           providers: [
-            { provide: PopoverRef, useValue: popoverRef }
-          ]
+            { provide: PopoverRef, useValue: popoverRef }]
         })
         // new PortalInjector(
         //   this.injector,

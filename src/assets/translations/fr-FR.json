@@ -1,4 +1,4 @@
-﻿{
+{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "connecté en tant que",
   "Remember me": "Souviens-toi de moi",
@@ -769,7 +769,10 @@
       "Week": "Semaine",
       "Withdraw": "Retirer",
       "Yes": "Oui",
-      "undo_account_transfer": "Annuler le transfert de compte"
+      "undo_account_transfer": "Annuler le transfert de compte",
+      "Year": "Année",
+      "Export Options": "Options d'exportation",
+      "Export PDF": "Exporter en PDF"
     },
     "catalogs": {
       "% Amount": "Montant",
@@ -3283,7 +3286,8 @@
       "Tasks": "Tâches",
       "Remittances": "Transferts",
       "Process Remittance": "Traiter le transfert",
-      "Undo Write-off": "Annuler l'abandon de créance"
+      "Undo Write-off": "Annuler l'abandon de créance",
+      "Global Financial Dashboard": "Tableau de bord financier mondial"
     },
     "placeholders": {
       "Add new server": "Ajouter un nouveau serveur",
@@ -3375,7 +3379,7 @@
       "Adhoc Query": "Requête ad hoc",
       "Advance Search": "Recherche Avancée",
       "Advanced search option for journal entries": "Option de recherche avancée pour les entrées de journal",
-      "All": "Tous",
+      "All": "Tout",
       "All Fixed Deposits": "Tous les dépôts fixes",
       "All Recurring Deposits": "Tous les dépôts récurrents",
       "All Savings": "Toutes les économies",
@@ -3784,7 +3788,7 @@
       "Navigate system selecting entity": "Cela permettra à l'utilisateur de naviguer rapidement dans l'entité de sélection du système tandis que la recherche rendra la navigation plus robuste.",
       "Navigation": "La navigation",
       "Near Breach Configurations": "Configurations de Quasi-Dépassement",
-      "No Data": "Pas de données",
+      "No Data": "Aucune donnée",
       "No Description": "Pas de description",
       "No Loan Product was found": "Aucun produit de prêt n'a été trouvé.",
       "No checker inbox data available for this account": "Aucune donnée de boîte de réception du vérificateur trouvé pour ce compte.",
@@ -4098,7 +4102,32 @@
       "username": "nom d'utilisateur",
       "withhold tax for this account": "retenir l'impôt sur ce compte",
       "withoutCategory": "Sans catégorie",
-      "Maker-Checker principle requires every tasks": "Le principe Maker-Checker exige que chaque tâche soit effectuée par deux personnes afin de réduire les risques d'erreurs et de mauvaise utilisation. Une personne lance le processus et la seconde le termine."
+      "Maker-Checker principle requires every tasks": "Le principe Maker-Checker exige que chaque tâche soit effectuée par deux personnes afin de réduire les risques d'erreurs et de mauvaise utilisation. Une personne lance le processus et la seconde le termine.",
+      "Active Borrowers": "Emprunteurs actifs",
+      "Active Client": "Client actif",
+      "Active Clients": "Clients actifs",
+      "Active Loans": "Prêts actifs",
+      "Active Savers": "Épargnants actifs",
+      "Amount Collected": "Montant collecté",
+      "Georeference Map": "Carte de géoréférence",
+      "Savings Portfolio": "Portefeuille d'épargne",
+      "Loan Portfolio Distribution": "Répartition du portefeuille de prêts",
+      "Average Loan Size": "Taille moyenne du prêt",
+      "New Client Onboarding Trends": "Tendances d'intégration des nouveaux clients",
+      "New Clients": "Nouveaux clients",
+      "New Clients Onboarded": "Nouveaux clients intégrés",
+      "Portfolio Growth": "Croissance du portefeuille",
+      "Portfolio Growth by Client Group": "Croissance du portefeuille par groupe de clients",
+      "Portfolio Gromard": "Portefeuille Gromard",
+      "Portfolio Snapshot": "Aperçu du portefeuille",
+      "Portfolio at Risk": "Portefeuille à risque",
+      "Real-time Financial Inclusion & Portfolio Analytics Insights": "Inclusion financière en temps réel et analyses de portefeuille",
+      "Rural Clients": "Clients ruraux",
+      "Product Type": "Type de produit",
+      "Loan Portfolio": "Portefeuille de prêts",
+      "Others": "Autres",
+      "Agricultural / Sectors": "Agricole / Secteurs",
+      "Sector": "Secteur"
     },
     "permissions": {
       "actions": {

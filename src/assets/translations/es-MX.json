@@ -1,4 +1,4 @@
-﻿{
+{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "Conectado como",
   "Remember me": "Recordar me",
@@ -770,7 +770,10 @@
       "Week": "Semana",
       "Withdraw": "Retirar",
       "Yes": "Sí",
-      "undo_account_transfer": "Revertir transferencia de cuenta"
+      "undo_account_transfer": "Revertir transferencia de cuenta",
+      "Year": "Año",
+      "Export Options": "Opciones de exportación",
+      "Export PDF": "Exportar como PDF"
     },
     "catalogs": {
       "% Amount": "% Monto",
@@ -3285,7 +3288,8 @@
       "Reject Additional Shares": "Rechazar acciones adicionales",
       "Tasks": "Tareas",
       "Process Remittance": "Procesar remesa",
-      "Undo Write-off": "Deshacer castigo contable"
+      "Undo Write-off": "Deshacer castigo contable",
+      "Global Financial Dashboard": "Panel Financiero Global"
     },
     "placeholders": {
       "# Remittance": "# Remesa",
@@ -4111,7 +4115,32 @@
       "username": "nombre de usuario",
       "withhold tax for this account": "retener impuestos para esta cuenta",
       "withoutCategory": "Sin categoría",
-      "Maker-Checker principle requires every tasks": "El principio Maker-Checker requiere que dos personas completen cada tarea para reducir la posibilidad de errores y uso indebido. Una persona inicia el proceso y la segunda lo completa."
+      "Maker-Checker principle requires every tasks": "El principio Maker-Checker requiere que dos personas completen cada tarea para reducir la posibilidad de errores y uso indebido. Una persona inicia el proceso y la segunda lo completa.",
+      "Active Borrowers": "Prestatarios activos",
+      "Active Client": "Cliente activo",
+      "Active Clients": "Clientes activos",
+      "Active Loans": "Préstamos activos",
+      "Active Savers": "Ahorristas activos",
+      "Amount Collected": "Monto recaudado",
+      "Georeference Map": "Mapa georreferencial",
+      "Savings Portfolio": "Cartera de ahorros",
+      "Loan Portfolio Distribution": "Distribución de la cartera de préstamos",
+      "Average Loan Size": "Tamaño promedio del préstamo",
+      "New Client Onboarding Trends": "Tendencias de incorporación de nuevos clientes",
+      "New Clients": "Nuevos clientes",
+      "New Clients Onboarded": "Nuevos clientes incorporados",
+      "Portfolio Growth": "Crecimiento de la cartera",
+      "Portfolio Growth by Client Group": "Crecimiento de la cartera por grupo de clientes",
+      "Portfolio Gromard": "Cartera Gromard",
+      "Portfolio Snapshot": "Resumen de la cartera",
+      "Portfolio at Risk": "Cartera en riesgo",
+      "Real-time Financial Inclusion & Portfolio Analytics Insights": "Inclusión financiera en tiempo real y análisis de cartera",
+      "Rural Clients": "Clientes rurales",
+      "Product Type": "Tipo de producto",
+      "Loan Portfolio": "Cartera de préstamos",
+      "Others": "Otros",
+      "Agricultural / Sectors": "Agrícola / Sectores",
+      "Sector": "Sector"
     },
     "permissions": {
       "actions": {

@@ -84,8 +84,7 @@ export class ColumnDialogComponent implements OnInit {
       ],
       mandatory: [{ value: this.data.isColumnNullable, disabled: this.data.type === 'existing' }],
       unique: [
-        { value: this.data.isColumnUnique, disabled: this.data.isColumnNullable || this.data.type === 'existing' }
-      ],
+        { value: this.data.isColumnUnique, disabled: this.data.isColumnNullable || this.data.type === 'existing' }],
       indexed: [{ value: this.data.isColumnIndexed, disabled: this.data.type === 'existing' }],
       code: [
         {

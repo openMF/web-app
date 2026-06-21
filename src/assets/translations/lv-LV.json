@@ -1,4 +1,4 @@
-﻿{
+{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "ielogojies Kā",
   "Remember me": "Atceries mani",
@@ -769,7 +769,10 @@
       "Week": "nedēļa",
       "Withdraw": "Izņemt",
       "Yes": "Jā",
-      "undo_account_transfer": "Atcelt konta pārskaitījumu"
+      "undo_account_transfer": "Atcelt konta pārskaitījumu",
+      "Year": "Gads",
+      "Export Options": "Eksportēšanas opcijas",
+      "Export PDF": "Eksportēt kā PDF"
     },
     "catalogs": {
       "% Amount": "Summa",
@@ -3279,7 +3282,8 @@
       "Tasks": "Uzdevumi",
       "Remittances": "Pārvedumi",
       "Process Remittance": "Apstrādāt pārvedumu",
-      "Undo Write-off": "Atcelt norakstīšanu"
+      "Undo Write-off": "Atcelt norakstīšanu",
+      "Global Financial Dashboard": "Globālais finanšu panelis"
     },
     "placeholders": {
       "Add new server": "Pievienot jaunu serveri",
@@ -4095,7 +4099,32 @@
       "username": "lietotājvārds",
       "withhold tax for this account": "ieturēt nodokli par šo kontu",
       "withoutCategory": "Bez kategorijas",
-      "Maker-Checker principle requires every tasks": "Maker-Checker princips paredz, ka katrs uzdevums ir jāveic diviem cilvēkiem, lai samazinātu kļūdu un nepareizas lietošanas iespējamību. Viens cilvēks uzsāk procesu, bet otrs to pabeidz."
+      "Maker-Checker principle requires every tasks": "Maker-Checker princips paredz, ka katrs uzdevums ir jāveic diviem cilvēkiem, lai samazinātu kļūdu un nepareizas lietošanas iespējamību. Viens cilvēks uzsāk procesu, bet otrs to pabeidz.",
+      "Active Borrowers": "Aktīvie aizņēmēji",
+      "Active Client": "Aktīvais klients",
+      "Active Clients": "Aktīvie klienti",
+      "Active Loans": "Aktīvie aizdevumi",
+      "Active Savers": "Aktīvie krājēji",
+      "Amount Collected": "Iekasētā summa",
+      "Georeference Map": "Ģeoreferences karte",
+      "Savings Portfolio": "Uzkrājumu portfelis",
+      "Loan Portfolio Distribution": "Aizdevumu portfeļa sadalījums",
+      "Average Loan Size": "Vidējais aizdevuma lielums",
+      "New Client Onboarding Trends": "Jaunu klientu piesaistes tendences",
+      "New Clients": "Jauni klienti",
+      "New Clients Onboarded": "Piesaistītie jauni klienti",
+      "Portfolio Growth": "Portfeļa pieaugums",
+      "Portfolio Growth by Client Group": "Portfeļa pieaugums pa klientu grupām",
+      "Portfolio Gromard": "Portfelis Gromard",
+      "Portfolio Snapshot": "Portfeļa pārskats",
+      "Portfolio at Risk": "Portfelis riskā",
+      "Real-time Financial Inclusion & Portfolio Analytics Insights": "Reāllaika finanšu iekļaušanas un portfeļa analītikas ieskati",
+      "Rural Clients": "Lauku klienti",
+      "Product Type": "Produkta tips",
+      "Loan Portfolio": "Aizdevumu portfelis",
+      "Others": "Citi",
+      "Agricultural / Sectors": "Lauksaimniecība / Sektori",
+      "Sector": "Sektors"
     },
     "permissions": {
       "actions": {

@@ -1,4 +1,4 @@
-﻿{
+{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "prisijungęs kaip",
   "Remember me": "Prisimink mane",
@@ -769,7 +769,10 @@
       "Week": "Savaitė",
       "Withdraw": "Atsitraukti",
       "Yes": "Taip",
-      "undo_account_transfer": "Atšaukti sąskaitos pervedimą"
+      "undo_account_transfer": "Atšaukti sąskaitos pervedimą",
+      "Year": "Metai",
+      "Export Options": "Eksportavimo parinktys",
+      "Export PDF": "Eksportuoti kaip PDF"
     },
     "catalogs": {
       "% Amount": "Suma",
@@ -3279,7 +3282,8 @@
       "Tasks": "Užduotys",
       "Remittances": "Pervedimai",
       "Process Remittance": "Apdoroti pervedimą",
-      "Undo Write-off": "Atšaukti nurašymą"
+      "Undo Write-off": "Atšaukti nurašymą",
+      "Global Financial Dashboard": "Pasaulinė finansų suvestinė"
     },
     "placeholders": {
       "Add new server": "Pridėti naują serverį",
@@ -4096,7 +4100,32 @@
       "username": "Vartotojo vardas",
       "withhold tax for this account": "išskaičiuoti mokesčius už šią sąskaitą",
       "withoutCategory": "Bez kategorijos",
-      "Maker-Checker principle requires every tasks": "Maker-Checker principas reikalauja, kad kiekvieną užduotį atliktų du žmonės, kad būtų sumažinta klaidų ir netinkamo naudojimo galimybė. Vienas asmuo pradeda procesą, o antrasis jį užbaigia."
+      "Maker-Checker principle requires every tasks": "Maker-Checker principas reikalauja, kad kiekvieną užduotį atliktų du žmonės, kad būtų sumažinta klaidų ir netinkamo naudojimo galimybė. Vienas asmuo pradeda procesą, o antrasis jį užbaigia.",
+      "Active Borrowers": "Aktyvūs skolininkai",
+      "Active Client": "Aktyvus klientas",
+      "Active Clients": "Aktyvūs klientai",
+      "Active Loans": "Aktyvios paskolos",
+      "Active Savers": "Aktyvūs taupytojai",
+      "Amount Collected": "Surinkta suma",
+      "Georeference Map": "Georeferencinis žemėlapis",
+      "Savings Portfolio": "Taupymo portfelis",
+      "Loan Portfolio Distribution": "Paskolų portfelio pasiskirstymas",
+      "Average Loan Size": "Vidutinis paskolos dydis",
+      "New Client Onboarding Trends": "Naujų klientų pritraukimo tendencijos",
+      "New Clients": "Nauji klientai",
+      "New Clients Onboarded": "Pritraukti nauji klientai",
+      "Portfolio Growth": "Portfelio augimas",
+      "Portfolio Growth by Client Group": "Portfelio augimas pagal klientų grupes",
+      "Portfolio Gromard": "Portfelis Gromard",
+      "Portfolio Snapshot": "Portfelio apžvalga",
+      "Portfolio at Risk": "Rizikingas portfelis",
+      "Real-time Financial Inclusion & Portfolio Analytics Insights": "Realaus laiko finansinės įtraukties ir portfelio analitikos įžvalgos",
+      "Rural Clients": "Kaimo klientai",
+      "Product Type": "Produkto tipas",
+      "Loan Portfolio": "Paskolų portfelis",
+      "Others": "Kiti",
+      "Agricultural / Sectors": "Žemės ūkis / Sektoriai",
+      "Sector": "Sektorius"
     },
     "permissions": {
       "actions": {

@@ -1,4 +1,4 @@
-﻿{
+{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "को रूपमा लग इन गरियो",
   "Remember me": "मलाई सम्झनुहोस्",
@@ -769,7 +769,10 @@
       "Week": "हप्ता",
       "Withdraw": "निकाल्नु",
       "Yes": "हो",
-      "undo_account_transfer": "खाता स्थानान्तरण रद्द गर्नुहोस्"
+      "undo_account_transfer": "खाता स्थानान्तरण रद्द गर्नुहोस्",
+      "Year": "वर्ष",
+      "Export Options": "निर्यात विकल्पहरू",
+      "Export PDF": "PDF को रूपमा निर्यात गर्नुहोस्"
     },
     "catalogs": {
       "% Amount": "रकम",
@@ -3279,7 +3282,8 @@
       "Tasks": "कार्यहरू",
       "Remittances": "रेमिट्यान्स",
       "Process Remittance": "रेमिट्यान्स प्रक्रिया",
-      "Undo Write-off": "राइट-अफ पूर्ववत गर्नुहोस्"
+      "Undo Write-off": "राइट-अफ पूर्ववत गर्नुहोस्",
+      "Global Financial Dashboard": "विश्वव्यापी वित्तीय ड्यासबोर्ड"
     },
     "placeholders": {
       "Add new server": "नयाँ सर्भर थप्नुहोस्",
@@ -3780,7 +3784,7 @@
       "Navigate system selecting entity": "यसले प्रयोगकर्तालाई प्रणाली चयन गर्ने निकायलाई द्रुत रूपमा नेभिगेट गर्न अनुमति दिनेछ जब खोजी गर्दा नेभिगेसनलाई अझ बलियो बनाउँछ।",
       "Navigation": "नेभिगेसन",
       "Near Breach Configurations": "लगभग उल्लंघन कन्फिगरेसन",
-      "No Data": "डाटा छैन",
+      "No Data": "कुनै डाटा छैन",
       "No Description": "विवरण छैन",
       "No Loan Product was found": "कुनै ऋण उत्पादन फेला परेन।",
       "No checker inbox data available for this account": "यस खाताको लागि कुनै जाँचकर्ता इनबक्स डाटा उपलब्ध छैन।",
@@ -4095,7 +4099,32 @@
       "username": "प्रयोगकर्ता नाम",
       "withhold tax for this account": "यस खाताको लागि कर रोक्नुहोस्",
       "withoutCategory": "बिना श्रेणी",
-      "Maker-Checker principle requires every tasks": "सिद्धान्तले त्रुटि र दुरुपयोगको सम्भावना कम गर्न प्रत्येक कार्यहरू दुई व्यक्तिद्वारा पूरा गर्न आवश्यक छ। एक व्यक्तिले प्रक्रिया सुरु गर्छ र दोस्रोले यसलाई पूरा गर्दछ।"
+      "Maker-Checker principle requires every tasks": "सिद्धान्तले त्रुटि र दुरुपयोगको सम्भावना कम गर्न प्रत्येक कार्यहरू दुई व्यक्तिद्वारा पूरा गर्न आवश्यक छ। एक व्यक्तिले प्रक्रिया सुरु गर्छ र दोस्रोले यसलाई पूरा गर्दछ।",
+      "Active Borrowers": "सक्रिय ऋणीहरू",
+      "Active Client": "सक्रिय ग्राहक",
+      "Active Clients": "सक्रिय ग्राहकहरू",
+      "Active Loans": "सक्रिय ऋणहरू",
+      "Active Savers": "सक्रिय बचतकर्ताहरू",
+      "Amount Collected": "संकलित रकम",
+      "Georeference Map": "भू-सन्दर्भ नक्सा",
+      "Savings Portfolio": "बचत पोर्टफोलियो",
+      "Loan Portfolio Distribution": "ऋण पोर्टफोलियो वितरण",
+      "Average Loan Size": "औसत ऋण आकार",
+      "New Client Onboarding Trends": "नयाँ ग्राहक अनबोर्डिङ प्रवृत्तिहरू",
+      "New Clients": "नयाँ ग्राहकहरू",
+      "New Clients Onboarded": "नयाँ ग्राहकहरू अनबोर्ड गरियो",
+      "Portfolio Growth": "पोर्टफोलियो वृद्धि",
+      "Portfolio Growth by Client Group": "ग्राहक समूह द्वारा पोर्टफोलियो वृद्धि",
+      "Portfolio Gromard": "पोर्टफोलियो Gromard",
+      "Portfolio Snapshot": "पोर्टफोलियो स्न्यापसट",
+      "Portfolio at Risk": "जोखिममा पोर्टफोलियो",
+      "Real-time Financial Inclusion & Portfolio Analytics Insights": "वास्तविक समय वित्तीय समावेश र पोर्टफोलियो विश्लेषण अन्तर्दृष्टि",
+      "Rural Clients": "ग्रामीण ग्राहकहरू",
+      "Product Type": "उत्पादन प्रकार",
+      "Loan Portfolio": "ऋण पोर्टफोलियो",
+      "Others": "अन्य",
+      "Agricultural / Sectors": "कृषि / क्षेत्रहरू",
+      "Sector": "क्षेत्र"
     },
     "permissions": {
       "actions": {

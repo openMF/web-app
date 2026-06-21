@@ -1,4 +1,4 @@
-﻿{
+{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "Přihlášen jako",
   "Remember me": "Zapamatuj si mě",
@@ -770,7 +770,10 @@
       "Week": "Týden",
       "Withdraw": "Ustoupit",
       "Yes": "Ano",
-      "undo_account_transfer": "Vrátit převod účtu"
+      "undo_account_transfer": "Vrátit převod účtu",
+      "Year": "Rok",
+      "Export Options": "Možnosti exportu",
+      "Export PDF": "Exportovat jako PDF"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -3280,7 +3283,8 @@
       "Tasks": "Úkoly",
       "Remittances": "Remitence",
       "Process Remittance": "Zpracovat remitenci",
-      "Undo Write-off": "Zrušit odpis"
+      "Undo Write-off": "Zrušit odpis",
+      "Global Financial Dashboard": "Globální finanční panel"
     },
     "placeholders": {
       "Add new server": "Přidat nový server",
@@ -3372,7 +3376,7 @@
       "Adhoc Query": "Adhoc dotaz",
       "Advance Search": "pokročilé vyhledávání",
       "Advanced search option for journal entries": "Možnost pokročilého vyhledávání záznamů v deníku",
-      "All": "Všechno",
+      "All": "Vše",
       "All Fixed Deposits": "Všechny pevné vklady",
       "All Recurring Deposits": "Všechny opakované vklady",
       "All Savings": "Všechny úspory",
@@ -4096,7 +4100,32 @@
       "username": "uživatelské jméno",
       "withhold tax for this account": "srazit daň pro tento účet",
       "withoutCategory": "Bez kategorie",
-      "Maker-Checker principle requires every tasks": "Princip Maker-Checker vyžaduje, aby každý úkol prováděli dva lidé, aby se snížila pravděpodobnost chyb a zneužití. Jedna osoba proces iniciuje a druhá jej dokončí."
+      "Maker-Checker principle requires every tasks": "Princip Maker-Checker vyžaduje, aby každý úkol prováděli dva lidé, aby se snížila pravděpodobnost chyb a zneužití. Jedna osoba proces iniciuje a druhá jej dokončí.",
+      "Active Borrowers": "Aktivní vypůjčovatelé",
+      "Active Client": "Aktivní klient",
+      "Active Clients": "Aktivní klienti",
+      "Active Loans": "Aktivní půjčky",
+      "Active Savers": "Aktivní střadatelé",
+      "Amount Collected": "Vybraná částka",
+      "Georeference Map": "Georeferenční mapa",
+      "Savings Portfolio": "Spořicí portfolio",
+      "Loan Portfolio Distribution": "Rozložení úvěrového portfolia",
+      "Average Loan Size": "Průměrná výše půjčky",
+      "New Client Onboarding Trends": "Trendy v přijímání nových klientů",
+      "New Clients": "Noví klienti",
+      "New Clients Onboarded": "Přijatí noví klienti",
+      "Portfolio Growth": "Růst portfolia",
+      "Portfolio Growth by Client Group": "Růst portfolia podle skupin klientů",
+      "Portfolio Gromard": "Portfolio Gromard",
+      "Portfolio Snapshot": "Snímek portfolia",
+      "Portfolio at Risk": "Portfolio v ohrožení",
+      "Real-time Financial Inclusion & Portfolio Analytics Insights": "Poznatky z analytiky portfolia a finančního začleňování v reálném čase",
+      "Rural Clients": "Venkovští klienti",
+      "Product Type": "Typ produktu",
+      "Loan Portfolio": "Úvěrové portfolio",
+      "Others": "Ostatní",
+      "Agricultural / Sectors": "Zemědělství / Sektory",
+      "Sector": "Sektor"
     },
     "permissions": {
       "actions": {
