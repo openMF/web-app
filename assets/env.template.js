@@ -113,6 +113,11 @@
   window['env']['mifosRemittanceApiClientHeader'] = '$MIFOS_REMITTANCE_API_CLIENT_HEADER';
   window['env']['mifosRemittanceApiClientKey'] = '$MIFOS_REMITTANCE_API_CLIENT_KEY';
 
+  // Mifos Copilot AI assistant
+  // Set MIFOS_ENABLE_COPILOT=true to load the Copilot panel for this deployment (off by default)
+  window['env']['enableCopilot'] = '$MIFOS_ENABLE_COPILOT';
+  window['env']['copilotMcpBaseUrl'] = '$MIFOS_COPILOT_MCP_BASE_URL';
+
   // Enable Role-Based Access Control (RBAC) for menu/button permissions
   // Set to 'true' to enable RBAC, 'false' (default) for backward compatibility
   window['env']['productionModeEnableRBAC'] = '$MIFOS_PRODUCTION_MODE_ENABLE_RBAC';
