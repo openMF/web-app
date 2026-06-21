@@ -25,17 +25,13 @@ jobs:
       - name: Build for production
         run: npm run build
 
-      - name: Deploy to Plesk via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Deploy to Plesk via SFTP
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
           server: ${{ secrets.PLESK_HOST }}
           username: ${{ secrets.PLESK_USER }}
           password: ${{ secrets.PLESK_PASSWORD }}
-          protocol: ftps
-          port: 21
-          local-dir: ./dist/web-app/browser/
-          server-dir: /httpdocs/
-          exclude: |
-            **/assets/env.js
-            **/.git*
-            **/node_modules/**
+          port: 22
+          local_path: ./dist/web-app/browser/*
+          remote_path: /httpdocs/
+          sftp_only: true
