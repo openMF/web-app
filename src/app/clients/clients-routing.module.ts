@@ -68,7 +68,7 @@ const routes: Routes = [
         },
         {
           path: 'create',
-          data: { title: 'Create Client', breadcrumb: 'Create Client', routeParamBreadcrumb: false },
+          data: { title: 'Create Member', breadcrumb: 'Create Member', routeParamBreadcrumb: false },
           component: CreateClientComponent,
           resolve: {
             clientAddressFieldConfig: ClientAddressFieldConfigurationResolver,
@@ -78,7 +78,7 @@ const routes: Routes = [
         {
           path: ':clientId',
           component: ClientsViewComponent,
-          data: { title: 'Clients View', routeParamBreadcrumb: 'clientId' },
+          data: { title: 'Members View', routeParamBreadcrumb: 'clientId' },
           resolve: {
             clientViewData: ClientViewResolver,
             clientTemplateData: ClientTemplateResolver,

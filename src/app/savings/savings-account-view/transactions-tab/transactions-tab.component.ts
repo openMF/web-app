@@ -290,7 +290,7 @@ export class TransactionsTabComponent implements OnInit {
     const clientId = this.route.parent.parent.snapshot.params['clientId'];
     const url: string = this.router.url;
     this.router
-      .navigateByUrl(`/clients/${clientId}/savings-accounts`, { skipLocationChange: true })
+      .navigateByUrl(`/members/${clientId}/savings-accounts`, { skipLocationChange: true })
       .then(() => this.router.navigate([url]));
   }
 }

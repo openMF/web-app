@@ -374,7 +374,7 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
   }
 
   loanTransactionRelatedLink(transactionId: number) {
-    return `/#/clients/${this.clientId}/loans-accounts/${this.loanId}/transactions/${transactionId}`;
+    return `/#/members/${this.clientId}/loans-accounts/${this.loanId}/transactions/${transactionId}`;
   }
 
   loanTransactionColor(): string {

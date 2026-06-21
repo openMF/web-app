@@ -57,11 +57,11 @@ export class ViewAccountTransferComponent {
   }
 
   transferToClient(toClient: any): string {
-    return `/#/clients/${toClient.id}`;
+    return `/#/members/${toClient.id}`;
   }
 
   transferToAccount(toClient: any, toAccount: any): string {
-    return `/#/clients/${toClient.id}/savings-accounts/${toAccount.id}`;
+    return `/#/members/${toClient.id}/savings-accounts/${toAccount.id}`;
   }
 
   goBack(): void {

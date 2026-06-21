@@ -29,56 +29,15 @@
   </div>
 } @else {
   <!-- Default mode for Shell -->
-  @if (displayBackEndInfo) {
-    <div class="layout-column m-b-20 f12" ngClass="{{ styleClass }}" id="footer">
-      <div class="layout-column m-t-10 m-b-10 content-wrapper footer-center">
-        <table class="versions">
-          <tr>
-            <td class="footer-content">{{ 'APP_NAME' | translate }}</td>
-            <td class="right footer-content">
-              {{ versions.mifos }} - <b>{{ hash }}</b>
-            </td>
-          </tr>
-          <tr>
-            <td class="footer-content">{{ 'labels.text.Fineract' | translate }}</td>
-            <td class="right footer-content">
-              {{ versions.fineract.version }} - <b>{{ versions.fineract.hash }}</b>
-            </td>
-          </tr>
-          <tr>
-            <td class="footer-content">{{ 'labels.inputs.Server' | translate }}</td>
-            <td class="right footer-content">
-              {{ server }}
-            </td>
-          </tr>
-          <tr>
-            <td class="footer-content">{{ 'labels.version.Username' | translate }}</td>
-            <td class="right footer-content">
-              {{ username }}
-            </td>
-          </tr>
-          <tr>
-            <td class="footer-content">{{ 'labels.version.Name' | translate }}</td>
-            <td class="right footer-content">
-              {{ name }}
-            </td>
-          </tr>
-          <tr>
-            <td class="footer-content">{{ 'labels.version.Render Time' | translate }}</td>
-            <td class="right footer-content">
-              {{ renderTime | date: 'dd MMMM yyyy HH:mm:ss' }}
-            </td>
-          </tr>
-          @if (isBusinessDateDefined) {
-            <tr>
-              <td class="footer-content">{{ 'labels.text.Current Business Date' | translate }}:</td>
-              <td class="right footer-content business-date">
-                <b>{{ businessDate | date: 'EEEE, MMMM dd, y' }}</b>
-              </td>
-            </tr>
-          }
-        </table>
-      </div>
-    </div>
-  }
+  <div class="footer-shell" ngClass="{{ styleClass }}">
+    <span class="footer-copyright">
+      &copy; {{ currentYear }} {{ 'APP_NAME' | translate }}. All rights reserved. Developed by
+      <a href="https://dibugsoft.com/" target="_blank" rel="noopener noreferrer">Debugsoft</a>
+    </span>
+    @if (isBusinessDateDefined) {
+      <span class="footer-business-date">
+        {{ 'labels.text.Current Business Date' | translate }}: <b>{{ businessDate | date: 'EEEE, MMMM dd, y' }}</b>
+      </span>
+    }
+  </div>
 }

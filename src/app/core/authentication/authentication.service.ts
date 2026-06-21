@@ -66,7 +66,6 @@ export class AuthenticationService {
    */
   private storage: Storage = sessionStorage;
   private credentials: Credentials;
-  private dialogShown = false;
   private authMode: AuthMode = AuthMode.Basic;
 
   /** Promise that resolves once the OIDC discovery document has been loaded. */
@@ -372,7 +371,6 @@ export class AuthenticationService {
 
     this.authenticationInterceptor.removeAuthorization();
     this.setCredentials();
-    this.resetDialog();
     this.userLoggedIn$.next(false);
 
     if (this.authMode === AuthMode.OIDC) {
@@ -479,18 +477,6 @@ export class AuthenticationService {
    */
   getDeliveryMethods() {
     return this.http.get('/twofactor');
-  }
-
-  showDialog() {
-    this.dialogShown = true;
-  }
-
-  resetDialog() {
-    this.dialogShown = false;
-  }
-
-  hasDialogBeenShown() {
-    return this.dialogShown;
   }
 
   /**

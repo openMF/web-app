@@ -243,7 +243,7 @@ export class TransactionsTabComponent implements OnInit {
   reload() {
     const url: string = this.router.url;
     this.router
-      .navigateByUrl(`/clients/${this.clientId}/fixed-deposits-accounts`, { skipLocationChange: true })
+      .navigateByUrl(`/members/${this.clientId}/fixed-deposits-accounts`, { skipLocationChange: true })
       .then(() => this.router.navigate([url]));
   }
 

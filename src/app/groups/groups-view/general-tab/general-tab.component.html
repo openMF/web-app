@@ -63,7 +63,7 @@
         <tr
           mat-row
           *matRowDef="let row; columns: clientMemberColumns"
-          [routerLink]="['/clients', row.id, 'general']"
+          [routerLink]="['/members', row.id, 'general']"
           class="select-row"
         ></tr>
       </table>
