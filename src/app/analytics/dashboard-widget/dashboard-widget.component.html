@@ -6,14 +6,14 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<mat-card class="widget-card">
+<mat-card class="widget-card" [class.metric-card]="widget.type === 'metric'">
   <div class="widget-header">
     <div class="widget-title">
-      <fa-icon [icon]="widget.icon"></fa-icon>
+      <fa-icon [icon]="widget.icon" class="title-icon"></fa-icon>
       <span>{{ widget.titleKey | translate }}</span>
     </div>
 
-    @if (state?.contextKey) {
+    @if (state?.contextKey && widget.type !== 'metric') {
       <span class="widget-context">
         {{ state.contextKey | translate }}
       </span>
@@ -29,9 +29,34 @@
       </div>
     } @else if (widget.type === 'metric') {
       <div class="metric-body">
-        <div class="metric-value">
-          {{ state.metricValue | number: '1.0-0' }}
+        <div class="metric-value-row">
+          <div class="metric-value">
+            {{ formatMetricValue(widget.id, state.metricValue) }}
+          </div>
+          @if (trendDirection && state.trendPercent !== undefined) {
+            <div class="metric-trend" [class]="trendDirection">
+              <fa-icon
+                [icon]="trendDirection === 'up' ? 'arrow-up' : trendDirection === 'down' ? 'arrow-down' : 'minus'"
+              ></fa-icon>
+              <span
+                >{{ trendDirection === 'up' ? '+' : trendDirection === 'down' ? '-' : ''
+                }}{{ state.trendPercent | number: '1.2-2' }}%</span
+              >
+            </div>
+          }
         </div>
+      </div>
+    } @else if (widget.adapter === 'georeference-map') {
+      <div class="map-container">
+        @if (hasValidCoordinates) {
+          <div #leafletMap class="leaflet-map-element"></div>
+        } @else {
+          <div class="map-empty-state">
+            <fa-icon icon="globe" class="empty-icon"></fa-icon>
+            <span class="empty-title">{{ 'labels.text.No Map Data' | translate }}</span>
+            <span class="empty-subtitle">{{ 'labels.text.No offices with valid coordinates found.' | translate }}</span>
+          </div>
+        }
       </div>
     } @else {
       @if (state?.details?.length) {

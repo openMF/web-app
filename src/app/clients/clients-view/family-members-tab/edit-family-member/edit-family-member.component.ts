@@ -118,8 +118,7 @@ export class EditFamilyMemberComponent implements OnInit {
       ],
       qualification: [familyMember.qualification],
       age: [
-        { value: familyMember.age, disabled: true }
-      ],
+        { value: familyMember.age, disabled: true }],
       isDependent: [familyMember.isDependent],
       relationshipId: [
         familyMember.relationshipId,

@@ -1,4 +1,4 @@
-﻿{
+{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "다음 계정으로 로그인됨",
   "Remember me": "날 기억해",
@@ -769,7 +769,10 @@
       "Week": "주",
       "Withdraw": "철회하다",
       "Yes": "예",
-      "undo_account_transfer": "계좌 이체 취소"
+      "undo_account_transfer": "계좌 이체 취소",
+      "Year": "연도",
+      "Export Options": "내보내기 옵션",
+      "Export PDF": "PDF로 내보내기"
     },
     "catalogs": {
       "% Amount": "양",
@@ -3279,7 +3282,8 @@
       "Tasks": "작업",
       "Remittances": "송금",
       "Process Remittance": "송금 처리",
-      "Undo Write-off": "상각 취소"
+      "Undo Write-off": "상각 취소",
+      "Global Financial Dashboard": "글로벌 재무 대시보드"
     },
     "placeholders": {
       "Add new server": "새 서버 추가",
@@ -3371,7 +3375,7 @@
       "Adhoc Query": "임시 쿼리",
       "Advance Search": "고급 검색",
       "Advanced search option for journal entries": "분개 항목에 대한 고급 검색 옵션",
-      "All": "모두",
+      "All": "전체",
       "All Fixed Deposits": "정기예금 전체",
       "All Recurring Deposits": "모든 정기 예금",
       "All Savings": "모든 저축",
@@ -4095,7 +4099,32 @@
       "username": "사용자 이름",
       "withhold tax for this account": "이 계정에 대한 원천징수세",
       "withoutCategory": "카테고리 없음",
-      "Maker-Checker principle requires every tasks": "원칙은 오류와 오용 가능성을 줄이기 위해 모든 작업을 두 사람이 완료하도록 요구합니다. 한 사람이 프로세스를 시작하고 두 번째 사람이 프로세스를 완료합니다."
+      "Maker-Checker principle requires every tasks": "원칙은 오류와 오용 가능성을 줄이기 위해 모든 작업을 두 사람이 완료하도록 요구합니다. 한 사람이 프로세스를 시작하고 두 번째 사람이 프로세스를 완료합니다.",
+      "Active Borrowers": "활성 대출자",
+      "Active Client": "활성 고객",
+      "Active Clients": "활성 고객",
+      "Active Loans": "활성 대출",
+      "Active Savers": "활성 저축자",
+      "Amount Collected": "수집된 금액",
+      "Georeference Map": "지리 참조 지도",
+      "Savings Portfolio": "저축 포트폴리오",
+      "Loan Portfolio Distribution": "대출 포트폴리오 분포",
+      "Average Loan Size": "평균 대출 규모",
+      "New Client Onboarding Trends": "신규 고객 온보딩 동향",
+      "New Clients": "신규 고객",
+      "New Clients Onboarded": "온보딩된 신규 고객",
+      "Portfolio Growth": "포트폴리오 성장",
+      "Portfolio Growth by Client Group": "고객 그룹별 포트폴리오 성장",
+      "Portfolio Gromard": "포트폴리오 Gromard",
+      "Portfolio Snapshot": "포트폴리오 스냅샷",
+      "Portfolio at Risk": "위험 포트폴리오",
+      "Real-time Financial Inclusion & Portfolio Analytics Insights": "실시간 금융 포용 및 포트폴리오 분석 인사이트",
+      "Rural Clients": "농촌 고객",
+      "Product Type": "상품 유형",
+      "Loan Portfolio": "대출 포트폴리오",
+      "Others": "기타",
+      "Agricultural / Sectors": "농업 / 부문",
+      "Sector": "부문"
     },
     "permissions": {
       "actions": {

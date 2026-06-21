@@ -19,6 +19,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 /** Custom Resolvers */
 import { OfficesResolver } from '../accounting/common-resolvers/offices.resolver';
+import { LoanProductsResolver } from '../accounting/common-resolvers/loan-products.resolver';
 
 /** Home and Dashboard Routes */
 const routes: Routes = [
@@ -36,9 +37,10 @@ const routes: Routes = [
     {
       path: 'dashboard',
       component: DashboardComponent,
-      data: { title: 'Dashboard', breadcrumb: 'Dashboard' },
+      data: { title: 'Global Financial Dashboard', breadcrumb: 'Global Financial Dashboard' },
       resolve: {
-        offices: OfficesResolver
+        offices: OfficesResolver,
+        products: LoanProductsResolver
       }
     }
   ])
@@ -52,6 +54,9 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [OfficesResolver]
+  providers: [
+    OfficesResolver,
+    LoanProductsResolver
+  ]
 })
 export class HomeRoutingModule {}

@@ -1,4 +1,4 @@
-﻿{
+{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "Imeingia kama",
   "Remember me": "Nikumbuke",
@@ -769,7 +769,10 @@
       "Week": "Wiki",
       "Withdraw": "Kutoa",
       "Yes": "Ndiyo",
-      "undo_account_transfer": "Futa uhamisho wa akaunti"
+      "undo_account_transfer": "Futa uhamisho wa akaunti",
+      "Year": "Mwaka",
+      "Export Options": "Chaguzi za Kusafirisha",
+      "Export PDF": "Safirisha kama PDF"
     },
     "catalogs": {
       "% Amount": "Kiasi",
@@ -3276,7 +3279,8 @@
       "Tasks": "Kazi",
       "Remittances": "Uhawilishaji",
       "Process Remittance": "Chakata uhawilishaji",
-      "Undo Write-off": "Futa Kuandika-mbali"
+      "Undo Write-off": "Futa Kuandika-mbali",
+      "Global Financial Dashboard": "Dashibodi ya Kifedha ya Kimataifa"
     },
     "placeholders": {
       "Add new server": "Ongeza seva mpya",
@@ -3368,7 +3372,7 @@
       "Adhoc Query": "Swali la Adhoc",
       "Advance Search": "Utafutaji wa Juu",
       "Advanced search option for journal entries": "Chaguo la utafutaji wa kina kwa maingizo ya jarida",
-      "All": "Wote",
+      "All": "Yote",
       "All Fixed Deposits": "Amana Zote Zisizohamishika",
       "All Recurring Deposits": "Amana Zote Zinazorudiwa",
       "All Savings": "Akiba Yote",
@@ -4092,7 +4096,32 @@
       "username": "jina la mtumiaji",
       "withhold tax for this account": "zuio la ushuru kwa akaunti hii",
       "withoutCategory": "Bila Kitengo",
-      "Maker-Checker principle requires every tasks": "Kanuni ya Mtengenezaji-Kikagua inahitaji kila kazi kukamilishwa na watu wawili ili kupunguza uwezekano wa makosa na matumizi mabaya. Mtu mmoja anaanzisha mchakato na wa pili anakamilisha."
+      "Maker-Checker principle requires every tasks": "Kanuni ya Mtengenezaji-Kikagua inahitaji kila kazi kukamilishwa na watu wawili ili kupunguza uwezekano wa makosa na matumizi mabaya. Mtu mmoja anaanzisha mchakato na wa pili anakamilisha.",
+      "Active Borrowers": "Wakopaji Wanaofanya Kazi",
+      "Active Client": "Mteja Anayefanya Kazi",
+      "Active Clients": "Wateja Wanaofanya Kazi",
+      "Active Loans": "Mikopo Inayoendelea",
+      "Active Savers": "Waweka Akiba Wanaofanya Kazi",
+      "Amount Collected": "Kiasi Kilichokusanywa",
+      "Georeference Map": "Ramani ya Kijiografia",
+      "Savings Portfolio": "Jalada la Akiba",
+      "Loan Portfolio Distribution": "Usambazaji wa Jalada la Mikopo",
+      "Average Loan Size": "Wastani wa Ukubwa wa Mkopo",
+      "New Client Onboarding Trends": "Mienendo ya Uandikishaji Wateja Wapya",
+      "New Clients": "Wateja Wapya",
+      "New Clients Onboarded": "Wateja Wapya Walioandikishwa",
+      "Portfolio Growth": "Ukuaji wa Jalada",
+      "Portfolio Growth by Client Group": "Ukuaji wa Jalada kwa Kundi la Wateja",
+      "Portfolio Gromard": "Jalada la Gromard",
+      "Portfolio Snapshot": "Muhtasari wa Jalada",
+      "Portfolio at Risk": "Jalada Lililo Hatarini",
+      "Real-time Financial Inclusion & Portfolio Analytics Insights": "Ushirikishwaji wa Kifedha wa Wakati Halisi na Uchanganuzi wa Jalada",
+      "Rural Clients": "Wateja wa Vijijini",
+      "Product Type": "Aina ya Bidhaa",
+      "Loan Portfolio": "Jalada la Mikopo",
+      "Others": "Mengine",
+      "Agricultural / Sectors": "Kilimo / Sekta",
+      "Sector": "Sekta"
     },
     "permissions": {
       "actions": {

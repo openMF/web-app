@@ -8,15 +8,28 @@
 
 /* eslint-disable @angular-eslint/prefer-inject */
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges
+} from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { Subscription, forkJoin } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-toggle';
+import { Subscription, forkJoin, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+
+import { TranslateService } from '@ngx-translate/core';
 /** Custom Services */
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { AnalyticsDataSourceService } from '../services/analytics-data-source.service';
 import { AnalyticsVisibilityService } from '../services/analytics-visibility.service';
+import { DashboardExportService } from '../services/dashboard-export.service';
 /** Custom Models */
 import {
   AnalyticsDashboardDefinition,
@@ -35,8 +48,8 @@ import { DashboardWidgetComponent } from '../dashboard-widget/dashboard-widget.c
   styleUrls: ['./dashboard-engine.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    MatButtonToggleGroup,
-    MatButtonToggle,
+    MatMenuModule,
+    MatIconModule,
     DashboardWidgetComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -44,6 +57,8 @@ import { DashboardWidgetComponent } from '../dashboard-widget/dashboard-widget.c
 export class DashboardEngineComponent implements OnInit, OnChanges, OnDestroy {
   @Input({ required: true }) dashboard!: AnalyticsDashboardDefinition;
   @Input() offices: any[] = [];
+  @Input() products: any[] = [];
+  @Input() clientGroups: any[] = [];
 
   filtersForm!: UntypedFormGroup;
   visibleWidgets: AnalyticsWidgetDefinition[] = [];
@@ -56,8 +71,12 @@ export class DashboardEngineComponent implements OnInit, OnChanges, OnDestroy {
     private formBuilder: UntypedFormBuilder,
     private authenticationService: AuthenticationService,
     private analyticsDataSourceService: AnalyticsDataSourceService,
-    private analyticsVisibilityService: AnalyticsVisibilityService
+    private analyticsVisibilityService: AnalyticsVisibilityService,
+    private dashboardExportService: DashboardExportService,
+    private translateService: TranslateService,
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
+
   get metricWidgets(): AnalyticsWidgetDefinition[] {
     return this.visibleWidgets.filter((widget) => widget.type === 'metric');
   }
@@ -71,11 +90,15 @@ export class DashboardEngineComponent implements OnInit, OnChanges, OnDestroy {
 
     this.filtersForm = this.formBuilder.group({
       officeId: [this.resolveDefaultOfficeId()],
-      timescale: ['Month']
+      timescale: ['Month'],
+      productId: [''],
+      clientGroupId: ['']
     });
 
     this.filtersSubscription = this.filtersForm.valueChanges.subscribe(() => {
       this.reloadDashboard();
+      // Immediately mark for check so Branch dropdown and pin active state update before async reload
+      this.changeDetectorRef.markForCheck();
     });
 
     this.reloadDashboard();
@@ -102,6 +125,7 @@ export class DashboardEngineComponent implements OnInit, OnChanges, OnDestroy {
       this.reloadDashboard();
     }
   }
+
   ngOnDestroy(): void {
     if (this.filtersSubscription) {
       this.filtersSubscription.unsubscribe();
@@ -110,6 +134,24 @@ export class DashboardEngineComponent implements OnInit, OnChanges, OnDestroy {
     if (this.loadSubscription) {
       this.loadSubscription.unsubscribe();
     }
+  }
+
+  exportAsCSV(): void {
+    const widgetsData = this.visibleWidgets.map((widget) => ({
+      id: widget.id,
+      title: this.translateService.instant(widget.titleKey),
+      state: this.widgetStateMap[widget.id]
+    }));
+    this.dashboardExportService.exportAsCSV(widgetsData, 'mifos-dashboard');
+  }
+
+  exportAsPDF(): void {
+    const widgetsData = this.visibleWidgets.map((widget) => ({
+      id: widget.id,
+      title: this.translateService.instant(widget.titleKey),
+      state: this.widgetStateMap[widget.id]
+    }));
+    this.dashboardExportService.exportAsPDF(widgetsData, 'mifos-dashboard');
   }
 
   reloadDashboard(forceRefresh: boolean = false): void {
@@ -126,6 +168,7 @@ export class DashboardEngineComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     const filters = this.filtersForm.getRawValue() as AnalyticsFilters;
+
     this.widgetStateMap = this.visibleWidgets.reduce(
       (accumulator, widget) => ({
         ...accumulator,
@@ -143,7 +186,17 @@ export class DashboardEngineComponent implements OnInit, OnChanges, OnDestroy {
           map((state) => ({
             widgetId: widget.id,
             state
-          }))
+          })),
+          catchError((error) => {
+            console.error(`Dashboard widget failed to load - Adapter: ${widget.adapter}, ID: ${widget.id}`, error);
+            return of({
+              widgetId: widget.id,
+              state: {
+                loading: false,
+                empty: true
+              }
+            });
+          })
         )
       )
     ).subscribe({
@@ -155,8 +208,10 @@ export class DashboardEngineComponent implements OnInit, OnChanges, OnDestroy {
           }),
           {}
         );
+        this.changeDetectorRef.detectChanges();
       },
-      error: () => {
+      error: (error) => {
+        console.error('Dashboard forkJoin error:', error);
         this.widgetStateMap = this.visibleWidgets.reduce(
           (accumulator, widget) => ({
             ...accumulator,
@@ -167,8 +222,16 @@ export class DashboardEngineComponent implements OnInit, OnChanges, OnDestroy {
           }),
           {}
         );
+        this.changeDetectorRef.detectChanges();
       }
     });
+  }
+
+  onOfficeSelected(officeId: number): void {
+    // Patch the form — this triggers valueChanges → reloadDashboard() + markForCheck()
+    this.filtersForm.patchValue({ officeId });
+    // Force immediate view update so pin turns orange and dropdown reflects new value
+    this.changeDetectorRef.detectChanges();
   }
 
   private resolveDefaultOfficeId(): number | null {
@@ -181,6 +244,7 @@ export class DashboardEngineComponent implements OnInit, OnChanges, OnDestroy {
 
     return this.offices[0]?.id ?? null;
   }
+
   private updateVisibleWidgets(): void {
     this.visibleWidgets = (this.dashboard?.widgets || []).filter((widget) =>
       this.analyticsVisibilityService.canView(widget.visibleTo)
