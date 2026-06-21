@@ -194,7 +194,8 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
           ? this.loanProductsTemplate.delinquencyStartType.id
           : null,
         breachId: this.loanProductsTemplate.breach?.id ?? null,
-        nearBreachId: this.loanProductsTemplate.nearBreach?.id ?? null
+        nearBreachId: this.loanProductsTemplate.nearBreach?.id ?? null,
+        breachGraceDays: this.loanProductsTemplate.breachGraceDays ?? null
       });
     }
 
@@ -466,7 +467,8 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
         ],
         delinquencyStartType: [''],
         breachId: [''],
-        nearBreachId: ['']
+        nearBreachId: [''],
+        breachGraceDays: ['']
       });
     }
   }
@@ -931,7 +933,8 @@ export class LoanProductSettingsStepComponent extends LoanProductBaseComponent i
     } else if (propertyName === 'breachId') {
       this.loanProductSettingsForm.patchValue({
         breachId: '',
-        nearBreachId: ''
+        nearBreachId: '',
+        breachGraceDays: null
       });
     } else if (propertyName === 'nearBreachId') {
       this.loanProductSettingsForm.patchValue({

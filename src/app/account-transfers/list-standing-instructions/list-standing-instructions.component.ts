@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import {
@@ -24,7 +25,7 @@ import {
   MatRow
 } from '@angular/material/table';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { AccountTransfersService } from '../account-transfers.service';
@@ -66,19 +67,20 @@ export class ListStandingInstructionsComponent {
   private accountTransfersService = inject(AccountTransfersService);
   private settingsService = inject(SettingsService);
   private dialog = inject(MatDialog);
+  private destroyRef = inject(DestroyRef);
 
   /** Recurring Deposits Data */
   standingIntructionsTemplateData: any;
   /** Instructions Data */
   instructionsData: any[];
   /** Name form control. */
-  transferType = new UntypedFormControl();
+  transferType = new FormControl();
   /** ExternalId form control. */
-  fromAccountId = new UntypedFormControl();
+  fromAccountId = new FormControl();
   /** Name form control. */
-  clientNameControl = new UntypedFormControl();
+  clientNameControl = new FormControl();
   /** ExternalId form control. */
-  fromClientId = new UntypedFormControl();
+  fromClientId = new FormControl();
   /** Client Name */
   clientName: any;
   /** Transfer Type Options Data */
@@ -117,15 +119,17 @@ export class ListStandingInstructionsComponent {
    * @param {AccountTransfersService} accountTransfersService Account Transfers Service
    */
   constructor() {
-    this.route.data.subscribe((data: { standingIntructionsTemplate: any }) => {
-      this.standingIntructionsTemplateData = data.standingIntructionsTemplate;
-      if (data.standingIntructionsTemplate.fromClient) {
-        this.clientName = this.standingIntructionsTemplateData.fromClient.displayName;
-        this.getStandingInstructions();
-      }
-      this.setParams();
-      this.transferTypeDatas = this.standingIntructionsTemplateData.transferTypeOptions;
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { standingIntructionsTemplate: any }) => {
+        this.standingIntructionsTemplateData = data.standingIntructionsTemplate;
+        if (data.standingIntructionsTemplate.fromClient) {
+          this.clientName = this.standingIntructionsTemplateData.fromClient.displayName;
+          this.getStandingInstructions();
+        }
+        this.setParams();
+        this.transferTypeDatas = this.standingIntructionsTemplateData.transferTypeOptions;
+      });
   }
 
   setParams() {

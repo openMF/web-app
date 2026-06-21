@@ -7,7 +7,9 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { take } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Components */
@@ -47,6 +49,7 @@ export class CreateCampaignComponent {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private organizationService = inject(OrganizationService);
+  private destroyRef = inject(DestroyRef);
   private settingsService = inject(SettingsService);
   private dateUtils = inject(Dates);
 
@@ -60,16 +63,8 @@ export class CreateCampaignComponent {
   /** Campaign Message Step */
   @ViewChild(CampaignMessageStepComponent, { static: true }) campaignMessageStep: CampaignMessageStepComponent;
 
-  /**
-   * Fetches campaign template from `resolve`
-   * @param {ActivatedRoute} route Activated Route
-   * @param {Router} router Router
-   * @param {OrganizationService} organizationService Organization Service
-   * @param {SettingsService} settingsService Settings Service
-   * @param {Dates} dateUtils Date Utils
-   */
   constructor() {
-    this.route.data.subscribe((data: { smsCampaignTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { smsCampaignTemplate: any }) => {
       this.smsCampaignTemplate = data.smsCampaignTemplate;
     });
   }
@@ -119,14 +114,17 @@ export class CreateCampaignComponent {
       const prevRecurrenceDate: Date = smsCampaign.recurrenceStartDate;
       smsCampaign.recurrenceStartDate = this.dateUtils.formatDate(prevRecurrenceDate, dateTimeFormat);
     }
-    this.organizationService.createSmsCampaign(smsCampaign).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          '../',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.organizationService
+      .createSmsCampaign(smsCampaign)
+      .pipe(take(1))
+      .subscribe((response: any) => {
+        this.router.navigate(
+          [
+            '../',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      });
   }
 }

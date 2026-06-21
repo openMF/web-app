@@ -7,8 +7,9 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -33,15 +34,16 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AcceptClientTransferComponent implements OnInit {
-  private readonly formBuilder = inject(UntypedFormBuilder);
+  private readonly formBuilder = inject(FormBuilder);
   private readonly clientsService = inject(ClientsService);
   private readonly settingsService = inject(SettingsService);
   private readonly dateUtils = inject(Dates);
   private readonly route = inject(ActivatedRoute);
   private readonly notifier = inject(ClientActionNotifierService);
+  private destroyRef = inject(DestroyRef);
 
   /** Accept Client Transfer form. */
-  acceptClientTransferForm: UntypedFormGroup;
+  acceptClientTransferForm: FormGroup;
   /** Client Id */
   clientId: any;
   /** Transfer Date */
@@ -51,7 +53,7 @@ export class AcceptClientTransferComponent implements OnInit {
    * constructor
    */
   constructor() {
-    this.route.data.subscribe((data: { clientActionData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientActionData: any }) => {
       this.transferDate = data.clientActionData;
     });
     this.clientId = this.route.parent.snapshot.params['clientId'];

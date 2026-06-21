@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -15,7 +16,7 @@ import {
   MatDialogActions,
   MatDialogClose
 } from '@angular/material/dialog';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
@@ -41,16 +42,17 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class ClientFamilyMemberDialogComponent implements OnInit {
   dialogRef = inject<MatDialogRef<ClientFamilyMemberDialogComponent>>(MatDialogRef);
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private dateUtils = inject(Dates);
   data = inject(MAT_DIALOG_DATA);
   private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Maximum Due Date allowed. */
   maxDate = new Date();
 
   /** Add/Edit family member form. */
-  familyMemberForm: UntypedFormGroup;
+  familyMemberForm: FormGroup;
 
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;
@@ -72,14 +74,17 @@ export class ClientFamilyMemberDialogComponent implements OnInit {
     }
 
     // Add subscription to date of birth changes to update age
-    this.familyMemberForm.get('dateOfBirth').valueChanges.subscribe((dateOfBirth: any) => {
-      if (dateOfBirth) {
-        const age = this.calculateAge(dateOfBirth);
-        this.familyMemberForm.get('age').setValue(age);
-      } else {
-        this.familyMemberForm.get('age').setValue('');
-      }
-    });
+    this.familyMemberForm
+      .get('dateOfBirth')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((dateOfBirth: any) => {
+        if (dateOfBirth) {
+          const age = this.calculateAge(dateOfBirth);
+          this.familyMemberForm.get('age').setValue(age);
+        } else {
+          this.familyMemberForm.get('age').setValue('');
+        }
+      });
 
     // If a date of birth is already set, calculate the age
     const currentDob = this.familyMemberForm.get('dateOfBirth').value;
@@ -123,7 +128,8 @@ export class ClientFamilyMemberDialogComponent implements OnInit {
       ],
       qualification: [''],
       age: [
-        { value: '', disabled: true }],
+        { value: '', disabled: true }
+      ],
       isDependent: [''],
       relationshipId: [
         '',

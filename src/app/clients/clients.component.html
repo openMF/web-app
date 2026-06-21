@@ -6,119 +6,201 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<mat-card class="container">
-  <div class="layout-column layout-gt-sm-row align-gt-sm-start-center">
-    <div class="search-box m-r-30">
-      <mat-form-field class="search-box">
-        <input
-          matInput
-          placeholder="{{ 'labels.text.SearchByClient' | translate }}"
-          class="search-box"
-          #searchInput
-          (input)="onSearchInput(searchInput.value)"
-          (keydown.enter)="search(searchInput.value)"
-          (compositionstart)="onCompositionStart()"
-          (compositionend)="onCompositionEnd(searchInput.value)"
-        />
+<div class="clients-container">
+  <!-- ── Toolbar (single line) ──────────────────────────────── -->
+  <div class="toolbar">
+    <div class="search m-r-60">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.3-4.3"></path>
+      </svg>
+      <input
+        type="text"
+        #searchInput
+        placeholder="{{ 'labels.text.SearchByClient' | translate }}"
+        (input)="onSearchInput(searchInput.value)"
+        (keydown.enter)="search(searchInput.value)"
+        (compositionstart)="onCompositionStart()"
+        (compositionend)="onCompositionEnd(searchInput.value)"
+      />
+      @if (searchInput.value) {
         <button
           type="button"
-          mat-icon-button
-          matSuffix
-          (click)="search(searchInput.value)"
-          [attr.aria-label]="'labels.buttons.Search' | translate"
+          class="search-clear"
+          (click)="clearSearch(searchInput)"
+          [attr.aria-label]="'labels.buttons.Clear' | translate"
         >
-          <mat-icon>search</mat-icon>
+          ×
         </button>
-      </mat-form-field>
+      }
     </div>
-    @if (existsClientsToFilter) {
-      <div class="filter-box">
-        <mat-checkbox #showClosedAccounts labelPosition="after" class="m-r-10"
-          >{{ 'labels.inputs.Show Closed Accounts' | translate }}
-        </mat-checkbox>
-      </div>
+
+    <label class="toggle" (click)="toggleShowClosed()">
+      <span class="switch" [class.on]="showClosedAccounts"></span>
+      {{ 'labels.buttons.Show Closed Accounts' | translate }}
+    </label>
+
+    @if (existsClientsToFilter && totalRows > 0) {
+      <span class="count-badge">
+        <strong>{{ totalRows | number }}</strong>
+        {{ 'labels.heading.Clients' | translate | lowercase }}
+      </span>
     }
-    <div class="action-button gap-25px">
-      <button
-        mat-raised-button
-        color="primary"
-        [routerLink]="['../', 'organization', 'bulk-import', 'Clients']"
-        *mifosxHasPermission="'CREATE_CLIENT'"
-      >
-        <fa-icon icon="download" class="m-r-20"></fa-icon>{{ 'labels.buttons.Import Client' | translate }}
-      </button>
-      <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_CLIENT'">
-        <fa-icon icon="plus" class="m-r-20"></fa-icon>{{ 'labels.buttons.Create Client' | translate }}
-      </button>
-    </div>
+
+    <div class="toolbar-spacer"></div>
+
+    <a
+      class="btn btn-ghost"
+      [routerLink]="['../', 'organization', 'bulk-import', 'Clients']"
+      *mifosxHasPermission="'CREATE_CLIENT'"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 3v12M7 10l5 5 5-5M5 21h14"></path>
+      </svg>
+      {{ 'labels.buttons.Import Client' | translate }}
+    </a>
+    <a class="btn btn-primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_CLIENT'">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M5 12h14"></path>
+      </svg>
+      {{ 'labels.buttons.Create Client' | translate }}
+    </a>
   </div>
 
-  <div [hidden]="!existsClientsToFilter" class="client-list">
-    @if (isLoading) {
-      <div>
-        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-      </div>
-    }
-    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortChanged($event)" class="bordered-table">
-      <!-- Name Column -->
-      <ng-container matColumnDef="displayName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.name' | translate }}</th>
-        <td mat-cell *matCellDef="let row" [routerLink]="[row.id, 'general']">
-          {{ hideClientData ? maskName(row.displayName) : row.displayName }}
-        </td>
-      </ng-container>
+  @if (isLoading) {
+    <mat-progress-bar class="loading-bar" mode="indeterminate"></mat-progress-bar>
+  }
 
-      <!-- Account no Column -->
-      <ng-container matColumnDef="accountNumber">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Account No' | translate }}</th>
-        <td mat-cell *matCellDef="let row">
-          <mifosx-account-number display="left" accountNo="{{ row.accountNumber }}"></mifosx-account-number>
-        </td>
-      </ng-container>
+  <!-- ── List ───────────────────────────────────────────────── -->
+  <div [hidden]="!existsClientsToFilter" class="list">
+    <div class="list-header">
+      <span></span>
+      <span></span>
+      <span class="sortable" [class.active]="sortAttribute === 'displayName'" (click)="setSort('displayName')">
+        {{ 'labels.inputs.name' | translate }}
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M7 10l5-5 5 5M7 14l5 5 5-5"></path>
+        </svg>
+      </span>
+      <span>{{ 'labels.inputs.Status' | translate }}</span>
+      <span class="sortable" [class.active]="sortAttribute === 'accountNumber'" (click)="setSort('accountNumber')">
+        {{ 'labels.inputs.Account No' | translate }}
+      </span>
+      <span class="sortable" [class.active]="sortAttribute === 'externalId'" (click)="setSort('externalId')">
+        {{ 'labels.inputs.External Id' | translate }}
+      </span>
+      <span>{{ 'labels.inputs.Office Name' | translate }}</span>
+      <span></span>
+    </div>
 
-      <!-- External ID Column -->
-      <ng-container matColumnDef="externalId">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.External Id' | translate }}</th>
-        <td mat-cell *matCellDef="let row">
-          <mifosx-external-identifier display="left" externalId="{{ row.externalId }}"></mifosx-external-identifier>
-        </td>
-      </ng-container>
-
-      <!-- Status Column -->
-      <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Status' | translate }}</th>
-        <td mat-cell *matCellDef="let row">
-          <div [ngClass]="row.status.code | statusLookup">
-            <fa-icon icon="stop"></fa-icon>
-            <span class="m-l-10 status">
-              {{ row.status.value | translate }}
+    @for (row of dataSource.data; track row.id) {
+      <div class="list-row" [ngClass]="severity(row)" [routerLink]="[row.id, 'general']">
+        <div class="rail"></div>
+        <div
+          class="avatar"
+          [class.entity]="row.legalForm?.id === LegalFormId.ENTITY"
+          [class.muted]="severity(row) === 'closed' || severity(row) === 'rejected'"
+        >
+          {{ initials(row.displayName) }}
+        </div>
+        <div class="name-block">
+          <span class="name">{{ hideClientData ? maskName(row.displayName) : row.displayName }}</span>
+          @if (metaDate(row); as date) {
+            <span class="name-meta">
+              {{ legalFormLabel(row) | translate }} · {{ metaDateLabel(row) | translate }} {{ date | dateFormat }}
             </span>
-          </div>
-        </td>
-      </ng-container>
+          } @else {
+            <span class="name-meta">{{ legalFormLabel(row) | translate }}</span>
+          }
+        </div>
+        <span class="status-pill" [ngClass]="severity(row)">
+          <span class="dot"></span>
+          {{ 'labels.status.' + row.status.value | translate }}
+        </span>
+        <span class="mono"
+          ><mifosx-account-number display="left" [accountNo]="row.accountNumber"></mifosx-account-number
+        ></span>
+        <span class="mono">
+          @if (row.externalId) {
+            <mifosx-external-identifier display="left" [externalId]="row.externalId"></mifosx-external-identifier>
+          } @else {
+            <span class="muted-dash">—</span>
+          }
+        </span>
+        <span class="office">{{ row.officeName }}</span>
+        <button
+          class="row-action"
+          (click)="$event.stopPropagation()"
+          [attr.aria-label]="'labels.buttons.More' | translate"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="1"></circle>
+            <circle cx="12" cy="5" r="1"></circle>
+            <circle cx="12" cy="19" r="1"></circle>
+          </svg>
+        </button>
+      </div>
+    }
 
-      <ng-container matColumnDef="officeName">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Office Name' | translate }}</th>
-        <td mat-cell *matCellDef="let row">{{ row.officeName }}</td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns" class="select-row"></tr>
-    </table>
-
-    <mat-paginator
-      [pageSize]="pageSize"
-      [pageSizeOptions]="[5, 50, 100]"
-      [length]="totalRows"
-      (page)="pageChanged($event)"
-      showFirstLastButtons
-    ></mat-paginator>
-  </div>
-
-  <div class="alert" [hidden]="!notExistsClientsToFilter">
-    <div class="message">
-      <i class="fa fa-exclamation-circle alert-check"></i>
-      {{ 'labels.text.No client was found' | translate }}
+    <div class="list-footer">
+      <span>
+        {{ 'labels.text.Showing' | translate }}
+        <strong>{{ rangeStart() | number }}–{{ rangeEnd() | number }}</strong>
+        {{ 'labels.text.of' | translate }}
+        <strong>{{ totalRows | number }}</strong>
+      </span>
+      <div class="pager">
+        <span class="page-size">
+          {{ 'labels.text.Rows' | translate }}
+          <select [value]="pageSize" (change)="onPageSizeChange(+$any($event.target).value)">
+            @for (size of pageSizeOptions; track size) {
+              <option [value]="size">{{ size }}</option>
+            }
+          </select>
+        </span>
+        <span class="page-info">
+          {{ 'labels.text.Page' | translate }} {{ currentPage + 1 }} {{ 'labels.text.of' | translate }}
+          {{ totalPages() }}
+        </span>
+        <div class="page-nav">
+          <button class="page-btn" [disabled]="currentPage === 0" (click)="goToPage(0)" aria-label="First page">
+            «
+          </button>
+          <button
+            class="page-btn"
+            [disabled]="currentPage === 0"
+            (click)="goToPage(currentPage - 1)"
+            aria-label="Previous page"
+          >
+            ‹
+          </button>
+          <button
+            class="page-btn"
+            [disabled]="currentPage >= totalPages() - 1"
+            (click)="goToPage(currentPage + 1)"
+            aria-label="Next page"
+          >
+            ›
+          </button>
+          <button
+            class="page-btn"
+            [disabled]="currentPage >= totalPages() - 1"
+            (click)="goToPage(totalPages() - 1)"
+            aria-label="Last page"
+          >
+            »
+          </button>
+        </div>
+      </div>
     </div>
   </div>
-</mat-card>
+
+  <!-- ── Empty state ────────────────────────────────────────── -->
+  <div [hidden]="!notExistsClientsToFilter" class="empty-state">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <circle cx="11" cy="11" r="8"></circle>
+      <path d="m21 21-4.3-4.3"></path>
+    </svg>
+    <h4>{{ 'labels.text.No client was found' | translate }}</h4>
+  </div>
+</div>

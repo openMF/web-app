@@ -6,7 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { SavingsService } from 'app/savings/savings.service';
@@ -27,6 +28,7 @@ export class NotesTabComponent {
   private route = inject(ActivatedRoute);
   private savingsService = inject(SavingsService);
   private authenticationService = inject(AuthenticationService);
+  private destroyRef = inject(DestroyRef);
 
   entityId: string;
   username: string;
@@ -36,7 +38,7 @@ export class NotesTabComponent {
     const savedCredentials = this.authenticationService.getCredentials();
     this.username = savedCredentials.username;
     this.entityId = this.route.parent.snapshot.params['savingAccountId'];
-    this.route.data.subscribe((data: { savingAccountNotes: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { savingAccountNotes: any }) => {
       this.entityNotes = data.savingAccountNotes;
     });
   }

@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ExternalIdentifierComponent } from '../../../../shared/external-identifier/external-identifier.component';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
@@ -29,16 +30,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class GeneralTabComponent {
   private route = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
 
   /** Office data */
   officeData: any;
 
-  /**
-   * Fetches office data from `resolve`
-   * @param {ActivatedRoute} route Activated Route
-   */
   constructor() {
-    this.route.data.subscribe((data: { office: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { office: any }) => {
       this.officeData = data.office;
     });
   }

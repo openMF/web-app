@@ -7,14 +7,9 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  Validators,
-  UntypedFormControl,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -41,19 +36,20 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditTransactionComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private dateUtils = inject(Dates);
   private savingsService = inject(SavingsService);
   private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Minimum Due Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Savings account transaction form. */
-  editTransactionForm: UntypedFormGroup;
+  editTransactionForm: FormGroup;
   /** savings account transaction payment options. */
   paymentTypeOptions: {
     id: number;
@@ -80,13 +76,15 @@ export class EditTransactionComponent implements OnInit {
    * @param {SettingsService} settingsService Setting service
    */
   constructor() {
-    this.route.data.subscribe((data: { savingsAccountTransactionTemplate: any }) => {
-      this.transactionTemplateData = data.savingsAccountTransactionTemplate;
-      if (data.savingsAccountTransactionTemplate.currency) {
-        this.currency = data.savingsAccountTransactionTemplate.currency;
-      }
-      this.paymentTypeOptions = this.transactionTemplateData.paymentTypeOptions;
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { savingsAccountTransactionTemplate: any }) => {
+        this.transactionTemplateData = data.savingsAccountTransactionTemplate;
+        if (data.savingsAccountTransactionTemplate.currency) {
+          this.currency = data.savingsAccountTransactionTemplate.currency;
+        }
+        this.paymentTypeOptions = this.transactionTemplateData.paymentTypeOptions;
+      });
     this.savingAccountId = this.route.snapshot.params['savingAccountId'];
   }
 
@@ -126,11 +124,11 @@ export class EditTransactionComponent implements OnInit {
   addPaymentDetails() {
     this.showPaymentDetails = !this.showPaymentDetails;
     if (this.showPaymentDetails) {
-      this.editTransactionForm.addControl('accountNumber', new UntypedFormControl(''));
-      this.editTransactionForm.addControl('checkNumber', new UntypedFormControl(''));
-      this.editTransactionForm.addControl('routingCode', new UntypedFormControl(''));
-      this.editTransactionForm.addControl('receiptNumber', new UntypedFormControl(''));
-      this.editTransactionForm.addControl('bankNumber', new UntypedFormControl(''));
+      this.editTransactionForm.addControl('accountNumber', new FormControl(''));
+      this.editTransactionForm.addControl('checkNumber', new FormControl(''));
+      this.editTransactionForm.addControl('routingCode', new FormControl(''));
+      this.editTransactionForm.addControl('receiptNumber', new FormControl(''));
+      this.editTransactionForm.addControl('bankNumber', new FormControl(''));
     } else {
       this.editTransactionForm.removeControl('accountNumber');
       this.editTransactionForm.removeControl('checkNumber');

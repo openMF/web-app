@@ -7,8 +7,10 @@
  */
 
 /** Angular Imports. */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { take } from 'rxjs';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -30,12 +32,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AllocateCashComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private route = inject(ActivatedRoute);
   private dateUtils = inject(Dates);
   private organizationService = inject(OrganizationService);
   private settingsService = inject(SettingsService);
   private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
 
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -44,7 +47,7 @@ export class AllocateCashComponent implements OnInit {
   /** Cashier data. */
   cashierData: any;
   /** Cashier Form. */
-  allocateCashForm: UntypedFormGroup;
+  allocateCashForm: FormGroup;
 
   /**
    * Get cashier data from `Resolver`.
@@ -56,7 +59,7 @@ export class AllocateCashComponent implements OnInit {
    * @param {Router} router Router.
    */
   constructor() {
-    this.route.data.subscribe((data: { cashierTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { cashierTemplate: any }) => {
       this.cashierData = data.cashierTemplate;
     });
   }
@@ -120,6 +123,7 @@ export class AllocateCashComponent implements OnInit {
     };
     this.organizationService
       .allocateCash(this.cashierData.tellerId, this.cashierData.cashierId, data)
+      .pipe(take(1))
       .subscribe((response: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });

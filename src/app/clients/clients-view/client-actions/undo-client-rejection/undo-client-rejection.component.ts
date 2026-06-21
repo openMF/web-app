@@ -7,8 +7,9 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -31,7 +32,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UndoClientRejectionComponent implements OnInit {
-  private readonly formBuilder = inject(UntypedFormBuilder);
+  private readonly formBuilder = inject(FormBuilder);
   private readonly clientsService = inject(ClientsService);
   private readonly dateUtils = inject(Dates);
   private readonly route = inject(ActivatedRoute);
@@ -43,7 +44,7 @@ export class UndoClientRejectionComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Undo Client Rejection form. */
-  undoClientRejectionForm: UntypedFormGroup;
+  undoClientRejectionForm: FormGroup;
   /** Client Id */
   clientId: any;
 

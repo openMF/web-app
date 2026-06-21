@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, ViewChild, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import {
@@ -58,6 +59,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 export class ChargesOverviewComponent implements OnInit {
   private route = inject(ActivatedRoute);
   dialog = inject(MatDialog);
+  private destroyRef = inject(DestroyRef);
 
   /** Columns to be displayed in charge overview table. */
   displayedColumns: string[] = [
@@ -82,7 +84,7 @@ export class ChargesOverviewComponent implements OnInit {
    * @param {MatDialog} dialog Dialog reference.
    */
   constructor() {
-    this.route.data.subscribe((data: { clientChargesData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientChargesData: any }) => {
       this.chargeOverviewData = data.clientChargesData;
     });
   }

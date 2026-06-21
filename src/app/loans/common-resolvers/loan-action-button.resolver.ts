@@ -42,7 +42,9 @@ export class LoanActionButtonResolver {
         ? this.loansService.getLoanActionTemplate(loanId, 'repayment')
         : this.loansService.getWorkingCapitalLoanActionTemplate(loanId, 'repayment');
     } else if (loanActionButton === 'Goodwill Credit') {
-      return this.loansService.getLoanActionTemplate(loanId, 'goodwillCredit');
+      return this.loanProductService.isLoanProduct
+        ? this.loansService.getLoanActionTemplate(loanId, 'goodwillCredit')
+        : this.loansService.getWorkingCapitalLoanActionTemplate(loanId, 'goodwillCredit');
     } else if (loanActionButton === 'Interest Payment Waiver') {
       return this.loansService.getLoanActionTemplate(loanId, 'interestPaymentWaiver');
     } else if (loanActionButton === 'Payout Refund') {
@@ -84,7 +86,7 @@ export class LoanActionButtonResolver {
         ? this.loansService.getLoanApprovalTemplate(loanId)
         : this.loansService.getWorkingCapitalLoanActionTemplate(loanId, loanActionButton.toLowerCase());
     } else if (loanActionButton === 'Add Loan Charge') {
-      return this.loansService.getLoanChargeTemplateResource(loanId);
+      return this.loansService.getLoanChargeTemplateResource(this.loanProductService.loanAccountPath, loanId);
     } else if (loanActionButton === 'Foreclosure') {
       return this.loansService.getLoanForeclosureActionTemplate(loanId);
     } else if (loanActionButton === 'Charge-Off') {
@@ -101,8 +103,8 @@ export class LoanActionButtonResolver {
       return this.loansService.getLoanActionTemplate(loanId, 'reAmortization');
     } else if (loanActionButton === 'Attach Loan Originator') {
       return this.organizationService.getLoanOriginators();
-    } else if (loanActionButton === 'Update discount') {
-      return this.loansService.getWorkingCapitalLoanDetails(loanId);
+    } else if (loanActionButton === 'Discount Fee') {
+      return this.loansService.getWorkingCapitalTransactions(loanId);
     } else {
       return undefined;
     }

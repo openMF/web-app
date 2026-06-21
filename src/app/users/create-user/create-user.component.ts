@@ -15,15 +15,11 @@ import {
   ElementRef,
   ViewChild,
   AfterViewInit,
-  inject
+  inject,
+  DestroyRef
 } from '@angular/core';
-import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  UntypedFormControl,
-  Validators,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -53,7 +49,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateUserComponent implements OnInit, AfterViewInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private usersService = inject(UsersService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
@@ -61,9 +57,10 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
   private configurationWizardService = inject(ConfigurationWizardService);
   private dialog = inject(MatDialog);
   private passwordsUtility = inject(PasswordsUtility);
+  private destroyRef = inject(DestroyRef);
 
   /** User form. */
-  userForm: UntypedFormGroup;
+  userForm: FormGroup;
   /** Offices data. */
   officesData: any;
   /** Roles data. */
@@ -86,7 +83,7 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor() {
-    this.route.data.subscribe((data: { usersTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { usersTemplate: any }) => {
       this.officesData = data.usersTemplate.allowedOffices;
       this.rolesData = data.usersTemplate.availableRoles;
     });
@@ -152,39 +149,45 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
    * Sets the staff data each time the user selects a new office
    */
   setStaffData() {
-    this.userForm.get('officeId').valueChanges.subscribe((officeId: string) => {
-      this.staffData = [];
-      this.usersService.getStaff(officeId).subscribe((staff: any) => {
-        this.staffData = staff;
+    this.userForm
+      .get('officeId')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((officeId: string) => {
+        this.staffData = [];
+        this.usersService.getStaff(officeId).subscribe((staff: any) => {
+          this.staffData = staff;
+        });
       });
-    });
   }
 
   /**
    * Sets the conditional controls of the user form
    */
   setConditionalControls() {
-    this.userForm.get('sendPasswordToEmail').valueChanges.subscribe((sendPasswordToEmail: boolean) => {
-      if (sendPasswordToEmail) {
-        this.userForm.removeControl('password');
-        this.userForm.removeControl('repeatPassword');
-        this.userForm.get('email').setValidators([
-          Validators.required,
-          Validators.email
-        ]);
-      } else {
-        this.userForm.addControl('password', new UntypedFormControl('', this.passwordsUtility.getPasswordValidators()));
-        this.userForm.addControl(
-          'repeatPassword',
-          new UntypedFormControl('', [
+    this.userForm
+      .get('sendPasswordToEmail')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((sendPasswordToEmail: boolean) => {
+        if (sendPasswordToEmail) {
+          this.userForm.removeControl('password');
+          this.userForm.removeControl('repeatPassword');
+          this.userForm.get('email').setValidators([
             Validators.required,
-            this.passwordsUtility.confirmPassword('password')
-          ])
-        );
-        this.userForm.get('email').setValidators([Validators.email]);
-      }
-      this.userForm.get('email').updateValueAndValidity();
-    });
+            Validators.email
+          ]);
+        } else {
+          this.userForm.addControl('password', new FormControl('', this.passwordsUtility.getPasswordValidators()));
+          this.userForm.addControl(
+            'repeatPassword',
+            new FormControl('', [
+              Validators.required,
+              this.passwordsUtility.confirmPassword('password')
+            ])
+          );
+          this.userForm.get('email').setValidators([Validators.email]);
+        }
+        this.userForm.get('email').updateValueAndValidity();
+      });
   }
 
   /**

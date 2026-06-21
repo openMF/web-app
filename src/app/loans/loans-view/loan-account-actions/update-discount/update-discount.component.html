@@ -22,6 +22,9 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
             <input matInput formControlName="externalId" />
+            <mat-hint align="end">
+              {{ updateDiscountForm.controls.externalId.value?.length || 0 }}/{{ maxExternalIdLength }}
+            </mat-hint>
             @if (updateDiscountForm.controls.externalId.hasError('maxlength')) {
               <mat-error>{{ 'labels.inputs.External Id is too long' | translate }}</mat-error>
             }
@@ -50,15 +53,10 @@
           <button
             mat-raised-button
             color="primary"
-            [disabled]="!updateDiscountForm.valid"
+            [disabled]="!updateDiscountForm.valid || isSubmitting"
             *mifosxHasPermission="'UPDATEDISCOUNT_WORKINGCAPITALLOAN'"
           >
-            @if (isSubmitting) {
-              <mat-spinner diameter="20"></mat-spinner>
-            }
-            @if (!isSubmitting) {
-              {{ 'labels.buttons.Submit' | translate }}
-            }
+            {{ 'labels.buttons.Submit' | translate }}
           </button>
         </mat-card-actions>
       </mat-card-content>

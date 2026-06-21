@@ -7,9 +7,10 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { UntypedFormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
@@ -65,6 +66,7 @@ export class AddressTabComponent {
   private dialog = inject(MatDialog);
   private translateService = inject(TranslateService);
   private postalCodeLookup = inject(PostalCodeLookupService);
+  private destroyRef = inject(DestroyRef);
 
   /** Client Address Data */
   clientAddressData: any;
@@ -82,14 +84,14 @@ export class AddressTabComponent {
    * @param {TranslateService} translateService Translate Service.
    */
   constructor() {
-    this.route.data.subscribe(
-      (data: { clientAddressData: any; clientAddressFieldConfig: any; clientAddressTemplateData: any }) => {
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { clientAddressData: any; clientAddressFieldConfig: any; clientAddressTemplateData: any }) => {
         this.clientAddressData = data.clientAddressData;
         this.clientAddressFieldConfig = data.clientAddressFieldConfig;
         this.clientAddressTemplate = data.clientAddressTemplateData;
         this.clientId = this.route.parent.snapshot.paramMap.get('clientId');
-      }
-    );
+      });
   }
 
   /**
@@ -170,7 +172,7 @@ export class AddressTabComponent {
     let postalSub: Subscription;
 
     dialogRef.afterOpened().subscribe(() => {
-      const form: UntypedFormGroup = dialogRef.componentInstance.form;
+      const form: FormGroup = dialogRef.componentInstance.form;
       const postalCodeControl = form.get('postalCode');
       if (!postalCodeControl) return;
 
@@ -226,7 +228,7 @@ export class AddressTabComponent {
   /**
    * Gets the ISO country code for the currently selected country in the form.
    */
-  private getSelectedCountryCode(form: UntypedFormGroup): string | null {
+  private getSelectedCountryCode(form: FormGroup): string | null {
     const countryIdValue = form.get('countryId')?.value;
     if (!countryIdValue) return null;
 
@@ -245,7 +247,7 @@ export class AddressTabComponent {
    * Clears form fields that were previously set by auto-fill,
    * so stale data doesn't persist when a new lookup fails or returns different results.
    */
-  private clearAutoFilledFields(form: UntypedFormGroup) {
+  private clearAutoFilledFields(form: FormGroup) {
     for (const fieldName of this.autoFilledFields) {
       const control = form.get(fieldName);
       if (control) {
@@ -256,7 +258,7 @@ export class AddressTabComponent {
     this.autoFilledFields.clear();
   }
 
-  private applyResolvedAddress(form: UntypedFormGroup, address: ResolvedAddress) {
+  private applyResolvedAddress(form: FormGroup, address: ResolvedAddress) {
     const cityControl = form.get('city');
     if (cityControl && address.city) {
       cityControl.setValue(address.city);

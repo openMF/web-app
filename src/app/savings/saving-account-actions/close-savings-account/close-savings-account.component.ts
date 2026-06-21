@@ -7,14 +7,9 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  Validators,
-  UntypedFormControl,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -42,19 +37,20 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CloseSavingsAccountComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private savingsService = inject(SavingsService);
   private dateUtils = inject(Dates);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Close Savings Account form. */
-  closeSavingsAccountForm: UntypedFormGroup;
+  closeSavingsAccountForm: FormGroup;
   /** Savings Account Id */
   accountId: any;
   /** Flag to enable payment details fields. */
@@ -73,7 +69,7 @@ export class CloseSavingsAccountComponent implements OnInit {
    * @param {SettingsService} settingsService Setting service
    */
   constructor() {
-    this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { savingsAccountActionData: any }) => {
       this.paymentTypeOptions = data.savingsAccountActionData[0].paymentTypeOptions;
       this.transactionAmount = data.savingsAccountActionData[1].summary.accountBalance;
     });
@@ -108,18 +104,21 @@ export class CloseSavingsAccountComponent implements OnInit {
    * Subscribe to value changes of withdraw balance checkbox.
    */
   buildDependencies() {
-    this.closeSavingsAccountForm.get('withdrawBalance').valueChanges.subscribe((value: boolean) => {
-      if (value) {
-        this.closeSavingsAccountForm.addControl(
-          'amount',
-          new UntypedFormControl({ value: this.transactionAmount, disabled: true })
-        );
-        this.closeSavingsAccountForm.addControl('paymentTypeId', new UntypedFormControl(''));
-      } else {
-        this.closeSavingsAccountForm.removeControl('amount');
-        this.closeSavingsAccountForm.removeControl('paymentTypeId');
-      }
-    });
+    this.closeSavingsAccountForm
+      .get('withdrawBalance')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((value: boolean) => {
+        if (value) {
+          this.closeSavingsAccountForm.addControl(
+            'amount',
+            new FormControl({ value: this.transactionAmount, disabled: true })
+          );
+          this.closeSavingsAccountForm.addControl('paymentTypeId', new FormControl(''));
+        } else {
+          this.closeSavingsAccountForm.removeControl('amount');
+          this.closeSavingsAccountForm.removeControl('paymentTypeId');
+        }
+      });
   }
 
   /**
@@ -128,11 +127,11 @@ export class CloseSavingsAccountComponent implements OnInit {
   addPaymentDetails() {
     this.addPaymentDetailsFlag = !this.addPaymentDetailsFlag;
     if (this.addPaymentDetailsFlag) {
-      this.closeSavingsAccountForm.addControl('accountNumber', new UntypedFormControl(''));
-      this.closeSavingsAccountForm.addControl('checkNumber', new UntypedFormControl(''));
-      this.closeSavingsAccountForm.addControl('routingCode', new UntypedFormControl(''));
-      this.closeSavingsAccountForm.addControl('receiptNumber', new UntypedFormControl(''));
-      this.closeSavingsAccountForm.addControl('bankNumber', new UntypedFormControl(''));
+      this.closeSavingsAccountForm.addControl('accountNumber', new FormControl(''));
+      this.closeSavingsAccountForm.addControl('checkNumber', new FormControl(''));
+      this.closeSavingsAccountForm.addControl('routingCode', new FormControl(''));
+      this.closeSavingsAccountForm.addControl('receiptNumber', new FormControl(''));
+      this.closeSavingsAccountForm.addControl('bankNumber', new FormControl(''));
     } else {
       this.closeSavingsAccountForm.removeControl('accountNumber');
       this.closeSavingsAccountForm.removeControl('checkNumber');

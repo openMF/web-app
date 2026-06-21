@@ -15,8 +15,10 @@ import {
   ElementRef,
   ViewChild,
   AfterViewInit,
-  inject
+  inject,
+  DestroyRef
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -40,7 +42,7 @@ import { of } from 'rxjs';
 /** Custom Services */
 import { PopoverService } from '../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
-import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { OfficeNode } from './office-node.model';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import {
@@ -112,9 +114,10 @@ export class OfficesComponent implements OnInit, AfterViewInit {
   private treeControlService = inject(TreeControlService);
   private configurationWizardService = inject(ConfigurationWizardService);
   private popoverService = inject(PopoverService);
+  private destroyRef = inject(DestroyRef);
 
   /** Button toggle group form control for type of view. (list/tree) */
-  viewGroup = new UntypedFormControl('listView');
+  viewGroup = new FormControl('listView');
 
   /** Offices data. */
   officesData: any;
@@ -163,11 +166,13 @@ export class OfficesComponent implements OnInit, AfterViewInit {
   constructor() {
     const officeTreeService = this.officeTreeService;
 
-    this.route.data.subscribe((data: { offices: any; officeDataTables: any }) => {
-      this.officesData = data.offices;
-      officeTreeService.initialize(this.officesData);
-      this.dataTablesData = data.officeDataTables;
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { offices: any; officeDataTables: any }) => {
+        this.officesData = data.offices;
+        officeTreeService.initialize(this.officesData);
+        this.dataTablesData = data.officeDataTables;
+      });
     this.nestedTreeControl = new NestedTreeControl<OfficeNode>(this.getChildren);
     this.nestedTreeDataSource = new MatTreeNestedDataSource<OfficeNode>();
   }
@@ -185,11 +190,13 @@ export class OfficesComponent implements OnInit, AfterViewInit {
    */
   ngOnInit() {
     this.setOffices();
-    this.officeTreeService.treeDataChange.subscribe((officeTreeData: OfficeNode[]) => {
-      this.nestedTreeDataSource.data = officeTreeData;
-      this.nestedTreeControl.expand(this.nestedTreeDataSource.data[0]);
-      this.nestedTreeControl.dataNodes = officeTreeData;
-    });
+    this.officeTreeService.treeDataChange
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((officeTreeData: OfficeNode[]) => {
+        this.nestedTreeDataSource.data = officeTreeData;
+        this.nestedTreeControl.expand(this.nestedTreeDataSource.data[0]);
+        this.nestedTreeControl.dataNodes = officeTreeData;
+      });
   }
 
   /**

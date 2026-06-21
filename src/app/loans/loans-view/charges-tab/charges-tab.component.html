@@ -6,162 +6,333 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<div class="tab-container">
-  <table mat-table [dataSource]="dataSource" matSort>
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.name' | translate }}</th>
-      <td mat-cell *matCellDef="let charge">{{ charge.name }}</td>
-    </ng-container>
+<div class="charges-container">
+  <!-- ── Summary strip ───────────────────────────────────────── -->
+  <div class="summary-strip">
+    <div class="summary-item">
+      <span class="summary-label">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="12" y1="1" x2="12" y2="23" />
+          <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+        </svg>
+        {{ 'labels.inputs.Total Due' | translate }}
+      </span>
+      <span class="summary-value">
+        {{ totalDue | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
+      </span>
+    </div>
 
-    <ng-container matColumnDef="feepenalty">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Fee/Penalty' | translate }}</th>
-      <td mat-cell *matCellDef="let charge">
-        @if (charge.penalty) {
-          <span>{{ 'labels.inputs.Penalty' | translate }}</span>
-        }
-        @if (!charge.penalty) {
-          <span>{{ 'labels.inputs.Fee' | translate }}</span>
-        }
-      </td>
-    </ng-container>
+    <div class="summary-item">
+      <span class="summary-label">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
+        {{ 'labels.inputs.Total Paid' | translate }}
+      </span>
+      <span class="summary-value c-paid">
+        {{ totalPaid | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
+      </span>
+    </div>
 
-    <ng-container matColumnDef="paymentdueat">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Payment due at' | translate }}</th>
-      <td mat-cell *matCellDef="let charge">{{ charge.chargeTimeType.value }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="submittedDate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Submitted On' | translate }}</th>
-      <td mat-cell *matCellDef="let charge">{{ charge.submittedOnDate | dateFormat }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="dueDate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header [hide]="useDueDate">
-        @if (useDueDate) {
-          <span> {{ 'labels.inputs.Due As Of' | translate }} </span>
-        }
-        @if (!useDueDate) {
-          <span> {{ 'labels.inputs.Submitted On' | translate }} </span>
-        }
-      </th>
-      <td mat-cell *matCellDef="let charge">
-        @if (useDueDate) {
-          <span>{{ charge.dueDate | dateFormat }}</span>
-        }
-        @if (!useDueDate) {
-          <span>{{ charge.submittedOnDate | dateFormat }}</span>
-        }
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="calculationtype">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Calculation Type' | translate }}</th>
-      <td mat-cell *matCellDef="let charge">
-        {{ charge.chargeCalculationType.value }}
-        @if (isPercentageCharge(charge)) {
-          ({{ charge.percentage | formatNumber: 2 }}%)
-        }
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="due">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Due' | translate }}</th>
-      <td mat-cell class="r-amount" *matCellDef="let charge">
-        {{ charge.amount | currency: charge.currency.code : 'symbol-narrow' : '1.2-2' }}
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="paid">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Paid' | translate }}</th>
-      <td mat-cell class="r-amount" *matCellDef="let charge">
-        {{ charge.amountPaid | currency: charge.currency.code : 'symbol-narrow' : '1.2-2' }}
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="waived">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef mat-sort-header>
+    <div class="summary-item">
+      <span class="summary-label">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M18 6L6 18M6 6l12 12" />
+        </svg>
         {{ 'labels.inputs.Waived' | translate }}
-      </th>
-      <td mat-cell class="r-amount" *matCellDef="let charge">
-        {{ charge.amountWaived | currency: charge.currency.code : 'symbol-narrow' : '1.2-2' }}
-      </td>
-    </ng-container>
+      </span>
+      <span class="summary-value">
+        {{ totalWaived | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
+      </span>
+    </div>
 
-    <ng-container matColumnDef="outstanding">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef mat-sort-header>
+    <div class="summary-item">
+      <span class="summary-label">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="8" x2="12" y2="12" />
+          <line x1="12" y1="16" x2="12.01" y2="16" />
+        </svg>
         {{ 'labels.inputs.Outstanding' | translate }}
-      </th>
-      <td mat-cell class="r-amount" *matCellDef="let charge">
-        {{ charge.amountOutstanding | currency: charge.currency.code : 'symbol-narrow' : '1.2-2' }}
-      </td>
-    </ng-container>
+      </span>
+      <span class="summary-value" [class.c-outstanding]="totalOutstanding > 0">
+        {{ totalOutstanding | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
+      </span>
+    </div>
+  </div>
 
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef mat-sort-header>
-        {{ 'labels.inputs.Actions' | translate }}
-      </th>
-      <td mat-cell class="center" *matCellDef="let charge">
-        @if (status === 'Submitted and pending approval') {
-          <span>
-            <button
-              class="account-action-button"
-              mat-raised-button
-              color="primary"
-              matTooltip="{{ 'tooltips.Edit Charge' | translate }}"
-              (click)="routeEdit($event); editCharge(charge)"
+  <!-- ── Bulk action bar (visible when rows are selected) ──────── -->
+  @if (selection.hasValue()) {
+    <div class="bulk-bar">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 11l3 3L22 4" />
+        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+      </svg>
+      <span class="bulk-count">{{ selection.selected.length }} {{ 'labels.inputs.Selected' | translate }}</span>
+      <div class="bulk-actions">
+        <button mat-button class="bulk-waive-btn" (click)="bulkWaiveSelected()">
+          {{ 'labels.buttons.Waive Selected' | translate }}
+        </button>
+        <button mat-button class="bulk-clear-btn" (click)="selection.clear()">
+          {{ 'labels.buttons.Clear' | translate }}
+        </button>
+      </div>
+    </div>
+  }
+
+  <!-- ── Table ───────────────────────────────────────────────── -->
+  <div class="table-wrapper">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <!-- ── Group header columns ──────────────────────────── -->
+      <ng-container matColumnDef="group-select">
+        <th mat-header-cell *matHeaderCellDef class="group-cell group-spacer"></th>
+      </ng-container>
+
+      <ng-container matColumnDef="group-info">
+        <th mat-header-cell *matHeaderCellDef [attr.colspan]="4" class="group-cell group-spacer"></th>
+      </ng-container>
+
+      <ng-container matColumnDef="group-financial">
+        <th mat-header-cell *matHeaderCellDef [attr.colspan]="4" class="group-cell group-financial">
+          {{ 'labels.inputs.Financial Summary' | translate }}
+        </th>
+      </ng-container>
+
+      <ng-container matColumnDef="group-actions">
+        <th mat-header-cell *matHeaderCellDef class="group-cell group-spacer"></th>
+      </ng-container>
+
+      <!-- ── Select (checkbox) ─────────────────────────────── -->
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef class="col-c col-sel">
+          <mat-checkbox
+            (click)="$event.stopPropagation()"
+            (change)="masterToggle()"
+            [checked]="isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()"
+            [attr.aria-label]="'labels.menus.Select All' | translate"
+          >
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let charge" class="col-c col-sel" (click)="$event.stopPropagation()">
+          @if (!isPaid(charge) && !isWaived(charge)) {
+            <mat-checkbox
+              [disabled]="charge.actionFlag"
+              [checked]="selection.isSelected(charge)"
+              (click)="$event.stopPropagation()"
+              (change)="$event ? selection.toggle(charge) : null"
+              [attr.aria-label]="'labels.menus.Select Item' | translate"
             >
-              <i class="fa fa-pencil"></i>
-            </button>
-            <button
-              class="account-action-button"
-              mat-raised-button
-              color="warn"
-              matTooltip="{{ 'tooltips.Delete Charge' | translate }}"
-              (click)="routeEdit($event); deleteCharge(charge.id)"
-            >
-              <i class="fa fa-trash"></i>
-            </button>
+            </mat-checkbox>
+          }
+        </td>
+      </ng-container>
+
+      <!-- ── Name ──────────────────────────────────────────── -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.inputs.Charge' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let charge">
+          <span class="charge-name">{{ charge.name }}</span>
+          <span class="charge-sub"
+            >{{ charge.chargeCalculationType.value }}
+            @if (isPercentageCharge(charge)) {
+              ({{ charge.percentage | formatNumber: 2 }}%)
+            }
           </span>
-        }
-        @if (!charge.paid && status === 'Active') {
-          <button
-            class="account-action-button"
-            mat-raised-button
-            color="accent"
-            matTooltip="{{ 'tooltips.Adjust Charge' | translate }}"
-            (click)="routeEdit($event); adjustCharge(charge.id)"
-          >
-            <i class="fa fa-pencil"></i>
-          </button>
-        }
-        @if (charge.chargePayable && !charge.paid && status === 'Active') {
-          <button
-            class="account-action-button"
-            mat-raised-button
-            color="primary"
-            matTooltip="{{ 'tooltips.Pay Charge' | translate }}"
-            (click)="routeEdit($event); payCharge(charge.id)"
-          >
-            <i class="fa fa-dollar"></i>
-          </button>
-        }
-        @if (!charge.actionFlag) {
-          <button
-            class="account-action-button"
-            mat-raised-button
-            color="primary"
-            matTooltip="{{ 'tooltips.Waive Charge' | translate }}"
-            (click)="routeEdit($event); waiveCharge(charge.id)"
-          >
-            <i class="fa fa-flag"></i>
-          </button>
-        }
-      </td>
-    </ng-container>
+        </td>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns" class="select-row" [routerLink]="[row.id]"></tr>
-  </table>
+      <!-- ── Fee / Penalty badge ────────────────────────────── -->
+      <ng-container matColumnDef="feepenalty">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.inputs.Type' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let charge">
+          @if (charge.penalty) {
+            <span class="badge badge-penalty">
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" />
+              </svg>
+              {{ 'labels.inputs.Penalty' | translate }}
+            </span>
+          }
+          @if (!charge.penalty) {
+            <span class="badge badge-fee">
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                />
+              </svg>
+              {{ 'labels.inputs.Fee' | translate }}
+            </span>
+          }
+        </td>
+      </ng-container>
+
+      <!-- ── Payment due at ─────────────────────────────────── -->
+      <ng-container matColumnDef="paymentdueat">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.inputs.Payment due at' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let charge">{{ charge.chargeTimeType.value }}</td>
+      </ng-container>
+
+      <!-- ── Due As Of ──────────────────────────────────────── -->
+      <ng-container matColumnDef="dueDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          @if (useDueDate) {
+            {{ 'labels.inputs.Due As Of' | translate }}
+          }
+          @if (!useDueDate) {
+            {{ 'labels.inputs.Submitted On' | translate }}
+          }
+        </th>
+        <td mat-cell *matCellDef="let charge">
+          @if (useDueDate) {
+            {{ charge.dueDate | dateFormat }}
+          }
+          @if (!useDueDate) {
+            {{ charge.submittedOnDate | dateFormat }}
+          }
+        </td>
+      </ng-container>
+
+      <!-- ── Due amount ─────────────────────────────────────── -->
+      <ng-container matColumnDef="due">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="col-r">
+          {{ 'labels.inputs.Due' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let charge" class="col-r">
+          <span class="mono amt-due">
+            {{ charge.amount | currency: charge.currency.code : 'symbol-narrow' : '1.2-2' }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- ── Paid ───────────────────────────────────────────── -->
+      <ng-container matColumnDef="paid">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="col-r">
+          {{ 'labels.inputs.Paid' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let charge" class="col-r">
+          <span class="mono" [class.amt-paid]="charge.amountPaid > 0" [class.amt-zero]="charge.amountPaid === 0">
+            {{ charge.amountPaid | currency: charge.currency.code : 'symbol-narrow' : '1.2-2' }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- ── Waived ─────────────────────────────────────────── -->
+      <ng-container matColumnDef="waived">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="col-r">
+          {{ 'labels.inputs.Waived' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let charge" class="col-r">
+          <span class="mono" [class.amt-zero]="charge.amountWaived === 0" [class.amt-waived]="charge.amountWaived > 0">
+            {{ charge.amountWaived | currency: charge.currency.code : 'symbol-narrow' : '1.2-2' }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- ── Outstanding ───────────────────────────────────── -->
+      <ng-container matColumnDef="outstanding">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="col-r">
+          {{ 'labels.inputs.Outstanding' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let charge" class="col-r">
+          <div class="out-cell">
+            <span
+              class="mono"
+              [class.amt-outstanding-zero]="charge.amountOutstanding === 0"
+              [class.amt-outstanding-partial]="charge.amountOutstanding > 0 && charge.amountPaid > 0"
+              [class.amt-outstanding-alert]="charge.amountOutstanding > 0 && charge.amountPaid === 0"
+            >
+              {{ charge.amountOutstanding | currency: charge.currency.code : 'symbol-narrow' : '1.2-2' }}
+            </span>
+            <div class="prog-bar">
+              <div
+                class="prog-fill"
+                [class.f-paid]="charge.amountOutstanding === 0"
+                [class.f-partial]="charge.amountOutstanding > 0 && charge.amountPaid > 0"
+                [class.f-alert]="charge.amountOutstanding > 0 && charge.amountPaid === 0"
+                [style.width.%]="paidProgress(charge)"
+              ></div>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- ── Actions ────────────────────────────────────────── -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="col-c">
+          {{ 'labels.inputs.Actions' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let charge" class="col-c" (click)="$event.stopPropagation()">
+          @if (!isPaid(charge) && !isWaived(charge)) {
+            <div class="act-group">
+              <button
+                mat-icon-button
+                type="button"
+                [matMenuTriggerFor]="chargeMenu"
+                [attr.aria-label]="'labels.inputs.Actions' | translate"
+              >
+                <mat-icon>more_vert</mat-icon>
+              </button>
+
+              <mat-menu #chargeMenu="matMenu" class="charge-actions-menu">
+                @if (status === 'Active' && !charge.paid) {
+                  <button mat-menu-item (click)="adjustCharge(charge.id)">
+                    <mat-icon matMenuItemIcon>tune</mat-icon>
+                    {{ 'tooltips.Adjust Charge' | translate }}
+                  </button>
+                }
+                @if (status === 'Submitted and pending approval') {
+                  <button mat-menu-item (click)="editCharge(charge)">
+                    <mat-icon matMenuItemIcon>edit</mat-icon>
+                    {{ 'tooltips.Edit Charge' | translate }}
+                  </button>
+                  <button mat-menu-item class="menu-item-danger" (click)="deleteCharge(charge.id)">
+                    <mat-icon matMenuItemIcon>delete</mat-icon>
+                    {{ 'labels.buttons.Delete' | translate }}
+                  </button>
+                }
+                @if (charge.chargePayable && !charge.paid && status === 'Active') {
+                  <button mat-menu-item (click)="payCharge(charge.id)">
+                    <mat-icon matMenuItemIcon>payments</mat-icon>
+                    {{ 'labels.buttons.Pay Charge' | translate }}
+                  </button>
+                }
+                @if (!charge.actionFlag) {
+                  <button mat-menu-item (click)="waiveCharge(charge.id)">
+                    <mat-icon matMenuItemIcon>check_circle</mat-icon>
+                    {{ 'labels.buttons.Waive Charge' | translate }}
+                  </button>
+                }
+              </mat-menu>
+            </div>
+          }
+        </td>
+      </ng-container>
+
+      <!-- ── Header rows ─────────────────────────────────────── -->
+      <tr mat-header-row *matHeaderRowDef="groupHeaderColumns" class="group-header-row"></tr>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+      <!-- ── Data rows ──────────────────────────────────────── -->
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        class="charge-row"
+        [class.row-state-paid]="rowStatus(row) === 'row-state-paid'"
+        [class.row-state-partial]="rowStatus(row) === 'row-state-partial'"
+        [class.row-state-alert]="rowStatus(row) === 'row-state-alert'"
+        [class.row-state-waived]="rowStatus(row) === 'row-state-waived'"
+        [class.row-selected]="selection.isSelected(row)"
+        [routerLink]="[row.id]"
+      ></tr>
+    </table>
+  </div>
 
   <mat-paginator [pageSizeOptions]="[50, 100, 200]" showFirstLastButtons></mat-paginator>
 </div>

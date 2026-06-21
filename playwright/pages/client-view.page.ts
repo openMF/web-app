@@ -9,7 +9,22 @@
 import { expect, Locator, Page } from '@playwright/test';
 
 import { BasePage } from './BasePage';
+import { CLIENT_VIEW_SELECTORS } from '../config/selectors';
+import { ROUTES } from '../config/routes';
+import { BEHAVIOR } from '../config/behavior';
 
+/**
+ * ClientViewPage - Page Object for the Mifos X client general view.
+ *
+ * Consumes Layer-2 contracts:
+ *   - selectors:  `CLIENT_VIEW_SELECTORS` (overlay, snackbar, rows)
+ *   - routes:     `ROUTES.clientView(id)`, `ROUTES.clientPersonalData(id)`
+ *   - behavior:   `BEHAVIOR.overlayDismissNeeded`
+ *
+ * Role-based locators (`getByRole`) are intentionally retained because
+ * they resolve identically against the React counterpart and form part
+ * of the cross-framework contract.
+ */
 export class ClientViewPage extends BasePage {
   readonly url: string;
 
@@ -23,12 +38,11 @@ export class ClientViewPage extends BasePage {
     private readonly clientId: number
   ) {
     super(page);
-    this.url = `/#/clients/${clientId}/general`;
+    this.url = ROUTES.clientView(clientId);
   }
 
   /**
    * Returns the top-level client actions trigger button.
-   * @returns The locator for the client actions button
    */
   get clientActionsButton(): Locator {
     return this.page.getByRole('button', { name: 'Client actions' });
@@ -36,16 +50,13 @@ export class ClientViewPage extends BasePage {
 
   /**
    * Returns the nested Actions submenu trigger inside the client actions menu.
-   * @returns The locator for the Actions submenu trigger
    */
   get actionsMenuItem(): Locator {
-    return this.page.getByRole('menuitem', { name: 'Actions' });
+    return this.page.getByRole('menuitem', { name: CLIENT_VIEW_SELECTORS.actionsSubmenuTrigger });
   }
 
   /**
    * Returns a specific item inside the Actions submenu by its visible label.
-   * @param name - The visible menu item label
-   * @returns The locator for the matching action menu item
    */
   actionMenuItem(name: string): Locator {
     return this.page.getByRole('menuitem', { name });
@@ -53,40 +64,44 @@ export class ClientViewPage extends BasePage {
 
   /**
    * Returns the personal data tab used to inspect post-action client fields.
-   * @returns The locator for the personal data tab
    */
   get personalDataTab(): Locator {
-    return this.page.getByRole('tab', { name: 'Personal Data' });
+    return this.page.getByRole('tab', { name: CLIENT_VIEW_SELECTORS.personalDataTab });
   }
 
   /**
    * Returns the snackbar container used for success and error notifications.
-   * @returns The locator for the Material snackbar container
    */
   get successSnackbar(): Locator {
-    return this.page.locator('.mat-mdc-snack-bar-container');
+    return this.page.locator(CLIENT_VIEW_SELECTORS.successSnackbar);
   }
 
   /**
    * Returns the active overlay backdrop rendered by Angular Material menus.
-   * @returns The locator for the active overlay backdrop
    */
   get overlayBackdrop(): Locator {
-    return this.page.locator('.cdk-overlay-backdrop');
+    return this.page.locator(CLIENT_VIEW_SELECTORS.overlayBackdrop);
   }
 
   /**
    * Returns the personal-data field that shows the client's closed date.
-   * @returns The locator for the closed date value
    */
   closedDateValue(): Locator {
-    return this.page.locator('.data-item', { hasText: 'Closed Date' }).locator('.value');
+    return this.page
+      .locator(CLIENT_VIEW_SELECTORS.closedDateRow, { hasText: 'Closed Date' })
+      .locator(CLIENT_VIEW_SELECTORS.closedDateValue);
   }
 
   /**
    * Dismisses an open Material overlay so subsequent clicks are not blocked.
+   *
+   * No-op on frameworks where `BEHAVIOR.overlayDismissNeeded` is false
+   * (React/shadcn), keeping the call safe to invoke from shared specs.
    */
   async dismissOverlay(): Promise<void> {
+    if (!BEHAVIOR.overlayDismissNeeded) {
+      return;
+    }
     if (await this.overlayBackdrop.isVisible()) {
       await this.overlayBackdrop.click({ force: true });
       await this.overlayBackdrop.waitFor({ state: 'hidden', timeout: 10000 });

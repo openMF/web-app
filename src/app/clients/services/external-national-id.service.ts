@@ -6,10 +6,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { inject, Injectable, OnDestroy } from '@angular/core';
-import { UntypedFormGroup } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, switchMap, takeUntil, timeout, catchError } from 'rxjs/operators';
+import { DestroyRef, Injectable, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, filter, switchMap, timeout, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { environment } from 'environments/environment';
 import { ClientsService } from '../clients.service';
@@ -54,7 +54,7 @@ export interface GenderOption {
  * - Disables those fields so users cannot modify API-provided values
  */
 @Injectable()
-export class ExternalNationalIdService implements OnDestroy {
+export class ExternalNationalIdService {
   /** Whether the feature is enabled via env var */
   readonly enabled: boolean;
 
@@ -71,9 +71,8 @@ export class ExternalNationalIdService implements OnDestroy {
   /** Whether a lookup is currently in progress */
   isLoading = false;
 
-  private destroy$ = new Subject<void>();
-
   private clientsService = inject(ClientsService);
+  private destroyRef = inject(DestroyRef);
 
   constructor() {
     this.enabled = environment.enableExternalNationalIdSystem === true;
@@ -110,7 +109,7 @@ export class ExternalNationalIdService implements OnDestroy {
    * @param skipInitialValue If true, skips lookup for the current form value (used in edit mode
    *                         to avoid re-fetching data for an already-saved external ID)
    */
-  watchExternalId(form: UntypedFormGroup, genderOptions: GenderOption[], skipInitialValue = false): void {
+  watchExternalId(form: FormGroup, genderOptions: GenderOption[], skipInitialValue = false): void {
     if (!this.enabled) {
       return;
     }
@@ -163,7 +162,7 @@ export class ExternalNationalIdService implements OnDestroy {
             })
           );
         }),
-        takeUntil(this.destroy$)
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe((response: ExternalNationalIdResponse | null) => {
         this.isLoading = false;
@@ -179,7 +178,7 @@ export class ExternalNationalIdService implements OnDestroy {
    * while a lookup is in-flight (e.g. controls removed by buildDependencies).
    */
   private fillFormFromResponse(
-    form: UntypedFormGroup,
+    form: FormGroup,
     response: ExternalNationalIdResponse,
     genderOptions: GenderOption[]
   ): void {
@@ -286,7 +285,7 @@ export class ExternalNationalIdService implements OnDestroy {
   /**
    * Re-enable person fields so they can be edited manually.
    */
-  enablePersonFields(form: UntypedFormGroup): void {
+  enablePersonFields(form: FormGroup): void {
     for (const field of PERSON_FIELD_NAMES) {
       form.get(field)?.enable();
     }
@@ -295,14 +294,9 @@ export class ExternalNationalIdService implements OnDestroy {
   /**
    * Disable person fields (used in edit mode to lock fields for existing external IDs).
    */
-  private disablePersonFields(form: UntypedFormGroup): void {
+  private disablePersonFields(form: FormGroup): void {
     for (const field of PERSON_FIELD_NAMES) {
       form.get(field)?.disable();
     }
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

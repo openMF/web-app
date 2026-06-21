@@ -7,10 +7,10 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Subject, merge } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { merge } from 'rxjs';
 
 /** Custom Services */
 import { SettingsService } from './settings.service';
@@ -46,11 +46,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SettingsComponent implements OnInit, OnDestroy {
+export class SettingsComponent implements OnInit {
   private settingsService = inject(SettingsService);
   private alertService = inject(AlertService);
   private translateService = inject(TranslateService);
-  private destroy$ = new Subject<void>();
+  private destroyRef = inject(DestroyRef);
 
   hasChanges = false;
 
@@ -133,7 +133,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   trackChanges(): void {
     merge(this.dateFormat.valueChanges, this.datetimeFormat.valueChanges, this.decimalsToDisplay.valueChanges)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
         this.hasChanges = this.hasFormChanged();
       });
@@ -161,10 +161,5 @@ export class SettingsComponent implements OnInit, OnDestroy {
       type: 'Settings Update',
       message: this.translateService.instant('labels.text.Settings saved successfully')
     });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

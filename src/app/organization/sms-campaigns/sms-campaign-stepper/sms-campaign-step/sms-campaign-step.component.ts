@@ -15,15 +15,12 @@ import {
   ViewChild,
   EventEmitter,
   Output,
-  inject
+  inject,
+  DestroyRef
 } from '@angular/core';
-import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  Validators,
-  UntypedFormControl,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { take } from 'rxjs';
 
 /** Custom Services */
 import { ReportsService } from 'app/reports/reports.service';
@@ -56,8 +53,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SmsCampaignStepComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private reportService = inject(ReportsService);
+  private destroyRef = inject(DestroyRef);
 
   /** SMS Campaign Template */
   @Input() smsCampaignTemplate: any;
@@ -70,7 +68,7 @@ export class SmsCampaignStepComponent implements OnInit {
   maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 10));
 
   /** SMS Campaign Form */
-  smsCampaignDetailsForm: UntypedFormGroup;
+  smsCampaignDetailsForm: FormGroup;
   /** Data to be passed to sub component */
   paramData: any;
   /** Trigger types options */
@@ -107,14 +105,14 @@ export class SmsCampaignStepComponent implements OnInit {
    * Else returns a cumulative form group.
    */
   get smsCampaignFormGroup() {
-    let smsCampaignFormGroup: UntypedFormGroup;
+    let smsCampaignFormGroup: FormGroup;
     if (this.businessRuleParametersComponent) {
-      smsCampaignFormGroup = new UntypedFormGroup({
+      smsCampaignFormGroup = new FormGroup({
         smsCampaign: this.smsCampaignDetailsForm,
         businessRule: this.businessRuleParametersComponent.ReportForm
       });
     } else {
-      smsCampaignFormGroup = new UntypedFormGroup({
+      smsCampaignFormGroup = new FormGroup({
         smsCampaign: this.smsCampaignDetailsForm
       });
     }
@@ -171,86 +169,101 @@ export class SmsCampaignStepComponent implements OnInit {
    * Gets reports parameters and passes it to subcomponent on business rule value changes.
    */
   buildDependencies() {
-    this.smsCampaignDetailsForm.get('isNotification').valueChanges.subscribe((value: boolean) => {
-      if (!value) {
-        this.smsCampaignDetailsForm.addControl('providerId', new UntypedFormControl(null));
-      } else {
-        this.smsCampaignDetailsForm.removeControl('providerId');
-      }
-    });
-    this.smsCampaignDetailsForm.get('runReportId').valueChanges.subscribe((value: number) => {
-      if (value) {
-        const report = this.businessRules.find((rule: any) => rule.reportId === value);
-        this.reportService.getReportParams(report.reportName).subscribe((response: ReportParameter[]) => {
-          this.paramData = { response, reportName: report.reportName };
-        });
-      }
-    });
-    this.smsCampaignDetailsForm.get('triggerType').valueChanges.subscribe((value: number) => {
-      this.templateParameters.emit(null);
-      this.businessRules = this.smsCampaignTemplate.businessRulesOptions;
-      if (this.smsCampaignDetailsForm.controls.runReportId.value) {
-        this.smsCampaignDetailsForm.get('runReportId').patchValue('');
-      }
-      if (value === 3) {
-        this.businessRules = this.businessRules.filter((rule: any) => rule.reportSubType === 'Triggered');
-      } else {
-        this.businessRules = this.businessRules.filter((rule: any) => rule.reportSubType !== 'Triggered');
-      }
-      if (value === 2) {
-        this.smsCampaignDetailsForm.addControl('recurrenceStartDate', new UntypedFormControl('', Validators.required));
-        this.smsCampaignDetailsForm.addControl('frequency', new UntypedFormControl('', Validators.required));
-        this.smsCampaignDetailsForm.addControl('interval', new UntypedFormControl('', Validators.required));
-        this.smsCampaignDetailsForm.get('frequency').valueChanges.subscribe((frequency: number) => {
+    this.smsCampaignDetailsForm
+      .get('isNotification')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((value: boolean) => {
+        if (!value) {
+          this.smsCampaignDetailsForm.addControl('providerId', new FormControl(null));
+        } else {
+          this.smsCampaignDetailsForm.removeControl('providerId');
+        }
+      });
+    this.smsCampaignDetailsForm
+      .get('runReportId')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((value: number) => {
+        if (value) {
+          const report = this.businessRules.find((rule: any) => rule.reportId === value);
+          this.reportService
+            .getReportParams(report.reportName)
+            .pipe(take(1))
+            .subscribe((response: ReportParameter[]) => {
+              this.paramData = { response, reportName: report.reportName };
+            });
+        }
+      });
+    this.smsCampaignDetailsForm
+      .get('triggerType')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((value: number) => {
+        this.templateParameters.emit(null);
+        this.businessRules = this.smsCampaignTemplate.businessRulesOptions;
+        if (this.smsCampaignDetailsForm.controls.runReportId.value) {
+          this.smsCampaignDetailsForm.get('runReportId').patchValue('');
+        }
+        if (value === 3) {
+          this.businessRules = this.businessRules.filter((rule: any) => rule.reportSubType === 'Triggered');
+        } else {
+          this.businessRules = this.businessRules.filter((rule: any) => rule.reportSubType !== 'Triggered');
+        }
+        if (value === 2) {
+          this.smsCampaignDetailsForm.addControl('recurrenceStartDate', new FormControl('', Validators.required));
+          this.smsCampaignDetailsForm.addControl('frequency', new FormControl('', Validators.required));
+          this.smsCampaignDetailsForm.addControl('interval', new FormControl('', Validators.required));
+          this.smsCampaignDetailsForm
+            .get('frequency')
+            .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((frequency: number) => {
+              this.smsCampaignDetailsForm.removeControl('repeatsOnDay');
+              switch (frequency) {
+                case 1: // Daily
+                  this.repetitionIntervals = [
+                    '1',
+                    '2',
+                    '3'
+                  ];
+                  break;
+                case 2: // Weekly
+                  this.repetitionIntervals = [
+                    '1',
+                    '2',
+                    '3'
+                  ];
+                  this.smsCampaignDetailsForm.addControl('repeatsOnDay', new FormControl('', Validators.required));
+                  break;
+                case 3: // Monthly
+                  this.repetitionIntervals = [
+                    '1',
+                    '2',
+                    '3',
+                    '4',
+                    '5',
+                    '6',
+                    '7',
+                    '8',
+                    '9',
+                    '10',
+                    '11'
+                  ];
+                  break;
+                case 4: // Yearly
+                  this.repetitionIntervals = [
+                    '1',
+                    '2',
+                    '3',
+                    '4',
+                    '5'
+                  ];
+                  break;
+              }
+            });
+        } else {
+          this.smsCampaignDetailsForm.removeControl('recurrenceStartDate');
+          this.smsCampaignDetailsForm.removeControl('frequency');
+          this.smsCampaignDetailsForm.removeControl('interval');
           this.smsCampaignDetailsForm.removeControl('repeatsOnDay');
-          switch (frequency) {
-            case 1: // Daily
-              this.repetitionIntervals = [
-                '1',
-                '2',
-                '3'
-              ];
-              break;
-            case 2: // Weekly
-              this.repetitionIntervals = [
-                '1',
-                '2',
-                '3'
-              ];
-              this.smsCampaignDetailsForm.addControl('repeatsOnDay', new UntypedFormControl('', Validators.required));
-              break;
-            case 3: // Monthly
-              this.repetitionIntervals = [
-                '1',
-                '2',
-                '3',
-                '4',
-                '5',
-                '6',
-                '7',
-                '8',
-                '9',
-                '10',
-                '11'
-              ];
-              break;
-            case 4: // Yearly
-              this.repetitionIntervals = [
-                '1',
-                '2',
-                '3',
-                '4',
-                '5'
-              ];
-              break;
-          }
-        });
-      } else {
-        this.smsCampaignDetailsForm.removeControl('recurrenceStartDate');
-        this.smsCampaignDetailsForm.removeControl('frequency');
-        this.smsCampaignDetailsForm.removeControl('interval');
-        this.smsCampaignDetailsForm.removeControl('repeatsOnDay');
-      }
-    });
+        }
+      });
   }
 }

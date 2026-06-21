@@ -155,16 +155,18 @@ export class LoanRescheduleComponent extends LoanAccountActionsBaseComponent imp
 
     // Waive penalties first if selected, then submit reschedule
     if (this.waivePenalties.value && this.selectedPenalties.length > 0) {
-      this.penaltyManagementService.waivePenalties(this.loanId, this.selectedPenalties).subscribe({
-        next: () => {
-          this.submitReschedule(data);
-        },
-        error: (error: any) => {
-          console.error('Error waiving penalties:', error);
-          // Continue with reschedule even if waive fails
-          this.submitReschedule(data);
-        }
-      });
+      this.penaltyManagementService
+        .waivePenalties(this.loanProductService.loanAccountPath, this.loanId, this.selectedPenalties)
+        .subscribe({
+          next: () => {
+            this.submitReschedule(data);
+          },
+          error: (error: any) => {
+            console.error('Error waiving penalties:', error);
+            // Continue with reschedule even if waive fails
+            this.submitReschedule(data);
+          }
+        });
     } else {
       this.submitReschedule(data);
     }

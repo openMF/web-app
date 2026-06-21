@@ -38,7 +38,8 @@ export default defineConfig({
   reporter: [
     [
       'html',
-      { outputFolder: 'playwright-report', open: 'never' }],
+      { outputFolder: 'playwright-report', open: 'never' }
+    ],
     ['list']
   ],
 
@@ -74,8 +75,20 @@ export default defineConfig({
   // Global test timeout (per test)
   timeout: process.env.CI ? 180000 : 120000,
 
-  // Configure projects for authentication setup and browser testing
+  // Configure projects for authentication setup and browser testing.
+  //
+  // `unit` exists for pure-logic utility specs under
+  // `playwright/utils/*.spec.ts` so retry/sleep infrastructure can be
+  // validated without a browser, app server, or backend.
   projects: [
+    {
+      // Pure-logic unit tests for shared utilities (retry, sleep, ...).
+      // No browser, no auth setup, no app dependency.
+      name: 'unit',
+      testMatch: /playwright\/utils\/.*\.spec\.ts/,
+      testDir: '.',
+      use: { storageState: { cookies: [], origins: [] } }
+    },
     {
       name: 'setup',
       testMatch: /.*\.setup\.ts/,

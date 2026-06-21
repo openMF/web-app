@@ -6,7 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, ViewChild, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import {
@@ -92,6 +93,7 @@ export class GsimAccountComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   dialog = inject(MatDialog);
+  private destroyRef = inject(DestroyRef);
 
   /** Columns to be displayed in charge overview table. */
   displayedColumns: string[] = [
@@ -122,15 +124,17 @@ export class GsimAccountComponent implements OnInit {
    */
   constructor() {
     // Get groupId from route params
-    this.route.parent?.parent?.params.subscribe((params) => {
+    this.route.parent?.parent?.params.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
       this.groupId = params['groupId'];
     });
 
-    this.route.data.subscribe((data: { gsimData: any; savingAccountData: any; groupsData: any }) => {
-      this.gsimOverviewData = data.gsimData[0].childGSIMAccounts;
-      this.savingAccountData = data.savingAccountData;
-      this.groupsData = data.groupsData;
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { gsimData: any; savingAccountData: any; groupsData: any }) => {
+        this.gsimOverviewData = data.gsimData[0].childGSIMAccounts;
+        this.savingAccountData = data.savingAccountData;
+        this.groupsData = data.groupsData;
+      });
   }
 
   ngOnInit(): void {

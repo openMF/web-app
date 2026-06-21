@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -85,6 +86,7 @@ export class SavingsAccountViewComponent implements OnInit {
   private savingsService = inject(SavingsService);
   private translateService = inject(TranslateService);
   dialog = inject(MatDialog);
+  private destroyRef = inject(DestroyRef);
 
   /** Savings Account Data */
   savingsAccountData: any;
@@ -105,11 +107,13 @@ export class SavingsAccountViewComponent implements OnInit {
    * @param {SavingsService} savingsService Savings Service
    */
   constructor() {
-    this.route.data.subscribe((data: { savingsAccountData: any; savingsDatatables: any }) => {
-      this.savingsAccountData = data.savingsAccountData;
-      this.currency = this.savingsAccountData.currency;
-      this.savingsDatatables = data.savingsDatatables;
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { savingsAccountData: any; savingsDatatables: any }) => {
+        this.savingsAccountData = data.savingsAccountData;
+        this.currency = this.savingsAccountData.currency;
+        this.savingsDatatables = data.savingsDatatables;
+      });
     if (this.router.url.includes('clients')) {
       this.entityType = 'Client';
     } else if (this.router.url.includes('groups')) {

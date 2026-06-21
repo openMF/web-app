@@ -358,13 +358,14 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
           discount: this.loansAccountTermsData.discountProposed || this.loansAccountTermsData.discount || '',
           principalAmount: this.loansAccountTermsData.proposedPrincipal,
           periodPaymentRate: this.loansAccountTermsData.periodPaymentRate,
-          totalPayment: this.loansAccountTermsData.balance?.totalPayment,
+          totalPaymentVolume: this.loansAccountTermsData.totalPaymentVolume,
           repaymentEvery: this.loansAccountTermsData.repaymentEvery,
           repaymentFrequencyType: this.loansAccountTermsData.repaymentFrequencyType?.id,
           delinquencyGraceDays: this.loansAccountTermsData.delinquencyGraceDays,
           delinquencyStartType: this.loansAccountTermsData.delinquencyStartType?.code,
           breachId: this.loansAccountTermsData.breach?.id,
-          nearBreachId: this.loansAccountTermsData.nearBreach?.id
+          nearBreachId: this.loansAccountTermsData.nearBreach?.id,
+          breachGraceDays: this.loansAccountTermsData.breachGraceDays ?? 0
         });
         // New Loan — solo inicializar si el producto realmente cambió
       } else if (productChanged) {
@@ -374,7 +375,8 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
           delinquencyGraceDays: this.loansAccountTermsData.product.delinquencyGraceDays || '',
           delinquencyStartType: this.loansAccountTermsData.product.delinquencyStartType?.code || '',
           breachId: this.loansAccountTermsData.product.breach?.id || '',
-          nearBreachId: this.loansAccountTermsData.product.nearBreach?.id || ''
+          nearBreachId: this.loansAccountTermsData.product.nearBreach?.id || '',
+          breachGraceDays: this.loansAccountTermsData.product.breachGraceDays ?? 0
         });
         this.cdr.markForCheck();
       }
@@ -398,6 +400,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
         this.allowAttributeOverridesBreach = false;
         this.loansAccountTermsForm.controls.breachId.disable();
         this.loansAccountTermsForm.controls.nearBreachId.disable();
+        this.loansAccountTermsForm.controls.breachGraceDays.disable();
       }
     }
   }
@@ -496,7 +499,9 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
             this.loansAccountTermsData.delinquencyStartType?.id ||
             this.loansAccountTermsData.product.delinquencyStartType?.id,
           breachId: this.loansAccountTermsData.breach?.id || this.loansAccountTermsData.product.breach?.id,
-          nearBreachId: this.loansAccountTermsData.nearBreach?.id || this.loansAccountTermsData.product.nearBreach?.id
+          nearBreachId: this.loansAccountTermsData.nearBreach?.id || this.loansAccountTermsData.product.nearBreach?.id,
+          breachGraceDays:
+            this.loansAccountTermsData.breachGraceDays ?? this.loansAccountTermsData.product.breachGraceDays ?? ''
         });
       }
     }
@@ -741,7 +746,7 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
             amountValueValidator()
           ]
         ],
-        totalPayment: [
+        totalPaymentVolume: [
           '',
           [
             Validators.required,
@@ -777,7 +782,8 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
         ],
         delinquencyStartType: [''],
         breachId: [''],
-        nearBreachId: ['']
+        nearBreachId: [''],
+        breachGraceDays: ['']
       });
     }
   }
@@ -984,7 +990,8 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
     if (propertyName === 'breachId') {
       this.loansAccountTermsForm.patchValue({
         breachId: '',
-        nearBreachId: ''
+        nearBreachId: '',
+        breachGraceDays: ''
       });
     } else if (propertyName === 'nearBreachId') {
       this.loansAccountTermsForm.patchValue({

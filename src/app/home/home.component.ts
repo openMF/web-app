@@ -18,7 +18,7 @@ import {
   inject
 } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd, RouterLink } from '@angular/router';
-import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 /** rxjs Imports */
@@ -79,7 +79,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   /** Activity Form. */
   activityForm: any;
   /** Search Text. */
-  searchText: UntypedFormControl = new UntypedFormControl();
+  searchText: FormControl = new FormControl();
   /** Filtered Activities. */
   filteredActivities: Observable<any[]>;
   /** All User Activities. */

@@ -7,8 +7,9 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -32,19 +33,20 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddFamilyMemberComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private dateUtils = inject(Dates);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private clientsService = inject(ClientsService);
   private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Minimum age allowed is 0. */
   minAge = 0;
   /** Add family member form. */
-  addFamilyMemberForm: UntypedFormGroup;
+  addFamilyMemberForm: FormGroup;
   /** Add family member template. */
   addFamilyMemberTemplate: any;
   /** Client ID */
@@ -59,7 +61,7 @@ export class AddFamilyMemberComponent implements OnInit {
    * @param {SettingsService} settingsService Setting service
    */
   constructor() {
-    this.route.data.subscribe((data: { clientTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientTemplate: any }) => {
       this.addFamilyMemberTemplate = data.clientTemplate.familyMemberOptions;
     });
     this.clientId = this.route.parent.parent.snapshot.params['clientId'];
@@ -68,14 +70,17 @@ export class AddFamilyMemberComponent implements OnInit {
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;
     this.createAddFamilyMemberForm();
-    this.addFamilyMemberForm.get('dateOfBirth').valueChanges.subscribe((dateOfBirth: any) => {
-      if (dateOfBirth) {
-        const age = this.calculateAge(dateOfBirth);
-        this.addFamilyMemberForm.get('age').setValue(age);
-      } else {
-        this.addFamilyMemberForm.get('age').setValue('');
-      }
-    });
+    this.addFamilyMemberForm
+      .get('dateOfBirth')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((dateOfBirth: any) => {
+        if (dateOfBirth) {
+          const age = this.calculateAge(dateOfBirth);
+          this.addFamilyMemberForm.get('age').setValue(age);
+        } else {
+          this.addFamilyMemberForm.get('age').setValue('');
+        }
+      });
   }
 
   /**
@@ -112,7 +117,8 @@ export class AddFamilyMemberComponent implements OnInit {
       ],
       qualification: [''],
       age: [
-        { value: '', disabled: true }],
+        { value: '', disabled: true }
+      ],
       isDependent: [''],
       relationshipId: [
         '',

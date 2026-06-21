@@ -8,7 +8,7 @@
 
 /** Angular Imports */
 import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/core';
-import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -37,7 +37,7 @@ export class CampaignMessageStepComponent implements OnChanges {
   @Input() editCampaignMessage: any;
 
   /** Camapaign Message */
-  message = new UntypedFormControl('');
+  message = new FormControl('');
   /** Column header names */
   parameterLabels: any[];
 

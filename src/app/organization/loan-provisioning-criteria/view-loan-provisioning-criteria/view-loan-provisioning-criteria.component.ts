@@ -7,7 +7,9 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { take } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import {
@@ -61,6 +63,7 @@ import { LoanProduct } from 'app/products/loan-products/models/loan-product.mode
 })
 export class ViewLoanProvisioningCriteriaComponent implements OnInit {
   private organizationService = inject(OrganizationService);
+  private destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   dialog = inject(MatDialog);
@@ -89,7 +92,7 @@ export class ViewLoanProvisioningCriteriaComponent implements OnInit {
    * @param {MatDialog} dialog Dialog reference.
    */
   constructor() {
-    this.route.data.subscribe((data: { loanProvisioningCriteria: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanProvisioningCriteria: any }) => {
       this.provisioningData = data.loanProvisioningCriteria;
     });
   }
@@ -124,14 +127,17 @@ export class ViewLoanProvisioningCriteriaComponent implements OnInit {
     });
     deleteCriteriaDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.organizationService.deleteProvisioningCriteria(this.provisioningData.criteriaId).subscribe(
-          () => {
-            this.router.navigate(['/organization/provisioning-criteria']);
-          },
-          (error) => {
-            console.error('Failed to delete provisioning criteria:', error);
-          }
-        );
+        this.organizationService
+          .deleteProvisioningCriteria(this.provisioningData.criteriaId)
+          .pipe(take(1))
+          .subscribe(
+            () => {
+              this.router.navigate(['/organization/provisioning-criteria']);
+            },
+            (error) => {
+              console.error('Failed to delete provisioning criteria:', error);
+            }
+          );
       }
     });
   }

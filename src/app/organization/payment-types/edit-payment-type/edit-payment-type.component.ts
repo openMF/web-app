@@ -7,8 +7,10 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { take } from 'rxjs';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -34,15 +36,16 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditPaymentTypeComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private organizationService = inject(OrganizationService);
+  private destroyRef = inject(DestroyRef);
   private alertService = inject(AlertService);
   private translateService = inject(TranslateService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
   /** Payment Type form. */
-  paymentTypeForm: UntypedFormGroup;
+  paymentTypeForm: FormGroup;
   /** Payment Type Data. */
   paymentTypeData: any;
   /** Flag to check if payment type is system defined. */
@@ -56,7 +59,7 @@ export class EditPaymentTypeComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data.subscribe((data: { paymentType: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { paymentType: any }) => {
       this.paymentTypeData = data.paymentType;
       this.isSystemDefined = data.paymentType.isSystemDefined;
     });
@@ -80,7 +83,8 @@ export class EditPaymentTypeComponent implements OnInit {
       ],
       description: [this.paymentTypeData.description],
       isCashPayment: [
-        { value: this.paymentTypeData.isCashPayment, disabled: this.isSystemDefined }],
+        { value: this.paymentTypeData.isCashPayment, disabled: this.isSystemDefined }
+      ],
       position: [
         { value: this.paymentTypeData.position, disabled: this.isSystemDefined },
         [
@@ -102,33 +106,39 @@ export class EditPaymentTypeComponent implements OnInit {
         name: paymentType.name,
         description: paymentType.description
       };
-      this.organizationService.updatePaymentType(this.paymentTypeData.id, systemDefinedPayload).subscribe({
-        next: (response) => {
-          this.router.navigate(['../../'], { relativeTo: this.route });
-        },
-        error: (error) => {
-          this.alertService.alert({
-            type: 'Error',
-            message:
-              error.error?.defaultUserMessage ||
-              this.translateService.instant('labels.text.Failed to update payment type. Please try again.')
-          });
-        }
-      });
+      this.organizationService
+        .updatePaymentType(this.paymentTypeData.id, systemDefinedPayload)
+        .pipe(take(1))
+        .subscribe({
+          next: (response) => {
+            this.router.navigate(['../../'], { relativeTo: this.route });
+          },
+          error: (error) => {
+            this.alertService.alert({
+              type: 'Error',
+              message:
+                error.error?.defaultUserMessage ||
+                this.translateService.instant('labels.text.Failed to update payment type. Please try again.')
+            });
+          }
+        });
     } else {
-      this.organizationService.updatePaymentType(this.paymentTypeData.id, paymentType).subscribe({
-        next: (response) => {
-          this.router.navigate(['../../'], { relativeTo: this.route });
-        },
-        error: (error) => {
-          this.alertService.alert({
-            type: 'Error',
-            message:
-              error.error?.defaultUserMessage ||
-              this.translateService.instant('labels.text.Failed to update payment type. Please try again.')
-          });
-        }
-      });
+      this.organizationService
+        .updatePaymentType(this.paymentTypeData.id, paymentType)
+        .pipe(take(1))
+        .subscribe({
+          next: (response) => {
+            this.router.navigate(['../../'], { relativeTo: this.route });
+          },
+          error: (error) => {
+            this.alertService.alert({
+              type: 'Error',
+              message:
+                error.error?.defaultUserMessage ||
+                this.translateService.instant('labels.text.Failed to update payment type. Please try again.')
+            });
+          }
+        });
     }
   }
 }

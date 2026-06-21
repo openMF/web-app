@@ -12,18 +12,13 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
+
+export type LoanAccountPath = 'loans' | 'working-capital-loans';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 import { DisbursementData } from './models/loan-account.model';
-
-export interface WorkingCapitalLoanDiscountUpdateRequest {
-  transactionAmount: number;
-  relatedResourceId: number;
-  externalId?: string;
-  note?: string;
-  locale: string;
-  dateFormat: string;
-}
+import { PeriodPaymentRateChange } from './models/working-capital-loan-account.model';
+import { BreachSchedule } from './models/working-capital-loan-account.model';
 
 /**
  * Loans service.
@@ -40,8 +35,8 @@ export class LoansService {
    * @param {string} loanId loanId of the loan.
    * @returns {Observable<any>}
    */
-  getLoanChargeTemplateResource(loanId: string): Observable<any> {
-    return this.http.get(`/loans/${loanId}/charges/template`);
+  getLoanChargeTemplateResource(loanAccountPath: LoanAccountPath, loanId: string): Observable<any> {
+    return this.http.get(`/${loanAccountPath}/${loanId}/charges/template`);
   }
 
   getLoanActionTemplate(loanId: string, command: string): Observable<any> {
@@ -155,6 +150,10 @@ export class LoansService {
     return this.http.get(`/working-capital-loans/${loanId}/amortization-schedule`);
   }
 
+  getWorkingCapitalLoanBreachSchedule(loanId: string): Observable<BreachSchedule[]> {
+    return this.http.get<BreachSchedule[]>(`/working-capital-loans/${loanId}/breach-schedule`);
+  }
+
   /**
    * Returns the loan template data with specific condition
    * @param loanId Loan Id
@@ -171,8 +170,8 @@ export class LoansService {
    * @param {any} loanCharge to apply on a Loan Account.
    * @returns {Observable<any>}
    */
-  createLoanCharge(loanId: string, resourceType: string, loanCharge: any): Observable<any> {
-    return this.http.post(`/loans/${loanId}/${resourceType}`, loanCharge);
+  createLoanCharge(loanAccountPath: LoanAccountPath, loanId: string, loanCharge: any): Observable<any> {
+    return this.http.post(`/${loanAccountPath}/${loanId}/charges`, loanCharge);
   }
 
   /**
@@ -223,6 +222,10 @@ export class LoansService {
   getWorkingCapitalLoanDetails(loanId: string) {
     const httpParams = new HttpParams().set('associations', 'all');
     return this.http.get(`/working-capital-loans/${loanId}`, { params: httpParams });
+  }
+
+  getWorkingCapitalLoanCharges(loanId: string) {
+    return this.http.get(`/working-capital-loans/${loanId}/charges`);
   }
 
   getApproveAssociationsDetails(loanId: any) {
@@ -607,8 +610,8 @@ export class LoansService {
    * @param {string} chargeId loans charge Id
    * @returns {Observable<any>}
    */
-  getLoansAccountCharge(accountId: string, chargeId: string): Observable<any> {
-    return this.http.get(`/loans/${accountId}/charges/${chargeId}`);
+  getLoansAccountCharge(loanAccountPath: LoanAccountPath, accountId: string, chargeId: string): Observable<any> {
+    return this.http.get(`/${loanAccountPath}/${accountId}/charges/${chargeId}`);
   }
 
   /**
@@ -618,9 +621,15 @@ export class LoansService {
    * @param {string} chargeId Charge Id
    * @returns {Observable<any>}
    */
-  executeLoansAccountChargesCommand(accountId: string, command: string, data: any, chargeId: any): Observable<any> {
+  executeLoansAccountChargesCommand(
+    loanAccountPath: LoanAccountPath,
+    accountId: string,
+    command: string,
+    data: any,
+    chargeId: any
+  ): Observable<any> {
     const httpParams = new HttpParams().set('command', command);
-    return this.http.post(`/loans/${accountId}/charges/${chargeId}`, data, { params: httpParams });
+    return this.http.post(`/${loanAccountPath}/${accountId}/charges/${chargeId}`, data, { params: httpParams });
   }
 
   /**
@@ -629,8 +638,13 @@ export class LoansService {
    * @param {any} chargeId Charge Id
    * @returns {Observable<any>}
    */
-  editLoansAccountCharge(accountId: string, data: any, chargeId: any): Observable<any> {
-    return this.http.put(`/loans/${accountId}/charges/${chargeId}`, data);
+  editLoansAccountCharge(
+    loanAccountPath: LoanAccountPath,
+    accountId: string,
+    data: any,
+    chargeId: any
+  ): Observable<any> {
+    return this.http.put(`/${loanAccountPath}/${accountId}/charges/${chargeId}`, data);
   }
 
   /**
@@ -638,8 +652,8 @@ export class LoansService {
    * @param {any} chargeId Charge Id
    * @returns {Observable<any>}
    */
-  deleteLoansAccountCharge(accountId: string, chargeId: any): Observable<any> {
-    return this.http.delete(`/loans/${accountId}/charges/${chargeId}`);
+  deleteLoansAccountCharge(loanAccountPath: LoanAccountPath, accountId: string, chargeId: any): Observable<any> {
+    return this.http.delete(`/${loanAccountPath}/${accountId}/charges/${chargeId}`);
   }
 
   /**
@@ -867,8 +881,8 @@ export class LoansService {
   /**
    * Returns the Working Capital Loan Payment Rates data
    */
-  getWorkingCapitalPeriodPaymentRates(loanId: any) {
-    return this.http.get(`/working-capital-loans/${loanId}/rate-changes`);
+  getWorkingCapitalPeriodPaymentRates(loanId: any): Observable<PeriodPaymentRateChange[]> {
+    return this.http.get<PeriodPaymentRateChange[]>(`/working-capital-loans/${loanId}/rate-changes`);
   }
 
   /**

@@ -15,14 +15,16 @@ import {
   ElementRef,
   ViewChild,
   AfterViewInit,
-  OnDestroy,
   OnChanges,
   SimpleChanges,
-  inject
+  inject,
+  DestroyRef
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { UntypedFormBuilder, UntypedFormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { take } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
 /** Custom Dialogs */
@@ -35,8 +37,7 @@ import { ConfigurationWizardService } from '../../../configuration-wizard/config
 
 /** Custom Dialog Component */
 import { ContinueSetupDialogComponent } from '../../../configuration-wizard/continue-setup-dialog/continue-setup-dialog.component';
-import { takeUntil } from 'rxjs/operators';
-import { ReplaySubject, Subject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 import { Currency } from 'app/shared/models/general.model';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { AsyncPipe } from '@angular/common';
@@ -61,15 +62,16 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
+export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnChanges {
   private route = inject(ActivatedRoute);
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private organizationservice = inject(OrganizationService);
   dialog = inject(MatDialog);
   private router = inject(Router);
   private translateService = inject(TranslateService);
   private configurationWizardService = inject(ConfigurationWizardService);
   private popoverService = inject(PopoverService);
+  private destroyRef = inject(DestroyRef);
 
   //** Defining PlaceHolders for the search bar */
   placeHolderLabel = '';
@@ -90,10 +92,7 @@ export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnDestr
   protected currencyData: ReplaySubject<Currency[]> = new ReplaySubject<Currency[]>(1);
 
   /** control for the filter select */
-  protected filterFormCtrl: UntypedFormControl = new UntypedFormControl('');
-
-  /** Subject that emits when the component has been destroyed. */
-  protected _onDestroy = new Subject<void>();
+  protected filterFormCtrl: FormControl = new FormControl('');
 
   /**
    * Retrieves the currency data from `resolve`.
@@ -103,7 +102,7 @@ export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnDestr
    * @param {MatDialog} dialog Mat Dialog
    */
   constructor() {
-    this.route.parent.data.subscribe((data: { currencies: any }) => {
+    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { currencies: any }) => {
       this.selectedCurrencies = data.currencies.selectedCurrencyOptions;
       this.currencyList = data.currencies.currencyOptions;
     });
@@ -112,15 +111,10 @@ export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnDestr
   ngOnInit() {
     this.placeHolderLabel = this.translateService.instant('labels.text.Search');
     this.noEntriesFoundLabel = this.translateService.instant('labels.text.No data found');
-    this.filterFormCtrl.valueChanges.pipe(takeUntil(this._onDestroy)).subscribe(() => {
+    this.filterFormCtrl.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.searchItem();
     });
     this.createCurrencyForm();
-  }
-
-  ngOnDestroy(): void {
-    this._onDestroy.next();
-    this._onDestroy.complete();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -165,14 +159,17 @@ export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnDestr
     const selectedCurrencyCodes: any[] = this.selectedCurrencies.map((currency) => currency.code);
     if (!selectedCurrencyCodes.includes(newCurrency.code)) {
       selectedCurrencyCodes.push(newCurrency.code);
-      this.organizationservice.updateCurrencies(selectedCurrencyCodes).subscribe((response: any) => {
-        this.selectedCurrencies.push(newCurrency);
-        this.formRef.resetForm();
-        if (this.configurationWizardService.showCurrencyForm) {
-          this.configurationWizardService.showCurrencyForm = false;
-          this.openDialog();
-        }
-      });
+      this.organizationservice
+        .updateCurrencies(selectedCurrencyCodes)
+        .pipe(take(1))
+        .subscribe((response: any) => {
+          this.selectedCurrencies.push(newCurrency);
+          this.formRef.resetForm();
+          if (this.configurationWizardService.showCurrencyForm) {
+            this.configurationWizardService.showCurrencyForm = false;
+            this.openDialog();
+          }
+        });
     }
   }
 
@@ -189,10 +186,13 @@ export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnDestr
     });
     deleteCurrencyDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.organizationservice.updateCurrencies(selectedCurrencyCodes).subscribe(() => {
-          this.selectedCurrencies.splice(index, 1);
-          this.formRef.resetForm();
-        });
+        this.organizationservice
+          .updateCurrencies(selectedCurrencyCodes)
+          .pipe(take(1))
+          .subscribe(() => {
+            this.selectedCurrencies.splice(index, 1);
+            this.formRef.resetForm();
+          });
       }
     });
   }

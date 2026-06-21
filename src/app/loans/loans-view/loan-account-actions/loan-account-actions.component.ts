@@ -139,7 +139,7 @@ export class LoanAccountActionsComponent {
     'Buy Down Fee': boolean;
     'Undo Write-off': boolean;
     'Attach Loan Originator': boolean;
-    'Update discount': boolean;
+    'Discount Fee': boolean;
   } = {
     Close: false,
     'Undo Approval': false,
@@ -181,7 +181,7 @@ export class LoanAccountActionsComponent {
     'Buy Down Fee': false,
     'Undo Write-off': false,
     'Attach Loan Originator': false,
-    'Update discount': false
+    'Discount Fee': false
   };
 
   actionButtonData: any;

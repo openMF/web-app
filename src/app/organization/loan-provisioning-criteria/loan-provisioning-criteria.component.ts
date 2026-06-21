@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -25,8 +26,6 @@ import {
 } from '@angular/material/table';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
-/** rxjs Imports */
-import { of } from 'rxjs';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -58,6 +57,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class LoanProvisioningCriteriaComponent implements OnInit {
   private route = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
 
   /** Loan Provisioning Criteria data. */
   loanProvisioningCriteriaData: any;
@@ -74,12 +74,8 @@ export class LoanProvisioningCriteriaComponent implements OnInit {
   /** Sorter for loan provisioning criteria table. */
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  /**
-   * Retrieves the loan provisioning criteria data from `resolve`.
-   * @param {ActivatedRoute} route Activated Route.
-   */
   constructor() {
-    this.route.data.subscribe((data: { loanProvisioningCriterias: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanProvisioningCriterias: any }) => {
       this.loanProvisioningCriteriaData = data.loanProvisioningCriterias;
     });
   }

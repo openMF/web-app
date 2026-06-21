@@ -168,6 +168,9 @@ export class CreateLoansAccountComponent extends LoanProductBaseComponent implem
   setProductType($event: any): void {
     this.productType = $event;
     this.loanProductService.initialize(this.productType);
+    this.loansAccountProductTemplate = null;
+    this.productId = null;
+    this.cdr.detectChanges();
   }
 
   setDatatables(): void {

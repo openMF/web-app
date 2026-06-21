@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatPaginator } from '@angular/material/paginator';
 import {
   MatTableDataSource,
@@ -63,6 +64,7 @@ export class SearchPageComponent {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private cdr = inject(ChangeDetectorRef);
+  private destroyRef = inject(DestroyRef);
 
   /** Flags if number of search results exceed 200 */
   overload: boolean;
@@ -88,7 +90,7 @@ export class SearchPageComponent {
    * @param {Router} router Router
    */
   constructor() {
-    this.route.data.subscribe((data: { searchResults: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { searchResults: any }) => {
       this.dataSource = new MatTableDataSource(data.searchResults);
       this.dataSource.paginator = this.paginator;
       this.hasResults = data.searchResults.length > 0;

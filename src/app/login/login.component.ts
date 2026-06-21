@@ -7,12 +7,9 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
-
-/** rxjs Imports */
-
-import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 /**
  * Interface for version information.
@@ -74,7 +71,7 @@ import { VersionService } from '../system/version.service';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
   /** Whether to show the tenant selector dropdown */
   showTenantSelector = true;
   /** Show version info table if env allows */
@@ -86,9 +83,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   private settingsService = inject(SettingsService);
   private themingService = inject(ThemingService);
   private router = inject(Router);
-
   private versionService = inject(VersionService);
   private translateService = inject(TranslateService);
+  private destroyRef = inject(DestroyRef);
 
   public environment = environment;
 
@@ -107,12 +104,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   resetPassword = false;
   /** True if user requires two factor authentication. */
   twoFactorAuthenticationRequired = false;
-  /** Subscription to alerts. */
-  alert$: Subscription;
   logoPath = 'assets/images/default_home.png';
   logoPathDark = 'assets/images/white-mifos.png';
-  /** Subscription to theme changes. */
-  theme$: Subscription;
 
   themeDarkEnabled: boolean = false;
 
@@ -124,7 +117,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.updateLogo();
     this.themeDarkEnabled = this.settingsService.themeDarkEnabled;
     // Subscribe to theme changes
-    this.theme$ = this.themingService.theme.subscribe((value: string) => {
+    this.themingService.theme.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.themeDarkEnabled = this.settingsService.themeDarkEnabled;
     });
 
@@ -132,7 +125,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.themingService.setDarkMode(!!this.settingsService.themeDarkEnabled);
 
     // Subscribe to alerts
-    this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
+    this.alertService.alertEvent.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((alertEvent: Alert) => {
       const alertType = alertEvent.type;
       if (alertType === this.translateService.instant('errors.auth.passwordExpired.type')) {
         this.twoFactorAuthenticationRequired = false;
@@ -177,18 +170,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
       );
     this.server = this.settingsService.server;
-  }
-
-  /**
-   * Unsubscribes from alerts and theme changes.
-   */
-  ngOnDestroy() {
-    if (this.alert$) {
-      this.alert$.unsubscribe();
-    }
-    if (this.theme$) {
-      this.theme$.unsubscribe();
-    }
   }
 
   reloadSettings(): void {

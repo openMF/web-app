@@ -12,6 +12,7 @@ const angularEslintTemplatePlugin = require('@angular-eslint/eslint-plugin-templ
 const angularTemplateParser = require('@angular-eslint/template-parser');
 const tseslint = require('@typescript-eslint/eslint-plugin');
 const tsParser = require('@typescript-eslint/parser');
+const mifosxPlaywrightPlugin = require('./eslint-rules');
 
 module.exports = [
   {
@@ -70,8 +71,21 @@ module.exports = [
     }
   },
 
-  // HTML files configurationNN
+  // Playwright E2E suite — custom architectural rules.
+  // Scoped narrowly to playwright/**/*.ts so the rules do not run
+  // against Angular app code.
+  {
+    files: ['playwright/**/*.ts'],
+    plugins: {
+      'mifosx-playwright': mifosxPlaywrightPlugin
+    },
+    rules: {
+      'mifosx-playwright/no-direct-login-goto': 'error',
+      'mifosx-playwright/no-bare-wait-for-timeout': 'error'
+    }
+  },
 
+  // HTML files configuration
   {
     files: ['**/*.html'],
     languageOptions: {

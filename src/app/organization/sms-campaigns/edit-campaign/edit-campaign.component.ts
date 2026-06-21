@@ -7,7 +7,9 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { take } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -49,6 +51,7 @@ export class EditCampaignComponent {
   private dateUtils = inject(Dates);
   private organizationService = inject(OrganizationService);
   private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
 
   /** smsCampaign */
   smsCampaign: any;
@@ -69,11 +72,13 @@ export class EditCampaignComponent {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data.subscribe((data: { smsCampaign: any; smsCampaignTemplate: any }) => {
-      this.smsCampaignTemplate = data.smsCampaignTemplate;
-      this.smsCampaign = data.smsCampaign;
-      this.smsCampaign.editFlag = true;
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { smsCampaign: any; smsCampaignTemplate: any }) => {
+        this.smsCampaignTemplate = data.smsCampaignTemplate;
+        this.smsCampaign = data.smsCampaign;
+        this.smsCampaign.editFlag = true;
+      });
   }
 
   /**
@@ -118,8 +123,11 @@ export class EditCampaignComponent {
         dateTimeFormat
       );
     }
-    this.organizationService.updateSmsCampaign(smsCampaign, this.smsCampaign.id).subscribe((response: any) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.organizationService
+      .updateSmsCampaign(smsCampaign, this.smsCampaign.id)
+      .pipe(take(1))
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
 }

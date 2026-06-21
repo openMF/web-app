@@ -7,7 +7,9 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { take } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -66,6 +68,7 @@ export class EntityDataTableChecksComponent implements OnInit {
   private organizationService = inject(OrganizationService);
   private route = inject(ActivatedRoute);
   private dialog = inject(MatDialog);
+  private destroyRef = inject(DestroyRef);
 
   /** Entity Data Table Checks data. */
   entityDataTableChecksData: any;
@@ -112,7 +115,7 @@ export class EntityDataTableChecksComponent implements OnInit {
    * @param {MatDialog} dialog Dialog reference.
    */
   constructor() {
-    this.route.data.subscribe((data: { entityDataTableChecks: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { entityDataTableChecks: any }) => {
       this.entityDataTableChecksData = data.entityDataTableChecks.pageItems;
     });
   }
@@ -174,12 +177,15 @@ export class EntityDataTableChecksComponent implements OnInit {
     });
     deleteEntityDataTableCheckDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.organizationService.deleteEntityDataTableCheck(entityDataTableCheckId).subscribe(() => {
-          this.entityDataTableChecksData = this.entityDataTableChecksData.filter(
-            (entityDataTableChecks: any) => entityDataTableChecks.id !== entityDataTableCheckId
-          );
-          this.dataSource.data = this.entityDataTableChecksData;
-        });
+        this.organizationService
+          .deleteEntityDataTableCheck(entityDataTableCheckId)
+          .pipe(take(1))
+          .subscribe(() => {
+            this.entityDataTableChecksData = this.entityDataTableChecksData.filter(
+              (entityDataTableChecks: any) => entityDataTableChecks.id !== entityDataTableCheckId
+            );
+            this.dataSource.data = this.entityDataTableChecksData;
+          });
       }
     });
   }

@@ -9,24 +9,32 @@
 /** Angular Imports */
 import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
+import { LoanBaseResolver } from 'app/loans/common-resolvers/loan-base.resolver';
 import { LoansService } from 'app/loans/loans.service';
+import { PeriodPaymentRateChange } from 'app/loans/models/working-capital-loan-account.model';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 /**
  * Working Capital Period Payment Rates resolver.
  */
 @Injectable()
-export class LoanPeriodPaymentRatesResolver {
+export class LoanPeriodPaymentRatesResolver extends LoanBaseResolver {
   private loansService = inject(LoansService);
 
   /**
    * Returns the Loans data.
    * @returns {Observable<any>}
    */
-  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+  resolve(route: ActivatedRouteSnapshot): Observable<PeriodPaymentRateChange[]> {
+    this.initialize(route);
     const loanId = route.paramMap.get('loanId') || route.parent.paramMap.get('loanId');
-    return this.loansService.getWorkingCapitalPeriodPaymentRates(loanId);
+    if (!isNaN(+loanId)) {
+      if (this.isWorkingCapital) {
+        return this.loansService.getWorkingCapitalPeriodPaymentRates(loanId);
+      }
+    }
+    return of([]);
   }
 }

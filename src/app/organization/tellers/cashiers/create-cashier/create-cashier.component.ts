@@ -7,8 +7,10 @@
  */
 
 /** Angular Imports. */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { take } from 'rxjs';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -32,12 +34,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateCashierComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private dateUtils = inject(Dates);
   private organizationService = inject(OrganizationService);
   private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -46,7 +49,7 @@ export class CreateCashierComponent implements OnInit {
   /** Cashier Template. */
   cashierTemplate: any;
   /** Create cashier form. */
-  createCashierForm: UntypedFormGroup;
+  createCashierForm: FormGroup;
   /** Hours options for time selection (00-23). */
   hours: string[] = Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0'));
   /** Minutes options for time selection (00-59). */
@@ -62,7 +65,7 @@ export class CreateCashierComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { cashierTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { cashierTemplate: any }) => {
       this.cashierTemplate = data.cashierTemplate;
     });
   }
@@ -147,8 +150,11 @@ export class CreateCashierComponent implements OnInit {
       data.startTime = `${hourStart}:${minStart}`;
       data.endTime = `${hourEnd}:${minEnd}`;
     }
-    this.organizationService.createCashier(this.cashierTemplate.tellerId, data).subscribe((response: any) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.organizationService
+      .createCashier(this.cashierTemplate.tellerId, data)
+      .pipe(take(1))
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
 }

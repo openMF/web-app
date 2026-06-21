@@ -7,8 +7,9 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
-import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, ViewChild, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import { CurrencyPipe, NgClass } from '@angular/common';
@@ -93,6 +94,7 @@ export class TransactionsTabComponent implements OnInit {
   private dateUtils = inject(Dates);
   private accountTransfersService = inject(AccountTransfersService);
   private translateService = inject(TranslateService);
+  private destroyRef = inject(DestroyRef);
 
   /** Savings Account Status */
   status: any;
@@ -101,8 +103,8 @@ export class TransactionsTabComponent implements OnInit {
   /** Transactions Data */
   transactionsData: SavingsAccountTransaction[] = [];
   /** Form control to handle accural parameter */
-  hideAccrualsParam: UntypedFormControl;
-  hideReversedParam: UntypedFormControl;
+  hideAccrualsParam: FormControl;
+  hideReversedParam: FormControl;
   /** Columns to be displayed in transactions table. */
   displayedColumns: string[] = [
     'row',
@@ -129,17 +131,19 @@ export class TransactionsTabComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.parent.parent.data.subscribe((data: { savingsAccountData: any }) => {
-      this.transactionsData = data.savingsAccountData.transactions;
-      this.status = data.savingsAccountData.status.value;
-      this.currency = data.savingsAccountData.currency || null;
-    });
+    this.route.parent.parent.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { savingsAccountData: any }) => {
+        this.transactionsData = data.savingsAccountData.transactions;
+        this.status = data.savingsAccountData.status.value;
+        this.currency = data.savingsAccountData.currency || null;
+      });
     this.accountId = this.route.parent.parent.snapshot.params['savingAccountId'];
   }
 
   ngOnInit() {
-    this.hideAccrualsParam = new UntypedFormControl(false);
-    this.hideReversedParam = new UntypedFormControl(false);
+    this.hideAccrualsParam = new FormControl(false);
+    this.hideReversedParam = new FormControl(false);
     this.setTransactions();
   }
 

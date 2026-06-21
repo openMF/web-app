@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { EntityDatatableTabComponent } from '../../../../shared/tabs/entity-datatable-tab/entity-datatable-tab.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -27,6 +28,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class DatatableTabsComponent {
   private route = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
 
   entityId: string;
   /** Office Datatable */
@@ -34,14 +36,10 @@ export class DatatableTabsComponent {
   /** Multi Row Datatable Flag */
   multiRowDatatableFlag: boolean;
 
-  /**
-   * Fetches data table data from `resolve`
-   * @param {ActivatedRoute} route Activated Route.
-   */
   constructor() {
     this.entityId = this.route.parent.parent.snapshot.paramMap.get('officeId');
 
-    this.route.data.subscribe((data: { officeDatatable: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { officeDatatable: any }) => {
       this.entityDatatable = data.officeDatatable;
       this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
     });

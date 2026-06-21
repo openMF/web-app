@@ -15,9 +15,12 @@ import {
   ElementRef,
   ViewChild,
   AfterViewInit,
-  inject
+  inject,
+  DestroyRef
 } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { take } from 'rxjs';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -47,8 +50,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateEmployeeComponent implements OnInit, AfterViewInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private organizationService = inject(OrganizationService);
+  private destroyRef = inject(DestroyRef);
   private settingsService = inject(SettingsService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
@@ -62,7 +66,7 @@ export class CreateEmployeeComponent implements OnInit, AfterViewInit {
   /** Maximum joining date allowed. */
   maxDate = new Date();
   /** Employee form. */
-  employeeForm: UntypedFormGroup;
+  employeeForm: FormGroup;
   /** Office data. */
   officeData: any;
 
@@ -84,7 +88,7 @@ export class CreateEmployeeComponent implements OnInit, AfterViewInit {
    * @param {MatDialog} dialog MatDialog.
    */
   constructor() {
-    this.route.data.subscribe((data: { offices: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });
   }
@@ -151,14 +155,17 @@ export class CreateEmployeeComponent implements OnInit, AfterViewInit {
       dateFormat,
       locale
     };
-    this.organizationService.createEmployee(data).subscribe((response: any) => {
-      if (this.configurationWizardService.showEmployeeForm) {
-        this.configurationWizardService.showEmployeeForm = false;
-        this.openDialog();
-      } else {
-        this.router.navigate(['../'], { relativeTo: this.route });
-      }
-    });
+    this.organizationService
+      .createEmployee(data)
+      .pipe(take(1))
+      .subscribe((response: any) => {
+        if (this.configurationWizardService.showEmployeeForm) {
+          this.configurationWizardService.showEmployeeForm = false;
+          this.openDialog();
+        } else {
+          this.router.navigate(['../'], { relativeTo: this.route });
+        }
+      });
   }
 
   /**

@@ -7,7 +7,9 @@
  */
 
 /** Angular Imports. */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { take } from 'rxjs';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -42,6 +44,7 @@ export class ViewHolidaysComponent {
   private dialog = inject(MatDialog);
   private translateService = inject(TranslateService);
   private organizationService = inject(OrganizationService);
+  private destroyRef = inject(DestroyRef);
 
   /** Holiday data. */
   holidayData: any;
@@ -51,7 +54,7 @@ export class ViewHolidaysComponent {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.subscribe((data: { holidays: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { holidays: any }) => {
       this.holidayData = data.holidays;
     });
   }
@@ -65,9 +68,12 @@ export class ViewHolidaysComponent {
     });
     deleteHolidayDialogRef.afterClosed().subscribe((response: any) => {
       if (response?.delete) {
-        this.organizationService.deleteHoliday(this.holidayData.id).subscribe(() => {
-          this.router.navigate(['../'], { relativeTo: this.route });
-        });
+        this.organizationService
+          .deleteHoliday(this.holidayData.id)
+          .pipe(take(1))
+          .subscribe(() => {
+            this.router.navigate(['../'], { relativeTo: this.route });
+          });
       }
     });
   }
@@ -87,9 +93,12 @@ export class ViewHolidaysComponent {
     });
     unAssignStaffDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response?.confirm) {
-        this.organizationService.activateHoliday(this.holidayData.id).subscribe(() => {
-          this.router.navigate(['/organization/holidays']);
-        });
+        this.organizationService
+          .activateHoliday(this.holidayData.id)
+          .pipe(take(1))
+          .subscribe(() => {
+            this.router.navigate(['/organization/holidays']);
+          });
       }
     });
   }

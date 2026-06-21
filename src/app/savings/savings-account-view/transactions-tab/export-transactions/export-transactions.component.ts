@@ -7,9 +7,10 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DomSanitizer } from '@angular/platform-browser';
-import { UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -35,10 +36,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 export class ExportTransactionsComponent implements OnInit {
   private sanitizer = inject(DomSanitizer);
   private reportsService = inject(ReportsService);
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private dateUtils = inject(Dates);
   private route = inject(ActivatedRoute);
   private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -63,9 +65,11 @@ export class ExportTransactionsComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.parent.parent.data.subscribe((data: { savingsAccountData: any }) => {
-      this.savingsAccountId = data.savingsAccountData.accountNo;
-    });
+    this.route.parent.parent.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { savingsAccountData: any }) => {
+        this.savingsAccountId = data.savingsAccountData.accountNo;
+      });
   }
 
   ngOnInit() {

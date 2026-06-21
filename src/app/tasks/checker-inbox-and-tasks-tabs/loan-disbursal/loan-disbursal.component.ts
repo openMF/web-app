@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { AfterViewInit, ChangeDetectionStrategy, Component, ViewChild, inject } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ViewChild, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
@@ -69,6 +70,7 @@ export class LoanDisbursalComponent implements AfterViewInit {
   private settingsService = inject(SettingsService);
   private translateService = inject(TranslateService);
   private tasksService = inject(TasksService);
+  private destroyRef = inject(DestroyRef);
 
   /** Loans Data */
   loans: any;
@@ -97,7 +99,7 @@ export class LoanDisbursalComponent implements AfterViewInit {
    * @param {TasksService} tasksService Tasks Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { loansData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loansData: any }) => {
       this.loans = data.loansData.pageItems;
       this.loans = this.loans.filter((account: any) => {
         return account.status.waitingForDisbursal === true;

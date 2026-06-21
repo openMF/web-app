@@ -26,7 +26,8 @@ describe('TakeSurveyComponent', () => {
       id: 10,
       name: 'Test Survey',
       questionDatas: [
-        { id: 1, componentKey: 'A', answer: { id: 2, value: '5' } }]
+        { id: 1, componentKey: 'A', answer: { id: 2, value: '5' } }
+      ]
     }
   ];
 

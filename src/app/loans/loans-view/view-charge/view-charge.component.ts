@@ -117,7 +117,13 @@ export class ViewChargeComponent extends LoanAccountTabBaseComponent {
           locale
         };
         this.loansService
-          .executeLoansAccountChargesCommand(this.chargeData.loanId, 'pay', dataObject, this.chargeData.id)
+          .executeLoansAccountChargesCommand(
+            this.loanProductService.loanAccountPath,
+            this.chargeData.loanId,
+            'pay',
+            dataObject,
+            this.chargeData.id
+          )
           .subscribe(() => {
             this.reload();
           });
@@ -141,7 +147,13 @@ export class ViewChargeComponent extends LoanAccountTabBaseComponent {
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
         this.loansService
-          .executeLoansAccountChargesCommand(this.chargeData.loanId, 'waive', {}, this.chargeData.id)
+          .executeLoansAccountChargesCommand(
+            this.loanProductService.loanAccountPath,
+            this.chargeData.loanId,
+            'waive',
+            {},
+            this.chargeData.id
+          )
           .subscribe(() => {
             this.reload();
           });
@@ -189,7 +201,12 @@ export class ViewChargeComponent extends LoanAccountTabBaseComponent {
           locale
         };
         this.loansService
-          .editLoansAccountCharge(this.loansAccountData.id, dataObject, this.chargeData.id)
+          .editLoansAccountCharge(
+            this.loanProductService.loanAccountPath,
+            this.loansAccountData.id,
+            dataObject,
+            this.chargeData.id
+          )
           .subscribe(() => {
             this.reload();
           });
@@ -206,9 +223,15 @@ export class ViewChargeComponent extends LoanAccountTabBaseComponent {
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.loansService.deleteLoansAccountCharge(this.loansAccountData.id, this.chargeData.id).subscribe(() => {
-          this.reload();
-        });
+        this.loansService
+          .deleteLoansAccountCharge(
+            this.loanProductService.loanAccountPath,
+            this.loansAccountData.id,
+            this.chargeData.id
+          )
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }

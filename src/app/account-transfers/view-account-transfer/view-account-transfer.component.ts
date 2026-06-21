@@ -8,7 +8,8 @@
 
 /** Angular Imports */
 import { Location, NgIf, NgClass } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -41,6 +42,7 @@ export class ViewAccountTransferComponent {
   private dialog = inject(MatDialog);
   private accountTransfersService = inject(AccountTransfersService);
   private translateService = inject(TranslateService);
+  private destroyRef = inject(DestroyRef);
 
   viewAccountTransferData: any;
   /**
@@ -49,7 +51,7 @@ export class ViewAccountTransferComponent {
    * @param {Location} location Location.
    */
   constructor() {
-    this.route.data.subscribe((data: { viewAccountTransferData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { viewAccountTransferData: any }) => {
       this.viewAccountTransferData = data.viewAccountTransferData;
     });
   }

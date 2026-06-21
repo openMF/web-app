@@ -7,24 +7,42 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
-  MatTableDataSource,
-  MatTable,
-  MatColumnDef,
-  MatHeaderCellDef,
-  MatHeaderCell,
-  MatCellDef,
-  MatCell,
-  MatHeaderRowDef,
-  MatHeaderRow,
-  MatRowDef,
-  MatRow
-} from '@angular/material/table';
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  OnInit,
+  ViewChild,
+  inject
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+
+interface Report {
+  id: number;
+  reportName: string;
+  reportType: string;
+  reportCategory: string;
+}
+
+interface ReportGroup {
+  category: string;
+  categoryKey: string;
+  reports: Report[];
+  collapsed: boolean;
+}
+
+const ENGINE_TYPES = [
+  'Table',
+  'Pentaho',
+  'BIRT',
+  'Chart',
+  'SMS'
+] as const;
 
 /**
  * Reports component.
@@ -35,129 +53,158 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./reports.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    MatTable,
-    MatSort,
-    MatColumnDef,
-    MatHeaderCellDef,
-    MatHeaderCell,
-    MatSortHeader,
-    MatCellDef,
-    MatCell,
-    MatHeaderRowDef,
-    MatHeaderRow,
-    MatRowDef,
-    MatRow,
+    RouterLink,
+    MatTooltipModule,
     MatPaginator
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReportsComponent implements OnInit {
+  private static readonly PINNED_KEY = 'mifosx.reports.pinned';
+  private static readonly COLLAPSE_KEY = 'mifosx.reports.collapsedGroups';
+  private static readonly PINNED_LIMIT = 6;
+
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
+  private cdr = inject(ChangeDetectorRef);
 
-  /** Reports data. */
-  reportsData: any;
-  /** Report category filter. */
-  filter: string;
-  /** Columns to be displayed in reports table. */
-  displayedColumns: string[] = [
-    'reportName',
-    'reportType',
-    'reportCategory'
+  /** Raw reports data from resolver. */
+  private reportsData: Report[] = [];
+  /** Category filter from route (e.g. /reports/Loan). */
+  private routeCategory: string | undefined;
+
+  /** Free-text search term. */
+  searchTerm = '';
+  /** Selected engine filter, null = all engines. */
+  selectedEngine: string | null = null;
+
+  /** State persisted in localStorage. */
+  private pinnedIds = new Set<number>();
+  private collapsedGroups = new Set<string>();
+
+  /** Derived views. */
+  totalCount = 0;
+  filteredCount = 0;
+  pinnedReports: Report[] = [];
+  engineCounts: Record<string, number> = {};
+  paginatedGroups: ReportGroup[] = [];
+  private filteredReports: Report[] = [];
+
+  pageSize = 25;
+  pageIndex = 0;
+  readonly pageSizeOptions = [
+    10,
+    25,
+    50,
+    100
   ];
-  /** Data source for reports table. */
-  dataSource = new MatTableDataSource();
 
-  /** Paginator for reports table. */
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  /** Sorter for reports table. */
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
-  /**
-   * Retrieves the reports data from `resolve`.
-   * @param {ActivatedRoute} route Activated Route.
-   * Prevents reuse of route parameter `filter`.
-   * @param {Router} router: Router.
-   */
+  readonly engines = ENGINE_TYPES;
+
   constructor() {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.route.data.subscribe((data: { reports: any }) => {
-      this.reportsData = data.reports;
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { reports: Report[] }) => {
+      this.reportsData = data.reports ?? [];
     });
-    this.filter = this.route.snapshot.params['filter'];
+    this.routeCategory = this.route.snapshot.params['filter'];
   }
 
-  /*
-   *Sets and filters the reports table by category.
-   */
-  ngOnInit() {
-    this.setReports();
-    this.filterReportsByCategory();
+  ngOnInit(): void {
+    this.loadPersistedState();
+    this.totalCount = this.reportsData.length;
+    this.computeEngineCounts();
+    this.recompute();
   }
 
-  /**
-   * Switches filterPredicate if filterValue is not null.
-   * @param {string} filterValue filter string for mat-table.
-   */
-  applyFilter(filterValue: string) {
-    if (filterValue.length) {
-      this.setCustomFilterPredicate();
-      this.dataSource.filter = filterValue.trim().toLowerCase();
-    } else {
-      this.filterReportsByCategory();
+  /* ── Filtering / search ───────────────────────────────────── */
+
+  onSearchInput(value: string): void {
+    this.searchTerm = value;
+    this.pageIndex = 0;
+    if (this.paginator) {
+      this.paginator.firstPage();
     }
+    this.recompute();
   }
 
-  /**
-   * Initializes the data source, paginator and sorter for reports table.
-   */
-  setReports() {
-    this.dataSource = new MatTableDataSource(this.reportsData);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  setEngineFilter(engine: string | null): void {
+    this.selectedEngine = this.selectedEngine === engine ? null : engine;
+    this.pageIndex = 0;
+    if (this.paginator) {
+      this.paginator.firstPage();
+    }
+    this.recompute();
   }
 
-  /**
-   * Filters the data source only for report category passed in route params.
-   */
-  filterReportsByCategory() {
-    this.dataSource.filterPredicate = (data: any, filter: string) => {
-      return data.reportCategory === filter;
-    };
-    this.dataSource.filter = this.filter;
+  clearFilters(): void {
+    this.searchTerm = '';
+    this.selectedEngine = null;
+    this.pageIndex = 0;
+    if (this.paginator) {
+      this.paginator.firstPage();
+    }
+    this.recompute();
   }
 
-  /**
-   *  Filters Reports for filter value string and report category.
-   */
-  setCustomFilterPredicate() {
-    this.dataSource.filterPredicate = (data: any, filter: string) => {
-      /** Transform the data into a lowercase string of all property values. */
-      const dataStr = Object.keys(data)
-        .reduce(function (currentTerm: string, key: string) {
-          /** Use an obscure Unicode character to delimit the words in the concatenated string.
-           * This avoids matches where the values of two columns combined will match the user's query
-           */
-          return currentTerm + /** @type {any} */ data[key] + '◬';
-        }, '')
-        .toLowerCase();
-      /** Transform the filter by converting it to lowercase and removing whitespace. */
-      const transformedFilter = filter.trim().toLowerCase();
-      /* Seperates filter for All reports page.*/
-
-      if (this.filter) {
-        return dataStr.indexOf(transformedFilter) !== -1 && data.reportCategory === this.filter;
-      } else {
-        return dataStr.indexOf(transformedFilter) !== -1;
-      }
-    };
+  hasActiveFilters(): boolean {
+    return this.searchTerm.length > 0 || this.selectedEngine !== null;
   }
+
+  onPageChange(event: { pageIndex: number; pageSize: number }): void {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.regroupPaginated();
+    this.cdr.markForCheck();
+  }
+
+  /* ── Pinning ──────────────────────────────────────────────── */
+
+  togglePin(report: Report, event: Event): void {
+    event.stopPropagation();
+    event.preventDefault();
+    if (this.pinnedIds.has(report.id)) {
+      this.pinnedIds.delete(report.id);
+    } else if (this.pinnedIds.size < ReportsComponent.PINNED_LIMIT) {
+      this.pinnedIds.add(report.id);
+    } else {
+      // At limit — no-op; user must unpin first.
+      return;
+    }
+    this.savePinned();
+    this.computePinned();
+    this.cdr.markForCheck();
+  }
+
+  isPinned(reportId: number): boolean {
+    return this.pinnedIds.has(reportId);
+  }
+
+  isPinLimitReached(): boolean {
+    return this.pinnedIds.size >= ReportsComponent.PINNED_LIMIT;
+  }
+
+  /* ── Group collapse ───────────────────────────────────────── */
+
+  toggleGroup(categoryKey: string): void {
+    if (this.collapsedGroups.has(categoryKey)) {
+      this.collapsedGroups.delete(categoryKey);
+    } else {
+      this.collapsedGroups.add(categoryKey);
+    }
+    this.saveCollapsed();
+    this.regroupPaginated();
+    this.cdr.markForCheck();
+  }
+
+  /* ── Translation key helpers (kept from previous impl) ────── */
 
   getCategoryKey(category: string): string {
     if (!category || category === '(NULL)' || category.trim() === '') {
       return 'labels.text.withoutCategory';
     }
-
     if (category.startsWith('labels.text.')) {
       return category;
     }
@@ -165,8 +212,126 @@ export class ReportsComponent implements OnInit {
   }
 
   cleanTranslatedCategory(translatedText: string): string {
-    if (!translatedText) return '';
-
+    if (!translatedText) {
+      return '';
+    }
     return translatedText.replace(/^labels\.text\./, '').replace(/^label\.text\./, '');
+  }
+
+  trackById(_: number, item: Report): number {
+    return item.id;
+  }
+
+  trackByCategory(_: number, group: ReportGroup): string {
+    return group.categoryKey;
+  }
+
+  isGroupCollapsed(categoryKey: string): boolean {
+    return this.collapsedGroups.has(categoryKey);
+  }
+
+  /* ── Internals ────────────────────────────────────────────── */
+
+  private recompute(): void {
+    const term = this.searchTerm.trim().toLowerCase();
+    this.filteredReports = this.reportsData.filter((r) => {
+      if (this.routeCategory && r.reportCategory !== this.routeCategory) {
+        return false;
+      }
+      if (this.selectedEngine && r.reportType !== this.selectedEngine) {
+        return false;
+      }
+      if (term.length > 0) {
+        const haystack = `${r.reportName} ${r.reportType} ${r.reportCategory}`.toLowerCase();
+        if (!haystack.includes(term)) {
+          return false;
+        }
+      }
+      return true;
+    });
+    this.filteredCount = this.filteredReports.length;
+    this.regroupPaginated();
+    this.computePinned();
+  }
+
+  private regroupPaginated(): void {
+    const start = this.pageIndex * this.pageSize;
+    const pageSlice = this.filteredReports.slice(start, start + this.pageSize);
+    const groupsMap = new Map<string, Report[]>();
+    pageSlice.forEach((report) => {
+      const key = this.getCategoryKey(report.reportCategory);
+      const bucket = groupsMap.get(key) ?? [];
+      bucket.push(report);
+      groupsMap.set(key, bucket);
+    });
+    this.paginatedGroups = Array.from(groupsMap.entries()).map(
+      ([
+        categoryKey,
+        reports
+      ]) => ({
+        category: reports[0]?.reportCategory ?? '',
+        categoryKey,
+        reports,
+        collapsed: this.collapsedGroups.has(categoryKey)
+      })
+    );
+  }
+
+  private computePinned(): void {
+    if (this.pinnedIds.size === 0) {
+      this.pinnedReports = [];
+      return;
+    }
+    this.pinnedReports = this.reportsData.filter((r) => this.pinnedIds.has(r.id));
+  }
+
+  private computeEngineCounts(): void {
+    const counts: Record<string, number> = {};
+    ENGINE_TYPES.forEach((t) => (counts[t] = 0));
+    this.reportsData.forEach((r) => {
+      if (counts[r.reportType] !== undefined) {
+        counts[r.reportType]++;
+      }
+    });
+    this.engineCounts = counts;
+  }
+
+  private loadPersistedState(): void {
+    try {
+      const pinned = localStorage.getItem(ReportsComponent.PINNED_KEY);
+      if (pinned) {
+        const parsed = JSON.parse(pinned);
+        if (Array.isArray(parsed)) {
+          this.pinnedIds = new Set(parsed.filter((v) => typeof v === 'number'));
+        }
+      }
+      const collapsed = localStorage.getItem(ReportsComponent.COLLAPSE_KEY);
+      if (collapsed) {
+        const parsed = JSON.parse(collapsed);
+        if (Array.isArray(parsed)) {
+          this.collapsedGroups = new Set(parsed.filter((v) => typeof v === 'string'));
+        }
+      }
+    } catch {
+      // Corrupted localStorage — start fresh.
+      this.pinnedIds = new Set();
+      this.collapsedGroups = new Set();
+    }
+  }
+
+  private savePinned(): void {
+    try {
+      localStorage.setItem(ReportsComponent.PINNED_KEY, JSON.stringify([...this.pinnedIds]));
+    } catch {
+      // Storage unavailable — silently ignore; UI still updates in-memory.
+    }
+  }
+
+  private saveCollapsed(): void {
+    try {
+      localStorage.setItem(ReportsComponent.COLLAPSE_KEY, JSON.stringify([...this.collapsedGroups]));
+    } catch {
+      // Storage unavailable.
+    }
   }
 }

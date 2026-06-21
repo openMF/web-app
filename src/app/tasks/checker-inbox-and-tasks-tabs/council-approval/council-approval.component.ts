@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import * as _ from 'lodash';
@@ -105,6 +106,7 @@ export class CouncilApprovalComponent {
   private translateService = inject(TranslateService);
   private settingsService = inject(SettingsService);
   private tasksService = inject(TasksService);
+  private destroyRef = inject(DestroyRef);
 
   /** Offices Data */
   offices: any[];
@@ -130,7 +132,7 @@ export class CouncilApprovalComponent {
   ];
 
   constructor() {
-    this.route.data.subscribe((data: ResolverData) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: ResolverData) => {
       this.offices = data.officesData;
       this.loans = data.loansData.pageItems;
       this.setOfficeData();

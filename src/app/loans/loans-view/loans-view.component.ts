@@ -121,7 +121,7 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
       .subscribe((data: { loanDetailsData: any; loanDatatables: any; loanArrearsDelinquencyConfig: any }) => {
         this.loanDetailsData = data.loanDetailsData;
         if (!this.loanDetailsData.loanProductName) {
-          this.loanDetailsData.loanProductName = this.loanDetailsData.product.name;
+          this.loanDetailsData.loanProductName = this.loanDetailsData.product?.name;
         }
         this.loanDatatables = this.loanProductService.isLoanProduct ? data.loanDatatables : [];
         this.loanStatus = this.loanDetailsData.status;
@@ -255,10 +255,14 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
     if (!this.loanDetailsData) {
       return;
     }
-    this.buttonConfig = new LoansAccountButtonConfiguration(this.status, this.loanSubStatus);
+    this.buttonConfig = new LoansAccountButtonConfiguration(
+      this.loanProductService.isWorkingCapital,
+      this.status,
+      this.loanSubStatus
+    );
     if (this.canShowWorkingCapitalDiscountUpdate()) {
       this.buttonConfig.addButton({
-        name: 'Update discount',
+        name: 'Discount Fee',
         icon: 'edit',
         taskPermissionName: 'UPDATEDISCOUNT_WORKINGCAPITALLOAN'
       });
@@ -271,7 +275,7 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
         taskPermissionName: 'UPDATELOANOFFICER_LOAN'
       });
 
-      if (this.loanDetailsData.isVariableInstallmentsAllowed) {
+      if (this.loanProductService.isLoanProduct && this.loanDetailsData.isVariableInstallmentsAllowed) {
         this.buttonConfig.addOption({
           name: 'Edit Repayment Schedule',
           icon: 'edit',
@@ -285,14 +289,14 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
         taskPermissionName: 'UPDATELOANOFFICER_LOAN'
       });
     } else if (this.status === 'Active') {
-      if (this.loanDetailsData.enableBuyDownFee) {
+      if (this.loanProductService.isLoanProduct && this.loanDetailsData.enableBuyDownFee) {
         this.buttonConfig.addButton({
           name: 'Buy Down Fee',
           icon: 'plus',
           taskPermissionName: 'BUYDOWNFEE_LOAN'
         });
       }
-      if (this.loanDetailsData.enableIncomeCapitalization) {
+      if (this.loanProductService.isLoanProduct && this.loanDetailsData.enableIncomeCapitalization) {
         this.buttonConfig.addButton({
           name: 'Capitalized Income',
           icon: 'coins',
@@ -307,21 +311,25 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
           taskPermissionName: 'DISBURSE_LOAN'
         });
       }
-      if (this.loanDetailsData.canDisburse) {
+      if (this.loanProductService.isLoanProduct && this.loanDetailsData.canDisburse) {
         this.buttonConfig.addButton({
           name: 'Disburse to Savings',
           icon: 'piggy-bank',
           taskPermissionName: 'DISBURSETOSAVINGS_LOAN'
         });
       }
-      if (this.loanDetailsData.multiDisburseLoan && this.disburseTransactionNo > 1) {
+      if (
+        this.loanProductService.isLoanProduct &&
+        this.loanDetailsData.multiDisburseLoan &&
+        this.disburseTransactionNo > 1
+      ) {
         this.buttonConfig.addButton({
           name: 'Undo Last Disbursal',
           icon: 'undo',
           taskPermissionName: 'DISBURSALLASTUNDO_LOAN'
         });
       }
-      if (this.recalculateInterest) {
+      if (this.loanProductService.isLoanProduct && this.recalculateInterest) {
         this.buttonConfig.addButton({
           name: 'Add Interest Pause',
           icon: 'calendar',
@@ -347,49 +355,54 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
       }
 
       // Allow ChargeOff only If there loan is not already ChargeOff
-      if (!this.loanDetailsData.chargedOff) {
-        this.buttonConfig.addButton({
-          name: 'Charge-Off',
-          icon: 'coins',
-          taskPermissionName: 'CHARGEOFF_LOAN'
-        });
-      } else {
-        this.buttonConfig.addButton({
-          name: 'Undo Charge-Off',
-          icon: 'undo',
-          taskPermissionName: 'UNDOCHARGEOFF_LOAN'
-        });
-      }
+      if (this.loanProductService.isLoanProduct) {
+        if (!this.loanDetailsData.chargedOff) {
+          this.buttonConfig.addButton({
+            name: 'Charge-Off',
+            icon: 'coins',
+            taskPermissionName: 'CHARGEOFF_LOAN'
+          });
+        } else {
+          this.buttonConfig.addButton({
+            name: 'Undo Charge-Off',
+            icon: 'undo',
+            taskPermissionName: 'UNDOCHARGEOFF_LOAN'
+          });
+        }
 
-      // Allow Re-Ageing only when there is not any Re-Age transaction
-      if (!this.loanReAged) {
-        this.buttonConfig.addButton({
-          name: 'Re-Age',
-          icon: 'calendar',
-          taskPermissionName: 'REAGE_LOAN'
-        });
-      } else {
-        this.buttonConfig.addButton({
-          name: 'Undo Re-Age',
-          icon: 'undo',
-          taskPermissionName: 'UNDO_REAGE_LOAN'
-        });
-      }
+        // Allow Re-Ageing only when there is not any Re-Age transaction
+        if (!this.loanReAged) {
+          this.buttonConfig.addButton({
+            name: 'Re-Age',
+            icon: 'calendar',
+            taskPermissionName: 'REAGE_LOAN'
+          });
+        } else {
+          this.buttonConfig.addButton({
+            name: 'Undo Re-Age',
+            icon: 'undo',
+            taskPermissionName: 'UNDO_REAGE_LOAN'
+          });
+        }
 
-      if (!this.loanReAmortized) {
-        this.buttonConfig.addButton({
-          name: 'Re-Amortize',
-          icon: 'calendar-alt',
-          taskPermissionName: 'REAMORTIZE_LOAN'
-        });
-      } else {
-        this.buttonConfig.addButton({
-          name: 'Undo Re-Amortize',
-          icon: 'undo',
-          taskPermissionName: 'UNDO_REAMORTIZE_LOAN'
-        });
+        if (!this.loanReAmortized) {
+          this.buttonConfig.addButton({
+            name: 'Re-Amortize',
+            icon: 'calendar-alt',
+            taskPermissionName: 'REAMORTIZE_LOAN'
+          });
+        } else {
+          this.buttonConfig.addButton({
+            name: 'Undo Re-Amortize',
+            icon: 'undo',
+            taskPermissionName: 'UNDO_REAMORTIZE_LOAN'
+          });
+        }
       }
-    } else if (this.status === 'Closed (obligations met)' || this.status === 'Overpaid') {
+    } else if (
+      (this.loanProductService.isLoanProduct && this.status === 'Closed (obligations met)') ||
+      this.status === 'Overpaid'
+    ) {
       if (this.loanDetailsData.multiDisburseLoan) {
         this.buttonConfig.addButton({
           name: 'Disburse',

@@ -7,8 +7,10 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { take } from 'rxjs';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -32,7 +34,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 export class EditOfficeComponent implements OnInit {
   private organizationService = inject(OrganizationService);
   private settingsService = inject(SettingsService);
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
+  private destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private dateUtils = inject(Dates);
@@ -40,24 +43,14 @@ export class EditOfficeComponent implements OnInit {
   /** Selected Data. */
   officeData: any;
   /** Office form. */
-  officeForm: UntypedFormGroup;
+  officeForm: FormGroup;
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
   maxDate = new Date();
 
-  /**
-   * Retrieves the charge data from `resolve`.
-   * @param {ProductsService} organizationService Organization Service.
-   * @param {SettingsService} settingsService Settings Service.
-   * @param {FormBuilder} formBuilder Form Builder.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {Router} router Router for navigation.
-   * @param {MatDialog} dialog Dialog reference.
-   * @param {Dates} dateUtils Date Utils
-   */
   constructor() {
-    this.route.data.subscribe((data: { officeTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { officeTemplate: any }) => {
       this.officeData = data.officeTemplate;
     });
   }
@@ -103,8 +96,11 @@ export class EditOfficeComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.organizationService.updateOffice(this.officeData.id, data).subscribe((response: any) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.organizationService
+      .updateOffice(this.officeData.id, data)
+      .pipe(take(1))
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
 }

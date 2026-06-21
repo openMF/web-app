@@ -22,7 +22,8 @@ describe('ClientActionNotifierService', () => {
         ClientActionNotifierService,
         { provide: MatSnackBar, useValue: snackBar },
         { provide: TranslateService, useValue: translateService },
-        { provide: Router, useValue: router }]
+        { provide: Router, useValue: router }
+      ]
     });
 
     service = TestBed.inject(ClientActionNotifierService);

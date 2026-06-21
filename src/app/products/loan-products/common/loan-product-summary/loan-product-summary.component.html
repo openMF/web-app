@@ -121,6 +121,10 @@
           <span class="flex-60"><mifosx-breach-display [singleRow]="false" [nearBreach]="getNearBreach()" /></span>
         </div>
       }
+      <div class="flex-fill layout-row">
+        <span class="flex-40">{{ 'labels.inputs.Breach Grace Days' | translate }}:</span>
+        <span class="flex-60">{{ loanProduct.breachGraceDays ?? 0 | formatNumber }}</span>
+      </div>
     }
     @if (loanProductService.isLoanProduct) {
       <div class="flex-fill layout-row">

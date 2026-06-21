@@ -15,15 +15,12 @@ import {
   ElementRef,
   ViewChild,
   AfterViewInit,
-  inject
+  inject,
+  DestroyRef
 } from '@angular/core';
-import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  UntypedFormArray,
-  UntypedFormControl,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, FormArray, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { take } from 'rxjs';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -55,8 +52,9 @@ const recurrenceDefaultValue = 'FREQ=WEEKLY;INTERVAL=1;BYDAY=';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WorkingDaysComponent implements OnInit, AfterViewInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private route = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
   private organizationService = inject(OrganizationService);
   private settingsService = inject(SettingsService);
   private router = inject(Router);
@@ -65,7 +63,7 @@ export class WorkingDaysComponent implements OnInit, AfterViewInit {
   private popoverService = inject(PopoverService);
 
   /** Working days form. */
-  workingDaysForm: UntypedFormGroup;
+  workingDaysForm: FormGroup;
   /** Working days data. */
   workingDaysData: any;
   /** Week days */
@@ -98,7 +96,7 @@ export class WorkingDaysComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor() {
-    this.route.data.subscribe((data: { workingDays: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { workingDays: any }) => {
       this.workingDaysData = data.workingDays;
     });
   }
@@ -126,8 +124,8 @@ export class WorkingDaysComponent implements OnInit, AfterViewInit {
   /**
    * @returns {FormArray} recurrence form array.
    */
-  get recurrence(): UntypedFormArray {
-    return this.workingDaysForm.get('recurrence') as UntypedFormArray;
+  get recurrence(): FormArray {
+    return this.workingDaysForm.get('recurrence') as FormArray;
   }
 
   /**
@@ -144,7 +142,7 @@ export class WorkingDaysComponent implements OnInit, AfterViewInit {
    * Creates the recurrence form array.
    */
   createRecurrenceFormArray() {
-    return this.weekDays.map((weekDay) => new UntypedFormControl(weekDay.checked));
+    return this.weekDays.map((weekDay) => new FormControl(weekDay.checked));
   }
 
   /**
@@ -162,14 +160,17 @@ export class WorkingDaysComponent implements OnInit, AfterViewInit {
       }
     }
     workingDays.recurrence = recurrence;
-    this.organizationService.updateWorkingDays(workingDays).subscribe((response) => {
-      if (this.configurationWizardService.showDefineWorkingDays) {
-        this.configurationWizardService.showDefineWorkingDays = false;
-        this.openNextStepDialog();
-      } else {
-        this.router.navigate(['../'], { relativeTo: this.route });
-      }
-    });
+    this.organizationService
+      .updateWorkingDays(workingDays)
+      .pipe(take(1))
+      .subscribe((response) => {
+        if (this.configurationWizardService.showDefineWorkingDays) {
+          this.configurationWizardService.showDefineWorkingDays = false;
+          this.openNextStepDialog();
+        } else {
+          this.router.navigate(['../'], { relativeTo: this.route });
+        }
+      });
   }
 
   /**

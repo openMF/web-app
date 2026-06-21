@@ -92,7 +92,13 @@ export class DisburseComponent extends LoanAccountActionsBaseComponent implement
       note: ''
     });
     if (this.isWorkingCapital) {
-      this.disbursementLoanForm.addControl('discountAmount', new UntypedFormControl());
+      this.disbursementLoanForm.addControl(
+        'discountAmount',
+        new UntypedFormControl({
+          value: this.dataObject.discountAmount,
+          disabled: this.dataObject.overrideDiscountDisabled
+        })
+      );
       this.disbursementLoanForm.addControl(
         'discountExternalId',
         new UntypedFormControl('', Validators.maxLength(this.maxExternalIdLength))

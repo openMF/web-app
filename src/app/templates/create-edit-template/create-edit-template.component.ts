@@ -9,13 +9,7 @@
 /** Angular Imports */
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  UntypedFormControl,
-  Validators,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Imports */
@@ -59,7 +53,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateEditComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private templateService = inject(TemplatesService);
@@ -95,7 +89,7 @@ export class CreateEditComponent implements OnInit {
   @ViewChild('tinymceEditor', { static: false }) tinymceEditor: EditorComponent;
 
   /** Template form. */
-  templateForm: UntypedFormGroup;
+  templateForm: FormGroup;
   /** Create or Edit Template Data. */
   templateData: any;
   /** Template Mappers */
@@ -128,8 +122,8 @@ export class CreateEditComponent implements OnInit {
         if (this.mode === 'edit') {
           this.mappers = this.templateData.template.mappers.map((mapper: any) => ({
             mappersorder: mapper.mapperorder,
-            mapperskey: new UntypedFormControl(mapper.mapperkey),
-            mappersvalue: new UntypedFormControl(mapper.mappervalue)
+            mapperskey: new FormControl(mapper.mapperkey),
+            mappersvalue: new FormControl(mapper.mappervalue)
           }));
         }
       });
@@ -204,17 +198,15 @@ export class CreateEditComponent implements OnInit {
           // client
           this.mappers.splice(0, 1, {
             mappersorder: 0,
-            mapperskey: new UntypedFormControl('client'),
-            mappersvalue: new UntypedFormControl('clients/{{clientId}}?tenantIdentifier=' + tenantIdentifier)
+            mapperskey: new FormControl('client'),
+            mappersvalue: new FormControl('clients/{{clientId}}?tenantIdentifier=' + tenantIdentifier)
           });
         } else {
           // loan
           this.mappers.splice(0, 1, {
             mappersorder: 0,
-            mapperskey: new UntypedFormControl('loan'),
-            mappersvalue: new UntypedFormControl(
-              'loans/{{loanId}}?associations=all&tenantIdentifier=' + tenantIdentifier
-            )
+            mapperskey: new FormControl('loan'),
+            mappersvalue: new FormControl('loans/{{loanId}}?associations=all&tenantIdentifier=' + tenantIdentifier)
           });
         }
         this.setEditorContent('');
@@ -231,8 +223,8 @@ export class CreateEditComponent implements OnInit {
   addMapper() {
     this.mappers.push({
       mappersorder: this.mappers.length,
-      mapperskey: new UntypedFormControl(''),
-      mappersvalue: new UntypedFormControl('')
+      mapperskey: new FormControl(''),
+      mappersvalue: new FormControl('')
     });
   }
 

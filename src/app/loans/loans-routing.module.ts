@@ -85,6 +85,9 @@ import { LoanBalancesTabComponent } from './loans-view/working-capital/loan-bala
 import { LoanPeriodPaymentRatesComponent } from './loans-view/working-capital/loan-period-payment-rates/loan-period-payment-rates.component';
 import { LoanPeriodPaymentRatesResolver } from './loans-view/working-capital/common-resolvers/loan-period-payment-rates.resolver';
 import { LoanTransactionsResolver } from './common-resolvers/loan-transactions.resolver';
+import { LoanChargesResolver } from './common-resolvers/loan-charges.resolver';
+import { LoanBreachScheduleResolver } from './common-resolvers/working-capital/loan-breach-schedule.resolver';
+import { LoanBreachScheduleTabComponent } from './loans-view/working-capital/loan-breach-schedule-tab/loan-breach-schedule-tab.component';
 
 /** Loans Route. */
 const routes: Routes = [
@@ -153,6 +156,14 @@ const routes: Routes = [
             data: { title: 'Amortization Schedule', breadcrumb: 'Amortization Schedule', routeParamBreadcrumb: false },
             resolve: {
               amortizationSchedule: LoanAmortizationScheduleResolver
+            }
+          },
+          {
+            path: 'breach-schedule',
+            component: LoanBreachScheduleTabComponent,
+            data: { title: 'Breach Schedule', breadcrumb: 'Breach Schedule', routeParamBreadcrumb: false },
+            resolve: {
+              breachSchedule: LoanBreachScheduleResolver
             }
           },
           {
@@ -264,7 +275,10 @@ const routes: Routes = [
           {
             path: 'charges',
             data: { title: 'Loans Account Charges', breadcrumb: 'Charges', routeParamBreadcrumb: false },
-            component: ChargesTabComponent
+            component: ChargesTabComponent,
+            resolve: {
+              loanChargeData: LoanChargesResolver
+            }
           },
           {
             path: 'loan-documents',
@@ -482,7 +496,9 @@ const routes: Routes = [
     LoanProductsResolver,
     LoanAmortizationScheduleResolver,
     LoanPeriodPaymentRatesResolver,
-    LoanTransactionsResolver
+    LoanTransactionsResolver,
+    LoanChargesResolver,
+    LoanBreachScheduleResolver
   ]
 })
 export class LoansRoutingModule {}

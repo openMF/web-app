@@ -10,6 +10,7 @@ import { CurrencyPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
+import { FormatNumberPipe } from '@pipes/format-number.pipe';
 import { WorkingCapitalBalances } from 'app/loans/models/working-capital/working-capital-loan-account.model';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -20,7 +21,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrl: './loan-balances-tab.component.scss',
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    CurrencyPipe
+    CurrencyPipe,
+    FormatNumberPipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

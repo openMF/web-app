@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
@@ -30,6 +31,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 export class ViewTransactionComponent {
   private route = inject(ActivatedRoute);
   dialog = inject(MatDialog);
+  private destroyRef = inject(DestroyRef);
 
   /** Transaction data. */
   transactionData: any;
@@ -43,7 +45,7 @@ export class ViewTransactionComponent {
    * @param {MatDialog} dialog Dialog reference.
    */
   constructor() {
-    this.route.data.subscribe((data: { transactionDatatables: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { transactionDatatables: any }) => {
       this.accountId = this.route.snapshot.params['savingAccountId'];
       this.entityDatatables = data.transactionDatatables;
     });

@@ -10,7 +10,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { AccountTransfersService } from '../account-transfers.service';
@@ -31,7 +31,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateStandingInstructionsComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private accountTransfersService = inject(AccountTransfersService);
@@ -49,7 +49,7 @@ export class CreateStandingInstructionsComponent implements OnInit {
   /** Allow Client Edit */
   allowclientedit = true;
   /** Edit Standing Instructions form. */
-  createStandingInstructionsForm: UntypedFormGroup;
+  createStandingInstructionsForm: FormGroup;
   /** Priority Type Data */
   priorityTypeData: any;
   /** Status Type Data */
@@ -99,11 +99,13 @@ export class CreateStandingInstructionsComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils
    */
   constructor() {
-    this.route.data.subscribe((data: { standingIntructionsTemplate: any }) => {
-      this.standingIntructionsTemplate = data.standingIntructionsTemplate;
-      this.setParams();
-      this.setOptions();
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { standingIntructionsTemplate: any }) => {
+        this.standingIntructionsTemplate = data.standingIntructionsTemplate;
+        this.setParams();
+        this.setOptions();
+      });
   }
 
   /** Sets the value from the URL */

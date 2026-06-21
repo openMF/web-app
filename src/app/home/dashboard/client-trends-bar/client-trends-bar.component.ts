@@ -8,7 +8,7 @@
 
 /** Angular Imports */
 import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
-import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -60,9 +60,9 @@ export class ClientTrendsBarComponent implements OnInit {
   private currentTheme = 'light-theme';
 
   /** Static Form control for office Id */
-  officeId = new UntypedFormControl();
+  officeId = new FormControl();
   /** Static Form control for time scale */
-  timescale = new UntypedFormControl();
+  timescale = new FormControl();
   /** Office Data */
   officeData: any;
   /** Chart.js chart */
@@ -77,7 +77,7 @@ export class ClientTrendsBarComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils
    */
   constructor() {
-    this.route.data.subscribe((data: { offices: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });
   }
@@ -108,7 +108,7 @@ export class ClientTrendsBarComponent implements OnInit {
    */
   getChartData() {
     merge(this.officeId.valueChanges, this.timescale.valueChanges)
-      .pipe(skip(1))
+      .pipe(skip(1), takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
         const officeId = this.officeId.value;
         const timescale = this.timescale.value;

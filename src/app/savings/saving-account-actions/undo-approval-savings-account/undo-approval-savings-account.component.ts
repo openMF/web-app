@@ -8,7 +8,7 @@
 
 /** Angular Imports */
 import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -30,13 +30,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UndoApprovalSavingsAccountComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private savingsService = inject(SavingsService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
   /** Undo Approval Savings Account form. */
-  undoApprovalSavingsAccountForm: UntypedFormGroup;
+  undoApprovalSavingsAccountForm: FormGroup;
   /** Savings Account Id */
   accountId: any;
 

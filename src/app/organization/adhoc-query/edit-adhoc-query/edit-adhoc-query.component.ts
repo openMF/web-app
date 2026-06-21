@@ -7,14 +7,10 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  Validators,
-  UntypedFormControl,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { take } from 'rxjs';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -36,27 +32,21 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditAdhocQueryComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private organizationService = inject(OrganizationService);
+  private destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
   /** Edit Adhoc Query form. */
-  editAdhocQueryForm: UntypedFormGroup;
+  editAdhocQueryForm: FormGroup;
   /** Adhoc Query template data. */
   adhocQueryTemplateData: any;
   /** Report run frequencies data. */
   reportRunFrequencyData: any;
 
-  /**
-   * Retrieves the adhoc query template data from `resolve`.
-   * @param {FormBuilder} formBuilder Form Builder.
-   * @param {OrganizationService} organizationService Organization Service.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {Router} router Router for navigation.
-   */
   constructor() {
-    this.route.data.subscribe((data: { adhocQueryAndTemplate: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { adhocQueryAndTemplate: any }) => {
       this.adhocQueryTemplateData = data.adhocQueryAndTemplate;
     });
   }
@@ -104,20 +94,23 @@ export class EditAdhocQueryComponent implements OnInit {
    * Sets the conditional controls of the adhoc query form
    */
   setConditionalControls() {
-    this.editAdhocQueryForm.get('reportRunFrequency').valueChanges.subscribe((reportRunFrequencyId) => {
-      if (reportRunFrequencyId === 5) {
-        this.editAdhocQueryForm.addControl(
-          'reportRunEvery',
-          new UntypedFormControl('', [
-            Validators.required,
-            Validators.min(1)
-          ])
-        );
-        this.editAdhocQueryForm.get('reportRunEvery').patchValue(this.adhocQueryTemplateData.reportRunEvery);
-      } else {
-        this.editAdhocQueryForm.removeControl('reportRunEvery');
-      }
-    });
+    this.editAdhocQueryForm
+      .get('reportRunFrequency')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((reportRunFrequencyId) => {
+        if (reportRunFrequencyId === 5) {
+          this.editAdhocQueryForm.addControl(
+            'reportRunEvery',
+            new FormControl('', [
+              Validators.required,
+              Validators.min(1)
+            ])
+          );
+          this.editAdhocQueryForm.get('reportRunEvery').patchValue(this.adhocQueryTemplateData.reportRunEvery);
+        } else {
+          this.editAdhocQueryForm.removeControl('reportRunEvery');
+        }
+      });
     this.editAdhocQueryForm.get('reportRunFrequency').patchValue(this.adhocQueryTemplateData.reportRunFrequency);
   }
 
@@ -128,6 +121,7 @@ export class EditAdhocQueryComponent implements OnInit {
   submit() {
     this.organizationService
       .updateAdhocQuery(this.adhocQueryTemplateData.id, this.editAdhocQueryForm.value)
+      .pipe(take(1))
       .subscribe(() => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });

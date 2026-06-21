@@ -15,7 +15,7 @@ import {
   MatDialogActions,
   MatDialogClose
 } from '@angular/material/dialog';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
@@ -32,10 +32,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class EditNotesDialogComponent implements OnInit {
   dialogRef = inject<MatDialogRef<EditNotesDialogComponent>>(MatDialogRef);
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   data = inject(MAT_DIALOG_DATA);
 
-  noteForm: UntypedFormGroup;
+  noteForm: FormGroup;
 
   ngOnInit() {
     this.createNoteForm();

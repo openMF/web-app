@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import * as _ from 'lodash';
@@ -76,6 +77,7 @@ export class RescheduleLoanComponent {
   private settingsService = inject(SettingsService);
   private translateService = inject(TranslateService);
   private tasksService = inject(TasksService);
+  private destroyRef = inject(DestroyRef);
 
   /** Loans Data */
   loans: any;
@@ -105,7 +107,7 @@ export class RescheduleLoanComponent {
    * @param {TasksService} tasksService Tasks Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { rescheduleLoansData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { rescheduleLoansData: any }) => {
       this.loans = data.rescheduleLoansData;
       this.dataSource = new MatTableDataSource(this.loans);
       this.selection = new SelectionModel(true, []);

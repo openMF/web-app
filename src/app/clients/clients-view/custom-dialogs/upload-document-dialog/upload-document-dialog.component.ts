@@ -14,7 +14,7 @@ import {
   MatDialogActions,
   MatDialogClose
 } from '@angular/material/dialog';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { FileUploadComponent } from '../../../../shared/file-upload/file-upload.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -33,11 +33,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class UploadDocumentDialogComponent implements OnInit {
   dialogRef = inject<MatDialogRef<UploadDocumentDialogComponent>>(MatDialogRef);
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   data = inject(MAT_DIALOG_DATA);
 
   /** Upload Document form. */
-  uploadDocumentForm: UntypedFormGroup;
+  uploadDocumentForm: FormGroup;
   /** Upload Document Data */
   uploadDocumentData: any = [];
   /** Triggers identity fields (documentType, status, documentKey) */

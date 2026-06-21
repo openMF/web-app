@@ -7,7 +7,9 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { take } from 'rxjs';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -34,6 +36,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class ViewAdhocQueryComponent {
   private organizationService = inject(OrganizationService);
+  private destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private dialog = inject(MatDialog);
@@ -41,15 +44,8 @@ export class ViewAdhocQueryComponent {
   /** Adhoc query data. */
   adhocQueryData: any;
 
-  /**
-   * Retrieves the adhoc query data from `resolve`.
-   * @param {OrganizationService} organizationService Organization Service.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {Router} router Router for navigation.
-   * @param {MatDialog} dialog Dialog reference.
-   */
   constructor() {
-    this.route.data.subscribe((data: { adhocQuery: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { adhocQuery: any }) => {
       this.adhocQueryData = data.adhocQuery;
     });
   }
@@ -75,9 +71,12 @@ export class ViewAdhocQueryComponent {
     });
     deleteAdhocQueryDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.organizationService.deleteAdhocQuery(this.adhocQueryData.id).subscribe(() => {
-          this.router.navigate(['/organization/adhoc-query']);
-        });
+        this.organizationService
+          .deleteAdhocQuery(this.adhocQueryData.id)
+          .pipe(take(1))
+          .subscribe(() => {
+            this.router.navigate(['/organization/adhoc-query']);
+          });
       }
     });
   }

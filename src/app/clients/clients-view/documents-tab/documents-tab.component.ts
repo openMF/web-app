@@ -6,7 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -29,13 +30,14 @@ export class DocumentsTabComponent {
   private route = inject(ActivatedRoute);
   private clientsService = inject(ClientsService);
   dialog = inject(MatDialog);
+  private destroyRef = inject(DestroyRef);
 
   entityDocuments: any;
   entityId: string;
   entityType = 'clients';
 
   constructor() {
-    this.route.data.subscribe((data: { clientDocuments: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientDocuments: any }) => {
       this.entityDocuments = data.clientDocuments;
     });
     this.entityId = this.route.parent.snapshot.paramMap.get('clientId');

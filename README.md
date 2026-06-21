@@ -7,7 +7,7 @@ Mifos® X Web App is a modern single-page application (SPA) built on top of the 
 **Technologies Used:**
 
 - HTML5, SCSS, and TypeScript
-- Angular framework
+- Angular 20 framework
 - Angular Material components
 
 ## 📋 Table of Contents
@@ -97,7 +97,7 @@ Choose ONE of the following methods to install the web app:
 1. Install Node.js: [Download here](https://nodejs.org/en/download/)
 2. Install Angular CLI:
    ```
-   npm install -g @angular/cli@16.0.2
+   npm install -g @angular/cli@20.3.27
    ```
 3. Clone the repository:
    ```

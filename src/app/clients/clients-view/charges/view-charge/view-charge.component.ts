@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ClientsService } from 'app/clients/clients.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -64,6 +65,7 @@ export class ViewChargeComponent {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private clientService = inject(ClientsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Charge Data. */
   chargeData: any;
@@ -83,7 +85,7 @@ export class ViewChargeComponent {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data.subscribe((data: { clientChargeData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { clientChargeData: any }) => {
       this.chargeData = data.clientChargeData;
     });
   }

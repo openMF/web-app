@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -58,6 +59,7 @@ export class NotificationsPageComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private notificationsService = inject(NotificationsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Notifications data. */
   notificationsData: any;
@@ -96,7 +98,7 @@ export class NotificationsPageComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor() {
-    this.route.data.subscribe((data: { notifications: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { notifications: any }) => {
       this.notificationsData = data.notifications.pageItems;
     });
   }

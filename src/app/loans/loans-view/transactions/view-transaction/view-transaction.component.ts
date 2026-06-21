@@ -140,7 +140,8 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
         !this.transactionData.manuallyReversed && !this.allowTransactionEdition(this.transactionData.type.id);
       this.allowUndo = this.allowUndoTransaction(
         this.transactionData.manuallyReversed || this.transactionData.reversed,
-        this.transactionType
+        this.transactionType,
+        !!this.transactionData.wcLoanId
       );
       this.allowChargeback =
         this.allowChargebackTransaction(this.transactionType) && !this.transactionData.manuallyReversed;
@@ -209,14 +210,19 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
     );
   }
 
-  allowUndoTransaction(manuallyReversed: boolean, transactionType: LoanTransactionType): boolean {
+  allowUndoTransaction(
+    manuallyReversed: boolean,
+    transactionType: LoanTransactionType,
+    isWorkingCapital: boolean
+  ): boolean {
     if (manuallyReversed) {
       return false;
     }
-    if (transactionType.interestRefund) {
-      return false;
-    }
-    return true;
+    return !(
+      transactionType.interestRefund ||
+      transactionType.id === 44 ||
+      (isWorkingCapital && transactionType.disbursement)
+    );
   }
 
   isWriteOff(transactionType: LoanTransactionType): boolean {

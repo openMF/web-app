@@ -9,7 +9,7 @@
 /** Angular Imports */
 import { ChangeDetectionStrategy, Component, OnInit, OnChanges, Input, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { UntypedFormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 /** Custom Dialogs */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -80,7 +80,7 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
   /** Savings Account Template */
   @Input() savingsAccountTemplate: any;
   /** Currency Code */
-  @Input() currencyCode: UntypedFormControl;
+  @Input() currencyCode: FormControl;
   /** active Client Members in case of GSIM Account */
   @Input() activeClientMembers?: any;
 

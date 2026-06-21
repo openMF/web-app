@@ -149,15 +149,15 @@ export class LoanSummaryBalanceComponentComponent extends LoanProductBaseCompone
     this.dataSource = new MatTableDataSource([
       {
         property: 'Principal',
-        original: this.summary.principalDisbursed,
+        original: this.summary.principal,
         paid: this.summary.principalPaid,
         outstanding: this.summary.principalOutstanding
       },
       {
         property: 'Discount',
-        original: this.summary.discountCharged,
-        paid: this.summary.discountPaid,
-        outstanding: this.summary.discountOutstanding
+        original: this.summary.totalDiscountFee,
+        paid: this.summary.discountPaid ?? 0,
+        outstanding: this.summary.discountOutstanding ?? 0
       },
       {
         property: 'Fees',

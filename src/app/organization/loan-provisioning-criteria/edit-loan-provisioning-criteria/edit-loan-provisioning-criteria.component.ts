@@ -7,8 +7,10 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { take } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import {
   MatTableDataSource,
@@ -68,8 +70,9 @@ import { TranslateService } from '@ngx-translate/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditLoanProvisioningCriteriaComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private organizationService = inject(OrganizationService);
+  private destroyRef = inject(DestroyRef);
   private router = inject(Router);
   private settingsService = inject(SettingsService);
   dialog = inject(MatDialog);
@@ -77,7 +80,7 @@ export class EditLoanProvisioningCriteriaComponent implements OnInit {
   private translateService = inject(TranslateService);
 
   /** Loan Provisioning Criteria form. */
-  provisioningCriteriaForm: UntypedFormGroup;
+  provisioningCriteriaForm: FormGroup;
   /** Loan Provisioning Criteria Template */
   loanProvisioningCriteriaAndTemplate: any;
   /** Liability Accounts */
@@ -117,19 +120,21 @@ export class EditLoanProvisioningCriteriaComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor() {
-    this.route.data.subscribe((data: { loanProvisioningCriteriaAndTemplate: any }) => {
-      this.loanProvisioningCriteriaAndTemplate = data.loanProvisioningCriteriaAndTemplate;
-      this.definitions = this.loanProvisioningCriteriaAndTemplate.definitions;
-      this.loanProducts = this.loanProvisioningCriteriaAndTemplate.loanProducts.concat(
-        this.loanProvisioningCriteriaAndTemplate.selectedLoanProducts
-      );
-      this.liabilityAccounts = this.loanProvisioningCriteriaAndTemplate.glAccounts.filter(
-        (account: any) => account.type.value === 'LIABILITY'
-      );
-      this.expenseAccounts = this.loanProvisioningCriteriaAndTemplate.glAccounts.filter(
-        (account: any) => account.type.value === 'EXPENSE'
-      );
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { loanProvisioningCriteriaAndTemplate: any }) => {
+        this.loanProvisioningCriteriaAndTemplate = data.loanProvisioningCriteriaAndTemplate;
+        this.definitions = this.loanProvisioningCriteriaAndTemplate.definitions;
+        this.loanProducts = this.loanProvisioningCriteriaAndTemplate.loanProducts.concat(
+          this.loanProvisioningCriteriaAndTemplate.selectedLoanProducts
+        );
+        this.liabilityAccounts = this.loanProvisioningCriteriaAndTemplate.glAccounts.filter(
+          (account: any) => account.type.value === 'LIABILITY'
+        );
+        this.expenseAccounts = this.loanProvisioningCriteriaAndTemplate.glAccounts.filter(
+          (account: any) => account.type.value === 'EXPENSE'
+        );
+      });
   }
 
   ngOnInit() {
@@ -269,6 +274,7 @@ export class EditLoanProvisioningCriteriaComponent implements OnInit {
     };
     this.organizationService
       .updateProvisioningCriteria(this.loanProvisioningCriteriaAndTemplate.criteriaId, loanProvisioningCriteria)
+      .pipe(take(1))
       .subscribe((response: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });

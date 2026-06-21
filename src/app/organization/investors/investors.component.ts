@@ -8,7 +8,8 @@
 
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
-import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { take } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -76,11 +77,11 @@ export class InvestorsComponent implements OnInit {
   maxDate = new Date();
 
   searchResults: any[] = [];
-  searchText = new UntypedFormControl('');
-  effectiveFromDate = new UntypedFormControl('');
-  effectiveToDate = new UntypedFormControl('');
-  settlementFromDate = new UntypedFormControl('');
-  settlementToDate = new UntypedFormControl('');
+  searchText = new FormControl('');
+  effectiveFromDate = new FormControl('');
+  effectiveToDate = new FormControl('');
+  settlementFromDate = new FormControl('');
+  settlementToDate = new FormControl('');
 
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   existsDataToFilter = false;
@@ -100,7 +101,7 @@ export class InvestorsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   /** Entry type filter form control. */
-  entryTypeFilter = new UntypedFormControl('');
+  entryTypeFilter = new FormControl('');
   /** Entry type filter data. */
   entryTypeFilterData = [
     {
@@ -188,13 +189,16 @@ export class InvestorsComponent implements OnInit {
       request['settlementToDate'] = this.dateUtils.formatDate(this.settlementToDate.value, dateFormat);
     }
     payload['request'] = request;
-    this.externalAssetOwnerService.searchExternalAssetOwnerTransfer(payload).subscribe((response: any) => {
-      this.totalRows = response.totalElements;
-      this.existsDataToFilter = response.totalElements > 0;
-      this.dataSource.data = response.content;
-      this.searchResults = response.content;
-      this.isLoading = false;
-    });
+    this.externalAssetOwnerService
+      .searchExternalAssetOwnerTransfer(payload)
+      .pipe(take(1))
+      .subscribe((response: any) => {
+        this.totalRows = response.totalElements;
+        this.existsDataToFilter = response.totalElements > 0;
+        this.dataSource.data = response.content;
+        this.searchResults = response.content;
+        this.isLoading = false;
+      });
   }
 
   transform(data: any): any {
@@ -218,6 +222,7 @@ export class InvestorsComponent implements OnInit {
         };
         this.externalAssetOwnerService
           .executeExternalAssetOwnerTransferCommand(transfer.transferId, payload, 'cancel')
+          .pipe(take(1))
           .subscribe((result: any) => {
             this.reload();
           });

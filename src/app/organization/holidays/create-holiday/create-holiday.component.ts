@@ -8,14 +8,10 @@
 
 /** Angular Imports. */
 import { SelectionModel } from '@angular/cdk/collections';
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, Injectable, inject } from '@angular/core';
-import {
-  UntypedFormBuilder,
-  UntypedFormGroup,
-  Validators,
-  UntypedFormControl,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, Injectable, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { take } from 'rxjs';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 import {
@@ -62,8 +58,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateHolidayComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private route = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
   private dateUtils = inject(Dates);
   private organizationService = inject(OrganizationService);
   private settings = inject(SettingsService);
@@ -72,7 +69,7 @@ export class CreateHolidayComponent implements OnInit {
   private createHoliday = inject(CreateHoliday);
 
   /** Create Holiday form. */
-  holidayForm: UntypedFormGroup;
+  holidayForm: FormGroup;
   /** Repayment Scheduling data. */
   repaymentSchedulingTypes: any;
   /** Offices Data */
@@ -122,20 +119,22 @@ export class CreateHolidayComponent implements OnInit {
   constructor() {
     const _database = this._database;
 
-    this.route.data.subscribe((data: { offices: any; holidayTemplate: any }) => {
-      this.officesData = data.offices;
-      this.repaymentSchedulingTypes = data.holidayTemplate;
-      // Constructs trie everytime data changes
-      this.constructOfficeHierarchy();
-      // Updates data in the CheckListDatabase
-      _database.initialize(this.officesTrie);
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { offices: any; holidayTemplate: any }) => {
+        this.officesData = data.offices;
+        this.repaymentSchedulingTypes = data.holidayTemplate;
+        // Constructs trie everytime data changes
+        this.constructOfficeHierarchy();
+        // Updates data in the CheckListDatabase
+        _database.initialize(this.officesTrie);
+      });
     this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel, this.isExpandable, this.getChildren);
     this.treeControl = new FlatTreeControl<OfficeItemFlatNode>(this.getLevel, this.isExpandable);
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
     // Listens for changes in CheckListDatabase
-    this._database.dataChange.subscribe((data) => {
+    this._database.dataChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.dataSource.data = data;
     });
   }
@@ -325,13 +324,16 @@ export class CreateHolidayComponent implements OnInit {
    * Sets the conditional controls.
    */
   buildDependencies() {
-    this.holidayForm.get('reschedulingType').valueChanges.subscribe((option: any) => {
-      if (option === 2) {
-        this.holidayForm.addControl('repaymentsRescheduledTo', new UntypedFormControl('', Validators.required));
-      } else {
-        this.holidayForm.removeControl('repaymentsRescheduledTo');
-      }
-    });
+    this.holidayForm
+      .get('reschedulingType')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((option: any) => {
+        if (option === 2) {
+          this.holidayForm.addControl('repaymentsRescheduledTo', new FormControl('', Validators.required));
+        } else {
+          this.holidayForm.removeControl('repaymentsRescheduledTo');
+        }
+      });
   }
 
   /**
@@ -374,14 +376,17 @@ export class CreateHolidayComponent implements OnInit {
       locale,
       offices
     };
-    this.organizationService.createHoliday(data).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          '../',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.organizationService
+      .createHoliday(data)
+      .pipe(take(1))
+      .subscribe((response: any) => {
+        this.router.navigate(
+          [
+            '../',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      });
   }
 }

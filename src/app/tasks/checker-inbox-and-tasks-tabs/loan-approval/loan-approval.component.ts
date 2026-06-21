@@ -11,15 +11,15 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  OnDestroy,
+  DestroyRef,
   QueryList,
   ViewChildren,
   inject
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import * as _ from 'lodash';
-import { Subscription } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import {
   MatTableDataSource,
@@ -78,7 +78,7 @@ interface OfficeNode {
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoanApprovalComponent implements AfterViewInit, OnDestroy {
+export class LoanApprovalComponent implements AfterViewInit {
   private route = inject(ActivatedRoute);
   private dialog = inject(MatDialog);
   private dateUtils = inject(Dates);
@@ -86,6 +86,7 @@ export class LoanApprovalComponent implements AfterViewInit, OnDestroy {
   private translateService = inject(TranslateService);
   private settingsService = inject(SettingsService);
   private tasksService = inject(TasksService);
+  private destroyRef = inject(DestroyRef);
 
   /** Offices Data */
   offices: any;
@@ -104,7 +105,6 @@ export class LoanApprovalComponent implements AfterViewInit, OnDestroy {
   officesArray: any[];
   /** List of Requests */
   batchRequests: any[];
-  private paginatorChangesSub?: Subscription;
   @ViewChildren(MatPaginator) paginators!: QueryList<MatPaginator>;
   /** Displayed Columns */
   displayedColumns: string[] = [
@@ -125,20 +125,18 @@ export class LoanApprovalComponent implements AfterViewInit, OnDestroy {
    * @param {TasksService} tasksService Tasks Service.
    */
   constructor() {
-    this.route.data.subscribe((data: { officesData: any; loansData: any }) => {
-      this.offices = data.officesData;
-      this.loans = data.loansData.pageItems;
-      this.setOfficeData();
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { officesData: any; loansData: any }) => {
+        this.offices = data.officesData;
+        this.loans = data.loansData.pageItems;
+        this.setOfficeData();
+      });
   }
 
   ngAfterViewInit() {
     this.bindPaginators();
-    this.paginatorChangesSub = this.paginators.changes.subscribe(() => this.bindPaginators());
-  }
-
-  ngOnDestroy() {
-    this.paginatorChangesSub?.unsubscribe();
+    this.paginators.changes.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.bindPaginators());
   }
 
   /** Group Office Data */

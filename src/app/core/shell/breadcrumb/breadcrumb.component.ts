@@ -11,18 +11,19 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   TemplateRef,
   ElementRef,
   ViewChild,
   AfterViewInit,
-  OnDestroy,
   inject
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, NavigationEnd, Data } from '@angular/router';
 
 /** rxjs Imports */
-import { filter, takeUntil } from 'rxjs/operators';
-import { merge, Subject } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { merge } from 'rxjs';
 
 /** Custom Model */
 import { Breadcrumb } from './breadcrumb.model';
@@ -77,14 +78,14 @@ const routeAddBreadcrumbLink = 'addBreadcrumbLink';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BreadcrumbComponent implements AfterViewInit, OnDestroy {
+export class BreadcrumbComponent implements AfterViewInit {
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
   private configurationWizardService = inject(ConfigurationWizardService);
   private popoverService = inject(PopoverService);
   private translateService = inject(TranslateService);
   private cdr = inject(ChangeDetectorRef);
-  private destroy$ = new Subject<void>();
+  private destroyRef = inject(DestroyRef);
 
   /** Array of breadcrumbs. */
   breadcrumbs: Breadcrumb[];
@@ -112,7 +113,7 @@ export class BreadcrumbComponent implements AfterViewInit, OnDestroy {
 
     // Merge navigation events with language change events to regenerate breadcrumbs when language changes
     merge(onNavigationEnd, this.translateService.onLangChange)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
         this.breadcrumbs = [];
         let currentRoute = this.activatedRoute.root;
@@ -333,13 +334,5 @@ export class BreadcrumbComponent implements AfterViewInit, OnDestroy {
 
     // If no translation found, return the original text
     return text;
-  }
-
-  /**
-   * Clean up subscriptions on component destroy.
-   */
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

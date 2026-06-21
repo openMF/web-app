@@ -7,14 +7,10 @@
  */
 
 /** Angular Imports. */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  Validators,
-  UntypedFormControl,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { take } from 'rxjs';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services. */
@@ -38,15 +34,16 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BulkLoanReassignmnetComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private route = inject(ActivatedRoute);
   private organizationSevice = inject(OrganizationService);
+  private destroyRef = inject(DestroyRef);
   private settingsService = inject(SettingsService);
   private dateUtils = inject(Dates);
   private router = inject(Router);
 
   /** Bulk Loan form. */
-  bulkLoanForm: UntypedFormGroup;
+  bulkLoanForm: FormGroup;
   /** Office data. */
   offices: any;
   /** To Loan Officers. */
@@ -73,7 +70,7 @@ export class BulkLoanReassignmnetComponent implements OnInit {
    * @param {Router} router Router.
    */
   constructor() {
-    this.route.data.subscribe((data: { offices: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { offices: any }) => {
       this.offices = data.offices;
     });
   }
@@ -108,11 +105,14 @@ export class BulkLoanReassignmnetComponent implements OnInit {
    * @param officeId Office Id.
    */
   getOffice(officeId: string) {
-    this.organizationSevice.getOfficeTemplate(officeId).subscribe((response: any) => {
-      this.officeTemplate = response;
-      this.fromLoanOfficers = this.officeTemplate.loanOfficerOptions;
-      this.bulkLoanForm.addControl('fromLoanOfficerId', new UntypedFormControl('', Validators.required));
-    });
+    this.organizationSevice
+      .getOfficeTemplate(officeId)
+      .pipe(take(1))
+      .subscribe((response: any) => {
+        this.officeTemplate = response;
+        this.fromLoanOfficers = this.officeTemplate.loanOfficerOptions;
+        this.bulkLoanForm.addControl('fromLoanOfficerId', new FormControl('', Validators.required));
+      });
   }
 
   /**
@@ -122,9 +122,12 @@ export class BulkLoanReassignmnetComponent implements OnInit {
   getFromOfficers(officerId: any) {
     this.toLoanOfficers = this.fromLoanOfficers?.filter((officer: any) => officer.id !== officerId) || [];
     if (officerId && this.officeTemplate && this.officeTemplate.officeId) {
-      this.organizationSevice.getOfficerTemplate(officerId, this.officeTemplate.officeId).subscribe((response: any) => {
-        this.officerTemplate = response;
-      });
+      this.organizationSevice
+        .getOfficerTemplate(officerId, this.officeTemplate.officeId)
+        .pipe(take(1))
+        .subscribe((response: any) => {
+          this.officerTemplate = response;
+        });
     } else {
       this.officerTemplate = undefined;
     }
@@ -162,8 +165,11 @@ export class BulkLoanReassignmnetComponent implements OnInit {
       locale
     };
     data.loans = this.loans;
-    this.organizationSevice.createLoanReassignment(data).subscribe((response: any) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.organizationSevice
+      .createLoanReassignment(data)
+      .pipe(take(1))
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
 }

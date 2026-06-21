@@ -15,3 +15,14 @@ export interface PeriodPaymentRateChange {
   reversed: boolean;
   createdDate: number[];
 }
+
+export interface BreachSchedule {
+  id: number;
+  loanId: number;
+  periodNumber: number;
+  fromDate: Date;
+  toDate: Date;
+  numberOfDays: number;
+  minPaymentAmount: number;
+  outstandingAmount: number;
+}

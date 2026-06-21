@@ -7,8 +7,9 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -38,9 +39,10 @@ import { GLOBAL_ANALYTICS_DASHBOARD } from 'app/analytics/global-dashboard.confi
 })
 export class DashboardComponent implements OnInit {
   private route = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
 
   /** Search Text. */
-  searchText: UntypedFormControl = new UntypedFormControl();
+  searchText: FormControl = new FormControl();
   /** Filtered Activities. */
   filteredActivities!: Observable<any[]>;
   /** All User Activities. */
@@ -51,7 +53,7 @@ export class DashboardComponent implements OnInit {
   offices: any[] = [];
 
   constructor() {
-    this.route.data.subscribe((data: { offices: any[] }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { offices: any[] }) => {
       this.offices = data.offices || [];
     });
   }

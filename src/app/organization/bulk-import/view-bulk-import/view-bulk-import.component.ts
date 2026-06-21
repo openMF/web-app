@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -24,7 +25,8 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { take } from 'rxjs';
+import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Imports */
 import { OrganizationService } from '../../organization.service';
@@ -68,8 +70,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class ViewBulkImportComponent implements OnInit {
   private route = inject(ActivatedRoute);
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private organizationService = inject(OrganizationService);
+  private destroyRef = inject(DestroyRef);
 
   /** offices Data */
   officeData: any;
@@ -80,7 +83,7 @@ export class ViewBulkImportComponent implements OnInit {
   /** imports Data */
   importsData: any;
   /** bulk-import form. */
-  bulkImportForm: UntypedFormGroup;
+  bulkImportForm: FormGroup;
   /** array of deined bulk-imports */
   bulkImportsArray = BulkImports;
   /** bulk-import which user navigated to */
@@ -114,7 +117,7 @@ export class ViewBulkImportComponent implements OnInit {
    */
   constructor() {
     this.bulkImport.name = this.route.snapshot.params['import-name'];
-    this.route.data.subscribe((data: any) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: any) => {
       this.officeData = data.offices;
       this.importsData = data.imports;
     });
@@ -145,13 +148,19 @@ export class ViewBulkImportComponent implements OnInit {
    * Subscribe to value changes and fetches select options accordingly.
    */
   buildDependencies() {
-    this.bulkImportForm.get('officeId').valueChanges.subscribe((value: any) => {
-      if (this.bulkImport.formFields >= 2) {
-        this.organizationService.getStaff(value).subscribe((data: any) => {
-          this.staffData = data;
-        });
-      }
-    });
+    this.bulkImportForm
+      .get('officeId')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((value: any) => {
+        if (this.bulkImport.formFields >= 2) {
+          this.organizationService
+            .getStaff(value)
+            .pipe(take(1))
+            .subscribe((data: any) => {
+              this.staffData = data;
+            });
+        }
+      });
   }
 
   /**
@@ -181,6 +190,7 @@ export class ViewBulkImportComponent implements OnInit {
     }
     this.organizationService
       .getImportTemplate(this.bulkImport.urlSuffix, officeId, staffId, legalFormType)
+      .pipe(take(1))
       .subscribe((res: any) => {
         const contentType = res.headers.get('Content-Type');
         const blob = new Blob([res.body], { type: contentType });
@@ -214,6 +224,7 @@ export class ViewBulkImportComponent implements OnInit {
     }
     this.organizationService
       .uploadImportDocument(this.template, this.bulkImport.urlSuffix, legalFormType)
+      .pipe(take(1))
       .subscribe(() => {});
   }
 
@@ -221,10 +232,13 @@ export class ViewBulkImportComponent implements OnInit {
    * Reloads imports data table.
    */
   refreshDocuments() {
-    this.organizationService.getImports(this.bulkImport.entityType).subscribe((data: any) => {
-      this.dataSource = new MatTableDataSource(data);
-      this.importsTableRef.renderRows();
-    });
+    this.organizationService
+      .getImports(this.bulkImport.entityType)
+      .pipe(take(1))
+      .subscribe((data: any) => {
+        this.dataSource = new MatTableDataSource(data);
+        this.importsTableRef.renderRows();
+      });
   }
 
   /**
@@ -233,11 +247,14 @@ export class ViewBulkImportComponent implements OnInit {
    * @param {any} id ImportID
    */
   downloadDocument(name: string, id: any) {
-    this.organizationService.getImportDocument(id).subscribe((res: any) => {
-      const contentType = res.headers.get('Content-Type');
-      const blob = new Blob([res.body], { type: contentType });
-      const fileOfBlob = new File([blob], name, { type: contentType });
-      window.open(window.URL.createObjectURL(fileOfBlob));
-    });
+    this.organizationService
+      .getImportDocument(id)
+      .pipe(take(1))
+      .subscribe((res: any) => {
+        const contentType = res.headers.get('Content-Type');
+        const blob = new Blob([res.body], { type: contentType });
+        const fileOfBlob = new File([blob], name, { type: contentType });
+        window.open(window.URL.createObjectURL(fileOfBlob));
+      });
   }
 }

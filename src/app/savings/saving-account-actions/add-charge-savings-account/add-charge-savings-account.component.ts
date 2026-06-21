@@ -7,14 +7,9 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  Validators,
-  UntypedFormControl,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -36,19 +31,20 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddChargeSavingsAccountComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private dateUtils = inject(Dates);
   private savingsService = inject(SavingsService);
   private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
 
   /** Minimum Due Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Add Savings Charge form. */
-  savingsChargeForm: UntypedFormGroup;
+  savingsChargeForm: FormGroup;
   /** savings charge options. */
   savingsChargeOptions: any;
   /** savings Id of the savings account. */
@@ -66,7 +62,7 @@ export class AddChargeSavingsAccountComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { savingsAccountActionData: any }) => {
       this.savingsChargeOptions = data.savingsAccountActionData.chargeOptions;
     });
     this.savingAccountId = this.route.snapshot.params['savingAccountId'];
@@ -82,41 +78,43 @@ export class AddChargeSavingsAccountComponent implements OnInit {
   }
 
   buildDependencies() {
-    this.savingsChargeForm.controls.chargeId.valueChanges.subscribe((chargeId) => {
-      this.savingsService.getChargeTemplate(chargeId).subscribe((data: any) => {
-        this.chargeDetails = data;
-        const chargeTimeType = data.chargeTimeType.id;
-        if (data.chargeTimeType.value === 'Withdrawal Fee' || data.chargeTimeType.value === 'Saving No Activity Fee') {
-          this.chargeDetails.dueDateNotRequired = true;
-        }
-        if (data.chargeTimeType.value === 'Annual Fee' || data.chargeTimeType.value === 'Monthly Fee') {
-          this.chargeDetails.chargeTimeTypeAnnualOrMonth = true;
-        }
-        if (!this.chargeDetails.dueDateNotRequired && !this.chargeDetails.chargeTimeTypeAnnualOrMonth) {
-          this.savingsChargeForm.addControl('dueDate', new UntypedFormControl('', Validators.required));
-        } else {
-          this.savingsChargeForm.removeControl('dueDate');
-        }
-        if (!this.chargeDetails.dueDateNotRequired && this.chargeDetails.chargeTimeTypeAnnualOrMonth) {
-          this.savingsChargeForm.addControl('feeOnMonthDay', new UntypedFormControl('', Validators.required));
-        } else {
-          this.savingsChargeForm.removeControl('feeOnMonthDay');
-        }
-        if (chargeTimeType.value === 'Monthly Fee') {
-          this.savingsChargeForm.addControl(
-            'feeInterval',
-            new UntypedFormControl(data.feeInterval, Validators.required)
-          );
-        } else {
-          this.savingsChargeForm.removeControl('feeInterval');
-        }
-        this.savingsChargeForm.patchValue({
-          amount: data.amount,
-          chargeCalculationType: data.chargeCalculationType.id,
-          chargeTimeType: data.chargeTimeType.id
+    this.savingsChargeForm.controls.chargeId.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((chargeId) => {
+        this.savingsService.getChargeTemplate(chargeId).subscribe((data: any) => {
+          this.chargeDetails = data;
+          const chargeTimeType = data.chargeTimeType.id;
+          if (
+            data.chargeTimeType.value === 'Withdrawal Fee' ||
+            data.chargeTimeType.value === 'Saving No Activity Fee'
+          ) {
+            this.chargeDetails.dueDateNotRequired = true;
+          }
+          if (data.chargeTimeType.value === 'Annual Fee' || data.chargeTimeType.value === 'Monthly Fee') {
+            this.chargeDetails.chargeTimeTypeAnnualOrMonth = true;
+          }
+          if (!this.chargeDetails.dueDateNotRequired && !this.chargeDetails.chargeTimeTypeAnnualOrMonth) {
+            this.savingsChargeForm.addControl('dueDate', new FormControl('', Validators.required));
+          } else {
+            this.savingsChargeForm.removeControl('dueDate');
+          }
+          if (!this.chargeDetails.dueDateNotRequired && this.chargeDetails.chargeTimeTypeAnnualOrMonth) {
+            this.savingsChargeForm.addControl('feeOnMonthDay', new FormControl('', Validators.required));
+          } else {
+            this.savingsChargeForm.removeControl('feeOnMonthDay');
+          }
+          if (chargeTimeType.value === 'Monthly Fee') {
+            this.savingsChargeForm.addControl('feeInterval', new FormControl(data.feeInterval, Validators.required));
+          } else {
+            this.savingsChargeForm.removeControl('feeInterval');
+          }
+          this.savingsChargeForm.patchValue({
+            amount: data.amount,
+            chargeCalculationType: data.chargeCalculationType.id,
+            chargeTimeType: data.chargeTimeType.id
+          });
         });
       });
-    });
   }
 
   /**

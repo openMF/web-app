@@ -6,8 +6,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CollectionsService } from '../collections.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SettingsService } from 'app/settings/settings.service';
@@ -33,7 +34,7 @@ import { Logger } from 'app/core/logger/logger.service';
 })
 export class CollectionSheetComponent implements OnInit {
   private readonly log = new Logger('CollectionSheetComponent');
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private centerService = inject(CentersService);
   private collectionsService = inject(CollectionsService);
   private organizationService = inject(OrganizationService);
@@ -41,6 +42,7 @@ export class CollectionSheetComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private settingsService = inject(SettingsService);
   private dateUtils = inject(Dates);
+  private destroyRef = inject(DestroyRef);
 
   /** Offices Data */
   officesData: any;
@@ -55,7 +57,7 @@ export class CollectionSheetComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   /** Collection Sheet form. */
-  collectionSheetForm: UntypedFormGroup;
+  collectionSheetForm: FormGroup;
 
   officeId: number | null = null;
   meetingFallCenters: MeetingFallCenter[] | null = null;
@@ -71,7 +73,7 @@ export class CollectionSheetComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor() {
-    this.route.data.subscribe((data: { officesData: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { officesData: any }) => {
       this.officesData = data.officesData;
     });
   }
@@ -109,18 +111,21 @@ export class CollectionSheetComponent implements OnInit {
    * Checks for the office id value change
    */
   buildDependencies() {
-    this.collectionSheetForm.get('officeId').valueChanges.subscribe((officeId: any) => {
-      this.officeId = officeId;
-      this.organizationService.getStaffs(officeId).subscribe((response: any) => {
-        this.loanOfficerData = response;
+    this.collectionSheetForm
+      .get('officeId')
+      .valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((officeId: any) => {
+        this.officeId = officeId;
+        this.organizationService.getStaffs(officeId).subscribe((response: any) => {
+          this.loanOfficerData = response;
+        });
+        this.organizationService.getCenters(officeId).subscribe((response: any) => {
+          this.centersData = response;
+        });
+        this.organizationService.getGroups(officeId).subscribe((response: any) => {
+          this.groupsData = response;
+        });
       });
-      this.organizationService.getCenters(officeId).subscribe((response: any) => {
-        this.centersData = response;
-      });
-      this.organizationService.getGroups(officeId).subscribe((response: any) => {
-        this.groupsData = response;
-      });
-    });
   }
 
   previewCollectionSheet() {

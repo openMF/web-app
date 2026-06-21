@@ -63,3 +63,38 @@
     color: $status-transfer-hold;
   }
 }
+
+/* ── Row-state tokens ────────────────────────────────────────────
+   Reusable left-border status indicator for mat-table rows.
+   Apply one class to <tr mat-row>:
+     .row-state-paid | .row-state-partial | .row-state-alert | .row-state-waived
+──────────────────────────────────────────────────────────────── */
+:root {
+  --row-state-paid: #2e7d32;
+  --row-state-partial: #e65100;
+  --row-state-alert: #c62828;
+  --row-state-waived: #5c6bc0;
+}
+
+.dark-theme {
+  --row-state-paid: #66bb6a;
+  --row-state-partial: #ffa726;
+  --row-state-alert: #ef9a9a;
+  --row-state-waived: #9fa8da;
+}
+
+.row-state-paid .mat-mdc-cell:first-child {
+  border-left: 3px solid var(--row-state-paid);
+}
+
+.row-state-partial .mat-mdc-cell:first-child {
+  border-left: 3px solid var(--row-state-partial);
+}
+
+.row-state-alert .mat-mdc-cell:first-child {
+  border-left: 3px solid var(--row-state-alert);
+}
+
+.row-state-waived .mat-mdc-cell:first-child {
+  border-left: 3px solid var(--row-state-waived);
+}

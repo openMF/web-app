@@ -7,11 +7,8 @@
  */
 
 /* Angular Imports */
-import { Directive, Renderer2, ElementRef, HostBinding, ChangeDetectorRef, OnDestroy, inject } from '@angular/core';
-
-/* rxjs Imports */
-import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Directive, Renderer2, ElementRef, HostBinding, ChangeDetectorRef, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /* Popover Ref */
 import { PopoverRef } from './popover-ref';
@@ -20,9 +17,10 @@ import { PopoverRef } from './popover-ref';
  * Internal directive that shows the popover arrow.
  */
 @Directive({ selector: '[mifosxPopoverArrow]' })
-export class PopoverArrowDirective implements OnDestroy {
+export class PopoverArrowDirective {
   private popoverRef = inject(PopoverRef);
   private cd = inject(ChangeDetectorRef);
+  private destroyRef = inject(DestroyRef);
 
   @HostBinding('style.width.px')
   @HostBinding('style.height.px')
@@ -40,30 +38,21 @@ export class PopoverArrowDirective implements OnDestroy {
   @HostBinding('style.left.px')
   offsetLeft: number;
 
-  private subscription = new Subscription();
-
-  /**
-   * @param {PopoverRef} popoverRef PopoverRef.
-   * @param {ChangeDetectorRef} cd ChangeDetectorRef
-   */
   constructor() {
-    const popoverRef = this.popoverRef;
+    this.arrowSize = this.popoverRef.config.arrowSize;
 
-    this.arrowSize = popoverRef.config.arrowSize;
+    this.popoverRef
+      .positionChanges()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((p) => {
+        const { offsetX, offsetY } = p.connectionPair;
 
-    this.subscription = popoverRef.positionChanges().subscribe((p) => {
-      const { offsetX, offsetY } = p.connectionPair;
+        this.offsetTop = offsetY >= 0 ? offsetY * -1 : null;
+        this.offsetLeft = offsetX < 0 ? offsetX * -1 : null;
+        this.offsetBottom = offsetY < 0 ? offsetY : null;
+        this.offsetRight = offsetX >= 0 ? offsetX : null;
 
-      this.offsetTop = offsetY >= 0 ? offsetY * -1 : null;
-      this.offsetLeft = offsetX < 0 ? offsetX * -1 : null;
-      this.offsetBottom = offsetY < 0 ? offsetY : null;
-      this.offsetRight = offsetX >= 0 ? offsetX : null;
-
-      this.cd.detectChanges();
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+        this.cd.detectChanges();
+      });
   }
 }

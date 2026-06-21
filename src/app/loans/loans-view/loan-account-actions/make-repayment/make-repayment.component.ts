@@ -180,7 +180,7 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
   }
 
   showDetails(): boolean {
-    return !this.isCapitalizedIncome() && !this.isBuyDownFee();
+    return this.loanProductService.isWorkingCapital ? false : !this.isCapitalizedIncome() && !this.isBuyDownFee();
   }
 
   isCapitalizedIncome(): boolean {
@@ -383,7 +383,7 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
       // Waive penalties first if selected, then submit repayment
       if (this.waivePenalties && this.selectedPenalties.length > 0) {
         this.penaltyManagementService
-          .waivePenalties(this.loanId, this.selectedPenalties)
+          .waivePenalties(this.loanProductService.loanAccountPath, this.loanId, this.selectedPenalties)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe({
             next: () => {

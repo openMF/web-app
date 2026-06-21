@@ -49,7 +49,7 @@
     >
     </mifosx-loan-summary-balance-component>
 
-    <div>
+    <div class="m-t-40">
       <h3>{{ 'labels.heading.Loan Details' | translate }}</h3>
       <table mat-table [dataSource]="detailsDataSource">
         <ng-container matColumnDef="Key">
@@ -82,11 +82,8 @@
                 <span> {{ 'labels.inputs.Unassigned' | translate }} </span>
               }
               @if (loanDetails.loanOfficerName) {
-                <span>
-                  {{ loanDetails.loanOfficerName }} &nbsp;
-                  @if (loanDetails.loanOfficerName) {
-                    <span> </span>
-                  }
+                <span class="m-r-10">
+                  {{ loanDetails.loanOfficerName }}
                 </span>
               }
             }
@@ -138,7 +135,7 @@
   }
 
   @if (!loanDetails.summary) {
-    <div>
+    <div class="m-t-40">
       <h3>{{ 'labels.heading.Loan Details' | translate }}</h3>
       <table mat-table [dataSource]="detailsDataSource">
         <ng-container matColumnDef="Key">
@@ -163,11 +160,8 @@
                 <span> {{ 'labels.inputs.Unassigned' | translate }} </span>
               }
               @if (loanDetails.loanOfficerName) {
-                <span>
-                  {{ loanDetails.loanOfficerName }} &nbsp;
-                  @if (loanDetails.loanOfficerName) {
-                    <span> </span>
-                  }
+                <span class="m-r-10">
+                  {{ loanDetails.loanOfficerName }}
                 </span>
               }
             }

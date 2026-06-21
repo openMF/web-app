@@ -6,79 +6,149 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<div class="container">
+<div class="tas-host">
   @if (!hideOutput && !toBeExportedToRepo) {
-    <div>
-      @if (dataObject.report.type === 'Table') {
-        <div class="m-b-10 gap-45px" align="end">
-          <button
-            mat-raised-button
-            color="primary"
-            (click)="exportFile()"
-            [disabled]="notExistsReportData"
-            matToolTip="{{ 'labels.text.Export the data to CSV file' | translate }}"
-          >
-            {{ 'labels.buttons.Export CSV' | translate }}
-          </button>
-          <button
-            mat-raised-button
-            color="primary"
-            (click)="exportToXLS()"
-            [disabled]="notExistsReportData"
-            matToolTip="{{ 'labels.text.Export the data to XLS file' | translate }}"
-          >
-            {{ 'labels.buttons.Export XLS' | translate }}
-          </button>
-        </div>
-      }
-      <div class="table-output" [hidden]="notExistsReportData">
-        <table id="report-table" mat-table [dataSource]="dataSource">
-          @for (column of displayedColumns; track column; let i = $index) {
-            <ng-container [matColumnDef]="column">
-              <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
-              <td mat-cell *matCellDef="let param">
-                @if (isDecimal(i)) {
-                  <span>{{ toDecimal(param.row[i]) }}</span>
-                }
-                @if (!isDecimal(i)) {
-                  <span>{{ param.row[i] }}</span>
-                }
-              </td>
-            </ng-container>
+    @if (!notExistsReportData && !hasError) {
+      <div class="card">
+        <div class="results-bar">
+          <div class="left">
+            <h2>
+              <fa-icon icon="table"></fa-icon>
+              {{ 'labels.inputs.Results' | translate }}
+            </h2>
+            @if (dataSource.data.length) {
+              <span class="count">{{ dataSource.data.length }}</span>
+            }
+          </div>
+          @if (dataObject.report.type === 'Table') {
+            <div class="right">
+              <button
+                type="button"
+                class="btn btn-ghost"
+                (click)="exportFile()"
+                matToolTip="{{ 'labels.text.Export the data to CSV file' | translate }}"
+              >
+                <fa-icon icon="file-export"></fa-icon>
+                {{ 'labels.buttons.Export CSV' | translate }}
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                (click)="exportToXLS()"
+                matToolTip="{{ 'labels.text.Export the data to XLS file' | translate }}"
+              >
+                <fa-icon icon="download"></fa-icon>
+                {{ 'labels.buttons.Export XLS' | translate }}
+              </button>
+            </div>
           }
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns" class="select-row"></tr>
-        </table>
+        </div>
+
+        <div class="table-wrap">
+          <table id="report-table" class="rep" mat-table [dataSource]="dataSource">
+            @for (column of displayedColumns; track column; let i = $index) {
+              <ng-container [matColumnDef]="column">
+                <th mat-header-cell *matHeaderCellDef [class.cell-num]="isDecimal(i)">
+                  {{ column }}
+                  @if (isDecimal(i)) {
+                    <span class="ttype t-num">DEC</span>
+                  }
+                </th>
+                <td mat-cell *matCellDef="let param" [class.cell-num]="isDecimal(i)">
+                  @if (isDecimal(i)) {
+                    <span>{{ toDecimal(param.row[i]) }}</span>
+                  } @else {
+                    <span>{{ param.row[i] }}</span>
+                  }
+                </td>
+              </ng-container>
+            }
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns" class="rep-row"></tr>
+          </table>
+        </div>
+
         <mat-paginator [pageSizeOptions]="[100, 200, 300]" showFirstLastButtons></mat-paginator>
       </div>
-      <div class="alert" [hidden]="!notExistsReportData">
-        <div class="message">
-          <i class="fa fa-exclamation-circle alert-check"></i>
-          {{ 'labels.text.No report data was generated' | translate }}
+    }
+
+    @if (notExistsReportData && !hasError) {
+      <div class="card">
+        <div class="state empty">
+          <div class="state-ico">
+            <mat-icon>search_off</mat-icon>
+          </div>
+          <h3>{{ 'labels.text.No report data was generated' | translate }}</h3>
         </div>
       </div>
-    </div>
+    }
+
+    @if (hasError) {
+      <div class="card">
+        <div class="state error">
+          <div class="state-ico">
+            <mat-icon>error_outline</mat-icon>
+          </div>
+          <h3>{{ 'errors.report.loadFailed' | translate }}</h3>
+        </div>
+      </div>
+    }
   }
 
   @if (!hideOutput && toBeExportedToRepo) {
-    <div class="alert">
-      <div class="message">
-        <i class="fa fa-exclamation-circle alert-check"></i>
-        {{ 'labels.text.The report request' | translate }}
+    <div class="card">
+      <div class="state s3">
+        <div class="state-ico">
+          <span class="ping"></span>
+          <mat-icon>cloud_upload</mat-icon>
+        </div>
+        <h3>{{ 'labels.text.The report request' | translate }}</h3>
       </div>
     </div>
   }
 
   @if (hideOutput) {
-    <div class="loader">
-      <div class="loading"></div>
+    <div class="card">
+      <div class="skel-head">
+        <div class="skel h w-60"></div>
+        <div class="skel h w-80"></div>
+        <div class="skel h w-70"></div>
+        <div class="skel h w-50"></div>
+        <div class="skel h w-65"></div>
+        <div class="skel h w-60"></div>
+      </div>
+      <div class="skel-row">
+        <div class="skel w-75"></div>
+        <div class="skel w-90"></div>
+        <div class="skel w-60"></div>
+        <div class="skel w-80"></div>
+        <div class="skel w-50"></div>
+        <div class="skel w-70"></div>
+      </div>
+      <div class="skel-row">
+        <div class="skel w-65"></div>
+        <div class="skel w-70"></div>
+        <div class="skel w-80"></div>
+        <div class="skel w-60"></div>
+        <div class="skel w-75"></div>
+        <div class="skel w-60"></div>
+      </div>
+      <div class="skel-row">
+        <div class="skel w-80"></div>
+        <div class="skel w-60"></div>
+        <div class="skel w-75"></div>
+        <div class="skel w-50"></div>
+        <div class="skel w-70"></div>
+        <div class="skel w-65"></div>
+      </div>
     </div>
   }
 
   @if (!hideOutput) {
-    <div class="back-button">
-      <button type="button" color="primary" mat-raised-button [routerLink]="['../..']">
-        <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>{{ 'labels.buttons.Back' | translate }}
+    <div class="back-row">
+      <button type="button" class="btn btn-ghost" [routerLink]="['../..']">
+        <fa-icon icon="arrow-left"></fa-icon>
+        {{ 'labels.buttons.Back' | translate }}
       </button>
     </div>
   }

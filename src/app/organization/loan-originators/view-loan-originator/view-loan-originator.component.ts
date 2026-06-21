@@ -7,7 +7,8 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -28,17 +29,16 @@ import { LoanOriginator } from 'app/loans/models/loan-account.model';
 })
 export class ViewLoanOriginatorComponent {
   private route = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
 
   /** Employee data. */
   loanOriginatorData: LoanOriginator;
 
-  /**
-   * Retrieves the Loan Originator data from `resolve`.
-   * @param {ActivatedRoute} route Activated Route.
-   */
   constructor() {
-    this.route.data.subscribe((data: { loanOriginatorData: LoanOriginator }) => {
-      this.loanOriginatorData = data.loanOriginatorData;
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { loanOriginatorData: LoanOriginator }) => {
+        this.loanOriginatorData = data.loanOriginatorData;
+      });
   }
 }

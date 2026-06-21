@@ -1,7 +1,0 @@
-// Setting wrong credentials
-save value "wrong" as "username"
-save value "wrongpassword" as "password"
-validate-login-page 
-login
-// validate invalid login message
-check that page contains "Invalid User Details. Please try again!"

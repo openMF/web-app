@@ -7,7 +7,9 @@
  */
 
 /** Angular Imports. */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { take } from 'rxjs';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Dialogs */
@@ -38,6 +40,7 @@ export class ViewCashierComponent {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private organizationService = inject(OrganizationService);
+  private destroyRef = inject(DestroyRef);
   dialog = inject(MatDialog);
 
   /** Cashier data. */
@@ -51,7 +54,7 @@ export class ViewCashierComponent {
    * @param {MatDialog} dialog Mat Dialog
    */
   constructor() {
-    this.route.data.subscribe((data: { cashier: any }) => {
+    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { cashier: any }) => {
       this.cashierData = data.cashier;
     });
   }
@@ -65,9 +68,12 @@ export class ViewCashierComponent {
     });
     deleteCashierDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.organizationService.deleteCashier(this.cashierData.tellerId, this.cashierData.id).subscribe(() => {
-          this.router.navigate(['../'], { relativeTo: this.route });
-        });
+        this.organizationService
+          .deleteCashier(this.cashierData.tellerId, this.cashierData.id)
+          .pipe(take(1))
+          .subscribe(() => {
+            this.router.navigate(['../'], { relativeTo: this.route });
+          });
       }
     });
   }

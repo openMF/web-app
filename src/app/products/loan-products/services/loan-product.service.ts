@@ -10,6 +10,7 @@ import { inject, Injectable } from '@angular/core';
 import { LOAN_PRODUCT_TYPE, LoanProductType } from '../models/loan-product.model';
 import { BehaviorSubject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { LoanAccountPath } from 'app/loans/loans.service';
 
 @Injectable({
   providedIn: 'root'
@@ -49,7 +50,7 @@ export class LoanProductService {
     return this.isLoanProduct ? 'loanproducts' : 'working-capital-loan-products';
   }
 
-  get loanAccountPath(): string {
+  get loanAccountPath(): LoanAccountPath {
     return this.isLoanProduct ? 'loans' : 'working-capital-loans';
   }
 

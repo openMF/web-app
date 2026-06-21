@@ -27,8 +27,16 @@
     @if (loanProductService.isWorkingCapital) {
       <mat-form-field class="flex-48">
         <mat-label>{{ 'labels.inputs.Total Payment' | translate }} {{ 'labels.inputs.Volume' | translate }}</mat-label>
-        <input type="number" matInput mifosxPositiveNumber min="0" required formControlName="totalPayment" step="any" />
-        @if (loansAccountTermsForm.controls.totalPayment.hasError('highAmountValue')) {
+        <input
+          type="number"
+          matInput
+          mifosxPositiveNumber
+          min="0"
+          required
+          formControlName="totalPaymentVolume"
+          step="any"
+        />
+        @if (loansAccountTermsForm.controls.totalPaymentVolume.hasError('highAmountValue')) {
           <mat-error>
             {{ 'labels.inputs.Total Payment' | translate }} {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.higher than allowed' | translate }}</strong>
@@ -79,7 +87,7 @@
 
       <mat-form-field class="flex-23">
         <mat-label>{{ 'labels.inputs.Delinquency Grace Days' | translate }}</mat-label>
-        <input type="number" min="0" matInput formControlName="delinquencyGraceDays" />
+        <input type="number" min="0" matInput mifosxPositiveNumber formControlName="delinquencyGraceDays" />
       </mat-form-field>
 
       <mat-form-field class="flex-23">
@@ -134,6 +142,11 @@
               <fa-icon icon="close" size="md"></fa-icon>
             </button>
           }
+        </mat-form-field>
+
+        <mat-form-field class="flex-23">
+          <mat-label>{{ 'labels.inputs.Breach Grace Days' | translate }}</mat-label>
+          <input type="number" min="0" matInput mifosxPositiveNumber formControlName="breachGraceDays" />
         </mat-form-field>
       }
     }
