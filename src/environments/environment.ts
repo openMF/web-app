@@ -92,11 +92,10 @@ export const environment = {
 
   /**
    * Mifos Copilot AI assistant: deployment master switch (level 1 feature flag).
-   * Off => the panel never renders and its lazy chunk is never downloaded.
-   * Currently DISABLED. Set back to the line below to re-enable (default on):
-   *   loadedEnv.enableCopilot !== 'false' && loadedEnv.enableCopilot !== false
+   * Off by default; set MIFOS_ENABLE_COPILOT=true to load the panel for a deployment.
+   * When off, the panel never renders and its lazy chunk is never downloaded.
    */
-  enableCopilot: false,
+  enableCopilot: loadedEnv.enableCopilot === 'true' || loadedEnv.enableCopilot === true || false,
   /** Base URL of the Mifos MCP server the Copilot talks to. */
   copilotMcpBaseUrl: loadedEnv.copilotMcpBaseUrl || 'https://ai.mifos.community',
 
