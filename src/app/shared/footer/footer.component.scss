@@ -61,55 +61,33 @@
 }
 
 // ===== Default Mode (Shell) =====
-#footer {
+.footer-shell {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  min-width: 400px;
+  gap: 0.25rem;
+  padding: 1rem 0;
+  font-size: 0.8rem;
+  color: var(--md-sys-color-on-surface-variant, #44474e);
 
-  .content-wrapper {
-    max-width: 100%;
-    min-width: 90%;
-    padding-left: 5%;
-    padding-right: 5%;
+  a {
+    color: inherit;
+    text-decoration: none;
+    font-weight: 500;
 
-    .versions {
-      width: 100%;
-      color: $status-inactive;
-    }
-
-    .footer-content {
-      margin: 0;
+    &:hover {
+      text-decoration: underline;
     }
   }
 
-  .divider {
-    margin: 2.5rem 1rem 0.5rem;
-    width: 4rem;
-  }
-
-  .business-date {
+  .footer-business-date {
     color: $status-approved;
-  }
-
-  table {
-    border: none;
-
-    tr:nth-child(even) {
-      background-color: transparent;
-    }
+    font-size: 0.75rem;
   }
 }
 
-.main-page {
-  max-width: 70%;
-  min-width: 50%;
-  padding-left: 30%;
-}
-
-.copy-label {
-  min-width: 100%;
-  text-align: center;
-  font-size: medium;
-  margin-bottom: 10px;
+.dark-theme .footer-shell {
+  color: var(--md-sys-color-on-surface-variant, #c4c6d0);
 }
 
 // ===== Responsive for Compact Mode =====

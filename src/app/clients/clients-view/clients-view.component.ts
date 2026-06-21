@@ -270,7 +270,7 @@ export class ClientsViewComponent implements OnInit {
    */
   reload() {
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/clients`, { skipLocationChange: true }).then(() => this.router.navigate([url]));
+    this.router.navigateByUrl(`/members`, { skipLocationChange: true }).then(() => this.router.navigate([url]));
   }
 
   /**
@@ -286,7 +286,7 @@ export class ClientsViewComponent implements OnInit {
       }
       if (response.delete) {
         this.clientsService.deleteClient(this.clientViewData.id).subscribe(() => {
-          this.router.navigate(['/clients'], { relativeTo: this.route });
+          this.router.navigate(['/members'], { relativeTo: this.route });
         });
       }
     });

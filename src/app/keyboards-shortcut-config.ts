@@ -63,12 +63,12 @@ export class KeyboardShortcutsConfiguration {
       // },
       // Create Client - ctrl + c
       {
-        title: 'Create Client',
+        title: 'Create Member',
         ctrlKey: false,
         shiftKey: false,
         altKey: true,
         key: 'c',
-        route: 'clients/create'
+        route: 'members/create'
       },
       // Create Group - ctrl + g
       {

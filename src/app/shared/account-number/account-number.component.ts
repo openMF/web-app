@@ -53,7 +53,7 @@ export class AccountNumberComponent implements OnInit {
 
   getAccountLink(): string {
     if (this.accountType) {
-      return `/#/clients/${this.clientId}/${this.getAccountType()}/${this.accountId}`;
+      return `/#/members/${this.clientId}/${this.getAccountType()}/${this.accountId}`;
     }
     return '';
   }

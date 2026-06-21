@@ -63,7 +63,7 @@
           mat-cell
           *matCellDef="let loan"
           class="view-details"
-          [routerLink]="['../../clients', loan.clientId, 'general']"
+          [routerLink]="['../../members', loan.clientId, 'general']"
         >
           {{ loan.clientName }}
         </td>
@@ -78,7 +78,7 @@
           mat-cell
           *matCellDef="let loan"
           class="view-details"
-          [routerLink]="['../../clients', loan.clientId, 'loans', loan.loanId, 'general']"
+          [routerLink]="['../../members', loan.clientId, 'loans', loan.loanId, 'general']"
         >
           {{ loan.loanAccountNumber }}
         </td>

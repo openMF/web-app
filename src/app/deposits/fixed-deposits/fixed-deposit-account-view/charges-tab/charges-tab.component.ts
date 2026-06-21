@@ -303,7 +303,7 @@ export class ChargesTabComponent implements OnInit {
     const clientId = this.fixedDepositsAccountData.clientId;
     const url: string = this.router.url;
     this.router
-      .navigateByUrl(`/clients/${clientId}/fixed-deposits-accounts`, { skipLocationChange: true })
+      .navigateByUrl(`/members/${clientId}/fixed-deposits-accounts`, { skipLocationChange: true })
       .then(() => this.router.navigate([url]));
   }
 }
