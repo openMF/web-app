@@ -21,7 +21,7 @@
         max-width: 20rem;
         padding: 0;
         margin: 0;
-        content: url('../assets/images/white-mifos.png');
+        content: url('../assets/images/debug-bg.png');
       }
 
       .logo-section {
@@ -281,7 +281,7 @@ body.dark-theme {
   mifosx-home {
     [src*='mifos_lg-logo.jpg'],
     [src$='_home.png'] {
-      content: url('../assets/images/white-mifos.png');
+      content: url('../assets/images/debug-bg.png');
     }
   }
 

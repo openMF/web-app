@@ -1,5 +1,5 @@
 ﻿{
-  "APP_NAME": "Mifos® X WebApp",
+  "APP_NAME": "COIMS",
   "Logged in as": "Imeingia kama",
   "Remember me": "Nikumbuke",
   "errors": {
@@ -432,6 +432,7 @@
     "version": {
       "Tenant": "Mpangaji",
       "Mifos WebApp": "Mifos® WebApp",
+      "WebApp": "WebApp",
       "Apache Fineract": "Apache Fineract®",
       "Server": "Seva",
       "Username": "Jina la mtumiaji",

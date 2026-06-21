@@ -1,5 +1,5 @@
 ﻿{
-  "APP_NAME": "Mifos® X WebApp",
+  "APP_NAME": "COIMS",
   "Logged in as": "Logged in as",
   "Remember me": "Remember me",
   "error.resource.notImplemented.type": "Not Implemented Error",
@@ -434,7 +434,8 @@
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
     "version": {
       "Tenant": "Tenant",
-      "Mifos WebApp": "Mifos® WebApp",
+      "Mifos WebApp": "WebApp",
+      "WebApp": "WebApp",
       "Apache Fineract": "Apache Fineract®",
       "Server": "Server",
       "Username": "Username",
