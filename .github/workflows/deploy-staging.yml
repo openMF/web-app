@@ -3,7 +3,7 @@ name: Deploy to Staging (Plesk)
 on:
   push:
     branches:
-      - staging
+      - dev
 
 jobs:
   build-and-deploy:
@@ -12,6 +12,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Sync staging with dev
+        run: |
+          git push origin HEAD:staging --force
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -25,17 +31,14 @@ jobs:
       - name: Build for production
         run: npm run build
 
-      - name: Deploy to Plesk via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.PLESK_HOST }}
-          username: ${{ secrets.PLESK_USER }}
-          password: ${{ secrets.PLESK_PASSWORD }}
-          protocol: ftps
-          port: 21
-          local-dir: ./dist/browser/
-          server-dir: /httpdocs/
-          exclude: |
-            **/assets/env.js
-            **/.git*
-            **/node_modules/**
+      - name: Push built files to dist-staging branch
+        run: |
+          cd dist/web-app/browser
+          git init
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git checkout -b dist-staging
+          git add -A
+          git commit -m "deploy: built files from commit ${{ github.sha }}"
+          git push origin dist-staging --force
