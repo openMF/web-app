@@ -18,6 +18,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 /** Custom Services */
 import { ClientsService } from '../clients.service';
@@ -63,6 +64,15 @@ export class CreateClientComponent {
   private clientsService = inject(ClientsService);
   private settingsService = inject(SettingsService);
   private destroyRef = inject(DestroyRef);
+  private snackBar = inject(MatSnackBar);
+
+  /** Step labels for toast messages */
+  private stepLabels = [
+    'General',
+    'Family Members',
+    'Address',
+    'Preview'
+  ];
 
   /** Client General Step */
   @ViewChild(ClientGeneralStepComponent, { static: true }) clientGeneralStep: ClientGeneralStepComponent;
@@ -150,6 +160,12 @@ export class CreateClientComponent {
         }
       });
     }
+  }
+
+  onStepChange(event: any) {
+    const previousIndex = event.previouslySelectedIndex;
+    const previousLabel = this.stepLabels[previousIndex] || `Step ${previousIndex + 1}`;
+    this.snackBar.open(`${previousLabel} step completed!`, 'Close', { duration: 2000 });
   }
 
   legalFormChange(eventData: { legalForm: number }) {
