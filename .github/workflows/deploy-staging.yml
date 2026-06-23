@@ -3,7 +3,7 @@ name: Deploy to Staging (Plesk)
 on:
   push:
     branches:
-      - dev
+      - staging
 
 jobs:
   build-and-deploy:
@@ -12,12 +12,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Sync staging with dev
-        run: |
-          git push origin HEAD:staging --force
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
