@@ -1,4 +1,4 @@
-﻿{
+{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "ielogojies Kā",
   "Remember me": "Atceries mani",
@@ -769,7 +769,9 @@
       "Week": "nedēļa",
       "Withdraw": "Izņemt",
       "Yes": "Jā",
-      "undo_account_transfer": "Atcelt konta pārskaitījumu"
+      "undo_account_transfer": "Atcelt konta pārskaitījumu",
+      "All": "Visi",
+      "Pause Breach": "Apturēt pārkāpumu"
     },
     "catalogs": {
       "% Amount": "Summa",
@@ -1576,7 +1578,10 @@
       "identifier id": "identifikatora id",
       "savings-transaction-datatable-tab works": "ietaupījums-transaction-datatable-tab darbojas",
       "successfully select option": "veiksmīgi. Lūdzu, atlasiet kādu no tālāk norādītajām opcijām, lai turpinātu.",
-      "undo_account_transfer": "Atcelt konta pārskaitījumu"
+      "undo_account_transfer": "Atcelt konta pārskaitījumu",
+      "Loan Breach Actions": "Aizdevuma pārkāpuma darbības",
+      "No Breach Actions": "Nav pārkāpuma darbību",
+      "Pause Timeline": "Pauzes laika līnija"
     },
     "inputs": {
       "# Remittance": "# Pārvedums",
@@ -3135,7 +3140,22 @@
       "s3_secret_key": "s3_secret_key",
       "task-management component": "uzdevumu pārvaldības komponents",
       "to": "uz",
-      "valid": "derīgs"
+      "valid": "derīgs",
+      "Active Pause": "Aktīva pauze",
+      "Breach Actions": "Pārkāpuma darbības",
+      "days": "dienas",
+      "Duration": "Ilgums",
+      "Expired": "Beidzies",
+      "Last Action": "Pēdējā darbība",
+      "No breach actions have been recorded for this loan": "Šim aizdevumam nav reģistrētas pārkāpuma darbības",
+      "No records match the selected filter": "Neviens ieraksts neatbilst atlasītajam filtram",
+      "Ongoing": "Notiekoša",
+      "Pause Active": "Pauze aktīva",
+      "Pauses": "Pauzes",
+      "Scheduled": "Plānota",
+      "Today": "Šodien",
+      "Total Actions": "Darbības kopā",
+      "Total Days Paused": "Pauzes dienas kopā"
     },
     "links": {
       "Community": "kopiena",
@@ -4095,7 +4115,9 @@
       "username": "lietotājvārds",
       "withhold tax for this account": "ieturēt nodokli par šo kontu",
       "withoutCategory": "Bez kategorijas",
-      "Maker-Checker principle requires every tasks": "Maker-Checker princips paredz, ka katrs uzdevums ir jāveic diviem cilvēkiem, lai samazinātu kļūdu un nepareizas lietošanas iespējamību. Viens cilvēks uzsāk procesu, bet otrs to pabeidz."
+      "Maker-Checker principle requires every tasks": "Maker-Checker princips paredz, ka katrs uzdevums ir jāveic diviem cilvēkiem, lai samazinātu kļūdu un nepareizas lietošanas iespējamību. Viens cilvēks uzsāk procesu, bet otrs to pabeidz.",
+      "Breach Actions": "Pārkāpuma darbības",
+      "“Maker-Checker” principle requires every tasks": "“Maker-Checker” princips paredz, ka katrs uzdevums ir jāveic diviem cilvēkiem, lai samazinātu kļūdu un nepareizas lietošanas iespējamību. Viens cilvēks uzsāk procesu, bet otrs to pabeidz."
     },
     "permissions": {
       "actions": {

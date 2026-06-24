@@ -1,4 +1,4 @@
-﻿{
+{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "prisijungęs kaip",
   "Remember me": "Prisimink mane",
@@ -769,7 +769,9 @@
       "Week": "Savaitė",
       "Withdraw": "Atsitraukti",
       "Yes": "Taip",
-      "undo_account_transfer": "Atšaukti sąskaitos pervedimą"
+      "undo_account_transfer": "Atšaukti sąskaitos pervedimą",
+      "All": "Visi",
+      "Pause Breach": "Pristabdyti pažeidimą"
     },
     "catalogs": {
       "% Amount": "Suma",
@@ -1575,7 +1577,10 @@
       "identifier id": "identifikatoriaus id",
       "savings-transaction-datatable-tab works": "taupymo-operacijų-duomenų lentelės-skirtukas veikia",
       "successfully select option": "sėkmingai. Jei norite tęsti, pasirinkite iš toliau pateiktų parinkčių.",
-      "undo_account_transfer": "Atšaukti sąskaitos pervedimą"
+      "undo_account_transfer": "Atšaukti sąskaitos pervedimą",
+      "Loan Breach Actions": "Paskolos pažeidimo veiksmai",
+      "No Breach Actions": "Nėra pažeidimo veiksmų",
+      "Pause Timeline": "Pauzių laiko juosta"
     },
     "inputs": {
       "# Remittance": "# Pervedimas",
@@ -3134,7 +3139,22 @@
       "s3_secret_key": "s3_slaptas_raktas",
       "task-management component": "užduočių valdymo komponentas",
       "to": "į",
-      "valid": "galioja"
+      "valid": "galioja",
+      "Active Pause": "Aktyvi pauzė",
+      "Breach Actions": "Pažeidimo veiksmai",
+      "days": "dienos",
+      "Duration": "Trukmė",
+      "Expired": "Pasibaigė",
+      "Last Action": "Paskutinis veiksmas",
+      "No breach actions have been recorded for this loan": "Šiai paskolai nebuvo užregistruota jokių pažeidimo veiksmų",
+      "No records match the selected filter": "Joks įrašas neatitinka pasirinkto filtro",
+      "Ongoing": "Vyksta",
+      "Pause Active": "Pauzė aktyvi",
+      "Pauses": "Pauzės",
+      "Scheduled": "Suplanuota",
+      "Today": "Šiandien",
+      "Total Actions": "Iš viso veiksmų",
+      "Total Days Paused": "Iš viso pauzės dienų"
     },
     "links": {
       "Community": "bendruomenė",
@@ -4096,7 +4116,9 @@
       "username": "Vartotojo vardas",
       "withhold tax for this account": "išskaičiuoti mokesčius už šią sąskaitą",
       "withoutCategory": "Bez kategorijos",
-      "Maker-Checker principle requires every tasks": "Maker-Checker principas reikalauja, kad kiekvieną užduotį atliktų du žmonės, kad būtų sumažinta klaidų ir netinkamo naudojimo galimybė. Vienas asmuo pradeda procesą, o antrasis jį užbaigia."
+      "Maker-Checker principle requires every tasks": "Maker-Checker principas reikalauja, kad kiekvieną užduotį atliktų du žmonės, kad būtų sumažinta klaidų ir netinkamo naudojimo galimybė. Vienas asmuo pradeda procesą, o antrasis jį užbaigia.",
+      "Breach Actions": "Pažeidimo veiksmai",
+      "“Maker-Checker” principle requires every tasks": "„Maker-Checker“ principas reikalauja, kad kiekvieną užduotį atliktų du žmonės, kad būtų sumažinta klaidų ir netinkamo naudojimo galimybė. Vienas asmuo pradeda procesą, o antrasis jį užbaigia."
     },
     "permissions": {
       "actions": {

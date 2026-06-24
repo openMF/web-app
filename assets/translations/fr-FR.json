@@ -1,4 +1,4 @@
-﻿{
+{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "connecté en tant que",
   "Remember me": "Souviens-toi de moi",
@@ -769,7 +769,9 @@
       "Week": "Semaine",
       "Withdraw": "Retirer",
       "Yes": "Oui",
-      "undo_account_transfer": "Annuler le transfert de compte"
+      "undo_account_transfer": "Annuler le transfert de compte",
+      "All": "Tous",
+      "Pause Breach": "Suspendre le Manquement"
     },
     "catalogs": {
       "% Amount": "Montant",
@@ -1579,7 +1581,10 @@
       "identifier id": "identifiant",
       "savings-transaction-datatable-tab works": "l'onglet datatable-transaction-d'épargne fonctionne",
       "successfully select option": "avec succès. Veuillez sélectionner parmi les options ci-dessous pour continuer.",
-      "undo_account_transfer": "Annuler le transfert de compte"
+      "undo_account_transfer": "Annuler le transfert de compte",
+      "Loan Breach Actions": "Actions de Manquement du Prêt",
+      "No Breach Actions": "Aucune Action sur Brèches",
+      "Pause Timeline": "Chronologie des Pauses"
     },
     "inputs": {
       "# Remittance": "# Transfert",
@@ -3138,7 +3143,22 @@
       "s3_secret_key": "s3_secret_key",
       "task-management component": "composant de gestion des tâches",
       "to": "à",
-      "valid": "valide"
+      "valid": "valide",
+      "Active Pause": "Pause Active",
+      "Breach Actions": "Actions de Manquement",
+      "days": "jours",
+      "Duration": "Durée",
+      "Expired": "Expirée",
+      "Last Action": "Dernière Action",
+      "No breach actions have been recorded for this loan": "Aucune action sur brèches n'a été enregistrée pour ce prêt",
+      "No records match the selected filter": "Aucun enregistrement ne correspond au filtre sélectionné",
+      "Ongoing": "En cours",
+      "Pause Active": "Pause Active",
+      "Pauses": "Pauses",
+      "Scheduled": "Programmée",
+      "Today": "Aujourd'hui",
+      "Total Actions": "Total des Actions",
+      "Total Days Paused": "Total des Jours en Pause"
     },
     "links": {
       "Community": "Communauté",
@@ -4098,7 +4118,9 @@
       "username": "nom d'utilisateur",
       "withhold tax for this account": "retenir l'impôt sur ce compte",
       "withoutCategory": "Sans catégorie",
-      "Maker-Checker principle requires every tasks": "Le principe Maker-Checker exige que chaque tâche soit effectuée par deux personnes afin de réduire les risques d'erreurs et de mauvaise utilisation. Une personne lance le processus et la seconde le termine."
+      "Maker-Checker principle requires every tasks": "Le principe Maker-Checker exige que chaque tâche soit effectuée par deux personnes afin de réduire les risques d'erreurs et de mauvaise utilisation. Une personne lance le processus et la seconde le termine.",
+      "Breach Actions": "Actions de Manquement",
+      "“Maker-Checker” principle requires every tasks": "Le principe « Maker-Checker » exige que chaque tâche soit effectuée par deux personnes afin de réduire les risques d'erreurs et de mauvaise utilisation. Une personne lance le processus et la seconde le termine."
     },
     "permissions": {
       "actions": {
