@@ -144,6 +144,8 @@ export const environment = {
    */
   productionModeEnableRBAC:
     loadedEnv['productionModeEnableRBAC'] === 'true' || loadedEnv['productionModeEnableRBAC'] === true || false,
+  enableGlobalDashboard:
+    loadedEnv['enableGlobalDashboard'] === 'true' || loadedEnv['enableGlobalDashboard'] === true || false,
 
   OIDC: {
     // Support legacy FINERACT_PLUGIN_OIDC_* variable names for backward compatibility

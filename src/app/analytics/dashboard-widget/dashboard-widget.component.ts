@@ -52,11 +52,7 @@ const CURRENCY_ADAPTERS = new Set([
 ]);
 
 /** Adapters that show percentage values */
-const PERCENT_ADAPTERS = new Set([
-  'women-borrowers-total',
-  'rural-clients-total',
-  'youth-clients-total'
-]);
+const PERCENT_ADAPTERS = new Set<string>([]);
 
 @Component({
   selector: 'mifosx-dashboard-widget',

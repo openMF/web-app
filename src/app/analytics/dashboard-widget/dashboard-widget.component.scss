@@ -32,8 +32,35 @@
 }
 
 .widget-card.metric-card {
-  min-height: 140px;
-  justify-content: center;
+  min-height: 110px;
+  justify-content: space-between;
+  padding: 16px 20px;
+  box-shadow: none;
+  border: 1px solid rgb(0 0 0 / 10%);
+
+  &:hover {
+    transform: none;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 5%);
+  }
+
+  .widget-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #94a3b8;
+
+    .title-icon {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+  }
+
+  .metric-value {
+    font-size: 26px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
 }
 
 .widget-header {
