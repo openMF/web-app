@@ -155,8 +155,8 @@ function sanitiseShard(input: GenerateE2ENameOptions['shard']): string {
  * Fold a `[0, 1)` RNG draw into a fixed-length lower-case base36 token.
  * `Math.random().toString(36).slice(2)` can occasionally yield a token
  * shorter than expected (when the value is very small), so this helper
- * pads with the next draw rather than emitting a name shorter than the
- * pattern documents.
+ * zero-pads the result to the requested `length` rather than emitting a
+ * name shorter than the pattern documents.
  */
 function sanitiseRandomToken(value: number, length: number): string {
   const normalised = Number.isFinite(value) && value >= 0 && value < 1 ? value : 0;

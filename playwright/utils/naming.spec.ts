@@ -95,11 +95,7 @@ test.describe('generateE2EName() format', () => {
 // generateE2EName() — shard resolution
 // ─────────────────────────────────────────────────────────────────────
 
-// Serial mode is required here because three tests mutate the shared
-// process.env.TEST_PARALLEL_INDEX.  Even though fullyParallel is not
-// currently enabled, being explicit prevents a future config change
-// from introducing a hard-to-diagnose race on process.env.
-test.describe.serial('generateE2EName() shard resolution', () => {
+test.describe('generateE2EName() shard resolution', () => {
   test('falls back to TEST_PARALLEL_INDEX when no shard option is passed', () => {
     const original = process.env.TEST_PARALLEL_INDEX;
     process.env.TEST_PARALLEL_INDEX = '7';

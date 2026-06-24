@@ -121,12 +121,26 @@ export default defineConfig({
   // `playwright/tests/admin/**` or `playwright/tests/restricted/**`,
   // and can also be force-enabled via PLAYWRIGHT_ENABLE_ADMIN_PROJECTS=1
   // or PLAYWRIGHT_ENABLE_RESTRICTED_PROJECTS=1 for CI matrices.
+  //
+  // `integration` exists for live-backend factory specs under
+  // `playwright/factories/*.spec.ts` — they need a real Fineract but
+  // no browser, so they bypass the `setup` project (which would burn
+  // a Chromium boot on auth state we never use).
   projects: [
     {
       // Pure-logic unit tests for shared utilities (retry, sleep, ...).
       // No browser, no auth setup, no app dependency.
       name: 'unit',
       testMatch: /playwright\/utils\/.*\.spec\.ts/,
+      testDir: '.',
+      use: { storageState: { cookies: [], origins: [] } }
+    },
+    {
+      // Live-backend factory specs — real Fineract HTTP, no browser.
+      // Runs against `E2E_FINERACT_URL` (default https://localhost:8443)
+      // and exits in seconds because no Chromium process is started.
+      name: 'integration',
+      testMatch: /playwright\/factories\/.*\.spec\.ts/,
       testDir: '.',
       use: { storageState: { cookies: [], origins: [] } }
     },
