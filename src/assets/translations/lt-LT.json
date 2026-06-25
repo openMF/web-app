@@ -475,6 +475,7 @@
     "accounting": {
       "Accrual (periodic)": "Kaupiamasis (periodinis)",
       "Accrual (upfront)": "Sukaupimas (išankstinis)",
+      "ACC_DEF_REV_AM": "Atsidėjimai su atidėtų pajamų amortizacija",
       "CASH_BASED": "Grynieji pinigai",
       "Cash": "Grynieji pinigai",
       "NONE": "Nė vienas",

@@ -476,6 +476,7 @@
     "accounting": {
       "Accrual (periodic)": "Akruální (periodické)",
       "Accrual (upfront)": "Akruální (předem)",
+      "ACC_DEF_REV_AM": "Časové rozlišení s odpisem odložených výnosů",
       "CASH_BASED": "Hotovost",
       "Cash": "Hotovost",
       "NONE": "Žádný",

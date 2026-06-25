@@ -477,6 +477,7 @@
     "accounting": {
       "Accrual (periodic)": "Abgrenzung (periodisch)",
       "Accrual (upfront)": "Rückstellung (im Voraus)",
+      "ACC_DEF_REV_AM": "Abgrenzung mit Abschreibung auf abgegrenzte Umsatzerlöse",
       "CASH_BASED": "Kasse",
       "Cash": "Kasse",
       "NONE": "Keiner",

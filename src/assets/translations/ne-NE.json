@@ -475,6 +475,7 @@
     "accounting": {
       "Accrual (periodic)": "उपार्जन (आवधिक)",
       "Accrual (upfront)": "उपार्जन (अगाडि)",
+      "ACC_DEF_REV_AM": "स्थगित राजस्व परिशोधन सहितको उपार्जन",
       "CASH_BASED": "नगद",
       "Cash": "नगद",
       "NONE": "कुनै पनि छैन",

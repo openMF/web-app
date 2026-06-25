@@ -475,6 +475,7 @@
     "accounting": {
       "Accrual (periodic)": "발생(정기적)",
       "Accrual (upfront)": "발생(선불)",
+      "ACC_DEF_REV_AM": "이연매출 상각액을 반영한 발생주의 회계",
       "CASH_BASED": "현금",
       "Cash": "현금",
       "NONE": "없음",

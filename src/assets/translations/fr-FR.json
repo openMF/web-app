@@ -475,6 +475,7 @@
     "accounting": {
       "Accrual (periodic)": "Accumulation (périodique)",
       "Accrual (upfront)": "Accumulation (d'avance)",
+      "ACC_DEF_REV_AM": "Comptabilisation avec amortissement des produits différés",
       "CASH_BASED": "Espèces",
       "Cash": "Espèces",
       "NONE": "Aucun",

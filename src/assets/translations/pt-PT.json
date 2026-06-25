@@ -475,6 +475,7 @@
     "accounting": {
       "Accrual (periodic)": "Acumulação (periódica)",
       "Accrual (upfront)": "Acumulação (antecipada)",
+      "ACC_DEF_REV_AM": "Acumulação com amortização de receitas diferidas",
       "CASH_BASED": "Dinheiro",
       "Cash": "Dinheiro",
       "NONE": "Nenhum",

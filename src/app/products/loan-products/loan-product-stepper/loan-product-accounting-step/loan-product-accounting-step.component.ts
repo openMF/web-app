@@ -298,7 +298,7 @@ export class LoanProductAccountingStepComponent extends LoanProductBaseComponent
       }
     } else if (this.loanProductService.isWorkingCapital) {
       switch (accountingRuleId) {
-        case 'CASH_BASED':
+        case 'ACC_DEF_REV_AM':
           this.loanProductAccountingForm.patchValue({
             fundSourceAccountId: accountingMappings.fundSourceAccount.id,
             loanPortfolioAccountId: accountingMappings.loanPortfolioAccount.id,
@@ -606,7 +606,7 @@ export class LoanProductAccountingStepComponent extends LoanProductBaseComponent
           this.loanProductAccountingForm.removeControl('receivablePenaltyAccountId');
 
           this.loanProductAccountingForm.removeControl('advancedAccountingRules');
-        } else if (accountingRule === 'CASH_BASED') {
+        } else if (accountingRule === 'ACC_DEF_REV_AM') {
           this.loanProductAccountingForm.addControl(
             'fundSourceAccountId',
             new UntypedFormControl('', Validators.required)
