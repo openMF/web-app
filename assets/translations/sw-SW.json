@@ -1117,6 +1117,8 @@
       "NotEqual": "Sio sawa"
     },
     "heading": {
+      "Breach Actions": "Ukiukaji Vitendo",
+      "Near Breach Actions": "Ukiukaji unaokaribia Vitendo",
       "About Us": "Kuhusu Sisi",
       "Account Information": "Taarifa za Akaunti",
       "Account Linked Financial": "Orodha ya akaunti zilizounganishwa na shughuli tofauti za kifedha. Kujua zaidi bofya:",
@@ -1404,6 +1406,7 @@
       "Minimum Deposit Term": "Muda wa chini wa Amana",
       "Moratorium": "Kusitishwa",
       "Near Breach Configuration": "Mipangilio ya Ukiukaji wa Karibu",
+      "Near Breach History": "Historia ya ukiukaji unaokaribia",
       "Nominal Interest Rate by loan cycle": "Kiwango cha Riba cha Kawaida kwa mzunguko wa mkopo",
       "Not Yet Amortized Amount": "Kiasi Bado Kijaondolewa",
       "Notes": "Vidokezo",
@@ -1581,6 +1584,7 @@
       "Pause Timeline": "Mfuatano wa Pumziko"
     },
     "inputs": {
+      "Breach Actions": "Ukiukaji Vitendo",
       "# Remittance": "# Uhawilishaji",
       "# Senders": "# Watumaji",
       "ACCOUNTING": "UHASIBU",
@@ -2489,6 +2493,7 @@
       "Multiple Debit Entries Allowed": "Maingizo Mengi ya Malipo Yanaruhusiwa",
       "Municipality": "Manispaa",
       "N/A": "N/A",
+      "New": "Mpya",
       "NID": "Kitambulisho cha Taifa",
       "Name": "Jina",
       "Name Decorated": "Jina Limepambwa",
@@ -2687,6 +2692,7 @@
       "Prefix Type": "Aina ya kiambishi awali",
       "Premature Close Date": "Tarehe ya Kufunga Mapema",
       "Present": "Wasilisha",
+      "Previous": "Awali",
       "Previous Run": "Mbio Iliyotangulia",
       "Previous Run Status": "Hali ya Uendeshaji Uliopita",
       "Primary Grouping by Amount": "Upangaji wa Msingi kwa Kiasi",
@@ -3170,6 +3176,7 @@
       "Working with Code": "Kufanya kazi na Kanuni"
     },
     "menus": {
+      "Update Breach": "Sasisha ukiukaji",
       "Unassign Staff": "Batilisha Wafanyikazi",
       "Accounting": "Uhasibu",
       "Account Overview": "Muhtasari wa akaunti",
@@ -3289,6 +3296,7 @@
       "Withdrawn by Client": "Imetolewa na mteja",
       "Write Off": "Andika",
       "Update discount": "Sasisha punguzo",
+      "Update Near Breach": "Sasisha ukiukaji unaokaribia",
       "Apply Additional Shares": "Omba Ziada",
       "Redeem Shares": "Komboa Hisa",
       "Approve Additional Shares": "Idhinisha Hisa za Ziada",
@@ -3358,6 +3366,8 @@
       "undo_account_transfer": "Una uhakika unataka kufuta uhamisho huu wa akaunti?"
     },
     "text": {
+      "No Breach Actions": "Hakuna Ukiukaji Vitendo",
+      "No Near Breach Actions": "Hakuna Ukiukaji unaokaribia Vitendo",
       "A": "A",
       "Ability to manage holidays for individual offices": "Uwezo wa kudhibiti likizo kwa ofisi binafsi ni zana muhimu sana kwa shirika linalotumia maeneo mengi.Tumia chaguo hili kubinafsisha likizo kwa kila ofisi ya shirika lako.",
       "About Us": "Kuhusu Sisi",

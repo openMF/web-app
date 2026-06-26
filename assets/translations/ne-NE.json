@@ -1118,6 +1118,8 @@
       "NotEqual": "बराबर छैन"
     },
     "heading": {
+      "Breach Actions": "उल्लंघन कार्यहरू",
+      "Near Breach Actions": "नजिकको उल्लंघन कार्यहरू",
       "About Us": "हाम्रो बारेमा",
       "Account Information": "खाता जानकारी",
       "Account Linked Financial": "विभिन्न वित्तीय गतिविधिहरु संग जोडिएको खाताहरु को सूची। थप जान्नको लागि क्लिक गर्नुहोस्:",
@@ -1406,6 +1408,7 @@
       "Minimum Deposit Term": "न्यूनतम जम्मा अवधि",
       "Moratorium": "मोरेटोरियम",
       "Near Breach Configuration": "नजिकको उल्लङ्घन कन्फिगरेसन",
+      "Near Breach History": "नजिकको उल्लंघन इतिहास",
       "Nominal Interest Rate by loan cycle": "ऋण चक्र द्वारा नाममात्र ब्याज दर",
       "Not Yet Amortized Amount": "अझै परिशोधन नभएको रकम",
       "Notes": "नोटहरू",
@@ -1583,6 +1586,7 @@
       "Pause Timeline": "रोकावट समयरेखा"
     },
     "inputs": {
+      "Breach Actions": "उल्लंघन कार्यहरू",
       "# Remittance": "# रेमिट्यान्स",
       "# Senders": "# पठाउनेहरू",
       "ACCOUNTING": "लेखा",
@@ -2491,6 +2495,7 @@
       "Multiple Debit Entries Allowed": "बहु डेबिट प्रविष्टिहरूलाई अनुमति छ",
       "Municipality": "नगरपालिका",
       "N/A": "N/A",
+      "New": "नयाँ",
       "NID": "राष्ट्रिय परिचयपत्र",
       "Name": "नाम",
       "Name Decorated": "नाम सजाइएको",
@@ -2689,6 +2694,7 @@
       "Prefix Type": "उपसर्ग प्रकार",
       "Premature Close Date": "समयपूर्व बन्द मिति",
       "Present": "उपस्थित",
+      "Previous": "अघिल्लो",
       "Previous Run": "अघिल्लो रन",
       "Previous Run Status": "अघिल्लो रन स्थिति",
       "Primary Grouping by Amount": "रकम द्वारा प्राथमिक समूहीकरण",
@@ -3172,6 +3178,7 @@
       "Working with Code": "Code मा काम गर्नुहुन्छ"
     },
     "menus": {
+      "Update Breach": "उल्लंघन अद्यावधिक गर्नुहोस्",
       "Unassign Staff": "कर्मचारी नियुक्ति रद्द गर्नुहोस्",
       "Accounting": "लेखा",
       "Account Overview": "खाता अवलोकन",
@@ -3292,6 +3299,7 @@
       "Withdrawn by Client": "ग्राहक द्वारा फिर्ता",
       "Write Off": "लेख्नुहोस्",
       "Update discount": "छुट अद्यावधिक गर्नुहोस्",
+      "Update Near Breach": "नजिकको उल्लंघन अद्यावधिक गर्नुहोस्",
       "Apply Additional Shares": "अतिरिक्त लागू गर्नुहोस्",
       "Redeem Shares": "शेयरहरू रिडिम गर्नुहोस्",
       "Approve Additional Shares": "अतिरिक्त शेयरहरू स्वीकृत गर्नुहोस्",
@@ -3361,6 +3369,8 @@
       "undo_account_transfer": "के तपाईं यो खाता स्थानान्तरण रद्द गर्न निश्चित हुनुहुन्छ?"
     },
     "text": {
+      "No Breach Actions": "कुनै उल्लंघन कार्यहरू छैन",
+      "No Near Breach Actions": "कुनै नजिकको उल्लंघन कार्यहरू छैन",
       "A": "ए",
       "Ability to manage holidays for individual offices": "व्यक्तिगत कार्यालयहरूको लागि छुट्टिहरू व्यवस्थापन गर्ने क्षमता धेरै स्थानहरूमा फैलिएको संगठनको लागि एक धेरै उपयोगी उपकरण हो। तपाईंको संगठनको प्रत्येक कार्यालयको लागि छुट्टिहरू अनुकूलन गर्न यो विकल्प प्रयोग गर्नुहोस्।",
       "About Us": "हाम्रो बारेमा",

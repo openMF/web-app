@@ -1,0 +1,1 @@
+import{gd as r}from"./chunk-SENTV2UL.js";import{ea as e,ja as c}from"./chunk-Q4ZLNCJ6.js";var u=(()=>{class t{constructor(){this.accountingService=c(r)}resolve(){return this.accountingService.getOffices()}static{this.\u0275fac=function(i){return new(i||t)}}static{this.\u0275prov=e({token:t,factory:t.\u0275fac})}}return t})();export{u as a};

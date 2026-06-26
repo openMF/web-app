@@ -1125,6 +1125,8 @@
       "NotEqual": "Not equal"
     },
     "heading": {
+      "Breach Actions": "Breach Actions",
+      "Near Breach Actions": "Near Breach Actions",
       "About Us": "About Us",
       "Account Information": "Account Information",
       "Account Linked Financial": "List of accounts linked to different financial activities. To know more click:",
@@ -1414,6 +1416,7 @@
       "Minimum Deposit Term": "Minimum Deposit Term",
       "Moratorium": "Moratorium",
       "Near Breach Configuration": "Near Breach Configuration",
+      "Near Breach History": "Near Breach History",
       "Nominal Interest Rate by loan cycle": "Nominal Interest Rate by loan cycle",
       "Not Yet Amortized Amount": "Not Yet Amortized Amount",
       "Notes": "Notes",
@@ -1591,6 +1594,7 @@
       "Pause Timeline": "Pause Timeline"
     },
     "inputs": {
+      "Breach Actions": "Breach Actions",
       "# Remittance": "# Remittance",
       "# Senders": "# Senders",
       "ACCOUNTING": "ACCOUNTING",
@@ -2495,6 +2499,7 @@
       "Multiple Debit Entries Allowed": "Multiple Debit Entries Allowed",
       "Municipality": "Municipality",
       "N/A": "N/A",
+      "New": "New",
       "NID": "NID",
       "Name": "Name",
       "Name Decorated": "Name Decorated",
@@ -2695,6 +2700,7 @@
       "Prefix Type": "Prefix Type",
       "Premature Close Date": "Premature Close Date",
       "Present": "Present",
+      "Previous": "Previous",
       "Previous Run": "Previous Run",
       "Previous Run Status": "Previous Run Status",
       "Primary Grouping by Amount": "Primary Grouping by Amount",
@@ -3176,6 +3182,7 @@
       "Working with Code": "Working with Code"
     },
     "menus": {
+      "Update Breach": "Update Breach",
       "Unassign Staff": "Unassign Staff",
       "Accounting": "Accounting",
       "Account Overview": "Account Overview",
@@ -3266,6 +3273,7 @@
       "Reject": "Reject",
       "Undo Write-off": "Undo Write-off",
       "Update discount": "Update discount",
+      "Update Near Breach": "Update Near Breach",
       "Reports": "Reports",
       "Reschedule": "Reschedule",
       "Savings": "Savings",
@@ -3365,6 +3373,8 @@
       "the Transaction Type": "the Transaction Type"
     },
     "text": {
+      "No Breach Actions": "No Breach Actions",
+      "No Near Breach Actions": "No Near Breach Actions",
       "A": "A",
       "Ability to manage holidays for individual offices": "The ability to manage holidays for individual offices is a very useful tool for an organization spanning multiple locations.Use this option to customize holidays for each office of your organization.",
       "About Us": "About Us",

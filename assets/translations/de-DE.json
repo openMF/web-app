@@ -1121,6 +1121,8 @@
       "NotEqual": "Ungleich"
     },
     "heading": {
+      "Breach Actions": "Verstoßaktionen",
+      "Near Breach Actions": "Beinahe-Verstoß-Aktionen",
       "About Us": "Über Uns",
       "Account Information": "Kontoinformationen",
       "Account Linked Financial": "Liste der Konten, die mit verschiedenen Finanzaktivitäten verknüpft sind. Um mehr zu erfahren, klicken Sie:",
@@ -1409,6 +1411,7 @@
       "Minimum Deposit Term": "Mindesteinzahlungsdauer",
       "Moratorium": "Moratorium",
       "Near Breach Configuration": "Konfiguration der Beinahe-Verletzung",
+      "Near Breach History": "Beinahe-Verstoß-Verlauf",
       "Nominal Interest Rate by loan cycle": "Nominalzinssatz nach Kreditzyklus",
       "Not Yet Amortized Amount": "Noch nicht amortisierter Betrag",
       "Notes": "Anmerkungen",
@@ -1586,6 +1589,7 @@
       "Pause Timeline": "Pausen-Zeitleiste"
     },
     "inputs": {
+      "Breach Actions": "Verstoßaktionen",
       "# Remittance": "# Überweisung",
       "# Senders": "# Absender",
       "ACCOUNTING": "BUCHHALTUNG",
@@ -2494,6 +2498,7 @@
       "Multiple Debit Entries Allowed": "Mehrere Lastschrifteinträge zulässig",
       "Municipality": "Gemeinde",
       "N/A": "N / A",
+      "New": "Neue",
       "NID": "Nationale ID",
       "Name": "Name",
       "Name Decorated": "Name dekoriert",
@@ -2692,6 +2697,7 @@
       "Prefix Type": "Präfixtyp",
       "Premature Close Date": "Vorzeitiger Abschlusstermin",
       "Present": "Gegenwärtig",
+      "Previous": "Vorherige",
       "Previous Run": "Vorheriger Lauf",
       "Previous Run Status": "Vorheriger Laufstatus",
       "Primary Grouping by Amount": "Primäre Gruppierung nach Betrag",
@@ -3175,6 +3181,7 @@
       "Working with Code": "Arbeiten mit Code"
     },
     "menus": {
+      "Update Breach": "Verstoß aktualisieren",
       "Unassign Staff": "Personalzuweisung aufheben",
       "Accounting": "Buchhaltung",
       "Account Overview": "Kontoübersicht",
@@ -3295,6 +3302,7 @@
       "Withdrawn by Client": "Vom Kunden zurückgezogen",
       "Write Off": "Abschreiben",
       "Update discount": "Rabatt aktualisieren",
+      "Update Near Breach": "Beinahe-Verstoß aktualisieren",
       "Apply Additional Shares": "Zusätzlich anwenden",
       "Redeem Shares": "Anteile zurückgeben",
       "Approve Additional Shares": "Genehmigen Sie zusätzliche Freigaben",
@@ -3364,6 +3372,8 @@
       "undo_account_transfer": "Möchten Sie diesen Kontotransfer wirklich rückgängig machen?"
     },
     "text": {
+      "No Breach Actions": "Keine Verstoßaktionen",
+      "No Near Breach Actions": "Keine Beinahe-Verstoß-Aktionen",
       "A": "A",
       "Ability to manage holidays for individual offices": "Die Möglichkeit, Feiertage für einzelne Büros zu verwalten, ist ein sehr nützliches Werkzeug für eine Organisation mit mehreren Standorten. Verwenden Sie diese Option, um Feiertage für jedes Büro Ihrer Organisation anzupassen.",
       "About Us": "Über Uns",

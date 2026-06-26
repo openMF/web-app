@@ -1120,6 +1120,8 @@
       "NotEqual": "Nerovná se"
     },
     "heading": {
+      "Breach Actions": "Porušení Akce",
+      "Near Breach Actions": "Blížící se porušení Akce",
       "About Us": "O Nás",
       "Account Information": "Informace o účtu",
       "Account Linked Financial": "Seznam účtů spojených s různými finančními aktivitami. Chcete-li vědět více, klikněte:",
@@ -1407,6 +1409,7 @@
       "Minimum Deposit Term": "Minimální doba vkladu",
       "Moratorium": "Moratorium",
       "Near Breach Configuration": "Konfigurace téměř porušení",
+      "Near Breach History": "Historie blížících se porušení",
       "Nominal Interest Rate by loan cycle": "Nominální úroková sazba podle úvěrového cyklu",
       "Not Yet Amortized Amount": "Dosud neamortizovana castka",
       "Notes": "Poznámky",
@@ -1584,6 +1587,7 @@
       "Pause Timeline": "Časová osa pauz"
     },
     "inputs": {
+      "Breach Actions": "Porušení Akce",
       "# Remittance": "# Remitence",
       "# Senders": "# Odesílatelé",
       "ACCOUNTING": "ÚČETNICTVÍ",
@@ -2492,6 +2496,7 @@
       "Multiple Debit Entries Allowed": "Je povoleno více debetních záznamů",
       "Municipality": "Obec",
       "N/A": "N/A",
+      "New": "Nové",
       "NID": "Národní ID",
       "Name": "název",
       "Name Decorated": "Jméno vyzdobeno",
@@ -2690,6 +2695,7 @@
       "Prefix Type": "Typ předpony",
       "Premature Close Date": "Datum předčasného uzavření",
       "Present": "Současnost, dárek",
+      "Previous": "Předchozí",
       "Previous Run": "Předchozí běh",
       "Previous Run Status": "Stav předchozího běhu",
       "Primary Grouping by Amount": "Primární seskupení podle množství",
@@ -3173,6 +3179,7 @@
       "Working with Code": "Práce s kódem"
     },
     "menus": {
+      "Update Breach": "Aktualizovat porušení",
       "Unassign Staff": "Zrušit přidělení personálu",
       "Accounting": "Účetnictví",
       "Account Overview": "Přehled účtu",
@@ -3293,6 +3300,7 @@
       "Withdrawn by Client": "Staženo klientem",
       "Write Off": "Odepsat",
       "Update discount": "Aktualizovat slevu",
+      "Update Near Breach": "Aktualizovat blížící se porušení",
       "Apply Additional Shares": "Použít další",
       "Redeem Shares": "Uplatnit akcie",
       "Approve Additional Shares": "Schválit další akcie",
@@ -3362,6 +3370,8 @@
       "undo_account_transfer": "Opravdu chcete vrátit tento převod účtu?"
     },
     "text": {
+      "No Breach Actions": "Žádné Porušení Akce",
+      "No Near Breach Actions": "Žádné Blížící se porušení Akce",
       "A": "A",
       "Ability to manage holidays for individual offices": "Schopnost spravovat svátky pro jednotlivé kanceláře je velmi užitečným nástrojem pro organizaci zahrnující více míst. Tuto možnost použijte k přizpůsobení svátků pro každou kancelář vaší organizace.",
       "About Us": "O Nás",
