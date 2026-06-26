@@ -77,6 +77,7 @@ import { LoanDeferredIncomeDataResolver } from './common-resolvers/loan-deferred
 import { LoanBuyDownFeesDataResolver } from './common-resolvers/loan-buy-down-fees-data.resolver';
 import { LoanOriginatorsTabComponent } from './loans-view/loan-originators-tab/loan-originators-tab.component';
 import { LoanOriginatorsResolver } from './common-resolvers/loan-originators.resolver';
+import { LoanOriginatorsResolver as LoanOriginatorsCatalogResolver } from 'app/organization/loan-originators/loan-originators.resolver';
 import { LoanProductsResolver } from './common-resolvers/loan-products.resolver';
 import { LoanDelinquencyRangeScheduleResolver } from './common-resolvers/working-capital/loan-delinquency-actions.resolver';
 import { LoanBreachActionsResolver } from './common-resolvers/working-capital/loan-breach-actions.resolver';
@@ -104,7 +105,8 @@ const routes: Routes = [
         component: CreateLoansAccountComponent,
         resolve: {
           loansAccountTemplate: LoansAccountTemplateResolver,
-          loanProductsBasicDetails: LoanProductsResolver
+          loanProductsBasicDetails: LoanProductsResolver,
+          loanOriginatorsData: LoanOriginatorsCatalogResolver
         }
       },
       {
@@ -400,7 +402,8 @@ const routes: Routes = [
         component: EditLoansAccountComponent,
         resolve: {
           loanProductsBasicDetails: LoanProductsResolver,
-          loansAccountAndTemplate: LoansAccountAndTemplateResolver
+          loansAccountAndTemplate: LoansAccountAndTemplateResolver,
+          loanOriginatorsData: LoanOriginatorsCatalogResolver
         }
       },
       {

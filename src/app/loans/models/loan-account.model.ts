@@ -179,8 +179,8 @@ export interface LoanOriginator {
   externalId: string;
   name: string;
   status: string;
-  originatorType: CodeValue;
-  channelType: CodeValue;
+  originatorType?: CodeValue;
+  channelType?: CodeValue;
 }
 
 export interface DelinquencyRangeSchedule {

@@ -757,14 +757,22 @@ export class LoansService {
     return this.http.post('/loans?command=calculateLoanSchedule', payload);
   }
 
-  attachLoanOriginator(loanId: string, originatorId: string): Observable<any> {
+  attachLoanOriginator(
+    productType: 'loans' | 'working-capital-loans',
+    loanId: string,
+    originatorId: string
+  ): Observable<any> {
     const emptyBody = {};
-    return this.http.post(`/loans/${loanId}/originators/${originatorId}`, emptyBody);
+    return this.http.post(`/${productType}/${loanId}/originators/${originatorId}`, emptyBody);
   }
 
-  detachLoanOriginator(loanId: string, originatorId: string): Observable<any> {
+  detachLoanOriginator(
+    productType: 'loans' | 'working-capital-loans',
+    loanId: string,
+    originatorId: string
+  ): Observable<any> {
     const emptyBody = {};
-    return this.http.delete(`/loans/${loanId}/originators/${originatorId}`, emptyBody);
+    return this.http.delete(`/${productType}/${loanId}/originators/${originatorId}`, emptyBody);
   }
 
   /**
