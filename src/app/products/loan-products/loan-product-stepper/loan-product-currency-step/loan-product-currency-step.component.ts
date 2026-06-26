@@ -68,7 +68,7 @@ export class LoanProductCurrencyStepComponent implements OnInit {
           this.loanProductsTemplate.installmentAmountInMultiplesOf === 0 ||
           this.loanProductsTemplate.installmentAmountInMultiplesOf === undefined ||
           this.loanProductsTemplate.installmentAmountInMultiplesOf === null
-            ? 0
+            ? 1
             : this.loanProductsTemplate.installmentAmountInMultiplesOf
       });
     }

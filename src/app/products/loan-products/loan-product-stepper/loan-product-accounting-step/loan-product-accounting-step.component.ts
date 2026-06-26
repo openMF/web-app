@@ -863,7 +863,7 @@ export class LoanProductAccountingStepComponent extends LoanProductBaseComponent
     const formfields: FormfieldBase[] = [
       new SelectBase({
         controlName: 'chargeOffReasonCodeValueId',
-        label: 'Charge-off Reason',
+        label: 'Charge-off reason',
         value: values ? values.chargeOffReasonCodeValueId : reasonOptions[0].id,
         options: { label: 'name', value: 'id', data: reasonOptions },
         required: true,

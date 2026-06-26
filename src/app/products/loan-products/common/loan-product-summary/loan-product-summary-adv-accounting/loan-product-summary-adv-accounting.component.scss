@@ -11,6 +11,12 @@
 
 table {
   width: 100%;
+  table-layout: fixed;
+}
+
+th:first-child,
+td:first-child {
+  width: 50%;
 }
 
 h2,

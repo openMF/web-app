@@ -260,7 +260,7 @@ export class LoanProductSummaryComponent extends LoanProductBaseComponent implem
           const incomeAccountId = m.incomeAccountId ?? m.glAccount?.id;
           const chargeId = m.chargeId ?? m.value?.id;
           this.feeToIncomeAccountMappings.push({
-            incomeAccount: this.glAccountLookUp(incomeAccountId, incomeAccountData),
+            incomeAccount: this.glAccountLookUp(incomeAccountId, incomeAccountData.concat(liabilityAccountData)),
             charge: this.chargeLookUp(chargeId, this.loanProductsTemplate.chargeOptions)
           });
         });
