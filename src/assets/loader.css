@@ -1,0 +1,115 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.loader-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #f8fafc;
+  gap: 1.25rem;
+  font-family: Roboto, sans-serif;
+}
+
+.loader-spinner {
+  position: relative;
+  width: 72px;
+  height: 72px;
+}
+
+.spinner-ring {
+  position: absolute;
+  inset: 0;
+  border: 3.5px solid #e2e8f0;
+  border-top-color: #1074b9;
+  border-radius: 50%;
+  animation: spin 1s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+.spinner-ring-2 {
+  inset: 8px;
+  border-color: #e2e8f0;
+  border-top-color: #0a5a8f;
+  animation-duration: 1.5s;
+  animation-direction: reverse;
+}
+
+.spinner-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+  background: #1074b9;
+  border-radius: 50%;
+  animation: pulse-dot 1.2s ease-in-out infinite;
+}
+
+.loader-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1074b9;
+  letter-spacing: 0.06em;
+}
+
+.loader-subtext {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin-top: -0.5rem;
+}
+
+.loader-bar {
+  width: 160px;
+  height: 3px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.loader-bar-fill {
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(90deg, #1074b9, #0a5a8f);
+  border-radius: 3px;
+  animation: bar-slide 1.4s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(0.6);
+    opacity: 0.5;
+  }
+}
+
+@keyframes bar-slide {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  50% {
+    transform: translateX(200%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}

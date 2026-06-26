@@ -9,8 +9,8 @@
 <h1 mat-dialog-title>{{ data.context }} {{ 'labels.heading.Family Member' | translate }}</h1>
 
 <form [formGroup]="familyMemberForm">
-  <div class="layout-row-wrap responsive-column align-start-center gap-2px">
-    <mat-form-field class="flex-48">
+  <div class="layout-row-wrap responsive-column align-start gap-2px">
+    <mat-form-field class="flex-23">
       <mat-label>{{ 'labels.inputs.First Name' | translate }}</mat-label>
       <input formControlName="firstName" required matInput />
       @if (familyMemberForm.controls.firstName.hasError('required')) {
@@ -21,12 +21,12 @@
       }
     </mat-form-field>
 
-    <mat-form-field class="flex-48">
+    <mat-form-field class="flex-23">
       <mat-label>{{ 'labels.inputs.Middle Name' | translate }}</mat-label>
       <input formControlName="middleName" matInput />
     </mat-form-field>
 
-    <mat-form-field class="flex-48">
+    <mat-form-field class="flex-23">
       <mat-label>{{ 'labels.inputs.Last Name' | translate }}</mat-label>
       <input formControlName="lastName" required matInput />
       @if (familyMemberForm.controls.lastName.hasError('required')) {
@@ -37,21 +37,7 @@
       }
     </mat-form-field>
 
-    <mat-form-field class="flex-48">
-      <mat-label>{{ 'labels.inputs.Qualification' | translate }}</mat-label>
-      <input formControlName="qualification" matInput />
-    </mat-form-field>
-
-    <mat-form-field class="flex-48">
-      <mat-label>{{ 'labels.inputs.Age' | translate }}</mat-label>
-      <input type="number" formControlName="age" matInput [min]="0" disabled />
-    </mat-form-field>
-
-    <mat-checkbox formControlName="isDependent" labelPosition="before" class="flex-48"
-      >{{ 'labels.inputs.Is Dependent' | translate }}?</mat-checkbox
-    >
-
-    <mat-form-field class="flex-48">
+    <mat-form-field class="flex-21">
       <mat-label>{{ 'labels.inputs.Relationship' | translate }}</mat-label>
       <mat-select formControlName="relationshipId" required>
         @for (relation of data.options.relationshipIdOptions; track relation) {
@@ -68,7 +54,7 @@
       }
     </mat-form-field>
 
-    <mat-form-field class="flex-48">
+    <mat-form-field class="flex-16">
       <mat-label>{{ 'labels.inputs.Gender' | translate }}</mat-label>
       <mat-select formControlName="genderId" required>
         @for (gender of data.options.genderIdOptions; track gender) {
@@ -85,18 +71,7 @@
       }
     </mat-form-field>
 
-    <mat-form-field class="flex-48">
-      <mat-label>{{ 'labels.inputs.Profession' | translate }}</mat-label>
-      <mat-select formControlName="professionId">
-        @for (profession of data.options.professionIdOptions; track profession) {
-          <mat-option [value]="profession.id">
-            {{ profession.name | translateKey: 'catalogs' }}
-          </mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field class="flex-48">
+    <mat-form-field class="flex-22">
       <mat-label>{{ 'labels.inputs.Marital Status' | translate }}</mat-label>
       <mat-select formControlName="maritalStatusId">
         @for (maritalStatus of data.options.maritalStatusIdOptions; track maritalStatus) {
@@ -107,7 +82,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field class="flex-98" (click)="dueDatePicker.open()">
+    <mat-form-field class="flex-21" (click)="dueDatePicker.open()">
       <mat-label>{{ 'labels.inputs.Date Of Birth' | translate }}</mat-label>
       <input
         formControlName="dateOfBirth"
@@ -118,6 +93,31 @@
       />
       <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #dueDatePicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="flex-12">
+      <mat-label>{{ 'labels.inputs.Age' | translate }}</mat-label>
+      <input type="number" formControlName="age" matInput [min]="0" disabled />
+    </mat-form-field>
+
+    <mat-checkbox formControlName="isDependent" labelPosition="before" class="flex-20 is-dependent-checkbox"
+      >{{ 'labels.inputs.Is Dependent' | translate }}?</mat-checkbox
+    >
+
+    <mat-form-field class="flex-25">
+      <mat-label>{{ 'labels.inputs.Qualification' | translate }}</mat-label>
+      <input formControlName="qualification" matInput />
+    </mat-form-field>
+
+    <mat-form-field class="flex-25">
+      <mat-label>{{ 'labels.inputs.Profession' | translate }}</mat-label>
+      <mat-select formControlName="professionId">
+        @for (profession of data.options.professionIdOptions; track profession) {
+          <mat-option [value]="profession.id">
+            {{ profession.name | translateKey: 'catalogs' }}
+          </mat-option>
+        }
+      </mat-select>
     </mat-form-field>
   </div>
 

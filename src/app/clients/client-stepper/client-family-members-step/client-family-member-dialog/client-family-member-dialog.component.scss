@@ -19,4 +19,15 @@ form {
   .layout-row-wrap {
     width: 100%;
   }
+
+  mat-error {
+    font-size: 11px;
+    white-space: nowrap;
+  }
+}
+
+.is-dependent-checkbox {
+  white-space: nowrap;
+  margin-top: -40px;
+  align-self: center;
 }

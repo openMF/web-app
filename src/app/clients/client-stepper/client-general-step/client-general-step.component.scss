@@ -30,6 +30,11 @@ mat-form-field {
   margin-bottom: 8px;
 }
 
+mat-error {
+  font-size: 11px;
+  white-space: nowrap;
+}
+
 mat-divider {
   margin: 16px 0;
 }
@@ -103,6 +108,14 @@ mat-checkbox {
   &.margin-v {
     margin-top: 12px;
   }
+
+  &.nowrap {
+    white-space: nowrap;
+  }
+}
+
+.activation-date {
+  min-width: 180px;
 }
 
 @media (width <= 768px) {

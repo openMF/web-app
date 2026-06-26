@@ -256,118 +256,21 @@
   flex: 3 0 auto;
 }
 
-.flex-4 {
-  flex: 0 0 4%;
-}
-
-.flex-5 {
-  flex: 0 0 5%;
-}
-
-.flex-8 {
-  flex: 0 0 8%;
-}
-
-.flex-9 {
-  flex: 0 0 9%;
-}
-
-.flex-10 {
-  flex: 0 0 10%;
-}
-
-.flex-13 {
-  flex: 0 0 13%;
-}
-
-.flex-14 {
-  flex: 0 0 12%;
-}
-
-.flex-15 {
-  flex: 0 0 15%;
-}
-
-.flex-16 {
-  flex: 0 0 16%;
-}
-
-.flex-18 {
-  flex: 0 0 18%;
-}
-
-.flex-20 {
-  flex: 0 0 20%;
-}
-
-.flex-23 {
-  flex: 0 0 23%;
-}
-
-.flex-24 {
-  flex: 0 0 24%;
-}
-
-.flex-25 {
-  flex: 0 0 25%;
-}
-
-.flex-28 {
-  flex: 0 0 28%;
-}
-
-.flex-29 {
-  flex: 0 0 29%;
-}
-
-.flex-30 {
-  flex: 0 0 30%;
-}
-
-.flex-31 {
-  flex: 0 0 31%;
-}
-
-.flex-32 {
-  flex: 0 0 32%;
-}
-
-.flex-33 {
-  flex: 0 0 33%;
-}
-
-.flex-34 {
-  flex: 0 0 34%;
-}
-
-.flex-38 {
-  flex: 0 0 38%;
+@for $i from 1 through 39 {
+  .flex-#{$i} {
+    flex: 0 0 #{$i}#{'%'};
+  }
 }
 
 .flex-40 {
-  //flex: 0 0 40%;
   flex: 1;
   width: 40%;
 }
 
-.flex-43 {
-  flex: 0 0 43%;
-}
-
-.flex-45 {
-  flex: 0 0 45%;
-}
-
-.flex-46 {
-  flex: 0 0 46%;
-}
-
-.flex-47 {
-  flex: 0 0 47%;
-}
-
-.flex-48 {
-  flex: 0 0 48%;
+@for $i from 41 through 48 {
+  .flex-#{$i} {
+    flex: 0 0 #{$i}#{'%'};
+  }
 }
 
 @media (width <=768px) {
@@ -385,62 +288,21 @@
   margin-bottom: 1rem;
 }
 
-.flex-53 {
-  flex: 0 0 53%;
+@for $i from 51 through 59 {
+  .flex-#{$i} {
+    flex: 0 0 #{$i}#{'%'};
+  }
 }
 
 .flex-60 {
-  // flex: 0 0 60%;
   flex: 1;
   width: 60%;
 }
 
-.flex-63 {
-  flex: 0 0 63%;
-}
-
-.flex-65 {
-  flex: 0 0 65%;
-}
-
-.flex-67 {
-  flex: 0 0 67%;
-}
-
-.flex-68 {
-  flex: 0 0 68%;
-}
-
-.flex-70 {
-  flex: 0 0 70%;
-}
-
-.flex-73 {
-  flex: 0 0 73%;
-}
-
-.flex-75 {
-  flex: 0 0 75%;
-}
-
-.flex-83 {
-  flex: 0 0 83%;
-}
-
-.flex-90 {
-  flex: 0 0 90%;
-}
-
-.flex-94 {
-  flex: 0 0 94%;
-}
-
-.flex-95 {
-  flex: 0 0 95%;
-}
-
-.flex-96 {
-  flex: 0 0 96%;
+@for $i from 61 through 100 {
+  .flex-#{$i} {
+    flex: 0 0 #{$i}#{'%'};
+  }
 }
 
 @media screen and (width <=599px) {
@@ -468,10 +330,6 @@
   @media (width <=599px) {
     display: none !important;
   }
-}
-
-.flex-98 {
-  flex: 0 0 98%;
 }
 
 .flex-100 {

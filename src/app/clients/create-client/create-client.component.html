@@ -7,7 +7,14 @@
 -->
 
 <div class="container">
-  <mat-stepper orientation="vertical" [linear]="false" class="mat-elevation-z8" labelPosition="bottom" #clientStepper>
+  <mat-stepper
+    orientation="vertical"
+    [linear]="false"
+    class="mat-elevation-z8"
+    labelPosition="bottom"
+    #clientStepper
+    (selectionChange)="onStepChange($event)"
+  >
     <ng-template matStepperIcon="number">
       <fa-icon icon="pencil-alt" size="sm"></fa-icon>
     </ng-template>
