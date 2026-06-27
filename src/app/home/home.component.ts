@@ -20,6 +20,7 @@ import {
 import { ActivatedRoute, Router, NavigationEnd, RouterLink } from '@angular/router';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { environment } from '../../environments/environment';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -71,6 +72,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   private configurationWizardService = inject(ConfigurationWizardService);
   private popoverService = inject(PopoverService);
   private settingsService = inject(SettingsService);
+
+  enableGlobalDashboard = environment.enableGlobalDashboard === true;
 
   /** Username of authenticated user. */
   username: string;
