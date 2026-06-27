@@ -1,17 +1,81 @@
-## Description
+# Pull Request
 
-Describe the changes made and why they were made instead of how they were made. List any dependencies that are required for this change.
+## Summary
 
-## Related issues and discussion
+Describe what changed and why.
 
-#{Issue Number}
+## Type of Change
 
-## Screenshots, if any
+- [ ] Feature
+- [ ] Fix
+- [ ] Refactor
+- [ ] Documentation
+- [ ] Chore
 
-## Checklist
+## Business Purpose
 
-Please make sure these boxes are checked before submitting your pull request - thanks!
+What business or user problem does this solve?
 
-- [ ] If you have multiple commits please combine them into one commit by squashing them.
+## Scope
 
-- [ ] Read and understood the contribution guidelines at `web-app/.github/CONTRIBUTING.md`.
+### In Scope
+
+-
+
+### Out of Scope
+
+-
+
+## Fineract Compatibility
+
+- [ ] Existing Apache Fineract API behavior is preserved.
+- [ ] Tenant header behavior is preserved.
+- [ ] Authentication behavior is preserved.
+- [ ] Permissions are respected.
+- [ ] No core financial workflow is changed without approval.
+
+## Architecture
+
+- [ ] Existing services and patterns are reused where practical.
+- [ ] API calls are isolated in services.
+- [ ] UI components avoid unnecessary business logic.
+- [ ] No customer-specific fork or hardcoded deployment values.
+
+## Testing
+
+Commands run:
+
+- [ ] `npm ci`
+- [ ] `npm run lint`
+- [ ] `npm run test:ci`
+- [ ] `npm run build:prod`
+
+If any command was not run, explain why:
+
+## UI Evidence
+
+Attach screenshots or screen recordings for UI changes.
+
+## Risk and Rollback
+
+Known risks:
+
+Rollback plan:
+
+## AI Developer Report
+
+Files changed:
+
+Routes affected:
+
+APIs or reports used:
+
+Known limitations:
+
+## Human Approval
+
+- [ ] Requirement approved.
+- [ ] Architecture approved.
+- [ ] Business behavior reviewed.
+- [ ] UI/UX reviewed if applicable.
+- [ ] Ready to merge.
