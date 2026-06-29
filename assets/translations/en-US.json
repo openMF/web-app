@@ -478,6 +478,7 @@
     "accounting": {
       "Accrual (periodic)": "Accrual (periodic)",
       "Accrual (upfront)": "Accrual (upfront)",
+      "ACC_DEF_REV_AM": "Accrual with deferred revenue amortization",
       "CASH_BASED": "Cash",
       "Cash": "Cash",
       "NONE": "None",

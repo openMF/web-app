@@ -475,6 +475,7 @@
     "accounting": {
       "Accrual (periodic)": "Devengo (periódico)",
       "Accrual (upfront)": "Devengo (adelantado)",
+      "ACC_DEF_REV_AM": "Acumulación con amortización de ingresos diferidos",
       "CASH_BASED": "Efectivo",
       "Cash": "Efectivo",
       "NONE": "Ninguno",

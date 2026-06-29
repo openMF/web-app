@@ -475,6 +475,7 @@
     "accounting": {
       "Accrual (periodic)": "Accantonamento (periodico)",
       "Accrual (upfront)": "Accantonamento (in anticipo)",
+      "ACC_DEF_REV_AM": "Accantonamento con ammortamento dei ricavi differiti",
       "CASH_BASED": "Contanti",
       "Cash": "Contanti",
       "NONE": "Nessuno",

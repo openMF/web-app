@@ -475,6 +475,7 @@
     "accounting": {
       "Accrual (periodic)": "Accrual (mara kwa mara)",
       "Accrual (upfront)": "Accrual (mbele)",
+      "ACC_DEF_REV_AM": "Ukusanyaji pamoja na upunguzaji wa mapato yaliyocheleweshwa",
       "CASH_BASED": "Fedha taslimu",
       "Cash": "Fedha taslimu",
       "NONE": "Hakuna",

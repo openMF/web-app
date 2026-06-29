@@ -475,6 +475,7 @@
     "accounting": {
       "Accrual (periodic)": "Uzkrāšana (periodiski)",
       "Accrual (upfront)": "Uzkrāšana (iepriekšēja)",
+      "ACC_DEF_REV_AM": "Uzkrājums ar atlikto ieņēmumu amortizāciju",
       "CASH_BASED": "Skaidra nauda",
       "Cash": "Skaidra nauda",
       "NONE": "Nav",
