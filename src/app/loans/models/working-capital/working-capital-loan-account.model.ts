@@ -63,7 +63,9 @@ export interface WorkingCapitalBreachActionRequest {
 export interface WorkingCapitalBreachAction {
   id: number;
   action: string;
-  startDate: Date;
+  startDate: number[];
+  endDate?: number[];
+  effectiveEndDate?: number[];
   minimumPayment?: number;
   minimumPaymentType?: string;
   frequency?: number;

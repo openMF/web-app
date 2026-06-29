@@ -34,7 +34,7 @@
       </span>
     </div>
     <div class="kpi-status">
-      @if (hasActivePause()) {
+      @if (hasPauseActiveToday()) {
         <span class="status-chip">
           <span class="dot"></span>
           {{ 'labels.inputs.Pause Active' | translate }}
@@ -133,6 +133,17 @@
         }
       </div>
       <div class="toolbar-right">
+        @if (hasActivePause()) {
+          <button
+            type="button"
+            class="btn btn-warn"
+            (click)="resumeBreachAction()"
+            *mifosxHasPermission="'CREATE_WC_BREACH_ACTION'"
+          >
+            <fa-icon icon="play"></fa-icon>
+            {{ 'labels.buttons.Resume Breach' | translate }}
+          </button>
+        }
         <button
           type="button"
           class="btn btn-primary"
@@ -166,7 +177,9 @@
                 </td>
                 <td>
                   <span class="action-badge">
-                    <fa-icon icon="pause"></fa-icon>
+                    <fa-icon
+                      [icon]="row.action === 'RESUME' ? 'play' : row.action === 'RESCHEDULE' ? 'calendar' : 'pause'"
+                    ></fa-icon>
                     {{ row.action | titlecase }}
                   </span>
                 </td>
@@ -180,23 +193,31 @@
                   <span class="date-cell">{{ row.startDateObj | dateFormat }}</span>
                 </td>
                 <td>
-                  @if (row.endDateObj) {
-                    <span class="date-cell">{{ row.endDateObj | dateFormat }}</span>
+                  @if (row.action !== 'RESUME') {
+                    @if (row.endDateObj) {
+                      <span class="date-cell">{{ row.endDateObj | dateFormat }}</span>
+                    } @else {
+                      <span class="date-cell muted">{{ 'labels.inputs.Ongoing' | translate }}</span>
+                    }
                   } @else {
-                    <span class="date-cell muted">{{ 'labels.inputs.Ongoing' | translate }}</span>
+                    <span class="date-cell muted">—</span>
                   }
                 </td>
                 <td>
-                  <span class="duration">
-                    <span class="days">{{ row.durationDays }}{{ row.isOngoing ? '+' : '' }}</span>
-                    <span class="duration-unit">{{ 'labels.inputs.days' | translate }}</span>
-                    <span class="duration-bar">
-                      <span
-                        [attr.class]="'duration-bar-fill duration-bar-fill--' + row.status"
-                        [style.width.%]="durationBarWidth(row)"
-                      ></span>
+                  @if (row.action !== 'RESUME') {
+                    <span class="duration">
+                      <span class="days">{{ row.durationDays }}{{ row.isOngoing ? '+' : '' }}</span>
+                      <span class="duration-unit">{{ 'labels.inputs.days' | translate }}</span>
+                      <span class="duration-bar">
+                        <span
+                          [attr.class]="'duration-bar-fill duration-bar-fill--' + row.status"
+                          [style.width.%]="durationBarWidth(row)"
+                        ></span>
+                      </span>
                     </span>
-                  </span>
+                  } @else {
+                    <span class="date-cell muted">—</span>
+                  }
                 </td>
               </tr>
             }

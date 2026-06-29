@@ -23,6 +23,7 @@ import {
   MatRow
 } from '@angular/material/table';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { TranslateService } from '@ngx-translate/core';
 import { Dates } from 'app/core/utils/dates';
 import { LoanDelinquencyActionDialogComponent } from 'app/loans/custom-dialog/loan-delinquency-action-dialog/loan-delinquency-action-dialog.component';
 import { LoansService } from 'app/loans/loans.service';
@@ -36,6 +37,7 @@ import {
   WorkingCapitalBreachAction,
   WorkingCapitalNearBreachActions
 } from 'app/loans/models/working-capital/working-capital-loan-account.model';
+import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 
 type BreachActionStatus = 'active' | 'scheduled' | 'expired';
 type BreachActionFilter = 'all' | BreachActionStatus;
@@ -50,6 +52,7 @@ interface BreachActionRow {
   status: BreachActionStatus;
   statusLabelKey: string;
   isOngoing: boolean;
+  isResumedPause: boolean;
   durationDays: number;
   label: string;
 }
@@ -95,6 +98,7 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
   private loansService = inject(LoansService);
   private dateUtils = inject(Dates);
   private settingsService = inject(SettingsService);
+  private translateService = inject(TranslateService);
   dialog = inject(MatDialog);
 
   // Pause dashboard state
@@ -128,13 +132,17 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
   rows = computed<BreachActionRow[]>(() => {
     const businessDate = this.settingsService.businessDate;
     return this.breachActions().map((item, index) => {
+      const isResumeAction = item.action === 'RESUME';
+      const isResumedPause = item.action === 'PAUSE' && !!item.effectiveEndDate;
       const start = this.dateUtils.parseDate(item.startDate);
-      const end = this.dateUtils.parseDate(item.endDate);
+      const end = isResumeAction ? null : this.dateUtils.parseDate(item.effectiveEndDate ?? item.endDate);
       const reference = end ?? businessDate;
       const durationDays = Math.max(1, Math.round((reference.getTime() - start.getTime()) / MS_PER_DAY));
 
       let status: BreachActionStatus;
-      if (start.getTime() < businessDate.getTime() && end.getTime() < businessDate.getTime()) {
+      if (isResumeAction) {
+        status = 'active';
+      } else if (start.getTime() < businessDate.getTime() && end.getTime() < businessDate.getTime()) {
         status = 'expired';
       } else if (start.getTime() > businessDate.getTime() && end.getTime() > businessDate.getTime()) {
         status = 'scheduled';
@@ -154,6 +162,7 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
         status,
         statusLabelKey: this.statusKey(status),
         isOngoing: !end && status === 'active',
+        isResumedPause: isResumedPause,
         durationDays,
         label: `P${index + 1}`
       };
@@ -176,8 +185,9 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
 
   kpis = computed(() => {
     const rows = this.rows();
-    const activeCount = rows.filter((row) => row.status === 'active').length;
-    const totalDays = rows.reduce((sum, row) => sum + row.durationDays, 0);
+    const pauseRows = rows.filter((row) => row.action === 'PAUSE');
+    const activeCount = pauseRows.filter((row) => row.status === 'active').length;
+    const totalDays = pauseRows.reduce((sum, row) => sum + row.durationDays, 0);
     const lastAction = rows.length
       ? rows.reduce((latest, row) => (row.startDateObj.getTime() > latest.startDateObj.getTime() ? row : latest))
       : null;
@@ -189,7 +199,11 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
     };
   });
 
-  hasActivePause = computed<boolean>(() => this.kpis().activeCount > 0);
+  hasActivePause = computed<boolean>(() =>
+    this.rows().some((r) => r.action === 'PAUSE' && r.status === 'active' && !r.isResumedPause)
+  );
+
+  hasPauseActiveToday = computed<boolean>(() => this.rows().some((r) => r.action === 'PAUSE' && r.status === 'active'));
 
   timelineYear = computed<number>(() => {
     const rows = this.rows();
@@ -203,23 +217,26 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
     const today = this.startOfToday();
     const daysInYear = this.isLeapYear(year) ? 366 : 365;
     const pxPerDay = TIMELINE_INNER_WIDTH / daysInYear;
+    const ongoingLabel = this.translateService.instant('labels.inputs.Ongoing');
 
-    return this.rows().map((row) => {
-      const endRef = row.endDateObj ?? today;
-      const startDay = this.clamp(Math.floor((row.startDateObj.getTime() - yearStart) / MS_PER_DAY), 0, daysInYear);
-      const endDay = this.clamp(Math.floor((endRef.getTime() - yearStart) / MS_PER_DAY), 0, daysInYear);
-      const x = TIMELINE_PADDING_LEFT + startDay * pxPerDay;
-      const width = Math.max(8, (endDay - startDay) * pxPerDay);
-      const tooltip = `${row.label} · ${this.shortDate(row.startDateObj)} → ${row.endDateObj ? this.shortDate(row.endDateObj) : 'Ongoing'} (${row.durationDays}d)`;
-      return {
-        label: row.label,
-        status: row.status,
-        x,
-        width,
-        midX: x + width / 2,
-        tooltip
-      };
-    });
+    return this.rows()
+      .filter((row) => row.action === 'PAUSE')
+      .map((row) => {
+        const endRef = row.endDateObj ?? today;
+        const startDay = this.clamp(Math.floor((row.startDateObj.getTime() - yearStart) / MS_PER_DAY), 0, daysInYear);
+        const endDay = this.clamp(Math.floor((endRef.getTime() - yearStart) / MS_PER_DAY), 0, daysInYear);
+        const x = TIMELINE_PADDING_LEFT + startDay * pxPerDay;
+        const width = Math.max(8, (endDay - startDay) * pxPerDay);
+        const tooltip = `${row.label} · ${this.shortDate(row.startDateObj)} → ${row.endDateObj ? this.shortDate(row.endDateObj) : ongoingLabel} (${row.durationDays}d)`;
+        return {
+          label: row.label,
+          status: row.status,
+          x,
+          width,
+          midX: x + width / 2,
+          tooltip
+        };
+      });
   });
 
   todayMarker = computed<number | null>(() => {
@@ -266,7 +283,7 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
         }) => {
           this.breachActionsList = data.loanBreachActions || [];
           this.nearBreachActions = data.loanNearBreachActions || [];
-          this.setBreachActions((data.loanBreachActions as unknown as LoanDelinquencyAction[]) || []);
+          this.setBreachActions((data.loanBreachActions as LoanDelinquencyAction[]) || []);
         }
       );
   }
@@ -314,6 +331,39 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
       const startDate: Date = response.data.value.startDate;
       const endDate: Date = response.data.value.endDate;
       this.sendBreachAction(action, startDate, endDate);
+    });
+  }
+
+  resumeBreachAction(): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        heading: this.translateService.instant('labels.buttons.Resume Breach'),
+        dialogContext: this.translateService.instant(
+          'labels.dialogContext.Are you sure you want to resume the breach pause'
+        )
+      }
+    });
+    dialogRef.afterClosed().subscribe((response: { data: any }) => {
+      if (!response) {
+        return;
+      }
+      const businessDate = this.settingsService.businessDate;
+      this.sendResumeBreachAction(businessDate);
+    });
+  }
+
+  sendResumeBreachAction(startDate: Date): void {
+    const payload = {
+      action: 'resume',
+      locale: this.locale,
+      dateFormat: this.dateFormat,
+      startDate: this.dateUtils.formatDate(startDate, this.dateFormat)
+    };
+
+    this.loansService.createBreachAction(this.loanId, payload).subscribe(() => {
+      this.loansService.getBreachActions(this.loanId).subscribe((breachActions: LoanDelinquencyAction[]) => {
+        this.setBreachActions(breachActions);
+      });
     });
   }
 

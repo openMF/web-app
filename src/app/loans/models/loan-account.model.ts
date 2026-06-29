@@ -48,6 +48,7 @@ export interface LoanDelinquencyAction {
   action: string;
   startDate: number[];
   endDate: number[];
+  effectiveEndDate?: number[];
   createdById: number;
   createdOn: Date;
   updatedById: number;
