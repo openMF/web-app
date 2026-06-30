@@ -80,7 +80,7 @@ export class CloseClientPage extends BasePage {
    * Waits for the close-client action form to load.
    */
   async waitForLoad(): Promise<void> {
-    await expect(this.page).toHaveURL(new RegExp(`/clients/${this.clientId}/actions/Close$`));
+    await expect(this.page).toHaveURL(new RegExp(`/members/${this.clientId}/actions/Close$`));
     await this.waitForVisible(this.closureDateInput, 30000);
   }
 
@@ -112,6 +112,6 @@ export class CloseClientPage extends BasePage {
    * Waits until cancellation returns the browser to the client general view.
    */
   async waitForCancelNavigation(): Promise<void> {
-    await expect(this.page).toHaveURL(new RegExp(`/clients/${this.clientId}/general$`));
+    await expect(this.page).toHaveURL(new RegExp(`/members/${this.clientId}/general$`));
   }
 }

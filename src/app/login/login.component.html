@@ -75,17 +75,36 @@
         }
 
         <!-- Login Form -->
-        @if (!resetPassword && !twoFactorAuthenticationRequired) {
-          <mifosx-login-form></mifosx-login-form>
-        }
+        <div class="form-section">
+          @if (!resetPassword && !twoFactorAuthenticationRequired) {
+            <mifosx-login-form></mifosx-login-form>
+          }
 
-        @if (resetPassword) {
-          <mifosx-reset-password></mifosx-reset-password>
-        }
+          @if (resetPassword) {
+            <mifosx-reset-password></mifosx-reset-password>
+          }
 
-        @if (twoFactorAuthenticationRequired) {
-          <mifosx-two-factor-authentication></mifosx-two-factor-authentication>
-        }
+          @if (twoFactorAuthenticationRequired) {
+            <mifosx-two-factor-authentication></mifosx-two-factor-authentication>
+          }
+        </div>
+
+        <!-- Resources section (desktop only) -->
+        <div class="resources-section">
+          <p class="resources-title">Helpful Resources</p>
+          <div class="resources-links">
+            <a
+              href="https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual"
+              target="_blank"
+              rel="noopener noreferrer"
+              >User Manual</a
+            >
+            <a href="https://mifos.org/community/" target="_blank" rel="noopener noreferrer">Community</a>
+            <a href="https://mifosforge.jira.com/wiki/spaces/docs/overview" target="_blank" rel="noopener noreferrer"
+              >Documentation</a
+            >
+          </div>
+        </div>
       </div>
     </div>
 

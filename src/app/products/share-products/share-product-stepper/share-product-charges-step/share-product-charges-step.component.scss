@@ -6,6 +6,19 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+.layout-row-wrap {
+  gap: 8px !important;
+  align-items: center;
+}
+
+.flex-22 {
+  flex: 0 0 22%;
+}
+
+.add-btn {
+  flex: 0 0 auto;
+}
+
 table {
   width: 100%;
 }

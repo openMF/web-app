@@ -64,6 +64,13 @@ const routeResolveBreadcrumb = 'routeResolveBreadcrumb';
  * Example- addBreadcrumbLink: false
  */
 const routeAddBreadcrumbLink = 'addBreadcrumbLink';
+/**
+ * Route data property to hide the breadcrumb trail (the `home › ...` line)
+ * while still showing the page title. Useful for top-level landing pages.
+ *
+ * Example- hideBreadcrumbTrail: true
+ */
+const routeHideBreadcrumbTrail = 'hideBreadcrumbTrail';
 
 /**
  * Generate breadcrumbs dynamically via route configuration.
@@ -89,6 +96,8 @@ export class BreadcrumbComponent implements AfterViewInit {
 
   /** Array of breadcrumbs. */
   breadcrumbs: Breadcrumb[];
+  /** Whether the breadcrumb trail (the `home › ...` line) should be hidden for the current route. */
+  hideTrail = false;
   /* Reference of breadcrumb */
   @ViewChild('breadcrumb') breadcrumb: ElementRef<any>;
   /* Template for popover on breadcrumb */
@@ -254,6 +263,7 @@ export class BreadcrumbComponent implements AfterViewInit {
             }
           });
         }
+        this.hideTrail = !!(currentRoute?.snapshot?.data && currentRoute.snapshot.data[routeHideBreadcrumbTrail]);
         this.cdr.markForCheck();
       });
   }

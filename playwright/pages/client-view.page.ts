@@ -112,7 +112,7 @@ export class ClientViewPage extends BasePage {
    * Waits until the client general view is loaded and interactive.
    */
   async waitForLoad(): Promise<void> {
-    await expect(this.page).toHaveURL(new RegExp(`/clients/${this.clientId}/general$`));
+    await expect(this.page).toHaveURL(new RegExp(`/members/${this.clientId}/general$`));
     await this.waitForVisible(this.clientActionsButton, 30000);
   }
 
@@ -147,6 +147,6 @@ export class ClientViewPage extends BasePage {
    */
   async gotoPersonalDataTab(): Promise<void> {
     await this.personalDataTab.click();
-    await expect(this.page).toHaveURL(new RegExp(`/clients/${this.clientId}/personal-data$`));
+    await expect(this.page).toHaveURL(new RegExp(`/members/${this.clientId}/personal-data$`));
   }
 }

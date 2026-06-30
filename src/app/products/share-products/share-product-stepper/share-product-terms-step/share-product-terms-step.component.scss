@@ -6,6 +6,37 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+form {
+  padding: 16px 0;
+
+  .layout-row-wrap {
+    gap: 8px !important;
+    align-items: flex-start;
+  }
+}
+
+.flex-22 {
+  flex: 0 0 22%;
+}
+
+mat-form-field {
+  margin-bottom: 8px;
+}
+
+mat-error {
+  font-size: 11px;
+  white-space: nowrap;
+}
+
 .margin-t {
   margin-top: 1em;
+}
+
+.layout-row.align-center {
+  padding-top: 16px;
+  margin-top: 12px;
+
+  button {
+    margin: 0 6px;
+  }
 }

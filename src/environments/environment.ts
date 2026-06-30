@@ -32,7 +32,9 @@ export const environment = {
   // For connecting to server running elsewhere set the base API URL
   baseApiUrl:
     loadedEnv.fineractApiUrl ||
-    (loadedEnv.fineractApiUrls?.length > 0 ? loadedEnv.fineractApiUrls.split(',')[0] : 'https://103.175.192.233'),
+    (loadedEnv.fineractApiUrls && loadedEnv.fineractApiUrls.length > 0
+      ? loadedEnv.fineractApiUrls.split(',')[0]
+      : 'https://103.175.192.233'),
   allowServerSwitch: loadedEnv.allowServerSwitch || 'true',
   apiProvider: loadedEnv.apiProvider || '/fineract-provider/api',
   apiVersion: loadedEnv.apiVersion || '/v1',

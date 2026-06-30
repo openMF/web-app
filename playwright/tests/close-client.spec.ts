@@ -212,7 +212,7 @@ test.describe('Close Client Workflow', () => {
       reasonName: closureReason.name
     });
 
-    await expect(page).toHaveURL(new RegExp(`/clients/${clientId}/actions/Close$`));
+    await expect(page).toHaveURL(new RegExp(`/members/${clientId}/actions/Close$`));
     await expect(page.getByText('Client cannot be closed because of non-closed loans.')).toBeVisible();
 
     const clientDetails = await fineractApi.getClient(clientId);

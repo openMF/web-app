@@ -6,6 +6,21 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+.flex-32 {
+  flex: 1 1 32%;
+  max-width: 32%;
+}
+
+.flex-15 {
+  flex: 1 1 15%;
+  max-width: 15%;
+}
+
+.flex-48 {
+  flex: 1 1 48%;
+  max-width: 48%;
+}
+
 .margin-t {
   margin-top: 1em;
 }

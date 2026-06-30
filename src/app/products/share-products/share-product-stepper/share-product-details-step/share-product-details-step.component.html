@@ -8,7 +8,7 @@
 
 <form [formGroup]="shareProductDetailsForm">
   <div class="layout-row-wrap gap-2px responsive-column">
-    <mat-form-field class="flex-48">
+    <mat-form-field class="flex-28">
       <mat-label>{{ 'labels.inputs.Product Name' | translate }}</mat-label>
       <input
         matInput
@@ -22,7 +22,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="flex-48">
+    <mat-form-field class="flex-15">
       <mat-label>{{ 'labels.inputs.Short Name' | translate }}</mat-label>
       <input
         matInput
@@ -37,14 +37,14 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="flex-98">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
-      <textarea
+      <input
         matInput
         formControlName="description"
         matTooltip="{{ 'tooltips.Provides additional information' | translate }}"
         required
-      ></textarea>
+      />
       @if (shareProductDetailsForm.get('description')?.hasError('required')) {
         <mat-error>
           {{ 'labels.inputs.Description' | translate }} {{ 'labels.commons.is' | translate }}

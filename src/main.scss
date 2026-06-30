@@ -466,7 +466,7 @@
 }
 
 .mat-mdc-form-field {
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 
   .mat-mdc-input-element::placeholder {
     font-size: 14px !important;
@@ -478,13 +478,44 @@
   }
 }
 
+// NOTE: this is a GLOBAL stylesheet (see angular.json `styles`). `::ng-deep`
+// is only valid in component styles; in a global sheet the browser treats it as
+// an unknown pseudo and drops the whole rule. So these target Material's classes
+// with plain selectors (which apply globally regardless of view encapsulation).
 mat-stepper {
-  ::ng-deep .mat-vertical-content {
-    padding: 16px;
+  // Compact the step header (the tall grey band; default 72px). Material derives
+  // the header height, its padding, AND the connector-line offset from this one
+  // variable, so setting it keeps the line aligned with the step icons. Earlier
+  // overriding `.mat-step-header { height }` directly only changed the height and
+  // left the line computed for 72px, which made it overlap the icons.
+  --mat-stepper-header-height: 48px;
+
+  // Show the header's grey state layer only on hover — not persistently on the
+  // selected step (which Material gives programmatic focus, painting it grey via
+  // the focus state layer). Hover uses a separate variable, so it stays grey.
+  --mat-stepper-header-focus-state-layer-color: transparent;
+
+  // Material's vertical step content has no top padding by default, so the first
+  // row sits flush at the top and its floated outline label gets clipped. A small
+  // top padding clears the label (no cut) while keeping the layout compact.
+  .mat-vertical-content {
+    padding: 12px 16px;
+
+    // Tighten the gap above each step's Previous/Next button row. Steps define
+    // this spacing themselves (`.layout-row.align-center` with padding/margin,
+    // or `.margin-t`), so override with higher precedence.
+    .layout-row.align-center,
+    .margin-t {
+      margin-top: 8px !important;
+      padding-top: 0 !important;
+    }
   }
 
-  ::ng-deep .mat-vertical-stepper-content {
-    padding-top: 16px;
+  // Neutralise per-step form paddings so spacing stays uniform/compact regardless
+  // of which step defined its own (the compacted share/client steppers do).
+  .mat-vertical-content form {
+    padding-top: 0;
+    padding-bottom: 0;
   }
 }
 

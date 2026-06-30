@@ -8,7 +8,7 @@
 
 <form [formGroup]="shareProductCurrencyForm">
   <div class="layout-row-wrap gap-2px responsive-column">
-    <mat-form-field class="flex-48">
+    <mat-form-field class="flex-22">
       <mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
       <mat-select
         matTooltip="{{ 'tooltips.The currency to be used' | translate }}"
@@ -27,7 +27,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="flex-48">
+    <mat-form-field class="flex-15">
       <mat-label>{{ 'labels.inputs.Decimal Places' | translate }}</mat-label>
       <input
         type="number"
@@ -43,12 +43,12 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-checkbox labelPosition="before" formControlName="setMultiples" class="flex-98 margin-t align-items-center">
+    <mat-checkbox labelPosition="before" formControlName="setMultiples" class="flex-auto align-items-center">
       {{ 'labels.inputs.Set the share installment in multiples of' | translate }}
     </mat-checkbox>
 
     @if (shareProductCurrencyForm.value.setMultiples) {
-      <mat-form-field class="flex-48">
+      <mat-form-field class="flex-19">
         <mat-label>{{ 'labels.inputs.Currency in multiples of' | translate }}</mat-label>
         <input
           type="number"

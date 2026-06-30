@@ -66,9 +66,11 @@ services:
       # Nginx proxy target (internal docker DNS)
       E2E_PROXY_TARGET: https://fineract:8443
 
-      # Angular app configuration (resolved by host browser via proxy)
-      FINERACT_API_URLS: ''
-      FINERACT_API_URL: ''
+      # Angular app configuration (resolved by host browser via Nginx proxy).
+      # Must be set to the browser-accessible origin so the Angular app constructs
+      # absolute API URLs that Nginx can proxy to the local Fineract container.
+      FINERACT_API_URLS: 'http://localhost:4200'
+      FINERACT_API_URL: 'http://localhost:4200'
 
       FINERACT_API_PROVIDER: /fineract-provider/api
       FINERACT_API_VERSION: /v1
