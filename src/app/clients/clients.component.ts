@@ -101,6 +101,7 @@ export class ClientsComponent implements OnInit, OnDestroy {
   @ViewChild('showClosedAccounts') showClosedAccounts: MatCheckbox;
 
   displayedColumns = [
+    'sno',
     'displayName',
     'accountNumber',
     'externalId',

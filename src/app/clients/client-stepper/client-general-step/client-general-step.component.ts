@@ -9,6 +9,7 @@
 /** Angular Imports */
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   DestroyRef,
   EventEmitter,
@@ -60,6 +61,7 @@ export class ClientGeneralStepComponent implements OnInit {
   private clientService = inject(ClientsService);
   externalNationalIdService = inject(ExternalNationalIdService);
   private destroyRef = inject(DestroyRef);
+  private cdr = inject(ChangeDetectorRef);
 
   @Output() legalFormChangeEvent = new EventEmitter<{ legalForm: number }>();
 
@@ -110,6 +112,9 @@ export class ClientGeneralStepComponent implements OnInit {
     this.setOptions();
     this.buildDependencies();
     this.externalNationalIdService.watchExternalId(this.createClientForm, this.genderOptions);
+    this.createClientForm.statusChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.cdr.markForCheck());
   }
 
   /**
@@ -132,7 +137,10 @@ export class ClientGeneralStepComponent implements OnInit {
       accountNo: [''],
       externalId: [''],
       genderId: [''],
-      mobileNo: [''],
+      mobileNo: [
+        '',
+        Validators.pattern(/^\d{10}$/)
+      ],
       emailAddress: [
         '',
         Validators.email

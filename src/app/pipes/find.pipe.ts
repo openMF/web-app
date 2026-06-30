@@ -6,8 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Pipe, PipeTransform, SecurityContext, inject } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { Pipe, PipeTransform } from '@angular/core';
 
 /**
  * Cache for storing lookup maps per options array reference.
@@ -18,7 +17,14 @@ const lookupCache = new WeakMap<any[], Map<string, Map<any, any>>>();
 
 @Pipe({ name: 'find' })
 export class FindPipe implements PipeTransform {
-  private sanitizer = inject(DomSanitizer);
+  private decodeHtmlEntities(text: string): string {
+    if (!text || !text.includes('&#')) {
+      return text;
+    }
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = text;
+    return textarea.value;
+  }
 
   transform(value: any, options: any, key: string, property: string): string {
     if (!options || !key || value === null || value === undefined) {
@@ -51,9 +57,8 @@ export class FindPipe implements PipeTransform {
     const optionFound = valueMap.get(value);
     const result = optionFound ? (optionFound[property] ?? '') : '';
 
-    // Sanitize string results to prevent XSS
     if (typeof result === 'string') {
-      return this.sanitizer.sanitize(SecurityContext.HTML, result) || '';
+      return this.decodeHtmlEntities(result);
     }
 
     return String(result || '');

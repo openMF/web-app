@@ -25,6 +25,19 @@
 
 /* You can add global styles to this file, and also import other style files */
 
+body {
+  font-family: Inter, 'Noto Sans Devanagari', sans-serif;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  box-shadow: 0 0 0 1000px #fff inset !important;
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -webkit-text-fill-color: rgb(0 0 0 / 87%) !important;
+}
+
 .custom-snackbar-top-right {
   top: 48px !important;
   right: 24px !important;
@@ -32,6 +45,21 @@
   transform: none !important;
   position: fixed !important;
   z-index: 9999;
+}
+
+// ===== Sort arrow colour override — must be global to pierce MatSortHeader's view encapsulation =====
+.members-table .mat-mdc-header-row .mat-sort-header-arrow {
+  color: #fff !important;
+}
+
+// ===== Material Snackbar Styles =====
+.mat-mdc-snack-bar-container {
+  .mdc-snackbar__label,
+  .mat-mdc-snack-bar-label,
+  .mat-mdc-button,
+  .mdc-button__label {
+    font-family: Inter, 'Noto Sans Devanagari', sans-serif !important;
+  }
 }
 
 // ===== Material Select Panel Styles (Material Design 3) =====
@@ -44,6 +72,7 @@
     0 8px 24px #00000014;
 
   .mat-mdc-option {
+    font-family: Inter, 'Noto Sans Devanagari', sans-serif;
     font-size: 0.875rem;
     min-height: 48px;
     padding: 0 16px;
@@ -75,6 +104,7 @@
   background: var(--md-sys-color-surface-container, #2c2f36);
 
   .mat-mdc-option {
+    font-family: Inter, 'Noto Sans Devanagari', sans-serif;
     color: var(--md-sys-color-on-surface, #e2e2e5);
 
     &:hover {
@@ -468,12 +498,19 @@
 .mat-mdc-form-field {
   margin-bottom: 8px;
 
+  .mat-mdc-input-element,
   .mat-mdc-input-element::placeholder {
+    font-family: Inter, 'Noto Sans Devanagari', sans-serif !important;
     font-size: 14px !important;
     color: #999 !important;
   }
 
+  .mat-mdc-input-element {
+    color: inherit !important;
+  }
+
   .mdc-floating-label {
+    font-family: Inter, 'Noto Sans Devanagari', sans-serif !important;
     font-size: 14px !important;
   }
 }

@@ -135,6 +135,18 @@ $input-border: #e2e8f0;
   overflow: hidden auto;
 }
 
+// ===== Language Selector (absolute top-right of login panel) =====
+.login-lang-selector {
+  position: absolute;
+  top: 0.1rem;
+  right: 0.1rem;
+  z-index: 10;
+
+  ::ng-deep mifosx-language-selector {
+    width: 130px;
+  }
+}
+
 // ===== Login Card =====
 .login-card-container {
   flex: 1;
@@ -297,8 +309,6 @@ $input-border: #e2e8f0;
     font-size: 0.75rem;
     font-weight: 600;
     color: $text-muted;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
     margin: 0 0 0.75rem;
   }
 

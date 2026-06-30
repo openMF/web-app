@@ -37,6 +37,7 @@ import { TenantSelectorComponent } from '../shared/tenant-selector/tenant-select
 import { LoginFormComponent } from './login-form/login-form.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { TwoFactorAuthenticationComponent } from './two-factor-authentication/two-factor-authentication.component';
+import { LanguageSelectorComponent } from '../shared/language-selector/language-selector.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 import { VersionService } from '../system/version.service';
@@ -53,7 +54,8 @@ import { VersionService } from '../system/version.service';
     TenantSelectorComponent,
     LoginFormComponent,
     ResetPasswordComponent,
-    TwoFactorAuthenticationComponent
+    TwoFactorAuthenticationComponent,
+    LanguageSelectorComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

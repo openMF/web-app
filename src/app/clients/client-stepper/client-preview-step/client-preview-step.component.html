@@ -6,170 +6,180 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<div class="container p-b-20">
-  <h3>{{ 'labels.heading.General' | translate }}</h3>
-
-  <mat-divider [inset]="true"></mat-divider>
-
-  <div class="flex-fill">
-    <span class="flex-40">{{ 'labels.inputs.name' | translate }}</span>
-    @if (client.legalFormId === LegalFormId.ENTITY) {
-      <span class="flex-60">{{ client.fullname }}</span>
-    }
-    @if (client.legalFormId === LegalFormId.PERSON) {
-      <span class="flex-60"
-        >{{ client.firstname }}
-        {{ client.middlename ? client.middlename + ' ' + client.lastname : client.lastname }}</span
-      >
-    }
-  </div>
-
-  <div class="flex-fill">
-    <span class="flex-40">{{ 'labels.inputs.Office' | translate }}</span>
-    <span class="flex-60">{{ client.officeId | find: clientTemplate.officeOptions : 'id' : 'name' }}</span>
-  </div>
-
-  <div class="flex-fill">
-    <span class="flex-40">{{ 'labels.inputs.Legal Form' | translate }}</span>
-    <span class="flex-60">{{ client.legalFormId | find: clientTemplate.clientLegalFormOptions : 'id' : 'value' }}</span>
-  </div>
-
-  @if (client.staffId) {
-    <div class="flex-fill">
-      <span class="flex-40">{{ 'labels.inputs.Staff' | translate }}</span>
-      <span class="flex-60">{{ client.staffId | find: clientTemplate.staffOptions : 'id' : 'displayName' }}</span>
-    </div>
-  }
-
-  @if (client.dateOfBirth) {
-    <div class="flex-fill">
-      <span class="flex-40">{{
-        client.legalFormId === LegalFormId.PERSON ? 'Date of Birth' : 'Incorporation Date'
-      }}</span>
-      <span class="flex-60">{{ client.dateOfBirth | dateFormat }}</span>
-    </div>
-  }
-
-  @if (client.externalId) {
-    <div class="flex-fill">
-      <span class="flex-40">{{ 'labels.inputs.External Id' | translate }}</span>
-      <span class="flex-60">
-        <mifosx-external-identifier externalId="{{ client.externalId }}"></mifosx-external-identifier>
-      </span>
-    </div>
-  }
-
-  @if (client.mobileNo) {
-    <div class="flex-fill">
-      <span class="flex-40">{{ 'labels.inputs.Mobile No' | translate }}</span>
-      <span class="flex-60">{{ client.mobileNo }}</span>
-    </div>
-  }
-
-  @if (client.emailAddress) {
-    <div class="flex-fill">
-      <span class="flex-40">{{ 'labels.inputs.Email Address' | translate }}</span>
-      <span class="flex-60">{{ client.emailAddress }}</span>
-    </div>
-  }
-
-  @if (client.clientTypeId) {
-    <div class="flex-fill">
-      <span class="flex-40">{{ 'labels.inputs.Client Type' | translate }}</span>
-      <span class="flex-60">{{ client.clientTypeId | find: clientTemplate.clientTypeOptions : 'id' : 'name' }}</span>
-    </div>
-  }
-
-  @if (client.clientClassificationId) {
-    <div class="flex-fill">
-      <span class="flex-40">{{ 'labels.inputs.Client Classification' | translate }}</span>
-      <span class="flex-60">{{
-        client.clientClassificationId | find: clientTemplate.clientClassificationOptions : 'id' : 'name'
-      }}</span>
-    </div>
-  }
-
-  @if (client.savingsProductId) {
-    <div class="flex-fill">
-      <span class="flex-40">{{ 'labels.inputs.Savings Product' | translate }}</span>
-      <span class="flex-60">{{
-        client.savingsProductId | find: clientTemplate.savingProductOptions : 'id' : 'name'
-      }}</span>
-    </div>
-  }
-
-  @if (client.submittedOnDate) {
-    <div class="flex-fill">
-      <span class="flex-40">{{ 'labels.inputs.Submitted On Date' | translate }}</span>
-      <span class="flex-60">{{ client.submittedOnDate | dateFormat }}</span>
-    </div>
-  }
-
-  <div class="flex-fill">
-    <span class="flex-40">{{ 'labels.inputs.Active' | translate }}?</span>
-    <span class="flex-60">{{ client.active | yesNo }}</span>
-  </div>
-
-  @if (client.activationDate) {
-    <div class="flex-fill">
-      <span class="flex-40">{{ 'labels.inputs.Activation Date' | translate }}</span>
-      <span class="flex-60">{{ client.activationDate | dateFormat }}</span>
-    </div>
-  }
-
-  @if (client.legalFormId === LegalFormId.PERSON) {
-    @if (client.genderId) {
-      <div class="flex-fill">
-        <span class="flex-40">{{ 'labels.inputs.Gender' | translate }}</span>
-        <span class="flex-60">{{ client.genderId | find: clientTemplate.genderOptions : 'id' : 'name' }}</span>
+<div class="preview-container p-b-20">
+  <div class="section">
+    <div class="preview-grid">
+      <div class="preview-item">
+        <span class="label">{{ 'labels.inputs.name' | translate }}</span>
+        @if (client.legalFormId === LegalFormId.ENTITY) {
+          <span class="value">{{ client.fullname }}</span>
+        }
+        @if (client.legalFormId === LegalFormId.PERSON) {
+          <span class="value"
+            >{{ client.firstname }}
+            {{ client.middlename ? client.middlename + ' ' + client.lastname : client.lastname }}</span
+          >
+        }
       </div>
-    }
-    <div class="flex-fill">
-      <span class="flex-40">{{ 'labels.inputs.Is staff' | translate }}?</span>
-      <span class="flex-60">{{ client.isStaff | yesNo }}</span>
-    </div>
-  }
 
-  @if (client.legalFormId === LegalFormId.ENTITY) {
-    @if (client.clientNonPersonDetails.incorpValidityTillDate) {
-      <div class="flex-fill">
-        <span class="flex-40">{{ 'labels.inputs.Incorporation Validity Till Date' | translate }}</span>
-        <span class="flex-60">{{ client.clientNonPersonDetails.incorpValidityTillDate | dateFormat }}</span>
+      <div class="preview-item">
+        <span class="label">{{ 'labels.inputs.Office' | translate }}</span>
+        <span class="value">{{ client.officeId | find: clientTemplate.officeOptions : 'id' : 'name' }}</span>
       </div>
-    }
-    <div class="flex-fill">
-      <span class="flex-40">{{ 'labels.inputs.Incorportation Number' | translate }}</span>
-      <span class="flex-60">{{ client.clientNonPersonDetails.incorpNumber || 'Not Provided' }}</span>
-    </div>
-    @if (client.clientNonPersonDetails.mainBusinessLineId) {
-      <div class="flex-fill">
-        <span class="flex-40">{{ 'labels.inputs.Main Business Line' | translate }}</span>
-        <span class="flex-60">{{
-          client.clientNonPersonDetails.mainBusinessLineId
-            | find: clientTemplate.clientNonPersonMainBusinessLineOptions : 'id' : 'name'
+
+      <div class="preview-item">
+        <span class="label">{{ 'labels.inputs.Legal Form' | translate }}</span>
+        <span class="value">{{
+          client.legalFormId | find: clientTemplate.clientLegalFormOptions : 'id' : 'value'
         }}</span>
       </div>
-    }
-    @if (client.clientNonPersonDetails.constitutionId) {
-      <div class="flex-fill">
-        <span class="flex-40">{{ 'labels.inputs.Constitution' | translate }}</span>
-        <span class="flex-60">{{
-          client.clientNonPersonDetails.constitutionId
-            | find: clientTemplate.clientNonPersonConstitutionOptions : 'id' : 'name'
-        }}</span>
-      </div>
-    }
-    <div class="flex-fill">
-      <span class="flex-40">{{ 'labels.inputs.Remarks' | translate }}</span>
-      <span class="flex-60">{{ client.clientNonPersonDetails.remarks || 'N/A' }}</span>
-    </div>
-  }
 
-  @if (client.familyMembers.length) {
-    <div class="layout-column flex-100 m-b-20">
-      <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Family Members' | translate }}</h3>
-      <mat-divider class="flex-fill"></mat-divider>
-      <mat-accordion class="flex-fill m-t-5">
+      @if (client.dateOfBirth) {
+        <div class="preview-item">
+          <span class="label">{{
+            client.legalFormId === LegalFormId.PERSON
+              ? ('labels.inputs.Date of Birth' | translate)
+              : ('labels.inputs.Incorporation Date' | translate)
+          }}</span>
+          <span class="value">{{ client.dateOfBirth | dateFormat }}</span>
+        </div>
+      }
+
+      @if (client.externalId) {
+        <div class="preview-item">
+          <span class="label">{{ 'labels.inputs.External Id' | translate }}</span>
+          <span class="value">
+            <mifosx-external-identifier externalId="{{ client.externalId }}"></mifosx-external-identifier>
+          </span>
+        </div>
+      }
+
+      @if (client.mobileNo) {
+        <div class="preview-item">
+          <span class="label">{{ 'labels.inputs.Mobile No' | translate }}</span>
+          <span class="value">{{ client.mobileNo }}</span>
+        </div>
+      }
+
+      @if (client.emailAddress) {
+        <div class="preview-item">
+          <span class="label">{{ 'labels.inputs.Email Address' | translate }}</span>
+          <span class="value">{{ client.emailAddress }}</span>
+        </div>
+      }
+
+      @if (client.staffId) {
+        <div class="preview-item">
+          <span class="label">{{ 'labels.inputs.Staff' | translate }}</span>
+          <span class="value">{{ client.staffId | find: clientTemplate.staffOptions : 'id' : 'displayName' }}</span>
+        </div>
+      }
+
+      @if (client.clientTypeId) {
+        <div class="preview-item">
+          <span class="label">{{ 'labels.inputs.Member Type' | translate }}</span>
+          <span class="value">{{ client.clientTypeId | find: clientTemplate.clientTypeOptions : 'id' : 'name' }}</span>
+        </div>
+      }
+
+      @if (client.clientClassificationId) {
+        <div class="preview-item">
+          <span class="label">{{ 'labels.inputs.Member Classification' | translate }}</span>
+          <span class="value">{{
+            client.clientClassificationId | find: clientTemplate.clientClassificationOptions : 'id' : 'name'
+          }}</span>
+        </div>
+      }
+
+      @if (client.submittedOnDate) {
+        <div class="preview-item">
+          <span class="label">{{ 'labels.inputs.Submitted On Date' | translate }}</span>
+          <span class="value">{{ client.submittedOnDate | dateFormat }}</span>
+        </div>
+      }
+
+      <div class="preview-item">
+        <span class="label">{{ 'labels.inputs.Active' | translate }}?</span>
+        <span class="value">{{ client.active | yesNo }}</span>
+      </div>
+
+      @if (client.activationDate) {
+        <div class="preview-item">
+          <span class="label">{{ 'labels.inputs.Activation Date' | translate }}</span>
+          <span class="value">{{ client.activationDate | dateFormat }}</span>
+        </div>
+      }
+
+      @if (client.savingsProductId) {
+        <div class="preview-item">
+          <span class="label">{{ 'labels.inputs.Savings Product' | translate }}</span>
+          <span class="value">{{
+            client.savingsProductId | find: clientTemplate.savingProductOptions : 'id' : 'name'
+          }}</span>
+        </div>
+      }
+
+      @if (client.legalFormId === LegalFormId.PERSON) {
+        @if (client.genderId) {
+          <div class="preview-item">
+            <span class="label">{{ 'labels.inputs.Gender' | translate }}</span>
+            <span class="value">{{ client.genderId | find: clientTemplate.genderOptions : 'id' : 'name' }}</span>
+          </div>
+        }
+        <div class="preview-item">
+          <span class="label">{{ 'labels.inputs.Is staff' | translate }}?</span>
+          <span class="value">{{ client.isStaff | yesNo }}</span>
+        </div>
+      }
+
+      @if (client.legalFormId === LegalFormId.ENTITY) {
+        @if (client.clientNonPersonDetails.constitutionId) {
+          <div class="preview-item">
+            <span class="label">{{ 'labels.inputs.Constitution' | translate }}</span>
+            <span class="value">{{
+              client.clientNonPersonDetails.constitutionId
+                | find: clientTemplate.clientNonPersonConstitutionOptions : 'id' : 'name'
+            }}</span>
+          </div>
+        }
+        @if (client.clientNonPersonDetails.mainBusinessLineId) {
+          <div class="preview-item">
+            <span class="label">{{ 'labels.inputs.Main Business Line' | translate }}</span>
+            <span class="value">{{
+              client.clientNonPersonDetails.mainBusinessLineId
+                | find: clientTemplate.clientNonPersonMainBusinessLineOptions : 'id' : 'name'
+            }}</span>
+          </div>
+        }
+        @if (client.clientNonPersonDetails.incorpValidityTillDate) {
+          <div class="preview-item">
+            <span class="label">{{ 'labels.inputs.Incorporation Validity Till Date' | translate }}</span>
+            <span class="value">{{ client.clientNonPersonDetails.incorpValidityTillDate | dateFormat }}</span>
+          </div>
+        }
+        @if (client.clientNonPersonDetails.incorpNumber) {
+          <div class="preview-item">
+            <span class="label">{{ 'labels.inputs.Incorportation Number' | translate }}</span>
+            <span class="value">{{ client.clientNonPersonDetails.incorpNumber }}</span>
+          </div>
+        }
+        @if (client.clientNonPersonDetails.remarks) {
+          <div class="preview-item preview-item--full">
+            <span class="label">{{ 'labels.inputs.Remarks' | translate }}</span>
+            <span class="value">{{ client.clientNonPersonDetails.remarks }}</span>
+          </div>
+        }
+      }
+    </div>
+  </div>
+
+  @if (client.familyMembers?.length) {
+    <div class="section">
+      <div class="section-header">
+        <h3>{{ 'labels.heading.Family Members' | translate }}</h3>
+        <mat-divider></mat-divider>
+      </div>
+      <mat-accordion>
         @for (member of client.familyMembers; track member) {
           <mat-expansion-panel class="family-member">
             <mat-expansion-panel-header>
@@ -177,32 +187,30 @@
                 {{ member.firstName }}
                 {{ member.middleName ? member.middleName + ' ' + member.lastName : member.lastName }}
               </mat-panel-title>
-              <mat-panel-description>
-                {{ member.relationship }}
-              </mat-panel-description>
+              <mat-panel-description>{{ member.relationship }}</mat-panel-description>
             </mat-expansion-panel-header>
             <mat-divider></mat-divider>
             <p>
-              {{ 'labels.inputs.First Name' | translate }} : {{ member.firstName }}<br />
-              {{ 'labels.inputs.Middle Name' | translate }} : {{ member.middleName }}<br />
-              {{ 'labels.inputs.Last Name' | translate }} : {{ member.lastName }}<br />
-              {{ 'labels.inputs.Qualification' | translate }} : {{ member.qualification }}<br />
-              {{ 'labels.inputs.Relationship' | translate }} :
+              {{ 'labels.inputs.First Name' | translate }}: {{ member.firstName }}<br />
+              {{ 'labels.inputs.Middle Name' | translate }}: {{ member.middleName }}<br />
+              {{ 'labels.inputs.Last Name' | translate }}: {{ member.lastName }}<br />
+              {{ 'labels.inputs.Qualification' | translate }}: {{ member.qualification }}<br />
+              {{ 'labels.inputs.Relationship' | translate }}:
               {{ member.relationshipId | find: clientTemplate.familyMemberOptions.relationshipIdOptions : 'id' : 'name'
               }}<br />
-              {{ 'labels.inputs.Age' | translate }} : {{ member.age }}<br />
-              {{ 'labels.inputs.Is Dependent' | translate }} : {{ member.isDependent ? 'Yes' : 'No' }}<br />
-              {{ 'labels.inputs.Marital Status' | translate }} :
+              {{ 'labels.inputs.Age' | translate }}: {{ member.age }}<br />
+              {{ 'labels.inputs.Is Dependent' | translate }}: {{ member.isDependent ? 'Yes' : 'No' }}<br />
+              {{ 'labels.inputs.Marital Status' | translate }}:
               {{
                 member.maritalStatusId
                   | find: clientTemplate.familyMemberOptions.maritalStatusIdOptions : 'id' : 'name'
               }}<br />
-              {{ 'labels.inputs.Gender' | translate }} :
+              {{ 'labels.inputs.Gender' | translate }}:
               {{ member.genderId | find: clientTemplate.familyMemberOptions.genderIdOptions : 'id' : 'name' }}<br />
-              {{ 'labels.inputs.Profession' | translate }} :
+              {{ 'labels.inputs.Profession' | translate }}:
               {{ member.professionId | find: clientTemplate.familyMemberOptions.professionIdOptions : 'id' : 'name'
               }}<br />
-              {{ 'labels.inputs.Date Of Birth' | translate }} : {{ member.dateOfBirth | dateFormat }}<br />
+              {{ 'labels.inputs.Date Of Birth' | translate }}: {{ member.dateOfBirth | dateFormat }}<br />
             </p>
           </mat-expansion-panel>
         }
@@ -211,57 +219,57 @@
   }
 
   @if (clientTemplate.isAddressEnabled && client.address && client.address.length) {
-    <div class="flex-fill layout-row-wrap responsive-column">
-      <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Address' | translate }}</h3>
-      <mat-divider class="flex-fill"></mat-divider>
-      <mat-accordion class="flex-fill m-t-5">
+    <div class="section">
+      <div class="section-header">
+        <h3>{{ 'labels.heading.Address' | translate }}</h3>
+        <mat-divider></mat-divider>
+      </div>
+      <mat-accordion>
         @for (address of client.address; track address) {
           <mat-expansion-panel class="address">
             <mat-expansion-panel-header>
-              <mat-panel-title>
-                {{ getSelectedValue('addressTypeIdOptions', address.addressTypeId)?.name }}
-              </mat-panel-title>
-              <mat-panel-description>
-                {{ address.relationship }}
-              </mat-panel-description>
+              <mat-panel-title>{{
+                getSelectedValue('addressTypeIdOptions', address.addressTypeId)?.name
+              }}</mat-panel-title>
+              <mat-panel-description>{{ address.relationship }}</mat-panel-description>
             </mat-expansion-panel-header>
             <mat-divider></mat-divider>
             <p>
               @if (isFieldEnabled('street')) {
-                <span>{{ 'labels.inputs.Street' | translate }} : {{ address.street }}<br /></span>
+                <span>{{ 'labels.inputs.Street' | translate }}: {{ address.street }}<br /></span>
               }
               @if (isFieldEnabled('addressLine1')) {
-                <span>{{ 'labels.inputs.Address Line' | translate }} 1 : {{ address.addressLine1 }}<br /></span>
+                <span>{{ 'labels.inputs.Address Line' | translate }} 1: {{ address.addressLine1 }}<br /></span>
               }
               @if (isFieldEnabled('addressLine2')) {
-                <span>{{ 'labels.inputs.Address Line' | translate }} 2 : {{ address.addressLine2 }}<br /></span>
+                <span>{{ 'labels.inputs.Address Line' | translate }} 2: {{ address.addressLine2 }}<br /></span>
               }
               @if (isFieldEnabled('addressLine3')) {
-                <span>{{ 'labels.inputs.Address Line' | translate }} 3 : {{ address.addressLine3 }}<br /></span>
+                <span>{{ 'labels.inputs.Address Line' | translate }} 3: {{ address.addressLine3 }}<br /></span>
               }
               @if (isFieldEnabled('townVillage')) {
-                <span>{{ 'labels.inputs.Town / Village' | translate }} : {{ address.townVillage }}<br /></span>
+                <span>{{ 'labels.inputs.Town / Village' | translate }}: {{ address.townVillage }}<br /></span>
               }
               @if (isFieldEnabled('city')) {
-                <span>{{ 'labels.inputs.City' | translate }} : {{ address.city }}<br /></span>
+                <span>{{ 'labels.inputs.City' | translate }}: {{ address.city }}<br /></span>
               }
               @if (isFieldEnabled('stateProvinceId')) {
                 <span
-                  >{{ 'labels.inputs.State / Province' | translate }} :
+                  >{{ 'labels.inputs.State / Province' | translate }}:
                   {{ getSelectedValue('stateProvinceIdOptions', address.stateProvinceId)?.name }}<br
                 /></span>
               }
               @if (isFieldEnabled('countryId')) {
                 <span
-                  >{{ 'labels.inputs.Country' | translate }} :
+                  >{{ 'labels.inputs.Country' | translate }}:
                   {{ getSelectedValue('countryIdOptions', address.countryId)?.name }}<br
                 /></span>
               }
               @if (isFieldEnabled('postalCode')) {
-                <span>{{ 'labels.inputs.Postal Code' | translate }} : {{ address.postalCode }}<br /></span>
+                <span>{{ 'labels.inputs.Postal Code' | translate }}: {{ address.postalCode }}<br /></span>
               }
               @if (isFieldEnabled('isActive')) {
-                <span>{{ 'labels.inputs.Active Status' | translate }} : {{ address.isActive }}<br /></span>
+                <span>{{ 'labels.inputs.Active Status' | translate }}: {{ address.isActive }}<br /></span>
               }
             </p>
           </mat-expansion-panel>
