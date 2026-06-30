@@ -774,7 +774,8 @@
       "Yes": "Ja",
       "undo_account_transfer": "Kontotransfer rückgängig machen",
       "All": "Alle",
-      "Pause Breach": "Verstoß pausieren"
+      "Pause Breach": "Verstoß pausieren",
+      "Resume Breach": "Verstoß fortsetzen"
     },
     "catalogs": {
       "% Amount": "Menge",
@@ -3342,6 +3343,7 @@
       "Withdrawn": "Zurückgezogen"
     },
     "dialogContext": {
+      "Are you sure you want to resume the breach pause": "Sind Sie sicher, dass Sie den Verstoß wirklich fortsetzen",
       "Are you sure you want Unassign Staff": "Sind Sie sicher, dass Sie das Personal freistellen möchten",
       "Are you sure you want to calculate interest ?": "Sind Sie sicher, dass Sie Zinsen berechnen möchten ?",
       "Are you sure you want to post interest ?": "Sind Sie sicher, dass Sie Zinsen buchen möchten ?",

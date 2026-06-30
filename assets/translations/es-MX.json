@@ -773,7 +773,8 @@
       "Yes": "Sí",
       "undo_account_transfer": "Revertir transferencia de cuenta",
       "All": "Todos",
-      "Pause Breach": "Pausar Incumplimiento"
+      "Pause Breach": "Pausar Incumplimiento",
+      "Resume Breach": "Reanudar Incumplimiento"
     },
     "catalogs": {
       "% Amount": "% Monto",
@@ -3344,6 +3345,7 @@
       "Withdrawn": "Retirado"
     },
     "dialogContext": {
+      "Are you sure you want to resume the breach pause": "¿Estás seguro de que quieres reanudar la pausa del incumplimiento?",
       "Are you sure you want Unassign Staff": "¿Estás seguro de que deseas desasignar al asesor?",
       "Are you sure you want to calculate interest ?": "¿Estás seguro de que deseas calcular los intereses?",
       "Are you sure you want to post interest ?": "¿Estás seguro de que deseas contabilizar los intereses?",

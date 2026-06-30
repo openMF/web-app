@@ -772,7 +772,8 @@
       "Yes": "Ndiyo",
       "undo_account_transfer": "Futa uhamisho wa akaunti",
       "All": "Vyote",
-      "Pause Breach": "Sitisha Ukiukaji"
+      "Pause Breach": "Sitisha Ukiukaji",
+      "Resume Breach": "Endelea Ukiukaji"
     },
     "catalogs": {
       "% Amount": "Kiasi",
@@ -3336,6 +3337,7 @@
       "Withdrawn": "Kutolewa"
     },
     "dialogContext": {
+      "Are you sure you want to resume the breach pause": "Je, una hakika unataka kuendelea na kusitishwa kwa ukiukaji?",
       "Are you sure you want Unassign Staff": "Je, una uhakika unataka kuondoa wafanyakazi?",
       "Are you sure you want to calculate interest ?": "Je, una uhakika unataka kuhesabu riba?",
       "Are you sure you want to post interest ?": "Je, una uhakika unataka kuchapisha riba?",

@@ -772,7 +772,8 @@
       "Yes": "Oui",
       "undo_account_transfer": "Annuler le transfert de compte",
       "All": "Tous",
-      "Pause Breach": "Suspendre le Manquement"
+      "Pause Breach": "Suspendre le Manquement",
+      "Resume Breach": "Reprendre le Manquement"
     },
     "catalogs": {
       "% Amount": "Montant",
@@ -3343,6 +3344,7 @@
       "Withdrawn": "Retiré"
     },
     "dialogContext": {
+      "Are you sure you want to resume the breach pause": "Êtes-vous sûr de vouloir reprendre le manquement après sa mise en pause ?",
       "Are you sure you want Unassign Staff": "Êtes-vous sûr de vouloir désassigner le personnel",
       "Are you sure you want to calculate interest ?": "Êtes-vous sûr de vouloir calculer les intérêts ?",
       "Are you sure you want to post interest ?": "Êtes-vous sûr de vouloir enregistrer les intérêts ?",

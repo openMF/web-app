@@ -772,7 +772,8 @@
       "Yes": "Jā",
       "undo_account_transfer": "Atcelt konta pārskaitījumu",
       "All": "Visi",
-      "Pause Breach": "Apturēt pārkāpumu"
+      "Pause Breach": "Apturēt pārkāpumu",
+      "Resume Breach": "Pārtraukuma atsākšana"
     },
     "catalogs": {
       "% Amount": "Summa",
@@ -3339,6 +3340,7 @@
       "Withdrawn": "Atsaukts"
     },
     "dialogContext": {
+      "Are you sure you want to resume the breach pause": "Vai esat pārliecināts, ka vēlaties atsākt pārtraukumu?",
       "Are you sure you want Unassign Staff": "Vai tiešām vēlaties atcelt darbinieka piešķiršanu?",
       "Are you sure you want to calculate interest ?": "Vai tiešām vēlaties aprēķināt procentus?",
       "Are you sure you want to post interest ?": "Vai tiešām vēlaties reģistrēt procentus?",

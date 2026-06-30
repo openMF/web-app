@@ -775,7 +775,8 @@
       "Yes": "Yes",
       "undo_account_transfer": "Undo Account Transfer",
       "All": "All",
-      "Pause Breach": "Pause Breach"
+      "Pause Breach": "Pause Breach",
+      "Resume Breach": "Resume Breach"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -3343,6 +3344,7 @@
       "Withdrawn": "Withdrawn"
     },
     "dialogContext": {
+      "Are you sure you want to resume the breach pause": "Are you sure you want to resume the breach pause",
       "Are you sure you want Unassign Staff": "Are you sure you want Unassign Staff",
       "Are you sure you want to calculate interest ?": "Are you sure you want to calculate interest ?",
       "Are you sure you want to post interest ?": "Are you sure you want to post interest ?",

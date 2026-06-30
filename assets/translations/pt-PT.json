@@ -772,7 +772,8 @@
       "Yes": "Sim",
       "undo_account_transfer": "Reverter transferência de conta",
       "All": "Todos",
-      "Pause Breach": "Pausar Violação"
+      "Pause Breach": "Pausar Violação",
+      "Resume Breach": "Retomar Violação"
     },
     "catalogs": {
       "% Amount": "Quantia",
@@ -3339,6 +3340,7 @@
       "Withdrawn": "Retirado"
     },
     "dialogContext": {
+      "Are you sure you want to resume the breach pause": "Tem a certeza de que quer retomar a violação?",
       "Are you sure you want Unassign Staff": "Tem a certeza que deseja desassociar o funcionário?",
       "Are you sure you want to calculate interest ?": "Tem a certeza que deseja calcular juros?",
       "Are you sure you want to post interest ?": "Tem a certeza que deseja registar juros?",

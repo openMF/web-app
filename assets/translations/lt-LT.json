@@ -772,7 +772,8 @@
       "Yes": "Taip",
       "undo_account_transfer": "Atšaukti sąskaitos pervedimą",
       "All": "Visi",
-      "Pause Breach": "Pristabdyti pažeidimą"
+      "Pause Breach": "Pristabdyti pažeidimą",
+      "Resume Breach": "Atnaujinti pažeidimą"
     },
     "catalogs": {
       "% Amount": "Suma",
@@ -3339,6 +3340,7 @@
       "Withdrawn": "Pasitraukė"
     },
     "dialogContext": {
+      "Are you sure you want to resume the breach pause": "Ar tikrai norite atnaujinti pažeidimo sustabdymą?",
       "Are you sure you want Unassign Staff": "Ar tikrai norite atšaukti darbuotojo priskyrimą?",
       "Are you sure you want to calculate interest ?": "Ar tikrai norite skaičiuoti palūkanas?",
       "Are you sure you want to post interest ?": "Ar tikrai norite paskelbti palūkanas?",

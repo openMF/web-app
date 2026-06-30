@@ -772,7 +772,8 @@
       "Yes": "예",
       "undo_account_transfer": "계좌 이체 취소",
       "All": "전체",
-      "Pause Breach": "위반 일시중지"
+      "Pause Breach": "위반 일시중지",
+      "Resume Breach": "중단된 작업 재개"
     },
     "catalogs": {
       "% Amount": "양",
@@ -3339,6 +3340,7 @@
       "Withdrawn": "빼는"
     },
     "dialogContext": {
+      "Are you sure you want to resume the breach pause": "중단된 작업을 재개하시겠습니까?",
       "Are you sure you want Unassign Staff": "직원 해제를 하시겠습니까?",
       "Are you sure you want to calculate interest ?": "이자를 계산하시겠습니까?",
       "Are you sure you want to post interest ?": "이자를 등록하시겠습니까?",

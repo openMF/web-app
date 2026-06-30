@@ -772,7 +772,8 @@
       "Yes": "हो",
       "undo_account_transfer": "खाता स्थानान्तरण रद्द गर्नुहोस्",
       "All": "सबै",
-      "Pause Breach": "उल्लङ्घन रोक्नुहोस्"
+      "Pause Breach": "उल्लङ्घन रोक्नुहोस्",
+      "Resume Breach": "उल्लंघन पुनः सुरु गर्नुहोस्"
     },
     "catalogs": {
       "% Amount": "रकम",
@@ -3339,6 +3340,7 @@
       "Withdrawn": "फिर्ता लिन"
     },
     "dialogContext": {
+      "Are you sure you want to resume the breach pause": "के तपाईं उल्लंघन रोकी राखिएको अवस्था पुनः सुरु गर्न चाहनुहुन्छ?",
       "Are you sure you want Unassign Staff": "के तपाईं निश्चित हुनुहुन्छ कि तपाईंले कर्मचारीलाई अनपाइन्ट गर्न चाहनुहुन्छ?",
       "Are you sure you want to calculate interest ?": "के तपाईं निश्चित हुनुहुन्छ कि तपाईं ब्याजहरू गणना गर्न चाहनुहुन्छ?",
       "Are you sure you want to post interest ?": "के तपाईं निश्चित हुनुहुन्छ कि तपाईं ब्याज पोस्ट गर्न चाहनुहुन्छ?",

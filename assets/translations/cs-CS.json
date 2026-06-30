@@ -773,7 +773,8 @@
       "Yes": "Ano",
       "undo_account_transfer": "Vrátit převod účtu",
       "All": "Vše",
-      "Pause Breach": "Pozastavit porušení"
+      "Pause Breach": "Pozastavit porušení",
+      "Resume Breach": "Obnovení porušení"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -3340,6 +3341,7 @@
       "Withdrawn": "Stažený"
     },
     "dialogContext": {
+      "Are you sure you want to resume the breach pause": "Opravdu chcete obnovit porušení?",
       "Are you sure you want Unassign Staff": "Opravdu chcete odebrat přiřazení zaměstnance?",
       "Are you sure you want to calculate interest ?": "Jste si jisti, že chcete spočítat zájem?",
       "Are you sure you want to post interest ?": "Jste si jisti, že chcete zveřejnit zájem?",
