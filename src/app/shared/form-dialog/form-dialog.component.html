@@ -11,10 +11,7 @@
 <div
   mat-dialog-content
   [formGroup]="form"
-  [ngClass]="[
-    layout.columns > 1 ? 'flex flex-wrap gap-' + layout.gap + 'percent' : 'layout-column',
-    'responsive-column'
-  ]"
+  [ngClass]="[layout.columns > 1 ? 'dialog-row gap-' + layout.gap + 'percent' : 'layout-column', 'responsive-column']"
 >
   @for (formfield of formfields; track formfield) {
     <div [ngClass]="'flex-' + layout.flex + ' responsive-flex-full'">

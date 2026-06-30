@@ -6,10 +6,47 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-.margin-t {
-  margin-top: 1em;
+form {
+  padding: 16px 0;
+
+  .layout-row-wrap {
+    gap: 8px !important;
+    align-items: center;
+  }
 }
 
-.align-items-center {
-  align-items: center;
+.flex-22 {
+  flex: 0 0 22%;
+}
+
+.flex-15 {
+  flex: 0 0 15%;
+}
+
+.flex-auto {
+  flex: 0 0 auto;
+}
+
+mat-form-field {
+  margin-bottom: 8px;
+}
+
+mat-error {
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+mat-checkbox {
+  margin: 0;
+  white-space: nowrap;
+  margin-bottom: 8px;
+}
+
+.layout-row.align-center {
+  padding-top: 16px;
+  margin-top: 12px;
+
+  button {
+    margin: 0 6px;
+  }
 }

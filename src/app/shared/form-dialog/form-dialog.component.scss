@@ -5,3 +5,32 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
+::ng-deep .dialog-row.mat-mdc-dialog-content {
+  display: flex !important;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  gap: 8px;
+
+  > div {
+    flex: 1 1 50% !important;
+    min-width: 0;
+    max-width: 50%;
+  }
+
+  .mat-mdc-form-field {
+    width: 100%;
+  }
+
+  .mat-mdc-form-field-icon-suffix {
+    display: flex;
+    align-items: center;
+    padding: 0 !important;
+
+    .mat-datepicker-toggle button {
+      width: 28px;
+      height: 28px;
+      padding: 0;
+    }
+  }
+}

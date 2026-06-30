@@ -156,7 +156,8 @@ export class ShareProductMarketPriceStepComponent implements OnInit {
   getData(values?: any) {
     return {
       title: this.translateService.instant('labels.inputs.Market Price Period'),
-      formfields: this.getFormfields(values)
+      formfields: this.getFormfields(values),
+      layout: { columns: 2, columnWidth: 200, flex: 24 }
     };
   }
 

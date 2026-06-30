@@ -39,18 +39,12 @@
     <a
       #institution
       class="tab-link"
-      [matMenuTriggerFor]="institutionMenu"
-      #institutionMenuTrigger="matMenuTrigger"
+      [routerLink]="['/member-management']"
       tabindex="0"
-      *mifosxHasPermission="['READ_GROUP', 'READ_CENTER']"
+      *mifosxHasPermission="['READ_CLIENT', 'READ_GROUP', 'READ_CENTER']"
     >
-      <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
-      {{ 'labels.menus.Institution' | translate }}
-    </a>
-
-    <a class="tab-link" [routerLink]="['/members']" tabindex="0" *mifosxHasPermission="'READ_CLIENT'">
       <fa-icon class="mr-05" icon="users" size="lg"></fa-icon>
-      {{ 'labels.menus.Clients' | translate }}
+      {{ 'labels.menus.Member Management' | translate }}
     </a>
 
     <span class="hide-lt-md">
@@ -73,8 +67,7 @@
       <a
         #reports
         class="tab-link"
-        [matMenuTriggerFor]="reportsMenu"
-        #reportsMenuTrigger="matMenuTrigger"
+        [routerLink]="['/reports-overview']"
         tabindex="0"
         *mifosxHasPermission="'READ_REPORT'"
       >
@@ -84,8 +77,7 @@
       <a
         #admin
         class="tab-link"
-        [matMenuTriggerFor]="adminMenu"
-        #adminMenuTrigger="matMenuTrigger"
+        [routerLink]="['/administration']"
         tabindex="0"
         *mifosxHasPermission="['READ_USER', 'READ_ROLE']"
       >
@@ -115,55 +107,6 @@
     </button>
   </div>
 </mat-toolbar>
-
-<mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item routerLink="/groups" tabindex="0" *mifosxHasPermission="'READ_GROUP'">
-    {{ 'labels.menus.Groups' | translate }}
-  </button>
-  <button mat-menu-item routerLink="/centers" tabindex="0" *mifosxHasPermission="'READ_CENTER'">
-    {{ 'labels.menus.Centers' | translate }}
-  </button>
-</mat-menu>
-
-<!-- Toolbar Menus -->
-<mat-menu #reportsMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item [routerLink]="['/reports']" tabindex="0" *mifosxHasPermission="'READ_REPORT'">
-    {{ 'labels.menus.All' | translate }}
-  </button>
-  <button mat-menu-item [routerLink]="['/reports', 'Client']" tabindex="0" *mifosxHasPermission="'READ_REPORT'">
-    {{ 'labels.menus.Clients' | translate }}
-  </button>
-  <button mat-menu-item [routerLink]="['/reports', 'Loan']" tabindex="0" *mifosxHasPermission="'READ_REPORT'">
-    {{ 'labels.menus.Loans' | translate }}
-  </button>
-  <button mat-menu-item [routerLink]="['/reports', 'Savings']" tabindex="0" *mifosxHasPermission="'READ_REPORT'">
-    {{ 'labels.menus.Savings' | translate }}
-  </button>
-  <button mat-menu-item [routerLink]="['/reports', 'Fund']" tabindex="0" *mifosxHasPermission="'READ_REPORT'">
-    {{ 'labels.menus.Funds' | translate }}
-  </button>
-  <button mat-menu-item [routerLink]="['/reports', 'Accounting']" tabindex="0" *mifosxHasPermission="'READ_REPORT'">
-    {{ 'labels.menus.Accounting' | translate }}
-  </button>
-</mat-menu>
-
-<mat-menu #adminMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item [routerLink]="['/appusers']" tabindex="0" *mifosxHasPermission="'READ_USER'">
-    {{ 'labels.menus.Users' | translate }}
-  </button>
-  <button mat-menu-item [routerLink]="['/organization']" tabindex="0" *mifosxHasPermission="'READ_OFFICE'">
-    {{ 'labels.menus.Organization' | translate }}
-  </button>
-  <button mat-menu-item [routerLink]="['/system']" tabindex="0" *mifosxHasPermission="'READ_CONFIGURATION'">
-    {{ 'labels.menus.System' | translate }}
-  </button>
-  <button mat-menu-item [routerLink]="['/products']" tabindex="0" *mifosxHasPermission="'READ_PRODUCT'">
-    {{ 'labels.menus.Products' | translate }}
-  </button>
-  <button mat-menu-item routerLink="/templates" tabindex="0" *mifosxHasPermission="'READ_TEMPLATE'">
-    {{ 'labels.menus.Templates' | translate }}
-  </button>
-</mat-menu>
 
 <!-- Application User Help Menu -->
 <mat-menu #applicationMenu="matMenu" [overlapTrigger]="false">

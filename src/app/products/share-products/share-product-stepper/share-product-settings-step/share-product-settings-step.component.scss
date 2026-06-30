@@ -6,15 +6,54 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-h4 {
+form {
+  padding: 16px 0;
+}
+
+.section-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.section-label {
+  flex: 0 0 auto;
   font-weight: 500;
-  margin: 1em 0;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.flex-10 {
+  flex: 0 0 10%;
+}
+
+.flex-15 {
+  flex: 0 0 15%;
+}
+
+mat-form-field {
+  margin-bottom: 0;
+}
+
+mat-error {
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+mat-checkbox {
+  white-space: nowrap;
 }
 
 .margin-t {
   margin-top: 1em;
 }
 
-.margin-v {
-  margin: 1em 0;
+.layout-row.align-center {
+  padding-top: 16px;
+  margin-top: 12px;
+
+  button {
+    margin: 0 6px;
+  }
 }

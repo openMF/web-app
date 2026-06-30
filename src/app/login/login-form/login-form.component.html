@@ -85,7 +85,7 @@
         variant="filled"
         type="submit"
         class="login-submit-button"
-        [disabled]="loading"
+        [disabled]="loading || loginForm.invalid"
         [fullWidth]="true"
         [label]="(loading ? 'labels.buttons.Signing in...' : 'labels.buttons.Login') | translate"
       >

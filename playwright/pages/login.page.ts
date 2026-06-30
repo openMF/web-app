@@ -140,11 +140,12 @@ export class LoginPage extends BasePage {
    */
   async loginAndWaitForDashboard(username: string, password: string): Promise<void> {
     await this.login(username, password);
-    // Wait for navigation away from login page
-    await this.page.waitForURL(/.*(?<!login)$/, {
-      timeout: 30000,
-      waitUntil: 'networkidle'
+    // Wait for navigation away from login and for the authenticated shell to appear.
+    // The app may keep background requests active after login, so avoid waiting for network idle here.
+    await this.page.waitForURL((url) => !url.toString().includes('/login'), {
+      timeout: 30000
     });
+    await expect(this.page.locator('#mifosx-toolbar')).toBeVisible({ timeout: 30000 });
   }
 
   /**

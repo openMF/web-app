@@ -18,6 +18,7 @@ import { PipesModule } from '../pipes/pipes.module';
 /** Custom Components */
 import { HomeComponent } from './home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { CardMenuComponent } from './card-menu/card-menu.component';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { SessionTimeoutDialogComponent } from './timeout-dialog/session-timeout-dialog.component';
@@ -36,6 +37,7 @@ import { SessionTimeoutDialogComponent } from './timeout-dialog/session-timeout-
     TranslateModule,
     HomeComponent,
     DashboardComponent,
+    CardMenuComponent,
     SessionTimeoutDialogComponent
   ],
   providers: []

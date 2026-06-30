@@ -1,0 +1,20 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="card-menu container">
+  <div class="card-grid">
+    @for (card of cards; track card.label) {
+      <a class="management-card" [routerLink]="card.path" tabindex="0" *mifosxHasPermission="card.permission">
+        <div class="icon-circle">
+          <fa-icon [icon]="card.icon" size="2x"></fa-icon>
+        </div>
+        <span class="card-label">{{ card.label | translate }}</span>
+      </a>
+    }
+  </div>
+</div>

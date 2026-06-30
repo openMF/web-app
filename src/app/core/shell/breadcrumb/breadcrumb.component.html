@@ -14,7 +14,7 @@
       </span>
     </div>
 
-    @if (breadcrumbs.length - 1 !== 0) {
+    @if (breadcrumbs.length - 1 !== 0 && !hideTrail) {
       <ol class="breadcrumb-trail" aria-label="breadcrumb">
         @for (breadcrumb of breadcrumbs; track breadcrumb; let first = $first; let last = $last) {
           <li class="breadcrumb-item" [class.breadcrumb-item--active]="last">
