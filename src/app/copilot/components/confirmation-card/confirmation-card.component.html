@@ -5,5 +5,34 @@
   License, v. 2.0. If a copy of the MPL was not distributed with this
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
-<!-- TODO: warning stripe + summary rows + [Cancel] [Confirm] buttons. -->
-<p>confirmation-card works</p>
+<div class="card card--confirm">
+  <div class="card__head">
+    <div class="card__icon-wrap card__icon-wrap--confirmation">
+      <svg class="card__type-icon" viewBox="0 0 24 24">
+        <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" />
+      </svg>
+    </div>
+    <div class="card__head-text">
+      <span class="card__badge card__badge--confirmation">{{ 'copilot.cardType.confirmation' | translate }}</span>
+      <span class="card__title">{{ card.title }}</span>
+    </div>
+  </div>
+  <div class="card__rows">
+    <div *ngFor="let entry of objectEntries(card.data)" class="card__row">
+      <span class="card__label">{{ entry[0] }}</span>
+      <span class="card__value">{{ entry[1] }}</span>
+    </div>
+  </div>
+  <div class="card__warn-stripe">
+    <svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" /></svg>
+    <span>{{ 'copilot.confirmWarning' | translate }}</span>
+  </div>
+  <div class="card__actions">
+    <button type="button" class="card__btn card__btn--accent" (click)="cancelled.emit()">
+      {{ 'labels.buttons.Cancel' | translate }}
+    </button>
+    <button type="button" class="card__btn card__btn--warn" (click)="confirmed.emit()">
+      {{ 'labels.buttons.Confirm' | translate }}
+    </button>
+  </div>
+</div>
