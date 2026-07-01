@@ -34,6 +34,13 @@ $color: #e2e4ec;
 
 .sidenav {
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+
+  mifosx-content {
+    flex: 1;
+  }
 }
 
 @keyframes move {

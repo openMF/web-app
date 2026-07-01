@@ -28,7 +28,7 @@
   --ch-alert-bg: #ffebee;
   --ch-zero: #b0bec5;
 
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: Inter, 'Noto Sans Devanagari', sans-serif;
   display: block;
 }
 
@@ -90,8 +90,6 @@
   gap: 5px;
   font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
   color: var(--ch-text-3);
 
   svg {
@@ -143,8 +141,6 @@
     background: var(--ch-surface-h);
     font-size: 11px;
     font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
     color: var(--ch-text-2);
     border-bottom: 2px solid var(--ch-border);
     padding: 0 16px;
@@ -223,8 +219,6 @@
 .group-cell {
   font-size: 9.5px;
   font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--ch-text-3);
   user-select: none;
 }

@@ -79,7 +79,7 @@ $input-border: #e2e8f0;
 
   ::ng-deep {
     .mat-mdc-text-field-wrapper {
-      background: $input-bg !important;
+      background: transparent !important;
       border-radius: 10px !important;
       border: 1px solid $input-border !important;
       transition: border-color 0.2s ease;
@@ -302,7 +302,7 @@ $input-border: #e2e8f0;
   .login-field {
     ::ng-deep {
       .mat-mdc-text-field-wrapper {
-        background: #2a2a2a !important;
+        background: transparent !important;
         border-color: #444 !important;
       }
 

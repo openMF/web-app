@@ -6,188 +6,204 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-// Variables
-$bar: 150px;
-$foo: $bar * 8;
-$color: #e2e4ec;
+// ===== Variables =====
+$border: #e2e8f0;
+$header-bg: #f8fafc;
+$row-hover: #f1f5f9;
+$text-primary: #1e293b;
+$text-muted: #64748b;
+$brand-blue: #1074b9;
 
+// ===== Card Container — same width/centering as .breadcrumb-wrapper so left edge aligns with the vertical line =====
 .container {
+  display: block;
+  width: 90%;
+  max-width: 84rem;
+  margin: 0 auto 24px;
   padding: 24px;
+  border-radius: 8px !important;
+}
 
-  // Support for existing layout classes
-  .layout-column,
-  .layout-gt-sm-row {
+// ===== Toolbar =====
+.list-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+
+  .toolbar-left {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
-    flex-wrap: nowrap;
-    gap: 20px;
+    gap: 16px;
+    flex: 1;
+    min-width: 0;
+    flex-wrap: wrap;
 
-    &.align-gt-sm-start-center {
-      align-items: center;
-      justify-content: flex-start;
-    }
-
-    .search-box {
-      display: flex;
-      align-items: center;
-      gap: 15px;
+    .search-field {
+      min-width: 280px;
+      max-width: 420px;
       flex: 1;
-      min-width: 0;
+      margin-bottom: 0 !important;
 
-      &.m-r-30 {
-        margin-right: 30px;
+      // Remove all reserved subscript space
+      .mat-mdc-form-field-subscript-wrapper {
+        display: none !important;
+        height: 0 !important;
+        margin: 0 !important;
       }
 
-      // Handle multiple form fields in search box
-      mat-form-field {
-        min-width: 200px;
-        flex: 1;
+      // Match height with buttons (~36px inner)
+      .mat-mdc-text-field-wrapper {
+        padding-top: 0;
+        padding-bottom: 0;
 
-        &.search-box {
-          width: auto;
-        }
-
-        // Ensure form fields are inline
-        + mat-form-field {
-          margin-left: 15px;
-        }
-      }
-
-      mat-checkbox {
-        white-space: nowrap;
-        flex-shrink: 0;
-        margin-left: 15px;
-
-        &.m-r-10 {
-          margin-right: 10px;
+        .mat-mdc-form-field-infix {
+          padding-top: 9px;
+          padding-bottom: 9px;
+          min-height: unset;
         }
       }
     }
 
-    .action-button {
-      display: flex;
-      align-items: center;
+    mat-checkbox {
+      white-space: nowrap;
       flex-shrink: 0;
-      margin-left: auto;
-
-      &.gap-25px {
-        gap: 25px;
-      }
-
-      button {
-        white-space: nowrap;
-
-        fa-icon {
-          &.m-r-10,
-          &.m-r-20 {
-            margin-right: 10px;
-          }
-        }
-      }
+      color: $text-muted;
+      font-size: 0.875rem;
     }
   }
 
-  // Table styling
-  .bordered-table {
-    width: 100%;
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
-    overflow: hidden;
-    margin-top: 16px;
+  .toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
 
-    .select-row {
-      cursor: pointer;
-
-      &:hover {
-        background-color: #f5f5f5;
-      }
-    }
-
-    th,
-    td {
-      padding: 12px 16px;
-    }
-
-    th {
-      font-weight: 500;
-      border-bottom: 1px solid #e0e0e0;
-    }
-
-    tr {
-      border-bottom: 1px solid #f0f0f0;
-
-      &:last-child {
-        border-bottom: none;
-      }
-    }
-  }
-
-  // Paginator styling
-  mat-paginator {
-    border-top: 1px solid #e0e0e0;
-    margin-top: 0;
-  }
-
-  // Progress bar
-  mat-progress-bar {
-    margin: 0;
-  }
-}
-
-// Responsive design
-@media (width <= 768px) {
-  .container {
-    padding: 16px;
-
-    .layout-column,
-    .layout-gt-sm-row {
-      flex-wrap: wrap;
-
-      .search-box {
-        width: 100%;
-        margin-right: 0 !important;
-        margin-bottom: 15px;
-        flex-wrap: wrap;
-
-        mat-form-field {
-          min-width: 150px;
-          margin-bottom: 10px;
-
-          + mat-form-field {
-            margin-left: 0;
-          }
-        }
-
-        mat-checkbox {
-          margin-left: 0;
-          margin-top: 10px;
-        }
-      }
-
-      .action-button {
-        margin-left: 0;
-        width: 100%;
-        justify-content: center;
-
-        &.gap-25px {
-          gap: 15px;
-        }
-      }
+    .btn-icon {
+      margin-right: 6px;
     }
   }
 }
 
-// Table styles
-table {
+// ===== Table =====
+.members-table {
   width: 100%;
+  border: 1px solid $border;
+  border-radius: 8px;
+  overflow: hidden;
 
-  tr.select-row:hover {
+  // Header row
+  .mat-mdc-header-row {
+    background: $brand-blue;
+    border-bottom: none;
+  }
+
+  th.mat-mdc-header-cell {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #fff;
+    padding: 14px 16px;
+    white-space: nowrap;
+    border-bottom: none;
+  }
+
+  td.mat-mdc-cell {
+    padding: 14px 16px;
+    font-size: 0.875rem;
+    color: $text-primary;
+    border-bottom: 1px solid $border;
+  }
+
+  // Alternating row colors
+  .mat-mdc-row:nth-child(even) {
+    background: #fafafa;
+  }
+
+  .mat-mdc-row:last-child td {
+    border-bottom: none;
+  }
+
+  .select-row {
     cursor: pointer;
+    transition: background 0.15s ease;
+
+    &:hover {
+      background: $row-hover !important;
+    }
+  }
+
+  // S.No. column — narrow, muted
+  .sno-col {
+    width: 56px;
+    min-width: 56px;
+    color: $text-muted;
+    font-size: 0.8rem;
+    text-align: center;
+  }
+
+  // Clickable name cell
+  .name-cell {
+    font-weight: 500;
+    color: $brand-blue;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 
-// Utility classes
+// ===== Status Badge =====
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+
+  fa-icon {
+    font-size: 0.5rem;
+  }
+}
+
+// ===== Paginator =====
+mat-paginator {
+  border-top: 1px solid $border;
+  font-size: 0.8rem;
+  color: $text-muted;
+}
+
+// ===== Progress Bar =====
+mat-progress-bar {
+  margin-bottom: 0;
+}
+
+// ===== Empty State =====
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  color: $text-muted;
+  gap: 12px;
+
+  .empty-icon {
+    opacity: 0.35;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+}
+
+// ===== Legacy class support =====
 .m-r-10 {
   margin-right: 10px !important;
 }
@@ -198,4 +214,38 @@ table {
 
 .m-r-30 {
   margin-right: 30px !important;
+}
+
+table {
+  width: 100%;
+
+  tr.select-row:hover {
+    cursor: pointer;
+  }
+}
+
+// ===== Responsive =====
+@media (width <= 768px) {
+  .container {
+    padding: 16px;
+  }
+
+  .list-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+
+    .toolbar-left {
+      flex-direction: column;
+      align-items: stretch;
+
+      .search-field {
+        max-width: 100%;
+        min-width: unset;
+      }
+    }
+
+    .toolbar-right {
+      justify-content: flex-end;
+    }
+  }
 }

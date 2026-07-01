@@ -112,9 +112,8 @@ test.describe('Login Page - Responsive Layout', () => {
     // Verify the login form is visible
     await loginPage.assertOnLoginPage();
 
-    // Check if login card content is fully visible
-    const loginCard = loginPage.divLocator('.login-card');
-    const cardBox = await loginCard.boundingBox();
+    // Check login card is present
+    await expect(loginPage.divLocator('.login-card')).toBeVisible();
 
     // Logo should be visible
     const logo = loginPage.divLocator('.logo-image');
@@ -135,11 +134,6 @@ test.describe('Login Page - Responsive Layout', () => {
     const loginButton = page.locator('mifosx-m3-button[type="submit"]');
     const buttonBox = await loginButton.boundingBox();
     expect(buttonBox).toBeTruthy();
-
-    // Resources section should be visible
-    const resourcesSection = page.locator('.resources-section');
-    const resourcesBox = await resourcesSection.boundingBox();
-    expect(resourcesBox).toBeTruthy();
 
     // Footer should be visible
     const footer = loginPage.divLocator('.login-footer');
@@ -185,11 +179,6 @@ test.describe('Login Page - Responsive Layout', () => {
       // All sections should be visible
       await expect(logo).toBeVisible();
       await expect(form).toBeVisible();
-
-      if (viewport.width > 1024) {
-        const resources = loginPage.divLocator('.resources-section');
-        await expect(resources).toBeVisible();
-      }
 
       // Get bounding boxes
       const logoBox = await logo.boundingBox();

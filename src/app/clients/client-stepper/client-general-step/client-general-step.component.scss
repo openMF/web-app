@@ -6,6 +6,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+.contents-wrapper {
+  display: contents;
+}
+
 form {
   padding: 16px 0;
 
@@ -27,7 +31,19 @@ form {
 }
 
 mat-form-field {
-  margin-bottom: 8px;
+  margin-bottom: 2px;
+
+  .mdc-floating-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &.mat-mdc-form-field-has-icon-suffix {
+    .mdc-floating-label:not(.mdc-floating-label--float-above) {
+      max-width: calc(100% - 40px);
+    }
+  }
 }
 
 mat-error {
@@ -36,7 +52,7 @@ mat-error {
 }
 
 mat-divider {
-  margin: 16px 0;
+  margin: 2px 0;
 }
 
 .margin-v {

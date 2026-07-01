@@ -23,7 +23,7 @@
 @include mat.all-component-typographies();
 
 $mifosx-typography-level: mat.m2-define-typography-level(
-  $font-family: Roboto,
+  $font-family: Inter,
   $font-weight: 400,
   $font-size: 14px,
   $line-height: 1.5,
@@ -42,6 +42,7 @@ $mifosx-color-config: (
 );
 
 $mifosx-typography: mat.m2-define-typography-config(
+  $font-family: Inter,
   $body-1: $mifosx-typography-level,
   $body-2: $mifosx-typography-level,
   $headline-1: $mifosx-typography-level,
