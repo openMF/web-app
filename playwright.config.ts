@@ -164,9 +164,14 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         storageState: ROLES.default.storageStateFile,
-        // Launch options for handling SSL in headed mode
+        // Launch options for handling SSL in headed mode.
+        // slowMo adds a delay (ms) between every action so the UI is
+        // visible when running with --ui or --headed locally.
+        // Override via:  E2E_SLOW_MO=2000 npx playwright test --ui ...
+        // Set to 0 in CI automatically.
         launchOptions: {
-          args: ['--ignore-certificate-errors']
+          args: ['--ignore-certificate-errors'],
+          slowMo: process.env.CI ? 0 : Number(process.env.E2E_SLOW_MO ?? 500)
         }
       },
       dependencies: ['setup']

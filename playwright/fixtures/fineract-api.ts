@@ -581,6 +581,37 @@ export class FineractApiClient {
   }
 
   /**
+   * Deletes a client by id. Only works for clients in Pending state
+   * (Fineract rejects deletion of active/closed clients).
+   * @param clientId - The client id to delete
+   */
+  async deleteClient(clientId: number): Promise<void> {
+    const res = await this.ctx.delete(`/fineract-provider/api/v1/clients/${clientId}`);
+    await this.validateResponse(res, 'deleteClient');
+  }
+
+  /**
+   * Returns all family members for a client.
+   * @param clientId - The client id
+   */
+  async getClientFamilyMembers(clientId: number): Promise<any[]> {
+    const res = await this.ctx.get(`/fineract-provider/api/v1/clients/${clientId}/familymembers`);
+    const body = await this.validateResponse(res, 'getClientFamilyMembers');
+    return Array.isArray(body) ? body : (body?.clients ?? []);
+  }
+
+  /**
+   * Deletes a single family member record for a client.
+   * Must be called before deleteClient to avoid a 403 FK violation.
+   * @param clientId - The owning client id
+   * @param memberId - The family member id to delete
+   */
+  async deleteClientFamilyMember(clientId: number, memberId: number): Promise<void> {
+    const res = await this.ctx.delete(`/fineract-provider/api/v1/clients/${clientId}/familymembers/${memberId}`);
+    await this.validateResponse(res, 'deleteClientFamilyMember');
+  }
+
+  /**
    * Disposes the underlying Playwright request context.
    */
   async dispose(): Promise<void> {
