@@ -3,6 +3,8 @@ name: Publish Image in Docker Hub
 on:
   push:
     branches: [main, dev]
+    tags:
+      - 'v*'
 
 jobs:
   build:
@@ -12,6 +14,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v4
@@ -41,12 +45,23 @@ jobs:
 
       - name: Build and Push Multi-Arch Docker Image
         run: |
-          TAGS="--tag $DOCKER_ORGANIZATION/web-app:${{ steps.extract_branch.outputs.branch }}"
-
-          if [ "${{ steps.extract_branch.outputs.branch }}" == "main" ]; then
-            TAGS="$TAGS --tag $DOCKER_ORGANIZATION/web-app:${{ steps.git_hashes.outputs.short_hash }} --tag $DOCKER_ORGANIZATION/web-app:${{ steps.git_hashes.outputs.long_hash }}"
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            if ! git merge-base --is-ancestor "$GITHUB_SHA" origin/main; then
+              echo "Tag is not on main, skipping."
+              exit 0
+            fi
+            TAGS="--tag $DOCKER_ORGANIZATION/web-app:${GITHUB_REF#refs/tags/}"
           else
-            TAGS="$TAGS --tag $DOCKER_ORGANIZATION/web-app:${{ steps.extract_branch.outputs.branch }}-${{ steps.git_hashes.outputs.short_hash }}"
+            TAGS="--tag $DOCKER_ORGANIZATION/web-app:${{ steps.extract_branch.outputs.branch }}"
+
+            if [ "${{ steps.extract_branch.outputs.branch }}" == "main" ]; then
+              TAGS="$TAGS --tag $DOCKER_ORGANIZATION/web-app:${{ steps.git_hashes.outputs.short_hash }} --tag $DOCKER_ORGANIZATION/web-app:${{ steps.git_hashes.outputs.long_hash }}"
+              for tag in $(git tag --points-at HEAD); do
+                TAGS="$TAGS --tag $DOCKER_ORGANIZATION/web-app:$tag"
+              done
+            else
+              TAGS="$TAGS --tag $DOCKER_ORGANIZATION/web-app:${{ steps.extract_branch.outputs.branch }}-${{ steps.git_hashes.outputs.short_hash }}"
+            fi
           fi
 
           docker build --push --build-arg="PUPPETEER_SKIP_DOWNLOAD_ARG=true" --platform linux/amd64,linux/arm64 $TAGS .
