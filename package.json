@@ -8,7 +8,7 @@
     "fineract",
     "angular"
   ],
-  "homepage": "https://github.com/openMF/web-app",
+  "homepage": "https://github.com/one-acre-fund/fineract-frontend-v2",
   "license": "MPL-2.0",
   "scripts": {
     "ng": "ng",
