@@ -7,6 +7,7 @@
     * Clients & Groups
         * [HQX-117] - Add standardized configurable kyc failure reasons
         * [HQX-120] - Display client status transitions
+        * [HQX-322] - Show client account number against the loan account on group general view
     * Loans & Payments
         * [HQX-276] - Display client deleted loans for visibility
         * [HQX-120] - Display client status transitions

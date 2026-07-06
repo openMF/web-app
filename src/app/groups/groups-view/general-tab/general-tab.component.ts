@@ -36,6 +36,7 @@ export class GeneralTabComponent implements OnInit {
   openLoansColumns: string[] = [
     "Account No",
     "Loan Account",
+    "Client",
     "Original Loan",
     "Loan Balance",
     "Amount Paid",

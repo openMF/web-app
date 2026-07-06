@@ -103,6 +103,11 @@
         <td mat-cell *matCellDef="let element">{{ element.productName }}</td>
       </ng-container>
 
+      <ng-container matColumnDef="Client">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Client' | translate }}.</th>
+        <td mat-cell *matCellDef="let element">{{ element.clientAccountNo }}</td>
+      </ng-container>
+
       <ng-container matColumnDef="Original Loan">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Original Loan' | translate }}</th>
         <td mat-cell *matCellDef="let element">{{ element.originalLoan }}</td>
