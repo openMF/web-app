@@ -489,6 +489,15 @@
         </svg>
         {{ 'labels.inputs.Notes' | translate }}
       </a>
+      <a
+        mat-tab-link
+        [routerLink]="['./bureau-readiness']"
+        routerLinkActive
+        #bureauReadiness="routerLinkActive"
+        [active]="bureauReadiness.isActive"
+      >
+        {{ 'labels.inputs.Bureau Readiness' | translate }}
+      </a>
       @for (clientDatatable of clientDatatables; track clientDatatable) {
         <a
           mat-tab-link

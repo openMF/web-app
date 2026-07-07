@@ -144,6 +144,8 @@ export const environment = {
   productionModeEnableRBAC:
     loadedEnv['productionModeEnableRBAC'] === 'true' || loadedEnv['productionModeEnableRBAC'] === true || false,
 
+  /** CB-ILD Credit Bureau plugin base URL */
+  pluginBaseUrl: loadedEnv['pluginBaseUrl'] || 'https://cbild.mifos.community',
   OIDC: {
     // Support legacy FINERACT_PLUGIN_OIDC_* variable names for backward compatibility
     oidcServerEnabled:
