@@ -46,7 +46,11 @@
 
         <div fxFlexFill>
           <span fxFlex="40%">Account #:</span>
-          <span fxFlex="60%">{{ viewAccountTransferData.fromAccount.accountNo }}</span>
+          <span fxFlex="60%">
+            <a (click)="navigationURLToAccountFromOnViewTransferData()" class="account-link">
+              {{ viewAccountTransferData.fromAccount.accountNo }}
+            </a>
+          </span>
         </div>
 
         <h3 class="mat-h3" fxFlexFill>Transferred To</h3>
@@ -70,7 +74,11 @@
 
         <div fxFlexFill>
           <span fxFlex="40%">Account #:</span>
-          <span fxFlex="60%">{{ viewAccountTransferData.toAccount.accountNo }}</span>
+          <span fxFlex="60%">
+            <a (click)="navigationURLToAccountToOnViewTransferData()" class="account-link">
+              {{ viewAccountTransferData.toAccount.accountNo }}
+            </a>
+          </span>
         </div>
 
       </div>

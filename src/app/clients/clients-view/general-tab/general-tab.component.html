@@ -105,7 +105,7 @@
     </div>
     <div fxLayout="column" fxFlex="50%">
       <div fxLayout="row" fxLayoutAlign="flex-end">
-        <div *ngIf="(loanAccounts | accountsFilter : 'loan' : 'closed')?.length || (loanAccounts | accountsFilter : 'loan' : 'deleted')?.length" class="action-button m-b-10">
+        <div class="action-button m-b-10">
           <mat-button-toggle-group [(ngModel)]="loanAccountsView" (change)="onLoanAccountsViewChange($event)" class="mat-primary">
             <mat-button-toggle value="active">{{ 'labels.status.Active' | translate }}</mat-button-toggle>
             <mat-button-toggle value="closed">{{ 'labels.status.Closed' | translate }}</mat-button-toggle>
