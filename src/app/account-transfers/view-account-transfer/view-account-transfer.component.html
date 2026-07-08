@@ -47,7 +47,7 @@
         <div fxFlexFill>
           <span fxFlex="40%">Account #:</span>
           <span fxFlex="60%">
-            <a (click)="navigationURLToAccountFromOnViewTransferData()" class="account-link">
+            <a [routerLink]="fromAccountUrl" class="account-link">
               {{ viewAccountTransferData.fromAccount.accountNo }}
             </a>
           </span>
@@ -75,7 +75,7 @@
         <div fxFlexFill>
           <span fxFlex="40%">Account #:</span>
           <span fxFlex="60%">
-            <a (click)="navigationURLToAccountToOnViewTransferData()" class="account-link">
+            <a [routerLink]="toAccountUrl" class="account-link">
               {{ viewAccountTransferData.toAccount.accountNo }}
             </a>
           </span>

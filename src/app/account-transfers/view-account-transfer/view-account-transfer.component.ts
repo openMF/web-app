@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -12,17 +12,23 @@ import { takeUntil } from 'rxjs/operators';
 export class ViewAccountTransferComponent implements OnDestroy {
 
   viewAccountTransferData: any;
+  fromAccountUrl: string | null = null;
+  toAccountUrl: string | null = null;
   private readonly destroy$ = new Subject<void>();
+
   /**
    * Retrieves the view account transfer data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute) {
     this.route.data
-    .pipe(takeUntil(this.destroy$))
-    .subscribe((data: { viewAccountTransferData: any }) => {
-      this.viewAccountTransferData = data.viewAccountTransferData;
-    });
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: { viewAccountTransferData: any }) => {
+        this.viewAccountTransferData = data.viewAccountTransferData;
+        const { fromAccountType, fromClient, fromAccount, toAccountType, toClient, toAccount } = data.viewAccountTransferData;
+        this.fromAccountUrl = this.getAccountUrl(fromAccountType.code, fromClient.id, fromAccount.id);
+        this.toAccountUrl = this.getAccountUrl(toAccountType.code, toClient.id, toAccount.id);
+      });
   }
 
   ngOnDestroy(): void {
@@ -30,7 +36,7 @@ export class ViewAccountTransferComponent implements OnDestroy {
     this.destroy$.complete();
   }
 
-    private getAccountUrl(accountTypeCode: string, clientId: string, accountId: string): string | null {
+  private getAccountUrl(accountTypeCode: string, clientId: string, accountId: string): string | null {
     const base = `/clients/${clientId}`;
     if (accountTypeCode === 'accountType.loan') {
       return `${base}/loans-accounts/${accountId}/general`;
@@ -39,29 +45,6 @@ export class ViewAccountTransferComponent implements OnDestroy {
       return `${base}/savings-accounts/${accountId}/transactions`;
     }
     return null;
-  }
-
-  private navigateToAccount(accountTypeCode: string, clientId: string, accountId: string): void {
-    const url = this.getAccountUrl(accountTypeCode, clientId, accountId);
-    if (url) {
-      this.router.navigateByUrl(url);
-    } else {
-      console.warn(`Unsupported account type: ${accountTypeCode}`);
-    }
-  }
-
-  navigationURLToAccountFromOnViewTransferData(): void {
-    const { fromAccountType, fromClient, fromAccount } = this.viewAccountTransferData ?? {};
-    if (fromAccountType && fromClient && fromAccount) {
-      this.navigateToAccount(fromAccountType.code, fromClient.id, fromAccount.id);
-    }
-  }
-
-  navigationURLToAccountToOnViewTransferData(): void {
-    const { toAccountType, toClient, toAccount } = this.viewAccountTransferData ?? {};
-    if (toAccountType && toClient && toAccount) {
-      this.navigateToAccount(toAccountType.code, toClient.id, toAccount.id);
-    }
   }
 
 }
