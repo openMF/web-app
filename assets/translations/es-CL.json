@@ -4137,7 +4137,17 @@
       "withoutCategory": "Sin categoría",
       "Maker-Checker principle requires every tasks": "El principio Maker-Checker requiere que dos personas completen cada tarea para reducir la posibilidad de errores y uso indebido. Una persona inicia el proceso y la segunda lo completa.",
       "Breach Actions": "Acciones de Incumplimiento",
-      "“Maker-Checker” principle requires every tasks": "El principio \"Maker-Checker\" requiere que dos personas completen cada tarea para reducir la posibilidad de errores y uso indebido. Una persona inicia el proceso y la segunda lo completa."
+      "“Maker-Checker” principle requires every tasks": "El principio \"Maker-Checker\" requiere que dos personas completen cada tarea para reducir la posibilidad de errores y uso indebido. Una persona inicia el proceso y la segunda lo completa.",
+      "SavingsAccountsStayedLockedBusinessEvent": "Savings Accounts Stayed Locked Business Event",
+      "WorkingCapitalLoanDisbursalTransactionBusinessEvent": "Working Capital Loan Disbursal Transaction Business Event",
+      "WorkingCapitalLoanUndoDisbursalTransactionBusinessEvent": "Working Capital Loan Undo Disbursal Transaction Business Event",
+      "WorkingCapitalLoanRepaymentTransactionBusinessEvent": "Working Capital Loan Repayment Transaction Business Event",
+      "WorkingCapitalLoanCreditBalanceRefundTransactionBusinessEvent": "Working Capital Loan Credit Balance Refund Transaction Business Event",
+      "WorkingCapitalLoanDiscountFeeTransactionBusinessEvent": "Working Capital Loan Discount Fee Transaction Business Event",
+      "WorkingCapitalLoanDiscountFeeAdjustmentTransactionBusinessEvent": "Working Capital Loan Discount Fee Adjustment Transaction Business Event",
+      "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
+      "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
+      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event"
     },
     "permissions": {
       "actions": {

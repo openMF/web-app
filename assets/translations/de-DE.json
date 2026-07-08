@@ -4137,7 +4137,17 @@
       "withoutCategory": "Ohne Kategorie",
       "Maker-Checker principle requires every tasks": "Das Maker-Checker-Prinzip erfordert, dass jede Aufgabe von zwei Personen erledigt wird, um das Risiko von Fehlern und Missbrauch zu verringern. Eine Person leitet den Prozess ein und die zweite Person schließt ihn ab.",
       "Breach Actions": "Verstoß-Aktionen",
-      "“Maker-Checker” principle requires every tasks": "Das „Maker-Checker“-Prinzip erfordert, dass jede Aufgabe von zwei Personen erledigt wird, um das Risiko von Fehlern und Missbrauch zu verringern. Eine Person leitet den Prozess ein und die zweite Person schließt ihn ab."
+      "“Maker-Checker” principle requires every tasks": "Das „Maker-Checker“-Prinzip erfordert, dass jede Aufgabe von zwei Personen erledigt wird, um das Risiko von Fehlern und Missbrauch zu verringern. Eine Person leitet den Prozess ein und die zweite Person schließt ihn ab.",
+      "SavingsAccountsStayedLockedBusinessEvent": "Savings Accounts Stayed Locked Business Event",
+      "WorkingCapitalLoanDisbursalTransactionBusinessEvent": "Working Capital Loan Disbursal Transaction Business Event",
+      "WorkingCapitalLoanUndoDisbursalTransactionBusinessEvent": "Working Capital Loan Undo Disbursal Transaction Business Event",
+      "WorkingCapitalLoanRepaymentTransactionBusinessEvent": "Working Capital Loan Repayment Transaction Business Event",
+      "WorkingCapitalLoanCreditBalanceRefundTransactionBusinessEvent": "Working Capital Loan Credit Balance Refund Transaction Business Event",
+      "WorkingCapitalLoanDiscountFeeTransactionBusinessEvent": "Working Capital Loan Discount Fee Transaction Business Event",
+      "WorkingCapitalLoanDiscountFeeAdjustmentTransactionBusinessEvent": "Working Capital Loan Discount Fee Adjustment Transaction Business Event",
+      "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
+      "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
+      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event"
     },
     "permissions": {
       "actions": {

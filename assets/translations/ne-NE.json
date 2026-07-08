@@ -4135,7 +4135,17 @@
       "withoutCategory": "बिना श्रेणी",
       "Maker-Checker principle requires every tasks": "सिद्धान्तले त्रुटि र दुरुपयोगको सम्भावना कम गर्न प्रत्येक कार्यहरू दुई व्यक्तिद्वारा पूरा गर्न आवश्यक छ। एक व्यक्तिले प्रक्रिया सुरु गर्छ र दोस्रोले यसलाई पूरा गर्दछ।",
       "Breach Actions": "उल्लङ्घन कार्यहरू",
-      "“Maker-Checker” principle requires every tasks": "\"मेकर-चेकर\" सिद्धान्तले त्रुटि र दुरुपयोगको सम्भावना कम गर्न प्रत्येक कार्यहरू दुई व्यक्तिद्वारा पूरा गर्न आवश्यक छ। एक व्यक्तिले प्रक्रिया सुरु गर्छ र दोस्रोले यसलाई पूरा गर्दछ।"
+      "“Maker-Checker” principle requires every tasks": "\"मेकर-चेकर\" सिद्धान्तले त्रुटि र दुरुपयोगको सम्भावना कम गर्न प्रत्येक कार्यहरू दुई व्यक्तिद्वारा पूरा गर्न आवश्यक छ। एक व्यक्तिले प्रक्रिया सुरु गर्छ र दोस्रोले यसलाई पूरा गर्दछ।",
+      "SavingsAccountsStayedLockedBusinessEvent": "Savings Accounts Stayed Locked Business Event",
+      "WorkingCapitalLoanDisbursalTransactionBusinessEvent": "Working Capital Loan Disbursal Transaction Business Event",
+      "WorkingCapitalLoanUndoDisbursalTransactionBusinessEvent": "Working Capital Loan Undo Disbursal Transaction Business Event",
+      "WorkingCapitalLoanRepaymentTransactionBusinessEvent": "Working Capital Loan Repayment Transaction Business Event",
+      "WorkingCapitalLoanCreditBalanceRefundTransactionBusinessEvent": "Working Capital Loan Credit Balance Refund Transaction Business Event",
+      "WorkingCapitalLoanDiscountFeeTransactionBusinessEvent": "Working Capital Loan Discount Fee Transaction Business Event",
+      "WorkingCapitalLoanDiscountFeeAdjustmentTransactionBusinessEvent": "Working Capital Loan Discount Fee Adjustment Transaction Business Event",
+      "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
+      "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
+      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event"
     },
     "permissions": {
       "actions": {

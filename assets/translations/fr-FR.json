@@ -4138,7 +4138,17 @@
       "withoutCategory": "Sans catégorie",
       "Maker-Checker principle requires every tasks": "Le principe Maker-Checker exige que chaque tâche soit effectuée par deux personnes afin de réduire les risques d'erreurs et de mauvaise utilisation. Une personne lance le processus et la seconde le termine.",
       "Breach Actions": "Actions de Manquement",
-      "“Maker-Checker” principle requires every tasks": "Le principe « Maker-Checker » exige que chaque tâche soit effectuée par deux personnes afin de réduire les risques d'erreurs et de mauvaise utilisation. Une personne lance le processus et la seconde le termine."
+      "“Maker-Checker” principle requires every tasks": "Le principe « Maker-Checker » exige que chaque tâche soit effectuée par deux personnes afin de réduire les risques d'erreurs et de mauvaise utilisation. Une personne lance le processus et la seconde le termine.",
+      "SavingsAccountsStayedLockedBusinessEvent": "Savings Accounts Stayed Locked Business Event",
+      "WorkingCapitalLoanDisbursalTransactionBusinessEvent": "Working Capital Loan Disbursal Transaction Business Event",
+      "WorkingCapitalLoanUndoDisbursalTransactionBusinessEvent": "Working Capital Loan Undo Disbursal Transaction Business Event",
+      "WorkingCapitalLoanRepaymentTransactionBusinessEvent": "Working Capital Loan Repayment Transaction Business Event",
+      "WorkingCapitalLoanCreditBalanceRefundTransactionBusinessEvent": "Working Capital Loan Credit Balance Refund Transaction Business Event",
+      "WorkingCapitalLoanDiscountFeeTransactionBusinessEvent": "Working Capital Loan Discount Fee Transaction Business Event",
+      "WorkingCapitalLoanDiscountFeeAdjustmentTransactionBusinessEvent": "Working Capital Loan Discount Fee Adjustment Transaction Business Event",
+      "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
+      "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
+      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event"
     },
     "permissions": {
       "actions": {
