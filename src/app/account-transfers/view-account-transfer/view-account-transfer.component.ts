@@ -36,7 +36,7 @@ export class ViewAccountTransferComponent implements OnDestroy {
     this.destroy$.complete();
   }
 
-  private getAccountUrl(accountTypeCode: string, clientId: string, accountId: string): string | null {
+  private getAccountUrl(accountTypeCode: string, clientId: string | number, accountId: string | number): string | null {
     const base = `/clients/${clientId}`;
     if (accountTypeCode === 'accountType.loan') {
       return `${base}/loans-accounts/${accountId}/general`;
