@@ -571,7 +571,7 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
         return 'loanStatusType.activeOverdue';
       }
     } else if (this.loanProductService.isWorkingCapital) {
-      if (this.loanDetailsData.collectionData?.delinquentDays > 0) {
+      if (this.loanDetailsData.delinquent?.delinquentDays > 0) {
         return 'loanStatusType.activeOverdue';
       }
     }
@@ -586,7 +586,7 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
       return 'Chargeoff';
     }
     if (this.loanProductService.isWorkingCapital) {
-      if (this.loanDetailsData.collectionData?.delinquentDays > 0) {
+      if (this.loanDetailsData.delinquent?.delinquentDays > 0) {
         return 'activeOverdue';
       }
     } else {
@@ -634,6 +634,6 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
     if (!this.loanProductService.isWorkingCapital || !this.loanDetailsData) {
       return false;
     }
-    return !this.loanDetailsData?.discount && this.loanDetailsData?.status?.active === true;
+    return !this.loanDetailsData?.discountFee && this.loanDetailsData?.status?.active === true;
   }
 }

@@ -6,62 +6,39 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<div class="tab-container mat-typography">
-  @if (summary) {
-    <div>
-      <h3>{{ 'labels.heading.Loan Summary' | translate }}</h3>
-      <table mat-table [dataSource]="dataSource">
-        <ng-container matColumnDef="Empty">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let ele">{{ 'labels.inputs.' + ele.property | translate }}</td>
-        </ng-container>
-        <ng-container matColumnDef="Original">
-          <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Original' | translate }}</th>
-          <td mat-cell class="r-amount" *matCellDef="let ele">
-            {{ ele.original | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="Paid">
-          <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Paid' | translate }}</th>
-          <td mat-cell class="r-amount amount-minus" *matCellDef="let ele">
-            {{ ele.paid | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="Adjustments">
-          <th mat-header-cell class="r-amount" *matHeaderCellDef>
-            {{ 'labels.inputs.Credit Adjustments' | translate }}
-          </th>
-          <td mat-cell class="r-amount amount-plus" *matCellDef="let ele">
-            {{ ele.adjustment | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="Waived">
-          <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Waived' | translate }}</th>
-          <td mat-cell class="r-amount amount-minus" *matCellDef="let ele">
-            {{ ele.waived | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="Written Off">
-          <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Written Off' | translate }}</th>
-          <td mat-cell class="r-amount amount-minus" *matCellDef="let ele">
-            {{ ele.writtenOff | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="Outstanding">
-          <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Outstanding' | translate }}</th>
-          <td mat-cell class="r-amount" *matCellDef="let ele">
-            {{ ele.outstanding | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="Over Due">
-          <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Over Due' | translate }}</th>
-          <td mat-cell class="r-amount" *matCellDef="let ele">
-            {{ ele.overdue | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
-          </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="loanSummaryColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: loanSummaryColumns"></tr>
-      </table>
-    </div>
-  }
-</div>
+@if (summary) {
+  <div class="section-head">
+    <h3 class="section-title">{{ 'labels.heading.Loan Summary' | translate }}</h3>
+    @if (currency) {
+      <span class="section-hint">{{ currency.name }} · {{ currency.code }}</span>
+    }
+  </div>
+  <div class="matrix-wrap">
+    <table class="matrix" [attr.aria-label]="'labels.heading.Loan Summary' | translate">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          @for (col of columns; track col.key) {
+            <th scope="col">{{ 'labels.inputs.' + col.label | translate }}</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of rows; track row.property) {
+          <tr [class.total]="row.isTotal">
+            <td class="rowlabel">{{ 'labels.inputs.' + row.property | translate }}</td>
+            @for (col of columns; track col.key) {
+              <td
+                [class.zero]="!row[col.key]"
+                [class.paid]="col.key === 'paid' && row[col.key] > 0"
+                [class.due]="col.key === 'overdue' && row[col.key] > 0"
+              >
+                {{ row[col.key] | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
+              </td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

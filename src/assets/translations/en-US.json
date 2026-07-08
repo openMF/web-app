@@ -1128,6 +1128,8 @@
     },
     "heading": {
       "Breach Actions": "Breach Actions",
+      "Delinquency & Breach": "Delinquency & Breach",
+      "Interest": "Interest",
       "Near Breach Actions": "Near Breach Actions",
       "About Us": "About Us",
       "Account Information": "Account Information",
@@ -2018,6 +2020,7 @@
       "Discount External Id must differ from External Id": "Discount External Id must differ from External Id",
       "Discount Factor": "Discount Factor",
       "Discount Fee": "Discount Fee",
+      "Discount Fee Adjustment": "Discount Fee Adjustment",
       "Discount Fee Balance": "Discount Fee Balance",
       "Discount must be greater than or equal to 0": "Discount must be greater than or equal to 0",
       "Display Name": "Display Name",
@@ -2501,6 +2504,7 @@
       "Multiple Debit Entries Allowed": "Multiple Debit Entries Allowed",
       "Municipality": "Municipality",
       "N/A": "N/A",
+      "Net Disbursal Amount": "Net Disbursal Amount",
       "New": "New",
       "NID": "NID",
       "Name": "Name",
@@ -3376,6 +3380,7 @@
       "the Transaction Type": "the Transaction Type"
     },
     "text": {
+      "Max": "Max",
       "No Breach Actions": "No Breach Actions",
       "No Near Breach Actions": "No Near Breach Actions",
       "A": "A",

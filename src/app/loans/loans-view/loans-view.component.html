@@ -61,14 +61,8 @@
                   <tr>
                     <td>{{ 'labels.text.' + entityType | translate }} {{ 'labels.inputs.name' | translate }}:</td>
                     <td>
-                      @if (loanProductService.isLoanProduct) {
-                        {{ loanDetailsData.clientName || loanDetailsData.group?.name }}
-                        ({{ loanDetailsData.clientAccountNo || loanDetailsData.group?.accountNo }})
-                      }
-                      @if (loanProductService.isWorkingCapital) {
-                        {{ loanDetailsData.client.displayName || loanDetailsData.group?.name }}
-                        ({{ loanDetailsData.client.accountNo || loanDetailsData.group?.accountNo }})
-                      }
+                      {{ loanDetailsData.clientName || loanDetailsData.group?.name }}
+                      ({{ loanDetailsData.clientAccountNo || loanDetailsData.group?.accountNo }})
                     </td>
                   </tr>
                   @if (loanDetailsData.officeName) {
@@ -126,8 +120,8 @@
             }
             @if (
               loanProductService.isWorkingCapital &&
-              loanDetailsData?.collectionData &&
-              loanDetailsData.collectionData.delinquentDays > 0
+              loanDetailsData?.delinquent &&
+              (loanDetailsData.delinquent.pastDueDays > 0 || loanDetailsData.delinquent.delinquentDays > 0)
             ) {
               <div>
                 <table class="account-overview">
@@ -139,10 +133,18 @@
                         {{ loanDetailsData?.delinquencyBucket?.name }}
                       </td>
                     </tr>
-                    <tr>
-                      <td>{{ 'labels.inputs.Delinquent Days' | translate }} :</td>
-                      <td>{{ loanDetailsData?.collectionData.delinquentDays | formatNumber }}</td>
-                    </tr>
+                    @if (loanDetailsData.delinquent.pastDueDays > 0) {
+                      <tr>
+                        <td>{{ 'labels.inputs.Past Due Days' | translate }} :</td>
+                        <td>{{ loanDetailsData?.delinquent.pastDueDays | formatNumber }}</td>
+                      </tr>
+                    }
+                    @if (loanDetailsData.delinquent.delinquentDays > 0) {
+                      <tr>
+                        <td>{{ 'labels.inputs.Delinquent Days' | translate }} :</td>
+                        <td>{{ loanDetailsData?.delinquent.delinquentDays | formatNumber }}</td>
+                      </tr>
+                    }
                   </tbody>
                 </table>
               </div>

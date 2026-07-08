@@ -6,446 +6,427 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<div class="container p-b-20">
-  <h3>{{ 'labels.heading.Loan Details' | translate }}</h3>
-
-  <div class="responsive-column">
-    @if (loanDetails.transactionProcessingStrategyName) {
-      <div class="flex-fill layout-row">
-        <span class="flex-50">{{ 'labels.inputs.Repayment Strategy' | translate }}</span>
-        <span class="flex-50">{{ loanDetails.transactionProcessingStrategyName | translateKey: 'catalogs' }}</span>
-      </div>
-    }
-    <div class="flex-fill layout-row">
-      <span class="flex-50">{{ 'labels.inputs.Currency' | translate }}</span>
-      <span class="flex-50">{{ loanDetails.currency?.code }}</span>
-    </div>
-
-    @if (loanProductService.isWorkingCapital) {
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Amortization Type' | translate }} </span>
-        <span class="flex-50"> {{ loanDetails.product.amortizationType?.value | translateKey: 'catalogs' }} </span>
-      </div>
-
-      <div class="flex-fill layout-row">
-        <span class="flex-50">{{ 'labels.inputs.Period Payment Frequency' | translate }}</span>
-        <span class="flex-50">
-          {{ loanDetails.repaymentEvery }}
-          {{ camalize(loanDetails.repaymentFrequencyType.value) | translateKey: 'catalogs' }}
-        </span>
-      </div>
-
-      @if (loanDetails.periodPaymentRate) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Period Payment Rate' | translate }} </span>
-          <span class="flex-50">{{ loanDetails.periodPaymentRate | formatNumber }} %</span>
-        </div>
-      }
-
-      @if (loanDetails.discountProposed) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50">{{ 'labels.inputs.Proposed Discount' | translate }}:</span>
-          <span class="flex-50">{{ loanDetails.discountProposed | formatNumber }}</span>
-        </div>
-      }
-      @if (loanDetails.discountApproved) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50">{{ 'labels.inputs.Approved Discount' | translate }}:</span>
-          <span class="flex-50">{{ loanDetails.discountApproved | formatNumber }}</span>
-        </div>
-      }
-      @if (loanDetails.discount) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50">{{ 'labels.inputs.Discount' | translate }}:</span>
-          <span class="flex-50">{{ loanDetails.discount | formatNumber }}</span>
-        </div>
-      }
-
-      @if (loanDetails.breachGraceDays !== null) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Breach Grace Days' | translate }} </span>
-          <span class="flex-50">{{ loanDetails.breachGraceDays | formatNumber }}</span>
-        </div>
-      }
-
-      @if (loanDetails.delinquencyGraceDays !== null) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Delinquency Grace Days' | translate }} </span>
-          <span class="flex-50">{{ loanDetails.delinquencyGraceDays | formatNumber }}</span>
-        </div>
-      }
-
-      @if (loanDetails.delinquencyStartType) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Delinquency Start Type' | translate }} </span>
-          <span class="flex-50">{{ loanDetails.delinquencyStartType?.value | translateKey: 'catalogs' }}</span>
-        </div>
-      }
-
-      @if (loanDetails.breach) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Breach' | translate }} </span>
-          <span class="flex-50"><mifosx-breach-display [singleRow]="false" [breach]="loanDetails.breach" /></span>
-        </div>
-      }
-
-      @if (loanDetails.nearBreach || loanNearBreachActions.length) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Near Breach' | translate }} </span>
-          @if (loanNearBreachActions.length > 0) {
-            <button
-              mat-icon-button
-              color="primary"
-              class="m-l-10"
-              [matTooltip]="'labels.heading.Near Breach History' | translate"
-              [attr.aria-label]="'labels.heading.Near Breach History' | translate"
-              (click)="openNearBreachHistory()"
-            >
-              <mat-icon>
-                <fa-icon icon="history" size="sm"></fa-icon>
-              </mat-icon>
-            </button>
+<div class="tab-container mat-typography">
+  <div class="details-card">
+    <!-- Lifecycle stepper -->
+    <div class="stepper">
+      @for (step of timelineSteps; track step.label) {
+        <div class="step" [ngClass]="step.state">
+          <div class="step-label">
+            <span class="step-check">{{ step.state === 'done' ? '✓' : step.state === 'rejected' ? '✕' : '•' }}</span>
+            {{ 'labels.inputs.' + step.label | translate }}
+          </div>
+          @if (step.date) {
+            <div class="step-date">{{ step.date | dateFormat }}</div>
+          }
+          @if (step.by) {
+            <div class="step-by">{{ step.by }}</div>
           }
         </div>
       }
-    }
+    </div>
 
-    @if (loanProductService.isLoanProduct) {
-      <div class="flex-fill layout-row">
-        <span class="flex-50">{{ 'labels.inputs.Repayments' | translate }}</span>
-        <span class="flex-50"
-          >{{ loanDetails.numberOfRepayments }} {{ 'labels.commons.every' | translate }}
-          {{ loanDetails.repaymentEvery }}&nbsp;{{
-            loanDetails.repaymentFrequencyType.value | translateKey: 'catalogs'
-          }}
-          @if (
-            loanDetails.repaymentFrequencyType?.id === 2 &&
-            loanDetails.repaymentFrequencyNthDayType?.id !== 0 &&
-            loanDetails.repaymentFrequencyDayOfWeekType?.id !== 0
-          ) {
-            <span class="m-l-10">
-              @if (loanDetails.repaymentFrequencyDayOfWeekType) {
-                <span>
-                  <span class="m-l-10">{{ 'labels.commons.on' | translate }}</span
-                  >{{ loanDetails.repaymentFrequencyNthDayType?.value }}
-                  <span class="m-l-10">{{
-                    loanDetails.repaymentFrequencyDayOfWeekType?.value | translateKey: 'catalogs'
-                  }}</span>
+    <!-- Terms -->
+    <div class="section">
+      <div class="section-head">
+        <h3 class="section-title">{{ 'labels.heading.Terms' | translate }}</h3>
+      </div>
+      <div class="fact-grid">
+        @if (loanDetails.transactionProcessingStrategyName) {
+          <div class="fact span-2">
+            <div class="fact-label">{{ 'labels.inputs.Repayment Strategy' | translate }}</div>
+            <div class="fact-value">{{ loanDetails.transactionProcessingStrategyName | translateKey: 'catalogs' }}</div>
+          </div>
+        }
+        <div class="fact">
+          <div class="fact-label">{{ 'labels.inputs.Currency' | translate }}</div>
+          <div class="fact-value">{{ loanDetails.currency?.code }}</div>
+        </div>
+
+        @if (loanProductService.isWorkingCapital) {
+          <div class="fact">
+            <div class="fact-label">{{ 'labels.inputs.Amortization Type' | translate }}</div>
+            <div class="fact-value">{{ loanDetails.amortizationType?.value | translateKey: 'catalogs' }}</div>
+          </div>
+          <div class="fact">
+            <div class="fact-label">{{ 'labels.inputs.Period Payment Frequency' | translate }}</div>
+            <div class="fact-value">
+              {{ loanDetails.repaymentEvery }}
+              {{ camalize(loanDetails.repaymentFrequencyType.value) | translateKey: 'catalogs' }}
+            </div>
+          </div>
+          @if (has(loanDetails.paymentRate)) {
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Period Payment Rate' | translate }}</div>
+              <div class="fact-value amount">{{ loanDetails.paymentRate | formatNumber }} %</div>
+            </div>
+          }
+          @if (has(loanDetails.numberOfRepayments)) {
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Number of Repayments' | translate }}</div>
+              <div class="fact-value amount">{{ loanDetails.numberOfRepayments | formatNumber }}</div>
+            </div>
+          }
+          @if (has(loanDetails.npvDayCount)) {
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Net Present Value day count' | translate }}</div>
+              <div class="fact-value amount">{{ loanDetails.npvDayCount | formatNumber }}</div>
+            </div>
+          }
+          @if (has(loanDetails.netDisbursalAmount)) {
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Net Disbursal Amount' | translate }}</div>
+              <div class="fact-value amount">{{ loanDetails.netDisbursalAmount | formatNumber }}</div>
+            </div>
+          }
+        }
+
+        @if (loanProductService.isLoanProduct) {
+          <div class="fact span-2">
+            <div class="fact-label">{{ 'labels.inputs.Repayments' | translate }}</div>
+            <div class="fact-value">
+              {{ loanDetails.numberOfRepayments }} {{ 'labels.commons.every' | translate }}
+              {{ loanDetails.repaymentEvery }}&nbsp;{{
+                loanDetails.repaymentFrequencyType.value | translateKey: 'catalogs'
+              }}
+              @if (
+                loanDetails.repaymentFrequencyType?.id === 2 &&
+                loanDetails.repaymentFrequencyNthDayType?.id !== 0 &&
+                loanDetails.repaymentFrequencyDayOfWeekType?.id !== 0
+              ) {
+                <span class="m-l-10">
+                  @if (loanDetails.repaymentFrequencyDayOfWeekType) {
+                    <span>
+                      <span class="m-l-10">{{ 'labels.commons.on' | translate }}</span
+                      >{{ loanDetails.repaymentFrequencyNthDayType?.value }}
+                      <span class="m-l-10">{{
+                        loanDetails.repaymentFrequencyDayOfWeekType?.value | translateKey: 'catalogs'
+                      }}</span>
+                    </span>
+                  }
                 </span>
               }
+            </div>
+          </div>
+          @if (loanDetails.fixedLength) {
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Fixed Length' | translate }}</div>
+              <div class="fact-value">
+                {{ loanDetails.fixedLength }}
+                {{ loanDetails.repaymentFrequencyType.value | translateKey: 'catalogs' }}
+              </div>
+            </div>
+          }
+          <div class="fact">
+            <div class="fact-label">{{ 'labels.inputs.Amortization' | translate }}</div>
+            <div class="fact-value">{{ loanDetails.amortizationType.value | translateKey: 'catalogs' }}</div>
+          </div>
+          @if (loanDetails.fixedPrincipalPercentagePerInstallment) {
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Principal Percentage Per Installment' | translate }}</div>
+              <div class="fact-value amount">
+                {{ loanDetails.fixedPrincipalPercentagePerInstallment | formatNumber }} %
+              </div>
+            </div>
+          }
+          @if (loanDetails.canDefineInstallmentAmount) {
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Fixed EMI amount' | translate }}</div>
+              <div class="fact-value amount">{{ loanDetails.fixedEmiAmount | formatNumber }}</div>
+            </div>
+          }
+          <div class="fact">
+            <div class="fact-label">{{ 'labels.inputs.Days in year' | translate }}</div>
+            <div class="fact-value">{{ loanDetails.daysInYearType.value | translateKey: 'catalogs' }}</div>
+          </div>
+          <div class="fact">
+            <div class="fact-label">{{ 'labels.inputs.Days in month' | translate }}</div>
+            <div class="fact-value">{{ loanDetails.daysInMonthType.value | translateKey: 'catalogs' }}</div>
+          </div>
+          @if (loanDetails.isTopup) {
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Loan closed with Topup' | translate }}</div>
+              <div class="fact-value">
+                <a href="#">{{ loanDetails.closureLoanAccountNo }}</a>
+              </div>
+            </div>
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Topup closure amount' | translate }}</div>
+              <div class="fact-value amount">{{ loanDetails.topupAmount | formatNumber }}</div>
+            </div>
+          }
+        }
+
+        <div class="fact">
+          <div class="fact-label">{{ 'labels.inputs.Fund Source' | translate }}</div>
+          @if (loanDetails.fundName) {
+            <div class="fact-value">{{ loanDetails.fundName }}</div>
+          } @else {
+            <div class="fact-value muted">{{ 'labels.inputs.Unassigned' | translate }}</div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Interest (term loans) -->
+    @if (loanProductService.isLoanProduct) {
+      <div class="section">
+        <div class="section-head">
+          <h3 class="section-title">{{ 'labels.heading.Interest' | translate }}</h3>
+        </div>
+        <div class="fact-grid">
+          <div class="fact span-2">
+            <div class="fact-label">{{ 'labels.inputs.Interest' | translate }}</div>
+            <div class="fact-value amount">
+              {{ loanDetails.annualInterestRate | formatNumber }} % {{ 'labels.text.per annum' | translate }} ({{
+                loanDetails.interestRatePerPeriod
+              }}
+              %&nbsp;{{ loanDetails.interestRateFrequencyType.value | translateKey: 'catalogs' }})
+            </div>
+          </div>
+          <div class="fact">
+            <div class="fact-label">{{ 'labels.inputs.Interest Type' | translate }}</div>
+            <div class="fact-value">{{ 'labels.text.' + loanDetails.interestType.value | translate }}</div>
+          </div>
+          <div class="fact">
+            <div class="fact-label">{{ 'labels.inputs.Interest Calculation Period' | translate }}</div>
+            <div class="fact-value">
+              {{ loanDetails.interestCalculationPeriodType.value | translateKey: 'catalogs' }}
+            </div>
+          </div>
+          <div class="fact">
+            <div class="fact-label">{{ 'labels.inputs.Interest Free Period' | translate }}</div>
+            <div class="fact-value amount">{{ loanDetails.graceOnInterestCharged }}</div>
+          </div>
+          <div class="fact">
+            <div class="fact-label">{{ 'labels.inputs.Grace: On Principal Payment' | translate }}</div>
+            <div class="fact-value amount">{{ loanDetails.graceOnPrincipalPayment }}</div>
+          </div>
+          <div class="fact">
+            <div class="fact-label">{{ 'labels.inputs.Grace: On Interest Payment' | translate }}</div>
+            <div class="fact-value amount">{{ loanDetails.graceOnInterestPayment }}</div>
+          </div>
+          <div class="fact">
+            <div class="fact-label">{{ 'labels.inputs.Grace on Arrears Ageing' | translate }}</div>
+            <div class="fact-value amount">{{ loanDetails.graceOnArrearsAgeing }}</div>
+          </div>
+          <div class="fact">
+            <div class="fact-label">{{ 'labels.inputs.Loan Charge-off behaviour' | translate }}</div>
+            <div class="fact-value">{{ loanDetails.chargeOffBehaviour?.value | translateKey: 'catalogs' }}</div>
+          </div>
+          @if (loanDetails.isInterestRecalculationEnabled) {
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Interest recalculation compounding on' | translate }}</div>
+              <div class="fact-value">
+                {{
+                  loanDetails.interestRecalculationData?.interestRecalculationCompoundingType?.value
+                    | translateKey: 'catalogs'
+                }}
+              </div>
+            </div>
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Advance payments adjustment type' | translate }}</div>
+              <div class="fact-value">
+                {{ loanDetails.interestRecalculationData?.rescheduleStrategyType?.value | translateKey: 'catalogs' }}
+              </div>
+            </div>
+            <div class="fact">
+              <div class="fact-label">
+                {{ 'labels.inputs.Frequency for recalculate Outstanding Principal' | translate }}
+              </div>
+              <div class="fact-value">{{ loanDetails.interestRecalculationData?.calendarData.humanReadable }}</div>
+            </div>
+            @if (loanDetails.interestRecalculationData?.interestRecalculationCompoundingType.id !== 0) {
+              <div class="fact">
+                <div class="fact-label">{{ 'labels.inputs.Frequency for compounding' | translate }}</div>
+                <div class="fact-value">
+                  {{ loanDetails.interestRecalculationData?.compoundingCalendarData?.humanReadable }}
+                </div>
+              </div>
+            }
+          }
+          @if (loanDetails.isVariableInstallmentsAllowed) {
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Gap between Installments' | translate }}</div>
+              <div class="fact-value amount">
+                {{ loanDetails.minimumGap | formatNumber }}&nbsp;{{ 'labels.text.Days' | translate }}&nbsp;,
+                {{ 'labels.text.Max' | translate }}:{{ loanDetails.maximumGap | formatNumber }}&nbsp;{{
+                  'labels.text.Days' | translate
+                }}
+              </div>
+            </div>
+          }
+          @if (loanDetails.enableIncomeCapitalization) {
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Income capitalization calculation type' | translate }}</div>
+              <div class="fact-value">
+                {{ loanDetails.capitalizedIncomeCalculationType?.value | translateKey: 'catalogs' }}
+              </div>
+            </div>
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Income capitalization strategy' | translate }}</div>
+              <div class="fact-value">
+                {{ loanDetails.capitalizedIncomeStrategy?.value | translateKey: 'catalogs' }}
+              </div>
+            </div>
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Income capitalization type' | translate }}</div>
+              <div class="fact-value">{{ loanDetails.capitalizedIncomeType?.value | translateKey: 'catalogs' }}</div>
+            </div>
+          }
+          @if (loanDetails.enableBuyDownFee) {
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Buy down fee calculation type' | translate }}</div>
+              <div class="fact-value">
+                {{ loanDetails.buyDownFeeCalculationType?.value | translateKey: 'catalogs' }}
+              </div>
+            </div>
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Buy down fee strategy' | translate }}</div>
+              <div class="fact-value">{{ loanDetails.buyDownFeeStrategy?.value | translateKey: 'catalogs' }}</div>
+            </div>
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Buy down fee income type' | translate }}</div>
+              <div class="fact-value">{{ loanDetails.buyDownFeeIncomeType?.value | translateKey: 'catalogs' }}</div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- Discount Fee (working capital) -->
+    @if (loanProductService.isWorkingCapital && hasDiscountSection()) {
+      <div class="section">
+        <div class="section-head">
+          <h3 class="section-title">{{ 'labels.inputs.Discount Fee' | translate }}</h3>
+        </div>
+        <div class="fact-grid">
+          @if (has(loanDetails.proposedDiscountFee)) {
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Proposed Discount' | translate }}</div>
+              <div class="fact-value amount">{{ loanDetails.proposedDiscountFee | formatNumber }}</div>
+            </div>
+          }
+          @if (has(loanDetails.approvedDiscountFee)) {
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Approved Discount' | translate }}</div>
+              <div class="fact-value amount">{{ loanDetails.approvedDiscountFee | formatNumber }}</div>
+            </div>
+          }
+          @if (has(loanDetails.discountFee)) {
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Discount' | translate }}</div>
+              <div class="fact-value amount">{{ loanDetails.discountFee | formatNumber }}</div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- Delinquency & Breach -->
+    @if (showDelinquencySection()) {
+      <div class="section">
+        <div class="section-head">
+          <h3 class="section-title">{{ 'labels.heading.Delinquency & Breach' | translate }}</h3>
+        </div>
+        <div class="fact-grid">
+          @if (loanProductService.isWorkingCapital) {
+            @if (has(loanDetails.breachGraceDays)) {
+              <div class="fact">
+                <div class="fact-label">{{ 'labels.inputs.Breach Grace Days' | translate }}</div>
+                <div class="fact-value amount">{{ loanDetails.breachGraceDays | formatNumber }}</div>
+              </div>
+            }
+            @if (has(loanDetails.delinquencyGraceDays)) {
+              <div class="fact">
+                <div class="fact-label">{{ 'labels.inputs.Delinquency Grace Days' | translate }}</div>
+                <div class="fact-value amount">{{ loanDetails.delinquencyGraceDays | formatNumber }}</div>
+              </div>
+            }
+            @if (loanDetails.delinquencyStartType) {
+              <div class="fact">
+                <div class="fact-label">{{ 'labels.inputs.Delinquency Start Type' | translate }}</div>
+                <div class="fact-value">{{ loanDetails.delinquencyStartType?.value | translateKey: 'catalogs' }}</div>
+              </div>
+            }
+            @if (loanDetails.breach) {
+              <div class="fact span-2">
+                <div class="fact-label">{{ 'labels.inputs.Breach' | translate }}</div>
+                <div class="fact-value">
+                  <mifosx-breach-display [singleRow]="false" [breach]="loanDetails.breach" />
+                </div>
+              </div>
+            }
+            @if (loanDetails.nearBreach) {
+              <div class="fact span-2">
+                <div class="fact-label">{{ 'labels.inputs.Near Breach' | translate }}</div>
+                <div class="fact-value">
+                  <mifosx-breach-display [singleRow]="true" [nearBreach]="loanDetails.nearBreach" />
+                </div>
+              </div>
+            }
+          }
+          @if (hasAvailableDisbursementAmount()) {
+            <div class="fact span-2">
+              <div class="fact-label">
+                {{ 'labels.inputs.Available Disbursement Amount (with Over Applied)' | translate }}
+              </div>
+              <div class="fact-value amount">
+                {{ loanDetails.delinquent.availableDisbursementAmountWithOverApplied | formatNumber }}
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- Settings -->
+    <div class="section">
+      <div class="section-head">
+        <h3 class="section-title">{{ 'labels.heading.Settings' | translate }}</h3>
+      </div>
+      <div class="chip-row">
+        @if (loanProductService.isLoanProduct) {
+          <span class="chip" [class.on]="loanDetails.isEqualAmortization">
+            <span class="st"></span>{{ 'labels.inputs.Equal Amortization' | translate }}
+          </span>
+          <span class="chip" [class.on]="loanDetails.enableDownPayment">
+            <span class="st"></span>{{ 'labels.inputs.Enable Down Payments' | translate }}
+          </span>
+          <span class="chip" [class.on]="loanDetails.enableIncomeCapitalization">
+            <span class="st"></span>{{ 'labels.inputs.Enable income capitalization' | translate }}
+          </span>
+          <span class="chip" [class.on]="loanDetails.enableBuyDownFee">
+            <span class="st"></span>{{ 'labels.inputs.Enable Buy down fee' | translate }}
+          </span>
+          @if (loanDetails.enableBuyDownFee) {
+            <span class="chip" [class.on]="loanDetails.merchantBuyDownFee">
+              <span class="st"></span>{{ 'labels.inputs.Merchant Buy down fee' | translate }}
             </span>
           }
+          <span class="chip" [class.on]="loanDetails.allowPartialPeriodInterestCalculation">
+            <span class="st"></span
+            >{{ 'labels.inputs.Allow Partial Interest Calculation with same as repayment' | translate }}
+          </span>
+          <span class="chip" [class.on]="loanDetails.interestRecognitionOnDisbursementDate">
+            <span class="st"></span>{{ 'labels.inputs.Is interest recognition on disbursement date?' | translate }}
+          </span>
+          <span class="chip" [class.on]="loanDetails.isInterestRecalculationEnabled">
+            <span class="st"></span>{{ 'labels.inputs.Recalculate Interest based on new terms' | translate }}
+          </span>
+          @if (loanDetails.isTopup) {
+            <span class="chip on"><span class="st"></span>{{ 'labels.inputs.Is Topup Loan' | translate }}</span>
+          }
+          @if (loanDetails.isVariableInstallmentsAllowed) {
+            <span class="chip on">
+              <span class="st"></span>{{ 'labels.inputs.Variable Installments Allowed' | translate }}
+            </span>
+          }
+        }
+        <span class="chip" [class.on]="loanDetails.enableInstallmentLevelDelinquency">
+          <span class="st"></span>{{ 'labels.inputs.Enable installment level Delinquency' | translate }}
         </span>
       </div>
-
-      @if (loanDetails.fixedLength) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Fixed Length' | translate }} </span>
-          <span class="flex-50">
-            {{ loanDetails.fixedLength }}
-            {{ loanDetails.repaymentFrequencyType.value | translateKey: 'catalogs' }}</span
-          >
-        </div>
-      }
-
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Amortization' | translate }} </span>
-        <span class="flex-50"> {{ loanDetails.amortizationType.value | translateKey: 'catalogs' }} </span>
-      </div>
-
-      @if (loanDetails.fixedPrincipalPercentagePerInstallment) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Principal Percentage Per Installment' | translate }} </span>
-          <span class="flex-50"> {{ loanDetails.fixedPrincipalPercentagePerInstallment | formatNumber }} %</span>
-        </div>
-      }
-
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Equal Amortization' | translate }} </span>
-        <span class="flex-50"> {{ loanDetails.isEqualAmortization | yesNo }} </span>
-      </div>
-
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Interest' | translate }} </span>
-        <span class="flex-50">
-          {{ loanDetails.annualInterestRate | formatNumber }} % {{ 'labels.text.per annum' | translate }} ({{
-            loanDetails.interestRatePerPeriod
-          }}
-          %&nbsp; {{ loanDetails.interestRateFrequencyType.value | translateKey: 'catalogs' }})
-        </span>
-      </div>
-
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Interest Type' | translate }} </span>
-        <span class="flex-50"> {{ 'labels.text.' + loanDetails.interestType.value | translate }} </span>
-      </div>
-
-      <div class="flex-fill layout-row">
-        <span class="flex-50">{{ 'labels.inputs.Enable Down Payments' | translate }}:</span>
-        <span class="flex-50">{{ loanDetails.enableDownPayment | yesNo }}</span>
-      </div>
-
-      <div class="flex-fill layout-row">
-        <span class="flex-50">{{ 'labels.inputs.Loan Charge-off behaviour' | translate }}:</span>
-        <span class="flex-50">{{ loanDetails.chargeOffBehaviour.value | translateKey: 'catalogs' }}</span>
-      </div>
-
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Enable income capitalization' | translate }}</span>
-        <span class="flex-50"> {{ loanDetails.enableIncomeCapitalization | yesNo }} </span>
-      </div>
-
-      @if (loanDetails.enableIncomeCapitalization) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Income capitalization calculation type' | translate }}</span>
-          <span class="flex-50">
-            {{ loanDetails.capitalizedIncomeCalculationType?.value | translateKey: 'catalogs' }}
-          </span>
-        </div>
-      }
-
-      @if (loanDetails.enableIncomeCapitalization) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Income capitalization strategy' | translate }}</span>
-          <span class="flex-50"> {{ loanDetails.capitalizedIncomeStrategy?.value | translateKey: 'catalogs' }} </span>
-        </div>
-      }
-
-      @if (loanDetails.enableIncomeCapitalization) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Income capitalization type' | translate }}</span>
-          <span class="flex-50"> {{ loanDetails.capitalizedIncomeType?.value | translateKey: 'catalogs' }} </span>
-        </div>
-      }
-
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Enable Buy down fee' | translate }}</span>
-        <span class="flex-50"> {{ loanDetails.enableBuyDownFee | yesNo }} </span>
-      </div>
-
-      @if (loanDetails.enableBuyDownFee) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Buy down fee calculation type' | translate }}</span>
-          <span class="flex-50">
-            {{ loanDetails.buyDownFeeCalculationType?.value | translateKey: 'catalogs' }}
-          </span>
-        </div>
-      }
-
-      @if (loanDetails.enableBuyDownFee) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Buy down fee strategy' | translate }}</span>
-          <span class="flex-50"> {{ loanDetails.buyDownFeeStrategy?.value | translateKey: 'catalogs' }} </span>
-        </div>
-      }
-
-      @if (loanDetails.enableBuyDownFee) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Buy down fee income type' | translate }}</span>
-          <span class="flex-50"> {{ loanDetails.buyDownFeeIncomeType?.value | translateKey: 'catalogs' }} </span>
-        </div>
-      }
-
-      @if (loanDetails.enableBuyDownFee) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Merchant Buy down fee' | translate }}</span>
-          <span class="flex-50"> {{ loanDetails.merchantBuyDownFee | yesNo }} </span>
-        </div>
-      }
-
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Grace: On Principal Payment' | translate }}</span>
-        <span class="flex-50"> {{ loanDetails.graceOnPrincipalPayment }} </span>
-      </div>
-
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Grace: On Interest Payment' | translate }}</span>
-        <span class="flex-50"> {{ loanDetails.graceOnInterestPayment }} </span>
-      </div>
-
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Grace on Arrears Ageing' | translate }}</span>
-        <span class="flex-50"> {{ loanDetails.graceOnArrearsAgeing }} </span>
-      </div>
-
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Enable installment level Delinquency' | translate }} </span>
-        <span class="flex-50"> {{ loanDetails.enableInstallmentLevelDelinquency | yesNo }} </span>
-      </div>
-    }
-
-    <div class="flex-fill layout-row">
-      <span class="flex-50"> {{ 'labels.inputs.Fund Source' | translate }} </span>
-      @if (loanDetails.fundName) {
-        <span class="flex-50"> {{ loanDetails.fundName }} </span>
-      }
-      @if (!loanDetails.fundName) {
-        <span class="flex-50"> {{ 'labels.inputs.Unassigned' | translate }} </span>
-      }
     </div>
-
-    @if (loanProductService.isLoanProduct) {
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Interest Free Period' | translate }}</span>
-        <span class="flex-50"> {{ loanDetails.graceOnInterestCharged }} </span>
-      </div>
-
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Interest Calculation Period' | translate }}</span>
-        <span class="flex-50"> {{ loanDetails.interestCalculationPeriodType.value | translateKey: 'catalogs' }} </span>
-      </div>
-
-      <div class="flex-fill layout-row">
-        <span class="flex-50">
-          {{ 'labels.inputs.Allow Partial Interest Calculation with same as repayment' | translate }}</span
-        >
-        <span class="flex-50"> {{ loanDetails.allowPartialPeriodInterestCalculation | yesNo }} </span>
-      </div>
-
-      <div class="flex-fill layout-row">
-        <span class="flex-50">{{ 'labels.inputs.Is interest recognition on disbursement date?' | translate }}:</span>
-        <span class="flex-50">{{ loanDetails.interestRecognitionOnDisbursementDate | yesNo }}</span>
-      </div>
-    }
-
-    <div class="flex-fill layout-row">
-      <span class="flex-50"> {{ 'labels.inputs.Submitted on' | translate }}</span>
-      <span class="flex-50"> {{ loanDetails.timeline.submittedOnDate | dateFormat }} </span>
-    </div>
-
-    <div class="flex-fill layout-row">
-      <span class="flex-50"> {{ 'labels.inputs.Approved on' | translate }}</span>
-      <span class="flex-50"> {{ loanDetails.timeline.approvedOnDate | dateFormat }} </span>
-    </div>
-
-    <div class="flex-fill layout-row">
-      <span class="flex-50"> {{ 'labels.inputs.Disbursed on' | translate }}</span>
-      <span class="flex-50"> {{ loanDetails.timeline.actualDisbursementDate | dateFormat }} </span>
-    </div>
-
-    <div class="flex-fill layout-row">
-      <span class="flex-50"> {{ 'labels.inputs.Matures on' | translate }}</span>
-      <span class="flex-50"> {{ loanDetails.timeline.expectedMaturityDate | dateFormat }} </span>
-    </div>
-
-    @if (loanProductService.isLoanProduct) {
-      @if (loanDetails.canDefineInstallmentAmount) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Fixed EMI amount' | translate }}</span>
-          <span class="flex-50"> {{ loanDetails.fixedEmiAmount | formatNumber }} </span>
-        </div>
-      }
-
-      @if (loanDetails.isTopup) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Is Topup Loan' | translate }}?</span>
-          <span class="flex-50"> {{ loanDetails.isTopup | yesNo }} </span>
-        </div>
-      }
-
-      @if (loanDetails.isTopup) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Loan closed with Topup' | translate }} </span>
-          <span class="flex-50">
-            <a href="#">{{ loanDetails.closureLoanAccountNo }}</a>
-          </span>
-        </div>
-      }
-
-      @if (loanDetails.isTopup) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Topup closure amount' | translate }}</span>
-          <span class="flex-50"> {{ loanDetails.topupAmount | formatNumber }} </span>
-        </div>
-      }
-
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Recalculate Interest based on new terms' | translate }}</span>
-        <span class="flex-50"> {{ loanDetails.isInterestRecalculationEnabled | yesNo }} </span>
-      </div>
-
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Days in year' | translate }}</span>
-        <span class="flex-50"> {{ loanDetails.daysInYearType.value | translateKey: 'catalogs' }} </span>
-      </div>
-
-      <div class="flex-fill layout-row">
-        <span class="flex-50"> {{ 'labels.inputs.Days in month' | translate }}</span>
-        <span class="flex-50"> {{ loanDetails.daysInMonthType.value | translateKey: 'catalogs' }} </span>
-      </div>
-
-      @if (loanDetails.isInterestRecalculationEnabled) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Interest recalculation compounding on' | translate }}</span>
-          <span class="flex-50">
-            {{
-              loanDetails.interestRecalculationData.interestRecalculationCompoundingType.value
-                | translateKey: 'catalogs'
-            }}
-          </span>
-        </div>
-      }
-
-      @if (loanDetails.isInterestRecalculationEnabled) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Advance payments adjustment type' | translate }}</span>
-          <span class="flex-50">
-            {{ loanDetails.interestRecalculationData.rescheduleStrategyType.value | translateKey: 'catalogs' }}
-          </span>
-        </div>
-      }
-
-      @if (loanDetails.isInterestRecalculationEnabled) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50">
-            {{ 'labels.inputs.Frequency for recalculate Outstanding Principal' | translate }}</span
-          >
-          <span class="flex-50"> {{ loanDetails.interestRecalculationData.calendarData.humanReadable }} </span>
-        </div>
-      }
-
-      @if (
-        loanDetails.isInterestRecalculationEnabled &&
-        loanDetails.interestRecalculationData.interestRecalculationCompoundingType.id !== 0
-      ) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Frequency for compounding' | translate }}</span>
-          <span class="flex-50">
-            {{ loanDetails.interestRecalculationData.compoundingCalendarData.humanReadable }}
-          </span>
-        </div>
-      }
-
-      @if (loanDetails.isVariableInstallmentsAllowed) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Variable Installments Allowed' | translate }}</span>
-          <span class="flex-50"> {{ loanDetails.isVariableInstallmentsAllowed | yesNo }} </span>
-        </div>
-      }
-
-      @if (loanDetails.isVariableInstallmentsAllowed) {
-        <div class="flex-fill layout-row">
-          <span class="flex-50"> {{ 'labels.inputs.Gap between Installments' | translate }}</span>
-          <span class="flex-50">
-            {{ loanDetails.minimumGap | formatNumber }}&nbsp;{{ 'labels.text.Days' | translate }}&nbsp;, Max:{{
-              loanDetails.maximumGap | formatNumber
-            }}&nbsp;{{ 'labels.text.Days' | translate }}
-          </span>
-        </div>
-      }
-    }
-
-    @if (
-      loanDetails &&
-      loanDetails.delinquent &&
-      loanDetails.delinquent.availableDisbursementAmountWithOverApplied !== undefined
-    ) {
-      <div class="flex-fill layout-row">
-        <span class="flex-50">{{ 'labels.inputs.Available Disbursement Amount (with Over Applied)' | translate }}</span>
-        <span class="flex-50">{{
-          loanDetails.delinquent.availableDisbursementAmountWithOverApplied | formatNumber
-        }}</span>
-      </div>
-    }
   </div>
 </div>

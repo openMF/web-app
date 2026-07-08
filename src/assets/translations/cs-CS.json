@@ -1123,6 +1123,8 @@
     },
     "heading": {
       "Breach Actions": "Porušení Akce",
+      "Delinquency & Breach": "Delikvence a porušení",
+      "Interest": "Úrok",
       "Near Breach Actions": "Blížící se porušení Akce",
       "About Us": "O Nás",
       "Account Information": "Informace o účtu",
@@ -2007,6 +2009,7 @@
       "Discount Default": "Výchozí sleva",
       "Discount External Id": "Externí id slevy",
       "Discount External Id must differ from External Id": "Externí id slevy se musí lišit od externího id",
+      "Discount Fee Adjustment": "Úprava poplatku za slevu",
       "Discount Fee Balance": "Zůstatek diskontního poplatku",
       "Discount must be greater than or equal to 0": "Sleva musí být větší nebo rovna 0",
       "Display Name": "Zobrazovaný název",
@@ -2498,6 +2501,7 @@
       "Multiple Debit Entries Allowed": "Je povoleno více debetních záznamů",
       "Municipality": "Obec",
       "N/A": "N/A",
+      "Net Disbursal Amount": "Čistá vyplacená částka",
       "New": "Nové",
       "NID": "Národní ID",
       "Name": "název",
@@ -3373,6 +3377,7 @@
       "undo_account_transfer": "Opravdu chcete vrátit tento převod účtu?"
     },
     "text": {
+      "Max": "Max",
       "No Breach Actions": "Žádné Porušení Akce",
       "No Near Breach Actions": "Žádné Blížící se porušení Akce",
       "A": "A",
