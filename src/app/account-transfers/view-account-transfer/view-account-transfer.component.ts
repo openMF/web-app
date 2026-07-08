@@ -26,8 +26,8 @@ export class ViewAccountTransferComponent implements OnDestroy {
       .subscribe((data: { viewAccountTransferData: any }) => {
         this.viewAccountTransferData = data.viewAccountTransferData;
         const { fromAccountType, fromClient, fromAccount, toAccountType, toClient, toAccount } = data.viewAccountTransferData;
-        this.fromAccountUrl = this.getAccountUrl(fromAccountType.code, fromClient.id, fromAccount.id);
-        this.toAccountUrl = this.getAccountUrl(toAccountType.code, toClient.id, toAccount.id);
+        this.fromAccountUrl = this.getAccountUrl(fromAccountType?.code, fromClient?.id, fromAccount?.id);
+        this.toAccountUrl = this.getAccountUrl(toAccountType?.code, toClient?.id, toAccount?.id);
       });
   }
 
