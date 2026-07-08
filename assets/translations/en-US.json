@@ -3156,21 +3156,12 @@
       "task-management component": "task-management component",
       "to": "to",
       "valid": "valid",
-      "Active Pause": "Active Pause",
-      "Breach Actions": "Breach Actions",
-      "days": "days",
-      "Duration": "Duration",
-      "Expired": "Expired",
-      "Last Action": "Last Action",
-      "No breach actions have been recorded for this loan": "No breach actions have been recorded for this loan",
-      "No records match the selected filter": "No records match the selected filter",
-      "Ongoing": "Ongoing",
-      "Pause Active": "Pause Active",
-      "Pauses": "Pauses",
-      "Scheduled": "Scheduled",
-      "Today": "Today",
-      "Total Actions": "Total Actions",
-      "Total Days Paused": "Total Days Paused"
+      "Bureau Readiness": "Bureau Readiness",
+      "Your CB-ILD Role": "Your CB-ILD Role",
+      "KYC Completeness Score": "KYC Completeness Score",
+      "CDC FICO Score": "CDC FICO Score",
+      "No bureau data available": "No bureau data available",
+      "Failed to load bureau data": "Failed to load bureau data"
     },
     "links": {
       "Community": "Community",
@@ -4553,45 +4544,24 @@
       "No Upcoming Charges Found": "No Upcoming Charges Found",
       "unableToUpdateDiscount": "Unable to update discount.",
       "validationSaved": "Validation data saved successfully.",
-      "workingCapitalDiscountUpdated": "Working capital discount was updated successfully."
+      "workingCapitalDiscountUpdated": "Working capital discount was updated successfully.",
+      "unableToUpdateDiscount": "Unable to update discount."
     },
-    "selections": {
-      "standingInstructions": {
-        "accountTransferType": {
-          "account.transfer": "Savings Transfer",
-          "loan.repayment": "Loan Repayment"
-        },
-        "standingInstructionPriority": {
-          "urgent": "Urgent",
-          "high": "High",
-          "medium": "Medium",
-          "low": "Low"
-        },
-        "standingInstructionStatus": {
-          "active": "Active",
-          "disabled": "Disabled",
-          "deleted": "Deleted"
-        },
-        "accountType": {
-          "savings": "Savings Account",
-          "loan": "Loan Account"
-        },
-        "standingInstructionType": {
-          "fixed": "Fixed Amount",
-          "dues": "Dues Amount"
-        },
-        "accountTransferRecurrenceType": {
-          "periodic": "Periodic",
-          "as.per.dues": "As Per Dues"
-        },
-        "frequencyperiodFrequencyType": {
-          "days": "Days",
-          "weeks": "Weeks",
-          "months": "Months",
-          "years": "Years"
-        },
-        "own.account": "Own Account",
-        "other.bank": "Other Bank"
+    "cbild": {
+      "fields": {
+        "nationalId": "RFC Tax ID (required — hard veto)",
+        "dob": "Date of Birth",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "address": "Address",
+        "phoneNumber": "Phone Number"
+      },
+      "errors": {
+        "unauthorized": "Authentication failed. Please select your role again.",
+        "forbidden": "You do not have permission to check bureau readiness.",
+        "clientNotFound": "Client {{ clientId }} not found in Fineract.",
+        "serviceUnavailable": "CDC or Fineract is unreachable. Please try again later.",
+        "unexpected": "An unexpected error occurred. Please try again."
       }
     }
   },
