@@ -1120,6 +1120,8 @@
     },
     "heading": {
       "Breach Actions": "Ukiukaji Vitendo",
+      "Delinquency & Breach": "Uhalifu na Ukiukaji",
+      "Interest": "Riba",
       "Near Breach Actions": "Ukiukaji unaokaribia Vitendo",
       "About Us": "Kuhusu Sisi",
       "Account Information": "Taarifa za Akaunti",
@@ -2004,6 +2006,7 @@
       "Discount Default": "Punguzo Chaguomsingi",
       "Discount External Id": "Kitambulisho cha Nje cha Punguzo",
       "Discount External Id must differ from External Id": "Kitambulisho cha Nje cha Punguzo lazima kitofautiane na Kitambulisho cha Nje",
+      "Discount Fee Adjustment": "Marekebisho ya Ada ya Punguzo",
       "Discount Fee Balance": "Salio la ada ya punguzo",
       "Discount must be greater than or equal to 0": "Punguzo lazima liwe kubwa au sawa na 0",
       "Display Name": "Jina la Kuonyesha",
@@ -2495,6 +2498,7 @@
       "Multiple Debit Entries Allowed": "Maingizo Mengi ya Malipo Yanaruhusiwa",
       "Municipality": "Manispaa",
       "N/A": "N/A",
+      "Net Disbursal Amount": "Kiasi Halisi cha Utoaji",
       "New": "Mpya",
       "NID": "Kitambulisho cha Taifa",
       "Name": "Jina",
@@ -3369,6 +3373,7 @@
       "undo_account_transfer": "Una uhakika unataka kufuta uhamisho huu wa akaunti?"
     },
     "text": {
+      "Max": "Upeo",
       "No Breach Actions": "Hakuna Ukiukaji Vitendo",
       "No Near Breach Actions": "Hakuna Ukiukaji unaokaribia Vitendo",
       "A": "A",

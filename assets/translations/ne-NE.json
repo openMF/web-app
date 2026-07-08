@@ -1121,6 +1121,8 @@
     },
     "heading": {
       "Breach Actions": "उल्लंघन कार्यहरू",
+      "Delinquency & Breach": "अपराध र उल्लंघन",
+      "Interest": "ब्याज",
       "Near Breach Actions": "नजिकको उल्लंघन कार्यहरू",
       "About Us": "हाम्रो बारेमा",
       "Account Information": "खाता जानकारी",
@@ -2006,6 +2008,7 @@
       "Discount Default": "छुट पूर्वनिर्धारित",
       "Discount External Id": "छुटको बाह्य आईडी",
       "Discount External Id must differ from External Id": "छुटको बाह्य आईडी बाह्य आईडी भन्दा फरक हुनुपर्छ",
+      "Discount Fee Adjustment": "छुट शुल्क समायोजन",
       "Discount Fee Balance": "छुट शुल्क मौज्दात",
       "Discount must be greater than or equal to 0": "छुट ० वा त्योभन्दा बढी हुनुपर्छ",
       "Display Name": "प्रदर्शन नाम",
@@ -2497,6 +2500,7 @@
       "Multiple Debit Entries Allowed": "बहु डेबिट प्रविष्टिहरूलाई अनुमति छ",
       "Municipality": "नगरपालिका",
       "N/A": "N/A",
+      "Net Disbursal Amount": "खुद वितरण रकम",
       "New": "नयाँ",
       "NID": "राष्ट्रिय परिचयपत्र",
       "Name": "नाम",
@@ -3372,6 +3376,7 @@
       "undo_account_transfer": "के तपाईं यो खाता स्थानान्तरण रद्द गर्न निश्चित हुनुहुन्छ?"
     },
     "text": {
+      "Max": "अधिकतम",
       "No Breach Actions": "कुनै उल्लंघन कार्यहरू छैन",
       "No Near Breach Actions": "कुनै नजिकको उल्लंघन कार्यहरू छैन",
       "A": "ए",

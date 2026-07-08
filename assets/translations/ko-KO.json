@@ -1122,6 +1122,8 @@
     },
     "heading": {
       "Breach Actions": "위반 행위",
+      "Delinquency & Breach": "연체 및 위반",
+      "Interest": "이자",
       "Near Breach Actions": "위반 임박 행위",
       "About Us": "회사 소개",
       "Account Information": "계정 정보",
@@ -2008,6 +2010,7 @@
       "Discount Default": "할인 기본값",
       "Discount External Id": "할인 외부 ID",
       "Discount External Id must differ from External Id": "할인 외부 ID는 외부 ID와 달라야 합니다",
+      "Discount Fee Adjustment": "할인 수수료 조정",
       "Discount Fee Balance": "할인 수수료 잔액",
       "Discount must be greater than or equal to 0": "할인은 0 이상이어야 합니다",
       "Display Name": "이름 표시하기",
@@ -2499,6 +2502,7 @@
       "Multiple Debit Entries Allowed": "복수 차변 항목 허용",
       "Municipality": "시/군/구",
       "N/A": "해당 없음",
+      "Net Disbursal Amount": "순 지급 금액",
       "New": "신규",
       "NID": "국민 신분증",
       "Name": "이름",
@@ -3372,6 +3376,7 @@
       "undo_account_transfer": "이 계좌 이체를 취소하시겠습니까?"
     },
     "text": {
+      "Max": "최대",
       "No Breach Actions": "위반 행위 없음",
       "No Near Breach Actions": "위반 임박 행위 없음",
       "A": "ㅏ",

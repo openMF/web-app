@@ -1122,6 +1122,8 @@
     },
     "heading": {
       "Breach Actions": "Azioni di violazione",
+      "Delinquency & Breach": "Delinquenza e violazione",
+      "Interest": "Interessi",
       "Near Breach Actions": "Azioni di violazione prossima",
       "About Us": "Chi Siamo",
       "Account Information": "Informazioni sull'account",
@@ -2007,6 +2009,7 @@
       "Discount Default": "Sconto predefinito",
       "Discount External Id": "ID esterno dello sconto",
       "Discount External Id must differ from External Id": "L'ID esterno dello sconto deve essere diverso dall'ID esterno",
+      "Discount Fee Adjustment": "Rettifica della commissione di sconto",
       "Discount Fee Balance": "Saldo commissione di sconto",
       "Discount must be greater than or equal to 0": "Lo sconto deve essere maggiore o uguale a 0",
       "Display Name": "Nome da visualizzare",
@@ -2498,6 +2501,7 @@
       "Multiple Debit Entries Allowed": "Sono consentite più voci di addebito",
       "Municipality": "Comune",
       "N/A": "N / A",
+      "Net Disbursal Amount": "Importo netto di erogazione",
       "New": "Nuovo",
       "NID": "NID",
       "Name": "Nome",
@@ -3372,6 +3376,7 @@
       "undo_account_transfer": "Sei sicuro di voler annullare questo trasferimento conto?"
     },
     "text": {
+      "Max": "Max",
       "No Breach Actions": "Nessuna azione di violazione",
       "No Near Breach Actions": "Nessuna azione di violazione prossima",
       "A": "UN",

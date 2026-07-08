@@ -1122,6 +1122,8 @@
     },
     "heading": {
       "Breach Actions": "Pārkāpums Darbības",
+      "Delinquency & Breach": "Kavējumi un pārkāpums",
+      "Interest": "Procenti",
       "Near Breach Actions": "Tuvu pārkāpumam Darbības",
       "About Us": "Par Mums",
       "Account Information": "Konta informācija",
@@ -2007,6 +2009,7 @@
       "Discount Default": "Atlaides noklusējuma vērtība",
       "Discount External Id": "Atlaides ārējais ID",
       "Discount External Id must differ from External Id": "Atlaides ārējam ID jāatšķiras no ārējā ID",
+      "Discount Fee Adjustment": "Atlaides maksas korekcija",
       "Discount Fee Balance": "Atlaides maksas atlikums",
       "Discount must be greater than or equal to 0": "Atlaidei jābūt lielākai vai vienādai ar 0",
       "Display Name": "Parādāmais nosaukums",
@@ -2498,6 +2501,7 @@
       "Multiple Debit Entries Allowed": "Ir atļauti vairāki debeta ieraksti",
       "Municipality": "Pašvaldība",
       "N/A": "N/A",
+      "Net Disbursal Amount": "Neto izmaksas summa",
       "New": "Jaunais",
       "NID": "Nacionālais ID",
       "Name": "Vārds",
@@ -3372,6 +3376,7 @@
       "undo_account_transfer": "Vai tiešām vēlaties atcelt šo konta pārskaitījumu?"
     },
     "text": {
+      "Max": "Maks",
       "No Breach Actions": "Nav Pārkāpums Darbības",
       "No Near Breach Actions": "Nav Tuvu pārkāpumam Darbības",
       "A": "A",
