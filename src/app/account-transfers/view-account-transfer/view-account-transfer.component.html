@@ -47,9 +47,10 @@
         <div fxFlexFill>
           <span fxFlex="40%">Account #:</span>
           <span fxFlex="60%">
-            <a [routerLink]="fromAccountUrl" class="account-link">
+            <a *ngIf="fromAccountUrl; else plainFromAccountNo" [routerLink]="fromAccountUrl" class="account-link">
               {{ viewAccountTransferData.fromAccount.accountNo }}
             </a>
+            <ng-template #plainFromAccountNo>{{ viewAccountTransferData.fromAccount.accountNo }}</ng-template>
           </span>
         </div>
 
@@ -75,9 +76,10 @@
         <div fxFlexFill>
           <span fxFlex="40%">Account #:</span>
           <span fxFlex="60%">
-            <a [routerLink]="toAccountUrl" class="account-link">
+            <a *ngIf="toAccountUrl; else plainToAccountNo" [routerLink]="toAccountUrl" class="account-link">
               {{ viewAccountTransferData.toAccount.accountNo }}
             </a>
+            <ng-template #plainToAccountNo>{{ viewAccountTransferData.toAccount.accountNo }}</ng-template>
           </span>
         </div>
 
