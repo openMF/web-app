@@ -81,6 +81,18 @@
           <a matLine #dashboard>{{ 'labels.menus.Dashboard' | translate }}</a>
         </mat-list-item>
         <mat-list-item
+          [routerLink]="['/reporting-dashboard']"
+          [matTooltipPosition]="tooltipPosition"
+          matTooltip="{{ 'tooltips.Reporting Dashboard' | translate }}"
+          routerLinkActive="active-menu"
+          [routerLinkActiveOptions]="{ exact: false }"
+        >
+          <mat-icon matListIcon>
+            <fa-icon icon="file-alt" size="sm"></fa-icon>
+          </mat-icon>
+          <a matLine #reportingDashboard>{{ 'labels.menus.Reporting Dashboard' | translate }}</a>
+        </mat-list-item>
+        <mat-list-item
           [routerLink]="['/navigation']"
           [matTooltipPosition]="tooltipPosition"
           matTooltip="{{ 'tooltips.Navigation' | translate }}"

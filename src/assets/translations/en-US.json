@@ -3309,7 +3309,8 @@
       "Apply Additional Shares": "Apply Additional Shares",
       "Redeem Shares": "Redeem Shares",
       "Approve Additional Shares": "Approve Additional Shares",
-      "Reject Additional Shares": "Reject Additional Shares"
+      "Reject Additional Shares": "Reject Additional Shares",
+      "Reporting Dashboard": "Reporting Dashboard"
     },
     "placeholders": {
       "# Remittance": "# Remittance",
@@ -4544,8 +4545,7 @@
       "No Upcoming Charges Found": "No Upcoming Charges Found",
       "unableToUpdateDiscount": "Unable to update discount.",
       "validationSaved": "Validation data saved successfully.",
-      "workingCapitalDiscountUpdated": "Working capital discount was updated successfully.",
-      "unableToUpdateDiscount": "Unable to update discount."
+      "workingCapitalDiscountUpdated": "Working capital discount was updated successfully."
     },
     "cbild": {
       "fields": {
@@ -4562,6 +4562,22 @@
         "clientNotFound": "Client {{ clientId }} not found in Fineract.",
         "serviceUnavailable": "CDC or Fineract is unreachable. Please try again later.",
         "unexpected": "An unexpected error occurred. Please try again."
+      },
+      "dashboard": {
+        "role": "Your CB-ILD Role",
+        "runBatch": "Run Batch",
+        "batchStarted": "Batch submission started for all active clients",
+        "total": "Total Submissions",
+        "accepted": "Accepted",
+        "pendingRetry": "Pending Retry",
+        "permanentlyFailed": "Permanently Failed",
+        "clientId": "Client ID",
+        "triggerType": "Trigger Type",
+        "status": "Status",
+        "cdcRef": "CDC Reference ID",
+        "expiry": "Expiry Date",
+        "submittedAt": "Submitted At",
+        "noSubmissions": "No submissions found"
       }
     }
   },
@@ -4783,7 +4799,8 @@
     "Withdraw": "Withdraw",
     "Yes": "Yes",
     "loan product will be active and available to clients": "The date that the loan product will be active and available to clients. If blank, the loan product will be active as soon as it is created.",
-    "loan product will become inactive and unavailable to clients": "The date that the loan product will become inactive and unavailable to clients. If blank, the load product will never become inactive."
+    "loan product will become inactive and unavailable to clients": "The date that the loan product will become inactive and unavailable to clients. If blank, the load product will never become inactive.",
+    "Reporting Dashboard": "CB-ILD Reporting Dashboard"
   },
   "countries": {
     "AF": "Afghanistan",

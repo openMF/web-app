@@ -88,21 +88,21 @@ export class CreditBureauService {
     });
   }
 
-  getSubmissionHistory(clientId: number, page = 0, size = 20): Observable<PagedResult<SubmissionRecord>> {
-    const params = new HttpParams()
-      .set('clientId', clientId.toString())
-      .set('page', page.toString())
-      .set('size', size.toString());
+  getSubmissionHistory(page = 0, size = 20, clientId?: number): Observable<PagedResult<SubmissionRecord>> {
+    let params = new HttpParams().set('page', page.toString()).set('size', size.toString());
+    if (clientId !== undefined && clientId !== null) {
+      params = params.set('clientId', clientId.toString());
+    }
     return this.externalHttp.get<PagedResult<SubmissionRecord>>(`${this.baseUrl}/api/submissions/history`, {
       headers: this.getHeaders(),
       params
     });
   }
 
-  runSubmissions(clientIds: number[]): Observable<SubmissionRunResponse> {
+  runSubmissions(clientIds?: number[]): Observable<SubmissionRunResponse> {
     return this.externalHttp.post<SubmissionRunResponse>(
       `${this.baseUrl}/api/submissions/run`,
-      { clientIds },
+      clientIds && clientIds.length > 0 ? { clientIds } : null,
       { headers: this.getHeaders() }
     );
   }
