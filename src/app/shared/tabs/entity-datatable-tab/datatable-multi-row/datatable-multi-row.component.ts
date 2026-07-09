@@ -10,6 +10,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { DecimalPipe, NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   Input,
   OnChanges,
@@ -82,6 +83,7 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
   private systemService = inject(SystemService);
   private settingsService = inject(SettingsService);
   private dialog = inject(MatDialog);
+  private changeDetectorRef = inject(ChangeDetectorRef);
   private datatables = inject(Datatables);
   private dateFormat = inject(DateFormatPipe);
   private dateTimeFormat = inject(DatetimeFormatPipe);
@@ -118,6 +120,7 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
     this.selection = new SelectionModel(true, []);
     this.route.params.subscribe((routeParams: any) => {
       this.datatableName = routeParams.datatableName;
+      this.changeDetectorRef.markForCheck();
     });
     this.setData();
     this.isSelected = false;
@@ -128,10 +131,18 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.setData();
+    if (changes.dataObject && this.dataObject) {
+      this.selection = new SelectionModel(true, []);
+      this.isSelected = false;
+      this.setData();
+      this.changeDetectorRef.markForCheck();
+    }
   }
 
   setData() {
+    if (!this.dataObject) {
+      return;
+    }
     this.datatableColumns = [this.SELECT_NAME_FIELD];
     this.dataObject.columnHeaders.filter((columnHeader: any) => {
       if (!this.datatables.isEntityId(columnHeader.columnName)) {
@@ -162,6 +173,7 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
       }
       this.isSelected = false;
       this.isLoading = false;
+      this.changeDetectorRef.markForCheck();
     });
   }
 

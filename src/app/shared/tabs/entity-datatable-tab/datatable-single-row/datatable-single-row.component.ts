@@ -6,7 +6,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  inject
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Datatables } from 'app/core/utils/datatables';
@@ -51,8 +60,9 @@ import { formatTabLabel } from 'app/shared/utils/format-tab-label.util';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DatatableSingleRowComponent implements OnInit {
+export class DatatableSingleRowComponent implements OnInit, OnChanges {
   private route = inject(ActivatedRoute);
+  private changeDetectorRef = inject(ChangeDetectorRef);
   private dateUtils = inject(Dates);
   private dialog = inject(MatDialog);
   private settingsService = inject(SettingsService);
@@ -71,7 +81,14 @@ export class DatatableSingleRowComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((routeParams: any) => {
       this.datatableName = routeParams.datatableName;
+      this.changeDetectorRef.markForCheck();
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.dataObject) {
+      this.changeDetectorRef.markForCheck();
+    }
   }
 
   add() {
@@ -104,6 +121,7 @@ export class DatatableSingleRowComponent implements OnInit {
           .subscribe(() => {
             this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
               this.dataObject = dataObject;
+              this.changeDetectorRef.markForCheck();
             });
           });
       }
@@ -158,6 +176,7 @@ export class DatatableSingleRowComponent implements OnInit {
           .subscribe(() => {
             this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
               this.dataObject = dataObject;
+              this.changeDetectorRef.markForCheck();
             });
           });
       }
@@ -173,6 +192,7 @@ export class DatatableSingleRowComponent implements OnInit {
         this.systemService.deleteDatatableContent(this.entityId, this.datatableName).subscribe(() => {
           this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
             this.dataObject = dataObject;
+            this.changeDetectorRef.markForCheck();
           });
         });
       }
