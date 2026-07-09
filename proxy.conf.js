@@ -23,22 +23,22 @@ const proxyConfig = [
     changeOrigin: true,
     secure: true,
     logLevel: 'debug',
-    onProxyReq: function (proxyReq, req, res) {
-      console.log('[Proxy] Proxying:', req.method, req.url, '->', this.target + req.url);
-    },
-    onError: function (err, req, res) {
-      console.error(
-        '[Proxy] Error while proxying request:',
-        req && req.method,
-        req && req.url,
-        '->',
-        this.target,
-        '-',
-        err && err.message
-      );
-      if (res && !res.headersSent) {
-        res.writeHead(502, { 'Content-Type': 'text/plain' });
-        res.end('Proxy error: ' + (err && err.message ? err.message : 'Unknown error'));
+    on: {
+      proxyReq: function (proxyReq, req, res) {
+        console.log('[Proxy] Proxying:', req.method, req.url, '->', 'https://demo.mifos.community' + req.url);
+      },
+      error: function (err, req, res) {
+        console.error(
+          '[Proxy] Error while proxying request:',
+          req && req.method,
+          req && req.url,
+          '-> https://demo.mifos.community -',
+          err && err.message
+        );
+        if (res && !res.headersSent) {
+          res.writeHead(502, { 'Content-Type': 'text/plain' });
+          res.end('Proxy error: ' + (err && err.message ? err.message : 'Unknown error'));
+        }
       }
     }
   },
@@ -54,23 +54,23 @@ const proxyConfig = [
         ? { 'X-Gravitee-Api-Key': process.env.EXTERNAL_NATIONAL_ID_SYSTEM_API_KEY }
         : {})
     },
-    onProxyReq: function (proxyReq, req, res) {
-      const rewrittenPath = (req.url || '').replace(/^\/external-nationalid/, '/1.0/nationalid');
-      console.log('[Proxy] Proxying:', req.method, req.url, '->', this.target + rewrittenPath);
-    },
-    onError: function (err, req, res) {
-      console.error(
-        '[Proxy] Error while proxying request:',
-        req && req.method,
-        req && req.url,
-        '->',
-        this.target,
-        '-',
-        err && err.message
-      );
-      if (res && !res.headersSent) {
-        res.writeHead(502, { 'Content-Type': 'text/plain' });
-        res.end('Proxy error: ' + (err && err.message ? err.message : 'Unknown error'));
+    on: {
+      proxyReq: function (proxyReq, req, res) {
+        const rewrittenPath = (req.url || '').replace(/^\/external-nationalid/, '/1.0/nationalid');
+        console.log('[Proxy] Proxying:', req.method, req.url, '->', 'https://apis.mifos.community' + rewrittenPath);
+      },
+      error: function (err, req, res) {
+        console.error(
+          '[Proxy] Error while proxying request:',
+          req && req.method,
+          req && req.url,
+          '-> https://apis.mifos.community -',
+          err && err.message
+        );
+        if (res && !res.headersSent) {
+          res.writeHead(502, { 'Content-Type': 'text/plain' });
+          res.end('Proxy error: ' + (err && err.message ? err.message : 'Unknown error'));
+        }
       }
     }
   },
@@ -86,23 +86,23 @@ const proxyConfig = [
         ? { [process.env.MIFOS_REMITTANCE_API_HEADER || 'X-Gravitee-Api-Key']: process.env.MIFOS_REMITTANCE_API_KEY }
         : {})
     },
-    onProxyReq: function (proxyReq, req, res) {
-      const rewrittenPath = (req.url || '').replace(/^\/remittance-api/, '/1.0/remittance');
-      console.log('[Proxy] Proxying:', req.method, req.url, '->', this.target + rewrittenPath);
-    },
-    onError: function (err, req, res) {
-      console.error(
-        '[Proxy] Error while proxying request:',
-        req && req.method,
-        req && req.url,
-        '->',
-        this.target,
-        '-',
-        err && err.message
-      );
-      if (res && !res.headersSent) {
-        res.writeHead(502, { 'Content-Type': 'text/plain' });
-        res.end('Proxy error: ' + (err && err.message ? err.message : 'Unknown error'));
+    on: {
+      proxyReq: function (proxyReq, req, res) {
+        const rewrittenPath = (req.url || '').replace(/^\/remittance-api/, '/1.0/remittance');
+        console.log('[Proxy] Proxying:', req.method, req.url, '->', 'https://apis.mifos.community' + rewrittenPath);
+      },
+      error: function (err, req, res) {
+        console.error(
+          '[Proxy] Error while proxying request:',
+          req && req.method,
+          req && req.url,
+          '-> https://apis.mifos.community -',
+          err && err.message
+        );
+        if (res && !res.headersSent) {
+          res.writeHead(502, { 'Content-Type': 'text/plain' });
+          res.end('Proxy error: ' + (err && err.message ? err.message : 'Unknown error'));
+        }
       }
     }
   }
