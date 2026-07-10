@@ -68,6 +68,7 @@ export class ClientsService {
     limit: number,
     countryId: string,
     subStatus?: string,
+    displayName?: string,
   ): Observable<any> {
     let httpParams = new HttpParams()
       .set('offset', offset.toString())
@@ -79,6 +80,9 @@ export class ClientsService {
 
       if(subStatus) {
         httpParams = httpParams.set('subStatus', subStatus);
+      }
+      if(displayName) {
+        httpParams = httpParams.set('displayName', displayName);
       }
     return this.http.get('/clients', { params: httpParams });
   }

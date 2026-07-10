@@ -80,6 +80,8 @@ export abstract class BaseCheckerInboxComponent implements OnDestroy, AfterViewI
     const pageSize = this.paginator ? this.paginator.pageSize : this.pageSize;
     const dateFormat = "dd MMMM yyyy";
 
+    const countryId = this.settingsService.getSelectedCountry()?.id;
+
     const params = {
       ...cleanForm,
       offset: pageIndex * pageSize,
@@ -88,7 +90,8 @@ export abstract class BaseCheckerInboxComponent implements OnDestroy, AfterViewI
       sortOrder: this.sort?.direction || undefined,
       includeClientHierarchyPath: this.includeOUPath ? this.includeOUPath.checked : true,
       dateFrom: this.dateUtils.formatDate(this.makerCheckerSearchForm.value.dateFrom, dateFormat),
-      dateTo: this.dateUtils.formatDate(this.makerCheckerSearchForm.value.dateTo, dateFormat)
+      dateTo: this.dateUtils.formatDate(this.makerCheckerSearchForm.value.dateTo, dateFormat),
+      ...(countryId ? { countryId } : {})
     };
 
     this.tasksService.getClientKYCApprovals(params)
