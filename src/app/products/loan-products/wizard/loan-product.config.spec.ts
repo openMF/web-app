@@ -7,7 +7,7 @@
  */
 
 import { LoanProducts } from '../loan-products';
-import { buildPayload } from './loan-product.config';
+import { buildPayload, PRODUCT_CARDS } from './loan-product.config';
 
 describe('loan-product.config buildPayload', () => {
   it('removes unsupported hidden defaults from the personal loan payload', () => {
@@ -430,5 +430,15 @@ describe('loan-product.config buildPayload', () => {
     expect(payload.enableDownPayment).toBe(true);
     expect(payload.disbursedAmountPercentageForDownPayment).toBe(35);
     expect(payload.enableAutoRepaymentForDownPayment).toBe(true);
+  });
+});
+
+describe('loan-product.config PRODUCT_CARDS', () => {
+  it('gives every product card a non-empty icon', () => {
+    PRODUCT_CARDS.forEach((product) => {
+      expect(product.icon).toBeDefined();
+      expect(typeof product.icon).toBe('string');
+      expect(product.icon.length).toBeGreaterThan(0);
+    });
   });
 });

@@ -86,6 +86,7 @@ export interface ProductCard {
   disabled?: boolean;
   route?: string;
   ctaLabel?: string;
+  icon: string;
 }
 
 export type FieldType = 'text' | 'number' | 'select' | 'checkbox' | 'textarea' | 'date';
@@ -123,11 +124,16 @@ export interface FormStep {
 export const PRODUCT_CARDS: ProductCard[] = [
   {
     name: 'Custom / Advanced',
-    description: 'Flexible configuration with advanced controls for tranche and arrears behavior.',
+    // Fully qualified translation key (rather than literal display text like the other cards below) so
+    // this specific description can be localized; the template applies `| translate` to every card's
+    // `description`, and untranslated literal text safely falls through the missing-translation handler
+    // unchanged, so this doesn't require touching the other, not-yet-translated cards.
+    description: 'labels.text.Complete control over every aspect of product behavior',
     active: true,
     disabled: false,
     route: 'custom-advanced',
-    ctaLabel: 'Create Custom / Advanced'
+    ctaLabel: 'Create Custom / Advanced',
+    icon: 'tune'
   },
   {
     name: 'Personal Loan',
@@ -135,107 +141,123 @@ export const PRODUCT_CARDS: ProductCard[] = [
       'Unsecured funding for personal needs like travel, medical expenses, or weddings, with flexible tenure and minimal documentation.',
     active: true,
     disabled: false,
-    route: 'personal-loan'
+    route: 'personal-loan',
+    icon: 'account_balance_wallet'
   },
   {
     name: 'Two Wheeler Loan',
     description: 'Finance for new or used two-wheelers with quick approval and flexible down payment options.',
     active: false,
-    disabled: true
+    disabled: true,
+    icon: 'pedal_bike'
   },
   {
     name: 'JLG Loan',
     description:
       'Group-backed microloans for individuals in a Joint Liability Group, typically for income-generating activities.',
     active: false,
-    disabled: true
+    disabled: true,
+    icon: 'group'
   },
   {
     name: 'Education Loan',
     description:
       'Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration.',
     active: false,
-    disabled: true
+    disabled: true,
+    icon: 'school'
   },
   {
     name: 'Home Loan',
     description: 'Long-tenure financing to purchase, construct, or renovate a residential property.',
     active: false,
-    disabled: true
+    disabled: true,
+    icon: 'home'
   },
   {
     name: 'Mortgage Loan (LAP)',
     description: 'Loan against property where an existing residential or commercial asset is pledged as collateral.',
     active: false,
-    disabled: true
+    disabled: true,
+    icon: 'home_work'
   },
   {
     name: 'Agri Loan',
     description:
       'Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles.',
     active: false,
-    disabled: true
+    disabled: true,
+    icon: 'agriculture'
   },
   {
     name: 'Auto Loan',
     description: 'Financing for new or used car purchases with structured EMIs over a chosen tenure.',
     active: false,
-    disabled: true
+    disabled: true,
+    icon: 'directions_car'
   },
   {
     name: 'Gold Loan',
     description:
       'Quick secured loan against pledged gold ornaments or coins, with fast disbursal and minimal paperwork.',
     active: false,
-    disabled: true
+    disabled: true,
+    icon: 'diamond'
   },
   {
     name: 'Consumer Durable Loan',
     description:
       'Point-of-sale financing for electronics, appliances, and other durable goods, often with zero-cost EMI options.',
     active: false,
-    disabled: true
+    disabled: true,
+    icon: 'devices'
   },
   {
     name: 'Loan vs Securities / FD',
     description:
       'Credit extended against shares, mutual funds, or fixed deposits without liquidating the underlying investment.',
     active: false,
-    disabled: true
+    disabled: true,
+    icon: 'account_balance'
   },
   {
     name: 'Credit Card EMI',
     description: 'Converts card spends or available credit limit into structured EMIs.',
     active: false,
-    disabled: true
+    disabled: true,
+    icon: 'credit_card'
   },
   {
     name: 'BNPL',
     description:
       'Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments.',
     active: false,
-    disabled: true
+    disabled: true,
+    icon: 'shopping_cart'
   },
   {
     name: 'Invoice Discounting',
     description:
       'Short-term financing against unpaid invoices to improve business cash flow before customer payment is due.',
     active: false,
-    disabled: true
+    disabled: true,
+    icon: 'receipt_long'
   },
   {
     name: 'Merchant Cash Advance',
     description:
       'Working capital advanced against future card or digital sales, repaid as a percentage of daily transactions.',
     active: false,
-    disabled: true
+    disabled: true,
+    icon: 'storefront'
   },
   {
     name: 'Line of Credit',
     description:
       'A revolving credit limit that can be drawn, repaid, and reused as needed, with interest charged only on the amount utilized.',
     active: false,
-    disabled: true
+    disabled: true,
+    icon: 'credit_score'
   }
 ];
 

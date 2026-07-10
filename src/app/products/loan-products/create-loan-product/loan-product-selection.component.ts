@@ -10,6 +10,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { PRODUCT_CARDS } from '../wizard/loan-product.config';
 
@@ -22,6 +23,7 @@ import { PRODUCT_CARDS } from '../wizard/loan-product.config';
     ...STANDALONE_SHARED_IMPORTS,
     MatCardModule,
     MatButtonModule,
+    MatIconModule,
     RouterLink
   ],
   changeDetection: ChangeDetectionStrategy.OnPush

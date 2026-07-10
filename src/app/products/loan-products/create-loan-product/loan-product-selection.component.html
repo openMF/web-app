@@ -8,16 +8,9 @@
 
 <div class="landing-page">
   <section class="landing-page__hero">
-    <div>
-      <p class="landing-page__eyebrow">{{ 'labels.text.Products' | translate }}</p>
-      <h1>{{ 'labels.heading.Loan product creation' | translate }}</h1>
-      <p class="landing-page__copy">{{ 'labels.text.Select a product below' | translate }}</p>
-    </div>
-
-    <div class="landing-page__badge">
-      <span>{{ 'labels.text.Version 2' | translate }}</span>
-      <strong>{{ 'labels.text.Personal and Custom Loan enabled' | translate }}</strong>
-    </div>
+    <p class="landing-page__eyebrow">{{ 'labels.text.Products' | translate }}</p>
+    <h1>{{ 'labels.heading.Loan product creation' | translate }}</h1>
+    <p class="landing-page__copy">{{ 'labels.text.Select a product below' | translate }}</p>
   </section>
 
   <section class="product-grid">
@@ -28,29 +21,27 @@
       [class.product-card--disabled]="product.disabled"
     >
       <div class="product-card__header">
-        <div>
-          <p class="product-card__eyebrow">{{ 'labels.inputs.Product' | translate }}</p>
-          <h3>{{ product.name }}</h3>
+        <div class="product-card__icon">
+          <mat-icon aria-hidden="true">{{ product.icon }}</mat-icon>
         </div>
         <span class="product-chip" [class.product-chip--active]="product.active">
-          {{ (product.active ? 'labels.inputs.Active' : 'labels.inputs.Disabled') | translate }}
+          {{ (product.active ? 'labels.inputs.Active' : 'labels.text.Upcoming') | translate }}
         </span>
       </div>
 
-      <p class="product-card__description">{{ product.description }}</p>
+      <h3 class="product-card__title">{{ product.name }}</h3>
+      <p class="product-card__description">{{ product.description | translate }}</p>
 
-      <button
+      <a
         *ngIf="product.active"
-        mat-raised-button
+        mat-button
         color="primary"
+        class="product-card__cta"
         [routerLink]="['/products', 'loan-products', product.route]"
         [queryParams]="{ productType: 'loan' }"
       >
-        {{ 'labels.buttons.Create' | translate }} {{ product.name }}
-      </button>
-      <button *ngIf="!product.active" mat-stroked-button disabled>
-        {{ 'labels.text.Coming soon' | translate }}
-      </button>
+        {{ 'labels.buttons.Create' | translate }}
+      </a>
     </mat-card>
   </section>
 </div>
