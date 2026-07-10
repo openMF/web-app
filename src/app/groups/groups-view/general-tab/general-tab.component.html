@@ -86,6 +86,15 @@
       [dataSource]="loanAccounts | accountsFilter : 'loan'"
       class="mat-elevation-z1 m-b-30"
     >
+      <ng-container matColumnDef="Client">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Client' | translate }}</th>
+        <td mat-cell *matCellDef="let element">
+          <a [routerLink]="['/clients', element.clientId, 'general']" (click)="$event.stopPropagation()">
+            {{ element.clientAccountNo }}
+          </a>
+        </td>
+      </ng-container>
+
       <ng-container matColumnDef="Account No">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account No' | translate }}.</th>
         <td mat-cell *matCellDef="let element">
@@ -101,15 +110,6 @@
       <ng-container matColumnDef="Loan Account">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Loan Account' | translate }}</th>
         <td mat-cell *matCellDef="let element">{{ element.productName }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="Client">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Client' | translate }}</th>
-        <td mat-cell *matCellDef="let element">
-          <a [routerLink]="['/clients', element.clientId, 'general']" (click)="$event.stopPropagation()">
-            {{ element.clientAccountNo }}
-          </a>
-        </td>
       </ng-container>
 
       <ng-container matColumnDef="Original Loan">
