@@ -645,7 +645,7 @@
               #datatable="routerLinkActive"
               [active]="datatable.isActive"
             >
-              {{ loanDatatable.registeredTableName }}
+              {{ loanDatatable.registeredTableName | datatableDisplayLabel }}
             </a>
           }
         }
