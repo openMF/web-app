@@ -21,14 +21,14 @@
     margin-top: 16px;
     box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
 
-    .mat-card-content {
+    mat-card-content {
       padding: 0;
+    }
 
-      .table-scroll-wrapper {
-        overflow-x: auto;
-        max-width: 100%;
-        width: 100%;
-      }
+    .table-scroll-wrapper {
+      overflow-x: auto;
+      max-width: 100%;
+      width: 100%;
     }
   }
 
