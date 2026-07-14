@@ -1130,6 +1130,11 @@
       "NotEqual": "Diferente de"
     },
     "heading": {
+      "Create Agriculture Loan": "Criar empréstimo agrícola",
+      "Create Education Loan": "Criar empréstimo para estudos",
+      "Create Personal Loan": "Criar empréstimo pessoal",
+      "Create Two Wheeler Loan": "Criar empréstimo para veículos de duas rodas",
+      "Custom / Advanced Loan Configuration": "Configuração de empréstimo personalizada / avançada",
       "Breach Actions": "Ações de violação",
       "Delinquency & Breach": "Inadimplência e Violação",
       "Interest": "Juros",
@@ -3452,6 +3457,14 @@
       "undo_account_transfer": "Tem a certeza de que pretende reverter esta transferência de conta?"
     },
     "text": {
+      "Agriculture Loan": "Empréstimo agrícola",
+      "Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles": "Crédito para necessidades agrícolas como a produção de culturas, equipamento ou valorização de terrenos, geralmente ajustado aos ciclos agrícolas.",
+      "Education Loan": "Empréstimo para estudos",
+      "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "Financiamento de propinas e despesas associadas para estudos no país ou no estrangeiro, com opções de reembolso ajustadas à duração do curso.",
+      "Personal Loan": "Empréstimo pessoal",
+      "Custom / Advanced": "Personalizado / Avançado",
+      "Two Wheeler Loan": "Empréstimo para veículos de duas rodas",
+      "Finance for new or used two-wheelers with quick approval and flexible down payment options": "Financiamento de veículos de duas rodas novos ou usados, com aprovação rápida e pagamento inicial flexível.",
       "Max": "Máx",
       "Hidden variables and predefined values are included in the final payload automatically.": "Hidden variables and predefined values are included in the final payload automatically.",
       "No Breach Actions": "Nenhuma ação de violação",

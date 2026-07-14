@@ -1145,6 +1145,11 @@
       "NotEqual": "Not equal"
     },
     "heading": {
+      "Create Agriculture Loan": "Create Agriculture Loan",
+      "Create Education Loan": "Create Education Loan",
+      "Create Personal Loan": "Create Personal Loan",
+      "Create Two Wheeler Loan": "Create Two Wheeler Loan",
+      "Custom / Advanced Loan Configuration": "Custom / Advanced Loan Configuration",
       "Breach Actions": "Breach Actions",
       "Delinquency & Breach": "Delinquency & Breach",
       "Interest": "Interest",
@@ -3482,6 +3487,14 @@
       "the Transaction Type": "the Transaction Type"
     },
     "text": {
+      "Agriculture Loan": "Agriculture Loan",
+      "Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles": "Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles.",
+      "Education Loan": "Education Loan",
+      "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration.",
+      "Personal Loan": "Personal Loan",
+      "Custom / Advanced": "Custom / Advanced",
+      "Two Wheeler Loan": "Two Wheeler Loan",
+      "Finance for new or used two-wheelers with quick approval and flexible down payment options": "Finance for new or used two-wheelers with quick approval and flexible down payment options.",
       "Max": "Max",
       "Min": "Min",
       "Any": "Any",

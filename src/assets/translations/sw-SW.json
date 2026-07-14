@@ -1128,6 +1128,11 @@
       "NotEqual": "Sio sawa"
     },
     "heading": {
+      "Create Agriculture Loan": "Unda Mkopo wa Kilimo",
+      "Create Education Loan": "Unda Mkopo wa Elimu",
+      "Create Personal Loan": "Unda Mkopo wa Binafsi",
+      "Create Two Wheeler Loan": "Unda Mkopo wa Pikipiki",
+      "Custom / Advanced Loan Configuration": "Usanidi wa Mkopo Maalum / wa Kina",
       "Breach Actions": "Ukiukaji Vitendo",
       "Delinquency & Breach": "Uhalifu na Ukiukaji",
       "Interest": "Riba",
@@ -3449,6 +3454,14 @@
       "undo_account_transfer": "Una uhakika unataka kufuta uhamisho huu wa akaunti?"
     },
     "text": {
+      "Agriculture Loan": "Mkopo wa Kilimo",
+      "Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles": "Mkopo kwa mahitaji ya kilimo kama vile uzalishaji wa mazao, vifaa au uendelezaji wa ardhi, ambao mara nyingi hufungamanishwa na misimu ya kilimo.",
+      "Education Loan": "Mkopo wa Elimu",
+      "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "Ufadhili wa ada na gharama zinazohusiana kwa masomo ya ndani au ya nje ya nchi, wenye chaguo za ulipaji zinazolingana na muda wa kozi.",
+      "Personal Loan": "Mkopo wa Binafsi",
+      "Custom / Advanced": "Maalum / wa Kina",
+      "Two Wheeler Loan": "Mkopo wa Pikipiki",
+      "Finance for new or used two-wheelers with quick approval and flexible down payment options": "Ufadhili wa pikipiki mpya au zilizotumika wenye idhini ya haraka na chaguo nyumbufu za malipo ya awali.",
       "Max": "Upeo",
       "Hidden variables and predefined values are included in the final payload automatically.": "Hidden variables and predefined values are included in the final payload automatically.",
       "No Breach Actions": "Hakuna Ukiukaji Vitendo",

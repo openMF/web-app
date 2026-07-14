@@ -1130,6 +1130,11 @@
       "NotEqual": "같지 않음"
     },
     "heading": {
+      "Create Agriculture Loan": "농업 대출 생성",
+      "Create Education Loan": "교육 대출 생성",
+      "Create Personal Loan": "개인 대출 생성",
+      "Create Two Wheeler Loan": "이륜차 대출 생성",
+      "Custom / Advanced Loan Configuration": "사용자 지정 / 고급 대출 구성",
       "Breach Actions": "위반 행위",
       "Delinquency & Breach": "연체 및 위반",
       "Interest": "이자",
@@ -3452,6 +3457,14 @@
       "undo_account_transfer": "이 계좌 이체를 취소하시겠습니까?"
     },
     "text": {
+      "Agriculture Loan": "농업 대출",
+      "Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles": "작물 생산, 장비, 농지 개발 등 영농 관련 자금을 지원하며, 일반적으로 영농 주기에 맞춰 운영되는 대출입니다.",
+      "Education Loan": "교육 대출",
+      "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "국내외 학업의 등록금 및 관련 비용을 지원하며, 학업 기간에 맞춘 상환 옵션을 제공합니다.",
+      "Personal Loan": "개인 대출",
+      "Custom / Advanced": "사용자 지정 / 고급",
+      "Two Wheeler Loan": "이륜차 대출",
+      "Finance for new or used two-wheelers with quick approval and flexible down payment options": "신차 및 중고 이륜차 구입 자금을 빠른 승인과 유연한 계약금 옵션으로 지원합니다.",
       "Max": "최대",
       "Hidden variables and predefined values are included in the final payload automatically.": "Hidden variables and predefined values are included in the final payload automatically.",
       "No Breach Actions": "위반 행위 없음",

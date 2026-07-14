@@ -1130,6 +1130,11 @@
       "NotEqual": "Nevienāds"
     },
     "heading": {
+      "Create Agriculture Loan": "Izveidot lauksaimniecības aizdevumu",
+      "Create Education Loan": "Izveidot studiju aizdevumu",
+      "Create Personal Loan": "Izveidot patēriņa aizdevumu",
+      "Create Two Wheeler Loan": "Izveidot divriteņu transportlīdzekļa aizdevumu",
+      "Custom / Advanced Loan Configuration": "Pielāgota / paplašināta aizdevuma konfigurācija",
       "Breach Actions": "Pārkāpums Darbības",
       "Delinquency & Breach": "Kavējumi un pārkāpums",
       "Interest": "Procenti",
@@ -3452,6 +3457,14 @@
       "undo_account_transfer": "Vai tiešām vēlaties atcelt šo konta pārskaitījumu?"
     },
     "text": {
+      "Agriculture Loan": "Lauksaimniecības aizdevums",
+      "Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles": "Kredīts lauksaimniecības vajadzībām, piemēram, kultūraugu audzēšanai, tehnikai vai zemes uzlabošanai, parasti saistīts ar lauksaimniecības cikliem.",
+      "Education Loan": "Studiju aizdevums",
+      "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "Mācību maksas un ar to saistīto izdevumu finansējums studijām valstī vai ārzemēs ar studiju ilgumam pielāgotām atmaksas iespējām.",
+      "Personal Loan": "Patēriņa aizdevums",
+      "Custom / Advanced": "Pielāgots / paplašināts",
+      "Two Wheeler Loan": "Divriteņu transportlīdzekļa aizdevums",
+      "Finance for new or used two-wheelers with quick approval and flexible down payment options": "Jaunu vai lietotu divriteņu transportlīdzekļu finansējums ar ātru apstiprinājumu un elastīgu pirmo iemaksu.",
       "Max": "Maks",
       "Hidden variables and predefined values are included in the final payload automatically.": "Hidden variables and predefined values are included in the final payload automatically.",
       "No Breach Actions": "Nav Pārkāpums Darbības",

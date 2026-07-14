@@ -8,7 +8,7 @@
 
 /** Angular Imports */
 import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import { LoanWizardProfileMode } from '../wizard/loan-product.config';
+import { LoanWizardProfileMode, profileForRoutePath } from '../wizard/loan-product.config';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -39,7 +39,8 @@ export class CreateLoanProductComponent extends LoanProductBaseComponent impleme
   accountingRuleData: string[] = [];
   itemsByDefault: any[] = [];
   profileMode: LoanWizardProfileMode = 'personal';
-  pageTitle = 'Create Personal Loan';
+  /** Translation key for the page heading, resolved from the matched route. */
+  pageTitle = 'labels.heading.Create Personal Loan';
 
   constructor() {
     super();
@@ -48,10 +49,9 @@ export class CreateLoanProductComponent extends LoanProductBaseComponent impleme
     const productType = this.route.snapshot.queryParamMap.get('productType') || 'loan';
     this.loanProductService.initialize(productType);
 
-    const routePath = this.route.snapshot.routeConfig?.path;
-    this.profileMode = routePath === 'custom-advanced' ? 'custom-advanced' : 'personal';
-    this.pageTitle =
-      this.profileMode === 'custom-advanced' ? 'Custom / Advanced Loan Configuration' : 'Create Personal Loan';
+    const routeProfile = profileForRoutePath(this.route.snapshot.routeConfig?.path);
+    this.profileMode = routeProfile.profileMode;
+    this.pageTitle = routeProfile.pageTitle;
 
     this.route.data.subscribe((data) => {
       this.loanProductsTemplate = data['loanProductsTemplate'];

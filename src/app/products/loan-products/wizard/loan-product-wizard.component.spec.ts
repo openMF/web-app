@@ -697,4 +697,742 @@ describe('LoanProductWizardComponent', () => {
       expect(component.formattedPrincipal).toContain('60,000');
     });
   });
+
+  describe('golden parity: visible fields, steps and seeded form state per profile', () => {
+    // These locks pin the exact wizard surface (which fields/steps render) and the exact form
+    // seeding (what getInitialFormState + syncTemplateDefaults leave in the controls) for the
+    // existing profile modes. Any refactor of visibility or seeding shows up as an explicit,
+    // reviewable diff in these literal objects — only an intentional UX change may update them.
+
+    function personalComponent(): LoanProductWizardComponent {
+      const component = createComponent();
+      component.profileMode = 'personal';
+      component.loanProductsTemplate = {
+        currencyOptions: [{ code: 'INR' }],
+        transactionProcessingStrategyOptions: [
+          { code: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY, name: 'Advanced Payment Allocation' }
+        ]
+      };
+      component.ngOnInit();
+      return component;
+    }
+
+    function customAdvancedComponent(): LoanProductWizardComponent {
+      const component = createComponent();
+      component.profileMode = 'custom-advanced';
+      component.loanProductsTemplate = {
+        currencyOptions: [{ code: 'INR' }],
+        transactionProcessingStrategyOptions: [
+          { code: 'mifos-standard-strategy', name: 'Mifos standard' },
+          { code: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY, name: 'Advanced Payment Allocation' }
+        ]
+      };
+      component.ngOnInit();
+      return component;
+    }
+
+    function visibleKeysByStep(component: LoanProductWizardComponent): Record<string, string[]> {
+      return Object.fromEntries(
+        component.steps
+          .filter((step) => (step.kind ?? 'fields') === 'fields')
+          .map((step) => [
+            step.title,
+            component.visibleFields(step).map((field) => field.key)
+          ])
+      );
+    }
+
+    it('locks the Personal Loan visible field set', () => {
+      expect(visibleKeysByStep(personalComponent())).toEqual({
+        Details: [
+          'name',
+          'shortName',
+          'externalId'
+        ],
+        Currency: ['currencyCode'],
+        Terms: [
+          'principal',
+          'numberOfRepayments',
+          'interestRatePerPeriod',
+          'interestRateFrequencyType',
+          'repaymentEvery',
+          'repaymentFrequencyType'
+        ],
+        Settings: [
+          'amortizationType',
+          'interestType',
+          'interestCalculationPeriodType',
+          'transactionProcessingStrategyCode',
+          'graceOnPrincipalPayment',
+          'graceOnInterestPayment',
+          'interestFreePeriod'
+        ],
+        'Advanced Configuration': []
+      });
+    });
+
+    it('locks the Custom/Advanced visible field set', () => {
+      expect(visibleKeysByStep(customAdvancedComponent())).toEqual({
+        Details: [
+          'name',
+          'shortName',
+          'externalId',
+          'description',
+          'startDate',
+          'closeDate',
+          'includeInBorrowerCycle'
+        ],
+        Currency: [
+          'currencyCode',
+          'digitsAfterDecimal',
+          'inMultiplesOf',
+          'installmentAmountInMultiplesOf',
+          'useBorrowerCycle'
+        ],
+        Terms: [
+          'principal',
+          'numberOfRepayments',
+          'interestRatePerPeriod',
+          'interestRateFrequencyType',
+          'repaymentEvery',
+          'repaymentFrequencyType',
+          'isLinkedToFloatingInterestRates',
+          'allowApprovedDisbursedAmountsOverApplied',
+          'overAppliedCalculationType',
+          'overAppliedNumber',
+          'minimumDaysBetweenDisbursalAndFirstRepayment',
+          'interestRecognitionOnDisbursementDate'
+        ],
+        Settings: [
+          'amortizationType',
+          'interestType',
+          'calculateInterestForExactDays',
+          'isEqualAmortization',
+          'interestCalculationPeriodType',
+          'loanScheduleType',
+          'transactionProcessingStrategyCode',
+          'graceOnPrincipalPayment',
+          'graceOnInterestPayment',
+          'interestFreePeriod',
+          'daysInYearType',
+          'daysInMonthType',
+          'principalThresholdForLastInstallment',
+          'canUseForTopup',
+          'isInterestRecalculationEnabled',
+          'delinquencyBucketId',
+          'canDefineInstallmentAmount',
+          'allowVariableInstallments',
+          'multiDisburseLoan',
+          'inArrearsTolerance',
+          'graceOnArrearsAgeing',
+          'overdueDaysForNPA',
+          'accountMovesOutOfNPAOnlyOnArrearsCompletion',
+          'holdGuaranteeFunds',
+          'outstandingLoanBalance',
+          'disallowExpectedDisbursements',
+          'allowAttributeOverrides.amortizationType',
+          'allowAttributeOverrides.interestType',
+          'allowAttributeOverrides.transactionProcessingStrategyCode',
+          'allowAttributeOverrides.interestCalculationPeriodType',
+          'allowAttributeOverrides.inArrearsTolerance',
+          'allowAttributeOverrides.repaymentEvery',
+          'allowAttributeOverrides.graceOnPrincipalAndInterestPayment',
+          'allowAttributeOverrides.graceOnArrearsAgeing',
+          'enableDownPayment',
+          'enableInstallmentLevelDelinquency',
+          'enableIncomeCapitalization',
+          'enableBuydownFees'
+        ],
+        'Advanced Configuration': [
+          'useGlobalConfigForRepaymentEvent',
+          'dueDaysForRepaymentEvent',
+          'overDueDaysForRepaymentEvent'
+        ]
+      });
+    });
+
+    it('locks the Personal Loan visible step sequence', () => {
+      expect(personalComponent().visibleSteps.map((step) => step.title)).toEqual([
+        'Details',
+        'Currency',
+        'Terms',
+        'Settings',
+        'Payment Allocation',
+        'Charges',
+        'Accounting',
+        'Review'
+      ]);
+    });
+
+    it('locks the Custom/Advanced visible step sequence', () => {
+      expect(customAdvancedComponent().visibleSteps.map((step) => step.title)).toEqual([
+        'Details',
+        'Currency',
+        'Terms',
+        'Settings',
+        'Charges',
+        'Accounting',
+        'Advanced Configuration',
+        'Review'
+      ]);
+    });
+
+    it('locks the Personal Loan form seeding when the template omits the seeded fields', () => {
+      // The stub template carries no principal/rate/repayments, so every value below comes from
+      // getInitialFormState + the syncTemplateDefaults fallbacks — the exact code paths a
+      // profile-aware seeding refactor touches.
+      expect(personalComponent().form.getRawValue()).toMatchObject({
+        principal: '',
+        numberOfRepayments: 12,
+        interestRatePerPeriod: '',
+        interestRateFrequencyType: 2,
+        repaymentEvery: 1,
+        repaymentFrequencyType: 2,
+        transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+        loanScheduleType: 'Progressive',
+        multiDisburseLoan: true,
+        allowVariableInstallments: true,
+        enableDownPayment: false,
+        disbursedAmountPercentageForDownPayment: 35,
+        currencyCode: 'INR'
+      });
+    });
+
+    it('locks the Custom/Advanced form seeding when the template omits the seeded fields', () => {
+      expect(customAdvancedComponent().form.getRawValue()).toMatchObject({
+        principal: '',
+        numberOfRepayments: 12,
+        interestRatePerPeriod: '',
+        transactionProcessingStrategyCode: 'interest-principal-penalties-fees-order-strategy',
+        loanScheduleType: 'Progressive',
+        multiDisburseLoan: false,
+        allowVariableInstallments: false,
+        enableDownPayment: false,
+        disbursedAmountPercentageForDownPayment: 35,
+        currencyCode: 'INR'
+      });
+    });
+  });
+
+  describe('Two Wheeler profile', () => {
+    function twoWheelerComponent(templateExtras: Record<string, unknown> = {}): LoanProductWizardComponent {
+      const component = createComponent();
+      component.profileMode = 'two-wheeler';
+      component.loanProductsTemplate = {
+        currencyOptions: [{ code: 'INR' }],
+        transactionProcessingStrategyOptions: [
+          { code: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY, name: 'Advanced Payment Allocation' }
+        ],
+        advancedPaymentAllocationTransactionTypes: [{ id: 1, code: 'DEFAULT', value: 'Default' }],
+        advancedPaymentAllocationTypes: [
+          { id: 1, code: 'PENALTY', value: 'Penalty' },
+          { id: 2, code: 'FEE', value: 'Fee' },
+          { id: 3, code: 'INTEREST', value: 'Interest' },
+          { id: 4, code: 'PRINCIPAL', value: 'Principal' }
+        ],
+        advancedPaymentAllocationFutureInstallmentAllocationRules: [
+          { id: 1, code: 'NEXT_INSTALLMENT', value: 'Next installment' }
+        ],
+        ...templateExtras
+      };
+      component.ngOnInit();
+      return component;
+    }
+
+    function visibleKeysByStep(component: LoanProductWizardComponent): Record<string, string[]> {
+      return Object.fromEntries(
+        component.steps
+          .filter((step) => (step.kind ?? 'fields') === 'fields')
+          .map((step) => [
+            step.title,
+            component.visibleFields(step).map((field) => field.key)
+          ])
+      );
+    }
+
+    it('locks the Two Wheeler visible field set: Personal plus the editable down payment %', () => {
+      expect(visibleKeysByStep(twoWheelerComponent())).toEqual({
+        Details: [
+          'name',
+          'shortName',
+          'externalId'
+        ],
+        Currency: ['currencyCode'],
+        Terms: [
+          'principal',
+          'numberOfRepayments',
+          'interestRatePerPeriod',
+          'interestRateFrequencyType',
+          'repaymentEvery',
+          'repaymentFrequencyType'
+        ],
+        Settings: [
+          'amortizationType',
+          'interestType',
+          'interestCalculationPeriodType',
+          'transactionProcessingStrategyCode',
+          'graceOnPrincipalPayment',
+          'graceOnInterestPayment',
+          'interestFreePeriod',
+          'delinquencyBucketId',
+          'disbursedAmountPercentageForDownPayment'
+        ],
+        'Advanced Configuration': []
+      });
+    });
+
+    it('keeps the down payment toggle and auto-repayment flag hidden (forced by the profile)', () => {
+      const settingsKeys = visibleKeysByStep(twoWheelerComponent()).Settings;
+
+      expect(settingsKeys).not.toContain('enableDownPayment');
+      expect(settingsKeys).not.toContain('enableAutoRepaymentForDownPayment');
+    });
+
+    it('shows the same guided step sequence as Personal, including Payment Allocation', () => {
+      expect(twoWheelerComponent().visibleSteps.map((step) => step.title)).toEqual([
+        'Details',
+        'Currency',
+        'Terms',
+        'Settings',
+        'Payment Allocation',
+        'Charges',
+        'Accounting',
+        'Review'
+      ]);
+    });
+
+    it('seeds the curated Two Wheeler prefills when the template omits those fields', () => {
+      expect(twoWheelerComponent().form.getRawValue()).toMatchObject({
+        principal: 80000,
+        numberOfRepayments: 36,
+        interestRatePerPeriod: 14,
+        interestRateFrequencyType: 3,
+        enableDownPayment: true,
+        disbursedAmountPercentageForDownPayment: 20,
+        transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+        loanScheduleType: 'Progressive',
+        currencyCode: 'INR'
+      });
+    });
+
+    it('lets the curated prefills win over the generic backend template defaults', () => {
+      // The template's generic defaults (e.g. per-month rate frequency) would turn "14% per year"
+      // into "14% per month" — a very different product. Curated profile prefills must win for
+      // exactly the overridden keys; non-overridden keys keep their template-first behavior.
+      const component = twoWheelerComponent({
+        interestRateFrequencyType: { id: 2 },
+        numberOfRepayments: 12,
+        repaymentEvery: 4,
+        daysInMonthType: { id: 1, code: 'DaysInMonthType.actual', value: 'Same as in year' }
+      });
+
+      expect(component.form.getRawValue()).toMatchObject({
+        interestRateFrequencyType: 3,
+        numberOfRepayments: 36,
+        // Not a curated key: the template still wins over INITIAL_FORM_STATE.
+        repaymentEvery: 4,
+        daysInMonthType: 1
+      });
+    });
+
+    it('submits the Personal-shaped guided payload with the Two Wheeler down payment deltas', () => {
+      const component = twoWheelerComponent();
+      const payload = component.buildPayloadForSubmit();
+
+      expect(payload.transactionProcessingStrategyCode).toBe(LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY);
+      expect(payload.loanScheduleType).toBe('PROGRESSIVE');
+      expect(Array.isArray(payload.paymentAllocation)).toBe(true);
+      expect((payload.paymentAllocation as unknown[]).length).toBeGreaterThan(0);
+      expect(payload.enableDownPayment).toBe(true);
+      expect(payload.disbursedAmountPercentageForDownPayment).toBe(20);
+      expect(payload.enableAutoRepaymentForDownPayment).toBe(true);
+      expect(payload.description).toBe('Two Wheeler Loan Product');
+      expect(payload.multiDisburseLoan).toBeUndefined();
+      expect(payload.maxTrancheCount).toBeUndefined();
+    });
+
+    it('submits a user-edited down payment percentage instead of the prefill', () => {
+      const component = twoWheelerComponent();
+      component.form.patchValue({ disbursedAmountPercentageForDownPayment: 25 });
+
+      expect(component.buildPayloadForSubmit().disbursedAmountPercentageForDownPayment).toBe(25);
+    });
+
+    it('exposes one profile label translation key per mode', () => {
+      const component = twoWheelerComponent();
+      expect(component.profileLabel).toBe('labels.text.Two Wheeler Loan');
+
+      component.profileMode = 'personal';
+      expect(component.profileLabel).toBe('labels.text.Personal Loan');
+
+      component.profileMode = 'custom-advanced';
+      expect(component.profileLabel).toBe('labels.text.Custom / Advanced');
+
+      component.profileMode = 'education';
+      expect(component.profileLabel).toBe('labels.text.Education Loan');
+
+      component.profileMode = 'agriculture';
+      expect(component.profileLabel).toBe('labels.text.Agriculture Loan');
+    });
+  });
+
+  describe('Education profile', () => {
+    function educationComponent(templateExtras: Record<string, unknown> = {}): LoanProductWizardComponent {
+      const component = createComponent();
+      component.profileMode = 'education';
+      component.loanProductsTemplate = {
+        currencyOptions: [{ code: 'INR' }],
+        transactionProcessingStrategyOptions: [
+          { code: 'mifos-standard-strategy', name: 'Mifos standard' },
+          { code: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY, name: 'Advanced Payment Allocation' }
+        ],
+        ...templateExtras
+      };
+      component.ngOnInit();
+      return component;
+    }
+
+    function visibleKeysByStep(component: LoanProductWizardComponent): Record<string, string[]> {
+      return Object.fromEntries(
+        component.steps
+          .filter((step) => (step.kind ?? 'fields') === 'fields')
+          .map((step) => [
+            step.title,
+            component.visibleFields(step).map((field) => field.key)
+          ])
+      );
+    }
+
+    it('locks the Education visible field set: the moratorium and tranche controls headline Settings', () => {
+      expect(visibleKeysByStep(educationComponent())).toEqual({
+        Details: [
+          'name',
+          'shortName',
+          'externalId'
+        ],
+        Currency: ['currencyCode'],
+        Terms: [
+          'principal',
+          'numberOfRepayments',
+          'interestRatePerPeriod',
+          'interestRateFrequencyType',
+          'repaymentEvery',
+          'repaymentFrequencyType'
+        ],
+        Settings: [
+          'graceOnPrincipalPayment',
+          'graceOnInterestPayment',
+          'delinquencyBucketId',
+          'maxTrancheCount'
+        ],
+        'Advanced Configuration': []
+      });
+    });
+
+    it('hides the Payment Allocation step: Education runs on the Cumulative + standard-strategy stack', () => {
+      const component = educationComponent();
+
+      expect(component.isAdvancedPaymentStrategy).toBe(false);
+      expect(component.visibleSteps.map((step) => step.title)).toEqual([
+        'Details',
+        'Currency',
+        'Terms',
+        'Settings',
+        'Charges',
+        'Accounting',
+        'Review'
+      ]);
+    });
+
+    it('seeds the curated Education prefills when the template omits those fields', () => {
+      expect(educationComponent().form.getRawValue()).toMatchObject({
+        principal: 500000,
+        numberOfRepayments: 120,
+        interestRatePerPeriod: 10.5,
+        interestRateFrequencyType: 3,
+        graceOnPrincipalPayment: 24,
+        maxTrancheCount: 8,
+        multiDisburseLoan: true,
+        transactionProcessingStrategyCode: 'mifos-standard-strategy',
+        loanScheduleType: 'Cumulative',
+        currencyCode: 'INR'
+      });
+    });
+
+    it('lets the curated prefills win over the generic backend template defaults', () => {
+      const component = educationComponent({
+        graceOnPrincipalPayment: 0,
+        numberOfRepayments: 12,
+        interestRateFrequencyType: { id: 2 },
+        // Not a curated key: the template still wins over INITIAL_FORM_STATE.
+        repaymentEvery: 4
+      });
+
+      expect(component.form.getRawValue()).toMatchObject({
+        graceOnPrincipalPayment: 24,
+        numberOfRepayments: 120,
+        interestRateFrequencyType: 3,
+        repaymentEvery: 4
+      });
+    });
+
+    it('submits the Cumulative-stack payload with the moratorium and tranches, and no allocation', () => {
+      const component = educationComponent();
+      const payload = component.buildPayloadForSubmit();
+
+      expect(payload.loanScheduleType).toBe('CUMULATIVE');
+      expect(payload.transactionProcessingStrategyCode).toBe('mifos-standard-strategy');
+      expect(payload.interestCalculationPeriodType).toBe(0);
+      expect(payload.graceOnPrincipalPayment).toBe(24);
+      expect(payload.multiDisburseLoan).toBe(true);
+      expect(payload.maxTrancheCount).toBe(8);
+      expect(payload.enableDownPayment).toBe(false);
+      expect(payload.description).toBe('Education Loan Product');
+      expect(payload.paymentAllocation).toBeUndefined();
+      expect(payload.creditAllocation).toBeUndefined();
+      expect(payload.chargeOffBehaviour).toBeUndefined();
+      expect(payload.outstandingLoanBalance).toBeUndefined();
+    });
+
+    it('submits a user-edited moratorium and tranche count instead of the prefills', () => {
+      const component = educationComponent();
+      component.form.patchValue({ graceOnPrincipalPayment: 36, maxTrancheCount: 10 });
+
+      const payload = component.buildPayloadForSubmit();
+
+      expect(payload.graceOnPrincipalPayment).toBe(36);
+      expect(payload.maxTrancheCount).toBe(10);
+    });
+  });
+
+  describe('Agriculture profile', () => {
+    function agricultureComponent(templateExtras: Record<string, unknown> = {}): LoanProductWizardComponent {
+      const component = createComponent();
+      component.profileMode = 'agriculture';
+      component.loanProductsTemplate = {
+        currencyOptions: [{ code: 'INR' }],
+        transactionProcessingStrategyOptions: [
+          {
+            code: 'principal-interest-penalties-fees-order-strategy',
+            name: 'Principal → Interest → Penalties → Fees'
+          },
+          { code: 'mifos-standard-strategy', name: 'Mifos standard' },
+          { code: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY, name: 'Advanced Payment Allocation' }
+        ],
+        ...templateExtras
+      };
+      component.ngOnInit();
+      return component;
+    }
+
+    function visibleKeysByStep(component: LoanProductWizardComponent): Record<string, string[]> {
+      return Object.fromEntries(
+        component.steps
+          .filter((step) => (step.kind ?? 'fields') === 'fields')
+          .map((step) => [
+            step.title,
+            component.visibleFields(step).map((field) => field.key)
+          ])
+      );
+    }
+
+    it('locks the Agriculture visible field set: the season terms plus the NPA clock', () => {
+      expect(visibleKeysByStep(agricultureComponent())).toEqual({
+        Details: [
+          'name',
+          'shortName',
+          'externalId'
+        ],
+        Currency: ['currencyCode'],
+        Terms: [
+          'principal',
+          'numberOfRepayments',
+          'interestRatePerPeriod',
+          'interestRateFrequencyType',
+          'repaymentEvery',
+          'repaymentFrequencyType'
+        ],
+        Settings: [
+          'delinquencyBucketId',
+          'overdueDaysForNPA'
+        ],
+        'Advanced Configuration': []
+      });
+    });
+
+    it('hides the Payment Allocation step: Agriculture runs on the Cumulative + principal-first stack', () => {
+      const component = agricultureComponent();
+
+      expect(component.isAdvancedPaymentStrategy).toBe(false);
+      expect(component.visibleSteps.map((step) => step.title)).toEqual([
+        'Details',
+        'Currency',
+        'Terms',
+        'Settings',
+        'Charges',
+        'Accounting',
+        'Review'
+      ]);
+    });
+
+    it('seeds the curated Agriculture prefills when the template omits those fields', () => {
+      expect(agricultureComponent().form.getRawValue()).toMatchObject({
+        principal: 100000,
+        numberOfRepayments: 1,
+        repaymentEvery: 12,
+        interestRatePerPeriod: 7,
+        interestRateFrequencyType: 3,
+        overdueDaysForNPA: 180,
+        transactionProcessingStrategyCode: 'principal-interest-penalties-fees-order-strategy',
+        loanScheduleType: 'Cumulative',
+        currencyCode: 'INR'
+      });
+    });
+
+    it('lets the curated prefills win over the generic backend template defaults', () => {
+      const component = agricultureComponent({
+        overdueDaysForNPA: 90,
+        numberOfRepayments: 12,
+        interestRateFrequencyType: { id: 2 },
+        // Not a curated key: the template still wins over INITIAL_FORM_STATE.
+        graceOnArrearsAgeing: 10
+      });
+
+      expect(component.form.getRawValue()).toMatchObject({
+        overdueDaysForNPA: 180,
+        numberOfRepayments: 1,
+        interestRateFrequencyType: 3,
+        graceOnArrearsAgeing: 10
+      });
+    });
+
+    it('submits the bullet payload: one installment, flat interest, no allocation, no tranches', () => {
+      const component = agricultureComponent();
+      const payload = component.buildPayloadForSubmit();
+
+      expect(payload.numberOfRepayments).toBe(1);
+      expect(payload.repaymentEvery).toBe(12);
+      expect(payload.interestType).toBe(1);
+      expect(payload.loanScheduleType).toBe('CUMULATIVE');
+      expect(payload.transactionProcessingStrategyCode).toBe('principal-interest-penalties-fees-order-strategy');
+      expect(payload.overdueDaysForNPA).toBe(180);
+      expect(payload.enableDownPayment).toBe(false);
+      expect(payload.description).toBe('Agriculture Loan Product');
+      expect(payload.paymentAllocation).toBeUndefined();
+      expect(payload.creditAllocation).toBeUndefined();
+      expect(payload.multiDisburseLoan).toBeUndefined();
+      expect(payload.chargeOffBehaviour).toBeUndefined();
+    });
+
+    it('submits a user-tuned season: NPA days and cycle structure instead of the prefills', () => {
+      const component = agricultureComponent();
+      component.form.patchValue({ overdueDaysForNPA: 360, numberOfRepayments: 2, repaymentEvery: 6 });
+
+      const payload = component.buildPayloadForSubmit();
+
+      expect(payload.overdueDaysForNPA).toBe(360);
+      expect(payload.numberOfRepayments).toBe(2);
+      expect(payload.repaymentEvery).toBe(6);
+    });
+  });
+
+  describe('Accounting step reuse (Classic parity)', () => {
+    // Minimal stub of the reused Classic accounting step: exposes the same `loanProductAccounting`
+    // raw value and `loanProductAccountingForm` the real component does, which is all the wizard reads.
+    function accountingStepStub(loanProductAccounting: Record<string, unknown>, invalid = false): any {
+      return { loanProductAccounting, loanProductAccountingForm: { invalid, markAllAsTouched: jest.fn() } };
+    }
+
+    function personalComponent(): LoanProductWizardComponent {
+      const component = createComponent();
+      component.profileMode = 'personal';
+      component.loanProductsTemplate = {
+        currencyOptions: [{ code: 'INR' }],
+        transactionProcessingStrategyOptions: [
+          { code: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY, name: 'Advanced Payment Allocation' }
+        ],
+        accountingMappingOptions: {
+          assetAccountOptions: [{ id: 4, name: 'Fund', glCode: '1001' }],
+          incomeAccountOptions: [{ id: 7, name: 'Interest income', glCode: '4001' }],
+          expenseAccountOptions: [{ id: 9, name: 'Write off', glCode: '5001' }],
+          liabilityAccountOptions: [{ id: 12, name: 'Overpayment', glCode: '2001' }]
+        }
+      };
+      component.ngOnInit();
+      return component;
+    }
+
+    it('folds the Cash GL account ids from the reused accounting step into the payload and overrides the rule', () => {
+      const component = personalComponent();
+      component.loanProductAccountingStep = accountingStepStub({
+        accountingRule: 2,
+        fundSourceAccountId: 4,
+        loanPortfolioAccountId: 5,
+        interestOnLoanAccountId: 7,
+        writeOffAccountId: 9,
+        overpaymentLiabilityAccountId: 12
+      });
+
+      const payload = component.buildPayloadForSubmit();
+
+      // The seeded INITIAL_FORM_STATE accountingRule (2) is overridden by the step's value, and every
+      // mandatory GL account id the step collected is present — the ids Fineract was rejecting before.
+      expect(payload.accountingRule).toBe(2);
+      expect(payload.fundSourceAccountId).toBe(4);
+      expect(payload.loanPortfolioAccountId).toBe(5);
+      expect(payload.interestOnLoanAccountId).toBe(7);
+      expect(payload.writeOffAccountId).toBe(9);
+      expect(payload.overpaymentLiabilityAccountId).toBe(12);
+    });
+
+    it('lets the accounting step drive the rule to None (1) so an untouched form needs no GL accounts', () => {
+      const component = personalComponent();
+      component.loanProductAccountingStep = accountingStepStub({ accountingRule: 1 });
+
+      const payload = component.buildPayloadForSubmit();
+
+      expect(payload.accountingRule).toBe(1);
+      expect(payload.fundSourceAccountId).toBeUndefined();
+    });
+
+    it('blocks submit when the reused accounting form is invalid (Cash without accounts)', () => {
+      const component = personalComponent();
+      component.form.patchValue({ name: 'LP', shortName: 'LP', principal: 1000, interestRatePerPeriod: 12 });
+      const step = accountingStepStub({ accountingRule: 2 }, true);
+      component.loanProductAccountingStep = step;
+      productsServiceStub.createLoanProduct.mockClear();
+
+      component.submit();
+
+      expect(step.loanProductAccountingForm.markAllAsTouched).toHaveBeenCalled();
+      expect(productsServiceStub.createLoanProduct).not.toHaveBeenCalled();
+    });
+
+    it('resolves the selected accounts for the Review exactly like Classic (gl-account-display objects)', () => {
+      const component = personalComponent();
+      component.loanProductAccountingStep = accountingStepStub({
+        accountingRule: 2,
+        fundSourceAccountId: 4,
+        writeOffAccountId: 9
+      });
+
+      const review = component.accountingReview;
+
+      expect(review?.ruleLabel).toBe('Cash-based');
+      expect(review?.accounts).toEqual([
+        { title: 'Fund source', glAccount: { id: 4, name: 'Fund', glCode: '1001' } },
+        { title: 'Losses written off', glAccount: { id: 9, name: 'Write off', glCode: '5001' } }
+      ]);
+    });
+
+    it('shows only the rule (no accounts) in the Review when accounting is None', () => {
+      const component = personalComponent();
+      component.loanProductAccountingStep = accountingStepStub({ accountingRule: 1 });
+
+      const review = component.accountingReview;
+
+      expect(review?.ruleLabel).toBe('None');
+      expect(review?.accounts).toEqual([]);
+    });
+  });
 });

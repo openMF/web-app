@@ -11,10 +11,15 @@ import { FormBuilder, FormGroup, UntypedFormControl, ValidatorFn, Validators } f
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import {
-  HIDDEN_DEFAULTS,
   FORM_STEPS,
   INITIAL_FORM_STATE,
+  PROFILE_EXTRA_VISIBLE_FIELDS,
+  PROFILE_INITIAL_OVERRIDES,
+  PROFILE_LABEL_KEYS,
   buildPayload,
+  forcesProgressiveStack,
+  hiddenDefaultsFor,
+  isGuidedProfileMode,
   VALUE_MAP,
   SelectOption,
   LoanWizardProfileMode,
@@ -32,6 +37,8 @@ import {
 } from '../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
 import { LoanProductPaymentStrategyStepComponent } from '../loan-product-stepper/loan-product-payment-strategy-step/loan-product-payment-strategy-step.component';
 import { LoanProductChargesStepComponent } from '../loan-product-stepper/loan-product-charges-step/loan-product-charges-step.component';
+import { LoanProductAccountingStepComponent } from '../loan-product-stepper/loan-product-accounting-step/loan-product-accounting-step.component';
+import { GlAccountDisplayComponent } from '../../../shared/accounting/gl-account-display/gl-account-display.component';
 import { LoanProductService } from '../services/loan-product.service';
 import { Router } from '@angular/router';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -43,6 +50,37 @@ import { SettingsService } from 'app/settings/settings.service';
 /** Currency symbols rendered in the Review banner, keyed by ISO currency code. */
 const CURRENCY_SYMBOLS: Record<string, string> = { INR: '₹', USD: '$', EUR: '€', GBP: '£' };
 
+/**
+ * The GL account controls the reused Classic accounting step collects for a Cash/Accrual loan
+ * product, each paired with the exact account title Classic's summary renders. Used only to build the
+ * Review's accounting section (via the reused `mifosx-gl-account-display`); the payload itself is
+ * driven entirely by the step's raw form value. Receivable accounts appear only for Accrual and are
+ * simply absent from the step's value for Cash, so a single presence filter covers both rules.
+ */
+const ACCOUNTING_REVIEW_ACCOUNTS: ReadonlyArray<{ key: string; title: string }> = [
+  { key: 'fundSourceAccountId', title: 'Fund source' },
+  { key: 'loanPortfolioAccountId', title: 'Loan portfolio' },
+  { key: 'transfersInSuspenseAccountId', title: 'Transfer in suspense' },
+  { key: 'receivableInterestAccountId', title: 'Interest Receivable' },
+  { key: 'receivableFeeAccountId', title: 'Fees Receivable' },
+  { key: 'receivablePenaltyAccountId', title: 'Penalties Receivable' },
+  { key: 'interestOnLoanAccountId', title: 'Income from Interest' },
+  { key: 'incomeFromFeeAccountId', title: 'Income from fees' },
+  { key: 'incomeFromPenaltyAccountId', title: 'Income from penalties' },
+  { key: 'incomeFromRecoveryAccountId', title: 'Income from Recovery Repayments' },
+  { key: 'incomeFromChargeOffInterestAccountId', title: 'Income from ChargeOff Interest' },
+  { key: 'incomeFromChargeOffFeesAccountId', title: 'Income from ChargeOff Fees' },
+  { key: 'incomeFromChargeOffPenaltyAccountId', title: 'Income from ChargeOff Penalty' },
+  { key: 'incomeFromGoodwillCreditInterestAccountId', title: 'Income from Goodwill Credit Interest' },
+  { key: 'incomeFromGoodwillCreditFeesAccountId', title: 'Income from Goodwill Credit Fees' },
+  { key: 'incomeFromGoodwillCreditPenaltyAccountId', title: 'Income from Goodwill Credit Penalty' },
+  { key: 'writeOffAccountId', title: 'Losses written off' },
+  { key: 'goodwillCreditAccountId', title: 'Expenses from Goodwill Credit' },
+  { key: 'chargeOffExpenseAccountId', title: 'ChargeOff Expense' },
+  { key: 'chargeOffFraudExpenseAccountId', title: 'ChargeOff Fraud Expense' },
+  { key: 'overpaymentLiabilityAccountId', title: 'Over payment liability' }
+];
+
 @Component({
   selector: 'mifosx-loan-product-wizard',
   standalone: true,
@@ -51,7 +89,9 @@ const CURRENCY_SYMBOLS: Record<string, string> = { INR: '₹', USD: '$', EUR: '�
     MatStepperModule,
     MatButtonModule,
     LoanProductPaymentStrategyStepComponent,
-    LoanProductChargesStepComponent
+    LoanProductChargesStepComponent,
+    LoanProductAccountingStepComponent,
+    GlAccountDisplayComponent
   ],
   templateUrl: './loan-product-wizard.component.html',
   styleUrls: ['./loan-product-wizard.component.scss']
@@ -68,7 +108,11 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
   private readonly translateService = inject(TranslateService);
   private readonly dateUtils = inject(Dates);
   private readonly settingsService = inject(SettingsService);
-  private readonly hiddenFieldKeys = new Set(Object.keys(HIDDEN_DEFAULTS));
+  // Hidden-key set derived from the ACTIVE profile's hidden defaults (Two Wheeler, for example,
+  // removes the down payment % from its defaults so it can be a visible control). Computed lazily
+  // and memoised per mode because `profileMode` is an @Input, not yet set when class fields
+  // initialize.
+  private hiddenFieldKeysCache?: { profileMode: LoanWizardProfileMode; keys: Set<string> };
   // Single source of truth for each control's config, so the `required`/`maxLength` metadata declared
   // in FORM_STEPS is wired into real Angular Validators instead of only decorating the template.
   private readonly fieldConfigByKey = new Map<string, FormField>(
@@ -81,10 +125,19 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
   @Input() loanProductsTemplate: any;
   @Input() itemsByDefault: any[] = [];
   @Input() profileMode: LoanWizardProfileMode = 'personal';
+  // The accounting-rule display names (NONE / CASH_BASED / ACCRUAL_PERIODIC / ACCRUAL_UPFRONT) the
+  // reused Classic accounting step renders as radio options — resolved by the host from the shared
+  // `Accounting` util, identical to Classic.
+  @Input() accountingRuleData: any[] = [];
 
   // Reused Classic Charges step. Rendered for the `kind: 'charges'` step; read at submit time to fold the
   // selected charge objects into the payload — mirrors Classic's `@ViewChild(LoanProductChargesStepComponent)`.
   @ViewChild(LoanProductChargesStepComponent) loanProductChargesStep?: LoanProductChargesStepComponent;
+
+  // Reused Classic Accounting step. Rendered for the `kind: 'accounting'` step; it owns the accounting
+  // rule and — for Cash/Accrual — every mandatory GL account selector, validator and advanced mapping
+  // rule. Read at submit time so its collected values are folded into the payload exactly like Classic.
+  @ViewChild(LoanProductAccountingStepComponent) loanProductAccountingStep?: LoanProductAccountingStepComponent;
 
   steps = FORM_STEPS;
   valueMap = VALUE_MAP;
@@ -118,9 +171,32 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
     this.formValueChangesSubscription?.unsubscribe();
   }
 
-  /** Human-readable name of the active profile, shown in the wizard header. */
+  /** Translation key for the active profile's name, shown in the wizard header. */
   get profileLabel(): string {
-    return this.profileMode === 'custom-advanced' ? 'Custom / Advanced' : 'Personal Loan';
+    return PROFILE_LABEL_KEYS[this.profileMode];
+  }
+
+  private get hiddenFieldKeys(): Set<string> {
+    if (this.hiddenFieldKeysCache?.profileMode !== this.profileMode) {
+      this.hiddenFieldKeysCache = {
+        profileMode: this.profileMode,
+        keys: new Set(Object.keys(hiddenDefaultsFor(this.profileMode)))
+      };
+    }
+    return this.hiddenFieldKeysCache.keys;
+  }
+
+  private get isGuidedProfile(): boolean {
+    return isGuidedProfileMode(this.profileMode);
+  }
+
+  private get forcesProgressiveStack(): boolean {
+    return forcesProgressiveStack(this.profileMode);
+  }
+
+  /** Keys the active profile re-exposes even though the guided-hidden lists would hide them. */
+  private isProfileExtraVisibleField(key: string): boolean {
+    return (PROFILE_EXTRA_VISIBLE_FIELDS[this.profileMode] ?? []).includes(key);
   }
 
   /**
@@ -142,6 +218,9 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
         return this.isAdvancedPaymentStrategy;
       }
       if (step.kind === 'charges') {
+        return true;
+      }
+      if (step.kind === 'accounting') {
         return true;
       }
       return this.visibleFields(step).length > 0;
@@ -190,6 +269,10 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
     return row.label;
   }
 
+  trackByAccountTitle(_index: number, account: { title: string }): string {
+    return account.title;
+  }
+
   visibleFields(step: FormStep): FormField[] {
     return step.fields
       .map((field) => {
@@ -211,7 +294,11 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
           return false;
         }
 
-        if (this.profileMode === 'personal' && this.hiddenFieldKeys.has(field.key)) {
+        if (
+          this.isGuidedProfile &&
+          this.hiddenFieldKeys.has(field.key) &&
+          !this.isProfileExtraVisibleField(field.key)
+        ) {
           return false;
         }
 
@@ -230,7 +317,7 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
           return false;
         }
 
-        if (this.profileMode === 'personal' && this.isCustomOnlyField(field.key)) {
+        if (this.isGuidedProfile && this.isCustomOnlyField(field.key) && !this.isProfileExtraVisibleField(field.key)) {
           return false;
         }
 
@@ -317,6 +404,14 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
     formValue.charges = this.selectedCharges;
     const merged = buildPayload(formValue, this.profileMode, this.loanProductsTemplate);
     this.applyAdvancedPaymentAllocation(merged);
+    // Fold in the accounting rule + GL account mappings collected by the reused Classic accounting
+    // step, mirroring Classic's `...this.loanProductAccountingStep.loanProductAccounting` spread. For
+    // None it overrides the seeded `accountingRule` with 1; for Cash/Accrual it also supplies every
+    // mandatory account id (fundSourceAccountId, loanPortfolioAccountId, …) so Fineract accepts the
+    // request. Guarded so unit tests that invoke the builder without rendering the step are unchanged.
+    if (this.loanProductAccountingStep) {
+      Object.assign(merged, this.loanProductAccountingStep.loanProductAccounting);
+    }
     return this.loanProducts.buildPayload(merged, this.itemsByDefault || []);
   }
 
@@ -520,6 +615,46 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
   }
 
   /**
+   * Accounting summary for the Review, driven by the reused Classic accounting step's collected
+   * values and rendered with the atomic Classic `mifosx-gl-account-display` (identical GL-code + name
+   * formatting). Each selected account id is resolved to its GL account object from the template's
+   * account options — account ids are globally unique in Fineract, so one union lookup covers every
+   * field without duplicating Classic's per-category mapping. Returns just the rule for None (or when
+   * the step has not been rendered), matching Classic's "Type: <rule>" summary line.
+   */
+  get accountingReview(): { ruleLabel: string; accounts: Array<{ title: string; glAccount: unknown }> } | null {
+    const accounting = this.loanProductAccountingStep?.loanProductAccounting;
+    if (!accounting) {
+      return null;
+    }
+    const ruleLabel = this.formatValue('accountingRule', accounting.accountingRule);
+    const ruleId = Number(accounting.accountingRule);
+    if (!(ruleId >= 2 && ruleId <= 4)) {
+      return { ruleLabel, accounts: [] };
+    }
+    const options = this.loanProductsTemplate?.accountingMappingOptions ?? {};
+    const glAccounts: any[] = [
+      ...(options.assetAccountOptions ?? []),
+      ...(options.incomeAccountOptions ?? []),
+      ...(options.expenseAccountOptions ?? []),
+      ...(options.liabilityAccountOptions ?? [])
+    ];
+    const accounts = ACCOUNTING_REVIEW_ACCOUNTS.map((field) => {
+      const id = (accounting as Record<string, unknown>)[field.key];
+      if (id === null || id === undefined || id === '') {
+        return null;
+      }
+      // Compared as strings: the control's value is a `mat-option` [value] binding of the numeric
+      // `GLAccount.id` today, but the guard above already tolerates a string (''), so a strict `===`
+      // would silently drop a row if any caller ever seeded the step with string ids. Both sides come
+      // from the same id space, so stringifying cannot introduce a false match.
+      const glAccount = glAccounts.find((account) => String(account.id) === String(id)) ?? null;
+      return glAccount ? { title: field.title, glAccount } : null;
+    }).filter((row): row is { title: string; glAccount: unknown } => row !== null);
+    return { ruleLabel, accounts };
+  }
+
+  /**
    * Formats a single visible field's current form value for the Review, reusing the field's own
    * configuration (its resolved `options` for selects). No payload/defaults logic is involved.
    */
@@ -604,10 +739,14 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
 
   submit(): void {
     // Every required field is visible in both profiles, so an invalid form means the user left a
-    // required control blank (or exceeded a maxLength). Surface the errors instead of POSTing a
-    // payload the backend would reject.
-    if (this.form.invalid) {
+    // required control blank (or exceeded a maxLength). The reused Classic accounting step keeps its
+    // own FormGroup (with the mandatory GL account validators for Cash/Accrual), so it must be checked
+    // alongside the wizard form — otherwise a Cash product with unselected accounts would POST and the
+    // backend would reject it with "fundSourceAccountId is mandatory". Surface the errors instead.
+    const accountingForm = this.loanProductAccountingStep?.loanProductAccountingForm;
+    if (this.form.invalid || accountingForm?.invalid) {
       this.form.markAllAsTouched();
+      accountingForm?.markAllAsTouched();
       return;
     }
     const final = this.buildPayloadForSubmit();
@@ -665,16 +804,16 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
         interestCalculationPeriodType:
           this.loanProductsTemplate.interestCalculationPeriodType?.id ??
           INITIAL_FORM_STATE.interestCalculationPeriodType,
-        // Personal Loan always uses Progressive schedule type - never let template override this
-        loanScheduleType:
-          this.profileMode === 'personal'
-            ? INITIAL_FORM_STATE.loanScheduleType
-            : (this.loanProductsTemplate.loanScheduleType?.value ?? INITIAL_FORM_STATE.loanScheduleType),
-        transactionProcessingStrategyCode:
-          this.profileMode === 'personal'
-            ? LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY
-            : (this.loanProductsTemplate.transactionProcessingStrategyCode ??
-              INITIAL_FORM_STATE.transactionProcessingStrategyCode),
+        // Progressive-stack profiles pin the schedule type and strategy - never let the template
+        // override them. Education pins its Cumulative stack via PROFILE_INITIAL_OVERRIDES instead
+        // (spread last below), so it intentionally falls through this branch.
+        loanScheduleType: this.forcesProgressiveStack
+          ? INITIAL_FORM_STATE.loanScheduleType
+          : (this.loanProductsTemplate.loanScheduleType?.value ?? INITIAL_FORM_STATE.loanScheduleType),
+        transactionProcessingStrategyCode: this.forcesProgressiveStack
+          ? LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY
+          : (this.loanProductsTemplate.transactionProcessingStrategyCode ??
+            INITIAL_FORM_STATE.transactionProcessingStrategyCode),
         loanScheduleProcessingType:
           this.loanProductsTemplate.loanScheduleProcessingType?.value ?? INITIAL_FORM_STATE.loanScheduleProcessingType,
         graceOnPrincipalPayment:
@@ -703,17 +842,18 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
           this.loanProductsTemplate.canDefineInstallmentAmount ?? INITIAL_FORM_STATE.canDefineInstallmentAmount,
         // Fineract rejects multiDisburseLoan/allowVariableInstallments unless the product uses daily
         // interest calculation or the advanced-payment-allocation repayment strategy
-        // (LoanProductDataValidator: "not.supported.for.selected.interest.calculation.type"). Personal
-        // Loan always forces the advanced strategy (see transactionProcessingStrategyCode below), so it
-        // keeps the existing checked-by-default template/INITIAL_FORM_STATE value. Custom/Advanced
-        // defaults to the standard repayment strategy, so it must default both to false here, same as
-        // the Classic stepper (loan-product-settings-step.component.ts).
+        // (LoanProductDataValidator: "not.supported.for.selected.interest.calculation.type"). Guided
+        // profiles satisfy the rule either way — Personal/Two Wheeler force the advanced strategy,
+        // Education pins daily interest calculation — so they keep the checked-by-default
+        // template/INITIAL_FORM_STATE value. Custom/Advanced defaults to the standard repayment
+        // strategy, so it must default both to false here, same as the Classic stepper
+        // (loan-product-settings-step.component.ts).
         allowVariableInstallments:
           this.loanProductsTemplate.allowVariableInstallments ??
-          (this.profileMode === 'personal' ? INITIAL_FORM_STATE.allowVariableInstallments : false),
+          (this.isGuidedProfile ? INITIAL_FORM_STATE.allowVariableInstallments : false),
         multiDisburseLoan:
           this.loanProductsTemplate.multiDisburseLoan ??
-          (this.profileMode === 'personal' ? INITIAL_FORM_STATE.multiDisburseLoan : false),
+          (this.isGuidedProfile ? INITIAL_FORM_STATE.multiDisburseLoan : false),
         maxTrancheCount: this.loanProductsTemplate.maxTrancheCount ?? INITIAL_FORM_STATE.maxTrancheCount,
         allowFullTermForTranche:
           this.loanProductsTemplate.allowFullTermForTranche ?? INITIAL_FORM_STATE.allowFullTermForTranche,
@@ -722,7 +862,13 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
         overdueDaysForNPA: this.loanProductsTemplate.overdueDaysForNPA ?? INITIAL_FORM_STATE.overdueDaysForNPA,
         chargeName: this.loanProductsTemplate.chargeName ?? INITIAL_FORM_STATE.chargeName,
         overdueCharge: this.loanProductsTemplate.overdueCharge ?? INITIAL_FORM_STATE.overdueCharge,
-        accountingRule: this.loanProductsTemplate.accountingRule ?? INITIAL_FORM_STATE.accountingRule
+        accountingRule: this.loanProductsTemplate.accountingRule ?? INITIAL_FORM_STATE.accountingRule,
+        // Curated profile prefills win over the generic backend template for exactly the overridden
+        // keys (e.g. the Two Wheeler product quotes 14% per YEAR, while the template would reset the
+        // frequency to per month — a very different product). Every other key keeps its
+        // template-first behavior above. Spread order: template-derived entries first, profile
+        // overrides last.
+        ...PROFILE_INITIAL_OVERRIDES[this.profileMode]
       },
       { emitEvent: false }
     );
@@ -746,19 +892,21 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
   }
 
   private getInitialFormState(): typeof INITIAL_FORM_STATE {
+    // Profile prefills layer between the shared seed and the template/profile-forced entries below:
+    // INITIAL_FORM_STATE < PROFILE_INITIAL_OVERRIDES < the explicit entries in the return object.
+    const state = { ...INITIAL_FORM_STATE, ...PROFILE_INITIAL_OVERRIDES[this.profileMode] };
     return {
-      ...INITIAL_FORM_STATE,
+      ...state,
       currencyCode: this.getDefaultCurrencyCode(),
-      principal: this.loanProductsTemplate?.principal ?? INITIAL_FORM_STATE.principal,
-      transactionProcessingStrategyCode:
-        this.profileMode === 'personal'
-          ? LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY
-          : INITIAL_FORM_STATE.transactionProcessingStrategyCode,
+      principal: this.loanProductsTemplate?.principal ?? state.principal,
+      transactionProcessingStrategyCode: this.forcesProgressiveStack
+        ? LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY
+        : state.transactionProcessingStrategyCode,
       // See the matching comment in syncTemplateDefaults(): Custom/Advanced defaults to the standard
       // repayment strategy, so multiDisburseLoan/allowVariableInstallments must default to false there
-      // to satisfy the same Fineract validation rule. Personal Loan is unaffected.
-      multiDisburseLoan: this.profileMode === 'personal' ? INITIAL_FORM_STATE.multiDisburseLoan : false,
-      allowVariableInstallments: this.profileMode === 'personal' ? INITIAL_FORM_STATE.allowVariableInstallments : false
+      // to satisfy the same Fineract validation rule. Guided profiles are unaffected.
+      multiDisburseLoan: this.isGuidedProfile ? state.multiDisburseLoan : false,
+      allowVariableInstallments: this.isGuidedProfile ? state.allowVariableInstallments : false
     };
   }
 
