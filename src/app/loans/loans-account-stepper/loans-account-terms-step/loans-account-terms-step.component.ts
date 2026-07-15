@@ -204,12 +204,13 @@ export class LoansAccountTermsStepComponent extends LoanProductBaseComponent imp
    * Executes on change of input values
    */
   ngOnChanges(changes: SimpleChanges) {
-    if (this.loanProductService.isLoanProduct) {
-      if (this.loansAccountProductTemplate) {
-        this.loansAccountTermsData = this.loansAccountProductTemplate;
-        if (this.loanId != null && this.loansAccountTemplate?.accountNo) {
-          this.loansAccountTermsData = this.loansAccountTemplate;
-        }
+    if (this.loansAccountProductTemplate) {
+          const templateChange = changes['loansAccountProductTemplate'];
+          const isInitialLoad = !templateChange || templateChange.isFirstChange();
+          this.loansAccountTermsData = this.loansAccountProductTemplate;
+          if (isInitialLoad && this.loanId != null && this.loansAccountTemplate?.accountNo) {
+            this.loansAccountTermsData = this.loansAccountTemplate;
+          }
         // Resolve the currency from the finalized terms data (the account template in edit mode),
         // matching ngOnInit and the non-loan-product branch, so the amount field reflects the
         // account currency instead of the product template currency.
