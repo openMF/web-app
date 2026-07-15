@@ -17,11 +17,11 @@
 }
 
 .ai-panel {
-  margin-top: 0.75rem;
-  padding: 1rem;
-  border: 1px solid rgb(0 0 0 / 12%);
-  border-radius: 4px;
-  background: rgb(0 0 0 / 2%);
+  margin-top: 8px;
+  padding: 16px;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-sm);
+  background: var(--ds-surface-alt);
 }
 
 .ai-prompt-field {
@@ -30,9 +30,9 @@
 
 .ai-actions {
   display: flex;
-  gap: 0.75rem;
+  gap: 8px;
   align-items: center;
-  margin-bottom: 0.75rem;
+  margin-bottom: 8px;
 }
 
 .ai-spinner {
@@ -49,14 +49,14 @@
 
 .ai-sql-preview {
   margin: 0;
-  padding: 0.75rem;
+  padding: 8px;
   font-family: 'Courier New', Courier, monospace;
   font-size: 0.85rem;
   line-height: 1.6;
   white-space: pre-wrap;
-  word-break: break-word;
+  overflow-wrap: anywhere;
   background: #1e1e1e;
   color: #d4d4d4;
-  border-radius: 4px;
+  border-radius: var(--ds-radius-sm);
   overflow-x: auto;
 }

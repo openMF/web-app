@@ -16,18 +16,18 @@
           </mat-slide-toggle>
 
           <mat-form-field>
-            <mat-label>{{ 'labels.inputs.Ollama URL' | translate }}</mat-label>
-            <input matInput formControlName="url" placeholder="http://192.168.1.100:11434" />
+            <mat-label>{{ 'labels.inputs.url' | translate }}</mat-label>
+            <input matInput formControlName="url" [placeholder]="'labels.inputs.URL Placeholder' | translate" />
             @if (ollamaForm.controls['url'].hasError('required')) {
               <mat-error>
-                {{ 'labels.inputs.Ollama URL' | translate }} {{ 'labels.commons.is' | translate }}
+                {{ 'labels.inputs.url' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             }
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{ 'labels.inputs.Ollama Model' | translate }}</mat-label>
+            <mat-label>{{ 'labels.inputs.model' | translate }}</mat-label>
             @if (availableModels.length > 0) {
               <mat-select formControlName="model">
                 @for (model of availableModels; track model) {
@@ -35,7 +35,7 @@
                 }
               </mat-select>
             } @else {
-              <input matInput formControlName="model" placeholder="llama3.2" />
+              <input matInput formControlName="model" [placeholder]="'labels.inputs.Model Placeholder' | translate" />
             }
           </mat-form-field>
 

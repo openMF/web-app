@@ -78,13 +78,15 @@ export class OllamaService {
   }
 
   /**
-   * Generates a Fineract MySQL SELECT query from a natural-language description.
+   * Generates a Fineract SELECT query from a natural-language description.
    * Includes the core Fineract schema as a system prompt so Ollama can reference
-   * real table and column names.
+   * real table and column names. Fineract runs on MySQL, MariaDB, or PostgreSQL,
+   * so the prompt asks for portable ANSI SQL rather than a vendor-specific dialect.
    */
   generateSqlQuery(description: string): Observable<string> {
-    const system = `You are a Mifos Fineract MySQL report query generator.
-Generate a single MySQL SELECT query based on the user's description.
+    const system = `You are a Mifos Fineract SQL report query generator.
+Generate a single ANSI SQL SELECT query based on the user's description.
+Fineract can run on MySQL, MariaDB, or PostgreSQL, so avoid vendor-specific syntax and stick to standard ANSI SQL.
 Use only these tables and columns:
 
 m_client: id, account_no, firstname, lastname, status_enum (100=pending 300=active 600=closed), office_id, staff_id, activation_date, birthdate, mobile_no, email_address
@@ -105,7 +107,7 @@ Rules:
 - Use meaningful column aliases (e.g. c.firstname AS first_name).
 - Parameterise date ranges with ${'{'}dateFormat${'}'} and ${'{'}startDate${'}'} / ${'{'}endDate${'}'} placeholders if the user mentions a date range.`;
 
-    return this.generate(description, system).pipe(map((sql) => this.stripMarkdownFences(sql)));
+    return this.generate(description, system).pipe(map((sql) => this.validateSelectSql(this.stripMarkdownFences(sql))));
   }
 
   private stripMarkdownFences(text: string): string {
@@ -113,6 +115,13 @@ Rules:
       .replace(/^```(?:sql)?\s*/i, '')
       .replace(/\s*```\s*$/, '')
       .trim();
+  }
+
+  /** Returns the SQL unchanged if it is a single SELECT statement, otherwise an empty string. */
+  private validateSelectSql(sql: string): string {
+    const normalized = sql.trim().replace(/;+\s*$/, '');
+    const isSingleSelect = /^select\b/i.test(normalized) && !/;\s*\S/.test(normalized);
+    return isSingleSelect ? normalized : '';
   }
 
   /** Returns true if the configured Ollama instance is reachable. */
@@ -123,6 +132,9 @@ Rules:
   /** Returns true if an Ollama instance at the given URL is reachable. */
   checkConnectionAt(url: string): Observable<boolean> {
     if (!url) return of(false);
-    return this.listModelsFromUrl(url).pipe(map((models) => models.length >= 0));
+    return this.externalHttp.get<OllamaTagsResponse>(`${url}/api/tags`).pipe(
+      map(() => true),
+      catchError(() => of(false))
+    );
   }
 }

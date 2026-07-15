@@ -26,6 +26,7 @@ import { RouterLink } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { SettingsService } from 'app/settings/settings.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'mifosx-ollama',
@@ -54,6 +55,7 @@ import { SettingsService } from 'app/settings/settings.service';
 })
 export class OllamaComponent implements OnInit {
   private settingsService = inject(SettingsService);
+  private translateService = inject(TranslateService);
 
   displayedColumns: string[] = [
     'name',
@@ -67,7 +69,12 @@ export class OllamaComponent implements OnInit {
   ngOnInit(): void {
     this.enabled = this.settingsService.ollamaEnabled;
     const rows = [
-      { name: 'enabled', value: this.settingsService.ollamaEnabled ? 'true' : 'false' },
+      {
+        name: 'enabled',
+        value: this.translateService.instant(
+          this.settingsService.ollamaEnabled ? 'labels.inputs.Enabled' : 'labels.inputs.Disabled'
+        )
+      },
       { name: 'url', value: this.settingsService.ollamaUrl || '—' },
       { name: 'model', value: this.settingsService.ollamaModel || '—' }
     ];

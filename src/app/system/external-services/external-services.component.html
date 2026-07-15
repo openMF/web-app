@@ -93,16 +93,20 @@
             <mat-icon matListIcon [routerLink]="['ollama']">
               <fa-icon icon="robot" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine [routerLink]="['ollama']">{{ 'labels.heading.Ollama AI Report Assistant' | translate }}</h4>
-            @if (!arrowBooleans[4]) {
-              <fa-icon (click)="arrowBooleansToggle(4); $event.stopPropagation()" icon="arrow-down" size="md"></fa-icon>
-            }
-            @if (arrowBooleans[4]) {
-              <fa-icon (click)="arrowBooleansToggle(4); $event.stopPropagation()" icon="arrow-up" size="md"></fa-icon>
-            }
+            <h4 matLine [routerLink]="['ollama']">{{ 'labels.heading.AI API Report Assistant' | translate }}</h4>
+            <button
+              mat-icon-button
+              type="button"
+              (click)="arrowBooleansToggle(4); $event.stopPropagation()"
+              [attr.aria-label]="
+                arrowBooleans[4] ? ('labels.buttons.Collapse' | translate) : ('labels.buttons.Expand' | translate)
+              "
+            >
+              <fa-icon [icon]="arrowBooleans[4] ? 'arrow-up' : 'arrow-down'" size="md"></fa-icon>
+            </button>
             @if (arrowBooleans[4]) {
               <p matLine [routerLink]="['ollama']">
-                {{ 'labels.text.Ollama AI Report Assistant Configuration' | translate }}
+                {{ 'labels.text.AI API Report Assistant Configuration' | translate }}
               </p>
             }
           </mat-list-item>

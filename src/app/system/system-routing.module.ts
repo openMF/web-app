@@ -266,7 +266,7 @@ const routes: Routes = [
             },
             {
               path: 'ollama',
-              data: { title: 'View Ollama AI Configuration', breadcrumb: 'Ollama AI' },
+              data: { title: 'View AI API Configuration', breadcrumb: 'AI API' },
               children: [
                 {
                   path: '',
@@ -275,7 +275,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditOllamaComponent,
-                  data: { title: 'Edit Ollama AI Configuration', breadcrumb: 'Edit' }
+                  data: { title: 'Edit AI API Configuration', breadcrumb: 'Edit' }
                 }
               ]
             }

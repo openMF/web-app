@@ -7,7 +7,7 @@
  */
 
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';
@@ -33,7 +33,7 @@ import { TranslateService } from '@ngx-translate/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditOllamaComponent implements OnInit {
-  private formBuilder = inject(UntypedFormBuilder);
+  private formBuilder = inject(FormBuilder);
   private settingsService = inject(SettingsService);
   private ollamaService = inject(OllamaService);
   private alertService = inject(AlertService);
@@ -42,7 +42,11 @@ export class EditOllamaComponent implements OnInit {
   private router = inject(Router);
   private cdr = inject(ChangeDetectorRef);
 
-  ollamaForm: UntypedFormGroup;
+  ollamaForm: FormGroup<{
+    enabled: FormControl<boolean>;
+    url: FormControl<string>;
+    model: FormControl<string>;
+  }>;
   availableModels: string[] = [];
 
   ngOnInit(): void {
@@ -93,14 +97,14 @@ export class EditOllamaComponent implements OnInit {
     this.ollamaService.checkConnectionAt(url).subscribe((ok) => {
       if (ok) {
         this.alertService.alert({
-          type: 'Ollama',
-          message: this.translateService.instant('labels.text.Ollama connection successful')
+          type: 'AI API',
+          message: this.translateService.instant('labels.text.AI API connection successful')
         });
         this.loadModels(url);
       } else {
         this.alertService.alert({
-          type: 'Ollama Error',
-          message: this.translateService.instant('labels.text.Ollama connection failed')
+          type: 'AI API Error',
+          message: this.translateService.instant('labels.text.AI API connection failed')
         });
       }
     });

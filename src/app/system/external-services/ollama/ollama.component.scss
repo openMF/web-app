@@ -9,19 +9,15 @@
 .usage-hint {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1rem;
-  background: rgb(63 81 181 / 8%);
-  border-radius: 4px;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--ds-blue-50);
+  border-radius: var(--ds-radius-sm);
   margin: 0;
-  font-size: 0.9rem;
-  color: rgb(0 0 0 / 70%);
+  color: var(--ds-blue-700);
 }
 
 .hint-icon {
-  font-size: 1.1rem;
-  width: 1.1rem;
-  height: 1.1rem;
-  color: #3f51b5;
+  color: var(--ds-blue-700);
   flex-shrink: 0;
 }
