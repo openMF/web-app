@@ -10,6 +10,8 @@ import { APIRequestContext, APIResponse, request } from '@playwright/test';
 
 export class FineractApiClient {
   private static readonly CLIENT_CLOSURE_REASON_CODE_NAME = 'ClientClosureReason';
+  private static readonly CLIENT_REJECT_REASON_CODE_NAME = 'ClientRejectReason';
+  private static readonly CLIENT_WITHDRAW_REASON_CODE_NAME = 'ClientWithdrawReason';
   private static readonly DEFAULT_DATE_FORMAT = 'dd MMMM yyyy';
   private static readonly DEFAULT_LOCALE = 'en';
   private static readonly CREATE_RACE_RETRY_DELAY_MS = 250;
@@ -117,6 +119,19 @@ export class FineractApiClient {
   async getClient(clientId: number): Promise<any> {
     const res = await this.ctx.get(`/fineract-provider/api/v1/clients/${clientId}`);
     return this.validateResponse(res, 'getClient');
+  }
+
+  /**
+   * Fetches the client creation template from Fineract, optionally scoped to an office.
+   * @param officeId - Optional office id to scope the template
+   * @returns The client template payload
+   */
+  async getClientTemplate(officeId?: number): Promise<any> {
+    const url = officeId
+      ? `/fineract-provider/api/v1/clients/template?officeId=${officeId}`
+      : '/fineract-provider/api/v1/clients/template';
+    const res = await this.ctx.get(url);
+    return this.validateResponse(res, 'getClientTemplate');
   }
 
   /**
@@ -393,6 +408,28 @@ export class FineractApiClient {
   }
 
   /**
+   * Ensures a rejection reason exists for reject-client workflow tests.
+   * @param name - The rejection reason name to ensure exists
+   * @returns The existing or created rejection reason
+   */
+  async ensureClientRejectionReason(name = 'E2E Reject Client Reason'): Promise<any> {
+    return this.ensureCodeValue(FineractApiClient.CLIENT_REJECT_REASON_CODE_NAME, name, {
+      description: 'Seeded for Playwright reject-client test'
+    });
+  }
+
+  /**
+   * Ensures a withdrawal reason exists for withdraw-client workflow tests.
+   * @param name - The withdrawal reason name to ensure exists
+   * @returns The existing or created withdrawal reason
+   */
+  async ensureClientWithdrawalReason(name = 'E2E Withdraw Client Reason'): Promise<any> {
+    return this.ensureCodeValue(FineractApiClient.CLIENT_WITHDRAW_REASON_CODE_NAME, name, {
+      description: 'Seeded for Playwright withdraw-client test'
+    });
+  }
+
+  /**
    * Ensures a minimal loan product exists for active-loan negative-path tests.
    * @param options - Optional loan product identifiers to match or create
    * @returns The existing or created loan product
@@ -489,8 +526,39 @@ export class FineractApiClient {
   }
 
   /**
+   * Rejects a client with the provided reason and rejection date.
+   * @param clientId - The client id to reject
+   * @param rejectionReasonId - The rejection reason code value id
+   * @param rejectionDate - The rejection date in Fineract's expected format
+   * @returns The reject-client command response payload
+   */
+  async rejectClient(clientId: number, rejectionReasonId: number, rejectionDate: string): Promise<any> {
+    return this.executeClientCommand(clientId, 'reject', {
+      rejectionDate,
+      rejectionReasonId,
+      dateFormat: FineractApiClient.DEFAULT_DATE_FORMAT,
+      locale: FineractApiClient.DEFAULT_LOCALE
+    });
+  }
+
+  /**
+   * Withdraws a client application with the provided reason and withdrawal date.
+   * @param clientId - The client id to withdraw
+   * @param withdrawalReasonId - The withdrawal reason code value id
+   * @param withdrawalDate - The withdrawal date in Fineract's expected format
+   * @returns The withdraw-client command response payload
+   */
+  async withdrawClient(clientId: number, withdrawalReasonId: number, withdrawalDate: string): Promise<any> {
+    return this.executeClientCommand(clientId, 'withdraw', {
+      withdrawalDate,
+      withdrawalReasonId,
+      dateFormat: FineractApiClient.DEFAULT_DATE_FORMAT,
+      locale: FineractApiClient.DEFAULT_LOCALE
+    });
+  }
+
+  /**
    * Approves a loan on the provided date.
-   * @param loanId - The loan id to approve
    * @param approvedOnDate - The approval date in Fineract's expected format
    * @returns The approve-loan command response payload
    */

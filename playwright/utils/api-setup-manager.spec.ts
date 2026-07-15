@@ -368,3 +368,101 @@ test.describe('Cache-key convention (sorted URLSearchParams)', () => {
     expect(calls).toBe(1);
   });
 });
+
+// ─────────────────────────────────────────────────────────────────────
+// getClientTemplate — domain wrapper
+// ─────────────────────────────────────────────────────────────────────
+
+function managerWithClientTemplateStub(returns: any = { offices: [] }) {
+  let calls = 0;
+  const stub = {
+    getClientTemplate: async (_officeId?: number) => {
+      calls += 1;
+      return returns;
+    }
+  } as unknown as FineractApiClient;
+  const manager = new ApiSetupManager(stub, { cache: new Map() });
+  return { manager, getCalls: () => calls };
+}
+
+test.describe('getClientTemplate domain wrapper', () => {
+  test('single fetch — concurrent callers share one HTTP call', async () => {
+    const { manager, getCalls } = managerWithClientTemplateStub();
+    const [
+      a,
+      b,
+      c
+    ] = await Promise.all([
+      manager.getClientTemplate(),
+      manager.getClientTemplate(),
+      manager.getClientTemplate()
+    ]);
+    expect(getCalls()).toBe(1);
+    expect(a).toEqual({ offices: [] });
+    expect(b).toBe(a);
+    expect(c).toBe(a);
+  });
+
+  test('cached — serial calls do not re-fetch', async () => {
+    const { manager, getCalls } = managerWithClientTemplateStub();
+    await manager.getClientTemplate();
+    await manager.getClientTemplate();
+    await manager.getClientTemplate();
+    expect(getCalls()).toBe(1);
+  });
+
+  test('distinct keys — different officeId values are cached separately', async () => {
+    let calls = 0;
+    const stub = {
+      getClientTemplate: async (id?: number) => {
+        calls += 1;
+        return { officeId: id };
+      }
+    } as unknown as FineractApiClient;
+    const manager = new ApiSetupManager(stub, { cache: new Map() });
+    const a = await manager.getClientTemplate(1);
+    const b = await manager.getClientTemplate(2);
+    const c = await manager.getClientTemplate(1); // cache hit for officeId=1
+    expect(calls).toBe(2); // officeId=1 once, officeId=2 once
+    expect(a).toBe(c); // same reference from cache
+    expect(b).not.toBe(a);
+  });
+
+  test('sentinel isolation — no-officeId key does not collide with officeId=0', async () => {
+    const results: number[] = [];
+    let calls = 0;
+    const stub = {
+      getClientTemplate: async (id?: number) => {
+        calls += 1;
+        results.push(id as number);
+        return { id };
+      }
+    } as unknown as FineractApiClient;
+    const manager = new ApiSetupManager(stub, { cache: new Map() });
+    const noId = await manager.getClientTemplate();
+    const zeroId = await manager.getClientTemplate(0);
+    expect(calls).toBe(2);
+    expect(noId).toEqual({ id: undefined });
+    expect(zeroId).toEqual({ id: 0 });
+    expect(results).toEqual([
+      undefined,
+      0
+    ]);
+  });
+
+  test('reject eviction — failed fetch is not cached', async () => {
+    let calls = 0;
+    const stub = {
+      getClientTemplate: async () => {
+        calls += 1;
+        if (calls === 1) throw new Error('network error');
+        return { offices: ['recovered'] };
+      }
+    } as unknown as FineractApiClient;
+    const manager = new ApiSetupManager(stub, { cache: new Map() });
+    await expect(manager.getClientTemplate()).rejects.toThrow('network error');
+    const result = await manager.getClientTemplate();
+    expect(calls).toBe(2);
+    expect(result).toEqual({ offices: ['recovered'] });
+  });
+});

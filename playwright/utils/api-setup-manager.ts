@@ -171,6 +171,22 @@ export class ApiSetupManager {
   }
 
   /**
+   * Returns (and caches) the Fineract client-creation template.
+   * Concurrent callers for the same `officeId` share a single in-flight
+   * request; the result is memoised for the lifetime of this manager.
+   *
+   * The cache key uses the sentinel string `'none'` when `officeId` is
+   * omitted so it never collides with `clientTemplate:0`.
+   *
+   * @param officeId - Optional office id to scope the template
+   * @returns The client template payload
+   */
+  getClientTemplate(officeId?: number): Promise<any> {
+    const key = `clientTemplate:${officeId ?? 'none'}`;
+    return this.dedupe(key, () => this.api.getClientTemplate(officeId));
+  }
+
+  /**
    * Test-only escape hatch. Clears the cache backing this instance —
    * useful for unit specs that want a clean slate per `test()`
    * without recreating the manager. Production code should never

@@ -294,3 +294,91 @@ export const CLOSE_CLIENT_SELECTORS: CloseClientSelectors = {
   confirmButton: 'Confirm',
   cancelButton: 'Cancel'
 };
+
+// ---------------------------------------------------------------------------
+// Activate client action form
+// ---------------------------------------------------------------------------
+
+export interface ActivateClientSelectors {
+  activationDateInput: string;
+  confirmButton: string;
+  cancelButton: string;
+}
+
+export const ACTIVATE_CLIENT_SELECTORS: ActivateClientSelectors = {
+  activationDateInput: 'input[formcontrolname="activationDate"]',
+  confirmButton: 'Confirm',
+  cancelButton: 'Cancel'
+};
+
+// ---------------------------------------------------------------------------
+// Reject client action form
+// ---------------------------------------------------------------------------
+
+export interface RejectClientSelectors {
+  rejectionDateInput: string;
+  rejectionReasonSelect: string;
+  confirmButton: string;
+  cancelButton: string;
+}
+
+export const REJECT_CLIENT_SELECTORS: RejectClientSelectors = {
+  rejectionDateInput: 'input[formcontrolname="rejectionDate"]',
+  rejectionReasonSelect: 'mat-select[formcontrolname="rejectionReasonId"]',
+  confirmButton: 'Confirm',
+  cancelButton: 'Cancel'
+};
+
+// ---------------------------------------------------------------------------
+// Withdraw client action form
+// ---------------------------------------------------------------------------
+
+export interface WithdrawClientSelectors {
+  withdrawalDateInput: string;
+  withdrawalReasonSelect: string;
+  confirmButton: string;
+  cancelButton: string;
+}
+
+export const WITHDRAW_CLIENT_SELECTORS: WithdrawClientSelectors = {
+  withdrawalDateInput: 'input[formcontrolname="withdrawalDate"]',
+  withdrawalReasonSelect: 'mat-select[formcontrolname="withdrawalReasonId"]',
+  confirmButton: 'Confirm',
+  cancelButton: 'Cancel'
+};
+
+// ---------------------------------------------------------------------------
+// Reactivate client action form
+// ---------------------------------------------------------------------------
+
+export interface ReactivateClientSelectors {
+  reactivationDateInput: string;
+  confirmButton: string;
+  cancelButton: string;
+}
+
+export const REACTIVATE_CLIENT_SELECTORS: ReactivateClientSelectors = {
+  reactivationDateInput: 'input[formcontrolname="reactivationDate"]',
+  confirmButton: 'Confirm',
+  cancelButton: 'Cancel'
+};
+
+// ---------------------------------------------------------------------------
+// Transfer client action form
+// ---------------------------------------------------------------------------
+
+export interface TransferClientSelectors {
+  destinationOfficeSelect: string;
+  transferDateInput: string;
+  noteInput: string;
+  confirmButton: string;
+  cancelButton: string;
+}
+
+export const TRANSFER_CLIENT_SELECTORS: TransferClientSelectors = {
+  destinationOfficeSelect: 'mat-select[formcontrolname="destinationOfficeId"]',
+  transferDateInput: 'input[formcontrolname="transferDate"]',
+  noteInput: 'textarea[formcontrolname="note"]',
+  confirmButton: 'Confirm',
+  cancelButton: 'Cancel'
+};
