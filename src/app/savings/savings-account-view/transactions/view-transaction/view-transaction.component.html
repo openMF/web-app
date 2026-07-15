@@ -26,7 +26,7 @@
         [active]="datatable.isActive"
         *mifosxHasPermission="'READ_' + entityDatatable.registeredTableName"
       >
-        {{ entityDatatable.registeredTableName }}
+        {{ entityDatatable.registeredTableName | datatableDisplayLabel }}
       </a>
     }
   </nav>

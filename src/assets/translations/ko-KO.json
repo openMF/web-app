@@ -1,4 +1,4 @@
-﻿{
+{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "다음 계정으로 로그인됨",
   "Remember me": "날 기억해",
@@ -475,6 +475,7 @@
     "accounting": {
       "Accrual (periodic)": "발생(정기적)",
       "Accrual (upfront)": "발생(선불)",
+      "ACC_DEF_REV_AM": "이연매출 상각액을 반영한 발생주의 회계",
       "CASH_BASED": "현금",
       "Cash": "현금",
       "NONE": "없음",
@@ -577,6 +578,8 @@
       "Create Interest Refund": "이자 환불 생성",
       "Create Journal Entries": "분개 항목 만들기",
       "Create Loan Product": "대출상품 생성",
+      "Create Loan Product (Classic)": "Create Loan Product (Classic)",
+      "Create Loan Product (Convenient)": "Create Loan Product (Convenient)",
       "Create Office": "사무실 만들기",
       "Create Payment Type": "결제 유형 생성",
       "Create Preference": "환경설정 만들기",
@@ -769,7 +772,10 @@
       "Week": "주",
       "Withdraw": "철회하다",
       "Yes": "예",
-      "undo_account_transfer": "계좌 이체 취소"
+      "undo_account_transfer": "계좌 이체 취소",
+      "All": "전체",
+      "Pause Breach": "위반 일시중지",
+      "Resume Breach": "중단된 작업 재개"
     },
     "catalogs": {
       "% Amount": "양",
@@ -1117,6 +1123,12 @@
       "NotEqual": "같지 않음"
     },
     "heading": {
+      "Breach Actions": "위반 행위",
+      "Delinquency & Breach": "연체 및 위반",
+      "Interest": "이자",
+      "Multi-step form": "Multi-step form",
+      "Loan product creation": "Loan product creation",
+      "Near Breach Actions": "위반 임박 행위",
       "About Us": "회사 소개",
       "Account Information": "계정 정보",
       "Account Linked Financial": "다양한 금융 활동과 연결된 계정 목록입니다. 자세한 내용을 보려면 다음을 클릭하세요.",
@@ -1405,6 +1417,7 @@
       "Minimum Deposit Term": "최소 예금 기간",
       "Moratorium": "모라토리엄",
       "Near Breach Configuration": "근접 위반 구성",
+      "Near Breach History": "위반 임박 내역",
       "Nominal Interest Rate by loan cycle": "대출주기별 명목이자율",
       "Not Yet Amortized Amount": "미상각 금액",
       "Notes": "노트",
@@ -1577,9 +1590,16 @@
       "identifier id": "식별자 ID",
       "savings-transaction-datatable-tab works": "저축 거래 데이터 테이블 탭이 작동합니다.",
       "successfully select option": "성공적으로. 계속 진행하려면 아래 옵션 중에서 선택하세요.",
-      "undo_account_transfer": "계좌 이체 취소"
+      "undo_account_transfer": "계좌 이체 취소",
+      "Loan Breach Actions": "대출 위반 작업",
+      "No Breach Actions": "위반 작업 없음",
+      "Pause Timeline": "일시중지 타임라인"
     },
     "inputs": {
+      "Annual interest rate": "Annual interest rate",
+      "Annual interest rate by loan cycle": "Annual interest rate by loan cycle",
+      "Annual interest rate frequency": "Annual interest rate frequency",
+      "Breach Actions": "위반 행위",
       "# Remittance": "# 송금",
       "# Senders": "# 송금인",
       "ACCOUNTING": "회계",
@@ -1997,6 +2017,7 @@
       "Discount Default": "할인 기본값",
       "Discount External Id": "할인 외부 ID",
       "Discount External Id must differ from External Id": "할인 외부 ID는 외부 ID와 달라야 합니다",
+      "Discount Fee Adjustment": "할인 수수료 조정",
       "Discount Fee Balance": "할인 수수료 잔액",
       "Discount must be greater than or equal to 0": "할인은 0 이상이어야 합니다",
       "Display Name": "이름 표시하기",
@@ -2488,6 +2509,8 @@
       "Multiple Debit Entries Allowed": "복수 차변 항목 허용",
       "Municipality": "시/군/구",
       "N/A": "해당 없음",
+      "Net Disbursal Amount": "순 지급 금액",
+      "New": "신규",
       "NID": "국민 신분증",
       "Name": "이름",
       "Name Decorated": "이름 장식",
@@ -2686,6 +2709,7 @@
       "Prefix Type": "접두사 유형",
       "Premature Close Date": "조기 마감일",
       "Present": "현재의",
+      "Previous": "이전",
       "Previous Run": "이전 실행",
       "Previous Run Status": "이전 실행 상태",
       "Primary Grouping by Amount": "금액별 기본 그룹화",
@@ -2807,6 +2831,7 @@
       "Revised Meeting Date": "수정된 회의 날짜",
       "Role": "역할",
       "Role Description": "역할 설명",
+      "Schedule": "Schedule",
       "System": "시스템",
       "This role provides all application permissions": "이 역할은 모든 애플리케이션 권한을 제공합니다.",
       "Role Name": "역할 이름",
@@ -3135,7 +3160,22 @@
       "s3_secret_key": "s3_비밀_키",
       "task-management component": "작업 관리 구성 요소",
       "to": "에게",
-      "valid": "유효한"
+      "valid": "유효한",
+      "Active Pause": "활성 일시중지",
+      "Breach Actions": "위반 작업",
+      "days": "일",
+      "Duration": "기간",
+      "Expired": "만료됨",
+      "Last Action": "마지막 작업",
+      "No breach actions have been recorded for this loan": "이 대출에 대한 위반 작업이 기록되지 않았습니다",
+      "No records match the selected filter": "선택한 필터와 일치하는 기록이 없습니다",
+      "Ongoing": "진행 중",
+      "Pause Active": "일시중지 활성",
+      "Pauses": "일시중지",
+      "Scheduled": "예약됨",
+      "Today": "오늘",
+      "Total Actions": "전체 작업",
+      "Total Days Paused": "총 일시중지 일수"
     },
     "links": {
       "Community": "지역 사회",
@@ -3153,6 +3193,7 @@
       "Working with Code": "코드 작업"
     },
     "menus": {
+      "Update Breach": "위반 업데이트",
       "Unassign Staff": "직원 할당 해제",
       "Accounting": "회계",
       "Account Overview": "계정 개요",
@@ -3272,6 +3313,7 @@
       "Withdrawn by Client": "고객이 철회함",
       "Write Off": "상각",
       "Update discount": "할인 업데이트",
+      "Update Near Breach": "임박한 위반 업데이트",
       "Apply Additional Shares": "추가 신청",
       "Redeem Shares": "주식 상환",
       "Approve Additional Shares": "추가 공유 승인",
@@ -3310,6 +3352,7 @@
       "Withdrawn": "빼는"
     },
     "dialogContext": {
+      "Are you sure you want to resume the breach pause": "중단된 작업을 재개하시겠습니까?",
       "Are you sure you want Unassign Staff": "직원 해제를 하시겠습니까?",
       "Are you sure you want to calculate interest ?": "이자를 계산하시겠습니까?",
       "Are you sure you want to post interest ?": "이자를 등록하시겠습니까?",
@@ -3341,6 +3384,10 @@
       "undo_account_transfer": "이 계좌 이체를 취소하시겠습니까?"
     },
     "text": {
+      "Max": "최대",
+      "Hidden variables and predefined values are included in the final payload automatically.": "Hidden variables and predefined values are included in the final payload automatically.",
+      "No Breach Actions": "위반 행위 없음",
+      "No Near Breach Actions": "위반 임박 행위 없음",
       "A": "ㅏ",
       "Ability to manage holidays for individual offices": "개별 사무실의 휴일을 관리하는 기능은 여러 위치에 걸쳐 있는 조직에 매우 유용한 도구입니다. 조직의 각 사무실에 대한 휴일을 사용자 정의하려면 이 옵션을 사용하십시오.",
       "About Us": "회사 소개",
@@ -3944,6 +3991,10 @@
       "Table": "테이블",
       "Tax Components": "세금 구성요소",
       "Tellers": "텔러",
+      "Template defaults are preloaded": "Template defaults are preloaded",
+      "Select a product below": "Select a product below",
+      "Upcoming": "예정된",
+      "Complete control over every aspect of product behavior": "모라토리엄과 보조금부터 다중 트랜치 구조, 배분 규칙까지 — 상품 동작의 모든 측면을 완벽하게 제어할 수 있습니다.",
       "Template I am trying to use": "제가 사용하려고 하는 템플릿입니다. 괜찮나요?",
       "Templates": "템플릿",
       "Tenant": "임차인",
@@ -4095,7 +4146,19 @@
       "username": "사용자 이름",
       "withhold tax for this account": "이 계정에 대한 원천징수세",
       "withoutCategory": "카테고리 없음",
-      "Maker-Checker principle requires every tasks": "원칙은 오류와 오용 가능성을 줄이기 위해 모든 작업을 두 사람이 완료하도록 요구합니다. 한 사람이 프로세스를 시작하고 두 번째 사람이 프로세스를 완료합니다."
+      "Maker-Checker principle requires every tasks": "원칙은 오류와 오용 가능성을 줄이기 위해 모든 작업을 두 사람이 완료하도록 요구합니다. 한 사람이 프로세스를 시작하고 두 번째 사람이 프로세스를 완료합니다.",
+      "Breach Actions": "위반 작업",
+      "“Maker-Checker” principle requires every tasks": "\"Maker-Checker\" 원칙은 오류와 오용 가능성을 줄이기 위해 모든 작업을 두 사람이 완료하도록 요구합니다. 한 사람이 프로세스를 시작하고 두 번째 사람이 프로세스를 완료합니다.",
+      "SavingsAccountsStayedLockedBusinessEvent": "Savings Accounts Stayed Locked Business Event",
+      "WorkingCapitalLoanDisbursalTransactionBusinessEvent": "Working Capital Loan Disbursal Transaction Business Event",
+      "WorkingCapitalLoanUndoDisbursalTransactionBusinessEvent": "Working Capital Loan Undo Disbursal Transaction Business Event",
+      "WorkingCapitalLoanRepaymentTransactionBusinessEvent": "Working Capital Loan Repayment Transaction Business Event",
+      "WorkingCapitalLoanCreditBalanceRefundTransactionBusinessEvent": "Working Capital Loan Credit Balance Refund Transaction Business Event",
+      "WorkingCapitalLoanDiscountFeeTransactionBusinessEvent": "Working Capital Loan Discount Fee Transaction Business Event",
+      "WorkingCapitalLoanDiscountFeeAdjustmentTransactionBusinessEvent": "Working Capital Loan Discount Fee Adjustment Transaction Business Event",
+      "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
+      "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
+      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event"
     },
     "permissions": {
       "actions": {
@@ -4836,5 +4899,71 @@
         "message": "구현되지 않은 기능입니다!"
       }
     }
+  },
+  "copilot": {
+    "brand": "Mifos Intelligence AI",
+    "currentSession": "현재 세션",
+    "newChat": "새 채팅",
+    "close": "닫기",
+    "greeting": {
+      "morning": "좋은 아침입니다",
+      "afternoon": "좋은 오후입니다",
+      "evening": "좋은 저녁입니다"
+    },
+    "welcomeHeading": "오늘 고객을 지원하는 데 어떻게 도와드릴까요?",
+    "suggestions": {
+      "clientDetails": "고객 John Doe의 세부 정보를 보여주세요",
+      "repaymentSchedule": "대출 #107의 상환 일정은 어떻게 되나요?",
+      "savingsBalance": "고객 #52의 예금 계좌 잔액을 보여주세요",
+      "overdueLoans": "이번 주에 연체된 대출은 몇 건인가요?"
+    },
+    "input": {
+      "placeholder": "고객, 대출 또는 계좌에 대해 질문하세요...",
+      "attach": "파일 첨부",
+      "voice": "음성 입력",
+      "send": "메시지 보내기",
+      "stop": "생성 중지"
+    },
+    "disclaimer": "Mifos Intelligence AI는 인간의 의사 결정을 대체하는 것이 아니라 지원하도록 설계되었습니다.",
+    "nav": {
+      "recentChats": "최근 채팅",
+      "chat": "채팅",
+      "preferences": "환경설정",
+      "helpCenter": "도움말 센터"
+    },
+    "preferencesHeading": "환경설정",
+    "recent": {
+      "emptyTitle": "최근 대화 없음",
+      "emptySubtitle": "채팅 기록이 여기에 표시됩니다",
+      "messages": "개의 메시지",
+      "delete": "대화 삭제"
+    },
+    "help": {
+      "capabilitiesTitle": "Mifos Intelligence AI는 무엇을 할 수 있나요?",
+      "capabilities": {
+        "lookup": "고객 정보 및 프로필 조회",
+        "loans": "대출 세부 정보 및 상환 일정 보기",
+        "savings": "예금 계좌 잔액 확인",
+        "portfolio": "고객 포트폴리오에 대한 인사이트 확인",
+        "navigate": "Mifos X의 특정 페이지로 이동"
+      },
+      "examplesTitle": "예시 질문",
+      "importantTitle": "중요",
+      "important": {
+        "assist": "AI 응답은 참고용일 뿐 최종 결정이 아닙니다",
+        "verify": "조치를 취하기 전에 항상 중요한 금융 데이터를 확인하세요",
+        "noExecute": "AI는 스스로 거래를 실행하지 않습니다"
+      }
+    },
+    "cardType": {
+      "client": "고객",
+      "loan": "대출",
+      "savings": "예금",
+      "insight": "인사이트",
+      "confirmation": "확인"
+    },
+    "confirmWarning": "이 작업은 실제 자금과 관련이 있습니다. 확인해 주세요.",
+    "openAssistant": "AI 어시스턴트 열기",
+    "newChatTitle": "새 대화"
   }
 }

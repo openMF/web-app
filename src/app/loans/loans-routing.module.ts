@@ -77,8 +77,11 @@ import { LoanDeferredIncomeDataResolver } from './common-resolvers/loan-deferred
 import { LoanBuyDownFeesDataResolver } from './common-resolvers/loan-buy-down-fees-data.resolver';
 import { LoanOriginatorsTabComponent } from './loans-view/loan-originators-tab/loan-originators-tab.component';
 import { LoanOriginatorsResolver } from './common-resolvers/loan-originators.resolver';
+import { LoanOriginatorsResolver as LoanOriginatorsCatalogResolver } from 'app/organization/loan-originators/loan-originators.resolver';
 import { LoanProductsResolver } from './common-resolvers/loan-products.resolver';
 import { LoanDelinquencyRangeScheduleResolver } from './common-resolvers/working-capital/loan-delinquency-actions.resolver';
+import { LoanBreachActionsResolver } from './common-resolvers/working-capital/loan-breach-actions.resolver';
+import { LoanBreachActionsTabComponent } from './loans-view/working-capital/loan-breach-actions-tab/loan-breach-actions-tab.component';
 import { LoanAmortizationScheduleTabComponent } from './loans-view/working-capital/loan-amortization-schedule-tab/loan-amortization-schedule-tab.component';
 import { LoanAmortizationScheduleResolver } from './common-resolvers/working-capital/loan-amortization-schedule.resolver';
 import { LoanBalancesTabComponent } from './loans-view/working-capital/loan-balances-tab/loan-balances-tab.component';
@@ -88,6 +91,7 @@ import { LoanTransactionsResolver } from './common-resolvers/loan-transactions.r
 import { LoanChargesResolver } from './common-resolvers/loan-charges.resolver';
 import { LoanBreachScheduleResolver } from './common-resolvers/working-capital/loan-breach-schedule.resolver';
 import { LoanBreachScheduleTabComponent } from './loans-view/working-capital/loan-breach-schedule-tab/loan-breach-schedule-tab.component';
+import { LoanNearBreachActionsResolver } from './common-resolvers/working-capital/loan-near-breach-actions.resolver';
 
 /** Loans Route. */
 const routes: Routes = [
@@ -101,7 +105,8 @@ const routes: Routes = [
         component: CreateLoansAccountComponent,
         resolve: {
           loansAccountTemplate: LoansAccountTemplateResolver,
-          loanProductsBasicDetails: LoanProductsResolver
+          loanProductsBasicDetails: LoanProductsResolver,
+          loanOriginatorsData: LoanOriginatorsCatalogResolver
         }
       },
       {
@@ -133,7 +138,10 @@ const routes: Routes = [
           {
             path: 'accountdetail',
             component: AccountDetailsComponent,
-            data: { title: 'Account Detail', breadcrumb: 'Account Detail', routeParamBreadcrumb: false }
+            data: { title: 'Account Detail', breadcrumb: 'Account Detail', routeParamBreadcrumb: false },
+            resolve: {
+              loanNearBreachActions: LoanNearBreachActionsResolver
+            }
           },
           {
             path: 'original-schedule',
@@ -164,6 +172,15 @@ const routes: Routes = [
             data: { title: 'Breach Schedule', breadcrumb: 'Breach Schedule', routeParamBreadcrumb: false },
             resolve: {
               breachSchedule: LoanBreachScheduleResolver
+            }
+          },
+          {
+            path: 'breach-actions',
+            component: LoanBreachActionsTabComponent,
+            data: { title: 'Breach Actions', breadcrumb: 'Breach Actions', routeParamBreadcrumb: false },
+            resolve: {
+              loanBreachActions: LoanBreachActionsResolver,
+              loanNearBreachActions: LoanNearBreachActionsResolver
             }
           },
           {
@@ -385,7 +402,8 @@ const routes: Routes = [
         component: EditLoansAccountComponent,
         resolve: {
           loanProductsBasicDetails: LoanProductsResolver,
-          loansAccountAndTemplate: LoansAccountAndTemplateResolver
+          loansAccountAndTemplate: LoansAccountAndTemplateResolver,
+          loanOriginatorsData: LoanOriginatorsCatalogResolver
         }
       },
       {
@@ -498,7 +516,9 @@ const routes: Routes = [
     LoanPeriodPaymentRatesResolver,
     LoanTransactionsResolver,
     LoanChargesResolver,
-    LoanBreachScheduleResolver
+    LoanBreachScheduleResolver,
+    LoanNearBreachActionsResolver,
+    LoanBreachActionsResolver
   ]
 })
 export class LoansRoutingModule {}

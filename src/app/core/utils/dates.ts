@@ -10,6 +10,21 @@ import { DatePipe } from '@angular/common';
 import { Injectable, inject } from '@angular/core';
 import moment from 'moment';
 
+export enum Month {
+  Jan = 'Jan',
+  Feb = 'Feb',
+  Mar = 'Mar',
+  Apr = 'Apr',
+  May = 'May',
+  Jun = 'Jun',
+  Jul = 'Jul',
+  Aug = 'Aug',
+  Sep = 'Sep',
+  Oct = 'Oct',
+  Nov = 'Nov',
+  Dec = 'Dec'
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -88,5 +103,9 @@ export class Dates {
         Date.UTC(date1.getFullYear(), date1.getMonth(), date1.getDate())) /
         (1000 * 60 * 60 * 24)
     );
+  }
+
+  get monthLabels(): Month[] {
+    return Object.values(Month);
   }
 }

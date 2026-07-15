@@ -98,6 +98,11 @@
   window['env']['mifosRemittanceApiClientHeader'] = '';
   window['env']['mifosRemittanceApiClientKey'] = '';
 
+  // Mifos Copilot AI assistant
+  // Set enableCopilot to 'true' to load the Copilot panel for this deployment (off by default)
+  window['env']['enableCopilot'] = false;
+  window['env']['copilotMcpBaseUrl'] = 'https://ai.mifos.community';
+
   // Enable Role-Based Access Control (RBAC) for menu/button permissions
   // Set to true to enable RBAC, false (default) for backward compatibility
   window['env']['productionModeEnableRBAC'] = false;

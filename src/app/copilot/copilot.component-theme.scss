@@ -1,0 +1,527 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+@use '@angular/material' as mat;
+@use 'sass:map';
+
+// Fixed semantic status colors - NOT part of the Material palette (success / warning).
+// These intentionally stay constant so cards keep their success/warning meaning.
+$copilot-success: #10b981;
+$copilot-warning: #f59e0b;
+
+/**
+ * Colors for the Mifos Copilot panel, driven entirely by the active Material
+ * theme. Called once for light and once for dark (under `.dark-theme`) from
+ * src/theme/mifosx-theme.scss - dark mode is derived automatically, so there is
+ * no hand-rolled dark block. Structure lives in copilot-panel.component.scss.
+ *
+ * Hybrid theming: brand (primary/accent) is identical in both palettes, so the
+ * AI's blue identity stays fixed while surfaces/text/borders follow light/dark.
+ */
+@mixin copilot-component-theme($theme) {
+  $primary: map.get($theme, primary);
+  $accent: map.get($theme, accent);
+  $warn: map.get($theme, warn);
+  $foreground: map.get($theme, foreground);
+  $background: map.get($theme, background);
+  $is-dark: map.get($theme, is-dark);
+
+  // Brand
+  $p100: mat.m2-get-color-from-palette($primary, 100);
+  $p500: mat.m2-get-color-from-palette($primary, 500);
+  $p700: mat.m2-get-color-from-palette($primary, 700);
+  $on-primary: mat.m2-get-contrast-color-from-palette($primary, 500);
+  $a500: mat.m2-get-color-from-palette($accent, 500);
+  $warn500: mat.m2-get-color-from-palette($warn, 500);
+  $warn700: mat.m2-get-color-from-palette($warn, 700);
+  $on-warn: mat.m2-get-contrast-color-from-palette($warn, 500);
+
+  // Brand text/tint that reads well in both modes (lighter blue on dark).
+  $brand-text: if($is-dark, $p100, $p500);
+  $brand-tint: mat.m2-get-color-from-palette($primary, 500, 0.1);
+  $brand-ring: mat.m2-get-color-from-palette($primary, 500, 0.5);
+
+  // Surfaces & text from the theme (flip automatically in dark).
+  $surface: map.get($background, card);
+  $muted: map.get($background, hover);
+  $border: mat.m2-get-color-from-palette($foreground, divider);
+  $text-1: mat.m2-get-color-from-palette($foreground, text);
+  $text-2: mat.m2-get-color-from-palette($foreground, secondary-text);
+  $text-3: mat.m2-get-color-from-palette($foreground, hint-text);
+
+  // Semantic (status) - fixed hues, mode-aware text/bg.
+  $success-text: if($is-dark, #6ee7b7, #047857);
+  $success-bg: rgba($copilot-success, 0.12);
+  $warning-text: if($is-dark, #fbbf24, $copilot-warning);
+  $warning-bg: rgba($copilot-warning, 0.12);
+  $danger-bg: rgba($warn500, 0.12);
+  $danger-text: if($is-dark, #fca5a5, $warn700);
+  $scroll-thumb: rgba(if($is-dark, #fff, #000), 0.08);
+  $disabled-send: if($is-dark, #555, #c7cdd4);
+
+  // Glassmorphic panel backdrop (translucent, branches on mode).
+  $glass-bg: if($is-dark, rgb(15 23 42 / 60%), rgb(255 255 255 / 70%));
+  $glass-border: if($is-dark, rgb(255 255 255 / 10%), rgb(255 255 255 / 30%));
+
+  .mifos-copilot {
+    /* FAB */
+    .ai-fab {
+      background: linear-gradient(135deg, $p500, $p700);
+      color: $on-primary;
+      box-shadow: 0 6px 20px mat.m2-get-color-from-palette($primary, 500, 0.4);
+
+      &:hover {
+        box-shadow: 0 8px 28px mat.m2-get-color-from-palette($primary, 500, 0.5);
+      }
+    }
+
+    /* Glass panel - translucent backdrop, mode-aware via $glass-* */
+    .chat-page {
+      background: $glass-bg;
+      border-color: $glass-border;
+    }
+
+    /* Topbar */
+    .topbar {
+      border-bottom-color: $border;
+
+      &__brand {
+        color: $text-1;
+      }
+
+      &__session-label {
+        color: $text-3;
+      }
+
+      &__session-value {
+        color: $text-1;
+      }
+
+      &__btn {
+        background: $surface;
+        border-color: $border;
+
+        svg {
+          fill: $text-2;
+        }
+
+        &:hover {
+          background: $muted;
+        }
+      }
+
+      &__new-chat {
+        color: $brand-text;
+        border-color: $brand-ring;
+
+        svg {
+          fill: $brand-text;
+        }
+
+        &:hover {
+          background: $brand-tint;
+          border-color: $brand-text;
+        }
+      }
+    }
+
+    /* Scrollbars */
+    .chat-body::-webkit-scrollbar-thumb {
+      background: $scroll-thumb;
+    }
+
+    /* Welcome */
+    .welcome {
+      &__badge {
+        background: $brand-tint;
+        color: $brand-text;
+      }
+
+      &__heading {
+        color: $text-1;
+      }
+    }
+
+    /* Messages */
+    .msg {
+      &--user .msg__bubble {
+        background: linear-gradient(135deg, $p500, $p700);
+        color: $on-primary;
+        box-shadow: 0 2px 8px mat.m2-get-color-from-palette($primary, 500, 0.2);
+      }
+
+      &--ai .msg__bubble {
+        background: $surface;
+        color: $text-1;
+        border: 1px solid $border;
+      }
+
+      &__bubble .md-inline-code {
+        background: rgba(if($is-dark, #fff, #000), 0.06);
+      }
+
+      &__avatar {
+        background: $surface;
+        border-color: $border;
+      }
+
+      &__time {
+        color: $text-3;
+      }
+    }
+
+    .typing__dots {
+      background: $surface;
+      border-color: $border;
+
+      span {
+        background: $p500;
+      }
+    }
+
+    /* Action cards */
+    .card {
+      background: $surface;
+      border-color: $border;
+
+      &::before {
+        background: linear-gradient(90deg, $p500, $p100);
+      }
+
+      &--confirm::before {
+        background: linear-gradient(90deg, $warn500, $warn700);
+      }
+
+      &--insight::before {
+        background: linear-gradient(90deg, $copilot-success, $a500);
+      }
+
+      &__icon-wrap {
+        background: $brand-tint;
+
+        &--client {
+          background: $brand-tint;
+        }
+
+        &--loan {
+          background: $warning-bg;
+        }
+
+        &--savings,
+        &--insight {
+          background: $success-bg;
+        }
+
+        &--confirmation {
+          background: $danger-bg;
+        }
+      }
+
+      &__type-icon {
+        fill: $brand-text;
+      }
+
+      &__icon-wrap--loan &__type-icon {
+        fill: $warning-text;
+      }
+
+      &__icon-wrap--savings &__type-icon,
+      &__icon-wrap--insight &__type-icon {
+        fill: $copilot-success;
+      }
+
+      &__icon-wrap--confirmation &__type-icon {
+        fill: $warn500;
+      }
+
+      &__badge {
+        color: $brand-text;
+
+        &--loan {
+          color: $warning-text;
+        }
+
+        &--savings,
+        &--insight {
+          color: $success-text;
+        }
+
+        &--confirmation {
+          color: $danger-text;
+        }
+      }
+
+      &__title {
+        color: $text-1;
+      }
+
+      &__row {
+        border-bottom-color: $border;
+      }
+
+      &__label {
+        color: $text-3;
+      }
+
+      &__value {
+        color: $text-1;
+      }
+
+      &__warn-stripe {
+        background: $danger-bg;
+        color: $danger-text;
+
+        svg {
+          fill: $warn500;
+        }
+      }
+
+      &__actions {
+        border-top-color: $border;
+      }
+
+      &__btn--primary {
+        background: linear-gradient(135deg, $p500, $p700);
+        color: $on-primary;
+        box-shadow: 0 2px 8px mat.m2-get-color-from-palette($primary, 500, 0.25);
+      }
+
+      &__btn--warn {
+        background: linear-gradient(135deg, $warn500, $warn700);
+        color: $on-warn;
+        box-shadow: 0 2px 8px mat.m2-get-color-from-palette($warn, 500, 0.25);
+      }
+
+      &__btn--accent {
+        background: $muted;
+        color: $text-1;
+        border-color: $border;
+      }
+    }
+
+    /* Prompt chips */
+    .prompt-chip {
+      background: $surface;
+      color: $text-1;
+      border-color: $border;
+
+      &:hover {
+        background: $brand-tint;
+        border-color: $p100;
+        color: $brand-text;
+      }
+    }
+
+    /* Footer / input bar */
+    .chat-footer {
+      &__input-bar {
+        background: $surface;
+        border-color: $border;
+
+        &:focus-within {
+          border-color: $brand-ring;
+          box-shadow: 0 0 0 4px mat.m2-get-color-from-palette($primary, 500, 0.08);
+        }
+      }
+
+      &__icon-btn {
+        svg {
+          fill: $text-3;
+        }
+
+        &:hover:not(:disabled) {
+          background: $muted;
+
+          svg {
+            fill: $brand-text;
+          }
+        }
+      }
+
+      &__input {
+        color: $text-1;
+
+        &::placeholder {
+          color: $text-3;
+        }
+      }
+
+      &__send {
+        background: linear-gradient(135deg, $p500, $p700);
+        box-shadow: 0 4px 14px mat.m2-get-color-from-palette($primary, 500, 0.3);
+
+        svg {
+          fill: $on-primary;
+        }
+
+        &:hover:not(:disabled) {
+          box-shadow: 0 6px 20px mat.m2-get-color-from-palette($primary, 500, 0.4);
+        }
+
+        &:disabled {
+          background: $disabled-send;
+        }
+      }
+
+      &__stop {
+        background: linear-gradient(135deg, $warn500, $warn700);
+        box-shadow: 0 4px 14px mat.m2-get-color-from-palette($warn, 500, 0.3);
+
+        svg {
+          fill: $on-warn;
+        }
+      }
+
+      &__disclaimer {
+        color: $text-3;
+      }
+    }
+
+    /* Bottom nav */
+    .bottom-nav {
+      background: $surface;
+      border-top-color: $border;
+
+      &__item {
+        color: $text-3;
+
+        svg {
+          fill: $text-3;
+        }
+
+        &:hover {
+          color: $text-2;
+          background: $muted;
+
+          svg {
+            fill: $text-2;
+          }
+        }
+
+        &--active {
+          color: $brand-text;
+          background: $brand-tint;
+
+          svg {
+            fill: $brand-text;
+          }
+
+          &:hover {
+            color: $brand-text;
+            background: $brand-tint;
+
+            svg {
+              fill: $brand-text;
+            }
+          }
+        }
+      }
+    }
+
+    /* Recent chats */
+    .recent-chats {
+      &__empty-icon {
+        fill: $text-3;
+      }
+
+      &__empty-title {
+        color: $text-2;
+      }
+
+      &__empty-subtitle {
+        color: $text-3;
+      }
+
+      &__item {
+        background: $surface;
+        border-color: $border;
+
+        &:hover {
+          border-color: $p100;
+        }
+      }
+
+      &__item-icon {
+        background: $brand-tint;
+
+        svg {
+          fill: $brand-text;
+        }
+      }
+
+      &__item-title {
+        color: $text-1;
+      }
+
+      &__item-preview {
+        color: $text-2;
+      }
+
+      &__item-meta {
+        color: $text-3;
+      }
+
+      &__item-delete {
+        svg {
+          fill: $text-3;
+        }
+
+        &:hover {
+          background: $danger-bg;
+
+          svg {
+            fill: $danger-text;
+          }
+        }
+      }
+    }
+
+    /* Help center */
+    .help-center {
+      &__section-icon svg {
+        fill: $text-2;
+      }
+
+      &__section-title {
+        color: $text-1;
+      }
+
+      &__item {
+        background: $surface;
+        border-color: $border;
+        color: $text-1;
+
+        svg {
+          fill: $copilot-success;
+        }
+
+        &--muted {
+          color: $text-2;
+
+          svg {
+            fill: $text-3;
+          }
+        }
+      }
+
+      &__prompt {
+        background: $surface;
+        border-color: $border;
+        color: $brand-text;
+
+        svg {
+          fill: $brand-text;
+        }
+
+        &:hover {
+          border-color: $p100;
+        }
+      }
+    }
+  }
+}

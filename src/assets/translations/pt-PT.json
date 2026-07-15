@@ -1,4 +1,4 @@
-﻿{
+{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "logado como",
   "Remember me": "Lembre de mim",
@@ -475,6 +475,7 @@
     "accounting": {
       "Accrual (periodic)": "Acumulação (periódica)",
       "Accrual (upfront)": "Acumulação (antecipada)",
+      "ACC_DEF_REV_AM": "Acumulação com amortização de receitas diferidas",
       "CASH_BASED": "Dinheiro",
       "Cash": "Dinheiro",
       "NONE": "Nenhum",
@@ -577,6 +578,8 @@
       "Create Interest Refund": "Criar reembolso de juros",
       "Create Journal Entries": "Criar lançamentos contábeis manuais",
       "Create Loan Product": "Criar produto de empréstimo",
+      "Create Loan Product (Classic)": "Create Loan Product (Classic)",
+      "Create Loan Product (Convenient)": "Create Loan Product (Convenient)",
       "Create Office": "Criar escritório",
       "Create Payment Type": "Criar tipo de pagamento",
       "Create Preference": "Criar preferência",
@@ -769,7 +772,10 @@
       "Week": "Semana",
       "Withdraw": "Retirar",
       "Yes": "Sim",
-      "undo_account_transfer": "Reverter transferência de conta"
+      "undo_account_transfer": "Reverter transferência de conta",
+      "All": "Todos",
+      "Pause Breach": "Pausar Violação",
+      "Resume Breach": "Retomar Violação"
     },
     "catalogs": {
       "% Amount": "Quantia",
@@ -1117,6 +1123,12 @@
       "NotEqual": "Diferente de"
     },
     "heading": {
+      "Breach Actions": "Ações de violação",
+      "Delinquency & Breach": "Inadimplência e Violação",
+      "Interest": "Juros",
+      "Multi-step form": "Multi-step form",
+      "Loan product creation": "Loan product creation",
+      "Near Breach Actions": "Ações de violação próxima",
       "About Us": "Sobre Nós",
       "Account Information": "Informações da Conta",
       "Account Linked Financial": "Lista de contas vinculadas a diferentes atividades financeiras. Para saber mais clique:",
@@ -1404,6 +1416,7 @@
       "Minimum Deposit Term": "Prazo mínimo de depósito",
       "Moratorium": "Moratória",
       "Near Breach Configuration": "Configuração de quase incumprimento",
+      "Near Breach History": "Histórico de violações próximas",
       "Nominal Interest Rate by loan cycle": "Taxa de juros nominal por ciclo de empréstimo",
       "Not Yet Amortized Amount": "Valor ainda nao amortizado",
       "Notes": "Notas",
@@ -1575,9 +1588,16 @@
       "identifier id": "ID do identificador",
       "savings-transaction-datatable-tab works": "poupança-transação-datatable-tab funciona",
       "successfully select option": "com sucesso. Selecione uma das opções abaixo para prosseguir.",
-      "undo_account_transfer": "Reverter transferência de conta"
+      "undo_account_transfer": "Reverter transferência de conta",
+      "Loan Breach Actions": "Ações de Violação do Empréstimo",
+      "No Breach Actions": "Sem Ações de Violação",
+      "Pause Timeline": "Cronologia de Pausas"
     },
     "inputs": {
+      "Annual interest rate": "Annual interest rate",
+      "Annual interest rate by loan cycle": "Annual interest rate by loan cycle",
+      "Annual interest rate frequency": "Annual interest rate frequency",
+      "Breach Actions": "Ações de violação",
       "# Remittance": "# Remessa",
       "# Senders": "# Remetentes",
       "ACCOUNTING": "CONTABILIDADE",
@@ -1995,6 +2015,7 @@
       "Discount Default": "Desconto padrão",
       "Discount External Id": "ID externo do desconto",
       "Discount External Id must differ from External Id": "O ID externo do desconto deve ser diferente do ID externo",
+      "Discount Fee Adjustment": "Ajuste da Taxa de Desconto",
       "Discount Fee Balance": "Saldo taxa de desconto",
       "Discount must be greater than or equal to 0": "O desconto deve ser maior ou igual a 0",
       "Display Name": "Nome de exibição",
@@ -2486,6 +2507,8 @@
       "Multiple Debit Entries Allowed": "Múltiplas entradas de débito permitidas",
       "Municipality": "Município",
       "N/A": "N / D",
+      "Net Disbursal Amount": "Montante Líquido do Desembolso",
+      "New": "Novo",
       "NID": "NID",
       "Name": "Nome",
       "Name Decorated": "Nome Decorado",
@@ -2684,6 +2707,7 @@
       "Prefix Type": "Tipo de prefixo",
       "Premature Close Date": "Data de fechamento prematura",
       "Present": "Presente",
+      "Previous": "Anterior",
       "Previous Run": "Execução Anterior",
       "Previous Run Status": "Status de execução anterior",
       "Primary Grouping by Amount": "Agrupamento primário por valor",
@@ -2806,6 +2830,7 @@
       "Revised Meeting Date": "Data da reunião revisada",
       "Role": "Papel",
       "Role Description": "Descrição da função",
+      "Schedule": "Schedule",
       "System": "Sistema",
       "This role provides all application permissions": "Este papel fornece todas as permissões da aplicação.",
       "Role Name": "Nome do papel",
@@ -3134,7 +3159,22 @@
       "s3_secret_key": "s3_secret_key",
       "task-management component": "componente de gerenciamento de tarefas",
       "to": "para",
-      "valid": "válido"
+      "valid": "válido",
+      "Active Pause": "Pausa Ativa",
+      "Breach Actions": "Ações de Violação",
+      "days": "dias",
+      "Duration": "Duração",
+      "Expired": "Expirada",
+      "Last Action": "Última Ação",
+      "No breach actions have been recorded for this loan": "Não foram registadas ações de violação para este empréstimo",
+      "No records match the selected filter": "Nenhum registo corresponde ao filtro selecionado",
+      "Ongoing": "Em curso",
+      "Pause Active": "Pausa Ativa",
+      "Pauses": "Pausas",
+      "Scheduled": "Agendada",
+      "Today": "Hoje",
+      "Total Actions": "Total de Ações",
+      "Total Days Paused": "Total de Dias em Pausa"
     },
     "links": {
       "Community": "Comunidade",
@@ -3152,6 +3192,7 @@
       "Working with Code": "Trabalhando com código"
     },
     "menus": {
+      "Update Breach": "Atualizar violação",
       "Unassign Staff": "Cancelar atribuição de equipe",
       "Accounting": "Contabilidade",
       "Account Overview": "visão geral da conta",
@@ -3272,6 +3313,7 @@
       "Withdrawn by Client": "Retirado pelo cliente",
       "Write Off": "Eliminar",
       "Update discount": "Atualizar desconto",
+      "Update Near Breach": "Atualizar violação próxima",
       "Apply Additional Shares": "Aplicar Adicional",
       "Redeem Shares": "Resgatar Ações",
       "Approve Additional Shares": "Aprovar ações adicionais",
@@ -3310,6 +3352,7 @@
       "Withdrawn": "Retirado"
     },
     "dialogContext": {
+      "Are you sure you want to resume the breach pause": "Tem a certeza de que quer retomar a violação?",
       "Are you sure you want Unassign Staff": "Tem a certeza que deseja desassociar o funcionário?",
       "Are you sure you want to calculate interest ?": "Tem a certeza que deseja calcular juros?",
       "Are you sure you want to post interest ?": "Tem a certeza que deseja registar juros?",
@@ -3341,6 +3384,10 @@
       "undo_account_transfer": "Tem a certeza de que pretende reverter esta transferência de conta?"
     },
     "text": {
+      "Max": "Máx",
+      "Hidden variables and predefined values are included in the final payload automatically.": "Hidden variables and predefined values are included in the final payload automatically.",
+      "No Breach Actions": "Nenhuma ação de violação",
+      "No Near Breach Actions": "Nenhuma ação de violação próxima",
       "A": "A",
       "Ability to manage holidays for individual offices": "A capacidade de gerenciar feriados para escritórios individuais é uma ferramenta muito útil para uma organização que abrange vários locais. Use esta opção para personalizar feriados para cada escritório da sua organização.",
       "About Us": "Sobre Nós",
@@ -3944,6 +3991,10 @@
       "Table": "Mesa",
       "Tax Components": "Componentes fiscais",
       "Tellers": "Caixas",
+      "Template defaults are preloaded": "Template defaults are preloaded",
+      "Select a product below": "Select a product below",
+      "Upcoming": "Brevemente",
+      "Complete control over every aspect of product behavior": "Controle total sobre cada aspecto do comportamento do produto — desde a moratória e a subvenção até estruturas multi-tranche, regras de repartição e muito mais.",
       "Template I am trying to use": "Este é o modelo que estou tentando usar. Tudo bem.",
       "Templates": "Modelos",
       "Tenant": "Inquilino",
@@ -4095,7 +4146,19 @@
       "username": "nome de usuário",
       "withhold tax for this account": "reter imposto para esta conta",
       "withoutCategory": "Sem categoria",
-      "Maker-Checker principle requires every tasks": "O princípio Maker-Checker exige que todas as tarefas sejam concluídas por duas pessoas para reduzir a chance de erros e uso indevido. Uma pessoa inicia o processo e a segunda o conclui."
+      "Maker-Checker principle requires every tasks": "O princípio Maker-Checker exige que todas as tarefas sejam concluídas por duas pessoas para reduzir a chance de erros e uso indevido. Uma pessoa inicia o processo e a segunda o conclui.",
+      "Breach Actions": "Ações de Violação",
+      "“Maker-Checker” principle requires every tasks": "O princípio “Maker-Checker” exige que todas as tarefas sejam concluídas por duas pessoas para reduzir a chance de erros e uso indevido. Uma pessoa inicia o processo e a segunda o conclui.",
+      "SavingsAccountsStayedLockedBusinessEvent": "Savings Accounts Stayed Locked Business Event",
+      "WorkingCapitalLoanDisbursalTransactionBusinessEvent": "Working Capital Loan Disbursal Transaction Business Event",
+      "WorkingCapitalLoanUndoDisbursalTransactionBusinessEvent": "Working Capital Loan Undo Disbursal Transaction Business Event",
+      "WorkingCapitalLoanRepaymentTransactionBusinessEvent": "Working Capital Loan Repayment Transaction Business Event",
+      "WorkingCapitalLoanCreditBalanceRefundTransactionBusinessEvent": "Working Capital Loan Credit Balance Refund Transaction Business Event",
+      "WorkingCapitalLoanDiscountFeeTransactionBusinessEvent": "Working Capital Loan Discount Fee Transaction Business Event",
+      "WorkingCapitalLoanDiscountFeeAdjustmentTransactionBusinessEvent": "Working Capital Loan Discount Fee Adjustment Transaction Business Event",
+      "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
+      "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
+      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event"
     },
     "permissions": {
       "actions": {
@@ -4836,5 +4899,71 @@
         "message": "Funcionalidade não implementada!"
       }
     }
+  },
+  "copilot": {
+    "brand": "Mifos Intelligence AI",
+    "currentSession": "Sessão atual",
+    "newChat": "Nova conversa",
+    "close": "Fechar",
+    "greeting": {
+      "morning": "Bom dia",
+      "afternoon": "Boa tarde",
+      "evening": "Boa noite"
+    },
+    "welcomeHeading": "Como posso ajudá-lo a apoiar os seus clientes hoje?",
+    "suggestions": {
+      "clientDetails": "Mostre-me os detalhes do cliente John Doe",
+      "repaymentSchedule": "Qual é o plano de reembolso do empréstimo n.º 107?",
+      "savingsBalance": "Mostre o saldo da conta poupança do cliente n.º 52",
+      "overdueLoans": "Quantos empréstimos estão em atraso esta semana?"
+    },
+    "input": {
+      "placeholder": "Pergunte sobre clientes, empréstimos ou contas...",
+      "attach": "Anexar ficheiro",
+      "voice": "Entrada de voz",
+      "send": "Enviar mensagem",
+      "stop": "Parar geração"
+    },
+    "disclaimer": "O Mifos Intelligence AI foi concebido para auxiliar, não substituir, a tomada de decisões humana.",
+    "nav": {
+      "recentChats": "Conversas recentes",
+      "chat": "Conversa",
+      "preferences": "Preferências",
+      "helpCenter": "Centro de ajuda"
+    },
+    "preferencesHeading": "Preferências",
+    "recent": {
+      "emptyTitle": "Sem conversas recentes",
+      "emptySubtitle": "O seu histórico de conversas aparecerá aqui",
+      "messages": "mensagens",
+      "delete": "Eliminar conversa"
+    },
+    "help": {
+      "capabilitiesTitle": "O que pode o Mifos Intelligence AI fazer?",
+      "capabilities": {
+        "lookup": "Procurar informações e perfis de clientes",
+        "loans": "Ver detalhes de empréstimos e planos de reembolso",
+        "savings": "Consultar saldos de contas poupança",
+        "portfolio": "Obter informações sobre as carteiras de clientes",
+        "navigate": "Navegar para páginas específicas no Mifos X"
+      },
+      "examplesTitle": "Exemplos de perguntas",
+      "importantTitle": "Importante",
+      "important": {
+        "assist": "As respostas da IA servem apenas de apoio, não são decisões finais",
+        "verify": "Verifique sempre os dados financeiros críticos antes de agir",
+        "noExecute": "A IA não executa transações por si própria"
+      }
+    },
+    "cardType": {
+      "client": "Cliente",
+      "loan": "Empréstimo",
+      "savings": "Poupança",
+      "insight": "Análise",
+      "confirmation": "Confirmação"
+    },
+    "confirmWarning": "Esta ação envolve dinheiro real. Por favor, confirme.",
+    "openAssistant": "Abrir o assistente de IA",
+    "newChatTitle": "Nova conversa"
   }
 }

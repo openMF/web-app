@@ -18,6 +18,7 @@ import { catchError } from 'rxjs/operators';
 import { LoansService } from '../loans.service';
 import { OrganizationService } from 'app/organization/organization.service';
 import { LoanProductService } from 'app/products/loan-products/services/loan-product.service';
+import { ProductsService } from 'app/products/products.service';
 
 /**
  * Loans notes data resolver.
@@ -27,6 +28,7 @@ export class LoanActionButtonResolver {
   private loansService = inject(LoansService);
   private organizationService = inject(OrganizationService);
   private loanProductService = inject(LoanProductService);
+  private productService = inject(ProductsService);
 
   /**
    * Returns the Loans Notes Data.
@@ -105,6 +107,10 @@ export class LoanActionButtonResolver {
       return this.organizationService.getLoanOriginators();
     } else if (loanActionButton === 'Discount Fee') {
       return this.loansService.getWorkingCapitalTransactions(loanId);
+    } else if (loanActionButton === 'Update Near Breach') {
+      return this.productService.getWorkingCapitalBreachTemplate();
+    } else if (loanActionButton === 'Update Breach') {
+      return this.productService.getWorkingCapitalBreachTemplate();
     } else {
       return undefined;
     }

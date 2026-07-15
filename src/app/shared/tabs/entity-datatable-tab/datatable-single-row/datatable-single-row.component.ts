@@ -6,7 +6,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  inject
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Datatables } from 'app/core/utils/datatables';
@@ -28,7 +37,7 @@ import { DatetimeFormatPipe } from '../../../../pipes/datetime-format.pipe';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
 import { PrettyPrintPipe } from '../../../../pipes/pretty-print.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { formatTabLabel } from 'app/shared/utils/format-tab-label.util';
+import { formatDatatableDisplayLabel } from '@pipes/datatable-display-label.pipe';
 
 @Component({
   selector: 'mifosx-datatable-single-row',
@@ -51,8 +60,9 @@ import { formatTabLabel } from 'app/shared/utils/format-tab-label.util';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DatatableSingleRowComponent implements OnInit {
+export class DatatableSingleRowComponent implements OnInit, OnChanges {
   private route = inject(ActivatedRoute);
+  private changeDetectorRef = inject(ChangeDetectorRef);
   private dateUtils = inject(Dates);
   private dialog = inject(MatDialog);
   private settingsService = inject(SettingsService);
@@ -65,13 +75,24 @@ export class DatatableSingleRowComponent implements OnInit {
   datatableName: string;
 
   formatTabLabel(label: string): string {
-    return formatTabLabel(label);
+    return formatDatatableDisplayLabel(label);
+  }
+
+  formatDisplayLabel(label: string): string {
+    return formatDatatableDisplayLabel(label);
   }
 
   ngOnInit() {
     this.route.params.subscribe((routeParams: any) => {
       this.datatableName = routeParams.datatableName;
+      this.changeDetectorRef.markForCheck();
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.dataObject) {
+      this.changeDetectorRef.markForCheck();
+    }
   }
 
   add() {
@@ -86,7 +107,7 @@ export class DatatableSingleRowComponent implements OnInit {
       dataTableEntryObject
     );
     const data = {
-      title: 'Add ' + formatTabLabel(this.datatableName) + ' for ' + this.entityType,
+      title: 'Add ' + formatDatatableDisplayLabel(this.datatableName) + ' for ' + this.entityType,
       formfields: formfields
     };
     const addDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
@@ -104,6 +125,7 @@ export class DatatableSingleRowComponent implements OnInit {
           .subscribe(() => {
             this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
               this.dataObject = dataObject;
+              this.changeDetectorRef.markForCheck();
             });
           });
       }
@@ -138,7 +160,7 @@ export class DatatableSingleRowComponent implements OnInit {
       return formfield;
     });
     const data = {
-      title: 'Edit ' + formatTabLabel(this.datatableName) + ' for ' + this.entityType,
+      title: 'Edit ' + formatDatatableDisplayLabel(this.datatableName) + ' for ' + this.entityType,
       formfields: formfields,
       layout: { addButtonText: 'Submit' },
       pristine: false
@@ -158,6 +180,7 @@ export class DatatableSingleRowComponent implements OnInit {
           .subscribe(() => {
             this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
               this.dataObject = dataObject;
+              this.changeDetectorRef.markForCheck();
             });
           });
       }
@@ -166,13 +189,14 @@ export class DatatableSingleRowComponent implements OnInit {
 
   delete() {
     const deleteDataTableDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: ` the contents of ${formatTabLabel(this.datatableName)}` }
+      data: { deleteContext: ` the contents of ${formatDatatableDisplayLabel(this.datatableName)}` }
     });
     deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
       if (response?.delete) {
         this.systemService.deleteDatatableContent(this.entityId, this.datatableName).subscribe(() => {
           this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
             this.dataObject = dataObject;
+            this.changeDetectorRef.markForCheck();
           });
         });
       }

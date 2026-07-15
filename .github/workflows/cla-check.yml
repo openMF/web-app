@@ -1,0 +1,82 @@
+name: CLA contributor check
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  check-contributor-membership:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      statuses: write
+
+    steps:
+      - name: Generate App token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.CLA_APP_ID }}
+          private-key: ${{ secrets.CLA_APP_PRIVATE_KEY }}
+          owner: openMF
+
+      - name: Check contributor team membership
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ steps.app-token.outputs.token }}
+          script: |
+            const author = context.payload.pull_request.user.login;
+            const org = 'openMF';
+            const teams = ['contributors', 'contracted-contributors'];
+
+            if (context.payload.pull_request.user.type === 'Bot') {
+              console.log('Bot PR — skipping CLA check');
+              return;
+            }
+
+            // App token has both members:read and pull-requests:write — one client for everything.
+            // All actions appear as mifos-cla-check[bot], no personal account involved.
+            let isMember = false;
+            let matchedTeam = null;
+            for (const team of teams) {
+              try {
+                const { data } = await github.rest.teams.getMembershipForUserInOrg({
+                  org, team_slug: team, username: author,
+                });
+                if (data.state === 'active') { isMember = true; matchedTeam = team; break; }
+              } catch (e) { /* 404 = not in this team, try next */ }
+            }
+
+            if (!isMember) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                body:
+                  `👋 Hi @${author} — thank you for your pull request.\n\n` +
+                  `**This PR is currently blocked** because we do not have a Contributor License Agreement (CLA) on file for your GitHub account.\n\n` +
+                  `To get unblocked:\n` +
+                  `1. Complete the form at https://mifos.org/about-us/financial-legal/mifos-contributor-agreement\n` +
+                  `2. Complete the CLA signing process\n` +
+                  `3. Once verified you will be added to the approved contributors list and this PR check will be cleared`
+              });
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                labels: ['cla-required'],
+              });
+              core.setFailed(
+                `@${author} is not a member of the 'contributors' or 'contracted-contributors' team. ` +
+                `CLA signature required before this PR can be merged.`
+              );
+            } else {
+              console.log(`@${author} is verified via '${matchedTeam}' team ✓`);
+              try {
+                await github.rest.issues.removeLabel({
+                  owner: context.repo.owner, repo: context.repo.repo,
+                  issue_number: context.payload.pull_request.number,
+                  name: 'cla-required',
+                });
+              } catch (e) { /* label may not be present — fine */ }
+            }

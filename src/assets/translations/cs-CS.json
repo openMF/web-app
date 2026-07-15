@@ -1,4 +1,4 @@
-﻿{
+{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "Přihlášen jako",
   "Remember me": "Zapamatuj si mě",
@@ -476,6 +476,7 @@
     "accounting": {
       "Accrual (periodic)": "Akruální (periodické)",
       "Accrual (upfront)": "Akruální (předem)",
+      "ACC_DEF_REV_AM": "Časové rozlišení s odpisem odložených výnosů",
       "CASH_BASED": "Hotovost",
       "Cash": "Hotovost",
       "NONE": "Žádný",
@@ -578,6 +579,8 @@
       "Create Interest Refund": "Vytvořit vrácení úroků",
       "Create Journal Entries": "Vytvářejte záznamy deníku",
       "Create Loan Product": "Vytvořte produkt půjčky",
+      "Create Loan Product (Classic)": "Vytvořit úvěrový produkt (klasický)",
+      "Create Loan Product (Convenient)": "Vytvořit úvěrový produkt (pohodlný)",
       "Create Office": "Vytvořit Office",
       "Create Payment Type": "Vytvořit typ platby",
       "Create Preference": "Vytvořit předvolbu",
@@ -770,7 +773,10 @@
       "Week": "Týden",
       "Withdraw": "Ustoupit",
       "Yes": "Ano",
-      "undo_account_transfer": "Vrátit převod účtu"
+      "undo_account_transfer": "Vrátit převod účtu",
+      "All": "Vše",
+      "Pause Breach": "Pozastavit porušení",
+      "Resume Breach": "Obnovení porušení"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -1118,6 +1124,12 @@
       "NotEqual": "Nerovná se"
     },
     "heading": {
+      "Breach Actions": "Porušení Akce",
+      "Delinquency & Breach": "Delikvence a porušení",
+      "Interest": "Úrok",
+      "Multi-step form": "Vícekrokový formulář",
+      "Loan product creation": "Vytvoření úvěrového produktu",
+      "Near Breach Actions": "Blížící se porušení Akce",
       "About Us": "O Nás",
       "Account Information": "Informace o účtu",
       "Account Linked Financial": "Seznam účtů spojených s různými finančními aktivitami. Chcete-li vědět více, klikněte:",
@@ -1405,6 +1417,7 @@
       "Minimum Deposit Term": "Minimální doba vkladu",
       "Moratorium": "Moratorium",
       "Near Breach Configuration": "Konfigurace téměř porušení",
+      "Near Breach History": "Historie blížících se porušení",
       "Nominal Interest Rate by loan cycle": "Nominální úroková sazba podle úvěrového cyklu",
       "Not Yet Amortized Amount": "Dosud neamortizovana castka",
       "Notes": "Poznámky",
@@ -1576,9 +1589,16 @@
       "identifier id": "identifikátor id",
       "savings-transaction-datatable-tab works": "spořicí-transakční-datatable-tab funguje",
       "successfully select option": "úspěšně. Chcete-li pokračovat dále, vyberte si z níže uvedených možností.",
-      "undo_account_transfer": "Vrátit převod účtu"
+      "undo_account_transfer": "Vrátit převod účtu",
+      "Loan Breach Actions": "Akce porušení úvěru",
+      "No Breach Actions": "Žádné akce při porušení",
+      "Pause Timeline": "Časová osa pauz"
     },
     "inputs": {
+      "Annual interest rate": "Roční úroková sazba",
+      "Annual interest rate by loan cycle": "Roční úroková sazba podle úvěrového cyklu",
+      "Annual interest rate frequency": "Frekvence roční úrokové sazby",
+      "Breach Actions": "Porušení Akce",
       "# Remittance": "# Remitence",
       "# Senders": "# Odesílatelé",
       "ACCOUNTING": "ÚČETNICTVÍ",
@@ -1996,6 +2016,7 @@
       "Discount Default": "Výchozí sleva",
       "Discount External Id": "Externí id slevy",
       "Discount External Id must differ from External Id": "Externí id slevy se musí lišit od externího id",
+      "Discount Fee Adjustment": "Úprava poplatku za slevu",
       "Discount Fee Balance": "Zůstatek diskontního poplatku",
       "Discount must be greater than or equal to 0": "Sleva musí být větší nebo rovna 0",
       "Display Name": "Zobrazovaný název",
@@ -2487,6 +2508,8 @@
       "Multiple Debit Entries Allowed": "Je povoleno více debetních záznamů",
       "Municipality": "Obec",
       "N/A": "N/A",
+      "Net Disbursal Amount": "Čistá vyplacená částka",
+      "New": "Nové",
       "NID": "Národní ID",
       "Name": "název",
       "Name Decorated": "Jméno vyzdobeno",
@@ -2685,6 +2708,7 @@
       "Prefix Type": "Typ předpony",
       "Premature Close Date": "Datum předčasného uzavření",
       "Present": "Současnost, dárek",
+      "Previous": "Předchozí",
       "Previous Run": "Předchozí běh",
       "Previous Run Status": "Stav předchozího běhu",
       "Primary Grouping by Amount": "Primární seskupení podle množství",
@@ -2807,6 +2831,7 @@
       "Revised Meeting Date": "Upravený termín schůzky",
       "Role": "Role",
       "Role Description": "Popis role",
+      "Schedule": "Splátkový kalendář",
       "System": "Systém",
       "This role provides all application permissions": "Tato role poskytuje všechna oprávnění aplikace.",
       "Role Name": "Název role",
@@ -3135,7 +3160,22 @@
       "s3_secret_key": "s3_secret_key",
       "task-management component": "komponenta řízení úkolů",
       "to": "na",
-      "valid": "platný"
+      "valid": "platný",
+      "Active Pause": "Aktivní pauza",
+      "Breach Actions": "Akce porušení",
+      "days": "dní",
+      "Duration": "Doba trvání",
+      "Expired": "Vypršela",
+      "Last Action": "Poslední akce",
+      "No breach actions have been recorded for this loan": "Pro tento úvěr nebyly zaznamenány žádné akce při porušení",
+      "No records match the selected filter": "Žádné záznamy neodpovídají vybranému filtru",
+      "Ongoing": "Probíhá",
+      "Pause Active": "Pauza aktivní",
+      "Pauses": "Pauzy",
+      "Scheduled": "Naplánováno",
+      "Today": "Dnes",
+      "Total Actions": "Celkové akce",
+      "Total Days Paused": "Celkový počet dní v pauze"
     },
     "links": {
       "Community": "Společenství",
@@ -3153,6 +3193,7 @@
       "Working with Code": "Práce s kódem"
     },
     "menus": {
+      "Update Breach": "Aktualizovat porušení",
       "Unassign Staff": "Zrušit přidělení personálu",
       "Accounting": "Účetnictví",
       "Account Overview": "Přehled účtu",
@@ -3273,6 +3314,7 @@
       "Withdrawn by Client": "Staženo klientem",
       "Write Off": "Odepsat",
       "Update discount": "Aktualizovat slevu",
+      "Update Near Breach": "Aktualizovat blížící se porušení",
       "Apply Additional Shares": "Použít další",
       "Redeem Shares": "Uplatnit akcie",
       "Approve Additional Shares": "Schválit další akcie",
@@ -3311,6 +3353,7 @@
       "Withdrawn": "Stažený"
     },
     "dialogContext": {
+      "Are you sure you want to resume the breach pause": "Opravdu chcete obnovit porušení?",
       "Are you sure you want Unassign Staff": "Opravdu chcete odebrat přiřazení zaměstnance?",
       "Are you sure you want to calculate interest ?": "Jste si jisti, že chcete spočítat zájem?",
       "Are you sure you want to post interest ?": "Jste si jisti, že chcete zveřejnit zájem?",
@@ -3342,6 +3385,10 @@
       "undo_account_transfer": "Opravdu chcete vrátit tento převod účtu?"
     },
     "text": {
+      "Max": "Max",
+      "Hidden variables and predefined values are included in the final payload automatically.": "Skryté proměnné a předdefinované hodnoty jsou automaticky zahrnuty do konečného payloadu.",
+      "No Breach Actions": "Žádné Porušení Akce",
+      "No Near Breach Actions": "Žádné Blížící se porušení Akce",
       "A": "A",
       "Ability to manage holidays for individual offices": "Schopnost spravovat svátky pro jednotlivé kanceláře je velmi užitečným nástrojem pro organizaci zahrnující více míst. Tuto možnost použijte k přizpůsobení svátků pro každou kancelář vaší organizace.",
       "About Us": "O Nás",
@@ -3945,6 +3992,10 @@
       "Table": "Stůl",
       "Tax Components": "Složky daně",
       "Tellers": "Věštci",
+      "Template defaults are preloaded": "Výchozí hodnoty šablony jsou předvyplněny",
+      "Select a product below": "Vyberte produkt níže",
+      "Upcoming": "Nadcházející",
+      "Complete control over every aspect of product behavior": "Úplná kontrola nad každým aspektem chování produktu — od moratoria a subvencí až po struktury s více tranšemi, pravidla rozdělování plateb a mnohem více.",
       "Template I am trying to use": "Toto je šablona, ​​kterou se snažím použít. Je to v pořádku?",
       "Templates": "Šablony",
       "Tenant": "Nájemce",
@@ -4096,7 +4147,19 @@
       "username": "uživatelské jméno",
       "withhold tax for this account": "srazit daň pro tento účet",
       "withoutCategory": "Bez kategorie",
-      "Maker-Checker principle requires every tasks": "Princip Maker-Checker vyžaduje, aby každý úkol prováděli dva lidé, aby se snížila pravděpodobnost chyb a zneužití. Jedna osoba proces iniciuje a druhá jej dokončí."
+      "Maker-Checker principle requires every tasks": "Princip Maker-Checker vyžaduje, aby každý úkol prováděli dva lidé, aby se snížila pravděpodobnost chyb a zneužití. Jedna osoba proces iniciuje a druhá jej dokončí.",
+      "Breach Actions": "Akce porušení",
+      "“Maker-Checker” principle requires every tasks": "Princip „Maker-Checker“ vyžaduje, aby každý úkol prováděli dva lidé, aby se snížila pravděpodobnost chyb a zneužití. Jedna osoba proces iniciuje a druhá jej dokončí.",
+      "SavingsAccountsStayedLockedBusinessEvent": "Savings Accounts Stayed Locked Business Event",
+      "WorkingCapitalLoanDisbursalTransactionBusinessEvent": "Working Capital Loan Disbursal Transaction Business Event",
+      "WorkingCapitalLoanUndoDisbursalTransactionBusinessEvent": "Working Capital Loan Undo Disbursal Transaction Business Event",
+      "WorkingCapitalLoanRepaymentTransactionBusinessEvent": "Working Capital Loan Repayment Transaction Business Event",
+      "WorkingCapitalLoanCreditBalanceRefundTransactionBusinessEvent": "Working Capital Loan Credit Balance Refund Transaction Business Event",
+      "WorkingCapitalLoanDiscountFeeTransactionBusinessEvent": "Working Capital Loan Discount Fee Transaction Business Event",
+      "WorkingCapitalLoanDiscountFeeAdjustmentTransactionBusinessEvent": "Working Capital Loan Discount Fee Adjustment Transaction Business Event",
+      "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
+      "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
+      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event"
     },
     "permissions": {
       "actions": {
@@ -5126,5 +5189,71 @@
         "message": "Neimplementovaná funkce!"
       }
     }
+  },
+  "copilot": {
+    "brand": "Mifos Intelligence AI",
+    "currentSession": "Aktuální relace",
+    "newChat": "Nový chat",
+    "close": "Zavřít",
+    "greeting": {
+      "morning": "Dobré ráno",
+      "afternoon": "Dobré odpoledne",
+      "evening": "Dobrý večer"
+    },
+    "welcomeHeading": "Jak vám dnes mohu pomoci s obsluhou vašich klientů?",
+    "suggestions": {
+      "clientDetails": "Zobrazte mi údaje o klientovi John Doe",
+      "repaymentSchedule": "Jaký je splátkový kalendář úvěru č. 107?",
+      "savingsBalance": "Zobrazte zůstatek spořicího účtu klienta č. 52",
+      "overdueLoans": "Kolik úvěrů je tento týden po splatnosti?"
+    },
+    "input": {
+      "placeholder": "Zeptejte se na klienty, úvěry nebo účty...",
+      "attach": "Připojit soubor",
+      "voice": "Hlasový vstup",
+      "send": "Odeslat zprávu",
+      "stop": "Zastavit generování"
+    },
+    "disclaimer": "Mifos Intelligence AI je navržena tak, aby pomáhala, nikoli nahrazovala lidské rozhodování.",
+    "nav": {
+      "recentChats": "Nedávné chaty",
+      "chat": "Chat",
+      "preferences": "Předvolby",
+      "helpCenter": "Centrum nápovědy"
+    },
+    "preferencesHeading": "Předvolby",
+    "recent": {
+      "emptyTitle": "Žádné nedávné konverzace",
+      "emptySubtitle": "Zde se zobrazí historie vašich chatů",
+      "messages": "zpráv",
+      "delete": "Smazat konverzaci"
+    },
+    "help": {
+      "capabilitiesTitle": "Co umí Mifos Intelligence AI?",
+      "capabilities": {
+        "lookup": "Vyhledávat informace a profily klientů",
+        "loans": "Zobrazit podrobnosti úvěrů a splátkové kalendáře",
+        "savings": "Kontrolovat zůstatky spořicích účtů",
+        "portfolio": "Získat přehled o portfoliích klientů",
+        "navigate": "Přejít na konkrétní stránky v Mifos X"
+      },
+      "examplesTitle": "Příklady dotazů",
+      "importantTitle": "Důležité",
+      "important": {
+        "assist": "Odpovědi AI slouží pouze jako pomoc, nikoli jako konečná rozhodnutí",
+        "verify": "Před provedením akce vždy ověřte kritická finanční data",
+        "noExecute": "AI neprovádí transakce sama"
+      }
+    },
+    "cardType": {
+      "client": "Klient",
+      "loan": "Úvěr",
+      "savings": "Úspory",
+      "insight": "Přehled",
+      "confirmation": "Potvrzení"
+    },
+    "confirmWarning": "Tato akce se týká skutečných peněz. Potvrďte prosím.",
+    "openAssistant": "Otevřít asistenta AI",
+    "newChatTitle": "Nová konverzace"
   }
 }

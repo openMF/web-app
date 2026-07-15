@@ -8,6 +8,17 @@
 
 table {
   width: 100%;
+  table-layout: fixed;
+}
+
+th:first-child,
+td:first-child {
+  width: 35%;
+}
+
+th:last-child,
+td:last-child {
+  width: 20%;
 }
 
 .mat-elevation-z1 {

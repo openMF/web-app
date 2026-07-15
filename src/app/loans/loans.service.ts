@@ -19,6 +19,12 @@ import { SettingsService } from 'app/settings/settings.service';
 import { DisbursementData } from './models/loan-account.model';
 import { PeriodPaymentRateChange } from './models/working-capital-loan-account.model';
 import { BreachSchedule } from './models/working-capital-loan-account.model';
+import {
+  WorkingCapitalBreachAction,
+  WorkingCapitalBreachActionRequest,
+  WorkingCapitalNearBreachActionRequest,
+  WorkingCapitalNearBreachActions
+} from './models/working-capital/working-capital-loan-account.model';
 
 /**
  * Loans service.
@@ -146,12 +152,28 @@ export class LoansService {
     return this.http.get(`/working-capital-loans/${loanId}/delinquency-range-schedule`);
   }
 
+  getBreachActions(loanId: string) {
+    return this.http.get(`/working-capital-loans/${loanId}/breach-actions`);
+  }
+
+  createBreachAction(loanId: string, payload: any) {
+    return this.http.post(`/working-capital-loans/${loanId}/breach-actions`, payload);
+  }
+
   getWorkingCapitalLoanAmortizationSchedule(loanId: string) {
     return this.http.get(`/working-capital-loans/${loanId}/amortization-schedule`);
   }
 
   getWorkingCapitalLoanBreachSchedule(loanId: string): Observable<BreachSchedule[]> {
     return this.http.get<BreachSchedule[]>(`/working-capital-loans/${loanId}/breach-schedule`);
+  }
+
+  getWorkingCapitalLoanNearBreachActions(loanId: string): Observable<WorkingCapitalNearBreachActions[]> {
+    return this.http.get<WorkingCapitalNearBreachActions[]>(`/working-capital-loans/${loanId}/near-breach-actions`);
+  }
+
+  getWorkingCapitalLoanBreachActions(loanId: string): Observable<WorkingCapitalBreachAction[]> {
+    return this.http.get<WorkingCapitalBreachAction[]>(`/working-capital-loans/${loanId}/breach-actions`);
   }
 
   /**
@@ -735,14 +757,22 @@ export class LoansService {
     return this.http.post('/loans?command=calculateLoanSchedule', payload);
   }
 
-  attachLoanOriginator(loanId: string, originatorId: string): Observable<any> {
+  attachLoanOriginator(
+    productType: 'loans' | 'working-capital-loans',
+    loanId: string,
+    originatorId: string
+  ): Observable<any> {
     const emptyBody = {};
-    return this.http.post(`/loans/${loanId}/originators/${originatorId}`, emptyBody);
+    return this.http.post(`/${productType}/${loanId}/originators/${originatorId}`, emptyBody);
   }
 
-  detachLoanOriginator(loanId: string, originatorId: string): Observable<any> {
+  detachLoanOriginator(
+    productType: 'loans' | 'working-capital-loans',
+    loanId: string,
+    originatorId: string
+  ): Observable<any> {
     const emptyBody = {};
-    return this.http.delete(`/loans/${loanId}/originators/${originatorId}`, emptyBody);
+    return this.http.delete(`/${productType}/${loanId}/originators/${originatorId}`, emptyBody);
   }
 
   /**
@@ -898,5 +928,19 @@ export class LoansService {
   getWorkingCapitalTransactions(loanId: string, page: number = 0, size: number = 100) {
     const httpParams = new HttpParams().set('page', page.toString()).set('size', size.toString());
     return this.http.get(`/working-capital-loans/${loanId}/transactions`, { params: httpParams });
+  }
+
+  /**
+   * Add a Working Capital Loan Near Breach Action
+   */
+  addWorkingCapitalNearBreachAction(loanId: string, payload: WorkingCapitalNearBreachActionRequest) {
+    return this.http.post(`/working-capital-loans/${loanId}/near-breach-actions`, payload);
+  }
+
+  /**
+   * Add a Working Capital Loan Breach Action
+   */
+  addWorkingCapitalBreachAction(loanId: string, payload: WorkingCapitalBreachActionRequest) {
+    return this.http.post(`/working-capital-loans/${loanId}/breach-actions`, payload);
   }
 }

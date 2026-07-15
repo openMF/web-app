@@ -1,4 +1,4 @@
-﻿{
+{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "Logged in as",
   "Remember me": "Remember me",
@@ -478,6 +478,7 @@
     "accounting": {
       "Accrual (periodic)": "Accrual (periodic)",
       "Accrual (upfront)": "Accrual (upfront)",
+      "ACC_DEF_REV_AM": "Accrual with deferred revenue amortization",
       "CASH_BASED": "Cash",
       "Cash": "Cash",
       "NONE": "None",
@@ -584,6 +585,8 @@
       "Create Journal Entries": "Create Journal Entries",
       "Create Loan Product": "Create Loan Product",
       "Create more": "Create more",
+      "Create Loan Product (Classic)": "Create Loan Product (Classic)",
+      "Create Loan Product (Convenient)": "Create Loan Product (Convenient)",
       "Create Office": "Create Office",
       "Create Payment Type": "Create Payment Type",
       "Create Preference": "Create Preference",
@@ -780,7 +783,11 @@
       "Waive Selected": "Waive Selected",
       "Week": "Week",
       "Withdraw": "Withdraw",
-      "Yes": "Yes"
+      "Yes": "Yes",
+      "undo_account_transfer": "Undo Account Transfer",
+      "All": "All",
+      "Pause Breach": "Pause Breach",
+      "Resume Breach": "Resume Breach"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -1131,6 +1138,12 @@
       "NotEqual": "Not equal"
     },
     "heading": {
+      "Breach Actions": "Breach Actions",
+      "Delinquency & Breach": "Delinquency & Breach",
+      "Interest": "Interest",
+      "Multi-step form": "Multi-step form",
+      "Loan product creation": "Loan product creation",
+      "Near Breach Actions": "Near Breach Actions",
       "About Us": "About Us",
       "Account Information": "Account Information",
       "Account Linked Financial": "List of accounts linked to different financial activities. To know more click:",
@@ -1420,6 +1433,7 @@
       "Minimum Deposit Term": "Minimum Deposit Term",
       "Moratorium": "Moratorium",
       "Near Breach Configuration": "Near Breach Configuration",
+      "Near Breach History": "Near Breach History",
       "Nominal Interest Rate by loan cycle": "Nominal Interest Rate by loan cycle",
       "Not Yet Amortized Amount": "Not Yet Amortized Amount",
       "Notes": "Notes",
@@ -1592,9 +1606,13 @@
       "identifier id": "identifier id",
       "savings-transaction-datatable-tab works": "savings-transaction-datatable-tab works",
       "successfully select option": "successfully. Please select from the options below to proceed further.",
-      "undo_account_transfer": "Undo Account Transfer"
+      "undo_account_transfer": "Undo Account Transfer",
+      "Loan Breach Actions": "Loan Breach Actions",
+      "No Breach Actions": "No Breach Actions",
+      "Pause Timeline": "Pause Timeline"
     },
     "inputs": {
+      "Breach Actions": "Breach Actions",
       "# Remittance": "# Remittance",
       "# Senders": "# Senders",
       "Above Changes are Effective from": "Above Changes are Effective from",
@@ -1700,6 +1718,9 @@
       "Amount to be Reserved": "Amount to be Reserved",
       "Annual EIR": "Annual EIR",
       "Annual Fees Transaction Date": "Annual Fees Transaction Date",
+      "Annual interest rate": "Annual interest rate",
+      "Annual interest rate by loan cycle": "Annual interest rate by loan cycle",
+      "Annual interest rate frequency": "Annual interest rate frequency",
       "Applicable From Date": "Applicable From Date",
       "Applicant": "Applicant",
       "Application Date": "Application Date",
@@ -2029,6 +2050,7 @@
       "Discount External Id must differ from External Id": "Discount External Id must differ from External Id",
       "Discount Factor": "Discount Factor",
       "Discount Fee": "Discount Fee",
+      "Discount Fee Adjustment": "Discount Fee Adjustment",
       "Discount Fee Balance": "Discount Fee Balance",
       "Discount must be greater than or equal to 0": "Discount must be greater than or equal to 0",
       "Display Name": "Display Name",
@@ -2524,6 +2546,9 @@
       "Multiple Debit Entries Allowed": "Multiple Debit Entries Allowed",
       "Municipality": "Municipality",
       "N/A": "N/A",
+      "Net Disbursal Amount": "Net Disbursal Amount",
+      "New": "New",
+      "NID": "NID",
       "Name": "Name",
       "name": "Name",
       "Name Decorated": "Name Decorated",
@@ -2730,6 +2755,7 @@
       "Premature Close Date": "Premature Close Date",
       "Present": "Present",
       "PREVIEW": "PREVIEW",
+      "Previous": "Previous",
       "Previous Run": "Previous Run",
       "Previous Run Status": "Previous Run Status",
       "Primary Grouping by Amount": "Primary Grouping by Amount",
@@ -2863,6 +2889,9 @@
       "Revised Meeting Date": "Revised Meeting Date",
       "Role": "Role",
       "Role Description": "Role Description",
+      "Schedule": "Schedule",
+      "System": "System",
+      "This role provides all application permissions": "This role provides all application permissions.",
       "Role Name": "Role Name",
       "Roles": "Roles",
       "Roles Loan Products": "Roles --> Loan Products",
@@ -3154,7 +3183,69 @@
       "WriteOff Reason": "WriteOff Reason",
       "Written Off": "Written Off",
       "Yearly": "Yearly",
-      "Zip": "Zip"
+      "Zip": "Zip",
+      "accounting": {
+        "ASSET": "ASSET",
+        "LIABILITY": "LIABILITY",
+        "EQUITY": "EQUITY",
+        "INCOME": "INCOME",
+        "EXPENSE": "EXPENSE"
+      },
+      "active": "active",
+      "begin with a special character or number": "begin with a special character or number",
+      "between": "between",
+      "cannot": "cannot",
+      "day must be selected": "day must be selected",
+      "email": "email",
+      "entries": "entries",
+      "event with entity name of": "event with entity name of",
+      "floating rate period with from date as": "floating rate period with from date as",
+      "form": "form",
+      "hook": "hook",
+      "json": "json",
+      "language": "language",
+      "matched": "matched",
+      "mins": "mins",
+      "name": "Name",
+      "one": "one",
+      "products": {
+        "loan": {
+          "Amortization": "Amortization",
+          "Is Equal Amortization?": "Is Equal Amortization?",
+          "amortizationType": {
+            "Equal installments": "Equal installments",
+            "Equal principal payments": "Equal principal payments",
+            "Effective Interest Rate": "Effective Interest Rate",
+            "Flat": "Flat"
+          }
+        }
+      },
+      "s3_access_key": "s3_access_key",
+      "s3_bucket_name": "s3_bucket_name",
+      "s3_secret_key": "s3_secret_key",
+      "task-management component": "task-management component",
+      "to": "to",
+      "valid": "valid",
+      "Active Pause": "Active Pause",
+      "days": "days",
+      "Duration": "Duration",
+      "Expired": "Expired",
+      "Last Action": "Last Action",
+      "No breach actions have been recorded for this loan": "No breach actions have been recorded for this loan",
+      "No records match the selected filter": "No records match the selected filter",
+      "Ongoing": "Ongoing",
+      "Pause Active": "Pause Active",
+      "Pauses": "Pauses",
+      "Scheduled": "Scheduled",
+      "Today": "Today",
+      "Total Actions": "Total Actions",
+      "Total Days Paused": "Total Days Paused",
+      "Bureau Readiness": "Bureau Readiness",
+      "Your CB-ILD Role": "Your CB-ILD Role",
+      "KYC Completeness Score": "KYC Completeness Score",
+      "CDC FICO Score": "CDC FICO Score",
+      "No bureau data available": "No bureau data available",
+      "Failed to load bureau data": "Failed to load bureau data"
     },
     "links": {
       "Community": "Community",
@@ -3172,6 +3263,7 @@
       "Working with Code": "Working with Code"
     },
     "menus": {
+      "Update Breach": "Update Breach",
       "Unassign Staff": "Unassign Staff",
       "Accounting": "Accounting",
       "Account Overview": "Account Overview",
@@ -3262,6 +3354,7 @@
       "Reject": "Reject",
       "Undo Write-off": "Undo Write-off",
       "Update discount": "Update discount",
+      "Update Near Breach": "Update Near Breach",
       "Reports": "Reports",
       "Reschedule": "Reschedule",
       "Savings": "Savings",
@@ -3300,7 +3393,8 @@
       "Apply Additional Shares": "Apply Additional Shares",
       "Redeem Shares": "Redeem Shares",
       "Approve Additional Shares": "Approve Additional Shares",
-      "Reject Additional Shares": "Reject Additional Shares"
+      "Reject Additional Shares": "Reject Additional Shares",
+      "Reporting Dashboard": "Reporting Dashboard"
     },
     "placeholders": {
       "# Remittance": "# Remittance",
@@ -3330,6 +3424,7 @@
       "Withdrawn": "Withdrawn"
     },
     "dialogContext": {
+      "Are you sure you want to resume the breach pause": "Are you sure you want to resume the breach pause",
       "Are you sure you want Unassign Staff": "Are you sure you want Unassign Staff",
       "Are you sure you want to calculate interest ?": "Are you sure you want to calculate interest ?",
       "Are you sure you want to post interest ?": "Are you sure you want to post interest ?",
@@ -3361,6 +3456,10 @@
       "the Transaction Type": "the Transaction Type"
     },
     "text": {
+      "Max": "Max",
+      "Hidden variables and predefined values are included in the final payload automatically.": "Hidden variables and predefined values are included in the final payload automatically.",
+      "No Breach Actions": "No Breach Actions",
+      "No Near Breach Actions": "No Near Breach Actions",
       "A": "A",
       "Ability to manage holidays for individual offices": "The ability to manage holidays for individual offices is a very useful tool for an organization spanning multiple locations.Use this option to customize holidays for each office of your organization.",
       "About Us": "About Us",
@@ -4106,6 +4205,10 @@
       "Table": "Table",
       "Tax Components": "Tax Components",
       "Tellers": "Tellers",
+      "Template defaults are preloaded": "Template defaults are preloaded",
+      "Select a product below": "Select a product below",
+      "Upcoming": "Upcoming",
+      "Complete control over every aspect of product behavior": "Complete control over every aspect of product behavior — from moratorium and subvention to multi-tranche structures, apportionment rules, and beyond.",
       "Template I am trying to use": "This is the template I am trying to use. Is that fine.",
       "Templates": "Templates",
       "Tenant": "Tenant",
@@ -4231,7 +4334,53 @@
       "Working days and configure behaviour of payments": "Define working days and configure behaviour of payments due on holidays",
       "Working days page allows you to define which days": "Working days page allows you to define which days of the week are working days.",
       "Write a note": "Write a note",
-      "Your answer is": "Your answer is"
+      "Your answer is": "Your answer is",
+      "access to": "access to",
+      "by": "by",
+      "deselect": "deselect",
+      "do not match": "do not match",
+      "edit": "edit",
+      "elimination of poverty": "that aims to speed the elimination of poverty by enabling Organizations to more effectively and efficiently deliver responsible financial services to the world’s poor and unbanked.Sounds interesting?",
+      "end_point": "end_point",
+      "fcm_end_point": "fcm_end_point",
+      "fromEmail": "fromEmail",
+      "fromName": "fromName",
+      "gcm_end_point": "gcm_end_point",
+      "global community": "global community",
+      "host": "host",
+      "host_name": "host_name",
+      "is designed by the": "is designed by the",
+      "more_vert": "more_vert",
+      "of": "of",
+      "out": "out",
+      "password": "password",
+      "per annum": "per annum",
+      "percentage range": "percentage range",
+      "port": "port",
+      "port_number": "port_number",
+      "row": "row",
+      "select": "select",
+      "server_key": "server_key",
+      "tenant_app_key": "tenant_app_key",
+      "this": "this",
+      "undefined": "undefined",
+      "useTLS": "useTLS",
+      "username": "username",
+      "withhold tax for this account": "withhold tax for this account",
+      "withoutCategory": "Without Category",
+      "Maker-Checker principle requires every tasks": "The Maker-Checker principle requires every task to be completed by two people to reduce the chance of errors and misuse. One person initiates the process and the second completes it.",
+      "Breach Actions": "Breach Actions",
+      "“Maker-Checker” principle requires every tasks": "The “Maker-Checker” principle requires every task to be completed by two people to reduce the chance of errors and misuse. One person initiates the process and the second completes it.",
+      "SavingsAccountsStayedLockedBusinessEvent": "Savings Accounts Stayed Locked Business Event",
+      "WorkingCapitalLoanDisbursalTransactionBusinessEvent": "Working Capital Loan Disbursal Transaction Business Event",
+      "WorkingCapitalLoanUndoDisbursalTransactionBusinessEvent": "Working Capital Loan Undo Disbursal Transaction Business Event",
+      "WorkingCapitalLoanRepaymentTransactionBusinessEvent": "Working Capital Loan Repayment Transaction Business Event",
+      "WorkingCapitalLoanCreditBalanceRefundTransactionBusinessEvent": "Working Capital Loan Credit Balance Refund Transaction Business Event",
+      "WorkingCapitalLoanDiscountFeeTransactionBusinessEvent": "Working Capital Loan Discount Fee Transaction Business Event",
+      "WorkingCapitalLoanDiscountFeeAdjustmentTransactionBusinessEvent": "Working Capital Loan Discount Fee Adjustment Transaction Business Event",
+      "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
+      "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
+      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event"
     },
     "permissions": {
       "actions": {
@@ -4532,6 +4681,39 @@
       "validationSaved": "Validation data saved successfully.",
       "workingCapitalDiscountUpdated": "Working capital discount was updated successfully."
     },
+    "cbild": {
+      "fields": {
+        "nationalId": "RFC Tax ID (required — hard veto)",
+        "dob": "Date of Birth",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "address": "Address",
+        "phoneNumber": "Phone Number"
+      },
+      "errors": {
+        "unauthorized": "Authentication failed. Please select your role again.",
+        "forbidden": "You do not have permission to check bureau readiness.",
+        "clientNotFound": "Client {{ clientId }} not found in Fineract.",
+        "serviceUnavailable": "CDC or Fineract is unreachable. Please try again later.",
+        "unexpected": "An unexpected error occurred. Please try again."
+      },
+      "dashboard": {
+        "role": "Your CB-ILD Role",
+        "runBatch": "Run Batch",
+        "batchStarted": "Batch submission started for all active clients",
+        "total": "Total Submissions",
+        "accepted": "Accepted",
+        "pendingRetry": "Pending Retry",
+        "permanentlyFailed": "Permanently Failed",
+        "clientId": "Client ID",
+        "triggerType": "Trigger Type",
+        "status": "Status",
+        "cdcRef": "CDC Reference ID",
+        "expiry": "Expiry Date",
+        "submittedAt": "Submitted At",
+        "noSubmissions": "No submissions found"
+      }
+    },
     "selections": {
       "standingInstructions": {
         "accountTransferType": {
@@ -4790,7 +4972,8 @@
     "Withdraw": "Withdraw",
     "Yes": "Yes",
     "loan product will be active and available to clients": "The date that the loan product will be active and available to clients. If blank, the loan product will be active as soon as it is created.",
-    "loan product will become inactive and unavailable to clients": "The date that the loan product will become inactive and unavailable to clients. If blank, the load product will never become inactive."
+    "loan product will become inactive and unavailable to clients": "The date that the loan product will become inactive and unavailable to clients. If blank, the load product will never become inactive.",
+    "Reporting Dashboard": "CB-ILD Reporting Dashboard"
   },
   "countries": {
     "AF": "Afghanistan",
@@ -4962,5 +5145,71 @@
         "failure": "Failed to submit survey."
       }
     }
+  },
+  "copilot": {
+    "brand": "Mifos Intelligence AI",
+    "currentSession": "Current Session",
+    "newChat": "New Chat",
+    "close": "Close",
+    "greeting": {
+      "morning": "Good morning",
+      "afternoon": "Good afternoon",
+      "evening": "Good evening"
+    },
+    "welcomeHeading": "How can I help you support your clients today?",
+    "suggestions": {
+      "clientDetails": "Show me details for client John Doe",
+      "repaymentSchedule": "What is the repayment schedule for loan #107?",
+      "savingsBalance": "Show savings account balance for client #52",
+      "overdueLoans": "How many loans are overdue this week?"
+    },
+    "input": {
+      "placeholder": "Ask about clients, loans, or accounts...",
+      "attach": "Attach file",
+      "voice": "Voice input",
+      "send": "Send message",
+      "stop": "Stop generating"
+    },
+    "disclaimer": "Mifos Intelligence AI is designed to assist, not replace, human decision making.",
+    "nav": {
+      "recentChats": "Recent Chats",
+      "chat": "Chat",
+      "preferences": "Preferences",
+      "helpCenter": "Help Center"
+    },
+    "preferencesHeading": "Preferences",
+    "recent": {
+      "emptyTitle": "No recent conversations",
+      "emptySubtitle": "Your chat history will appear here",
+      "messages": "messages",
+      "delete": "Delete conversation"
+    },
+    "help": {
+      "capabilitiesTitle": "What can Mifos Intelligence AI do?",
+      "capabilities": {
+        "lookup": "Look up client information and profiles",
+        "loans": "View loan details and repayment schedules",
+        "savings": "Check savings account balances",
+        "portfolio": "Get insights on client portfolios",
+        "navigate": "Navigate to specific pages in Mifos X"
+      },
+      "examplesTitle": "Example prompts",
+      "importantTitle": "Important",
+      "important": {
+        "assist": "AI responses are for assistance only, not final decisions",
+        "verify": "Always verify critical financial data before taking action",
+        "noExecute": "The AI does not execute transactions on its own"
+      }
+    },
+    "cardType": {
+      "client": "Client",
+      "loan": "Loan",
+      "savings": "Savings",
+      "insight": "Insight",
+      "confirmation": "Confirmation"
+    },
+    "confirmWarning": "This action involves real money. Please confirm.",
+    "openAssistant": "Open AI Assistant",
+    "newChatTitle": "New conversation"
   }
 }

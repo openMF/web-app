@@ -66,8 +66,10 @@ export class AttachOriginatorComponent extends LoanAccountActionsBaseComponent i
    */
   submit() {
     const approveLoanFormData = this.attachLoanOriginatorForm.value;
-    this.loanService.attachLoanOriginator(this.loanId, approveLoanFormData.originatorId).subscribe((response: any) => {
-      this.gotoLoanDefaultView();
-    });
+    this.loanService
+      .attachLoanOriginator(this.loanProductService.loanAccountPath, this.loanId, approveLoanFormData.originatorId)
+      .subscribe((response: any) => {
+        this.gotoLoanView('originators');
+      });
   }
 }

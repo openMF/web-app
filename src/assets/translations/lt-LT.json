@@ -1,4 +1,4 @@
-﻿{
+{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "prisijungęs kaip",
   "Remember me": "Prisimink mane",
@@ -475,6 +475,7 @@
     "accounting": {
       "Accrual (periodic)": "Kaupiamasis (periodinis)",
       "Accrual (upfront)": "Sukaupimas (išankstinis)",
+      "ACC_DEF_REV_AM": "Atsidėjimai su atidėtų pajamų amortizacija",
       "CASH_BASED": "Grynieji pinigai",
       "Cash": "Grynieji pinigai",
       "NONE": "Nė vienas",
@@ -577,6 +578,8 @@
       "Create Interest Refund": "Sukurti palūkanų grąžinimą",
       "Create Journal Entries": "Kurti žurnalo įrašus",
       "Create Loan Product": "Sukurti paskolos produktą",
+      "Create Loan Product (Classic)": "Create Loan Product (Classic)",
+      "Create Loan Product (Convenient)": "Create Loan Product (Convenient)",
       "Create Office": "Sukurkite biurą",
       "Create Payment Type": "Sukurti mokėjimo tipą",
       "Create Preference": "Sukurti pirmenybę",
@@ -769,7 +772,10 @@
       "Week": "Savaitė",
       "Withdraw": "Atsitraukti",
       "Yes": "Taip",
-      "undo_account_transfer": "Atšaukti sąskaitos pervedimą"
+      "undo_account_transfer": "Atšaukti sąskaitos pervedimą",
+      "All": "Visi",
+      "Pause Breach": "Pristabdyti pažeidimą",
+      "Resume Breach": "Atnaujinti pažeidimą"
     },
     "catalogs": {
       "% Amount": "Suma",
@@ -1116,6 +1122,12 @@
       "NotEqual": "Nelygu"
     },
     "heading": {
+      "Breach Actions": "Pažeidimas Veiksmai",
+      "Delinquency & Breach": "Delinkvencija ir pažeidimas",
+      "Interest": "Palūkanos",
+      "Multi-step form": "Multi-step form",
+      "Loan product creation": "Loan product creation",
+      "Near Breach Actions": "Artėjantis pažeidimas Veiksmai",
       "About Us": "Apie Mus",
       "Account Information": "Paskyros informacija",
       "Account Linked Financial": "Sąskaitų, susietų su įvairia finansine veikla, sąrašas. Norėdami sužinoti daugiau, spustelėkite:",
@@ -1404,6 +1416,7 @@
       "Minimum Deposit Term": "Minimalus indėlio terminas",
       "Moratorium": "Moratoriumas",
       "Near Breach Configuration": "Artimo pažeidimo konfigūracija",
+      "Near Breach History": "Artėjančių pažeidimų istorija",
       "Nominal Interest Rate by loan cycle": "Nominali palūkanų norma pagal paskolos ciklą",
       "Not Yet Amortized Amount": "Dar neamortizuota suma",
       "Notes": "Pastabos",
@@ -1575,9 +1588,16 @@
       "identifier id": "identifikatoriaus id",
       "savings-transaction-datatable-tab works": "taupymo-operacijų-duomenų lentelės-skirtukas veikia",
       "successfully select option": "sėkmingai. Jei norite tęsti, pasirinkite iš toliau pateiktų parinkčių.",
-      "undo_account_transfer": "Atšaukti sąskaitos pervedimą"
+      "undo_account_transfer": "Atšaukti sąskaitos pervedimą",
+      "Loan Breach Actions": "Paskolos pažeidimo veiksmai",
+      "No Breach Actions": "Nėra pažeidimo veiksmų",
+      "Pause Timeline": "Pauzių laiko juosta"
     },
     "inputs": {
+      "Annual interest rate": "Annual interest rate",
+      "Annual interest rate by loan cycle": "Annual interest rate by loan cycle",
+      "Annual interest rate frequency": "Annual interest rate frequency",
+      "Breach Actions": "Pažeidimas Veiksmai",
       "# Remittance": "# Pervedimas",
       "# Senders": "# Siuntėjai",
       "ACCOUNTING": "APSKAITA",
@@ -1995,6 +2015,7 @@
       "Discount Default": "Numatytoji nuolaida",
       "Discount External Id": "Nuolaidos išorinis ID",
       "Discount External Id must differ from External Id": "Nuolaidos išorinis ID turi skirtis nuo išorinio ID",
+      "Discount Fee Adjustment": "Nuolaidos mokesčio koregavimas",
       "Discount Fee Balance": "Diskonto mokesčio likutis",
       "Discount must be greater than or equal to 0": "Nuolaida turi būti didesnė arba lygi 0",
       "Display Name": "Rodomas pavadinimas",
@@ -2486,6 +2507,8 @@
       "Multiple Debit Entries Allowed": "Leidžiami keli debeto įrašai",
       "Municipality": "Savivaldybė",
       "N/A": "N/A",
+      "Net Disbursal Amount": "Grynoji išmokėjimo suma",
+      "New": "Naujas",
       "NID": "Nacionalinis ID",
       "Name": "vardas",
       "Name Decorated": "Vardas Dekoruotas",
@@ -2684,6 +2707,7 @@
       "Prefix Type": "Priešdėlio tipas",
       "Premature Close Date": "Ankstyva uždarymo data",
       "Present": "Pateikti",
+      "Previous": "Ankstesnis",
       "Previous Run": "Ankstesnis bėgimas",
       "Previous Run Status": "Ankstesnė paleidimo būsena",
       "Primary Grouping by Amount": "Pirminis grupavimas pagal sumą",
@@ -2806,6 +2830,7 @@
       "Revised Meeting Date": "Patikslinta susirinkimo data",
       "Role": "Vaidmuo",
       "Role Description": "Vaidmenų aprašymas",
+      "Schedule": "Schedule",
       "System": "Sistema",
       "This role provides all application permissions": "Šis vaidmuo suteikia visus programos leidimus.",
       "Role Name": "Vaidmens pavadinimas",
@@ -3134,7 +3159,22 @@
       "s3_secret_key": "s3_slaptas_raktas",
       "task-management component": "užduočių valdymo komponentas",
       "to": "į",
-      "valid": "galioja"
+      "valid": "galioja",
+      "Active Pause": "Aktyvi pauzė",
+      "Breach Actions": "Pažeidimo veiksmai",
+      "days": "dienos",
+      "Duration": "Trukmė",
+      "Expired": "Pasibaigė",
+      "Last Action": "Paskutinis veiksmas",
+      "No breach actions have been recorded for this loan": "Šiai paskolai nebuvo užregistruota jokių pažeidimo veiksmų",
+      "No records match the selected filter": "Joks įrašas neatitinka pasirinkto filtro",
+      "Ongoing": "Vyksta",
+      "Pause Active": "Pauzė aktyvi",
+      "Pauses": "Pauzės",
+      "Scheduled": "Suplanuota",
+      "Today": "Šiandien",
+      "Total Actions": "Iš viso veiksmų",
+      "Total Days Paused": "Iš viso pauzės dienų"
     },
     "links": {
       "Community": "bendruomenė",
@@ -3152,6 +3192,7 @@
       "Working with Code": "Darbas su kodu"
     },
     "menus": {
+      "Update Breach": "Atnaujinti pažeidimą",
       "Unassign Staff": "Atšaukti personalo priskyrimą",
       "Accounting": "Apskaita",
       "Account Overview": "Sąskaitos apžvalga",
@@ -3272,6 +3313,7 @@
       "Withdrawn by Client": "Atsiėmė klientas",
       "Write Off": "Nusirašinėti",
       "Update discount": "Atnaujinti nuolaidą",
+      "Update Near Breach": "Atnaujinti artėjantį pažeidimą",
       "Apply Additional Shares": "Taikyti Papildomą",
       "Redeem Shares": "Išpirkti akcijas",
       "Approve Additional Shares": "Patvirtinti papildomas akcijas",
@@ -3310,6 +3352,7 @@
       "Withdrawn": "Pasitraukė"
     },
     "dialogContext": {
+      "Are you sure you want to resume the breach pause": "Ar tikrai norite atnaujinti pažeidimo sustabdymą?",
       "Are you sure you want Unassign Staff": "Ar tikrai norite atšaukti darbuotojo priskyrimą?",
       "Are you sure you want to calculate interest ?": "Ar tikrai norite skaičiuoti palūkanas?",
       "Are you sure you want to post interest ?": "Ar tikrai norite paskelbti palūkanas?",
@@ -3341,6 +3384,10 @@
       "undo_account_transfer": "Ar tikrai norite atšaukti šį sąskaitos pervedimą?"
     },
     "text": {
+      "Max": "Maks",
+      "Hidden variables and predefined values are included in the final payload automatically.": "Hidden variables and predefined values are included in the final payload automatically.",
+      "No Breach Actions": "Nėra Pažeidimas Veiksmai",
+      "No Near Breach Actions": "Nėra Artėjantis pažeidimas Veiksmai",
       "A": "A",
       "Ability to manage holidays for individual offices": "Galimybė tvarkyti atskirų biurų atostogas yra labai naudingas įrankis organizacijai, kuri veikia keliose vietose. Naudokite šią parinktį, kad tinkintumėte atostogas kiekvienam savo organizacijos biurui.",
       "About Us": "Apie Mus",
@@ -3944,6 +3991,10 @@
       "Table": "Lentelė",
       "Tax Components": "Mokesčių komponentai",
       "Tellers": "Pasakotojai",
+      "Template defaults are preloaded": "Template defaults are preloaded",
+      "Select a product below": "Select a product below",
+      "Upcoming": "Būsimas",
+      "Complete control over every aspect of product behavior": "Visiška kontrolė kiekvienam produkto elgsenos aspektui — nuo moratoriumo ir subvencijos iki kelių tranšių struktūrų, paskirstymo taisyklių ir dar daugiau.",
       "Template I am trying to use": "Tai yra šablonas, kurį bandau naudoti. Ar tai gerai.",
       "Templates": "Šablonai",
       "Tenant": "Nuomininkas",
@@ -4096,7 +4147,19 @@
       "username": "Vartotojo vardas",
       "withhold tax for this account": "išskaičiuoti mokesčius už šią sąskaitą",
       "withoutCategory": "Bez kategorijos",
-      "Maker-Checker principle requires every tasks": "Maker-Checker principas reikalauja, kad kiekvieną užduotį atliktų du žmonės, kad būtų sumažinta klaidų ir netinkamo naudojimo galimybė. Vienas asmuo pradeda procesą, o antrasis jį užbaigia."
+      "Maker-Checker principle requires every tasks": "Maker-Checker principas reikalauja, kad kiekvieną užduotį atliktų du žmonės, kad būtų sumažinta klaidų ir netinkamo naudojimo galimybė. Vienas asmuo pradeda procesą, o antrasis jį užbaigia.",
+      "Breach Actions": "Pažeidimo veiksmai",
+      "“Maker-Checker” principle requires every tasks": "„Maker-Checker“ principas reikalauja, kad kiekvieną užduotį atliktų du žmonės, kad būtų sumažinta klaidų ir netinkamo naudojimo galimybė. Vienas asmuo pradeda procesą, o antrasis jį užbaigia.",
+      "SavingsAccountsStayedLockedBusinessEvent": "Savings Accounts Stayed Locked Business Event",
+      "WorkingCapitalLoanDisbursalTransactionBusinessEvent": "Working Capital Loan Disbursal Transaction Business Event",
+      "WorkingCapitalLoanUndoDisbursalTransactionBusinessEvent": "Working Capital Loan Undo Disbursal Transaction Business Event",
+      "WorkingCapitalLoanRepaymentTransactionBusinessEvent": "Working Capital Loan Repayment Transaction Business Event",
+      "WorkingCapitalLoanCreditBalanceRefundTransactionBusinessEvent": "Working Capital Loan Credit Balance Refund Transaction Business Event",
+      "WorkingCapitalLoanDiscountFeeTransactionBusinessEvent": "Working Capital Loan Discount Fee Transaction Business Event",
+      "WorkingCapitalLoanDiscountFeeAdjustmentTransactionBusinessEvent": "Working Capital Loan Discount Fee Adjustment Transaction Business Event",
+      "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
+      "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
+      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event"
     },
     "permissions": {
       "actions": {
@@ -4837,5 +4900,71 @@
         "message": "Neįgyvendinta funkcija!"
       }
     }
+  },
+  "copilot": {
+    "brand": "Mifos Intelligence AI",
+    "currentSession": "Dabartinė sesija",
+    "newChat": "Naujas pokalbis",
+    "close": "Uždaryti",
+    "greeting": {
+      "morning": "Labas rytas",
+      "afternoon": "Laba diena",
+      "evening": "Labas vakaras"
+    },
+    "welcomeHeading": "Kaip galiu padėti jums aptarnauti klientus šiandien?",
+    "suggestions": {
+      "clientDetails": "Parodykite kliento John Doe informaciją",
+      "repaymentSchedule": "Koks yra paskolos Nr. 107 grąžinimo grafikas?",
+      "savingsBalance": "Parodykite kliento Nr. 52 taupomosios sąskaitos likutį",
+      "overdueLoans": "Kiek paskolų yra pradelsta šią savaitę?"
+    },
+    "input": {
+      "placeholder": "Klauskite apie klientus, paskolas ar sąskaitas...",
+      "attach": "Pridėti failą",
+      "voice": "Balso įvestis",
+      "send": "Siųsti žinutę",
+      "stop": "Stabdyti generavimą"
+    },
+    "disclaimer": "Mifos Intelligence AI skirta padėti, o ne pakeisti žmogaus sprendimų priėmimą.",
+    "nav": {
+      "recentChats": "Naujausi pokalbiai",
+      "chat": "Pokalbis",
+      "preferences": "Nuostatos",
+      "helpCenter": "Pagalbos centras"
+    },
+    "preferencesHeading": "Nuostatos",
+    "recent": {
+      "emptyTitle": "Nėra naujausių pokalbių",
+      "emptySubtitle": "Jūsų pokalbių istorija bus rodoma čia",
+      "messages": "žinutės",
+      "delete": "Ištrinti pokalbį"
+    },
+    "help": {
+      "capabilitiesTitle": "Ką gali Mifos Intelligence AI?",
+      "capabilities": {
+        "lookup": "Ieškoti klientų informacijos ir profilių",
+        "loans": "Peržiūrėti paskolų informaciją ir grąžinimo grafikus",
+        "savings": "Tikrinti taupomųjų sąskaitų likučius",
+        "portfolio": "Gauti įžvalgų apie klientų portfelius",
+        "navigate": "Pereiti į konkrečius Mifos X puslapius"
+      },
+      "examplesTitle": "Užklausų pavyzdžiai",
+      "importantTitle": "Svarbu",
+      "important": {
+        "assist": "AI atsakymai skirti tik pagalbai, o ne galutiniams sprendimams",
+        "verify": "Prieš veikdami visada patikrinkite svarbius finansinius duomenis",
+        "noExecute": "AI pati nevykdo operacijų"
+      }
+    },
+    "cardType": {
+      "client": "Klientas",
+      "loan": "Paskola",
+      "savings": "Santaupos",
+      "insight": "Įžvalga",
+      "confirmation": "Patvirtinimas"
+    },
+    "confirmWarning": "Šis veiksmas susijęs su tikrais pinigais. Patvirtinkite.",
+    "openAssistant": "Atidaryti DI asistentą",
+    "newChatTitle": "Naujas pokalbis"
   }
 }

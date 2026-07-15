@@ -332,9 +332,10 @@
       <h4 class="mat-h4 flex-98">{{ 'labels.inputs.Nominal interest rate' | translate }}</h4>
 
       @if (!loansAccountTermsData?.isLoanProductLinkedToFloatingRate) {
-        <mat-form-field class="flex-fill flex-23">
-          <mat-label>{{ 'labels.inputs.Nominal interest rate' | translate }} %</mat-label>
+        <mat-form-field class="flex-fill flex-23 interest-rate-field">
+          <mat-label>{{ 'labels.inputs.Nominal interest rate' | translate }}</mat-label>
           <input type="number" matInput formControlName="interestRatePerPeriod" min="0" step="0.01" />
+          <span matSuffix>%</span>
         </mat-form-field>
         <mat-form-field class="flex-fill flex-23">
           <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>

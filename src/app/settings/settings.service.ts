@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { AlertService } from 'app/core/alert/alert.service';
 import { Dates } from 'app/core/utils/dates';
 
@@ -30,6 +30,9 @@ export class SettingsService {
   public static cobDateType = 'COB_DATE';
   minAllowedDate = new Date(1950, 0, 1);
   maxAllowedDate = new Date(2100, 0, 1);
+
+  /** Reactive backing for the business date so signal consumers recompute when it changes. */
+  private readonly businessDateValue = signal<string | null>(localStorage.getItem('mifosXServerDate'));
 
   /**
    * Sets date format setting throughout the app.
@@ -105,6 +108,7 @@ export class SettingsService {
    */
   setBusinessDate(date: string) {
     localStorage.setItem('mifosXServerDate', date);
+    this.businessDateValue.set(date);
   }
 
   /**
@@ -226,7 +230,10 @@ export class SettingsService {
    * Returns current Business date server
    */
   get businessDate(): Date {
-    return this.dateUtils.convertToDate(localStorage.getItem('mifosXServerDate'), SettingsService.businessDateFormat);
+    return this.dateUtils.convertToDate(
+      this.businessDateValue() ?? localStorage.getItem('mifosXServerDate'),
+      SettingsService.businessDateFormat
+    );
   }
 
   /**

@@ -6,6 +6,35 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 import { defineConfig, devices } from '@playwright/test';
+import fs from 'fs';
+import path from 'path';
+import { ROLES } from './playwright/config/roles';
+
+/**
+ * Returns true when `dir` (or any subdir, recursively) contains at
+ * least one `.spec.ts` file. Used to keep the multi-role auth
+ * projects truly zero-cost: until somebody actually adds a spec
+ * under `playwright/tests/admin/**` or `playwright/tests/restricted/**`,
+ * the corresponding `setup-<role>` and `chromium-<role>` projects are
+ * not registered, so CI doesn't waste time logging in users nobody
+ * is testing yet.
+ */
+function hasSpecFiles(dir: string): boolean {
+  if (!fs.existsSync(dir)) return false;
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory() && hasSpecFiles(full)) return true;
+    if (entry.isFile() && /\.spec\.ts$/.test(entry.name)) return true;
+  }
+  return false;
+}
+
+const ADMIN_DIR = path.resolve(__dirname, 'playwright/tests/admin');
+const RESTRICTED_DIR = path.resolve(__dirname, 'playwright/tests/restricted');
+
+const includeAdminProjects = hasSpecFiles(ADMIN_DIR) || process.env.PLAYWRIGHT_ENABLE_ADMIN_PROJECTS === '1';
+const includeRestrictedProjects =
+  hasSpecFiles(RESTRICTED_DIR) || process.env.PLAYWRIGHT_ENABLE_RESTRICTED_PROJECTS === '1';
 
 /**
  * Playwright configuration for Mifos X Web App E2E tests.
@@ -80,6 +109,23 @@ export default defineConfig({
   // `unit` exists for pure-logic utility specs under
   // `playwright/utils/*.spec.ts` so retry/sleep infrastructure can be
   // validated without a browser, app server, or backend.
+  //
+  // Multi-role storageState scaffold (proposal WA-2.2):
+  //   setup              → playwright/.auth/user.json        (default role, always on)
+  //   setup-admin        → playwright/.auth/admin.json       (auto-mounted)
+  //   setup-restricted   → playwright/.auth/restricted.json  (auto-mounted)
+  //
+  // The default `chromium` project depends only on `setup`, so the
+  // existing CI footprint is unchanged. The admin / restricted
+  // projects mount automatically the moment a spec lands under
+  // `playwright/tests/admin/**` or `playwright/tests/restricted/**`,
+  // and can also be force-enabled via PLAYWRIGHT_ENABLE_ADMIN_PROJECTS=1
+  // or PLAYWRIGHT_ENABLE_RESTRICTED_PROJECTS=1 for CI matrices.
+  //
+  // `integration` exists for live-backend factory specs under
+  // `playwright/factories/*.spec.ts` — they need a real Fineract but
+  // no browser, so they bypass the `setup` project (which would burn
+  // a Chromium boot on auth state we never use).
   projects: [
     {
       // Pure-logic unit tests for shared utilities (retry, sleep, ...).
@@ -90,23 +136,88 @@ export default defineConfig({
       use: { storageState: { cookies: [], origins: [] } }
     },
     {
+      // Live-backend factory specs — real Fineract HTTP, no browser.
+      // Runs against `E2E_FINERACT_URL` (default https://localhost:8443)
+      // and exits in seconds because no Chromium process is started.
+      name: 'integration',
+      testMatch: /playwright\/factories\/.*\.spec\.ts/,
+      testDir: '.',
+      use: { storageState: { cookies: [], origins: [] } }
+    },
+    {
       name: 'setup',
-      testMatch: /.*\.setup\.ts/,
+      testMatch: /auth\.setup\.ts/,
       testDir: './playwright',
       retries: process.env.CI ? 2 : 0
     },
+    ...(includeAdminProjects
+      ? [
+          {
+            name: 'setup-admin',
+            testMatch: /auth\.admin\.setup\.ts/,
+            testDir: './playwright',
+            retries: process.env.CI ? 2 : 0
+          }
+        ]
+      : []),
+    ...(includeRestrictedProjects
+      ? [
+          {
+            name: 'setup-restricted',
+            testMatch: /auth\.restricted\.setup\.ts/,
+            testDir: './playwright',
+            retries: process.env.CI ? 2 : 0
+          }
+        ]
+      : []),
     {
       name: 'chromium',
+      // Exclude role-specific test folders so they only run under the
+      // project that carries the correct storageState for that role.
+      testIgnore: /tests\/(admin|restricted)\//,
       use: {
         ...devices['Desktop Chrome'],
-        storageState: 'playwright/.auth/user.json',
-        // Launch options for handling SSL in headed mode
+        storageState: ROLES.default.storageStateFile,
+        // Launch options for handling SSL in headed mode.
+        // slowMo adds a delay (ms) between every action so the UI is
+        // visible when running with --ui or --headed locally.
+        // Override via:  E2E_SLOW_MO=2000 npx playwright test --ui ...
+        // Set to 0 in CI automatically.
         launchOptions: {
-          args: ['--ignore-certificate-errors']
+          args: ['--ignore-certificate-errors'],
+          slowMo: process.env.CI ? 0 : Number(process.env.E2E_SLOW_MO ?? 500)
         }
       },
       dependencies: ['setup']
-    }
+    },
+    ...(includeAdminProjects
+      ? [
+          {
+            name: 'chromium-admin',
+            testMatch: /tests\/admin\/.*\.spec\.ts/,
+            use: {
+              ...devices['Desktop Chrome'],
+              storageState: ROLES.admin.storageStateFile,
+              launchOptions: { args: ['--ignore-certificate-errors'] }
+            },
+            dependencies: ['setup-admin']
+          }
+        ]
+      : []),
+    ...(includeRestrictedProjects
+      ? [
+          {
+            name: 'chromium-restricted',
+            testMatch: /tests\/restricted\/.*\.spec\.ts/,
+            use: {
+              ...devices['Desktop Chrome'],
+              storageState: ROLES.restricted.storageStateFile,
+              launchOptions: { args: ['--ignore-certificate-errors'] }
+            },
+            dependencies: ['setup-restricted']
+          }
+        ]
+      : [])
   ],
 
   webServer: process.env.CI

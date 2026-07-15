@@ -19,7 +19,9 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 /**
  * Loan Originators data resolver.
  */
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class LoanOriginatorsResolver {
   private organizationService = inject(OrganizationService);
 

@@ -72,6 +72,7 @@ import { LoansAccountViewGuarantorDetailsDialogComponent } from './custom-dialog
 import { LoansAccountAddCollateralDialogComponent } from './custom-dialog/loans-account-add-collateral-dialog/loans-account-add-collateral-dialog.component';
 import { LoanCreditBalanceRefundComponent } from './loans-view/loan-account-actions/loan-credit-balance-refund/loan-credit-balance-refund.component';
 import { LoanDelinquencyTagsTabComponent } from './loans-view/loan-delinquency-tags-tab/loan-delinquency-tags-tab.component';
+import { LoanBreachActionsTabComponent } from './loans-view/working-capital/loan-breach-actions-tab/loan-breach-actions-tab.component';
 import { LoansAccountScheduleStepComponent } from './loans-account-stepper/loans-account-schedule-step/loans-account-schedule-step.component';
 import { EditRepaymentScheduleComponent } from './loans-view/loan-account-actions/edit-repayment-schedule/edit-repayment-schedule.component';
 import { DisburseToSavingsAccountComponent } from './loans-view/loan-account-actions/disburse-to-savings-account/disburse-to-savings-account.component';
@@ -156,6 +157,7 @@ import { LoansActiveClientMembersComponent } from './loans-account-stepper/loans
     GlimAccountComponent,
     CreateGlimAccountComponent,
     LoanDelinquencyTagsTabComponent,
+    LoanBreachActionsTabComponent,
     LoansAccountScheduleStepComponent,
     EditRepaymentScheduleComponent,
     DisburseToSavingsAccountComponent,

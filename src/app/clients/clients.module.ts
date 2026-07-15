@@ -25,6 +25,7 @@ import { EditFamilyMemberComponent } from './clients-view/family-members-tab/edi
 import { IdentitiesTabComponent } from './clients-view/identities-tab/identities-tab.component';
 import { UploadDocumentDialogComponent } from './clients-view/custom-dialogs/upload-document-dialog/upload-document-dialog.component';
 import { NotesTabComponent } from './clients-view/notes-tab/notes-tab.component';
+import { BureauReadinessComponent } from './clients-view/bureau-readiness/bureau-readiness.component';
 import { EditNotesDialogComponent } from './clients-view/custom-dialogs/edit-notes-dialog/edit-notes-dialog.component';
 import { DocumentsTabComponent } from './clients-view/documents-tab/documents-tab.component';
 import { DatatableTabComponent } from './clients-view/datatable-tab/datatable-tab.component';
@@ -87,6 +88,7 @@ import { ClientDatatableStepComponent } from './client-stepper/client-datatable-
     IdentitiesTabComponent,
     UploadDocumentDialogComponent,
     NotesTabComponent,
+    BureauReadinessComponent,
     EditNotesDialogComponent,
     DocumentsTabComponent,
     DatatableTabComponent,

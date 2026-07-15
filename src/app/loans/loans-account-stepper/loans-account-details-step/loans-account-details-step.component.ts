@@ -34,12 +34,16 @@ import { AsyncPipe } from '@angular/common';
 import { MatDivider } from '@angular/material/divider';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProductBasicDetails } from 'app/loans/models/loan-product.model';
 import { LoanProductService } from 'app/products/loan-products/services/loan-product.service';
 import { MatSelectChange, MatSelectTrigger } from '@angular/material/select';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
+import { LoanOriginator } from 'app/loans/models/loan-account.model';
+import { SystemService } from 'app/system/system.service';
+import { GlobalConfiguration } from 'app/system/configurations/global-configurations-tab/configuration.model';
 
 /**
  * Loans Account Details Step
@@ -58,6 +62,7 @@ import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan
     FaIconComponent,
     MatStepperNext,
     MatSelectTrigger,
+    MatIconButton,
     AsyncPipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -71,6 +76,12 @@ export class LoansAccountDetailsStepComponent extends LoanProductBaseComponent i
   private settingsService = inject(SettingsService);
   private commons = inject(Commons);
   private cdr = inject(ChangeDetectorRef);
+  private systemService = inject(SystemService);
+
+  /** Global configuration name that toggles creating a new originator during loan application. */
+  private static readonly ORIGINATOR_CREATION_CONFIG = 'enable-originator-creation-during-loan-application';
+  /** Whether the user is allowed to add a new originator externalId (driven by the global config). */
+  originatorCreationEnabled = false;
 
   //** Defining PlaceHolders for the search bar */
   placeHolderLabel = '';
@@ -95,6 +106,12 @@ export class LoansAccountDetailsStepComponent extends LoanProductBaseComponent i
   fundOptions: any;
   /** Account Linking Options */
   accountLinkingOptions: any;
+  /** Loan Originators catalog (resolved from the route; may be empty) */
+  originatorOptions: LoanOriginator[] = [];
+  /** Filtered originators for the select-search dropdown */
+  protected filteredOriginatorOptions: ReplaySubject<LoanOriginator[]> = new ReplaySubject<LoanOriginator[]>(1);
+  /** Control for the originator filter search box */
+  protected originatorFilterCtrl: UntypedFormControl = new UntypedFormControl('');
   /** For edit loan accounts form */
   isFieldOfficerPatched = false;
   /** Loans Account Details Form */
@@ -129,6 +146,20 @@ export class LoansAccountDetailsStepComponent extends LoanProductBaseComponent i
     this.placeHolderLabel = this.translateService.instant('labels.text.Search');
     this.noEntriesFoundLabel = this.translateService.instant('labels.text.No data found');
     this.maxDate = this.settingsService.maxFutureDate;
+    this.originatorOptions = (this.route.snapshot.data['loanOriginatorsData'] ?? []).filter(
+      (originator: LoanOriginator) => originator.status === 'ACTIVE'
+    );
+    this.filteredOriginatorOptions.next(this.originatorOptions.slice());
+    this.originatorFilterCtrl.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.filterOriginators());
+    this.systemService
+      .getConfigurationByName(LoansAccountDetailsStepComponent.ORIGINATOR_CREATION_CONFIG)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((config: GlobalConfiguration) => {
+        this.originatorCreationEnabled = config?.enabled ?? false;
+        this.cdr.markForCheck();
+      });
     this.productList = this.loanProductsBasicDetails
       ? this.loanProductsBasicDetails.sort(this.commons.dynamicSort('name'))
       : [];
@@ -149,7 +180,10 @@ export class LoansAccountDetailsStepComponent extends LoanProductBaseComponent i
         loanProductId = this.loansAccountTemplate.loanProductId;
         this.loansAccountDetailsForm.patchValue({
           loanOfficerId: this.loansAccountTemplate.loanOfficerId,
-          loanPurposeId: this.loansAccountTemplate.loanPurposeId
+          loanPurposeId: this.loansAccountTemplate.loanPurposeId,
+          originatorExternalId: (this.loansAccountTemplate.originators ?? []).map(
+            (originator: LoanOriginator) => originator.externalId
+          )
         });
       } else if (this.loanProductService.isWorkingCapital && this.loansAccountTemplate.product) {
         loanProductId = this.loansAccountTemplate.product.id;
@@ -206,7 +240,8 @@ export class LoansAccountDetailsStepComponent extends LoanProductBaseComponent i
         '',
         Validators.required
       ],
-      externalId: ['']
+      externalId: [''],
+      originatorExternalId: [[]]
     });
   }
 
@@ -215,13 +250,100 @@ export class LoansAccountDetailsStepComponent extends LoanProductBaseComponent i
    */
   get loansAccountDetails() {
     if (this.productSelected) {
-      const loanAccountDetails = {
-        ...this.loansAccountDetailsForm.getRawValue(),
+      const { originatorExternalId, ...rest } = this.loansAccountDetailsForm.getRawValue();
+      const loanAccountDetails: any = {
+        ...rest,
         productId: this.productSelected.id
       };
+      // The backend expects the originator(s) as an array of objects with the externalId.
+      if (originatorExternalId?.length) {
+        loanAccountDetails.originators = originatorExternalId.map((externalId: string) => ({ externalId }));
+      }
       return loanAccountDetails;
     }
     return null;
+  }
+
+  /**
+   * Filters the loan originators catalog by name/externalId and pushes the
+   * result to the select-search list.
+   */
+  private filterOriginators(): void {
+    const search = (this.originatorFilterCtrl.value || '').toLowerCase();
+    if (!search) {
+      this.filteredOriginatorOptions.next(this.originatorOptions.slice());
+      return;
+    }
+    this.filteredOriginatorOptions.next(
+      this.originatorOptions.filter(
+        (originator) =>
+          (originator.externalId || '').toLowerCase().includes(search) ||
+          (originator.name || '').toLowerCase().includes(search)
+      )
+    );
+  }
+
+  /** Current trimmed search term typed in the originator select-search. */
+  get originatorSearchTerm(): string {
+    return (this.originatorFilterCtrl.value || '').trim();
+  }
+
+  /**
+   * Whether the typed term can be added as a new externalId. Requires the global
+   * config to be enabled and no exact match in the catalog.
+   */
+  get canAddOriginator(): boolean {
+    const term = this.originatorSearchTerm;
+    return (
+      this.originatorCreationEnabled &&
+      !!term &&
+      !this.originatorOptions.some((originator) => originator.externalId.toLowerCase() === term.toLowerCase())
+    );
+  }
+
+  /** Builds the display label "name : externalId" (or just externalId when name is empty). */
+  originatorLabel(originator: LoanOriginator): string {
+    return originator.name ? `${originator.name} : ${originator.externalId}` : originator.externalId;
+  }
+
+  /** Label rendered in the select trigger for the currently selected/added value(s). */
+  get selectedOriginatorLabel(): string {
+    const values: string[] = this.loansAccountDetailsForm?.get('originatorExternalId')?.value ?? [];
+    if (!values.length) {
+      return '';
+    }
+    return values
+      .map((value) => {
+        const match = this.originatorOptions.find((originator) => originator.externalId === value);
+        return match ? this.originatorLabel(match) : value;
+      })
+      .join(', ');
+  }
+
+  /**
+   * Handles a selection in the originator dropdown. When a chosen value is a
+   * newly typed externalId (not in the catalog), it is added as a persistent
+   * option so the selection survives once the search filter is cleared.
+   */
+  onOriginatorSelectionChange(event: MatSelectChange): void {
+    const selectedIds: string[] = event.value ?? [];
+    const newOriginators = selectedIds
+      .filter((externalId) => !this.originatorOptions.some((originator) => originator.externalId === externalId))
+      .map((externalId) => ({ id: 0, externalId, name: '', status: 'ACTIVE' }) as LoanOriginator);
+    if (newOriginators.length) {
+      this.originatorOptions = [
+        ...this.originatorOptions,
+        ...newOriginators
+      ];
+    }
+    this.originatorFilterCtrl.setValue('');
+  }
+
+  /** Clears all the selected loan originator values. */
+  clearOriginator($event: Event): void {
+    this.loansAccountDetailsForm.get('originatorExternalId')?.setValue([]);
+    this.loansAccountDetailsForm.markAsDirty();
+    $event.stopPropagation();
   }
 
   getLoanProductType(productType: string) {

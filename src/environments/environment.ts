@@ -90,6 +90,15 @@ export const environment = {
   mifosInterbankTransfersEnabled:
     window.env?.mifosInterbankTransfersEnabled !== 'false' && window.env?.mifosInterbankTransfersEnabled !== false,
 
+  /**
+   * Mifos Copilot AI assistant: deployment master switch (level 1 feature flag).
+   * Off by default; set MIFOS_ENABLE_COPILOT=true to load the panel for a deployment.
+   * When off, the panel never renders and its lazy chunk is never downloaded.
+   */
+  enableCopilot: loadedEnv.enableCopilot === 'true' || loadedEnv.enableCopilot === true || false,
+  /** Base URL of the Mifos MCP server the Copilot talks to. */
+  copilotMcpBaseUrl: loadedEnv.copilotMcpBaseUrl || 'https://ai.mifos.community',
+
   /** Remittance Module Integration */
   mifosRemittanceApiUrl: window.env?.mifosRemittanceApiClientUrl || '',
   mifosRemittanceApiProvider: window.env?.mifosRemittanceApiProvider || '',
@@ -147,6 +156,8 @@ export const environment = {
   productionModeEnableRBAC:
     loadedEnv.productionModeEnableRBAC === 'true' || loadedEnv.productionModeEnableRBAC === true || false,
 
+  /** CB-ILD Credit Bureau plugin base URL — must be HTTPS in production */
+  pluginBaseUrl: loadedEnv.pluginBaseUrl || 'http://localhost:8084',
   OIDC: {
     // Support legacy FINERACT_PLUGIN_OIDC_* variable names for backward compatibility
     oidcServerEnabled:

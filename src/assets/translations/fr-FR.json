@@ -1,4 +1,4 @@
-﻿{
+{
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "connecté en tant que",
   "Remember me": "Souviens-toi de moi",
@@ -475,6 +475,7 @@
     "accounting": {
       "Accrual (periodic)": "Accumulation (périodique)",
       "Accrual (upfront)": "Accumulation (d'avance)",
+      "ACC_DEF_REV_AM": "Comptabilisation avec amortissement des produits différés",
       "CASH_BASED": "Espèces",
       "Cash": "Espèces",
       "NONE": "Aucun",
@@ -577,6 +578,8 @@
       "Create Interest Refund": "Créer un remboursement d’intérêts",
       "Create Journal Entries": "Créer des entrées de journal",
       "Create Loan Product": "Créer un produit de prêt",
+      "Create Loan Product (Classic)": "Create Loan Product (Classic)",
+      "Create Loan Product (Convenient)": "Create Loan Product (Convenient)",
       "Create Office": "Créer un bureau",
       "Create Payment Type": "Créer un type de paiement",
       "Create Preference": "Créer une préférence",
@@ -769,7 +772,10 @@
       "Week": "Semaine",
       "Withdraw": "Retirer",
       "Yes": "Oui",
-      "undo_account_transfer": "Annuler le transfert de compte"
+      "undo_account_transfer": "Annuler le transfert de compte",
+      "All": "Tous",
+      "Pause Breach": "Suspendre le Manquement",
+      "Resume Breach": "Reprendre le Manquement"
     },
     "catalogs": {
       "% Amount": "Montant",
@@ -1120,6 +1126,12 @@
       "NotEqual": "Différent de"
     },
     "heading": {
+      "Breach Actions": "Actions de violation",
+      "Delinquency & Breach": "Délinquance et violation",
+      "Interest": "Intérêts",
+      "Multi-step form": "Multi-step form",
+      "Loan product creation": "Loan product creation",
+      "Near Breach Actions": "Actions de violation proche",
       "About Us": "À Propos de Nous",
       "Account Information": "Informations sur le compte",
       "Account Linked Financial": "Liste des comptes liés aux différentes activités financières. Pour en savoir plus cliquez :",
@@ -1408,6 +1420,7 @@
       "Minimum Deposit Term": "Durée de dépôt minimale",
       "Moratorium": "Moratoire",
       "Near Breach Configuration": "Configuration de quasi-violation",
+      "Near Breach History": "Historique des violations proches",
       "Nominal Interest Rate by loan cycle": "Taux d'intérêt nominal par cycle de prêt",
       "Not Yet Amortized Amount": "Montant pas encore amorti",
       "Notes": "Remarques",
@@ -1579,9 +1592,16 @@
       "identifier id": "identifiant",
       "savings-transaction-datatable-tab works": "l'onglet datatable-transaction-d'épargne fonctionne",
       "successfully select option": "avec succès. Veuillez sélectionner parmi les options ci-dessous pour continuer.",
-      "undo_account_transfer": "Annuler le transfert de compte"
+      "undo_account_transfer": "Annuler le transfert de compte",
+      "Loan Breach Actions": "Actions de Manquement du Prêt",
+      "No Breach Actions": "Aucune Action sur Brèches",
+      "Pause Timeline": "Chronologie des Pauses"
     },
     "inputs": {
+      "Annual interest rate": "Annual interest rate",
+      "Annual interest rate by loan cycle": "Annual interest rate by loan cycle",
+      "Annual interest rate frequency": "Annual interest rate frequency",
+      "Breach Actions": "Actions de violation",
       "# Remittance": "# Transfert",
       "# Senders": "# Expéditeurs",
       "ACCOUNTING": "COMPTABILITÉ",
@@ -1999,6 +2019,7 @@
       "Discount Default": "Remise par défaut",
       "Discount External Id": "Identifiant externe du rabais",
       "Discount External Id must differ from External Id": "L'identifiant externe du rabais doit être différent de l'identifiant externe",
+      "Discount Fee Adjustment": "Ajustement des frais d'escompte",
       "Discount Fee Balance": "Solde frais d'escompte",
       "Discount must be greater than or equal to 0": "La rabais doit être supérieure ou égale à 0",
       "Display Name": "Afficher un nom",
@@ -2490,6 +2511,8 @@
       "Multiple Debit Entries Allowed": "Plusieurs entrées de débit autorisées",
       "Municipality": "Municipalité",
       "N/A": "N / A",
+      "Net Disbursal Amount": "Montant net de décaissement",
+      "New": "Nouveau",
       "NID": "NID",
       "Name": "Nom",
       "Name Decorated": "Nom décoré",
@@ -2688,6 +2711,7 @@
       "Prefix Type": "Type de préfixe",
       "Premature Close Date": "Date de clôture prématurée",
       "Present": "Présent",
+      "Previous": "Précédent",
       "Previous Run": "Exécution précédente",
       "Previous Run Status": "État de l'exécution précédente",
       "Primary Grouping by Amount": "Regroupement principal par montant",
@@ -2810,6 +2834,7 @@
       "Revised Meeting Date": "Date de réunion révisée",
       "Role": "Rôle",
       "Role Description": "Description du rôle",
+      "Schedule": "Schedule",
       "System": "Système",
       "This role provides all application permissions": "Ce rôle fournit toutes les autorisations de l'application.",
       "Role Name": "Nom de rôle",
@@ -3138,7 +3163,22 @@
       "s3_secret_key": "s3_secret_key",
       "task-management component": "composant de gestion des tâches",
       "to": "à",
-      "valid": "valide"
+      "valid": "valide",
+      "Active Pause": "Pause Active",
+      "Breach Actions": "Actions de Manquement",
+      "days": "jours",
+      "Duration": "Durée",
+      "Expired": "Expirée",
+      "Last Action": "Dernière Action",
+      "No breach actions have been recorded for this loan": "Aucune action sur brèches n'a été enregistrée pour ce prêt",
+      "No records match the selected filter": "Aucun enregistrement ne correspond au filtre sélectionné",
+      "Ongoing": "En cours",
+      "Pause Active": "Pause Active",
+      "Pauses": "Pauses",
+      "Scheduled": "Programmée",
+      "Today": "Aujourd'hui",
+      "Total Actions": "Total des Actions",
+      "Total Days Paused": "Total des Jours en Pause"
     },
     "links": {
       "Community": "Communauté",
@@ -3156,6 +3196,7 @@
       "Working with Code": "Travailler avec du code"
     },
     "menus": {
+      "Update Breach": "Mettre à jour la violation",
       "Unassign Staff": "Annuler l'affectation du personnel",
       "Accounting": "Comptabilité",
       "Account Overview": "Aperçu du compte",
@@ -3276,6 +3317,7 @@
       "Withdrawn by Client": "Retiré par le client",
       "Write Off": "Radier",
       "Update discount": "Mettre à jour le rabais",
+      "Update Near Breach": "Mettre à jour la violation proche",
       "Apply Additional Shares": "Appliquer supplémentaire",
       "Redeem Shares": "Racheter des actions",
       "Approve Additional Shares": "Approuver des partages supplémentaires",
@@ -3314,6 +3356,7 @@
       "Withdrawn": "Retiré"
     },
     "dialogContext": {
+      "Are you sure you want to resume the breach pause": "Êtes-vous sûr de vouloir reprendre le manquement après sa mise en pause ?",
       "Are you sure you want Unassign Staff": "Êtes-vous sûr de vouloir désassigner le personnel",
       "Are you sure you want to calculate interest ?": "Êtes-vous sûr de vouloir calculer les intérêts ?",
       "Are you sure you want to post interest ?": "Êtes-vous sûr de vouloir enregistrer les intérêts ?",
@@ -3345,6 +3388,10 @@
       "undo_account_transfer": "Êtes-vous sûr de vouloir annuler ce transfert de compte ?"
     },
     "text": {
+      "Max": "Max",
+      "Hidden variables and predefined values are included in the final payload automatically.": "Hidden variables and predefined values are included in the final payload automatically.",
+      "No Breach Actions": "Aucune action de violation",
+      "No Near Breach Actions": "Aucune action de violation proche",
       "A": "UN",
       "Ability to manage holidays for individual offices": "La possibilité de gérer les congés de chaque bureau est un outil très utile pour une organisation répartie sur plusieurs sites. Utilisez cette option pour personnaliser les congés de chaque bureau de votre organisation.",
       "About Us": "À Propos de Nous",
@@ -3948,6 +3995,10 @@
       "Table": "Tableau",
       "Tax Components": "Composantes fiscales",
       "Tellers": "Caissiers",
+      "Template defaults are preloaded": "Template defaults are preloaded",
+      "Select a product below": "Select a product below",
+      "Upcoming": "À venir",
+      "Complete control over every aspect of product behavior": "Contrôle total sur chaque aspect du comportement du produit — du moratoire et de la subvention aux structures à tranches multiples, aux règles de répartition, et bien plus encore.",
       "Template I am trying to use": "C'est le modèle que j'essaie d'utiliser. Es-ce bien.",
       "Templates": "Modèles",
       "Tenant": "Locataire",
@@ -4098,7 +4149,19 @@
       "username": "nom d'utilisateur",
       "withhold tax for this account": "retenir l'impôt sur ce compte",
       "withoutCategory": "Sans catégorie",
-      "Maker-Checker principle requires every tasks": "Le principe Maker-Checker exige que chaque tâche soit effectuée par deux personnes afin de réduire les risques d'erreurs et de mauvaise utilisation. Une personne lance le processus et la seconde le termine."
+      "Maker-Checker principle requires every tasks": "Le principe Maker-Checker exige que chaque tâche soit effectuée par deux personnes afin de réduire les risques d'erreurs et de mauvaise utilisation. Une personne lance le processus et la seconde le termine.",
+      "Breach Actions": "Actions de Manquement",
+      "“Maker-Checker” principle requires every tasks": "Le principe « Maker-Checker » exige que chaque tâche soit effectuée par deux personnes afin de réduire les risques d'erreurs et de mauvaise utilisation. Une personne lance le processus et la seconde le termine.",
+      "SavingsAccountsStayedLockedBusinessEvent": "Savings Accounts Stayed Locked Business Event",
+      "WorkingCapitalLoanDisbursalTransactionBusinessEvent": "Working Capital Loan Disbursal Transaction Business Event",
+      "WorkingCapitalLoanUndoDisbursalTransactionBusinessEvent": "Working Capital Loan Undo Disbursal Transaction Business Event",
+      "WorkingCapitalLoanRepaymentTransactionBusinessEvent": "Working Capital Loan Repayment Transaction Business Event",
+      "WorkingCapitalLoanCreditBalanceRefundTransactionBusinessEvent": "Working Capital Loan Credit Balance Refund Transaction Business Event",
+      "WorkingCapitalLoanDiscountFeeTransactionBusinessEvent": "Working Capital Loan Discount Fee Transaction Business Event",
+      "WorkingCapitalLoanDiscountFeeAdjustmentTransactionBusinessEvent": "Working Capital Loan Discount Fee Adjustment Transaction Business Event",
+      "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
+      "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
+      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event"
     },
     "permissions": {
       "actions": {
@@ -4840,5 +4903,71 @@
         "message": "Fonctionnalité non implémentée !"
       }
     }
+  },
+  "copilot": {
+    "brand": "Mifos Intelligence AI",
+    "currentSession": "Session actuelle",
+    "newChat": "Nouvelle discussion",
+    "close": "Fermer",
+    "greeting": {
+      "morning": "Bonjour",
+      "afternoon": "Bon après-midi",
+      "evening": "Bonsoir"
+    },
+    "welcomeHeading": "Comment puis-je vous aider à accompagner vos clients aujourd'hui ?",
+    "suggestions": {
+      "clientDetails": "Affichez les détails du client John Doe",
+      "repaymentSchedule": "Quel est l'échéancier de remboursement du prêt n° 107 ?",
+      "savingsBalance": "Affichez le solde du compte d'épargne du client n° 52",
+      "overdueLoans": "Combien de prêts sont en retard cette semaine ?"
+    },
+    "input": {
+      "placeholder": "Posez une question sur les clients, les prêts ou les comptes...",
+      "attach": "Joindre un fichier",
+      "voice": "Entrée vocale",
+      "send": "Envoyer le message",
+      "stop": "Arrêter la génération"
+    },
+    "disclaimer": "Mifos Intelligence AI est conçue pour assister, et non remplacer, la prise de décision humaine.",
+    "nav": {
+      "recentChats": "Discussions récentes",
+      "chat": "Discussion",
+      "preferences": "Préférences",
+      "helpCenter": "Centre d'aide"
+    },
+    "preferencesHeading": "Préférences",
+    "recent": {
+      "emptyTitle": "Aucune conversation récente",
+      "emptySubtitle": "Votre historique de discussion apparaîtra ici",
+      "messages": "messages",
+      "delete": "Supprimer la conversation"
+    },
+    "help": {
+      "capabilitiesTitle": "Que peut faire Mifos Intelligence AI ?",
+      "capabilities": {
+        "lookup": "Rechercher les informations et profils des clients",
+        "loans": "Consulter les détails des prêts et les échéanciers",
+        "savings": "Vérifier les soldes des comptes d'épargne",
+        "portfolio": "Obtenir des informations sur les portefeuilles clients",
+        "navigate": "Naviguer vers des pages spécifiques dans Mifos X"
+      },
+      "examplesTitle": "Exemples de questions",
+      "importantTitle": "Important",
+      "important": {
+        "assist": "Les réponses de l'IA sont fournies à titre indicatif, pas comme décisions finales",
+        "verify": "Vérifiez toujours les données financières critiques avant d'agir",
+        "noExecute": "L'IA n'exécute pas de transactions par elle-même"
+      }
+    },
+    "cardType": {
+      "client": "Client",
+      "loan": "Prêt",
+      "savings": "Épargne",
+      "insight": "Analyse",
+      "confirmation": "Confirmation"
+    },
+    "confirmWarning": "Cette action implique de l'argent réel. Veuillez confirmer.",
+    "openAssistant": "Ouvrir l'assistant IA",
+    "newChatTitle": "Nouvelle conversation"
   }
 }

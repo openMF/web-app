@@ -74,8 +74,76 @@
     }
   }
 
+  @if (timelineBars().length > 0) {
+    <div class="timeline-section">
+      <div class="section-header">
+        <span class="section-title"> {{ 'labels.heading.Pause Timeline' | translate }} · {{ timelineYear() }} </span>
+        <div class="legend">
+          <span class="legend-item">
+            <span class="legend-swatch legend-active"></span>{{ 'labels.inputs.Active' | translate }}
+          </span>
+          <span class="legend-item">
+            <span class="legend-swatch legend-scheduled"></span>{{ 'labels.inputs.Scheduled' | translate }}
+          </span>
+          <span class="legend-item">
+            <span class="legend-swatch legend-expired"></span>{{ 'labels.inputs.Expired' | translate }}
+          </span>
+        </div>
+      </div>
+
+      <svg class="timeline" viewBox="0 0 1200 180" preserveAspectRatio="none">
+        <text class="lane-label" x="6" y="92">{{ 'labels.inputs.Pauses' | translate }}</text>
+
+        <g class="grid-group">
+          @for (line of monthGridLines; track $index) {
+            <line class="month-grid" [attr.x1]="line" y1="28" [attr.x2]="line" y2="130" />
+          }
+        </g>
+
+        <line class="baseline" x1="60" y1="130" x2="1200" y2="130" />
+
+        <g>
+          @for (label of monthLabels; track label.name) {
+            <text class="month-label" [attr.x]="label.x" y="152" text-anchor="middle">{{ label.name }}</text>
+          }
+        </g>
+
+        <g>
+          @for (bar of timelineBars(); track bar.label) {
+            <rect
+              [attr.class]="'pause-bar-edge pause-bar-edge--' + bar.status"
+              [attr.x]="bar.x"
+              y="64"
+              [attr.width]="bar.width"
+              height="48"
+              rx="4"
+            />
+            <rect
+              [attr.class]="'pause-bar pause-bar--' + bar.status"
+              [attr.x]="bar.x"
+              y="68"
+              [attr.width]="bar.width"
+              height="40"
+              rx="4"
+            >
+              <title>{{ bar.tooltip }}</title>
+            </rect>
+            <text class="bar-tag" [attr.x]="bar.midX" y="92" text-anchor="middle">{{ bar.label }}</text>
+          }
+        </g>
+
+        @if (todayMarker() !== null) {
+          <line class="today-line" [attr.x1]="todayMarker()" y1="28" [attr.x2]="todayMarker()" y2="140" />
+          <text class="today-label" [attr.x]="todayMarker()" y="22" text-anchor="middle">
+            {{ 'labels.inputs.Today' | translate }}
+          </text>
+        }
+      </svg>
+    </div>
+  }
+
   <div class="layout-row m-t-20 m-b-10 align-end align-items-center gap-5px">
-    @if (allowPause) {
+    @if (allowPause()) {
       <button
         mat-raised-button
         color="primary"
@@ -98,10 +166,10 @@
     }
   </div>
 
-  @if (loanDelinquencyActions.length > 0) {
+  @if (loanDelinquencyActions().length > 0) {
     <div class="m-t-10">
       <h3>{{ 'labels.heading.Loan Delinquency Actions' | translate }}</h3>
-      <table mat-table [dataSource]="loanDelinquencyActions">
+      <table mat-table [dataSource]="loanDelinquencyActions()">
         <ng-container matColumnDef="identifier">
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Id' | translate }}</th>
           <td mat-cell *matCellDef="let item">{{ item.id }}</td>
@@ -117,51 +185,62 @@
         <ng-container matColumnDef="endDate">
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.End Date' | translate }}</th>
           <td mat-cell *matCellDef="let item">
-            @if (item.endDate) {
-              {{ item.endDate | dateFormat }}
+            @if (item.effectiveEndDate ?? item.endDate; as endDate) {
+              {{ endDate | dateFormat }}
             }
           </td>
         </ng-container>
-        @if (loanProductService.isLoanProduct) {
-          <ng-container matColumnDef="createdOn">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Created On' | translate }}</th>
-            <td mat-cell *matCellDef="let item">{{ item.createdOn | datetimeFormat }}</td>
-          </ng-container>
-        }
-        @if (loanProductService.isWorkingCapital) {
-          <ng-container matColumnDef="minimumPayment">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Minimum Payment' | translate }}</th>
-            <td mat-cell *matCellDef="let item">
-              @if (item.action === 'RESCHEDULE') {
-                {{ item.minimumPayment | formatNumber: '' : 0 }}
-                {{ item.minimumPaymentType | translateKey: 'catalogs' }}
-              }
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="frequency">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Frequency' | translate }}</th>
-            <td mat-cell *matCellDef="let item">
-              @if (item.action === 'RESCHEDULE') {
-                {{ item.frequency | formatNumber: '' : 0 }} {{ item.frequencyType | translateKey: 'catalogs' }}
-              }
-            </td>
-          </ng-container>
-        }
+        <ng-container matColumnDef="createdOn">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Created On' | translate }}</th>
+          <td mat-cell *matCellDef="let item">{{ item.createdOn | datetimeFormat }}</td>
+        </ng-container>
+        <ng-container matColumnDef="minimumPayment">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Minimum Payment' | translate }}</th>
+          <td mat-cell *matCellDef="let item">
+            @if (item.action === 'RESCHEDULE') {
+              {{ item.minimumPayment | formatNumber: '' : 0 }}
+              {{ item.minimumPaymentType | translateKey: 'catalogs' }}
+            }
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="frequency">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Frequency' | translate }}</th>
+          <td mat-cell *matCellDef="let item">
+            @if (item.action === 'RESCHEDULE') {
+              {{ item.frequency | formatNumber: '' : 0 }} {{ item.frequencyType | translateKey: 'catalogs' }}
+            }
+          </td>
+        </ng-container>
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
           <td mat-cell *matCellDef="let item">
-            @if (loanProductService.isLoanProduct && isCurrentAndPauseAction(item)) {
-              <span>
-                <button
-                  mat-button
-                  color="primary"
-                  (click)="resumeDelinquencyClassification(item)"
-                  *mifosxHasPermission="'CREATE_DELINQUENCY_ACTION'"
-                  matTooltip="{{ 'tooltips.Resume Delinquency Classification' | translate }}"
-                >
-                  <fa-icon icon="play" class="m-r-10"></fa-icon>
-                </button>
-              </span>
+            @if (isCurrentAndPauseAction(item)) {
+              @if (loanProductService.isLoanProduct) {
+                <span>
+                  <button
+                    mat-button
+                    color="primary"
+                    (click)="resumeDelinquencyClassification(item)"
+                    *mifosxHasPermission="'CREATE_DELINQUENCY_ACTION'"
+                    matTooltip="{{ 'tooltips.Resume Delinquency Classification' | translate }}"
+                  >
+                    <fa-icon icon="play" class="m-r-10"></fa-icon>
+                  </button>
+                </span>
+              }
+              @if (loanProductService.isWorkingCapital) {
+                <span>
+                  <button
+                    mat-button
+                    color="primary"
+                    (click)="resumeDelinquencyClassification(item)"
+                    *mifosxHasPermission="'CREATE_WC_DELINQUENCY_ACTION'"
+                    matTooltip="{{ 'tooltips.Resume Delinquency Classification' | translate }}"
+                  >
+                    <fa-icon icon="play" class="m-r-10"></fa-icon>
+                  </button>
+                </span>
+              }
             }
           </td>
         </ng-container>

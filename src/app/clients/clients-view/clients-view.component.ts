@@ -26,6 +26,7 @@ import { CaptureImageDialogComponent } from './custom-dialogs/capture-image-dial
 
 /** Custom Services */
 import { ClientsService } from '../clients.service';
+import { CreditBureauService } from 'app/credit-bureau/credit-bureau.service';
 import { LegalFormId } from '../models/legal-form.enum';
 import { MatCardMdImage } from '@angular/material/card';
 import { MatIconButton } from '@angular/material/button';
@@ -123,6 +124,7 @@ export class ClientsViewComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private clientsService = inject(ClientsService);
+  private creditBureauService = inject(CreditBureauService);
   private _sanitizer = inject(DomSanitizer);
   dialog = inject(MatDialog);
   private destroyRef = inject(DestroyRef);
@@ -416,5 +418,13 @@ export class ClientsViewComponent implements OnInit {
         });
       }
     });
+  }
+
+  /**
+   * Returns true if the current CB-ILD role is COMPLIANCE.
+   * Used to show/hide Audit Trail tab in the client profile nav.
+   */
+  get isCbildCompliance(): boolean {
+    return this.creditBureauService.getRole() === 'COMPLIANCE';
   }
 }

@@ -177,6 +177,10 @@ export class LoansAccountPreviewStepComponent extends LoanProductBaseComponent i
     return match ? { id: match.id, code: match.code, value: match.value } : null;
   }
 
+  originatorsLabel(originators: { externalId: string }[]): string {
+    return (originators ?? []).map((originator) => originator.externalId).join(', ');
+  }
+
   loanProductName(id: number): string {
     const productType: string = this.loanProductService.productType.value;
     const product = this.loanProductsBasicDetails.find((p) => p.productType === productType && p.id === id);

@@ -79,14 +79,22 @@ export class LoanOriginatorsTabComponent extends LoanAccountTabBaseComponent {
     super();
     this.clientId = this.route.parent.parent.snapshot.paramMap.get('clientId');
     this.loanId = this.route.parent?.parent?.snapshot.paramMap.get('loanId');
+    this.loanOriginatorsData = [];
     this.route.parent.parent.data
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((data: { loanDetailsData: any }) => {
         this.loanStatus = data.loanDetailsData.status;
+        if ('originators' in data.loanDetailsData) {
+          this.loanOriginatorsData = data.loanDetailsData.originators;
+        }
       });
-    this.route.parent.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { loanOriginatorsData: any }) => {
-      this.loanOriginatorsData = data.loanOriginatorsData.originators;
-    });
+    if (this.loanProductService.isLoanProduct) {
+      this.route.parent.data
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((data: { loanOriginatorsData: any }) => {
+          this.loanOriginatorsData = data.loanOriginatorsData.originators ?? [];
+        });
+    }
   }
 
   detachLoanOriginator(loanOriginator: LoanOriginator): void {
@@ -107,9 +115,11 @@ export class LoanOriginatorsTabComponent extends LoanAccountTabBaseComponent {
     });
     detachCodeDialogRef.afterClosed().subscribe((response?: { confirm?: boolean }) => {
       if (response?.confirm && this.loanId) {
-        this.loansService.detachLoanOriginator(this.loanId, String(loanOriginator.id)).subscribe((response) => {
-          this.reload();
-        });
+        this.loansService
+          .detachLoanOriginator(this.loanProductService.loanAccountPath, this.loanId, String(loanOriginator.id))
+          .subscribe((response) => {
+            this.reload();
+          });
       }
     });
   }

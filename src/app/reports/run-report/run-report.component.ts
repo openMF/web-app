@@ -21,6 +21,7 @@ import { ReportParameter } from '../common-models/report-parameter.model';
 import { SelectOption } from '../common-models/select-option.model';
 import { Dates } from 'app/core/utils/dates';
 import { GlobalConfiguration } from 'app/system/configurations/global-configurations-tab/configuration.model';
+import { sanitizeCsvValue } from 'app/core/utils/csv.utils';
 
 import * as ExcelJS from 'exceljs';
 import { AlertService } from 'app/core/alert/alert.service';
@@ -129,7 +130,6 @@ export class RunReportComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((data: { reportParameters: ReportParameter[]; configurations: any }) => {
         this.paramData = data.reportParameters;
-        console.log(this.paramData);
         this.createRunReportForm();
         if (this.isTableReport()) {
           const amazonS3Config = data.configurations.globalConfiguration.find(
@@ -536,11 +536,11 @@ export class RunReportComponent implements OnInit {
   async exportToXLS(reportName: string, csvData: any, displayedColumns: string[]): Promise<void> {
     const fileName = `${reportName}.xlsx`;
 
-    // Format data for ExcelJS
+    // Format data for ExcelJS - sanitize all values to prevent formula injection
     const data = csvData.map((object: any) => {
       const row: Record<string, any> = {};
       for (let i = 0; i < displayedColumns.length; i++) {
-        row[displayedColumns[i]] = object.row[i];
+        row[displayedColumns[i]] = sanitizeCsvValue(object.row[i]);
       }
       return row;
     });
@@ -550,7 +550,7 @@ export class RunReportComponent implements OnInit {
     const worksheet = workbook.addWorksheet('report');
 
     // Add header
-    worksheet.addRow(displayedColumns);
+    worksheet.addRow(displayedColumns.map(sanitizeCsvValue));
 
     // Add data rows
     data.forEach((rowObj: any) => {

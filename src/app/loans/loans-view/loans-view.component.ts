@@ -399,6 +399,24 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
           });
         }
       }
+
+      // Only Available when Near Breach is set in the Loan
+      if (this.loanProductService.isWorkingCapital && this.loanDetailsData?.nearBreach != null) {
+        this.buttonConfig.addButton({
+          name: 'Update Near Breach',
+          icon: 'not-equal',
+          taskPermissionName: 'CREATE_WC_NEAR_BREACH_ACTION'
+        });
+      }
+
+      // Only Available when Breach is set in the Loan
+      if (this.loanProductService.isWorkingCapital && this.loanDetailsData?.breach != null) {
+        this.buttonConfig.addButton({
+          name: 'Update Breach',
+          icon: 'not-equal',
+          taskPermissionName: 'CREATE_WC_BREACH_ACTION'
+        });
+      }
     } else if (
       (this.loanProductService.isLoanProduct && this.status === 'Closed (obligations met)') ||
       this.status === 'Overpaid'
@@ -553,7 +571,7 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
         return 'loanStatusType.activeOverdue';
       }
     } else if (this.loanProductService.isWorkingCapital) {
-      if (this.loanDetailsData.collectionData?.delinquentDays > 0) {
+      if (this.loanDetailsData.delinquent?.delinquentDays > 0) {
         return 'loanStatusType.activeOverdue';
       }
     }
@@ -568,7 +586,7 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
       return 'Chargeoff';
     }
     if (this.loanProductService.isWorkingCapital) {
-      if (this.loanDetailsData.collectionData?.delinquentDays > 0) {
+      if (this.loanDetailsData.delinquent?.delinquentDays > 0) {
         return 'activeOverdue';
       }
     } else {
@@ -616,6 +634,6 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
     if (!this.loanProductService.isWorkingCapital || !this.loanDetailsData) {
       return false;
     }
-    return !this.loanDetailsData?.discount && this.loanDetailsData?.status?.active === true;
+    return !this.loanDetailsData?.discountFee && this.loanDetailsData?.status?.active === true;
   }
 }
