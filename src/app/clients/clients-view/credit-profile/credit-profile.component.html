@@ -1,0 +1,159 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="cbild-credit-profile">
+  <!-- Role selector -->
+  <mat-card class="cbild-role-card">
+    <mat-card-content>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'labels.cbild.dashboard.role' | translate }}</mat-label>
+        <mat-select [(ngModel)]="selectedRole" (ngModelChange)="onRoleChange($event)">
+          @for (role of roles; track role.value) {
+            <mat-option [value]="role.value">{{ role.label }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Loading -->
+  @if (isLoading) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
+
+  <!-- Credit Profile result -->
+  @if (result && !isLoading) {
+    <mat-card class="cbild-profile-card">
+      <mat-card-content>
+        <!-- Score Drop Alert -->
+        @if (result.scoreDropAlert) {
+          <div class="cbild-alert cbild-alert-warning">
+            <mat-icon>trending_down</mat-icon>
+            <span>{{ 'labels.cbild.creditProfile.scoreDropAlert' | translate }}</span>
+          </div>
+        }
+
+        <!-- Delinquency Alert -->
+        @if (result.hasDelinquencies) {
+          <div class="cbild-alert cbild-alert-danger">
+            <mat-icon>warning</mat-icon>
+            <span>{{ 'labels.cbild.creditProfile.hasDelinquencies' | translate }}</span>
+          </div>
+        }
+
+        <!-- FICO + Risk Band -->
+        <div class="cbild-scores-row">
+          <div class="cbild-fico-card" [class]="getFicoClass()">
+            <span class="cbild-fico-label">{{ 'labels.cbild.creditProfile.ficoScore' | translate }}</span>
+            <span class="cbild-fico-value">{{ result.ficoScore }}</span>
+          </div>
+          @if (result.riskBand) {
+            <div class="cbild-risk-card" [class]="getRiskClass()">
+              <span class="cbild-risk-label">{{ 'labels.cbild.creditProfile.riskBand' | translate }}</span>
+              <span class="cbild-risk-value">{{ result.riskBand }}</span>
+            </div>
+          }
+        </div>
+
+        <mat-divider class="cbild-divider"></mat-divider>
+
+        <!-- Bureau Details -->
+        <div class="cbild-details-grid">
+          <div class="cbild-detail-item">
+            <span class="cbild-detail-label">{{ 'labels.cbild.creditProfile.bureau' | translate }}</span>
+            <span class="cbild-detail-value">{{ result.bureauType }}</span>
+          </div>
+          <div class="cbild-detail-item">
+            <span class="cbild-detail-label">{{ 'labels.cbild.creditProfile.pulledAt' | translate }}</span>
+            <span class="cbild-detail-value">{{ result.pulledAt | dateFormat }}</span>
+          </div>
+          <div class="cbild-detail-item">
+            <span class="cbild-detail-label">{{ 'labels.cbild.creditProfile.expiry' | translate }}</span>
+            <span class="cbild-detail-value">{{ result.expiryDate }} (72 months LRSIC)</span>
+          </div>
+          <div class="cbild-detail-item">
+            <span class="cbild-detail-label">{{ 'labels.cbild.creditProfile.delinquencies' | translate }}</span>
+            @if (result.hasDelinquencies) {
+              <span class="cbild-detail-value cbild-text-danger">
+                <mat-icon class="cbild-inline-icon">cancel</mat-icon>
+                {{ 'labels.cbild.creditProfile.yes' | translate }}
+              </span>
+            } @else {
+              <span class="cbild-detail-value cbild-text-success">
+                <mat-icon class="cbild-inline-icon">check_circle</mat-icon>
+                {{ 'labels.cbild.creditProfile.none' | translate }}
+              </span>
+            }
+          </div>
+          @if (result.dateOfFirstDelinquency) {
+            <div class="cbild-detail-item">
+              <span class="cbild-detail-label">{{ 'labels.cbild.creditProfile.firstDelinquency' | translate }}</span>
+              <span class="cbild-detail-value cbild-text-danger">{{ result.dateOfFirstDelinquency }}</span>
+            </div>
+          }
+        </div>
+
+        <mat-divider class="cbild-divider"></mat-divider>
+
+        <!-- Tradelines -->
+        <div class="cbild-tradelines-section">
+          <p class="cbild-section-title">
+            <mat-icon>account_balance</mat-icon>
+            {{ 'labels.cbild.creditProfile.tradelines' | translate }}
+            ({{ tradelines.length }})
+          </p>
+
+          @if (tradelines.length === 0) {
+            <div class="cbild-empty-sub">
+              <p>{{ 'labels.cbild.creditProfile.noTradelines' | translate }}</p>
+            </div>
+          } @else {
+            @for (tradeline of tradelines; track $index) {
+              <div class="cbild-tradeline-card">
+                <span class="cbild-tradeline-name">{{ tradeline.creditorName || tradeline.name }}</span>
+                @if (tradeline.balance !== undefined && tradeline.balance !== null) {
+                  <span class="cbild-tradeline-detail"
+                    >{{ 'labels.cbild.creditProfile.balance' | translate }}: {{ tradeline.balance }}</span
+                  >
+                }
+                @if (tradeline.latePayments !== undefined) {
+                  <span class="cbild-tradeline-detail"
+                    >{{ 'labels.cbild.creditProfile.latePayments' | translate }}: {{ tradeline.latePayments }}</span
+                  >
+                }
+              </div>
+            }
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  <!-- Empty state — no CDC data yet -->
+  @if (isEmpty && !isLoading) {
+    <mat-card class="cbild-empty-card">
+      <mat-card-content class="cbild-empty-content">
+        <mat-icon>search_off</mat-icon>
+        <p>{{ 'labels.cbild.creditProfile.noData' | translate }}</p>
+        <p class="cbild-empty-hint">{{ 'labels.cbild.creditProfile.noDataHint' | translate }}</p>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  <!-- Error state -->
+  @if (hasError && !isLoading) {
+    <mat-card class="cbild-empty-card">
+      <mat-card-content class="cbild-empty-content">
+        <mat-icon color="warn">error_outline</mat-icon>
+        <p>{{ 'labels.cbild.errors.unexpected' | translate }}</p>
+        <button mat-stroked-button color="primary" (click)="loadProfile()">
+          {{ 'labels.buttons.Retry' | translate }}
+        </button>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

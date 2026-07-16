@@ -1597,7 +1597,7 @@
       "Annual interest rate": "Annual interest rate",
       "Annual interest rate by loan cycle": "Annual interest rate by loan cycle",
       "Annual interest rate frequency": "Annual interest rate frequency",
-      "Breach Actions": "Ações de violação",
+      "Breach Actions": "Ações de Violação",
       "# Remittance": "# Remessa",
       "# Senders": "# Remetentes",
       "ACCOUNTING": "CONTABILIDADE",
@@ -3161,7 +3161,6 @@
       "to": "para",
       "valid": "válido",
       "Active Pause": "Pausa Ativa",
-      "Breach Actions": "Ações de Violação",
       "days": "dias",
       "Duration": "Duração",
       "Expired": "Expirada",
@@ -3174,7 +3173,8 @@
       "Scheduled": "Agendada",
       "Today": "Hoje",
       "Total Actions": "Total de Ações",
-      "Total Days Paused": "Total de Dias em Pausa"
+      "Total Days Paused": "Total de Dias em Pausa",
+      "Credit Profile": "Perfil de crédito"
     },
     "links": {
       "Community": "Comunidade",
@@ -4496,6 +4496,27 @@
         },
         "own.account": "Conta Própria",
         "other.bank": "Outro Banco"
+      }
+    },
+    "cbild": {
+      "creditProfile": {
+        "ficoScore": "Pontuação FICO",
+        "riskBand": "Faixa de risco",
+        "bureau": "Bureau",
+        "pulledAt": "Última consulta",
+        "expiry": "Data de validade",
+        "delinquencies": "Inadimplências",
+        "firstDelinquency": "Primeira inadimplência",
+        "none": "Nenhuma",
+        "yes": "Sim",
+        "scoreDropAlert": "Pontuação FICO caiu",
+        "hasDelinquencies": "Cliente tem inadimplências",
+        "tradelines": "Linhas de crédito",
+        "noTradelines": "Sem linhas de crédito",
+        "balance": "Saldo",
+        "latePayments": "Pagamentos atrasados",
+        "noData": "Nenhum perfil disponível",
+        "noDataHint": "Execute a verificação do bureau"
       }
     }
   },

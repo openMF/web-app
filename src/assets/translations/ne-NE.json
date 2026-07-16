@@ -1597,7 +1597,7 @@
       "Annual interest rate": "Annual interest rate",
       "Annual interest rate by loan cycle": "Annual interest rate by loan cycle",
       "Annual interest rate frequency": "Annual interest rate frequency",
-      "Breach Actions": "उल्लंघन कार्यहरू",
+      "Breach Actions": "उल्लङ्घन कार्यहरू",
       "# Remittance": "# रेमिट्यान्स",
       "# Senders": "# पठाउनेहरू",
       "ACCOUNTING": "लेखा",
@@ -3161,7 +3161,6 @@
       "to": "को",
       "valid": "मान्य",
       "Active Pause": "सक्रिय रोकावट",
-      "Breach Actions": "उल्लङ्घन कार्यहरू",
       "days": "दिन",
       "Duration": "अवधि",
       "Expired": "समाप्त",
@@ -3174,7 +3173,8 @@
       "Scheduled": "तालिकाबद्ध",
       "Today": "आज",
       "Total Actions": "कुल कार्यहरू",
-      "Total Days Paused": "कुल रोकिएका दिनहरू"
+      "Total Days Paused": "कुल रोकिएका दिनहरू",
+      "Credit Profile": "क्रेडिट प्रोफाइल"
     },
     "links": {
       "Community": "समुदाय",
@@ -4496,6 +4496,27 @@
         },
         "own.account": "आफ्नै खाता",
         "other.bank": "अन्य बैंक"
+      }
+    },
+    "cbild": {
+      "creditProfile": {
+        "ficoScore": "FICO स्कोर",
+        "riskBand": "जोखिम ब्यान्ड",
+        "bureau": "ब्यूरो",
+        "pulledAt": "अन्तिम पटक",
+        "expiry": "म्याद समाप्ति",
+        "delinquencies": "बक्यौता",
+        "firstDelinquency": "पहिलो बक्यौता",
+        "none": "छैन",
+        "yes": "छ",
+        "scoreDropAlert": "FICO स्कोर घटेको",
+        "hasDelinquencies": "बक्यौता रेकर्ड छ",
+        "tradelines": "क्रेडिट लाइन",
+        "noTradelines": "कुनै लाइन छैन",
+        "balance": "शेष",
+        "latePayments": "ढिलो भुक्तानी",
+        "noData": "प्रोफाइल उपलब्ध छैन",
+        "noDataHint": "ब्यूरो जाँच चलाउनुहोस्"
       }
     }
   },

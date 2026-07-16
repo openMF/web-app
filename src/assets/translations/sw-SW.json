@@ -1595,7 +1595,7 @@
       "Annual interest rate": "Annual interest rate",
       "Annual interest rate by loan cycle": "Annual interest rate by loan cycle",
       "Annual interest rate frequency": "Annual interest rate frequency",
-      "Breach Actions": "Ukiukaji Vitendo",
+      "Breach Actions": "Vitendo vya Ukiukaji",
       "# Remittance": "# Uhawilishaji",
       "# Senders": "# Watumaji",
       "ACCOUNTING": "UHASIBU",
@@ -3159,7 +3159,6 @@
       "to": "kwa",
       "valid": "halali",
       "Active Pause": "Pumziko Linaloendelea",
-      "Breach Actions": "Vitendo vya Ukiukaji",
       "days": "siku",
       "Duration": "Muda",
       "Expired": "Imeisha",
@@ -3172,7 +3171,8 @@
       "Scheduled": "Iliyopangwa",
       "Today": "Leo",
       "Total Actions": "Jumla ya Vitendo",
-      "Total Days Paused": "Jumla ya Siku za Pumziko"
+      "Total Days Paused": "Jumla ya Siku za Pumziko",
+      "Credit Profile": "Wasifu wa Mkopo"
     },
     "links": {
       "Community": "Jumuiya",
@@ -4493,6 +4493,27 @@
         },
         "own.account": "Akaunti Yangu",
         "other.bank": "Benki Nyingine"
+      }
+    },
+    "cbild": {
+      "creditProfile": {
+        "ficoScore": "Alama ya FICO",
+        "riskBand": "Kiwango cha Hatari",
+        "bureau": "Shirika",
+        "pulledAt": "Ilipatikana mara ya mwisho",
+        "expiry": "Tarehe ya kumalizika",
+        "delinquencies": "Madeni",
+        "firstDelinquency": "Deni la kwanza",
+        "none": "Hakuna",
+        "yes": "Ndiyo",
+        "scoreDropAlert": "Alama ya FICO imeshuka",
+        "hasDelinquencies": "Mteja ana madeni",
+        "tradelines": "Mistari ya mkopo",
+        "noTradelines": "Hakuna mistari",
+        "balance": "Salio",
+        "latePayments": "Malipo ya kuchelewa",
+        "noData": "Hakuna wasifu bado",
+        "noDataHint": "Endesha ukaguzi wa shirika"
       }
     }
   },

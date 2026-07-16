@@ -1600,7 +1600,7 @@
       "Annual interest rate": "Annual interest rate",
       "Annual interest rate by loan cycle": "Annual interest rate by loan cycle",
       "Annual interest rate frequency": "Annual interest rate frequency",
-      "Breach Actions": "Verstoßaktionen",
+      "Breach Actions": "Verstoß-Aktionen",
       "# Remittance": "# Überweisung",
       "# Senders": "# Absender",
       "ACCOUNTING": "BUCHHALTUNG",
@@ -3164,7 +3164,6 @@
       "to": "Zu",
       "valid": "gültig",
       "Active Pause": "Aktive Pause",
-      "Breach Actions": "Verstoß-Aktionen",
       "days": "Tage",
       "Duration": "Dauer",
       "Expired": "Abgelaufen",
@@ -3177,7 +3176,8 @@
       "Scheduled": "Geplant",
       "Today": "Heute",
       "Total Actions": "Gesamtaktionen",
-      "Total Days Paused": "Pausentage gesamt"
+      "Total Days Paused": "Pausentage gesamt",
+      "Credit Profile": "Kreditprofil"
     },
     "links": {
       "Community": "Gemeinschaft",
@@ -4493,6 +4493,27 @@
         "RECURRINGDEPOSITACCOUNT": "Sparplankonto",
         "ACCOUNTTRANSFER": "Kontoübertragung",
         "SSBENEFICIARYTPT": "Self-Service-Begünstigte TPT"
+      }
+    },
+    "cbild": {
+      "creditProfile": {
+        "ficoScore": "FICO-Bewertung",
+        "riskBand": "Risikoband",
+        "bureau": "Büro",
+        "pulledAt": "Zuletzt abgerufen",
+        "expiry": "Ablaufdatum",
+        "delinquencies": "Zahlungsrückstände",
+        "firstDelinquency": "Erster Zahlungsrückstand",
+        "none": "Keine",
+        "yes": "Ja",
+        "scoreDropAlert": "FICO-Score gesunken",
+        "hasDelinquencies": "Zahlungsrückstände vorhanden",
+        "tradelines": "Kreditlinien",
+        "noTradelines": "Keine Kreditlinien",
+        "balance": "Saldo",
+        "latePayments": "Verspätete Zahlungen",
+        "noData": "Kein Kreditprofil verfügbar",
+        "noDataHint": "Zuerst Bürobereitschaftsprüfung durchführen"
       }
     }
   },

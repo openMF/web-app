@@ -89,6 +89,8 @@
   window['env']['mifosInterbankTransfersApiProvider'] = '';
   window['env']['mifosInterbankTransfersApiVersion'] = '';
   window['env']['mifosInterbankTransfersEnabled'] = 'true';
+  window['env']['cbIldEnabled'] = 'false';
+  window['env']['pluginBaseUrl'] = 'http://localhost:8084';
 
   // Remittance Module Environment variables
   window['env']['mifosRemittanceApiClientUrl'] = '';

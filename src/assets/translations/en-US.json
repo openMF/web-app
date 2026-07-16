@@ -3183,7 +3183,8 @@
       "KYC Completeness Score": "KYC Completeness Score",
       "CDC FICO Score": "CDC FICO Score",
       "No bureau data available": "No bureau data available",
-      "Failed to load bureau data": "Failed to load bureau data"
+      "Failed to load bureau data": "Failed to load bureau data",
+      "Credit Profile": "Credit Profile"
     },
     "links": {
       "Community": "Community",
@@ -4605,6 +4606,25 @@
         "expiry": "Expiry Date",
         "submittedAt": "Submitted At",
         "noSubmissions": "No submissions found"
+      },
+      "creditProfile": {
+        "ficoScore": "FICO Score",
+        "riskBand": "Risk Band",
+        "bureau": "Bureau",
+        "pulledAt": "Last Pulled",
+        "expiry": "Expiry Date",
+        "delinquencies": "Delinquencies",
+        "firstDelinquency": "First Delinquency",
+        "none": "None",
+        "yes": "Yes",
+        "scoreDropAlert": "FICO score dropped since last pull — monitor this client",
+        "hasDelinquencies": "Client has delinquencies on record — review before approval",
+        "tradelines": "Tradelines",
+        "noTradelines": "No tradelines on record",
+        "balance": "Balance",
+        "latePayments": "Late Payments",
+        "noData": "No credit profile available yet",
+        "noDataHint": "Run Bureau Readiness check first to pull data from CDC"
       }
     },
     "selections": {

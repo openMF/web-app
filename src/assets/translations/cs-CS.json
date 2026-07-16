@@ -1598,7 +1598,7 @@
       "Annual interest rate": "Roční úroková sazba",
       "Annual interest rate by loan cycle": "Roční úroková sazba podle úvěrového cyklu",
       "Annual interest rate frequency": "Frekvence roční úrokové sazby",
-      "Breach Actions": "Porušení Akce",
+      "Breach Actions": "Akce porušení",
       "# Remittance": "# Remitence",
       "# Senders": "# Odesílatelé",
       "ACCOUNTING": "ÚČETNICTVÍ",
@@ -3162,7 +3162,6 @@
       "to": "na",
       "valid": "platný",
       "Active Pause": "Aktivní pauza",
-      "Breach Actions": "Akce porušení",
       "days": "dní",
       "Duration": "Doba trvání",
       "Expired": "Vypršela",
@@ -3175,7 +3174,8 @@
       "Scheduled": "Naplánováno",
       "Today": "Dnes",
       "Total Actions": "Celkové akce",
-      "Total Days Paused": "Celkový počet dní v pauze"
+      "Total Days Paused": "Celkový počet dní v pauze",
+      "Credit Profile": "Kreditní profil"
     },
     "links": {
       "Community": "Společenství",
@@ -4493,6 +4493,27 @@
         "RECURRINGDEPOSITACCOUNT": "Účet pravidelného spoření",
         "ACCOUNTTRANSFER": "Převod účtu",
         "SSBENEFICIARYTPT": "Self-Service příjemci TPT"
+      }
+    },
+    "cbild": {
+      "creditProfile": {
+        "ficoScore": "Skóre FICO",
+        "riskBand": "Rizikové pásmo",
+        "bureau": "Bureau",
+        "pulledAt": "Naposledy staženo",
+        "expiry": "Datum vypršení",
+        "delinquencies": "Prodlení",
+        "firstDelinquency": "První prodlení",
+        "none": "Žádné",
+        "yes": "Ano",
+        "scoreDropAlert": "FICO skóre kleslo",
+        "hasDelinquencies": "Klient má prodlení",
+        "tradelines": "Úvěrové linky",
+        "noTradelines": "Žádné úvěrové linky",
+        "balance": "Zůstatek",
+        "latePayments": "Opožděné platby",
+        "noData": "Kreditní profil není k dispozici",
+        "noDataHint": "Spusťte kontrolu bureau"
       }
     }
   },

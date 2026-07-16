@@ -104,6 +104,8 @@
   window['env']['mifosInterbankTransfersApiProvider'] = '$MIFOS_INTERBANK_TRANSFERS_API_PROVIDER';
   window['env']['mifosInterbankTransfersApiVersion'] = '$MIFOS_INTERBANK_TRANSFERS_API_VERSION';
   window['env']['mifosInterbankTransfersEnabled'] = '$MIFOS_INTERBANK_TRANSFERS_ENABLED';
+  window['env']['cbIldEnabled'] = '$CB_ILD_ENABLED';
+  window['env']['pluginBaseUrl'] = '$PLUGIN_BASE_URL';
 
   // Remittance Module Environment variables
   window['env']['mifosRemittanceApiClientUrl'] = '$MIFOS_REMITTANCE_API_CLIENT_URL';

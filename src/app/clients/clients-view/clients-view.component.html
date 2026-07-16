@@ -489,15 +489,26 @@
         </svg>
         {{ 'labels.inputs.Notes' | translate }}
       </a>
-      <a
-        mat-tab-link
-        [routerLink]="['./bureau-readiness']"
-        routerLinkActive
-        #bureauReadiness="routerLinkActive"
-        [active]="bureauReadiness.isActive"
-      >
-        {{ 'labels.inputs.Bureau Readiness' | translate }}
-      </a>
+      @if (cbIldEnabled) {
+        <a
+          mat-tab-link
+          [routerLink]="['./bureau-readiness']"
+          routerLinkActive
+          #bureauReadiness="routerLinkActive"
+          [active]="bureauReadiness.isActive"
+        >
+          {{ 'labels.inputs.Bureau Readiness' | translate }}
+        </a>
+        <a
+          mat-tab-link
+          [routerLink]="['./credit-profile']"
+          routerLinkActive
+          #creditProfile="routerLinkActive"
+          [active]="creditProfile.isActive"
+        >
+          {{ 'labels.inputs.Credit Profile' | translate }}
+        </a>
+      }
       @for (clientDatatable of clientDatatables; track clientDatatable) {
         <a
           mat-tab-link
