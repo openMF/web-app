@@ -1601,7 +1601,7 @@
       "Annual interest rate": "Annual interest rate",
       "Annual interest rate by loan cycle": "Annual interest rate by loan cycle",
       "Annual interest rate frequency": "Annual interest rate frequency",
-      "Breach Actions": "Actions de violation",
+      "Breach Actions": "Actions de Manquement",
       "# Remittance": "# Transfert",
       "# Senders": "# Expéditeurs",
       "ACCOUNTING": "COMPTABILITÉ",
@@ -3165,7 +3165,6 @@
       "to": "à",
       "valid": "valide",
       "Active Pause": "Pause Active",
-      "Breach Actions": "Actions de Manquement",
       "days": "jours",
       "Duration": "Durée",
       "Expired": "Expirée",
@@ -3178,7 +3177,8 @@
       "Scheduled": "Programmée",
       "Today": "Aujourd'hui",
       "Total Actions": "Total des Actions",
-      "Total Days Paused": "Total des Jours en Pause"
+      "Total Days Paused": "Total des Jours en Pause",
+      "Credit Profile": "Profil de crédit"
     },
     "links": {
       "Community": "Communauté",
@@ -4499,6 +4499,27 @@
         },
         "own.account": "Compte Propre",
         "other.bank": "Autre Banque"
+      }
+    },
+    "cbild": {
+      "creditProfile": {
+        "ficoScore": "Score FICO",
+        "riskBand": "Bande de risque",
+        "bureau": "Bureau",
+        "pulledAt": "Dernière consultation",
+        "expiry": "Date d expiration",
+        "delinquencies": "Défauts de paiement",
+        "firstDelinquency": "Premier défaut",
+        "none": "Aucun",
+        "yes": "Oui",
+        "scoreDropAlert": "Score FICO en baisse",
+        "hasDelinquencies": "Client a des défauts",
+        "tradelines": "Lignes de crédit",
+        "noTradelines": "Aucune ligne de crédit",
+        "balance": "Solde",
+        "latePayments": "Paiements en retard",
+        "noData": "Aucun profil de crédit",
+        "noDataHint": "Exécutez la vérification du bureau"
       }
     }
   },

@@ -149,6 +149,8 @@ export const environment = {
     loadedEnv.productionModeEnableRBAC === 'true' || loadedEnv.productionModeEnableRBAC === true || false,
 
   /** CB-ILD Credit Bureau plugin base URL — must be HTTPS in production */
+  /** CB-ILD feature flag — set cbIldEnabled=true in env to show CB-ILD tabs */
+  cbIldEnabled: loadedEnv.cbIldEnabled === 'true' || loadedEnv.cbIldEnabled === true || false,
   pluginBaseUrl: loadedEnv.pluginBaseUrl || 'http://localhost:8084',
   OIDC: {
     // Support legacy FINERACT_PLUGIN_OIDC_* variable names for backward compatibility

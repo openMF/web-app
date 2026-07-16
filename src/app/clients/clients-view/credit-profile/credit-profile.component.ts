@@ -9,40 +9,48 @@
 import { Component, OnInit, OnDestroy, inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
 import { takeUntil } from 'rxjs/operators';
-import { MatProgressBar } from '@angular/material/progress-bar';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatList, MatListItem, MatListItemIcon, MatListItemTitle } from '@angular/material/list';
+import { HttpErrorResponse } from '@angular/common/http';
 import { MatIcon } from '@angular/material/icon';
 import { MatDivider } from '@angular/material/divider';
+import { MatProgressBar } from '@angular/material/progress-bar';
 import { FormsModule } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { AlertService } from 'app/core/alert/alert.service';
-import { TranslateService } from '@ngx-translate/core';
 import { CreditBureauService } from 'app/credit-bureau/credit-bureau.service';
-import { KycReadinessResult, CbildRole, CBILD_ROLE_LABELS } from 'app/credit-bureau/credit-bureau.models';
+import { BureauResponseDTO, CbildRole, CBILD_ROLE_LABELS } from 'app/credit-bureau/credit-bureau.models';
 
+interface Tradeline {
+  creditorName?: string;
+  name?: string;
+  balance?: number | null;
+  latePayments?: number;
+}
+
+/**
+ * CB-ILD Credit Profile — MX-378 Tab 3.
+ * Shows stored CDC credit report for a client.
+ * Route: /clients/{id}/credit-profile
+ * Roles: CREDIT_ANALYST, COMPLIANCE (KYC_OFFICER gets 403)
+ * Does NOT make a new CDC call — reads from database only.
+ * @author Satyam Mishra — MSOC 2026
+ */
 @Component({
-  selector: 'mifosx-bureau-readiness',
-  templateUrl: './bureau-readiness.component.html',
-  styleUrls: ['./bureau-readiness.component.scss'],
+  selector: 'mifosx-credit-profile',
+  templateUrl: './credit-profile.component.html',
+  styleUrls: ['./credit-profile.component.scss'],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    MatProgressBar,
-    MatChipsModule,
-    MatList,
-    MatListItem,
-    MatListItemIcon,
-    MatListItemTitle,
     MatIcon,
     MatDivider,
+    MatProgressBar,
     FormsModule
   ]
 })
-export class BureauReadinessComponent implements OnInit, OnDestroy {
+export class CreditProfileComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private creditBureauService = inject(CreditBureauService);
   private alertService = inject(AlertService);
@@ -52,11 +60,13 @@ export class BureauReadinessComponent implements OnInit, OnDestroy {
   clientId: number;
   isLoading = false;
   hasError = false;
-  result: KycReadinessResult | null = null;
-  selectedRole: CbildRole = 'KYC_OFFICER';
+  isEmpty = false;
+  result: BureauResponseDTO | null = null;
+  tradelines: Tradeline[] = [];
+  selectedRole: CbildRole = 'CREDIT_ANALYST';
 
   roles: { value: CbildRole; label: string }[] = [
-    { value: 'KYC_OFFICER', label: CBILD_ROLE_LABELS.KYC_OFFICER },
+    { value: 'CREDIT_ANALYST', label: CBILD_ROLE_LABELS.CREDIT_ANALYST },
     { value: 'COMPLIANCE', label: CBILD_ROLE_LABELS.COMPLIANCE }
   ];
 
@@ -65,74 +75,95 @@ export class BureauReadinessComponent implements OnInit, OnDestroy {
   constructor() {
     const rawId = this.route.parent?.snapshot.params['clientId'];
     this.clientId = rawId ? +rawId : 0;
-    if (!this.clientId || isNaN(this.clientId)) {
-      console.error('CB-ILD: Invalid clientId from route');
-    }
   }
 
   ngOnInit(): void {
     const saved = this.creditBureauService.getRole();
-    this.selectedRole = saved === 'CREDIT_ANALYST' ? 'KYC_OFFICER' : saved;
+    this.selectedRole = saved === 'KYC_OFFICER' ? 'CREDIT_ANALYST' : saved;
     this.creditBureauService.setRole(this.selectedRole);
-    this.loadReadiness();
+    this.loadProfile();
   }
 
   onRoleChange(role: CbildRole): void {
     this.selectedRole = role;
     this.creditBureauService.setRole(role);
     this.result = null;
-    this.loadReadiness();
+    this.isEmpty = false;
+    this.loadProfile();
   }
 
-  loadReadiness(): void {
+  loadProfile(): void {
     this.isLoading = true;
     this.hasError = false;
+    this.isEmpty = false;
     this.cdr.markForCheck();
 
     this.creditBureauService
-      .getBureauReadiness(this.clientId)
+      .getBureauResponse(this.clientId)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (data) => {
-          this.result = data;
+        next: (data: BureauResponseDTO) => {
+          if (!data || !data.ficoScore) {
+            this.isEmpty = true;
+            this.result = null;
+          } else {
+            this.result = data;
+            this.isEmpty = false;
+            this.tradelines = this.parseTradelinesOnce(data.tradelines);
+          }
           this.isLoading = false;
           this.cdr.markForCheck();
         },
         error: (err: HttpErrorResponse) => {
           this.isLoading = false;
           this.hasError = true;
-          this.alertService.alert({ type: 'error', message: this.getErrorMessage(err) });
+          this.alertService.alert({
+            type: 'error',
+            message: this.getErrorMessage(err)
+          });
           this.cdr.markForCheck();
         }
       });
   }
 
-  getScoreColor(): 'primary' | 'accent' | 'warn' {
-    if (!this.result) return 'primary';
-    if (this.result.score >= 70) return 'primary';
-    if (this.result.score >= 40) return 'accent';
-    return 'warn';
+  getFicoClass(): string {
+    if (!this.result?.ficoScore) return 'cbild-fico-unknown';
+    if (this.result.ficoScore >= 700) return 'cbild-fico-good';
+    if (this.result.ficoScore >= 500) return 'cbild-fico-medium';
+    return 'cbild-fico-poor';
   }
 
-  formatFieldName(field: string): string {
-    const key = `labels.cbild.fields.${field}`;
-    const translated = this.translateService.instant(key);
-    return translated !== key ? translated : field;
+  getRiskClass(): string {
+    switch (this.result?.riskBand) {
+      case 'LOW':
+        return 'cbild-risk-low';
+      case 'MEDIUM':
+        return 'cbild-risk-medium';
+      case 'HIGH':
+        return 'cbild-risk-high';
+      case 'VERY_HIGH':
+        return 'cbild-risk-very-high';
+      default:
+        return '';
+    }
   }
 
-  isRfcHardVeto(): boolean {
-    return !!this.result && this.result.score === 0 && this.result.missingFields.includes('nationalId');
+  private parseTradelinesOnce(raw: string | null): Tradeline[] {
+    if (!raw) return [];
+    try {
+      return JSON.parse(raw) as Tradeline[];
+    } catch {
+      return [];
+    }
   }
 
   private getErrorMessage(err: HttpErrorResponse): string {
-    const t = (key: string, params?: object) => this.translateService.instant(key, params);
+    const t = (key: string) => this.translateService.instant(key);
     switch (err?.status) {
       case 401:
         return t('labels.cbild.errors.unauthorized');
       case 403:
         return t('labels.cbild.errors.forbidden');
-      case 404:
-        return t('labels.cbild.errors.clientNotFound', { clientId: this.clientId });
       case 503:
         return t('labels.cbild.errors.serviceUnavailable');
       default:

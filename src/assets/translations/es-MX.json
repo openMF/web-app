@@ -3167,7 +3167,6 @@
       "to": "a",
       "valid": "válido",
       "Active Pause": "Pausa Activa",
-      "Breach Actions": "Acciones de Incumplimiento",
       "days": "días",
       "Duration": "Duración",
       "Expired": "Expirada",
@@ -3180,7 +3179,8 @@
       "Scheduled": "Programada",
       "Today": "Hoy",
       "Total Actions": "Acciones Totales",
-      "Total Days Paused": "Total de Días en Pausa"
+      "Total Days Paused": "Total de Días en Pausa",
+      "Credit Profile": "Perfil de crédito"
     },
     "links": {
       "Community": "Comunidad",
@@ -4512,6 +4512,27 @@
         },
         "own.account": "Cuenta Propia",
         "other.bank": "Otro Banco"
+      }
+    },
+    "cbild": {
+      "creditProfile": {
+        "ficoScore": "Puntuación FICO",
+        "riskBand": "Banda de riesgo",
+        "bureau": "Buró",
+        "pulledAt": "Última consulta",
+        "expiry": "Fecha de vencimiento",
+        "delinquencies": "Morosidades",
+        "firstDelinquency": "Primera morosidad",
+        "none": "Ninguna",
+        "yes": "Sí",
+        "scoreDropAlert": "Puntuación FICO ha bajado",
+        "hasDelinquencies": "Cliente tiene morosidades",
+        "tradelines": "Líneas de crédito",
+        "noTradelines": "Sin líneas de crédito",
+        "balance": "Saldo",
+        "latePayments": "Pagos tardíos",
+        "noData": "Sin perfil de crédito aún",
+        "noDataHint": "Ejecute primero la verificación del buró"
       }
     }
   },

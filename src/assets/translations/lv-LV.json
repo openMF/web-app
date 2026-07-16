@@ -1598,7 +1598,7 @@
       "Annual interest rate": "Annual interest rate",
       "Annual interest rate by loan cycle": "Annual interest rate by loan cycle",
       "Annual interest rate frequency": "Annual interest rate frequency",
-      "Breach Actions": "Pārkāpums Darbības",
+      "Breach Actions": "Pārkāpuma darbības",
       "# Remittance": "# Pārvedums",
       "# Senders": "# Sūtītāji",
       "ACCOUNTING": "GRĀMATVEDĪBA",
@@ -3162,7 +3162,6 @@
       "to": "uz",
       "valid": "derīgs",
       "Active Pause": "Aktīva pauze",
-      "Breach Actions": "Pārkāpuma darbības",
       "days": "dienas",
       "Duration": "Ilgums",
       "Expired": "Beidzies",
@@ -3175,7 +3174,8 @@
       "Scheduled": "Plānota",
       "Today": "Šodien",
       "Total Actions": "Darbības kopā",
-      "Total Days Paused": "Pauzes dienas kopā"
+      "Total Days Paused": "Pauzes dienas kopā",
+      "Credit Profile": "Kredīta profils"
     },
     "links": {
       "Community": "kopiena",
@@ -4496,6 +4496,27 @@
         },
         "own.account": "Savs konts",
         "other.bank": "Cita banka"
+      }
+    },
+    "cbild": {
+      "creditProfile": {
+        "ficoScore": "FICO rādītājs",
+        "riskBand": "Riska josla",
+        "bureau": "Birojs",
+        "pulledAt": "Pēdējo reizi iegūts",
+        "expiry": "Derīguma termiņš",
+        "delinquencies": "Kavējumi",
+        "firstDelinquency": "Pirmais kavējums",
+        "none": "Nav",
+        "yes": "Jā",
+        "scoreDropAlert": "FICO rādītājs samazinājies",
+        "hasDelinquencies": "Klientam ir kavējumi",
+        "tradelines": "Kredītlīnijas",
+        "noTradelines": "Nav kredītlīniju",
+        "balance": "Atlikums",
+        "latePayments": "Nokavēti maksājumi",
+        "noData": "Kredīta profils nav pieejams",
+        "noDataHint": "Veiciet biroja pārbaudi"
       }
     }
   },

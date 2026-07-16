@@ -1597,7 +1597,7 @@
       "Annual interest rate": "Annual interest rate",
       "Annual interest rate by loan cycle": "Annual interest rate by loan cycle",
       "Annual interest rate frequency": "Annual interest rate frequency",
-      "Breach Actions": "Pažeidimas Veiksmai",
+      "Breach Actions": "Pažeidimo veiksmai",
       "# Remittance": "# Pervedimas",
       "# Senders": "# Siuntėjai",
       "ACCOUNTING": "APSKAITA",
@@ -3161,7 +3161,6 @@
       "to": "į",
       "valid": "galioja",
       "Active Pause": "Aktyvi pauzė",
-      "Breach Actions": "Pažeidimo veiksmai",
       "days": "dienos",
       "Duration": "Trukmė",
       "Expired": "Pasibaigė",
@@ -3174,7 +3173,8 @@
       "Scheduled": "Suplanuota",
       "Today": "Šiandien",
       "Total Actions": "Iš viso veiksmų",
-      "Total Days Paused": "Iš viso pauzės dienų"
+      "Total Days Paused": "Iš viso pauzės dienų",
+      "Credit Profile": "Kredito profilis"
     },
     "links": {
       "Community": "bendruomenė",
@@ -4497,6 +4497,27 @@
         },
         "own.account": "Sava sąskaita",
         "other.bank": "Kitas bankas"
+      }
+    },
+    "cbild": {
+      "creditProfile": {
+        "ficoScore": "FICO balas",
+        "riskBand": "Rizikos juosta",
+        "bureau": "Biuras",
+        "pulledAt": "Paskutinį kartą gauta",
+        "expiry": "Galiojimo pabaiga",
+        "delinquencies": "Įsiskolinimai",
+        "firstDelinquency": "Pirmas įsiskolinimas",
+        "none": "Nėra",
+        "yes": "Taip",
+        "scoreDropAlert": "FICO balas sumažėjo",
+        "hasDelinquencies": "Klientas turi įsiskolinimų",
+        "tradelines": "Kredito linijos",
+        "noTradelines": "Kredito linijų nėra",
+        "balance": "Likutis",
+        "latePayments": "Pavėluoti mokėjimai",
+        "noData": "Kredito profilis nepasiekiamas",
+        "noDataHint": "Atlikite biuro patikrinimą"
       }
     }
   },
