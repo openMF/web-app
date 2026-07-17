@@ -3178,7 +3178,8 @@
       "Today": "Aujourd'hui",
       "Total Actions": "Total des Actions",
       "Total Days Paused": "Total des Jours en Pause",
-      "Credit Profile": "Profil de crédit"
+      "Credit Profile": "Profil de crédit",
+      "Borrower": "Emprunteur"
     },
     "links": {
       "Community": "Communauté",
@@ -4161,7 +4162,9 @@
       "WorkingCapitalLoanDiscountFeeAdjustmentTransactionBusinessEvent": "Working Capital Loan Discount Fee Adjustment Transaction Business Event",
       "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
       "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
-      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event"
+      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event",
+      "No loan was found": "Aucun prêt n'a été trouvé",
+      "SearchByLoan": "Rechercher par numéro de compte, emprunteur ou produit"
     },
     "permissions": {
       "actions": {

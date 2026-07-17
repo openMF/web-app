@@ -3175,7 +3175,8 @@
       "Today": "Dnes",
       "Total Actions": "Celkové akce",
       "Total Days Paused": "Celkový počet dní v pauze",
-      "Credit Profile": "Kreditní profil"
+      "Credit Profile": "Kreditní profil",
+      "Borrower": "Dlužník"
     },
     "links": {
       "Community": "Společenství",
@@ -4159,7 +4160,9 @@
       "WorkingCapitalLoanDiscountFeeAdjustmentTransactionBusinessEvent": "Working Capital Loan Discount Fee Adjustment Transaction Business Event",
       "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
       "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
-      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event"
+      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event",
+      "No loan was found": "Nebyl nalezen žádný úvěr",
+      "SearchByLoan": "Hledat podle čísla účtu, dlužníka nebo produktu"
     },
     "permissions": {
       "actions": {

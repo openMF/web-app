@@ -38,6 +38,31 @@ export class LoansService {
   private dateUtils = inject(Dates);
 
   /**
+   * Retrieves a single page of loans for the loans list screen.
+   *
+   * The Fineract `/loans` endpoint on this deployment does not honor server-side
+   * text search or the (removed) `sqlSearch` status filter, so the component loads
+   * the full set (search / status-filter / sort / paging all run on the client) —
+   * but it does so progressively, page by page, so the first rows render quickly
+   * instead of blocking on the whole dataset. See `LoansComponent`.
+   * @param {number} offset Row offset.
+   * @param {number} limit Page size.
+   * @returns {Observable<any>} A Fineract page (`{ pageItems, totalFilteredRecords }`).
+   */
+  getLoansPage(offset: number, limit: number): Observable<any> {
+    const httpParams = new HttpParams().set('offset', offset.toString()).set('limit', limit.toString());
+    return this.http.get('/loans', { params: httpParams });
+  }
+
+  /**
+   * Flat office list, used to populate the loans list office filter.
+   * @returns {Observable<any[]>}
+   */
+  getOffices(): Observable<any[]> {
+    return this.http.get<any[]>('/offices');
+  }
+
+  /**
    * @param {string} loanId loanId of the loan.
    * @returns {Observable<any>}
    */

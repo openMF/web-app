@@ -139,6 +139,9 @@
   <button mat-menu-item routerLink="/clients" tabindex="0" *mifosxHasPermission="'READ_CLIENT'">
     {{ 'labels.menus.Clients' | translate }}
   </button>
+  <button mat-menu-item routerLink="/loans" tabindex="0" *mifosxHasPermission="'READ_LOAN'">
+    {{ 'labels.menus.Loans' | translate }}
+  </button>
   <button mat-menu-item routerLink="/groups" tabindex="0" *mifosxHasPermission="'READ_GROUP'">
     {{ 'labels.menus.Groups' | translate }}
   </button>

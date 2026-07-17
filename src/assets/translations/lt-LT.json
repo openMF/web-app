@@ -3174,7 +3174,8 @@
       "Today": "Šiandien",
       "Total Actions": "Iš viso veiksmų",
       "Total Days Paused": "Iš viso pauzės dienų",
-      "Credit Profile": "Kredito profilis"
+      "Credit Profile": "Kredito profilis",
+      "Borrower": "Paskolos gavėjas"
     },
     "links": {
       "Community": "bendruomenė",
@@ -4159,7 +4160,9 @@
       "WorkingCapitalLoanDiscountFeeAdjustmentTransactionBusinessEvent": "Working Capital Loan Discount Fee Adjustment Transaction Business Event",
       "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
       "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
-      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event"
+      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event",
+      "No loan was found": "Paskolų nerasta",
+      "SearchByLoan": "Ieškoti pagal sąskaitos numerį, paskolos gavėją ar produktą"
     },
     "permissions": {
       "actions": {

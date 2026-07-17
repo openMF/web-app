@@ -3172,7 +3172,8 @@
       "Today": "Leo",
       "Total Actions": "Jumla ya Vitendo",
       "Total Days Paused": "Jumla ya Siku za Pumziko",
-      "Credit Profile": "Wasifu wa Mkopo"
+      "Credit Profile": "Wasifu wa Mkopo",
+      "Borrower": "Mkopaji"
     },
     "links": {
       "Community": "Jumuiya",
@@ -4155,7 +4156,9 @@
       "WorkingCapitalLoanDiscountFeeAdjustmentTransactionBusinessEvent": "Working Capital Loan Discount Fee Adjustment Transaction Business Event",
       "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
       "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
-      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event"
+      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event",
+      "No loan was found": "Hakuna mkopo uliopatikana",
+      "SearchByLoan": "Tafuta kwa nambari ya akaunti, mkopaji au bidhaa"
     },
     "permissions": {
       "actions": {

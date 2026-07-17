@@ -3175,7 +3175,8 @@
       "Today": "오늘",
       "Total Actions": "전체 작업",
       "Total Days Paused": "총 일시중지 일수",
-      "Credit Profile": "신용 프로필"
+      "Credit Profile": "신용 프로필",
+      "Borrower": "차용인"
     },
     "links": {
       "Community": "지역 사회",
@@ -4158,7 +4159,9 @@
       "WorkingCapitalLoanDiscountFeeAdjustmentTransactionBusinessEvent": "Working Capital Loan Discount Fee Adjustment Transaction Business Event",
       "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
       "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
-      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event"
+      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event",
+      "No loan was found": "대출을 찾을 수 없습니다",
+      "SearchByLoan": "계좌 번호, 차용인 또는 상품으로 검색"
     },
     "permissions": {
       "actions": {

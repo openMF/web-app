@@ -1,0 +1,212 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="loans-container">
+  <!-- ── Toolbar (single line) ──────────────────────────────── -->
+  <div class="toolbar">
+    <div class="search m-r-60">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.3-4.3"></path>
+      </svg>
+      <input
+        type="text"
+        #searchInput
+        placeholder="{{ 'labels.text.SearchByLoan' | translate }}"
+        (input)="onSearchInput(searchInput.value)"
+      />
+      @if (searchInput.value) {
+        <button
+          type="button"
+          class="search-clear"
+          (click)="clearSearch(searchInput)"
+          [attr.aria-label]="'labels.buttons.Clear' | translate"
+        >
+          ×
+        </button>
+      }
+    </div>
+
+    <select class="office-select" (change)="onOfficeChange($any($event.target).value)">
+      <option value="" [selected]="selectedOfficeId === null">{{ 'labels.text.All Offices' | translate }}</option>
+      @for (office of offices; track office.id) {
+        <option [value]="office.id" [selected]="office.id === selectedOfficeId">{{ office.name }}</option>
+      }
+    </select>
+
+    <label class="toggle" (click)="toggleShowClosed()">
+      <span class="switch" [class.on]="showClosedAccounts"></span>
+      {{ 'labels.buttons.Show Closed Accounts' | translate }}
+    </label>
+
+    @if (hasResults) {
+      <span class="count-badge">
+        <strong>{{ totalRows | number }}</strong>
+        {{ 'labels.menus.Loans' | translate | lowercase }}
+      </span>
+    }
+
+    <div class="toolbar-spacer"></div>
+  </div>
+
+  @if (isLoading) {
+    <mat-progress-bar class="loading-bar" mode="indeterminate"></mat-progress-bar>
+  }
+
+  <!-- ── List ───────────────────────────────────────────────── -->
+  <div [hidden]="!hasResults" class="list">
+    <div class="list-header">
+      <span></span>
+      <span></span>
+      <span
+        class="sortable"
+        [class.active]="sortColumn === 'borrower'"
+        [class.desc]="sortColumn === 'borrower' && sortDirection === 'desc'"
+        (click)="setSort('borrower')"
+      >
+        {{ 'labels.inputs.Borrower' | translate }}
+        <svg class="sort-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M7 14l5-5 5 5"></path>
+        </svg>
+      </span>
+      <span
+        class="sortable"
+        [class.active]="sortColumn === 'status'"
+        [class.desc]="sortColumn === 'status' && sortDirection === 'desc'"
+        (click)="setSort('status')"
+      >
+        {{ 'labels.inputs.Status' | translate }}
+        <svg class="sort-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M7 14l5-5 5 5"></path>
+        </svg>
+      </span>
+      <span
+        class="sortable"
+        [class.active]="sortColumn === 'accountNo'"
+        [class.desc]="sortColumn === 'accountNo' && sortDirection === 'desc'"
+        (click)="setSort('accountNo')"
+      >
+        {{ 'labels.inputs.Loan Account' | translate }}
+        <svg class="sort-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M7 14l5-5 5 5"></path>
+        </svg>
+      </span>
+      <span
+        class="sortable"
+        [class.active]="sortColumn === 'principal'"
+        [class.desc]="sortColumn === 'principal' && sortDirection === 'desc'"
+        (click)="setSort('principal')"
+      >
+        {{ 'labels.inputs.Principal' | translate }}
+        <svg class="sort-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M7 14l5-5 5 5"></path>
+        </svg>
+      </span>
+      <span
+        class="sortable"
+        [class.active]="sortColumn === 'product'"
+        [class.desc]="sortColumn === 'product' && sortDirection === 'desc'"
+        (click)="setSort('product')"
+      >
+        {{ 'labels.inputs.Loan Product' | translate }}
+        <svg class="sort-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M7 14l5-5 5 5"></path>
+        </svg>
+      </span>
+    </div>
+
+    @for (loan of pagedLoans; track loan.id) {
+      <div class="list-row" [ngClass]="loan._severity" [routerLink]="loan._viewRoute">
+        <div class="rail"></div>
+        <div class="avatar" [class.muted]="loan._muted">
+          {{ loan._initials }}
+        </div>
+        <div class="name-block">
+          @if (loan._borrowerRoute.length) {
+            <a [routerLink]="loan._borrowerRoute" (click)="$event.stopPropagation()" class="name">
+              {{ loan._borrowerName }}
+            </a>
+          } @else {
+            <span class="name">{{ loan._borrowerName }}</span>
+          }
+          <span class="name-meta">{{ loan.loanType?.value }}</span>
+        </div>
+        <span class="status-pill" [ngClass]="loan._severity">
+          <span class="dot"></span>
+          {{ loan.status?.value }}
+        </span>
+        <span class="mono"
+          ><mifosx-account-number display="left" [accountNo]="loan.accountNo"></mifosx-account-number
+        ></span>
+        <span class="mono">{{ loan.principal | currency: loan.currency?.code : 'symbol-narrow' : '1.2-2' }}</span>
+        <span class="office">{{ loan.loanProductName }}</span>
+      </div>
+    }
+
+    <div class="list-footer">
+      <span>
+        {{ 'labels.text.Showing' | translate }}
+        <strong>{{ rangeStart() | number }}–{{ rangeEnd() | number }}</strong>
+        {{ 'labels.text.of' | translate }}
+        <strong>{{ totalRows | number }}</strong>
+      </span>
+      <div class="pager">
+        <span class="page-size">
+          {{ 'labels.text.Rows' | translate }}
+          <select (change)="onPageSizeChange(+$any($event.target).value)">
+            @for (size of pageSizeOptions; track size) {
+              <option [value]="size" [selected]="size === pageSize">{{ size }}</option>
+            }
+          </select>
+        </span>
+        <span class="page-info">
+          {{ 'labels.text.Page' | translate }} {{ currentPage + 1 }} {{ 'labels.text.of' | translate }}
+          {{ totalPages() }}
+        </span>
+        <div class="page-nav">
+          <button class="page-btn" [disabled]="currentPage === 0" (click)="goToPage(0)" aria-label="First page">
+            «
+          </button>
+          <button
+            class="page-btn"
+            [disabled]="currentPage === 0"
+            (click)="goToPage(currentPage - 1)"
+            aria-label="Previous page"
+          >
+            ‹
+          </button>
+          <button
+            class="page-btn"
+            [disabled]="currentPage >= totalPages() - 1"
+            (click)="goToPage(currentPage + 1)"
+            aria-label="Next page"
+          >
+            ›
+          </button>
+          <button
+            class="page-btn"
+            [disabled]="currentPage >= totalPages() - 1"
+            (click)="goToPage(totalPages() - 1)"
+            aria-label="Last page"
+          >
+            »
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Empty state ────────────────────────────────────────── -->
+  <div [hidden]="hasResults || isLoading" class="empty-state">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <circle cx="11" cy="11" r="8"></circle>
+      <path d="m21 21-4.3-4.3"></path>
+    </svg>
+    <h4>{{ 'labels.text.No loan was found' | translate }}</h4>
+  </div>
+</div>

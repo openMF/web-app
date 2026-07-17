@@ -3174,7 +3174,8 @@
       "Today": "आज",
       "Total Actions": "कुल कार्यहरू",
       "Total Days Paused": "कुल रोकिएका दिनहरू",
-      "Credit Profile": "क्रेडिट प्रोफाइल"
+      "Credit Profile": "क्रेडिट प्रोफाइल",
+      "Borrower": "ऋणी"
     },
     "links": {
       "Community": "समुदाय",
@@ -4158,7 +4159,9 @@
       "WorkingCapitalLoanDiscountFeeAdjustmentTransactionBusinessEvent": "Working Capital Loan Discount Fee Adjustment Transaction Business Event",
       "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
       "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
-      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event"
+      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event",
+      "No loan was found": "कुनै ऋण फेला परेन",
+      "SearchByLoan": "खाता नम्बर, ऋणी, वा उत्पादनद्वारा खोज्नुहोस्"
     },
     "permissions": {
       "actions": {
