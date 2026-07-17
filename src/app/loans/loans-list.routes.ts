@@ -9,6 +9,9 @@
 /** Angular Imports */
 import { Routes } from '@angular/router';
 
+/** Custom Services */
+import { Route } from '../core/route/route.service';
+
 /** Custom Components */
 import { LoansComponent } from './loans.component';
 
@@ -21,18 +24,24 @@ import { LoansComponent } from './loans.component';
  * `clients/:clientId/loans-accounts` and `groups/:groupId/loans-accounts`, where
  * the org-wide list must not appear.
  *
+ * `Route.withShell` is applied here (not in `app-routing.module.ts`) to match how
+ * every other feature module wraps its own routes; `LoansModule` has no shell of
+ * its own since it's normally nested under the already-shelled clients/groups routes.
+ *
  * The list has no resolver: the component loads loans progressively so navigation
  * is instant and the first rows appear without waiting for the whole dataset.
  */
 export const LOANS_LIST_ROUTES: Routes = [
-  {
-    path: '',
-    pathMatch: 'full',
-    component: LoansComponent,
-    data: { title: 'Loans', breadcrumb: 'Loans', routeParamBreadcrumb: false }
-  },
-  {
-    path: '',
-    loadChildren: () => import('./loans.module').then((m) => m.LoansModule)
-  }
+  Route.withShell([
+    {
+      path: '',
+      pathMatch: 'full',
+      component: LoansComponent,
+      data: { title: 'Loans', breadcrumb: 'Loans', routeParamBreadcrumb: false }
+    },
+    {
+      path: '',
+      loadChildren: () => import('./loans.module').then((m) => m.LoansModule)
+    }
+  ])
 ];

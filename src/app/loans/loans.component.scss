@@ -133,7 +133,7 @@
   line-height: 1;
 }
 
-.office-select {
+.filter-select {
   height: 36px;
   padding: 0 10px;
   border: 1px solid var(--ch-border);
@@ -146,7 +146,7 @@
   max-width: 220px;
 }
 
-.office-select:focus {
+.filter-select:focus {
   outline: none;
   border-color: var(--ch-blue-700);
   box-shadow: 0 0 0 3px rgb(21 101 192 / 12%);
@@ -228,7 +228,10 @@
 .list-header,
 .list-row {
   display: grid;
-  grid-template-columns: 4px 36px minmax(220px, 32%) 110px minmax(120px, 16%) minmax(120px, 16%) minmax(150px, 18%);
+  grid-template-columns: 4px 36px minmax(220px, 32%) minmax(130px, 15%) minmax(120px, 16%) minmax(120px, 16%) minmax(
+      150px,
+      18%
+    );
   align-items: center;
   gap: 14px;
   padding: 8px 16px;
@@ -323,10 +326,7 @@
   background: var(--ch-text-3);
 }
 
-.list-row.rejected .rail {
-  background: var(--ch-alert);
-}
-
+.list-row.rejected .rail,
 .list-row.arrears .rail {
   background: var(--ch-alert);
 }
@@ -393,12 +393,21 @@ a.name:hover {
   letter-spacing: 0.04em;
   white-space: nowrap;
   width: fit-content;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.status-pill .label {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .status-pill .dot {
   width: 5px;
   height: 5px;
   border-radius: 50%;
+  flex-shrink: 0;
 }
 
 .status-pill.active {
@@ -421,44 +430,28 @@ a.name:hover {
   background: var(--ch-partial);
 }
 
-.status-pill.closed {
-  color: var(--ch-text-3);
-  border-color: var(--ch-text-3);
-  background: var(--ch-surface-h);
-}
-
-.status-pill.closed .dot {
-  background: var(--ch-text-3);
-}
-
-.status-pill.rejected {
-  color: var(--ch-alert);
-  border-color: var(--ch-alert);
-  background: var(--ch-alert-bg);
-}
-
-.status-pill.rejected .dot {
-  background: var(--ch-alert);
-}
-
-.status-pill.arrears {
-  color: var(--ch-alert);
-  border-color: var(--ch-alert);
-  background: var(--ch-alert-bg);
-}
-
-.status-pill.arrears .dot {
-  background: var(--ch-alert);
-}
-
+.status-pill.closed,
 .status-pill.neutral {
   color: var(--ch-text-3);
   border-color: var(--ch-text-3);
   background: var(--ch-surface-h);
 }
 
+.status-pill.closed .dot,
 .status-pill.neutral .dot {
   background: var(--ch-text-3);
+}
+
+.status-pill.rejected,
+.status-pill.arrears {
+  color: var(--ch-alert);
+  border-color: var(--ch-alert);
+  background: var(--ch-alert-bg);
+}
+
+.status-pill.rejected .dot,
+.status-pill.arrears .dot {
+  background: var(--ch-alert);
 }
 
 .mono {

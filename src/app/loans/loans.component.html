@@ -32,10 +32,19 @@
       }
     </div>
 
-    <select class="office-select" (change)="onOfficeChange($any($event.target).value)">
+    <select class="filter-select" (change)="onOfficeChange($any($event.target).value)">
       <option value="" [selected]="selectedOfficeId === null">{{ 'labels.text.All Offices' | translate }}</option>
       @for (office of offices; track office.id) {
         <option [value]="office.id" [selected]="office.id === selectedOfficeId">{{ office.name }}</option>
+      }
+    </select>
+
+    <select class="filter-select" (change)="onLoanProductChange($any($event.target).value)">
+      <option value="" [selected]="selectedLoanProductId === null">
+        {{ 'labels.text.All Loan Products' | translate }}
+      </option>
+      @for (product of loanProducts; track product.id) {
+        <option [value]="product.id" [selected]="product.id === selectedLoanProductId">{{ product.name }}</option>
       }
     </select>
 
@@ -63,67 +72,25 @@
     <div class="list-header">
       <span></span>
       <span></span>
-      <span
-        class="sortable"
-        [class.active]="sortColumn === 'borrower'"
-        [class.desc]="sortColumn === 'borrower' && sortDirection === 'desc'"
-        (click)="setSort('borrower')"
-      >
-        {{ 'labels.inputs.Borrower' | translate }}
-        <svg class="sort-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M7 14l5-5 5 5"></path>
-        </svg>
-      </span>
-      <span
-        class="sortable"
-        [class.active]="sortColumn === 'status'"
-        [class.desc]="sortColumn === 'status' && sortDirection === 'desc'"
-        (click)="setSort('status')"
-      >
-        {{ 'labels.inputs.Status' | translate }}
-        <svg class="sort-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M7 14l5-5 5 5"></path>
-        </svg>
-      </span>
-      <span
-        class="sortable"
-        [class.active]="sortColumn === 'accountNo'"
-        [class.desc]="sortColumn === 'accountNo' && sortDirection === 'desc'"
-        (click)="setSort('accountNo')"
-      >
-        {{ 'labels.inputs.Loan Account' | translate }}
-        <svg class="sort-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M7 14l5-5 5 5"></path>
-        </svg>
-      </span>
-      <span
-        class="sortable"
-        [class.active]="sortColumn === 'principal'"
-        [class.desc]="sortColumn === 'principal' && sortDirection === 'desc'"
-        (click)="setSort('principal')"
-      >
-        {{ 'labels.inputs.Principal' | translate }}
-        <svg class="sort-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M7 14l5-5 5 5"></path>
-        </svg>
-      </span>
-      <span
-        class="sortable"
-        [class.active]="sortColumn === 'product'"
-        [class.desc]="sortColumn === 'product' && sortDirection === 'desc'"
-        (click)="setSort('product')"
-      >
-        {{ 'labels.inputs.Loan Product' | translate }}
-        <svg class="sort-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M7 14l5-5 5 5"></path>
-        </svg>
-      </span>
+      @for (col of sortColumns; track col.key) {
+        <span
+          class="sortable"
+          [class.active]="sortColumn === col.key"
+          [class.desc]="sortColumn === col.key && sortDirection === 'desc'"
+          (click)="setSort(col.key)"
+        >
+          {{ col.label | translate }}
+          <svg class="sort-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M7 14l5-5 5 5"></path>
+          </svg>
+        </span>
+      }
     </div>
 
     @for (loan of pagedLoans; track loan.id) {
       <div class="list-row" [ngClass]="loan._severity" [routerLink]="loan._viewRoute">
         <div class="rail"></div>
-        <div class="avatar" [class.muted]="loan._muted">
+        <div class="avatar" [class.muted]="loan._isClosed">
           {{ loan._initials }}
         </div>
         <div class="name-block">
@@ -136,9 +103,9 @@
           }
           <span class="name-meta">{{ loan.loanType?.value }}</span>
         </div>
-        <span class="status-pill" [ngClass]="loan._severity">
+        <span class="status-pill" [ngClass]="loan._severity" [title]="loan.status?.value">
           <span class="dot"></span>
-          {{ loan.status?.value }}
+          <span class="label">{{ loan.status?.value }}</span>
         </span>
         <span class="mono"
           ><mifosx-account-number display="left" [accountNo]="loan.accountNo"></mifosx-account-number

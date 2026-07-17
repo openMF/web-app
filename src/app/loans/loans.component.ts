@@ -12,29 +12,18 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatProgressBar } from '@angular/material/progress-bar';
 
 /** rxjs Imports */
-import { Subject, from } from 'rxjs';
-import { debounceTime, distinctUntilChanged, mergeMap } from 'rxjs/operators';
+import { Subject, from, of } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, map, mergeMap } from 'rxjs/operators';
 
 /** Custom Services */
 import { LoansService } from './loans.service';
 import { AccountNumberComponent } from '../shared/account-number/account-number.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { nameInitials } from 'app/core/utils/name-initials';
 
 type Severity = 'active' | 'arrears' | 'pending' | 'closed' | 'rejected' | 'neutral';
 type SortColumn = '' | 'borrower' | 'status' | 'accountNo' | 'principal' | 'product';
 type SortDirection = '' | 'asc' | 'desc';
-
-/**
- * Loan status ids treated as "closed" for the Show Closed Accounts toggle:
- * 400 withdrawn, 500 rejected, 600/601/602 closed variants (Fineract LoanStatus).
- */
-const CLOSED_STATUS_IDS = [
-  400,
-  500,
-  600,
-  601,
-  602
-];
 
 /** First page is small for a fast first paint; the remaining pages are fetched in parallel behind it. */
 const FIRST_CHUNK = 100;
@@ -65,8 +54,16 @@ export class LoansComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
   private cdr = inject(ChangeDetectorRef);
 
-  /** Full loan set loaded so far (all client-side operations run against this). */
+  /**
+   * Loaded pages keyed by their request offset. Chunks are fetched in parallel and can
+   * arrive out of order, so the flat list is rebuilt in offset order to keep row order
+   * deterministic run-to-run.
+   */
+  private chunks = new Map<number, any[]>();
+  /** Full loan set loaded so far, flattened from `chunks` (all client-side operations run against this). */
   private allLoans: any[] = [];
+  /** Result of the current filter + sort, cached so page navigation only re-slices. */
+  private viewRows: any[] = [];
   /** Loans on the current page after filtering and sorting. */
   pagedLoans: any[] = [];
 
@@ -90,9 +87,22 @@ export class LoansComponent implements OnInit {
   sortColumn: SortColumn = '';
   sortDirection: SortDirection = '';
 
+  /** Sortable list-header columns, rendered in order after the two unlabeled rail/avatar cells. */
+  readonly sortColumns: { key: SortColumn; label: string }[] = [
+    { key: 'borrower', label: 'labels.inputs.Borrower' },
+    { key: 'status', label: 'labels.inputs.Status' },
+    { key: 'accountNo', label: 'labels.inputs.Loan Account' },
+    { key: 'principal', label: 'labels.inputs.Principal' },
+    { key: 'product', label: 'labels.inputs.Loan Product' }
+  ];
+
   /** Flat office list for the office filter (populated once, independent of loan loading). */
   offices: any[] = [];
   selectedOfficeId: number | null = null;
+
+  /** Basic loan product list for the product filter (populated once, independent of loan loading). */
+  loanProducts: any[] = [];
+  selectedLoanProductId: number | null = null;
 
   private searchInput$ = new Subject<string>();
 
@@ -114,6 +124,13 @@ export class LoansComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((offices) => {
         this.offices = offices ?? [];
+        this.cdr.markForCheck();
+      });
+    this.loansService
+      .getLoanProducts()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((loanProducts) => {
+        this.loanProducts = loanProducts ?? [];
         this.cdr.markForCheck();
       });
   }
@@ -160,17 +177,23 @@ export class LoansComponent implements OnInit {
     const clamped = Math.min(Math.max(page, 0), this.totalPages() - 1);
     if (clamped === this.currentPage) return;
     this.currentPage = clamped;
-    this.applyView();
+    this.updatePage();
   }
 
   onPageSizeChange(size: number) {
     this.pageSize = size;
     this.currentPage = 0;
-    this.applyView();
+    this.updatePage();
   }
 
   onOfficeChange(value: string) {
     this.selectedOfficeId = value ? Number(value) : null;
+    this.currentPage = 0;
+    this.applyView();
+  }
+
+  onLoanProductChange(value: string) {
+    this.selectedLoanProductId = value ? Number(value) : null;
     this.currentPage = 0;
     this.applyView();
   }
@@ -201,7 +224,7 @@ export class LoansComponent implements OnInit {
         next: (page: any) => {
           const items: any[] = page?.pageItems ?? [];
           const total: number = page?.totalFilteredRecords ?? items.length;
-          this.appendLoans(items);
+          this.storeChunk(0, items);
 
           const offsets: number[] = [];
           for (let offset = FIRST_CHUNK; offset < total; offset += NEXT_CHUNK) {
@@ -215,24 +238,31 @@ export class LoansComponent implements OnInit {
 
           from(offsets)
             .pipe(
-              mergeMap((offset) => this.loansService.getLoansPage(offset, NEXT_CHUNK), MAX_PARALLEL_REQUESTS),
+              mergeMap(
+                (offset) =>
+                  this.loansService.getLoansPage(offset, NEXT_CHUNK).pipe(
+                    map((page: any) => ({ offset, page })),
+                    // A failed chunk must not abort the merged stream; skip it and keep the rest loading.
+                    catchError((error) => {
+                      console.error(`Failed to load loans at offset ${offset}:`, error);
+                      return of(null);
+                    })
+                  ),
+                MAX_PARALLEL_REQUESTS
+              ),
               takeUntilDestroyed(this.destroyRef)
             )
             .subscribe({
-              next: (chunk: any) => this.appendLoans(chunk?.pageItems ?? []),
-              error: (error) => {
-                console.error('Failed to load loans:', error);
-                this.isLoading = false;
-                this.applyView();
+              next: (result: { offset: number; page: any } | null) => {
+                if (result?.page?.pageItems) {
+                  this.storeChunk(result.offset, result.page.pageItems);
+                }
               },
               complete: () => {
                 this.isLoading = false;
                 this.applyView();
                 if (this.allLoans.length < total) {
-                  // Offsets are tiled from `total` assuming full pages; warn if the backend returned short ones.
-                  console.warn(
-                    `Loans list: loaded ${this.allLoans.length} of ${total} loans (backend returned short pages).`
-                  );
+                  console.warn(`Loans list: loaded ${this.allLoans.length} of ${total} loans (failed or short pages).`);
                 }
               }
             });
@@ -245,68 +275,90 @@ export class LoansComponent implements OnInit {
       });
   }
 
-  /** Decorates and appends a page of loans, then re-renders the current view. */
-  private appendLoans(items: any[]) {
-    for (const loan of items) {
-      this.allLoans.push(this.decorate(loan));
-    }
-    this.applyView();
+  /** Decorates and stores a page of loans under its offset, then schedules a re-render. */
+  private storeChunk(offset: number, items: any[]) {
+    this.chunks.set(
+      offset,
+      items.map((loan) => this.decorate(loan))
+    );
+    this.allLoans = Array.from(this.chunks.keys())
+      .sort((a, b) => a - b)
+      .flatMap((key) => this.chunks.get(key));
+    this.scheduleApplyView();
+  }
+
+  /**
+   * Coalesces applyView calls to one per animation frame, so a burst of parallel chunk
+   * arrivals re-filters/re-sorts the growing set once instead of once per response.
+   */
+  private applyViewScheduled = false;
+  private scheduleApplyView() {
+    if (this.applyViewScheduled) return;
+    this.applyViewScheduled = true;
+    requestAnimationFrame(() => {
+      this.applyViewScheduled = false;
+      this.applyView();
+    });
   }
 
   /** Precomputes display and search fields so template bindings don't recompute each change-detection cycle. */
   private decorate(loan: any): any {
     const borrowerName = loan.clientName || loan.group?.name || loan.groupName || '';
     const severity = this.severity(loan);
-    return {
-      ...loan,
-      _borrowerName: borrowerName,
-      _initials: this.initials(borrowerName),
-      _borrowerRoute: this.getBorrowerRoute(loan),
-      _viewRoute: [
-        loan.id,
-        'general'
-      ],
-      _severity: severity,
-      _muted: severity === 'closed' || severity === 'rejected',
-      _isClosed: CLOSED_STATUS_IDS.includes(loan.status?.id),
-      // Client loans carry office at the top level; group loans only have it nested.
-      _officeId: loan.clientOfficeId ?? loan.group?.officeId ?? null,
-      _search: [
-        loan.id,
-        loan.accountNo,
-        borrowerName,
-        loan.loanProductName,
-        loan.status?.value
-      ]
-        .filter((value: any) => value !== undefined && value !== null)
-        .join(' ')
-        .toLowerCase()
-    };
+    loan._borrowerName = borrowerName;
+    loan._initials = nameInitials(borrowerName);
+    loan._borrowerRoute = this.getBorrowerRoute(loan);
+    loan._viewRoute = [
+      loan.id,
+      'general'
+    ];
+    loan._severity = severity;
+    // Single source of truth for "dead account": drives both the closed-accounts filter and the faded styling.
+    loan._isClosed = severity === 'closed' || severity === 'rejected';
+    // Client loans carry office at the top level; group loans only have it nested.
+    loan._officeId = loan.clientOfficeId ?? loan.group?.officeId ?? null;
+    loan._search = [
+      loan.id,
+      loan.accountNo,
+      borrowerName,
+      loan.loanProductName,
+      loan.status?.value
+    ]
+      .filter((value: any) => value !== undefined && value !== null)
+      .join(' ')
+      .toLowerCase();
+    return loan;
   }
 
-  /** Applies the closed-accounts filter, search, sort, and paging to the loaded set. */
+  /** Applies the closed-accounts filter, search, and sort to the loaded set, then repages. */
   private applyView() {
-    let rows = this.allLoans;
-    if (!this.showClosedAccounts) {
-      rows = rows.filter((loan) => !loan._isClosed);
-    }
-    if (this.selectedOfficeId !== null) {
-      rows = rows.filter((loan) => loan._officeId === this.selectedOfficeId);
-    }
-    if (this.filterText) {
-      rows = rows.filter((loan) => loan._search.includes(this.filterText));
-    }
+    const officeId = this.selectedOfficeId;
+    const productId = this.selectedLoanProductId;
+    const text = this.filterText;
+    const rows = this.allLoans.filter(
+      (loan) =>
+        (this.showClosedAccounts || !loan._isClosed) &&
+        (officeId === null || loan._officeId === officeId) &&
+        (productId === null || loan.loanProductId === productId) &&
+        (!text || loan._search.includes(text))
+    );
     if (this.sortColumn && this.sortDirection) {
       const direction = this.sortDirection === 'asc' ? 1 : -1;
-      rows = rows.slice().sort((a, b) => this.compareBy(a, b, this.sortColumn) * direction);
+      rows.sort((a, b) => this.compareBy(a, b, this.sortColumn) * direction);
     }
-    this.totalRows = rows.length;
+    this.viewRows = rows;
+    this.updatePage();
+  }
+
+  /** Re-slices the cached filtered/sorted rows for the current page — no re-filter or re-sort. */
+  private updatePage() {
+    this.totalRows = this.viewRows.length;
     const maxPage = this.totalPages() - 1;
     if (this.currentPage > maxPage) {
       this.currentPage = maxPage;
     }
     const start = this.currentPage * this.pageSize;
-    this.pagedLoans = rows.slice(start, start + this.pageSize);
+    this.pagedLoans = this.viewRows.slice(start, start + this.pageSize);
     this.cdr.markForCheck();
   }
 
@@ -334,15 +386,6 @@ export class LoansComponent implements OnInit {
       default:
         return '';
     }
-  }
-
-  /** Two-letter uppercase initials from a borrower name. */
-  private initials(name: string): string {
-    if (!name) return '?';
-    const parts = name.trim().split(/\s+/).filter(Boolean);
-    if (parts.length === 0) return '?';
-    if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
-    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
   }
 
   /** Borrower route for client or group loans, empty when neither is present. */

@@ -4161,6 +4161,8 @@
       "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
       "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
       "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event",
+      "All Loan Products": "Všechny úvěrové produkty",
+      "All Offices": "Všechny kanceláře",
       "No loan was found": "Nebyl nalezen žádný úvěr",
       "SearchByLoan": "Hledat podle čísla účtu, dlužníka nebo produktu"
     },

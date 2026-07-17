@@ -4157,6 +4157,8 @@
       "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
       "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
       "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event",
+      "All Loan Products": "Bidhaa zote za mkopo",
+      "All Offices": "Ofisi zote",
       "No loan was found": "Hakuna mkopo uliopatikana",
       "SearchByLoan": "Tafuta kwa nambari ya akaunti, mkopaji au bidhaa"
     },

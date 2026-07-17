@@ -63,6 +63,14 @@ export class LoansService {
   }
 
   /**
+   * Loan product list (id/name), used to populate the loans list product filter.
+   * @returns {Observable<any[]>}
+   */
+  getLoanProducts(): Observable<any[]> {
+    return this.http.get<any[]>('/loanproducts');
+  }
+
+  /**
    * @param {string} loanId loanId of the loan.
    * @returns {Observable<any>}
    */

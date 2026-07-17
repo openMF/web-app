@@ -9,7 +9,6 @@
 /** Angular Imports */
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { Route } from './core/route/route.service';
 
 // Not Found Component
 import { NotFoundComponent } from './not-found/not-found.component';
@@ -45,16 +44,10 @@ const routes: Routes = [
     path: 'groups',
     loadChildren: () => import('./groups/groups.module').then((m) => m.GroupsModule)
   },
-  // LoansModule has no shell wrapper of its own since it's normally nested under the
-  // already-shelled clients/groups routes; wrap it here for this standalone mount. The
-  // org-wide list lives in LOANS_LIST_ROUTES (not LoansModule), so it renders only here
-  // and not at the clients/groups `loans-accounts` mounts that also load LoansModule.
-  Route.withShell([
-    {
-      path: 'loans',
-      loadChildren: () => import('./loans/loans-list.routes').then((m) => m.LOANS_LIST_ROUTES)
-    }
-  ]),
+  {
+    path: 'loans',
+    loadChildren: () => import('./loans/loans-list.routes').then((m) => m.LOANS_LIST_ROUTES)
+  },
   {
     path: 'navigation',
     loadChildren: () => import('./navigation/navigation.module').then((m) => m.NavigationModule)

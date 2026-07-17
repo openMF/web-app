@@ -4160,6 +4160,8 @@
       "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
       "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
       "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event",
+      "All Loan Products": "Visi aizdevuma produkti",
+      "All Offices": "Visi biroji",
       "No loan was found": "Aizdevums nav atrasts",
       "SearchByLoan": "Meklēt pēc konta numura, aizņēmēja vai produkta"
     },

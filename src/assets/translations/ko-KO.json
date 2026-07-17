@@ -4160,6 +4160,8 @@
       "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
       "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
       "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event",
+      "All Loan Products": "모든 대출상품",
+      "All Offices": "모든 사무소",
       "No loan was found": "대출을 찾을 수 없습니다",
       "SearchByLoan": "계좌 번호, 차용인 또는 상품으로 검색"
     },

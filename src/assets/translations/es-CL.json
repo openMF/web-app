@@ -4162,6 +4162,8 @@
       "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
       "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
       "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event",
+      "All Loan Products": "Todos los productos de crédito",
+      "All Offices": "Todas las oficinas",
       "No loan was found": "No se encontró ningún préstamo",
       "SearchByLoan": "Buscar por número de cuenta, prestatario o producto"
     },

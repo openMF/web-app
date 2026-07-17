@@ -4161,6 +4161,8 @@
       "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
       "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
       "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event",
+      "All Loan Products": "Visi paskolų produktai",
+      "All Offices": "Visi biurai",
       "No loan was found": "Paskolų nerasta",
       "SearchByLoan": "Ieškoti pagal sąskaitos numerį, paskolos gavėją ar produktą"
     },

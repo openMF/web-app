@@ -4160,6 +4160,8 @@
       "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
       "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
       "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event",
+      "All Loan Products": "सबै ऋण उत्पादनहरू",
+      "All Offices": "सबै कार्यालयहरू",
       "No loan was found": "कुनै ऋण फेला परेन",
       "SearchByLoan": "खाता नम्बर, ऋणी, वा उत्पादनद्वारा खोज्नुहोस्"
     },
