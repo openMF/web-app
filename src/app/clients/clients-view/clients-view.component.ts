@@ -427,4 +427,8 @@ export class ClientsViewComponent implements OnInit {
   get isCbildCompliance(): boolean {
     return this.creditBureauService.getRole() === 'COMPLIANCE';
   }
+
+  get cbIldEnabled(): boolean {
+    return environment.cbIldEnabled;
+  }
 }

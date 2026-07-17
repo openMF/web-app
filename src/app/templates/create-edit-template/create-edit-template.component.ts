@@ -286,6 +286,7 @@ export class CreateEditComponent implements OnInit {
         );
       });
     } else {
+      template.id = this.templateData.template.id;
       this.templateService.updateTemplate(template, this.templateData.template.id).subscribe(() => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
