@@ -17,7 +17,7 @@
     "build:prod": "node version.js && node --max-old-space-size=16384 ./node_modules/@angular/cli/bin/ng build --configuration production --output-hashing=none --base-href=/web-app/",
     "start": "npm run env -s && ng serve --proxy-config proxy.conf.js",
     "serve:dev": "npm run env -s && ng serve --source-map",
-    "serve:sw": "npm run build -s && npx http-server ./dist -p 4200",
+    "serve:sw": "npm run build -s && npx http-server ./dist/web-app/browser -p 4200",
     "lint": "eslint . && stylelint \"src/**/*.scss\" && prettier . --check && htmlhint \"src\" --config .htmlhintrc",
     "test": "jest --config jest.config.ts",
     "test:watch": "jest --config jest.config.ts --watch",

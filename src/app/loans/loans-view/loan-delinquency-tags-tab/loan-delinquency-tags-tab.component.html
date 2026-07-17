@@ -163,6 +163,22 @@
       >
         <fa-icon icon="calendar" class="m-r-10"></fa-icon>{{ 'labels.buttons.Reschedule' | translate }}
       </button>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="createDelinquencyActionReset()"
+        *mifosxHasPermission="'CREATE_WC_DELINQUENCY_RESET'"
+      >
+        <fa-icon icon="calendar" class="m-r-10"></fa-icon>{{ 'labels.buttons.Reset' | translate }}
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="createDelinquencyActionUndoReset()"
+        *mifosxHasPermission="'CREATE_WC_DELINQUENCY_UNDO_RESET'"
+      >
+        <fa-icon icon="calendar" class="m-r-10"></fa-icon>{{ 'labels.buttons.Undo Reset' | translate }}
+      </button>
     }
   </div>
 

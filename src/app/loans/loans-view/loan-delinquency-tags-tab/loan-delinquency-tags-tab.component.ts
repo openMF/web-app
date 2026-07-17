@@ -56,6 +56,9 @@ import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan
 import { LoanDelinquencyActionRescheduleDialogComponent } from 'app/loans/custom-dialog/loan-delinquency-action-reschedule-dialog/loan-delinquency-action-reschedule-dialog.component';
 import { StringEnumOptionData } from 'app/shared/models/option-data.model';
 import { ProductsService } from 'app/products/products.service';
+import {
+  LoanDelinquencyActionResetDialogComponent
+} from 'app/loans/custom-dialog/loan-delinquency-action-reset-dialog/loan-delinquency-action-reset-dialog.component';
 
 type DelinquencyActionStatus = 'active' | 'scheduled' | 'expired';
 
@@ -293,7 +296,7 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
       const startDate: Date = response.data.value.startDate;
       const endDate: Date = response.data.value.endDate;
 
-      this.sendDelinquencyAction(action, startDate, endDate, null, null, null, null);
+      this.sendDelinquencyAction(action, startDate, endDate, null, null, null, null, null);
     });
   }
 
@@ -312,7 +315,36 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
       const frequency: number = response.data.value.frequency;
       const frequencyType: string = response.data.value.frequencyType;
 
-      this.sendDelinquencyAction(action, null, null, minimumPayment, minimumPaymentType, frequency, frequencyType);
+      this.sendDelinquencyAction(action, null, null, minimumPayment, minimumPaymentType, frequency, frequencyType, null);
+    });
+  }
+
+  createDelinquencyActionReset(): void {
+    const action = 'reset';
+    const loanDelinquencyActionDialogRef = this.dialog.open(LoanDelinquencyActionResetDialogComponent, {
+      data: {
+        action: action,
+        startNewPeriod: false
+      }
+    });
+    loanDelinquencyActionDialogRef.afterClosed().subscribe((response: { data: any }) => {
+      const startNewPeriod: boolean = response.data.value.startNewPeriod;
+
+      this.sendDelinquencyAction(action, null, null, null, null, null, null, startNewPeriod);
+    });
+  }
+  createDelinquencyActionUndoReset(): void {
+    const action = 'undo_reset';
+    const loanDelinquencyActionDialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        heading: this.translateService.instant('labels.heading.Undo Reset'),
+        dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to undo last reset action')
+      }
+    });
+    loanDelinquencyActionDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
+      if (response.confirm) {
+        this.sendDelinquencyAction(action, null, null, null, null, null, null, null);
+      }
     });
   }
 
@@ -330,11 +362,12 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
     removePauseDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
         if (this.loanProductService.isLoanProduct) {
-          this.sendDelinquencyAction('resume', null, null, null, null, null, null);
+          this.sendDelinquencyAction('resume', null, null, null, null, null, null, null);
         } else {
           this.sendDelinquencyAction(
             'resume',
             this.dateUtils.parseDate(this.businessDate()),
+            null,
             null,
             null,
             null,
@@ -353,7 +386,8 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
     minimumPayment: number | null,
     minimumPaymentType: string | null,
     frequency: number | null,
-    frequencyType: string | null
+    frequencyType: string | null,
+    startNewPeriod: boolean | null
   ): void {
     let payload: any = {
       action,
@@ -378,6 +412,12 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
         frequency,
         frequencyType
       };
+    } else if (action === 'reset') {
+      payload = {
+        action,
+        locale: this.locale,
+        startNewPeriod,
+      }
     }
 
     this.loansServices
