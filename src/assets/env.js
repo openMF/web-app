@@ -123,6 +123,9 @@
   // Set to 'true' to enable, 'false' (default) to disable
   window['env']['enablePostalCodeLookup'] = 'false';
 
+  // Client Address Location (latitude, longitude, and map)
+  window['env']['enableClientAddressLocation'] = false;
+
   // Password Configuration
   window['env']['minPasswordLength'] = 8;
 

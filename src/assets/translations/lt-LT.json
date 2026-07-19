@@ -1593,7 +1593,8 @@
       "undo_account_transfer": "Atšaukti sąskaitos pervedimą",
       "Loan Breach Actions": "Paskolos pažeidimo veiksmai",
       "No Breach Actions": "Nėra pažeidimo veiksmų",
-      "Pause Timeline": "Pauzių laiko juosta"
+      "Pause Timeline": "Pauzių laiko juosta",
+      "Location Map": "Vietos žemėlapis"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3177,7 +3178,9 @@
       "Today": "Šiandien",
       "Total Actions": "Iš viso veiksmų",
       "Total Days Paused": "Iš viso pauzės dienų",
-      "Credit Profile": "Kredito profilis"
+      "Credit Profile": "Kredito profilis",
+      "Latitude": "Platuma",
+      "Longitude": "Ilguma"
     },
     "links": {
       "Community": "bendruomenė",
@@ -4163,7 +4166,8 @@
       "WorkingCapitalLoanDiscountFeeAdjustmentTransactionBusinessEvent": "Working Capital Loan Discount Fee Adjustment Transaction Business Event",
       "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
       "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
-      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event"
+      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event",
+      "Map tiles unavailable": "Žemėlapio plytelės nepasiekiamos"
     },
     "permissions": {
       "actions": {

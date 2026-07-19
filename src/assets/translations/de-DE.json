@@ -1596,7 +1596,8 @@
       "undo_account_transfer": "Kontotransfer rückgängig machen",
       "Loan Breach Actions": "Kredit-Verstoß-Aktionen",
       "No Breach Actions": "Keine Verstoßaktionen",
-      "Pause Timeline": "Pausen-Zeitleiste"
+      "Pause Timeline": "Pausen-Zeitleiste",
+      "Location Map": "Standortkarte"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3180,7 +3181,9 @@
       "Today": "Heute",
       "Total Actions": "Gesamtaktionen",
       "Total Days Paused": "Pausentage gesamt",
-      "Credit Profile": "Kreditprofil"
+      "Credit Profile": "Kreditprofil",
+      "Latitude": "Breitengrad",
+      "Longitude": "Längengrad"
     },
     "links": {
       "Community": "Gemeinschaft",
@@ -4164,7 +4167,8 @@
       "WorkingCapitalLoanDiscountFeeAdjustmentTransactionBusinessEvent": "Working Capital Loan Discount Fee Adjustment Transaction Business Event",
       "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
       "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
-      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event"
+      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event",
+      "Map tiles unavailable": "Kartendaten nicht verfügbar"
     },
     "permissions": {
       "actions": {

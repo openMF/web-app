@@ -1593,7 +1593,8 @@
       "undo_account_transfer": "खाता स्थानान्तरण रद्द गर्नुहोस्",
       "Loan Breach Actions": "ऋण उल्लङ्घन कार्यहरू",
       "No Breach Actions": "कुनै उल्लंघन कार्यहरू छैनन्",
-      "Pause Timeline": "रोकावट समयरेखा"
+      "Pause Timeline": "रोकावट समयरेखा",
+      "Location Map": "स्थान नक्सा"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3177,7 +3178,9 @@
       "Today": "आज",
       "Total Actions": "कुल कार्यहरू",
       "Total Days Paused": "कुल रोकिएका दिनहरू",
-      "Credit Profile": "क्रेडिट प्रोफाइल"
+      "Credit Profile": "क्रेडिट प्रोफाइल",
+      "Latitude": "अक्षांश",
+      "Longitude": "देशान्तर"
     },
     "links": {
       "Community": "समुदाय",
@@ -4162,7 +4165,8 @@
       "WorkingCapitalLoanDiscountFeeAdjustmentTransactionBusinessEvent": "Working Capital Loan Discount Fee Adjustment Transaction Business Event",
       "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
       "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
-      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event"
+      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event",
+      "Map tiles unavailable": "नक्साका टाइलहरू उपलब्ध छैनन्"
     },
     "permissions": {
       "actions": {

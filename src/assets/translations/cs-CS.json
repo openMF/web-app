@@ -1594,7 +1594,8 @@
       "undo_account_transfer": "Vrátit převod účtu",
       "Loan Breach Actions": "Akce porušení úvěru",
       "No Breach Actions": "Žádné akce při porušení",
-      "Pause Timeline": "Časová osa pauz"
+      "Pause Timeline": "Časová osa pauz",
+      "Location Map": "Mapa polohy"
     },
     "inputs": {
       "Annual interest rate": "Roční úroková sazba",
@@ -3178,7 +3179,9 @@
       "Today": "Dnes",
       "Total Actions": "Celkové akce",
       "Total Days Paused": "Celkový počet dní v pauze",
-      "Credit Profile": "Kreditní profil"
+      "Credit Profile": "Kreditní profil",
+      "Latitude": "Zeměpisná šířka",
+      "Longitude": "Zeměpisná délka"
     },
     "links": {
       "Community": "Společenství",
@@ -4163,7 +4166,8 @@
       "WorkingCapitalLoanDiscountFeeAdjustmentTransactionBusinessEvent": "Working Capital Loan Discount Fee Adjustment Transaction Business Event",
       "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
       "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
-      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event"
+      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event",
+      "Map tiles unavailable": "Mapové dlaždice nejsou dostupné"
     },
     "permissions": {
       "actions": {

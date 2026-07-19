@@ -1597,7 +1597,8 @@
       "undo_account_transfer": "Annuler le transfert de compte",
       "Loan Breach Actions": "Actions de Manquement du Prêt",
       "No Breach Actions": "Aucune Action sur Brèches",
-      "Pause Timeline": "Chronologie des Pauses"
+      "Pause Timeline": "Chronologie des Pauses",
+      "Location Map": "Carte de localisation"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3181,7 +3182,9 @@
       "Today": "Aujourd'hui",
       "Total Actions": "Total des Actions",
       "Total Days Paused": "Total des Jours en Pause",
-      "Credit Profile": "Profil de crédit"
+      "Credit Profile": "Profil de crédit",
+      "Latitude": "Latitude",
+      "Longitude": "Longitude"
     },
     "links": {
       "Community": "Communauté",
@@ -4165,7 +4168,8 @@
       "WorkingCapitalLoanDiscountFeeAdjustmentTransactionBusinessEvent": "Working Capital Loan Discount Fee Adjustment Transaction Business Event",
       "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
       "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
-      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event"
+      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event",
+      "Map tiles unavailable": "Tuiles cartographiques indisponibles"
     },
     "permissions": {
       "actions": {

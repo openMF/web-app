@@ -1601,7 +1601,8 @@
       "undo_account_transfer": "Undo Account Transfer",
       "Loan Breach Actions": "Loan Breach Actions",
       "No Breach Actions": "No Breach Actions",
-      "Pause Timeline": "Pause Timeline"
+      "Pause Timeline": "Pause Timeline",
+      "Location Map": "Location Map"
     },
     "inputs": {
       "Breach Actions": "Breach Actions",
@@ -3187,7 +3188,9 @@
       "CDC FICO Score": "CDC FICO Score",
       "No bureau data available": "No bureau data available",
       "Failed to load bureau data": "Failed to load bureau data",
-      "Credit Profile": "Credit Profile"
+      "Credit Profile": "Credit Profile",
+      "Latitude": "Latitude",
+      "Longitude": "Longitude"
     },
     "links": {
       "Community": "Community",
@@ -4278,7 +4281,8 @@
       "WorkingCapitalLoanDiscountFeeAdjustmentTransactionBusinessEvent": "Working Capital Loan Discount Fee Adjustment Transaction Business Event",
       "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
       "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
-      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event"
+      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event",
+      "Map tiles unavailable": "Map tiles unavailable"
     },
     "permissions": {
       "actions": {

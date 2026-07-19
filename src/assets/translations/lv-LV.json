@@ -1594,7 +1594,8 @@
       "undo_account_transfer": "Atcelt konta pārskaitījumu",
       "Loan Breach Actions": "Aizdevuma pārkāpuma darbības",
       "No Breach Actions": "Nav pārkāpuma darbību",
-      "Pause Timeline": "Pauzes laika līnija"
+      "Pause Timeline": "Pauzes laika līnija",
+      "Location Map": "Atrašanās vietas karte"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3178,7 +3179,9 @@
       "Today": "Šodien",
       "Total Actions": "Darbības kopā",
       "Total Days Paused": "Pauzes dienas kopā",
-      "Credit Profile": "Kredīta profils"
+      "Credit Profile": "Kredīta profils",
+      "Latitude": "Platums",
+      "Longitude": "Garums"
     },
     "links": {
       "Community": "kopiena",
@@ -4162,7 +4165,8 @@
       "WorkingCapitalLoanDiscountFeeAdjustmentTransactionBusinessEvent": "Working Capital Loan Discount Fee Adjustment Transaction Business Event",
       "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
       "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
-      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event"
+      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event",
+      "Map tiles unavailable": "Kartes elementi nav pieejami"
     },
     "permissions": {
       "actions": {

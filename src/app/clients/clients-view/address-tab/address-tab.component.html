@@ -70,10 +70,32 @@
           @if (isFieldEnabled('postalCode')) {
             <span>{{ 'labels.inputs.Postal Code' | translate }} : {{ address.postalCode }}<br /></span>
           }
+          @if (
+            clientAddressLocationEnabled &&
+            isFieldEnabled('latitude') &&
+            hasCoordinateValue(address.latitude, 'latitude')
+          ) {
+            <span>{{ 'labels.inputs.Latitude' | translate }} : {{ address.latitude }}<br /></span>
+          }
+          @if (
+            clientAddressLocationEnabled &&
+            isFieldEnabled('longitude') &&
+            hasCoordinateValue(address.longitude, 'longitude')
+          ) {
+            <span>{{ 'labels.inputs.Longitude' | translate }} : {{ address.longitude }}<br /></span>
+          }
           @if (isFieldEnabled('isActive')) {
             <span>{{ 'labels.inputs.Active Status' | translate }} : {{ address.isActive }}<br /></span>
           }
         </p>
+        @if (
+          clientAddressLocationEnabled &&
+          isFieldEnabled('latitude') &&
+          isFieldEnabled('longitude') &&
+          hasValidCoordinatePair(address.latitude, address.longitude)
+        ) {
+          <mifosx-address-location-map [latitude]="address.latitude" [longitude]="address.longitude" />
+        }
       </mat-expansion-panel>
     }
   </mat-accordion>

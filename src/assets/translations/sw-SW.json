@@ -1591,7 +1591,8 @@
       "undo_account_transfer": "Futa uhamisho wa akaunti",
       "Loan Breach Actions": "Vitendo vya Ukiukaji wa Mkopo",
       "No Breach Actions": "Hakuna Vitendo vya Ukiukaji",
-      "Pause Timeline": "Mfuatano wa Pumziko"
+      "Pause Timeline": "Mfuatano wa Pumziko",
+      "Location Map": "Ramani ya eneo"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3175,7 +3176,9 @@
       "Today": "Leo",
       "Total Actions": "Jumla ya Vitendo",
       "Total Days Paused": "Jumla ya Siku za Pumziko",
-      "Credit Profile": "Wasifu wa Mkopo"
+      "Credit Profile": "Wasifu wa Mkopo",
+      "Latitude": "Latitudo",
+      "Longitude": "Longitudo"
     },
     "links": {
       "Community": "Jumuiya",
@@ -4159,7 +4162,8 @@
       "WorkingCapitalLoanDiscountFeeAdjustmentTransactionBusinessEvent": "Working Capital Loan Discount Fee Adjustment Transaction Business Event",
       "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
       "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
-      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event"
+      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event",
+      "Map tiles unavailable": "Vipande vya ramani havipatikani"
     },
     "permissions": {
       "actions": {
