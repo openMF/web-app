@@ -127,6 +127,9 @@ export const environment = {
   enablePostalCodeLookup:
     loadedEnv.enablePostalCodeLookup === 'true' || loadedEnv.enablePostalCodeLookup === true || false,
 
+  enableClientAddressLocation:
+    loadedEnv.enableClientAddressLocation === 'true' || loadedEnv.enableClientAddressLocation === true || false,
+
   minPasswordLength: resolvedMinPasswordLength,
   passwordRegex:
     loadedEnv.passwordRegex ||

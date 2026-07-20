@@ -743,6 +743,7 @@
       "Unassign Staff": "직원 할당 해제",
       "Undo": "실행 취소",
       "Undo Rejection": "거부 취소",
+      "Undo Reset": "재설정 실행 취소",
       "Undo Transfer": "전송 취소",
       "Unpin": "고정 해제",
       "Update Default Savings": "기본 절감액 업데이트",
@@ -1563,6 +1564,7 @@
       "Unassign Role": "역할 할당 해제",
       "Unassign Staff": "직원 할당 해제",
       "Undo": "실행 취소",
+      "Undo Reset": "재설정 실행 취소",
       "Undo Transaction": "거래 취소",
       "Upcoming Charges": "다가오는 요금",
       "Upload": "업로드",
@@ -1593,7 +1595,8 @@
       "undo_account_transfer": "계좌 이체 취소",
       "Loan Breach Actions": "대출 위반 작업",
       "No Breach Actions": "위반 작업 없음",
-      "Pause Timeline": "일시중지 타임라인"
+      "Pause Timeline": "일시중지 타임라인",
+      "Location Map": "위치 지도"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -2930,6 +2933,7 @@
       "Standing Instruction Type": "상임 지시 유형",
       "Standing Instructions": "기립 지침",
       "Start Date": "시작일",
+      "Start new period": "새 기간 시작",
       "Start Time": "시작 시간",
       "Started On": "시작 날짜",
       "Starting date": "시작 날짜",
@@ -3179,7 +3183,9 @@
       "Total Actions": "전체 작업",
       "Total Days Paused": "총 일시중지 일수",
       "Credit Profile": "신용 프로필",
-      "Borrower": "차용인"
+      "Borrower": "차용인",
+      "Latitude": "위도",
+      "Longitude": "경도"
     },
     "links": {
       "Community": "지역 사회",
@@ -3364,6 +3370,7 @@
       "Disable withhold tax for this account ?": "이 계정에 대한 세금 보류 기능을 비활성화하시겠습니까?",
       "Are you sure you want to waive charge with id:": "ID가 있는 요금을 면제하시겠습니까?",
       "Are you sure you want to waive charges": "정말로 {{ count }}개의 수수료를 면제하시겠습니까",
+      "Are you sure you want to undo last reset action": "마지막 재설정 작업을 취소하시겠습니까?",
       "Are you sure you want to undo this transaction ?": "이 거래를 취소하시겠습니까?",
       "Are you sure you want recover from Guarantor": "보증인에서 복구하시겠습니까?",
       "Are you sure you want recover the Original Schedule": "원본 일정에서 복구하시겠습니까?",
@@ -4172,7 +4179,8 @@
       "All Loan Products": "모든 대출상품",
       "All Offices": "모든 사무소",
       "No loan was found": "대출을 찾을 수 없습니다",
-      "SearchByLoan": "계좌 번호, 차용인 또는 상품으로 검색"
+      "SearchByLoan": "계좌 번호, 차용인 또는 상품으로 검색",
+      "Map tiles unavailable": "지도 타일을 사용할 수 없습니다"
     },
     "permissions": {
       "actions": {

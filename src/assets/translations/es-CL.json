@@ -743,6 +743,7 @@
       "Unassign Staff": "Desasignar Asesor",
       "Undo": "Deshacer",
       "Undo Rejection": "Deshacer rechazo",
+      "Undo Reset": "Deshacer reinicio",
       "Undo Transfer": "Deshacer transferencia",
       "Unpin": "Desanclar",
       "Update Default Savings": "Actualizar ahorros predeterminados",
@@ -1562,6 +1563,7 @@
       "Unassign Role": "Desasignar rol",
       "Unassign Staff": "Desasignar Asesor",
       "Undo": "Deshacer",
+      "Undo Reset": "Deshacer reinicio",
       "Undo Transaction": "Deshacer transacción",
       "Upcoming Charges": "Próximos cargos",
       "Upload": "Subir",
@@ -1592,7 +1594,8 @@
       "undo_account_transfer": "Revertir transferencia de cuenta",
       "Loan Breach Actions": "Acciones de Incumplimiento del Préstamo",
       "No Breach Actions": "Sin Acciones sobre Brechas",
-      "Pause Timeline": "Línea de Tiempo de Pausas"
+      "Pause Timeline": "Línea de Tiempo de Pausas",
+      "Location Map": "Mapa de ubicación"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -2931,6 +2934,7 @@
       "Standing Instruction Type": "Tipo de instrucción permanente",
       "Standing Instructions": "Instrucciones permanentes",
       "Start Date": "Fecha de inicio",
+      "Start new period": "Iniciar nuevo período",
       "Start Time": "Hora de inicio",
       "Started On": "Iniciado en",
       "Starting date": "Fecha de inicio",
@@ -3180,7 +3184,9 @@
       "Total Actions": "Acciones Totales",
       "Total Days Paused": "Total de Días en Pausa",
       "Credit Profile": "Perfil de crédito",
-      "Borrower": "Prestatario"
+      "Borrower": "Prestatario",
+      "Latitude": "Latitud",
+      "Longitude": "Longitud"
     },
     "links": {
       "Community": "Comunidad",
@@ -3366,6 +3372,7 @@
       "Disable withhold tax for this account ?": "¿Quieres deshabilitar la retención de impuestos para esta cuenta?",
       "Are you sure you want to waive charge with id:": "¿Estás seguro de que deseas eximir el cargo con ID:",
       "Are you sure you want to waive charges": "¿Está seguro de que desea renunciar a {{ count }} comisiones",
+      "Are you sure you want to undo last reset action": "¿Está seguro de que desea deshacer la última acción de reinicio?",
       "Are you sure you want to undo this transaction ?": "¿Estás seguro de que deseas deshacer esta transacción?",
       "Are you sure you want recover from Guarantor": "¿Estás seguro de que deseas recuperar del garante?",
       "Are you sure you want recover the Original Schedule": "¿Estás seguro de que deseas recuperar el Calendario Original?",
@@ -4174,7 +4181,8 @@
       "All Loan Products": "Todos los productos de crédito",
       "All Offices": "Todas las oficinas",
       "No loan was found": "No se encontró ningún préstamo",
-      "SearchByLoan": "Buscar por número de cuenta, prestatario o producto"
+      "SearchByLoan": "Buscar por número de cuenta, prestatario o producto",
+      "Map tiles unavailable": "Los mosaicos del mapa no están disponibles"
     },
     "permissions": {
       "actions": {

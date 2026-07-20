@@ -379,7 +379,7 @@ describe('CreateClientComponent - Integration Tests', () => {
         Object.defineProperty(component.clientAddressStep, 'address', {
           get: jest.fn(() => ({
             address: [
-              { addressTypeId: 1, street: '123 Main St', city: 'New York' }
+              { addressTypeId: 1, street: '123 Main St', city: 'New York', latitude: '12.9716', longitude: '77.5946' }
             ]
           })),
           configurable: true
@@ -391,7 +391,11 @@ describe('CreateClientComponent - Integration Tests', () => {
       expect(mockClientsService.createClient).toHaveBeenCalledWith(
         expect.objectContaining({
           address: expect.arrayContaining([
-            expect.objectContaining({ street: '123 Main St' })
+            expect.objectContaining({
+              street: '123 Main St',
+              latitude: '12.9716',
+              longitude: '77.5946'
+            })
           ])
         })
       );

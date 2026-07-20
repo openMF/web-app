@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** rxjs Imports */
@@ -44,6 +44,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 export class TwoFactorAuthenticationComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
   private authenticationService = inject(AuthenticationService);
+  private changeDetectorRef = inject(ChangeDetectorRef);
 
   /** Available delivery methods to receive OTP. */
   twoFactorAuthenticationDeliveryMethods: any;
@@ -71,6 +72,8 @@ export class TwoFactorAuthenticationComponent implements OnInit {
     this.createTwoFactorAuthenticationDeliveryMethodForm();
     this.authenticationService.getDeliveryMethods().subscribe((deliveryMethods: any) => {
       this.twoFactorAuthenticationDeliveryMethods = deliveryMethods;
+      // OnPush: the delivery methods arrive asynchronously, so notify the view to render the options.
+      this.changeDetectorRef.markForCheck();
     });
   }
 
@@ -92,12 +95,15 @@ export class TwoFactorAuthenticationComponent implements OnInit {
           // Angular Material Bug: Validation errors won't get removed on reset.
           this.twoFactorAuthenticationDeliveryMethodForm.enable();
           this.loading = false;
+          this.changeDetectorRef.markForCheck();
         })
       )
       .subscribe((response: any) => {
         this.createTwoFactorAuthenticationForm();
         this.otpRequested = true;
         this.tokenValidityTime = response.tokenLiveTimeInSec;
+        // OnPush: reveal the OTP entry field once the OTP has been requested.
+        this.changeDetectorRef.markForCheck();
       });
   }
 
@@ -116,6 +122,7 @@ export class TwoFactorAuthenticationComponent implements OnInit {
           // Angular Material Bug: Validation errors won't get removed on reset.
           this.twoFactorAuthenticationForm.enable();
           this.loading = false;
+          this.changeDetectorRef.markForCheck();
         })
       )
       .subscribe();
@@ -136,6 +143,7 @@ export class TwoFactorAuthenticationComponent implements OnInit {
           // Angular Material Bug: Validation errors won't get removed on reset.
           this.twoFactorAuthenticationForm.enable();
           this.resendOTPLoading = false;
+          this.changeDetectorRef.markForCheck();
         })
       )
       .subscribe();

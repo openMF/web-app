@@ -748,6 +748,7 @@
       "Unassign Staff": "Unassign Staff",
       "Undo": "Undo",
       "Undo Rejection": "Undo Rejection",
+      "Undo Reset": "Undo Reset",
       "Undo Transfer": "Undo Transfer",
       "Unpin": "Unpin",
       "Update Default Savings": "Update Default Savings",
@@ -1572,6 +1573,7 @@
       "Unassign Staff": "Unassign Staff",
       "Undo": "Undo",
       "Undo Transaction": "Undo Transaction",
+      "Undo Reset": "Undo Reset",
       "Upcoming Charges": "Upcoming Charges",
       "Upload": "Upload",
       "Upload Client Image": "Upload Client Image",
@@ -1601,7 +1603,8 @@
       "undo_account_transfer": "Undo Account Transfer",
       "Loan Breach Actions": "Loan Breach Actions",
       "No Breach Actions": "No Breach Actions",
-      "Pause Timeline": "Pause Timeline"
+      "Pause Timeline": "Pause Timeline",
+      "Location Map": "Location Map"
     },
     "inputs": {
       "Breach Actions": "Breach Actions",
@@ -2936,6 +2939,7 @@
       "Standing Instruction Type": "Standing Instruction Type",
       "Standing Instructions": "Standing Instructions",
       "Start Date": "Start Date",
+      "Start new period": "Start New Period",
       "Start Time": "Start Time",
       "Started On": "Started On",
       "Starting Date": "Starting Date",
@@ -3190,7 +3194,9 @@
       "CDC FICO Score": "CDC FICO Score",
       "No bureau data available": "No bureau data available",
       "Failed to load bureau data": "Failed to load bureau data",
-      "Credit Profile": "Credit Profile"
+      "Credit Profile": "Credit Profile",
+      "Latitude": "Latitude",
+      "Longitude": "Longitude"
     },
     "links": {
       "Community": "Community",
@@ -3394,6 +3400,7 @@
       "Are you sure you want to delete checker": "Are you sure you want to delete checker",
       "Are you sure you want to Approve Loan": "Are you sure you want to Approve Loan",
       "Are you sure you want to Disburse Loan": "Are you sure you want to Disburse Loan",
+      "Are you sure you want to undo last reset action": "Are you sure you want to undo last reset action",
       "undo_account_transfer": "Are you sure you want to undo this account transfer?",
       "Are you sure you want to": "Are you sure you want to ",
       "the productmix component with id": "the productmix component with id",
@@ -4298,7 +4305,8 @@
       "WorkingCapitalLoanDiscountFeeAdjustmentTransactionBusinessEvent": "Working Capital Loan Discount Fee Adjustment Transaction Business Event",
       "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
       "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
-      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event"
+      "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event",
+      "Map tiles unavailable": "Map tiles unavailable"
     },
     "permissions": {
       "actions": {

@@ -743,6 +743,7 @@
       "Unassign Staff": "Atcelt personāla piešķiršanu",
       "Undo": "Atsaukt",
       "Undo Rejection": "Atsaukt noraidījumu",
+      "Undo Reset": "Atsaukt atiestatīšanu",
       "Undo Transfer": "Atsaukt pārsūtīšanu",
       "Unpin": "Atspraust",
       "Update Default Savings": "Atjauniniet noklusējuma ietaupījumus",
@@ -1562,6 +1563,7 @@
       "Unassign Role": "Atcelt lomas piešķiršanu",
       "Unassign Staff": "Atcelt personāla piešķiršanu",
       "Undo": "Atsaukt",
+      "Undo Reset": "Atsaukt atiestatīšanu",
       "Undo Transaction": "Atsaukt darījumu",
       "Upcoming Charges": "Gaidāmās maksas",
       "Upload": "Augšupielādēt",
@@ -1592,7 +1594,8 @@
       "undo_account_transfer": "Atcelt konta pārskaitījumu",
       "Loan Breach Actions": "Aizdevuma pārkāpuma darbības",
       "No Breach Actions": "Nav pārkāpuma darbību",
-      "Pause Timeline": "Pauzes laika līnija"
+      "Pause Timeline": "Pauzes laika līnija",
+      "Location Map": "Atrašanās vietas karte"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -2930,6 +2933,7 @@
       "Standing Instruction Type": "Pastāvīgās instrukcijas veids",
       "Standing Instructions": "Stāvošās instrukcijas",
       "Start Date": "Sākuma datums",
+      "Start new period": "Sākt jaunu periodu",
       "Start Time": "Sākuma laiks",
       "Started On": "Sākās",
       "Starting date": "Sākuma datums",
@@ -3179,7 +3183,9 @@
       "Total Actions": "Darbības kopā",
       "Total Days Paused": "Pauzes dienas kopā",
       "Credit Profile": "Kredīta profils",
-      "Borrower": "Aizņēmējs"
+      "Borrower": "Aizņēmējs",
+      "Latitude": "Platums",
+      "Longitude": "Garums"
     },
     "links": {
       "Community": "kopiena",
@@ -3364,6 +3370,7 @@
       "Disable withhold tax for this account ?": "Vai vēlaties deaktivizēt ieturēto nodokli šim kontam?",
       "Are you sure you want to waive charge with id:": "Vai tiešām vēlaties atbrīvot maksu ar ID:",
       "Are you sure you want to waive charges": "Vai esat pārliecināts, ka vēlaties atteikties no {{ count }} maksām",
+      "Are you sure you want to undo last reset action": "Vai tiešām vēlaties atsaukt pēdējo atiestatīšanas darbību?",
       "Are you sure you want to undo this transaction ?": "Vai tiešām vēlaties atsaukt šo darījumu?",
       "Are you sure you want recover from Guarantor": "Vai tiešām vēlaties atgūt no garantētāja?",
       "Are you sure you want recover the Original Schedule": "Vai tiešām vēlaties atjaunot oriģinālo grafiku?",
@@ -4172,7 +4179,8 @@
       "All Loan Products": "Visi aizdevuma produkti",
       "All Offices": "Visi biroji",
       "No loan was found": "Aizdevums nav atrasts",
-      "SearchByLoan": "Meklēt pēc konta numura, aizņēmēja vai produkta"
+      "SearchByLoan": "Meklēt pēc konta numura, aizņēmēja vai produkta",
+      "Map tiles unavailable": "Kartes elementi nav pieejami"
     },
     "permissions": {
       "actions": {

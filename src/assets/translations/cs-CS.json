@@ -744,6 +744,7 @@
       "Unassign Staff": "Zrušit přidělení personálu",
       "Undo": "vrátit",
       "Undo Rejection": "Zrušit odmítnutí",
+      "Undo Reset": "Vrátit reset",
       "Undo Transfer": "Vrátit zpět převod",
       "Unpin": "Odepnout",
       "Update Default Savings": "Aktualizovat výchozí úspory",
@@ -1562,6 +1563,7 @@
       "Unassign Role": "Zrušit přiřazení role",
       "Unassign Staff": "Zrušit přidělení personálu",
       "Undo": "vrátit",
+      "Undo Reset": "Vrátit reset",
       "Undo Transaction": "Vrátit zpět transakci",
       "Upcoming Charges": "Nadcházející poplatky",
       "Upload": "nahrát",
@@ -1592,7 +1594,8 @@
       "undo_account_transfer": "Vrátit převod účtu",
       "Loan Breach Actions": "Akce porušení úvěru",
       "No Breach Actions": "Žádné akce při porušení",
-      "Pause Timeline": "Časová osa pauz"
+      "Pause Timeline": "Časová osa pauz",
+      "Location Map": "Mapa polohy"
     },
     "inputs": {
       "Annual interest rate": "Roční úroková sazba",
@@ -2930,6 +2933,7 @@
       "Standing Instruction Type": "Typ trvalého pokynu",
       "Standing Instructions": "Stálé instrukce",
       "Start Date": "Datum zahájení",
+      "Start new period": "Zahájit nové období",
       "Start Time": "Doba spuštění",
       "Started On": "Zahájeno dne",
       "Starting date": "Počáteční datum",
@@ -3179,7 +3183,9 @@
       "Total Actions": "Celkové akce",
       "Total Days Paused": "Celkový počet dní v pauze",
       "Credit Profile": "Kreditní profil",
-      "Borrower": "Dlužník"
+      "Borrower": "Dlužník",
+      "Latitude": "Zeměpisná šířka",
+      "Longitude": "Zeměpisná délka"
     },
     "links": {
       "Community": "Společenství",
@@ -3366,6 +3372,7 @@
       "Are you sure you want to waive charge with id:": "Určitě se chcete vzdát poplatku s ID:",
       "Are you sure you want to waive charges": "Opravdu chcete odpustit {{ count }} poplatků",
       "Are you sure you want to undo this transaction ?": "Jste si jisti, že chcete tuto transakci vrátit zpět?",
+      "Are you sure you want to undo last reset action": "Opravdu chcete vrátit poslední akci resetu?",
       "Are you sure you want recover from Guarantor": "Jste si jisti, že se chcete zotavit z ručitele",
       "Are you sure you want recover the Original Schedule": "Jste si jisti, že chcete obnovit původní rozvrh",
       "Are you sure you want resume the Delinquency Classification for Loan": "Jste si jisti, že chcete pokračovat v klasifikaci delikvence pro půjčku",
@@ -4173,7 +4180,8 @@
       "All Loan Products": "Všechny úvěrové produkty",
       "All Offices": "Všechny kanceláře",
       "No loan was found": "Nebyl nalezen žádný úvěr",
-      "SearchByLoan": "Hledat podle čísla účtu, dlužníka nebo produktu"
+      "SearchByLoan": "Hledat podle čísla účtu, dlužníka nebo produktu",
+      "Map tiles unavailable": "Mapové dlaždice nejsou dostupné"
     },
     "permissions": {
       "actions": {

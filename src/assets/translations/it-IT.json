@@ -743,6 +743,7 @@
       "Unassign Staff": "Annulla assegnazione del personale",
       "Undo": "Disfare",
       "Undo Rejection": "Annulla rifiuto",
+      "Undo Reset": "Annulla ripristino",
       "Undo Transfer": "Annulla trasferimento",
       "Unpin": "Sblocca",
       "Update Default Savings": "Aggiorna i risparmi predefiniti",
@@ -1562,6 +1563,7 @@
       "Unassign Role": "Annulla assegnazione ruolo",
       "Unassign Staff": "Annulla assegnazione del personale",
       "Undo": "Disfare",
+      "Undo Reset": "Annulla ripristino",
       "Undo Transaction": "Annulla transazione",
       "Upcoming Charges": "Prossimi addebiti",
       "Upload": "Caricamento",
@@ -1592,7 +1594,8 @@
       "undo_account_transfer": "Annulla trasferimento conto",
       "Loan Breach Actions": "Azioni di Violazione del Prestito",
       "No Breach Actions": "Nessuna Azione sulle Violazioni",
-      "Pause Timeline": "Cronologia Pause"
+      "Pause Timeline": "Cronologia Pause",
+      "Location Map": "Mappa della posizione"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -2930,6 +2933,7 @@
       "Standing Instruction Type": "Tipo di istruzione permanente",
       "Standing Instructions": "Istruzioni per la permanenza",
       "Start Date": "Data d'inizio",
+      "Start new period": "Avvia nuovo periodo",
       "Start Time": "Ora di inizio",
       "Started On": "Iniziato il",
       "Starting date": "Data di inizio",
@@ -3179,7 +3183,9 @@
       "Total Actions": "Azioni Totali",
       "Total Days Paused": "Totale Giorni in Pausa",
       "Credit Profile": "Profilo di credito",
-      "Borrower": "Mutuatario"
+      "Borrower": "Mutuatario",
+      "Latitude": "Latitudine",
+      "Longitude": "Longitudine"
     },
     "links": {
       "Community": "Comunità",
@@ -3364,6 +3370,7 @@
       "Disable withhold tax for this account ?": "Vuoi disabilitare la ritenuta d'acconto per questo conto ?",
       "Are you sure you want to waive charge with id:": "Sei sicuro di voler rinunciare alla tariffa con ID:",
       "Are you sure you want to waive charges": "Sei sicuro di voler rinunciare a {{ count }} commissioni",
+      "Are you sure you want to undo last reset action": "Sei sicuro di voler annullare l'ultima operazione di ripristino?",
       "Are you sure you want to undo this transaction ?": "Sei sicuro di voler annullare questa transazione ?",
       "Are you sure you want recover from Guarantor": "Sei sicuro di voler recuperare dal Garante",
       "Are you sure you want recover the Original Schedule": "Sei sicuro di voler recuperare il Calendario Originale",
@@ -4173,7 +4180,8 @@
       "All Loan Products": "Tutti i prodotti di prestito",
       "All Offices": "Tutti gli uffici",
       "No loan was found": "Nessun prestito trovato",
-      "SearchByLoan": "Cerca per numero di conto, mutuatario o prodotto"
+      "SearchByLoan": "Cerca per numero di conto, mutuatario o prodotto",
+      "Map tiles unavailable": "Tessere della mappa non disponibili"
     },
     "permissions": {
       "actions": {

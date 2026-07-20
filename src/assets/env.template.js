@@ -132,6 +132,9 @@
   window['env']['externalNationalIdSystemApiKey'] = '$EXTERNAL_NATIONAL_ID_SYSTEM_API_KEY';
   window['env']['externalNationalIdRegex'] = '$EXTERNAL_NATIONAL_ID_REGEX';
 
+  // Client Address Location (latitude, longitude, and map)
+  window['env']['enableClientAddressLocation'] = '$MIFOS_ENABLE_CLIENT_ADDRESS_LOCATION';
+
   // OIDC Plugin Environment variables
   window['env']['oidcServerEnabled'] = '$FINERACT_PLUGIN_OIDC_ENABLED';
   window['env']['oidcBaseUrl'] = '$FINERACT_PLUGIN_OIDC_BASE_URL';
