@@ -1,0 +1,198 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="tab-container mat-typography">
+  <div class="layout-row align-start">
+    <div class="m-b-10">
+      <h3>{{ 'labels.heading.Address' | translate }}</h3>
+    </div>
+    <div class="action-button m-b-10 gap-25px">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="addAddress()"
+        [disabled]="isLoading || isSaving || optionsLoadFailed || isPluginUnavailable"
+        *mifosxHasPermission="'CREATE_OFFICE'"
+      >
+        <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
+      </button>
+    </div>
+  </div>
+
+  @if (isLoading) {
+    <div class="address-state">
+      <mat-spinner diameter="36"></mat-spinner>
+      <span>{{ 'labels.text.Loading data' | translate }}</span>
+    </div>
+  }
+
+  @if (isPluginUnavailable && !isLoading) {
+    <div class="address-state unavailable-state">
+      <span>{{ 'labels.text.Office Address management requires the Savings Plugin to be deployed' | translate }}</span>
+    </div>
+  }
+
+  @if (hasError && !isLoading && !isPluginUnavailable) {
+    <div class="address-state error-state">
+      <span>{{ 'errors.generic.unexpectedRetry' | translate }}</span>
+      <button mat-button color="primary" (click)="loadOfficeAddresses()">
+        {{ 'labels.buttons.Retry' | translate }}
+      </button>
+    </div>
+  }
+
+  @if (optionsLoadFailed && !isLoading && !isPluginUnavailable) {
+    <div class="address-state error-state">
+      <span>{{ 'errors.generic.unexpectedRetry' | translate }}</span>
+    </div>
+  }
+
+  @if (!isLoading && !hasError && !isPluginUnavailable && !officeAddresses.length) {
+    <div class="address-state empty-state">
+      <span>{{ 'labels.text.No data found' | translate }}</span>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="addAddress()"
+        [disabled]="optionsLoadFailed || isPluginUnavailable"
+        *mifosxHasPermission="'CREATE_OFFICE'"
+      >
+        <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
+      </button>
+    </div>
+  }
+
+  @if (!isLoading && !hasError && !isPluginUnavailable && officeAddresses.length) {
+    <mat-accordion>
+      @for (address of officeAddresses; track getOfficeAddressId(address, $index)) {
+        <mat-expansion-panel class="address">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{ getAddressType(address) || ('labels.heading.Address' | translate) }}
+            </mat-panel-title>
+            <mat-panel-description>
+              {{ 'labels.inputs.Active Status' | translate }}: {{ getActiveStatusLabel(address.isActive) | translate }}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <mat-divider [inset]="true"></mat-divider>
+          <div class="address-actions layout-row align-end align-items-center">
+            <button
+              mat-button
+              color="primary"
+              (click)="editAddress(address)"
+              [disabled]="isSaving || optionsLoadFailed || isPluginUnavailable"
+              *mifosxHasPermission="'UPDATE_OFFICE'"
+            >
+              <fa-icon icon="edit"></fa-icon>
+            </button>
+            <button
+              mat-button
+              color="warn"
+              (click)="deleteAddress(address)"
+              [disabled]="isSaving || isPluginUnavailable"
+              *mifosxHasPermission="'DELETE_OFFICE'"
+            >
+              <fa-icon icon="trash"></fa-icon>
+            </button>
+            <mat-slide-toggle
+              [checked]="address.isActive"
+              (change)="toggleAddress(address)"
+              [disabled]="isSaving || isPluginUnavailable"
+              *mifosxHasPermission="'UPDATE_OFFICE'"
+            ></mat-slide-toggle>
+          </div>
+
+          <div class="address-details">
+            <div class="address-row">
+              <span class="label">{{ 'labels.inputs.Address Type' | translate }}</span>
+              <span>{{ getAddressType(address) || ('labels.inputs.Not Provided' | translate) }}</span>
+            </div>
+            @if (hasValue(address.street)) {
+              <div class="address-row">
+                <span class="label">{{ 'labels.inputs.Street' | translate }}</span>
+                <span>{{ address.street }}</span>
+              </div>
+            }
+            @if (hasValue(address.addressLine1)) {
+              <div class="address-row">
+                <span class="label">{{ 'labels.inputs.Address Line' | translate }} 1</span>
+                <span>{{ address.addressLine1 }}</span>
+              </div>
+            }
+            @if (hasValue(address.addressLine2)) {
+              <div class="address-row">
+                <span class="label">{{ 'labels.inputs.Address Line' | translate }} 2</span>
+                <span>{{ address.addressLine2 }}</span>
+              </div>
+            }
+            @if (hasValue(address.addressLine3)) {
+              <div class="address-row">
+                <span class="label">{{ 'labels.inputs.Address Line' | translate }} 3</span>
+                <span>{{ address.addressLine3 }}</span>
+              </div>
+            }
+            @if (hasValue(address.townVillage)) {
+              <div class="address-row">
+                <span class="label">{{ 'labels.inputs.Town / Village' | translate }}</span>
+                <span>{{ address.townVillage }}</span>
+              </div>
+            }
+            @if (hasValue(address.city)) {
+              <div class="address-row">
+                <span class="label">{{ 'labels.inputs.City' | translate }}</span>
+                <span>{{ address.city }}</span>
+              </div>
+            }
+            @if (hasValue(address.countyDistrict)) {
+              <div class="address-row">
+                <span class="label">{{ 'labels.inputs.Country District' | translate }}</span>
+                <span>{{ address.countyDistrict }}</span>
+              </div>
+            }
+            @if (hasValue(address.stateProvinceId)) {
+              <div class="address-row">
+                <span class="label">{{ 'labels.inputs.State / Province' | translate }}</span>
+                <span>{{
+                  getSelectedValue('stateProvinceIdOptions', address.stateProvinceId)?.name || address.stateProvinceId
+                }}</span>
+              </div>
+            }
+            @if (hasValue(address.countryId)) {
+              <div class="address-row">
+                <span class="label">{{ 'labels.inputs.Country' | translate }}</span>
+                <span>{{ getSelectedValue('countryIdOptions', address.countryId)?.name || address.countryId }}</span>
+              </div>
+            }
+            @if (hasValue(address.postalCode)) {
+              <div class="address-row">
+                <span class="label">{{ 'labels.inputs.Postal Code' | translate }}</span>
+                <span>{{ address.postalCode }}</span>
+              </div>
+            }
+            @if (hasValue(address.latitude)) {
+              <div class="address-row">
+                <span class="label">{{ 'labels.inputs.Latitude' | translate }}</span>
+                <span>{{ address.latitude }}</span>
+              </div>
+            }
+            @if (hasValue(address.longitude)) {
+              <div class="address-row">
+                <span class="label">{{ 'labels.inputs.Longitude' | translate }}</span>
+                <span>{{ address.longitude }}</span>
+              </div>
+            }
+            <div class="address-row">
+              <span class="label">{{ 'labels.inputs.Active Status' | translate }}</span>
+              <span>{{ getActiveStatusLabel(address.isActive) | translate }}</span>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      }
+    </mat-accordion>
+  }
+</div>

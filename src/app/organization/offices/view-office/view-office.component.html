@@ -33,6 +33,17 @@
         >
           {{ 'labels.inputs.General' | translate }}
         </a>
+        <a
+          mat-tab-link
+          [routerLink]="['./address']"
+          routerLinkActive
+          #address="routerLinkActive"
+          [active]="address.isActive"
+          class="compact-tab"
+          *mifosxHasPermission="'READ_OFFICE'"
+        >
+          {{ 'labels.heading.Address' | translate }}
+        </a>
         @for (officeDatatable of officeDatatables; track officeDatatable) {
           <span>
             <a
