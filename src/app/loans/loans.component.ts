@@ -28,12 +28,16 @@ import { catchError, debounceTime, distinctUntilChanged, map, mergeMap } from 'r
 /** Translation Imports */
 import { TranslateService } from '@ngx-translate/core';
 
+/** Third-party Imports */
+import * as ExcelJS from 'exceljs';
+
 /** Custom Services */
 import { LoansService } from './loans.service';
 import { AccountNumberComponent } from '../shared/account-number/account-number.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { nameInitials } from 'app/core/utils/name-initials';
 import { Dates } from 'app/core/utils/dates';
+import { sanitizeCsvValue } from 'app/core/utils/csv.utils';
 import { SettingsService } from 'app/settings/settings.service';
 
 type Severity = 'active' | 'arrears' | 'pending' | 'closed' | 'rejected' | 'neutral';
@@ -77,6 +81,32 @@ interface LoanDatatableMeta {
     type: string;
     codeValues?: Map<number, string>;
   }[];
+}
+
+/** The kind of control an ad-hoc filter row renders, chosen from the field's ColumnDef. */
+type FilterType = 'text' | 'number' | 'date' | 'boolean' | 'select';
+
+/**
+ * One user-added filter in the right-hand panel, beyond the three always-on defaults
+ * (office, loan product, show-closed). Freshly added with every bound left empty, which
+ * is deliberately a no-op match — adding a filter never hides rows until it's configured.
+ */
+interface ActiveFilter {
+  uid: number;
+  /** ColumnDef id this filter targets — resolved back via LoansComponent.resolveColumnDef. */
+  columnId: string;
+  /** Resolved once at add-time so the panel doesn't re-translate on every render. */
+  label: string;
+  type: FilterType;
+  text: string;
+  numberMin: number | null;
+  numberMax: number | null;
+  dateFrom: string | null;
+  dateTo: string | null;
+  boolValue: '' | 'true' | 'false';
+  /** 'select' only: the field's code-lookup values, resolved once at add-time. */
+  selectOptions: string[];
+  selectValues: Set<string>;
 }
 
 /** First page is small for a fast first paint; the remaining pages are fetched in parallel behind it. */
@@ -162,6 +192,9 @@ export class LoansComponent implements OnInit {
 
   /** True while loans are still streaming in from the server. */
   isLoading = false;
+
+  /** True while the current view is being written out to an .xlsx file. */
+  exporting = false;
 
   pageSize = 50;
   pageSizeOptions = [
@@ -379,7 +412,15 @@ export class LoansComponent implements OnInit {
   loanProducts: any[] = [];
   selectedLoanProductId: number | null = null;
 
+  /** User-added filters beyond the three defaults above, shown in the right-hand panel. */
+  activeFilters: ActiveFilter[] = [];
+  addFilterMenuOpen = false;
+  addFilterSearch = '';
+  private nextFilterUid = 1;
+
   private searchInput$ = new Subject<string>();
+  /** Debounces active-filter edits (typed text, typed numbers) into one re-filter, like search. */
+  private filterUpdate$ = new Subject<void>();
 
   constructor() {
     this.searchInput$
@@ -389,6 +430,10 @@ export class LoansComponent implements OnInit {
         this.currentPage = 0;
         this.applyView();
       });
+    this.filterUpdate$.pipe(debounceTime(200), takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+      this.currentPage = 0;
+      this.applyView();
+    });
   }
 
   ngOnInit() {
@@ -434,6 +479,16 @@ export class LoansComponent implements OnInit {
 
   get hasResults(): boolean {
     return this.totalRows > 0;
+  }
+
+  /**
+   * Export walks `viewRows`, which only reflects loans loaded so far. While the
+   * background chunks (or a visible datatable column) are still streaming in, an
+   * export would silently omit not-yet-loaded loans/cells instead of covering
+   * every matching row as documented.
+   */
+  get canExport(): boolean {
+    return this.hasResults && !this.isLoading && this.dtLoading.size === 0;
   }
 
   /** Panel options for built-in columns: the four core columns, then the optional loan fields. */
@@ -530,6 +585,75 @@ export class LoansComponent implements OnInit {
     return this.pageSize > 0 ? Math.max(1, Math.ceil(this.totalRows / this.pageSize)) : 1;
   }
 
+  /* ── Export ───────────────────────────────────────────────── */
+
+  /**
+   * Writes every row currently matching the filters (all pages, not just the one on
+   * screen) to an .xlsx file, one column per column the user has visible, in the same
+   * order and with the same headers shown in the table.
+   */
+  async exportToXlsx(): Promise<void> {
+    if (this.exporting || !this.canExport) return;
+    this.exporting = true;
+    this.cdr.detectChanges();
+    try {
+      const columns = this.visibleColumns;
+      const workbook = new ExcelJS.Workbook();
+      const worksheet = workbook.addWorksheet('Loans');
+      worksheet.addRow(columns.map((col) => sanitizeCsvValue(this.columnLabel(col))));
+      for (const loan of this.viewRows) {
+        worksheet.addRow(columns.map((col) => sanitizeCsvValue(this.exportCellValue(loan, col))));
+      }
+      const buffer = await workbook.xlsx.writeBuffer();
+      const blob = new Blob([buffer], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = this.exportFileName();
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }, 0);
+    } catch (error) {
+      console.error('Failed to export loans:', error);
+    } finally {
+      this.exporting = false;
+      // exceljs resolves its write internally, sometimes outside Angular's zone, so
+      // markForCheck() alone can leave this flagged-dirty-but-never-flushed — force
+      // an immediate repaint instead of hoping a tick gets scheduled.
+      this.cdr.detectChanges();
+    }
+  }
+
+  /** Plain-text value for one cell — mirrors the template's per-column rendering for the four core columns. */
+  private exportCellValue(loan: any, col: ColumnDef): string {
+    switch (col.id) {
+      case 'borrower':
+        return loan._borrowerName ?? '';
+      case 'status':
+        return loan.status?.value ?? '';
+      case 'accountNo':
+        return loan.accountNo ?? '';
+      case 'principal':
+        return this.moneyText(loan, loan.principal);
+      case 'product':
+        return loan.loanProductName ?? '';
+      default:
+        return loan._cells?.[col.id] ?? '';
+    }
+  }
+
+  private exportFileName(): string {
+    const now = new Date();
+    const pad = (value: number) => String(value).padStart(2, '0');
+    const stamp = `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}_${pad(now.getHours())}${pad(now.getMinutes())}`;
+    return `Loans_${stamp}.xlsx`;
+  }
+
   /* ── Column configuration ─────────────────────────────────── */
 
   toggleColumnsPanel() {
@@ -544,8 +668,9 @@ export class LoansComponent implements OnInit {
   }
 
   onEscapeKey() {
-    if (this.columnsPanelOpen) {
+    if (this.columnsPanelOpen || this.addFilterMenuOpen) {
       this.columnsPanelOpen = false;
+      this.addFilterMenuOpen = false;
       this.cdr.markForCheck();
     }
   }
@@ -598,13 +723,7 @@ export class LoansComponent implements OnInit {
   /** Re-derives visible columns, kicks off any missing datatable loads, and re-renders. */
   private onColumnsChanged() {
     this.rebuildVisibleColumns();
-    for (const col of this.visibleColumns) {
-      if (col.kind === 'dt') {
-        this.ensureDatatableLoaded(col.dtTable);
-      }
-    }
-    this.rebuildAllCells();
-    this.applyView();
+    this.refreshDataColumns();
   }
 
   /** Rebuilds visibleColumns by walking visibleColumnIds in order — that order is the display order. */
@@ -764,7 +883,11 @@ export class LoansComponent implements OnInit {
     return tables;
   }
 
-  /** Drops saved datatable columns whose table or column no longer exists. */
+  /**
+   * Drops saved datatable columns whose table or column no longer exists, and any
+   * ad-hoc filter targeting one — an unresolvable filter's raw value always reads
+   * as empty, which silently excludes every row once the filter has a value set.
+   */
   private pruneUnknownDtColumns() {
     const known = new Set<string>();
     for (const table of this.dtTables ?? []) {
@@ -776,6 +899,12 @@ export class LoansComponent implements OnInit {
     if (filtered.length !== this.visibleColumnIds.length) {
       this.visibleColumnIds = filtered;
       this.persistColumns();
+    }
+    const remainingFilters = this.activeFilters.filter(
+      (filter) => !filter.columnId.startsWith('dt:') || known.has(filter.columnId)
+    );
+    if (remainingFilters.length !== this.activeFilters.length) {
+      this.activeFilters = remainingFilters;
     }
   }
 
@@ -830,6 +959,246 @@ export class LoansComponent implements OnInit {
         });
     };
     loadPage(0);
+  }
+
+  /* ── Ad-hoc filters (right panel) ─────────────────────────── */
+
+  /** Fields offered by "Add Filter", excluding product/office — those are the default filters above. */
+  filterableStandardOptions(search: string): ColumnDef[] {
+    const pool = [
+      ...this.coreColumns.filter((col) => col.id !== 'product'),
+      ...this.stdColumns.filter((col) => col.id !== 'std:office')
+    ];
+    if (!search) return pool;
+    const needle = search.toLowerCase();
+    return pool.filter((col) => this.columnLabel(col).toLowerCase().includes(needle));
+  }
+
+  filterableDtOptions(table: LoanDatatableMeta, search: string): LoanDatatableMeta['columns'] {
+    if (!search) return table.columns;
+    const needle = search.toLowerCase();
+    if (table.label.toLowerCase().includes(needle)) return table.columns;
+    return table.columns.filter((col) => col.label.toLowerCase().includes(needle));
+  }
+
+  columnLabel(col: ColumnDef): string {
+    return col.translate ? this.translateService.instant(col.label) : col.label;
+  }
+
+  isFilterActive(columnId: string): boolean {
+    return this.activeFilters.some((filter) => filter.columnId === columnId);
+  }
+
+  toggleAddFilterMenu() {
+    this.addFilterMenuOpen = !this.addFilterMenuOpen;
+    if (this.addFilterMenuOpen) {
+      this.addFilterSearch = '';
+      this.loadDatatableMeta();
+    }
+  }
+
+  closeAddFilterMenu() {
+    this.addFilterMenuOpen = false;
+  }
+
+  /** Adds an empty (no-op) filter row for the given field and opens it for editing. */
+  addFilter(columnId: string) {
+    if (this.isFilterActive(columnId)) {
+      this.closeAddFilterMenu();
+      return;
+    }
+    const def = this.resolveColumnDef(columnId);
+    if (!def) return;
+    const type = this.filterTypeFor(def);
+    this.activeFilters = [
+      ...this.activeFilters,
+      {
+        uid: this.nextFilterUid++,
+        columnId,
+        label: this.columnLabel(def),
+        type,
+        text: '',
+        numberMin: null,
+        numberMax: null,
+        dateFrom: null,
+        dateTo: null,
+        boolValue: '',
+        selectOptions: type === 'select' ? Array.from(def.codeValues?.values() ?? []).sort() : [],
+        selectValues: new Set<string>()
+      }
+    ];
+    this.closeAddFilterMenu();
+    this.currentPage = 0;
+    this.refreshDataColumns();
+  }
+
+  removeFilter(uid: number) {
+    this.activeFilters = this.activeFilters.filter((filter) => filter.uid !== uid);
+    this.currentPage = 0;
+    this.refreshDataColumns();
+  }
+
+  clearAllFilters() {
+    this.activeFilters = [];
+    this.currentPage = 0;
+    this.applyView();
+  }
+
+  /** Resets the three always-on defaults; leaves any ad-hoc filters in the list untouched. */
+  resetDefaultFilters() {
+    this.selectedOfficeId = null;
+    this.selectedLoanProductId = null;
+    this.showClosedAccounts = false;
+    this.currentPage = 0;
+    this.applyView();
+  }
+
+  updateFilterText(filter: ActiveFilter, value: string) {
+    filter.text = value;
+    this.filterUpdate$.next();
+  }
+
+  updateFilterNumber(filter: ActiveFilter, bound: 'min' | 'max', value: string) {
+    const num = value === '' ? null : Number(value);
+    const parsed = num !== null && isNaN(num) ? null : num;
+    if (bound === 'min') {
+      filter.numberMin = parsed;
+    } else {
+      filter.numberMax = parsed;
+    }
+    this.filterUpdate$.next();
+  }
+
+  updateFilterDate(filter: ActiveFilter, bound: 'from' | 'to', value: string) {
+    if (bound === 'from') {
+      filter.dateFrom = value || null;
+    } else {
+      filter.dateTo = value || null;
+    }
+    this.filterUpdate$.next();
+  }
+
+  updateFilterBool(filter: ActiveFilter, value: string) {
+    filter.boolValue = value as ActiveFilter['boolValue'];
+    this.filterUpdate$.next();
+  }
+
+  toggleFilterSelectOption(filter: ActiveFilter, option: string) {
+    if (filter.selectValues.has(option)) {
+      filter.selectValues.delete(option);
+    } else {
+      filter.selectValues.add(option);
+    }
+    this.filterUpdate$.next();
+  }
+
+  /** Picks the right panel control for a field from its ColumnDef — dt columns key off Fineract's display type. */
+  private filterTypeFor(def: ColumnDef): FilterType {
+    if (def.kind === 'dt') {
+      switch (def.dtType) {
+        case 'DATE':
+        case 'DATETIME':
+          return 'date';
+        case 'INTEGER':
+        case 'DECIMAL':
+          return 'number';
+        case 'BOOLEAN':
+          return 'boolean';
+        case 'CODELOOKUP':
+        case 'CODEVALUE':
+          return def.codeValues?.size ? 'select' : 'text';
+        default:
+          return 'text';
+      }
+    }
+    switch (def.id) {
+      case 'principal':
+      case 'std:interestRate':
+      case 'std:numberOfRepayments':
+      case 'std:principalOutstanding':
+      case 'std:totalOutstanding':
+      case 'std:totalOverdue':
+        return 'number';
+      case 'std:disbursedDate':
+      case 'std:maturityDate':
+      case 'std:submittedDate':
+      case 'std:closedDate':
+        return 'date';
+      case 'std:inArrears':
+        return 'boolean';
+      default:
+        return 'text';
+    }
+  }
+
+  /** Every std/dt column currently needed: visible ones plus whatever ad-hoc filters target, deduped. */
+  private dataColumns(): ColumnDef[] {
+    const seen = new Set<string>();
+    const defs: ColumnDef[] = [];
+    const add = (col: ColumnDef | undefined) => {
+      if (col && (col.kind === 'std' || col.kind === 'dt') && !seen.has(col.id)) {
+        seen.add(col.id);
+        defs.push(col);
+      }
+    };
+    for (const col of this.visibleColumns) add(col);
+    for (const filter of this.activeFilters) add(this.resolveColumnDef(filter.columnId));
+    return defs;
+  }
+
+  /** Ensures every std/dt column now in play has its data loaded, then re-renders. Columns or filters changed. */
+  private refreshDataColumns() {
+    for (const col of this.dataColumns()) {
+      if (col.kind === 'dt') {
+        this.ensureDatatableLoaded(col.dtTable);
+      }
+    }
+    this.rebuildAllCells();
+    this.applyView();
+  }
+
+  /** True if the loan satisfies every ad-hoc filter; an unconfigured (freshly added) filter always matches. */
+  private matchesFilter(loan: any, filter: ActiveFilter): boolean {
+    const raw = this.sortKey(loan, filter.columnId);
+    switch (filter.type) {
+      case 'text': {
+        if (!filter.text) return true;
+        return String(raw ?? '')
+          .toLowerCase()
+          .includes(filter.text.toLowerCase());
+      }
+      case 'number': {
+        if (filter.numberMin === null && filter.numberMax === null) return true;
+        const num = typeof raw === 'number' ? raw : NaN;
+        if (isNaN(num) || num === Number.MIN_SAFE_INTEGER) return false;
+        if (filter.numberMin !== null && num < filter.numberMin) return false;
+        if (filter.numberMax !== null && num > filter.numberMax) return false;
+        return true;
+      }
+      case 'date': {
+        if (!filter.dateFrom && !filter.dateTo) return true;
+        const time = typeof raw === 'number' ? raw : 0;
+        if (!time) return false;
+        if (filter.dateFrom && time < new Date(filter.dateFrom).getTime()) return false;
+        // Inclusive of the whole "to" day.
+        if (filter.dateTo && time > new Date(filter.dateTo).getTime() + 86399999) return false;
+        return true;
+      }
+      case 'boolean': {
+        if (!filter.boolValue) return true;
+        // Both boolean sources (std:inArrears, dt BOOLEAN columns) encode as 1/0, never a real boolean.
+        const truthy = raw === 1;
+        return filter.boolValue === 'true' ? truthy : !truthy;
+      }
+      case 'select': {
+        if (filter.selectValues.size === 0) return true;
+        const rawText = String(raw ?? '');
+        for (const option of filter.selectValues) {
+          if (option.toLowerCase() === rawText) return true;
+        }
+        return false;
+      }
+    }
   }
 
   /* ── Loading ──────────────────────────────────────────────── */
@@ -900,9 +1269,10 @@ export class LoansComponent implements OnInit {
 
   /** Decorates and stores a page of loans under its offset, then schedules a re-render. */
   private storeChunk(offset: number, items: any[]) {
+    const columns = this.dataColumns();
     this.chunks.set(
       offset,
-      items.map((loan) => this.decorate(loan))
+      items.map((loan) => this.decorate(loan, columns))
     );
     this.allLoans = Array.from(this.chunks.keys())
       .sort((a, b) => a - b)
@@ -925,7 +1295,7 @@ export class LoansComponent implements OnInit {
   }
 
   /** Precomputes display and search fields so template bindings don't recompute each change-detection cycle. */
-  private decorate(loan: any): any {
+  private decorate(loan: any, columns: ColumnDef[] = this.dataColumns()): any {
     const borrowerName = loan.clientName || loan.group?.name || loan.groupName || '';
     const severity = this.severity(loan);
     loan._borrowerName = borrowerName;
@@ -950,17 +1320,21 @@ export class LoansComponent implements OnInit {
       .filter((value: any) => value !== undefined && value !== null)
       .join(' ')
       .toLowerCase();
-    this.buildCells(loan);
+    this.buildCells(loan, columns);
     return loan;
   }
 
   /* ── Dynamic cell values ──────────────────────────────────── */
 
-  /** Precomputes display text and sort keys for the non-core visible columns of one loan. */
-  private buildCells(loan: any) {
+  /**
+   * Precomputes display text and sort/filter keys for one loan, across every std/dt column
+   * currently in play — not just the visible ones, since an ad-hoc filter can target a
+   * column the user never chose to display.
+   */
+  private buildCells(loan: any, columns: ColumnDef[] = this.dataColumns()) {
     const cells: Record<string, string> = {};
     const raw: Record<string, string | number> = {};
-    for (const col of this.visibleColumns) {
+    for (const col of columns) {
       if (col.kind === 'std') {
         const text = col.text(loan) ?? '';
         cells[col.id] = text;
@@ -977,8 +1351,9 @@ export class LoansComponent implements OnInit {
   }
 
   private rebuildAllCells() {
+    const columns = this.dataColumns();
     for (const loan of this.allLoans) {
-      this.buildCells(loan);
+      this.buildCells(loan, columns);
     }
   }
 
@@ -1072,12 +1447,14 @@ export class LoansComponent implements OnInit {
     const officeId = this.selectedOfficeId;
     const productId = this.selectedLoanProductId;
     const text = this.filterText;
+    const filters = this.activeFilters;
     const rows = this.allLoans.filter(
       (loan) =>
         (this.showClosedAccounts || !loan._isClosed) &&
         (officeId === null || loan._officeId === officeId) &&
         (productId === null || loan.loanProductId === productId) &&
-        (!text || loan._search.includes(text))
+        (!text || loan._search.includes(text)) &&
+        filters.every((filter) => this.matchesFilter(loan, filter))
     );
     if (this.sortColumn && this.sortDirection) {
       const direction = this.sortDirection === 'asc' ? 1 : -1;
