@@ -396,6 +396,29 @@ export class LoansService {
   }
 
   /**
+   * Reads one page of rows from a loan datatable via the advanced query API.
+   *
+   * The loans list uses this to show custom-table columns: one paged request per
+   * table covers every loan, instead of a `/datatables/{name}/{loanId}` call per row.
+   * Dates are requested in ISO format so parsing is independent of the UI locale.
+   * @param {string} datatableName Registered datatable name.
+   * @param {string[]} resultColumns Columns to fetch (must include the `loan_id` FK).
+   * @param {number} page Zero-based page number.
+   * @param {number} size Page size.
+   * @returns {Observable<any>} A Spring page (`{ content, last, ... }`).
+   */
+  queryLoanDatatableRows(datatableName: string, resultColumns: string[], page: number, size: number): Observable<any> {
+    return this.http.post(`/datatables/${datatableName}/query`, {
+      request: { resultColumns },
+      page,
+      size,
+      dateFormat: 'yyyy-MM-dd',
+      dateTimeFormat: 'yyyy-MM-dd HH:mm:ss',
+      locale: 'en'
+    });
+  }
+
+  /**
    * @param loanId Loan Id of loan to get add datatable entry for.
    * @param datatableName Data Table name.
    * @param data Data.

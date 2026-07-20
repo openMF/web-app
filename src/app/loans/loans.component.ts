@@ -7,23 +7,77 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  LOCALE_ID,
+  OnInit,
+  inject
+} from '@angular/core';
+import { formatCurrency, formatNumber, getCurrencySymbol } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatProgressBar } from '@angular/material/progress-bar';
+import { CdkDropList, CdkDrag, CdkDragHandle, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 /** rxjs Imports */
 import { Subject, from, of } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map, mergeMap } from 'rxjs/operators';
+
+/** Translation Imports */
+import { TranslateService } from '@ngx-translate/core';
 
 /** Custom Services */
 import { LoansService } from './loans.service';
 import { AccountNumberComponent } from '../shared/account-number/account-number.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { nameInitials } from 'app/core/utils/name-initials';
+import { Dates } from 'app/core/utils/dates';
+import { SettingsService } from 'app/settings/settings.service';
 
 type Severity = 'active' | 'arrears' | 'pending' | 'closed' | 'rejected' | 'neutral';
-type SortColumn = '' | 'borrower' | 'status' | 'accountNo' | 'principal' | 'product';
 type SortDirection = '' | 'asc' | 'desc';
+
+/**
+ * A column the list can display. Core columns have bespoke cell markup in the
+ * template; standard and datatable columns render a precomputed text cell.
+ */
+interface ColumnDef {
+  /** Stable id, also the persisted token: core key, `std:<key>`, or `dt:<table>:<column>`. */
+  id: string;
+  /** Translate key for core/standard columns, raw display text for datatable columns. */
+  label: string;
+  translate: boolean;
+  kind: 'core' | 'std' | 'dt';
+  /** Minimum grid track width in px; the row scrolls horizontally once mins no longer fit. */
+  min: number;
+  /** fr share of the leftover space. */
+  grow: number;
+  /** Render the cell in the monospace numeric style. */
+  mono?: boolean;
+  /** Display text for standard columns. */
+  text?: (loan: any) => string;
+  /** Sort key for standard columns; falls back to lowercased text when omitted. */
+  raw?: (loan: any) => string | number;
+  /** Datatable columns: source table, column, Fineract display type, and code lookups. */
+  dtTable?: string;
+  dtColumn?: string;
+  dtType?: string;
+  codeValues?: Map<number, string>;
+}
+
+/** One registered loan datatable, reduced to what the column picker needs. */
+interface LoanDatatableMeta {
+  name: string;
+  label: string;
+  columns: {
+    name: string;
+    label: string;
+    type: string;
+    codeValues?: Map<number, string>;
+  }[];
+}
 
 /** First page is small for a fast first paint; the remaining pages are fetched in parallel behind it. */
 const FIRST_CHUNK = 100;
@@ -31,12 +85,40 @@ const NEXT_CHUNK = 500;
 /** Cap on concurrent /loans requests during the background load, to avoid overwhelming the backend. */
 const MAX_PARALLEL_REQUESTS = 6;
 
+/** Page size and safety cap for the bulk datatable reads behind custom-table columns. */
+const DATATABLE_PAGE_SIZE = 500;
+const DATATABLE_MAX_PAGES = 40;
+
+const COLUMNS_STORAGE_KEY = 'mifosXLoansListColumns';
+/** Borrower is never in this list — it's structural, always shown first, not part of the picker. */
+const DEFAULT_COLUMN_IDS = [
+  'status',
+  'accountNo',
+  'principal',
+  'product'
+];
+
+/** 'accrued_interest_all' / 'AccruedInterestAll' → 'Accrued Interest All'. */
+function humanizeName(name: string): string {
+  return name
+    .replace(/_cd_.*$/, '')
+    .replace(/[_\s]+/g, ' ')
+    .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+    .trim()
+    .replace(/\b[a-z]/g, (char) => char.toUpperCase());
+}
+
 /**
  * Loans list component.
  *
  * Loans are loaded progressively (first chunk fast, the rest in the background), and
  * search, status filtering, sorting, and pagination all run on the client, so they
  * cover every loan rather than just one server page.
+ *
+ * Displayed columns are user-configurable (cog button in the toolbar) and persisted in
+ * localStorage. Besides the built-in loan fields, columns from any datatable registered
+ * against m_loan can be shown; each such table is bulk-loaded once via the datatable
+ * advanced query API and joined to the rows client-side by loan id.
  */
 @Component({
   selector: 'mifosx-loans',
@@ -45,14 +127,22 @@ const MAX_PARALLEL_REQUESTS = 6;
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     MatProgressBar,
-    AccountNumberComponent
+    AccountNumberComponent,
+    CdkDropList,
+    CdkDrag,
+    CdkDragHandle
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { '(document:keydown.escape)': 'onEscapeKey()' }
 })
 export class LoansComponent implements OnInit {
   private loansService = inject(LoansService);
   private destroyRef = inject(DestroyRef);
   private cdr = inject(ChangeDetectorRef);
+  private dateUtils = inject(Dates);
+  private settingsService = inject(SettingsService);
+  private translateService = inject(TranslateService);
+  private locale = inject(LOCALE_ID);
 
   /**
    * Loaded pages keyed by their request offset. Chunks are fetched in parallel and can
@@ -84,21 +174,206 @@ export class LoansComponent implements OnInit {
 
   filterText = '';
   showClosedAccounts = false;
-  sortColumn: SortColumn = '';
+  sortColumn = '';
   sortDirection: SortDirection = '';
 
-  /** Sortable list-header columns, rendered in order after the two unlabeled rail/avatar cells. */
-  readonly sortColumns: { key: SortColumn; label: string }[] = [
-    { key: 'borrower', label: 'labels.inputs.Borrower' },
-    { key: 'status', label: 'labels.inputs.Status' },
-    { key: 'accountNo', label: 'labels.inputs.Loan Account' },
-    { key: 'principal', label: 'labels.inputs.Principal' },
-    { key: 'product', label: 'labels.inputs.Loan Product' }
+  /** Structural: always shown, always first, never part of the picker or the reorder list. */
+  private readonly borrowerColumn: ColumnDef = {
+    id: 'borrower',
+    label: 'labels.inputs.Borrower',
+    translate: true,
+    kind: 'core',
+    min: 200,
+    grow: 2
+  };
+
+  /** The four other built-in columns. */
+  private readonly coreColumns: ColumnDef[] = [
+    { id: 'status', label: 'labels.inputs.Status', translate: true, kind: 'core', min: 125, grow: 1 },
+    { id: 'accountNo', label: 'labels.inputs.Loan Account', translate: true, kind: 'core', min: 115, grow: 1 },
+    { id: 'principal', label: 'labels.inputs.Principal', translate: true, kind: 'core', min: 110, grow: 1 },
+    { id: 'product', label: 'labels.inputs.Loan Product', translate: true, kind: 'core', min: 140, grow: 1.2 }
   ];
+
+  /** Optional loan fields, all derivable from the /loans list response already loaded. */
+  private readonly stdColumns: ColumnDef[] = [
+    {
+      id: 'std:externalId',
+      label: 'labels.inputs.External Id',
+      translate: true,
+      kind: 'std',
+      min: 115,
+      grow: 1,
+      mono: true,
+      text: (loan) => this.externalIdText(loan)
+    },
+    {
+      id: 'std:office',
+      label: 'labels.inputs.Office',
+      translate: true,
+      kind: 'std',
+      min: 130,
+      grow: 1,
+      text: (loan) => this.officeNameById.get(loan._officeId) ?? ''
+    },
+    {
+      id: 'std:loanOfficer',
+      label: 'labels.inputs.Loan Officer',
+      translate: true,
+      kind: 'std',
+      min: 130,
+      grow: 1,
+      text: (loan) => loan.loanOfficerName ?? ''
+    },
+    {
+      id: 'std:interestRate',
+      label: 'labels.inputs.Interest Rate',
+      translate: true,
+      kind: 'std',
+      min: 95,
+      grow: 0.6,
+      mono: true,
+      raw: (loan) => this.numberOrNaN(loan.annualInterestRate ?? loan.interestRatePerPeriod),
+      text: (loan) => this.percentText(loan.annualInterestRate ?? loan.interestRatePerPeriod)
+    },
+    {
+      id: 'std:numberOfRepayments',
+      label: 'labels.inputs.Number of Repayments',
+      translate: true,
+      kind: 'std',
+      min: 90,
+      grow: 0.6,
+      mono: true,
+      raw: (loan) => this.numberOrNaN(loan.numberOfRepayments),
+      text: (loan) => (loan.numberOfRepayments ?? '') + ''
+    },
+    {
+      id: 'std:disbursedDate',
+      label: 'labels.inputs.Disbursement Date',
+      translate: true,
+      kind: 'std',
+      min: 110,
+      grow: 0.8,
+      mono: true,
+      raw: (loan) => this.dateSortKey(loan.timeline?.actualDisbursementDate ?? loan.timeline?.expectedDisbursementDate),
+      text: (loan) => this.dateText(loan.timeline?.actualDisbursementDate ?? loan.timeline?.expectedDisbursementDate)
+    },
+    {
+      id: 'std:maturityDate',
+      label: 'labels.inputs.Maturity Date',
+      translate: true,
+      kind: 'std',
+      min: 110,
+      grow: 0.8,
+      mono: true,
+      raw: (loan) => this.dateSortKey(loan.timeline?.actualMaturityDate ?? loan.timeline?.expectedMaturityDate),
+      text: (loan) => this.dateText(loan.timeline?.actualMaturityDate ?? loan.timeline?.expectedMaturityDate)
+    },
+    {
+      id: 'std:submittedDate',
+      label: 'labels.inputs.Submitted On Date',
+      translate: true,
+      kind: 'std',
+      min: 110,
+      grow: 0.8,
+      mono: true,
+      raw: (loan) => this.dateSortKey(loan.timeline?.submittedOnDate),
+      text: (loan) => this.dateText(loan.timeline?.submittedOnDate)
+    },
+    {
+      id: 'std:closedDate',
+      label: 'labels.inputs.Closed Date',
+      translate: true,
+      kind: 'std',
+      min: 110,
+      grow: 0.8,
+      mono: true,
+      raw: (loan) => this.dateSortKey(loan.timeline?.closedOnDate),
+      text: (loan) => this.dateText(loan.timeline?.closedOnDate)
+    },
+    {
+      id: 'std:principalOutstanding',
+      label: 'labels.inputs.Principal Outstanding',
+      translate: true,
+      kind: 'std',
+      min: 125,
+      grow: 1,
+      mono: true,
+      raw: (loan) => this.numberOrNaN(loan.summary?.principalOutstanding),
+      text: (loan) => this.moneyText(loan, loan.summary?.principalOutstanding)
+    },
+    {
+      id: 'std:totalOutstanding',
+      label: 'labels.inputs.Total Outstanding',
+      translate: true,
+      kind: 'std',
+      min: 125,
+      grow: 1,
+      mono: true,
+      raw: (loan) => this.numberOrNaN(loan.summary?.totalOutstanding),
+      text: (loan) => this.moneyText(loan, loan.summary?.totalOutstanding)
+    },
+    {
+      id: 'std:totalOverdue',
+      label: 'labels.inputs.Total Overdue',
+      translate: true,
+      kind: 'std',
+      min: 125,
+      grow: 1,
+      mono: true,
+      raw: (loan) => this.numberOrNaN(loan.summary?.totalOverdue),
+      text: (loan) => this.moneyText(loan, loan.summary?.totalOverdue)
+    },
+    {
+      id: 'std:inArrears',
+      label: 'labels.inputs.In Arrears',
+      translate: true,
+      kind: 'std',
+      min: 85,
+      grow: 0.5,
+      raw: (loan) => (loan.inArrears ? 1 : 0),
+      text: (loan) => this.yesNoText(!!loan.inArrears)
+    },
+    {
+      id: 'std:currency',
+      label: 'labels.inputs.Currency',
+      translate: true,
+      kind: 'std',
+      min: 80,
+      grow: 0.5,
+      mono: true,
+      text: (loan) => loan.currency?.code ?? ''
+    }
+  ];
+
+  /** Ids of the non-borrower columns the user has enabled, in display order; persisted in localStorage. */
+  private visibleColumnIds: string[] = [...DEFAULT_COLUMN_IDS];
+
+  /** Ordered columns currently rendered; rebuilt whenever the selection or table metadata changes. */
+  visibleColumns: ColumnDef[] = [];
+  /** Grid track template shared by the header and every row. */
+  gridTemplate = '';
+  /** Sum of column minimums — rows narrower than this scroll horizontally instead of collapsing. */
+  gridMinWidth = 0;
+
+  columnsPanelOpen = false;
+
+  /** Datatables registered against m_loan; null until first needed (panel open or saved dt column). */
+  dtTables: LoanDatatableMeta[] | null = null;
+  dtTablesLoading = false;
+  dtTablesError = false;
+
+  /** Bulk-loaded datatable rows, keyed table → loan id → row. */
+  private dtRows = new Map<string, Map<number, any>>();
+  /** Tables currently streaming in. */
+  dtLoading = new Set<string>();
+  /** Tables whose bulk load failed; re-enabling one of their columns retries. */
+  dtFailed = new Set<string>();
 
   /** Flat office list for the office filter (populated once, independent of loan loading). */
   offices: any[] = [];
   selectedOfficeId: number | null = null;
+  private officeNameById = new Map<number, string>();
 
   /** Basic loan product list for the product filter (populated once, independent of loan loading). */
   loanProducts: any[] = [];
@@ -117,6 +392,16 @@ export class LoansComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.visibleColumnIds = this.restoreColumns();
+    this.rebuildVisibleColumns();
+    if (this.hasDatatableColumnsSelected()) {
+      this.loadDatatableMeta();
+    }
+    // A different language can need more (or less) room for the same header label.
+    this.translateService.onLangChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+      this.rebuildVisibleColumns();
+      this.cdr.markForCheck();
+    });
     this.isLoading = true;
     this.loadAllLoans();
     this.loansService
@@ -124,7 +409,19 @@ export class LoansComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((offices) => {
         this.offices = offices ?? [];
-        this.cdr.markForCheck();
+        this.officeNameById = new Map(
+          this.offices.map((office) => [
+            office.id,
+            office.name
+          ])
+        );
+        // The office column may have rendered blank cells before this arrived.
+        if (this.visibleColumns.some((col) => col.id === 'std:office')) {
+          this.rebuildAllCells();
+          this.applyView();
+        } else {
+          this.cdr.markForCheck();
+        }
       });
     this.loansService
       .getLoanProducts()
@@ -139,6 +436,19 @@ export class LoansComponent implements OnInit {
     return this.totalRows > 0;
   }
 
+  /** Panel options for built-in columns: the four core columns, then the optional loan fields. */
+  get standardColumnOptions(): ColumnDef[] {
+    return [
+      ...this.coreColumns,
+      ...this.stdColumns
+    ];
+  }
+
+  /** Non-borrower visible columns in display order — what the panel's reorder list renders. */
+  get reorderableColumns(): ColumnDef[] {
+    return this.visibleColumns.slice(1);
+  }
+
   onSearchInput(value: string) {
     this.searchInput$.next(value.trim().toLowerCase());
   }
@@ -148,6 +458,15 @@ export class LoansComponent implements OnInit {
     this.onSearchInput('');
   }
 
+  /** Mirrors horizontal scroll between the top sync bar and the real (bottom) scrollbar. */
+  private syncingScroll = false;
+  syncScroll(source: HTMLElement, target: HTMLElement) {
+    if (this.syncingScroll) return;
+    this.syncingScroll = true;
+    target.scrollLeft = source.scrollLeft;
+    this.syncingScroll = false;
+  }
+
   toggleShowClosed() {
     this.showClosedAccounts = !this.showClosedAccounts;
     this.currentPage = 0;
@@ -155,7 +474,7 @@ export class LoansComponent implements OnInit {
   }
 
   /** Sets the sort column/direction, cycling asc → desc → none on repeated clicks. */
-  setSort(column: SortColumn) {
+  setSort(column: string) {
     if (this.sortColumn === column) {
       if (this.sortDirection === 'asc') {
         this.sortDirection = 'desc';
@@ -210,6 +529,310 @@ export class LoansComponent implements OnInit {
   totalPages(): number {
     return this.pageSize > 0 ? Math.max(1, Math.ceil(this.totalRows / this.pageSize)) : 1;
   }
+
+  /* ── Column configuration ─────────────────────────────────── */
+
+  toggleColumnsPanel() {
+    this.columnsPanelOpen = !this.columnsPanelOpen;
+    if (this.columnsPanelOpen) {
+      this.loadDatatableMeta();
+    }
+  }
+
+  closeColumnsPanel() {
+    this.columnsPanelOpen = false;
+  }
+
+  onEscapeKey() {
+    if (this.columnsPanelOpen) {
+      this.columnsPanelOpen = false;
+      this.cdr.markForCheck();
+    }
+  }
+
+  isColumnVisible(id: string): boolean {
+    return this.visibleColumnIds.includes(id);
+  }
+
+  toggleColumn(id: string) {
+    if (id === 'borrower') return;
+    const index = this.visibleColumnIds.indexOf(id);
+    if (index >= 0) {
+      this.visibleColumnIds.splice(index, 1);
+    } else {
+      this.visibleColumnIds.push(id);
+    }
+    this.persistColumns();
+    this.onColumnsChanged();
+  }
+
+  resetColumns() {
+    this.visibleColumnIds = [...DEFAULT_COLUMN_IDS];
+    this.persistColumns();
+    this.onColumnsChanged();
+  }
+
+  /**
+   * Reorders visible columns from a drag in the panel's "Visible Columns" list.
+   *
+   * Reorders only the currently-resolved ids (what was actually on screen to drag) and
+   * appends any not-yet-resolved ones (e.g. a datatable column whose metadata is still
+   * loading) at the end, so a drag mid-load can't scramble columns the user never saw.
+   */
+  moveColumn(event: CdkDragDrop<ColumnDef[]>) {
+    const visibleIds = this.reorderableColumns.map((col) => col.id);
+    moveItemInArray(visibleIds, event.previousIndex, event.currentIndex);
+    const pending = this.visibleColumnIds.filter((id) => !visibleIds.includes(id));
+    this.visibleColumnIds = [
+      ...visibleIds,
+      ...pending
+    ];
+    this.persistColumns();
+    this.onColumnsChanged();
+  }
+
+  dtColumnId(tableName: string, columnName: string): string {
+    return `dt:${tableName}:${columnName}`;
+  }
+
+  /** Re-derives visible columns, kicks off any missing datatable loads, and re-renders. */
+  private onColumnsChanged() {
+    this.rebuildVisibleColumns();
+    for (const col of this.visibleColumns) {
+      if (col.kind === 'dt') {
+        this.ensureDatatableLoaded(col.dtTable);
+      }
+    }
+    this.rebuildAllCells();
+    this.applyView();
+  }
+
+  /** Rebuilds visibleColumns by walking visibleColumnIds in order — that order is the display order. */
+  private rebuildVisibleColumns() {
+    const defs: ColumnDef[] = [this.borrowerColumn];
+    for (const id of this.visibleColumnIds) {
+      const def = this.resolveColumnDef(id);
+      if (def) defs.push(def);
+    }
+    this.visibleColumns = defs;
+    const mins = defs.map((def) => this.effectiveMinWidth(def));
+    this.gridTemplate = '4px 36px ' + defs.map((def, i) => `minmax(${mins[i]}px, ${def.grow}fr)`).join(' ');
+    // 4px rail + 36px avatar + column minimums + 14px gaps + 32px row padding.
+    this.gridMinWidth = 40 + mins.reduce((sum, min) => sum + min, 0) + 14 * (defs.length + 1) + 32;
+    if (this.sortColumn && !defs.some((def) => def.id === this.sortColumn)) {
+      this.sortColumn = '';
+      this.sortDirection = '';
+    }
+  }
+
+  /**
+   * A column's declared `min` is tuned for its value cells; the header label (especially
+   * once translated — some languages run notably longer than English) can need more room
+   * than that to avoid clipping. Whichever is larger wins.
+   */
+  private effectiveMinWidth(def: ColumnDef): number {
+    const label = def.translate ? this.translateService.instant(def.label) : def.label;
+    return Math.max(def.min, this.headerTextMinWidth(label));
+  }
+
+  /** Estimated px width of a header label in its bold, uppercase, letter-spaced 10.5px font, plus the sort icon. */
+  private headerTextMinWidth(text: string): number {
+    return Math.ceil((text || '').length * 8) + 14;
+  }
+
+  /** Resolves a persisted column id to its definition; undefined for a stale or not-yet-loaded datatable column. */
+  private resolveColumnDef(id: string): ColumnDef | undefined {
+    const core = this.coreColumns.find((col) => col.id === id);
+    if (core) return core;
+    const std = this.stdColumns.find((col) => col.id === id);
+    if (std) return std;
+    if (!id.startsWith('dt:')) return undefined;
+    for (const table of this.dtTables ?? []) {
+      const column = table.columns.find((candidate) => this.dtColumnId(table.name, candidate.name) === id);
+      if (column) {
+        return {
+          id,
+          label: column.label,
+          translate: false,
+          kind: 'dt',
+          ...this.dtColumnSizing(column.type),
+          dtTable: table.name,
+          dtColumn: column.name,
+          dtType: column.type,
+          codeValues: column.codeValues
+        };
+      }
+    }
+    return undefined;
+  }
+
+  private dtColumnSizing(type: string): { min: number; grow: number; mono?: boolean } {
+    switch (type) {
+      case 'DATE':
+      case 'DATETIME':
+        return { min: 110, grow: 0.8, mono: true };
+      case 'INTEGER':
+      case 'DECIMAL':
+        return { min: 100, grow: 0.8, mono: true };
+      case 'BOOLEAN':
+        return { min: 85, grow: 0.5 };
+      default:
+        return { min: 130, grow: 1 };
+    }
+  }
+
+  private hasDatatableColumnsSelected(): boolean {
+    return this.visibleColumnIds.some((id) => id.startsWith('dt:'));
+  }
+
+  private persistColumns() {
+    try {
+      localStorage.setItem(COLUMNS_STORAGE_KEY, JSON.stringify(this.visibleColumnIds));
+    } catch {
+      /* Storage full or unavailable — the selection just won't survive a reload. */
+    }
+  }
+
+  private restoreColumns(): string[] {
+    try {
+      const saved = JSON.parse(localStorage.getItem(COLUMNS_STORAGE_KEY));
+      if (Array.isArray(saved) && saved.length) {
+        // Older saved state persisted 'borrower' too, back when it was a removable column.
+        return saved.filter((id: any) => typeof id === 'string' && id !== 'borrower');
+      }
+    } catch {
+      /* Corrupt entry — fall through to the defaults. */
+    }
+    return [...DEFAULT_COLUMN_IDS];
+  }
+
+  /* ── Datatable metadata and bulk data ─────────────────────── */
+
+  private loadDatatableMeta() {
+    if (this.dtTables !== null || this.dtTablesLoading) return;
+    this.dtTablesLoading = true;
+    this.dtTablesError = false;
+    this.loansService
+      .getLoanDataTables()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (res: any) => {
+          this.dtTables = this.parseDatatableMeta(res);
+          this.dtTablesLoading = false;
+          this.pruneUnknownDtColumns();
+          this.onColumnsChanged();
+        },
+        error: (error) => {
+          console.error('Failed to load loan datatables:', error);
+          this.dtTablesLoading = false;
+          this.dtTablesError = true;
+          this.cdr.markForCheck();
+        }
+      });
+  }
+
+  private parseDatatableMeta(res: any): LoanDatatableMeta[] {
+    const tables: LoanDatatableMeta[] = [];
+    for (const table of res ?? []) {
+      const name = table?.registeredTableName;
+      if (!name) continue;
+      const columns = (table.columnHeaderData ?? [])
+        .filter(
+          (col: any) => ![
+              'id',
+              'loan_id',
+              'client_id'
+            ].includes((col.columnName ?? '').toLowerCase())
+        )
+        .map((col: any) => ({
+          name: col.columnName,
+          label: humanizeName(col.columnName ?? ''),
+          type: (col.columnDisplayType ?? 'STRING').toUpperCase(),
+          codeValues: col.columnValues?.length
+            ? new Map<number, string>(
+                col.columnValues.map((value: any) => [
+                  value.id,
+                  value.value
+                ])
+              )
+            : undefined
+        }));
+      if (columns.length) {
+        tables.push({ name, label: humanizeName(name), columns });
+      }
+    }
+    return tables;
+  }
+
+  /** Drops saved datatable columns whose table or column no longer exists. */
+  private pruneUnknownDtColumns() {
+    const known = new Set<string>();
+    for (const table of this.dtTables ?? []) {
+      for (const column of table.columns) {
+        known.add(this.dtColumnId(table.name, column.name));
+      }
+    }
+    const filtered = this.visibleColumnIds.filter((id) => !id.startsWith('dt:') || known.has(id));
+    if (filtered.length !== this.visibleColumnIds.length) {
+      this.visibleColumnIds = filtered;
+      this.persistColumns();
+    }
+  }
+
+  /**
+   * Bulk-loads a datatable once: pages through the advanced query API and indexes rows
+   * by loan id. For multi-row tables the last row per loan wins (the newest entry under
+   * the API's id ordering).
+   */
+  private ensureDatatableLoaded(tableName: string | undefined) {
+    if (!tableName || this.dtRows.has(tableName) || this.dtLoading.has(tableName)) return;
+    const table = (this.dtTables ?? []).find((candidate) => candidate.name === tableName);
+    if (!table) return;
+    this.dtLoading.add(tableName);
+    this.dtFailed.delete(tableName);
+    const resultColumns = [
+      'loan_id',
+      ...table.columns.map((column) => column.name)
+    ];
+    const rows = new Map<number, any>();
+    const loadPage = (page: number) => {
+      this.loansService
+        .queryLoanDatatableRows(tableName, resultColumns, page, DATATABLE_PAGE_SIZE)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+          next: (res: any) => {
+            const content: any[] = res?.content ?? (Array.isArray(res) ? res : []);
+            for (const row of content) {
+              const loanId = Number(row?.loan_id);
+              if (!isNaN(loanId)) {
+                rows.set(loanId, row);
+              }
+            }
+            // Fineract serializes this endpoint's Spring Page via Gson, which reflects
+            // declared fields (content) but not interface default-methods (last/totalPages),
+            // so a full page — rather than a `last` flag — is what signals "there may be more".
+            const isFullPage = content.length === DATATABLE_PAGE_SIZE;
+            if (isFullPage && page + 1 < DATATABLE_MAX_PAGES) {
+              loadPage(page + 1);
+            } else {
+              this.dtLoading.delete(tableName);
+              this.dtRows.set(tableName, rows);
+              this.rebuildAllCells();
+              this.applyView();
+            }
+          },
+          error: (error) => {
+            console.error(`Failed to load datatable ${tableName}:`, error);
+            this.dtLoading.delete(tableName);
+            this.dtFailed.add(tableName);
+            this.cdr.markForCheck();
+          }
+        });
+    };
+    loadPage(0);
+  }
+
+  /* ── Loading ──────────────────────────────────────────────── */
 
   /**
    * Loads all loans. The first (small) page is fetched on its own so the list paints
@@ -327,8 +950,122 @@ export class LoansComponent implements OnInit {
       .filter((value: any) => value !== undefined && value !== null)
       .join(' ')
       .toLowerCase();
+    this.buildCells(loan);
     return loan;
   }
+
+  /* ── Dynamic cell values ──────────────────────────────────── */
+
+  /** Precomputes display text and sort keys for the non-core visible columns of one loan. */
+  private buildCells(loan: any) {
+    const cells: Record<string, string> = {};
+    const raw: Record<string, string | number> = {};
+    for (const col of this.visibleColumns) {
+      if (col.kind === 'std') {
+        const text = col.text(loan) ?? '';
+        cells[col.id] = text;
+        raw[col.id] = col.raw ? col.raw(loan) : text.toLowerCase();
+      } else if (col.kind === 'dt') {
+        const row = this.dtRows.get(col.dtTable)?.get(Number(loan.id));
+        const cell = this.dtCell(col, row);
+        cells[col.id] = cell.text;
+        raw[col.id] = cell.raw;
+      }
+    }
+    loan._cells = cells;
+    loan._raw = raw;
+  }
+
+  private rebuildAllCells() {
+    for (const loan of this.allLoans) {
+      this.buildCells(loan);
+    }
+  }
+
+  /** Formats one datatable value by its Fineract column display type. */
+  private dtCell(col: ColumnDef, row: any): { text: string; raw: string | number } {
+    const value = row?.[col.dtColumn];
+    if (value === null || value === undefined || value === '') {
+      return { text: '', raw: '' };
+    }
+    switch (col.dtType) {
+      case 'DATE':
+      case 'DATETIME': {
+        const date = this.dateUtils.parseDate(value);
+        const time = date?.getTime();
+        if (time === undefined || isNaN(time)) {
+          return { text: String(value), raw: String(value).toLowerCase() };
+        }
+        return { text: this.dateUtils.formatDate(date, this.settingsService.dateFormat), raw: time };
+      }
+      case 'DECIMAL': {
+        const num = Number(value);
+        if (isNaN(num)) return { text: String(value), raw: String(value).toLowerCase() };
+        return { text: formatNumber(num, this.locale, '1.0-2'), raw: num };
+      }
+      case 'INTEGER': {
+        const num = Number(value);
+        if (isNaN(num)) return { text: String(value), raw: String(value).toLowerCase() };
+        return { text: String(value), raw: num };
+      }
+      case 'BOOLEAN': {
+        const truthy = value === true || value === 'true' || value === 1 || value === '1';
+        return { text: this.yesNoText(truthy), raw: truthy ? 1 : 0 };
+      }
+      case 'CODELOOKUP':
+      case 'CODEVALUE': {
+        const text = col.codeValues?.get(Number(value)) ?? String(value);
+        return { text, raw: text.toLowerCase() };
+      }
+      default:
+        return { text: String(value), raw: String(value).toLowerCase() };
+    }
+  }
+
+  private externalIdText(loan: any): string {
+    const externalId = loan.externalId;
+    if (externalId === null || externalId === undefined) return '';
+    return typeof externalId === 'object' ? (externalId.value ?? '') : String(externalId);
+  }
+
+  private numberOrNaN(value: any): number {
+    const num = Number(value);
+    // Finite sentinel so missing values sort first without producing NaN in the comparator.
+    return isNaN(num) ? Number.MIN_SAFE_INTEGER : num;
+  }
+
+  private percentText(value: any): string {
+    const num = Number(value);
+    if (value === null || value === undefined || isNaN(num)) return '';
+    return formatNumber(num, this.locale, '1.0-2') + '%';
+  }
+
+  private moneyText(loan: any, value: any): string {
+    const num = Number(value);
+    if (value === null || value === undefined || isNaN(num)) return '';
+    const code = loan.currency?.code ?? '';
+    return formatCurrency(num, this.locale, getCurrencySymbol(code, 'narrow'), code, '1.2-2');
+  }
+
+  private dateSortKey(value: any): number {
+    if (!value) return 0;
+    const time = this.dateUtils.parseDate(value)?.getTime();
+    return time === undefined || isNaN(time) ? 0 : time;
+  }
+
+  private dateText(value: any): string {
+    if (!value) return '';
+    const date = this.dateUtils.parseDate(value);
+    const time = date?.getTime();
+    if (time === undefined || isNaN(time)) return '';
+    return this.dateUtils.formatDate(date, this.settingsService.dateFormat);
+  }
+
+  private yesNoText(value: boolean): string {
+    return this.translateService.instant(value ? 'labels.commons.Yes' : 'labels.commons.No');
+  }
+
+  /* ── Filtering, sorting, paging ───────────────────────────── */
 
   /** Applies the closed-accounts filter, search, and sort to the loaded set, then repages. */
   private applyView() {
@@ -362,7 +1099,7 @@ export class LoansComponent implements OnInit {
     this.cdr.markForCheck();
   }
 
-  private compareBy(a: any, b: any, column: SortColumn): number {
+  private compareBy(a: any, b: any, column: string): number {
     const keyA = this.sortKey(a, column);
     const keyB = this.sortKey(b, column);
     if (typeof keyA === 'number' && typeof keyB === 'number') {
@@ -371,7 +1108,7 @@ export class LoansComponent implements OnInit {
     return String(keyA).localeCompare(String(keyB), undefined, { numeric: true, sensitivity: 'base' });
   }
 
-  private sortKey(loan: any, column: SortColumn): string | number {
+  private sortKey(loan: any, column: string): string | number {
     switch (column) {
       case 'borrower':
         return loan._borrowerName || '';
@@ -383,8 +1120,10 @@ export class LoansComponent implements OnInit {
         return typeof loan.principal === 'number' ? loan.principal : Number(loan.principal) || 0;
       case 'product':
         return loan.loanProductName || '';
-      default:
-        return '';
+      default: {
+        const raw = loan._raw?.[column];
+        return raw === undefined || raw === null ? '' : raw;
+      }
     }
   }
 

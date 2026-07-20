@@ -55,7 +55,9 @@
   margin: 16px auto;
   max-width: 70%;
   border-radius: 8px;
-  overflow: hidden;
+
+  /* Visible (not hidden) so the column panel can drop below the toolbar even when the list is short. */
+  overflow: visible;
   border: 1px solid var(--ch-border);
   background: var(--ch-surface-alt);
   box-shadow: 0 1px 3px rgb(13 43 94 / 6%);
@@ -70,6 +72,7 @@
   gap: 12px;
   flex-wrap: wrap;
   border-bottom: 1px solid var(--ch-border);
+  border-radius: 8px 8px 0 0;
 }
 
 .search {
@@ -216,6 +219,257 @@
   flex: 1;
 }
 
+/* ── Column configuration ─────────────────────────────────── */
+.col-config {
+  position: relative;
+}
+
+.cog-btn {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--ch-border);
+  border-radius: 6px;
+  background: var(--ch-surface);
+  color: var(--ch-text-2);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    border-color 0.14s ease,
+    color 0.14s ease;
+}
+
+.cog-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.cog-btn:hover,
+.cog-btn.active {
+  border-color: var(--ch-blue-700);
+  color: var(--ch-blue-700);
+}
+
+.panel-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+}
+
+.col-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 50;
+  width: 300px;
+  max-height: min(480px, 70vh);
+  display: flex;
+  flex-direction: column;
+  background: var(--ch-surface);
+  border: 1px solid var(--ch-border);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgb(13 43 94 / 14%);
+}
+
+.col-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--ch-border);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ch-text-1);
+}
+
+.link-btn {
+  border: none;
+  background: none;
+  padding: 2px 4px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ch-blue-700);
+  cursor: pointer;
+}
+
+.link-btn:hover {
+  text-decoration: underline;
+}
+
+.col-panel-body {
+  overflow-y: auto;
+  padding: 4px 8px 12px;
+}
+
+.col-group-title {
+  padding: 10px 6px 4px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ch-text-3);
+}
+
+.col-table-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 6px 2px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ch-text-2);
+}
+
+.col-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 5px 6px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  color: var(--ch-text-1);
+  cursor: pointer;
+  user-select: none;
+}
+
+.col-option:hover {
+  background: var(--ch-blue-20);
+}
+
+.col-option [type='checkbox'] {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  flex-shrink: 0;
+  accent-color: var(--ch-blue-700);
+  cursor: pointer;
+}
+
+.col-option span {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.col-note {
+  padding: 6px;
+  font-size: 12px;
+  color: var(--ch-text-3);
+}
+
+.col-note.error {
+  color: var(--ch-alert);
+}
+
+.spin {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  border: 2px solid var(--ch-border);
+  border-top-color: var(--ch-blue-700);
+  border-radius: 50%;
+  display: inline-block;
+  animation: colspin 0.7s linear infinite;
+}
+
+@keyframes colspin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.dt-error {
+  color: var(--ch-alert);
+  font-weight: 700;
+  cursor: help;
+}
+
+/* ── Column reorder list ──────────────────────────────────── */
+.reorder-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.reorder-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+  border-radius: 6px;
+  background: var(--ch-surface);
+}
+
+.reorder-item:hover {
+  background: var(--ch-blue-20);
+}
+
+.drag-handle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--ch-text-3);
+  cursor: grab;
+}
+
+.drag-handle svg {
+  width: 14px;
+  height: 14px;
+}
+
+.reorder-label {
+  flex: 1;
+  font-size: 12.5px;
+  color: var(--ch-text-1);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.reorder-remove {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ch-text-3);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reorder-remove:hover {
+  background: var(--ch-alert-bg);
+  color: var(--ch-alert);
+}
+
+.reorder-item.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 6px;
+  background: var(--ch-surface);
+  border: 1px solid var(--ch-border);
+  box-shadow: 0 4px 12px rgb(13 43 94 / 18%);
+}
+
+.reorder-item.cdk-drag-placeholder {
+  opacity: 0.3;
+}
+
+.reorder-list.cdk-drop-list-dragging .reorder-item:not(.cdk-drag-placeholder) {
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
 .loading-bar {
   display: block;
 }
@@ -223,15 +477,31 @@
 /* ── List ─────────────────────────────────────────────────── */
 .list {
   background: var(--ch-surface);
+  border-radius: 0 0 8px 8px;
 }
 
+.table-scroll {
+  overflow-x: auto;
+}
+
+/*
+ * A second horizontal scrollbar, synced with the real one on `.table-scroll` (via
+ * LoansComponent.syncScroll), so one is reachable right at the top of the table instead
+ * of only after however many rows are on the current page.
+ */
+.scroll-sync-top {
+  overflow: auto hidden;
+  height: 16px;
+}
+
+.scroll-sync-spacer {
+  height: 1px;
+}
+
+/* Column tracks come from an inline grid-template so the user's column picks drive the layout. */
 .list-header,
 .list-row {
   display: grid;
-  grid-template-columns: 4px 36px minmax(220px, 32%) minmax(130px, 15%) minmax(120px, 16%) minmax(120px, 16%) minmax(
-      150px,
-      18%
-    );
   align-items: center;
   gap: 14px;
   padding: 8px 16px;
