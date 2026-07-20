@@ -24,6 +24,7 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCardTitle } from '@angular/material/card';
 
 /**
  * Create savings account transactions component.
@@ -38,7 +39,8 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
     MatSlideToggle,
     CdkTextareaAutosize,
     MatStepperModule,
-    FaIconComponent
+    FaIconComponent,
+    MatCardTitle
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -81,6 +83,11 @@ export class SavingsAccountTransactionsComponent implements OnInit {
   /** Flag to track if transaction is being submitted */
   isSubmitting: boolean = false;
 
+  get minimumTransactionAmount(): number {
+    const decimalPlaces = Math.min(this.currency?.decimalPlaces ?? 6, 6);
+    return 1 / Math.pow(10, decimalPlaces);
+  }
+
   /**
    * Retrieves the Saving Account transaction template data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -121,7 +128,10 @@ export class SavingsAccountTransactionsComponent implements OnInit {
       ],
       transactionAmount: [
         0,
-        Validators.required
+        [
+          Validators.required,
+          Validators.min(this.minimumTransactionAmount)
+        ]
       ],
       paymentTypeId: [
         '',
