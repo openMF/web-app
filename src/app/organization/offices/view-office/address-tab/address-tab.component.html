@@ -174,13 +174,13 @@
                 <span>{{ address.postalCode }}</span>
               </div>
             }
-            @if (hasValue(address.latitude)) {
+            @if (clientAddressLocationEnabled && hasValue(address.latitude)) {
               <div class="address-row">
                 <span class="label">{{ 'labels.inputs.Latitude' | translate }}</span>
                 <span>{{ address.latitude }}</span>
               </div>
             }
-            @if (hasValue(address.longitude)) {
+            @if (clientAddressLocationEnabled && hasValue(address.longitude)) {
               <div class="address-row">
                 <span class="label">{{ 'labels.inputs.Longitude' | translate }}</span>
                 <span>{{ address.longitude }}</span>
@@ -191,6 +191,9 @@
               <span>{{ getActiveStatusLabel(address.isActive) | translate }}</span>
             </div>
           </div>
+          @if (clientAddressLocationEnabled && hasValidCoordinatePair(address.latitude, address.longitude)) {
+            <mifosx-address-location-map [latitude]="address.latitude" [longitude]="address.longitude" />
+          }
         </mat-expansion-panel>
       }
     </mat-accordion>

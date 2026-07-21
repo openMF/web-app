@@ -33,12 +33,14 @@ import { catchError, debounceTime, distinctUntilChanged, finalize, switchMap } f
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
+import { AddressLocationMapComponent } from 'app/clients/clients-view/address-tab/address-location-map/address-location-map.component';
 
 /** Custom Services */
 import { TranslateService } from '@ngx-translate/core';
 import { ClientsService } from 'app/clients/clients.service';
 import { OrganizationService } from 'app/organization/organization.service';
 import { PostalCodeLookupService } from 'app/shared/services/postal-code-lookup.service';
+import { environment } from 'environments/environment';
 
 /** Custom Models */
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
@@ -49,6 +51,7 @@ import { ResolvedAddress } from 'app/shared/models/postal-code-lookup.model';
 
 /** Custom Imports */
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { hasValidCoordinatePair } from 'app/clients/utils/address-coordinate.util';
 
 @Component({
   selector: 'mifosx-office-address-tab',
@@ -64,11 +67,18 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatExpansionPanelDescription,
     MatDivider,
     MatProgressSpinner,
-    MatSlideToggle
+    MatSlideToggle,
+    AddressLocationMapComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddressTabComponent implements OnInit {
+  readonly hasValidCoordinatePair = hasValidCoordinatePair;
+
+  get clientAddressLocationEnabled(): boolean {
+    return environment.enableClientAddressLocation;
+  }
+
   private route = inject(ActivatedRoute);
   private organizationService = inject(OrganizationService);
   private clientsService = inject(ClientsService);
@@ -292,7 +302,7 @@ export class AddressTabComponent implements OnInit {
   }
 
   private normalizeAddressData(addressData: any) {
-    return {
+    const normalizedAddressData: any = {
       addressTypeId: addressData.addressTypeId,
       street: addressData.street ?? '',
       addressLine1: addressData.addressLine1 ?? '',
@@ -304,10 +314,15 @@ export class AddressTabComponent implements OnInit {
       stateProvinceId: addressData.stateProvinceId || null,
       countryId: addressData.countryId || null,
       postalCode: addressData.postalCode ?? '',
-      latitude: this.hasValue(addressData.latitude) ? addressData.latitude : null,
-      longitude: this.hasValue(addressData.longitude) ? addressData.longitude : null,
       isActive: !!addressData.isActive
     };
+
+    if (this.clientAddressLocationEnabled) {
+      normalizedAddressData.latitude = this.hasValue(addressData.latitude) ? addressData.latitude : null;
+      normalizedAddressData.longitude = this.hasValue(addressData.longitude) ? addressData.longitude : null;
+    }
+
+    return normalizedAddressData;
   }
 
   private getAddressFormFields(address?: any) {
@@ -390,26 +405,30 @@ export class AddressTabComponent implements OnInit {
         options: { label: 'name', value: 'id', data: this.addressTemplate.countryIdOptions ?? [] },
         order: 11
       }),
-      new InputBase({
-        controlName: 'latitude',
-        label: this.translateService.instant('labels.inputs.Latitude'),
-        value: address ? address.latitude : '',
-        type: 'number',
-        min: -90,
-        max: 90,
-        step: '0.00000001',
-        order: 12
-      }),
-      new InputBase({
-        controlName: 'longitude',
-        label: this.translateService.instant('labels.inputs.Longitude'),
-        value: address ? address.longitude : '',
-        type: 'number',
-        min: -180,
-        max: 180,
-        step: '0.00000001',
-        order: 13
-      }),
+      ...(this.clientAddressLocationEnabled
+        ? [
+            new InputBase({
+              controlName: 'latitude',
+              label: this.translateService.instant('labels.inputs.Latitude'),
+              value: address ? address.latitude : '',
+              type: 'number',
+              min: -90,
+              max: 90,
+              step: '0.00000001',
+              order: 12
+            }),
+            new InputBase({
+              controlName: 'longitude',
+              label: this.translateService.instant('labels.inputs.Longitude'),
+              value: address ? address.longitude : '',
+              type: 'number',
+              min: -180,
+              max: 180,
+              step: '0.00000001',
+              order: 13
+            })
+          ]
+        : []),
       new CheckboxBase({
         controlName: 'isActive',
         label: this.translateService.instant('labels.inputs.Active Status'),

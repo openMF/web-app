@@ -15,12 +15,39 @@ import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faEdit, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { of, throwError } from 'rxjs';
 import { describe, it, expect, jest, beforeEach } from '@jest/globals';
+import * as L from 'leaflet';
 
 import { AddressTabComponent } from './address-tab.component';
 import { ClientsService } from 'app/clients/clients.service';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { OrganizationService } from 'app/organization/organization.service';
 import { PostalCodeLookupService } from 'app/shared/services/postal-code-lookup.service';
+import { environment } from 'environments/environment';
+
+const mockMapRemove = jest.fn();
+const mockMapSetView = jest.fn().mockReturnThis();
+const mockMapInvalidateSize = jest.fn();
+const mockMarkerSetLatLng = jest.fn();
+const mockTileLayerAddTo = jest.fn().mockReturnThis();
+const mockTileLayerOn = jest.fn().mockReturnValue({ addTo: mockTileLayerAddTo, on: jest.fn() });
+const mockMarkerAddTo = jest.fn().mockReturnThis();
+
+jest.mock('leaflet', () => ({
+  icon: jest.fn(() => ({})),
+  map: jest.fn(() => ({
+    setView: mockMapSetView,
+    invalidateSize: mockMapInvalidateSize,
+    remove: mockMapRemove
+  })),
+  tileLayer: jest.fn(() => ({
+    addTo: mockTileLayerAddTo,
+    on: mockTileLayerOn
+  })),
+  marker: jest.fn(() => ({
+    addTo: mockMarkerAddTo,
+    setLatLng: mockMarkerSetLatLng
+  }))
+}));
 
 describe('Office AddressTabComponent', () => {
   let component: AddressTabComponent;
@@ -72,6 +99,9 @@ describe('Office AddressTabComponent', () => {
   }
 
   beforeEach(async () => {
+    jest.clearAllMocks();
+    environment.enableClientAddressLocation = true;
+
     organizationService = {
       getOfficeAddresses: jest.fn(() => of([officeAddress])),
       createOfficeAddress: jest.fn(() => of({ entityId: 10 })),
@@ -278,6 +308,88 @@ describe('Office AddressTabComponent', () => {
     expect(formFields.find((field: any) => field.controlName === 'longitude')).toEqual(
       expect.objectContaining({ min: -180, max: 180 })
     );
+  });
+
+  it('shows plugin geolocation fields when the location feature is enabled even if Fineract field config disables them', () => {
+    component.addressTemplate = addressTemplate;
+    (component as any).clientAddressFieldConfig = [
+      { field: 'latitude', isEnabled: false },
+      { field: 'longitude', isEnabled: false }
+    ];
+
+    const formFields = (component as any).getAddressFormFields();
+
+    expect(formFields.some((field: any) => field.controlName === 'latitude')).toBe(true);
+    expect(formFields.some((field: any) => field.controlName === 'longitude')).toBe(true);
+  });
+
+  it('hides plugin geolocation fields when the location feature is disabled', () => {
+    environment.enableClientAddressLocation = false;
+    component.addressTemplate = addressTemplate;
+
+    const formFields = (component as any).getAddressFormFields();
+
+    expect(formFields.some((field: any) => field.controlName === 'latitude')).toBe(false);
+    expect(formFields.some((field: any) => field.controlName === 'longitude')).toBe(false);
+  });
+
+  it('omits plugin geolocation values from save payloads when the location feature is disabled', () => {
+    environment.enableClientAddressLocation = false;
+    fixture.detectChanges();
+    dialog.open.mockReturnValue(
+      dialogRefWithValue({
+        addressTypeId: 1,
+        street: 'Church Street',
+        latitude: '12.9716',
+        longitude: '77.5946',
+        isActive: true
+      })
+    );
+
+    component.addAddress();
+
+    const payload = organizationService.createOfficeAddress.mock.calls[0][1];
+    expect(payload.latitude).toBeUndefined();
+    expect(payload.longitude).toBeUndefined();
+  });
+
+  it('renders plugin geolocation values and map for returned coordinates when the location feature is enabled', () => {
+    organizationService.getOfficeAddresses.mockReturnValue(
+      of([
+        {
+          ...officeAddress,
+          latitude: '12.9716',
+          longitude: '77.5946'
+        }
+      ])
+    );
+
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.textContent).toContain('12.9716');
+    expect(fixture.nativeElement.textContent).toContain('77.5946');
+    expect(fixture.nativeElement.querySelector('mifosx-address-location-map')).not.toBeNull();
+    expect(L.map).toHaveBeenCalledTimes(1);
+  });
+
+  it('hides plugin geolocation values and map for returned coordinates when the location feature is disabled', () => {
+    environment.enableClientAddressLocation = false;
+    organizationService.getOfficeAddresses.mockReturnValue(
+      of([
+        {
+          ...officeAddress,
+          latitude: '12.9716',
+          longitude: '77.5946'
+        }
+      ])
+    );
+
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.textContent).not.toContain('12.9716');
+    expect(fixture.nativeElement.textContent).not.toContain('77.5946');
+    expect(fixture.nativeElement.querySelector('mifosx-address-location-map')).toBeNull();
+    expect(L.map).not.toHaveBeenCalled();
   });
 
   it('shows an error state when office address loading fails for non-404 errors', () => {
