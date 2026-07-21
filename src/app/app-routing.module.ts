@@ -45,6 +45,10 @@ const routes: Routes = [
     loadChildren: () => import('./groups/groups.module').then((m) => m.GroupsModule)
   },
   {
+    path: 'loans',
+    loadChildren: () => import('./loans/loans-list.routes').then((m) => m.LOANS_LIST_ROUTES)
+  },
+  {
     path: 'navigation',
     loadChildren: () => import('./navigation/navigation.module').then((m) => m.NavigationModule)
   },

@@ -32,6 +32,7 @@ import { ExternalIdentifierComponent } from '../shared/external-identifier/exter
 import { LegalFormId } from './models/legal-form.enum';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { DateFormatPipe } from '../pipes/date-format.pipe';
+import { nameInitials } from 'app/core/utils/name-initials';
 
 export const DEBOUNCE_MS = 500;
 
@@ -75,11 +76,7 @@ export class ClientsComponent implements OnInit, OnDestroy {
 
   /** Two-letter uppercase initials from a display name. */
   initials(name: string): string {
-    if (!name) return '?';
-    const parts = name.trim().split(/\s+/).filter(Boolean);
-    if (parts.length === 0) return '?';
-    if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
-    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    return nameInitials(name);
   }
 
   /** UI severity class for a row from its status.code. */
