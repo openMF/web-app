@@ -131,17 +131,12 @@
       </mat-form-field>
     }
 
-    <mat-form-field class="flex-13" (click)="dateOfBirthDatePicker.open()">
-      <mat-label>
-        {{
-          'labels.inputs.' + getDateLabel(createClientForm.value.legalFormId, ['Date of Birth', 'Incorporation Date'])
-            | translate
-        }}
-      </mat-label>
-      <input matInput [max]="maxDate" [matDatepicker]="dateOfBirthDatePicker" formControlName="dateOfBirth" />
-      <mat-datepicker-toggle matSuffix [for]="dateOfBirthDatePicker"></mat-datepicker-toggle>
-      <mat-datepicker #dateOfBirthDatePicker></mat-datepicker>
-    </mat-form-field>
+    <mifosx-nepali-date-input
+      class="flex-13"
+      [label]="getDateLabel(createClientForm.value.legalFormId, ['Date of Birth', 'Incorporation Date'])"
+      formControlName="dateOfBirth"
+      [maxDate]="maxDate"
+    />
 
     @if (createClientForm.get('clientNonPersonDetails')) {
       <div formGroupName="clientNonPersonDetails" class="contents-wrapper">
@@ -165,18 +160,11 @@
             }
           </mat-select>
         </mat-form-field>
-        <mat-form-field class="flex-14" (click)="incorpValidityTillDateDatePicker.open()">
-          <mat-label>{{ 'labels.inputs.Incorporation Validity Till Date' | translate }}</mat-label>
-          <input
-            matInput
-            [min]="minDate"
-            [max]="maxDate"
-            [matDatepicker]="incorpValidityTillDateDatePicker"
-            formControlName="incorpValidityTillDate"
-          />
-          <mat-datepicker-toggle matSuffix [for]="incorpValidityTillDateDatePicker"></mat-datepicker-toggle>
-          <mat-datepicker #incorpValidityTillDateDatePicker></mat-datepicker>
-        </mat-form-field>
+        <mifosx-nepali-date-input
+          class="flex-14"
+          label="Incorporation Validity Till Date"
+          formControlName="incorpValidityTillDate"
+        />
         <mat-form-field class="flex-15">
           <mat-label>{{ 'labels.inputs.Incorporation Number' | translate }}</mat-label>
           <input matInput formControlName="incorpNumber" />
@@ -262,44 +250,26 @@
     </mat-form-field>
 
     <!-- Row 4: Submitted On, Active?, Activation Date, Open Savings Account?, Savings Product -->
-    <mat-form-field class="flex-13" (click)="submittedOnDatePicker.open()">
-      <mat-label>{{ 'labels.inputs.Submitted On' | translate }}</mat-label>
-      <input
-        matInput
-        [min]="minDate"
-        [max]="maxDate"
-        [matDatepicker]="submittedOnDatePicker"
-        formControlName="submittedOnDate"
-        required
-      />
-      <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
-      <mat-datepicker #submittedOnDatePicker></mat-datepicker>
-    </mat-form-field>
+    <mifosx-nepali-date-input
+      class="flex-13"
+      label="Submitted On"
+      formControlName="submittedOnDate"
+      [minDate]="minDate"
+      [maxDate]="maxDate"
+    />
 
     <mat-checkbox labelPosition="before" formControlName="active" class="flex-5">
       {{ 'labels.inputs.Active' | translate }}?
     </mat-checkbox>
 
     @if (createClientForm.contains('activationDate')) {
-      <mat-form-field class="flex-13 activation-date" (click)="activatedOnDatePicker.open()">
-        <mat-label>{{ 'labels.inputs.Activation Date' | translate }}</mat-label>
-        <input
-          matInput
-          [min]="createClientForm.value.submittedOnDate"
-          [max]="maxDate"
-          [matDatepicker]="activatedOnDatePicker"
-          required
-          formControlName="activationDate"
-        />
-        <mat-datepicker-toggle matSuffix [for]="activatedOnDatePicker"></mat-datepicker-toggle>
-        <mat-datepicker #activatedOnDatePicker></mat-datepicker>
-        @if (createClientForm.controls.activationDate.hasError('required')) {
-          <mat-error>
-            {{ 'labels.inputs.Activation Date' | translate }} {{ 'labels.commons.is' | translate }}
-            <strong>{{ 'labels.commons.required' | translate }}</strong>
-          </mat-error>
-        }
-      </mat-form-field>
+      <mifosx-nepali-date-input
+        class="flex-13 activation-date"
+        label="Activation Date"
+        formControlName="activationDate"
+        [minDate]="createClientForm.value.submittedOnDate"
+        [maxDate]="maxDate"
+      />
     }
 
     <mat-checkbox labelPosition="before" formControlName="addSavings">

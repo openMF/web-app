@@ -1,0 +1,305 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+// ── Host ─────────────────────────────────────────────────────────────────────
+:host {
+  display: block;
+}
+
+// ── Wrapper ───────────────────────────────────────────────────────────────────
+.mfx-bs-picker {
+  position: relative;
+  display: flex;
+  width: 100%;
+
+  &__input {
+    cursor: pointer !important;
+  }
+
+  &__cal-icon {
+    cursor: pointer;
+    font-size: 18px !important;
+    width: 18px !important;
+    height: 18px !important;
+    opacity: 0.54;
+  }
+
+  // ── Panel ──────────────────────────────────────────────────────────────────
+  &__panel {
+    position: fixed;
+    z-index: 1050;
+    width: 264px;
+    max-height: 90vh;
+    overflow-y: auto;
+    outline: 1px solid transparent;
+    background: var(--mat-datepicker-calendar-container-background-color);
+    color: var(--mat-datepicker-calendar-container-text-color);
+    border-radius: 6px;
+    box-shadow: var(
+      --mat-datepicker-calendar-container-elevation-shadow,
+      0 2px 8px rgb(0 0 0 / 15%),
+      0 1px 3px rgb(0 0 0 / 10%)
+    );
+  }
+
+  // ── Header ─────────────────────────────────────────────────────────────────
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 6px 6px 4px;
+    background: var(--mat-datepicker-calendar-header-background-color, inherit);
+    color: var(--mat-datepicker-calendar-header-text-color, inherit);
+  }
+
+  &__nav-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+    color: inherit;
+    flex-shrink: 0;
+    transition: background 0.12s ease;
+
+    mat-icon {
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
+      line-height: 16px;
+    }
+
+    &:hover:not(:disabled) {
+      background: var(--mat-datepicker-calendar-date-hover-state-background-color, rgb(0 0 0 / 6%));
+    }
+
+    &:disabled {
+      opacity: 0.38;
+      cursor: default;
+    }
+  }
+
+  &__header-labels {
+    display: flex;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__header-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 1px;
+    padding: 2px 4px;
+    border: none;
+    border-radius: 4px;
+    background: transparent;
+    color: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.1s ease;
+
+    &:hover {
+      background: var(--mat-datepicker-calendar-date-hover-state-background-color, rgb(0 0 0 / 6%));
+    }
+  }
+
+  &__header-chevron {
+    font-size: 14px !important;
+    width: 14px !important;
+    height: 14px !important;
+    line-height: 14px !important;
+    opacity: 0.7;
+  }
+
+  // ── Month picker grid ────────────────────────────────────────────────────────
+  &__month-grid {
+    display: grid;
+    // 3 columns; gap: 2px means 2 column gaps = 4px consumed; each cell = (100% - 4px) / 3
+    grid-template-columns: repeat(3, calc((100% - 4px) / 3));
+    gap: 2px;
+    padding: 6px;
+  }
+
+  &__month-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    border: none;
+    border-radius: 18px;
+    background: transparent;
+    color: var(--mat-datepicker-calendar-container-text-color, inherit);
+    font-size: 11px;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.1s ease;
+
+    &:hover {
+      background: var(--mat-datepicker-calendar-date-hover-state-background-color, rgb(0 0 0 / 6%));
+    }
+
+    &--selected {
+      background: var(--mat-datepicker-calendar-date-selected-state-background-color, #6750a4) !important;
+      color: var(--mat-datepicker-calendar-date-selected-state-text-color, #fff) !important;
+      font-weight: 700;
+    }
+  }
+
+  // ── Year picker grid ─────────────────────────────────────────────────────────
+  &__year-grid {
+    display: grid;
+    // 3 columns; gap: 2px means 2 column gaps = 4px consumed; each cell = (100% - 4px) / 3
+    grid-template-columns: repeat(3, calc((100% - 4px) / 3));
+    gap: 2px;
+    padding: 6px;
+    max-height: 200px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+  }
+
+  &__year-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    border: none;
+    border-radius: 16px;
+    background: transparent;
+    color: var(--mat-datepicker-calendar-container-text-color, inherit);
+    font-size: 11px;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.1s ease;
+
+    &:hover {
+      background: var(--mat-datepicker-calendar-date-hover-state-background-color, rgb(0 0 0 / 6%));
+    }
+
+    &--selected {
+      background: var(--mat-datepicker-calendar-date-selected-state-background-color, #6750a4) !important;
+      color: var(--mat-datepicker-calendar-date-selected-state-text-color, #fff) !important;
+      font-weight: 700;
+    }
+  }
+
+  // ── Weekday row ─────────────────────────────────────────────────────────────
+  &__weekdays {
+    // 7 equal columns, no column gap — 7 × 14.285714% ≈ 100%
+    display: grid;
+    grid-template-columns: repeat(7, 14.2857%);
+    padding: 0 6px;
+
+    span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 26px;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--mat-datepicker-calendar-header-text-color, inherit);
+      opacity: 0.55;
+      letter-spacing: 0.02em;
+    }
+  }
+
+  // ── Day grid ─────────────────────────────────────────────────────────────────
+  &__grid {
+    // 7 equal columns, no column gap — 7 × 14.285714% ≈ 100%
+    display: grid;
+    grid-template-columns: repeat(7, 14.2857%);
+    padding: 0 6px 6px;
+    gap: 1px 0;
+  }
+
+  &__day {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    margin: 0 auto;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    font-size: 12px;
+    font-family: inherit;
+    color: var(--mat-datepicker-calendar-container-text-color, inherit);
+    cursor: pointer;
+    transition: background 0.1s ease;
+
+    &:hover {
+      background: var(--mat-datepicker-calendar-date-hover-state-background-color, rgb(0 0 0 / 6%));
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--mat-datepicker-calendar-date-selected-state-background-color, #6750a4);
+      outline-offset: -2px;
+    }
+
+    &--selected {
+      background: var(--mat-datepicker-calendar-date-selected-state-background-color, #6750a4) !important;
+      color: var(--mat-datepicker-calendar-date-selected-state-text-color, #fff) !important;
+      font-weight: 700;
+    }
+
+    &--today {
+      color: var(--mat-datepicker-calendar-date-today-outline-color, #6750a4);
+      font-weight: 700;
+      outline: 1px solid var(--mat-datepicker-calendar-date-today-outline-color, #6750a4);
+    }
+
+    &--disabled,
+    &:disabled {
+      opacity: 0.3;
+      cursor: default;
+      pointer-events: none;
+    }
+  }
+
+  // ── Footer ──────────────────────────────────────────────────────────────────
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px 8px 6px;
+    border-top: 1px solid var(--mat-datepicker-calendar-header-divider-color, rgb(0 0 0 / 10%));
+  }
+
+  &__footer-btn {
+    border: none;
+    background: transparent;
+    color: var(--mat-datepicker-calendar-date-selected-state-background-color, #6750a4);
+    font-size: 11px;
+    font-weight: 600;
+    font-family: inherit;
+    padding: 3px 6px;
+    border-radius: 4px;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    transition: background 0.1s ease;
+
+    &:hover {
+      background: var(--mat-datepicker-calendar-date-hover-state-background-color, rgb(0 0 0 / 6%));
+    }
+
+    &:disabled {
+      opacity: 0.38;
+      cursor: default;
+    }
+  }
+}

@@ -1,0 +1,163 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="mfx-bs-picker" #wrapper>
+  <!-- ── Trigger form field ─────────────────────────────────────────────── -->
+  <mat-form-field class="flex-fill" (click)="openPanel()">
+    <mat-label>{{ label }}</mat-label>
+    <input
+      matInput
+      readonly
+      class="mfx-bs-picker__input"
+      [formControl]="bsInputControl"
+      [required]="isRequired"
+      placeholder="Select BS date"
+    />
+    <mat-icon matSuffix class="mfx-bs-picker__cal-icon">calendar_today</mat-icon>
+
+    @if (hasRequiredError) {
+      <mat-error>{{ label }} is <strong>required</strong></mat-error>
+    }
+  </mat-form-field>
+
+  <!-- ── Calendar panel ────────────────────────────────────────────────── -->
+  @if (panelOpen) {
+    <div
+      class="mfx-bs-picker__panel"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-label]="label + ' calendar'"
+      [style.top.px]="panelTop"
+      [style.left.px]="panelLeft"
+      (click)="$event.stopPropagation()"
+    >
+      <!-- ── Header ──────────────────────────────────────────────────────── -->
+      <div class="mfx-bs-picker__header">
+        @if (pickerMode === 'days') {
+          <button
+            type="button"
+            class="mfx-bs-picker__nav-btn"
+            [disabled]="isAtMin"
+            (click)="prevMonth()"
+            aria-label="Previous month"
+          >
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+        }
+
+        <div class="mfx-bs-picker__header-labels">
+          <button
+            type="button"
+            class="mfx-bs-picker__header-btn"
+            (click)="setMode(pickerMode === 'months' ? 'days' : 'months')"
+          >
+            {{ nepaliMonths[viewMonth] }}
+            <mat-icon class="mfx-bs-picker__header-chevron">{{
+              pickerMode === 'months' ? 'expand_less' : 'expand_more'
+            }}</mat-icon>
+          </button>
+          <button
+            type="button"
+            class="mfx-bs-picker__header-btn"
+            (click)="setMode(pickerMode === 'years' ? 'days' : 'years')"
+          >
+            {{ viewYear }}
+            <mat-icon class="mfx-bs-picker__header-chevron">{{
+              pickerMode === 'years' ? 'expand_less' : 'expand_more'
+            }}</mat-icon>
+          </button>
+        </div>
+
+        @if (pickerMode === 'days') {
+          <button
+            type="button"
+            class="mfx-bs-picker__nav-btn"
+            [disabled]="isAtMax"
+            (click)="nextMonth()"
+            aria-label="Next month"
+          >
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        } @else {
+          <button type="button" class="mfx-bs-picker__nav-btn" (click)="setMode('days')" aria-label="Close picker">
+            <mat-icon>close</mat-icon>
+          </button>
+        }
+      </div>
+
+      <!-- ── Month picker ─────────────────────────────────────────────────── -->
+      @if (pickerMode === 'months') {
+        <div class="mfx-bs-picker__month-grid">
+          @for (m of nepaliMonths; track $index) {
+            <button
+              type="button"
+              class="mfx-bs-picker__month-item"
+              [class.mfx-bs-picker__month-item--selected]="$index === viewMonth"
+              (click)="selectViewMonth($index)"
+            >
+              {{ m }}
+            </button>
+          }
+        </div>
+      }
+
+      <!-- ── Year picker ──────────────────────────────────────────────────── -->
+      @if (pickerMode === 'years') {
+        <div class="mfx-bs-picker__year-grid" #yearList>
+          @for (y of yearRange; track y) {
+            <button
+              type="button"
+              class="mfx-bs-picker__year-item"
+              [class.mfx-bs-picker__year-item--selected]="y === viewYear"
+              [attr.data-year]="y"
+              (click)="selectViewYear(y)"
+            >
+              {{ y }}
+            </button>
+          }
+        </div>
+      }
+
+      <!-- ── Day view ─────────────────────────────────────────────────────── -->
+      @if (pickerMode === 'days') {
+        <div class="mfx-bs-picker__weekdays">
+          @for (w of weekdays; track w) {
+            <span>{{ w }}</span>
+          }
+        </div>
+
+        <div class="mfx-bs-picker__grid">
+          @for (e of emptySlots; track $index) {
+            <span></span>
+          }
+          @for (day of dayNumbers; track day) {
+            <button
+              type="button"
+              class="mfx-bs-picker__day"
+              [class.mfx-bs-picker__day--selected]="isSelected(day)"
+              [class.mfx-bs-picker__day--today]="isToday(day) && !isSelected(day)"
+              [class.mfx-bs-picker__day--disabled]="isDayDisabled(day)"
+              [disabled]="isDayDisabled(day)"
+              (click)="selectDay(day)"
+            >
+              {{ day }}
+            </button>
+          }
+        </div>
+
+        <!-- Footer: Clear · Today -->
+        <div class="mfx-bs-picker__footer">
+          <button type="button" class="mfx-bs-picker__footer-btn" (click)="clearDate()">CLEAR</button>
+          <button type="button" class="mfx-bs-picker__footer-btn" [disabled]="isTodayDisabled" (click)="selectToday()">
+            TODAY
+          </button>
+        </div>
+      }
+    </div>
+  }
+</div>
