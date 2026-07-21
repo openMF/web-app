@@ -72,6 +72,7 @@
     "lodash": "4.18.1",
     "lottie-web": "^5.13.0",
     "moment": "^2.29.4",
+    "nepali-date-converter": "^3.4.0",
     "ngx-lottie": "^12.0.0",
     "ngx-mat-select-search": "^8.0.2",
     "rxjs": "^7.8.2",
