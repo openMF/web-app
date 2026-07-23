@@ -11,17 +11,19 @@
     <div class="m-b-10">
       <h3>{{ 'labels.heading.Address' | translate }}</h3>
     </div>
-    <div class="action-button m-b-10 gap-25px">
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="addAddress()"
-        [disabled]="isLoading || isSaving || optionsLoadFailed || isPluginUnavailable"
-        *mifosxHasPermission="'CREATE_OFFICE'"
-      >
-        <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
-      </button>
-    </div>
+    @if (!hasOfficeAddress) {
+      <div class="action-button m-b-10 gap-25px">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="addAddress()"
+          [disabled]="!canAddAddress"
+          *mifosxHasPermission="'CREATE_OFFICE'"
+        >
+          <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
+        </button>
+      </div>
+    }
   </div>
 
   @if (isLoading) {
@@ -59,7 +61,7 @@
         mat-raised-button
         color="primary"
         (click)="addAddress()"
-        [disabled]="optionsLoadFailed || isPluginUnavailable"
+        [disabled]="!canAddAddress"
         *mifosxHasPermission="'CREATE_OFFICE'"
       >
         <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
