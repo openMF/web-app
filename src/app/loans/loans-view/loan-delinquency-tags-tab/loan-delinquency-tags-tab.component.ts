@@ -285,7 +285,7 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
           if (loanDelinquencyDataResponse?.product) {
             this.loanProductId = loanDelinquencyDataResponse.product.id;
           }
-          this.wcLoanDelinquencyRangeSchedule = data.wcLoanDelinquencyRangeSchedule;
+          this.wcLoanDelinquencyRangeSchedule = data.wcLoanDelinquencyRangeSchedule || [];
           this.cdr.markForCheck();
         }
       );

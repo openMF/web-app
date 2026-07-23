@@ -14,7 +14,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
 import { MatDivider } from '@angular/material/divider';
-import { MatProgressBar } from '@angular/material/progress-bar';
 import { FormsModule } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -39,7 +38,6 @@ import { DisputeCase, CbildRole, CBILD_ROLE_LABELS } from 'app/credit-bureau/cre
     ...STANDALONE_SHARED_IMPORTS,
     MatIcon,
     MatDivider,
-    MatProgressBar,
     FormsModule
   ]
 })

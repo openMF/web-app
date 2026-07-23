@@ -670,6 +670,16 @@ export class LoansService {
     return this.http.get(`/working-capital-loans/${loanId}/template`, { params: httpParams });
   }
 
+  getWorkingCapitalLoanPayoutTemplate(loanId: string, actionName: string): Observable<any> {
+    const httpParams = new HttpParams().set('templateType', actionName);
+    return this.http.get(`/workingcapitalloans/${loanId}/template`, { params: httpParams });
+  }
+
+  getWorkingCapitalLoanTransactionTemplate(loanId: string, actionName: string): Observable<any> {
+    const httpParams = new HttpParams().set('command', actionName);
+    return this.http.get(`/working-capital-loans/${loanId}/transactions/template`, { params: httpParams });
+  }
+
   guarantorAccountResource(loanId: string, clientId: any): Observable<any> {
     const httpParams = new HttpParams().set('clientId', clientId);
     return this.http.get(`/loans/${loanId}/guarantors/accounts/template`, { params: httpParams });

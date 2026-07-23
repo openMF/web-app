@@ -200,6 +200,11 @@ export class LoansAccountButtonConfiguration {
             taskPermissionName: 'REPAYMENT_LOAN'
           },
           {
+            name: 'Payout Refund',
+            icon: 'coins',
+            taskPermissionName: 'PAYOUTREFUND_WORKINGCAPITALLOAN'
+          },
+          {
             name: 'Undo Disbursal',
             icon: 'undo',
             taskPermissionName: 'DISBURSALUNDO_LOAN'
@@ -212,6 +217,20 @@ export class LoansAccountButtonConfiguration {
             name: 'Goodwill Credit',
             icon: 'coins',
             taskPermissionName: 'CREATE_GOODWILL_TRANSACTION'
+          },
+          {
+            name: 'Payout Refund',
+            icon: 'coins',
+            taskPermissionName: 'PAYOUTREFUND_WORKINGCAPITALLOAN'
+          }
+        ];
+        break;
+      case 'Overpaid':
+        this.buttonsArray = [
+          {
+            name: 'Payout Refund',
+            icon: 'coins',
+            taskPermissionName: 'PAYOUTREFUND_WORKINGCAPITALLOAN'
           }
         ];
         break;
