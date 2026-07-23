@@ -31,6 +31,24 @@
               <mat-radio-button value="LIABILITY">{{
                 'labels.inputs.accounting.LIABILITY' | translate
               }}</mat-radio-button>
+              <mat-radio-button value="DISBURSEMENT_DATE">{{ 'labels.inputs.Disbursement Date' | translate }}</mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <div
+            fxFlex="48%"
+            fxLayout="row"
+            fxLayout.lt-md="column"
+            class="rule-wrapper"
+            *ngIf="
+              allocationForm.controls.repaymentChoice.value == 'SYSTEM_CHOICE' &&
+              allocationForm.controls.systemChoice.value == 'DISBURSEMENT_DATE'
+            "
+          >
+            <mat-label fxFlex="50%">{{ 'labels.inputs.Disbursement Date Order' | translate }}</mat-label>
+            <mat-radio-group fxFlex="50%" fxLayout="row" fxLayoutGap="5%" formControlName="disbursementDateOrder">
+              <mat-radio-button value="LATEST">{{ 'labels.inputs.Latest Disbursal' | translate }}</mat-radio-button>
+              <mat-radio-button value="FIRST">{{ 'labels.inputs.First Disbursal' | translate }}</mat-radio-button>
             </mat-radio-group>
           </div>
 

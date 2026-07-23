@@ -66,7 +66,7 @@ export class LoanProductAllocationComponent implements OnInit {
 
   ngOnInit(): void {
     this.allocationForm = this.formBuilder.group({
-      id: [this.loanAllocationTemplate?.loanPaymentAllocationSetting?.id],
+      id: [this.loanAllocationTemplate?.loanPaymentAllocationSetting?.id ?? this.loanAllocationTemplate?.id],
       countryId: [null, Validators.required],
       repaymentChoice: [
         this.loanAllocationTemplate?.loanPaymentAllocationSetting?.repaymentChoice,
@@ -74,6 +74,7 @@ export class LoanProductAllocationComponent implements OnInit {
       ],
       systemChoice: [this.loanAllocationTemplate?.loanPaymentAllocationSetting?.systemChoice],
       liabilityPriority: [this.loanAllocationTemplate?.loanPaymentAllocationSetting?.liabilityPriority],
+      disbursementDateOrder: [this.loanAllocationTemplate?.loanPaymentAllocationSetting?.disbursementDateOrder],
       districtIds: [this.selectedUnits],
     });
   }
@@ -142,6 +143,9 @@ export class LoanProductAllocationComponent implements OnInit {
     }
     if (loanAllocationProduct.systemChoice === "DUE_DATE") {
       delete loanAllocationProduct.liabilityPriority;
+      delete loanAllocationProduct.disbursementDateOrder;
+    } else if (loanAllocationProduct.systemChoice === "DISBURSEMENT_DATE") {
+      delete loanAllocationProduct.liabilityPriority;
     } else {
       const loanOptions = [];
       this.loanTypeOptionsModel.forEach((element: any) => {
@@ -154,6 +158,7 @@ export class LoanProductAllocationComponent implements OnInit {
         );
       });
       loanAllocationProduct.liabilityPriority = loanOptions.join(" ");
+      delete loanAllocationProduct.disbursementDateOrder;
     }
     return loanAllocationProduct;
   }

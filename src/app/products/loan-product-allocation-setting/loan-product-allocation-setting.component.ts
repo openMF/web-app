@@ -21,11 +21,22 @@ export class LoanProductAllocationSettingComponent implements OnInit {
     this.route.data.subscribe((data: { loanProductAllocationData: any }) => {
       this.loanProductAllocationData = [];
       data.loanProductAllocationData.content.forEach(element => {
+        const setting = element.loanPaymentAllocationSetting;
+        let repaymentSummary = setting.repaymentChoice.replace(/_/g, ' ');
+        if (setting.systemChoice) {
+          repaymentSummary += ' - ' + setting.systemChoice.replace(/_/g, ' ');
+          if (setting.liabilityPriority) {
+            repaymentSummary += ' - ' + setting.liabilityPriority;
+          }
+          if (setting.disbursementDateOrder) {
+            repaymentSummary += ' - ' + setting.disbursementDateOrder;
+          }
+        }
         this.loanProductAllocationData.push({
           id: element.id,
           name: element.officeCountry.name,
           ou: element.districtOffice.name,
-          repaymentChoice: element.loanPaymentAllocationSetting.repaymentChoice
+          repaymentChoice: repaymentSummary
         });
       });
     });
