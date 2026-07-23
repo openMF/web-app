@@ -15,4 +15,4 @@ commonconfig:
   HOST_HOME_URL: https://loans.dev.oneacrefund.org/home
   MATOMO_SITE_ID: "2"
 image:
-  tag: 1.4.11.2026.07.13.921
+  tag: 1.4.11.2026.07.23.923
