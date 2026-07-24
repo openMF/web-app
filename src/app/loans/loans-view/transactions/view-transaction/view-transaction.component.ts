@@ -170,6 +170,10 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
       ) {
         this.allowUndo = false;
       }
+      if (this.isWorkingCapital) {
+        this.allowEdition = false;
+        this.allowChargeback = false;
+      }
     });
     this.clientId = this.route.snapshot.params['clientId'];
     this.loanId = this.route.snapshot.params['loanId'];
@@ -291,27 +295,34 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
         if (response.confirm) {
           const locale = this.settingsService.language.code;
           const dateFormat = this.settingsService.dateFormat;
-          const data = {
-            transactionDate: this.dateUtils.formatDate(
-              this.transactionData.date && new Date(this.transactionData.date),
-              dateFormat
-            ),
-            transactionAmount: 0,
-            dateFormat,
-            locale
-          };
           const command = this.isWriteOff(this.transactionType) ? 'undowriteoff' : 'undo';
-          const transactionId = command === 'undowriteoff' ? null : this.transactionData.id;
-          this.loansService
-            .executeLoansAccountTransactionsCommand(accountId, command, data, transactionId)
-            .subscribe(() => {
-              this.router.navigate(['../'], {
-                queryParams: {
-                  productType: this.loanProductService.productType.value
-                },
-                relativeTo: this.route
-              });
+          const navigateBack = () =>
+            this.router.navigate(['../'], {
+              queryParams: {
+                productType: this.loanProductService.productType.value
+              },
+              relativeTo: this.route
             });
+          if (this.isWorkingCapital) {
+            const payload = { dateFormat, locale };
+            this.loansService
+              .applyWorkingCapitalLoanActionCommand(accountId, payload, command, this.transactionData.id)
+              .subscribe(navigateBack);
+          } else {
+            const data = {
+              transactionDate: this.dateUtils.formatDate(
+                this.transactionData.date && new Date(this.transactionData.date),
+                dateFormat
+              ),
+              transactionAmount: 0,
+              dateFormat,
+              locale
+            };
+            const transactionId = command === 'undowriteoff' ? null : this.transactionData.id;
+            this.loansService
+              .executeLoansAccountTransactionsCommand(accountId, command, data, transactionId)
+              .subscribe(navigateBack);
+          }
         }
       });
     }
