@@ -226,7 +226,7 @@ export default defineConfig({
   webServer: process.env.CI
     ? undefined
     : {
-        command: 'npm run start',
+        command: 'npm run start:local',
         url: 'http://localhost:4200',
         reuseExistingServer: true,
         timeout: 180000
