@@ -167,6 +167,20 @@ describe('Office AddressTabComponent', () => {
     const text = fixture.nativeElement.textContent;
     expect(component.officeAddresses).toEqual([]);
     expect(text).toContain('No data found');
+    expect(fixture.nativeElement.querySelector('.action-button button')).not.toBeNull();
+  });
+
+  it('hides the add action and prevents the add dialog when the office already has an address', () => {
+    fixture.detectChanges();
+
+    expect(component.hasOfficeAddress).toBe(true);
+    expect(component.canAddAddress).toBe(false);
+    expect(fixture.nativeElement.querySelector('.action-button button')).toBeNull();
+
+    component.addAddress();
+
+    expect(dialog.open).not.toHaveBeenCalled();
+    expect(organizationService.createOfficeAddress).not.toHaveBeenCalled();
   });
 
   it('shows plugin unavailable state when the office address endpoint is not registered', () => {
@@ -197,6 +211,7 @@ describe('Office AddressTabComponent', () => {
   });
 
   it('creates an office address through the plugin endpoint service method', () => {
+    organizationService.getOfficeAddresses.mockReturnValue(of([]));
     fixture.detectChanges();
     dialog.open.mockReturnValue(
       dialogRefWithValue({
@@ -221,6 +236,7 @@ describe('Office AddressTabComponent', () => {
   });
 
   it('shows plugin unavailable state when create returns endpoint not found', () => {
+    organizationService.getOfficeAddresses.mockReturnValue(of([]));
     fixture.detectChanges();
     organizationService.createOfficeAddress.mockReturnValue(throwError(() => endpointNotFoundError()));
     dialog.open.mockReturnValue(
@@ -296,6 +312,21 @@ describe('Office AddressTabComponent', () => {
     expect(organizationService.deleteOfficeAddress).toHaveBeenCalledWith('1', '7');
   });
 
+  it('enables the add action again after the existing address is deleted', () => {
+    organizationService.getOfficeAddresses.mockReturnValueOnce(of([officeAddress])).mockReturnValueOnce(of([]));
+    fixture.detectChanges();
+    dialog.open.mockReturnValue(dialogRefWithDelete());
+
+    component.deleteAddress(officeAddress);
+    fixture.detectChanges();
+
+    expect(organizationService.deleteOfficeAddress).toHaveBeenCalledWith('1', '7');
+    expect(component.officeAddresses).toEqual([]);
+    expect(component.hasOfficeAddress).toBe(false);
+    expect(component.canAddAddress).toBe(true);
+    expect(fixture.nativeElement.querySelector('.action-button button')).not.toBeNull();
+  });
+
   it('uses address validation metadata in the form dialog fields', () => {
     component.addressTemplate = addressTemplate;
 
@@ -335,6 +366,7 @@ describe('Office AddressTabComponent', () => {
 
   it('omits plugin geolocation values from save payloads when the location feature is disabled', () => {
     environment.enableClientAddressLocation = false;
+    organizationService.getOfficeAddresses.mockReturnValue(of([]));
     fixture.detectChanges();
     dialog.open.mockReturnValue(
       dialogRefWithValue({
@@ -351,6 +383,53 @@ describe('Office AddressTabComponent', () => {
     const payload = organizationService.createOfficeAddress.mock.calls[0][1];
     expect(payload.latitude).toBeUndefined();
     expect(payload.longitude).toBeUndefined();
+  });
+
+  it('preserves latitude and longitude in create payloads when the location feature is enabled', () => {
+    organizationService.getOfficeAddresses.mockReturnValue(of([]));
+    fixture.detectChanges();
+    dialog.open.mockReturnValue(
+      dialogRefWithValue({
+        addressTypeId: 1,
+        street: 'Church Street',
+        latitude: '12.9716',
+        longitude: '77.5946',
+        isActive: true
+      })
+    );
+
+    component.addAddress();
+
+    const payload = organizationService.createOfficeAddress.mock.calls[0][1];
+    expect(payload.latitude).toBe('12.9716');
+    expect(payload.longitude).toBe('77.5946');
+  });
+
+  it('preserves latitude and longitude in edit payloads when the location feature is enabled', () => {
+    const officeAddressWithCoordinates = {
+      ...officeAddress,
+      latitude: '12.9716',
+      longitude: '77.5946'
+    };
+    fixture.detectChanges();
+    dialog.open.mockReturnValue(
+      dialogRefWithValue({
+        ...officeAddressWithCoordinates,
+        latitude: '13',
+        longitude: '78'
+      })
+    );
+
+    component.editAddress(officeAddressWithCoordinates);
+
+    expect(organizationService.updateOfficeAddress).toHaveBeenCalledWith(
+      '1',
+      '7',
+      expect.objectContaining({
+        latitude: '13',
+        longitude: '78'
+      })
+    );
   });
 
   it('renders plugin geolocation values and map for returned coordinates when the location feature is enabled', () => {
@@ -370,6 +449,47 @@ describe('Office AddressTabComponent', () => {
     expect(fixture.nativeElement.textContent).toContain('77.5946');
     expect(fixture.nativeElement.querySelector('mifosx-address-location-map')).not.toBeNull();
     expect(L.map).toHaveBeenCalledTimes(1);
+  });
+
+  it('refreshes displayed coordinates and map position after editing an address location', () => {
+    const initialAddress = {
+      ...officeAddress,
+      latitude: '12.9716',
+      longitude: '77.5946'
+    };
+    const updatedAddress = {
+      ...officeAddress,
+      latitude: '13',
+      longitude: '78'
+    };
+    organizationService.getOfficeAddresses
+      .mockReturnValueOnce(of([initialAddress]))
+      .mockReturnValueOnce(of([updatedAddress]));
+    fixture.detectChanges();
+    dialog.open.mockReturnValue(dialogRefWithValue(updatedAddress));
+
+    component.editAddress(initialAddress);
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.textContent).toContain('13');
+    expect(fixture.nativeElement.textContent).toContain('78');
+    expect(fixture.nativeElement.querySelector('mifosx-address-location-map')).not.toBeNull();
+    expect(mockMapSetView).toHaveBeenCalledWith(
+      [
+        13,
+        78
+      ],
+      15
+    );
+  });
+
+  it('does not render a map when coordinates are missing', () => {
+    organizationService.getOfficeAddresses.mockReturnValue(of([officeAddress]));
+
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('mifosx-address-location-map')).toBeNull();
+    expect(L.map).not.toHaveBeenCalled();
   });
 
   it('hides plugin geolocation values and map for returned coordinates when the location feature is disabled', () => {
@@ -400,5 +520,12 @@ describe('Office AddressTabComponent', () => {
     expect(component.hasError).toBe(true);
     expect(component.isPluginUnavailable).toBe(false);
     expect(component.officeAddresses).toEqual([]);
+    expect(component.canAddAddress).toBe(false);
+    expect(fixture.nativeElement.querySelector('.action-button button:disabled')).not.toBeNull();
+
+    component.addAddress();
+
+    expect(dialog.open).not.toHaveBeenCalled();
+    expect(organizationService.createOfficeAddress).not.toHaveBeenCalled();
   });
 });
