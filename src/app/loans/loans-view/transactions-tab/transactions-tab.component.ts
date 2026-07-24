@@ -434,28 +434,29 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const loanId = this.route.parent.parent.snapshot.params['loanId'];
+    const isLoanProduct = this.loanProductService.isLoanProduct;
     let command = 'undo';
     let operationDate = this.dateUtils.parseDate(transaction.date);
-    let payload = {};
+    let payload: any = {};
+    // Working capital loan undo only accepts locale/dateFormat/note/reversalExternalId;
+    // transactionDate/transactionAmount are required only by the generic loan adjust endpoint.
+    const undoPayload = isLoanProduct
+      ? {
+          transactionDate: this.dateUtils.formatDate(operationDate && new Date(operationDate), dateFormat),
+          transactionAmount: 0,
+          dateFormat,
+          locale
+        }
+      : { dateFormat, locale };
     if (this.isChargeOff(transaction.type)) {
       command = 'undo-charge-off';
       operationDate = this.settingsService.businessDate;
       payload = {};
     } else if (this.isWriteOff(transaction.type)) {
       command = 'undowriteoff';
-      payload = {
-        transactionDate: this.dateUtils.formatDate(operationDate && new Date(operationDate), dateFormat),
-        transactionAmount: 0,
-        dateFormat,
-        locale
-      };
+      payload = undoPayload;
     } else {
-      payload = {
-        transactionDate: this.dateUtils.formatDate(operationDate && new Date(operationDate), dateFormat),
-        transactionAmount: 0,
-        dateFormat,
-        locale
-      };
+      payload = undoPayload;
     }
 
     const undoTransactionAccountDialogRef = this.dialog.open(ConfirmationDialogComponent, {
