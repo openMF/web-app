@@ -31,6 +31,10 @@ import { ManageTaxConfigurationsComponent } from './manage-tax-configurations/ma
 import { RecurringDepositProductsComponent } from './recurring-deposit-products/recurring-deposit-products.component';
 import { ChargesComponent } from './charges/charges.component';
 import { ViewChargeComponent } from './charges/view-charge/view-charge.component';
+import { TransferFeesComponent } from './transfer-fees/transfer-fees.component';
+import { CreateTransferFeeComponent } from './transfer-fees/create-transfer-fee/create-transfer-fee.component';
+import { ViewTransferFeeComponent } from './transfer-fees/view-transfer-fee/view-transfer-fee.component';
+import { EditTransferFeeComponent } from './transfer-fees/edit-transfer-fee/edit-transfer-fee.component';
 import { FixedDepositProductsComponent } from './fixed-deposit-products/fixed-deposit-products.component';
 import { ProductsMixComponent } from './products-mix/products-mix.component';
 import { ViewProductMixComponent } from './products-mix/view-product-mix/view-product-mix.component';
@@ -161,6 +165,10 @@ import { LoanProductSelectionComponent } from './loan-products/create-loan-produ
     RecurringDepositProductsComponent,
     ChargesComponent,
     ViewChargeComponent,
+    TransferFeesComponent,
+    CreateTransferFeeComponent,
+    ViewTransferFeeComponent,
+    EditTransferFeeComponent,
     FixedDepositProductsComponent,
     ManageTaxComponentsComponent,
     ProductsMixComponent,
