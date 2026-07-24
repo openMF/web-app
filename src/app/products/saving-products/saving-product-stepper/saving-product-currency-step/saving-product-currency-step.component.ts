@@ -45,12 +45,20 @@ export class SavingProductCurrencyStepComponent implements OnInit {
 
   ngOnInit() {
     this.currencyData = this.savingProductsTemplate.currencyOptions;
+    const currency = this.savingProductsTemplate?.currency;
+    const isEditing = this.savingProductsTemplate?.id !== undefined && this.savingProductsTemplate?.id !== null;
+    const digitsAfterDecimal = isEditing
+      ? (currency?.decimalPlaces ?? '')
+      : (this.savingProductsTemplate?.digitsAfterDecimal ?? '');
+    const inMultiplesOf = isEditing
+      ? (currency?.inMultiplesOf ?? '')
+      : (this.savingProductsTemplate?.inMultiplesOf ?? '');
 
     this.savingProductCurrencyForm.patchValue({
-      currencyCode: this.savingProductsTemplate?.currency?.code || this.currencyData?.[0]?.code || '',
-      digitsAfterDecimal: this.savingProductsTemplate.digitsAfterDecimal ?? '',
-      setMultiples: !!this.savingProductsTemplate.inMultiplesOf,
-      inMultiplesOf: this.savingProductsTemplate.inMultiplesOf ?? ''
+      currencyCode: currency?.code || this.currencyData?.[0]?.code || '',
+      digitsAfterDecimal,
+      setMultiples: !!inMultiplesOf,
+      inMultiplesOf
     });
 
     this.setupConditionalValidation();
