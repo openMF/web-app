@@ -176,6 +176,42 @@ export class OrganizationService {
   }
 
   /**
+   * @param {string} officeId Office ID of Office.
+   * @returns {Observable<any>} Office services.
+   */
+  getOfficeServices(officeId: string): Observable<any> {
+    return this.http.get(`/v2/offices/${officeId}/services`);
+  }
+
+  /**
+   * @param {string} officeId Office ID of Office.
+   * @param {any} serviceData Office service data.
+   * @returns {Observable<any>}
+   */
+  createOfficeService(officeId: string, serviceData: any): Observable<any> {
+    return this.http.post(`/v2/offices/${officeId}/services`, serviceData);
+  }
+
+  /**
+   * @param {string} officeId Office ID of Office.
+   * @param {string} serviceId Office service ID.
+   * @param {any} serviceData Office service data.
+   * @returns {Observable<any>}
+   */
+  updateOfficeService(officeId: string, serviceId: string, serviceData: any): Observable<any> {
+    return this.http.put(`/v2/offices/${officeId}/services/${serviceId}`, serviceData);
+  }
+
+  /**
+   * @param {string} officeId Office ID of Office.
+   * @param {string} serviceId Office service ID.
+   * @returns {Observable<any>}
+   */
+  deleteOfficeService(officeId: string, serviceId: string): Observable<any> {
+    return this.http.delete(`/v2/offices/${officeId}/services/${serviceId}`);
+  }
+
+  /**
    * @returns {Observable<any>}
    */
   getOfficeDatatables(): Observable<any> {
