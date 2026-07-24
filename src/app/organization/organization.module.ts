@@ -47,6 +47,7 @@ import { ViewHolidaysComponent } from './holidays/view-holidays/view-holidays.co
 import { ViewOfficeComponent } from './offices/view-office/view-office.component';
 import { GeneralTabComponent } from './offices/view-office/general-tab/general-tab.component';
 import { AddressTabComponent } from './offices/view-office/address-tab/address-tab.component';
+import { ServicesTabComponent } from './offices/view-office/services-tab/services-tab.component';
 import { DatatableTabsComponent } from './offices/view-office/datatable-tabs/datatable-tabs.component';
 import { ViewCampaignComponent } from './sms-campaigns/view-campaign/view-campaign.component';
 import { ManageFundsComponent } from './manage-funds/manage-funds.component';
@@ -129,6 +130,7 @@ import { InvestorsComponent } from './investors/investors.component';
     ViewOfficeComponent,
     GeneralTabComponent,
     AddressTabComponent,
+    ServicesTabComponent,
     DatatableTabsComponent,
     ViewCampaignComponent,
     ManageFundsComponent,
