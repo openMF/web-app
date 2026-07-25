@@ -187,6 +187,45 @@ export class ApiSetupManager {
   }
 
   /**
+   * Returns (and caches) the shared minimal loan product, creating it
+   * on first use.
+   *
+   * Products are shared infrastructure rather than per-test data, so a
+   * whole run pays for at most one create. Without this wrapper every
+   * loan factory invocation would re-issue the product list GET (and
+   * race on the POST) even though the answer never changes.
+   *
+   * @returns The existing or created loan product
+   */
+  ensureMinimalLoanProduct(): Promise<any> {
+    return this.dedupe('loanProduct:minimal', () => this.api.ensureMinimalLoanProduct());
+  }
+
+  /**
+   * Returns (and caches) the shared minimal savings product, creating
+   * it on first use. Savings counterpart of
+   * {@link ensureMinimalLoanProduct} — see that method for the
+   * rationale.
+   *
+   * @returns The existing or created savings product
+   */
+  ensureMinimalSavingsProduct(): Promise<any> {
+    return this.dedupe('savingsProduct:minimal', () => this.api.ensureMinimalSavingsProduct());
+  }
+
+  /**
+   * Returns (and caches) the savings product creation template.
+   *
+   * The template is tenant-global and carries the enum option lists
+   * used to build savings payloads, so one fetch serves the whole run.
+   *
+   * @returns The savings product template payload
+   */
+  getSavingsProductTemplate(): Promise<any> {
+    return this.dedupe('savingsProductTemplate', () => this.api.getSavingsProductTemplate());
+  }
+
+  /**
    * Test-only escape hatch. Clears the cache backing this instance —
    * useful for unit specs that want a clean slate per `test()`
    * without recreating the manager. Production code should never
