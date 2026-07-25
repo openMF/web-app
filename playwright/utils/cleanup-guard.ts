@@ -15,11 +15,15 @@
  *    A per-test `afterEach` hook is too easy to forget; the `cleanupGuard`
  *    auto-fixture in `playwright/fixtures/test-fixtures.ts` calls
  *    {@link CleanupGuard.flush} unconditionally so opt-in is impossible.
- *  - Deleters MUST run in strict reverse-insertion order (LIFO). A test
- *    that creates a client and then a loan on that client cannot delete
- *    the client before the loan or Fineract rejects the cascade.
+ *  - Deleters MUST run in strict reverse-insertion order (LIFO), one
+ *    at a time. A test that creates a client and then a loan on that
+ *    client cannot delete the client before the loan or Fineract
+ *    rejects the cascade with a 403. Ordering is only meaningful if
+ *    the drain is *sequential* — issuing every delete concurrently
+ *    and merely sorting the array does not stop the client DELETE
+ *    from reaching Fineract before the loan DELETE lands.
  *  - A single failing deleter MUST NOT abort the remaining deleters.
- *    The whole flush is wrapped in `Promise.allSettled` so a flaky
+ *    Each deleter is awaited inside its own try/catch so a flaky
  *    teardown HTTP call cannot leak the siblings — and the structured
  *    {@link FlushSummary} surfaces every failure for triage.
  *  - flush() NEVER throws. Teardown noise must not mask the real test
@@ -49,9 +53,11 @@ export interface FlushOutcome {
   /** Human-readable label supplied at register-time, for triage logs. */
   label: string;
   /**
-   * Result of the underlying `Promise.allSettled`. `'fulfilled'` means
-   * the deleter resolved (Fineract returned 2xx); `'rejected'` means
-   * it threw or returned a non-2xx response.
+   * Outcome of this deleter's own awaited invocation. `'fulfilled'`
+   * means it resolved (Fineract returned 2xx); `'rejected'` means it
+   * threw or returned a non-2xx response. Each deleter is awaited
+   * individually inside {@link CleanupGuard.flush}, so this reflects
+   * one delete, not a batched settle.
    */
   status: 'fulfilled' | 'rejected';
   /** Populated only when `status === 'rejected'`. */
@@ -159,8 +165,18 @@ export class CleanupGuard {
   }
 
   /**
-   * Drain the stack in strict LIFO order, running every deleter via
-   * `Promise.allSettled` so a single failure cannot block siblings.
+   * Drain the stack in strict LIFO order, awaiting each deleter
+   * before starting the next so dependent resources are removed in
+   * the only sequence Fineract's foreign keys accept.
+   *
+   * Sequential — not concurrent — by design. Factories register a
+   * sub-entity's deleter *after* its parent's, so LIFO pops the child
+   * first; that guarantee is void if every delete is dispatched in
+   * the same tick. See the module docstring for the full rationale.
+   *
+   * A rejecting deleter is caught and recorded, then the drain
+   * continues with the next entry — one dead resource must not leak
+   * its siblings.
    *
    * Safe to call multiple times: subsequent calls after the stack is
    * drained resolve to an empty {@link FlushSummary} (`ok: 0`,
@@ -190,22 +206,18 @@ export class CleanupGuard {
         drained.push(this.stack.pop()!);
       }
 
-      const settled = await Promise.allSettled(
-        // Each deleter is wrapped in `Promise.resolve().then(...)` so
-        // that a synchronously-thrown error becomes a rejected
-        // promise. Without this wrapper a sync throw would propagate
-        // out of the `.map()` callback BEFORE `Promise.allSettled`
-        // could intercept it and the whole flush would reject — the
-        // exact failure mode this design is meant to prevent.
-        drained.map((entry) => Promise.resolve().then(() => entry.deleter()))
-      );
-
-      const outcomes: FlushOutcome[] = settled.map((result, index) => {
-        const label = drained[index].label;
-        return result.status === 'fulfilled'
-          ? { label, status: 'fulfilled' }
-          : { label, status: 'rejected', reason: result.reason };
-      });
+      const outcomes: FlushOutcome[] = [];
+      for (const entry of drained) {
+        try {
+          // `Promise.resolve().then(...)` normalises a deleter that
+          // throws synchronously into a rejected promise, so the
+          // catch below handles both failure shapes identically.
+          await Promise.resolve().then(() => entry.deleter());
+          outcomes.push({ label: entry.label, status: 'fulfilled' });
+        } catch (reason) {
+          outcomes.push({ label: entry.label, status: 'rejected', reason });
+        }
+      }
 
       const failed = outcomes
         .filter((o): o is FlushOutcome & { status: 'rejected' } => o.status === 'rejected')
