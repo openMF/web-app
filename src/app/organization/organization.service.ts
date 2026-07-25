@@ -185,6 +185,23 @@ export class OrganizationService {
 
   /**
    * @param {string} officeId Office ID of Office.
+   * @returns {Observable<any>} Office schedules.
+   */
+  getOfficeSchedules(officeId: string): Observable<any> {
+    return this.http.get(`/v2/offices/${officeId}/schedules`);
+  }
+
+  /**
+   * @param {string} officeId Office ID of Office.
+   * @param {any} scheduleData Office schedule data.
+   * @returns {Observable<any>}
+   */
+  updateOfficeSchedules(officeId: string, scheduleData: any): Observable<any> {
+    return this.http.put(`/v2/offices/${officeId}/schedules`, scheduleData);
+  }
+
+  /**
+   * @param {string} officeId Office ID of Office.
    * @param {any} serviceData Office service data.
    * @returns {Observable<any>}
    */
