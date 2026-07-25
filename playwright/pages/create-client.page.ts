@@ -9,6 +9,7 @@
 import { expect, Locator, Page } from '@playwright/test';
 
 import { BasePage } from './BasePage';
+import { fillIfVisible, selectOption } from './material-form-helpers';
 import { CREATE_CLIENT_SELECTORS } from '../config/selectors';
 import { ROUTES } from '../config/routes';
 
@@ -556,15 +557,17 @@ export class CreateClientPage extends BasePage {
 
   /**
    * Opens a `<mat-select>` and picks the option whose visible text
-   * matches `optionLabel`. Wraps the click sequence required by
-   * Angular Material (open trigger → overlay option) so callers don't
-   * have to repeat it for every dropdown.
+   * matches `optionLabel`.
+   *
+   * Delegates to the shared `material-form-helpers` module so every
+   * Angular page object drives Material overlays identically. Kept as
+   * a thin private method (rather than inlining the helper at each
+   * call site) so the ~10 existing callers below stay unchanged, and
+   * so the React port can re-point this one line at its own
+   * `radix-form-helpers` module.
    */
   private async selectMatOption(trigger: Locator, optionLabel: string): Promise<void> {
-    await trigger.click();
-    const option = this.page.getByRole('option', { name: optionLabel, exact: false });
-    await this.waitForVisible(option.first(), 10000);
-    await option.first().click();
+    await selectOption(this.page, trigger, optionLabel);
   }
 
   /**
@@ -573,11 +576,6 @@ export class CreateClientPage extends BasePage {
    * based on tenant configuration.
    */
   private async fillIfVisible(locator: Locator, value: string | undefined): Promise<void> {
-    if (value === undefined) {
-      return;
-    }
-    if (await locator.isVisible()) {
-      await locator.fill(value);
-    }
+    await fillIfVisible(locator, value);
   }
 }
