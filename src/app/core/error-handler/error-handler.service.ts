@@ -47,6 +47,14 @@ export interface ErrorMessage {
   providedIn: 'root'
 })
 export class ErrorHandlerService {
+  constructor(
+    // eslint-disable-next-line @angular-eslint/prefer-inject
+    private snackBar: MatSnackBar,
+    // eslint-disable-next-line @angular-eslint/prefer-inject
+    private router: Router,
+    // eslint-disable-next-line @angular-eslint/prefer-inject
+    private translate: TranslateService
+  ) {}
   private snackBar = inject(MatSnackBar);
   private router = inject(Router);
   private translateService = inject(TranslateService);
@@ -185,5 +193,59 @@ export class ErrorHandlerService {
       verticalPosition: 'bottom',
       panelClass: ['info-snackbar']
     });
+  }
+
+  /**
+   * Translates a Fineract error response into a single, translated message.
+   * Falls back to defaultUserMessage when translation keys are missing.
+   */
+  translateFineractError(errorResponse: FineractErrorResponse | null | undefined): string {
+    if (!errorResponse || typeof errorResponse !== 'object') {
+      return '';
+    }
+
+    const messages: string[] = [];
+
+    if (errorResponse.userMessageGlobalisationCode) {
+      const mainMsg = this.getMessageForCode(
+        errorResponse.userMessageGlobalisationCode,
+        errorResponse.defaultUserMessage
+      );
+      if (mainMsg) {
+        messages.push(mainMsg);
+      }
+    } else if (errorResponse.defaultUserMessage) {
+      messages.push(errorResponse.defaultUserMessage);
+    }
+    if (Array.isArray(errorResponse.errors)) {
+      errorResponse.errors.forEach((error: FineractErrorDetail) => {
+        if (!error || typeof error !== 'object') {
+          return;
+        }
+        if (error.userMessageGlobalisationCode) {
+          const nestedMsg = this.getMessageForCode(error.userMessageGlobalisationCode, error.defaultUserMessage);
+          if (nestedMsg) {
+            messages.push(nestedMsg);
+          }
+        } else if (error.defaultUserMessage) {
+          messages.push(error.defaultUserMessage);
+        }
+      });
+    }
+    const uniqueMessages = Array.from(new Set(messages.filter((m) => !!m && typeof m === 'string')));
+    return uniqueMessages.join(' ');
+  }
+
+  private getMessageForCode(code: string, defaultMessage?: string): string {
+    if (!code) {
+      return defaultMessage || '';
+    }
+
+    const translated = this.translate.instant(code);
+    if (translated && translated !== code) {
+      return translated;
+    }
+
+    return defaultMessage || '';
   }
 }

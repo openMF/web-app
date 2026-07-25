@@ -2,6 +2,8 @@
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "다음 계정으로 로그인됨",
   "Remember me": "날 기억해",
+  "error.msg.platform.service.unavailable": "서버가 현재 요청을 처리할 수 없습니다. 나중에 다시 시도해주세요.",
+  "error.msg.database.type.not.supported": "지원하지 않는 데이터 유형입니다",
   "errors": {
     "accountingRule": {
       "duplicateName": "죄송합니다. 이미 동일한 이름의 회계 규칙이 존재합니다."

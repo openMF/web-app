@@ -2,6 +2,8 @@
   "APP_NAME": "Mifos® X WebApp",
   "Logged in as": "ielogojies Kā",
   "Remember me": "Atceries mani",
+  "error.msg.platform.service.unavailable": "Serveris pašlaik nespēj apstrādāt pieprasījumu. Lūdzu, mēģiniet vēlāk.",
+  "error.msg.database.type.not.supported": "Datu tips nav atbalstīts",
   "errors": {
     "accountingRule": {
       "duplicateName": "Atvainojiet, bet grāmatvedības noteikums ar šo nosaukumu jau pastāv."

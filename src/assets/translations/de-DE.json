@@ -4,6 +4,8 @@
   "Remember me": "Erinnere dich an mich",
   "error.resource.notImplemented.type": "Nicht implementierter Fehler",
   "error.resource.notImplemented.message": "Nicht implementierte Funktion!",
+  "error.msg.platform.service.unavailable": "Der Server kann die Anfrage derzeit nicht bearbeiten. Bitte versuchen Sie es später erneut.",
+  "error.msg.database.type.not.supported": "Der Datentyp wird nicht unterstützt",
   "errors": {
     "accountingRule": {
       "duplicateName": "Entschuldigung, aber eine Buchungsregel mit diesem Namen existiert bereits."
