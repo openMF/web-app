@@ -78,7 +78,6 @@ import { EditLoanProvisioningCriteriaComponent } from './loan-provisioning-crite
 import { StandingInstructionsHistoryComponent } from './standing-instructions-history/standing-instructions-history.component';
 import { FundMappingComponent } from './fund-mapping/fund-mapping.component';
 import { CreateHolidayComponent } from './holidays/create-holiday/create-holiday.component';
-
 /** Custom Service */
 import { OfficeItemNode } from './holidays/create-holiday/office-item.class';
 import { OfficeItemFlatNode } from './holidays/create-holiday/office-flat-item.class';

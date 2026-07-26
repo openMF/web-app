@@ -634,7 +634,7 @@
       "Export XLS": "Eksportēt XLS",
       "Export to File": "Eksportēt uz failu",
       "Export to PDF": "Eksportēt kā PDF",
-      "Filter": "filtrēt",
+      "Filter": "Filter",
       "Foreclosure": "Preces ierobežošana",
       "GLIM Application": "GLIM aizdevuma pieteikums",
       "GSIM Application": "GSIM lietojumprogramma",
@@ -777,7 +777,9 @@
       "undo_account_transfer": "Atcelt konta pārskaitījumu",
       "All": "Visi",
       "Pause Breach": "Apturēt pārkāpumu",
-      "Resume Breach": "Pārtraukuma atsākšana"
+      "Resume Breach": "Pārtraukuma atsākšana",
+      "Currency Conversion": "Currency Conversion",
+      "Create Exchange Rate": "Create Exchange Rate"
     },
     "catalogs": {
       "% Amount": "Summa",
@@ -1596,7 +1598,9 @@
       "Loan Breach Actions": "Aizdevuma pārkāpuma darbības",
       "No Breach Actions": "Nav pārkāpuma darbību",
       "Pause Timeline": "Pauzes laika līnija",
-      "Location Map": "Atrašanās vietas karte"
+      "Location Map": "Atrašanās vietas karte",
+      "Exchange Rates": "Exchange Rates",
+      "Currency Conversion": "Currency Conversion"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3186,7 +3190,14 @@
       "Credit Profile": "Kredīta profils",
       "Borrower": "Aizņēmējs",
       "Latitude": "Platums",
-      "Longitude": "Garums"
+      "Longitude": "Garums",
+      "Source Currency": "Source Currency",
+      "Target Currency": "Target Currency",
+      "Exchange Rate": "Exchange Rate",
+      "Exchange Rate Used": "Exchange Rate Used",
+      "Converted Amount": "Converted Amount",
+      "Conversion Date": "Conversion Date",
+      "Effective To": "Effective To"
     },
     "links": {
       "Community": "kopiena",
@@ -4181,7 +4192,12 @@
       "All Offices": "Visi biroji",
       "No loan was found": "Neviens aizdevums nav atrasts",
       "SearchByLoan": "Meklēt pēc konta numura, aizņēmēja vai produkta",
-      "Map tiles unavailable": "Kartes elementi nav pieejami"
+      "Map tiles unavailable": "Kartes elementi nav pieejami",
+      "Manage exchange rates and currency conversion": "Manage exchange rates and currency conversion",
+      "No exchange rates found": "No exchange rates found",
+      "Loading": "Loading",
+      "Source and target currencies cannot be identical": "Source and target currencies cannot be identical",
+      "Effective To cannot be before Effective From": "Effective To cannot be before Effective From"
     },
     "permissions": {
       "actions": {

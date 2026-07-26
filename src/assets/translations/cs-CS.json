@@ -635,7 +635,7 @@
       "Export XLS": "Vývozní XLS",
       "Export to File": "Export do FILE",
       "Export to PDF": "Export do PDF",
-      "Filter": "filtr",
+      "Filter": "Filter",
       "Foreclosure": "Exekuce",
       "GLIM Application": "Žádost o půjčku GLIM",
       "GSIM Application": "Aplikace GSIM",
@@ -778,7 +778,9 @@
       "undo_account_transfer": "Vrátit převod účtu",
       "All": "Vše",
       "Pause Breach": "Pozastavit porušení",
-      "Resume Breach": "Obnovení porušení"
+      "Resume Breach": "Obnovení porušení",
+      "Currency Conversion": "Currency Conversion",
+      "Create Exchange Rate": "Create Exchange Rate"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -1596,7 +1598,9 @@
       "Loan Breach Actions": "Akce porušení úvěru",
       "No Breach Actions": "Žádné akce při porušení",
       "Pause Timeline": "Časová osa pauz",
-      "Location Map": "Mapa polohy"
+      "Location Map": "Mapa polohy",
+      "Exchange Rates": "Exchange Rates",
+      "Currency Conversion": "Currency Conversion"
     },
     "inputs": {
       "Annual interest rate": "Roční úroková sazba",
@@ -3186,7 +3190,14 @@
       "Credit Profile": "Kreditní profil",
       "Borrower": "Dlužník",
       "Latitude": "Zeměpisná šířka",
-      "Longitude": "Zeměpisná délka"
+      "Longitude": "Zeměpisná délka",
+      "Source Currency": "Source Currency",
+      "Target Currency": "Target Currency",
+      "Exchange Rate": "Exchange Rate",
+      "Exchange Rate Used": "Exchange Rate Used",
+      "Converted Amount": "Converted Amount",
+      "Conversion Date": "Conversion Date",
+      "Effective To": "Effective To"
     },
     "links": {
       "Community": "Společenství",
@@ -4182,7 +4193,12 @@
       "All Offices": "Všechny kanceláře",
       "No loan was found": "Nebyl nalezen žádný úvěr",
       "SearchByLoan": "Hledat podle čísla účtu, dlužníka nebo produktu",
-      "Map tiles unavailable": "Mapové dlaždice nejsou dostupné"
+      "Map tiles unavailable": "Mapové dlaždice nejsou dostupné",
+      "Manage exchange rates and currency conversion": "Manage exchange rates and currency conversion",
+      "No exchange rates found": "No exchange rates found",
+      "Loading": "Loading",
+      "Source and target currencies cannot be identical": "Source and target currencies cannot be identical",
+      "Effective To cannot be before Effective From": "Effective To cannot be before Effective From"
     },
     "permissions": {
       "actions": {

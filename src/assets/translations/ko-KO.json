@@ -634,7 +634,7 @@
       "Export XLS": "XLS 내보내기",
       "Export to File": "파일로 내보내기",
       "Export to PDF": "PDF로 내보내기",
-      "Filter": "필터",
+      "Filter": "Filter",
       "Foreclosure": "유질",
       "GLIM Application": "GLIM 대출 신청",
       "GSIM Application": "GSIM 애플리케이션",
@@ -777,7 +777,9 @@
       "undo_account_transfer": "계좌 이체 취소",
       "All": "전체",
       "Pause Breach": "위반 일시중지",
-      "Resume Breach": "중단된 작업 재개"
+      "Resume Breach": "중단된 작업 재개",
+      "Currency Conversion": "Currency Conversion",
+      "Create Exchange Rate": "Create Exchange Rate"
     },
     "catalogs": {
       "% Amount": "양",
@@ -1597,7 +1599,9 @@
       "Loan Breach Actions": "대출 위반 작업",
       "No Breach Actions": "위반 작업 없음",
       "Pause Timeline": "일시중지 타임라인",
-      "Location Map": "위치 지도"
+      "Location Map": "위치 지도",
+      "Exchange Rates": "Exchange Rates",
+      "Currency Conversion": "Currency Conversion"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3186,7 +3190,14 @@
       "Credit Profile": "신용 프로필",
       "Borrower": "차용인",
       "Latitude": "위도",
-      "Longitude": "경도"
+      "Longitude": "경도",
+      "Source Currency": "Source Currency",
+      "Target Currency": "Target Currency",
+      "Exchange Rate": "Exchange Rate",
+      "Exchange Rate Used": "Exchange Rate Used",
+      "Converted Amount": "Converted Amount",
+      "Conversion Date": "Conversion Date",
+      "Effective To": "Effective To"
     },
     "links": {
       "Community": "지역 사회",
@@ -4181,7 +4192,12 @@
       "All Offices": "모든 사무소",
       "No loan was found": "대출을 찾을 수 없습니다",
       "SearchByLoan": "계좌 번호, 차용인 또는 상품으로 검색",
-      "Map tiles unavailable": "지도 타일을 사용할 수 없습니다"
+      "Map tiles unavailable": "지도 타일을 사용할 수 없습니다",
+      "Manage exchange rates and currency conversion": "Manage exchange rates and currency conversion",
+      "No exchange rates found": "No exchange rates found",
+      "Loading": "Loading",
+      "Source and target currencies cannot be identical": "Source and target currencies cannot be identical",
+      "Effective To cannot be before Effective From": "Effective To cannot be before Effective From"
     },
     "permissions": {
       "actions": {
