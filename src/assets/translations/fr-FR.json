@@ -68,6 +68,7 @@
     "validation.msg.fixeddeposit.chart.slabs.range.has.gap": "La plage Période/Montant présente un écart pour le graphique des taux d'intérêt",
     "validation.msg.fixeddeposit.chart.slabs.range.overlapping": "Plage de périodes/montants se chevauchant pour le graphique des taux d'intérêt",
     "validation.msg.fixeddeposit.chart.slabs.range.start.incorrect": "Le début de la plage de période/montant est incorrect pour le graphique des taux d'intérêt",
+    "validation.msg.interestchart.period.type.is.not.same": "All slabs in a chart must use the same period type.",
     "validation.msg.fixeddepositaccount.posting.period.type.is.less.than.compound.period.type": "La période de comptabilisation des dépôts fixes ne peut pas être inférieure à la période de composition",
     "validation.msg.loan.allowPartialPeriodInterestCalculation.not.supported.for.daily.calculations": "Autoriser le calcul des versements partiels ne peut pas être défini comme vrai pour le calcul quotidien",
     "validation.msg.loan.allowVariableInstallments.not.supported.for.selected.interest.calculation.type": "Le versement variable doit être utilisé avec le calcul des intérêts quotidiens ou permettre le calcul des intérêts partiels.",
