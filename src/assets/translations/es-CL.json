@@ -634,7 +634,7 @@
       "Export XLS": "Exportar XLS",
       "Export to File": "Exportar Archivo",
       "Export to PDF": "Exportar a PDF",
-      "Filter": "Filtrar",
+      "Filter": "Filter",
       "Foreclosure": "Juicio hipotecario",
       "GLIM Application": "Solicitud de Crédito GLIM",
       "GSIM Application": "Aplicación GSIM",
@@ -777,7 +777,9 @@
       "undo_account_transfer": "Revertir transferencia de cuenta",
       "All": "Todos",
       "Pause Breach": "Pausar Incumplimiento",
-      "Resume Breach": "Reanudar Incumplimiento"
+      "Resume Breach": "Reanudar Incumplimiento",
+      "Currency Conversion": "Currency Conversion",
+      "Create Exchange Rate": "Create Exchange Rate"
     },
     "catalogs": {
       "% Amount": "% Monto",
@@ -1596,7 +1598,9 @@
       "Loan Breach Actions": "Acciones de Incumplimiento del Préstamo",
       "No Breach Actions": "Sin Acciones sobre Brechas",
       "Pause Timeline": "Línea de Tiempo de Pausas",
-      "Location Map": "Mapa de ubicación"
+      "Location Map": "Mapa de ubicación",
+      "Exchange Rates": "Exchange Rates",
+      "Currency Conversion": "Currency Conversion"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3187,7 +3191,14 @@
       "Credit Profile": "Perfil de crédito",
       "Borrower": "Prestatario",
       "Latitude": "Latitud",
-      "Longitude": "Longitud"
+      "Longitude": "Longitud",
+      "Source Currency": "Source Currency",
+      "Target Currency": "Target Currency",
+      "Exchange Rate": "Exchange Rate",
+      "Exchange Rate Used": "Exchange Rate Used",
+      "Converted Amount": "Converted Amount",
+      "Conversion Date": "Conversion Date",
+      "Effective To": "Effective To"
     },
     "links": {
       "Community": "Comunidad",
@@ -4183,7 +4194,12 @@
       "All Offices": "Todas las oficinas",
       "No loan was found": "No se encontró ningún préstamo",
       "SearchByLoan": "Buscar por número de cuenta, prestatario o producto",
-      "Map tiles unavailable": "Los mosaicos del mapa no están disponibles"
+      "Map tiles unavailable": "Los mosaicos del mapa no están disponibles",
+      "Manage exchange rates and currency conversion": "Manage exchange rates and currency conversion",
+      "No exchange rates found": "No exchange rates found",
+      "Loading": "Loading",
+      "Source and target currencies cannot be identical": "Source and target currencies cannot be identical",
+      "Effective To cannot be before Effective From": "Effective To cannot be before Effective From"
     },
     "permissions": {
       "actions": {

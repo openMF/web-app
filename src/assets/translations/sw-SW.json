@@ -634,7 +634,7 @@
       "Export XLS": "Hamisha XLS",
       "Export to File": "Hamisha kwa FILE",
       "Export to PDF": "Hamisha kwa PDF",
-      "Filter": "Kichujio",
+      "Filter": "Filter",
       "Foreclosure": "Kukamata Mali",
       "GLIM Application": "Maombi ya Mkopo wa GLIM",
       "GSIM Application": "Maombi ya GSIM",
@@ -777,7 +777,9 @@
       "undo_account_transfer": "Futa uhamisho wa akaunti",
       "All": "Vyote",
       "Pause Breach": "Sitisha Ukiukaji",
-      "Resume Breach": "Endelea Ukiukaji"
+      "Resume Breach": "Endelea Ukiukaji",
+      "Currency Conversion": "Currency Conversion",
+      "Create Exchange Rate": "Create Exchange Rate"
     },
     "catalogs": {
       "% Amount": "Kiasi",
@@ -1593,7 +1595,9 @@
       "Loan Breach Actions": "Vitendo vya Ukiukaji wa Mkopo",
       "No Breach Actions": "Hakuna Vitendo vya Ukiukaji",
       "Pause Timeline": "Mfuatano wa Pumziko",
-      "Location Map": "Ramani ya eneo"
+      "Location Map": "Ramani ya eneo",
+      "Exchange Rates": "Exchange Rates",
+      "Currency Conversion": "Currency Conversion"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3183,7 +3187,14 @@
       "Credit Profile": "Wasifu wa Mkopo",
       "Borrower": "Mkopaji",
       "Latitude": "Latitudo",
-      "Longitude": "Longitudo"
+      "Longitude": "Longitudo",
+      "Source Currency": "Source Currency",
+      "Target Currency": "Target Currency",
+      "Exchange Rate": "Exchange Rate",
+      "Exchange Rate Used": "Exchange Rate Used",
+      "Converted Amount": "Converted Amount",
+      "Conversion Date": "Conversion Date",
+      "Effective To": "Effective To"
     },
     "links": {
       "Community": "Jumuiya",
@@ -4178,7 +4189,12 @@
       "All Offices": "Ofisi zote",
       "No loan was found": "Hakuna mkopo uliopatikana",
       "SearchByLoan": "Tafuta kwa nambari ya akaunti, mkopaji au bidhaa",
-      "Map tiles unavailable": "Vipande vya ramani havipatikani"
+      "Map tiles unavailable": "Vipande vya ramani havipatikani",
+      "Manage exchange rates and currency conversion": "Manage exchange rates and currency conversion",
+      "No exchange rates found": "No exchange rates found",
+      "Loading": "Loading",
+      "Source and target currencies cannot be identical": "Source and target currencies cannot be identical",
+      "Effective To cannot be before Effective From": "Effective To cannot be before Effective From"
     },
     "permissions": {
       "actions": {

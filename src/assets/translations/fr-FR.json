@@ -634,7 +634,7 @@
       "Export XLS": "Exporter au format XLS",
       "Export to File": "Exporter vers un fichier",
       "Export to PDF": "Exporter en PDF",
-      "Filter": "filtre",
+      "Filter": "Filter",
       "Foreclosure": "Forclusion",
       "GLIM Application": "Demande de prêt GLIM",
       "GSIM Application": "Demande GSIM",
@@ -777,7 +777,9 @@
       "undo_account_transfer": "Annuler le transfert de compte",
       "All": "Tous",
       "Pause Breach": "Suspendre le Manquement",
-      "Resume Breach": "Reprendre le Manquement"
+      "Resume Breach": "Reprendre le Manquement",
+      "Currency Conversion": "Currency Conversion",
+      "Create Exchange Rate": "Create Exchange Rate"
     },
     "catalogs": {
       "% Amount": "Montant",
@@ -1599,7 +1601,9 @@
       "Loan Breach Actions": "Actions de Manquement du Prêt",
       "No Breach Actions": "Aucune Action sur Brèches",
       "Pause Timeline": "Chronologie des Pauses",
-      "Location Map": "Carte de localisation"
+      "Location Map": "Carte de localisation",
+      "Exchange Rates": "Exchange Rates",
+      "Currency Conversion": "Currency Conversion"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3189,7 +3193,14 @@
       "Credit Profile": "Profil de crédit",
       "Borrower": "Emprunteur",
       "Latitude": "Latitude",
-      "Longitude": "Longitude"
+      "Longitude": "Longitude",
+      "Source Currency": "Source Currency",
+      "Target Currency": "Target Currency",
+      "Exchange Rate": "Exchange Rate",
+      "Exchange Rate Used": "Exchange Rate Used",
+      "Converted Amount": "Converted Amount",
+      "Conversion Date": "Conversion Date",
+      "Effective To": "Effective To"
     },
     "links": {
       "Community": "Communauté",
@@ -4184,7 +4195,12 @@
       "All Offices": "Tous les bureaux",
       "No loan was found": "Aucun prêt n'a été trouvé",
       "SearchByLoan": "Rechercher par numéro de compte, emprunteur ou produit",
-      "Map tiles unavailable": "Tuiles cartographiques indisponibles"
+      "Map tiles unavailable": "Tuiles cartographiques indisponibles",
+      "Manage exchange rates and currency conversion": "Manage exchange rates and currency conversion",
+      "No exchange rates found": "No exchange rates found",
+      "Loading": "Loading",
+      "Source and target currencies cannot be identical": "Source and target currencies cannot be identical",
+      "Effective To cannot be before Effective From": "Effective To cannot be before Effective From"
     },
     "permissions": {
       "actions": {
