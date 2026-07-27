@@ -67,7 +67,7 @@ export class LoanProductAllocationComponent implements OnInit {
   ngOnInit(): void {
     this.allocationForm = this.formBuilder.group({
       id: [this.loanAllocationTemplate?.loanPaymentAllocationSetting?.id ?? this.loanAllocationTemplate?.id],
-      countryId: [null, Validators.required],
+      countryId: [null, this.officeName ? [] : Validators.required],
       repaymentChoice: [
         this.loanAllocationTemplate?.loanPaymentAllocationSetting?.repaymentChoice,
         Validators.required,
@@ -77,6 +77,26 @@ export class LoanProductAllocationComponent implements OnInit {
       disbursementDateOrder: [this.loanAllocationTemplate?.loanPaymentAllocationSetting?.disbursementDateOrder],
       districtIds: [this.selectedUnits],
     });
+
+    this. updateDisbursementDateOrderValidation();
+    this.allocationForm.get("repaymentChoice")?.valueChanges.subscribe(() => {
+      this.updateDisbursementDateOrderValidation();
+    });
+    this.allocationForm.get("systemChoice")?.valueChanges.subscribe(() => {
+      this.updateDisbursementDateOrderValidation();
+    });
+  }
+
+  private updateDisbursementDateOrderValidation() {
+    const disbursementDateOrderControl = this.allocationForm.get("disbursementDateOrder");
+    const requiresDisbursementDateOrder =
+      this.allocationForm.get("repaymentChoice")?.value === "SYSTEM_CHOICE" &&
+      this.allocationForm.get("systemChoice")?.value === "DISBURSEMENT_DATE";
+
+    disbursementDateOrderControl?.setValidators(
+      requiresDisbursementDateOrder ? Validators.required : null
+    );
+    disbursementDateOrderControl?.updateValueAndValidity({ emitEvent: false });
   }
 
   getCountries() {
@@ -163,6 +183,11 @@ export class LoanProductAllocationComponent implements OnInit {
     return loanAllocationProduct;
   }
   submit() {
+    if (this.allocationForm.invalid) {
+      this.allocationForm.markAllAsTouched();
+      return;
+    }
+
     let loanAllocationProduct = this.getLoanAllocationProduct();
     if (this.router.url.includes("edit")) {
       delete loanAllocationProduct.districtIds;

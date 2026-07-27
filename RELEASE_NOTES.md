@@ -1,5 +1,10 @@
 # Release Notes
 
+## Version 1.4.12 - Community 1.0.0
+
+    * Configurations
+          * [HQX-306] - Add disbursement date loan repayment allocation protocol to system choice
+
 ## Version 1.4.11 - Community 1.0.0
 
     * Savings Accounts & Products
@@ -15,9 +20,9 @@
         * [HQX-118] - Enable persistent filtering by office name, date range, and other key parameters, while retaining filters after submitting verification entries
         * [FNG-395] - Add country filter on Client KYC Verification list retrieval
 
-## Version 1.4.10 - Community 1.0.0
+## Version 1.4.10 - Community 1.0.0`
 
-    * Loans & Payments
+    * Loans & Payments`
         * [CP-4057] - Improve Rahisi Model UI to show more details and make it more user friendly
     * System
         * [FOX-202] - Resolve errors during create/modify custom fields of dropdown type
