@@ -7,12 +7,21 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { MatIconButton } from '@angular/material/button';
 import { MatNavList, MatListItem } from '@angular/material/list';
 import { MatIcon } from '@angular/material/icon';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatLine } from '@angular/material/grid-list';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { AuthenticationService } from 'app/core/authentication/authentication.service';
+import { environment } from 'environments/environment';
+import {
+  EXTERNAL_SERVICE_REGISTRY,
+  ExternalServiceAvailabilityContext,
+  ExternalServiceConfiguration,
+  getVisibleExternalServices
+} from './external-services.config';
 
 /**
  * External Services component.
@@ -25,24 +34,56 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatNavList,
     MatListItem,
     MatIcon,
+    MatIconButton,
     FaIconComponent,
     MatLine
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ExternalServicesComponent {
-  // Initialize an array of 4 boolean values, all set to false
-  arrowBooleans: boolean[] = new Array(4).fill(false);
+  private readonly authenticationService = inject(AuthenticationService);
+  private readonly availabilityContext: ExternalServiceAvailabilityContext = {};
+  private readonly userPermissions: string[];
+  private readonly expandedServiceIds = new Set<string>();
 
-  constructor() {}
+  externalServices: ExternalServiceConfiguration[];
+  serviceColumns: ExternalServiceConfiguration[][];
+
+  constructor() {
+    this.userPermissions = this.authenticationService.getCredentials()?.permissions ?? [];
+    this.externalServices = getVisibleExternalServices(
+      EXTERNAL_SERVICE_REGISTRY,
+      this.availabilityContext,
+      this.userPermissions,
+      environment.productionModeEnableRBAC
+    );
+    this.serviceColumns = this.getServiceColumns(this.externalServices);
+  }
+
+  getServiceColumns(services: ExternalServiceConfiguration[]): ExternalServiceConfiguration[][] {
+    const columnSize = Math.ceil(services.length / 2);
+    if (!columnSize) {
+      return [];
+    }
+    return [
+      services.slice(0, columnSize),
+      services.slice(columnSize)
+    ].filter((column: ExternalServiceConfiguration[]) => column.length > 0);
+  }
 
   /**
-   * Popover function
-   * @param arrowNumber - The index of the boolean value to toggle.
+   * Toggles a service description.
+   * @param serviceId Service identifier.
    */
+  toggleServiceDescription(serviceId: string): void {
+    if (this.expandedServiceIds.has(serviceId)) {
+      this.expandedServiceIds.delete(serviceId);
+    } else {
+      this.expandedServiceIds.add(serviceId);
+    }
+  }
 
-  arrowBooleansToggle(arrowNumber: number) {
-    // Toggle the boolean value at the given index
-    this.arrowBooleans[arrowNumber] = !this.arrowBooleans[arrowNumber];
+  isServiceDescriptionVisible(serviceId: string): boolean {
+    return this.expandedServiceIds.has(serviceId);
   }
 }
