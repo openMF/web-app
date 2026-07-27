@@ -1,0 +1,63 @@
+:host {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.site-selector {
+  padding: 16px 24px;
+
+  .site-selector-field {
+    display: flex;
+    flex-direction: column;
+    min-width: 180px;
+
+    label {
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .site-selector-country-name {
+      line-height: 36px;
+      font-weight: 500;
+    }
+  }
+
+  .selected-sites {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .selected-site-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px 4px 12px;
+    border-radius: 16px;
+    background-color: rgb(0 0 0 / 8%);
+    font-size: 13px;
+    line-height: 20px;
+
+    .remove-site-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      padding: 0;
+      border: none;
+      border-radius: 50%;
+      background-color: rgb(0 0 0 / 15%);
+      color: inherit;
+      font-size: 14px;
+      line-height: 1;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgb(0 0 0 / 30%);
+      }
+    }
+  }
+}

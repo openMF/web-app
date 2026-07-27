@@ -1,3 +1,8 @@
+mifosx-site-selector {
+  display: block;
+  margin-bottom: 12px;
+}
+
 .container {
   .action-button{
     margin-left: auto;
@@ -11,5 +16,52 @@
 table {
   tr.select-row:hover {
     cursor: pointer;
+  }
+}
+
+.actions-section {
+  margin-top: 24px;
+
+  .actions-header {
+    margin-bottom: 12px;
+
+    .actions-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background-color: #1673b4;
+      color: #fff;
+      font-size: 18px;
+      margin-right: 12px;
+    }
+
+    .actions-title {
+      margin: 0;
+      color: #1673b4;
+      font-weight: 600;
+    }
+
+    .actions-subtitle {
+      margin: 0;
+      color: rgba(0, 0, 0, 0.54);
+      font-size: 12px;
+    }
+  }
+
+  .action-card {
+    border-radius: 12px;
+
+    .action-card-title {
+      margin: 0 0 4px;
+      font-weight: 600;
+    }
+
+    .action-card-description {
+      margin: 0;
+      color: rgba(0, 0, 0, 0.54);
+    }
   }
 }

@@ -1,5 +1,8 @@
-<mat-card class="container">
-  <div fxLayout="row" fxLayoutAlign="start center">
+<div class="container">
+  <mifosx-site-selector (selectionChange)="onSiteSelectionChange($event)"></mifosx-site-selector>
+
+  <mat-card>
+    <div fxLayout="row" fxLayoutAlign="start center">
     <div class="search-box">
       <mat-form-field>
         <input matInput placeholder="{{ 'labels.oaf.Search by Name' | translate }} " [formControl]="name" />
@@ -63,4 +66,29 @@
     [pageSizeOptions]="[10, 25, 50, 100]"
     showFirstLastButtons
   ></mat-paginator>
-</mat-card>
+  </mat-card>
+
+  <div class="actions-section">
+  <div class="actions-header" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="12px">
+    <div class="actions-icon">
+      <fa-icon icon="hand-pointer"></fa-icon>
+    </div>
+    <div>
+      <h3 class="actions-title">{{ 'labels.oaf.Actions' | translate }}</h3>
+      <p class="actions-subtitle">{{ 'labels.oaf.Bulk actions on site-levels and groups' | translate }}</p>
+    </div>
+  </div>
+
+  <mat-card class="action-card">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <div>
+        <h4 class="action-card-title">{{ 'labels.oaf.Bulk Client Group Removal' | translate }}</h4>
+        <p class="action-card-description">{{ 'labels.oaf.One-click end-of-season cleanup' | translate }}.</p>
+      </div>
+      <button mat-raised-button color="primary" (click)="bulkRemoval()">
+        <fa-icon icon="times"></fa-icon>&nbsp;{{ 'labels.buttons.Bulk Removal' | translate }}
+      </button>
+    </div>
+  </mat-card>
+  </div>
+</div>
