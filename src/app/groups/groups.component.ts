@@ -152,7 +152,7 @@ export class GroupsComponent implements OnInit, AfterViewInit {
       this.snackBar.open('No sites selected', 'Close', { duration: 3000 });
       return;
     }
-    console.log('Navigating to bulk client removal with selection:', this.siteSelection);
+
     this.router.navigate(['bulk-client-removal'], {
       relativeTo: this.route,
       state: { siteSelection: this.siteSelection },

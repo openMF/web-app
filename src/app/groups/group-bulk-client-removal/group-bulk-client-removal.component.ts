@@ -67,6 +67,7 @@ export class GroupBulkClientRemovalComponent implements OnInit, AfterViewInit {
       this.router.navigate(['../'], { relativeTo: this.route });
       return;
     }
+
     this.scope = [this.siteSelection.regionName, this.siteSelection.districtName].filter(
       (name): name is string => !!name
     );
