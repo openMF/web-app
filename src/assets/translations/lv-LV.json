@@ -68,6 +68,7 @@
     "validation.msg.fixeddeposit.chart.slabs.range.has.gap": "Perioda/summas diapazonā procentu likmju diagrammā ir atstarpe",
     "validation.msg.fixeddeposit.chart.slabs.range.overlapping": "Perioda/summas diapazons pārklājas procentu likmju diagrammā",
     "validation.msg.fixeddeposit.chart.slabs.range.start.incorrect": "Perioda/summas diapazona sākums procentu likmju diagrammai ir nepareizs",
+    "validation.msg.interestchart.period.type.is.not.same": "All slabs in a chart must use the same period type.",
     "validation.msg.fixeddepositaccount.posting.period.type.is.less.than.compound.period.type": "Fiksētā depozīta grāmatošanas periods nevar būt īsāks par salikšanas periodu",
     "validation.msg.loan.allowPartialPeriodInterestCalculation.not.supported.for.daily.calculations": "Atļaut daļējas iemaksas aprēķinu nevar iestatīt kā patiesu ikdienas aprēķinam",
     "validation.msg.loan.allowVariableInstallments.not.supported.for.selected.interest.calculation.type": "Mainīgā iemaksa jāizmanto, aprēķinot ikdienas procentus, vai arī pieļaujot daļēju procentu aprēķinu",
@@ -599,6 +600,7 @@
       "Create User": "Izveidot lietotāju",
       "Create Working Capital Product": "Izveidot apgrozāmā kapitāla produktu",
       "Create more": "Izveidojiet vairāk",
+      "Disable Delinquency": "Atspējot kavējumu",
       "DONE": "Gatavs",
       "Dashboard": "Mērinstrumentu panelis",
       "Day": "diena",
@@ -624,6 +626,7 @@
       "Edit Schedule": "Rediģēt grafiku",
       "Edit Survey": "Rediģēt aptauju",
       "Enable": "Iespējot",
+      "Enable Delinquency": "Iespējot kavējumu",
       "Expand All": "Paplašināt visu",
       "Export": "Eksportēt",
       "Export CSV": "Eksportēt CSV",
@@ -633,7 +636,7 @@
       "Export XLS": "Eksportēt XLS",
       "Export to File": "Eksportēt uz failu",
       "Export to PDF": "Eksportēt kā PDF",
-      "Filter": "filtrēt",
+      "Filter": "Filter",
       "Foreclosure": "Preces ierobežošana",
       "GLIM Application": "GLIM aizdevuma pieteikums",
       "GSIM Application": "GSIM lietojumprogramma",
@@ -776,7 +779,9 @@
       "undo_account_transfer": "Atcelt konta pārskaitījumu",
       "All": "Visi",
       "Pause Breach": "Apturēt pārkāpumu",
-      "Resume Breach": "Pārtraukuma atsākšana"
+      "Resume Breach": "Pārtraukuma atsākšana",
+      "Currency Conversion": "Currency Conversion",
+      "Create Exchange Rate": "Create Exchange Rate"
     },
     "catalogs": {
       "% Amount": "Summa",
@@ -1595,7 +1600,9 @@
       "Loan Breach Actions": "Aizdevuma pārkāpuma darbības",
       "No Breach Actions": "Nav pārkāpuma darbību",
       "Pause Timeline": "Pauzes laika līnija",
-      "Location Map": "Atrašanās vietas karte"
+      "Location Map": "Atrašanās vietas karte",
+      "Exchange Rates": "Exchange Rates",
+      "Currency Conversion": "Currency Conversion"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -1927,6 +1934,7 @@
       "Custom Report Run Frequency": "Pielāgota pārskata izpildes biežums",
       "Custom Report Run Frequency (Days)": "Pielāgota pārskata izpildes biežums (dienas)",
       "DEFERRED INCOME RECOGNITION": "Atliktā ienākuma atzīšana",
+      "Delinquency evaluation disabled": "Kavējuma novērtēšana atspējota",
       "DETAILS": "INFORMĀCIJAS",
       "Daily": "Ikdienas",
       "Dashboard": "Mērinstrumentu panelis",
@@ -3185,7 +3193,14 @@
       "Credit Profile": "Kredīta profils",
       "Borrower": "Aizņēmējs",
       "Latitude": "Platums",
-      "Longitude": "Garums"
+      "Longitude": "Garums",
+      "Source Currency": "Source Currency",
+      "Target Currency": "Target Currency",
+      "Exchange Rate": "Exchange Rate",
+      "Exchange Rate Used": "Exchange Rate Used",
+      "Converted Amount": "Converted Amount",
+      "Conversion Date": "Conversion Date",
+      "Effective To": "Effective To"
     },
     "links": {
       "Community": "kopiena",
@@ -3366,6 +3381,7 @@
       "Are you sure you want Unassign Staff": "Vai tiešām vēlaties atcelt darbinieka piešķiršanu?",
       "Are you sure you want to calculate interest ?": "Vai tiešām vēlaties aprēķināt procentus?",
       "Are you sure you want to post interest ?": "Vai tiešām vēlaties reģistrēt procentus?",
+      "Disabling delinquency stops the delinquency evaluation and lifts the current delinquency classification": "Kavējuma atspējošana aptur kavējuma novērtēšanu un atceļ pašreizējo kavējuma klasifikāciju",
       "Enable withhold tax for this account ?": "Vai vēlaties aktivizēt ieturēto nodokli šim kontam?",
       "Disable withhold tax for this account ?": "Vai vēlaties deaktivizēt ieturēto nodokli šim kontam?",
       "Are you sure you want to waive charge with id:": "Vai tiešām vēlaties atbrīvot maksu ar ID:",
@@ -3376,6 +3392,7 @@
       "Are you sure you want recover the Original Schedule": "Vai tiešām vēlaties atjaunot oriģinālo grafiku?",
       "Are you sure you want resume the Delinquency Classification for Loan": "Vai tiešām vēlaties atsākt aizņēmuma nokavējuma klasifikāciju?",
       "Are you sure you want": "Vai tiešām vēlaties",
+      "Enabling delinquency resumes the delinquency evaluation and recalculates it as of the current business date": "Kavējuma iespējošana atsāk kavējuma novērtēšanu un pārrēķina to pēc pašreizējā biznesa datuma",
       "the Loan Reschedule": "aizdevuma pārkārtošanu",
       "Are you sure you want undo the transaction": "Vai tiešām vēlaties atsaukt šo darījumu?",
       "Are you sure you want undo the transaction type": "Vai tiešām vēlaties atsaukt šī darījuma veidu?",
@@ -4180,7 +4197,12 @@
       "All Offices": "Visi biroji",
       "No loan was found": "Neviens aizdevums nav atrasts",
       "SearchByLoan": "Meklēt pēc konta numura, aizņēmēja vai produkta",
-      "Map tiles unavailable": "Kartes elementi nav pieejami"
+      "Map tiles unavailable": "Kartes elementi nav pieejami",
+      "Manage exchange rates and currency conversion": "Manage exchange rates and currency conversion",
+      "No exchange rates found": "No exchange rates found",
+      "Loading": "Loading",
+      "Source and target currencies cannot be identical": "Source and target currencies cannot be identical",
+      "Effective To cannot be before Effective From": "Effective To cannot be before Effective From"
     },
     "permissions": {
       "actions": {

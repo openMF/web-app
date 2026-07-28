@@ -68,6 +68,7 @@
     "validation.msg.fixeddeposit.chart.slabs.range.has.gap": "Masafa ya kipindi/Kiasi ina pengo la chati ya viwango vya riba",
     "validation.msg.fixeddeposit.chart.slabs.range.overlapping": "Masafa ya kipindi/Kiasi kinachopishana kwa chati ya viwango vya riba",
     "validation.msg.fixeddeposit.chart.slabs.range.start.incorrect": "Kipindi/Kiasi cha kuanzia mwanzo si sahihi kwa chati ya viwango vya riba",
+    "validation.msg.interestchart.period.type.is.not.same": "All slabs in a chart must use the same period type.",
     "validation.msg.fixeddepositaccount.posting.period.type.is.less.than.compound.period.type": "Kipindi cha Kuchapisha Amana Isiyobadilika hakiwezi kuwa chini ya kipindi cha kujumuisha",
     "validation.msg.loan.allowPartialPeriodInterestCalculation.not.supported.for.daily.calculations": "Ruhusu Ukokotoaji wa Usawa wa Kiasi hauwezi kuwekwa kuwa kweli kwa hesabu ya kila siku",
     "validation.msg.loan.allowVariableInstallments.not.supported.for.selected.interest.calculation.type": "Malipo ya Kubadilishana yanapaswa kutumiwa pamoja na hesabu ya maslahi ya kila siku au kuruhusu ukokotoaji wa riba kiasi kuwa kweli",
@@ -599,6 +600,7 @@
       "Create User": "Unda Mtumiaji",
       "Create Working Capital Product": "Unda Bidhaa ya Mtaji wa Kufanya Kazi",
       "Create more": "Unda zaidi",
+      "Disable Delinquency": "Zima tathmini ya udaiwa",
       "DONE": "Imekamilika",
       "Dashboard": "Dashibodi",
       "Day": "Siku",
@@ -624,6 +626,7 @@
       "Edit Schedule": "Badilisha Ratiba",
       "Edit Survey": "Hariri Utafiti",
       "Enable": "Wezesha",
+      "Enable Delinquency": "Washa tathmini ya udaiwa",
       "Expand All": "Panua Yote",
       "Export": "Hamisha",
       "Export CSV": "Hamisha CSV",
@@ -633,7 +636,7 @@
       "Export XLS": "Hamisha XLS",
       "Export to File": "Hamisha kwa FILE",
       "Export to PDF": "Hamisha kwa PDF",
-      "Filter": "Kichujio",
+      "Filter": "Filter",
       "Foreclosure": "Kukamata Mali",
       "GLIM Application": "Maombi ya Mkopo wa GLIM",
       "GSIM Application": "Maombi ya GSIM",
@@ -776,7 +779,9 @@
       "undo_account_transfer": "Futa uhamisho wa akaunti",
       "All": "Vyote",
       "Pause Breach": "Sitisha Ukiukaji",
-      "Resume Breach": "Endelea Ukiukaji"
+      "Resume Breach": "Endelea Ukiukaji",
+      "Currency Conversion": "Currency Conversion",
+      "Create Exchange Rate": "Create Exchange Rate"
     },
     "catalogs": {
       "% Amount": "Kiasi",
@@ -1592,7 +1597,9 @@
       "Loan Breach Actions": "Vitendo vya Ukiukaji wa Mkopo",
       "No Breach Actions": "Hakuna Vitendo vya Ukiukaji",
       "Pause Timeline": "Mfuatano wa Pumziko",
-      "Location Map": "Ramani ya eneo"
+      "Location Map": "Ramani ya eneo",
+      "Exchange Rates": "Exchange Rates",
+      "Currency Conversion": "Currency Conversion"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -1924,6 +1931,7 @@
       "Custom Report Run Frequency": "Marudio ya Uendeshaji wa Ripoti Maalum",
       "Custom Report Run Frequency (Days)": "Marudio ya Uendeshaji wa Ripoti Maalum (Siku)",
       "DEFERRED INCOME RECOGNITION": "Utambuzi wa mapato ulioahirishwa",
+      "Delinquency evaluation disabled": "Tathmini ya udaiwa imezimwa",
       "DETAILS": "MAELEZO",
       "Daily": "Kila siku",
       "Dashboard": "Dashibodi",
@@ -3182,7 +3190,14 @@
       "Credit Profile": "Wasifu wa Mkopo",
       "Borrower": "Mkopaji",
       "Latitude": "Latitudo",
-      "Longitude": "Longitudo"
+      "Longitude": "Longitudo",
+      "Source Currency": "Source Currency",
+      "Target Currency": "Target Currency",
+      "Exchange Rate": "Exchange Rate",
+      "Exchange Rate Used": "Exchange Rate Used",
+      "Converted Amount": "Converted Amount",
+      "Conversion Date": "Conversion Date",
+      "Effective To": "Effective To"
     },
     "links": {
       "Community": "Jumuiya",
@@ -3363,6 +3378,7 @@
       "Are you sure you want Unassign Staff": "Je, una uhakika unataka kuondoa wafanyakazi?",
       "Are you sure you want to calculate interest ?": "Je, una uhakika unataka kuhesabu riba?",
       "Are you sure you want to post interest ?": "Je, una uhakika unataka kuchapisha riba?",
+      "Disabling delinquency stops the delinquency evaluation and lifts the current delinquency classification": "Kuzima udaiwa kunasitisha tathmini ya udaiwa na kuondoa uainishaji wa udaiwa wa sasa",
       "Enable withhold tax for this account ?": "Je, una uhakika unataka kuwezesha kodi ya kizuizi kwa akaunti hii?",
       "Disable withhold tax for this account ?": "Je, una uhakika unataka kulemaza kodi ya kizuizi kwa akaunti hii?",
       "Are you sure you want to waive charge with id:": "Je, una uhakika unataka kufuta malipo na kitambulisho:",
@@ -3373,6 +3389,7 @@
       "Are you sure you want recover the Original Schedule": "Je, una uhakika unataka kurejesha ratiba ya awali?",
       "Are you sure you want resume the Delinquency Classification for Loan": "Je, una uhakika unataka kuendelea na uainishaji wa malipo kwa mkopo?",
       "Are you sure you want": "Je, una uhakika unataka",
+      "Enabling delinquency resumes the delinquency evaluation and recalculates it as of the current business date": "Kuwasha udaiwa kunaendelea na tathmini ya udaiwa na kuihesabu upya kwa tarehe ya biashara ya sasa",
       "the Loan Reschedule": "kupangilia upya mkopo",
       "Are you sure you want undo the transaction": "Je, una uhakika unataka kufuta hii muamala?",
       "Are you sure you want undo the transaction type": "Je, una uhakika unataka kufuta aina ya muamala?",
@@ -4177,7 +4194,12 @@
       "All Offices": "Ofisi zote",
       "No loan was found": "Hakuna mkopo uliopatikana",
       "SearchByLoan": "Tafuta kwa nambari ya akaunti, mkopaji au bidhaa",
-      "Map tiles unavailable": "Vipande vya ramani havipatikani"
+      "Map tiles unavailable": "Vipande vya ramani havipatikani",
+      "Manage exchange rates and currency conversion": "Manage exchange rates and currency conversion",
+      "No exchange rates found": "No exchange rates found",
+      "Loading": "Loading",
+      "Source and target currencies cannot be identical": "Source and target currencies cannot be identical",
+      "Effective To cannot be before Effective From": "Effective To cannot be before Effective From"
     },
     "permissions": {
       "actions": {

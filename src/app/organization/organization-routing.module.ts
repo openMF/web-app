@@ -315,6 +315,12 @@ const routes: Routes = [
           ]
         },
         {
+          path: 'exchange-rates',
+          data: { title: 'Exchange Rates', breadcrumb: 'Exchange Rates' },
+          loadChildren: () =>
+            import('./exchange-rates/exchange-rates.module').then((module) => module.ExchangeRatesModule)
+        },
+        {
           path: 'sms-campaigns',
           data: { title: 'SMS Campaigns', breadcrumb: 'SMS Campaigns' },
           children: [

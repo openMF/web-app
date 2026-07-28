@@ -142,43 +142,71 @@
     </div>
   }
 
+  @if (isDelinquencyDisabled()) {
+    <div class="delinquency-disabled-banner m-t-20">
+      <fa-icon icon="ban" class="m-r-10"></fa-icon>
+      <span>{{ 'labels.inputs.Delinquency evaluation disabled' | translate }}</span>
+    </div>
+  }
+
   <div class="layout-row m-t-20 m-b-10 align-end align-items-center gap-5px">
-    @if (allowPause()) {
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="createDelinquencyAction()"
-        *mifosxHasPermission="'CREATE_DELINQUENCY_ACTION'"
-      >
-        <fa-icon icon="pause" class="m-r-10"></fa-icon
-        >{{ 'labels.buttons.Pause Delinquency Classification' | translate }}
-      </button>
-    }
-    @if (loanProductService.isWorkingCapital) {
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="createDelinquencyActionReschedule()"
-        *mifosxHasPermission="'CREATE_WC_DELINQUENCY_ACTION'"
-      >
-        <fa-icon icon="calendar" class="m-r-10"></fa-icon>{{ 'labels.buttons.Reschedule' | translate }}
-      </button>
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="createDelinquencyActionReset()"
-        *mifosxHasPermission="'CREATE_WC_DELINQUENCY_RESET'"
-      >
-        <fa-icon icon="calendar" class="m-r-10"></fa-icon>{{ 'labels.buttons.Reset' | translate }}
-      </button>
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="createDelinquencyActionUndoReset()"
-        *mifosxHasPermission="'CREATE_WC_DELINQUENCY_UNDO_RESET'"
-      >
-        <fa-icon icon="calendar" class="m-r-10"></fa-icon>{{ 'labels.buttons.Undo Reset' | translate }}
-      </button>
+    @if (isDelinquencyDisabled()) {
+      @if (loanProductService.isWorkingCapital) {
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="createDelinquencyEnable()"
+          *mifosxHasPermission="'CREATE_WC_DELINQUENCY_DISABLE'"
+        >
+          <fa-icon icon="play" class="m-r-10"></fa-icon>{{ 'labels.buttons.Enable Delinquency' | translate }}
+        </button>
+      }
+    } @else {
+      @if (allowPause()) {
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="createDelinquencyAction()"
+          *mifosxHasPermission="'CREATE_DELINQUENCY_ACTION'"
+        >
+          <fa-icon icon="pause" class="m-r-10"></fa-icon
+          >{{ 'labels.buttons.Pause Delinquency Classification' | translate }}
+        </button>
+      }
+      @if (loanProductService.isWorkingCapital) {
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="createDelinquencyActionReschedule()"
+          *mifosxHasPermission="'CREATE_WC_DELINQUENCY_ACTION'"
+        >
+          <fa-icon icon="calendar" class="m-r-10"></fa-icon>{{ 'labels.buttons.Reschedule' | translate }}
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="createDelinquencyActionReset()"
+          *mifosxHasPermission="'CREATE_WC_DELINQUENCY_RESET'"
+        >
+          <fa-icon icon="calendar" class="m-r-10"></fa-icon>{{ 'labels.buttons.Reset' | translate }}
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="createDelinquencyActionUndoReset()"
+          *mifosxHasPermission="'CREATE_WC_DELINQUENCY_UNDO_RESET'"
+        >
+          <fa-icon icon="calendar" class="m-r-10"></fa-icon>{{ 'labels.buttons.Undo Reset' | translate }}
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="createDelinquencyDisable()"
+          *mifosxHasPermission="'CREATE_WC_DELINQUENCY_DISABLE'"
+        >
+          <fa-icon icon="ban" class="m-r-10"></fa-icon>{{ 'labels.buttons.Disable Delinquency' | translate }}
+        </button>
+      }
     }
   </div>
 
@@ -230,7 +258,7 @@
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
           <td mat-cell *matCellDef="let item">
-            @if (isCurrentAndPauseAction(item)) {
+            @if (isCurrentAndPauseAction(item) && !isDelinquencyDisabled()) {
               @if (loanProductService.isLoanProduct) {
                 <span>
                   <button

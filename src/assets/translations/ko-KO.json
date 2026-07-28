@@ -68,6 +68,7 @@
     "validation.msg.fixeddeposit.chart.slabs.range.has.gap": "기간/금액 범위는 금리 차트와 간격이 있습니다.",
     "validation.msg.fixeddeposit.chart.slabs.range.overlapping": "금리 차트의 기간/금액 범위가 중복됩니다.",
     "validation.msg.fixeddeposit.chart.slabs.range.start.incorrect": "이자율 차트의 기간/금액 범위 시작이 올바르지 않습니다.",
+    "validation.msg.interestchart.period.type.is.not.same": "All slabs in a chart must use the same period type.",
     "validation.msg.fixeddepositaccount.posting.period.type.is.less.than.compound.period.type": "정기 예금 전기 기간은 복리 기간보다 작을 수 없습니다.",
     "validation.msg.loan.allowPartialPeriodInterestCalculation.not.supported.for.daily.calculations": "일일 계산에서는 부분 할부 계산 허용을 true로 설정할 수 없습니다.",
     "validation.msg.loan.allowVariableInstallments.not.supported.for.selected.interest.calculation.type": "변액할부는 일일이자 계산과 함께 사용하거나 부분이자 계산을 허용해야 합니다.",
@@ -599,6 +600,7 @@
       "Create User": "사용자 생성",
       "Create Working Capital Product": "운전자본 상품 생성",
       "Create more": "더 만들기",
+      "Disable Delinquency": "연체 평가 비활성화",
       "DONE": "완료",
       "Dashboard": "계기반",
       "Day": "낮",
@@ -624,6 +626,7 @@
       "Edit Schedule": "일정 편집",
       "Edit Survey": "설문조사 편집",
       "Enable": "할 수 있게 하다",
+      "Enable Delinquency": "연체 평가 활성화",
       "Expand All": "모두 확장",
       "Export": "내보내다",
       "Export CSV": "CSV 내보내기",
@@ -633,7 +636,7 @@
       "Export XLS": "XLS 내보내기",
       "Export to File": "파일로 내보내기",
       "Export to PDF": "PDF로 내보내기",
-      "Filter": "필터",
+      "Filter": "Filter",
       "Foreclosure": "유질",
       "GLIM Application": "GLIM 대출 신청",
       "GSIM Application": "GSIM 애플리케이션",
@@ -776,7 +779,9 @@
       "undo_account_transfer": "계좌 이체 취소",
       "All": "전체",
       "Pause Breach": "위반 일시중지",
-      "Resume Breach": "중단된 작업 재개"
+      "Resume Breach": "중단된 작업 재개",
+      "Currency Conversion": "Currency Conversion",
+      "Create Exchange Rate": "Create Exchange Rate"
     },
     "catalogs": {
       "% Amount": "양",
@@ -1596,7 +1601,9 @@
       "Loan Breach Actions": "대출 위반 작업",
       "No Breach Actions": "위반 작업 없음",
       "Pause Timeline": "일시중지 타임라인",
-      "Location Map": "위치 지도"
+      "Location Map": "위치 지도",
+      "Exchange Rates": "Exchange Rates",
+      "Currency Conversion": "Currency Conversion"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -1928,6 +1935,7 @@
       "Custom Report Run Frequency": "사용자 정의 보고서 실행 빈도",
       "Custom Report Run Frequency (Days)": "사용자 정의 보고서 실행 빈도(일)",
       "DEFERRED INCOME RECOGNITION": "이연수익 인식",
+      "Delinquency evaluation disabled": "연체 평가가 비활성화됨",
       "DETAILS": "세부",
       "Daily": "일일",
       "Dashboard": "계기반",
@@ -3185,7 +3193,14 @@
       "Credit Profile": "신용 프로필",
       "Borrower": "차용인",
       "Latitude": "위도",
-      "Longitude": "경도"
+      "Longitude": "경도",
+      "Source Currency": "Source Currency",
+      "Target Currency": "Target Currency",
+      "Exchange Rate": "Exchange Rate",
+      "Exchange Rate Used": "Exchange Rate Used",
+      "Converted Amount": "Converted Amount",
+      "Conversion Date": "Conversion Date",
+      "Effective To": "Effective To"
     },
     "links": {
       "Community": "지역 사회",
@@ -3366,6 +3381,7 @@
       "Are you sure you want Unassign Staff": "직원 해제를 하시겠습니까?",
       "Are you sure you want to calculate interest ?": "이자를 계산하시겠습니까?",
       "Are you sure you want to post interest ?": "이자를 등록하시겠습니까?",
+      "Disabling delinquency stops the delinquency evaluation and lifts the current delinquency classification": "연체를 비활성화하면 연체 평가가 중지되고 현재 연체 분류가 해제됩니다",
       "Enable withhold tax for this account ?": "이 계정에 대한 세금 보류 기능을 활성화하시겠습니까?",
       "Disable withhold tax for this account ?": "이 계정에 대한 세금 보류 기능을 비활성화하시겠습니까?",
       "Are you sure you want to waive charge with id:": "ID가 있는 요금을 면제하시겠습니까?",
@@ -3376,6 +3392,7 @@
       "Are you sure you want recover the Original Schedule": "원본 일정에서 복구하시겠습니까?",
       "Are you sure you want resume the Delinquency Classification for Loan": "대출에 대한 연체 분류를 재개하시겠습니까?",
       "Are you sure you want": "확실하게 원하시나요?",
+      "Enabling delinquency resumes the delinquency evaluation and recalculates it as of the current business date": "연체를 활성화하면 연체 평가가 재개되고 현재 영업일 기준으로 다시 계산됩니다",
       "the Loan Reschedule": "대출 재일정",
       "Are you sure you want undo the transaction": "이 거래를 취소하시겠습니까?",
       "Are you sure you want undo the transaction type": "이 거래 유형을 취소하시겠습니까?",
@@ -4180,7 +4197,12 @@
       "All Offices": "모든 사무소",
       "No loan was found": "대출을 찾을 수 없습니다",
       "SearchByLoan": "계좌 번호, 차용인 또는 상품으로 검색",
-      "Map tiles unavailable": "지도 타일을 사용할 수 없습니다"
+      "Map tiles unavailable": "지도 타일을 사용할 수 없습니다",
+      "Manage exchange rates and currency conversion": "Manage exchange rates and currency conversion",
+      "No exchange rates found": "No exchange rates found",
+      "Loading": "Loading",
+      "Source and target currencies cannot be identical": "Source and target currencies cannot be identical",
+      "Effective To cannot be before Effective From": "Effective To cannot be before Effective From"
     },
     "permissions": {
       "actions": {

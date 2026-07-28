@@ -68,6 +68,7 @@
     "validation.msg.fixeddeposit.chart.slabs.range.has.gap": "अवधि/राशि दायरा ब्याज दर चार्ट को लागी अन्तर छ",
     "validation.msg.fixeddeposit.chart.slabs.range.overlapping": "ब्याज दर चार्टको लागि अवधि / रकम दायरा ओभरल्यापिङ",
     "validation.msg.fixeddeposit.chart.slabs.range.start.incorrect": "अवधि/राशि दायरा सुरु ब्याज दर चार्ट को लागी गलत छ",
+    "validation.msg.interestchart.period.type.is.not.same": "All slabs in a chart must use the same period type.",
     "validation.msg.fixeddepositaccount.posting.period.type.is.less.than.compound.period.type": "फिक्स्ड डिपोजिट पोस्टिङ अवधि चक्रवृद्धि अवधि भन्दा कम हुन सक्दैन",
     "validation.msg.loan.allowPartialPeriodInterestCalculation.not.supported.for.daily.calculations": "अनुमति दिनुहोस् आंशिक किस्ता गणना दैनिक गणनाको लागि सत्यको रूपमा सेट गर्न सकिँदैन",
     "validation.msg.loan.allowVariableInstallments.not.supported.for.selected.interest.calculation.type": "चर किस्ता दैनिक ब्याज गणनाको साथ प्रयोग गरिनु पर्छ वा आंशिक ब्याज गणनालाई अनुमति दिनुपर्छ।",
@@ -599,6 +600,7 @@
       "Create User": "प्रयोगकर्ता सिर्जना गर्नुहोस्",
       "Create Working Capital Product": "कार्यशील पूँजी उत्पादन सिर्जना गर्नुहोस्",
       "Create more": "थप सिर्जना गर्नुहोस्",
+      "Disable Delinquency": "अपराध मूल्यांकन असक्षम गर्नुहोस्",
       "DONE": "सम्पन्न",
       "Dashboard": "ड्यासबोर्ड",
       "Day": "दिन",
@@ -624,6 +626,7 @@
       "Edit Schedule": "तालिका सम्पादन गर्नुहोस्",
       "Edit Survey": "सर्वेक्षण सम्पादन गर्नुहोस्",
       "Enable": "सक्षम गर्नुहोस्",
+      "Enable Delinquency": "अपराध मूल्यांकन सक्षम गर्नुहोस्",
       "Expand All": "सबै विस्तार गर्नुहोस्",
       "Export": "निर्यात गर्नुहोस्",
       "Export CSV": "CSV निर्यात गर्नुहोस्",
@@ -633,7 +636,7 @@
       "Export XLS": "XLS निर्यात गर्नुहोस्",
       "Export to File": "फाइलमा निर्यात गर्नुहोस्",
       "Export to PDF": "PDF को रूपमा निर्यात गर्नुहोस्",
-      "Filter": "फिल्टर",
+      "Filter": "Filter",
       "Foreclosure": "फोरक्लोजर",
       "GLIM Application": "GLIM ऋण आवेदन",
       "GSIM Application": "GSIM आवेदन",
@@ -776,7 +779,9 @@
       "undo_account_transfer": "खाता स्थानान्तरण रद्द गर्नुहोस्",
       "All": "सबै",
       "Pause Breach": "उल्लङ्घन रोक्नुहोस्",
-      "Resume Breach": "उल्लंघन पुनः सुरु गर्नुहोस्"
+      "Resume Breach": "उल्लंघन पुनः सुरु गर्नुहोस्",
+      "Currency Conversion": "Currency Conversion",
+      "Create Exchange Rate": "Create Exchange Rate"
     },
     "catalogs": {
       "% Amount": "रकम",
@@ -1594,7 +1599,9 @@
       "Loan Breach Actions": "ऋण उल्लङ्घन कार्यहरू",
       "No Breach Actions": "कुनै उल्लंघन कार्यहरू छैनन्",
       "Pause Timeline": "रोकावट समयरेखा",
-      "Location Map": "स्थान नक्सा"
+      "Location Map": "स्थान नक्सा",
+      "Exchange Rates": "Exchange Rates",
+      "Currency Conversion": "Currency Conversion"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -1926,6 +1933,7 @@
       "Custom Report Run Frequency": "अनुकूलन रिपोर्ट रन आवृत्ति",
       "Custom Report Run Frequency (Days)": "अनुकूलन रिपोर्ट रन आवृत्ति (दिन)",
       "DEFERRED INCOME RECOGNITION": "स्थगित आय पहिचान",
+      "Delinquency evaluation disabled": "अपराध मूल्यांकन असक्षम गरिएको",
       "DETAILS": "विवरणहरू",
       "Daily": "दैनिक",
       "Dashboard": "ड्यासबोर्ड",
@@ -3184,7 +3192,14 @@
       "Credit Profile": "क्रेडिट प्रोफाइल",
       "Borrower": "ऋणी",
       "Latitude": "अक्षांश",
-      "Longitude": "देशान्तर"
+      "Longitude": "देशान्तर",
+      "Source Currency": "Source Currency",
+      "Target Currency": "Target Currency",
+      "Exchange Rate": "Exchange Rate",
+      "Exchange Rate Used": "Exchange Rate Used",
+      "Converted Amount": "Converted Amount",
+      "Conversion Date": "Conversion Date",
+      "Effective To": "Effective To"
     },
     "links": {
       "Community": "समुदाय",
@@ -3366,6 +3381,7 @@
       "Are you sure you want Unassign Staff": "के तपाईं निश्चित हुनुहुन्छ कि तपाईंले कर्मचारीलाई अनपाइन्ट गर्न चाहनुहुन्छ?",
       "Are you sure you want to calculate interest ?": "के तपाईं निश्चित हुनुहुन्छ कि तपाईं ब्याजहरू गणना गर्न चाहनुहुन्छ?",
       "Are you sure you want to post interest ?": "के तपाईं निश्चित हुनुहुन्छ कि तपाईं ब्याज पोस्ट गर्न चाहनुहुन्छ?",
+      "Disabling delinquency stops the delinquency evaluation and lifts the current delinquency classification": "अपराध असक्षम गर्दा अपराध मूल्यांकन रोकिन्छ र हालको अपराध वर्गीकरण हटाइन्छ",
       "Enable withhold tax for this account ?": "के तपाईं निश्चित हुनुहुन्छ कि तपाईं यस खातामा कर निर्वाचन गर्न चाहनुहुन्छ?",
       "Disable withhold tax for this account ?": "के तपाईं निश्चित हुनुहुन्छ कि तपाईं यस खातामा कर निर्वाचन गर्न चाहनुहुन्छ?",
       "Are you sure you want to waive charge with id:": "के तपाईं निश्चित हुनुहुन्छ कि तपाईं आइडी सहित शुल्क त्याग गर्न चाहनुहुन्छ?",
@@ -3376,6 +3392,7 @@
       "Are you sure you want recover the Original Schedule": "के तपाईं निश्चित हुनुहुन्छ कि तपाईं मौलिक तालिका पुनर्प्राप्त गर्न चाहनुहुन्छ?",
       "Are you sure you want resume the Delinquency Classification for Loan": "के तपाईं निश्चित हुनुहुन्छ कि तपाईं कर्जाको लागि दोषभूतता वर्गीकरण पुनर्आरंभ गर्न चाहनुहुन्छ?",
       "Are you sure you want": "के तपाईं निश्चित हुनुहुन्छ",
+      "Enabling delinquency resumes the delinquency evaluation and recalculates it as of the current business date": "अपराध सक्षम गर्दा अपराध मूल्यांकन पुनः सुरु हुन्छ र हालको व्यापार मितिमा पुनः गणना गरिन्छ",
       "the Loan Reschedule": "कर्जा पुनर्योजना",
       "Are you sure you want undo the transaction": "के तपाईं निश्चित हुनुहुन्छ कि तपाईं यस लेन-देनलाई पूर्वस्थिति मा पर्खन चाहनुहुन्छ?",
       "Are you sure you want undo the transaction type": "के तपाईं निश्चित हुनुहुन्छ कि तपाईं यस लेन-देन प्रकारलाई पूर्वस्थिति मा पर्खन चाहनुहुन्छ?",
@@ -4180,7 +4197,12 @@
       "All Offices": "सबै कार्यालयहरू",
       "No loan was found": "कुनै ऋण फेला परेन",
       "SearchByLoan": "खाता नम्बर, ऋणी, वा उत्पादनद्वारा खोज्नुहोस्",
-      "Map tiles unavailable": "नक्साका टाइलहरू उपलब्ध छैनन्"
+      "Map tiles unavailable": "नक्साका टाइलहरू उपलब्ध छैनन्",
+      "Manage exchange rates and currency conversion": "Manage exchange rates and currency conversion",
+      "No exchange rates found": "No exchange rates found",
+      "Loading": "Loading",
+      "Source and target currencies cannot be identical": "Source and target currencies cannot be identical",
+      "Effective To cannot be before Effective From": "Effective To cannot be before Effective From"
     },
     "permissions": {
       "actions": {

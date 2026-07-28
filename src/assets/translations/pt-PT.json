@@ -68,6 +68,7 @@
     "validation.msg.fixeddeposit.chart.slabs.range.has.gap": "A faixa Período/Valor tem lacuna no gráfico de taxas de juros",
     "validation.msg.fixeddeposit.chart.slabs.range.overlapping": "Intervalo de período/valor sobreposto no gráfico de taxas de juros",
     "validation.msg.fixeddeposit.chart.slabs.range.start.incorrect": "O início do intervalo de período/valor está incorreto para o gráfico de taxas de juros",
+    "validation.msg.interestchart.period.type.is.not.same": "All slabs in a chart must use the same period type.",
     "validation.msg.fixeddepositaccount.posting.period.type.is.less.than.compound.period.type": "O período de lançamento de depósito fixo não pode ser inferior ao período composto",
     "validation.msg.loan.allowPartialPeriodInterestCalculation.not.supported.for.daily.calculations": "Permitir cálculo de parcela parcial não pode ser definido como verdadeiro para cálculo diário",
     "validation.msg.loan.allowVariableInstallments.not.supported.for.selected.interest.calculation.type": "A Parcela Variável deve ser usada com cálculo de juros diários ou permitir cálculo de juros parciais verdadeiro",
@@ -599,6 +600,7 @@
       "Create User": "Criar usuário",
       "Create Working Capital Product": "Criar Produto de Capital de Giro",
       "Create more": "Crie mais",
+      "Disable Delinquency": "Desativar inadimplência",
       "DONE": "Concluir",
       "Dashboard": "Painel",
       "Day": "Dia",
@@ -624,6 +626,7 @@
       "Edit Schedule": "Editar agendamento",
       "Edit Survey": "Editar pesquisa",
       "Enable": "Habilitar",
+      "Enable Delinquency": "Ativar inadimplência",
       "Expand All": "Expandir todos",
       "Export": "Exportar",
       "Export CSV": "Exportar CSV",
@@ -633,7 +636,7 @@
       "Export XLS": "Exportar XLS",
       "Export to File": "Exportar arquivo",
       "Export to PDF": "Exportar para PDF",
-      "Filter": "filtro",
+      "Filter": "Filter",
       "Foreclosure": "Execução hipotecária",
       "GLIM Application": "Solicitação de empréstimo GLIM",
       "GSIM Application": "Aplicação GSM",
@@ -776,7 +779,9 @@
       "undo_account_transfer": "Reverter transferência de conta",
       "All": "Todos",
       "Pause Breach": "Pausar Violação",
-      "Resume Breach": "Retomar Violação"
+      "Resume Breach": "Retomar Violação",
+      "Currency Conversion": "Currency Conversion",
+      "Create Exchange Rate": "Create Exchange Rate"
     },
     "catalogs": {
       "% Amount": "Quantia",
@@ -1594,7 +1599,9 @@
       "Loan Breach Actions": "Ações de Violação do Empréstimo",
       "No Breach Actions": "Sem Ações de Violação",
       "Pause Timeline": "Cronologia de Pausas",
-      "Location Map": "Mapa de localização"
+      "Location Map": "Mapa de localização",
+      "Exchange Rates": "Exchange Rates",
+      "Currency Conversion": "Currency Conversion"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -1926,6 +1933,7 @@
       "Custom Report Run Frequency": "Frequência de execução de relatório personalizado",
       "Custom Report Run Frequency (Days)": "Frequência de execução de relatório personalizado (dias)",
       "DEFERRED INCOME RECOGNITION": "Reconhecimento de receita diferida",
+      "Delinquency evaluation disabled": "Avaliação de inadimplência desativada",
       "DETAILS": "DETALHES",
       "Daily": "Diário",
       "Dashboard": "Painel",
@@ -3184,7 +3192,14 @@
       "Credit Profile": "Perfil de crédito",
       "Borrower": "Mutuário",
       "Latitude": "Latitude",
-      "Longitude": "Longitude"
+      "Longitude": "Longitude",
+      "Source Currency": "Source Currency",
+      "Target Currency": "Target Currency",
+      "Exchange Rate": "Exchange Rate",
+      "Exchange Rate Used": "Exchange Rate Used",
+      "Converted Amount": "Converted Amount",
+      "Conversion Date": "Conversion Date",
+      "Effective To": "Effective To"
     },
     "links": {
       "Community": "Comunidade",
@@ -3366,6 +3381,7 @@
       "Are you sure you want Unassign Staff": "Tem a certeza que deseja desassociar o funcionário?",
       "Are you sure you want to calculate interest ?": "Tem a certeza que deseja calcular juros?",
       "Are you sure you want to post interest ?": "Tem a certeza que deseja registar juros?",
+      "Disabling delinquency stops the delinquency evaluation and lifts the current delinquency classification": "Desativar a inadimplência interrompe a avaliação de inadimplência e suspende a classificação de inadimplência atual",
       "Enable withhold tax for this account ?": "Ativar retenção de impostos para esta conta?",
       "Disable withhold tax for this account ?": "Desativar retenção de impostos para esta conta?",
       "Are you sure you want to waive charge with id:": "Tem a certeza que deseja renunciar a cobrança com id:",
@@ -3376,6 +3392,7 @@
       "Are you sure you want recover the Original Schedule": "Tem a certeza que deseja recuperar o Calendário Original",
       "Are you sure you want resume the Delinquency Classification for Loan": "Tem a certeza que deseja retomar a Classificação de Inadimplência para Empréstimo",
       "Are you sure you want": "Tem a certeza que deseja",
+      "Enabling delinquency resumes the delinquency evaluation and recalculates it as of the current business date": "Ativar a inadimplência retoma a avaliação de inadimplência e recalcula-a na data de negócio atual",
       "the Loan Reschedule": "o Reagendamento do Empréstimo",
       "Are you sure you want undo the transaction": "Tem a certeza que deseja desfazer a transação",
       "Are you sure you want undo the transaction type": "Tem a certeza que deseja desfazer o tipo de transação",
@@ -4180,7 +4197,12 @@
       "All Offices": "Todos os escritórios",
       "No loan was found": "Nenhum empréstimo foi encontrado",
       "SearchByLoan": "Pesquisar por número de conta, mutuário ou produto",
-      "Map tiles unavailable": "Mosaicos do mapa indisponíveis"
+      "Map tiles unavailable": "Mosaicos do mapa indisponíveis",
+      "Manage exchange rates and currency conversion": "Manage exchange rates and currency conversion",
+      "No exchange rates found": "No exchange rates found",
+      "Loading": "Loading",
+      "Source and target currencies cannot be identical": "Source and target currencies cannot be identical",
+      "Effective To cannot be before Effective From": "Effective To cannot be before Effective From"
     },
     "permissions": {
       "actions": {

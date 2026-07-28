@@ -68,6 +68,7 @@
     "validation.msg.fixeddeposit.chart.slabs.range.has.gap": "El rango de período/monto tiene un espacio en el gráfico de tasas de interés",
     "validation.msg.fixeddeposit.chart.slabs.range.overlapping": "Rango de período/importe superpuesto para el gráfico de tasas de interés",
     "validation.msg.fixeddeposit.chart.slabs.range.start.incorrect": "El inicio del rango de período/monto es incorrecto para el gráfico de tasas de interés",
+    "validation.msg.interestchart.period.type.is.not.same": "All slabs in a chart must use the same period type.",
     "validation.msg.fixeddepositaccount.posting.period.type.is.less.than.compound.period.type": "El período de contabilización del Depósito Fijo no puede ser inferior al período de capitalización",
     "validation.msg.loan.allowPartialPeriodInterestCalculation.not.supported.for.daily.calculations": "Permitir el cálculo de cuotas parciales no se puede establecer como verdadero para el cálculo diario",
     "validation.msg.loan.allowVariableInstallments.not.supported.for.selected.interest.calculation.type": "La cuota variable debe usarse con el cálculo de interés diario o permitir el cálculo de interés parcial.",
@@ -600,6 +601,7 @@
       "Create User": "Crear Usuario",
       "Create Working Capital Product": "Crear Producto de Capital de Trabajo",
       "Create more": "Crear más",
+      "Disable Delinquency": "Deshabilitar Morosidad",
       "DONE": "Hecho",
       "Dashboard": "Tableros",
       "Day": "Día",
@@ -625,6 +627,7 @@
       "Edit Schedule": "Editar Calendario",
       "Edit Survey": "Editar Encuesta",
       "Enable": "Permitir",
+      "Enable Delinquency": "Habilitar Morosidad",
       "Expand All": "Expandir Todo",
       "Export": "Exportar",
       "Export CSV": "Exportar CSV",
@@ -634,7 +637,7 @@
       "Export XLS": "Exportar XLS",
       "Export to File": "Exportar Archivo",
       "Export to PDF": "Exportar a PDF",
-      "Filter": "Filtrar",
+      "Filter": "Filter",
       "Foreclosure": "Juicio hipotecario",
       "GLIM Application": "Solicitud de Crédito GLIM",
       "GSIM Application": "Aplicación GSIM",
@@ -778,7 +781,9 @@
       "undo_account_transfer": "Revertir transferencia de cuenta",
       "All": "Todos",
       "Pause Breach": "Pausar Incumplimiento",
-      "Resume Breach": "Reanudar Incumplimiento"
+      "Resume Breach": "Reanudar Incumplimiento",
+      "Currency Conversion": "Currency Conversion",
+      "Create Exchange Rate": "Create Exchange Rate"
     },
     "catalogs": {
       "% Amount": "% Monto",
@@ -1600,7 +1605,9 @@
       "Loan Breach Actions": "Acciones de Incumplimiento del Préstamo",
       "No Breach Actions": "Sin Acciones sobre Brechas",
       "Pause Timeline": "Línea de Tiempo de Pausas",
-      "Location Map": "Mapa de ubicación"
+      "Location Map": "Mapa de ubicación",
+      "Exchange Rates": "Exchange Rates",
+      "Currency Conversion": "Currency Conversion"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -1934,6 +1941,7 @@
       "Custom Report Run Frequency": "Frecuencia de ejecución de reportes personalizados",
       "Custom Report Run Frequency (Days)": "Frecuencia de ejecución de reportes personalizados (días)",
       "DEFERRED INCOME RECOGNITION": "INGRESOS DIFERIDOS",
+      "Delinquency evaluation disabled": "Evaluación de morosidad deshabilitada",
       "DETAILS": "DETALLES",
       "Daily": "Diario",
       "Daily EIR": "TIE Diaria",
@@ -3191,7 +3199,14 @@
       "Credit Profile": "Perfil de crédito",
       "Borrower": "Prestatario",
       "Latitude": "Latitud",
-      "Longitude": "Longitud"
+      "Longitude": "Longitud",
+      "Source Currency": "Source Currency",
+      "Target Currency": "Target Currency",
+      "Exchange Rate": "Exchange Rate",
+      "Exchange Rate Used": "Exchange Rate Used",
+      "Converted Amount": "Converted Amount",
+      "Conversion Date": "Conversion Date",
+      "Effective To": "Effective To"
     },
     "links": {
       "Community": "Comunidad",
@@ -3372,6 +3387,7 @@
       "Are you sure you want Unassign Staff": "¿Estás seguro de que deseas desasignar al asesor?",
       "Are you sure you want to calculate interest ?": "¿Estás seguro de que deseas calcular los intereses?",
       "Are you sure you want to post interest ?": "¿Estás seguro de que deseas contabilizar los intereses?",
+      "Disabling delinquency stops the delinquency evaluation and lifts the current delinquency classification": "Deshabilitar la morosidad detiene la evaluación de morosidad y levanta la clasificación de morosidad vigente",
       "Enable withhold tax for this account ?": "¿Quieres habilitar la retención de impuestos para esta cuenta?",
       "Disable withhold tax for this account ?": "¿Quieres deshabilitar la retención de impuestos para esta cuenta?",
       "Are you sure you want to waive charge with id:": "¿Estás seguro de que deseas eximir el cargo con ID:",
@@ -3382,6 +3398,7 @@
       "Are you sure you want recover the Original Schedule": "¿Estás seguro de que deseas recuperar el Calendario Original?",
       "Are you sure you want resume the Delinquency Classification for Loan": "¿Estás seguro de que deseas reanudar la Clasificación de Morosidad para el Crédito?",
       "Are you sure you want": "¿Estás seguro de que deseas",
+      "Enabling delinquency resumes the delinquency evaluation and recalculates it as of the current business date": "Habilitar la morosidad reanuda la evaluación de morosidad y la recalcula a la fecha de negocio actual",
       "the Loan Reschedule": "la Recanlendrización del Crédito",
       "Are you sure you want undo the transaction": "¿Estás seguro de que deseas reversar la transacción?",
       "Are you sure you want undo the transaction type": "¿Estás seguro de que deseas reversar el tipo de transacción?",
@@ -4206,7 +4223,12 @@
       "All Offices": "Todas las sucursales",
       "No loan was found": "No se encontró ningún crédito",
       "SearchByLoan": "Buscar por número de cuenta, prestatario o producto",
-      "Map tiles unavailable": "Los mosaicos del mapa no están disponibles"
+      "Map tiles unavailable": "Los mosaicos del mapa no están disponibles",
+      "Manage exchange rates and currency conversion": "Manage exchange rates and currency conversion",
+      "No exchange rates found": "No exchange rates found",
+      "Loading": "Loading",
+      "Source and target currencies cannot be identical": "Source and target currencies cannot be identical",
+      "Effective To cannot be before Effective From": "Effective To cannot be before Effective From"
     },
     "permissions": {
       "actions": {
