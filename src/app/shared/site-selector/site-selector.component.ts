@@ -128,6 +128,11 @@ export class SiteSelectorComponent implements OnInit, OnChanges {
               ...this.siteOptions,
             ]
           : [];
+      this.siteSelectorForm.patchValue(
+        { siteIds: this.siteOptions.map((site: any) => site.id) },
+        { emitEvent: false }
+      );
+      this.emitSelection();
       });
     }
     this.emitSelection();
