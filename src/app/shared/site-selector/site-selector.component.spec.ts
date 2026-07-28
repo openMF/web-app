@@ -17,7 +17,10 @@ describe('SiteSelectorComponent', () => {
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule],
       declarations: [SiteSelectorComponent],
-      providers: [{ provide: OrganizationService, useValue: organizationService }],
+      providers: [
+        { provide: OrganizationService, useValue: organizationService },
+        { provide: SettingsService, useValue: settingsService },
+      ],
     })
       .overrideTemplate(SiteSelectorComponent, '')
       .compileComponents();
