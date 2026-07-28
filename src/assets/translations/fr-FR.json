@@ -68,6 +68,7 @@
     "validation.msg.fixeddeposit.chart.slabs.range.has.gap": "La plage Période/Montant présente un écart pour le graphique des taux d'intérêt",
     "validation.msg.fixeddeposit.chart.slabs.range.overlapping": "Plage de périodes/montants se chevauchant pour le graphique des taux d'intérêt",
     "validation.msg.fixeddeposit.chart.slabs.range.start.incorrect": "Le début de la plage de période/montant est incorrect pour le graphique des taux d'intérêt",
+    "validation.msg.interestchart.period.type.is.not.same": "All slabs in a chart must use the same period type.",
     "validation.msg.fixeddepositaccount.posting.period.type.is.less.than.compound.period.type": "La période de comptabilisation des dépôts fixes ne peut pas être inférieure à la période de composition",
     "validation.msg.loan.allowPartialPeriodInterestCalculation.not.supported.for.daily.calculations": "Autoriser le calcul des versements partiels ne peut pas être défini comme vrai pour le calcul quotidien",
     "validation.msg.loan.allowVariableInstallments.not.supported.for.selected.interest.calculation.type": "Le versement variable doit être utilisé avec le calcul des intérêts quotidiens ou permettre le calcul des intérêts partiels.",
@@ -633,7 +634,7 @@
       "Export XLS": "Exporter au format XLS",
       "Export to File": "Exporter vers un fichier",
       "Export to PDF": "Exporter en PDF",
-      "Filter": "filtre",
+      "Filter": "Filter",
       "Foreclosure": "Forclusion",
       "GLIM Application": "Demande de prêt GLIM",
       "GSIM Application": "Demande GSIM",
@@ -776,7 +777,9 @@
       "undo_account_transfer": "Annuler le transfert de compte",
       "All": "Tous",
       "Pause Breach": "Suspendre le Manquement",
-      "Resume Breach": "Reprendre le Manquement"
+      "Resume Breach": "Reprendre le Manquement",
+      "Currency Conversion": "Currency Conversion",
+      "Create Exchange Rate": "Create Exchange Rate"
     },
     "catalogs": {
       "% Amount": "Montant",
@@ -1598,7 +1601,9 @@
       "Loan Breach Actions": "Actions de Manquement du Prêt",
       "No Breach Actions": "Aucune Action sur Brèches",
       "Pause Timeline": "Chronologie des Pauses",
-      "Location Map": "Carte de localisation"
+      "Location Map": "Carte de localisation",
+      "Exchange Rates": "Exchange Rates",
+      "Currency Conversion": "Currency Conversion"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3188,7 +3193,14 @@
       "Credit Profile": "Profil de crédit",
       "Borrower": "Emprunteur",
       "Latitude": "Latitude",
-      "Longitude": "Longitude"
+      "Longitude": "Longitude",
+      "Source Currency": "Source Currency",
+      "Target Currency": "Target Currency",
+      "Exchange Rate": "Exchange Rate",
+      "Exchange Rate Used": "Exchange Rate Used",
+      "Converted Amount": "Converted Amount",
+      "Conversion Date": "Conversion Date",
+      "Effective To": "Effective To"
     },
     "links": {
       "Community": "Communauté",
@@ -4183,7 +4195,12 @@
       "All Offices": "Tous les bureaux",
       "No loan was found": "Aucun prêt n'a été trouvé",
       "SearchByLoan": "Rechercher par numéro de compte, emprunteur ou produit",
-      "Map tiles unavailable": "Tuiles cartographiques indisponibles"
+      "Map tiles unavailable": "Tuiles cartographiques indisponibles",
+      "Manage exchange rates and currency conversion": "Manage exchange rates and currency conversion",
+      "No exchange rates found": "No exchange rates found",
+      "Loading": "Loading",
+      "Source and target currencies cannot be identical": "Source and target currencies cannot be identical",
+      "Effective To cannot be before Effective From": "Effective To cannot be before Effective From"
     },
     "permissions": {
       "actions": {

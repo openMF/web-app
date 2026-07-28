@@ -68,6 +68,7 @@
     "validation.msg.fixeddeposit.chart.slabs.range.has.gap": "अवधि/राशि दायरा ब्याज दर चार्ट को लागी अन्तर छ",
     "validation.msg.fixeddeposit.chart.slabs.range.overlapping": "ब्याज दर चार्टको लागि अवधि / रकम दायरा ओभरल्यापिङ",
     "validation.msg.fixeddeposit.chart.slabs.range.start.incorrect": "अवधि/राशि दायरा सुरु ब्याज दर चार्ट को लागी गलत छ",
+    "validation.msg.interestchart.period.type.is.not.same": "All slabs in a chart must use the same period type.",
     "validation.msg.fixeddepositaccount.posting.period.type.is.less.than.compound.period.type": "फिक्स्ड डिपोजिट पोस्टिङ अवधि चक्रवृद्धि अवधि भन्दा कम हुन सक्दैन",
     "validation.msg.loan.allowPartialPeriodInterestCalculation.not.supported.for.daily.calculations": "अनुमति दिनुहोस् आंशिक किस्ता गणना दैनिक गणनाको लागि सत्यको रूपमा सेट गर्न सकिँदैन",
     "validation.msg.loan.allowVariableInstallments.not.supported.for.selected.interest.calculation.type": "चर किस्ता दैनिक ब्याज गणनाको साथ प्रयोग गरिनु पर्छ वा आंशिक ब्याज गणनालाई अनुमति दिनुपर्छ।",
@@ -633,7 +634,7 @@
       "Export XLS": "XLS निर्यात गर्नुहोस्",
       "Export to File": "फाइलमा निर्यात गर्नुहोस्",
       "Export to PDF": "PDF को रूपमा निर्यात गर्नुहोस्",
-      "Filter": "फिल्टर",
+      "Filter": "Filter",
       "Foreclosure": "फोरक्लोजर",
       "GLIM Application": "GLIM ऋण आवेदन",
       "GSIM Application": "GSIM आवेदन",
@@ -776,7 +777,9 @@
       "undo_account_transfer": "खाता स्थानान्तरण रद्द गर्नुहोस्",
       "All": "सबै",
       "Pause Breach": "उल्लङ्घन रोक्नुहोस्",
-      "Resume Breach": "उल्लंघन पुनः सुरु गर्नुहोस्"
+      "Resume Breach": "उल्लंघन पुनः सुरु गर्नुहोस्",
+      "Currency Conversion": "Currency Conversion",
+      "Create Exchange Rate": "Create Exchange Rate"
     },
     "catalogs": {
       "% Amount": "रकम",
@@ -1594,7 +1597,9 @@
       "Loan Breach Actions": "ऋण उल्लङ्घन कार्यहरू",
       "No Breach Actions": "कुनै उल्लंघन कार्यहरू छैनन्",
       "Pause Timeline": "रोकावट समयरेखा",
-      "Location Map": "स्थान नक्सा"
+      "Location Map": "स्थान नक्सा",
+      "Exchange Rates": "Exchange Rates",
+      "Currency Conversion": "Currency Conversion"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3184,7 +3189,14 @@
       "Credit Profile": "क्रेडिट प्रोफाइल",
       "Borrower": "ऋणी",
       "Latitude": "अक्षांश",
-      "Longitude": "देशान्तर"
+      "Longitude": "देशान्तर",
+      "Source Currency": "Source Currency",
+      "Target Currency": "Target Currency",
+      "Exchange Rate": "Exchange Rate",
+      "Exchange Rate Used": "Exchange Rate Used",
+      "Converted Amount": "Converted Amount",
+      "Conversion Date": "Conversion Date",
+      "Effective To": "Effective To"
     },
     "links": {
       "Community": "समुदाय",
@@ -4180,7 +4192,12 @@
       "All Offices": "सबै कार्यालयहरू",
       "No loan was found": "कुनै ऋण फेला परेन",
       "SearchByLoan": "खाता नम्बर, ऋणी, वा उत्पादनद्वारा खोज्नुहोस्",
-      "Map tiles unavailable": "नक्साका टाइलहरू उपलब्ध छैनन्"
+      "Map tiles unavailable": "नक्साका टाइलहरू उपलब्ध छैनन्",
+      "Manage exchange rates and currency conversion": "Manage exchange rates and currency conversion",
+      "No exchange rates found": "No exchange rates found",
+      "Loading": "Loading",
+      "Source and target currencies cannot be identical": "Source and target currencies cannot be identical",
+      "Effective To cannot be before Effective From": "Effective To cannot be before Effective From"
     },
     "permissions": {
       "actions": {

@@ -68,6 +68,7 @@
     "validation.msg.fixeddeposit.chart.slabs.range.has.gap": "L'intervallo periodo/importo presenta un divario per il grafico del tasso di interesse",
     "validation.msg.fixeddeposit.chart.slabs.range.overlapping": "Intervallo di periodo/importo sovrapposto per il grafico del tasso di interesse",
     "validation.msg.fixeddeposit.chart.slabs.range.start.incorrect": "L'inizio dell'intervallo periodo/importo non è corretto per il grafico del tasso di interesse",
+    "validation.msg.interestchart.period.type.is.not.same": "All slabs in a chart must use the same period type.",
     "validation.msg.fixeddepositaccount.posting.period.type.is.less.than.compound.period.type": "Il periodo di registrazione del deposito fisso non può essere inferiore al periodo di capitalizzazione",
     "validation.msg.loan.allowPartialPeriodInterestCalculation.not.supported.for.daily.calculations": "Consenti calcolo rata parziale non può essere impostato su vero per il calcolo giornaliero",
     "validation.msg.loan.allowVariableInstallments.not.supported.for.selected.interest.calculation.type": "La rata variabile deve essere utilizzata con il calcolo dell'interesse giornaliero o con il calcolo dell'interesse parziale vero",
@@ -633,7 +634,7 @@
       "Export XLS": "Esporta XLS",
       "Export to File": "Esporta su file",
       "Export to PDF": "Esporta come PDF",
-      "Filter": "filtro",
+      "Filter": "Filter",
       "Foreclosure": "Pignoramento",
       "GLIM Application": "Richiesta di prestito GLIM",
       "GSIM Application": "Applicazione GSMIM",
@@ -776,7 +777,9 @@
       "undo_account_transfer": "Annulla trasferimento conto",
       "All": "Tutti",
       "Pause Breach": "Sospendi Violazione",
-      "Resume Breach": "Riprendi Violazione"
+      "Resume Breach": "Riprendi Violazione",
+      "Currency Conversion": "Currency Conversion",
+      "Create Exchange Rate": "Create Exchange Rate"
     },
     "catalogs": {
       "% Amount": "Quantità",
@@ -1595,7 +1598,9 @@
       "Loan Breach Actions": "Azioni di Violazione del Prestito",
       "No Breach Actions": "Nessuna Azione sulle Violazioni",
       "Pause Timeline": "Cronologia Pause",
-      "Location Map": "Mappa della posizione"
+      "Location Map": "Mappa della posizione",
+      "Exchange Rates": "Exchange Rates",
+      "Currency Conversion": "Currency Conversion"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3185,7 +3190,14 @@
       "Credit Profile": "Profilo di credito",
       "Borrower": "Mutuatario",
       "Latitude": "Latitudine",
-      "Longitude": "Longitudine"
+      "Longitude": "Longitudine",
+      "Source Currency": "Source Currency",
+      "Target Currency": "Target Currency",
+      "Exchange Rate": "Exchange Rate",
+      "Exchange Rate Used": "Exchange Rate Used",
+      "Converted Amount": "Converted Amount",
+      "Conversion Date": "Conversion Date",
+      "Effective To": "Effective To"
     },
     "links": {
       "Community": "Comunità",
@@ -4181,7 +4193,12 @@
       "All Offices": "Tutti gli uffici",
       "No loan was found": "Nessun prestito trovato",
       "SearchByLoan": "Cerca per numero di conto, mutuatario o prodotto",
-      "Map tiles unavailable": "Tessere della mappa non disponibili"
+      "Map tiles unavailable": "Tessere della mappa non disponibili",
+      "Manage exchange rates and currency conversion": "Manage exchange rates and currency conversion",
+      "No exchange rates found": "No exchange rates found",
+      "Loading": "Loading",
+      "Source and target currencies cannot be identical": "Source and target currencies cannot be identical",
+      "Effective To cannot be before Effective From": "Effective To cannot be before Effective From"
     },
     "permissions": {
       "actions": {

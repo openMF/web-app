@@ -68,6 +68,7 @@
     "validation.msg.fixeddeposit.chart.slabs.range.has.gap": "Laikotarpis / Sumos diapazonas turi spragą palūkanų normų diagramoje",
     "validation.msg.fixeddeposit.chart.slabs.range.overlapping": "Palūkanų normos diagramos laikotarpis / sumos diapazonas sutampa",
     "validation.msg.fixeddeposit.chart.slabs.range.start.incorrect": "Palūkanų normos diagramos laikotarpio/sumos intervalo pradžia neteisinga",
+    "validation.msg.interestchart.period.type.is.not.same": "All slabs in a chart must use the same period type.",
     "validation.msg.fixeddepositaccount.posting.period.type.is.less.than.compound.period.type": "Fiksuoto indėlio registravimo laikotarpis negali būti trumpesnis nei sudėties laikotarpis",
     "validation.msg.loan.allowPartialPeriodInterestCalculation.not.supported.for.daily.calculations": "Leisti dalinį įmokos apskaičiavimą negali būti nustatyta kaip teisinga atliekant kasdienį skaičiavimą",
     "validation.msg.loan.allowVariableInstallments.not.supported.for.selected.interest.calculation.type": "Kintamoji įmoka turėtų būti naudojama skaičiuojant kasdienes palūkanas arba leidžiant skaičiuoti dalines palūkanas",
@@ -633,7 +634,7 @@
       "Export XLS": "Eksportuoti XLS",
       "Export to File": "Eksportuoti į failą",
       "Export to PDF": "Eksportuoti kaip PDF",
-      "Filter": "filtras",
+      "Filter": "Filter",
       "Foreclosure": "Uždarymas",
       "GLIM Application": "GLIM paskolos paraiška",
       "GSIM Application": "GSIM programa",
@@ -776,7 +777,9 @@
       "undo_account_transfer": "Atšaukti sąskaitos pervedimą",
       "All": "Visi",
       "Pause Breach": "Pristabdyti pažeidimą",
-      "Resume Breach": "Atnaujinti pažeidimą"
+      "Resume Breach": "Atnaujinti pažeidimą",
+      "Currency Conversion": "Currency Conversion",
+      "Create Exchange Rate": "Create Exchange Rate"
     },
     "catalogs": {
       "% Amount": "Suma",
@@ -1594,7 +1597,9 @@
       "Loan Breach Actions": "Paskolos pažeidimo veiksmai",
       "No Breach Actions": "Nėra pažeidimo veiksmų",
       "Pause Timeline": "Pauzių laiko juosta",
-      "Location Map": "Vietos žemėlapis"
+      "Location Map": "Vietos žemėlapis",
+      "Exchange Rates": "Exchange Rates",
+      "Currency Conversion": "Currency Conversion"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3184,7 +3189,14 @@
       "Credit Profile": "Kredito profilis",
       "Borrower": "Paskolos gavėjas",
       "Latitude": "Platuma",
-      "Longitude": "Ilguma"
+      "Longitude": "Ilguma",
+      "Source Currency": "Source Currency",
+      "Target Currency": "Target Currency",
+      "Exchange Rate": "Exchange Rate",
+      "Exchange Rate Used": "Exchange Rate Used",
+      "Converted Amount": "Converted Amount",
+      "Conversion Date": "Conversion Date",
+      "Effective To": "Effective To"
     },
     "links": {
       "Community": "bendruomenė",
@@ -4181,7 +4193,12 @@
       "All Offices": "Visi biurai",
       "No loan was found": "Paskolų nerasta",
       "SearchByLoan": "Ieškoti pagal sąskaitos numerį, paskolos gavėją ar produktą",
-      "Map tiles unavailable": "Žemėlapio plytelės nepasiekiamos"
+      "Map tiles unavailable": "Žemėlapio plytelės nepasiekiamos",
+      "Manage exchange rates and currency conversion": "Manage exchange rates and currency conversion",
+      "No exchange rates found": "No exchange rates found",
+      "Loading": "Loading",
+      "Source and target currencies cannot be identical": "Source and target currencies cannot be identical",
+      "Effective To cannot be before Effective From": "Effective To cannot be before Effective From"
     },
     "permissions": {
       "actions": {

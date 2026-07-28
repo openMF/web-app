@@ -482,17 +482,12 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
           this.loanProductTermsForm.get('maxInterestRatePerPeriod')!.patchValue(0);
           this.loanProductTermsForm.get('maxInterestRatePerPeriod')!.disable();
         } else {
-          this.loanProductTermsForm
-            .get('minInterestRatePerPeriod')!
-            .patchValue(this.loanProductsTemplate.minInterestRatePerPeriod);
+          const interestRateValues = this.getInterestRateValues();
+          this.loanProductTermsForm.get('minInterestRatePerPeriod')!.patchValue(interestRateValues.min);
           this.loanProductTermsForm.get('minInterestRatePerPeriod')!.enable();
-          this.loanProductTermsForm
-            .get('interestRatePerPeriod')!
-            .patchValue(this.loanProductsTemplate.interestRatePerPeriod);
+          this.loanProductTermsForm.get('interestRatePerPeriod')!.patchValue(interestRateValues.default);
           this.loanProductTermsForm.get('interestRatePerPeriod')!.enable();
-          this.loanProductTermsForm
-            .get('maxInterestRatePerPeriod')!
-            .patchValue(this.loanProductsTemplate.maxInterestRatePerPeriod);
+          this.loanProductTermsForm.get('maxInterestRatePerPeriod')!.patchValue(interestRateValues.max);
           this.loanProductTermsForm.get('maxInterestRatePerPeriod')!.enable();
         }
         this.validateAdvancedPaymentStrategyControls();
@@ -659,5 +654,29 @@ export class LoanProductTermsStepComponent extends LoanProductBaseComponent impl
     } else {
       this.loanProductTermsForm.get('fixedLength')!.patchValue(null);
     }
+  }
+
+  private getInterestRateValues(): { min: any; default: any; max: any } {
+    if (this.isZeroInterestTemplate()) {
+      return {
+        min: '',
+        default: '',
+        max: ''
+      };
+    }
+
+    return {
+      min: this.loanProductsTemplate.minInterestRatePerPeriod,
+      default: this.loanProductsTemplate.interestRatePerPeriod,
+      max: this.loanProductsTemplate.maxInterestRatePerPeriod
+    };
+  }
+
+  private isZeroInterestTemplate(): boolean {
+    return (
+      this.loanProductsTemplate.minInterestRatePerPeriod === 0 &&
+      this.loanProductsTemplate.interestRatePerPeriod === 0 &&
+      this.loanProductsTemplate.maxInterestRatePerPeriod === 0
+    );
   }
 }

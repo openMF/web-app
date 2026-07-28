@@ -68,6 +68,7 @@
     "validation.msg.fixeddeposit.chart.slabs.range.has.gap": "Der Zeitraum/Betragsbereich weist eine Lücke für das Zinsdiagramm auf",
     "validation.msg.fixeddeposit.chart.slabs.range.overlapping": "Perioden-/Betragsbereich überlappen sich für das Zinsdiagramm",
     "validation.msg.fixeddeposit.chart.slabs.range.start.incorrect": "Der Beginn des Zeitraums/Betragsbereichs ist für das Zinsdiagramm falsch",
+    "validation.msg.interestchart.period.type.is.not.same": "All slabs in a chart must use the same period type.",
     "validation.msg.fixeddepositaccount.posting.period.type.is.less.than.compound.period.type": "Der Buchungszeitraum für Festgelder darf nicht kürzer als der Zinseszinszeitraum sein",
     "validation.msg.loan.allowPartialPeriodInterestCalculation.not.supported.for.daily.calculations": "Teilzahlungsberechnung zulassen kann für die tägliche Berechnung nicht auf „Wahr“ gesetzt werden",
     "validation.msg.loan.allowVariableInstallments.not.supported.for.selected.interest.calculation.type": "Variable Ratenzahlung sollte entweder mit täglicher Zinsberechnung verwendet werden oder eine Teilzinsberechnung zulassen",
@@ -778,7 +779,9 @@
       "undo_account_transfer": "Kontotransfer rückgängig machen",
       "All": "Alle",
       "Pause Breach": "Verstoß pausieren",
-      "Resume Breach": "Verstoß fortsetzen"
+      "Resume Breach": "Verstoß fortsetzen",
+      "Currency Conversion": "Currency Conversion",
+      "Create Exchange Rate": "Create Exchange Rate"
     },
     "catalogs": {
       "% Amount": "Menge",
@@ -1597,7 +1600,9 @@
       "Loan Breach Actions": "Kredit-Verstoß-Aktionen",
       "No Breach Actions": "Keine Verstoßaktionen",
       "Pause Timeline": "Pausen-Zeitleiste",
-      "Location Map": "Standortkarte"
+      "Location Map": "Standortkarte",
+      "Exchange Rates": "Exchange Rates",
+      "Currency Conversion": "Currency Conversion"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3187,7 +3192,14 @@
       "Credit Profile": "Kreditprofil",
       "Borrower": "Kreditnehmer",
       "Latitude": "Breitengrad",
-      "Longitude": "Längengrad"
+      "Longitude": "Längengrad",
+      "Source Currency": "Source Currency",
+      "Target Currency": "Target Currency",
+      "Exchange Rate": "Exchange Rate",
+      "Exchange Rate Used": "Exchange Rate Used",
+      "Converted Amount": "Converted Amount",
+      "Conversion Date": "Conversion Date",
+      "Effective To": "Effective To"
     },
     "links": {
       "Community": "Gemeinschaft",
@@ -4182,7 +4194,12 @@
       "All Offices": "Alle Büros",
       "No loan was found": "Es wurde kein Kredit gefunden",
       "SearchByLoan": "Suche nach Kontonummer, Kreditnehmer oder Produkt",
-      "Map tiles unavailable": "Kartendaten nicht verfügbar"
+      "Map tiles unavailable": "Kartendaten nicht verfügbar",
+      "Manage exchange rates and currency conversion": "Manage exchange rates and currency conversion",
+      "No exchange rates found": "No exchange rates found",
+      "Loading": "Loading",
+      "Source and target currencies cannot be identical": "Source and target currencies cannot be identical",
+      "Effective To cannot be before Effective From": "Effective To cannot be before Effective From"
     },
     "permissions": {
       "actions": {

@@ -68,6 +68,7 @@
     "validation.msg.fixeddeposit.chart.slabs.range.has.gap": "A faixa Período/Valor tem lacuna no gráfico de taxas de juros",
     "validation.msg.fixeddeposit.chart.slabs.range.overlapping": "Intervalo de período/valor sobreposto no gráfico de taxas de juros",
     "validation.msg.fixeddeposit.chart.slabs.range.start.incorrect": "O início do intervalo de período/valor está incorreto para o gráfico de taxas de juros",
+    "validation.msg.interestchart.period.type.is.not.same": "All slabs in a chart must use the same period type.",
     "validation.msg.fixeddepositaccount.posting.period.type.is.less.than.compound.period.type": "O período de lançamento de depósito fixo não pode ser inferior ao período composto",
     "validation.msg.loan.allowPartialPeriodInterestCalculation.not.supported.for.daily.calculations": "Permitir cálculo de parcela parcial não pode ser definido como verdadeiro para cálculo diário",
     "validation.msg.loan.allowVariableInstallments.not.supported.for.selected.interest.calculation.type": "A Parcela Variável deve ser usada com cálculo de juros diários ou permitir cálculo de juros parciais verdadeiro",
@@ -633,7 +634,7 @@
       "Export XLS": "Exportar XLS",
       "Export to File": "Exportar arquivo",
       "Export to PDF": "Exportar para PDF",
-      "Filter": "filtro",
+      "Filter": "Filter",
       "Foreclosure": "Execução hipotecária",
       "GLIM Application": "Solicitação de empréstimo GLIM",
       "GSIM Application": "Aplicação GSM",
@@ -776,7 +777,9 @@
       "undo_account_transfer": "Reverter transferência de conta",
       "All": "Todos",
       "Pause Breach": "Pausar Violação",
-      "Resume Breach": "Retomar Violação"
+      "Resume Breach": "Retomar Violação",
+      "Currency Conversion": "Currency Conversion",
+      "Create Exchange Rate": "Create Exchange Rate"
     },
     "catalogs": {
       "% Amount": "Quantia",
@@ -1594,7 +1597,9 @@
       "Loan Breach Actions": "Ações de Violação do Empréstimo",
       "No Breach Actions": "Sem Ações de Violação",
       "Pause Timeline": "Cronologia de Pausas",
-      "Location Map": "Mapa de localização"
+      "Location Map": "Mapa de localização",
+      "Exchange Rates": "Exchange Rates",
+      "Currency Conversion": "Currency Conversion"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3184,7 +3189,14 @@
       "Credit Profile": "Perfil de crédito",
       "Borrower": "Mutuário",
       "Latitude": "Latitude",
-      "Longitude": "Longitude"
+      "Longitude": "Longitude",
+      "Source Currency": "Source Currency",
+      "Target Currency": "Target Currency",
+      "Exchange Rate": "Exchange Rate",
+      "Exchange Rate Used": "Exchange Rate Used",
+      "Converted Amount": "Converted Amount",
+      "Conversion Date": "Conversion Date",
+      "Effective To": "Effective To"
     },
     "links": {
       "Community": "Comunidade",
@@ -4180,7 +4192,12 @@
       "All Offices": "Todos os escritórios",
       "No loan was found": "Nenhum empréstimo foi encontrado",
       "SearchByLoan": "Pesquisar por número de conta, mutuário ou produto",
-      "Map tiles unavailable": "Mosaicos do mapa indisponíveis"
+      "Map tiles unavailable": "Mosaicos do mapa indisponíveis",
+      "Manage exchange rates and currency conversion": "Manage exchange rates and currency conversion",
+      "No exchange rates found": "No exchange rates found",
+      "Loading": "Loading",
+      "Source and target currencies cannot be identical": "Source and target currencies cannot be identical",
+      "Effective To cannot be before Effective From": "Effective To cannot be before Effective From"
     },
     "permissions": {
       "actions": {

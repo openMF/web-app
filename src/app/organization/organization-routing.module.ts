@@ -44,6 +44,7 @@ import { ViewOfficeComponent } from './offices/view-office/view-office.component
 import { GeneralTabComponent } from './offices/view-office/general-tab/general-tab.component';
 import { AddressTabComponent } from './offices/view-office/address-tab/address-tab.component';
 import { ServicesTabComponent } from './offices/view-office/services-tab/services-tab.component';
+import { SchedulesTabComponent } from './offices/view-office/schedules-tab/schedules-tab.component';
 import { DatatableTabsComponent } from './offices/view-office/datatable-tabs/datatable-tabs.component';
 import { ViewCampaignComponent } from './sms-campaigns/view-campaign/view-campaign.component';
 import { ManageFundsComponent } from './manage-funds/manage-funds.component';
@@ -224,6 +225,11 @@ const routes: Routes = [
                   data: { title: 'Services', breadcrumb: 'Services', routeParamBreadcrumb: false }
                 },
                 {
+                  path: 'schedules',
+                  component: SchedulesTabComponent,
+                  data: { title: 'Schedules', breadcrumb: 'Schedules', routeParamBreadcrumb: false }
+                },
+                {
                   path: 'datatables',
                   children: [
                     {
@@ -307,6 +313,12 @@ const routes: Routes = [
               component: ManageCurrenciesComponent
             }
           ]
+        },
+        {
+          path: 'exchange-rates',
+          data: { title: 'Exchange Rates', breadcrumb: 'Exchange Rates' },
+          loadChildren: () =>
+            import('./exchange-rates/exchange-rates.module').then((module) => module.ExchangeRatesModule)
         },
         {
           path: 'sms-campaigns',
