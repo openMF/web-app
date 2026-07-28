@@ -4749,6 +4749,7 @@
     "Process Remittance": "송금 처리",
     "Product name is a unique identifier": "상품명은 대출 상품의 고유 식별자입니다.",
     "Provide additional information": "설명은 대출 상품의 목적과 특성에 대한 추가 정보를 제공하는 데 사용됩니다.",
+    "Provide at least a minimum payment or a frequency change": "최소 지급액 또는 주기 변경 중 하나 이상을 입력하세요",
     "Provides additional information": "저장상품의 목적과 특징에 대한 추가정보를 제공합니다.",
     "Provides an external id": "대출 계좌에 대한 외부 ID를 제공합니다.",
     "Provides an indication": "대출을 통해 제공되는 자금이 어떻게 관리되고 보고와 동일한 목적으로 그룹 대출에 사용될 수 있는지에 대한 표시를 제공합니다.",

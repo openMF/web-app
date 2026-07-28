@@ -4750,6 +4750,7 @@
     "Process Remittance": "Apdoroti pervedimą",
     "Product name is a unique identifier": "Produkto pavadinimas yra unikalus skolinamo produkto identifikatorius.",
     "Provide additional information": "Aprašymas naudojamas norint pateikti papildomos informacijos apie paskolos produkto paskirtį ir savybes.",
+    "Provide at least a minimum payment or a frequency change": "Nurodykite bent minimalų mokėjimą arba dažnumo pakeitimą",
     "Provides additional information": "Suteikia papildomos informacijos apie taupymo produkto paskirtį ir savybes",
     "Provides an external id": "Suteikia išorinį paskolos sąskaitos ID",
     "Provides an indication": "Nurodoma, kaip bus nukreiptos paskolos suteiktos lėšos, ir gali būti naudojamos to paties tikslo paskoloms ataskaitoms grupuoti",
