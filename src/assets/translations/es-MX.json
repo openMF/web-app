@@ -4775,6 +4775,7 @@
     "Process Remittance": "Procesar Remesa",
     "Product name is a unique identifier": "El nombre del producto es un identificador único del producto de Crédito.",
     "Provide additional information": "La descripción se utiliza para proporcionar información adicional sobre el propósito y las características del producto crediticio.",
+    "Provide at least a minimum payment or a frequency change": "Proporcione al menos un pago mínimo o un cambio de frecuencia",
     "Provides additional information": "Proporciona información adicional sobre la finalidad y características del producto de ahorro.",
     "Provides an external id": "Proporciona una Id externo para la cuenta del Crédito.",
     "Provides an indication": "Proporciona una indicación de cómo se dirigirán los fondos proporcionados a través del Crédito y cómo se pueden utilizar para agrupar Créditos con el mismo propósito de informar.",

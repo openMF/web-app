@@ -4926,6 +4926,7 @@
     "Process Remittance": "Process Remittance",
     "Product name is a unique identifier": "The product name is a unique identifier for the lending product.",
     "Provide additional information": "The description is used to provide additional information regarding the purpose and characteristics of the loan product.",
+    "Provide at least a minimum payment or a frequency change": "Provide at least a minimum payment or a frequency change",
     "Provides additional information": "Provides additional information regarding the purpose and characteristics of the saving product",
     "Provides an external id": "Provides an external id for the loan account",
     "Provides an indication": "Provides an indication of how the funds provided through the loan will be directed and can be used to group loans with the same purpose for reporting",

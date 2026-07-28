@@ -4749,6 +4749,7 @@
     "Process Remittance": "Processar remessa",
     "Product name is a unique identifier": "O nome do produto é um identificador exclusivo do produto de empréstimo.",
     "Provide additional information": "A descrição é utilizada para fornecer informações adicionais sobre a finalidade e as características do produto de empréstimo.",
+    "Provide at least a minimum payment or a frequency change": "Forneça pelo menos um pagamento mínimo ou uma alteração da frequência",
     "Provides additional information": "Fornece informações adicionais sobre a finalidade e as características do produto salvador",
     "Provides an external id": "Fornece uma identificação externa para a conta do empréstimo",
     "Provides an indication": "Fornece uma indicação de como os fundos fornecidos através do empréstimo serão direcionados e podem ser usados ​​para agrupar empréstimos com a mesma finalidade para fins de relatório",

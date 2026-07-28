@@ -13,17 +13,26 @@
     <mat-form-field class="flex-98">
       <mat-label>{{ 'labels.inputs.Minimum Payment' | translate }}</mat-label>
       <input type="number" matInput formControlName="minimumPayment" />
+      @if (delinquencyActionForm.controls.minimumPayment.hasError('highAmountValue')) {
+        <mat-error>{{ 'labels.commons.Invalid amount format' | translate }}</mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field class="flex-98">
       <mat-label>{{ 'labels.inputs.Minimum Payment Type' | translate }}</mat-label>
-      <mat-select formControlName="minimumPaymentType">
+      <mat-select formControlName="minimumPaymentType" [errorStateMatcher]="minimumPaymentTypeMatcher">
         @for (minimumPaymentType of minimumPaymentTypeOptions; track minimumPaymentType) {
           <mat-option [value]="minimumPaymentType.id">
             {{ minimumPaymentType.value | translateKey: 'catalogs' }}
           </mat-option>
         }
       </mat-select>
+      @if (delinquencyActionForm.hasError('minimumPaymentTypeRequired')) {
+        <mat-error>
+          {{ 'labels.inputs.Minimum Payment Type' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field class="flex-98">
@@ -34,29 +43,46 @@
         formControlName="frequency"
         matTooltip="{{ 'tooltips.Fields are input to calculating the repayment schedule' | translate }}"
       />
+      @if (delinquencyActionForm.controls.frequency.hasError('positiveInteger')) {
+        <mat-error>
+          {{ 'labels.inputs.Period Payment Frequency' | translate }}
+          {{ 'labels.commons.Must be a positive integer' | translate }}
+        </mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field class="flex-98">
       <mat-label>{{ 'labels.inputs.Period Payment Frequency Type' | translate }}</mat-label>
-      <mat-select formControlName="frequencyType">
+      <mat-select formControlName="frequencyType" [errorStateMatcher]="frequencyTypeMatcher">
         @for (frequencyType of frequencyTypeOptions; track frequencyType) {
           <mat-option [value]="frequencyType.id">
             {{ frequencyType.value | translateKey: 'catalogs' }}
           </mat-option>
         }
       </mat-select>
+      @if (delinquencyActionForm.hasError('frequencyTypeRequired')) {
+        <mat-error>
+          {{ 'labels.inputs.Period Payment Frequency Type' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
     </mat-form-field>
   </div>
 </div>
 
 <mat-dialog-actions class="layout-row layout-xs-column layout-align-center gap-2percent">
   <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
-  <button
-    mat-raised-button
-    color="primary"
-    [mat-dialog-close]="{ data: delinquencyActionForm }"
-    [disabled]="!delinquencyActionForm.valid || delinquencyActionForm.pristine"
+  <span
+    [matTooltip]="'tooltips.Provide at least a minimum payment or a frequency change' | translate"
+    [matTooltipDisabled]="delinquencyActionForm.valid || delinquencyActionForm.pristine"
   >
-    {{ 'labels.buttons.Reschedule' | translate }}
-  </button>
+    <button
+      mat-raised-button
+      color="primary"
+      [mat-dialog-close]="{ data: delinquencyActionForm }"
+      [disabled]="!delinquencyActionForm.valid || delinquencyActionForm.pristine"
+    >
+      {{ 'labels.buttons.Reschedule' | translate }}
+    </button>
+  </span>
 </mat-dialog-actions>
