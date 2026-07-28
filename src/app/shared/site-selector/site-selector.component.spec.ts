@@ -42,7 +42,6 @@ describe('SiteSelectorComponent', () => {
   });
 
   it('should load regions when countryId is set on init', () => {
-    component.countryId = 1;
     fixture.detectChanges();
     expect(organizationService.fetchByHierarchyLevel).toHaveBeenCalledWith(1, 'LOWER');
   });
