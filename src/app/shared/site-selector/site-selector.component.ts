@@ -18,8 +18,7 @@ export interface SiteSelectorChange {
 /**
  * Site Selector Component.
  *
- * Displays a Country (read only, informational), Region, District and
- * Site (optional, defaults to "All Sites") cascading set of dropdowns.
+ * Displays Region, District and Site (optional, defaults to "All Sites") cascading set of dropdowns
  *
  * The component walks the office hierarchy using
  * `OrganizationService.fetchByHierarchyLevel` starting from the country/root

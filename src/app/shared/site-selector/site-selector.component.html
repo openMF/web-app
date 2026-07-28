@@ -1,7 +1,13 @@
 <mat-card class="site-selector" [formGroup]="siteSelectorForm">
-  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="25px" fxLayoutAlign="start start">
+  <div
+    fxLayout="row"
+    fxLayout.lt-md="column"
+    fxLayoutGap="25px"
+    fxLayoutAlign="start start"
+    fxLayoutAlign.lt-md="start stretch"
+  >
    
-    <div class="site-selector-field" fxFlex="33%">
+    <div class="site-selector-field" fxFlex="33%" fxFlex.lt-md="100%">
       <label for="regionId">{{ 'labels.commons.Region' | translate }}</label>
       <ng-select
         #region
@@ -18,7 +24,7 @@
       </ng-select>
     </div>
 
-    <div class="site-selector-field" fxFlex="33%">
+    <div class="site-selector-field" fxFlex="33%" fxFlex.lt-md="100%">
       <label for="districtId">{{ 'labels.oaf.District' | translate }}</label>
       <ng-select
         #district
@@ -35,7 +41,7 @@
       </ng-select>
     </div>
 
-    <div class="site-selector-field" fxFlex="33%">
+    <div class="site-selector-field" fxFlex="33%" fxFlex.lt-md="100%">
       <label for="siteIds">{{ 'labels.oaf.Site (Optional) - Defaults to All Sites' | translate }}</label>
       <ng-select
         #site
