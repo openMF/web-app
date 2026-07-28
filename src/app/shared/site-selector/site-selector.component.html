@@ -39,7 +39,7 @@
       <label for="siteIds">{{ 'labels.oaf.Site (Optional) - Defaults to All Sites' | translate }}</label>
       <ng-select
         #site
-        [items]="siteOptions"
+        [items]="siteDropdownOptions"
         bindLabel="name"
         bindValue="id"
         placeholder="{{ 'labels.oaf.All Sites' | translate }}"

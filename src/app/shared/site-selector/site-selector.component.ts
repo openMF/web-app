@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { OrganizationService } from 'app/organization/organization.service';
 import { SettingsService } from 'app/settings/settings.service';
 
@@ -22,10 +23,10 @@ export interface SiteSelectorChange {
  *
  * The component walks the office hierarchy using
  * `OrganizationService.fetchByHierarchyLevel` starting from the country/root
- * office supplied via `@Input() countryId`, populating the Region dropdown,
+ * office supplied via `countryId`, populating the Region dropdown,
  * then the District dropdown (children of the selected Region) and finally
  * the Site dropdown (children of the selected District). The Site dropdown
- * always includes an "All Sites" option which is selected by default.
+ * includes an "All Sites" option which is selected by default.
  */
 @Component({
   selector: 'mifosx-site-selector',
@@ -48,10 +49,17 @@ export class SiteSelectorComponent implements OnInit, OnChanges {
   /** Sentinel value representing the "All Sites" option (no specific sites selected). */
   readonly ALL_SITES: number[] | null = null;
 
+  /** Sentinel id for the "All Sites" dropdown option. */
+  readonly ALL_SITES_OPTION_ID = -1;
+
+  /** Site options for the dropdown, prefixed with an "All Sites" option when sites exist. */
+  siteDropdownOptions: any[] = [];
+
   constructor(
     private formBuilder: UntypedFormBuilder,
     private organizationService: OrganizationService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private translateService: TranslateService
   ) {
     this.siteSelectorForm = this.formBuilder.group({
       regionId: [null],
@@ -78,6 +86,7 @@ export class SiteSelectorComponent implements OnInit, OnChanges {
     this.regionOptions = [];
     this.districtOptions = [];
     this.siteOptions = [];
+    this.siteDropdownOptions = [];
     this.siteSelectorForm.reset({ regionId: null, districtId: null, siteIds: this.ALL_SITES });
     this.emitSelection();
   }
@@ -94,6 +103,7 @@ export class SiteSelectorComponent implements OnInit, OnChanges {
   onRegionChange(region: any): void {
     this.districtOptions = [];
     this.siteOptions = [];
+    this.siteDropdownOptions = [];
     this.siteSelectorForm.patchValue({ districtId: null, siteIds: this.ALL_SITES });
 
     if (region?.id) {
@@ -106,17 +116,32 @@ export class SiteSelectorComponent implements OnInit, OnChanges {
 
   onDistrictChange(district: any): void {
     this.siteOptions = [];
+    this.siteDropdownOptions = [];
     this.siteSelectorForm.patchValue({ siteIds: this.ALL_SITES });
 
     if (district?.id) {
       this.organizationService.fetchByHierarchyLevel(district.id, 'LOWER').subscribe((response: any) => {
         this.siteOptions = (response || []).filter((office: any) => office.status === true);
+        this.siteDropdownOptions = this.siteOptions.length
+          ? [
+              { id: this.ALL_SITES_OPTION_ID, name: this.translateService.instant('labels.oaf.All Sites') },
+              ...this.siteOptions,
+            ]
+          : [];
       });
     }
     this.emitSelection();
   }
 
   onSiteChange(): void {
+    const siteIds: number[] = this.siteSelectorForm.value.siteIds || [];
+    if (siteIds.includes(this.ALL_SITES_OPTION_ID)) {
+      // "All Sites" selected: mark every available site as selected.
+      this.siteSelectorForm.patchValue(
+        { siteIds: this.siteOptions.map((site: any) => site.id) },
+        { emitEvent: false }
+      );
+    }
     this.emitSelection();
   }
 
