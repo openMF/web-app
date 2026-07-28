@@ -57,6 +57,7 @@ import { LoanDelinquencyActionRescheduleDialogComponent } from 'app/loans/custom
 import { StringEnumOptionData } from 'app/shared/models/option-data.model';
 import { ProductsService } from 'app/products/products.service';
 import { LoanDelinquencyActionResetDialogComponent } from 'app/loans/custom-dialog/loan-delinquency-action-reset-dialog/loan-delinquency-action-reset-dialog.component';
+import { LoanDelinquencyActionDisableDialogComponent } from 'app/loans/custom-dialog/loan-delinquency-action-disable-dialog/loan-delinquency-action-disable-dialog.component';
 
 type DelinquencyActionStatus = 'active' | 'scheduled' | 'expired';
 
@@ -161,6 +162,17 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
     }
     return !this.isCurrentAndPauseAction(current);
   });
+
+  /**
+   * Whether the delinquency evaluation is currently disabled for this working capital loan.
+   * Derived from the actions list: a `DISABLE` action with no (effective) end date is still in force.
+   * While disabled, the backend rejects pause/resume/reschedule, so those actions are hidden.
+   */
+  isDelinquencyDisabled = computed<boolean>(() =>
+    this.loanDelinquencyActions().some(
+      (item) => item.action === 'DISABLE' && (item.effectiveEndDate ?? item.endDate) == null
+    )
+  );
 
   timelineYear = computed<number>(() => {
     const actions = this.loanDelinquencyActions();
@@ -360,6 +372,41 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
     });
   }
 
+  createDelinquencyDisable(): void {
+    this.confirmDelinquencyToggle('disable');
+  }
+
+  createDelinquencyEnable(): void {
+    this.confirmDelinquencyToggle('enable');
+  }
+
+  /**
+   * Opens the disable/enable confirmation dialog. The start date is always the current business date
+   * (no backdating), so it is only displayed, and the action is submitted without an end date.
+   */
+  private confirmDelinquencyToggle(action: 'disable' | 'enable'): void {
+    const dialogRef = this.dialog.open(LoanDelinquencyActionDisableDialogComponent, {
+      data: {
+        action,
+        businessDate: this.businessDate()
+      }
+    });
+    dialogRef.afterClosed().subscribe((response: { confirm: any }) => {
+      if (response?.confirm) {
+        this.sendDelinquencyAction(
+          action,
+          this.dateUtils.parseDate(this.businessDate()),
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        );
+      }
+    });
+  }
+
   resumeDelinquencyClassification(item: LoanDelinquencyAction): void {
     const removePauseDialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
@@ -461,7 +508,7 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
   }
 
   actionClass(action: string): string {
-    if (action === 'PAUSE') {
+    if (action === 'PAUSE' || action === 'DISABLE') {
       return 'status-pending';
     }
     return 'status-active';
