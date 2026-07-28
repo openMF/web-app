@@ -4,15 +4,20 @@ import { of } from 'rxjs';
 
 import { SiteSelectorComponent } from './site-selector.component';
 import { OrganizationService } from 'app/organization/organization.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 describe('SiteSelectorComponent', () => {
   let component: SiteSelectorComponent;
   let fixture: ComponentFixture<SiteSelectorComponent>;
   let organizationService: jasmine.SpyObj<OrganizationService>;
+  let settingsService: jasmine.SpyObj<SettingsService>;
 
   beforeEach(async () => {
     organizationService = jasmine.createSpyObj<OrganizationService>('OrganizationService', ['fetchByHierarchyLevel']);
     organizationService.fetchByHierarchyLevel.and.returnValue(of([]));
+
+    settingsService = jasmine.createSpyObj<SettingsService>('SettingsService', ['getSelectedCountry']);
+    settingsService.getSelectedCountry.and.returnValue({ id: 1 } as any);
 
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule],
