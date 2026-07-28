@@ -5,3 +5,109 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
+@use '../../loan-tab-shared' as shared;
+
+/* ── Section header ────────────────────────────────────────── */
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.section-title {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ch-text-2);
+}
+
+.section-hint {
+  font-size: 11.5px;
+  color: var(--ch-text-3);
+}
+
+/* ── Summary matrix ────────────────────────────────────────── */
+.matrix-wrap {
+  border: 1px solid var(--ch-border);
+  border-radius: 6px;
+  overflow-x: auto;
+  background: var(--ch-surface);
+}
+
+table.matrix {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.matrix th {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ch-text-2);
+  background: var(--ch-surface-h);
+  border-bottom: 2px solid var(--ch-border);
+  padding: 9px 16px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.matrix th:first-child {
+  text-align: left;
+}
+
+.matrix td {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--ch-border);
+  text-align: right;
+  font-family: 'JetBrains Mono', 'Cascadia Code', monospace;
+  font-size: 12.5px;
+  color: var(--ch-text-1);
+  white-space: nowrap;
+}
+
+.matrix tr:last-child td {
+  border-bottom: none;
+}
+
+.matrix td.rowlabel {
+  text-align: left;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ch-text-2);
+}
+
+.matrix td.paid {
+  color: var(--ch-paid);
+}
+
+.matrix td.due {
+  color: var(--ch-alert);
+  font-weight: 500;
+}
+
+.matrix td.zero {
+  color: var(--ch-zero);
+}
+
+.matrix tr.total td {
+  background: var(--ch-blue-20);
+  border-top: 2px solid var(--ch-blue-600);
+  font-weight: 500;
+}
+
+.matrix tr.total td.rowlabel {
+  color: var(--ch-blue-700);
+  font-weight: 700;
+}
+
+.matrix tbody tr:hover td {
+  background: var(--ch-blue-20);
+}

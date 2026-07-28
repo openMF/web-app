@@ -15,26 +15,52 @@ export interface SanitizeResult {
 
 export const MAX_INPUT_LENGTH = 500;
 
+/** Known prompt-injection phrasings, kept narrow to avoid blocking real banking queries. */
+const INJECTION_PATTERNS: RegExp[] = [
+  /ignore\s+(?:all\s+|any\s+|the\s+)?(?:previous\s+|prior\s+|above\s+|earlier\s+)?(?:instructions?|prompts?|rules?|context|directives?)/i,
+  /disregard\s+(?:all\s+|the\s+)?(?:previous|prior|above)\b/i,
+  /forget\s+(?:all\s+(?:your\s+)?|everything\s+)?(?:previous|prior|instructions?)/i,
+  /you\s+are\s+now\s+(?:a|an|in|free|dan|developer)\b/i,
+  /act\s+as\s+(?:an?\s+)?(?:ai|assistant|admin|administrator|system|developer|dan|jailbroken)\b/i,
+  /pretend\s+(?:to\s+be|you(?:'re|\s+are))/i,
+  /(?:system|developer)\s+prompt/i,
+  /(?:reveal|show|print|repeat)\s+(?:your|the)\s+(?:system\s+)?(?:prompt|instructions)/i,
+  /override\s+(?:your\s+|the\s+)?(?:instructions|rules|system)/i,
+  /prompt\s+injection/i,
+  /developer\s+mode/i,
+  /jailbreak/i
+];
+
 /**
  * First security gate: runs on every message before it leaves the frontend.
- * Pure function, no Angular dependency - see input-sanitizer.spec.ts.
+ * Pure logic, no Angular dependency - see input-sanitizer.spec.ts.
  */
 export class InputSanitizer {
-  /** Strip HTML/script tags and obvious SQL fragments. */
-  stripDangerous(_input: string): string {
-    // TODO: implement tag/script/SQL stripping.
-    throw new Error('Not implemented');
+  /** Remove script/style blocks, HTML tags, invisible/control characters, then collapse whitespace. */
+  stripDangerous(input: string): string {
+    return (input ?? '')
+      .replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1>/gi, '')
+      .replace(/<\/?[a-zA-Z][^>]*>/g, '')
+      .replace(/\p{Cf}/gu, '')
+      .replace(/\p{Cc}/gu, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
   }
 
-  /** Detect prompt-injection phrasing, e.g. "ignore previous instructions". */
-  matchesInjectionPattern(_input: string): boolean {
-    // TODO: implement injection pattern matching.
-    throw new Error('Not implemented');
+  /** True when the text contains a known prompt-injection phrasing. */
+  matchesInjectionPattern(input: string): boolean {
+    return INJECTION_PATTERNS.some((pattern) => pattern.test(input));
   }
 
-  /** Main entry point. */
-  sanitize(_input: string): SanitizeResult {
-    // TODO: clean -> length check -> injection check.
-    throw new Error('Not implemented');
+  /** Clean -> length check -> injection check. Returns the cleaned text when allowed. */
+  sanitize(input: string): SanitizeResult {
+    const cleaned = this.stripDangerous(input);
+    if (cleaned.length === 0 || cleaned.length > MAX_INPUT_LENGTH) {
+      return { blocked: true, reason: 'invalid_length' };
+    }
+    if (this.matchesInjectionPattern(cleaned)) {
+      return { blocked: true, reason: 'injection_detected' };
+    }
+    return { blocked: false, text: cleaned };
   }
 }

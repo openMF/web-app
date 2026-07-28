@@ -1,0 +1,98 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+@use 'app/loans/loans-view/loan-tab-shared' as shared;
+
+.dialog-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.dialog-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.close-button {
+  flex: 0 0 auto;
+  margin: -8px -8px 0 0;
+}
+
+.near-breach-table {
+  width: 100%;
+
+  /* Group header cells */
+  th.grp-header,
+  th.grp-blank {
+    padding: 0 16px;
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-align: left;
+    border-bottom: none;
+    color: var(--ch-text-3);
+    user-select: none;
+  }
+
+  th.grp-header.grp-previous {
+    color: var(--ch-text-3);
+    border-top: 2px solid var(--ch-border);
+  }
+
+  th.grp-header.grp-new {
+    color: var(--ch-blue-700);
+    border-top: 2px solid var(--ch-blue-600);
+  }
+
+  /* Main column header row */
+  th.mat-mdc-header-cell {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  th.mat-mdc-header-cell.col-new {
+    color: var(--ch-blue-700);
+  }
+
+  /* Group bracket borders (start / end) */
+  th.col-grp-start.col-new,
+  td.col-grp-start.col-new {
+    border-left: 2px solid var(--ch-blue-100);
+  }
+
+  th.col-grp-end.col-new,
+  td.col-grp-end.col-new {
+    border-right: 2px solid var(--ch-blue-100);
+  }
+
+  /* Reversed status indicator */
+  .reversed-indicator {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    vertical-align: middle;
+  }
+
+  .reversed-indicator.reversed-yes {
+    background: var(--ch-paid);
+  }
+
+  .reversed-indicator.reversed-no {
+    background: var(--ch-alert);
+  }
+}

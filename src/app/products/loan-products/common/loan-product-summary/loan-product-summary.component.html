@@ -29,7 +29,7 @@
         <span class="flex-60">{{ loanProduct.fundName }}</span>
       </div>
     }
-    @if (loanProductService.isLoanProduct) {
+    @if (loanProductService.isLoanProduct && !hideToggleInView(loanProduct.includeInBorrowerCycle)) {
       <div class="flex-fill layout-row">
         <span class="flex-40">{{ 'labels.inputs.Include in Customer Loan Counter' | translate }}:</span>
         <span class="flex-60">{{ loanProduct.includeInBorrowerCycle | yesNo }}</span>
@@ -127,10 +127,14 @@
       </div>
     }
     @if (loanProductService.isLoanProduct) {
-      <div class="flex-fill layout-row">
-        <span class="flex-40">{{ 'labels.inputs.Allow Approved / Disbursed Amounts Over Applied' | translate }}:</span>
-        <span class="flex-60">{{ loanProduct.allowApprovedDisbursedAmountsOverApplied | yesNo }}</span>
-      </div>
+      @if (!hideToggleInView(loanProduct.allowApprovedDisbursedAmountsOverApplied)) {
+        <div class="flex-fill layout-row">
+          <span class="flex-40"
+            >{{ 'labels.inputs.Allow Approved / Disbursed Amounts Over Applied' | translate }}:</span
+          >
+          <span class="flex-60">{{ loanProduct.allowApprovedDisbursedAmountsOverApplied | yesNo }}</span>
+        </div>
+      }
       @if (loanProduct.allowApprovedDisbursedAmountsOverApplied) {
         <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Over Amount' | translate }}:</span>
@@ -159,17 +163,19 @@
             ')'
         }}</span>
       </div>
-      <div class="flex-fill layout-row">
-        <span class="flex-40">{{ 'labels.inputs.Linked to floating interest rates' | translate }}:</span>
-        <span class="flex-60">{{ loanProduct.isLinkedToFloatingInterestRates | yesNo }}</span>
-      </div>
+      @if (!hideToggleInView(loanProduct.isLinkedToFloatingInterestRates)) {
+        <div class="flex-fill layout-row">
+          <span class="flex-40">{{ 'labels.inputs.Linked to floating interest rates' | translate }}:</span>
+          <span class="flex-60">{{ loanProduct.isLinkedToFloatingInterestRates | yesNo }}</span>
+        </div>
+      }
       @if (!loanProduct.isLinkedToFloatingInterestRates) {
         <div class="flex-fill layout-row">
-          <span class="flex-40">{{ 'labels.inputs.Nominal interest rate' | translate }}:</span>
+          <span class="flex-40">{{ 'labels.inputs.Annual interest rate' | translate }}:</span>
           <span class="flex-60"
             >{{
               loanProduct.interestRatePerPeriod +
-                ' (Min: ' +
+                ' % (Min: ' +
                 (loanProduct.minInterestRatePerPeriod
                   ? loanProduct.minInterestRatePerPeriod
                   : loanProduct.interestRatePerPeriod) +
@@ -214,10 +220,12 @@
           </div>
         </div>
       }
-      <div class="flex-fill layout-row">
-        <span class="flex-40">{{ 'labels.inputs.Terms vary based on loan cycle' | translate }}:</span>
-        <span class="flex-60">{{ loanProduct.useBorrowerCycle | yesNo }}</span>
-      </div>
+      @if (!hideToggleInView(loanProduct.useBorrowerCycle)) {
+        <div class="flex-fill layout-row">
+          <span class="flex-40">{{ 'labels.inputs.Terms vary based on loan cycle' | translate }}:</span>
+          <span class="flex-60">{{ loanProduct.useBorrowerCycle | yesNo }}</span>
+        </div>
+      }
       @if (loanProduct.principalVariationsForBorrowerCycle?.length) {
         <div class="flex-fill layout-row">
           <h4 class="mat-h4 flex-fill">{{ 'labels.inputs.Principal by loan cycle' | translate }}</h4>
@@ -306,7 +314,7 @@
       }
       @if (loanProduct.interestRateVariationsForBorrowerCycle?.length) {
         <div class="flex-fill">
-          <h4 class="mat-h4 flex-fill">{{ 'labels.inputs.Nominal Interest Rate by loan cycle' | translate }}</h4>
+          <h4 class="mat-h4 flex-fill">{{ 'labels.inputs.Annual interest rate by loan cycle' | translate }}</h4>
           <table
             class="mat-elevation-z1 flex-fill"
             mat-table
@@ -400,10 +408,12 @@
       </div>
     }
     @if (loanProductService.isLoanProduct) {
-      <div class="flex-fill layout-row">
-        <span class="flex-40">{{ 'labels.inputs.Is Equal Amortization' | translate }}:</span>
-        <span class="flex-60">{{ loanProduct.isEqualAmortization | yesNo }}</span>
-      </div>
+      @if (!hideToggleInView(loanProduct.isEqualAmortization)) {
+        <div class="flex-fill layout-row">
+          <span class="flex-40">{{ 'labels.inputs.Is Equal Amortization' | translate }}:</span>
+          <span class="flex-60">{{ loanProduct.isEqualAmortization | yesNo }}</span>
+        </div>
+      }
       <div class="flex-fill layout-row">
         <span class="flex-40">{{ 'labels.inputs.Interest Method' | translate }}:</span>
         <span class="flex-60">{{ loanProduct.interestType?.value | translateKey: 'catalogs' }}</span>
@@ -418,10 +428,12 @@
         >
         <span class="flex-60">{{ loanProduct.allowPartialPeriodInterestCalculation | yesNo }}</span>
       </div>
-      <div class="flex-fill layout-row">
-        <span class="flex-40">{{ 'labels.inputs.Is interest recognition on disbursement date?' | translate }}:</span>
-        <span class="flex-60">{{ loanProduct.interestRecognitionOnDisbursementDate | yesNo }}</span>
-      </div>
+      @if (!hideToggleInView(loanProduct.interestRecognitionOnDisbursementDate)) {
+        <div class="flex-fill layout-row">
+          <span class="flex-40">{{ 'labels.inputs.Is interest recognition on disbursement date?' | translate }}:</span>
+          <span class="flex-60">{{ loanProduct.interestRecognitionOnDisbursementDate | yesNo }}</span>
+        </div>
+      }
       <h3 class="mat-h3 flex-fill">{{ 'labels.inputs.Loan Schedule' | translate }}</h3>
       <mat-divider [inset]="true"></mat-divider>
       <div class="flex-fill layout-row">
@@ -480,23 +492,25 @@
           </span>
         </div>
       }
-      <h3 class="mat-h3 flex-fill">{{ 'labels.inputs.Down Payments' | translate }}</h3>
-      <mat-divider [inset]="true"></mat-divider>
-      <div class="flex-fill layout-row">
-        <span class="flex-40">{{ 'labels.inputs.Enable Down Payments' | translate }}:</span>
-        <span class="flex-60">{{ loanProduct.enableDownPayment | yesNo }}</span>
-      </div>
-      @if (loanProduct.enableDownPayment) {
-        <div class="flex-fill layout-row-wrap responsive-column">
-          <span class="flex-40">{{ 'labels.inputs.Disbursed Amount Percentage Down Payment' | translate }} (%):</span>
-          <span class="flex-60">{{ loanProduct.disbursedAmountPercentageForDownPayment }} %</span>
+      @if (showDownPaymentsSection) {
+        <h3 class="mat-h3 flex-fill">{{ 'labels.inputs.Down Payments' | translate }}</h3>
+        <mat-divider [inset]="true"></mat-divider>
+        <div class="flex-fill layout-row">
+          <span class="flex-40">{{ 'labels.inputs.Enable Down Payments' | translate }}:</span>
+          <span class="flex-60">{{ loanProduct.enableDownPayment | yesNo }}</span>
         </div>
-      }
-      @if (loanProduct.enableDownPayment) {
-        <div class="flex-fill layout-row-wrap responsive-column">
-          <span class="flex-40">{{ 'labels.inputs.Enable Auto Repayment for Down Payment' | translate }}:</span>
-          <span class="flex-60">{{ loanProduct.enableAutoRepaymentForDownPayment | yesNo }}</span>
-        </div>
+        @if (loanProduct.enableDownPayment) {
+          <div class="flex-fill layout-row-wrap responsive-column">
+            <span class="flex-40">{{ 'labels.inputs.Disbursed Amount Percentage Down Payment' | translate }} (%):</span>
+            <span class="flex-60">{{ loanProduct.disbursedAmountPercentageForDownPayment }} %</span>
+          </div>
+        }
+        @if (loanProduct.enableDownPayment) {
+          <div class="flex-fill layout-row-wrap responsive-column">
+            <span class="flex-40">{{ 'labels.inputs.Enable Auto Repayment for Down Payment' | translate }}:</span>
+            <span class="flex-60">{{ loanProduct.enableAutoRepaymentForDownPayment | yesNo }}</span>
+          </div>
+        }
       }
       @if (isAdvancedPaymentAllocation) {
         <div class="flex-100 layout-row-wrap responsive-column">
@@ -621,10 +635,12 @@
           <span class="flex-60">{{ loanProduct.principalThresholdForLastInstallment }}</span>
         </div>
       }
-      <div class="flex-fill layout-row">
-        <span class="flex-40">{{ 'labels.inputs.Variable Installments allowed' | translate }}:</span>
-        <span class="flex-60">{{ loanProduct.allowVariableInstallments | yesNo }}</span>
-      </div>
+      @if (!hideToggleInView(loanProduct.allowVariableInstallments)) {
+        <div class="flex-fill layout-row">
+          <span class="flex-40">{{ 'labels.inputs.Variable Installments allowed' | translate }}:</span>
+          <span class="flex-60">{{ loanProduct.allowVariableInstallments | yesNo }}</span>
+        </div>
+      }
       @if (loanProduct.allowVariableInstallments) {
         <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Variable Installments' | translate }}:</span>
@@ -637,16 +653,20 @@
           }}</span>
         </div>
       }
-      <div class="flex-fill layout-row">
-        <span class="flex-40">{{ 'labels.inputs.Allowed to be used for providing Topup Loans' | translate }}:</span>
-        <span class="flex-60">{{ loanProduct.canUseForTopup | yesNo }}</span>
-      </div>
-      <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Interest Recalculation' | translate }}</h3>
-      <mat-divider [inset]="true"></mat-divider>
-      <div class="flex-fill layout-row">
-        <span class="flex-40">{{ 'labels.inputs.Recalculate Interest' | translate }}:</span>
-        <span class="flex-60">{{ loanProduct.isInterestRecalculationEnabled | yesNo }}</span>
-      </div>
+      @if (!hideToggleInView(loanProduct.canUseForTopup)) {
+        <div class="flex-fill layout-row">
+          <span class="flex-40">{{ 'labels.inputs.Allowed to be used for providing Topup Loans' | translate }}:</span>
+          <span class="flex-60">{{ loanProduct.canUseForTopup | yesNo }}</span>
+        </div>
+      }
+      @if (showInterestRecalculationSection) {
+        <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Interest Recalculation' | translate }}</h3>
+        <mat-divider [inset]="true"></mat-divider>
+        <div class="flex-fill layout-row">
+          <span class="flex-40">{{ 'labels.inputs.Recalculate Interest' | translate }}:</span>
+          <span class="flex-60">{{ loanProduct.isInterestRecalculationEnabled | yesNo }}</span>
+        </div>
+      }
       @if (loanProduct.isInterestRecalculationEnabled) {
         <div>
           <div class="flex-fill layout-row-wrap responsive-column">
@@ -787,12 +807,14 @@
           }
         </div>
       }
-      <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Guarantee Requirements' | translate }}</h3>
-      <mat-divider [inset]="true"></mat-divider>
-      <div class="flex-fill layout-row">
-        <span class="flex-40">{{ 'labels.inputs.Place Guarantee Funds On-Hold' | translate }}:</span>
-        <span class="flex-60">{{ loanProduct.holdGuaranteeFunds | yesNo }}</span>
-      </div>
+      @if (showGuaranteeSection) {
+        <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Guarantee Requirements' | translate }}</h3>
+        <mat-divider [inset]="true"></mat-divider>
+        <div class="flex-fill layout-row">
+          <span class="flex-40">{{ 'labels.inputs.Place Guarantee Funds On-Hold' | translate }}:</span>
+          <span class="flex-60">{{ loanProduct.holdGuaranteeFunds | yesNo }}</span>
+        </div>
+      }
       @if (loanProduct.holdGuaranteeFunds) {
         <div class="flex-fill layout-row-wrap responsive-column">
           <span class="flex-40">{{ 'labels.inputs.Mandatory Guarantee' | translate }} (%):</span>
@@ -811,12 +833,14 @@
           }
         </div>
       }
-      <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Loan Tranche Details' | translate }}</h3>
-      <mat-divider [inset]="true"></mat-divider>
-      <div class="flex-fill layout-row">
-        <span class="flex-40">{{ 'labels.inputs.Enable Multiple Disbursals' | translate }}:</span>
-        <span class="flex-60">{{ loanProduct.multiDisburseLoan | yesNo }}</span>
-      </div>
+      @if (showTrancheSection) {
+        <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Loan Tranche Details' | translate }}</h3>
+        <mat-divider [inset]="true"></mat-divider>
+        <div class="flex-fill layout-row">
+          <span class="flex-40">{{ 'labels.inputs.Enable Multiple Disbursals' | translate }}:</span>
+          <span class="flex-60">{{ loanProduct.multiDisburseLoan | yesNo }}</span>
+        </div>
+      }
       @if (loanProduct.multiDisburseLoan) {
         <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Maximum Tranche count' | translate }}:</span>

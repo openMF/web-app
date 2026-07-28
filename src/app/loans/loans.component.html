@@ -1,0 +1,535 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="loans-layout">
+  <div class="loans-container">
+    <!-- ── Toolbar (single line) ──────────────────────────────── -->
+    <div class="toolbar">
+      <mat-form-field class="search m-r-60" subscriptSizing="dynamic">
+        <mat-icon matPrefix>search</mat-icon>
+        <input
+          matInput
+          type="text"
+          #searchInput
+          placeholder="{{ 'labels.text.SearchByLoan' | translate }}"
+          (input)="onSearchInput(searchInput.value)"
+        />
+        @if (searchInput.value) {
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            (click)="clearSearch(searchInput)"
+            [attr.aria-label]="'labels.buttons.Clear' | translate"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        }
+      </mat-form-field>
+
+      @if (hasResults) {
+        <span class="count-badge">
+          <strong>{{ totalRows | number }}</strong>
+          {{ 'labels.menus.Loans' | translate | lowercase }}
+        </span>
+      }
+
+      <div class="toolbar-spacer"></div>
+
+      <!-- ── Export ──────────────────────────────────────────────── -->
+      <button
+        type="button"
+        class="cog-btn"
+        [disabled]="exporting || !canExport"
+        (click)="exportToXlsx()"
+        [attr.aria-label]="'labels.buttons.Export' | translate"
+        title="{{
+          isLoading || dtLoading.size > 0
+            ? ('labels.text.Loading data' | translate)
+            : ('labels.buttons.Export' | translate)
+        }}"
+      >
+        @if (exporting) {
+          <span class="spin"></span>
+        } @else {
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 3v12"></path>
+            <path d="m7 10 5 5 5-5"></path>
+            <path d="M4 21h16"></path>
+          </svg>
+        }
+      </button>
+
+      <!-- ── Column configuration ───────────────────────────────── -->
+      <div class="col-config">
+        <button
+          type="button"
+          class="cog-btn"
+          [class.active]="columnsPanelOpen"
+          (click)="toggleColumnsPanel()"
+          [attr.aria-label]="'labels.inputs.Columns' | translate"
+          [attr.aria-expanded]="columnsPanelOpen"
+          title="{{ 'labels.inputs.Columns' | translate }}"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path
+              d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"
+            ></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </button>
+
+        @if (columnsPanelOpen) {
+          <div class="panel-backdrop" (click)="closeColumnsPanel()"></div>
+          <div class="col-panel">
+            <div class="col-panel-head">
+              <span>{{ 'labels.inputs.Columns' | translate }}</span>
+              <button type="button" class="link-btn" (click)="resetColumns()">
+                {{ 'labels.buttons.Reset' | translate }}
+              </button>
+            </div>
+            <div class="col-panel-body">
+              <div class="col-group-title">{{ 'labels.text.Visible Columns' | translate }}</div>
+              @if (reorderableColumns.length === 0) {
+                <div class="col-note">{{ 'labels.text.No columns selected' | translate }}</div>
+              } @else {
+                <div class="reorder-list" cdkDropList (cdkDropListDropped)="moveColumn($event)">
+                  @for (col of reorderableColumns; track col.id) {
+                    <div class="reorder-item" cdkDrag>
+                      <span class="drag-handle" cdkDragHandle aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                          <circle cx="9" cy="6" r="1.5"></circle>
+                          <circle cx="9" cy="12" r="1.5"></circle>
+                          <circle cx="9" cy="18" r="1.5"></circle>
+                          <circle cx="15" cy="6" r="1.5"></circle>
+                          <circle cx="15" cy="12" r="1.5"></circle>
+                          <circle cx="15" cy="18" r="1.5"></circle>
+                        </svg>
+                      </span>
+                      <span class="reorder-label">{{ col.translate ? (col.label | translate) : col.label }}</span>
+                      <button
+                        type="button"
+                        class="reorder-remove"
+                        (click)="toggleColumn(col.id)"
+                        [attr.aria-label]="'labels.buttons.Remove' | translate"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  }
+                </div>
+              }
+
+              <div class="col-group-title">{{ 'labels.text.Loan Fields' | translate }}</div>
+              @for (col of standardColumnOptions; track col.id) {
+                <label class="col-option">
+                  <input type="checkbox" [checked]="isColumnVisible(col.id)" (change)="toggleColumn(col.id)" />
+                  <span>{{ col.label | translate }}</span>
+                </label>
+              }
+
+              <div class="col-group-title">{{ 'labels.text.Data Tables' | translate }}</div>
+              @if (dtTablesLoading) {
+                <div class="col-note"><span class="spin"></span></div>
+              } @else if (dtTablesError) {
+                <div class="col-note error">{{ 'labels.text.Failed to load' | translate }}</div>
+              } @else if (!dtTables || dtTables.length === 0) {
+                <div class="col-note">{{ 'labels.text.No data tables' | translate }}</div>
+              } @else {
+                @for (table of dtTables; track table.name) {
+                  <div class="col-table-name">
+                    {{ table.label }}
+                    @if (dtLoading.has(table.name)) {
+                      <span class="spin"></span>
+                    }
+                    @if (dtFailed.has(table.name)) {
+                      <span class="dt-error" title="{{ 'labels.text.Failed to load' | translate }}">!</span>
+                    }
+                  </div>
+                  @for (col of table.columns; track col.name) {
+                    <label class="col-option">
+                      <input
+                        type="checkbox"
+                        [checked]="isColumnVisible(dtColumnId(table.name, col.name))"
+                        (change)="toggleColumn(dtColumnId(table.name, col.name))"
+                      />
+                      <span>{{ col.label }}</span>
+                    </label>
+                  }
+                }
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    @if (isLoading) {
+      <mat-progress-bar class="loading-bar" mode="indeterminate"></mat-progress-bar>
+    }
+
+    <!-- ── List ───────────────────────────────────────────────── -->
+    <div [hidden]="!hasResults" class="list">
+      <!--
+      A second horizontal scrollbar synced with the real one below, so it's reachable
+      right by the header instead of only after however many rows are on the page.
+    -->
+      <div class="scroll-sync-top" #topScroll (scroll)="syncScroll(topScroll, mainScroll)">
+        <div class="scroll-sync-spacer" [style.width.px]="gridMinWidth"></div>
+      </div>
+      <div class="table-scroll" #mainScroll (scroll)="syncScroll(mainScroll, topScroll)">
+        <div class="list-header" [style.gridTemplateColumns]="gridTemplate" [style.minWidth.px]="gridMinWidth">
+          <span></span>
+          <span></span>
+          @for (col of visibleColumns; track col.id) {
+            <button
+              type="button"
+              class="sortable"
+              [class.active]="sortColumn === col.id"
+              [class.desc]="sortColumn === col.id && sortDirection === 'desc'"
+              (click)="setSort(col.id)"
+            >
+              {{ col.translate ? (col.label | translate) : col.label }}
+              <svg class="sort-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M7 14l5-5 5 5"></path>
+              </svg>
+            </button>
+          }
+        </div>
+
+        @for (loan of pagedLoans; track loan.id) {
+          <div
+            class="list-row"
+            [ngClass]="loan._severity"
+            [routerLink]="loan._viewRoute"
+            [style.gridTemplateColumns]="gridTemplate"
+            [style.minWidth.px]="gridMinWidth"
+          >
+            <div class="rail"></div>
+            <div class="avatar" [class.muted]="loan._isClosed">
+              {{ loan._initials }}
+            </div>
+            @for (col of visibleColumns; track col.id) {
+              @switch (col.id) {
+                @case ('borrower') {
+                  <div class="name-block">
+                    @if (loan._borrowerRoute.length) {
+                      <a [routerLink]="loan._borrowerRoute" (click)="$event.stopPropagation()" class="name">
+                        {{ loan._borrowerName }}
+                      </a>
+                    } @else {
+                      <span class="name">{{ loan._borrowerName }}</span>
+                    }
+                    <span class="name-meta">{{ loan.loanType?.value }}</span>
+                  </div>
+                }
+                @case ('status') {
+                  <span class="status-pill" [ngClass]="loan._severity" [title]="loan.status?.value">
+                    <span class="dot"></span>
+                    <span class="label">{{ loan.status?.value }}</span>
+                  </span>
+                }
+                @case ('accountNo') {
+                  <span class="mono"
+                    ><mifosx-account-number display="left" [accountNo]="loan.accountNo"></mifosx-account-number
+                  ></span>
+                }
+                @case ('principal') {
+                  <span class="mono">{{
+                    loan.principal | currency: loan.currency?.code : 'symbol-narrow' : '1.2-2'
+                  }}</span>
+                }
+                @case ('product') {
+                  <span class="office">{{ loan.loanProductName }}</span>
+                }
+                @default {
+                  <span class="cell" [class.cell-mono]="col.mono">{{ loan._cells?.[col.id] || '—' }}</span>
+                }
+              }
+            }
+          </div>
+        }
+      </div>
+
+      <div class="list-footer">
+        <span>
+          {{ 'labels.text.Showing' | translate }}
+          <strong>{{ rangeStart() | number }}–{{ rangeEnd() | number }}</strong>
+          {{ 'labels.text.of' | translate }}
+          <strong>{{ totalRows | number }}</strong>
+        </span>
+        <div class="pager">
+          <mat-form-field class="page-size-field" subscriptSizing="dynamic">
+            <mat-label>{{ 'labels.text.Rows' | translate }}</mat-label>
+            <mat-select [value]="pageSize" (selectionChange)="onPageSizeChange($event.value)">
+              @for (size of pageSizeOptions; track size) {
+                <mat-option [value]="size">{{ size }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          <span class="page-info">
+            {{ 'labels.text.Page' | translate }} {{ currentPage + 1 }} {{ 'labels.text.of' | translate }}
+            {{ totalPages() }}
+          </span>
+          <div class="page-nav">
+            <button
+              class="page-btn"
+              [disabled]="currentPage === 0"
+              (click)="goToPage(0)"
+              [attr.aria-label]="'labels.buttons.First page' | translate"
+            >
+              «
+            </button>
+            <button
+              class="page-btn"
+              [disabled]="currentPage === 0"
+              (click)="goToPage(currentPage - 1)"
+              [attr.aria-label]="'labels.buttons.Previous page' | translate"
+            >
+              ‹
+            </button>
+            <button
+              class="page-btn"
+              [disabled]="currentPage >= totalPages() - 1"
+              (click)="goToPage(currentPage + 1)"
+              [attr.aria-label]="'labels.buttons.Next page' | translate"
+            >
+              ›
+            </button>
+            <button
+              class="page-btn"
+              [disabled]="currentPage >= totalPages() - 1"
+              (click)="goToPage(totalPages() - 1)"
+              [attr.aria-label]="'labels.buttons.Last page' | translate"
+            >
+              »
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Empty state ────────────────────────────────────────── -->
+    <div [hidden]="hasResults || isLoading" class="empty-state">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.3-4.3"></path>
+      </svg>
+      <h4>{{ 'labels.text.No loan was found' | translate }}</h4>
+    </div>
+  </div>
+
+  <!-- ── Filter panel ───────────────────────────────────────── -->
+  <aside class="filter-panel">
+    <div class="filter-panel-head">
+      <span>{{ 'labels.inputs.Filters' | translate }}</span>
+    </div>
+    <div class="filter-panel-body">
+      <div class="filter-group-title">
+        <span>{{ 'labels.text.Default Filters' | translate }}</span>
+        <button type="button" class="link-btn" (click)="resetDefaultFilters()">
+          {{ 'labels.buttons.Reset' | translate }}
+        </button>
+      </div>
+
+      <mat-form-field class="filter-field-full" subscriptSizing="dynamic">
+        <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
+        <mat-select [value]="selectedOfficeId" (selectionChange)="onOfficeChange($event.value)">
+          <mat-option [value]="null">{{ 'labels.text.All Offices' | translate }}</mat-option>
+          @for (office of offices; track office.id) {
+            <mat-option [value]="office.id">{{ office.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="filter-field-full" subscriptSizing="dynamic">
+        <mat-label>{{ 'labels.inputs.Loan Product' | translate }}</mat-label>
+        <mat-select [value]="selectedLoanProductId" (selectionChange)="onLoanProductChange($event.value)">
+          <mat-option [value]="null">{{ 'labels.text.All Loan Products' | translate }}</mat-option>
+          @for (product of loanProducts; track product.id) {
+            <mat-option [value]="product.id">{{ product.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-slide-toggle class="filter-toggle" [checked]="showClosedAccounts" (change)="toggleShowClosed()">
+        {{ 'labels.buttons.Show Closed Accounts' | translate }}
+      </mat-slide-toggle>
+
+      <div class="filter-divider"></div>
+
+      <div class="filter-group-title">
+        <span>{{ 'labels.text.Additional Filters' | translate }}</span>
+        @if (activeFilters.length) {
+          <button type="button" class="link-btn" (click)="clearAllFilters()">
+            {{ 'labels.buttons.Clear All' | translate }}
+          </button>
+        }
+      </div>
+
+      @if (activeFilters.length === 0) {
+        <div class="col-note">{{ 'labels.text.No additional filters' | translate }}</div>
+      }
+
+      @for (filter of activeFilters; track filter.uid) {
+        <div class="active-filter">
+          <div class="active-filter-head">
+            <span class="active-filter-label">{{ filter.label }}</span>
+            <button
+              type="button"
+              class="reorder-remove"
+              (click)="removeFilter(filter.uid)"
+              [attr.aria-label]="'labels.buttons.Remove' | translate"
+            >
+              ×
+            </button>
+          </div>
+
+          @switch (filter.type) {
+            @case ('text') {
+              <input
+                type="text"
+                class="filter-input"
+                #textInput
+                (input)="updateFilterText(filter, textInput.value)"
+                placeholder="{{ 'labels.text.Contains' | translate }}"
+              />
+            }
+            @case ('number') {
+              <div class="range-row">
+                <input
+                  type="number"
+                  class="filter-input"
+                  #minInput
+                  (input)="updateFilterNumber(filter, 'min', minInput.value)"
+                  placeholder="{{ 'labels.text.Min' | translate }}"
+                />
+                <span class="range-sep">–</span>
+                <input
+                  type="number"
+                  class="filter-input"
+                  #maxInput
+                  (input)="updateFilterNumber(filter, 'max', maxInput.value)"
+                  placeholder="{{ 'labels.text.Max' | translate }}"
+                />
+              </div>
+            }
+            @case ('date') {
+              <div class="range-row">
+                <input
+                  type="date"
+                  class="filter-input"
+                  #dateFromInput
+                  (change)="updateFilterDate(filter, 'from', dateFromInput.value)"
+                />
+                <span class="range-sep">–</span>
+                <input
+                  type="date"
+                  class="filter-input"
+                  #dateToInput
+                  (change)="updateFilterDate(filter, 'to', dateToInput.value)"
+                />
+              </div>
+            }
+            @case ('boolean') {
+              <mat-form-field class="filter-field-full" subscriptSizing="dynamic">
+                <mat-select [value]="filter.boolValue" (selectionChange)="updateFilterBool(filter, $event.value)">
+                  <mat-option value="">{{ 'labels.text.Any' | translate }}</mat-option>
+                  <mat-option value="true">{{ 'labels.commons.Yes' | translate }}</mat-option>
+                  <mat-option value="false">{{ 'labels.commons.No' | translate }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            }
+            @case ('select') {
+              <div class="select-options">
+                @for (option of filter.selectOptions; track option) {
+                  <label class="col-option">
+                    <input
+                      type="checkbox"
+                      [checked]="filter.selectValues.has(option)"
+                      (change)="toggleFilterSelectOption(filter, option)"
+                    />
+                    <span>{{ option }}</span>
+                  </label>
+                }
+              </div>
+            }
+          }
+        </div>
+      }
+    </div>
+
+    <!--
+      Outside the scrollable body (and its overflow clipping) so the flyout below can
+      always render in full, and pinned so "Add Filter" never scrolls out of reach.
+    -->
+    <div class="add-filter">
+      <button type="button" class="add-filter-btn" [class.active]="addFilterMenuOpen" (click)="toggleAddFilterMenu()">
+        + {{ 'labels.buttons.Add Filter' | translate }}
+      </button>
+
+      @if (addFilterMenuOpen) {
+        <div class="panel-backdrop" (click)="closeAddFilterMenu()"></div>
+        <div class="add-filter-menu">
+          <input
+            type="text"
+            class="filter-input add-filter-search"
+            #fieldSearch
+            placeholder="{{ 'labels.text.Search fields' | translate }}"
+            (input)="addFilterSearch = fieldSearch.value"
+          />
+          <div class="add-filter-list">
+            <div class="col-group-title">{{ 'labels.text.Loan Fields' | translate }}</div>
+            @for (col of filterableStandardOptions(addFilterSearch); track col.id) {
+              <button
+                type="button"
+                class="add-filter-option"
+                [disabled]="isFilterActive(col.id)"
+                (click)="addFilter(col.id)"
+              >
+                {{ columnLabel(col) }}
+                @if (isFilterActive(col.id)) {
+                  <span class="added-badge">{{ 'labels.text.Added' | translate }}</span>
+                }
+              </button>
+            }
+
+            <div class="col-group-title">{{ 'labels.text.Data Tables' | translate }}</div>
+            @if (dtTablesLoading) {
+              <div class="col-note"><span class="spin"></span></div>
+            } @else if (dtTablesError) {
+              <div class="col-note error">{{ 'labels.text.Failed to load' | translate }}</div>
+            } @else if (!dtTables || dtTables.length === 0) {
+              <div class="col-note">{{ 'labels.text.No data tables' | translate }}</div>
+            } @else {
+              @for (table of dtTables; track table.name) {
+                @let filteredDtOptions = filterableDtOptions(table, addFilterSearch);
+                @if (filteredDtOptions.length) {
+                  <div class="col-table-name">{{ table.label }}</div>
+                  @for (col of filteredDtOptions; track col.name) {
+                    <button
+                      type="button"
+                      class="add-filter-option"
+                      [disabled]="isFilterActive(dtColumnId(table.name, col.name))"
+                      (click)="addFilter(dtColumnId(table.name, col.name))"
+                    >
+                      {{ col.label }}
+                      @if (isFilterActive(dtColumnId(table.name, col.name))) {
+                        <span class="added-badge">{{ 'labels.text.Added' | translate }}</span>
+                      }
+                    </button>
+                  }
+                }
+              }
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </aside>
+</div>

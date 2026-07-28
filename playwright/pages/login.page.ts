@@ -135,16 +135,46 @@ export class LoginPage extends BasePage {
    * Perform login and wait for successful navigation.
    * Use this when expecting a successful login.
    *
+   * Races the post-login URL change against the appearance of an
+   * error element. If the error element appears first, throws
+   * immediately with a clear message rather than waiting for the
+   * full navigationTimeout to expire. This ensures bad-credential
+   * failures during auth setup fail fast and are never silently
+   * retried as transient timeouts.
+   *
    * @param username - The username to enter
    * @param password - The password to enter
    */
   async loginAndWaitForDashboard(username: string, password: string): Promise<void> {
     await this.login(username, password);
-    // Wait for navigation away from login page
-    await this.page.waitForURL(/.*(?<!login)$/, {
-      timeout: 30000,
-      waitUntil: 'networkidle'
-    });
+
+    // Race: URL leaves the login page (success) vs error element appears (bad creds).
+    // Uses a URL predicate instead of a regex so that /login/, /login?..., and
+    // /login#... variants are all correctly treated as "still on login page".
+    const errorLocator = this.page.locator(LOGIN_SELECTORS.errorMessage);
+    const result = await Promise.race([
+      this.page
+        .waitForURL((url) => !url.hash.startsWith('#/login'), {
+          timeout: 30000,
+          waitUntil: 'networkidle'
+        })
+        .then(() => 'navigated' as const),
+      errorLocator
+        .first()
+        .waitFor({ state: 'visible', timeout: 30000 })
+        .then(() => 'error' as const)
+    ]);
+
+    if (result === 'error') {
+      const errorText = await errorLocator
+        .first()
+        .textContent()
+        .catch(() => '(no message)');
+      throw new Error(
+        `[LoginPage] Authentication rejected — invalid credentials for "${username}". ` +
+          `Server returned: ${errorText?.trim()}`
+      );
+    }
   }
 
   /**

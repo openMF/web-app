@@ -6,10 +6,157 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-table {
-  width: 100%;
+@use '../loan-tab-shared' as shared;
+
+@include shared.fact-sheet;
+
+.tab-container {
+  padding: 4px 0 20px;
 }
 
-span {
-  margin: 0.5em 0;
+/* ── Card shell (shared card-container, without side margins) ── */
+.details-card {
+  @include shared.card-container;
+
+  margin: 12px 4px;
+}
+
+/* ── Lifecycle stepper ─────────────────────────────────────── */
+.stepper {
+  display: flex;
+  flex-wrap: wrap;
+  background: var(--ch-surface);
+  border-bottom: 1px solid var(--ch-border);
+}
+
+.step {
+  flex: 1 1 0;
+  min-width: 160px;
+  position: relative;
+  padding: 16px 18px 14px 26px;
+}
+
+.step + .step {
+  border-left: 1px solid var(--ch-border);
+}
+
+.step::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--ch-border);
+}
+
+.step.done::before {
+  background: var(--ch-paid);
+}
+
+.step.rejected::before {
+  background: var(--ch-alert);
+}
+
+.step.pending::before {
+  background: var(--ch-zero);
+}
+
+.step-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ch-text-3);
+  margin-bottom: 5px;
+}
+
+.step-check {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  color: var(--ch-surface);
+  background: var(--ch-paid);
+  flex-shrink: 0;
+}
+
+.step.pending .step-check {
+  background: var(--ch-zero);
+}
+
+.step.rejected .step-check {
+  background: var(--ch-alert);
+}
+
+.step-date {
+  font-family: 'JetBrains Mono', 'Cascadia Code', monospace;
+  font-size: 13px;
+  color: var(--ch-text-1);
+}
+
+.step.pending .step-date {
+  color: var(--ch-text-3);
+}
+
+.step-by {
+  font-size: 11px;
+  color: var(--ch-text-2);
+  margin-top: 2px;
+}
+
+/* ── Settings chips (on/off booleans) ──────────────────────── */
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--ch-border);
+  background: var(--ch-surface);
+  color: var(--ch-text-2);
+
+  .st {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--ch-zero);
+    flex-shrink: 0;
+  }
+}
+
+.chip.on {
+  border-color: var(--ch-paid);
+  background: var(--ch-paid-bg);
+  color: var(--ch-paid);
+
+  .st {
+    background: var(--ch-paid);
+  }
+}
+
+/* ── Responsive ────────────────────────────────────────────── */
+@media (width <= 700px) {
+  .stepper {
+    flex-direction: column;
+  }
+
+  .step + .step {
+    border-left: none;
+    border-top: 1px solid var(--ch-border);
+  }
 }

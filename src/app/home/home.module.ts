@@ -20,6 +20,7 @@ import { HomeComponent } from './home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { WarningDialogComponent } from './warning-dialog/warning-dialog.component';
+import { ReportingDashboardComponent } from './reporting-dashboard/reporting-dashboard.component';
 import { SessionTimeoutDialogComponent } from './timeout-dialog/session-timeout-dialog.component';
 
 /**
@@ -37,7 +38,8 @@ import { SessionTimeoutDialogComponent } from './timeout-dialog/session-timeout-
     HomeComponent,
     DashboardComponent,
     WarningDialogComponent,
-    SessionTimeoutDialogComponent
+    SessionTimeoutDialogComponent,
+    ReportingDashboardComponent
   ],
   providers: []
 })

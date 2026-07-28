@@ -6,26 +6,68 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+@use '../loan-tab-shared' as shared;
+
+@include shared.fact-sheet;
+
 .tab-container {
-  padding: 1%;
-  margin: 1%;
+  padding: 4px 0 20px;
+}
 
-  h3 {
-    margin: 1% auto;
-  }
+/* ── Card shell (shared card-container, without side margins) ── */
+.general-card {
+  @include shared.card-container;
 
-  .performance-history-container {
-    border: 1px solid;
-    padding: 1%;
-    margin-bottom: 20px;
-  }
+  margin: 12px 4px;
+}
 
-  table {
-    width: 100%;
-    margin-bottom: 20px;
+/* ── Status chip (badge system from charges/transactions) ──── */
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  white-space: nowrap;
+
+  .st {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentcolor;
+    flex-shrink: 0;
   }
 }
 
-span {
-  margin: 0.5em 0;
+.st-active {
+  background: var(--ch-paid-bg);
+  color: var(--ch-paid);
+  border-color: var(--ch-paid);
+}
+
+.st-pending {
+  background: var(--ch-partial-bg);
+  color: var(--ch-partial);
+  border-color: var(--ch-partial);
+}
+
+.st-approved {
+  background: var(--ch-blue-50);
+  color: var(--ch-blue-700);
+  border-color: var(--ch-blue-100);
+}
+
+.st-overpaid {
+  background: var(--ch-blue-20);
+  color: var(--ch-blue-600);
+  border-color: var(--ch-blue-100);
+}
+
+.st-closed {
+  background: var(--ch-surface-h);
+  color: var(--ch-text-2);
+  border-color: var(--ch-border);
 }

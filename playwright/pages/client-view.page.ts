@@ -17,8 +17,10 @@ import { BEHAVIOR } from '../config/behavior';
  * ClientViewPage - Page Object for the Mifos X client general view.
  *
  * Consumes Layer-2 contracts:
- *   - selectors:  `CLIENT_VIEW_SELECTORS` (overlay, snackbar, rows)
- *   - routes:     `ROUTES.clientView(id)`, `ROUTES.clientPersonalData(id)`
+ *   - selectors:  `CLIENT_VIEW_SELECTORS` (overlay, snackbar, rows,
+ *                 status badge, edit menu item)
+ *   - routes:     `ROUTES.clientView(id)`, `ROUTES.clientEdit(id)`,
+ *                 `ROUTES.clientPersonalData(id)`
  *   - behavior:   `BEHAVIOR.overlayDismissNeeded`
  *
  * Role-based locators (`getByRole`) are intentionally retained because
@@ -63,6 +65,34 @@ export class ClientViewPage extends BasePage {
   }
 
   /**
+   * Returns the "Edit" menu item rendered inside the client actions
+   * menu (the entry that routes to `/clients/:id/edit`).
+   *
+   * Note: the menu must be opened first via `openActionsMenu()` since
+   * Angular Material renders menu items into a CDK overlay that is
+   * only present while the trigger is open. React's port renders the
+   * same logical control through a shadcn dropdown so the public
+   * accessor stays identical.
+   */
+  get editLink(): Locator {
+    return this.page.getByRole('menuitem', { name: CLIENT_VIEW_SELECTORS.editMenuItem });
+  }
+
+  /**
+   * Returns the status indicator rendered by `mifosx-account-header`.
+   *
+   * The visual element is a colour-coded dot whose CSS class is
+   * derived from `statusCode | statusLookup`; the tooltip carries the
+   * human-readable status (e.g. "Active", "Closed"). React's
+   * counterpart exposes the same logical badge via a `data-testid`
+   * (`[data-testid="client-status"]`) so spec assertions remain
+   * framework-agnostic when they read text rather than colour.
+   */
+  get statusBadge(): Locator {
+    return this.page.locator(CLIENT_VIEW_SELECTORS.statusBadge);
+  }
+
+  /**
    * Returns the personal data tab used to inspect post-action client fields.
    */
   get personalDataTab(): Locator {
@@ -81,6 +111,18 @@ export class ClientViewPage extends BasePage {
    */
   get overlayBackdrop(): Locator {
     return this.page.locator(CLIENT_VIEW_SELECTORS.overlayBackdrop);
+  }
+
+  /**
+   * Returns a tab link in the client-view navigation by its accessible label.
+   *
+   * Tab labels mirror the route segments rendered in
+   * `clients-view.component.html` (e.g. "General", "Personal Data",
+   * "Address", "Family Members", "Identities", "Documents", "Notes").
+   * @param name - The visible tab label to target
+   */
+  tab(name: string): Locator {
+    return this.page.getByRole(CLIENT_VIEW_SELECTORS.tabRole, { name });
   }
 
   /**
@@ -140,6 +182,39 @@ export class ClientViewPage extends BasePage {
     await this.openActionsSubmenu();
     await this.waitForVisible(this.actionMenuItem(name), 10000);
     await this.actionMenuItem(name).click();
+  }
+
+  /**
+   * Opens the client actions menu and clicks the "Edit" entry.
+   *
+   * Waits until the browser navigates to the edit route
+   * (`/clients/:id/edit`) before resolving.
+   */
+  async goToEdit(): Promise<void> {
+    await this.openActionsMenu();
+    await this.waitForVisible(this.editLink, 10000);
+    await Promise.all([
+      this.page.waitForURL(new RegExp(`/clients/${this.clientId}/edit(?:[/?#]|$)`), {
+        waitUntil: 'networkidle',
+        timeout: 30000
+      }),
+      this.editLink.click()
+    ]);
+  }
+
+  /**
+   * Activates a tab in the client-view navigation by its visible label.
+   *
+   * Mirrors the React port's API (where tabs are also addressed by
+   * accessible name) so specs can switch tabs without knowing the
+   * Angular `mat-tab-link` directive.
+   *
+   * @param name - The visible tab label to activate
+   */
+  async gotoTab(name: string): Promise<void> {
+    const tab = this.tab(name);
+    await this.waitForVisible(tab, 10000);
+    await tab.click();
   }
 
   /**

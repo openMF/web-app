@@ -11,8 +11,8 @@ import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable, forkJoin, from } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, forkJoin, of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 /** Custom Services */
 import { ClientsService } from '../clients.service';
@@ -30,20 +30,22 @@ export class ClientIdentitiesResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const clientId = route.parent.paramMap.get('clientId');
-    let identitiesData: any;
     return this.clientsService.getClientIdentifiers(clientId).pipe(
-      map((identities: any) => {
-        identitiesData = identities;
-        const docObservable: Observable<any>[] = [];
-        identities.forEach((identity: any) => {
-          docObservable.push(this.clientsService.getClientIdentificationDocuments(identity.id));
-        });
-        forkJoin(docObservable).subscribe((documents) => {
-          documents.forEach((document, index) => {
-            identitiesData[index].documents = document;
-          });
-        });
-        return identitiesData;
+      switchMap((identities: any[]) => {
+        if (!identities?.length) {
+          return of(identities || []);
+        }
+
+        return forkJoin(
+          identities.map((identity: any) =>
+            this.clientsService.getClientIdentificationDocuments(identity.id).pipe(
+              map((documents: any[]) => ({
+                ...identity,
+                documents: documents || []
+              }))
+            )
+          )
+        );
       })
     );
   }

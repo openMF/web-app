@@ -20,16 +20,25 @@
     <mat-menu #createMenu="matMenu">
       <button
         mat-menu-item
-        [routerLink]="['create']"
+        [routerLink]="['create/classic']"
         [queryParams]="{ productType: 'loan' }"
         *mifosxHasPermission="'CREATE_LOANPRODUCT'"
       >
         <fa-icon icon="calendar-alt" class="m-r-10"></fa-icon>
-        {{ 'labels.buttons.Create Loan Product' | translate }}
+        {{ 'labels.buttons.Create Loan Product (Classic)' | translate }}
       </button>
       <button
         mat-menu-item
         [routerLink]="['create']"
+        [queryParams]="{ productType: 'loan' }"
+        *mifosxHasPermission="'CREATE_LOANPRODUCT'"
+      >
+        <fa-icon icon="calendar-check" class="m-r-10"></fa-icon>
+        {{ 'labels.buttons.Create Loan Product (Convenient)' | translate }}
+      </button>
+      <button
+        mat-menu-item
+        [routerLink]="['create/classic']"
         [queryParams]="{ productType: 'working-capital' }"
         *mifosxHasPermission="'CREATE_LOANPRODUCT'"
       >

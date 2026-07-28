@@ -241,7 +241,7 @@
       @if (!loanProductTermsForm.value.isLinkedToFloatingInterestRates) {
         <div class="flex-fill layout-row-wrap gap-2percent responsive-column">
           <h4 class="mat-h4 flex-98">
-            {{ 'labels.inputs.Nominal interest rate' | translate }}
+            {{ 'labels.inputs.Annual interest rate' | translate }} (%)
             <i
               class="fas fa-question"
               matTooltip="{{
@@ -277,11 +277,11 @@
               [attr.disabled]="isZeroInterest()"
             />
             <mat-error *ngIf="loanProductTermsForm.get('interestRatePerPeriod')?.hasError('required')">
-              {{ 'labels.catalogs.Default' | translate }} {{ 'labels.inputs.Nominal interest rate' | translate }}
+              {{ 'labels.catalogs.Default' | translate }} {{ 'labels.inputs.Annual interest rate' | translate }}
               <span class="text-danger">{{ 'labels.commons.is required' | translate }}</span>
             </mat-error>
             <mat-error *ngIf="loanProductTermsForm.get('interestRatePerPeriod')?.hasError('min')">
-              {{ 'labels.catalogs.Default' | translate }} {{ 'labels.inputs.Nominal interest rate' | translate }}
+              {{ 'labels.catalogs.Default' | translate }} {{ 'labels.inputs.Annual interest rate' | translate }}
               {{ 'labels.commons.is' | translate }}
               <strong>0</strong>
             </mat-error>
@@ -321,7 +321,7 @@
               }
             </mat-select>
             <mat-error>
-              {{ 'labels.inputs.Nominal interest rate frequency' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Annual interest rate frequency' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -550,7 +550,7 @@
               <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
             </table>
           }
-          <h4 class="mat-h4 flex-73">{{ 'labels.inputs.Nominal interest rate by loan cycle' | translate }}</h4>
+          <h4 class="mat-h4 flex-73">{{ 'labels.inputs.Annual interest rate by loan cycle' | translate }}</h4>
           <div class="flex-23">
             <button
               type="button"

@@ -135,7 +135,10 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
         } else if (this.formType === 'FeesIncome') {
           const addData: AccountingMappingDTO = {
             value: this.getValueData(response.data.value.chargeId),
-            glAccount: this.getGlAccountData(response.data.value.incomeAccountId)
+            glAccount: this.getGlAccountDataFromList(
+              response.data.value.incomeAccountId,
+              this.incomeAndLiabilityAccountData
+            )
           };
           this.addTableData(addData);
         } else if (this.formType === 'PenaltyIncome') {
@@ -216,12 +219,15 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
         } else if (this.formType === 'FeesIncome') {
           updateData = {
             value: this.getValueData(response.data.value.chargeId),
-            glAccount: this.getGlAccountData(response.data.value.incomeAccountId)
+            glAccount: this.getGlAccountDataFromList(
+              response.data.value.incomeAccountId,
+              this.incomeAndLiabilityAccountData
+            )
           };
         } else if (this.formType === 'PenaltyIncome') {
           updateData = {
             value: this.getValueData(response.data.value.chargeId),
-            glAccount: this.getGlAccountData(response.data.value.incomeAccountId)
+            glAccount: this.getGlAccountDataFromList(response.data.value.incomeAccountId, this.incomeAccountData)
           };
         }
         if (updateData) {
@@ -308,7 +314,7 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
       new SelectBase({
         controlName: 'chargeId',
         label: 'Fees',
-        value: values ? values.chargeId : this.chargeData[0].id,
+        value: values ? values.value.id : this.chargeData[0].id,
         options: { label: 'name', value: 'id', data: this.chargeData },
         required: true,
         order: 1
@@ -316,7 +322,7 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
       new SelectBase({
         controlName: 'incomeAccountId',
         label: 'Income Account',
-        value: values ? values.incomeAccountId : this.incomeAndLiabilityAccountData[0].id,
+        value: values ? values.glAccount.id : this.incomeAndLiabilityAccountData[0].id,
         options: { label: 'name', value: 'id', data: this.incomeAndLiabilityAccountData },
         required: true,
         order: 2
@@ -330,7 +336,7 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
       new SelectBase({
         controlName: 'chargeId',
         label: 'Penalty',
-        value: values ? values.chargeId : this.penaltyData[0].id,
+        value: values ? values.value.id : this.penaltyData[0].id,
         options: { label: 'name', value: 'id', data: this.penaltyData },
         required: true,
         order: 1
@@ -338,7 +344,7 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
       new SelectBase({
         controlName: 'incomeAccountId',
         label: 'Income Account',
-        value: values ? values.incomeAccountId : this.incomeAccountData[0].id,
+        value: values ? values.glAccount.id : this.incomeAccountData[0].id,
         options: { label: 'name', value: 'id', data: this.incomeAccountData },
         required: true,
         order: 2
@@ -355,7 +361,7 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
     const formfields: FormfieldBase[] = [
       new SelectBase({
         controlName: 'reasonCodeValueId',
-        label: this.formType === 'ChargeOffReasonExpense' ? 'Charge-off Reason' : 'Write-off reason',
+        label: this.formType === 'ChargeOffReasonExpense' ? 'Charge-off reason' : 'Write-off reason',
         value: values ? values.value.id : reasonOptions[0].id,
         options: { label: 'name', value: 'id', data: reasonOptions },
         required: true,
@@ -418,6 +424,14 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
           return glAccount;
         }
       }
+    }
+    return null;
+  }
+
+  getGlAccountDataFromList(valueId: number, glAccountData: any[]): GLAccount | null {
+    const glAccount = glAccountData.find((i: GLAccount) => i.id === valueId);
+    if (glAccount) {
+      return glAccount;
     }
     return null;
   }

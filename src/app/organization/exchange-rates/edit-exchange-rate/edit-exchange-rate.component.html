@@ -1,0 +1,219 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container">
+  <mat-card>
+    <form [formGroup]="exchangeRateForm" (ngSubmit)="submit()">
+      <mat-card-content>
+        <div class="exchange-rate-form-grid">
+          <div class="exchange-rate-field">
+            <label class="field-label">{{ 'labels.inputs.Source Currency' | translate }}</label>
+            <mat-form-field appearance="outline">
+              <mat-select
+                required
+                formControlName="sourceCurrency"
+                [attr.aria-label]="'labels.inputs.Source Currency' | translate"
+              >
+                @for (currency of currencyOptions; track currency.code) {
+                  <mat-option [value]="currency.code"> ({{ currency.code }}) {{ currency.name }} </mat-option>
+                }
+              </mat-select>
+              @if (exchangeRateForm.controls.sourceCurrency.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Source Currency' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="exchange-rate-field">
+            <label class="field-label">{{ 'labels.inputs.Target Currency' | translate }}</label>
+            <mat-form-field appearance="outline">
+              <mat-select
+                required
+                formControlName="targetCurrency"
+                [attr.aria-label]="'labels.inputs.Target Currency' | translate"
+              >
+                @for (currency of currencyOptions; track currency.code) {
+                  <mat-option [value]="currency.code"> ({{ currency.code }}) {{ currency.name }} </mat-option>
+                }
+              </mat-select>
+              @if (exchangeRateForm.controls.targetCurrency.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Target Currency' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          @if (exchangeRateForm.hasError('sameCurrencies')) {
+            <mat-error class="form-error">
+              {{ 'labels.text.Source and target currencies cannot be identical' | translate }}
+            </mat-error>
+          }
+
+          <div class="exchange-rate-field">
+            <label class="field-label">{{ 'labels.inputs.Buy Indicator' | translate }}</label>
+            <mat-form-field appearance="outline">
+              <input
+                required
+                matInput
+                formControlName="buyIndicatorCode"
+                [attr.aria-label]="'labels.inputs.Buy Indicator' | translate"
+              />
+              @if (exchangeRateForm.controls.buyIndicatorCode.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Buy Indicator' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="exchange-rate-field">
+            <label class="field-label">{{ 'labels.inputs.Sell Indicator' | translate }}</label>
+            <mat-form-field appearance="outline">
+              <input
+                required
+                matInput
+                formControlName="sellIndicatorCode"
+                [attr.aria-label]="'labels.inputs.Sell Indicator' | translate"
+              />
+              @if (exchangeRateForm.controls.sellIndicatorCode.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Sell Indicator' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="exchange-rate-field">
+            <label class="field-label">{{ 'labels.inputs.Buy Rate' | translate }}</label>
+            <mat-form-field appearance="outline">
+              <input
+                required
+                matInput
+                type="number"
+                min="0.0000001"
+                step="any"
+                formControlName="buyRate"
+                [attr.aria-label]="'labels.inputs.Buy Rate' | translate"
+              />
+              @if (exchangeRateForm.controls.buyRate.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Buy Rate' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+              @if (exchangeRateForm.controls.buyRate.hasError('min')) {
+                <mat-error>{{
+                  'errors.validation.mustBePositive' | translate: { field: ('labels.inputs.Buy Rate' | translate) }
+                }}</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="exchange-rate-field">
+            <label class="field-label">{{ 'labels.inputs.Sell Rate' | translate }}</label>
+            <mat-form-field appearance="outline">
+              <input
+                required
+                matInput
+                type="number"
+                min="0.0000001"
+                step="any"
+                formControlName="sellRate"
+                [attr.aria-label]="'labels.inputs.Sell Rate' | translate"
+              />
+              @if (exchangeRateForm.controls.sellRate.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Sell Rate' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+              @if (exchangeRateForm.controls.sellRate.hasError('min')) {
+                <mat-error>{{
+                  'errors.validation.mustBePositive' | translate: { field: ('labels.inputs.Sell Rate' | translate) }
+                }}</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="exchange-rate-field">
+            <label class="field-label">{{ 'labels.inputs.Reference Rate' | translate }}</label>
+            <mat-form-field appearance="outline">
+              <input
+                required
+                matInput
+                type="number"
+                min="0.0000001"
+                step="any"
+                formControlName="referenceRate"
+                [attr.aria-label]="'labels.inputs.Reference Rate' | translate"
+              />
+              @if (exchangeRateForm.controls.referenceRate.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Reference Rate' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+              @if (exchangeRateForm.controls.referenceRate.hasError('min')) {
+                <mat-error>{{
+                  'errors.validation.mustBePositive'
+                    | translate: { field: ('labels.inputs.Reference Rate' | translate) }
+                }}</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="exchange-rate-field">
+            <label class="field-label">{{ 'labels.inputs.Rate Date' | translate }}</label>
+            <mat-form-field appearance="outline">
+              <input
+                required
+                matInput
+                [matDatepicker]="rateDatePicker"
+                formControlName="rateDate"
+                [attr.aria-label]="'labels.inputs.Rate Date' | translate"
+              />
+              <mat-datepicker-toggle matSuffix [for]="rateDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #rateDatePicker></mat-datepicker>
+              @if (exchangeRateForm.controls.rateDate.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Rate Date' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <mat-checkbox labelPosition="before" formControlName="latest" class="status">
+            {{ 'labels.inputs.Latest' | translate }}
+          </mat-checkbox>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions class="layout-row align-center gap-5px responsive-column">
+        <button type="button" mat-raised-button [routerLink]="['../../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="submitting || !exchangeRateForm.valid"
+          *mifosxHasPermission="'UPDATE_EXCHANGERATE'"
+        >
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>

@@ -5,6 +5,17 @@
   License, v. 2.0. If a copy of the MPL was not distributed with this
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
+<!-- Business date: independent of variant -->
+@if (displayBackEndInfo && isBusinessDateDefined) {
+  <div class="business-date-field">
+    <span class="business-date-label">{{ 'labels.text.Current Business Date' | translate }}</span>
+    <span class="business-date-chip">
+      <span class="business-date-dot" aria-hidden="true"></span>
+      {{ businessDate | date: 'EEEE, MMMM dd, y' }}
+    </span>
+  </div>
+}
+
 @if (variant === 'compact') {
   <!-- Compact mode for Login -->
   <div class="footer-compact">
@@ -69,14 +80,6 @@
               {{ renderTime | date: 'dd MMMM yyyy HH:mm:ss' }}
             </td>
           </tr>
-          @if (isBusinessDateDefined) {
-            <tr>
-              <td class="footer-content">{{ 'labels.text.Current Business Date' | translate }}:</td>
-              <td class="right footer-content business-date">
-                <b>{{ businessDate | date: 'EEEE, MMMM dd, y' }}</b>
-              </td>
-            </tr>
-          }
         </table>
       </div>
     </div>

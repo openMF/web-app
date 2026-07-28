@@ -1,0 +1,27 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.address-location-map {
+  margin: 1rem 2%;
+
+  h4 {
+    margin: 0 0 0.5rem;
+  }
+}
+
+.map-container {
+  border: 1px solid #d8d8d8;
+  min-height: 240px;
+  width: 100%;
+}
+
+.map-error {
+  color: #666;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}

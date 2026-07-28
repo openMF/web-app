@@ -19,6 +19,12 @@ import { SettingsService } from 'app/settings/settings.service';
 import { DisbursementData } from './models/loan-account.model';
 import { PeriodPaymentRateChange } from './models/working-capital-loan-account.model';
 import { BreachSchedule } from './models/working-capital-loan-account.model';
+import {
+  WorkingCapitalBreachAction,
+  WorkingCapitalBreachActionRequest,
+  WorkingCapitalNearBreachActionRequest,
+  WorkingCapitalNearBreachActions
+} from './models/working-capital/working-capital-loan-account.model';
 
 /**
  * Loans service.
@@ -30,6 +36,39 @@ export class LoansService {
   private http = inject(HttpClient);
   private settingsService = inject(SettingsService);
   private dateUtils = inject(Dates);
+
+  /**
+   * Retrieves a single page of loans for the loans list screen.
+   *
+   * The Fineract `/loans` endpoint on this deployment does not honor server-side
+   * text search or the (removed) `sqlSearch` status filter, so the component loads
+   * the full set (search / status-filter / sort / paging all run on the client) —
+   * but it does so progressively, page by page, so the first rows render quickly
+   * instead of blocking on the whole dataset. See `LoansComponent`.
+   * @param {number} offset Row offset.
+   * @param {number} limit Page size.
+   * @returns {Observable<any>} A Fineract page (`{ pageItems, totalFilteredRecords }`).
+   */
+  getLoansPage(offset: number, limit: number): Observable<any> {
+    const httpParams = new HttpParams().set('offset', offset.toString()).set('limit', limit.toString());
+    return this.http.get('/loans', { params: httpParams });
+  }
+
+  /**
+   * Flat office list, used to populate the loans list office filter.
+   * @returns {Observable<any[]>}
+   */
+  getOffices(): Observable<any[]> {
+    return this.http.get<any[]>('/offices');
+  }
+
+  /**
+   * Loan product list (id/name), used to populate the loans list product filter.
+   * @returns {Observable<any[]>}
+   */
+  getLoanProducts(): Observable<any[]> {
+    return this.http.get<any[]>('/loanproducts');
+  }
 
   /**
    * @param {string} loanId loanId of the loan.
@@ -146,12 +185,28 @@ export class LoansService {
     return this.http.get(`/working-capital-loans/${loanId}/delinquency-range-schedule`);
   }
 
+  getBreachActions(loanId: string) {
+    return this.http.get(`/working-capital-loans/${loanId}/breach-actions`);
+  }
+
+  createBreachAction(loanId: string, payload: any) {
+    return this.http.post(`/working-capital-loans/${loanId}/breach-actions`, payload);
+  }
+
   getWorkingCapitalLoanAmortizationSchedule(loanId: string) {
     return this.http.get(`/working-capital-loans/${loanId}/amortization-schedule`);
   }
 
   getWorkingCapitalLoanBreachSchedule(loanId: string): Observable<BreachSchedule[]> {
     return this.http.get<BreachSchedule[]>(`/working-capital-loans/${loanId}/breach-schedule`);
+  }
+
+  getWorkingCapitalLoanNearBreachActions(loanId: string): Observable<WorkingCapitalNearBreachActions[]> {
+    return this.http.get<WorkingCapitalNearBreachActions[]>(`/working-capital-loans/${loanId}/near-breach-actions`);
+  }
+
+  getWorkingCapitalLoanBreachActions(loanId: string): Observable<WorkingCapitalBreachAction[]> {
+    return this.http.get<WorkingCapitalBreachAction[]>(`/working-capital-loans/${loanId}/breach-actions`);
   }
 
   /**
@@ -338,6 +393,29 @@ export class LoansService {
   getLoanDatatable(loanId: string, datatableName: string) {
     const httpParams = new HttpParams().set('genericResultSet', 'true');
     return this.http.get(`/datatables/${datatableName}/${loanId}`, { params: httpParams });
+  }
+
+  /**
+   * Reads one page of rows from a loan datatable via the advanced query API.
+   *
+   * The loans list uses this to show custom-table columns: one paged request per
+   * table covers every loan, instead of a `/datatables/{name}/{loanId}` call per row.
+   * Dates are requested in ISO format so parsing is independent of the UI locale.
+   * @param {string} datatableName Registered datatable name.
+   * @param {string[]} resultColumns Columns to fetch (must include the `loan_id` FK).
+   * @param {number} page Zero-based page number.
+   * @param {number} size Page size.
+   * @returns {Observable<any>} A Spring page (`{ content, last, ... }`).
+   */
+  queryLoanDatatableRows(datatableName: string, resultColumns: string[], page: number, size: number): Observable<any> {
+    return this.http.post(`/datatables/${datatableName}/query`, {
+      request: { resultColumns },
+      page,
+      size,
+      dateFormat: 'yyyy-MM-dd',
+      dateTimeFormat: 'yyyy-MM-dd HH:mm:ss',
+      locale: 'en'
+    });
   }
 
   /**
@@ -735,14 +813,22 @@ export class LoansService {
     return this.http.post('/loans?command=calculateLoanSchedule', payload);
   }
 
-  attachLoanOriginator(loanId: string, originatorId: string): Observable<any> {
+  attachLoanOriginator(
+    productType: 'loans' | 'working-capital-loans',
+    loanId: string,
+    originatorId: string
+  ): Observable<any> {
     const emptyBody = {};
-    return this.http.post(`/loans/${loanId}/originators/${originatorId}`, emptyBody);
+    return this.http.post(`/${productType}/${loanId}/originators/${originatorId}`, emptyBody);
   }
 
-  detachLoanOriginator(loanId: string, originatorId: string): Observable<any> {
+  detachLoanOriginator(
+    productType: 'loans' | 'working-capital-loans',
+    loanId: string,
+    originatorId: string
+  ): Observable<any> {
     const emptyBody = {};
-    return this.http.delete(`/loans/${loanId}/originators/${originatorId}`, emptyBody);
+    return this.http.delete(`/${productType}/${loanId}/originators/${originatorId}`, emptyBody);
   }
 
   /**
@@ -898,5 +984,19 @@ export class LoansService {
   getWorkingCapitalTransactions(loanId: string, page: number = 0, size: number = 100) {
     const httpParams = new HttpParams().set('page', page.toString()).set('size', size.toString());
     return this.http.get(`/working-capital-loans/${loanId}/transactions`, { params: httpParams });
+  }
+
+  /**
+   * Add a Working Capital Loan Near Breach Action
+   */
+  addWorkingCapitalNearBreachAction(loanId: string, payload: WorkingCapitalNearBreachActionRequest) {
+    return this.http.post(`/working-capital-loans/${loanId}/near-breach-actions`, payload);
+  }
+
+  /**
+   * Add a Working Capital Loan Breach Action
+   */
+  addWorkingCapitalBreachAction(loanId: string, payload: WorkingCapitalBreachActionRequest) {
+    return this.http.post(`/working-capital-loans/${loanId}/breach-actions`, payload);
   }
 }

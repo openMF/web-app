@@ -8,23 +8,21 @@
 
 /** Angular Imports */
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import {
-  MatCell,
-  MatCellDef,
-  MatColumnDef,
-  MatHeaderCell,
-  MatHeaderCellDef,
-  MatHeaderRow,
-  MatHeaderRowDef,
-  MatRow,
-  MatRowDef,
-  MatTable,
-  MatTableDataSource
-} from '@angular/material/table';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
 import { Currency } from 'app/shared/models/general.model';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { CurrencyPipe } from '@angular/common';
+
+interface SummaryColumn {
+  key: string;
+  label: string;
+}
+
+interface SummaryRow {
+  property: string;
+  isTotal?: boolean;
+  [amount: string]: any;
+}
 
 @Component({
   selector: 'mifosx-loan-summary-balance-component',
@@ -32,16 +30,6 @@ import { CurrencyPipe } from '@angular/common';
   styleUrl: './loan-summary-balance-component.component.scss',
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    MatTable,
-    MatColumnDef,
-    MatHeaderCellDef,
-    MatHeaderCell,
-    MatCellDef,
-    MatCell,
-    MatHeaderRowDef,
-    MatHeaderRow,
-    MatRowDef,
-    MatRow,
     CurrencyPipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -51,9 +39,8 @@ export class LoanSummaryBalanceComponentComponent extends LoanProductBaseCompone
   @Input() currency: Currency | null = null;
   @Input() hasChargeBack: boolean = false;
 
-  /** Data source for loans summary table. */
-  dataSource: MatTableDataSource<any>;
-  loanSummaryColumns: string[] = [];
+  columns: SummaryColumn[] = [];
+  rows: SummaryRow[] = [];
   currencyCode: string | null = null;
 
   constructor() {
@@ -72,19 +59,18 @@ export class LoanSummaryBalanceComponentComponent extends LoanProductBaseCompone
   }
 
   setLoanSummaryTableData(): void {
-    this.loanSummaryColumns = [
-      'Empty',
-      'Original',
-      'Paid',
-      'Waived',
-      'Written Off',
-      'Outstanding',
-      'Over Due'
+    this.columns = [
+      { key: 'original', label: 'Original' },
+      { key: 'paid', label: 'Paid' },
+      { key: 'waived', label: 'Waived' },
+      { key: 'writtenOff', label: 'Written Off' },
+      { key: 'outstanding', label: 'Outstanding' },
+      { key: 'overdue', label: 'Over Due' }
     ];
     if (this.hasChargeBack) {
-      this.loanSummaryColumns.splice(2, 0, 'Adjustments');
+      this.columns.splice(2, 0, { key: 'adjustment', label: 'Credit Adjustments' });
     }
-    this.dataSource = new MatTableDataSource([
+    this.rows = [
       {
         property: 'Principal',
         original: this.summary.totalPrincipal,
@@ -127,6 +113,7 @@ export class LoanSummaryBalanceComponentComponent extends LoanProductBaseCompone
       },
       {
         property: 'Total',
+        isTotal: true,
         original: this.summary.totalExpectedRepayment,
         adjustment: this.summary.principalAdjustments || 0,
         paid: this.summary.totalRepayment,
@@ -135,18 +122,16 @@ export class LoanSummaryBalanceComponentComponent extends LoanProductBaseCompone
         outstanding: this.summary.totalOutstanding,
         overdue: this.summary.totalOverdue
       }
-    ]);
+    ];
   }
 
   setWorkingCapitalSummaryTableData(): void {
-    this.loanSummaryColumns = [
-      'Empty',
-      'Original',
-      'Paid',
-      'Outstanding'
+    this.columns = [
+      { key: 'original', label: 'Original' },
+      { key: 'paid', label: 'Paid' },
+      { key: 'outstanding', label: 'Outstanding' }
     ];
-
-    this.dataSource = new MatTableDataSource([
+    this.rows = [
       {
         property: 'Principal',
         original: this.summary.principal,
@@ -155,22 +140,35 @@ export class LoanSummaryBalanceComponentComponent extends LoanProductBaseCompone
       },
       {
         property: 'Discount',
-        original: this.summary.totalDiscountFee,
-        paid: this.summary.discountPaid ?? 0,
-        outstanding: this.summary.discountOutstanding ?? 0
+        original: this.summary.totalDiscountFee || 0,
+        paid: this.summary.realizedIncomeFromDiscountFee || 0,
+        outstanding: this.summary.unrealizedIncomeFromDiscountFee || 0
+      },
+      {
+        property: 'Discount Fee Adjustment',
+        original: this.summary.totalDiscountFeeAdjustment || 0,
+        paid: 0,
+        outstanding: 0
       },
       {
         property: 'Fees',
-        original: this.summary.feeChargesCharged || 0,
-        paid: this.summary.feeChargesPaid || 0,
-        outstanding: this.summary.feeChargesOutstanding || 0
+        original: this.summary.fee || 0,
+        paid: this.summary.feePaid || 0,
+        outstanding: this.summary.feeOutstanding || 0
+      },
+      {
+        property: 'Penalties',
+        original: this.summary.penalty || 0,
+        paid: this.summary.penaltyPaid || 0,
+        outstanding: this.summary.penaltyOutstanding || 0
       },
       {
         property: 'Total',
+        isTotal: true,
         original: this.summary.totalExpectedRepayment || 0,
         paid: this.summary.totalRepayment || 0,
         outstanding: this.summary.totalOutstanding || 0
       }
-    ]);
+    ];
   }
 }

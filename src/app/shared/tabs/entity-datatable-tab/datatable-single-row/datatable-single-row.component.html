@@ -36,7 +36,7 @@
             @for (columnHeader of dataObject.columnHeaders; track columnHeader; let i = $index) {
               <div class="data-item" [ngClass]="setAttributeClass(columnHeader.columnName)">
                 <div class="data-label mat-body-strong">
-                  {{ datatables.toDisplayLabel(columnHeader.columnName) }}
+                  {{ formatDisplayLabel(columnHeader.columnName) }}
                 </div>
                 <div class="data-value">
                   @switch (getColumnType(columnHeader.columnDisplayType, columnHeader.columnType)) {

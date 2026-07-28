@@ -23,8 +23,11 @@ export interface AppRoutes {
   clients: string;
   clientCreate: string;
   clientView: (id: number) => string;
+  clientEdit: (id: number) => string;
   clientPersonalData: (id: number) => string;
   clientAction: (id: number, action: string) => string;
+  clientCharges: (id: number) => string;
+  clientChargesOverview: (id: number) => string;
   groups: string;
   groupCreate: string;
   groupView: (id: number) => string;
@@ -39,8 +42,11 @@ export const ROUTES: AppRoutes = {
   clients: '/#/clients',
   clientCreate: '/#/clients/create',
   clientView: (id) => `/#/clients/${id}/general`,
+  clientEdit: (id) => `/#/clients/${id}/edit`,
   clientPersonalData: (id) => `/#/clients/${id}/personal-data`,
   clientAction: (id, action) => `/#/clients/${id}/actions/${encodeURIComponent(action)}`,
+  clientCharges: (id) => `/#/clients/${id}/charges`,
+  clientChargesOverview: (id) => `/#/clients/${id}/charges/overview`,
   groups: '/#/groups',
   groupCreate: '/#/groups/create',
   groupView: (id) => `/#/groups/${id}/general`,
