@@ -84,8 +84,13 @@ export class GroupBulkClientRemovalComponent implements OnInit, AfterViewInit {
    * @param {('skipped' | 'removed')} type Type of clients to export.
    */
   downloadCsv(type: 'skipped' | 'removed') {
+    const escapeCsv = (value: string | number): string => {
+      const text = String(value);
+      const safeText = /^[=+\-@]/.test(text) ? `'${text}` : text;
+      return `"${safeText.replace(/"/g, '""')}"`;
+    };
     const rows = this.groups.map((g) =>
-      [g.group, g.site, type === 'removed' ? g.toRemove : g.toSkip].join(',')
+      [g.group, g.site, type === 'removed' ? g.toRemove : g.toSkip].map(escapeCsv).join(',')
     );
     const header = ['Group', 'Site', type === 'removed' ? 'To remove' : 'To skip'].join(',');
     const csv = [header, ...rows].join('\n');
