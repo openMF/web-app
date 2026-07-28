@@ -312,6 +312,32 @@ export class FineractApiClient {
   }
 
   /**
+   * Attempts a client command WITHOUT throwing on non-2xx responses.
+   *
+   * Sibling of {@link executeClientCommand} intended for negative-path
+   * tests (illegal state transitions, validation-failure matrices)
+   * where the error body IS the assertion target. Returns the raw
+   * status code and body text so callers can pattern-match against
+   * Fineract's `userMessageGlobalisationCode`, `developerMessage`,
+   * or free-form user message strings — the same payload the UI
+   * snackbar renders.
+   *
+   * @param clientId - The client id to operate on
+   * @param command - The Fineract client command name (e.g. 'activate')
+   * @param data - The command payload
+   * @returns Response envelope with ok flag, HTTP status, and raw body text
+   */
+  async tryExecuteClientCommand(
+    clientId: number,
+    command: string,
+    data: Record<string, unknown>
+  ): Promise<{ ok: boolean; status: number; bodyText: string }> {
+    const res = await this.ctx.post(`/fineract-provider/api/v1/clients/${clientId}?command=${command}`, { data });
+    const bodyText = await res.text();
+    return { ok: res.ok(), status: res.status(), bodyText };
+  }
+
+  /**
    * Executes a command against an existing loan resource.
    * @param loanId - The loan id to operate on
    * @param command - The Fineract loan command name
