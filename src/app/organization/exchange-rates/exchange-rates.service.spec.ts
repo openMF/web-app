@@ -11,17 +11,14 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { TestBed } from '@angular/core/testing';
 import { firstValueFrom } from 'rxjs';
 
-import { SettingsService } from 'app/settings/settings.service';
-
 import { CurrencyConversionPayload, ExchangeRatePayload } from './exchange-rate.model';
 import { ExchangeRatesService } from './exchange-rates.service';
 
 describe('ExchangeRatesService', () => {
   let service: ExchangeRatesService;
   let httpMock: HttpTestingController;
-  const baseServerUrl = 'http://localhost:4200/fineract-provider/api';
-  const exchangeRatesResource = `${baseServerUrl}/v2/exchange-rates`;
-  const currencyConversionResource = `${baseServerUrl}/exchange-rates`;
+  const exchangeRatesResource = '/v2/exchange-rates';
+  const currencyConversionResource = '/exchange-rates';
 
   const exchangeRatePayload: ExchangeRatePayload = {
     rateDate: '2026-01-15',
@@ -48,7 +45,6 @@ describe('ExchangeRatesService', () => {
     TestBed.configureTestingModule({
       providers: [
         ExchangeRatesService,
-        { provide: SettingsService, useValue: { baseServerUrl } },
         provideHttpClient(),
         provideHttpClientTesting()
       ]
@@ -75,6 +71,8 @@ describe('ExchangeRatesService', () => {
     const req = httpMock.expectOne(
       (request) => request.url === `${exchangeRatesResource}/latest` && request.method === 'GET'
     );
+    expect(req.request.url).toBe('/v2/exchange-rates/latest');
+    expect(req.request.url).not.toContain('/api/');
     expect(req.request.params.get('sourceCurrency')).toBe('USD');
     expect(req.request.params.get('targetCurrency')).toBe('KES');
     expect(req.request.params.get('latest')).toBe('true');
@@ -84,6 +82,28 @@ describe('ExchangeRatesService', () => {
     expect(await resultPromise).toEqual([
       { id: 1, sourceCurrency: 'USD', sourceCurrencyCode: 'USD', targetCurrency: 'KES', targetCurrencyCode: 'KES' }
     ]);
+  });
+
+  it('should return an empty exchange rate list when the latest endpoint is unavailable', async () => {
+    const resultPromise = firstValueFrom(service.getExchangeRates());
+
+    const req = httpMock.expectOne(
+      (request) => request.url === `${exchangeRatesResource}/latest` && request.method === 'GET'
+    );
+    req.flush({ message: 'Not Found' }, { status: 404, statusText: 'Not Found' });
+
+    expect(await resultPromise).toEqual([]);
+  });
+
+  it('should return an empty exchange rate list when the latest endpoint has no rates', async () => {
+    const resultPromise = firstValueFrom(service.getExchangeRates());
+
+    const req = httpMock.expectOne(
+      (request) => request.url === `${exchangeRatesResource}/latest` && request.method === 'GET'
+    );
+    req.flush({ error: 'No exchange rate available' });
+
+    expect(await resultPromise).toEqual([]);
   });
 
   it('should create an exchange rate', async () => {

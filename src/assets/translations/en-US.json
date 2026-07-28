@@ -1622,7 +1622,14 @@
       "Location Map": "Location Map",
       "Services": "Services",
       "Currency Conversion": "Currency Conversion",
-      "Schedules": "Schedules"
+      "Schedules": "Schedules",
+      "Create Transfer Fee": "Create Transfer Fee",
+      "View Transfer Fee": "View Transfer Fee",
+      "Edit Transfer Fee": "Edit Transfer Fee",
+      "Exchange Rate": "Exchange Rate",
+      "Create Exchange Rate": "Create Exchange Rate",
+      "View Exchange Rate": "View Exchange Rate",
+      "Edit Exchange Rate": "Edit Exchange Rate"
     },
     "inputs": {
       "Breach Actions": "Breach Actions",
@@ -3252,7 +3259,11 @@
       "Failed to load bureau data": "Failed to load bureau data",
       "Credit Profile": "Credit Profile",
       "Latitude": "Latitude",
-      "Longitude": "Longitude"
+      "Longitude": "Longitude",
+      "Cross Rate": "Cross Rate",
+      "Cross Rate via": "Cross Rate (via {{ currency }})",
+      "Administrator": "Administrator",
+      "Provider": "Provider"
     },
     "links": {
       "Community": "Community",
@@ -4380,7 +4391,17 @@
       "WorkingCapitalLoanChargeAdjustmentPreBusinessEvent": "Working Capital Loan Charge Adjustment Pre Business Event",
       "WorkingCapitalLoanChargeAdjustmentPostBusinessEvent": "Working Capital Loan Charge Adjustment Post Business Event",
       "SavingsAccountForceWithdrawalBusinessEvent": "Savings Account Force Withdrawal Business Event",
-      "Map tiles unavailable": "Map tiles unavailable"
+      "Map tiles unavailable": "Map tiles unavailable",
+      "Transfer Fees": "Transfer Fees",
+      "Create Transfer Fee": "Create Transfer Fee",
+      "View Transfer Fee": "View Transfer Fee",
+      "Edit Transfer Fee": "Edit Transfer Fee",
+      "Exchange Rate": "Exchange Rate",
+      "Exchange Rates": "Exchange Rates",
+      "Create Exchange Rate": "Create Exchange Rate",
+      "View Exchange Rate": "View Exchange Rate",
+      "Edit Exchange Rate": "Edit Exchange Rate",
+      "Currency conversion failed. Please try again.": "Currency conversion failed. Please try again."
     },
     "permissions": {
       "actions": {

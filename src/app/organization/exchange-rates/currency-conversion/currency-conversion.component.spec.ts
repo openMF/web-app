@@ -10,6 +10,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { of, throwError } from 'rxjs';
 
 import { Dates } from 'app/core/utils/dates';
@@ -55,7 +56,14 @@ describe('CurrencyConversionComponent', () => {
         { provide: ExchangeRatesService, useValue: exchangeRatesService },
         { provide: SettingsService, useValue: { dateFormat: 'yyyy-MM-dd', language: { code: 'en' } } },
         { provide: Dates, useValue: { formatDate: (date: Date) => date.toISOString().slice(0, 10) } },
-        { provide: ChangeDetectorRef, useValue: { markForCheck: jest.fn() } }
+        { provide: ChangeDetectorRef, useValue: { markForCheck: jest.fn() } },
+        {
+          provide: TranslateService,
+          useValue: {
+            instant: (key: string, params?: { currency: string }) =>
+              key === 'labels.inputs.Cross Rate via' ? `Cross Rate (via ${params?.currency})` : key.split('.').pop()
+          }
+        }
       ]
     });
 
