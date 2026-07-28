@@ -49,10 +49,10 @@ describe('TransferFeesService', () => {
     httpMock.verify();
   });
 
-  it('should fetch transfer fees from the Self-Service Plugin endpoint', async () => {
+  it('should fetch transfer fees from the Transfer Fees API endpoint', async () => {
     const resultPromise = firstValueFrom(service.getTransferFees());
 
-    const req = httpMock.expectOne((request) => request.url === '/v1/self/transfer-fees' && request.method === 'GET');
+    const req = httpMock.expectOne((request) => request.url === '/v2/transfer-fees' && request.method === 'GET');
     req.flush([{ id: 1 }]);
 
     expect(await resultPromise).toEqual([{ id: 1 }]);
@@ -61,7 +61,7 @@ describe('TransferFeesService', () => {
   it('should create a transfer fee with the supported payload', async () => {
     const resultPromise = firstValueFrom(service.createTransferFee(payload));
 
-    const req = httpMock.expectOne((request) => request.url === '/v1/self/transfer-fees' && request.method === 'POST');
+    const req = httpMock.expectOne((request) => request.url === '/v2/transfer-fees' && request.method === 'POST');
     expect(req.request.body).toEqual(payload);
     req.flush({ resourceId: 1 });
 
@@ -71,7 +71,7 @@ describe('TransferFeesService', () => {
   it('should update a transfer fee with the supported payload', async () => {
     const resultPromise = firstValueFrom(service.updateTransferFee(7, payload));
 
-    const req = httpMock.expectOne((request) => request.url === '/v1/self/transfer-fees/7' && request.method === 'PUT');
+    const req = httpMock.expectOne((request) => request.url === '/v2/transfer-fees/7' && request.method === 'PUT');
     expect(req.request.body).toEqual(payload);
     req.flush({ resourceId: 7 });
 
@@ -81,9 +81,7 @@ describe('TransferFeesService', () => {
   it('should delete a transfer fee by id', async () => {
     const resultPromise = firstValueFrom(service.deleteTransferFee(9));
 
-    const req = httpMock.expectOne(
-      (request) => request.url === '/v1/self/transfer-fees/9' && request.method === 'DELETE'
-    );
+    const req = httpMock.expectOne((request) => request.url === '/v2/transfer-fees/9' && request.method === 'DELETE');
     req.flush({ resourceId: 9 });
 
     expect(await resultPromise).toEqual({ resourceId: 9 });
@@ -92,7 +90,7 @@ describe('TransferFeesService', () => {
   it('should find one transfer fee from the supported list endpoint', async () => {
     const resultPromise = firstValueFrom(service.getTransferFee('2'));
 
-    const req = httpMock.expectOne((request) => request.url === '/v1/self/transfer-fees' && request.method === 'GET');
+    const req = httpMock.expectOne((request) => request.url === '/v2/transfer-fees' && request.method === 'GET');
     req.flush([
       { id: 1, transferType: 'PIN' },
       { id: 2, transferType: 'SINPE_MOVIL' }
@@ -104,7 +102,7 @@ describe('TransferFeesService', () => {
   it('should reject with a 404 when the transfer fee is not found in the list response', async () => {
     const resultPromise = firstValueFrom(service.getTransferFee(99));
 
-    const req = httpMock.expectOne((request) => request.url === '/v1/self/transfer-fees' && request.method === 'GET');
+    const req = httpMock.expectOne((request) => request.url === '/v2/transfer-fees' && request.method === 'GET');
     req.flush([{ id: 1, transferType: 'PIN' }]);
 
     await expect(resultPromise).rejects.toEqual(expect.objectContaining({ status: 404 }));
