@@ -20,7 +20,7 @@ describe('ExchangeRatesService', () => {
   let service: ExchangeRatesService;
   let httpMock: HttpTestingController;
   const baseServerUrl = 'http://localhost:4200/fineract-provider/api';
-  const exchangeRatesResource = `${baseServerUrl}/api/v2/exchange-rates`;
+  const exchangeRatesResource = `${baseServerUrl}/v2/exchange-rates`;
   const currencyConversionResource = `${baseServerUrl}/exchange-rates`;
 
   const exchangeRatePayload: ExchangeRatePayload = {
