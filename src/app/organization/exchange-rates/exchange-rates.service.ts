@@ -30,7 +30,7 @@ export class ExchangeRatesService {
   private settingsService = inject(SettingsService);
 
   private get exchangeRatesResource(): string {
-    return `${this.settingsService.baseServerUrl}/api/v2/exchange-rates`;
+    return `${this.settingsService.baseServerUrl}/v2/exchange-rates`;
   }
 
   private get currencyConversionResource(): string {
