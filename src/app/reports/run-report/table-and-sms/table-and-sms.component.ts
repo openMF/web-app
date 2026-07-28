@@ -34,6 +34,8 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { environment } from '../../../../environments/environment';
 import { ProgressBarService } from 'app/core/progress-bar/progress-bar.service';
+import { sanitizeCsvValue } from 'app/core/utils/csv.utils';
+import { downloadBlob } from 'app/core/utils/file-download.utils';
 
 import * as ExcelJS from 'exceljs';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -183,18 +185,19 @@ export class TableAndSmsComponent implements OnChanges {
     };
     const exportDialogRef = this.dialog.open(FormDialogComponent, { data });
     exportDialogRef.afterClosed().subscribe((response: { data: any }) => {
-      if (response.data) {
+      if (response?.data) {
         this.downloadCSV(response.data.value.fileName, response.data.value.delimiter);
       }
     });
   }
 
-  exportToXLS(): void {
+  async exportToXLS(): Promise<void> {
     const fileName = `${this.dataObject.report.name}.xlsx`;
+    // Sanitize all values to prevent formula injection in spreadsheet applications
     const data = this.csvData.map((object: any) => {
       const row: { [key: string]: any } = {};
       for (let i = 0; i < this.displayedColumns.length; i++) {
-        row[this.displayedColumns[i]] = object.row[i];
+        row[this.displayedColumns[i]] = sanitizeCsvValue(object.row[i]);
       }
       return row;
     });
@@ -203,22 +206,16 @@ export class TableAndSmsComponent implements OnChanges {
     const worksheet = workbook.addWorksheet('Report');
 
     // Add header row
-    worksheet.addRow(this.displayedColumns);
+    worksheet.addRow(this.displayedColumns.map(sanitizeCsvValue));
 
     // Add data rows
     data.forEach((rowObj: any) => {
       worksheet.addRow(this.displayedColumns.map((col) => rowObj[col]));
     });
 
-    workbook.xlsx.writeBuffer().then((buffer: any) => {
-      const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'filename.xlsx';
-      a.click();
-      URL.revokeObjectURL(url);
-    });
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    downloadBlob(blob, fileName);
   }
 
   /**
@@ -226,8 +223,8 @@ export class TableAndSmsComponent implements OnChanges {
    */
   downloadCSV(fileName: string, delimiter: string) {
     const headers = this.displayedColumns;
-    let csv = this.csvData.map((object: any) => object.row.join(delimiter));
-    csv.unshift(`data:text/csv;charset=utf-8,${headers.join(delimiter)}`);
+    let csv = this.csvData.map((object: any) => object.row.map((cell: any) => sanitizeCsvValue(cell)).join(delimiter));
+    csv.unshift(`data:text/csv;charset=utf-8,${headers.map(sanitizeCsvValue).join(delimiter)}`);
     csv = csv.join('\r\n');
     const link = document.createElement('a');
     link.setAttribute('href', encodeURI(csv));

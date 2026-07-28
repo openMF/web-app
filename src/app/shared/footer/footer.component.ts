@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { Alert } from 'app/core/alert/alert.model';
 import { AlertService } from 'app/core/alert/alert.service';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
@@ -45,6 +45,7 @@ export class FooterComponent implements OnInit, OnDestroy {
   private dateUtils = inject(Dates);
   private versionService = inject(VersionService);
   private translateService = inject(TranslateService);
+  private cdr = inject(ChangeDetectorRef);
 
   username: string = '';
   name: string = '';
@@ -175,6 +176,7 @@ export class FooterComponent implements OnInit, OnDestroy {
         this.dateUtils.formatDate(this.businessDate, SettingsService.businessDateFormat)
       );
       this.isBusinessDateDefined = true;
+      this.cdr.markForCheck();
     });
   }
 }

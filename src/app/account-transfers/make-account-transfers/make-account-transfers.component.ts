@@ -9,6 +9,7 @@
 /** Angular Imports */
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   OnInit,
   AfterViewInit,
@@ -81,6 +82,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
   private clientsService = inject(ClientsService);
   private translateService = inject(TranslateService);
   private destroyRef = inject(DestroyRef);
+  private cdr = inject(ChangeDetectorRef);
 
   /** Stepper reference */
   @ViewChild('transferStepper') transferStepper: MatStepper;
@@ -315,8 +317,13 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((value: any) => {
           if (typeof value === 'string' && value.length >= 2) {
+            const searchedValue = value;
             this.clientsService.getFilteredClients('displayName', 'ASC', true, value).subscribe((data: any) => {
+              if (this.beneficiaryForm.controls.toClientId.value !== searchedValue) {
+                return;
+              }
               this.clientsData = data.pageItems;
+              this.cdr.markForCheck();
             });
           } else if (typeof value === 'number') {
             this.changeEvent();

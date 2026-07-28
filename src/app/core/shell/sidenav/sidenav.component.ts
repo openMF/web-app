@@ -6,6 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+import { environment } from 'environments/environment';
 /** Angular Imports */
 import {
   ChangeDetectionStrategy,
@@ -69,6 +70,7 @@ import { catchError, finalize, of, take } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidenavComponent implements OnInit, AfterViewInit {
+  readonly cbIldEnabled = environment.cbIldEnabled;
   private router = inject(Router);
   dialog = inject(MatDialog);
   private authenticationService = inject(AuthenticationService);

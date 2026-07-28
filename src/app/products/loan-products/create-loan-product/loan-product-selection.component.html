@@ -1,0 +1,47 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="landing-page">
+  <section class="landing-page__hero">
+    <p class="landing-page__eyebrow">{{ 'labels.text.Products' | translate }}</p>
+    <h1>{{ 'labels.heading.Loan product creation' | translate }}</h1>
+    <p class="landing-page__copy">{{ 'labels.text.Select a product below' | translate }}</p>
+  </section>
+
+  <section class="product-grid">
+    <mat-card
+      *ngFor="let product of productCards"
+      class="product-card"
+      [class.product-card--active]="product.active"
+      [class.product-card--disabled]="product.disabled"
+    >
+      <div class="product-card__header">
+        <div class="product-card__icon">
+          <mat-icon aria-hidden="true">{{ product.icon }}</mat-icon>
+        </div>
+        <span class="product-chip" [class.product-chip--active]="product.active">
+          {{ (product.active ? 'labels.inputs.Active' : 'labels.text.Upcoming') | translate }}
+        </span>
+      </div>
+
+      <h3 class="product-card__title">{{ product.name }}</h3>
+      <p class="product-card__description">{{ product.description | translate }}</p>
+
+      <a
+        *ngIf="product.active"
+        mat-button
+        color="primary"
+        class="product-card__cta"
+        [routerLink]="['/products', 'loan-products', product.route]"
+        [queryParams]="{ productType: 'loan' }"
+      >
+        {{ 'labels.buttons.Create' | translate }}
+      </a>
+    </mat-card>
+  </section>
+</div>

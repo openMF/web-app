@@ -1,0 +1,171 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="wizard-shell">
+  <div class="wizard-shell__header">
+    <div>
+      <p class="landing-page__eyebrow">{{ profileLabel }}</p>
+      <h2>{{ 'labels.heading.Multi-step form' | translate }}</h2>
+    </div>
+  </div>
+
+  <mat-stepper orientation="vertical" [linear]="false" class="wizard-stepper">
+    <mat-step *ngFor="let step of visibleSteps; trackBy: trackByStepId; let i = index">
+      <ng-template matStepLabel>{{ step.title }}</ng-template>
+
+      <div [formGroup]="form" class="step-panel">
+        <ng-container *ngIf="step.kind === 'payment-allocation' && loanProductsTemplate">
+          <mifosx-loan-product-payment-strategy-step
+            [advancedPaymentAllocations]="advancedPaymentAllocations"
+            [advancedCreditAllocations]="loanProductService.isLoanProduct ? advancedCreditAllocations : []"
+            [advancedPaymentAllocationTransactionTypes]="loanProductsTemplate.advancedPaymentAllocationTransactionTypes"
+            [paymentAllocationOrderDefault]="loanProductsTemplate.advancedPaymentAllocationTypes"
+            [advancedCreditAllocationTransactionTypes]="loanProductsTemplate.creditAllocationTransactionTypes"
+            [creditAllocationOrderDefault]="loanProductsTemplate.creditAllocationAllocationTypes"
+            (setPaymentAllocation)="setPaymentAllocation($event)"
+            (setCreditAllocation)="setCreditAllocation($event)"
+          >
+          </mifosx-loan-product-payment-strategy-step>
+        </ng-container>
+
+        <ng-container *ngIf="step.kind === 'charges' && loanProductsTemplate">
+          <div class="wizard-charges">
+            <mifosx-loan-product-charges-step
+              [loanProductsTemplate]="loanProductsTemplate"
+              [currencyCode]="chargesCurrencyControl"
+              [multiDisburseLoan]="chargesMultiDisburseControl"
+            ></mifosx-loan-product-charges-step>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="step.kind !== 'payment-allocation' && step.kind !== 'charges' && step.kind !== 'review'">
+          <div class="field-grid">
+            <ng-container *ngFor="let field of visibleFields(step); trackBy: trackByFieldKey">
+              <mat-form-field *ngIf="field.type !== 'checkbox'" appearance="outline">
+                <mat-label>{{ field.label }}</mat-label>
+
+                <input
+                  *ngIf="field.type === 'text' || field.type === 'number'"
+                  matInput
+                  [type]="field.type"
+                  [formControlName]="field.key"
+                  [placeholder]="field.placeholder"
+                  [required]="!!field.required"
+                  [attr.maxlength]="field.maxLength || null"
+                />
+                <ng-container *ngIf="field.type === 'date'">
+                  <input
+                    matInput
+                    [matDatepicker]="picker"
+                    [formControlName]="field.key"
+                    [placeholder]="field.placeholder"
+                    [required]="!!field.required"
+                  />
+                  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </ng-container>
+                <textarea
+                  *ngIf="field.type === 'textarea'"
+                  matInput
+                  [formControlName]="field.key"
+                  [placeholder]="field.placeholder"
+                  [required]="!!field.required"
+                  rows="3"
+                ></textarea>
+                @if (field.key === 'interestRatePerPeriod') {
+                  <span matSuffix>%</span>
+                }
+
+                <mat-select *ngIf="field.type === 'select'" [formControlName]="field.key" [required]="!!field.required">
+                  <mat-option *ngFor="let option of field.options; trackBy: trackByOptionValue" [value]="option.value">
+                    {{ option.label }}
+                  </mat-option>
+                </mat-select>
+
+                <mat-hint *ngIf="field.hint">{{ field.hint }}</mat-hint>
+                <mat-error *ngIf="form.get(field.key)?.hasError('required')">
+                  {{ field.label }} <span>{{ 'labels.commons.is required' | translate }}</span>
+                </mat-error>
+              </mat-form-field>
+
+              <mat-checkbox *ngIf="field.type === 'checkbox'" [formControlName]="field.key">
+                {{ field.label }}
+              </mat-checkbox>
+            </ng-container>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="step.kind === 'review'">
+          <div class="review-banner">
+            <div>
+              <p class="review-banner__name">{{ reviewName || '—' }}</p>
+              <div class="review-banner__chips">
+                <span *ngIf="reviewShortName" class="review-chip">{{ reviewShortName }}</span>
+                <span class="review-chip">{{ formatValue('currencyCode', reviewCurrencyCode) }}</span>
+                <span *ngIf="reviewExternalId" class="review-chip"
+                  >{{ 'labels.inputs.Id' | translate }}: {{ reviewExternalId }}</span
+                >
+              </div>
+            </div>
+
+            <div class="review-metrics">
+              <div class="review-metric">
+                <span class="review-metric__label">{{ 'labels.inputs.Principal' | translate }}</span>
+                <span class="review-metric__value">{{ formattedPrincipal }}</span>
+              </div>
+              <div class="review-metric">
+                <span class="review-metric__label">{{ 'labels.inputs.Schedule' | translate }}</span>
+                <span class="review-metric__value">{{ scheduleLabel }}</span>
+              </div>
+              <div class="review-metric">
+                <span class="review-metric__label">{{ 'labels.inputs.Interest' | translate }}</span>
+                <span class="review-metric__value">{{ interestLabel }}</span>
+              </div>
+            </div>
+          </div>
+
+          <ng-container *ngFor="let group of reviewGroups; trackBy: trackBySectionTitle">
+            <div class="review-section">
+              <p class="review-section__title">{{ group.title }}</p>
+              <div class="review-row" *ngFor="let row of group.rows; trackBy: trackByRowLabel">
+                <span class="review-row__label">{{ row.label }}</span>
+                <span class="review-row__value">{{ row.display }}</span>
+              </div>
+            </div>
+          </ng-container>
+
+          <div class="review-defaults-pill">
+            <div>
+              <p class="review-defaults-pill__title">
+                {{ 'labels.text.Template defaults are preloaded' | translate }}
+              </p>
+              <p class="review-defaults-pill__sub">
+                {{
+                  'labels.text.Hidden variables and predefined values are included in the final payload automatically.'
+                    | translate
+                }}
+              </p>
+            </div>
+          </div>
+        </ng-container>
+
+        <div class="step-actions">
+          <button mat-stroked-button matStepperPrevious *ngIf="i > 0">
+            {{ 'labels.buttons.Back' | translate }}
+          </button>
+          <button mat-raised-button color="primary" matStepperNext *ngIf="i < visibleSteps.length - 1">
+            {{ 'labels.buttons.Next' | translate }}
+          </button>
+          <button mat-raised-button color="primary" *ngIf="i === visibleSteps.length - 1" (click)="submit()">
+            {{ 'labels.buttons.Create Loan Product' | translate }}
+          </button>
+        </div>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</div>

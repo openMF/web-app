@@ -10,6 +10,8 @@ import { APIRequestContext, APIResponse, request } from '@playwright/test';
 
 export class FineractApiClient {
   private static readonly CLIENT_CLOSURE_REASON_CODE_NAME = 'ClientClosureReason';
+  private static readonly CLIENT_REJECT_REASON_CODE_NAME = 'ClientRejectReason';
+  private static readonly CLIENT_WITHDRAW_REASON_CODE_NAME = 'ClientWithdrawReason';
   private static readonly DEFAULT_DATE_FORMAT = 'dd MMMM yyyy';
   private static readonly DEFAULT_LOCALE = 'en';
   private static readonly CREATE_RACE_RETRY_DELAY_MS = 250;
@@ -117,6 +119,93 @@ export class FineractApiClient {
   async getClient(clientId: number): Promise<any> {
     const res = await this.ctx.get(`/fineract-provider/api/v1/clients/${clientId}`);
     return this.validateResponse(res, 'getClient');
+  }
+
+  /**
+   * Fetches the client creation template from Fineract, optionally scoped to an office.
+   * @param officeId - Optional office id to scope the template
+   * @returns The client template payload
+   */
+  async getClientTemplate(officeId?: number): Promise<any> {
+    const url = officeId
+      ? `/fineract-provider/api/v1/clients/template?officeId=${officeId}`
+      : '/fineract-provider/api/v1/clients/template';
+    const res = await this.ctx.get(url);
+    return this.validateResponse(res, 'getClientTemplate');
+  }
+
+  /**
+   * Deletes a client by id. Fineract only allows hard-delete for clients
+   * that are still in pending state with no associated accounts — the
+   * factories in `playwright/factories/client.factory.ts` always create
+   * pending clients precisely so the cleanup-guard teardown can succeed.
+   * @param clientId - The client id to delete
+   * @returns The Fineract delete-client response payload
+   */
+  async deleteClient(clientId: number): Promise<any> {
+    const res = await this.ctx.delete(`/fineract-provider/api/v1/clients/${clientId}`);
+    return this.validateResponse(res, 'deleteClient');
+  }
+
+  /**
+   * Creates a group using the supplied request payload.
+   * @param data - The group creation payload
+   * @returns The Fineract create-group response payload
+   */
+  async createGroup(data: Record<string, unknown>): Promise<any> {
+    const res = await this.ctx.post('/fineract-provider/api/v1/groups', { data });
+    return this.validateResponse(res, 'createGroup');
+  }
+
+  /**
+   * Fetches a group record by id.
+   * @param groupId - The group id to fetch
+   * @returns The requested group payload
+   */
+  async getGroup(groupId: number): Promise<any> {
+    const res = await this.ctx.get(`/fineract-provider/api/v1/groups/${groupId}`);
+    return this.validateResponse(res, 'getGroup');
+  }
+
+  /**
+   * Deletes a group by id. Only pending groups with no member clients
+   * are accepted by Fineract for hard-delete.
+   * @param groupId - The group id to delete
+   * @returns The Fineract delete-group response payload
+   */
+  async deleteGroup(groupId: number): Promise<any> {
+    const res = await this.ctx.delete(`/fineract-provider/api/v1/groups/${groupId}`);
+    return this.validateResponse(res, 'deleteGroup');
+  }
+
+  /**
+   * Creates a user (application user / staff with login) using the supplied payload.
+   * @param data - The user creation payload
+   * @returns The Fineract create-user response payload
+   */
+  async createUser(data: Record<string, unknown>): Promise<any> {
+    const res = await this.ctx.post('/fineract-provider/api/v1/users', { data });
+    return this.validateResponse(res, 'createUser');
+  }
+
+  /**
+   * Fetches a user record by id.
+   * @param userId - The user id to fetch
+   * @returns The requested user payload
+   */
+  async getUser(userId: number): Promise<any> {
+    const res = await this.ctx.get(`/fineract-provider/api/v1/users/${userId}`);
+    return this.validateResponse(res, 'getUser');
+  }
+
+  /**
+   * Deletes a user by id.
+   * @param userId - The user id to delete
+   * @returns The Fineract delete-user response payload
+   */
+  async deleteUser(userId: number): Promise<any> {
+    const res = await this.ctx.delete(`/fineract-provider/api/v1/users/${userId}`);
+    return this.validateResponse(res, 'deleteUser');
   }
 
   /**
@@ -319,6 +408,28 @@ export class FineractApiClient {
   }
 
   /**
+   * Ensures a rejection reason exists for reject-client workflow tests.
+   * @param name - The rejection reason name to ensure exists
+   * @returns The existing or created rejection reason
+   */
+  async ensureClientRejectionReason(name = 'E2E Reject Client Reason'): Promise<any> {
+    return this.ensureCodeValue(FineractApiClient.CLIENT_REJECT_REASON_CODE_NAME, name, {
+      description: 'Seeded for Playwright reject-client test'
+    });
+  }
+
+  /**
+   * Ensures a withdrawal reason exists for withdraw-client workflow tests.
+   * @param name - The withdrawal reason name to ensure exists
+   * @returns The existing or created withdrawal reason
+   */
+  async ensureClientWithdrawalReason(name = 'E2E Withdraw Client Reason'): Promise<any> {
+    return this.ensureCodeValue(FineractApiClient.CLIENT_WITHDRAW_REASON_CODE_NAME, name, {
+      description: 'Seeded for Playwright withdraw-client test'
+    });
+  }
+
+  /**
    * Ensures a minimal loan product exists for active-loan negative-path tests.
    * @param options - Optional loan product identifiers to match or create
    * @returns The existing or created loan product
@@ -415,8 +526,39 @@ export class FineractApiClient {
   }
 
   /**
+   * Rejects a client with the provided reason and rejection date.
+   * @param clientId - The client id to reject
+   * @param rejectionReasonId - The rejection reason code value id
+   * @param rejectionDate - The rejection date in Fineract's expected format
+   * @returns The reject-client command response payload
+   */
+  async rejectClient(clientId: number, rejectionReasonId: number, rejectionDate: string): Promise<any> {
+    return this.executeClientCommand(clientId, 'reject', {
+      rejectionDate,
+      rejectionReasonId,
+      dateFormat: FineractApiClient.DEFAULT_DATE_FORMAT,
+      locale: FineractApiClient.DEFAULT_LOCALE
+    });
+  }
+
+  /**
+   * Withdraws a client application with the provided reason and withdrawal date.
+   * @param clientId - The client id to withdraw
+   * @param withdrawalReasonId - The withdrawal reason code value id
+   * @param withdrawalDate - The withdrawal date in Fineract's expected format
+   * @returns The withdraw-client command response payload
+   */
+  async withdrawClient(clientId: number, withdrawalReasonId: number, withdrawalDate: string): Promise<any> {
+    return this.executeClientCommand(clientId, 'withdraw', {
+      withdrawalDate,
+      withdrawalReasonId,
+      dateFormat: FineractApiClient.DEFAULT_DATE_FORMAT,
+      locale: FineractApiClient.DEFAULT_LOCALE
+    });
+  }
+
+  /**
    * Approves a loan on the provided date.
-   * @param loanId - The loan id to approve
    * @param approvedOnDate - The approval date in Fineract's expected format
    * @returns The approve-loan command response payload
    */
@@ -578,6 +720,37 @@ export class FineractApiClient {
       data: { ...overrides, clientId, productId }
     });
     return this.validateResponse(res, 'createSavingsAccount');
+  }
+
+  /**
+   * Deletes a client by id. Only works for clients in Pending state
+   * (Fineract rejects deletion of active/closed clients).
+   * @param clientId - The client id to delete
+   */
+  async deleteClient(clientId: number): Promise<void> {
+    const res = await this.ctx.delete(`/fineract-provider/api/v1/clients/${clientId}`);
+    await this.validateResponse(res, 'deleteClient');
+  }
+
+  /**
+   * Returns all family members for a client.
+   * @param clientId - The client id
+   */
+  async getClientFamilyMembers(clientId: number): Promise<any[]> {
+    const res = await this.ctx.get(`/fineract-provider/api/v1/clients/${clientId}/familymembers`);
+    const body = await this.validateResponse(res, 'getClientFamilyMembers');
+    return Array.isArray(body) ? body : (body?.clients ?? []);
+  }
+
+  /**
+   * Deletes a single family member record for a client.
+   * Must be called before deleteClient to avoid a 403 FK violation.
+   * @param clientId - The owning client id
+   * @param memberId - The family member id to delete
+   */
+  async deleteClientFamilyMember(clientId: number, memberId: number): Promise<void> {
+    const res = await this.ctx.delete(`/fineract-provider/api/v1/clients/${clientId}/familymembers/${memberId}`);
+    await this.validateResponse(res, 'deleteClientFamilyMember');
   }
 
   /**

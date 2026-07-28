@@ -37,13 +37,17 @@
     <ng-container matColumnDef="originatorType">
       <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Originator Type' | translate }}</th>
       <td mat-cell *matCellDef="let item">
-        {{ item.originatorType.name }}
+        @if (item.originatorType) {
+          {{ item.originatorType.name }}
+        }
       </td>
     </ng-container>
     <ng-container matColumnDef="channelType">
       <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Channel Type' | translate }}</th>
       <td mat-cell *matCellDef="let item">
-        {{ item.channelType.name }}
+        @if (item.channelType) {
+          {{ item.channelType.name }}
+        }
       </td>
     </ng-container>
     <ng-container matColumnDef="actions">

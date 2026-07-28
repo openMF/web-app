@@ -44,6 +44,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { AttachOriginatorComponent } from './attach-originator/attach-originator.component';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
 import { UpdateDiscountComponent } from './update-discount/update-discount.component';
+import { NearBreachConfigComponent } from '../working-capital/loan-account-actions/near-breach-config/near-breach-config.component';
+import { BreachConfigComponent } from '../working-capital/loan-account-actions/breach-config/breach-config.component';
 
 /**
  * Loan Account Actions component.
@@ -85,7 +87,9 @@ import { UpdateDiscountComponent } from './update-discount/update-discount.compo
     AddInterestPauseComponent,
     UndoWriteOffComponent,
     AttachOriginatorComponent,
-    UpdateDiscountComponent
+    UpdateDiscountComponent,
+    NearBreachConfigComponent,
+    BreachConfigComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -140,6 +144,8 @@ export class LoanAccountActionsComponent {
     'Undo Write-off': boolean;
     'Attach Loan Originator': boolean;
     'Discount Fee': boolean;
+    'Update Near Breach': boolean;
+    'Update Breach': boolean;
   } = {
     Close: false,
     'Undo Approval': false,
@@ -181,7 +187,9 @@ export class LoanAccountActionsComponent {
     'Buy Down Fee': false,
     'Undo Write-off': false,
     'Attach Loan Originator': false,
-    'Discount Fee': false
+    'Discount Fee': false,
+    'Update Near Breach': false,
+    'Update Breach': false
   };
 
   actionButtonData: any;

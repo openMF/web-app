@@ -24,6 +24,8 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { YesnoPipe } from '../../../pipes/yesno.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LegalFormId } from 'app/clients/models/legal-form.enum';
+import { hasCoordinateValue } from 'app/clients/utils/address-coordinate.util';
+import { environment } from 'environments/environment';
 
 /**
  * Client Preview Step Component
@@ -50,6 +52,12 @@ import { LegalFormId } from 'app/clients/models/legal-form.enum';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClientPreviewStepComponent {
+  readonly hasCoordinateValue = hasCoordinateValue;
+
+  get clientAddressLocationEnabled(): boolean {
+    return environment.enableClientAddressLocation;
+  }
+
   /** Client Address field configuration */
   @Input() clientAddressFieldConfig: any;
   /** Client Template */

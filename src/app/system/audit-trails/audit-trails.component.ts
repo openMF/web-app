@@ -16,6 +16,9 @@ import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 /** Custom Data Source */
 import { AuditTrailsDataSource } from './audit-trail.datasource';
 
+/** Custom Utils */
+import { sanitizeCsvValue } from 'app/core/utils/csv.utils';
+
 /** Custom Services */
 import { SystemService } from '../system.service';
 import { SettingsService } from 'app/settings/settings.service';
@@ -530,7 +533,6 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    */
   downloadCSV() {
     const dateFormat = this.settingsService.dateFormat;
-    const replacer = (key: any, value: any) => (value === undefined ? '' : value);
     const header = [
       'ID',
       'Resource ID',
@@ -562,13 +564,23 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
       .subscribe((response: any) => {
         if (response !== undefined) {
           let csv = response.pageItems.map((row: any) =>
-            headerCode.map((fieldName) =>
-              (fieldName === 'madeOnDate' || fieldName === 'checkedOnDate') &&
-              row[fieldName] != null &&
-              row[fieldName] !== ''
-                ? JSON.stringify(this.dateUtils.formatDate(row[fieldName], 'yyyy-MM-ddTHH:mm:ssZ'))
-                : JSON.stringify(row[fieldName], replacer)
-            )
+            headerCode.map((fieldName) => {
+              // Resolve the raw string value first, THEN sanitize before JSON.stringify wraps
+              // it in double-quotes for CSV quoting. Sanitizing the JSON.stringify output would
+              // be ineffective because the leading " masks formula-trigger characters from the
+              // sanitizer, and Excel strips those outer quotes when parsing the CSV cell.
+              let rawValue: string;
+              if (
+                (fieldName === 'madeOnDate' || fieldName === 'checkedOnDate') &&
+                row[fieldName] != null &&
+                row[fieldName] !== ''
+              ) {
+                rawValue = this.dateUtils.formatDate(row[fieldName], 'yyyy-MM-ddTHH:mm:ssZ');
+              } else {
+                rawValue = row[fieldName] == null ? '' : String(row[fieldName]);
+              }
+              return JSON.stringify(sanitizeCsvValue(rawValue));
+            })
           );
           csv.unshift(`data:text/csv;charset=utf-8,${header.join()}`);
           csv = csv.join('\r\n');

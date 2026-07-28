@@ -6,27 +6,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+@use 'assets/styles/redesign-tokens' as rt;
+
 /* ── Design tokens ───────────────────────────────────────────── */
 :host {
-  --ch-blue-700: #1565c0;
-  --ch-blue-600: #1976d2;
-  --ch-blue-100: #bbdefb;
-  --ch-blue-50: #e3f2fd;
-  --ch-blue-20: #f0f7ff;
-  --ch-surface: #fff;
-  --ch-surface-alt: #f4f7fb;
-  --ch-surface-h: #ebf2fa;
-  --ch-border: #dde5f0;
-  --ch-text-1: #0d1b2a;
-  --ch-text-2: #4a6785;
-  --ch-text-3: #8fa5bc;
-  --ch-paid: #2e7d32;
-  --ch-paid-bg: #e8f5e9;
-  --ch-partial: #e65100;
-  --ch-partial-bg: #fff3e0;
-  --ch-alert: #c62828;
-  --ch-alert-bg: #ffebee;
-  --ch-zero: #b0bec5;
+  @include rt.ch-tokens;
 
   font-family: 'DM Sans', system-ui, sans-serif;
   display: block;
@@ -34,25 +18,7 @@
 
 /* ── Dark mode token overrides ───────────────────────────────── */
 :host-context(.dark-theme) {
-  --ch-blue-700: #5b9bd5;
-  --ch-blue-600: #7ab3e0;
-  --ch-blue-100: #1a3a60;
-  --ch-blue-50: #0a2040;
-  --ch-blue-20: #0d1f35;
-  --ch-surface: #1a2535;
-  --ch-surface-alt: #101d2d;
-  --ch-surface-h: #132032;
-  --ch-border: #1e3050;
-  --ch-text-1: #e2ebf6;
-  --ch-text-2: #8baecf;
-  --ch-text-3: #6a8fad;
-  --ch-paid: #66bb6a;
-  --ch-paid-bg: #172b1a;
-  --ch-partial: #ffa726;
-  --ch-partial-bg: #281c0b;
-  --ch-alert: #ef9a9a;
-  --ch-alert-bg: #2b1212;
-  --ch-zero: #6a8fad;
+  @include rt.ch-dark-tokens;
 }
 
 /* ── Container ───────────────────────────────────────────────── */

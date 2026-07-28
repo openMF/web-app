@@ -117,7 +117,8 @@ export class AddFamilyMemberComponent implements OnInit {
       ],
       qualification: [''],
       age: [
-        { value: '', disabled: true }],
+        { value: '', disabled: true }
+      ],
       isDependent: [''],
       relationshipId: [
         '',

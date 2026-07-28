@@ -16,6 +16,7 @@ import { Route } from '../core/route/route.service';
 /** Custom Components */
 import { HomeComponent } from './home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ReportingDashboardComponent } from './reporting-dashboard/reporting-dashboard.component';
 
 /** Custom Resolvers */
 import { OfficesResolver } from '../accounting/common-resolvers/offices.resolver';
@@ -42,6 +43,11 @@ const routes: Routes = [
         offices: OfficesResolver,
         products: LoanProductsResolver
       }
+    },
+    {
+      path: 'reporting-dashboard',
+      component: ReportingDashboardComponent,
+      data: { title: 'Reporting Dashboard', breadcrumb: 'Reporting Dashboard' }
     }
   ])
 ];

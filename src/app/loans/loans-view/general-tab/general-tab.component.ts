@@ -9,16 +9,7 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
-import {
-  MatTableDataSource,
-  MatTable,
-  MatColumnDef,
-  MatCellDef,
-  MatCell,
-  MatRowDef,
-  MatRow
-} from '@angular/material/table';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, NgClass } from '@angular/common';
 import { ExternalIdentifierComponent } from '../../../shared/external-identifier/external-identifier.component';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
@@ -33,12 +24,7 @@ import { LoanSummaryBalanceComponentComponent } from './loan-summary-balance-com
   styleUrls: ['./general-tab.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    MatTable,
-    MatColumnDef,
-    MatCellDef,
-    MatCell,
-    MatRowDef,
-    MatRow,
+    NgClass,
     ExternalIdentifierComponent,
     CurrencyPipe,
     DateFormatPipe,
@@ -55,16 +41,7 @@ export class GeneralTabComponent extends LoanProductBaseComponent implements OnI
   currencyCode: string | null = null;
   loanDetails: any;
   status: any;
-
-  loanDetailsColumns: string[] = [
-    'Key',
-    'Value'
-  ];
-  loanDetailsTableData: { key: string; value?: string }[] = [];
   hasChargeBack: boolean = false;
-
-  /** Data source for loans details table. */
-  detailsDataSource: MatTableDataSource<any>;
 
   constructor() {
     super();
@@ -84,91 +61,31 @@ export class GeneralTabComponent extends LoanProductBaseComponent implements OnI
   }
 
   ngOnInit() {
-    this.status = this.loanDetails.value;
-    if (this.loanDetails.summary) {
-      this.setloanDetailsTableData();
-    } else {
-      this.setloanNonDetailsTableData();
-    }
+    this.status = this.loanDetails.status?.value;
   }
 
-  setloanDetailsTableData() {
-    this.loanDetailsTableData = [
-      {
-        key: 'Product Type'
-      },
-      {
-        key: 'Product Name'
-      },
-      {
-        key: 'Status'
-      },
-      {
-        key: 'Disbursement Date'
-      },
-      {
-        key: 'Currency'
-      },
-      {
-        key: 'External Id'
-      },
-      {
-        key: 'Proposed Amount',
-        value: this.loanDetails.proposedPrincipal
-      },
-      {
-        key: 'Approved Amount',
-        value: this.loanDetails.approvedPrincipal
-      },
-      {
-        key: 'Disburse Amount',
-        value: this.loanDetails.principal
-      }
-    ];
-    if (this.loanDetails.writeOffReason) {
-      this.loanDetailsTableData.push({
-        key: 'Write-off Reason',
-        value: this.loanDetails.writeOffReason
-      });
-    }
-    if (this.loanProductService.isLoanProduct) {
-      this.loanDetailsTableData.push({
-        key: 'Loan Officer'
-      });
-    }
-    this.detailsDataSource = new MatTableDataSource(this.loanDetailsTableData);
+  hasNumberOfRepayments(): boolean {
+    return this.loanDetails.numberOfRepayments !== null && this.loanDetails.numberOfRepayments !== undefined;
   }
 
-  setloanNonDetailsTableData() {
-    this.loanDetailsTableData = [
-      {
-        key: 'Product Type'
-      },
-      {
-        key: 'Product Name'
-      },
-      {
-        key: 'Status'
-      },
-      {
-        key: 'Disbursement Date'
-      },
-      {
-        key: 'Currency'
-      },
-      {
-        key: 'External Id'
-      }
-    ];
-    if (this.loanProductService.isLoanProduct) {
-      this.loanDetailsTableData.push({
-        key: 'Loan Officer'
-      });
-      this.loanDetailsTableData.push({
-        key: 'Loan Purpose'
-      });
+  statusClass(): string {
+    const status = this.loanDetails.status;
+    if (!status) {
+      return 'st-closed';
     }
-    this.detailsDataSource = new MatTableDataSource(this.loanDetailsTableData);
+    if (status.active) {
+      return 'st-active';
+    }
+    if (status.pendingApproval) {
+      return 'st-pending';
+    }
+    if (status.waitingForDisbursal) {
+      return 'st-approved';
+    }
+    if (status.overpaid) {
+      return 'st-overpaid';
+    }
+    return 'st-closed';
   }
 
   showApprovedAmountBasedOnStatus() {
@@ -182,7 +99,7 @@ export class GeneralTabComponent extends LoanProductBaseComponent implements OnI
     return true;
   }
 
-  showDisbursedAmountBasedOnStatus = function () {
+  showDisbursedAmountBasedOnStatus() {
     if (
       this.status === 'Submitted and pending approval' ||
       this.status === 'Withdrawn by applicant' ||
@@ -192,7 +109,7 @@ export class GeneralTabComponent extends LoanProductBaseComponent implements OnI
       return false;
     }
     return true;
-  };
+  }
 
   loanProductType(): string {
     return this.loanDetails.loanType

@@ -1,0 +1,234 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.cbild-credit-profile {
+  padding: 16px;
+}
+
+.cbild-role-card {
+  margin-bottom: 16px;
+
+  mat-card-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  mat-form-field {
+    width: 240px;
+  }
+}
+
+.cbild-profile-card {
+  margin-bottom: 16px;
+}
+
+.cbild-alert {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.cbild-alert-warning {
+  background: var(--cbild-alert-warning-bg, #fef9c3);
+  color: var(--cbild-alert-warning-fg, #d97706);
+  border: 1px solid var(--cbild-alert-warning-border, #fde68a);
+}
+
+.cbild-alert-danger {
+  background: var(--cbild-alert-danger-bg, #fee2e2);
+  color: var(--cbild-alert-danger-fg, #dc2626);
+  border: 1px solid var(--cbild-alert-danger-border, #fca5a5);
+}
+
+.cbild-scores-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.cbild-fico-card,
+.cbild-risk-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 24px;
+  border-radius: 8px;
+  min-width: 120px;
+}
+
+.cbild-fico-label,
+.cbild-risk-label {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.cbild-fico-value {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.cbild-risk-value {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.cbild-fico-good {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.cbild-fico-medium {
+  background: #fef9c3;
+  color: #d97706;
+}
+
+.cbild-fico-poor {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.cbild-fico-unknown {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.cbild-risk-low {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.cbild-risk-medium {
+  background: #fef9c3;
+  color: #d97706;
+}
+
+.cbild-risk-high {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.cbild-risk-very-high {
+  background: #fce7f3;
+  color: #9d174d;
+}
+
+.cbild-divider {
+  margin: 16px 0;
+}
+
+.cbild-details-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cbild-detail-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.cbild-detail-label {
+  font-size: 13px;
+  color: var(--mdc-theme-text-secondary-on-background, rgb(0 0 0 / 54%));
+  min-width: 160px;
+}
+
+.cbild-detail-value {
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cbild-text-success {
+  color: #16a34a;
+}
+
+.cbild-text-danger {
+  color: #dc2626;
+}
+
+.cbild-inline-icon {
+  font-size: 16px;
+  height: 16px;
+  width: 16px;
+}
+
+.cbild-section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.cbild-tradeline-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cbild-tradeline-name {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.cbild-tradeline-detail {
+  font-size: 12px;
+  color: var(--mdc-theme-text-secondary-on-background, rgb(0 0 0 / 54%));
+}
+
+.cbild-empty-sub {
+  padding: 16px;
+  text-align: center;
+  color: var(--mdc-theme-text-disabled-on-background, rgb(0 0 0 / 38%));
+  font-size: 13px;
+}
+
+.cbild-empty-card {
+  margin-bottom: 16px;
+}
+
+.cbild-empty-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px;
+  gap: 16px;
+  color: var(--mdc-theme-text-disabled-on-background, rgb(0 0 0 / 38%));
+
+  mat-icon {
+    font-size: 48px;
+    height: 48px;
+    width: 48px;
+  }
+}
+
+.cbild-empty-hint {
+  font-size: 12px;
+  color: var(--mdc-theme-text-disabled-on-background, rgb(0 0 0 / 38%));
+}

@@ -9,6 +9,7 @@
 /** Angular Imports */
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   DestroyRef,
   ElementRef,
@@ -86,6 +87,7 @@ export class IdentitiesTabComponent implements OnDestroy {
   private clientService = inject(ClientsService);
   private translateService = inject(TranslateService);
   private documentPreviewService = inject(DocumentPreviewService);
+  private changeDetectorRef = inject(ChangeDetectorRef);
 
   private destroyRef = inject(DestroyRef);
 
@@ -284,7 +286,7 @@ export class IdentitiesTabComponent implements OnDestroy {
             this.clientService.downloadClientIdentificationDocument(doc.parentEntityId || identity.id, doc.id)
           );
           if (preview.type === 'image') {
-            this.previewThumbnails[doc.id] = preview.url;
+            this.setPreviewThumbnail(doc.id, preview.url);
           }
           items.push({
             src: preview.url,
@@ -343,20 +345,32 @@ export class IdentitiesTabComponent implements OnDestroy {
     }
   }
 
-  private setThumbnail(document: any): void {
+  private setThumbnail(document: any, identity?: any): void {
     if (!this.documentPreviewService.isPreviewable(document)) {
+      return;
+    }
+    const identifierId = document.parentEntityId || identity?.id;
+    if (!identifierId) {
       return;
     }
     this.documentPreviewService
       .resolvePreviewUrl(document, () =>
-        this.clientService.downloadClientIdentificationDocument(document.parentEntityId || this.clientId, document.id)
+        this.clientService.downloadClientIdentificationDocument(identifierId, document.id)
       )
       .then((preview) => {
         if (preview.type === 'image') {
-          this.previewThumbnails[document.id] = preview.url;
+          this.setPreviewThumbnail(document.id, preview.url);
         }
       })
       .catch((): void => undefined);
+  }
+
+  private setPreviewThumbnail(documentId: string, thumbnailUrl: string): void {
+    this.previewThumbnails = {
+      ...this.previewThumbnails,
+      [documentId]: thumbnailUrl
+    };
+    this.changeDetectorRef.markForCheck();
   }
 
   private prefetchThumbnails(): void {
@@ -364,7 +378,7 @@ export class IdentitiesTabComponent implements OnDestroy {
       return;
     }
     this.clientIdentities.forEach((identity: any) => {
-      identity.documents?.forEach((doc: any) => this.setThumbnail(doc));
+      identity.documents?.forEach((doc: any) => this.setThumbnail(doc, identity));
     });
   }
 }

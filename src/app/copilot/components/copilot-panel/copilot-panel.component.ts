@@ -118,7 +118,8 @@ export class CopilotPanelComponent {
     this.activeTab = 'chat';
     this.messages = [
       ...this.messages,
-      { id: this.nextId(), role: 'user', content, timestamp: Date.now() }];
+      { id: this.nextId(), role: 'user', content, timestamp: Date.now() }
+    ];
     this.respondMock(content);
   }
 

@@ -1,0 +1,181 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.wizard-shell {
+  display: grid;
+  gap: 1rem;
+  border-radius: 1rem;
+  background: var(--mat-sys-surface-container, #2e2e2e);
+  padding: 1.25rem;
+}
+
+.landing-page__eyebrow {
+  margin: 0 0 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.review-chip {
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+  background: rgb(255 255 255 / 10%);
+}
+
+.wizard-shell__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.wizard-stepper {
+  background: transparent;
+}
+
+.step-panel {
+  display: grid;
+  gap: 1.25rem;
+  padding: 0.5rem 0 0.25rem;
+}
+
+.field-grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.field-grid > mat-form-field {
+  flex: 1 1 16rem;
+  min-width: 16rem;
+}
+
+.field-grid > mat-checkbox {
+  flex: 1 1 100%;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-checkbox {
+  align-self: center;
+  margin-top: 0.5rem;
+}
+
+.step-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.review-banner {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  background: rgb(255 255 255 / 5%);
+}
+
+.review-banner__name {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.review-banner__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.review-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.review-metrics > .review-metric {
+  flex: 1 1 9rem;
+  min-width: 9rem;
+}
+
+.review-metric {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  background: rgb(255 255 255 / 4%);
+}
+
+.review-metric__label,
+.review-section__title {
+  opacity: 0.75;
+  font-size: 0.8rem;
+}
+
+.review-metric__value {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.review-section {
+  display: grid;
+  gap: 0.4rem;
+  padding: 1rem 0;
+  border-top: 1px solid rgb(255 255 255 / 8%);
+}
+
+.review-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.review-row__label {
+  opacity: 0.8;
+}
+
+.review-row__value {
+  text-align: right;
+}
+
+.review-defaults-pill {
+  border-radius: 1rem;
+  padding: 1rem;
+  background: rgb(255 255 255 / 5%);
+}
+
+.review-defaults-pill__title {
+  margin: 0;
+  font-weight: 700;
+}
+
+.review-defaults-pill__sub {
+  margin: 0.25rem 0 0;
+  opacity: 0.8;
+}
+
+@media (width <= 768px) {
+  .wizard-shell__header,
+  .review-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+// The reused Classic Charges step ships its own Previous/Next stepper row; the wizard shell already
+// renders unified step actions, so hide the embedded component's trailing nav to avoid duplicate buttons.
+.wizard-charges ::ng-deep .layout-row.margin-t {
+  display: none;
+}

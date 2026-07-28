@@ -7,7 +7,8 @@
     "font-family-name-quotes": "always-where-recommended",
     "font-family-no-missing-generic-family-keyword": [
       true,
-      { "ignoreFontFamilies": ["FontAwesome"] }],
+      { "ignoreFontFamilies": ["FontAwesome"] }
+    ],
     "function-url-quotes": [
       "always",
       {
@@ -24,7 +25,8 @@
     "at-rule-no-unknown": null,
     "scss/at-rule-no-unknown": [
       true,
-      { "ignoreAtRules": ["tailwind"] }],
+      { "ignoreAtRules": ["tailwind"] }
+    ],
     "media-feature-name-no-vendor-prefix": true,
     "property-no-vendor-prefix": true,
     "selector-no-vendor-prefix": true,

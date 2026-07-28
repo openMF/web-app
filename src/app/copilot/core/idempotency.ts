@@ -14,11 +14,22 @@
  */
 export class IdempotencyKeyFactory {
   /**
-   * Build a key, e.g. `usr-42-approve_and_disburse_loan-107-<ts>`.
-   * @param timestamp injected (Date.now() is not called inside core logic to keep it testable).
+   * Build a key, e.g. `usr-42-approve_and_disburse_loan-107-1719360000000`.
+   * Deterministic: identical inputs always yield the same key, so a retry or
+   * double-click reuses it and Fineract deduplicates. Timestamp is injected
+   * (Date.now() is not called here) to keep the function pure and testable.
    */
-  generate(_userId: number, _toolName: string, _entityId: number, _timestamp: number): string {
-    // TODO: assemble deterministic key.
-    throw new Error('Not implemented');
+  generate(userId: number, toolName: string, entityId: number, timestamp: number): string {
+    const safeTool = this.slug(toolName);
+    return `usr-${userId}-${safeTool}-${entityId}-${timestamp}`;
+  }
+
+  /** Lowercase, keep word chars, collapse the rest to underscores. */
+  private slug(value: string): string {
+    return (value ?? '')
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '_')
+      .replace(/^_+|_+$/g, '');
   }
 }

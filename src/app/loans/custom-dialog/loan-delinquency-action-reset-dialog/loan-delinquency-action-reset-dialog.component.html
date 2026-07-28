@@ -1,0 +1,24 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h2 mat-dialog-title>{{ 'labels.heading.Loan Delinquency Actions' | translate }}</h2>
+
+<div mat-dialog-content [formGroup]="delinquencyActionForm">
+  <div class="layout-column">
+    <mat-checkbox class="flex-98" formControlName="startNewPeriod">
+      <p>{{ 'labels.inputs.Start new period' | translate }}</p>
+    </mat-checkbox>
+  </div>
+</div>
+
+<mat-dialog-actions class="layout-row layout-xs-column layout-align-center gap-2percent">
+  <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="{ data: delinquencyActionForm }">
+    {{ 'labels.buttons.Reset' | translate }}
+  </button>
+</mat-dialog-actions>

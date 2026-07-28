@@ -44,7 +44,10 @@ export class ActionCardComponent {
   }
 
   /** Ordered label/value pairs for the card body. */
-  objectEntries(data: Record<string, string>): [string, string][] {
+  objectEntries(data: Record<string, string>): [
+    string,
+    string
+  ][] {
     return Object.entries(data ?? {});
   }
 }
