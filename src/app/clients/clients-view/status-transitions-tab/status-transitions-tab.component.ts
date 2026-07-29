@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 
 /** Custom Services */
 import { ClientsService } from '../../clients.service';
+import {SettingsService} from "../../../settings/settings.service";
 
 /**
  * Client Status Transitions Tab Component.
@@ -43,8 +44,13 @@ export class StatusTransitionsTabComponent implements OnInit {
   /**
    * @param {ActivatedRoute} route Activated Route.
    * @param {ClientsService} clientsService Clients service.
+   * @param {SettingsService} settingsService Settings service.
    */
-  constructor(private route: ActivatedRoute, private clientsService: ClientsService) {
+  constructor(
+    private route: ActivatedRoute,
+    private clientsService: ClientsService,
+    private settingsService: SettingsService
+  ) {
     this.clientId = this.route.parent.snapshot.paramMap.get('clientId');
     this.route.data.subscribe((data: { clientStatusTransitions: any }) => {
       if (data.clientStatusTransitions) {
@@ -101,4 +107,7 @@ export class StatusTransitionsTabComponent implements OnInit {
     this.fetchStatusTransitions(event.pageIndex, event.pageSize);
   }
 
+  get dateTimeFormat(): string {
+    return this.settingsService.dateFormat.replace('dd', 'DD').concat(' HH:mm:ss');
+  }
 }

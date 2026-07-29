@@ -38,12 +38,12 @@
 
       <ng-container matColumnDef="statusChangedOn">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.StatusChangedOn' | translate }}</th>
-        <td mat-cell *matCellDef="let row">{{ row.statusChangedOn | dateFormat }}</td>
+        <td mat-cell *matCellDef="let row">{{ row.statusChangedOn | dateFormat:dateTimeFormat }}</td>
       </ng-container>
 
       <ng-container matColumnDef="createdOn">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.TransitionCreatedOn' | translate }}</th>
-        <td mat-cell *matCellDef="let row">{{ row.createdOn | dateFormat }}</td>
+        <td mat-cell *matCellDef="let row">{{ row.createdOn | dateFormat:dateTimeFormat }}</td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

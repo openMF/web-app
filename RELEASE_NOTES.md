@@ -1,5 +1,10 @@
 # Release Notes
 
+## Version 1.4.12 - Community 1.0.0
+
+    * Configurations
+          * [HQX-306] - Add disbursement date loan repayment allocation protocol to system choice
+
 ## Version 1.4.11 - Community 1.0.0
 
     * Savings Accounts & Products
