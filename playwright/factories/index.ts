@@ -19,4 +19,11 @@
  * cross-framework portability swap a path-only change.
  */
 
-export { createTestClient, type TestClientPayload } from './client';
+export {
+  createTestClient,
+  createSeededClient,
+  type TestClientPayload,
+  type ClientState,
+  type CreateTestClientOverrides,
+  type SeededTestClient
+} from './client';

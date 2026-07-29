@@ -523,7 +523,7 @@
             {{ 'labels.inputs.Term Variations' | translate }}
           </a>
         }
-        @if (loanProductService.isLoanProduct && loanDetailsData.overdueCharges.length > 0) {
+        @if (loanProductService.isLoanProduct && loanDetailsData.overdueCharges?.length > 0) {
           <a
             mat-tab-link
             [routerLink]="['./overdue-charges']"

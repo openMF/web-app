@@ -52,6 +52,11 @@ import {
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FindPipe } from '../../../../pipes/find.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import {
+  depositProductChartSlabsValidator,
+  getDepositProductChartSlabsErrorKey,
+  normalizeDepositProductInterestRateCharts
+} from 'app/products/deposit-product-interest-rate-chart.util';
 
 @Component({
   selector: 'mifosx-recurring-deposit-product-interest-rate-chart-step',
@@ -340,7 +345,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
   }
 
   createChartForm(): UntypedFormGroup {
-    return this.formBuilder.group({
+    const chartForm = this.formBuilder.group({
       id: [null],
       name: [''],
       description: [''],
@@ -352,6 +357,12 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
       isPrimaryGroupingByAmount: [false],
       chartSlabs: this.formBuilder.array([], Validators.required)
     });
+    const chartSlabs = chartForm.get('chartSlabs') as UntypedFormArray;
+    chartSlabs.setValidators([
+      Validators.required,
+      depositProductChartSlabsValidator(() => chartForm.get('isPrimaryGroupingByAmount')?.value)
+    ]);
+    return chartForm;
   }
 
   addChart() {
@@ -379,6 +390,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
               'amountRange'
             ];
         this.chartSlabsDisplayedColumns[chartIndex].push('annualInterestRate', 'description', 'actions');
+        (this.charts.at(chartIndex).get('chartSlabs') as UntypedFormArray).updateValueAndValidity();
       });
   }
 
@@ -439,6 +451,10 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
         formArray.removeAt(index);
       }
     });
+  }
+
+  getChartSlabsErrorKey(chartSlabs: UntypedFormArray): string | null {
+    return getDepositProductChartSlabsErrorKey(chartSlabs.errors, 'recurringdeposit');
   }
 
   getData(formType: string, values?: any) {
@@ -542,6 +558,6 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
         delete chart.id;
       }
     }
-    return recurringDepositProductInterestRateChart;
+    return normalizeDepositProductInterestRateCharts(recurringDepositProductInterestRateChart);
   }
 }

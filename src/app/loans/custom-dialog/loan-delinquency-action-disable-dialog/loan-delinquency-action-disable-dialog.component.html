@@ -1,0 +1,39 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h2 mat-dialog-title>
+  {{
+    (data.action === 'disable' ? 'labels.buttons.Disable Delinquency' : 'labels.buttons.Enable Delinquency') | translate
+  }}
+</h2>
+
+<div mat-dialog-content [formGroup]="delinquencyActionForm">
+  <p class="dialog-context">
+    {{
+      (data.action === 'disable'
+        ? 'labels.dialogContext.Disabling delinquency stops the delinquency evaluation and lifts the current delinquency classification'
+        : 'labels.dialogContext.Enabling delinquency resumes the delinquency evaluation and recalculates it as of the current business date'
+      ) | translate
+    }}
+  </p>
+  <div class="layout-column">
+    <mat-form-field class="flex-48">
+      <mat-label>{{ 'labels.inputs.Business Date' | translate }}</mat-label>
+      <input matInput [matDatepicker]="businessDatePicker" formControlName="startDate" readonly />
+      <mat-datepicker-toggle matSuffix [for]="businessDatePicker" disabled></mat-datepicker-toggle>
+      <mat-datepicker #businessDatePicker></mat-datepicker>
+    </mat-form-field>
+  </div>
+</div>
+
+<mat-dialog-actions class="layout-row layout-xs-column layout-align-center gap-2percent">
+  <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="{ confirm: true }">
+    {{ 'labels.buttons.Confirm' | translate }}
+  </button>
+</mat-dialog-actions>

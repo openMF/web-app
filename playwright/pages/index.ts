@@ -35,3 +35,8 @@ export {
 } from './create-client.page';
 export { ClientViewPage } from './client-view.page';
 export { CloseClientPage } from './close-client.page';
+export { ActivateClientPage } from './client-actions/activate-client.page';
+export { RejectClientPage } from './client-actions/reject-client.page';
+export { WithdrawClientPage } from './client-actions/withdraw-client.page';
+export { ReactivateClientPage } from './client-actions/reactivate-client.page';
+export { TransferClientPage } from './client-actions/transfer-client.page';

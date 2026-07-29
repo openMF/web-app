@@ -35,6 +35,7 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 import { environment } from '../../../../environments/environment';
 import { ProgressBarService } from 'app/core/progress-bar/progress-bar.service';
 import { sanitizeCsvValue } from 'app/core/utils/csv.utils';
+import { downloadBlob } from 'app/core/utils/file-download.utils';
 
 import * as ExcelJS from 'exceljs';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -184,13 +185,13 @@ export class TableAndSmsComponent implements OnChanges {
     };
     const exportDialogRef = this.dialog.open(FormDialogComponent, { data });
     exportDialogRef.afterClosed().subscribe((response: { data: any }) => {
-      if (response.data) {
+      if (response?.data) {
         this.downloadCSV(response.data.value.fileName, response.data.value.delimiter);
       }
     });
   }
 
-  exportToXLS(): void {
+  async exportToXLS(): Promise<void> {
     const fileName = `${this.dataObject.report.name}.xlsx`;
     // Sanitize all values to prevent formula injection in spreadsheet applications
     const data = this.csvData.map((object: any) => {
@@ -212,15 +213,9 @@ export class TableAndSmsComponent implements OnChanges {
       worksheet.addRow(this.displayedColumns.map((col) => rowObj[col]));
     });
 
-    workbook.xlsx.writeBuffer().then((buffer: any) => {
-      const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'filename.xlsx';
-      a.click();
-      URL.revokeObjectURL(url);
-    });
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    downloadBlob(blob, fileName);
   }
 
   /**

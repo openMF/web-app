@@ -1,0 +1,46 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.currency-conversion-form-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+  max-width: 820px;
+  margin: 0 auto;
+
+  .exchange-rate-field {
+    flex: 1 1 320px;
+    min-width: 260px;
+  }
+
+  .field-label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--md-sys-color-on-surface-variant, #44474e);
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+}
+
+.form-error,
+.conversion-error,
+.conversion-message {
+  margin-bottom: 4px;
+}
+
+.form-error {
+  flex-basis: 100%;
+}
+
+.conversion-error {
+  color: var(--warn-color, #b00020);
+}

@@ -269,47 +269,49 @@
           {{ 'labels.inputs.Actions' | translate }}
         </th>
         <td mat-cell *matCellDef="let charge" class="col-c" (click)="$event.stopPropagation()">
-          <div class="act-group">
-            <button
-              mat-icon-button
-              type="button"
-              [matMenuTriggerFor]="chargeMenu"
-              [attr.aria-label]="'labels.inputs.Actions' | translate"
-            >
-              <mat-icon>more_vert</mat-icon>
-            </button>
+          @if (status === 'Active' || status === 'Submitted and pending approval') {
+            <div class="act-group">
+              <button
+                mat-icon-button
+                type="button"
+                [matMenuTriggerFor]="chargeMenu"
+                [attr.aria-label]="'labels.inputs.Actions' | translate"
+              >
+                <mat-icon>more_vert</mat-icon>
+              </button>
 
-            <mat-menu #chargeMenu="matMenu" class="charge-actions-menu">
-              @if (status === 'Active') {
-                <button mat-menu-item (click)="adjustCharge(charge.id)">
-                  <mat-icon matMenuItemIcon>tune</mat-icon>
-                  {{ 'tooltips.Adjust Charge' | translate }}
-                </button>
-              }
-              @if (status === 'Submitted and pending approval') {
-                <button mat-menu-item (click)="editCharge(charge)">
-                  <mat-icon matMenuItemIcon>edit</mat-icon>
-                  {{ 'tooltips.Edit Charge' | translate }}
-                </button>
-                <button mat-menu-item class="menu-item-danger" (click)="deleteCharge(charge.id)">
-                  <mat-icon matMenuItemIcon>delete</mat-icon>
-                  {{ 'labels.buttons.Delete' | translate }}
-                </button>
-              }
-              @if (charge.chargePayable && !charge.paid && status === 'Active') {
-                <button mat-menu-item (click)="payCharge(charge.id)">
-                  <mat-icon matMenuItemIcon>payments</mat-icon>
-                  {{ 'labels.buttons.Pay Charge' | translate }}
-                </button>
-              }
-              @if (!charge.actionFlag) {
-                <button mat-menu-item (click)="waiveCharge(charge.id)">
-                  <mat-icon matMenuItemIcon>check_circle</mat-icon>
-                  {{ 'labels.buttons.Waive Charge' | translate }}
-                </button>
-              }
-            </mat-menu>
-          </div>
+              <mat-menu #chargeMenu="matMenu" class="charge-actions-menu">
+                @if (status === 'Active') {
+                  <button mat-menu-item (click)="adjustCharge(charge.id)">
+                    <mat-icon matMenuItemIcon>tune</mat-icon>
+                    {{ 'tooltips.Adjust Charge' | translate }}
+                  </button>
+                }
+                @if (status === 'Submitted and pending approval') {
+                  <button mat-menu-item (click)="editCharge(charge)">
+                    <mat-icon matMenuItemIcon>edit</mat-icon>
+                    {{ 'tooltips.Edit Charge' | translate }}
+                  </button>
+                  <button mat-menu-item class="menu-item-danger" (click)="deleteCharge(charge.id)">
+                    <mat-icon matMenuItemIcon>delete</mat-icon>
+                    {{ 'labels.buttons.Delete' | translate }}
+                  </button>
+                }
+                @if (charge.chargePayable && !charge.paid && status === 'Active') {
+                  <button mat-menu-item (click)="payCharge(charge.id)">
+                    <mat-icon matMenuItemIcon>payments</mat-icon>
+                    {{ 'labels.buttons.Pay Charge' | translate }}
+                  </button>
+                }
+                @if (!charge.actionFlag) {
+                  <button mat-menu-item (click)="waiveCharge(charge.id)">
+                    <mat-icon matMenuItemIcon>check_circle</mat-icon>
+                    {{ 'labels.buttons.Waive Charge' | translate }}
+                  </button>
+                }
+              </mat-menu>
+            </div>
+          }
         </td>
       </ng-container>
 
@@ -328,6 +330,7 @@
         [class.row-state-waived]="rowStatus(row) === 'row-state-waived'"
         [class.row-selected]="selection.isSelected(row)"
         [routerLink]="[row.id]"
+        [queryParams]="{ productType: loanProductService.productType.value }"
       ></tr>
     </table>
   </div>
