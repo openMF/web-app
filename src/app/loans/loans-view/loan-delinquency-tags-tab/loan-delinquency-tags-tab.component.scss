@@ -32,3 +32,15 @@ table {
   color: $status-pending;
   font-weight: 500;
 }
+
+// Reset delinquency period marker in the range schedule (expectedAmount === null)
+.reset-period {
+  font-style: italic;
+  opacity: 0.6;
+}
+
+// Active/undone flag next to a RESET row in the actions history
+.reset-flag {
+  font-size: 0.85em;
+  opacity: 0.7;
+}
