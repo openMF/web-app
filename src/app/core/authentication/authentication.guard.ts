@@ -8,7 +8,7 @@
 
 /** Angular Imports */
 import { Injectable, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 
 /** Custom Services */
 import { Logger } from '../logger/logger.service';
@@ -28,16 +28,31 @@ export class AuthenticationGuard {
   /**
    * Ensures route access is authorized only when user is authenticated, otherwise redirects to login.
    *
+   * When the session is missing, the originally requested URL is preserved as a
+   * `returnUrl` query param so the user lands on that page after logging in.
+   *
    * @returns {boolean} True if user is authenticated.
    */
-  canActivate(): boolean {
+  canActivate(_route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     if (this.authenticationService.isAuthenticated()) {
       return true;
     }
 
     log.debug('User not authenticated, redirecting to login...');
     this.authenticationService.logout();
-    this.router.navigate(['/login'], { replaceUrl: true });
+    this.redirectToLogin(state.url);
     return false;
+  }
+
+  /**
+   * Redirects to the login page, preserving the attempted URL as `returnUrl`.
+   * The root path and the login page itself are not preserved.
+   */
+  private redirectToLogin(attemptedUrl: string): void {
+    const shouldPreserve = attemptedUrl && attemptedUrl !== '/' && !attemptedUrl.startsWith('/login');
+    this.router.navigate(['/login'], {
+      replaceUrl: true,
+      queryParams: shouldPreserve ? { returnUrl: attemptedUrl } : {}
+    });
   }
 }
