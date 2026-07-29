@@ -106,6 +106,63 @@ describe('ExchangeRatesService', () => {
     expect(await resultPromise).toEqual([]);
   });
 
+  it('should fetch exchange rates from pageItems response', async () => {
+    const resultPromise = firstValueFrom(service.getExchangeRates());
+
+    const req = httpMock.expectOne(
+      (request) => request.url === `${exchangeRatesResource}/latest` && request.method === 'GET'
+    );
+    req.flush({ pageItems: [{ id: 2, sourceCurrency: 'EUR', targetCurrency: 'USD' }] });
+
+    expect(await resultPromise).toEqual([
+      { id: 2, sourceCurrency: 'EUR', sourceCurrencyCode: 'EUR', targetCurrency: 'USD', targetCurrencyCode: 'USD' }
+    ]);
+  });
+
+  it('should fetch exchange rates from a single exchange rate response', async () => {
+    const resultPromise = firstValueFrom(service.getExchangeRates());
+
+    const req = httpMock.expectOne(
+      (request) => request.url === `${exchangeRatesResource}/latest` && request.method === 'GET'
+    );
+    req.flush({
+      id: 3,
+      sourceCurrency: 'USD',
+      targetCurrency: 'CRC',
+      buyRate: 510.5,
+      sellRate: 455.48,
+      referenceRate: 513.12,
+      rateDate: '2026-07-12',
+      latest: true
+    });
+
+    expect(await resultPromise).toEqual([
+      {
+        id: 3,
+        sourceCurrency: 'USD',
+        sourceCurrencyCode: 'USD',
+        targetCurrency: 'CRC',
+        targetCurrencyCode: 'CRC',
+        buyRate: 510.5,
+        sellRate: 455.48,
+        referenceRate: 513.12,
+        rateDate: '2026-07-12',
+        latest: true
+      }
+    ]);
+  });
+
+  it('should return an empty exchange rate list for an empty response object', async () => {
+    const resultPromise = firstValueFrom(service.getExchangeRates());
+
+    const req = httpMock.expectOne(
+      (request) => request.url === `${exchangeRatesResource}/latest` && request.method === 'GET'
+    );
+    req.flush({});
+
+    expect(await resultPromise).toEqual([]);
+  });
+
   it('should create an exchange rate', async () => {
     const resultPromise = firstValueFrom(service.createExchangeRate(exchangeRatePayload));
 
