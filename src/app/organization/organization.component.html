@@ -262,6 +262,34 @@
               </div>
             </mat-list-item>
           </div>
+
+          <div #adhocquery>
+            <mat-list-item *mifosxHasPermission="'VIEW_ADHOC'">
+              <div class="menu-list-item-content">
+                <div class="menu-left-section" [routerLink]="['adhoc-query']">
+                  <mat-icon matListIcon>
+                    <fa-icon icon="chevron-right" size="sm"></fa-icon>
+                  </mat-icon>
+                  <div matLine>
+                    {{ 'labels.heading.AdHocQuery' | translate }}
+                    @if (arrowBooleans[16]) {
+                      <p matLine [routerLink]="['adhoc-query']" class="menu-explanation">
+                        {{ 'labels.text.Define AdHocQuery for Organization' | translate }}
+                      </p>
+                    }
+                  </div>
+                </div>
+                <div class="menu-right-section">
+                  @if (!arrowBooleans[16]) {
+                    <fa-icon (click)="arrowBooleansToggle(16)" icon="arrow-down" size="md"></fa-icon>
+                  }
+                  @if (arrowBooleans[16]) {
+                    <fa-icon (click)="arrowBooleansToggle(16)" icon="arrow-up" size="md"></fa-icon>
+                  }
+                </div>
+              </div>
+            </mat-list-item>
+          </div>
         </mat-nav-list>
       </div>
 
@@ -289,6 +317,42 @@
                   }
                   @if (arrowBooleans[9]) {
                     <fa-icon (click)="arrowBooleansToggle(9)" icon="arrow-up" size="md"></fa-icon>
+                  }
+                </div>
+              </div>
+            </mat-list-item>
+          </div>
+
+          <div #exchangeRates>
+            <mat-list-item
+              *mifosxHasPermission="[
+                'READ_EXCHANGERATE',
+                'CREATE_EXCHANGERATE',
+                'UPDATE_EXCHANGERATE',
+                'DELETE_EXCHANGERATE',
+                'CONVERT_CURRENCY'
+              ]"
+            >
+              <div class="menu-list-item-content">
+                <div class="menu-left-section" [routerLink]="['exchange-rates']">
+                  <mat-icon matListIcon>
+                    <fa-icon icon="exchange" size="sm"></fa-icon>
+                  </mat-icon>
+                  <div matLine>
+                    {{ 'labels.heading.Exchange Rates' | translate }}
+                    @if (arrowBooleans[19]) {
+                      <p matLine [routerLink]="['exchange-rates']" class="menu-explanation">
+                        {{ 'labels.text.Manage exchange rates and currency conversion' | translate }}
+                      </p>
+                    }
+                  </div>
+                </div>
+                <div class="menu-right-section">
+                  @if (!arrowBooleans[19]) {
+                    <fa-icon (click)="arrowBooleansToggle(19)" icon="arrow-down" size="md"></fa-icon>
+                  }
+                  @if (arrowBooleans[19]) {
+                    <fa-icon (click)="arrowBooleansToggle(19)" icon="arrow-up" size="md"></fa-icon>
                   }
                 </div>
               </div>
@@ -485,34 +549,6 @@
                   }
                   @if (arrowBooleans[15]) {
                     <fa-icon (click)="arrowBooleansToggle(15)" icon="arrow-up" size="md"></fa-icon>
-                  }
-                </div>
-              </div>
-            </mat-list-item>
-          </div>
-
-          <div #adhocquery>
-            <mat-list-item *mifosxHasPermission="'VIEW_ADHOC'">
-              <div class="menu-list-item-content">
-                <div class="menu-left-section" [routerLink]="['adhoc-query']">
-                  <mat-icon matListIcon>
-                    <fa-icon icon="chevron-right" size="sm"></fa-icon>
-                  </mat-icon>
-                  <div matLine>
-                    {{ 'labels.heading.AdHocQuery' | translate }}
-                    @if (arrowBooleans[16]) {
-                      <p matLine [routerLink]="['adhoc-query']" class="menu-explanation">
-                        {{ 'labels.text.Define AdHocQuery for Organization' | translate }}
-                      </p>
-                    }
-                  </div>
-                </div>
-                <div class="menu-right-section">
-                  @if (!arrowBooleans[16]) {
-                    <fa-icon (click)="arrowBooleansToggle(16)" icon="arrow-down" size="md"></fa-icon>
-                  }
-                  @if (arrowBooleans[16]) {
-                    <fa-icon (click)="arrowBooleansToggle(16)" icon="arrow-up" size="md"></fa-icon>
                   }
                 </div>
               </div>

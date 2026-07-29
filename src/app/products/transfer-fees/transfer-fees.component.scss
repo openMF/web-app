@@ -1,0 +1,30 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+@use 'assets/styles/colours' as c;
+
+table {
+  width: 100%;
+  min-width: 900px;
+
+  .select-row:hover {
+    cursor: pointer;
+  }
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.true {
+  color: c.$msg-success;
+}
+
+.false {
+  color: c.$msg-danger;
+}

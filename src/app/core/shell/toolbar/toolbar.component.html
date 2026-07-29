@@ -42,7 +42,7 @@
       [matMenuTriggerFor]="institutionMenu"
       #institutionMenuTrigger="matMenuTrigger"
       tabindex="0"
-      *mifosxHasPermission="['READ_CLIENT', 'READ_GROUP', 'READ_CENTER']"
+      *mifosxHasPermission="['READ_CLIENT', 'READ_GROUP', 'READ_CENTER', 'READ_LOAN']"
     >
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
       {{ 'labels.menus.Institution' | translate }}
@@ -138,6 +138,9 @@
 <mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
   <button mat-menu-item routerLink="/clients" tabindex="0" *mifosxHasPermission="'READ_CLIENT'">
     {{ 'labels.menus.Clients' | translate }}
+  </button>
+  <button mat-menu-item routerLink="/loans" tabindex="0" *mifosxHasPermission="'READ_LOAN'">
+    {{ 'labels.menus.Loans' | translate }}
   </button>
   <button mat-menu-item routerLink="/groups" tabindex="0" *mifosxHasPermission="'READ_GROUP'">
     {{ 'labels.menus.Groups' | translate }}

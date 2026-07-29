@@ -131,7 +131,10 @@ export default defineConfig({
       // Pure-logic unit tests for shared utilities (retry, sleep, ...).
       // No browser, no auth setup, no app dependency.
       name: 'unit',
-      testMatch: /playwright\/utils\/.*\.spec\.ts/,
+      testMatch: [
+        /playwright\/utils\/.*\.spec\.ts/,
+        /playwright\/factories\/client\.spec\.ts/
+      ],
       testDir: '.',
       use: { storageState: { cookies: [], origins: [] } }
     },
@@ -140,7 +143,7 @@ export default defineConfig({
       // Runs against `E2E_FINERACT_URL` (default https://localhost:8443)
       // and exits in seconds because no Chromium process is started.
       name: 'integration',
-      testMatch: /playwright\/factories\/.*\.spec\.ts/,
+      testMatch: /playwright\/factories\/.*\.factory\.spec\.ts/,
       testDir: '.',
       use: { storageState: { cookies: [], origins: [] } }
     },
@@ -223,7 +226,7 @@ export default defineConfig({
   webServer: process.env.CI
     ? undefined
     : {
-        command: 'npm run start',
+        command: 'npm run start:local',
         url: 'http://localhost:4200',
         reuseExistingServer: true,
         timeout: 180000

@@ -75,8 +75,8 @@ export class OrganizationComponent implements AfterViewInit {
   @ViewChild('manageFunds') manageFunds: ElementRef<any>;
   /* Template for popover on manage funds */
   @ViewChild('templateManageFunds') templateManageFunds: TemplateRef<any>;
-  // Initialize an array of 18 boolean values, all set to false
-  arrowBooleans: boolean[] = new Array(19).fill(false);
+  // Initialize an array of menu toggle values, all set to false
+  arrowBooleans: boolean[] = new Array(20).fill(false);
 
   /**
    * Popover function
