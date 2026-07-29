@@ -20,6 +20,9 @@ import {
 } from './exchange-rate.model';
 import { getCurrencyCode } from './exchange-rate-form.util';
 
+type ExchangeRateResponse = ExchangeRate[] | ExchangeRate | { pageItems?: ExchangeRate[]; error?: string };
+type ExchangeRateResponseObject = ExchangeRate & { pageItems?: ExchangeRate[]; error?: string };
+
 @Injectable({
   providedIn: 'root'
 })
@@ -36,9 +39,7 @@ export class ExchangeRatesService {
     httpParams = this.addParam(httpParams, 'rateDate', filters.rateDate);
 
     return this.httpWithoutDefaultErrorHandler()
-      .get<ExchangeRate[] | { pageItems?: ExchangeRate[]; error?: string }>(`${this.exchangeRatesResource}/latest`, {
-        params: httpParams
-      })
+      .get<ExchangeRateResponse>(`${this.exchangeRatesResource}/latest`, { params: httpParams })
       .pipe(
         catchError((error: HttpErrorResponse) => {
           if (error.status === 404) {
@@ -102,13 +103,32 @@ export class ExchangeRatesService {
     return configurableHttp.skipErrorHandler ? configurableHttp.skipErrorHandler() : this.http;
   }
 
-  private normalizeExchangeRateResponse(
-    response: ExchangeRate[] | { pageItems?: ExchangeRate[]; error?: string }
-  ): ExchangeRate[] {
+  private normalizeExchangeRateResponse(response: ExchangeRateResponse): ExchangeRate[] {
     if (Array.isArray(response)) {
       return response;
     }
-    return response?.pageItems || [];
+    const responseObject = response as ExchangeRateResponseObject;
+    if (Array.isArray(responseObject?.pageItems)) {
+      return responseObject.pageItems;
+    }
+    if (this.isExchangeRate(responseObject)) {
+      return [
+        responseObject
+      ];
+    }
+    return [];
+  }
+
+  private isExchangeRate(response: ExchangeRateResponseObject | null | undefined): response is ExchangeRate {
+    return !!(
+      response &&
+      !response.error &&
+      (response.id ||
+        response.sourceCurrency ||
+        response.targetCurrency ||
+        response.sourceCurrencyCode ||
+        response.targetCurrencyCode)
+    );
   }
 
   private toExchangeRateRequest(exchangeRate: ExchangeRatePayload) {
