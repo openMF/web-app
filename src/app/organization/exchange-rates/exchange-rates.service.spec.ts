@@ -163,6 +163,61 @@ describe('ExchangeRatesService', () => {
     expect(await resultPromise).toEqual([]);
   });
 
+  it('should resolve one exchange rate for edit from the latest response', async () => {
+    const resultPromise = firstValueFrom(service.getExchangeRate('3'));
+
+    const req = httpMock.expectOne(
+      (request) => request.url === `${exchangeRatesResource}/latest` && request.method === 'GET'
+    );
+    expect(req.request.url).not.toBe(`${exchangeRatesResource}/3`);
+    req.flush([
+      {
+        id: 2,
+        sourceCurrency: 'EUR',
+        targetCurrency: 'USD',
+        buyRate: 1.1,
+        sellRate: 1.2,
+        referenceRate: 1.15,
+        rateDate: '2026-07-11',
+        latest: false
+      },
+      {
+        id: 3,
+        sourceCurrency: 'USD',
+        targetCurrency: 'CRC',
+        buyRate: 510.5,
+        sellRate: 455.48,
+        referenceRate: 513.12,
+        rateDate: '2026-07-12',
+        latest: true
+      }
+    ]);
+
+    expect(await resultPromise).toEqual({
+      id: 3,
+      sourceCurrency: 'USD',
+      sourceCurrencyCode: 'USD',
+      targetCurrency: 'CRC',
+      targetCurrencyCode: 'CRC',
+      buyRate: 510.5,
+      sellRate: 455.48,
+      referenceRate: 513.12,
+      rateDate: '2026-07-12',
+      latest: true
+    });
+  });
+
+  it('should error when an exchange rate cannot be resolved for edit', async () => {
+    const resultPromise = firstValueFrom(service.getExchangeRate('9'));
+
+    const req = httpMock.expectOne(
+      (request) => request.url === `${exchangeRatesResource}/latest` && request.method === 'GET'
+    );
+    req.flush([{ id: 3, sourceCurrency: 'USD', targetCurrency: 'CRC' }]);
+
+    await expect(resultPromise).rejects.toThrow('Exchange rate not found with id: 9');
+  });
+
   it('should create an exchange rate', async () => {
     const resultPromise = firstValueFrom(service.createExchangeRate(exchangeRatePayload));
 
