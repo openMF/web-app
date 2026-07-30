@@ -12,16 +12,25 @@
  * Factories produce deterministic, framework-agnostic test payloads that
  * specs can hand straight to a page object helper (e.g. the create-client
  * stepper) without re-deriving suffixes, dates, or office names in every
- * spec. They never touch the network — pair them with `FineractApiClient`
- * when API seeding is required.
+ * spec. The pure {@link createTestClient} builder never touches the
+ * network — pair it with `FineractApiClient` when API seeding is
+ * required.
  *
- * Cross-framework portability: the returned shape matches
+ * The async {@link createSeededClient} factory bundles the pure payload
+ * with a single API create call and (when requested) a follow-up
+ * command that transitions the client to `active`, `rejected`,
+ * `withdrawn`, or `closed`. It returns a {@link SeededTestClient} whose
+ * `cleanup` closure knows how to tear the client down for the state it
+ * created.
+ *
+ * Cross-framework portability: the pure return shape matches
  * `GeneralStepData` from the page-object barrel, which the React port
  * exports under the same name. Importing a factory from
  * `playwright/factories/...` therefore behaves identically against either
  * web app.
  */
 
+import type { FineractApiClient } from '../fixtures/fineract-api';
 import type { GeneralStepData } from '../pages';
 
 /**
@@ -33,26 +42,28 @@ import type { GeneralStepData } from '../pages';
  * fields (`middlename`, `mobileNo`, `email`, …) remain optional so the
  * type stays interchangeable with the page-object's
  * `fillGeneralStep(data)` parameter.
- *
- * Overrides that explicitly set one of these fields to `''` (the empty
- * string) still satisfy `string`, which is precisely how negative-path
- * specs request an empty required field without bypassing the type
- * system.
  */
 export type TestClientPayload = GeneralStepData &
   Required<Pick<GeneralStepData, 'office' | 'legalForm' | 'firstname' | 'lastname' | 'submittedOnDate'>>;
 
-/**
- * Default values used by {@link createTestClient}.
- *
- * Aligned with the Fineract default-tenant Liquibase seed:
- *   - `Head Office` is the first row inserted into `m_office`.
- *   - PERSON (legalFormId = 1) is the most common legal form and matches
- *     the seeded `c_code_value`s used by other Playwright specs.
- *   - `01 January 2024` is the same submitted-on date the close-client
- *     spec uses, keeping all test clients clustered on a known business
- *     day so reports stay readable.
- */
+export type ClientState = 'pending' | 'active' | 'rejected' | 'withdrawn' | 'closed';
+
+export interface CreateTestClientOverrides extends Partial<GeneralStepData> {
+  state?: ClientState;
+  actionDate?: string;
+  rejectionReasonName?: string;
+  withdrawalReasonName?: string;
+  closureReasonName?: string;
+}
+
+export interface SeededTestClient {
+  clientId: number;
+  officeId: number;
+  payload: TestClientPayload;
+  state: ClientState;
+  cleanup: () => Promise<void>;
+}
+
 const DEFAULT_TEST_CLIENT_DATA: Readonly<TestClientPayload> = {
   office: 'Head Office',
   legalForm: 'PERSON',
@@ -61,42 +72,122 @@ const DEFAULT_TEST_CLIENT_DATA: Readonly<TestClientPayload> = {
   submittedOnDate: '01 January 2024'
 };
 
-/**
- * Monotonic counter used to keep firstnames unique even when the same
- * test invokes `createTestClient` multiple times within a single
- * millisecond. Combined with the module-load epoch it produces
- * `Test<epoch><seq>` style names that satisfy Fineract's
- * "must not begin with a number" pattern (the leading `Test` prefix is
- * always alphabetic).
- */
 let testClientSequence = 0;
 const MODULE_LOAD_EPOCH = Date.now();
 
-/**
- * Builds a deterministic, uniquely-named payload for the create-client
- * stepper.
- *
- * Use this factory in negative-path specs that need a valid baseline to
- * mutate one field at a time — e.g. clearing `lastname` to assert the
- * Person-legal-form validator surfaces "Client last name is required".
- *
- * The happy-path spec intentionally avoids this factory and inlines the
- * payload so the UI form, the API echo assertion, and the cleanup-guard
- * all read against the same explicit values.
- *
- * @param overrides - Partial overrides merged on top of the defaults.
- *                    Pass `lastname: ''` (or any other empty required
- *                    field) to exercise validation.
- * @returns A {@link TestClientPayload} ready for
- *          `CreateClientPage.fillGeneralStep`.
- */
-export function createTestClient(overrides: Partial<GeneralStepData> = {}): TestClientPayload {
+function extractPayloadOverrides(overrides: CreateTestClientOverrides): Partial<GeneralStepData> {
+  const { state, actionDate, rejectionReasonName, withdrawalReasonName, closureReasonName, ...payloadOverrides } =
+    overrides;
+  void state;
+  void actionDate;
+  void rejectionReasonName;
+  void withdrawalReasonName;
+  void closureReasonName;
+  return payloadOverrides;
+}
+
+export function createTestClient(overrides: CreateTestClientOverrides = {}): TestClientPayload {
   testClientSequence += 1;
   const uniqueSuffix = `${MODULE_LOAD_EPOCH}${testClientSequence}`;
+  const payloadOverrides = extractPayloadOverrides(overrides);
 
   return {
     ...DEFAULT_TEST_CLIENT_DATA,
     firstname: `${DEFAULT_TEST_CLIENT_DATA.firstname}${uniqueSuffix}`,
-    ...overrides
+    ...payloadOverrides
   };
+}
+
+function resolveCreatedClientId(response: unknown): number {
+  const candidate = response as { resourceId?: number; clientId?: number } | null | undefined;
+  const id = candidate?.resourceId ?? candidate?.clientId;
+
+  if (typeof id !== 'number') {
+    throw new Error(
+      `[createSeededClient] Fineract create-client response missing resourceId/clientId: ${JSON.stringify(response)}`
+    );
+  }
+
+  return id;
+}
+
+export async function createSeededClient(
+  fineractApi: FineractApiClient,
+  overrides: CreateTestClientOverrides = {}
+): Promise<SeededTestClient> {
+  const payload = createTestClient(overrides);
+  const state: ClientState = overrides.state ?? 'pending';
+  const actionDate = overrides.actionDate ?? payload.submittedOnDate;
+  const officeId = await fineractApi.getFirstOfficeId();
+
+  const createResponse =
+    state === 'active' || state === 'closed'
+      ? await fineractApi.createActiveClient(officeId, {
+          firstname: payload.firstname,
+          lastname: payload.lastname,
+          submittedOnDate: payload.submittedOnDate,
+          activationDate: actionDate
+        })
+      : await fineractApi.createPendingClient(officeId, {
+          firstname: payload.firstname,
+          lastname: payload.lastname,
+          submittedOnDate: payload.submittedOnDate
+        });
+
+  const clientId = resolveCreatedClientId(createResponse);
+
+  const cleanup = async (): Promise<void> => {
+    try {
+      const members = await fineractApi.getClientFamilyMembers(clientId).catch(() => [] as unknown[]);
+
+      for (const member of members) {
+        const memberId = (member as { id?: number }).id;
+        if (typeof memberId !== 'number') {
+          continue;
+        }
+
+        try {
+          await fineractApi.deleteClientFamilyMember(clientId, memberId);
+        } catch (memberError) {
+          const message = memberError instanceof Error ? memberError.message : String(memberError);
+          console.warn(
+            `[createSeededClient cleanup] failed to delete family member ${memberId} of client ${clientId}: ${message}`
+          );
+        }
+      }
+
+      await fineractApi.deleteClient(clientId);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      console.warn(`[createSeededClient cleanup] failed to delete client ${clientId} (state=${state}): ${message}`);
+    }
+  };
+
+  try {
+    switch (state) {
+      case 'rejected': {
+        const reason = await fineractApi.ensureClientRejectionReason(overrides.rejectionReasonName);
+        await fineractApi.rejectClient(clientId, reason.id, actionDate);
+        break;
+      }
+      case 'withdrawn': {
+        const reason = await fineractApi.ensureClientWithdrawalReason(overrides.withdrawalReasonName);
+        await fineractApi.withdrawClient(clientId, reason.id, actionDate);
+        break;
+      }
+      case 'closed': {
+        const reason = await fineractApi.ensureClientClosureReason(overrides.closureReasonName);
+        await fineractApi.closeClient(clientId, reason.id, actionDate);
+        break;
+      }
+      case 'pending':
+      case 'active':
+        break;
+    }
+  } catch (transitionError) {
+    await cleanup();
+    throw transitionError;
+  }
+
+  return { clientId, officeId, payload, state, cleanup };
 }

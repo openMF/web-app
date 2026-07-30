@@ -44,6 +44,28 @@
         >
           {{ 'labels.heading.Address' | translate }}
         </a>
+        <a
+          mat-tab-link
+          [routerLink]="['./services']"
+          routerLinkActive
+          #services="routerLinkActive"
+          [active]="services.isActive"
+          class="compact-tab"
+          *mifosxHasPermission="'READ_OFFICE'"
+        >
+          {{ 'labels.heading.Services' | translate }}
+        </a>
+        <a
+          mat-tab-link
+          [routerLink]="['./schedules']"
+          routerLinkActive
+          #schedules="routerLinkActive"
+          [active]="schedules.isActive"
+          class="compact-tab"
+          *mifosxHasPermission="'READ_OFFICE'"
+        >
+          {{ 'labels.heading.Schedules' | translate }}
+        </a>
         @for (officeDatatable of officeDatatables; track officeDatatable) {
           <span>
             <a

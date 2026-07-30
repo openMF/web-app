@@ -103,6 +103,21 @@ export class AddressTabComponent implements OnInit {
 
   private autoFilledFields = new Set<string>();
 
+  get hasOfficeAddress(): boolean {
+    return this.officeAddresses.length > 0;
+  }
+
+  get canAddAddress(): boolean {
+    return (
+      !this.hasOfficeAddress &&
+      !this.isLoading &&
+      !this.isSaving &&
+      !this.hasError &&
+      !this.optionsLoadFailed &&
+      !this.isPluginUnavailable
+    );
+  }
+
   ngOnInit() {
     this.officeId = this.route.parent.snapshot.paramMap.get('officeId') ?? '';
     this.loadOfficeAddresses();
@@ -150,7 +165,7 @@ export class AddressTabComponent implements OnInit {
   }
 
   addAddress() {
-    if (this.isPluginUnavailable) {
+    if (!this.canAddAddress) {
       return;
     }
 

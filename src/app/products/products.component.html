@@ -95,6 +95,41 @@
             </mat-list-item>
           </div>
 
+          <!-- The Self-Service Plugin checks TRANSFER_FEE permissions; its migrations currently do not appear to seed them. -->
+          <mat-list-item [routerLink]="['transfer-fees']" *mifosxHasPermission="'READ_TRANSFER_FEE'">
+            <div class="menu-list-item-content">
+              <div class="menu-left-section" [routerLink]="['transfer-fees']">
+                <mat-icon matListIcon>
+                  <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
+                </mat-icon>
+                <div matLine>
+                  {{ 'labels.heading.Transfer Fees' | translate }}
+                  @if (arrowBooleans[13]) {
+                    <p matLine [routerLink]="['transfer-fees']" class="menu-explanation">
+                      {{ 'labels.text.Configure self-service transfer fees' | translate }}
+                    </p>
+                  }
+                </div>
+              </div>
+              <div class="menu-right-section">
+                @if (!arrowBooleans[13]) {
+                  <fa-icon
+                    (click)="arrowBooleansToggle(13); $event.stopPropagation()"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                }
+                @if (arrowBooleans[13]) {
+                  <fa-icon
+                    (click)="arrowBooleansToggle(13); $event.stopPropagation()"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
+                }
+              </div>
+            </div>
+          </mat-list-item>
+
           <mat-list-item [routerLink]="['collaterals']">
             <div class="menu-list-item-content">
               <div class="menu-left-section" [routerLink]="['collaterals']">

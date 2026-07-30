@@ -35,6 +35,10 @@ import { ViewRecurringDepositProductComponent } from './recurring-deposit-produc
 import { ChargesComponent } from './charges/charges.component';
 import { ViewChargeComponent } from './charges/view-charge/view-charge.component';
 import { CreateChargeComponent } from './charges/create-charge/create-charge.component';
+import { TransferFeesComponent } from './transfer-fees/transfer-fees.component';
+import { CreateTransferFeeComponent } from './transfer-fees/create-transfer-fee/create-transfer-fee.component';
+import { ViewTransferFeeComponent } from './transfer-fees/view-transfer-fee/view-transfer-fee.component';
+import { EditTransferFeeComponent } from './transfer-fees/edit-transfer-fee/edit-transfer-fee.component';
 import { FixedDepositProductsComponent } from './fixed-deposit-products/fixed-deposit-products.component';
 import { CreateFixedDepositProductComponent } from './fixed-deposit-products/create-fixed-deposit-product/create-fixed-deposit-product.component';
 import { ProductsMixComponent } from './products-mix/products-mix.component';
@@ -80,6 +84,8 @@ import { RecurringDepositProductResolver } from './recurring-deposit-products/re
 import { ChargesResolver } from './charges/charges.resolver';
 import { ChargeResolver } from './charges/charge.resolver';
 import { ChargesTemplateResolver } from './charges/charges-template.resolver';
+import { TransferFeesResolver } from './transfer-fees/transfer-fees.resolver';
+import { TransferFeeResolver } from './transfer-fees/transfer-fee.resolver';
 import { FixedDepositProductsResolver } from './fixed-deposit-products/fixed-deposit-products.resolver';
 import { FixedDepositProductsTemplateResolver } from './fixed-deposit-products/fixed-deposit-products-template.resolver';
 import { ProductsMixResolver } from './products-mix/products-mix.resolver';
@@ -413,6 +419,45 @@ const routes: Routes = [
                       }
                     }
                   ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          path: 'transfer-fees',
+          data: { title: 'Transfer Fees', breadcrumb: 'Transfer Fees' },
+          children: [
+            {
+              path: '',
+              component: TransferFeesComponent,
+              resolve: {
+                transferFees: TransferFeesResolver
+              }
+            },
+            {
+              path: 'create',
+              component: CreateTransferFeeComponent,
+              data: { title: 'Create Transfer Fee', breadcrumb: 'Create' }
+            },
+            {
+              path: ':id',
+              data: { title: 'View Transfer Fee', routeParamBreadcrumb: 'id' },
+              children: [
+                {
+                  path: '',
+                  component: ViewTransferFeeComponent,
+                  resolve: {
+                    transferFee: TransferFeeResolver
+                  }
+                },
+                {
+                  path: 'edit',
+                  component: EditTransferFeeComponent,
+                  data: { title: 'Edit Transfer Fee', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  resolve: {
+                    transferFee: TransferFeeResolver
+                  }
                 }
               ]
             }
@@ -1047,6 +1092,8 @@ const routes: Routes = [
     ChargeResolver,
     ChargesTemplateAndResolver,
     ChargesTemplateResolver,
+    TransferFeesResolver,
+    TransferFeeResolver,
     FixedDepositProductsResolver,
     FixedDepositProductsTemplateResolver,
     ProductsMixResolver,
