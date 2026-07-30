@@ -195,7 +195,7 @@ export class LoanProductAllocationComponent implements OnInit {
       delete loanAllocationProduct.id;
       this.productService.updateLoanAllocationProduct(id, loanAllocationProduct).subscribe((response: any) => {
         this.selectedUnits = [];
-        this.router.navigate(["../"], { relativeTo: this.route });
+        this.router.navigate(["../../"], { relativeTo: this.route });
       });
     } else {
       delete loanAllocationProduct.id;

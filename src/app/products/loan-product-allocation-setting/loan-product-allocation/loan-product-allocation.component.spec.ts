@@ -45,7 +45,7 @@ describe('LoanProductAllocationComponent', () => {
     Object.assign(component, overrides);
     component.ngOnInit();
 
-    return { component, productService, router };
+    return { component, productService, router, route };
   };
 
   it('should create', () => {
@@ -92,5 +92,14 @@ describe('LoanProductAllocationComponent', () => {
 
     expect(component.getLoanAllocationProduct).not.toHaveBeenCalled();
     expect(productService.updateLoanAllocationProduct).not.toHaveBeenCalled();
+  });
+
+  it('should navigate to listing page after successful update', () => {
+    const { component, router, route, productService } = createComponent();
+
+    component.submit();
+
+    expect(productService.updateLoanAllocationProduct).toHaveBeenCalledWith(7, jasmine.any(Object));
+    expect(router.navigate).toHaveBeenCalledWith(['../../'], { relativeTo: route });
   });
 });
