@@ -42,6 +42,7 @@ export class AddressLocationMapComponent implements AfterViewInit, OnChanges, On
   @ViewChild('mapContainer')
   set mapContainer(container: ElementRef<HTMLElement> | undefined) {
     this.mapContainerElement = container;
+    this.observeMapContainer(container);
     this.updateMap();
   }
 
@@ -49,6 +50,7 @@ export class AddressLocationMapComponent implements AfterViewInit, OnChanges, On
   private map: L.Map | null = null;
   private marker: L.Marker | null = null;
   private mapContainerElement?: ElementRef<HTMLElement>;
+  private resizeObserver: ResizeObserver | null = null;
   tileLoadFailed = false;
 
   private readonly markerIcon = L.icon({
@@ -83,10 +85,20 @@ export class AddressLocationMapComponent implements AfterViewInit, OnChanges, On
 
   ngOnDestroy(): void {
     this.destroyMap();
+    this.disconnectResizeObserver();
   }
 
   get hasValidCoordinates(): boolean {
     return this.getCoordinatePair() !== null;
+  }
+
+  refresh(): void {
+    if (!this.map) {
+      this.updateMap();
+      return;
+    }
+
+    setTimeout(() => this.map?.invalidateSize(), 0);
   }
 
   private updateMap(): void {
@@ -117,7 +129,18 @@ export class AddressLocationMapComponent implements AfterViewInit, OnChanges, On
       this.marker?.setLatLng(coordinates);
     }
 
-    setTimeout(() => this.map?.invalidateSize(), 0);
+    this.refresh();
+  }
+
+  private observeMapContainer(container: ElementRef<HTMLElement> | undefined): void {
+    this.disconnectResizeObserver();
+
+    if (!container || typeof ResizeObserver === 'undefined') {
+      return;
+    }
+
+    this.resizeObserver = new ResizeObserver(() => this.refresh());
+    this.resizeObserver.observe(container.nativeElement);
   }
 
   private getCoordinatePair(): L.LatLngTuple | null {
@@ -129,5 +152,10 @@ export class AddressLocationMapComponent implements AfterViewInit, OnChanges, On
     this.map?.remove();
     this.map = null;
     this.tileLoadFailed = false;
+  }
+
+  private disconnectResizeObserver(): void {
+    this.resizeObserver?.disconnect();
+    this.resizeObserver = null;
   }
 }
