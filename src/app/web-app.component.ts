@@ -156,6 +156,15 @@ export class WebAppComponent implements OnInit, OnDestroy {
     });
     this.themingService.setInitialDarkMode();
     this.themingService.setDarkMode(!!this.settingsService.themeDarkEnabled);
+    // Apply the tenant's brand colour: cached value first so there is no flash,
+    // then refreshed from the server. Re-run whenever the session changes so a
+    // user signing in picks up their tenant's branding.
+    this.themeStorageService.loadTenantTheme();
+    this.authenticationService.isAuthenticated$.pipe(takeUntil(this.destroy$)).subscribe((isAuthenticated: boolean) => {
+      if (isAuthenticated) {
+        this.themeStorageService.loadTenantTheme();
+      }
+    });
 
     // Setup logger
     if (environment.production) {
