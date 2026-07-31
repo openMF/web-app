@@ -186,11 +186,19 @@ export class SiteSelectorComponent implements OnInit, OnChanges, OnDestroy {
   onSiteChange(): void {
     const siteIds: number[] = this.siteSelectorForm.value.siteIds || [];
     if (siteIds.includes(this.ALL_SITES_OPTION_ID)) {
-      // "All Sites" selected: mark every available site as selected.
-      this.siteSelectorForm.patchValue(
-        { siteIds: this.siteOptions.map((site: any) => site.id) },
-        { emitEvent: false }
-      );
+      const selectedSiteIds = siteIds.filter((id: number) => id !== this.ALL_SITES_OPTION_ID);
+      const allAlreadySelected =
+        this.siteOptions.length > 0 && this.siteOptions.every((site: any) => selectedSiteIds.includes(site.id));
+      if (allAlreadySelected) {
+        // "All Sites" clicked while everything was selected: deselect all.
+        this.siteSelectorForm.patchValue({ siteIds: this.ALL_SITES }, { emitEvent: false });
+      } else {
+        // "All Sites" selected: mark every available site as selected.
+        this.siteSelectorForm.patchValue(
+          { siteIds: this.siteOptions.map((site: any) => site.id) },
+          { emitEvent: false }
+        );
+      }
     }
     this.emitSelection();
   }
