@@ -174,6 +174,15 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
     )
   );
 
+  /**
+   * Whether there is an active RESET that can still be undone.
+   * Undo Reset is LIFO and only meaningful while a RESET remains open (endDate === null);
+   * once a reset is undone the backend closes it by setting its endDate.
+   */
+  hasActiveReset = computed<boolean>(() =>
+    this.loanDelinquencyActions().some((item) => item.action === 'RESET' && item.endDate == null)
+  );
+
   timelineYear = computed<number>(() => {
     const actions = this.loanDelinquencyActions();
     if (actions.length === 0) {
@@ -476,6 +485,12 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
         action,
         locale: this.locale,
         startNewPeriod
+      };
+    } else if (action === 'undo_reset') {
+      payload = {
+        action,
+        locale: this.locale,
+        dateFormat: this.dateFormat
       };
     }
 
