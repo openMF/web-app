@@ -52,9 +52,17 @@ export class ExchangeRatesService {
   }
 
   getExchangeRate(exchangeRateId: string): Observable<ExchangeRate> {
-    return this.http
-      .get<ExchangeRate>(`${this.exchangeRatesResource}/${exchangeRateId}`)
-      .pipe(map((rate) => this.normalizeExchangeRate(rate)));
+    return this.getExchangeRates().pipe(
+      map((rates) => {
+        const exchangeRate = this.normalizeExchangeRateResponse(rates).find(
+          (rate) => rate.id?.toString() === exchangeRateId.toString()
+        );
+        if (!exchangeRate) {
+          throw new Error(`Exchange rate not found with id: ${exchangeRateId}`);
+        }
+        return exchangeRate;
+      })
+    );
   }
 
   createExchangeRate(exchangeRate: ExchangeRatePayload): Observable<{ resourceId: number }> {
