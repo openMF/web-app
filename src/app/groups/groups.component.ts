@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngx-translate/core';
 
 /** rxjs Imports */
 import { merge } from 'rxjs';
@@ -60,7 +61,8 @@ export class GroupsComponent implements OnInit, AfterViewInit {
     private groupsService: GroupsService,
     private router: Router,
     private route: ActivatedRoute,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit() {
@@ -149,7 +151,11 @@ export class GroupsComponent implements OnInit, AfterViewInit {
    */
   bulkRemoval() {
     if (!this.siteSelection?.siteIds?.length) {
-      this.snackBar.open('No sites selected', 'Close', { duration: 3000 });
+      this.snackBar.open(
+        this.translateService.instant('labels.oaf.NoSitesSelected'),
+        this.translateService.instant('labels.buttons.Close'),
+        { duration: 3000 }
+      );
       return;
     }
 

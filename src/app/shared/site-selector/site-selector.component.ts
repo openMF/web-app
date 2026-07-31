@@ -115,7 +115,7 @@ export class SiteSelectorComponent implements OnInit, OnChanges, OnDestroy {
         this.siteOptions = (response || []).filter((office: any) => office.status === true);
         this.siteDropdownOptions = this.siteOptions.length
           ? [
-              { id: this.ALL_SITES_OPTION_ID, name: this.translateService.instant('labels.oaf.All Sites') },
+              { id: this.ALL_SITES_OPTION_ID, name: this.translateService.instant('labels.oaf.AllSites') },
               ...this.siteOptions,
             ]
           : [];

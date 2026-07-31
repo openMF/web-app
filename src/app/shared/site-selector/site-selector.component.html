@@ -14,7 +14,7 @@
         [items]="regionOptions"
         bindLabel="name"
         bindValue="id"
-        placeholder="{{ 'labels.oaf.Select a region' | translate }}"
+        placeholder="{{ 'labels.oaf.SelectARegion' | translate }}"
         formControlName="regionId"
         aria-labelledby="regionId"
         (change)="onRegionChange($event)"
@@ -31,7 +31,7 @@
         [items]="districtOptions"
         bindLabel="name"
         bindValue="id"
-        placeholder="{{ 'labels.oaf.Select a district' | translate }}"
+        placeholder="{{ 'labels.oaf.SelectADistrict' | translate }}"
         formControlName="districtId"
         aria-labelledby="districtId"
         (change)="onDistrictChange($event)"
@@ -42,13 +42,13 @@
     </div>
 
     <div class="site-selector-field" fxFlex="33%" fxFlex.lt-md="100%">
-      <label for="siteIds">{{ 'labels.oaf.Site (Optional) - Defaults to All Sites' | translate }}</label>
+      <label for="siteIds">{{ 'labels.oaf.SiteOptionalDefaultsToAllSites' | translate }}</label>
       <ng-select
         #site
         [items]="siteDropdownOptions"
         bindLabel="name"
         bindValue="id"
-        placeholder="{{ 'labels.oaf.All Sites' | translate }}"
+        placeholder="{{ 'labels.oaf.AllSites' | translate }}"
         formControlName="siteIds"
         aria-labelledby="siteIds"
         (change)="onSiteChange()"
@@ -69,7 +69,7 @@
         </ng-template>
         <ng-template ng-multi-label-tmp let-items="items">
           <span class="ng-placeholder-selected">
-            {{ items.length }} {{ 'labels.oaf.site(s) selected' | translate }}
+            {{ items.length }} {{ 'labels.oaf.SitesSelected' | translate }}
           </span>
         </ng-template>
       </ng-select>

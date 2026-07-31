@@ -1,6 +1,6 @@
 <div class="container">
   <div class="page-header" fxLayout="row" fxLayoutAlign="space-between center">
-    <h2 class="page-title">{{ 'labels.oaf.Impact Preview' | translate }}</h2>
+    <h2 class="page-title">{{ 'labels.oaf.ImpactPreview' | translate }}</h2>
     <button mat-icon-button class="close-button" (click)="cancel()" [attr.aria-label]="'labels.buttons.Close' | translate">
       <fa-icon icon="times"></fa-icon>
     </button>
@@ -16,19 +16,19 @@
 
     <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="16px" class="summary-stats">
       <div class="stat-box" fxFlex="25%">
-        <span class="stat-label">{{ 'labels.oaf.Groups Affected' | translate }}</span>
+        <span class="stat-label">{{ 'labels.oaf.GroupsAffected' | translate }}</span>
         <span class="stat-value">{{ groupsAffected | number }}</span>
       </div>
       <div class="stat-box" fxFlex="25%">
-        <span class="stat-label">{{ 'labels.oaf.Clients in scope' | translate }}</span>
+        <span class="stat-label">{{ 'labels.oaf.ClientsInScope' | translate }}</span>
         <span class="stat-value">{{ clientsInScope | number }}</span>
       </div>
       <div class="stat-box" fxFlex="25%">
-        <span class="stat-label">{{ 'labels.oaf.To be removed' | translate }}</span>
+        <span class="stat-label">{{ 'labels.oaf.ToBeRemoved' | translate }}</span>
         <span class="stat-value">{{ toBeRemoved | number }}</span>
       </div>
       <div class="stat-box" fxFlex="25%">
-        <span class="stat-label">{{ 'labels.oaf.To be Skipped' | translate }}</span>
+        <span class="stat-label">{{ 'labels.oaf.ToBeSkipped' | translate }}</span>
         <span class="stat-value">{{ toBeSkipped | number }}</span>
       </div>
     </div>
@@ -36,23 +36,23 @@
     <div class="exceptions" fxLayout="row" fxLayoutGap="24px" fxLayoutAlign="start center">
       <span class="exceptions-label">{{ 'labels.oaf.Exceptions' | translate }}:</span>
       <mat-checkbox [(ngModel)]="exceptions.bannedClients" disabled>
-        {{ 'labels.oaf.Banned Clients' | translate }}
+        {{ 'labels.oaf.BannedClients' | translate }}
       </mat-checkbox>
       <mat-checkbox [(ngModel)]="exceptions.clientsWithActiveLoans" disabled>
-        {{ 'labels.oaf.Clients with active loans' | translate }}
+        {{ 'labels.oaf.ClientsWithActiveLoans' | translate }}
       </mat-checkbox>
       <mat-checkbox [(ngModel)]="exceptions.groupsWithActiveLoans" disabled>
-        {{ 'labels.oaf.Groups with active loans' | translate }}
+        {{ 'labels.oaf.GroupsWithActiveLoans' | translate }}
       </mat-checkbox>
     </div>
   </mat-card>
 
   <div class="export-buttons" fxLayout="row" fxLayoutGap="12px">
     <button mat-stroked-button (click)="downloadCsv('skipped')">
-      <fa-icon icon="download"></fa-icon>&nbsp;{{ 'labels.oaf.Skipped clients (.csv)' | translate }}
+      <fa-icon icon="download"></fa-icon>&nbsp;{{ 'labels.oaf.SkippedClientsCsv' | translate }}
     </button>
     <button mat-stroked-button (click)="downloadCsv('removed')">
-      <fa-icon icon="download"></fa-icon>&nbsp;{{ 'labels.oaf.Removed clients (.csv)' | translate }}
+      <fa-icon icon="download"></fa-icon>&nbsp;{{ 'labels.oaf.RemovedClientsCsv' | translate }}
     </button>
   </div>
 
@@ -69,12 +69,12 @@
     </ng-container>
 
     <ng-container matColumnDef="toRemove">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.oaf.To remove' | translate }}</th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.oaf.ToRemove' | translate }}</th>
       <td mat-cell *matCellDef="let row">{{ row.toRemove }}</td>
     </ng-container>
 
     <ng-container matColumnDef="toSkip">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.oaf.To skip' | translate }}</th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.oaf.ToSkip' | translate }}</th>
       <td mat-cell *matCellDef="let row" class="to-skip">{{ row.toSkip }}</td>
     </ng-container>
 
@@ -95,7 +95,7 @@
       <fa-icon icon="times"></fa-icon>&nbsp;{{ 'labels.buttons.Cancel' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="submitForApproval()">
-      <fa-icon icon="circle"></fa-icon>&nbsp;{{ 'labels.oaf.Submit for Approval' | translate }}
+      <fa-icon icon="circle"></fa-icon>&nbsp;{{ 'labels.oaf.SubmitForApproval' | translate }}
     </button>
   </div>
 </div>
