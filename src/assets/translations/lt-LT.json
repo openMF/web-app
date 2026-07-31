@@ -1129,6 +1129,11 @@
       "NotEqual": "Nelygu"
     },
     "heading": {
+      "Create Agriculture Loan": "Sukurti žemės ūkio paskolą",
+      "Create Education Loan": "Sukurti studijų paskolą",
+      "Create Personal Loan": "Sukurti vartojimo paskolą",
+      "Create Two Wheeler Loan": "Sukurti motociklų ir motorolerių paskolą",
+      "Custom / Advanced Loan Configuration": "Pasirinktinė / išplėstinė paskolos konfigūracija",
       "Breach Actions": "Pažeidimas Veiksmai",
       "Delinquency & Breach": "Delinkvencija ir pažeidimas",
       "Interest": "Palūkanos",
@@ -3452,6 +3457,14 @@
       "undo_account_transfer": "Ar tikrai norite atšaukti šį sąskaitos pervedimą?"
     },
     "text": {
+      "Agriculture Loan": "Žemės ūkio paskola",
+      "Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles": "Kreditas žemės ūkio poreikiams, tokiems kaip augalininkystė, technika ar žemės gerinimas, paprastai derinamas prie žemės ūkio ciklų.",
+      "Education Loan": "Studijų paskola",
+      "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "Studijų mokesčio ir kitų susijusių išlaidų finansavimas mokantis šalyje ar užsienyje, su studijų trukmei pritaikytomis grąžinimo galimybėmis.",
+      "Personal Loan": "Vartojimo paskola",
+      "Custom / Advanced": "Pasirinktinė / išplėstinė",
+      "Two Wheeler Loan": "Motociklų ir motorolerių paskola",
+      "Finance for new or used two-wheelers with quick approval and flexible down payment options": "Naujų ar naudotų motociklų ir motorolerių finansavimas su greitu patvirtinimu ir lanksčia pradine įmoka.",
       "Max": "Maks",
       "Hidden variables and predefined values are included in the final payload automatically.": "Hidden variables and predefined values are included in the final payload automatically.",
       "No Breach Actions": "Nėra Pažeidimas Veiksmai",

@@ -9,7 +9,7 @@
 <div class="wizard-shell">
   <div class="wizard-shell__header">
     <div>
-      <p class="landing-page__eyebrow">{{ profileLabel }}</p>
+      <p class="landing-page__eyebrow">{{ profileLabel | translate }}</p>
       <h2>{{ 'labels.heading.Multi-step form' | translate }}</h2>
     </div>
   </div>
@@ -43,7 +43,24 @@
           </div>
         </ng-container>
 
-        <ng-container *ngIf="step.kind !== 'payment-allocation' && step.kind !== 'charges' && step.kind !== 'review'">
+        <ng-container *ngIf="step.kind === 'accounting' && loanProductsTemplate">
+          <div class="wizard-accounting">
+            <mifosx-loan-product-accounting-step
+              [loanProductsTemplate]="loanProductsTemplate"
+              [accountingRuleData]="accountingRuleData"
+              [loanProductFormValid]="form.valid"
+            ></mifosx-loan-product-accounting-step>
+          </div>
+        </ng-container>
+
+        <ng-container
+          *ngIf="
+            step.kind !== 'payment-allocation' &&
+            step.kind !== 'charges' &&
+            step.kind !== 'accounting' &&
+            step.kind !== 'review'
+          "
+        >
           <div class="field-grid">
             <ng-container *ngFor="let field of visibleFields(step); trackBy: trackByFieldKey">
               <mat-form-field *ngIf="field.type !== 'checkbox'" appearance="outline">
@@ -138,6 +155,25 @@
               </div>
             </div>
           </ng-container>
+
+          <!--
+            Accounting summary, driven by the reused Classic accounting step and rendered with the same
+            atomic mifosx-gl-account-display component Classic uses — so the selected GL accounts appear
+            exactly as they do in the Classic preview.
+          -->
+          <div class="review-section" *ngIf="accountingReview">
+            <p class="review-section__title">{{ 'labels.heading.Accounting' | translate }}</p>
+            <div class="review-row">
+              <span class="review-row__label">{{ 'labels.inputs.Type' | translate }}</span>
+              <span class="review-row__value">{{ accountingReview.ruleLabel }}</span>
+            </div>
+            <mifosx-gl-account-display
+              *ngFor="let account of accountingReview.accounts; trackBy: trackByAccountTitle"
+              [accountTitle]="account.title"
+              [glAccount]="account.glAccount"
+              [withTitle]="'47%'"
+            ></mifosx-gl-account-display>
+          </div>
 
           <div class="review-defaults-pill">
             <div>

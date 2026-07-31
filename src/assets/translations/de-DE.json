@@ -1132,6 +1132,11 @@
       "NotEqual": "Ungleich"
     },
     "heading": {
+      "Create Agriculture Loan": "Agrarkredit erstellen",
+      "Create Education Loan": "Bildungskredit erstellen",
+      "Create Personal Loan": "Privatkredit erstellen",
+      "Create Two Wheeler Loan": "Zweiradkredit erstellen",
+      "Custom / Advanced Loan Configuration": "Benutzerdefinierte / erweiterte Kreditkonfiguration",
       "Breach Actions": "Verstoßaktionen",
       "Delinquency & Breach": "Verzug & Verstoß",
       "Interest": "Zinsen",
@@ -3455,6 +3460,14 @@
       "undo_account_transfer": "Möchten Sie diesen Kontotransfer wirklich rückgängig machen?"
     },
     "text": {
+      "Agriculture Loan": "Agrarkredit",
+      "Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles": "Kredit für landwirtschaftliche Zwecke wie Pflanzenbau, Maschinen oder Flächenerschließung, meist an die landwirtschaftlichen Zyklen gekoppelt.",
+      "Education Loan": "Bildungskredit",
+      "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "Finanzierung von Studiengebühren und damit verbundenen Kosten für ein Studium im In- oder Ausland, mit an die Studiendauer angepassten Rückzahlungsoptionen.",
+      "Personal Loan": "Privatkredit",
+      "Custom / Advanced": "Benutzerdefiniert / Erweitert",
+      "Two Wheeler Loan": "Zweiradkredit",
+      "Finance for new or used two-wheelers with quick approval and flexible down payment options": "Finanzierung neuer oder gebrauchter Zweiräder mit schneller Zusage und flexibler Anzahlung.",
       "Max": "Max",
       "Hidden variables and predefined values are included in the final payload automatically.": "Hidden variables and predefined values are included in the final payload automatically.",
       "No Breach Actions": "Keine Verstoßaktionen",

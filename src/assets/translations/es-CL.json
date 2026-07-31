@@ -1129,6 +1129,11 @@
       "NotEqual": "No igual"
     },
     "heading": {
+      "Create Agriculture Loan": "Crear Crédito Agrícola",
+      "Create Education Loan": "Crear Crédito Educativo",
+      "Create Personal Loan": "Crear Crédito Personal",
+      "Create Two Wheeler Loan": "Crear Crédito para Motos",
+      "Custom / Advanced Loan Configuration": "Configuración de Crédito Personalizada / Avanzada",
       "Breach Actions": "Acciones de Incumplimiento",
       "Delinquency & Breach": "Morosidad e Incumplimiento",
       "Interest": "Interés",
@@ -3454,6 +3459,14 @@
       "undo_account_transfer": "¿Está seguro de que desea revertir esta transferencia de cuenta?"
     },
     "text": {
+      "Agriculture Loan": "Crédito Agrícola",
+      "Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles": "Crédito para necesidades agrícolas como la producción de cultivos, maquinaria o habilitación de terrenos, generalmente ajustado a los ciclos agrícolas.",
+      "Education Loan": "Crédito Educativo",
+      "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "Financiamiento de matrícula y gastos asociados para estudios nacionales o internacionales, con opciones de pago ajustadas a la duración de la carrera.",
+      "Personal Loan": "Crédito Personal",
+      "Custom / Advanced": "Personalizado / Avanzado",
+      "Two Wheeler Loan": "Crédito para Motos",
+      "Finance for new or used two-wheelers with quick approval and flexible down payment options": "Financiamiento de motos nuevas o usadas, con aprobación rápida y opciones flexibles de pago inicial.",
       "Max": "Máx",
       "Hidden variables and predefined values are included in the final payload automatically.": "Hidden variables and predefined values are included in the final payload automatically.",
       "No Breach Actions": "Sin acciones de incumplimiento",
