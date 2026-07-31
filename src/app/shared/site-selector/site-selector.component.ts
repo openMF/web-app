@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { OrganizationService } from 'app/organization/organization.service';
@@ -36,7 +36,7 @@ export interface SiteSelectorChange {
 })
 export class SiteSelectorComponent implements OnInit, OnChanges, OnDestroy {
   /** Root/country office id to fetch regions from. */
-  countryId: number | null = null;
+  @Input() countryId: number | null = null;
 
   /** Emits the current region/district/site selection whenever it changes. */
   @Output() selectionChange = new EventEmitter<SiteSelectorChange>();
@@ -80,7 +80,9 @@ export class SiteSelectorComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit(): void {
     this.setupRequestStreams();
-    this.countryId = this.settingsService.getSelectedCountry()?.id;
+    if (!this.countryId) {
+      this.countryId = this.settingsService.getSelectedCountry()?.id ?? null;
+    }
     if (this.countryId) {
       this.loadRegions();
     }
