@@ -1,0 +1,18 @@
+commonconfig:
+  FINERACT_KEYCLOAK_CLIENT_ID: fineract
+  FINERACT_KEYCLOAK_PUBLIC_CLIENT: "true"
+  FINERACT_KEYCLOAK_REALM: OneAcreFund
+  FINERACT_PROXY_URL: https://fineract-fineract-backend-fineractrest:8443
+  MATOMO_SITE_URL: https://analytics.oneacrefund.org
+  SENTRY_DSN: https://de303153328352a5b50dfdd84d381428@o454511.ingest.us.sentry.io/4508318875844608
+  APM_ACTIVE: "true"
+  APM_SERVER_URL: https://api.oneacrefund.org/apm
+  AUTH_SERVER_URL: https://accounts.oneacrefund.org
+  FINERACT_API_URL: https://loans.oneacrefund.org
+  FINERACT_KEYCLOAK_API_URL: https://secure-api.oneacrefund.org/functions/function/keycloak-api
+  FINERACT_KEYCLOAK_AUTH_SERVER_URL: https://accounts.oneacrefund.org
+  FINERACT_KEYCLOAK_TOKEN_URL: https://loans.oneacrefund.org/auth/realms/OneAcreFund/protocol/openid-connect/token
+  HOST_HOME_URL: https://loans.oneacrefund.org/home
+  MATOMO_SITE_ID: "1"
+image:
+  tag: 1.4.10
