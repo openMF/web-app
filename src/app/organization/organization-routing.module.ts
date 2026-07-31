@@ -195,9 +195,13 @@ const routes: Routes = [
             },
             {
               path: ':officeId',
-              data: { title: 'View Office', breadcrumb: 'officeId', routeParamBreadcrumb: 'officeId' },
+              data: { title: 'View Office', routeResolveBreadcrumb: [
+                  'office',
+                  'name'
+                ], addBreadcrumbLink: false },
               component: ViewOfficeComponent,
               resolve: {
+                office: OfficeResolver,
                 officeDatatables: OfficeDatatablesResolver
               },
               children: [
@@ -275,7 +279,13 @@ const routes: Routes = [
             },
             {
               path: ':id',
-              data: { title: 'View Employee', routeParamBreadcrumb: 'id' },
+              data: { title: 'View Employee', routeResolveBreadcrumb: [
+                  'employee',
+                  'displayName'
+                ] },
+              resolve: {
+                employee: EmployeeResolver
+              },
               children: [
                 {
                   path: '',
@@ -287,7 +297,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditEmployeeComponent,
-                  data: { title: 'Edit Employee', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: { title: 'Edit Employee', breadcrumb: 'Edit', routeResolveBreadcrumb: false },
                   resolve: {
                     employee: EditEmployeeResolver
                   }
@@ -451,7 +461,13 @@ const routes: Routes = [
             },
             {
               path: ':id',
-              data: { title: 'View Teller', routeParamBreadcrumb: 'id' },
+              data: { title: 'View Teller', routeResolveBreadcrumb: [
+                  'teller',
+                  'name'
+                ] },
+              resolve: {
+                teller: TellerResolver
+              },
               children: [
                 {
                   path: '',
@@ -463,7 +479,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditTellerComponent,
-                  data: { title: 'Edit Teller', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: { title: 'Edit Teller', breadcrumb: 'Edit', routeResolveBreadcrumb: false },
                   resolve: {
                     teller: TellerResolver,
                     offices: OfficesResolver
@@ -471,11 +487,12 @@ const routes: Routes = [
                 },
                 {
                   path: 'cashiers',
-                  data: { title: 'Cashiers', breadcrumb: 'Cashiers', routeParamBreadcrumb: false },
+                  data: { title: 'Cashiers', breadcrumb: 'Cashiers', routeResolveBreadcrumb: false },
                   children: [
                     {
                       path: '',
                       component: CashiersComponent,
+                      data: { title: 'Cashiers', breadcrumb: false },
                       resolve: {
                         cashiersData: CashiersResolver
                       }
@@ -490,20 +507,23 @@ const routes: Routes = [
                     },
                     {
                       path: ':id',
-                      data: { title: 'View Cashier', routeParamBreadcrumb: 'id' },
+                      data: { title: 'View Cashier', routeResolveBreadcrumb: [
+                          'cashier',
+                          'staffName'
+                        ] },
+                      resolve: {
+                        cashier: CashierResolver
+                      },
                       children: [
                         {
                           path: '',
                           component: ViewCashierComponent,
-                          data: { title: 'View Cashier', breadcrumb: 'View Cashier', routeParamBreadcrumb: false },
-                          resolve: {
-                            cashier: CashierResolver
-                          }
+                          data: { title: 'View Cashier', breadcrumb: false, routeResolveBreadcrumb: false }
                         },
                         {
                           path: 'edit',
                           component: EditCashierComponent,
-                          data: { title: 'Edit Cashier', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                          data: { title: 'Edit Cashier', breadcrumb: 'Edit', routeResolveBreadcrumb: false },
                           resolve: {
                             cashier: CashierResolver,
                             cashierTemplate: EditCashierResolver
@@ -514,7 +534,7 @@ const routes: Routes = [
                           data: {
                             title: 'Cashier Transactions',
                             breadcrumb: 'Transactions',
-                            routeParamBreadcrumb: false
+                            routeResolveBreadcrumb: false
                           },
                           component: TransactionsComponent,
                           resolve: {
@@ -524,7 +544,7 @@ const routes: Routes = [
                         {
                           path: 'settle',
                           component: SettleCashComponent,
-                          data: { title: 'Settle Cash', breadcrumb: 'Settle Cash', routeParamBreadcrumb: false },
+                          data: { title: 'Settle Cash', breadcrumb: 'Settle Cash', routeResolveBreadcrumb: false },
                           resolve: {
                             cashierTemplate: CashierTransactionTemplateResolver
                           }
@@ -532,7 +552,7 @@ const routes: Routes = [
                         {
                           path: 'allocate',
                           component: AllocateCashComponent,
-                          data: { title: 'Allocate Cash', breadcrumb: 'Allocate Cash', routeParamBreadcrumb: false },
+                          data: { title: 'Allocate Cash', breadcrumb: 'Allocate Cash', routeResolveBreadcrumb: false },
                           resolve: {
                             cashierTemplate: CashierTransactionTemplateResolver
                           }
@@ -684,7 +704,10 @@ const routes: Routes = [
             },
             {
               path: ':id',
-              data: { title: 'View Fund', breadcrumb: 'id', routeParamBreadcrumb: 'id' },
+              data: { title: 'View Fund', routeResolveBreadcrumb: [
+                  'fundData',
+                  'name'
+                ] },
               resolve: {
                 fundData: ManageFundResolver
               },
@@ -699,7 +722,7 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditFundComponent,
-                  data: { title: 'Edit Fund', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: { title: 'Edit Fund', breadcrumb: 'Edit', routeResolveBreadcrumb: false },
                   resolve: {
                     fundData: ManageFundResolver
                   }
@@ -752,7 +775,13 @@ const routes: Routes = [
             },
             {
               path: ':id',
-              data: { title: 'View Holidays', routeParamBreadcrumb: 'id' },
+              data: { title: 'View Holidays', routeResolveBreadcrumb: [
+                  'holidays',
+                  'name'
+                ] },
+              resolve: {
+                holidays: HolidayResolver
+              },
               children: [
                 {
                   path: '',
@@ -764,7 +793,12 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditHolidayComponent,
-                  data: { title: 'Edit Holidays', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: {
+                    title: 'Edit Holidays',
+                    breadcrumb: 'Edit',
+                    routeParamBreadcrumb: false,
+                    routeResolveBreadcrumb: null
+                  },
                   resolve: {
                     holiday: HolidayResolver,
                     holidayTemplate: HolidayTemplateResolver
