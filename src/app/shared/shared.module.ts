@@ -28,6 +28,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { OfficeTreeViewComponent } from './office-tree-view/office-tree-view.component';
 import { OfficeHierarchyComponent } from './office-hierarchy/office-hierarchy.component';
 import { CountryTreeViewComponent } from './country-tree-view/country-tree-view.component';
+import { SiteSelectorComponent } from './site-selector/site-selector.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgOtpInputModule } from 'ng-otp-input';
 
@@ -66,6 +67,7 @@ import { NgOtpInputModule } from 'ng-otp-input';
     OfficeTreeViewComponent,
     OfficeHierarchyComponent,
     CountryTreeViewComponent,
+    SiteSelectorComponent,
   ],
   exports: [
     FileUploadComponent,
@@ -84,6 +86,7 @@ import { NgOtpInputModule } from 'ng-otp-input';
     OfficeTreeViewComponent,
     OfficeHierarchyComponent,
     CountryTreeViewComponent,
+    SiteSelectorComponent,
     NgOtpInputModule,
     TranslateModule,
   ],

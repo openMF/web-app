@@ -1,0 +1,92 @@
+<mat-card class="site-selector" [formGroup]="siteSelectorForm">
+  <div
+    fxLayout="row"
+    fxLayout.lt-md="column"
+    fxLayoutGap="25px"
+    fxLayoutAlign="start start"
+    fxLayoutAlign.lt-md="start stretch"
+  >
+   
+    <div class="site-selector-field" fxFlex="33%" fxFlex.lt-md="100%">
+      <label for="regionId">{{ 'labels.commons.Region' | translate }}</label>
+      <ng-select
+        #region
+        [items]="regionOptions"
+        bindLabel="name"
+        bindValue="id"
+        placeholder="{{ 'labels.oaf.SelectARegion' | translate }}"
+        formControlName="regionId"
+        aria-labelledby="regionId"
+        (change)="onRegionChange($event)"
+        [clearable]="true"
+        [virtualScroll]="true"
+      >
+      </ng-select>
+    </div>
+
+    <div class="site-selector-field" fxFlex="33%" fxFlex.lt-md="100%">
+      <label for="districtId">{{ 'labels.oaf.District' | translate }}</label>
+      <ng-select
+        #district
+        [items]="districtOptions"
+        bindLabel="name"
+        bindValue="id"
+        placeholder="{{ 'labels.oaf.SelectADistrict' | translate }}"
+        formControlName="districtId"
+        aria-labelledby="districtId"
+        (change)="onDistrictChange($event)"
+        [clearable]="true"
+        [virtualScroll]="true"
+      >
+      </ng-select>
+    </div>
+
+    <div class="site-selector-field" fxFlex="33%" fxFlex.lt-md="100%">
+      <label for="siteIds">{{ 'labels.oaf.SiteOptionalDefaultsToAllSites' | translate }}</label>
+      <ng-select
+        #site
+        [items]="siteDropdownOptions"
+        bindLabel="name"
+        bindValue="id"
+        placeholder="{{ 'labels.oaf.AllSites' | translate }}"
+        formControlName="siteIds"
+        aria-labelledby="siteIds"
+        (change)="onSiteChange()"
+        [multiple]="true"
+        [closeOnSelect]="false"
+        [clearable]="true"
+        [virtualScroll]="true"
+      >
+        <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+          <mat-checkbox
+            [id]="'site-' + index"
+            [checked]="item$.selected"
+            (click)="$event.preventDefault()"
+            class="site-option-checkbox"
+          >
+            {{ item.name }}
+          </mat-checkbox>
+        </ng-template>
+        <ng-template ng-multi-label-tmp let-items="items">
+          <span class="ng-placeholder-selected">
+            {{ items.length }} {{ 'labels.oaf.SitesSelected' | translate }}
+          </span>
+        </ng-template>
+      </ng-select>
+    </div>
+  </div>
+
+  <div class="selected-sites" *ngIf="selectedSites.length">
+    <span class="selected-site-chip" *ngFor="let site of selectedSites">
+      {{ site.name }}
+      <button
+        type="button"
+        class="remove-site-button"
+        [attr.aria-label]="('labels.buttons.Remove' | translate) + ' ' + site.name"
+        (click)="removeSite(site.id)"
+      >
+        &times;
+      </button>
+    </span>
+  </div>
+</mat-card>

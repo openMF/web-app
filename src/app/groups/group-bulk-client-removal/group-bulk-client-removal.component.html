@@ -1,0 +1,101 @@
+<div class="container">
+  <div class="page-header" fxLayout="row" fxLayoutAlign="space-between center">
+    <h2 class="page-title">{{ 'labels.oaf.ImpactPreview' | translate }}</h2>
+    <button mat-icon-button class="close-button" (click)="cancel()" [attr.aria-label]="'labels.buttons.Close' | translate">
+      <fa-icon icon="times"></fa-icon>
+    </button>
+  </div>
+
+  <mat-card class="summary-card">
+    <div class="scope-breadcrumb" fxLayout="row" fxLayoutGap="8px">
+      <ng-container *ngFor="let item of scope; let last = last">
+        <span class="scope-item">{{ item }}</span>
+        <span class="scope-separator" *ngIf="!last">|</span>
+      </ng-container>
+    </div>
+
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="16px" class="summary-stats">
+      <div class="stat-box" fxFlex="25%">
+        <span class="stat-label">{{ 'labels.oaf.GroupsAffected' | translate }}</span>
+        <span class="stat-value">{{ groupsAffected | number }}</span>
+      </div>
+      <div class="stat-box" fxFlex="25%">
+        <span class="stat-label">{{ 'labels.oaf.ClientsInScope' | translate }}</span>
+        <span class="stat-value">{{ clientsInScope | number }}</span>
+      </div>
+      <div class="stat-box" fxFlex="25%">
+        <span class="stat-label">{{ 'labels.oaf.ToBeRemoved' | translate }}</span>
+        <span class="stat-value">{{ toBeRemoved | number }}</span>
+      </div>
+      <div class="stat-box" fxFlex="25%">
+        <span class="stat-label">{{ 'labels.oaf.ToBeSkipped' | translate }}</span>
+        <span class="stat-value">{{ toBeSkipped | number }}</span>
+      </div>
+    </div>
+
+    <div class="exceptions" fxLayout="row" fxLayoutGap="24px" fxLayoutAlign="start center">
+      <span class="exceptions-label">{{ 'labels.oaf.Exceptions' | translate }}:</span>
+      <mat-checkbox [(ngModel)]="exceptions.bannedClients" disabled>
+        {{ 'labels.oaf.BannedClients' | translate }}
+      </mat-checkbox>
+      <mat-checkbox [(ngModel)]="exceptions.clientsWithActiveLoans" disabled>
+        {{ 'labels.oaf.ClientsWithActiveLoans' | translate }}
+      </mat-checkbox>
+      <mat-checkbox [(ngModel)]="exceptions.groupsWithActiveLoans" disabled>
+        {{ 'labels.oaf.GroupsWithActiveLoans' | translate }}
+      </mat-checkbox>
+    </div>
+  </mat-card>
+
+  <div class="export-buttons" fxLayout="row" fxLayoutGap="12px">
+    <button mat-stroked-button (click)="downloadCsv('skipped')">
+      <fa-icon icon="download"></fa-icon>&nbsp;{{ 'labels.oaf.SkippedClientsCsv' | translate }}
+    </button>
+    <button mat-stroked-button (click)="downloadCsv('removed')">
+      <fa-icon icon="download"></fa-icon>&nbsp;{{ 'labels.oaf.RemovedClientsCsv' | translate }}
+    </button>
+  </div>
+
+  <mat-card class="impact-table-card">
+    <table mat-table [dataSource]="dataSource" class="impact-table">
+    <ng-container matColumnDef="group">
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.oaf.Group' | translate }}</th>
+      <td mat-cell *matCellDef="let row" class="group-name">{{ row.group }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="site">
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.oaf.Site' | translate }}</th>
+      <td mat-cell *matCellDef="let row" class="site-name">{{ row.site }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="toRemove">
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.oaf.ToRemove' | translate }}</th>
+      <td mat-cell *matCellDef="let row">{{ row.toRemove }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="toSkip">
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.oaf.ToSkip' | translate }}</th>
+      <td mat-cell *matCellDef="let row" class="to-skip">{{ row.toSkip }}</td>
+    </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator
+      [length]="totalGroups"
+      [pageSize]="10"
+      [pageSizeOptions]="[10, 25, 50, 100]"
+      showFirstLastButtons
+    ></mat-paginator>
+  </mat-card>
+
+  <div class="page-actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="12px">
+    <button mat-stroked-button (click)="cancel()">
+      <fa-icon icon="times"></fa-icon>&nbsp;{{ 'labels.buttons.Cancel' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="submitForApproval()">
+      <fa-icon icon="circle"></fa-icon>&nbsp;{{ 'labels.oaf.SubmitForApproval' | translate }}
+    </button>
+  </div>
+</div>

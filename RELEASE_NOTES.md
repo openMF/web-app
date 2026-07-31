@@ -4,6 +4,8 @@
 
     * Configurations
           * [HQX-306] - Add disbursement date loan repayment allocation protocol to system choice
+    * Clients & Groups
+        * [HQX-269] - Initial work on bulk removal of clients from groups
 
 ## Version 1.4.11 - Community 1.0.0
 

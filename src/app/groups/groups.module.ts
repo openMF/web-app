@@ -32,6 +32,7 @@ import { EditGroupMeetingComponent } from './groups-view/group-actions/edit-grou
 import { EditGroupMeetingScheduleComponent } from './groups-view/group-actions/edit-group-meeting-schedule/edit-group-meeting-schedule.component';
 import { GroupTransferClientsComponent } from './groups-view/group-actions/group-transfer-clients/group-transfer-clients.component';
 import { AuditTabComponent } from './groups-view/audit-tab/audit-tab.component';
+import { GroupBulkClientRemovalComponent } from './group-bulk-client-removal/group-bulk-client-removal.component';
 
 /**
  * Groups Module
@@ -69,7 +70,8 @@ import { AuditTabComponent } from './groups-view/audit-tab/audit-tab.component';
     EditGroupMeetingComponent,
     EditGroupMeetingScheduleComponent,
     GroupTransferClientsComponent,
-    AuditTabComponent
+    AuditTabComponent,
+    GroupBulkClientRemovalComponent
   ],
   providers: [ ]
 })

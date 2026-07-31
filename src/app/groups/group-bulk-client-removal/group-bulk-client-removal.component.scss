@@ -1,0 +1,118 @@
+@import '../../../theme/material-palette';
+
+:host {
+  display: block;
+}
+
+.page-header {
+  background-color: map-get($primary-palette, 500);
+  color: map-get(map-get($primary-palette, contrast), 500);
+  margin-bottom: 16px;
+  padding: 12px 24px;
+  border-radius: 4px;
+
+  .page-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: inherit;
+  }
+
+  .close-button {
+    color: inherit;
+  }
+}
+
+.summary-card {
+  margin-bottom: 20px;
+  padding: 16px;
+
+  .scope-breadcrumb {
+    margin-bottom: 16px;
+
+    .scope-item {
+      font-weight: 700;
+    }
+
+    .scope-separator {
+      color: #9e9e9e;
+    }
+  }
+
+  .summary-stats {
+    margin-bottom: 16px;
+
+    .stat-box {
+      border: 1px solid #90caf9;
+      border-radius: 6px;
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+
+      .stat-label {
+        color: #757575;
+        font-size: 0.85rem;
+      }
+
+      .stat-value {
+        color: map-get($primary-palette, 500);
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .exceptions {
+    border-top: 1px solid #eee;
+    padding-top: 12px;
+
+    .exceptions-label {
+      color: #757575;
+      font-weight: 600;
+    }
+  }
+}
+
+.export-buttons {
+  margin-bottom: 16px;
+
+  button {
+    border-radius: 18px;
+  }
+}
+
+.impact-table-card {
+  padding: 0;
+  overflow: hidden;
+
+  .table-footnote {
+    padding: 0 16px 8px 16px;
+  }
+}
+
+.impact-table {
+  width: 100%;
+
+  .group-name {
+    font-weight: 600;
+  }
+
+  .site-name {
+    color: map-get($primary-palette, 500);
+  }
+
+  .to-skip {
+    color: #e65100;
+    font-weight: 600;
+  }
+}
+
+.table-footnote {
+  color: #9e9e9e;
+  font-size: 0.8rem;
+  margin-top: 8px;
+}
+
+.page-actions {
+  margin-top: 24px;
+}

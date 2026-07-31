@@ -20,6 +20,7 @@ import { DatatableTabsComponent } from './groups-view/datatable-tabs/datatable-t
 import { AddRoleComponent } from './groups-view/add-role/add-role.component';
 import { GroupActionsComponent } from './groups-view/group-actions/group-actions.component';
 import { EditGroupComponent } from './edit-group/edit-group.component';
+import { GroupBulkClientRemovalComponent } from './group-bulk-client-removal/group-bulk-client-removal.component';
 
 /** Custom Resolvers */
 import { GroupViewResolver } from './common-resolvers/group-view.resolver';
@@ -51,6 +52,15 @@ const routes: Routes = [
           resolve: {
             offices: LowestOfficesResolver
           }
+        },
+        {
+          path: 'bulk-client-removal',
+          component: GroupBulkClientRemovalComponent,
+          data: {
+            title: extract('labels.oaf.Bulk Client Group Removal'),
+            breadcrumb: 'Bulk Client Removal',
+            routeParamBreadcrumb: false,
+          },
         },
         {
           path: ':groupId',

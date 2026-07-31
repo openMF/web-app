@@ -4,13 +4,19 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { UntypedFormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngx-translate/core';
 
 /** rxjs Imports */
 import { merge } from 'rxjs';
-import { tap, startWith, map, distinctUntilChanged, debounceTime } from 'rxjs/operators';
+import { tap, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 
 /** Custom Services */
 import { GroupsService } from './groups.service';
+
+/** Custom Components */
+import { SiteSelectorChange } from 'app/shared/site-selector/site-selector.component';
 
 /** Custom Data Source */
 import { GroupsDataSource } from './groups.datasource';
@@ -45,10 +51,19 @@ export class GroupsComponent implements OnInit, AfterViewInit {
   /** Sorter for groups table. */
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
+  /** Current site selector selection. */
+  siteSelection: SiteSelectorChange | null = null;
+
   /**
    * @param {GroupsService} groupsService Groups Service
    */
-  constructor(private groupsService: GroupsService) {}
+  constructor(
+    private groupsService: GroupsService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar,
+    private translateService: TranslateService
+  ) {}
 
   ngOnInit() {
     this.getGroups();
@@ -122,5 +137,31 @@ export class GroupsComponent implements OnInit, AfterViewInit {
       this.paginator.pageIndex,
       this.paginator.pageSize
     );
+  }
+
+  /**
+   * Stores the latest site selector selection.
+   */
+  onSiteSelectionChange(selection: SiteSelectorChange) {
+    this.siteSelection = selection;
+  }
+
+  /**
+   * Navigates to the bulk client group removal impact preview page.
+   */
+  bulkRemoval() {
+    if (!this.siteSelection?.siteIds?.length) {
+      this.snackBar.open(
+        this.translateService.instant('labels.oaf.NoSitesSelected'),
+        this.translateService.instant('labels.buttons.Close'),
+        { duration: 3000 }
+      );
+      return;
+    }
+
+    this.router.navigate(['bulk-client-removal'], {
+      relativeTo: this.route,
+      state: { siteSelection: this.siteSelection },
+    });
   }
 }
