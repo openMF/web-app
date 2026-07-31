@@ -15,5 +15,5 @@ commonconfig:
   HOST_HOME_URL: https://loans.uat.oneacrefund.org/home
   MATOMO_SITE_ID: "1"
 image:
-  tag: 1.4.12.2026.07.30.942
+  tag: 1.4.12.2026.07.31.946
 replicaCount: 2
