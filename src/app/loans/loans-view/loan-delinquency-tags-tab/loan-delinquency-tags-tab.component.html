@@ -190,14 +190,16 @@
         >
           <fa-icon icon="calendar" class="m-r-10"></fa-icon>{{ 'labels.buttons.Reset' | translate }}
         </button>
-        <button
-          mat-raised-button
-          color="primary"
-          (click)="createDelinquencyActionUndoReset()"
-          *mifosxHasPermission="'CREATE_WC_DELINQUENCY_UNDO_RESET'"
-        >
-          <fa-icon icon="calendar" class="m-r-10"></fa-icon>{{ 'labels.buttons.Undo Reset' | translate }}
-        </button>
+        @if (hasActiveReset()) {
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="createDelinquencyActionUndoReset()"
+            *mifosxHasPermission="'CREATE_WC_DELINQUENCY_UNDO_RESET'"
+          >
+            <fa-icon icon="calendar" class="m-r-10"></fa-icon>{{ 'labels.buttons.Undo Reset' | translate }}
+          </button>
+        }
         <button
           mat-raised-button
           color="primary"
@@ -220,7 +222,14 @@
         </ng-container>
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Action' | translate }}</th>
-          <td mat-cell *matCellDef="let item" ngClass="{{ actionClass(item.action) }}">{{ item.action }}</td>
+          <td mat-cell *matCellDef="let item" ngClass="{{ actionClass(item.action) }}">
+            {{ item.action }}
+            @if (item.action === 'RESET') {
+              <span class="reset-flag">
+                ({{ (item.endDate === null ? 'labels.inputs.Active' : 'labels.inputs.Undone') | translate }})
+              </span>
+            }
+          </td>
         </ng-container>
         <ng-container matColumnDef="startDate">
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Start Date' | translate }}</th>
@@ -311,29 +320,57 @@
         </ng-container>
         <ng-container matColumnDef="expectedAmount">
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Expected Amount' | translate }}</th>
-          <td mat-cell *matCellDef="let item" class="r-amount">{{ item.expectedAmount | formatNumber }}</td>
+          <td mat-cell *matCellDef="let item" class="r-amount">
+            @if (item.expectedAmount === null) {
+              <span class="reset-period" matTooltip="{{ 'tooltips.Reset delinquency period' | translate }}">
+                {{ 'labels.inputs.Reset' | translate }}
+              </span>
+            } @else {
+              {{ item.expectedAmount | formatNumber }}
+            }
+          </td>
         </ng-container>
         <ng-container matColumnDef="paidAmount">
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Paid Amount' | translate }}</th>
-          <td mat-cell *matCellDef="let item" class="r-amount">{{ item.paidAmount | formatNumber }}</td>
+          <td mat-cell *matCellDef="let item" class="r-amount">
+            {{ item.paidAmount === null ? '—' : (item.paidAmount | formatNumber) }}
+          </td>
         </ng-container>
         <ng-container matColumnDef="outstandingAmount">
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Outstanding Amount' | translate }}</th>
-          <td mat-cell *matCellDef="let item" class="r-amount">{{ item.outstandingAmount | formatNumber }}</td>
+          <td mat-cell *matCellDef="let item" class="r-amount">
+            {{ item.outstandingAmount === null ? '—' : (item.outstandingAmount | formatNumber) }}
+          </td>
         </ng-container>
         <ng-container matColumnDef="delinquentDays">
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Delinquent Days' | translate }}</th>
-          <td mat-cell *matCellDef="let item" class="r-amount">{{ item.delinquentDays | formatNumber }}</td>
+          <td mat-cell *matCellDef="let item" class="r-amount">
+            {{ item.delinquentDays === null ? '—' : (item.delinquentDays | formatNumber) }}
+          </td>
         </ng-container>
         <ng-container matColumnDef="delinquentAmount">
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Delinquent Amount' | translate }}</th>
-          <td mat-cell *matCellDef="let item" class="r-amount">{{ item.delinquentAmount | formatNumber }}</td>
+          <td mat-cell *matCellDef="let item" class="r-amount">
+            {{ item.delinquentAmount === null ? '—' : (item.delinquentAmount | formatNumber) }}
+          </td>
         </ng-container>
         <ng-container matColumnDef="minPaymentCriteriaMet">
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Minimum Payment Criteria Met' | translate }}</th>
           <td mat-cell *matCellDef="let item" class="center">
-            <div [ngClass]="item.minPaymentCriteriaMet ? 'enabled' : 'disabled'">
-              <fa-icon icon="circle" size="lg"></fa-icon>
+            <div
+              [ngClass]="
+                item.minPaymentCriteriaMet === null ? 'pending' : item.minPaymentCriteriaMet ? 'enabled' : 'disabled'
+              "
+              matTooltip="{{
+                (item.minPaymentCriteriaMet === null
+                  ? 'tooltips.Period not yet evaluated'
+                  : item.minPaymentCriteriaMet
+                    ? 'tooltips.Minimum payment criteria met'
+                    : 'tooltips.Minimum payment criteria not met'
+                ) | translate
+              }}"
+            >
+              <fa-icon [icon]="item.minPaymentCriteriaMet === null ? 'clock' : 'circle'" size="lg"></fa-icon>
             </div>
           </td>
         </ng-container>

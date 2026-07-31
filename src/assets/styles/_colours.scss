@@ -150,3 +150,7 @@ $manual-entry: #d7e3ff;
 .disabled {
   color: #f44366;
 }
+
+.pending {
+  color: $status-pending;
+}

@@ -9,10 +9,21 @@
 <h2 mat-dialog-title>{{ 'labels.heading.Loan Delinquency Actions' | translate }}</h2>
 
 <div mat-dialog-content [formGroup]="delinquencyActionForm">
+  <p class="reset-info">
+    {{ 'labels.dialogContext.Reset neutralizes overdue delinquency periods effective today' | translate }}
+  </p>
   <div class="layout-column">
     <mat-checkbox class="flex-98" formControlName="startNewPeriod">
       <p>{{ 'labels.inputs.Start new period' | translate }}</p>
     </mat-checkbox>
+    <p class="hint-text">
+      {{ 'labels.dialogContext.Start new period splits the current period today' | translate }}
+    </p>
+    @if (delinquencyActionForm.value.startNewPeriod) {
+      <p class="reset-info-emphasis">
+        {{ 'labels.dialogContext.A new clean period will start today' | translate }}
+      </p>
+    }
   </div>
 </div>
 
