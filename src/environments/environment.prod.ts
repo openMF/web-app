@@ -64,7 +64,8 @@ export const environment = {
 
   defaultCharDelimiter: loadedEnv['defaultCharDelimiter'] || ',',
 
-  displayBackEndInfo: loadedEnv['displayBackEndInfo'] || 'true',
+  // Backend info is available in the System Information view, so it is hidden by default
+  displayBackEndInfo: loadedEnv['displayBackEndInfo'] || 'false',
   displayTenantSelector: loadedEnv['displayTenantSelector'] || 'true',
   /** Production mode - when true, shows minimal hero with only branding at bottom */
   productionMode: loadedEnv['productionMode'] === 'true' || loadedEnv['productionMode'] === true || false,

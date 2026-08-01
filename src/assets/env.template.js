@@ -43,7 +43,8 @@
   // Display or not the Server Selector
   window['env']['allowServerSwitch'] = '$MIFOS_ALLOW_SERVER_SWITCH_SELECTOR';
 
-  // Display or not the BackEnd Info
+  // Display or not the BackEnd Info in the footer and the Login view.
+  // Regardless of this setting, it is always available in Admin > System > System Information
   window['env']['displayBackEndInfo'] = '$MIFOS_DISPLAY_BACKEND_INFO';
 
   // Show minimal production hero on login page
