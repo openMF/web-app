@@ -3244,7 +3244,8 @@
       "Cross Rate": "Kreuzkurs",
       "Cross Rate via": "Kreuzkurs (über {{ currency }})",
       "Administrator": "Administrator",
-      "Provider": "Anbieter"
+      "Provider": "Anbieter",
+      "Dispute Management": "Streitverwaltung"
     },
     "links": {
       "Community": "Gemeinschaft",
@@ -4629,6 +4630,32 @@
         "latePayments": "Verspätete Zahlungen",
         "noData": "Kein Kreditprofil verfügbar",
         "noDataHint": "Zuerst Bürobereitschaftsprüfung durchführen"
+      },
+      "dispute": {
+        "raiseTitle": "Neuen Streitfall einreichen",
+        "lookupTitle": "Bestehenden Streitfall suchen",
+        "submissionRecordId": "Einreichungs-ID",
+        "disputeDetails": "Streitdetails",
+        "submissionIdRequired": "Einreichungs-ID ist erforderlich",
+        "detailsRequired": "Details müssen mindestens 10 Zeichen haben",
+        "raise": "Streit einreichen",
+        "lookup": "Suchen",
+        "disputeId": "Streit-ID",
+        "id": "Streitfall",
+        "submissionRef": "Einreichungsref.",
+        "raisedBy": "Eingereicht von",
+        "openedAt": "Geöffnet am",
+        "details": "Details",
+        "resolvedAt": "Gelöst am",
+        "resolutionNotes": "Lösungsnotizen",
+        "expiry": "Ablaufdatum",
+        "markUnderReview": "Als in Prüfung markieren",
+        "resolve": "Streit lösen",
+        "raised": "Streitfall #{{ id }} erfolgreich eingereicht",
+        "statusUpdated": "Streitstatus auf {{ status }} aktualisiert"
+      },
+      "errors": {
+        "badRequest": "Ungültige Anfrage. Bitte überprüfen Sie die Einreichungs-ID."
       }
     }
   },

@@ -3239,7 +3239,8 @@
       "Cross Rate": "Kiwango cha msalaba",
       "Cross Rate via": "Kiwango cha msalaba (kupitia {{ currency }})",
       "Administrator": "Msimamizi",
-      "Provider": "Mtoa huduma"
+      "Provider": "Mtoa huduma",
+      "Dispute Management": "Usimamizi wa Migogoro"
     },
     "links": {
       "Community": "Jumuiya",
@@ -4629,6 +4630,32 @@
         "latePayments": "Malipo ya kuchelewa",
         "noData": "Hakuna wasifu bado",
         "noDataHint": "Endesha ukaguzi wa shirika"
+      },
+      "dispute": {
+        "raiseTitle": "Anza mgogoro mpya",
+        "lookupTitle": "Tafuta mgogoro uliopo",
+        "submissionRecordId": "ID ya rekodi ya uwasilishaji",
+        "disputeDetails": "Maelezo ya mgogoro",
+        "submissionIdRequired": "ID ya rekodi inahitajika",
+        "detailsRequired": "Maelezo lazima yawe na angalau herufi 10",
+        "raise": "Anza mgogoro",
+        "lookup": "Tafuta",
+        "disputeId": "ID ya mgogoro",
+        "id": "Mgogoro",
+        "submissionRef": "Kumbukumbu ya uwasilishaji",
+        "raisedBy": "Ilianzishwa na",
+        "openedAt": "Ilifunguliwa",
+        "details": "Maelezo",
+        "resolvedAt": "Ilitatuliwa",
+        "resolutionNotes": "Maelezo ya utatuzi",
+        "expiry": "Tarehe ya kumalizika",
+        "markUnderReview": "Weka alama ya kukaguliwa",
+        "resolve": "Tatua mgogoro",
+        "raised": "Mgogoro #{{ id }} ulianzishwa kwa mafanikio",
+        "statusUpdated": "Hali ya mgogoro imesasishwa hadi {{ status }}"
+      },
+      "errors": {
+        "badRequest": "Ombi batili. Angalia ID ya rekodi ya uwasilishaji."
       }
     }
   },

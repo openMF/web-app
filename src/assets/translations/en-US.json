@@ -3270,7 +3270,8 @@
       "Cross Rate": "Cross Rate",
       "Cross Rate via": "Cross Rate (via {{ currency }})",
       "Administrator": "Administrator",
-      "Provider": "Provider"
+      "Provider": "Provider",
+      "Dispute Management": "Dispute Management"
     },
     "links": {
       "Community": "Community",
@@ -4734,7 +4735,8 @@
         "forbidden": "You do not have permission to check bureau readiness.",
         "clientNotFound": "Client {{ clientId }} not found in Fineract.",
         "serviceUnavailable": "CDC or Fineract is unreachable. Please try again later.",
-        "unexpected": "An unexpected error occurred. Please try again."
+        "unexpected": "An unexpected error occurred. Please try again.",
+        "badRequest": "Invalid request. Please check the submission record ID."
       },
       "dashboard": {
         "role": "Your CB-ILD Role",
@@ -4770,6 +4772,29 @@
         "latePayments": "Late Payments",
         "noData": "No credit profile available yet",
         "noDataHint": "Run Bureau Readiness check first to pull data from CDC"
+      },
+      "dispute": {
+        "raiseTitle": "Raise a New Dispute",
+        "lookupTitle": "Look Up Existing Dispute",
+        "submissionRecordId": "Submission Record ID",
+        "disputeDetails": "Dispute Details",
+        "submissionIdRequired": "Submission Record ID is required",
+        "detailsRequired": "Dispute details must be at least 10 characters",
+        "raise": "Raise Dispute",
+        "lookup": "Look Up",
+        "disputeId": "Dispute ID",
+        "id": "Dispute",
+        "submissionRef": "Submission Ref",
+        "raisedBy": "Raised By",
+        "openedAt": "Opened At",
+        "details": "Details",
+        "resolvedAt": "Resolved At",
+        "resolutionNotes": "Resolution Notes",
+        "expiry": "Expiry Date",
+        "markUnderReview": "Mark Under Review",
+        "resolve": "Resolve Dispute",
+        "raised": "Dispute #{{ id }} raised successfully",
+        "statusUpdated": "Dispute status updated to {{ status }}"
       }
     },
     "selections": {

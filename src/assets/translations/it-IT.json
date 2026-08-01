@@ -3242,7 +3242,8 @@
       "Cross Rate": "Tasso incrociato",
       "Cross Rate via": "Tasso incrociato (tramite {{ currency }})",
       "Administrator": "Amministratore",
-      "Provider": "Provider"
+      "Provider": "Provider",
+      "Dispute Management": "Gestione delle controversie"
     },
     "links": {
       "Community": "Comunità",
@@ -4633,6 +4634,32 @@
         "latePayments": "Pagamenti in ritardo",
         "noData": "Nessun profilo di credito",
         "noDataHint": "Eseguire prima il controllo del bureau"
+      },
+      "dispute": {
+        "raiseTitle": "Presenta una nuova controversia",
+        "lookupTitle": "Cerca controversia esistente",
+        "submissionRecordId": "ID registrazione invio",
+        "disputeDetails": "Dettagli controversia",
+        "submissionIdRequired": "ID registrazione obbligatorio",
+        "detailsRequired": "I dettagli devono avere almeno 10 caratteri",
+        "raise": "Presenta controversia",
+        "lookup": "Cerca",
+        "disputeId": "ID controversia",
+        "id": "Controversia",
+        "submissionRef": "Rif. invio",
+        "raisedBy": "Presentata da",
+        "openedAt": "Aperta il",
+        "details": "Dettagli",
+        "resolvedAt": "Risolta il",
+        "resolutionNotes": "Note di risoluzione",
+        "expiry": "Data di scadenza",
+        "markUnderReview": "Segna in revisione",
+        "resolve": "Risolvi controversia",
+        "raised": "Controversia #{{ id }} presentata con successo",
+        "statusUpdated": "Stato aggiornato a {{ status }}"
+      },
+      "errors": {
+        "badRequest": "Richiesta non valida. Verificare l'ID di registrazione."
       }
     }
   },

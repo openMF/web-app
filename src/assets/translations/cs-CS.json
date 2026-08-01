@@ -3242,7 +3242,8 @@
       "Cross Rate": "Křížový kurz",
       "Cross Rate via": "Křížový kurz (přes {{ currency }})",
       "Administrator": "Administrátor",
-      "Provider": "Poskytovatel"
+      "Provider": "Poskytovatel",
+      "Dispute Management": "Správa sporů"
     },
     "links": {
       "Community": "Společenství",
@@ -4629,6 +4630,32 @@
         "latePayments": "Opožděné platby",
         "noData": "Kreditní profil není k dispozici",
         "noDataHint": "Spusťte kontrolu bureau"
+      },
+      "dispute": {
+        "raiseTitle": "Podat nový spor",
+        "lookupTitle": "Vyhledat existující spor",
+        "submissionRecordId": "ID záznamu podání",
+        "disputeDetails": "Podrobnosti sporu",
+        "submissionIdRequired": "ID záznamu je povinné",
+        "detailsRequired": "Podrobnosti musí mít alespoň 10 znaků",
+        "raise": "Podat spor",
+        "lookup": "Vyhledat",
+        "disputeId": "ID sporu",
+        "id": "Spor",
+        "submissionRef": "Ref. podání",
+        "raisedBy": "Podal",
+        "openedAt": "Otevřeno",
+        "details": "Podrobnosti",
+        "resolvedAt": "Vyřešeno",
+        "resolutionNotes": "Poznámky k řešení",
+        "expiry": "Datum vypršení",
+        "markUnderReview": "Označit jako v přezkumu",
+        "resolve": "Vyřešit spor",
+        "raised": "Spor #{{ id }} úspěšně podán",
+        "statusUpdated": "Stav sporu aktualizován na {{ status }}"
+      },
+      "errors": {
+        "badRequest": "Neplatný požadavek. Zkontrolujte ID záznamu podání."
       }
     }
   },
