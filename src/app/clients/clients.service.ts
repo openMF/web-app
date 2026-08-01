@@ -29,6 +29,15 @@ export class ClientsService {
   /** Separate HttpClient that bypasses interceptors (for external API calls) */
   private externalHttp = new HttpClient(this.httpBackend);
 
+  private isValidDocumentId(documentId: string | number | null | undefined): boolean {
+    const parsedDocumentId = Number(documentId);
+    return Number.isFinite(parsedDocumentId) && parsedDocumentId > 0;
+  }
+
+  private invalidDocumentIdError(): Observable<never> {
+    return throwError(() => new Error('Invalid client document id.'));
+  }
+
   getFilteredClients(
     orderBy: string,
     sortOrder: string,
@@ -227,7 +236,10 @@ export class ClientsService {
     return this.http.post(`/clients/${clientId}/documents`, formData);
   }
 
-  getClientSignatureImage(clientId: string, documentId: string) {
+  getClientSignatureImage(clientId: string, documentId: string | number | null | undefined) {
+    if (!this.isValidDocumentId(documentId)) {
+      return this.invalidDocumentIdError();
+    }
     return this.http.get(`/clients/${clientId}/documents/${documentId}/attachment`, { responseType: 'blob' });
   }
 
@@ -285,7 +297,10 @@ export class ClientsService {
     return this.http.get(`/clients/${clientId}/documents`);
   }
 
-  downloadClientDocument(parentEntityId: string, documentId: string) {
+  downloadClientDocument(parentEntityId: string, documentId: string | number | null | undefined) {
+    if (!this.isValidDocumentId(documentId)) {
+      return this.invalidDocumentIdError();
+    }
     return this.http.get(`/clients/${parentEntityId}/documents/${documentId}/attachment`, { responseType: 'blob' });
   }
 
@@ -293,7 +308,10 @@ export class ClientsService {
     return this.http.post(`/clients/${clientId}/documents`, documentData);
   }
 
-  deleteClientDocument(parentEntityId: string, documentId: string) {
+  deleteClientDocument(parentEntityId: string, documentId: string | number | null | undefined) {
+    if (!this.isValidDocumentId(documentId)) {
+      return this.invalidDocumentIdError();
+    }
     return this.http.delete(`/clients/${parentEntityId}/documents/${documentId}`);
   }
 
