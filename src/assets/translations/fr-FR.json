@@ -3245,7 +3245,8 @@
       "Cross Rate": "Taux croisé",
       "Cross Rate via": "Taux croisé (via {{ currency }})",
       "Administrator": "Administrateur",
-      "Provider": "Fournisseur"
+      "Provider": "Fournisseur",
+      "Dispute Management": "Gestion des litiges"
     },
     "links": {
       "Community": "Communauté",
@@ -4635,6 +4636,32 @@
         "latePayments": "Paiements en retard",
         "noData": "Aucun profil de crédit",
         "noDataHint": "Exécutez la vérification du bureau"
+      },
+      "dispute": {
+        "raiseTitle": "Soumettre un nouveau litige",
+        "lookupTitle": "Rechercher un litige existant",
+        "submissionRecordId": "ID d'enregistrement",
+        "disputeDetails": "Détails du litige",
+        "submissionIdRequired": "L'ID d'enregistrement est requis",
+        "detailsRequired": "Les détails doivent comporter au moins 10 caractères",
+        "raise": "Soumettre un litige",
+        "lookup": "Rechercher",
+        "disputeId": "ID du litige",
+        "id": "Litige",
+        "submissionRef": "Ref. soumission",
+        "raisedBy": "Soumis par",
+        "openedAt": "Ouvert le",
+        "details": "Détails",
+        "resolvedAt": "Résolu le",
+        "resolutionNotes": "Notes de résolution",
+        "expiry": "Date d'expiration",
+        "markUnderReview": "Marquer en cours d'examen",
+        "resolve": "Résoudre le litige",
+        "raised": "Litige #{{ id }} soumis avec succès",
+        "statusUpdated": "Statut mis à jour à {{ status }}"
+      },
+      "errors": {
+        "badRequest": "Requête invalide. Vérifiez l'ID d'enregistrement."
       }
     }
   },

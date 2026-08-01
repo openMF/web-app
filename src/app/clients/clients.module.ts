@@ -27,6 +27,7 @@ import { UploadDocumentDialogComponent } from './clients-view/custom-dialogs/upl
 import { NotesTabComponent } from './clients-view/notes-tab/notes-tab.component';
 import { BureauReadinessComponent } from './clients-view/bureau-readiness/bureau-readiness.component';
 import { CreditProfileComponent } from './clients-view/credit-profile/credit-profile.component';
+import { DisputeManagementComponent } from './clients-view/dispute-management/dispute-management.component';
 import { EditNotesDialogComponent } from './clients-view/custom-dialogs/edit-notes-dialog/edit-notes-dialog.component';
 import { DocumentsTabComponent } from './clients-view/documents-tab/documents-tab.component';
 import { DatatableTabComponent } from './clients-view/datatable-tab/datatable-tab.component';
@@ -91,6 +92,7 @@ import { ClientDatatableStepComponent } from './client-stepper/client-datatable-
     NotesTabComponent,
     BureauReadinessComponent,
     CreditProfileComponent,
+    DisputeManagementComponent,
     EditNotesDialogComponent,
     DocumentsTabComponent,
     DatatableTabComponent,

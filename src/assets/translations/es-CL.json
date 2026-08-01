@@ -3243,7 +3243,8 @@
       "Cross Rate": "Tipo cruzado",
       "Cross Rate via": "Tipo cruzado (vía {{ currency }})",
       "Administrator": "Administrador",
-      "Provider": "Proveedor"
+      "Provider": "Proveedor",
+      "Dispute Management": "Gestión de disputas"
     },
     "links": {
       "Community": "Comunidad",
@@ -4634,6 +4635,32 @@
         "latePayments": "Pagos tardíos",
         "noData": "Sin perfil de crédito aún",
         "noDataHint": "Ejecute primero la verificación del buró"
+      },
+      "dispute": {
+        "raiseTitle": "Presentar una nueva disputa",
+        "lookupTitle": "Buscar disputa existente",
+        "submissionRecordId": "ID de registro de envío",
+        "disputeDetails": "Detalles de la disputa",
+        "submissionIdRequired": "El ID de registro es obligatorio",
+        "detailsRequired": "Los detalles deben tener al menos 10 caracteres",
+        "raise": "Presentar disputa",
+        "lookup": "Buscar",
+        "disputeId": "ID de disputa",
+        "id": "Disputa",
+        "submissionRef": "Ref. de envio",
+        "raisedBy": "Presentado por",
+        "openedAt": "Abierto el",
+        "details": "Detalles",
+        "resolvedAt": "Resuelto el",
+        "resolutionNotes": "Notas de resolución",
+        "expiry": "Fecha de vencimiento",
+        "markUnderReview": "Marcar en revisión",
+        "resolve": "Resolver disputa",
+        "raised": "Disputa #{{ id }} presentada exitosamente",
+        "statusUpdated": "Estado actualizado a {{ status }}"
+      },
+      "errors": {
+        "badRequest": "Solicitud inválida. Verifique el ID de registro."
       }
     }
   },

@@ -23,6 +23,7 @@ import { IdentitiesTabComponent } from './clients-view/identities-tab/identities
 import { NotesTabComponent } from './clients-view/notes-tab/notes-tab.component';
 import { BureauReadinessComponent } from './clients-view/bureau-readiness/bureau-readiness.component';
 import { CreditProfileComponent } from './clients-view/credit-profile/credit-profile.component';
+import { DisputeManagementComponent } from './clients-view/dispute-management/dispute-management.component';
 import { DocumentsTabComponent } from './clients-view/documents-tab/documents-tab.component';
 import { DatatableTabComponent } from './clients-view/datatable-tab/datatable-tab.component';
 import { AddressTabComponent } from './clients-view/address-tab/address-tab.component';
@@ -186,6 +187,11 @@ const routes: Routes = [
               path: 'credit-profile',
               component: CreditProfileComponent,
               data: { title: 'Credit Profile', breadcrumb: 'Credit Profile', routeParamBreadcrumb: false }
+            },
+            {
+              path: 'dispute-management',
+              component: DisputeManagementComponent,
+              data: { title: 'Dispute Management', breadcrumb: 'Dispute Management', routeParamBreadcrumb: false }
             },
             {
               path: 'datatables',

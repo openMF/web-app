@@ -3242,7 +3242,8 @@
       "Cross Rate": "Krusta kurss",
       "Cross Rate via": "Krusta kurss (caur {{ currency }})",
       "Administrator": "Administrators",
-      "Provider": "Nodrošinātājs"
+      "Provider": "Nodrošinātājs",
+      "Dispute Management": "Stridu parvaldiba"
     },
     "links": {
       "Community": "kopiena",
@@ -4632,6 +4633,32 @@
         "latePayments": "Nokavēti maksājumi",
         "noData": "Kredīta profils nav pieejams",
         "noDataHint": "Veiciet biroja pārbaudi"
+      },
+      "dispute": {
+        "raiseTitle": "Iesniegt jaunu stridu",
+        "lookupTitle": "Meklet esosu stridu",
+        "submissionRecordId": "Iesnieguma ieraksta ID",
+        "disputeDetails": "Strida detajas",
+        "submissionIdRequired": "Iesnieguma ieraksta ID ir obligats",
+        "detailsRequired": "Detalam jabut vismaz 10 rakstzimem",
+        "raise": "Iesniegt stridu",
+        "lookup": "Meklet",
+        "disputeId": "Strida ID",
+        "id": "Strids",
+        "submissionRef": "Iesnieguma atsauce",
+        "raisedBy": "Iesniedza",
+        "openedAt": "Atverats",
+        "details": "Detajas",
+        "resolvedAt": "Atrisinats",
+        "resolutionNotes": "Atrisinajuma piezimes",
+        "expiry": "Derigiuma termins",
+        "markUnderReview": "Atzimei ka parskatamu",
+        "resolve": "Atrisinati stridu",
+        "raised": "Strid s #{{ id }} veiksmigi iesniegts",
+        "statusUpdated": "Strida statuss atjauninats uz {{ status }}"
+      },
+      "errors": {
+        "badRequest": "Nederīgs pieprasījums. Pārbaudiet iesnieguma ieraksta ID."
       }
     }
   },

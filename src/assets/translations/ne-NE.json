@@ -3241,7 +3241,8 @@
       "Cross Rate": "क्रस दर",
       "Cross Rate via": "क्रस दर ({{ currency }} मार्फत)",
       "Administrator": "प्रशासक",
-      "Provider": "प्रदायक"
+      "Provider": "प्रदायक",
+      "Dispute Management": "Vivad Vyavasthapan"
     },
     "links": {
       "Community": "समुदाय",
@@ -4632,6 +4633,32 @@
         "latePayments": "ढिलो भुक्तानी",
         "noData": "प्रोफाइल उपलब्ध छैन",
         "noDataHint": "ब्यूरो जाँच चलाउनुहोस्"
+      },
+      "dispute": {
+        "raiseTitle": "Naya vivad uthaunus",
+        "lookupTitle": "Avasthit vivad khojnus",
+        "submissionRecordId": "Submission Record ID",
+        "disputeDetails": "Vivadko vivaran",
+        "submissionIdRequired": "Submission ID aavasyak cha",
+        "detailsRequired": "Vivaran kamtima 10 akshar hunuparcha",
+        "raise": "Vivad uthaunus",
+        "lookup": "Khojnus",
+        "disputeId": "Vivad ID",
+        "id": "Vivad",
+        "submissionRef": "Submission sandarbha",
+        "raisedBy": "Uthaaune vyakti",
+        "openedAt": "Kholiyako miti",
+        "details": "Vivaran",
+        "resolvedAt": "Samadhan miti",
+        "resolutionNotes": "Samadhan notaharu",
+        "expiry": "Myad samapti",
+        "markUnderReview": "Sameekshama chinh lagaunus",
+        "resolve": "Vivad samadhan garnus",
+        "raised": "Vivad #{{ id }} safaltapurbak uthaiyo",
+        "statusUpdated": "Vivadko sthiti {{ status }} ma update bhayo"
+      },
+      "errors": {
+        "badRequest": "अमान्य अनुरोध। सबमिशन रेकर्ड ID जाँच गर्नुहोस्।"
       }
     }
   },

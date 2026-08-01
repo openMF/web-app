@@ -3242,7 +3242,8 @@
       "Cross Rate": "교차 환율",
       "Cross Rate via": "교차 환율 ({{ currency }} 경유)",
       "Administrator": "관리자",
-      "Provider": "제공자"
+      "Provider": "제공자",
+      "Dispute Management": "분쟁 관리"
     },
     "links": {
       "Community": "지역 사회",
@@ -4632,6 +4633,32 @@
         "latePayments": "연체 횟수",
         "noData": "신용 프로필 없음",
         "noDataHint": "신용조회 준비 확인 실행"
+      },
+      "dispute": {
+        "raiseTitle": "새 분쟁 제기",
+        "lookupTitle": "기존 분쟁 조회",
+        "submissionRecordId": "제출 기록 ID",
+        "disputeDetails": "분쟁 세부 사항",
+        "submissionIdRequired": "제출 기록 ID가 필요합니다",
+        "detailsRequired": "세부 사항은 최소 10자 이상이어야 합니다",
+        "raise": "분쟁 제기",
+        "lookup": "조회",
+        "disputeId": "분쟁 ID",
+        "id": "분쟁",
+        "submissionRef": "제출 참조",
+        "raisedBy": "제기자",
+        "openedAt": "개시일",
+        "details": "세부 사항",
+        "resolvedAt": "해결일",
+        "resolutionNotes": "해결 메모",
+        "expiry": "만료일",
+        "markUnderReview": "검토 중으로 표시",
+        "resolve": "분쟁 해결",
+        "raised": "분쟁 #{{ id }} 성공적으로 제기됨",
+        "statusUpdated": "분쟁 상태가 {{ status }}로 업데이트됨"
+      },
+      "errors": {
+        "badRequest": "잘못된 요청입니다. 제출 기록 ID를 확인하세요."
       }
     }
   },

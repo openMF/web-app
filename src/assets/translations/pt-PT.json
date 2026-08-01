@@ -3241,7 +3241,8 @@
       "Cross Rate": "Taxa cruzada",
       "Cross Rate via": "Taxa cruzada (via {{ currency }})",
       "Administrator": "Administrador",
-      "Provider": "Fornecedor"
+      "Provider": "Fornecedor",
+      "Dispute Management": "Gestão de disputas"
     },
     "links": {
       "Community": "Comunidade",
@@ -4632,6 +4633,32 @@
         "latePayments": "Pagamentos atrasados",
         "noData": "Nenhum perfil disponível",
         "noDataHint": "Execute a verificação do bureau"
+      },
+      "dispute": {
+        "raiseTitle": "Levantar nova disputa",
+        "lookupTitle": "Consultar disputa existente",
+        "submissionRecordId": "ID do registo de envio",
+        "disputeDetails": "Detalhes da disputa",
+        "submissionIdRequired": "ID do registo é obrigatório",
+        "detailsRequired": "Os detalhes devem ter pelo menos 10 caracteres",
+        "raise": "Levantar disputa",
+        "lookup": "Consultar",
+        "disputeId": "ID da disputa",
+        "id": "Disputa",
+        "submissionRef": "Ref. envio",
+        "raisedBy": "Levantado por",
+        "openedAt": "Aberto em",
+        "details": "Detalhes",
+        "resolvedAt": "Resolvido em",
+        "resolutionNotes": "Notas de resolução",
+        "expiry": "Data de validade",
+        "markUnderReview": "Marcar em revisão",
+        "resolve": "Resolver disputa",
+        "raised": "Disputa #{{ id }} levantada com sucesso",
+        "statusUpdated": "Estado atualizado para {{ status }}"
+      },
+      "errors": {
+        "badRequest": "Pedido inválido. Verifique o ID do registo de envio."
       }
     }
   },

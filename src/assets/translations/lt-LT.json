@@ -3241,7 +3241,8 @@
       "Cross Rate": "Kryžminis kursas",
       "Cross Rate via": "Kryžminis kursas (per {{ currency }})",
       "Administrator": "Administratorius",
-      "Provider": "Teikėjas"
+      "Provider": "Teikėjas",
+      "Dispute Management": "Gincu valdymas"
     },
     "links": {
       "Community": "bendruomenė",
@@ -4633,6 +4634,32 @@
         "latePayments": "Pavėluoti mokėjimai",
         "noData": "Kredito profilis nepasiekiamas",
         "noDataHint": "Atlikite biuro patikrinimą"
+      },
+      "dispute": {
+        "raiseTitle": "Pateikti nauja gincu",
+        "lookupTitle": "Ieskoti esamo ginco",
+        "submissionRecordId": "Pateikimo iraso ID",
+        "disputeDetails": "Ginco detales",
+        "submissionIdRequired": "Pateikimo iraso ID yra privalomas",
+        "detailsRequired": "Detales turi buti bent 10 simboliu",
+        "raise": "Pateikti gincu",
+        "lookup": "Ieskoti",
+        "disputeId": "Ginco ID",
+        "id": "Gincas",
+        "submissionRef": "Pateikimo ref.",
+        "raisedBy": "Pateike",
+        "openedAt": "Atidarytas",
+        "details": "Detales",
+        "resolvedAt": "Issprendyta",
+        "resolutionNotes": "Sprendimo pastabos",
+        "expiry": "Galiojimo pabaiga",
+        "markUnderReview": "Pazymeti kaip perziurima",
+        "resolve": "Issprusti gincu",
+        "raised": "Gincas #{{ id }} sekmin gai pateiktas",
+        "statusUpdated": "Ginco busena atnaujinta i {{ status }}"
+      },
+      "errors": {
+        "badRequest": "Neteisinga užklausa. Patikrinkite pateikimo įrašo ID."
       }
     }
   },
