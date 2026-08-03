@@ -60,7 +60,7 @@
             [min]="minDate"
             [max]="maxDate"
             [matDatepicker]="makerDateTimetoPicker"
-            formControlName="makerDateTimeto"
+            formControlName="makerDateTimeTo"
           />
           <mat-datepicker-toggle matSuffix [for]="makerDateTimetoPicker"></mat-datepicker-toggle>
           <mat-datepicker #makerDateTimetoPicker></mat-datepicker>
@@ -91,6 +91,9 @@
         </mat-form-field>
         <button mat-raised-button color="primary" id="search-button" type="button" (click)="search()">
           <fa-icon icon="search" class="m-r-10"></fa-icon>{{ 'labels.buttons.Advanced Search' | translate }}
+        </button>
+        <button mat-raised-button id="reset-button" type="button" (click)="resetFilters()">
+          {{ 'labels.buttons.Reset' | translate }}
         </button>
       </div>
     </form>
@@ -140,6 +143,10 @@
       <ng-container matColumnDef="entity">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Entity' | translate }}</th>
         <td mat-cell *matCellDef="let makerChecker">{{ makerChecker.entityName }}</td>
+      </ng-container>
+      <ng-container matColumnDef="resourceId">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Resource ID' | translate }}</th>
+        <td mat-cell *matCellDef="let makerChecker">{{ makerChecker.resourceId }}</td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr
