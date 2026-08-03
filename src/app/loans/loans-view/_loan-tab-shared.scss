@@ -201,3 +201,44 @@
     outline-offset: 1px;
   }
 }
+
+/* ── Account flag badges ───────────────────────────────────── */
+
+// Flag colours are solid fills, so they need a darker tone than the $status-*
+// palette for white label text to stay legible. These are the light variants of
+// the charge-off and alert tokens, used as backgrounds rather than as text.
+$flag-charged-off: #e65100;
+$flag-fraud: #c62828;
+
+// Pill marking an account-level flag. Shared by the account header, where it
+// sits on the dark blue card next to the status pill, and the general tab, so a
+// charged-off account is marked the same way wherever it appears.
+@mixin account-flag-badge($background) {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  vertical-align: middle;
+  color: #fff;
+  background-color: $background;
+}
+
+// Declares both flag badge classes. Include it in any component that renders
+// one of them; the classes themselves stay identical across components.
+@mixin account-flag-badges {
+  .charged-off-badge {
+    @include account-flag-badge($flag-charged-off);
+  }
+
+  // Red separates fraud from the amber charge-off pill so the two flags never
+  // blur together when an account carries both.
+  .fraud-badge {
+    @include account-flag-badge($flag-fraud);
+
+    margin-left: 8px;
+  }
+}
