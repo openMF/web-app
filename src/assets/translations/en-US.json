@@ -1634,7 +1634,8 @@
       "Exchange Rate": "Exchange Rate",
       "Create Exchange Rate": "Create Exchange Rate",
       "View Exchange Rate": "View Exchange Rate",
-      "Edit Exchange Rate": "Edit Exchange Rate"
+      "Edit Exchange Rate": "Edit Exchange Rate",
+      "Theme": "Theme"
     },
     "inputs": {
       "Breach Actions": "Breach Actions",
@@ -3271,7 +3272,14 @@
       "Cross Rate via": "Cross Rate (via {{ currency }})",
       "Administrator": "Administrator",
       "Provider": "Provider",
-      "Dispute Management": "Dispute Management"
+      "Dispute Management": "Dispute Management",
+      "Blue": "Blue",
+      "Green": "Green",
+      "Purple": "Purple",
+      "Orange": "Orange",
+      "Red": "Red",
+      "Yellow": "Yellow",
+      "Primary Color": "Primary Color"
     },
     "links": {
       "Community": "Community",
@@ -4420,7 +4428,12 @@
       "Create Exchange Rate": "Create Exchange Rate",
       "View Exchange Rate": "View Exchange Rate",
       "Edit Exchange Rate": "Edit Exchange Rate",
-      "Currency conversion failed. Please try again.": "Currency conversion failed. Please try again."
+      "Currency conversion failed. Please try again.": "Currency conversion failed. Please try again.",
+      "Set the primary color used across this tenant": "Set the primary color used across this tenant",
+      "Tenant theme explanation": "The primary color is applied to every user of this tenant. Individual users cannot override it.",
+      "Tenant theme unavailable": "The theme configuration is not available on this server. The default color is being used.",
+      "Tenant theme updated successfully": "Tenant theme updated successfully",
+      "Theme": "Theme"
     },
     "permissions": {
       "actions": {

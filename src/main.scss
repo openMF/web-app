@@ -26,6 +26,27 @@
 
 /* You can add global styles to this file, and also import other style files */
 
+/**
+ * Brand colour bridge.
+ *
+ * `--brand-primary-*` is set at runtime by `ThemeStorageService` (see
+ * `_material-palette.scss`). Declaring `--md-sys-color-primary` in terms of it
+ * lets the components that already read that token follow the selected colour.
+ * The value is unchanged by default, so existing appearance is preserved.
+ */
+:root {
+  --md-sys-color-primary: var(--brand-primary-500, #1074b9);
+}
+
+/**
+ * Sass cannot apply an alpha to a `var()`, so this one primary-derived token
+ * loses its 25% alpha during compilation. Restore it to avoid a solid track.
+ */
+.mat-mdc-progress-bar,
+.dark-theme .mat-mdc-progress-bar {
+  --mat-progress-bar-track-color: color-mix(in srgb, var(--brand-primary-500, #1074b9) 25%, transparent);
+}
+
 .custom-snackbar-top-right {
   top: 48px !important;
   right: 24px !important;

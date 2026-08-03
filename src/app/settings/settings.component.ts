@@ -23,7 +23,6 @@ import {
   MatExpansionPanelTitle
 } from '@angular/material/expansion';
 import { FileUploadComponent } from '../shared/file-upload/file-upload.component';
-import { ThemePickerComponent } from '../shared/theme-picker/theme-picker.component';
 import { LanguageSelectorComponent } from '../shared/language-selector/language-selector.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -41,7 +40,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatExpansionPanelHeader,
     MatExpansionPanelTitle,
     FileUploadComponent,
-    ThemePickerComponent,
     LanguageSelectorComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush

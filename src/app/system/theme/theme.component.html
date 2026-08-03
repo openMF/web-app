@@ -1,0 +1,49 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container space">
+  <mat-card>
+    <mat-card-content>
+      <p class="theme-explanation">
+        {{ 'labels.text.Tenant theme explanation' | translate }}
+      </p>
+
+      @if (unavailable) {
+        <p class="theme-unavailable">
+          {{ 'labels.text.Tenant theme unavailable' | translate }}
+        </p>
+      } @else {
+        <span class="header">{{ 'labels.inputs.Primary Color' | translate }}</span>
+        <mifosx-theme-picker [selected]="selectedTheme" (themeSelected)="onThemeSelected($event)"></mifosx-theme-picker>
+
+        <p class="theme-selection">
+          {{ 'labels.inputs.Theme' | translate }}:
+          <strong>{{ 'labels.inputs.' + selectedTheme.name | translate }}</strong>
+        </p>
+      }
+    </mat-card-content>
+
+    @if (!unavailable) {
+      <mat-card-actions class="layout-row align-center gap-5px responsive-column">
+        <button type="button" mat-raised-button [disabled]="!hasChanges || saving" (click)="reset()">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button
+          type="button"
+          mat-raised-button
+          color="primary"
+          [disabled]="!hasChanges || saving"
+          (click)="submit()"
+          *mifosxHasPermission="'UPDATE_CONFIGURATION'"
+        >
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
+      </mat-card-actions>
+    }
+  </mat-card>
+</div>

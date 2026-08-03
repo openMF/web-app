@@ -70,6 +70,7 @@ import { ConfigurationsComponent } from './configurations/configurations.compone
 import { EditConfigurationComponent } from './configurations/global-configurations-tab/edit-configuration/edit-configuration.component';
 import { GlobalConfigurationResolver } from './configurations/global-configurations-tab/global-configuration.resolver';
 import { GlobalConfigurationsResolver } from './configurations/global-configurations-tab/global-configurations.resolver';
+import { ThemeComponent } from './theme/theme.component';
 import { ConfigureMakerCheckerTasksComponent } from './configure-maker-checker-tasks/configure-maker-checker-tasks.component';
 import { MakerCheckerTasksResolver } from './configure-maker-checker-tasks/configure-maker-checker-tasks.resolver';
 import { EntityToEntityMappingResolver } from './entity-to-entity-mapping/entity-to-entity-mapping.resolver';
@@ -476,6 +477,11 @@ const routes: Routes = [
               ]
             }
           ]
+        },
+        {
+          path: 'theme',
+          component: ThemeComponent,
+          data: { title: 'Theme', breadcrumb: 'Theme' }
         },
         {
           path: 'configurations',

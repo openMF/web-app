@@ -22,6 +22,9 @@ import { Logger } from '../logger/logger.service';
 import { AlertService } from '../alert/alert.service';
 import { TranslateService } from '@ngx-translate/core';
 
+/** Custom Models */
+import { BRANDING_API_PATH } from 'app/shared/theme-picker/theme.model';
+
 /** Initialize Logger */
 const log = new Logger('ErrorHandlerInterceptor');
 
@@ -60,6 +63,17 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   }
 
   private handleError(response: HttpErrorResponse, request: HttpRequest<any>): Observable<HttpEvent<any>> {
+    // Tenant branding is cosmetic and optional: the endpoint is absent on
+    // deployments without the self-service plugin. Let the caller fall back to
+    // the default colour silently instead of interrupting the user with an
+    // alert. Only reads are suppressed, so a failed save still surfaces.
+    // Checked before the error body is parsed, since none of that work is
+    // needed here.
+    const isTenantThemeLookup = request.method === 'GET' && request.url.endsWith(BRANDING_API_PATH);
+    if (isTenantThemeLookup) {
+      return throwError(() => response);
+    }
+
     const status = response.status;
     const errorBody = this.parseErrorBody(response.error);
 
