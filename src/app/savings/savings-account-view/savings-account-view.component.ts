@@ -158,6 +158,12 @@ export class SavingsAccountViewComponent implements OnInit {
         taskPermissionName: 'REMOVESAVINGSOFFICER_SAVINGSACCOUNT'
       });
     }
+    if (this.savingsAccountData.clientId && environment.mifosInterbankTransfersEnabled) {
+      this.buttonConfig.addOption({
+        name: 'Link to payment system',
+        taskPermissionName: 'CREATE_ACCOUNTTRANSFER'
+      });
+    }
     if (this.savingsAccountData.charges) {
       const charges: any[] = this.savingsAccountData.charges;
       charges.forEach((charge: any) => {
@@ -217,6 +223,7 @@ export class SavingsAccountViewComponent implements OnInit {
       case 'Block Deposit':
       case 'Block Withdrawal':
       case 'Unassign Staff':
+      case 'Link to payment system':
       case 'Withdrawn by Client':
       case 'Apply Annual Fees':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
