@@ -164,11 +164,13 @@ export class ClientApprovalComponent implements AfterViewInit {
   }
 
   approveClients() {
+    const businessDate = this.settingsService.businessDate || new Date();
     const formfields: FormfieldBase[] = [
       new DatepickerBase({
         controlName: 'actDate',
         label: 'Date',
-        value: new Date(),
+        value: businessDate,
+        maxDate: businessDate,
         type: 'datetime-local',
         required: true
       })
@@ -176,7 +178,8 @@ export class ClientApprovalComponent implements AfterViewInit {
     const data = {
       title: 'Enter Clients Activation Date',
       layout: { addButtonText: 'Confirm' },
-      formfields: formfields
+      formfields: formfields,
+      pristine: false
     };
     const clientApprovalDialogRef = this.dialog.open(FormDialogComponent, { data });
     clientApprovalDialogRef.afterClosed().subscribe((response: any) => {
