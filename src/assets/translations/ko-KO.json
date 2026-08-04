@@ -3316,6 +3316,7 @@
       "Write-off": "상각",
       "WriteOff Reason": "상각 사유",
       "Written Off": "상각",
+      "Written Off On": "상각일",
       "Yearly": "매년",
       "Zip": "지퍼",
       "accounting": {
@@ -3488,6 +3489,7 @@
       "Centers": "센터",
       "Change Loan Officer": "대출 담당자 변경",
       "Charge-Off": "상각",
+      "Write-Off": "대손상각",
       "Chart of Accounts": "계정 목록",
       "Checker Inbox and Tasks": "Checker 받은 편지함 및 작업",
       "Clients": "클라이언트",
@@ -3638,7 +3640,8 @@
       "Submitted and pending approval": "제출 및 보류 승인",
       "Transfer in progress": "진행중인 양도",
       "Transfer on hold": "보류에 이체하십시오",
-      "Withdrawn": "빼는"
+      "Withdrawn": "빼는",
+      "Written Off": "상각됨"
     },
     "dialogContext": {
       "A new clean period will start today": "오늘부터 새로운 깨끗한 기간이 시작됩니다.",

@@ -3316,6 +3316,7 @@
       "Write-off": "Norakstīt",
       "WriteOff Reason": "Norakstīšanas iemesls",
       "Written Off": "Norakstīti",
+      "Written Off On": "Norakstīts",
       "Yearly": "Ik gadu",
       "Zip": "Pasta indekss",
       "accounting": {
@@ -3487,6 +3488,7 @@
       "Centers": "Centri",
       "Change Loan Officer": "Mainīt aizdevuma speciālistu",
       "Charge-Off": "Norakstīšana",
+      "Write-Off": "Norakstīšana",
       "Chart of Accounts": "Kontu plāns",
       "Checker Inbox and Tasks": "Pārbaudīt iesūtni un uzdevumus",
       "Clients": "Klienti",
@@ -3638,7 +3640,8 @@
       "Submitted and pending approval": "Iesniegts un gaidīts apstiprinājums",
       "Transfer in progress": "Iepriekšējā pārnešana",
       "Transfer on hold": "Pārnešana aizturēta",
-      "Withdrawn": "Atsaukts"
+      "Withdrawn": "Atsaukts",
+      "Written Off": "Norakstīts"
     },
     "dialogContext": {
       "A new clean period will start today": "No šodienas sāksies jauns, tīrs periods.",

@@ -3316,6 +3316,7 @@
       "Write-off": "Odepsat",
       "WriteOff Reason": "Důvod odepsání",
       "Written Off": "Odepsané",
+      "Written Off On": "Odepsáno dne",
       "Yearly": "Roční",
       "Zip": "zip",
       "accounting": {
@@ -3488,6 +3489,7 @@
       "Centers": "Střediska",
       "Change Loan Officer": "Změnit úvěrového úředníka",
       "Charge-Off": "Odpis pohledávky",
+      "Write-Off": "Odpis",
       "Chart of Accounts": "Graf účtů",
       "Checker Inbox and Tasks": "Kontrola doručené pošty a úkolů",
       "Clients": "klienti",
@@ -3639,7 +3641,8 @@
       "Submitted and pending approval": "Předložený a čekající na schválení",
       "Transfer in progress": "Převod",
       "Transfer on hold": "Přenesejte na pozastavení",
-      "Withdrawn": "Stažený"
+      "Withdrawn": "Stažený",
+      "Written Off": "Odepsáno"
     },
     "dialogContext": {
       "A new clean period will start today": "Ode dneška začne nové čisté období.",

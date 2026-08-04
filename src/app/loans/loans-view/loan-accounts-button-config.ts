@@ -234,6 +234,16 @@ export class LoansAccountButtonConfiguration {
           }
         ];
         break;
+      case 'Closed (written off)':
+        // Terminal state: only Undo Write-off remains available.
+        this.buttonsArray = [
+          {
+            name: 'Undo Write-off',
+            icon: 'undo',
+            taskPermissionName: 'UNDOWRITEOFF_WORKINGCAPITALLOAN'
+          }
+        ];
+        break;
       default:
         this.buttonsArray = [];
     }
@@ -389,6 +399,10 @@ export class LoansAccountButtonConfiguration {
           {
             name: 'Goodwill Credit',
             taskPermissionName: 'CREATE_GOODWILL_TRANSACTION'
+          },
+          {
+            name: 'Write Off',
+            taskPermissionName: 'WRITEOFF_WORKINGCAPITALLOAN'
           }
         ];
         this.optionPaymentArray = [];
