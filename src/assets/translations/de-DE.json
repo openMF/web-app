@@ -3318,6 +3318,7 @@
       "Write-off": "Abschreiben",
       "WriteOff Reason": "Abschreibungsgrund",
       "Written Off": "Abgeschrieben",
+      "Written Off On": "Abgeschrieben am",
       "Yearly": "Jährlich",
       "Zip": "Reißverschluss",
       "accounting": {
@@ -3490,6 +3491,7 @@
       "Centers": "Zentren",
       "Change Loan Officer": "Kreditsachbearbeiter ändern",
       "Charge-Off": "Abladen",
+      "Write-Off": "Abschreibung",
       "Chart of Accounts": "Kontenplan",
       "Checker Inbox and Tasks": "Überprüfen Sie den Posteingang und die Aufgaben",
       "Clients": "Kunden",
@@ -3641,7 +3643,8 @@
       "Submitted and pending approval": "Eingereicht und ausstehende Genehmigung",
       "Transfer in progress": "Übertragung in Arbeit",
       "Transfer on hold": "Übertragen",
-      "Withdrawn": "Zurückgezogen"
+      "Withdrawn": "Zurückgezogen",
+      "Written Off": "Abgeschrieben"
     },
     "dialogContext": {
       "A new clean period will start today": "Ab heute beginnt eine neue, saubere Periode.",

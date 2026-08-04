@@ -100,6 +100,18 @@
                       </td>
                     </tr>
                   }
+                  @if (loanProductService.isWorkingCapital && loanDetailsData.writtenOffOnDate) {
+                    <tr>
+                      <td>{{ 'labels.inputs.Written Off On' | translate }}:</td>
+                      <td>
+                        <span class="written-off-badge">{{ 'labels.status.Written Off' | translate }}</span>
+                        <span class="m-l-10">{{ loanDetailsData.writtenOffOnDate | dateFormat }}</span>
+                        @if (loanDetailsData.writeOffReason?.name) {
+                          <span class="m-l-10">· {{ loanDetailsData.writeOffReason.name }}</span>
+                        }
+                      </td>
+                    </tr>
+                  }
                 </tbody>
               </table>
             </div>

@@ -3320,6 +3320,7 @@
       "Write-off": "Cancelaciones",
       "WriteOff Reason": "Motivo de la cancelación",
       "Written Off": "Cancelado",
+      "Written Off On": "Castigado el",
       "Yearly": "Anual",
       "Zip": "Comprimir",
       "accounting": {
@@ -3489,6 +3490,7 @@
       "Centers": "Centros",
       "Change Loan Officer": "Cambiar oficial de Créditos",
       "Charge-Off": "Cancelación",
+      "Write-Off": "Castigo",
       "Chart of Accounts": "Catálogo de cuentas",
       "Checker Inbox and Tasks": "Bandeja de entrada y tareas de Checker",
       "Clients": "Clientes",
@@ -3640,7 +3642,8 @@
       "Submitted and pending approval": "Aprobación pendiente",
       "Transfer in progress": "Transferencia en progreso",
       "Transfer on hold": "Transferencia en pausa",
-      "Withdrawn": "Retirado"
+      "Withdrawn": "Retirado",
+      "Written Off": "Castigado"
     },
     "dialogContext": {
       "A new clean period will start today": "Se abrirá un periodo nuevo y limpio a partir de hoy.",

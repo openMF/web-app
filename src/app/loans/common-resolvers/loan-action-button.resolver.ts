@@ -60,7 +60,9 @@ export class LoanActionButtonResolver {
     } else if (loanActionButton === 'Waive Interest') {
       return this.loansService.getLoanActionTemplate(loanId, 'waiveinterest');
     } else if (loanActionButton === 'Write Off') {
-      return this.loansService.getLoanActionTemplate(loanId, 'writeoff');
+      return this.loanProductService.isLoanProduct
+        ? this.loansService.getLoanActionTemplate(loanId, 'writeoff')
+        : this.loansService.getWorkingCapitalWriteOffTemplate();
     } else if (loanActionButton === 'Close') {
       return this.loansService.getLoanActionTemplate(loanId, 'close');
     } else if (loanActionButton === 'Close (as Rescheduled)') {

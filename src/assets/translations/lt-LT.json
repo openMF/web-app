@@ -3315,6 +3315,7 @@
       "Write-off": "Nusirašinėti",
       "WriteOff Reason": "Nurašymo priežastis",
       "Written Off": "Nurašytas",
+      "Written Off On": "Nurašyta",
       "Yearly": "Kasmet",
       "Zip": "Pašto kodas",
       "accounting": {
@@ -3487,6 +3488,7 @@
       "Centers": "Centrai",
       "Change Loan Officer": "Keisti paskolos pareigūną",
       "Charge-Off": "Atsakingas už",
+      "Write-Off": "Nurašymas",
       "Chart of Accounts": "Sąskaitų planas",
       "Checker Inbox and Tasks": "Tikrinti gautuosius ir užduotis",
       "Clients": "Klientai",
@@ -3638,7 +3640,8 @@
       "Submitted and pending approval": "Pateikta ir laukiama patvirtinimo",
       "Transfer in progress": "Vykdomas perkėlimas",
       "Transfer on hold": "Perkelti sustabdytas",
-      "Withdrawn": "Pasitraukė"
+      "Withdrawn": "Pasitraukė",
+      "Written Off": "Nurašyta"
     },
     "dialogContext": {
       "A new clean period will start today": "Nuo šiandien prasidės naujas švarus laikotarpis.",

@@ -153,3 +153,19 @@ export interface WorkingCapitalNearBreachActions {
   frequencyType: string;
   createdDate: Date;
 }
+
+export interface WorkingCapitalWriteOffRequest {
+  transactionDate: string;
+  /** Lower-case "writeoff" on purpose: the backend follows the term/progressive loan parameter shape. */
+  writeoffReasonId?: number;
+  note?: string;
+  externalId?: string;
+  locale: string;
+  dateFormat: string;
+}
+
+export interface WorkingCapitalUndoWriteOffRequest {
+  reversalExternalId?: string;
+  note?: string;
+  locale: string;
+}

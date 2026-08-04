@@ -3373,6 +3373,7 @@
       "Write-off": "Write-off",
       "WriteOff Reason": "WriteOff Reason",
       "Written Off": "Written Off",
+      "Written Off On": "Written Off On",
       "Yearly": "Yearly",
       "Zip": "Zip",
       "accounting": {
@@ -3517,6 +3518,7 @@
       "Centers": "Centers",
       "Change Loan Officer": "Change Loan Officer",
       "Charge-Off": "Charge-Off",
+      "Write-Off": "Write-Off",
       "Chart of Accounts": "Chart of Accounts",
       "Checker Inbox and Tasks": "Checker Inbox and Tasks",
       "Clients": "Clients",
@@ -3669,7 +3671,8 @@
       "Submitted and pending approval": "Submitted and pending approval",
       "Transfer in progress": "Transfer in progress",
       "Transfer on hold": "Transfer on hold",
-      "Withdrawn": "Withdrawn"
+      "Withdrawn": "Withdrawn",
+      "Written Off": "Written Off"
     },
     "dialogContext": {
       "A new clean period will start today": "A new clean period will start from today.",

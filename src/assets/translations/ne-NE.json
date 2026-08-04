@@ -3315,6 +3315,7 @@
       "Write-off": "राइट-अफ",
       "WriteOff Reason": "कारण लेख्नुहोस्",
       "Written Off": "लिखित बन्द",
+      "Written Off On": "राइट अफ मिति",
       "Yearly": "वार्षिक",
       "Zip": "जिप कोड",
       "accounting": {
@@ -3487,6 +3488,7 @@
       "Centers": "केन्द्रहरू",
       "Change Loan Officer": "ऋण अधिकारी परिवर्तन गर्नुहोस्",
       "Charge-Off": "चार्ज-अफ",
+      "Write-Off": "राइट-अफ",
       "Chart of Accounts": "लेखाको चार्ट",
       "Checker Inbox and Tasks": "जाँचकर्ता इनबक्स र कार्यहरू",
       "Clients": "ग्राहकहरु",
@@ -3638,7 +3640,8 @@
       "Submitted and pending approval": "बुझाइएको र अनुमोदन पेन्डिंग",
       "Transfer in progress": "प्रगतिमा स्थानान्तरण",
       "Transfer on hold": "होल्डमा स्थानान्तरण गर्नुहोस्",
-      "Withdrawn": "फिर्ता लिन"
+      "Withdrawn": "फिर्ता लिन",
+      "Written Off": "राइट अफ"
     },
     "dialogContext": {
       "A new clean period will start today": "आजबाट नयाँ सफा अवधि सुरु हुनेछ।",

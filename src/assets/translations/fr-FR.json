@@ -3319,6 +3319,7 @@
       "Write-off": "Radier",
       "WriteOff Reason": "Motif de radiation",
       "Written Off": "Radié",
+      "Written Off On": "Passé en perte le",
       "Yearly": "Annuel",
       "Zip": "Fermeture éclair",
       "accounting": {
@@ -3491,6 +3492,7 @@
       "Centers": "Centres",
       "Change Loan Officer": "Changer l'agent de crédit",
       "Charge-Off": "Amortir",
+      "Write-Off": "Passer en perte",
       "Chart of Accounts": "Plan comptable",
       "Checker Inbox and Tasks": "Boîte de réception et tâches du vérificateur",
       "Clients": "Clientèle",
@@ -3642,7 +3644,8 @@
       "Submitted and pending approval": "Approbation soumise et en attente",
       "Transfer in progress": "Transfert en cours",
       "Transfer on hold": "Transfert en attente",
-      "Withdrawn": "Retiré"
+      "Withdrawn": "Retiré",
+      "Written Off": "Passé en perte"
     },
     "dialogContext": {
       "A new clean period will start today": "Une nouvelle période vierge commencera aujourd’hui.",
