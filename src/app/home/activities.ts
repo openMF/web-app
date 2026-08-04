@@ -59,7 +59,12 @@ const activities: any[] = [
   { activity: 'create accounting closure', path: '' },
   { activity: 'navigation', path: '/navigation' },
   { activity: 'remittances', path: '/remittances/process' },
-  { activity: '', path: 'home' }
+  { activity: 'loans', path: '/loans' },
+  { activity: 'collections', path: '/collections' },
+  { activity: 'notifications', path: '/notifications' },
+  { activity: 'profile', path: '/profile' },
+  { activity: 'settings', path: '/settings' },
+  { activity: 'checker inbox and tasks', path: '/checker-inbox-and-tasks' }
 ];
 
 export { activities };
