@@ -193,7 +193,7 @@
                   <span class="date-cell">{{ row.startDateObj | dateFormat }}</span>
                 </td>
                 <td>
-                  @if (row.action !== 'RESUME') {
+                  @if (row.hasEndDate) {
                     @if (row.endDateObj) {
                       <span class="date-cell">{{ row.endDateObj | dateFormat }}</span>
                     } @else {

@@ -50,7 +50,9 @@ export class LoanActionButtonResolver {
     } else if (loanActionButton === 'Interest Payment Waiver') {
       return this.loansService.getLoanActionTemplate(loanId, 'interestPaymentWaiver');
     } else if (loanActionButton === 'Payout Refund') {
-      return this.loansService.getLoanActionTemplate(loanId, 'payoutRefund');
+      return this.loanProductService.isLoanProduct
+        ? this.loansService.getLoanActionTemplate(loanId, 'payoutRefund')
+        : this.loansService.getWorkingCapitalLoanActionTemplate(loanId, 'repayment');
     } else if (loanActionButton === 'Merchant Issued Refund') {
       return this.loansService.getLoanActionTemplate(loanId, 'merchantIssuedRefund');
     } else if (loanActionButton === 'Credit Balance Refund') {

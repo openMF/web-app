@@ -302,7 +302,7 @@
       </table>
     </div>
   }
-  @if (wcLoanDelinquencyRangeSchedule.length > 0) {
+  @if (wcLoanDelinquencyRangeSchedule?.length > 0) {
     <div class="m-t-10">
       <h3>{{ 'labels.heading.Loan Delinquency Range Schedule' | translate }}</h3>
       <table mat-table [dataSource]="wcLoanDelinquencyRangeSchedule">

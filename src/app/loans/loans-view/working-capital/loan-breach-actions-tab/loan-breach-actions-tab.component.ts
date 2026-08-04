@@ -49,6 +49,8 @@ interface BreachActionRow {
   endDate: number[];
   startDateObj: Date;
   endDateObj: Date | null;
+  /** Whether the action type defines an end date at all (RESUME and RESCHEDULE do not) */
+  hasEndDate: boolean;
   status: BreachActionStatus;
   statusLabelKey: string;
   isOngoing: boolean;
@@ -133,11 +135,16 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
     const businessDate = this.settingsService.businessDate;
     return this.breachActions().map((item, index) => {
       const isResumeAction = item.action === 'RESUME';
+      const isRescheduleAction = item.action === 'RESCHEDULE';
       const isResumedPause = item.action === 'PAUSE' && !!item.effectiveEndDate;
       const start = this.dateUtils.parseDate(item.startDate);
       const end = isResumeAction ? null : this.dateUtils.parseDate(item.effectiveEndDate ?? item.endDate);
       const reference = end ?? businessDate;
-      const durationDays = Math.max(1, Math.round((reference.getTime() - start.getTime()) / MS_PER_DAY));
+      // Both boundary dates count: a pause from Jul 1st to Jul 16th lasts 16 days, not 15.
+      // A pause closed by a RESUME is the exception: the loan is already active on the resume
+      // date, so that day is not a paused day and must not be added.
+      const elapsedDays = Math.round((reference.getTime() - start.getTime()) / MS_PER_DAY);
+      const durationDays = Math.max(1, isResumedPause ? elapsedDays : elapsedDays + 1);
 
       let status: BreachActionStatus;
       if (isResumeAction) {
@@ -159,6 +166,7 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
         endDate: item.endDate,
         startDateObj: start,
         endDateObj: end,
+        hasEndDate: !isResumeAction && !isRescheduleAction,
         status,
         statusLabelKey: this.statusKey(status),
         isOngoing: !end && status === 'active',
