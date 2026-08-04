@@ -234,8 +234,7 @@
                 [placeholder]="'labels.inputs.Incorporation Validity Till Date' | translate"
                 [title]="'labels.inputs.Incorporation Validity Till Date' | translate"
                 matInput
-                [min]="minDate"
-                [max]="maxDate"
+                [min]="editClientForm.get('dateOfBirth')?.value || minDate"
                 [matDatepicker]="incorpValidityTillDateDatePicker"
                 formControlName="incorpValidityTillDate"
               />
