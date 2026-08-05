@@ -156,15 +156,6 @@ export class WebAppComponent implements OnInit, OnDestroy {
     });
     this.themingService.setInitialDarkMode();
     this.themingService.setDarkMode(!!this.settingsService.themeDarkEnabled);
-    // Apply the tenant's brand colour: cached value first so there is no flash,
-    // then refreshed from the server. Re-run whenever the session changes so a
-    // user signing in picks up their tenant's branding.
-    this.themeStorageService.loadTenantTheme();
-    this.authenticationService.isAuthenticated$.pipe(takeUntil(this.destroy$)).subscribe((isAuthenticated: boolean) => {
-      if (isAuthenticated) {
-        this.themeStorageService.loadTenantTheme();
-      }
-    });
 
     // Setup logger
     if (environment.production) {
@@ -252,6 +243,18 @@ export class WebAppComponent implements OnInit, OnDestroy {
       this.settingsService.setTenantIdentifier(environment.fineractPlatformTenantId || 'default');
     }
     this.settingsService.setTenantIdentifiers(environment.fineractPlatformTenantIds.split(','));
+
+    // Apply the tenant's brand colour: the cached value is painted first so
+    // there is no flash, then refreshed from the server. Read anonymously, so
+    // it does not wait for authentication and the login screen is branded too.
+    //
+    // Deliberately after the server and tenant are settled above: the read
+    // carries no credentials, so the tenant header is the only thing saying
+    // whose branding to return. Re-run when the session changes, since signing
+    // in can switch tenant; it is a no-op for a tenant already read.
+    this.authenticationService.isAuthenticated$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.themeStorageService.loadTenantTheme());
 
     // Subscribe to session timeout If IdleTimeout is higher than 0 (zero)
     if (environment.session.timeout.idleTimeout > 0) {
