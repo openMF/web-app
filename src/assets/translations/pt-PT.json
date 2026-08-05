@@ -782,7 +782,9 @@
       "Resume Breach": "Retomar Violação",
       "Currency Conversion": "Conversão de moeda",
       "Create Exchange Rate": "Criar taxa de câmbio",
-      "Create Transfer Fee": "Criar taxa de transferência"
+      "Create Transfer Fee": "Criar taxa de transferência",
+      "Requesting": "A solicitar",
+      "Delink": "Desligar"
     },
     "catalogs": {
       "% Amount": "Quantia",
@@ -3244,7 +3246,10 @@
       "Cross Rate via": "Taxa cruzada (via {{ currency }})",
       "Administrator": "Administrador",
       "Provider": "Fornecedor",
-      "Dispute Management": "Gestão de disputas"
+      "Dispute Management": "Gestão de disputas",
+      "Phone": "Telefone",
+      "Mail": "E-mail",
+      "Link": "Ligação"
     },
     "links": {
       "Community": "Comunidade",
@@ -3391,7 +3396,8 @@
       "Tasks": "Tarefas",
       "Remittances": "Remessas",
       "Process Remittance": "Processar remessa",
-      "Undo Write-off": "Desfazer abatimento"
+      "Undo Write-off": "Desfazer abatimento",
+      "Link to payment system": "Ligar ao sistema de pagamentos"
     },
     "placeholders": {
       "Add new server": "Adicionar novo servidor",
@@ -4277,7 +4283,21 @@
       "View Exchange Rate": "Ver taxa de câmbio",
       "Edit Exchange Rate": "Editar taxa de câmbio",
       "Currency Conversion": "Conversão de moeda",
-      "Currency conversion failed. Please try again.": "A conversão de moeda falhou. Tente novamente."
+      "Currency conversion failed. Please try again.": "A conversão de moeda falhou. Tente novamente.",
+      "Add link": "Adicionar ligação",
+      "Enter an 8 digit phone number": "Introduza um número de telefone com 8 dígitos.",
+      "Enter a valid 8 digit phone number": "Introduza um número de telefone válido com 8 dígitos.",
+      "OTP must contain only numbers": "O OTP deve conter apenas números.",
+      "Linked phone number": "Número de telefone ligado",
+      "Payment system account missing IBAN": "Esta conta poupança não tem um ID externo para usar como IBAN do sistema de pagamentos.",
+      "Payment system OTP sent": "OTP solicitado e número de telefone verificado.",
+      "Payment system OTP request failed": "Não foi possível solicitar ou verificar o número de telefone.",
+      "Payment system link successful": "Conta ligada ao sistema de pagamentos com sucesso.",
+      "Payment system link failed": "Não foi possível ligar a conta ao sistema de pagamentos.",
+      "Payment system delink OTP sent": "Foi solicitado um novo OTP para remover a ligação ao sistema de pagamentos.",
+      "Payment system delink OTP request failed": "Não foi possível solicitar um novo OTP para desligar.",
+      "Payment system delink successful": "Ligação ao sistema de pagamentos removida com sucesso.",
+      "Payment system delink failed": "Não foi possível remover a ligação ao sistema de pagamentos."
     },
     "permissions": {
       "actions": {
