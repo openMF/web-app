@@ -782,7 +782,9 @@
       "Resume Breach": "Reprendre le Manquement",
       "Currency Conversion": "Conversion de devise",
       "Create Exchange Rate": "Créer un taux de change",
-      "Create Transfer Fee": "Créer des frais de transfert"
+      "Create Transfer Fee": "Créer des frais de transfert",
+      "Requesting": "Demande en cours",
+      "Delink": "Délier"
     },
     "catalogs": {
       "% Amount": "Montant",
@@ -3248,7 +3250,10 @@
       "Cross Rate via": "Taux croisé (via {{ currency }})",
       "Administrator": "Administrateur",
       "Provider": "Fournisseur",
-      "Dispute Management": "Gestion des litiges"
+      "Dispute Management": "Gestion des litiges",
+      "Phone": "Téléphone",
+      "Mail": "E-mail",
+      "Link": "Lien"
     },
     "links": {
       "Community": "Communauté",
@@ -3395,7 +3400,8 @@
       "Tasks": "Tâches",
       "Remittances": "Transferts",
       "Process Remittance": "Traiter le transfert",
-      "Undo Write-off": "Annuler l'abandon de créance"
+      "Undo Write-off": "Annuler l'abandon de créance",
+      "Link to payment system": "Lier au système de paiement"
     },
     "placeholders": {
       "Add new server": "Ajouter un nouveau serveur",
@@ -4280,7 +4286,21 @@
       "View Exchange Rate": "Afficher le taux de change",
       "Edit Exchange Rate": "Modifier le taux de change",
       "Currency Conversion": "Conversion de devise",
-      "Currency conversion failed. Please try again.": "La conversion de devise a échoué. Veuillez réessayer."
+      "Currency conversion failed. Please try again.": "La conversion de devise a échoué. Veuillez réessayer.",
+      "Add link": "Ajouter un lien",
+      "Enter an 8 digit phone number": "Saisissez un numéro de téléphone à 8 chiffres.",
+      "Enter a valid 8 digit phone number": "Saisissez un numéro de téléphone valide à 8 chiffres.",
+      "OTP must contain only numbers": "L’OTP doit contenir uniquement des chiffres.",
+      "Linked phone number": "Numéro de téléphone lié",
+      "Payment system account missing IBAN": "Ce compte d’épargne ne possède pas d’ID externe à utiliser comme IBAN du système de paiement.",
+      "Payment system OTP sent": "L’OTP a été demandé et le numéro de téléphone a été vérifié.",
+      "Payment system OTP request failed": "Impossible de demander ou de vérifier le numéro de téléphone.",
+      "Payment system link successful": "Le compte a été lié au système de paiement avec succès.",
+      "Payment system link failed": "Impossible de lier le compte au système de paiement.",
+      "Payment system delink OTP sent": "Un nouvel OTP a été demandé pour supprimer le lien avec le système de paiement.",
+      "Payment system delink OTP request failed": "Impossible de demander un nouvel OTP pour la suppression du lien.",
+      "Payment system delink successful": "Le lien avec le système de paiement a été supprimé avec succès.",
+      "Payment system delink failed": "Impossible de supprimer le lien avec le système de paiement."
     },
     "permissions": {
       "actions": {

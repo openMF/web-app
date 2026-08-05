@@ -784,7 +784,9 @@
       "Resume Breach": "Verstoß fortsetzen",
       "Currency Conversion": "Währungsumrechnung",
       "Create Exchange Rate": "Wechselkurs erstellen",
-      "Create Transfer Fee": "Transfergebühr erstellen"
+      "Create Transfer Fee": "Transfergebühr erstellen",
+      "Requesting": "Wird angefordert",
+      "Delink": "Verknüpfung entfernen"
     },
     "catalogs": {
       "% Amount": "Menge",
@@ -3247,7 +3249,10 @@
       "Cross Rate via": "Kreuzkurs (über {{ currency }})",
       "Administrator": "Administrator",
       "Provider": "Anbieter",
-      "Dispute Management": "Streitverwaltung"
+      "Dispute Management": "Streitverwaltung",
+      "Phone": "Telefon",
+      "Mail": "E-Mail",
+      "Link": "Verknüpfung"
     },
     "links": {
       "Community": "Gemeinschaft",
@@ -3394,7 +3399,8 @@
       "Tasks": "Aufgaben",
       "Remittances": "Überweisungen",
       "Process Remittance": "Überweisung bearbeiten",
-      "Undo Write-off": "Abschreibung rückgängig machen"
+      "Undo Write-off": "Abschreibung rückgängig machen",
+      "Link to payment system": "Mit Zahlungssystem verknüpfen"
     },
     "placeholders": {
       "Add new server": "Neuen Server hinzufügen",
@@ -4279,7 +4285,21 @@
       "View Exchange Rate": "Wechselkurs anzeigen",
       "Edit Exchange Rate": "Wechselkurs bearbeiten",
       "Currency Conversion": "Währungsumrechnung",
-      "Currency conversion failed. Please try again.": "Währungsumrechnung fehlgeschlagen. Bitte versuchen Sie es erneut."
+      "Currency conversion failed. Please try again.": "Währungsumrechnung fehlgeschlagen. Bitte versuchen Sie es erneut.",
+      "Add link": "Verknüpfung hinzufügen",
+      "Enter an 8 digit phone number": "Geben Sie eine 8-stellige Telefonnummer ein.",
+      "Enter a valid 8 digit phone number": "Geben Sie eine gültige 8-stellige Telefonnummer ein.",
+      "OTP must contain only numbers": "Das OTP darf nur Zahlen enthalten.",
+      "Linked phone number": "Verknüpfte Telefonnummer",
+      "Payment system account missing IBAN": "Dieses Sparkonto hat keine externe ID, die als IBAN des Zahlungssystems verwendet werden kann.",
+      "Payment system OTP sent": "OTP wurde angefordert und die Telefonnummer wurde verifiziert.",
+      "Payment system OTP request failed": "Die Telefonnummer konnte nicht angefordert oder verifiziert werden.",
+      "Payment system link successful": "Das Konto wurde erfolgreich mit dem Zahlungssystem verknüpft.",
+      "Payment system link failed": "Das Konto konnte nicht mit dem Zahlungssystem verknüpft werden.",
+      "Payment system delink OTP sent": "Ein neues OTP zum Entfernen der Zahlungssystem-Verknüpfung wurde angefordert.",
+      "Payment system delink OTP request failed": "Ein neues OTP zum Entfernen der Verknüpfung konnte nicht angefordert werden.",
+      "Payment system delink successful": "Die Zahlungssystem-Verknüpfung wurde erfolgreich entfernt.",
+      "Payment system delink failed": "Die Zahlungssystem-Verknüpfung konnte nicht entfernt werden."
     },
     "permissions": {
       "actions": {

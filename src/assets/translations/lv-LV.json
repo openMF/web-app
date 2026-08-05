@@ -782,7 +782,9 @@
       "Resume Breach": "Pārtraukuma atsākšana",
       "Currency Conversion": "Valūtas konvertēšana",
       "Create Exchange Rate": "Izveidot valūtas kursu",
-      "Create Transfer Fee": "Izveidot pārskaitījuma maksu"
+      "Create Transfer Fee": "Izveidot pārskaitījuma maksu",
+      "Requesting": "Pieprasa",
+      "Delink": "Atsaistīt"
     },
     "catalogs": {
       "% Amount": "Summa",
@@ -3245,7 +3247,10 @@
       "Cross Rate via": "Krusta kurss (caur {{ currency }})",
       "Administrator": "Administrators",
       "Provider": "Nodrošinātājs",
-      "Dispute Management": "Stridu parvaldiba"
+      "Dispute Management": "Stridu parvaldiba",
+      "Phone": "Tālrunis",
+      "Mail": "E-pasts",
+      "Link": "Saite"
     },
     "links": {
       "Community": "kopiena",
@@ -3391,7 +3396,8 @@
       "Tasks": "Uzdevumi",
       "Remittances": "Pārvedumi",
       "Process Remittance": "Apstrādāt pārvedumu",
-      "Undo Write-off": "Atcelt norakstīšanu"
+      "Undo Write-off": "Atcelt norakstīšanu",
+      "Link to payment system": "Saistīt ar maksājumu sistēmu"
     },
     "placeholders": {
       "Add new server": "Pievienot jaunu serveri",
@@ -4277,7 +4283,21 @@
       "View Exchange Rate": "Skatīt valūtas kursu",
       "Edit Exchange Rate": "Rediģēt valūtas kursu",
       "Currency Conversion": "Valūtas konvertēšana",
-      "Currency conversion failed. Please try again.": "Valūtas konvertēšana neizdevās. Lūdzu, mēģiniet vēlreiz."
+      "Currency conversion failed. Please try again.": "Valūtas konvertēšana neizdevās. Lūdzu, mēģiniet vēlreiz.",
+      "Add link": "Pievienot saiti",
+      "Enter an 8 digit phone number": "Ievadiet 8 ciparu tālruņa numuru.",
+      "Enter a valid 8 digit phone number": "Ievadiet derīgu 8 ciparu tālruņa numuru.",
+      "OTP must contain only numbers": "OTP drīkst saturēt tikai ciparus.",
+      "Linked phone number": "Saistītais tālruņa numurs",
+      "Payment system account missing IBAN": "Šim krājkontam nav ārējā ID, ko izmantot kā maksājumu sistēmas IBAN.",
+      "Payment system OTP sent": "OTP tika pieprasīts, un tālruņa numurs tika pārbaudīts.",
+      "Payment system OTP request failed": "Neizdevās pieprasīt vai pārbaudīt tālruņa numuru.",
+      "Payment system link successful": "Konts veiksmīgi saistīts ar maksājumu sistēmu.",
+      "Payment system link failed": "Neizdevās saistīt kontu ar maksājumu sistēmu.",
+      "Payment system delink OTP sent": "Tika pieprasīts jauns OTP maksājumu sistēmas saites noņemšanai.",
+      "Payment system delink OTP request failed": "Neizdevās pieprasīt jaunu OTP atsaistīšanai.",
+      "Payment system delink successful": "Maksājumu sistēmas saite veiksmīgi noņemta.",
+      "Payment system delink failed": "Neizdevās noņemt maksājumu sistēmas saiti."
     },
     "permissions": {
       "actions": {
