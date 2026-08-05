@@ -17,7 +17,8 @@ import { SavingsService } from 'app/savings/savings.service';
 import {
   fastPaymentPhoneValidator,
   LinkPaymentSystemComponent,
-  normalizeFastPaymentPhoneNumber
+  normalizeFastPaymentPhoneNumber,
+  otpFromEnrollmentRequestResponse
 } from './link-payment-system.component';
 
 describe('LinkPaymentSystemComponent', () => {
@@ -89,6 +90,13 @@ describe('LinkPaymentSystemComponent', () => {
     expect(fastPaymentPhoneValidator({ value: '1234567' } as any)).toEqual({ phoneNumber: true });
   });
 
+  it('extracts OTP from the enrollment request response changes', () => {
+    expect(otpFromEnrollmentRequestResponse({ changes: { otp: '048404' } })).toBe('048404');
+    expect(otpFromEnrollmentRequestResponse({ changes: { otp: 924892 } })).toBe('924892');
+    expect(otpFromEnrollmentRequestResponse({ changes: {} })).toBe('');
+    expect(otpFromEnrollmentRequestResponse({})).toBe('');
+  });
+
   it('uses savings externalId as the read-only IBAN and never accountNo', async () => {
     await setup();
 
@@ -99,6 +107,7 @@ describe('LinkPaymentSystemComponent', () => {
 
   it('requests OTP, verifies the phone, and links with externalId as iban', async () => {
     await setup();
+    savingsService.requestSinpeEnrollment.mockReturnValueOnce(of({ changes: { otp: '048404' } }));
 
     component.linkPaymentSystemForm.patchValue({ phoneNumber: '+506 0930 0097' });
     component.requestLinkOtp();
@@ -106,6 +115,7 @@ describe('LinkPaymentSystemComponent', () => {
     expect(savingsService.requestSinpeEnrollment).toHaveBeenCalledWith(90, '09300097');
     expect(savingsService.verifySinpeEnrollmentPhone).toHaveBeenCalledWith('09300097');
     expect(component.otpRequested).toBe(true);
+    expect(component.linkPaymentSystemForm.get('otp')?.value).toBe('048404');
 
     component.linkPaymentSystemForm.patchValue({ otp: '048404' });
     component.submitLink();
@@ -118,6 +128,44 @@ describe('LinkPaymentSystemComponent', () => {
     });
     expect(component.linkedPhoneNumber).toBe('09300097');
     expect(component.statusType).toBe('success');
+    expect(component.linkPaymentSystemForm.get('otp')?.value).toBe('');
+  });
+
+  it('keeps manual OTP entry available when the backend does not return an OTP', async () => {
+    await setup();
+    savingsService.requestSinpeEnrollment.mockReturnValueOnce(of({ changes: {} }));
+
+    component.linkPaymentSystemForm.patchValue({ phoneNumber: '88781923', otp: '999999' });
+    component.requestLinkOtp();
+
+    expect(component.otpRequested).toBe(true);
+    expect(component.linkPaymentSystemForm.get('otp')?.value).toBe('');
+
+    component.linkPaymentSystemForm.patchValue({ otp: '123456' });
+    component.submitLink();
+
+    expect(savingsService.createSinpeSubscription).toHaveBeenCalledWith({
+      clientId: 90,
+      phoneNumber: '88781923',
+      iban: 'CR92037300110010000087',
+      otp: '123456'
+    });
+  });
+
+  it('clears returned OTP values when the phone number changes', async () => {
+    await setup();
+    savingsService.requestSinpeEnrollment.mockReturnValueOnce(of({ changes: { otp: '048404' } }));
+
+    component.linkPaymentSystemForm.patchValue({ phoneNumber: '88781923' });
+    component.requestLinkOtp();
+    component.delinkPaymentSystemForm.patchValue({ otp: '924892' });
+
+    component.linkPaymentSystemForm.patchValue({ phoneNumber: '88781924' });
+
+    expect(component.linkPaymentSystemForm.get('otp')?.value).toBe('');
+    expect(component.delinkPaymentSystemForm.get('otp')?.value).toBe('');
+    expect(component.otpRequested).toBe(false);
+    expect(component.delinkOtpRequested).toBe(false);
   });
 
   it('shows an error state when link OTP request fails', async () => {
@@ -152,12 +200,14 @@ describe('LinkPaymentSystemComponent', () => {
 
   it('requests a fresh OTP and delinks the linked phone number', async () => {
     await setup();
+    savingsService.requestSinpeEnrollment.mockReturnValueOnce(of({ changes: { otp: '924892' } }));
     component.linkedPhoneNumber = '88781923';
 
     component.requestDelinkOtp();
 
     expect(savingsService.requestSinpeEnrollment).toHaveBeenCalledWith(90, '88781923');
     expect(component.delinkOtpRequested).toBe(true);
+    expect(component.delinkPaymentSystemForm.get('otp')?.value).toBe('924892');
 
     component.delinkPaymentSystemForm.patchValue({ otp: '924892' });
     component.submitDelink();
@@ -168,6 +218,7 @@ describe('LinkPaymentSystemComponent', () => {
     });
     expect(component.linkedPhoneNumber).toBeNull();
     expect(component.statusType).toBe('success');
+    expect(component.delinkPaymentSystemForm.get('otp')?.value).toBe('');
   });
 
   it('shows an error state when delink fails', async () => {

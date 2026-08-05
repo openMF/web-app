@@ -11,7 +11,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnIn
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { finalize, switchMap } from 'rxjs';
+import { finalize, map, switchMap } from 'rxjs';
 
 /** Angular Material Imports */
 import { MatRadioModule } from '@angular/material/radio';
@@ -28,6 +28,11 @@ export function normalizeFastPaymentPhoneNumber(value: unknown): string {
 
 export function fastPaymentPhoneValidator(control: AbstractControl): ValidationErrors | null {
   return normalizeFastPaymentPhoneNumber(control.value).length === 8 ? null : { phoneNumber: true };
+}
+
+export function otpFromEnrollmentRequestResponse(response: any): string {
+  const otp = response?.changes?.otp;
+  return otp === null || otp === undefined ? '' : `${otp}`;
 }
 
 type FastPaymentLoadingAction = 'linkOtp' | 'link' | 'delinkOtp' | 'delink';
@@ -129,17 +134,21 @@ export class LinkPaymentSystemComponent implements OnInit {
       return;
     }
     const phoneNumber = this.normalizedPhoneNumber;
+    this.linkPaymentSystemForm.get('otp')?.reset('');
     this.setLoading('linkOtp');
     this.savingsService
       .requestSinpeEnrollment(clientId, phoneNumber)
       .pipe(
-        switchMap(() => this.savingsService.verifySinpeEnrollmentPhone(phoneNumber)),
+        switchMap((response: any) =>
+          this.savingsService.verifySinpeEnrollmentPhone(phoneNumber).pipe(map(() => response))
+        ),
         finalize(() => this.clearLoading())
       )
       .subscribe({
-        next: () => {
+        next: (response: any) => {
           this.otpRequested = true;
           this.requireLinkOtp();
+          this.prefillOtp(this.linkPaymentSystemForm, response);
           this.setStatus('info', 'labels.text.Payment system OTP sent');
         },
         error: (error: any) => this.setStatus('error', 'labels.text.Payment system OTP request failed', error)
@@ -166,7 +175,7 @@ export class LinkPaymentSystemComponent implements OnInit {
         next: () => {
           this.linkedPhoneNumber = phoneNumber;
           this.otpRequested = false;
-          this.linkPaymentSystemForm.get('otp')?.reset('');
+          this.clearOtpValues();
           this.clearLinkOtpRequirement();
           this.setStatus('success', 'labels.text.Payment system link successful');
         },
@@ -186,9 +195,10 @@ export class LinkPaymentSystemComponent implements OnInit {
       .requestSinpeEnrollment(clientId, phoneNumber)
       .pipe(finalize(() => this.clearLoading()))
       .subscribe({
-        next: () => {
+        next: (response: any) => {
           this.delinkOtpRequested = true;
           this.delinkPaymentSystemForm.reset({ otp: '' });
+          this.prefillOtp(this.delinkPaymentSystemForm, response);
           this.setStatus('info', 'labels.text.Payment system delink OTP sent');
         },
         error: (error: any) => this.setStatus('error', 'labels.text.Payment system delink OTP request failed', error)
@@ -213,11 +223,16 @@ export class LinkPaymentSystemComponent implements OnInit {
         next: () => {
           this.linkedPhoneNumber = null;
           this.delinkOtpRequested = false;
-          this.delinkPaymentSystemForm.reset({ otp: '' });
+          this.clearOtpValues();
           this.setStatus('success', 'labels.text.Payment system delink successful');
         },
         error: (error: any) => this.setStatus('error', 'labels.text.Payment system delink failed', error)
       });
+  }
+
+  clearOtpValues() {
+    this.linkPaymentSystemForm.get('otp')?.reset('');
+    this.delinkPaymentSystemForm.reset({ otp: '' });
   }
 
   private createForms() {
@@ -256,8 +271,7 @@ export class LinkPaymentSystemComponent implements OnInit {
       .subscribe(() => {
         this.otpRequested = false;
         this.delinkOtpRequested = false;
-        this.linkPaymentSystemForm.get('otp')?.reset('');
-        this.delinkPaymentSystemForm.reset({ otp: '' });
+        this.clearOtpValues();
         this.clearLinkOtpRequirement();
         this.statusType = null;
         this.statusMessage = null;
@@ -285,6 +299,13 @@ export class LinkPaymentSystemComponent implements OnInit {
     return (
       this.linkedPhoneNumber || (this.linkPaymentSystemForm.get('phoneNumber')?.valid ? this.normalizedPhoneNumber : '')
     );
+  }
+
+  private prefillOtp(form: FormGroup, response: any) {
+    const otp = otpFromEnrollmentRequestResponse(response);
+    if (otp) {
+      form.get('otp')?.setValue(otp);
+    }
   }
 
   private setLoading(action: FastPaymentLoadingAction) {

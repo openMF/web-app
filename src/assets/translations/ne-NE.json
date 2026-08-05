@@ -782,7 +782,9 @@
       "Resume Breach": "उल्लंघन पुनः सुरु गर्नुहोस्",
       "Currency Conversion": "मुद्रा रूपान्तरण",
       "Create Exchange Rate": "विनिमय दर सिर्जना गर्नुहोस्",
-      "Create Transfer Fee": "स्थानान्तरण शुल्क सिर्जना गर्नुहोस्"
+      "Create Transfer Fee": "स्थानान्तरण शुल्क सिर्जना गर्नुहोस्",
+      "Requesting": "अनुरोध गर्दै",
+      "Delink": "लिंक हटाउनुहोस्"
     },
     "catalogs": {
       "% Amount": "रकम",
@@ -3244,7 +3246,10 @@
       "Cross Rate via": "क्रस दर ({{ currency }} मार्फत)",
       "Administrator": "प्रशासक",
       "Provider": "प्रदायक",
-      "Dispute Management": "Vivad Vyavasthapan"
+      "Dispute Management": "Vivad Vyavasthapan",
+      "Phone": "फोन",
+      "Mail": "मेल",
+      "Link": "लिंक"
     },
     "links": {
       "Community": "समुदाय",
@@ -3391,7 +3396,8 @@
       "Tasks": "कार्यहरू",
       "Remittances": "रेमिट्यान्स",
       "Process Remittance": "रेमिट्यान्स प्रक्रिया",
-      "Undo Write-off": "राइट-अफ पूर्ववत गर्नुहोस्"
+      "Undo Write-off": "राइट-अफ पूर्ववत गर्नुहोस्",
+      "Link to payment system": "भुक्तानी प्रणालीमा लिंक गर्नुहोस्"
     },
     "placeholders": {
       "Add new server": "नयाँ सर्भर थप्नुहोस्",
@@ -4277,7 +4283,21 @@
       "View Exchange Rate": "विनिमय दर हेर्नुहोस्",
       "Edit Exchange Rate": "विनिमय दर सम्पादन गर्नुहोस्",
       "Currency Conversion": "मुद्रा रूपान्तरण",
-      "Currency conversion failed. Please try again.": "मुद्रा रूपान्तरण असफल भयो। कृपया फेरि प्रयास गर्नुहोस्।"
+      "Currency conversion failed. Please try again.": "मुद्रा रूपान्तरण असफल भयो। कृपया फेरि प्रयास गर्नुहोस्।",
+      "Add link": "लिंक थप्नुहोस्",
+      "Enter an 8 digit phone number": "८ अंकको फोन नम्बर प्रविष्ट गर्नुहोस्।",
+      "Enter a valid 8 digit phone number": "मान्य ८ अंकको फोन नम्बर प्रविष्ट गर्नुहोस्।",
+      "OTP must contain only numbers": "OTP मा अंकहरू मात्र हुनुपर्छ।",
+      "Linked phone number": "लिंक गरिएको फोन नम्बर",
+      "Payment system account missing IBAN": "यस बचत खातामा भुक्तानी प्रणाली IBAN को रूपमा प्रयोग गर्न बाह्य ID छैन।",
+      "Payment system OTP sent": "OTP अनुरोध गरियो र फोन नम्बर प्रमाणित गरियो।",
+      "Payment system OTP request failed": "फोन नम्बर अनुरोध वा प्रमाणित गर्न सकिएन।",
+      "Payment system link successful": "खाता सफलतापूर्वक भुक्तानी प्रणालीमा लिंक गरियो।",
+      "Payment system link failed": "खाता भुक्तानी प्रणालीमा लिंक गर्न सकिएन।",
+      "Payment system delink OTP sent": "भुक्तानी प्रणाली लिंक हटाउन नयाँ OTP अनुरोध गरियो।",
+      "Payment system delink OTP request failed": "लिंक हटाउन नयाँ OTP अनुरोध गर्न सकिएन।",
+      "Payment system delink successful": "भुक्तानी प्रणाली लिंक सफलतापूर्वक हटाइयो।",
+      "Payment system delink failed": "भुक्तानी प्रणाली लिंक हटाउन सकिएन।"
     },
     "permissions": {
       "actions": {
