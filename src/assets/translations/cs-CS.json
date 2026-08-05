@@ -783,7 +783,9 @@
       "Resume Breach": "Obnovení porušení",
       "Currency Conversion": "Převod měny",
       "Create Exchange Rate": "Vytvořit směnný kurz",
-      "Create Transfer Fee": "Vytvořit poplatek za převod"
+      "Create Transfer Fee": "Vytvořit poplatek za převod",
+      "Requesting": "Probíhá požadavek",
+      "Delink": "Odpojit"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -3245,7 +3247,10 @@
       "Cross Rate via": "Křížový kurz (přes {{ currency }})",
       "Administrator": "Administrátor",
       "Provider": "Poskytovatel",
-      "Dispute Management": "Správa sporů"
+      "Dispute Management": "Správa sporů",
+      "Phone": "Telefon",
+      "Mail": "E-mail",
+      "Link": "Propojení"
     },
     "links": {
       "Community": "Společenství",
@@ -3392,7 +3397,8 @@
       "Tasks": "Úkoly",
       "Remittances": "Remitence",
       "Process Remittance": "Zpracovat remitenci",
-      "Undo Write-off": "Zrušit odpis"
+      "Undo Write-off": "Zrušit odpis",
+      "Link to payment system": "Propojit s platebním systémem"
     },
     "placeholders": {
       "Add new server": "Přidat nový server",
@@ -4278,7 +4284,21 @@
       "View Exchange Rate": "Zobrazit směnný kurz",
       "Edit Exchange Rate": "Upravit směnný kurz",
       "Currency Conversion": "Převod měny",
-      "Currency conversion failed. Please try again.": "Převod měny se nezdařil. Zkuste to prosím znovu."
+      "Currency conversion failed. Please try again.": "Převod měny se nezdařil. Zkuste to prosím znovu.",
+      "Add link": "Přidat propojení",
+      "Enter an 8 digit phone number": "Zadejte 8místné telefonní číslo.",
+      "Enter a valid 8 digit phone number": "Zadejte platné 8místné telefonní číslo.",
+      "OTP must contain only numbers": "OTP smí obsahovat pouze číslice.",
+      "Linked phone number": "Propojené telefonní číslo",
+      "Payment system account missing IBAN": "Tento spořicí účet nemá externí ID, které lze použít jako IBAN platebního systému.",
+      "Payment system OTP sent": "OTP bylo vyžádáno a telefonní číslo ověřeno.",
+      "Payment system OTP request failed": "Nepodařilo se vyžádat nebo ověřit telefonní číslo.",
+      "Payment system link successful": "Účet byl úspěšně propojen s platebním systémem.",
+      "Payment system link failed": "Účet se nepodařilo propojit s platebním systémem.",
+      "Payment system delink OTP sent": "Bylo vyžádáno nové OTP pro odebrání propojení s platebním systémem.",
+      "Payment system delink OTP request failed": "Nepodařilo se vyžádat nové OTP pro odpojení.",
+      "Payment system delink successful": "Propojení s platebním systémem bylo úspěšně odebráno.",
+      "Payment system delink failed": "Propojení s platebním systémem se nepodařilo odebrat."
     },
     "permissions": {
       "actions": {

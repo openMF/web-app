@@ -782,7 +782,9 @@
       "Resume Breach": "Riprendi Violazione",
       "Currency Conversion": "Conversione valuta",
       "Create Exchange Rate": "Crea tasso di cambio",
-      "Create Transfer Fee": "Crea commissione di trasferimento"
+      "Create Transfer Fee": "Crea commissione di trasferimento",
+      "Requesting": "Richiesta in corso",
+      "Delink": "Scollega"
     },
     "catalogs": {
       "% Amount": "Quantità",
@@ -3245,7 +3247,10 @@
       "Cross Rate via": "Tasso incrociato (tramite {{ currency }})",
       "Administrator": "Amministratore",
       "Provider": "Provider",
-      "Dispute Management": "Gestione delle controversie"
+      "Dispute Management": "Gestione delle controversie",
+      "Phone": "Telefono",
+      "Mail": "E-mail",
+      "Link": "Collegamento"
     },
     "links": {
       "Community": "Comunità",
@@ -3391,7 +3396,8 @@
       "Tasks": "Attività",
       "Remittances": "Rimesse",
       "Process Remittance": "Elabora rimessa",
-      "Undo Write-off": "Annulla storno"
+      "Undo Write-off": "Annulla storno",
+      "Link to payment system": "Collega al sistema di pagamento"
     },
     "placeholders": {
       "Add new server": "Aggiungi nuovo server",
@@ -4278,7 +4284,21 @@
       "View Exchange Rate": "Visualizza tasso di cambio",
       "Edit Exchange Rate": "Modifica tasso di cambio",
       "Currency Conversion": "Conversione valuta",
-      "Currency conversion failed. Please try again.": "Conversione valuta non riuscita. Riprova."
+      "Currency conversion failed. Please try again.": "Conversione valuta non riuscita. Riprova.",
+      "Add link": "Aggiungi collegamento",
+      "Enter an 8 digit phone number": "Inserisci un numero di telefono di 8 cifre.",
+      "Enter a valid 8 digit phone number": "Inserisci un numero di telefono valido di 8 cifre.",
+      "OTP must contain only numbers": "L’OTP deve contenere solo numeri.",
+      "Linked phone number": "Numero di telefono collegato",
+      "Payment system account missing IBAN": "Questo conto di risparmio non ha un ID esterno da usare come IBAN del sistema di pagamento.",
+      "Payment system OTP sent": "OTP richiesto e numero di telefono verificato.",
+      "Payment system OTP request failed": "Impossibile richiedere o verificare il numero di telefono.",
+      "Payment system link successful": "Conto collegato correttamente al sistema di pagamento.",
+      "Payment system link failed": "Impossibile collegare il conto al sistema di pagamento.",
+      "Payment system delink OTP sent": "È stato richiesto un nuovo OTP per rimuovere il collegamento al sistema di pagamento.",
+      "Payment system delink OTP request failed": "Impossibile richiedere un nuovo OTP per lo scollegamento.",
+      "Payment system delink successful": "Collegamento al sistema di pagamento rimosso correttamente.",
+      "Payment system delink failed": "Impossibile rimuovere il collegamento al sistema di pagamento."
     },
     "permissions": {
       "actions": {

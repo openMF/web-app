@@ -782,7 +782,9 @@
       "Resume Breach": "Atnaujinti pažeidimą",
       "Currency Conversion": "Valiutos konvertavimas",
       "Create Exchange Rate": "Sukurti valiutos kursą",
-      "Create Transfer Fee": "Sukurti pervedimo mokestį"
+      "Create Transfer Fee": "Sukurti pervedimo mokestį",
+      "Requesting": "Prašoma",
+      "Delink": "Atsieti"
     },
     "catalogs": {
       "% Amount": "Suma",
@@ -3244,7 +3246,10 @@
       "Cross Rate via": "Kryžminis kursas (per {{ currency }})",
       "Administrator": "Administratorius",
       "Provider": "Teikėjas",
-      "Dispute Management": "Gincu valdymas"
+      "Dispute Management": "Gincu valdymas",
+      "Phone": "Telefonas",
+      "Mail": "El. paštas",
+      "Link": "Susiejimas"
     },
     "links": {
       "Community": "bendruomenė",
@@ -3391,7 +3396,8 @@
       "Tasks": "Užduotys",
       "Remittances": "Pervedimai",
       "Process Remittance": "Apdoroti pervedimą",
-      "Undo Write-off": "Atšaukti nurašymą"
+      "Undo Write-off": "Atšaukti nurašymą",
+      "Link to payment system": "Susieti su mokėjimo sistema"
     },
     "placeholders": {
       "Add new server": "Pridėti naują serverį",
@@ -4278,7 +4284,21 @@
       "View Exchange Rate": "Peržiūrėti valiutos kursą",
       "Edit Exchange Rate": "Redaguoti valiutos kursą",
       "Currency Conversion": "Valiutos konvertavimas",
-      "Currency conversion failed. Please try again.": "Valiutos konvertuoti nepavyko. Bandykite dar kartą."
+      "Currency conversion failed. Please try again.": "Valiutos konvertuoti nepavyko. Bandykite dar kartą.",
+      "Add link": "Pridėti susiejimą",
+      "Enter an 8 digit phone number": "Įveskite 8 skaitmenų telefono numerį.",
+      "Enter a valid 8 digit phone number": "Įveskite galiojantį 8 skaitmenų telefono numerį.",
+      "OTP must contain only numbers": "OTP gali būti sudarytas tik iš skaičių.",
+      "Linked phone number": "Susietas telefono numeris",
+      "Payment system account missing IBAN": "Ši taupomoji sąskaita neturi išorinio ID, kurį būtų galima naudoti kaip mokėjimo sistemos IBAN.",
+      "Payment system OTP sent": "OTP paprašyta ir telefono numeris patvirtintas.",
+      "Payment system OTP request failed": "Nepavyko paprašyti arba patvirtinti telefono numerio.",
+      "Payment system link successful": "Sąskaita sėkmingai susieta su mokėjimo sistema.",
+      "Payment system link failed": "Nepavyko susieti sąskaitos su mokėjimo sistema.",
+      "Payment system delink OTP sent": "Paprašyta naujo OTP mokėjimo sistemos susiejimui pašalinti.",
+      "Payment system delink OTP request failed": "Nepavyko paprašyti naujo OTP atsiejimui.",
+      "Payment system delink successful": "Mokėjimo sistemos susiejimas sėkmingai pašalintas.",
+      "Payment system delink failed": "Nepavyko pašalinti mokėjimo sistemos susiejimo."
     },
     "permissions": {
       "actions": {

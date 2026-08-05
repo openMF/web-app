@@ -782,7 +782,9 @@
       "Resume Breach": "Endelea Ukiukaji",
       "Currency Conversion": "Ubadilishaji wa sarafu",
       "Create Exchange Rate": "Unda kiwango cha ubadilishaji",
-      "Create Transfer Fee": "Unda ada ya uhamisho"
+      "Create Transfer Fee": "Unda ada ya uhamisho",
+      "Requesting": "Inaomba",
+      "Delink": "Tenganisha"
     },
     "catalogs": {
       "% Amount": "Kiasi",
@@ -3242,7 +3244,10 @@
       "Cross Rate via": "Kiwango cha msalaba (kupitia {{ currency }})",
       "Administrator": "Msimamizi",
       "Provider": "Mtoa huduma",
-      "Dispute Management": "Usimamizi wa Migogoro"
+      "Dispute Management": "Usimamizi wa Migogoro",
+      "Phone": "Simu",
+      "Mail": "Barua pepe",
+      "Link": "Kiungo"
     },
     "links": {
       "Community": "Jumuiya",
@@ -3388,7 +3393,8 @@
       "Tasks": "Kazi",
       "Remittances": "Uhawilishaji",
       "Process Remittance": "Chakata uhawilishaji",
-      "Undo Write-off": "Futa Kuandika-mbali"
+      "Undo Write-off": "Futa Kuandika-mbali",
+      "Link to payment system": "Unganisha kwenye mfumo wa malipo"
     },
     "placeholders": {
       "Add new server": "Ongeza seva mpya",
@@ -4274,7 +4280,21 @@
       "View Exchange Rate": "Tazama kiwango cha ubadilishaji",
       "Edit Exchange Rate": "Hariri kiwango cha ubadilishaji",
       "Currency Conversion": "Ubadilishaji wa sarafu",
-      "Currency conversion failed. Please try again.": "Ubadilishaji wa sarafu umeshindwa. Tafadhali jaribu tena."
+      "Currency conversion failed. Please try again.": "Ubadilishaji wa sarafu umeshindwa. Tafadhali jaribu tena.",
+      "Add link": "Ongeza kiungo",
+      "Enter an 8 digit phone number": "Weka nambari ya simu yenye tarakimu 8.",
+      "Enter a valid 8 digit phone number": "Weka nambari halali ya simu yenye tarakimu 8.",
+      "OTP must contain only numbers": "OTP lazima iwe na nambari pekee.",
+      "Linked phone number": "Nambari ya simu iliyounganishwa",
+      "Payment system account missing IBAN": "Akaunti hii ya akiba haina kitambulisho cha nje cha kutumia kama IBAN ya mfumo wa malipo.",
+      "Payment system OTP sent": "OTP imeombwa na nambari ya simu imethibitishwa.",
+      "Payment system OTP request failed": "Imeshindikana kuomba au kuthibitisha nambari ya simu.",
+      "Payment system link successful": "Akaunti imeunganishwa kwenye mfumo wa malipo kwa mafanikio.",
+      "Payment system link failed": "Imeshindikana kuunganisha akaunti kwenye mfumo wa malipo.",
+      "Payment system delink OTP sent": "OTP mpya imeombwa ili kuondoa kiungo cha mfumo wa malipo.",
+      "Payment system delink OTP request failed": "Imeshindikana kuomba OTP mpya ya kutenganisha.",
+      "Payment system delink successful": "Kiungo cha mfumo wa malipo kimeondolewa kwa mafanikio.",
+      "Payment system delink failed": "Imeshindikana kuondoa kiungo cha mfumo wa malipo."
     },
     "permissions": {
       "actions": {

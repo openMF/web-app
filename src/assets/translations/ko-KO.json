@@ -782,7 +782,9 @@
       "Resume Breach": "중단된 작업 재개",
       "Currency Conversion": "통화 변환",
       "Create Exchange Rate": "환율 생성",
-      "Create Transfer Fee": "송금 수수료 생성"
+      "Create Transfer Fee": "송금 수수료 생성",
+      "Requesting": "요청 중",
+      "Delink": "연결 해제"
     },
     "catalogs": {
       "% Amount": "양",
@@ -3245,7 +3247,10 @@
       "Cross Rate via": "교차 환율 ({{ currency }} 경유)",
       "Administrator": "관리자",
       "Provider": "제공자",
-      "Dispute Management": "분쟁 관리"
+      "Dispute Management": "분쟁 관리",
+      "Phone": "전화번호",
+      "Mail": "메일",
+      "Link": "연결"
     },
     "links": {
       "Community": "지역 사회",
@@ -3391,7 +3396,8 @@
       "Tasks": "작업",
       "Remittances": "송금",
       "Process Remittance": "송금 처리",
-      "Undo Write-off": "상각 취소"
+      "Undo Write-off": "상각 취소",
+      "Link to payment system": "결제 시스템에 연결"
     },
     "placeholders": {
       "Add new server": "새 서버 추가",
@@ -4277,7 +4283,21 @@
       "View Exchange Rate": "환율 보기",
       "Edit Exchange Rate": "환율 편집",
       "Currency Conversion": "통화 변환",
-      "Currency conversion failed. Please try again.": "통화 변환에 실패했습니다. 다시 시도하세요."
+      "Currency conversion failed. Please try again.": "통화 변환에 실패했습니다. 다시 시도하세요.",
+      "Add link": "연결 추가",
+      "Enter an 8 digit phone number": "8자리 전화번호를 입력하세요.",
+      "Enter a valid 8 digit phone number": "유효한 8자리 전화번호를 입력하세요.",
+      "OTP must contain only numbers": "OTP는 숫자만 포함해야 합니다.",
+      "Linked phone number": "연결된 전화번호",
+      "Payment system account missing IBAN": "이 예금 계좌에는 결제 시스템 IBAN으로 사용할 외부 ID가 없습니다.",
+      "Payment system OTP sent": "OTP가 요청되었고 전화번호가 확인되었습니다.",
+      "Payment system OTP request failed": "전화번호를 요청하거나 확인할 수 없습니다.",
+      "Payment system link successful": "계좌가 결제 시스템에 성공적으로 연결되었습니다.",
+      "Payment system link failed": "계좌를 결제 시스템에 연결할 수 없습니다.",
+      "Payment system delink OTP sent": "결제 시스템 연결을 제거하기 위한 새 OTP가 요청되었습니다.",
+      "Payment system delink OTP request failed": "연결 해제를 위한 새 OTP를 요청할 수 없습니다.",
+      "Payment system delink successful": "결제 시스템 연결이 성공적으로 제거되었습니다.",
+      "Payment system delink failed": "결제 시스템 연결을 제거할 수 없습니다."
     },
     "permissions": {
       "actions": {
