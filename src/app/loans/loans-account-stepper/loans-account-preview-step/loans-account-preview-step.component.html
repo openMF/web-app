@@ -405,7 +405,7 @@
       <div class="layout-row-wrap responsive-column flex-fill margin-t">
         <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Charges' | translate }}</h3>
         <mat-divider class="flex-fill"></mat-divider>
-        <table class="flex-fill mat-elevation-z1" mat-table [dataSource]="loansAccount.charges">
+        <table class="mat-elevation-z1" mat-table [dataSource]="loansAccount.charges">
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
             <td mat-cell *matCellDef="let charge">
