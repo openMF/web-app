@@ -14,7 +14,7 @@ import {
   type GeneralStepData,
   type FamilyMemberData
 } from '../../pages';
-import { createTestClient } from '../../factories';
+import { buildTestClientPayload } from '../../factories';
 import { BEHAVIOR } from '../../config/behavior';
 
 /**
@@ -28,7 +28,7 @@ import { BEHAVIOR } from '../../config/behavior';
  *      single test exercises every PR-1 page object surface
  *      (`ClientsListPage`, `CreateClientPage`, `ClientViewPage`).
  *
- *   2. Negative path — uses the {@link createTestClient} payload factory
+ *   2. Negative path — uses the {@link buildTestClientPayload} payload factory
  *      to build a baseline that is one required field short, then
  *      asserts the wizard refuses to expose the Preview step until the
  *      missing field is supplied. The factory is intentionally scoped
@@ -216,7 +216,7 @@ test.describe('Create Client — CRUD', () => {
       );
     }
 
-    const invalidPayload = createTestClient({
+    const invalidPayload = buildTestClientPayload({
       office: officeName,
       lastname: ''
     });
