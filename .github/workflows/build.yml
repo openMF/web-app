@@ -9,8 +9,8 @@ on:
       - hotfix/*
       - release/*
     paths-ignore:
-      - 'helm/**'
-      - '.github/**'
+      - "helm/**"
+      - ".github/**"
   pull_request:
     branches:
       - main
@@ -371,6 +371,52 @@ jobs:
           FINERACT_API_URL: "${{ vars.FINERACT_API_URL }}"
           MATOMO_SITE_ID: "${{ vars.MATOMO_SITE_ID }}"
           MATOMO_SITE_URL: "${{ vars.MATOMO_SITE_URL }}"
+          SENTRY_DSN: "${{ secrets.SENTRY_DSN }}"
+          APM_SERVER_URL: "${{ vars.APM_SERVER_URL }}"
+          APM_ACTIVE: "${{ vars.APM_ACTIVE }}"
+  EKS-Production:
+    runs-on: ubuntu-latest
+    if: github.event.ref == 'refs/heads/main' || contains(github.event.ref, 'refs/heads/hotfix/') || contains(github.event.ref, 'refs/heads/release/')
+    environment:
+      name: Production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+
+      - name: Setup Helm
+        uses: one-acre-fund/oaf-actions/helm_setup@1.0.0
+        with:
+          ARTIFACT_NAME: "${{ env.ARTIFACT_NAME }}"
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          RUN_ID: "${{ github.run_id }}"
+          CI_REPOSITORY: "${{ github.repository }}"
+          K8S_URL: "${{ secrets.K8S_PROD_URL }}"
+          K8S_SECRET: "${{ secrets.K8S_PROD_DEFAULT }}"
+
+      - name: Deploy using Helm
+        uses: "./.github/actions/helm_fineract_frontend"
+        with:
+          NAMESPACE: "${{ vars.NAMESPACE }}"
+          ACR_REGISTRY: "${{ vars.ACR_REGISTRY }}"
+          ACR_PULL_PASSWORD: "${{ secrets.ACR_PULL_PASSWORD }}"
+          ACR_PULL_USERNAME: "${{ vars.ACR_PULL_USERNAME }}"
+          ARTIFACT_NAME: "${{ env.ARTIFACT_NAME }}"
+          REPLICAS: "${{ vars.REPLICAS }}"
+          RELEASE_NAME: "${{ vars.RELEASE_NAME }}"
+          FINERACT_PROXY_URL: "${{ vars.FINERACT_PROXY_URL }}"
+          FINERACT_PROXY_HTTPS_PORT: "${{ vars.FINERACT_PROXY_HTTPS_PORT }}"
+          FINERACT_PROXY_HTTP_PORT: "${{ vars.FINERACT_PROXY_HTTP_PORT }}"
+          FINERACT_KEYCLOAK_REALM: "${{ vars.FINERACT_KEYCLOAK_REALM }}"
+          FINERACT_KEYCLOAK_CLIENT_ID: "${{ vars.FINERACT_KEYCLOAK_CLIENT_ID }}"
+          FINERACT_KEYCLOAK_TOKEN_URL: "${{ vars.FINERACT_KEYCLOAK_TOKEN_URL }}"
+          FINERACT_KEYCLOAK_AUTH_SERVER_URL: "${{ vars.FINERACT_KEYCLOAK_AUTH_SERVER_URL }}"
+          FINERACT_KEYCLOAK_API_URL: "https://aws-accounts.oneacrefund.org"
+          FINERACT_HOST_HOME_URL: "${{ vars.FINERACT_HOST_HOME_URL }}"
+          FINERACT_BASE_URL: "${{ vars.FINERACT_BASE_URL }}"
+          FINERACT_AUTH_URL: "${{ vars.FINERACT_AUTH_URL }}"
+          FINERACT_API_URL: "https://aws-loans.oneacrefund.org"
+          MATOMO_SITE_ID: "${{ vars.MATOMO_SITE_ID }}"
+          MATOMO_SITE_URL: "https://aws-analytics.oneacrefund.org"
           SENTRY_DSN: "${{ secrets.SENTRY_DSN }}"
           APM_SERVER_URL: "${{ vars.APM_SERVER_URL }}"
           APM_ACTIVE: "${{ vars.APM_ACTIVE }}"
