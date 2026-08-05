@@ -133,6 +133,7 @@ export default defineConfig({
       name: 'unit',
       testMatch: [
         /playwright\/utils\/.*\.spec\.ts/,
+        /playwright\/pages\/.*\.spec\.ts/,
         /playwright\/factories\/client\.spec\.ts/
       ],
       testDir: '.',
