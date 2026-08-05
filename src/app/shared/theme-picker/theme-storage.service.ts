@@ -38,12 +38,28 @@ export class ThemeStorageService {
   /** Cache of the last known colour, keyed by tenant. */
   private themeCacheKey = 'mifosXTenantPrimaryColor';
 
+  /** Tenant whose branding has already been read from the server this session. */
+  private loadedTenant: string | null = null;
+
   /**
-   * Applies the cached colour immediately, then refreshes it from the server.
-   * Called after authentication and on startup.
+   * Applies the cached colour immediately, then refreshes it from the server
+   * once per tenant.
+   *
+   * Callers signal "the tenant may have changed" - startup, and signing in,
+   * which can switch tenant - rather than "fetch now", so repeated calls for a
+   * tenant already read cost nothing.
    */
   loadTenantTheme(): void {
     this.applyTheme(this.getCachedTheme());
+
+    const tenant = this.getTenantIdentifier();
+    if (this.loadedTenant === tenant) {
+      return;
+    }
+    // Recorded before the request rather than after, so a slow read cannot be
+    // issued twice; a failed one leaves the cached colour applied, which is
+    // what it would fall back to anyway.
+    this.loadedTenant = tenant;
     this.fetchTenantTheme().subscribe();
   }
 
@@ -53,14 +69,26 @@ export class ThemeStorageService {
    * Only a colour the server actually returned is cached: a failed read falls
    * back to the last known colour, so an outage cannot overwrite the tenant's
    * branding with the default.
+   *
+   * The tenant is captured when the request is issued rather than read again
+   * when it resolves, because it can change while the read is in flight - the
+   * tenant selector switches it without a reload. The answer belongs to the
+   * tenant that was asked, so it is cached under that one, and applied only
+   * while that tenant is still the current one.
    * @returns {Observable<Theme>} The applied theme; never errors.
    */
   fetchTenantTheme(): Observable<Theme> {
+    const requestedTenant = this.getTenantIdentifier();
+
     return this.brandingService.getTenantBranding().pipe(
       map((branding: TenantBranding) => resolvePrimaryColorTheme(branding?.primaryColor)),
-      tap((theme: Theme) => this.cacheTheme(theme)),
-      catchError(() => of(this.getCachedTheme())),
-      tap((theme: Theme) => this.applyTheme(theme))
+      tap((theme: Theme) => this.cacheTheme(theme, requestedTenant)),
+      catchError(() => of(this.getCachedTheme(requestedTenant))),
+      tap((theme: Theme) => {
+        if (requestedTenant === this.getTenantIdentifier()) {
+          this.applyTheme(theme);
+        }
+      })
     );
   }
 
@@ -84,10 +112,11 @@ export class ThemeStorageService {
   }
 
   /**
-   * @returns {Theme} Last known colour for the current tenant, else the default.
+   * @param {string} tenant Tenant to read; defaults to the current one.
+   * @returns {Theme} Last known colour for that tenant, else the default.
    */
-  getCachedTheme(): Theme {
-    return resolvePrimaryColorTheme(this.readCache()[this.getTenantIdentifier()]);
+  getCachedTheme(tenant: string = this.getTenantIdentifier()): Theme {
+    return resolvePrimaryColorTheme(this.readCache()[tenant]);
   }
 
   /**
@@ -110,12 +139,13 @@ export class ThemeStorageService {
   }
 
   /**
-   * @param {Theme} theme Theme to remember for the current tenant.
+   * @param {Theme} theme Theme to remember.
+   * @param {string} tenant Tenant it belongs to; defaults to the current one.
    */
-  private cacheTheme(theme: Theme): void {
+  private cacheTheme(theme: Theme, tenant: string = this.getTenantIdentifier()): void {
     try {
       const cache = this.readCache();
-      cache[this.getTenantIdentifier()] = theme.id;
+      cache[tenant] = theme.id;
       localStorage.setItem(this.themeCacheKey, JSON.stringify(cache));
     } catch {
       // Persistence is best effort: unavailable or full storage must not stop
