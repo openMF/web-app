@@ -3259,7 +3259,8 @@
       "Phone": "전화번호",
       "Mail": "메일",
       "Link": "연결",
-      "Audit Trail": "감사 추적"
+      "Audit Trail": "감사 추적",
+      "Restart Period from Reset Date": "리셋 날짜부터 기간 다시 시작"
     },
     "links": {
       "Community": "지역 사회",
@@ -3481,7 +3482,8 @@
       "the Reschedule Loan": "대출 재일정",
       "the Transaction Type": "거래 유형",
       "undo_account_transfer": "이 계좌 이체를 취소하시겠습니까?",
-      "Are you sure you want to undo the charge-off": "상각을 취소하시겠습니까?"
+      "Are you sure you want to undo the charge-off": "상각을 취소하시겠습니까?",
+      "Restart Period from Reset Date splits the current period": "활성화하면 현재 위반 기간이 리셋 날짜로 분할되고 해당 날짜부터 새 기간이 시작됩니다."
     },
     "text": {
       "Agriculture Loan": "농업 대출",
