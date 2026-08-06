@@ -99,6 +99,17 @@ describe('AddressLocationMapComponent', () => {
     );
   });
 
+  it('should refresh map sizing after the view and dialog animations settle', () => {
+    jest.useFakeTimers();
+    component.latitude = 12.9716;
+    component.longitude = 77.5946;
+
+    fixture.detectChanges();
+    jest.runOnlyPendingTimers();
+
+    expect(mockMapInvalidateSize).toHaveBeenCalledTimes(2);
+  });
+
   it('should not initialize without valid coordinates', () => {
     component.latitude = null;
     component.longitude = undefined;
@@ -134,7 +145,7 @@ describe('AddressLocationMapComponent', () => {
     mockResizeCallback?.([] as ResizeObserverEntry[], {} as ResizeObserver);
     jest.runOnlyPendingTimers();
 
-    expect(mockMapInvalidateSize).toHaveBeenCalledTimes(1);
+    expect(mockMapInvalidateSize).toHaveBeenCalledTimes(2);
   });
 
   it('should not initialize duplicate map instances', () => {
@@ -151,6 +162,19 @@ describe('AddressLocationMapComponent', () => {
       13,
       78
     ]);
+  });
+
+  it('should remove an existing map when coordinates become invalid', () => {
+    component.latitude = 12.9716;
+    component.longitude = 77.5946;
+    fixture.detectChanges();
+
+    fixture.componentRef.setInput('latitude', '');
+    fixture.componentRef.setInput('longitude', 78);
+    fixture.detectChanges();
+
+    expect(mockMapRemove).toHaveBeenCalledTimes(1);
+    expect(fixture.nativeElement.querySelector('.address-location-map')).toBeNull();
   });
 
   it('should preserve zero values as valid coordinates', () => {

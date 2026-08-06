@@ -20,7 +20,11 @@
 
   <mat-accordion>
     @for (address of clientAddressData; track address.addressId; let i = $index) {
-      <mat-expansion-panel class="address">
+      <mat-expansion-panel
+        class="address"
+        (afterExpand)="showAddressMap(address)"
+        (afterCollapse)="hideAddressMap(address)"
+      >
         <mat-expansion-panel-header>
           <mat-panel-title>
             {{ address.addressType }}
@@ -92,7 +96,8 @@
           clientAddressLocationEnabled &&
           isFieldEnabled('latitude') &&
           isFieldEnabled('longitude') &&
-          hasValidCoordinatePair(address.latitude, address.longitude)
+          hasValidCoordinatePair(address.latitude, address.longitude) &&
+          isAddressMapVisible(address)
         ) {
           <mifosx-address-location-map [latitude]="address.latitude" [longitude]="address.longitude" />
         }
@@ -100,3 +105,15 @@
     }
   </mat-accordion>
 </div>
+
+<ng-template #addressLocationMapDialogTemplate let-form="form">
+  @if (
+    clientAddressLocationEnabled &&
+    isFieldEnabled('latitude') &&
+    isFieldEnabled('longitude') &&
+    form?.get('latitude') &&
+    form?.get('longitude')
+  ) {
+    <mifosx-address-location-map [latitude]="form.get('latitude')?.value" [longitude]="form.get('longitude')?.value" />
+  }
+</ng-template>

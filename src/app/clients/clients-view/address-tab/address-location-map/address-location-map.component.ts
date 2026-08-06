@@ -51,6 +51,7 @@ export class AddressLocationMapComponent implements AfterViewInit, OnChanges, On
   private marker: L.Marker | null = null;
   private mapContainerElement?: ElementRef<HTMLElement>;
   private resizeObserver: ResizeObserver | null = null;
+  private resizeTimeouts: ReturnType<typeof setTimeout>[] = [];
   tileLoadFailed = false;
 
   private readonly markerIcon = L.icon({
@@ -98,7 +99,7 @@ export class AddressLocationMapComponent implements AfterViewInit, OnChanges, On
       return;
     }
 
-    setTimeout(() => this.map?.invalidateSize(), 0);
+    this.scheduleResize();
   }
 
   private updateMap(): void {
@@ -143,15 +144,36 @@ export class AddressLocationMapComponent implements AfterViewInit, OnChanges, On
     this.resizeObserver.observe(container.nativeElement);
   }
 
+  private scheduleResize(): void {
+    this.clearResizeTimeouts();
+
+    [
+      0,
+      250
+    ].forEach((delay) => {
+      const resizeTimeout = setTimeout(() => {
+        this.map?.invalidateSize();
+        this.resizeTimeouts = this.resizeTimeouts.filter((timeout) => timeout !== resizeTimeout);
+      }, delay);
+      this.resizeTimeouts.push(resizeTimeout);
+    });
+  }
+
   private getCoordinatePair(): L.LatLngTuple | null {
     return getCoordinatePair(this.latitude, this.longitude);
   }
 
   private destroyMap(): void {
+    this.clearResizeTimeouts();
     this.marker = null;
     this.map?.remove();
     this.map = null;
     this.tileLoadFailed = false;
+  }
+
+  private clearResizeTimeouts(): void {
+    this.resizeTimeouts.forEach((resizeTimeout) => clearTimeout(resizeTimeout));
+    this.resizeTimeouts = [];
   }
 
   private disconnectResizeObserver(): void {
