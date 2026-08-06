@@ -50,6 +50,15 @@ export {
   type CreateActiveTestClientOverrides
 } from './client.factory';
 
+export { createTestLoan, createApprovedLoan, createActiveLoan, type CreateTestLoanOverrides } from './loan.factory';
+
+export {
+  createTestSavingsAccount,
+  createApprovedSavingsAccount,
+  createActiveSavingsAccount,
+  type CreateTestSavingsAccountOverrides
+} from './savings.factory';
+
 // ── Pure payload builders (no network) ─────────────────────────────
 
 export {
@@ -63,4 +72,4 @@ export {
 
 // ── Shared resolvers ───────────────────────────────────────────────
 
-export { resolveDefaultOfficeId, FIRST_OFFICE_CACHE_KEY } from './_shared';
+export { resolveDefaultOfficeId, resolveProductId, FIRST_OFFICE_CACHE_KEY } from './_shared';
