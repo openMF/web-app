@@ -3260,7 +3260,8 @@
       "Administrator": "Administrador",
       "Provider": "Proveedor",
       "Dispute Management": "Gestión de disputas",
-      "Audit Trail": "Registro de auditoría"
+      "Audit Trail": "Registro de auditoría",
+      "Restart Period from Reset Date": "Reiniciar el período desde la fecha de reinicio"
     },
     "links": {
       "Community": "Comunidad",
@@ -3483,7 +3484,8 @@
       "the Reschedule Loan": "la Recandelarización del Crédito",
       "the Transaction Type": "el tipo de transacción",
       "undo_account_transfer": "¿Está seguro de que desea revertir esta transferencia de cuenta?",
-      "Are you sure you want to undo the charge-off": "¿Está seguro de que desea deshacer la cancelación?"
+      "Are you sure you want to undo the charge-off": "¿Está seguro de que desea deshacer la cancelación?",
+      "Restart Period from Reset Date splits the current period": "Si se activa, el periodo de incumplimiento actual se corta en la fecha de reinicio y arranca un periodo nuevo desde esa fecha."
     },
     "text": {
       "Agriculture Loan": "Crédito Agrícola",

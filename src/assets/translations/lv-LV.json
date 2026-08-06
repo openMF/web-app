@@ -3259,7 +3259,8 @@
       "Phone": "Tālrunis",
       "Mail": "E-pasts",
       "Link": "Saite",
-      "Audit Trail": "Revīzijas taka"
+      "Audit Trail": "Revīzijas taka",
+      "Restart Period from Reset Date": "Restartēt periodu no atiestatīšanas datuma"
     },
     "links": {
       "Community": "kopiena",
@@ -3481,7 +3482,8 @@
       "the Reschedule Loan": "aizdevuma pārkārtošanu",
       "the Transaction Type": "Darījuma veids",
       "undo_account_transfer": "Vai tiešām vēlaties atcelt šo konta pārskaitījumu?",
-      "Are you sure you want to undo the charge-off": "Vai tiešām vēlaties atcelt norakstīšanu?"
+      "Are you sure you want to undo the charge-off": "Vai tiešām vēlaties atcelt norakstīšanu?",
+      "Restart Period from Reset Date splits the current period": "Ja iespējots, pašreizējais pārkāpuma periods tiek sadalīts atiestatīšanas datumā un jauns periods sākas no šī datuma."
     },
     "text": {
       "Agriculture Loan": "Lauksaimniecības aizdevums",

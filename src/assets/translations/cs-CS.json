@@ -3259,7 +3259,8 @@
       "Phone": "Telefon",
       "Mail": "E-mail",
       "Link": "Propojení",
-      "Audit Trail": "Auditní stopa"
+      "Audit Trail": "Auditní stopa",
+      "Restart Period from Reset Date": "Restartovat období od data resetu"
     },
     "links": {
       "Community": "Společenství",
@@ -3482,7 +3483,8 @@
       "the Reschedule Loan": "přeplánovat půjčku",
       "the Transaction Type": "typ transakce",
       "undo_account_transfer": "Opravdu chcete vrátit tento převod účtu?",
-      "Are you sure you want to undo the charge-off": "Opravdu chcete zrušit odpis?"
+      "Are you sure you want to undo the charge-off": "Opravdu chcete zrušit odpis?",
+      "Restart Period from Reset Date splits the current period": "Pokud je povoleno, aktuální období porušení se rozdělí k datu resetu a nové období začne od tohoto data."
     },
     "text": {
       "Agriculture Loan": "Zemědělský úvěr",

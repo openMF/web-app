@@ -3256,7 +3256,8 @@
       "Phone": "Simu",
       "Mail": "Barua pepe",
       "Link": "Kiungo",
-      "Audit Trail": "Njia ya Ukaguzi"
+      "Audit Trail": "Njia ya Ukaguzi",
+      "Restart Period from Reset Date": "Anza upya kipindi kutoka tarehe ya uwekaji upya"
     },
     "links": {
       "Community": "Jumuiya",
@@ -3478,7 +3479,8 @@
       "the Reschedule Loan": "kupanga upya mkopo",
       "the Transaction Type": "Aina ya Muamala",
       "undo_account_transfer": "Una uhakika unataka kufuta uhamisho huu wa akaunti?",
-      "Are you sure you want to undo the charge-off": "Una uhakika unataka kutendua Chaji-Zima?"
+      "Are you sure you want to undo the charge-off": "Una uhakika unataka kutendua Chaji-Zima?",
+      "Restart Period from Reset Date splits the current period": "Ikiwashwa, kipindi cha sasa cha ukiukaji hugawanywa katika tarehe ya uwekaji upya na kipindi kipya huanza kuanzia tarehe hiyo."
     },
     "text": {
       "Agriculture Loan": "Mkopo wa Kilimo",

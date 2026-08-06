@@ -153,6 +153,15 @@
           <fa-icon icon="pause"></fa-icon>
           {{ 'labels.buttons.Pause Breach' | translate }}
         </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="createBreachActionReset()"
+          *mifosxHasPermission="'CREATE_WC_BREACH_RESET'"
+        >
+          <fa-icon icon="calendar"></fa-icon>
+          {{ 'labels.buttons.Reset' | translate }}
+        </button>
       </div>
     </div>
 

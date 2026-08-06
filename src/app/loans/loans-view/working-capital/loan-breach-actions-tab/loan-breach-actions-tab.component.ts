@@ -25,6 +25,7 @@ import {
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TranslateService } from '@ngx-translate/core';
 import { Dates } from 'app/core/utils/dates';
+import { LoanBreachActionResetDialogComponent } from 'app/loans/custom-dialog/loan-breach-action-reset-dialog/loan-breach-action-reset-dialog.component';
 import { LoanDelinquencyActionDialogComponent } from 'app/loans/custom-dialog/loan-delinquency-action-dialog/loan-delinquency-action-dialog.component';
 import { LoansService } from 'app/loans/loans.service';
 import { LoanDelinquencyAction } from 'app/loans/models/loan-account.model';
@@ -342,6 +343,17 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
     });
   }
 
+  createBreachActionReset(): void {
+    const dialogRef = this.dialog.open(LoanBreachActionResetDialogComponent, {
+      data: { action: 'reset' }
+    });
+    dialogRef.afterClosed().subscribe((response: { data: any }) => {
+      if (response?.data) {
+        this.sendBreachResetAction(!!response.data.value.restartPeriodFromResetDate);
+      }
+    });
+  }
+
   resumeBreachAction(): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
@@ -388,6 +400,19 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
       this.loansService.getBreachActions(this.loanId).subscribe((breachActions: LoanDelinquencyAction[]) => {
         this.setBreachActions(breachActions);
       });
+    });
+  }
+
+  sendBreachResetAction(restartPeriodFromResetDate: boolean): void {
+    const payload = {
+      action: 'reset',
+      locale: this.locale,
+      dateFormat: this.dateFormat,
+      restartPeriodFromResetDate
+    };
+
+    this.loansService.createBreachAction(this.loanId, payload).subscribe(() => {
+      this.reload();
     });
   }
 

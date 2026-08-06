@@ -3258,7 +3258,8 @@
       "Phone": "Telefonas",
       "Mail": "El. paštas",
       "Link": "Susiejimas",
-      "Audit Trail": "Audito takas"
+      "Audit Trail": "Audito takas",
+      "Restart Period from Reset Date": "Iš naujo paleisti laikotarpį nuo atstatymo datos"
     },
     "links": {
       "Community": "bendruomenė",
@@ -3481,7 +3482,8 @@
       "the Reschedule Loan": "skolos tvarkaraštį iš naujo",
       "the Transaction Type": "operacijos tipas",
       "undo_account_transfer": "Ar tikrai norite atšaukti šį sąskaitos pervedimą?",
-      "Are you sure you want to undo the charge-off": "Ar tikrai norite anuliuoti Atsakingas už?"
+      "Are you sure you want to undo the charge-off": "Ar tikrai norite anuliuoti Atsakingas už?",
+      "Restart Period from Reset Date splits the current period": "Jei įjungta, dabartinis pažeidimo laikotarpis padalijamas atstatymo data, o naujas laikotarpis prasideda nuo šios datos."
     },
     "text": {
       "Agriculture Loan": "Žemės ūkio paskola",
