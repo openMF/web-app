@@ -134,7 +134,9 @@ export default defineConfig({
       testMatch: [
         /playwright\/utils\/.*\.spec\.ts/,
         /playwright\/pages\/.*\.spec\.ts/,
-        /playwright\/factories\/client\.spec\.ts/
+        /playwright\/fixtures\/.*\.spec\.ts/,
+        /playwright\/factories\/client\.spec\.ts/,
+        /playwright\/factories\/_shared\.spec\.ts/
       ],
       testDir: '.',
       use: { storageState: { cookies: [], origins: [] } }

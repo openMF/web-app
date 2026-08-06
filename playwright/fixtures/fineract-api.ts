@@ -265,7 +265,10 @@ export class FineractApiClient {
       staffInSelectedOfficeOnly: 'true'
     });
 
-    if (productId) {
+    // Explicit undefined check, not a truthiness test: a product id of 0
+    // is a valid scope and must still be sent, or the template silently
+    // falls back to an unscoped (product-agnostic) response.
+    if (productId !== undefined) {
       query.set('productId', productId.toString());
     }
 
@@ -844,7 +847,13 @@ export class FineractApiClient {
           interestCalculationDaysInYearType: FineractApiClient.SAVINGS_DAYS_IN_YEAR_365,
           accountingRule: 1,
           withdrawalFeeForTransfers: false,
-          dateFormat: FineractApiClient.DEFAULT_DATE_FORMAT,
+          // NOTE: no `dateFormat` here, deliberately. Unlike almost
+          // every other Fineract create endpoint, /savingsproducts
+          // carries no date field at all, and its parameter allow-list
+          // rejects `dateFormat` outright with
+          // "The parameter dateFormat is not supported." `locale` is
+          // still required — it drives decimal parsing on the interest
+          // rate.
           locale: FineractApiClient.DEFAULT_LOCALE,
           charges: []
         });
@@ -888,7 +897,10 @@ export class FineractApiClient {
   async getSavingsAccountTemplate(clientId: number, productId?: number): Promise<any> {
     const query = new URLSearchParams({ clientId: clientId.toString() });
 
-    if (productId) {
+    // Explicit undefined check, not a truthiness test: a product id of 0
+    // is a valid scope and must still be sent, or the template silently
+    // falls back to an unscoped (product-agnostic) response.
+    if (productId !== undefined) {
       query.set('productId', productId.toString());
     }
 

@@ -140,6 +140,24 @@ test.describe('createActiveTestClient() against live Fineract', () => {
     expect(cleanupGuard.size()).toBe(0);
   });
 
+  test('pins the wire date protocol even when extra supplies a conflicting dateFormat', async ({
+    apiSetup,
+    cleanupGuard
+  }) => {
+    // The factory's dates are `dd MMMM yyyy` and `assertDateNotBefore`
+    // validates them as such. A caller who slips a different
+    // `dateFormat` into `extra` must not be able to desync the protocol
+    // from those values — otherwise Fineract tries to parse
+    // `02 January 2024` under `yyyy-MM-dd` and rejects the create. The
+    // create succeeding here proves `dateFormat` stayed pinned.
+    const client = await createActiveTestClient(apiSetup, cleanupGuard, {
+      extra: { dateFormat: 'yyyy-MM-dd' }
+    });
+
+    const fetched = await apiSetup.api.getClient(client.resourceId);
+    expect(fetched.active).toBe(true);
+  });
+
   test('exposes an account-opening date after the activation date', () => {
     // Guards the constant chain itself: a future edit that bumps the
     // activation date past the account-opening date would silently

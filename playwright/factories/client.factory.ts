@@ -163,17 +163,30 @@ export interface CreateActiveTestClientOverrides extends Omit<CreateTestClientOv
   /**
    * Override the default activation date. MUST NOT precede
    * `submittedOnDate` — Fineract rejects the create outright.
+   *
+   * ⚠️ Downstream monotonicity: the loan and savings factories default
+   * their account dates to {@link DEFAULT_ACCOUNT_OPENING_DATE}. An
+   * `activationDate` later than that constant produces a client whose
+   * activation postdates a default-dated account, and Fineract rejects
+   * that account. When you set a later activation, also pass matching
+   * `submittedOnDate` / `approvedOnDate` / `activatedOnDate` to those
+   * factories — the safe default (`02 January 2024`) already precedes
+   * `DEFAULT_ACCOUNT_OPENING_DATE`, so callers that take the defaults
+   * on both sides never hit this.
    */
   activationDate?: string;
   /**
    * Extra payload fields merged BEFORE this factory's own invariants.
    *
-   * `active`, `activationDate`, and `submittedOnDate` are always
-   * applied last and cannot be overridden here — they are the fields
-   * this factory validates, and letting `extra` replace them would
-   * mean validating one value while sending another to Fineract. Use
-   * the dedicated `submittedOnDate` / `activationDate` options
-   * instead, which go through {@link assertDateNotBefore}.
+   * `active`, `activationDate`, `submittedOnDate`, `dateFormat`, and
+   * `locale` are always applied last and cannot be overridden here.
+   * The first three are the values this factory validates; `dateFormat`
+   * and `locale` are the wire protocol those values are written in, and
+   * {@link assertDateNotBefore} assumes English `dd MMMM yyyy`. Letting
+   * `extra` replace any of them would mean validating one thing while
+   * sending another to Fineract. Use the dedicated `submittedOnDate` /
+   * `activationDate` options instead, which go through
+   * {@link assertDateNotBefore}.
    */
   extra?: Record<string, unknown>;
 }
@@ -227,13 +240,20 @@ export async function createActiveTestClient(
       // Caller extras first, invariants last. `createTestClient`
       // spreads this object after its own defaults, so anything left
       // in here wins — including `submittedOnDate`. Ordering the
-      // spread this way keeps the three validated fields
-      // authoritative: otherwise the guard above could pass on one
-      // date pair while Fineract received another.
+      // spread this way keeps the validated fields authoritative:
+      // otherwise the guard above could pass on one date pair while
+      // Fineract received another.
       ...overrides.extra,
       active: true,
       activationDate,
-      submittedOnDate
+      submittedOnDate,
+      // `dateFormat`/`locale` are the wire protocol the dates above are
+      // written in and that `assertDateNotBefore` assumes (`dd MMMM
+      // yyyy`, English). Pin them last so `extra` cannot desync the
+      // format from the values just validated — otherwise the guard
+      // checks one protocol while Fineract parses under another.
+      dateFormat: DEFAULT_DATE_FORMAT,
+      locale: DEFAULT_LOCALE
     }
   });
 }
