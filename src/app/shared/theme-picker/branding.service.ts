@@ -8,10 +8,13 @@
 
 /** Angular Imports */
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpBackend, HttpClient, HttpHeaders } from '@angular/common/http';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
+
+/** Custom Services */
+import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Models */
 import { BRANDING_API_PATH } from './theme.model';
@@ -33,12 +36,26 @@ export interface TenantBranding {
 })
 export class BrandingService {
   private http = inject(HttpClient);
+  private httpBackend = inject(HttpBackend);
+  private settingsService = inject(SettingsService);
 
   /**
-   * @returns {Observable<TenantBranding>} Branding of the tenant the user is signed in to.
+   * Reads without credentials, bypassing the interceptor chain.
+   *
+   * The endpoint is public, and is served by the plugin's own security chain, which authenticates
+   * against the self-service user store. A platform user does not exist there, so presenting the
+   * credentials `AuthenticationInterceptor` attaches to every other request fails authentication
+   * before the endpoint's public rule is ever reached - the request has to carry none.
+   *
+   * Bypassing the chain also means supplying what those interceptors would have: the tenant, which
+   * is the only thing identifying whose branding to return, and the platform base URL.
+   * @returns {Observable<TenantBranding>} Branding of the current tenant.
    */
   getTenantBranding(): Observable<TenantBranding> {
-    return this.http.get<TenantBranding>(BRANDING_API_PATH);
+    const anonymousHttp = new HttpClient(this.httpBackend);
+    return anonymousHttp.get<TenantBranding>(`${this.settingsService.serverUrl}${BRANDING_API_PATH}`, {
+      headers: new HttpHeaders({ 'Fineract-Platform-TenantId': this.settingsService.tenantIdentifier || 'default' })
+    });
   }
 
   /**
