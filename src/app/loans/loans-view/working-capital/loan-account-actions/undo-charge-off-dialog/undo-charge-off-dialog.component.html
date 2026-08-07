@@ -1,0 +1,28 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h1 mat-dialog-title>{{ 'labels.menus.Undo Charge-Off' | translate }}</h1>
+<div mat-dialog-content>
+  <p>{{ 'labels.dialogContext.Are you sure you want to undo the charge-off' | translate }} ?</p>
+  <form [formGroup]="undoForm" class="layout-column">
+    <mat-form-field>
+      <mat-label>{{ 'labels.inputs.Reversal External Id' | translate }}</mat-label>
+      <input matInput formControlName="reversalExternalId" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>
+      <textarea matInput formControlName="note" maxlength="1000" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+    </mat-form-field>
+  </form>
+</div>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
+  <button mat-raised-button color="warn" (click)="confirm()">
+    {{ 'labels.buttons.Confirm' | translate }}
+  </button>
+</mat-dialog-actions>

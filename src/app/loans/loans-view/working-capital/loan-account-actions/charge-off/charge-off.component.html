@@ -1,0 +1,88 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="container mat-elevation-z8">
+  <mat-card>
+    <form [formGroup]="chargeOffForm" (ngSubmit)="submit()">
+      <mat-card-content>
+        <div class="layout-column">
+          <!-- Outstanding amount to charge off (read-only) -->
+          <div class="layout-row-wrap charge-off-amount">
+            <div class="flex-50 mat-body-strong">
+              {{ 'labels.inputs.Charge-Off Amount' | translate }}
+            </div>
+            <div class="flex-50 r-amount right-label">
+              {{ chargeOffAmount | formatNumber }} {{ currency?.displaySymbol || currency?.code }}
+            </div>
+          </div>
+
+          <mat-form-field (click)="chargeOffDatePicker.open()">
+            <mat-label>{{ 'labels.inputs.Charge-Off Date' | translate }}</mat-label>
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="chargeOffDatePicker"
+              required
+              formControlName="transactionDate"
+            />
+            <mat-datepicker-toggle matSuffix [for]="chargeOffDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #chargeOffDatePicker></mat-datepicker>
+            @if (chargeOffForm.controls.transactionDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Charge-Off Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'labels.inputs.Reason for Charge-Off' | translate }}</mat-label>
+            <mat-select formControlName="chargeOffReasonId">
+              @for (chargeOffReason of chargeOffReasonOptions; track chargeOffReason.id) {
+                <mat-option [value]="chargeOffReason.id">
+                  {{ chargeOffReason.name }}
+                </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
+            <input matInput formControlName="externalId" />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>
+            <textarea
+              matInput
+              formControlName="note"
+              maxlength="1000"
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="2"
+            ></textarea>
+          </mat-form-field>
+        </div>
+
+        <mat-card-actions class="layout-row align-center gap-5px responsive-column">
+          <button type="button" mat-raised-button (click)="gotoLoanDefaultView()">
+            {{ 'labels.buttons.Cancel' | translate }}
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            [disabled]="!chargeOffForm.valid || isSubmitting"
+            *mifosxHasPermission="chargeOffPermission"
+          >
+            {{ 'labels.buttons.Submit' | translate }}
+          </button>
+        </mat-card-actions>
+      </mat-card-content>
+    </form>
+  </mat-card>
+</div>

@@ -94,7 +94,9 @@ export class LoanActionButtonResolver {
     } else if (loanActionButton === 'Foreclosure') {
       return this.loansService.getLoanForeclosureActionTemplate(loanId);
     } else if (loanActionButton === 'Charge-Off') {
-      return this.loansService.getLoanActionTemplate(loanId, 'charge-off');
+      return this.loanProductService.isLoanProduct
+        ? this.loansService.getLoanActionTemplate(loanId, 'charge-off')
+        : this.loansService.getWorkingCapitalLoanActionTemplate(loanId, 'chargeOff');
     } else if (loanActionButton === 'Capitalized Income') {
       return this.loansService.getLoanActionTemplate(loanId, 'capitalizedIncome');
     } else if (loanActionButton === 'Contract Termination') {

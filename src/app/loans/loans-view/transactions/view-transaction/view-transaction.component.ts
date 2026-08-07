@@ -14,6 +14,11 @@ import { MatDialog } from '@angular/material/dialog';
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
+import {
+  WorkingCapitalUndoChargeOffDialogComponent,
+  WorkingCapitalUndoChargeOffDialogResult,
+  buildWorkingCapitalUndoChargeOffPayload
+} from '../../working-capital/loan-account-actions/undo-charge-off-dialog/undo-charge-off-dialog.component';
 import { Dates } from 'app/core/utils/dates';
 import { OrganizationService } from 'app/organization/organization.service';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
@@ -97,6 +102,10 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
   allowUndo = true;
   /** Is able to be Chargeback */
   allowChargeback = true;
+  /** True when this is a Working Capital charge-off, which is undone with its own command. */
+  isWorkingCapitalChargeOff = false;
+  /** Permission required by the Undo button; Working Capital charge-off has its own. */
+  undoPermission = 'ADJUST_LOAN';
   existTransactionRelations = false;
 
   paymentTypeOptions: {}[] = [];
@@ -143,6 +152,10 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
         this.transactionType,
         !!this.transactionData.wcLoanId
       );
+      this.isWorkingCapitalChargeOff = this.isWorkingCapital && this.isChargeOff(this.transactionType);
+      if (this.isWorkingCapitalChargeOff) {
+        this.undoPermission = 'UNDOCHARGEOFF_WORKINGCAPITALLOAN';
+      }
       this.allowChargeback =
         this.allowChargebackTransaction(this.transactionType) && !this.transactionData.manuallyReversed;
       let transactionsChargebackRelated = false;
@@ -233,6 +246,10 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
     return transactionType.writeOff || transactionType.code === 'loanTransactionType.writeOff';
   }
 
+  isChargeOff(transactionType: LoanTransactionType): boolean {
+    return transactionType.chargeoff || transactionType.code === 'loanTransactionType.chargeOff';
+  }
+
   /**
    * Undo the loans transaction
    */
@@ -282,6 +299,8 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
           });
         }
       });
+    } else if (this.isWorkingCapitalChargeOff) {
+      this.undoWorkingCapitalChargeOff(accountId);
     } else {
       const undoTransactionAccountDialogRef = this.dialog.open(ConfirmationDialogComponent, {
         data: {
@@ -322,6 +341,36 @@ export class ViewTransactionComponent extends LoanAccountActionsBaseComponent im
         }
       });
     }
+  }
+
+  /**
+   * Undoes a Working Capital charge-off from the transaction detail view.
+   * Uses the same dialog and command as the account header action so every
+   * entry point posts the same request.
+   * @param accountId Loan id
+   */
+  private undoWorkingCapitalChargeOff(accountId: string): void {
+    this.dialog
+      .open<WorkingCapitalUndoChargeOffDialogComponent, unknown, WorkingCapitalUndoChargeOffDialogResult>(
+        WorkingCapitalUndoChargeOffDialogComponent
+      )
+      .afterClosed()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((result) => {
+        if (!result?.confirm) {
+          return;
+        }
+        const payload = buildWorkingCapitalUndoChargeOffPayload(result, this.settingsService.language.code);
+        // The undo charge-off command targets the loan, not a single transaction.
+        this.loansService.applyWorkingCapitalLoanActionCommand(accountId, payload, 'undoChargeOff').subscribe(() => {
+          this.router.navigate(['../'], {
+            queryParams: {
+              productType: this.loanProductService.productType.value
+            },
+            relativeTo: this.route
+          });
+        });
+      });
   }
 
   chargebackTransaction() {

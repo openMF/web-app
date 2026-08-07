@@ -31,6 +31,7 @@ import { MatIconButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Search Page Component
@@ -65,6 +66,7 @@ export class SearchPageComponent {
   private router = inject(Router);
   private cdr = inject(ChangeDetectorRef);
   private destroyRef = inject(DestroyRef);
+  private translateService = inject(TranslateService);
 
   /** Flags if number of search results exceed 200 */
   overload: boolean;
@@ -107,6 +109,16 @@ export class SearchPageComponent {
    * @param {any} entity Entity
    */
   navigate(entity: SearchData) {
+    if (this.isLoanTransaction(entity)) {
+      this.navigateToTransaction(entity, 'loans-accounts');
+      return;
+    }
+
+    if (this.isSavingsTransaction(entity)) {
+      this.navigateToTransaction(entity, 'savings-accounts', 'general');
+      return;
+    }
+
     switch (entity.entityType) {
       case 'CLIENT':
         this.router.navigate([
@@ -179,5 +191,102 @@ export class SearchPageComponent {
         ]);
         break;
     }
+  }
+
+  getEntityName(entity: SearchData): string {
+    if (!this.isTransaction(entity)) {
+      return this.emptyIfMissing(entity.entityName);
+    }
+
+    const transactionType = this.formatTransactionType(entity.transactionType);
+    const transactionId = this.emptyIfMissing(entity.transactionId);
+
+    if (transactionType && transactionId) {
+      return `${transactionType} #${transactionId}`;
+    }
+
+    return transactionType || transactionId;
+  }
+
+  getAccountNo(entity: SearchData): string {
+    return this.emptyIfMissing(
+      this.isTransaction(entity) ? entity.accountNo || entity.entityAccountNo : entity.entityAccountNo
+    );
+  }
+
+  getExternalId(entity: SearchData): string {
+    const externalId = this.isTransaction(entity)
+      ? entity.transactionExternalId || entity.transactionRefNo || entity.entityExternalId
+      : entity.entityExternalId;
+
+    return this.emptyIfMissing(externalId);
+  }
+
+  getParentType(entity: SearchData): string {
+    const officeParentEntityTypes = [
+      'CLIENT',
+      'GROUP',
+      'CENTER'
+    ];
+
+    if (officeParentEntityTypes.includes(entity.entityType)) {
+      return this.translateService.instant('labels.inputs.Office');
+    }
+
+    return this.translateService.instant(this.getParentTypeLabel(entity.parentType));
+  }
+
+  private isTransaction(entity: SearchData): boolean {
+    return this.isLoanTransaction(entity) || this.isSavingsTransaction(entity);
+  }
+
+  private isLoanTransaction(entity: SearchData): boolean {
+    return entity.entityType === 'LOAN_TRANSACTION';
+  }
+
+  private isSavingsTransaction(entity: SearchData): boolean {
+    return entity.entityType === 'SAVINGS_TRANSACTION';
+  }
+
+  private navigateToTransaction(entity: SearchData, accountRoute: string, tab?: string): void {
+    if (!entity.parentId || !entity.accountId || !entity.transactionId) {
+      return;
+    }
+
+    const parentRoute = entity.parentType === 'group' ? 'groups' : 'clients';
+    const commands = [
+      parentRoute,
+      entity.parentId,
+      accountRoute,
+      entity.accountId,
+      'transactions',
+      entity.transactionId
+    ];
+
+    if (tab) {
+      commands.push(tab);
+    }
+
+    this.router.navigate(commands);
+  }
+
+  private emptyIfMissing(value: string | number | null | undefined): string {
+    return value == null ? '' : `${value}`;
+  }
+
+  private formatTransactionType(transactionType: string | null | undefined): string {
+    if (!transactionType) {
+      return '';
+    }
+
+    return transactionType.charAt(0).toUpperCase() + transactionType.slice(1);
+  }
+
+  private getParentTypeLabel(parentType: string | null | undefined): string {
+    if (parentType?.toLowerCase() === 'group') {
+      return 'labels.inputs.Group';
+    }
+
+    return 'labels.inputs.Client';
   }
 }

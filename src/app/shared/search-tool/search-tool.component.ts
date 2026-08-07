@@ -77,16 +77,23 @@ export class SearchToolComponent {
 
   /** Resource Options */
   resourceOptions: any[] = [
-    { name: 'All', value: 'clients,clientIdentifiers,groups,savings,shares,loans' },
+    {
+      name: 'All',
+      value: 'clients,clientIdentifiers,groups,savings,shares,loans,loanTransactions,savingsTransactions'
+    },
     { name: 'Clients', value: 'clients,clientIdentifiers' },
     { name: 'Groups', value: 'groups' },
     { name: 'Savings', value: 'savings' },
+    { name: 'TXN Savings', value: 'savingsTransactions' },
     { name: 'Shares', value: 'shares' },
-    { name: 'Loans', value: 'loans' }
+    { name: 'Loans', value: 'loans' },
+    { name: 'TXN Loans', value: 'loanTransactions' }
   ];
 
   constructor() {
-    this.resource.patchValue('clients,clientIdentifiers,groups,savings,shares,loans');
+    this.resource.patchValue(
+      'clients,clientIdentifiers,groups,savings,shares,loans,loanTransactions,savingsTransactions'
+    );
     this.query.patchValue('');
   }
 
