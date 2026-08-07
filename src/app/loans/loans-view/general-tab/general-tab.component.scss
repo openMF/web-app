@@ -10,6 +10,9 @@
 
 @include shared.fact-sheet;
 
+// Charged-off pill, identical to the one in the account header.
+@include shared.account-flag-badges;
+
 .tab-container {
   padding: 4px 0 20px;
 }

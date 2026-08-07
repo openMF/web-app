@@ -9,6 +9,29 @@
 <div class="tab-container mat-typography">
   <div class="general-card">
     @if (loanDetails.summary) {
+      @if (loanProductService.isWorkingCapital && loanDetails.chargedOff) {
+        <div class="section">
+          <div class="section-head">
+            <h3 class="section-title">{{ 'labels.menus.Charge-Off' | translate }}</h3>
+          </div>
+          <div class="fact-grid">
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.inputs.Charged Off On' | translate }}</div>
+              <div class="fact-value">
+                <span class="charged-off-badge">{{ 'labels.status.Charged Off' | translate }}</span>
+                <span class="m-l-10">{{ loanDetails.chargedOffOnDate | dateFormat }}</span>
+              </div>
+            </div>
+            @if (loanDetails.chargeOffReason?.name) {
+              <div class="fact">
+                <div class="fact-label">{{ 'labels.inputs.Reason for Charge-Off' | translate }}</div>
+                <div class="fact-value">{{ loanDetails.chargeOffReason.name }}</div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+
       @if (hasNumberOfRepayments() || loanDetails.timeline?.expectedMaturityDate) {
         <div class="section">
           <div class="section-head">

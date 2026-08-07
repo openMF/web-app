@@ -22,6 +22,7 @@ import { BreachSchedule } from './models/working-capital-loan-account.model';
 import {
   WorkingCapitalBreachAction,
   WorkingCapitalBreachActionRequest,
+  WorkingCapitalMarkAsFraudRequest,
   WorkingCapitalNearBreachActionRequest,
   WorkingCapitalNearBreachActions
 } from './models/working-capital/working-capital-loan-account.model';
@@ -463,6 +464,21 @@ export class LoansService {
   applyWorkingCapitalLoanAccountCommand(loanId: any, command: any, data?: any): Observable<any> {
     const httpParams = new HttpParams().set('command', command);
     return this.http.post(`/working-capital-loans/${loanId}`, data, { params: httpParams });
+  }
+
+  /**
+   * Marks or unmarks a Working Capital loan as fraud.
+   *
+   * Uses PUT on a dedicated resource rather than the transactions command
+   * endpoint, and sends `fraud` as the only parameter: the backend rejects any
+   * extra field, including the locale and dateFormat the other actions send.
+   * @param {string} loanId Loan Id
+   * @param {boolean} fraud Target value of the fraud flag
+   * @returns {Observable<any>}
+   */
+  markWorkingCapitalLoanAsFraud(loanId: string, fraud: boolean): Observable<any> {
+    const payload: WorkingCapitalMarkAsFraudRequest = { fraud };
+    return this.http.put(`/working-capital-loans/${loanId}/mark-as-fraud`, payload);
   }
 
   applyWorkingCapitalLoanActionCommand(
