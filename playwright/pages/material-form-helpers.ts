@@ -133,17 +133,70 @@ export async function selectFilteredOption(
  * `dateFormat` setting) — which is NOT the same string as the API's
  * `dd MMMM yyyy` wire format, even though both render identically.
  *
+ * ── Why the calendar is explicitly dismissed ────────────────────────
+ *
+ * Mifos wraps most date fields in
+ * `<mat-form-field (click)="picker.open()">`, so *any* interaction
+ * with the field pops the calendar. That overlay is attached to the
+ * document root with a full-viewport backdrop, and it does not close
+ * on blur — so it silently intercepts the next click anywhere on the
+ * page. The symptom is a timeout on a completely unrelated control
+ * ("Next button … <span class='mat-calendar-body-cell-content'> …
+ * intercepts pointer events"), which is a genuinely hard failure to
+ * trace back to the date field that caused it.
+ *
+ * Dismissing here, once, keeps that class of failure out of every
+ * calling page object.
+ *
  * @param input - Locator for the datepicker's `<input>`.
  * @param value - Date string in the tenant's display format.
  */
 export async function fillDateField(input: Locator, value: string): Promise<void> {
-  await input.click();
   await input.fill(value);
   // Blur so Material's `dateInput`/`dateChange` events fire and the
   // bound form control updates. Without this the control can stay
   // pristine and leave the step's Next button disabled.
-  await input.press('Escape');
   await input.blur();
+
+  // In browser-backed runs, a real Playwright Locator exposes
+  // `page()`. Unit stubs in this repository intentionally implement
+  // only the methods under test, so fall back to Escape on the input
+  // itself when `page()` is unavailable.
+  const pageGetter = (input as unknown as { page?: () => Page }).page;
+  if (typeof pageGetter === 'function') {
+    await dismissDatepickerOverlay(pageGetter.call(input));
+    return;
+  }
+
+  await input.press('Escape').catch(() => undefined);
+}
+
+/**
+ * Close an open Material datepicker calendar, if one is showing.
+ *
+ * Exported because a few flows open the calendar without going through
+ * {@link fillDateField} (clicking the suffix toggle directly, for
+ * instance) and still need the overlay gone before the next click.
+ *
+ * Safe to call unconditionally — it is a no-op when no calendar is
+ * open, and it swallows the wait timeout rather than failing the test,
+ * since a still-open calendar will surface as a much more specific
+ * error at the actual click site.
+ *
+ * @param page - The Playwright page.
+ * @param timeout - How long to wait for the overlay to detach.
+ */
+export async function dismissDatepickerOverlay(page: Page, timeout = 5000): Promise<void> {
+  // `.first()` — while an earlier overlay pane is still detaching there
+  // can be two `.mat-datepicker-content` nodes; an unscoped locator then
+  // throws a strict-mode error that `.catch(() => false)` would misread
+  // as "no calendar open", skipping the Escape this helper exists to send.
+  const calendar = page.locator('.mat-datepicker-content').first();
+  if (!(await calendar.isVisible().catch(() => false))) {
+    return;
+  }
+  await page.keyboard.press('Escape');
+  await calendar.waitFor({ state: 'hidden', timeout }).catch(() => undefined);
 }
 
 /**

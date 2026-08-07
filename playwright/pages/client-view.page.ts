@@ -185,6 +185,63 @@ export class ClientViewPage extends BasePage {
   }
 
   /**
+   * Returns the "Applications" submenu trigger inside the client
+   * actions menu — the entry point for opening a new loan, savings,
+   * share or deposit account.
+   *
+   * Only rendered for an ACTIVE client: the template wraps it in
+   * `@if (isActive())`. Opening it against a pending client is not a
+   * flake, it is Fineract's rule that accounts cannot be applied for
+   * until the client is activated.
+   */
+  get applicationsMenuItem(): Locator {
+    return this.page.getByRole('menuitem', { name: 'Applications' });
+  }
+
+  /**
+   * Opens a new-account application from the client actions menu.
+   *
+   * Wraps the two-hop menu walk (Client actions → Applications →
+   * "New Savings Account") and waits for the create route so callers
+   * get a deterministic hand-off to the create page object.
+   *
+   * The React port renders the same logical menu through a shadcn
+   * dropdown, so this signature is unchanged there.
+   *
+   * @param name - Menu entry, e.g. `'New Savings Account'` or
+   *   `'New Loan Account'`.
+   * @param urlPattern - Route the click is expected to land on, used
+   *   to await navigation before returning.
+   */
+  async openApplication(name: string, urlPattern: RegExp): Promise<void> {
+    await this.openActionsMenu();
+    await this.waitForVisible(this.applicationsMenuItem, 10000);
+    await this.applicationsMenuItem.hover();
+    await this.applicationsMenuItem.click();
+
+    const entry = this.page.getByRole('menuitem', { name });
+    await this.waitForVisible(entry, 10000);
+    await Promise.all([
+      this.page.waitForURL(urlPattern, { timeout: 30000 }),
+      entry.click()
+    ]);
+  }
+
+  /**
+   * Opens the new-savings-account stepper for this client.
+   */
+  async openNewSavingsApplication(): Promise<void> {
+    await this.openApplication('New Savings Account', new RegExp(`/clients/${this.clientId}/savings-accounts/create`));
+  }
+
+  /**
+   * Opens the new-loan-account stepper for this client.
+   */
+  async openNewLoanApplication(): Promise<void> {
+    await this.openApplication('New Loan Account', new RegExp(`/clients/${this.clientId}/loans-accounts/create`));
+  }
+
+  /**
    * Opens the client actions menu and clicks the "Edit" entry.
    *
    * Waits until the browser navigates to the edit route

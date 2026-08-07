@@ -113,14 +113,13 @@ test.describe('fillDateField()', () => {
 
     await fillDateField(input, '01 January 2024');
 
-    // Escape dismisses the calendar popup; blur fires dateChange. Skip
-    // either and the bound control can stay pristine, leaving the
-    // step's Next button disabled.
+    // Blur fires dateChange so Angular form controls commit. In unit
+    // stubs there is no page-level overlay to close, so the helper
+    // falls back to Escape on the input itself.
     expect(log.events).toEqual([
-      'date.click',
       'date.fill:01 January 2024',
-      'date.press:Escape',
-      'date.blur'
+      'date.blur',
+      'date.press:Escape'
     ]);
   });
 });

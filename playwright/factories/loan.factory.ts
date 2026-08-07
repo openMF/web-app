@@ -42,6 +42,16 @@ import type { TestLoan } from '../types/test-data.types';
 import { DEFAULT_ACCOUNT_OPENING_DATE } from './client.factory';
 import { resolveProductId } from './_shared';
 
+/**
+ * Name of the shared minimal loan product seeded by
+ * `ApiSetupManager#ensureMinimalLoanProduct`.
+ *
+ * Exported so UI specs can pick the same product from the create-account
+ * dropdown that the API factories attach by id. Hard-coding the string in
+ * both places is how the two drift apart after a product rename.
+ */
+export const E2E_LOAN_PRODUCT_NAME = 'E2E Loan Product';
+
 /** Caller-supplied tweaks accepted by every loan factory in this module. */
 export interface CreateTestLoanOverrides {
   /** Fineract loan product id. Defaults to the shared minimal E2E product. */
@@ -52,6 +62,14 @@ export interface CreateTestLoanOverrides {
    * client's default activation date.
    */
   submittedOnDate?: string;
+  /**
+   * Approval date. Defaults to `submittedOnDate`.
+   *
+   * Mirrors `CreateTestSavingsAccountOverrides` so a spec that
+   * arranges one loan and one savings account can pass the same date
+   * literals to both factories.
+   */
+  approvedOnDate?: string;
   /** Expected/actual disbursement date. Defaults to `submittedOnDate`. */
   disbursementDate?: string;
 }
@@ -178,8 +196,19 @@ export async function createApprovedLoan(
   overrides: CreateTestLoanOverrides = {}
 ): Promise<TestLoan> {
   const submittedOnDate = overrides.submittedOnDate ?? DEFAULT_ACCOUNT_OPENING_DATE;
-  const loan = await createTestLoan(setup, guard, clientId, { ...overrides, submittedOnDate });
-  await setup.api.approveLoan(loan.resourceId, submittedOnDate);
+  const approvedOnDate = overrides.approvedOnDate ?? submittedOnDate;
+
+  // Fineract rejects approval when the expected disbursement date
+  // falls before the approval date. `createTestLoan` defaults that
+  // date to `submittedOnDate`, so a caller who pushes `approvedOnDate`
+  // later — which specs do, to prove the date actually reached the
+  // server — would submit a loan that can never be approved. Carrying
+  // the disbursement date forward keeps the arrangement valid while
+  // still honouring an explicit `disbursementDate` override.
+  const disbursementDate = overrides.disbursementDate ?? approvedOnDate;
+
+  const loan = await createTestLoan(setup, guard, clientId, { ...overrides, submittedOnDate, disbursementDate });
+  await setup.api.approveLoan(loan.resourceId, approvedOnDate);
   return refetchLoan(setup, loan.resourceId, clientId, loan.loanProductId);
 }
 
@@ -197,8 +226,9 @@ export async function createActiveLoan(
   overrides: CreateTestLoanOverrides = {}
 ): Promise<TestLoan> {
   const submittedOnDate = overrides.submittedOnDate ?? DEFAULT_ACCOUNT_OPENING_DATE;
-  const disbursementDate = overrides.disbursementDate ?? submittedOnDate;
-  const loan = await createApprovedLoan(setup, guard, clientId, { ...overrides, submittedOnDate });
+  const approvedOnDate = overrides.approvedOnDate ?? submittedOnDate;
+  const disbursementDate = overrides.disbursementDate ?? approvedOnDate;
+  const loan = await createApprovedLoan(setup, guard, clientId, { ...overrides, submittedOnDate, approvedOnDate });
 
   // `loan.principal` comes from the re-fetched loan, so it reflects the
   // approved amount rather than a create-response fallback. Disbursing
