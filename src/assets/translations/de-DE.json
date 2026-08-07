@@ -428,7 +428,16 @@
     "validation.emailInvalid": "E-Mail ist ungültig",
     "validation.requiredField": "{{label}} ist ein Pflichtfeld.",
     "validation.mustBeAtLeast": "{{field}} muss mindestens {{min}} betragen",
-    "validation.mustBePositive": "{{field}} muss eine positive Zahl sein."
+    "validation.mustBePositive": "{{field}} muss eine positive Zahl sein.",
+    "breach": {
+      "alreadyDisabled": "Die Verstoßbewertung ist für dieses Darlehen bereits deaktiviert.",
+      "noActiveDisableToEnable": "Es gibt keine aktive Deaktivierung, die für dieses Darlehen aktiviert werden könnte.",
+      "mustBeCurrentBusinessDate": "Das Wirksamkeitsdatum muss das aktuelle Geschäftsdatum sein.",
+      "endDateNotAllowed": "Beim Deaktivieren oder Aktivieren der Verstoßbewertung darf kein Enddatum gesendet werden.",
+      "noBreachConfiguration": "Dieses Darlehen hat keine Verstoßkonfiguration.",
+      "loanIsNotActive": "Die Verstoßbewertung kann nur geändert werden, solange das Darlehen aktiv ist.",
+      "breachIsDisabled": "Die Verstoßbewertung ist für dieses Darlehen deaktiviert. Aktivieren Sie sie, um diese Aktion auszuführen."
+    }
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -786,7 +795,9 @@
       "Create Exchange Rate": "Wechselkurs erstellen",
       "Create Transfer Fee": "Transfergebühr erstellen",
       "Requesting": "Wird angefordert",
-      "Delink": "Verknüpfung entfernen"
+      "Delink": "Verknüpfung entfernen",
+      "Disable Breach": "Verstoß deaktivieren",
+      "Enable Breach": "Verstoß aktivieren"
     },
     "catalogs": {
       "% Amount": "Menge",
@@ -1614,6 +1625,7 @@
       "undo_account_transfer": "Kontotransfer rückgängig machen",
       "Loan Breach Actions": "Kredit-Verstoß-Aktionen",
       "No Breach Actions": "Keine Verstoßaktionen",
+      "No Delinquency Actions": "Keine Verzugsaktionen",
       "Pause Timeline": "Pausen-Zeitleiste",
       "Location Map": "Standortkarte",
       "Exchange Rates": "Wechselkurse",
@@ -1625,7 +1637,9 @@
       "Exchange Rate": "Wechselkurs",
       "Create Exchange Rate": "Wechselkurs erstellen",
       "View Exchange Rate": "Wechselkurs anzeigen",
-      "Edit Exchange Rate": "Wechselkurs bearbeiten"
+      "Edit Exchange Rate": "Wechselkurs bearbeiten",
+      "Disable Breach Evaluation": "Verstoßbewertung deaktivieren",
+      "Enable Breach Evaluation": "Verstoßbewertung aktivieren"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3212,6 +3226,7 @@
       "Expired": "Abgelaufen",
       "Last Action": "Letzte Aktion",
       "No breach actions have been recorded for this loan": "Für dieses Darlehen wurden keine Verstoßaktionen erfasst",
+      "No delinquency actions have been recorded for this loan": "Für dieses Darlehen wurden keine Verzugsaktionen erfasst",
       "No records match the selected filter": "Keine Einträge entsprechen dem ausgewählten Filter",
       "Ongoing": "Laufend",
       "Pause Active": "Pause aktiv",
@@ -3262,7 +3277,8 @@
       "Mail": "E-Mail",
       "Link": "Verknüpfung",
       "Audit Trail": "Prüfpfad",
-      "Restart Period from Reset Date": "Periode ab Reset-Datum neu starten"
+      "Restart Period from Reset Date": "Periode ab Reset-Datum neu starten",
+      "Breach evaluation disabled since": "Verstoßbewertung deaktiviert seit {{date}}"
     },
     "links": {
       "Community": "Gemeinschaft",
@@ -3486,7 +3502,9 @@
       "the Transaction Type": "der Transaktionstyp",
       "undo_account_transfer": "Möchten Sie diesen Kontotransfer wirklich rückgängig machen?",
       "Are you sure you want to undo the charge-off": "Sind Sie sicher, dass Sie das Abladen rückgängig machen möchten?",
-      "Restart Period from Reset Date splits the current period": "Wenn aktiviert, wird die aktuelle Verstoßperiode zum Reset-Datum geteilt und eine neue Periode beginnt ab diesem Datum."
+      "Restart Period from Reset Date splits the current period": "Wenn aktiviert, wird die aktuelle Verstoßperiode zum Reset-Datum geteilt und eine neue Periode beginnt ab diesem Datum.",
+      "Breach evaluation will stop": "Die Verstoßbewertung endet am {{date}}. Frühere Ergebnisse bleiben erhalten, werden aber bis zur erneuten Aktivierung ausgeblendet.",
+      "Breach evaluation will resume": "Die Verstoßbewertung wird am {{date}} fortgesetzt. Das Darlehen wird ab diesem Datum wieder bewertet."
     },
     "text": {
       "Agriculture Loan": "Agrarkredit",
@@ -3500,6 +3518,7 @@
       "Max": "Max",
       "Hidden variables and predefined values are included in the final payload automatically.": "Hidden variables and predefined values are included in the final payload automatically.",
       "No Breach Actions": "Keine Verstoßaktionen",
+      "Previous results are hidden while breach evaluation is disabled": "Frühere Ergebnisse sind ausgeblendet, solange die Verstoßbewertung deaktiviert ist",
       "No Near Breach Actions": "Keine Beinahe-Verstoß-Aktionen",
       "A": "A",
       "Ability to manage holidays for individual offices": "Die Möglichkeit, Feiertage für einzelne Büros zu verwalten, ist ein sehr nützliches Werkzeug für eine Organisation mit mehreren Standorten. Verwenden Sie diese Option, um Feiertage für jedes Büro Ihrer Organisation anzupassen.",

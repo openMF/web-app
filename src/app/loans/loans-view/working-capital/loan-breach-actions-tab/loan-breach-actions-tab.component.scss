@@ -137,6 +137,20 @@
   }
 }
 
+// Breach evaluation suspended. Uses the alert tokens instead of the blue of the
+// pause chip, and drops the pulse: a disable is a standing state, not activity.
+.status-chip--disabled {
+  border-color: var(--ch-alert);
+  background: var(--ch-alert-bg);
+  color: var(--ch-alert);
+
+  .dot {
+    background: var(--ch-alert);
+    box-shadow: none;
+    animation: none;
+  }
+}
+
 @keyframes ba-pulse {
   0%,
   100% {
@@ -507,6 +521,14 @@
   fa-icon {
     font-size: 10px;
   }
+}
+
+// A DISABLE row stands out from pauses and reschedules: it suppresses
+// evaluation entirely rather than adjusting it.
+.action-badge--disable {
+  background: var(--ch-alert-bg);
+  color: var(--ch-alert);
+  border-color: var(--ch-alert);
 }
 
 .status-pill {

@@ -426,7 +426,16 @@
     "validation.emailInvalid": "E-mail non valide",
     "validation.requiredField": "{{label}} est un champ obligatoire.",
     "validation.mustBeAtLeast": "{{field}} doit être au moins {{min}}",
-    "validation.mustBePositive": "{{field}} doit être un nombre positif."
+    "validation.mustBePositive": "{{field}} doit être un nombre positif.",
+    "breach": {
+      "alreadyDisabled": "L'évaluation des manquements est déjà désactivée pour ce prêt.",
+      "noActiveDisableToEnable": "Aucune désactivation active à réactiver pour ce prêt.",
+      "mustBeCurrentBusinessDate": "La date d'effet doit être la date d'exercice actuelle.",
+      "endDateNotAllowed": "Aucune date de fin ne peut être envoyée lors de la désactivation ou de l'activation de l'évaluation des manquements.",
+      "noBreachConfiguration": "Ce prêt n'a aucune configuration de manquement.",
+      "loanIsNotActive": "L'évaluation des manquements ne peut être modifiée que lorsque le prêt est actif.",
+      "breachIsDisabled": "L'évaluation des manquements est désactivée pour ce prêt. Activez-la pour exécuter cette action."
+    }
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -784,7 +793,9 @@
       "Create Exchange Rate": "Créer un taux de change",
       "Create Transfer Fee": "Créer des frais de transfert",
       "Requesting": "Demande en cours",
-      "Delink": "Délier"
+      "Delink": "Délier",
+      "Disable Breach": "Désactiver le Manquement",
+      "Enable Breach": "Activer le Manquement"
     },
     "catalogs": {
       "% Amount": "Montant",
@@ -1615,6 +1626,7 @@
       "undo_account_transfer": "Annuler le transfert de compte",
       "Loan Breach Actions": "Actions de Manquement du Prêt",
       "No Breach Actions": "Aucune Action sur Brèches",
+      "No Delinquency Actions": "Aucune Action sur Impayés",
       "Pause Timeline": "Chronologie des Pauses",
       "Location Map": "Carte de localisation",
       "Exchange Rates": "Taux de change",
@@ -1626,7 +1638,9 @@
       "Exchange Rate": "Taux de change",
       "Create Exchange Rate": "Créer un taux de change",
       "View Exchange Rate": "Afficher le taux de change",
-      "Edit Exchange Rate": "Modifier le taux de change"
+      "Edit Exchange Rate": "Modifier le taux de change",
+      "Disable Breach Evaluation": "Désactiver l'évaluation des manquements",
+      "Enable Breach Evaluation": "Activer l'évaluation des manquements"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3213,6 +3227,7 @@
       "Expired": "Expirée",
       "Last Action": "Dernière Action",
       "No breach actions have been recorded for this loan": "Aucune action sur brèches n'a été enregistrée pour ce prêt",
+      "No delinquency actions have been recorded for this loan": "Aucune action sur impayés n'a été enregistrée pour ce prêt",
       "No records match the selected filter": "Aucun enregistrement ne correspond au filtre sélectionné",
       "Ongoing": "En cours",
       "Pause Active": "Pause Active",
@@ -3263,7 +3278,8 @@
       "Mail": "E-mail",
       "Link": "Lien",
       "Audit Trail": "Piste d'audit",
-      "Restart Period from Reset Date": "Redémarrer la période à partir de la date de réinitialisation"
+      "Restart Period from Reset Date": "Redémarrer la période à partir de la date de réinitialisation",
+      "Breach evaluation disabled since": "Évaluation des manquements désactivée depuis le {{date}}"
     },
     "links": {
       "Community": "Communauté",
@@ -3487,7 +3503,9 @@
       "the Transaction Type": "le type de transaction",
       "undo_account_transfer": "Êtes-vous sûr de vouloir annuler ce transfert de compte ?",
       "Are you sure you want to undo the charge-off": "Êtes-vous sûr de vouloir annuler l'amortissement ?",
-      "Restart Period from Reset Date splits the current period": "Si activé, la période de manquement actuelle est scindée à la date de réinitialisation et une nouvelle période commence à cette date."
+      "Restart Period from Reset Date splits the current period": "Si activé, la période de manquement actuelle est scindée à la date de réinitialisation et une nouvelle période commence à cette date.",
+      "Breach evaluation will stop": "L'évaluation des manquements s'arrête le {{date}}. Les résultats précédents sont conservés mais masqués jusqu'à sa réactivation.",
+      "Breach evaluation will resume": "L'évaluation des manquements reprend le {{date}}. Le prêt est de nouveau évalué à partir de cette date."
     },
     "text": {
       "Agriculture Loan": "Prêt agricole",
@@ -3501,6 +3519,7 @@
       "Max": "Max",
       "Hidden variables and predefined values are included in the final payload automatically.": "Hidden variables and predefined values are included in the final payload automatically.",
       "No Breach Actions": "Aucune action de violation",
+      "Previous results are hidden while breach evaluation is disabled": "Les résultats précédents sont masqués tant que l'évaluation des dépassements est désactivée",
       "No Near Breach Actions": "Aucune action de violation proche",
       "A": "UN",
       "Ability to manage holidays for individual offices": "La possibilité de gérer les congés de chaque bureau est un outil très utile pour une organisation répartie sur plusieurs sites. Utilisez cette option pour personnaliser les congés de chaque bureau de votre organisation.",

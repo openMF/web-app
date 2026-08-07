@@ -426,7 +426,16 @@
     "validation.emailInvalid": "Barua pepe si sahihi",
     "validation.requiredField": "{{label}} ni sehemu inayohitajika.",
     "validation.mustBeAtLeast": "{{field}} lazima iwe angalau {{min}}",
-    "validation.mustBePositive": "{{field}} lazima iwe nambari chanya."
+    "validation.mustBePositive": "{{field}} lazima iwe nambari chanya.",
+    "breach": {
+      "alreadyDisabled": "Tathmini ya ukiukaji tayari imezimwa kwa mkopo huu.",
+      "noActiveDisableToEnable": "Hakuna uzimaji unaoendelea wa kuwasha kwa mkopo huu.",
+      "mustBeCurrentBusinessDate": "Tarehe ya kuanza kutumika lazima iwe tarehe ya sasa ya biashara.",
+      "endDateNotAllowed": "Tarehe ya mwisho haiwezi kutumwa wakati wa kuzima au kuwasha tathmini ya ukiukaji.",
+      "noBreachConfiguration": "Mkopo huu hauna usanidi wa ukiukaji.",
+      "loanIsNotActive": "Tathmini ya ukiukaji inaweza kubadilishwa tu wakati mkopo uko hai.",
+      "breachIsDisabled": "Tathmini ya ukiukaji imezimwa kwa mkopo huu. Iwashe ili kutekeleza kitendo hiki."
+    }
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -784,7 +793,9 @@
       "Create Exchange Rate": "Unda kiwango cha ubadilishaji",
       "Create Transfer Fee": "Unda ada ya uhamisho",
       "Requesting": "Inaomba",
-      "Delink": "Tenganisha"
+      "Delink": "Tenganisha",
+      "Disable Breach": "Zima Ukiukaji",
+      "Enable Breach": "Washa Ukiukaji"
     },
     "catalogs": {
       "% Amount": "Kiasi",
@@ -1609,6 +1620,7 @@
       "undo_account_transfer": "Futa uhamisho wa akaunti",
       "Loan Breach Actions": "Vitendo vya Ukiukaji wa Mkopo",
       "No Breach Actions": "Hakuna Vitendo vya Ukiukaji",
+      "No Delinquency Actions": "Hakuna Vitendo vya Udaiwa",
       "Pause Timeline": "Mfuatano wa Pumziko",
       "Location Map": "Ramani ya eneo",
       "Exchange Rates": "Viwango vya ubadilishaji",
@@ -1620,7 +1632,9 @@
       "Exchange Rate": "Kiwango cha ubadilishaji",
       "Create Exchange Rate": "Unda kiwango cha ubadilishaji",
       "View Exchange Rate": "Tazama kiwango cha ubadilishaji",
-      "Edit Exchange Rate": "Hariri kiwango cha ubadilishaji"
+      "Edit Exchange Rate": "Hariri kiwango cha ubadilishaji",
+      "Disable Breach Evaluation": "Zima Tathmini ya Ukiukaji",
+      "Enable Breach Evaluation": "Washa Tathmini ya Ukiukaji"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3207,6 +3221,7 @@
       "Expired": "Imeisha",
       "Last Action": "Kitendo cha Mwisho",
       "No breach actions have been recorded for this loan": "Hakuna vitendo vya ukiukaji vilivyorekodiwa kwa mkopo huu",
+      "No delinquency actions have been recorded for this loan": "Hakuna vitendo vya udaiwa vilivyorekodiwa kwa mkopo huu",
       "No records match the selected filter": "Hakuna rekodi zinazolingana na kichujio kilichochaguliwa",
       "Ongoing": "Inaendelea",
       "Pause Active": "Pumziko Linaendelea",
@@ -3257,7 +3272,8 @@
       "Mail": "Barua pepe",
       "Link": "Kiungo",
       "Audit Trail": "Njia ya Ukaguzi",
-      "Restart Period from Reset Date": "Anza upya kipindi kutoka tarehe ya uwekaji upya"
+      "Restart Period from Reset Date": "Anza upya kipindi kutoka tarehe ya uwekaji upya",
+      "Breach evaluation disabled since": "Tathmini ya ukiukaji imezimwa tangu {{date}}"
     },
     "links": {
       "Community": "Jumuiya",
@@ -3480,7 +3496,9 @@
       "the Transaction Type": "Aina ya Muamala",
       "undo_account_transfer": "Una uhakika unataka kufuta uhamisho huu wa akaunti?",
       "Are you sure you want to undo the charge-off": "Una uhakika unataka kutendua Chaji-Zima?",
-      "Restart Period from Reset Date splits the current period": "Ikiwashwa, kipindi cha sasa cha ukiukaji hugawanywa katika tarehe ya uwekaji upya na kipindi kipya huanza kuanzia tarehe hiyo."
+      "Restart Period from Reset Date splits the current period": "Ikiwashwa, kipindi cha sasa cha ukiukaji hugawanywa katika tarehe ya uwekaji upya na kipindi kipya huanza kuanzia tarehe hiyo.",
+      "Breach evaluation will stop": "Tathmini ya ukiukaji itasimama tarehe {{date}}. Matokeo ya awali yatahifadhiwa lakini yatafichwa hadi uwashe tena.",
+      "Breach evaluation will resume": "Tathmini ya ukiukaji itaanza tena tarehe {{date}}. Mkopo utatathminiwa upya kuanzia tarehe hiyo."
     },
     "text": {
       "Agriculture Loan": "Mkopo wa Kilimo",
@@ -3494,6 +3512,7 @@
       "Max": "Upeo",
       "Hidden variables and predefined values are included in the final payload automatically.": "Hidden variables and predefined values are included in the final payload automatically.",
       "No Breach Actions": "Hakuna Ukiukaji Vitendo",
+      "Previous results are hidden while breach evaluation is disabled": "Matokeo ya awali yamefichwa wakati tathmini ya ukiukaji imezimwa",
       "No Near Breach Actions": "Hakuna Ukiukaji unaokaribia Vitendo",
       "A": "A",
       "Ability to manage holidays for individual offices": "Uwezo wa kudhibiti likizo kwa ofisi binafsi ni zana muhimu sana kwa shirika linalotumia maeneo mengi.Tumia chaguo hili kubinafsisha likizo kwa kila ofisi ya shirika lako.",
