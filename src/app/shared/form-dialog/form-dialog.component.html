@@ -21,6 +21,11 @@
       <mifosx-formfield [formfield]="formfield" [form]="form" class="flex-fill"></mifosx-formfield>
     </div>
   }
+  @if (data.contentTemplate) {
+    <div class="flex-100 responsive-flex-full">
+      <ng-container [ngTemplateOutlet]="data.contentTemplate" [ngTemplateOutletContext]="{ form: form }"></ng-container>
+    </div>
+  }
 </div>
 
 <mat-dialog-actions class="layout-row layout-xs-column layout-align-center gap-2percent" align="end">

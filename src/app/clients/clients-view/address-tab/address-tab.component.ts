@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, TemplateRef, ViewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FormGroup } from '@angular/forms';
@@ -72,6 +72,9 @@ export class AddressTabComponent {
   readonly hasCoordinateValue = hasCoordinateValue;
   readonly hasValidCoordinatePair = hasValidCoordinatePair;
 
+  @ViewChild('addressLocationMapDialogTemplate')
+  addressLocationMapDialogTemplate?: TemplateRef<{ form: FormGroup }>;
+
   get clientAddressLocationEnabled(): boolean {
     return environment.enableClientAddressLocation;
   }
@@ -91,6 +94,7 @@ export class AddressTabComponent {
   clientAddressTemplate: any;
   /** Client Id */
   clientId: string;
+  expandedAddressMapIds = new Set<number>();
 
   /**
    * @param {ActivatedRoute} route Activated Route
@@ -120,7 +124,8 @@ export class AddressTabComponent {
         this.translateService.instant('labels.catalogs.Client') +
         ' ' +
         this.translateService.instant('labels.heading.Address'),
-      formfields: this.getAddressFormFields('add')
+      formfields: this.getAddressFormFields('add'),
+      contentTemplate: this.addressLocationMapDialogTemplate
     };
     const addAddressDialogRef = this.dialog.open(FormDialogComponent, { data });
     this.setupPostalCodeLookup(addAddressDialogRef);
@@ -156,6 +161,7 @@ export class AddressTabComponent {
         ' ' +
         this.translateService.instant('labels.heading.Address'),
       formfields: this.getAddressFormFields('edit', address),
+      contentTemplate: this.addressLocationMapDialogTemplate,
       layout: { addButtonText: 'Edit' }
     };
     const editAddressDialogRef = this.dialog.open(FormDialogComponent, { data });
@@ -329,6 +335,18 @@ export class AddressTabComponent {
    */
   isFieldEnabled(fieldName: any) {
     return this.clientAddressFieldConfig.find((fieldObj: any) => fieldObj.field === fieldName)?.isEnabled;
+  }
+
+  showAddressMap(address: any): void {
+    this.expandedAddressMapIds.add(address.addressId);
+  }
+
+  hideAddressMap(address: any): void {
+    this.expandedAddressMapIds.delete(address.addressId);
+  }
+
+  isAddressMapVisible(address: any): boolean {
+    return this.expandedAddressMapIds.has(address.addressId);
   }
 
   /**
