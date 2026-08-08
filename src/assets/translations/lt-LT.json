@@ -4314,6 +4314,7 @@
       "Payment system OTP request failed": "Nepavyko paprašyti arba patvirtinti telefono numerio.",
       "Payment system link successful": "Sąskaita sėkmingai susieta su mokėjimo sistema.",
       "Payment system link failed": "Nepavyko susieti sąskaitos su mokėjimo sistema.",
+      "Payment system links loading failed": "Nepavyko įkelti susietų telefono numerių.",
       "Payment system delink OTP sent": "Paprašyta naujo OTP mokėjimo sistemos susiejimui pašalinti.",
       "Payment system delink OTP request failed": "Nepavyko paprašyti naujo OTP atsiejimui.",
       "Payment system delink successful": "Mokėjimo sistemos susiejimas sėkmingai pašalintas.",

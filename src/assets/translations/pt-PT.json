@@ -4313,6 +4313,7 @@
       "Payment system OTP request failed": "Não foi possível solicitar ou verificar o número de telefone.",
       "Payment system link successful": "Conta ligada ao sistema de pagamentos com sucesso.",
       "Payment system link failed": "Não foi possível ligar a conta ao sistema de pagamentos.",
+      "Payment system links loading failed": "Não foi possível carregar os números de telefone ligados.",
       "Payment system delink OTP sent": "Foi solicitado um novo OTP para remover a ligação ao sistema de pagamentos.",
       "Payment system delink OTP request failed": "Não foi possível solicitar um novo OTP para desligar.",
       "Payment system delink successful": "Ligação ao sistema de pagamentos removida com sucesso.",

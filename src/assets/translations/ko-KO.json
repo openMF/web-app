@@ -4313,6 +4313,7 @@
       "Payment system OTP request failed": "전화번호를 요청하거나 확인할 수 없습니다.",
       "Payment system link successful": "계좌가 결제 시스템에 성공적으로 연결되었습니다.",
       "Payment system link failed": "계좌를 결제 시스템에 연결할 수 없습니다.",
+      "Payment system links loading failed": "연결된 전화번호를 불러올 수 없습니다.",
       "Payment system delink OTP sent": "결제 시스템 연결을 제거하기 위한 새 OTP가 요청되었습니다.",
       "Payment system delink OTP request failed": "연결 해제를 위한 새 OTP를 요청할 수 없습니다.",
       "Payment system delink successful": "결제 시스템 연결이 성공적으로 제거되었습니다.",

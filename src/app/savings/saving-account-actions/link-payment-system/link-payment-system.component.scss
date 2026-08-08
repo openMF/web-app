@@ -25,12 +25,25 @@
   }
 }
 
-.link-payment-system-header,
-.delink-actions {
+.link-payment-system-header {
   align-items: center;
   display: flex;
   justify-content: space-between;
   margin: 1.5rem 0;
+}
+
+.linked-phone-table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+}
+
+.payment-system-empty {
+  color: #666;
+  margin: 2rem 0;
+  text-align: center;
 }
 
 .link-payment-system-form {
@@ -77,24 +90,12 @@
   }
 }
 
-.delink-panel {
-  border-top: 1px solid #e0e0e0;
-  margin: 1.5rem auto 0;
-  max-width: 420px;
-  padding-top: 1rem;
-
-  mat-form-field {
-    width: 100%;
-  }
-}
-
 @media (width <= 600px) {
   .link-payment-system-wrapper {
     padding: 1rem;
   }
 
-  .link-payment-system-header,
-  .delink-actions {
+  .link-payment-system-header {
     align-items: stretch;
     flex-direction: column;
     gap: 1rem;

@@ -62,6 +62,31 @@ describe('SavingsService SINPE enrollment methods', () => {
     expect(await resultPromise).toEqual({ linked: false });
   });
 
+  it('gets linked SINPE phones for a savings account', async () => {
+    const resultPromise = firstValueFrom(service.getLinkedSinpePhones(87));
+
+    const req = httpMock.expectOne(
+      (request) => request.url === '/v2/sinpe/enrollment/savingsaccounts/87/phones' && request.method === 'GET'
+    );
+    req.flush([
+      {
+        savingsAccountId: 87,
+        iban: 'CR92037300110010000087',
+        mobileNumber: '88781923',
+        status: 'LINKED'
+      }
+    ]);
+
+    expect(await resultPromise).toEqual([
+      {
+        savingsAccountId: 87,
+        iban: 'CR92037300110010000087',
+        mobileNumber: '88781923',
+        status: 'LINKED'
+      }
+    ]);
+  });
+
   it('creates a SINPE subscription with clientId, phoneNumber, iban, and otp', async () => {
     const payload = {
       clientId: 90,

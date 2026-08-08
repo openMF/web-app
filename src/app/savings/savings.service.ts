@@ -25,6 +25,13 @@ export interface SinpeDeleteSubscriptionPayload {
   otp: string;
 }
 
+export interface SinpeLinkedPhone {
+  savingsAccountId: string | number;
+  iban?: string | null;
+  mobileNumber?: string | null;
+  status?: string | null;
+}
+
 /**
  * Savings Service.
  */
@@ -118,6 +125,14 @@ export class SavingsService {
    */
   verifySinpeEnrollmentPhone(phoneNumber: string): Observable<any> {
     return this.http.get(`/v2/sinpe/enrollment/phone/${phoneNumber}`);
+  }
+
+  /**
+   * @param {string | number} savingsAccountId Savings account id.
+   * @returns {Observable<SinpeLinkedPhone[]>}
+   */
+  getLinkedSinpePhones(savingsAccountId: string | number): Observable<SinpeLinkedPhone[]> {
+    return this.http.get<SinpeLinkedPhone[]>(`/v2/sinpe/enrollment/savingsaccounts/${savingsAccountId}/phones`);
   }
 
   /**

@@ -4008,6 +4008,7 @@
       "Payment system delink OTP sent": "Se solicitó una nueva OTP para eliminar el vínculo con el sistema de pago.",
       "Payment system delink successful": "El vínculo con el sistema de pago se eliminó correctamente.",
       "Payment system link failed": "No se pudo vincular la cuenta al sistema de pago.",
+      "Payment system links loading failed": "No se pudieron cargar los números de teléfono vinculados.",
       "Payment system link successful": "La cuenta se vinculó correctamente al sistema de pago.",
       "Payment system OTP request failed": "No se pudo solicitar o verificar el número de teléfono.",
       "Payment system OTP sent": "Se solicitó la OTP y se verificó el número de teléfono.",
