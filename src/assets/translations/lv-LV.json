@@ -4313,6 +4313,7 @@
       "Payment system OTP request failed": "Neizdevās pieprasīt vai pārbaudīt tālruņa numuru.",
       "Payment system link successful": "Konts veiksmīgi saistīts ar maksājumu sistēmu.",
       "Payment system link failed": "Neizdevās saistīt kontu ar maksājumu sistēmu.",
+      "Payment system links loading failed": "Neizdevās ielādēt saistītos tālruņa numurus.",
       "Payment system delink OTP sent": "Tika pieprasīts jauns OTP maksājumu sistēmas saites noņemšanai.",
       "Payment system delink OTP request failed": "Neizdevās pieprasīt jaunu OTP atsaistīšanai.",
       "Payment system delink successful": "Maksājumu sistēmas saite veiksmīgi noņemta.",

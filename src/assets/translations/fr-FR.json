@@ -4316,6 +4316,7 @@
       "Payment system OTP request failed": "Impossible de demander ou de vérifier le numéro de téléphone.",
       "Payment system link successful": "Le compte a été lié au système de paiement avec succès.",
       "Payment system link failed": "Impossible de lier le compte au système de paiement.",
+      "Payment system links loading failed": "Impossible de charger les numéros de téléphone liés.",
       "Payment system delink OTP sent": "Un nouvel OTP a été demandé pour supprimer le lien avec le système de paiement.",
       "Payment system delink OTP request failed": "Impossible de demander un nouvel OTP pour la suppression du lien.",
       "Payment system delink successful": "Le lien avec le système de paiement a été supprimé avec succès.",

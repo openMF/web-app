@@ -4315,6 +4315,7 @@
       "Payment system OTP request failed": "Die Telefonnummer konnte nicht angefordert oder verifiziert werden.",
       "Payment system link successful": "Das Konto wurde erfolgreich mit dem Zahlungssystem verknüpft.",
       "Payment system link failed": "Das Konto konnte nicht mit dem Zahlungssystem verknüpft werden.",
+      "Payment system links loading failed": "Verknüpfte Telefonnummern konnten nicht geladen werden.",
       "Payment system delink OTP sent": "Ein neues OTP zum Entfernen der Zahlungssystem-Verknüpfung wurde angefordert.",
       "Payment system delink OTP request failed": "Ein neues OTP zum Entfernen der Verknüpfung konnte nicht angefordert werden.",
       "Payment system delink successful": "Die Zahlungssystem-Verknüpfung wurde erfolgreich entfernt.",

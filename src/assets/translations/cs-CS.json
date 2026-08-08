@@ -4314,6 +4314,7 @@
       "Payment system OTP request failed": "Nepodařilo se vyžádat nebo ověřit telefonní číslo.",
       "Payment system link successful": "Účet byl úspěšně propojen s platebním systémem.",
       "Payment system link failed": "Účet se nepodařilo propojit s platebním systémem.",
+      "Payment system links loading failed": "Nepodařilo se načíst propojená telefonní čísla.",
       "Payment system delink OTP sent": "Bylo vyžádáno nové OTP pro odebrání propojení s platebním systémem.",
       "Payment system delink OTP request failed": "Nepodařilo se vyžádat nové OTP pro odpojení.",
       "Payment system delink successful": "Propojení s platebním systémem bylo úspěšně odebráno.",

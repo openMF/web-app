@@ -4310,6 +4310,7 @@
       "Payment system OTP request failed": "Imeshindikana kuomba au kuthibitisha nambari ya simu.",
       "Payment system link successful": "Akaunti imeunganishwa kwenye mfumo wa malipo kwa mafanikio.",
       "Payment system link failed": "Imeshindikana kuunganisha akaunti kwenye mfumo wa malipo.",
+      "Payment system links loading failed": "Imeshindikana kupakia nambari za simu zilizounganishwa.",
       "Payment system delink OTP sent": "OTP mpya imeombwa ili kuondoa kiungo cha mfumo wa malipo.",
       "Payment system delink OTP request failed": "Imeshindikana kuomba OTP mpya ya kutenganisha.",
       "Payment system delink successful": "Kiungo cha mfumo wa malipo kimeondolewa kwa mafanikio.",

@@ -4313,6 +4313,7 @@
       "Payment system OTP request failed": "फोन नम्बर अनुरोध वा प्रमाणित गर्न सकिएन।",
       "Payment system link successful": "खाता सफलतापूर्वक भुक्तानी प्रणालीमा लिंक गरियो।",
       "Payment system link failed": "खाता भुक्तानी प्रणालीमा लिंक गर्न सकिएन।",
+      "Payment system links loading failed": "लिंक गरिएका फोन नम्बरहरू लोड गर्न सकिएन।",
       "Payment system delink OTP sent": "भुक्तानी प्रणाली लिंक हटाउन नयाँ OTP अनुरोध गरियो।",
       "Payment system delink OTP request failed": "लिंक हटाउन नयाँ OTP अनुरोध गर्न सकिएन।",
       "Payment system delink successful": "भुक्तानी प्रणाली लिंक सफलतापूर्वक हटाइयो।",

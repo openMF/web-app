@@ -4145,6 +4145,7 @@
       "Payment system delink OTP sent": "A fresh OTP was requested for removing the payment-system link.",
       "Payment system delink successful": "Payment-system link removed successfully.",
       "Payment system link failed": "Unable to link the account to the payment system.",
+      "Payment system links loading failed": "Unable to load linked phone numbers.",
       "Payment system link successful": "Account linked to the payment system successfully.",
       "Payment system OTP request failed": "Unable to request or verify the phone number.",
       "Payment system OTP sent": "OTP requested and phone number verified.",
