@@ -17,3 +17,29 @@
     }
   }
 }
+
+.account-overview {
+  min-width: 85%;
+  margin-left: 10px;
+}
+
+mifosx-account-header {
+  td,
+  th,
+  b,
+  span:not(.status-dot),
+  h3,
+  p,
+  a {
+    color: var(--md-sys-color-on-primary, #fff);
+  }
+
+  img.profile-image {
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+    background-color: var(--md-sys-color-on-primary, #fff);
+  }
+}
