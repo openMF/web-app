@@ -3257,7 +3257,8 @@
       "Dispute Management": "Gestione delle controversie",
       "Phone": "Telefono",
       "Mail": "E-mail",
-      "Link": "Collegamento"
+      "Link": "Collegamento",
+      "Audit Trail": "Traccia di controllo"
     },
     "links": {
       "Community": "Comunità",
@@ -4700,7 +4701,27 @@
         "statusUpdated": "Stato aggiornato a {{ status }}"
       },
       "errors": {
-        "badRequest": "Richiesta non valida. Verificare l'ID di registrazione."
+        "badRequest": "Richiesta non valida. Verificare l'ID di registrazione.",
+        "unauthorized": "Non autorizzato",
+        "forbidden": "Accesso negato",
+        "serviceUnavailable": "Servizio non disponibile",
+        "unexpected": "Si è verificato un errore imprevisto",
+        "invalidDateRange": "La data di inizio deve essere precedente alla data di fine"
+      },
+      "auditTrail": {
+        "title": "Traccia di controllo",
+        "totalEntries": "voci",
+        "filterTitle": "Filtra per intervallo di date",
+        "startDate": "Data di inizio",
+        "endDate": "Data di fine",
+        "apply": "Applica",
+        "clear": "Cancella",
+        "noEntries": "Nessuna voce di controllo trovata.",
+        "performedBy": "Eseguito da",
+        "createdAt": "Data e ora",
+        "duration": "Durata",
+        "requestId": "ID richiesta",
+        "invalidDateRange": "La data di inizio deve essere precedente alla data di fine"
       }
     }
   },

@@ -3256,7 +3256,8 @@
       "Dispute Management": "Vivad Vyavasthapan",
       "Phone": "फोन",
       "Mail": "मेल",
-      "Link": "लिंक"
+      "Link": "लिंक",
+      "Audit Trail": "अडिट ट्रेल"
     },
     "links": {
       "Community": "समुदाय",
@@ -4699,7 +4700,27 @@
         "statusUpdated": "Vivadko sthiti {{ status }} ma update bhayo"
       },
       "errors": {
-        "badRequest": "अमान्य अनुरोध। सबमिशन रेकर्ड ID जाँच गर्नुहोस्।"
+        "badRequest": "अमान्य अनुरोध। सबमिशन रेकर्ड ID जाँच गर्नुहोस्।",
+        "unauthorized": "अनधिकृत",
+        "forbidden": "पहुँच अस्वीकृत",
+        "serviceUnavailable": "सेवा उपलब्ध छैन",
+        "unexpected": "अनपेक्षित त्रुटि भयो",
+        "invalidDateRange": "सुरु मिति अन्त्य मितिभन्दा पहिले हुनुपर्छ"
+      },
+      "auditTrail": {
+        "title": "अडिट ट्रेल",
+        "totalEntries": "प्रविष्टिहरू",
+        "filterTitle": "मिति दायराद्वारा फिल्टर गर्नुहोस्",
+        "startDate": "सुरु मिति",
+        "endDate": "अन्त्य मिति",
+        "apply": "लागू गर्नुहोस्",
+        "clear": "हटाउनुहोस्",
+        "noEntries": "कुनै अडिट प्रविष्टि फेला परेन।",
+        "performedBy": "द्वारा गरिएको",
+        "createdAt": "मिति र समय",
+        "duration": "अवधि",
+        "requestId": "अनुरोध ID",
+        "invalidDateRange": "सुरु मिति अन्त्य मितिभन्दा पहिले हुनुपर्छ"
       }
     }
   },
