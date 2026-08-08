@@ -36,6 +36,16 @@ import type { TestSavingsAccount } from '../types/test-data.types';
 import { DEFAULT_ACCOUNT_OPENING_DATE } from './client.factory';
 import { resolveProductId } from './_shared';
 
+/**
+ * Name of the shared minimal savings product seeded by
+ * `ApiSetupManager#ensureMinimalSavingsProduct`.
+ *
+ * Exported so UI specs can pick the same product from the create-account
+ * dropdown that the API factories attach by id. Hard-coding the string in
+ * both places is how the two drift apart after a product rename.
+ */
+export const E2E_SAVINGS_PRODUCT_NAME = 'E2E Savings Product';
+
 /** Caller-supplied tweaks accepted by every savings factory in this module. */
 export interface CreateTestSavingsAccountOverrides {
   /** Fineract savings product id. Defaults to the shared minimal E2E product. */

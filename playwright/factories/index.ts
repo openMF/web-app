@@ -50,14 +50,37 @@ export {
   type CreateActiveTestClientOverrides
 } from './client.factory';
 
-export { createTestLoan, createApprovedLoan, createActiveLoan, type CreateTestLoanOverrides } from './loan.factory';
+export {
+  createTestLoan,
+  createApprovedLoan,
+  createActiveLoan,
+  E2E_LOAN_PRODUCT_NAME,
+  type CreateTestLoanOverrides
+} from './loan.factory';
 
 export {
   createTestSavingsAccount,
   createApprovedSavingsAccount,
   createActiveSavingsAccount,
+  E2E_SAVINGS_PRODUCT_NAME,
   type CreateTestSavingsAccountOverrides
 } from './savings.factory';
+
+export {
+  createTestClientCharge,
+  ensureClientChargeDefinition,
+  E2E_CHARGE_NAMES,
+  CHARGE_TIME_TYPE,
+  DEFAULT_CHARGE_AMOUNT,
+  type TestClientCharge,
+  type CreateTestClientChargeOverrides
+} from './charge.factory';
+
+// `createTestGroup` produces a *pending*, memberless group precisely so
+// its registered deleter can succeed. Tests that activate the group or
+// attach members are opting into a teardown failure — expected, and
+// recorded rather than thrown.
+export { createTestGroup, DEFAULT_TEST_GROUP_SUBMITTED_ON_DATE, type CreateTestGroupOverrides } from './group.factory';
 
 // ── Pure payload builders (no network) ─────────────────────────────
 

@@ -184,6 +184,70 @@ export class FineractApiClient {
   }
 
   /**
+   * Executes a lifecycle or membership command against a group.
+   *
+   * Fineract routes every group mutation that is not a plain field
+   * update through `POST /groups/{id}?command=...`. Known commands
+   * include `activate`, `close`, `associateClients`,
+   * `disassociateClients`, `assignStaff` and `unassignStaff`.
+   *
+   * @param groupId - The group id to act on
+   * @param command - The Fineract command name
+   * @param data - The command payload (may be empty for some commands)
+   * @returns The Fineract command response payload
+   */
+  async executeGroupCommand(groupId: number, command: string, data: Record<string, unknown> = {}): Promise<any> {
+    const res = await this.ctx.post(
+      `/fineract-provider/api/v1/groups/${groupId}?command=${encodeURIComponent(command)}`,
+      { data }
+    );
+    return this.validateResponse(res, `executeGroupCommand:${command}`);
+  }
+
+  /**
+   * Activates a pending group.
+   *
+   * Fineract rejects an activation date earlier than the group's
+   * submitted-on date, so the default here matches
+   * `DEFAULT_TEST_GROUP_SUBMITTED_ON_DATE` in the group factory.
+   *
+   * Note an activated group can no longer be hard-deleted, so any
+   * `CleanupGuard` entry registered by the factory will fail on
+   * teardown. That failure is recorded, not thrown — see
+   * `CleanupGuard`.
+   *
+   * @param groupId - The group id to activate
+   * @param activationDate - Activation date in `dd MMMM yyyy` form
+   * @returns The Fineract activate-group response payload
+   */
+  async activateGroup(groupId: number, activationDate = '01 January 2024'): Promise<any> {
+    return this.executeGroupCommand(groupId, 'activate', {
+      activationDate,
+      dateFormat: 'dd MMMM yyyy',
+      locale: 'en'
+    });
+  }
+
+  /**
+   * Fetches the client members currently associated with a group.
+   *
+   * `GET /groups/{id}` omits `clientMembers` unless the association is
+   * explicitly requested, so this always asks for it and normalises
+   * the missing case to an empty array — a memberless group and a
+   * group whose members were not requested are indistinguishable
+   * otherwise, and quietly returning `undefined` would make every
+   * caller repeat the same guard.
+   *
+   * @param groupId - The group id whose members to fetch
+   * @returns The member client collection, empty when there are none
+   */
+  async getGroupClientMembers(groupId: number): Promise<any[]> {
+    const res = await this.ctx.get(`/fineract-provider/api/v1/groups/${groupId}?associations=clientMembers`);
+    const group = await this.validateResponse(res, 'getGroupClientMembers');
+    return Array.isArray(group?.clientMembers) ? group.clientMembers : [];
+  }
+
+  /**
    * Creates a user (application user / staff with login) using the supplied payload.
    * @param data - The user creation payload
    * @returns The Fineract create-user response payload
@@ -1031,26 +1095,57 @@ export class FineractApiClient {
   }
 
   /**
+   * Returns the tenant's configured payment types.
+   */
+  async getPaymentTypes(): Promise<any[]> {
+    const res = await this.ctx.get('/fineract-provider/api/v1/paymenttypes');
+    return this.validateResponse(res, 'getPaymentTypes');
+  }
+
+  /**
    * Posts a transaction against an ACTIVE savings account.
+   *
+   * `paymentTypeId` is mandatory on this endpoint — Fineract rejects
+   * the request with
+   * "The parameter `paymentTypeId` is mandatory." otherwise — but it is
+   * a tenant-configured lookup, so there is no id that can safely be
+   * hard-coded. When the caller does not supply one, the first
+   * configured payment type is resolved and used, matching what the UI
+   * does when a user leaves the dropdown on its default.
    *
    * @param savingsAccountId - The savings account id to transact on
    * @param command - Either 'deposit' or 'withdrawal'
    * @param transactionDate - The transaction date in Fineract's expected format
    * @param transactionAmount - The transaction amount
+   * @param paymentTypeId - Optional payment type; defaults to the first configured one
    * @returns The transaction response payload
    */
   async createSavingsTransaction(
     savingsAccountId: number,
     command: 'deposit' | 'withdrawal',
     transactionDate: string,
-    transactionAmount: number
+    transactionAmount: number,
+    paymentTypeId?: number
   ): Promise<any> {
+    let resolvedPaymentTypeId = paymentTypeId;
+    if (resolvedPaymentTypeId === undefined) {
+      const paymentTypes = await this.getPaymentTypes();
+      if (!paymentTypes.length) {
+        throw new Error(
+          'createSavingsTransaction: the tenant has no payment types configured, so no transaction can be posted. ' +
+            'Seed at least one payment type before running savings transaction tests.'
+        );
+      }
+      resolvedPaymentTypeId = paymentTypes[0].id;
+    }
+
     const res = await this.ctx.post(
       `/fineract-provider/api/v1/savingsaccounts/${savingsAccountId}/transactions?command=${command}`,
       {
         data: {
           transactionDate,
           transactionAmount,
+          paymentTypeId: resolvedPaymentTypeId,
           dateFormat: FineractApiClient.DEFAULT_DATE_FORMAT,
           locale: FineractApiClient.DEFAULT_LOCALE
         }
@@ -1123,6 +1218,263 @@ export class FineractApiClient {
   async deleteClientFamilyMember(clientId: number, memberId: number): Promise<void> {
     const res = await this.ctx.delete(`/fineract-provider/api/v1/clients/${clientId}/familymembers/${memberId}`);
     await this.validateResponse(res, 'deleteClientFamilyMember');
+  }
+
+  // ── Charge definitions ─────────────────────────────────────────────
+  //
+  // A "charge" in Fineract is a reusable *definition* (name, currency,
+  // amount, when it applies), quite separate from a "client charge",
+  // which is one definition attached to one client. The Add Charge
+  // form's dropdown is populated from definitions filtered to
+  // `chargeAppliesTo: 3` (Client) — with none configured the dropdown
+  // renders empty and the rest of the form never appears, so seeding a
+  // definition is a hard prerequisite for any charge E2E test.
+
+  /**
+   * Fetches all charge definitions.
+   * @returns The charge definition collection
+   */
+  async getCharges(): Promise<any[]> {
+    const res = await this.ctx.get('/fineract-provider/api/v1/charges');
+    const body = await this.validateResponse(res, 'getCharges');
+    return Array.isArray(body) ? body : [];
+  }
+
+  /**
+   * Creates a charge definition.
+   * @param data - The charge definition payload
+   * @returns The Fineract create-charge response payload
+   */
+  async createCharge(data: Record<string, unknown>): Promise<any> {
+    const res = await this.ctx.post('/fineract-provider/api/v1/charges', { data });
+    return this.validateResponse(res, 'createCharge');
+  }
+
+  /**
+   * Finds or creates a flat client-applicable charge definition.
+   *
+   * ── Why this is an ensure, not a create ─────────────────────────
+   *
+   * Charge definitions are global and cannot be deleted once any
+   * client charge references them, so creating one per test would leak
+   * a growing pile of definitions into the tenant and eventually make
+   * the Add Charge dropdown unusable by hand. Reusing a fixed name
+   * keeps exactly one definition per time type, which is also what
+   * lets specs assert on the option label.
+   *
+   * `chargeTimeType` is the parameter that actually changes the *form*
+   * under test: Specified due date (2) renders a `dueDate` control,
+   * while Annual (6) and Monthly (7) swap in `feeOnMonthDay` — hence
+   * separate definitions rather than one shared default.
+   *
+   * @param name - Definition name; must be unique per time type
+   * @param chargeTimeType - Fineract charge time type id (2/6/7)
+   * @param amount - Flat charge amount
+   * @returns The charge definition, whether found or freshly created
+   */
+  async ensureClientChargeDefinition(name = 'E2E Client Charge', chargeTimeType = 2, amount = 100): Promise<any> {
+    const existing = (await this.getCharges()).find((charge) => charge?.name === name);
+    if (existing) {
+      return existing;
+    }
+
+    const payload = {
+      name,
+      // 3 = Client. Anything else and the definition never reaches the
+      // Add Charge dropdown.
+      chargeAppliesTo: 3,
+      chargeTimeType,
+      // 1 = Flat. Percentage types would need a base amount that a
+      // client charge has no notion of.
+      chargeCalculationType: 1,
+      currencyCode: 'USD',
+      amount,
+      active: true,
+      penalty: false,
+      locale: 'en',
+      monthDayFormat: 'dd MMMM'
+    };
+
+    try {
+      const created = await this.createCharge(payload);
+      const charges = await this.getCharges();
+      return charges.find((charge) => charge?.id === created?.resourceId) ?? created;
+    } catch (error) {
+      // Two workers can race to seed the same definition. A duplicate
+      // means the other worker won, so re-read rather than fail.
+      if (!this.isRecoverableDuplicateError(error)) {
+        throw error;
+      }
+      await this.waitForCreateRaceRetry();
+      const charges = await this.getCharges();
+      const found = charges.find((charge) => charge?.name === name);
+      if (!found) {
+        throw error;
+      }
+      return found;
+    }
+  }
+
+  // ── Client charges ────────────────────────────────────────────────
+
+  /**
+   * Returns the charges attached to a client.
+   * @param clientId - The owning client id
+   * @returns The client charge collection
+   */
+  async getClientCharges(clientId: number): Promise<any[]> {
+    const res = await this.ctx.get(`/fineract-provider/api/v1/clients/${clientId}/charges`);
+    const body = await this.validateResponse(res, 'getClientCharges');
+    return body?.pageItems ?? (Array.isArray(body) ? body : []);
+  }
+
+  /**
+   * Fetches a single client charge.
+   * @param clientId - The owning client id
+   * @param clientChargeId - The client charge id
+   * @returns The client charge payload
+   */
+  async getClientCharge(clientId: number, clientChargeId: number): Promise<any> {
+    const res = await this.ctx.get(`/fineract-provider/api/v1/clients/${clientId}/charges/${clientChargeId}`);
+    return this.validateResponse(res, 'getClientCharge');
+  }
+
+  /**
+   * Attaches a charge definition to a client.
+   * @param clientId - The owning client id
+   * @param chargeId - The charge definition id
+   * @param dueDate - Due date in `dd MMMM yyyy` wire format
+   * @param amount - Optional amount override
+   * @returns The Fineract create-client-charge response payload
+   */
+  async createClientCharge(clientId: number, chargeId: number, dueDate: string, amount?: number): Promise<any> {
+    const data: Record<string, unknown> = {
+      chargeId,
+      dueDate,
+      locale: 'en',
+      dateFormat: 'dd MMMM yyyy'
+    };
+    if (amount !== undefined) {
+      data.amount = amount;
+    }
+    const res = await this.ctx.post(`/fineract-provider/api/v1/clients/${clientId}/charges`, { data });
+    return this.validateResponse(res, 'createClientCharge');
+  }
+
+  /**
+   * Runs a command against a client charge (`pay`, `waive`).
+   * @param clientId - The owning client id
+   * @param clientChargeId - The client charge id
+   * @param command - The command name
+   * @param data - The command payload
+   * @returns The Fineract command response payload
+   */
+  async executeClientChargeCommand(
+    clientId: number,
+    clientChargeId: number,
+    command: string,
+    data: Record<string, unknown> = {}
+  ): Promise<any> {
+    const res = await this.ctx.post(
+      `/fineract-provider/api/v1/clients/${clientId}/charges/${clientChargeId}?command=${command}`,
+      { data }
+    );
+    return this.validateResponse(res, `executeClientChargeCommand(${command})`);
+  }
+
+  /**
+   * Deletes a client charge.
+   * @param clientId - The owning client id
+   * @param clientChargeId - The client charge id
+   */
+  async deleteClientCharge(clientId: number, clientChargeId: number): Promise<void> {
+    const res = await this.ctx.delete(`/fineract-provider/api/v1/clients/${clientId}/charges/${clientChargeId}`);
+    await this.validateResponse(res, 'deleteClientCharge');
+  }
+
+  // ── Client sub-entities (KYC tabs) ────────────────────────────────
+
+  /**
+   * Fetches the family-member template, which supplies the
+   * relationship / gender / profession / marital status dropdowns.
+   * @param clientId - The owning client id
+   * @returns The family member template payload
+   */
+  async getFamilyMemberTemplate(clientId: number): Promise<any> {
+    const res = await this.ctx.get(`/fineract-provider/api/v1/clients/${clientId}/familymembers/template`);
+    return this.validateResponse(res, 'getFamilyMemberTemplate');
+  }
+
+  /**
+   * Returns the identifiers attached to a client.
+   * @param clientId - The owning client id
+   * @returns The identifier collection
+   */
+  async getClientIdentifiers(clientId: number): Promise<any[]> {
+    const res = await this.ctx.get(`/fineract-provider/api/v1/clients/${clientId}/identifiers`);
+    const body = await this.validateResponse(res, 'getClientIdentifiers');
+    return Array.isArray(body) ? body : [];
+  }
+
+  /**
+   * Deletes a client identifier.
+   * @param clientId - The owning client id
+   * @param identifierId - The identifier id
+   */
+  async deleteClientIdentifier(clientId: number, identifierId: number): Promise<void> {
+    const res = await this.ctx.delete(`/fineract-provider/api/v1/clients/${clientId}/identifiers/${identifierId}`);
+    await this.validateResponse(res, 'deleteClientIdentifier');
+  }
+
+  /**
+   * Returns the notes attached to a client.
+   * @param clientId - The owning client id
+   * @returns The note collection, newest first as Fineract returns it
+   */
+  async getClientNotes(clientId: number): Promise<any[]> {
+    const res = await this.ctx.get(`/fineract-provider/api/v1/clients/${clientId}/notes`);
+    const body = await this.validateResponse(res, 'getClientNotes');
+    return Array.isArray(body) ? body : [];
+  }
+
+  /**
+   * Returns the addresses attached to a client.
+   *
+   * The address module is disabled by default in Fineract, in which
+   * case this endpoint 403s. Callers that only need to know whether
+   * addresses are usable should prefer {@link isAddressModuleEnabled}.
+   *
+   * @param clientId - The owning client id
+   * @returns The address collection
+   */
+  async getClientAddresses(clientId: number): Promise<any[]> {
+    const res = await this.ctx.get(`/fineract-provider/api/v1/client/${clientId}/addresses`);
+    const body = await this.validateResponse(res, 'getClientAddresses');
+    return Array.isArray(body) ? body : [];
+  }
+
+  /**
+   * Reports whether the optional address module is switched on for
+   * this tenant.
+   *
+   * Address is gated behind the `enable-address` global configuration,
+   * which ships **disabled**. When it is off the client view hides the
+   * tab entirely, so address specs must skip rather than fail — a
+   * switched-off optional module is not a product defect. Note the
+   * config name is lower-case; `Enable-Address` 404s.
+   *
+   * @returns true when the address module is enabled
+   */
+  async isAddressModuleEnabled(): Promise<boolean> {
+    const res = await this.ctx.get('/fineract-provider/api/v1/configurations/name/enable-address');
+    if (!res.ok()) {
+      // Don't collapse a broken API or bad credentials into "module off"
+      // — that would make address specs silently skip instead of failing.
+      // The global config ships present, so any non-2xx here is unexpected.
+      throw new Error(`isAddressModuleEnabled: expected 2xx from the enable-address config, got ${res.status()}`);
+    }
+    const body = await res.json();
+    return body?.enabled === true;
   }
 
   /**
