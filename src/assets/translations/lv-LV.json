@@ -3257,7 +3257,8 @@
       "Dispute Management": "Stridu parvaldiba",
       "Phone": "Tālrunis",
       "Mail": "E-pasts",
-      "Link": "Saite"
+      "Link": "Saite",
+      "Audit Trail": "Revīzijas taka"
     },
     "links": {
       "Community": "kopiena",
@@ -4699,7 +4700,27 @@
         "statusUpdated": "Strida statuss atjauninats uz {{ status }}"
       },
       "errors": {
-        "badRequest": "Nederīgs pieprasījums. Pārbaudiet iesnieguma ieraksta ID."
+        "badRequest": "Nederīgs pieprasījums. Pārbaudiet iesnieguma ieraksta ID.",
+        "unauthorized": "Nav autorizēts",
+        "forbidden": "Piekļuve liegta",
+        "serviceUnavailable": "Pakalpojums nav pieejams",
+        "unexpected": "Radās neparedzēta kļūda",
+        "invalidDateRange": "Sākuma datumam jābūt pirms beigu datuma"
+      },
+      "auditTrail": {
+        "title": "Revīzijas taka",
+        "totalEntries": "ieraksti",
+        "filterTitle": "Filtrēt pēc datumu diapazona",
+        "startDate": "Sākuma datums",
+        "endDate": "Beigu datums",
+        "apply": "Lietot",
+        "clear": "Notīrīt",
+        "noEntries": "Revīzijas ieraksti nav atrasti.",
+        "performedBy": "Veica",
+        "createdAt": "Datums un laiks",
+        "duration": "Ilgums",
+        "requestId": "Pieprasījuma ID",
+        "invalidDateRange": "Sākuma datumam jābūt pirms beigu datuma"
       }
     }
   },

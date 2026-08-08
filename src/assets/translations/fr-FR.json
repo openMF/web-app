@@ -3260,7 +3260,8 @@
       "Dispute Management": "Gestion des litiges",
       "Phone": "Téléphone",
       "Mail": "E-mail",
-      "Link": "Lien"
+      "Link": "Lien",
+      "Audit Trail": "Piste d'audit"
     },
     "links": {
       "Community": "Communauté",
@@ -4702,7 +4703,27 @@
         "statusUpdated": "Statut mis à jour à {{ status }}"
       },
       "errors": {
-        "badRequest": "Requête invalide. Vérifiez l'ID d'enregistrement."
+        "badRequest": "Requête invalide. Vérifiez l'ID d'enregistrement.",
+        "unauthorized": "Non autorisé",
+        "forbidden": "Accès refusé",
+        "serviceUnavailable": "Service indisponible",
+        "unexpected": "Une erreur inattendue est survenue",
+        "invalidDateRange": "La date de début doit être antérieure à la date de fin"
+      },
+      "auditTrail": {
+        "title": "Piste d'audit",
+        "totalEntries": "entrées",
+        "filterTitle": "Filtrer par plage de dates",
+        "startDate": "Date de début",
+        "endDate": "Date de fin",
+        "apply": "Appliquer",
+        "clear": "Effacer",
+        "noEntries": "Aucune entrée d'audit trouvée.",
+        "performedBy": "Effectué par",
+        "createdAt": "Date et heure",
+        "duration": "Durée",
+        "requestId": "ID de requête",
+        "invalidDateRange": "La date de début doit être antérieure à la date de fin"
       }
     }
   },

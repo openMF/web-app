@@ -3256,7 +3256,8 @@
       "Dispute Management": "Gestão de disputas",
       "Phone": "Telefone",
       "Mail": "E-mail",
-      "Link": "Ligação"
+      "Link": "Ligação",
+      "Audit Trail": "Trilha de auditoria"
     },
     "links": {
       "Community": "Comunidade",
@@ -4699,7 +4700,27 @@
         "statusUpdated": "Estado atualizado para {{ status }}"
       },
       "errors": {
-        "badRequest": "Pedido inválido. Verifique o ID do registo de envio."
+        "badRequest": "Pedido inválido. Verifique o ID do registo de envio.",
+        "unauthorized": "Não autorizado",
+        "forbidden": "Acesso negado",
+        "serviceUnavailable": "Serviço indisponível",
+        "unexpected": "Ocorreu um erro inesperado",
+        "invalidDateRange": "A data de início deve ser anterior à data de fim"
+      },
+      "auditTrail": {
+        "title": "Trilha de auditoria",
+        "totalEntries": "entradas",
+        "filterTitle": "Filtrar por intervalo de datas",
+        "startDate": "Data de início",
+        "endDate": "Data de fim",
+        "apply": "Aplicar",
+        "clear": "Limpar",
+        "noEntries": "Nenhuma entrada de auditoria encontrada.",
+        "performedBy": "Realizado por",
+        "createdAt": "Data e hora",
+        "duration": "Duração",
+        "requestId": "ID do pedido",
+        "invalidDateRange": "A data de início deve ser anterior à data de fim"
       }
     }
   },

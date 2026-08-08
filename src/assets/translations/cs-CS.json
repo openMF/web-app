@@ -3257,7 +3257,8 @@
       "Dispute Management": "Správa sporů",
       "Phone": "Telefon",
       "Mail": "E-mail",
-      "Link": "Propojení"
+      "Link": "Propojení",
+      "Audit Trail": "Auditní stopa"
     },
     "links": {
       "Community": "Společenství",
@@ -4696,7 +4697,27 @@
         "statusUpdated": "Stav sporu aktualizován na {{ status }}"
       },
       "errors": {
-        "badRequest": "Neplatný požadavek. Zkontrolujte ID záznamu podání."
+        "badRequest": "Neplatný požadavek. Zkontrolujte ID záznamu podání.",
+        "unauthorized": "Neautorizováno",
+        "forbidden": "Přístup odepřen",
+        "serviceUnavailable": "Služba není dostupná",
+        "unexpected": "Došlo k neočekávané chybě",
+        "invalidDateRange": "Datum začátku musí být před datem konce"
+      },
+      "auditTrail": {
+        "title": "Auditní stopa",
+        "totalEntries": "záznamy",
+        "filterTitle": "Filtrovat podle rozsahu dat",
+        "startDate": "Datum začátku",
+        "endDate": "Datum konce",
+        "apply": "Použít",
+        "clear": "Vymazat",
+        "noEntries": "Nebyly nalezeny žádné auditní záznamy.",
+        "performedBy": "Provedl",
+        "createdAt": "Datum a čas",
+        "duration": "Trvání",
+        "requestId": "ID požadavku",
+        "invalidDateRange": "Datum začátku musí být před datem konce"
       }
     }
   },

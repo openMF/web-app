@@ -3294,7 +3294,8 @@
       "Orange": "Orange",
       "Red": "Red",
       "Yellow": "Yellow",
-      "Primary Color": "Primary Color"
+      "Primary Color": "Primary Color",
+      "Audit Trail": "Audit Trail"
     },
     "links": {
       "Community": "Community",
@@ -4850,6 +4851,21 @@
         "resolve": "Resolve Dispute",
         "raised": "Dispute #{{ id }} raised successfully",
         "statusUpdated": "Dispute status updated to {{ status }}"
+      },
+      "auditTrail": {
+        "title": "Audit Trail",
+        "totalEntries": "entries",
+        "filterTitle": "Filter by Date Range",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "apply": "Apply",
+        "clear": "Clear",
+        "noEntries": "No audit entries found for the selected criteria.",
+        "performedBy": "Performed By",
+        "createdAt": "Date & Time",
+        "duration": "Duration",
+        "requestId": "Request ID",
+        "invalidDateRange": "Start date must be before end date."
       }
     },
     "selections": {

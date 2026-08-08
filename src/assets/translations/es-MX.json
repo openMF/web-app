@@ -3263,7 +3263,8 @@
       "Cross Rate via": "Tipo cruzado (vía {{ currency }})",
       "Administrator": "Administrador",
       "Provider": "Proveedor",
-      "Dispute Management": "Gestión de disputas"
+      "Dispute Management": "Gestión de disputas",
+      "Audit Trail": "Registro de auditoría"
     },
     "links": {
       "Community": "Comunidad",
@@ -4725,7 +4726,27 @@
         "statusUpdated": "Estado actualizado a {{ status }}"
       },
       "errors": {
-        "badRequest": "Solicitud inválida. Verifique el ID de registro de envío."
+        "badRequest": "Solicitud inválida. Verifique el ID de registro de envío.",
+        "unauthorized": "No autorizado",
+        "forbidden": "Acceso denegado",
+        "serviceUnavailable": "Servicio no disponible",
+        "unexpected": "Ocurrió un error inesperado",
+        "invalidDateRange": "La fecha de inicio debe ser anterior a la fecha de fin"
+      },
+      "auditTrail": {
+        "title": "Registro de auditoría",
+        "totalEntries": "entradas",
+        "filterTitle": "Filtrar por rango de fechas",
+        "startDate": "Fecha de inicio",
+        "endDate": "Fecha de fin",
+        "apply": "Aplicar",
+        "clear": "Limpiar",
+        "noEntries": "No se encontraron entradas de auditoría.",
+        "performedBy": "Realizado por",
+        "createdAt": "Fecha y hora",
+        "duration": "Duración",
+        "requestId": "ID de solicitud",
+        "invalidDateRange": "La fecha de inicio debe ser anterior a la fecha de fin"
       }
     }
   },
