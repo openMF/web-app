@@ -165,6 +165,13 @@ export class LinkPaymentSystemComponent implements OnInit {
       return;
     }
 
+    if (successMessage) {
+      this.viewMode = 'LIST';
+      this.selectedLink = null;
+      this.delinkOtpRequested = false;
+      this.setStatus('success', successMessage);
+    }
+
     this.setLoading('list', !successMessage);
     this.savingsService
       .getLinkedSinpePhones(savingsAccountId)
@@ -179,7 +186,7 @@ export class LinkPaymentSystemComponent implements OnInit {
             this.setStatus('success', successMessage);
           }
         },
-        error: (error: any) => this.setStatus('error', 'labels.text.Payment system links loading failed', error)
+        error: (error: any) => this.handleLinkedPhonesLoadError(successMessage, error)
       });
   }
 
@@ -448,6 +455,16 @@ export class LinkPaymentSystemComponent implements OnInit {
     this.statusMessage = message;
     this.statusDetail = this.errorMessage(error);
     this.changeDetectorRef.markForCheck();
+  }
+
+  private handleLinkedPhonesLoadError(successMessage: string | undefined, error: any) {
+    if (successMessage) {
+      this.statusDetail = this.errorMessage(error);
+      this.changeDetectorRef.markForCheck();
+      return;
+    }
+
+    this.setStatus('error', 'labels.text.Payment system links loading failed', error);
   }
 
   private clearStatus() {

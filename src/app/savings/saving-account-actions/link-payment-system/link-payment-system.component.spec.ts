@@ -205,6 +205,25 @@ describe('LinkPaymentSystemComponent', () => {
     expect(component.linkPaymentSystemForm.get('otp')?.value).toBe('');
   });
 
+  it('preserves link success when the linked-phone refresh fails', async () => {
+    await setup();
+    savingsService.requestSinpeEnrollment.mockReturnValueOnce(of({ changes: { otp: '048404' } }));
+    savingsService.getLinkedSinpePhones.mockReturnValueOnce(
+      throwError(() => ({ error: { message: 'Refresh failed' } }))
+    );
+
+    component.showAddView();
+    component.linkPaymentSystemForm.patchValue({ phoneNumber: '88781923' });
+    component.requestLinkOtp();
+    component.linkPaymentSystemForm.patchValue({ otp: '048404' });
+    component.submitLink();
+
+    expect(component.viewMode).toBe('LIST');
+    expect(component.statusType).toBe('success');
+    expect(component.statusMessage).toBe('labels.text.Payment system link successful');
+    expect(component.statusDetail).toBe('Refresh failed');
+  });
+
   it('keeps manual OTP entry available when the backend does not return an OTP', async () => {
     await setup();
     savingsService.requestSinpeEnrollment.mockReturnValueOnce(of({ changes: {} }));
@@ -330,6 +349,27 @@ describe('LinkPaymentSystemComponent', () => {
     expect(component.viewMode).toBe('LIST');
     expect(component.linkedPhones).toEqual([linkedPhones[1]]);
     expect(component.statusType).toBe('success');
+  });
+
+  it('preserves delink success when the linked-phone refresh fails', async () => {
+    await setup({}, of(linkedPhones));
+    savingsService.requestSinpeEnrollment.mockReturnValueOnce(of({ changes: { otp: '924892' } }));
+    savingsService.getLinkedSinpePhones.mockReturnValueOnce(
+      throwError(() => ({ error: { message: 'Refresh failed' } }))
+    );
+
+    component.showRemoveView(linkedPhones[0]);
+    component.delinkPaymentSystemForm.patchValue({ otp: '924892' });
+    component.submitDelink();
+
+    expect(savingsService.deleteSinpeSubscription).toHaveBeenCalledWith('88781923', {
+      clientId: 90,
+      otp: '924892'
+    });
+    expect(component.viewMode).toBe('LIST');
+    expect(component.statusType).toBe('success');
+    expect(component.statusMessage).toBe('labels.text.Payment system delink successful');
+    expect(component.statusDetail).toBe('Refresh failed');
   });
 
   it('does not delete when remove is cancelled', async () => {
