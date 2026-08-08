@@ -6,6 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+@use 'assets/styles/loan-product-tokens' as lpt;
+
 table {
   width: 100%;
   table-layout: fixed;
@@ -22,10 +24,23 @@ td:last-child {
 }
 
 .mat-elevation-z1 {
-  margin: 1em 0 1.5em;
+  @include lpt.table-card;
 }
 
-h3,
+h3 {
+  margin: 0 0 var(--lp-space-16, 1rem);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--lp-text, var(--mat-app-text-color, inherit));
+}
+
 h4 {
-  font-weight: 500;
+  margin: var(--lp-space-24, 1.5rem) 0 var(--lp-space-16, 1rem);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--lp-text-muted, var(--mat-card-subtitle-text-color, inherit));
 }
