@@ -3257,7 +3257,8 @@
       "Dispute Management": "분쟁 관리",
       "Phone": "전화번호",
       "Mail": "메일",
-      "Link": "연결"
+      "Link": "연결",
+      "Audit Trail": "감사 추적"
     },
     "links": {
       "Community": "지역 사회",
@@ -4699,7 +4700,27 @@
         "statusUpdated": "분쟁 상태가 {{ status }}로 업데이트됨"
       },
       "errors": {
-        "badRequest": "잘못된 요청입니다. 제출 기록 ID를 확인하세요."
+        "badRequest": "잘못된 요청입니다. 제출 기록 ID를 확인하세요.",
+        "unauthorized": "인증되지 않음",
+        "forbidden": "접근 거부됨",
+        "serviceUnavailable": "서비스를 사용할 수 없음",
+        "unexpected": "예기치 않은 오류가 발생했습니다",
+        "invalidDateRange": "시작 날짜는 종료 날짜보다 이전이어야 합니다"
+      },
+      "auditTrail": {
+        "title": "감사 추적",
+        "totalEntries": "항목",
+        "filterTitle": "날짜 범위로 필터",
+        "startDate": "시작 날짜",
+        "endDate": "종료 날짜",
+        "apply": "적용",
+        "clear": "지우기",
+        "noEntries": "감사 항목을 찾을 수 없습니다.",
+        "performedBy": "수행자",
+        "createdAt": "날짜 및 시간",
+        "duration": "소요 시간",
+        "requestId": "요청 ID",
+        "invalidDateRange": "시작 날짜는 종료 날짜보다 이전이어야 합니다"
       }
     }
   },

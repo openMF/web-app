@@ -3254,7 +3254,8 @@
       "Dispute Management": "Usimamizi wa Migogoro",
       "Phone": "Simu",
       "Mail": "Barua pepe",
-      "Link": "Kiungo"
+      "Link": "Kiungo",
+      "Audit Trail": "Njia ya Ukaguzi"
     },
     "links": {
       "Community": "Jumuiya",
@@ -4696,7 +4697,27 @@
         "statusUpdated": "Hali ya mgogoro imesasishwa hadi {{ status }}"
       },
       "errors": {
-        "badRequest": "Ombi batili. Angalia ID ya rekodi ya uwasilishaji."
+        "badRequest": "Ombi batili. Angalia ID ya rekodi ya uwasilishaji.",
+        "unauthorized": "Hauruhusiwi",
+        "forbidden": "Ufikiaji umekatazwa",
+        "serviceUnavailable": "Huduma haipatikani",
+        "unexpected": "Hitilafu isiyotarajiwa ilitokea",
+        "invalidDateRange": "Tarehe ya kuanza lazima iwe kabla ya tarehe ya mwisho"
+      },
+      "auditTrail": {
+        "title": "Njia ya Ukaguzi",
+        "totalEntries": "maingizo",
+        "filterTitle": "Chuja kwa masafa ya tarehe",
+        "startDate": "Tarehe ya kuanza",
+        "endDate": "Tarehe ya mwisho",
+        "apply": "Tumia",
+        "clear": "Futa",
+        "noEntries": "Hakuna maingizo ya ukaguzi yaliyopatikana.",
+        "performedBy": "Ilifanywa na",
+        "createdAt": "Tarehe na wakati",
+        "duration": "Muda",
+        "requestId": "ID ya ombi",
+        "invalidDateRange": "Tarehe ya kuanza lazima iwe kabla ya tarehe ya mwisho"
       }
     }
   },

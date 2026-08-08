@@ -3256,7 +3256,8 @@
       "Dispute Management": "Gincu valdymas",
       "Phone": "Telefonas",
       "Mail": "El. paštas",
-      "Link": "Susiejimas"
+      "Link": "Susiejimas",
+      "Audit Trail": "Audito takas"
     },
     "links": {
       "Community": "bendruomenė",
@@ -4700,7 +4701,27 @@
         "statusUpdated": "Ginco busena atnaujinta i {{ status }}"
       },
       "errors": {
-        "badRequest": "Neteisinga užklausa. Patikrinkite pateikimo įrašo ID."
+        "badRequest": "Neteisinga užklausa. Patikrinkite pateikimo įrašo ID.",
+        "unauthorized": "Nėra leidimo",
+        "forbidden": "Prieiga uždrausta",
+        "serviceUnavailable": "Paslauga nepasiekiama",
+        "unexpected": "Įvyko nenumatyta klaida",
+        "invalidDateRange": "Pradžios data turi būti ankstesnė už pabaigos datą"
+      },
+      "auditTrail": {
+        "title": "Audito takas",
+        "totalEntries": "įrašai",
+        "filterTitle": "Filtruoti pagal datų intervalą",
+        "startDate": "Pradžios data",
+        "endDate": "Pabaigos data",
+        "apply": "Taikyti",
+        "clear": "Išvalyti",
+        "noEntries": "Audito įrašų nerasta.",
+        "performedBy": "Atliko",
+        "createdAt": "Data ir laikas",
+        "duration": "Trukmė",
+        "requestId": "Užklausos ID",
+        "invalidDateRange": "Pradžios data turi būti ankstesnė už pabaigos datą"
       }
     }
   },

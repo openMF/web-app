@@ -3259,7 +3259,8 @@
       "Dispute Management": "Streitverwaltung",
       "Phone": "Telefon",
       "Mail": "E-Mail",
-      "Link": "Verknüpfung"
+      "Link": "Verknüpfung",
+      "Audit Trail": "Prüfpfad"
     },
     "links": {
       "Community": "Gemeinschaft",
@@ -4696,7 +4697,27 @@
         "statusUpdated": "Streitstatus auf {{ status }} aktualisiert"
       },
       "errors": {
-        "badRequest": "Ungültige Anfrage. Bitte überprüfen Sie die Einreichungs-ID."
+        "badRequest": "Ungültige Anfrage. Bitte überprüfen Sie die Einreichungs-ID.",
+        "unauthorized": "Nicht autorisiert",
+        "forbidden": "Zugriff verweigert",
+        "serviceUnavailable": "Dienst nicht verfügbar",
+        "unexpected": "Ein unerwarteter Fehler ist aufgetreten",
+        "invalidDateRange": "Startdatum muss vor dem Enddatum liegen"
+      },
+      "auditTrail": {
+        "title": "Prüfpfad",
+        "totalEntries": "Einträge",
+        "filterTitle": "Nach Datumsbereich filtern",
+        "startDate": "Startdatum",
+        "endDate": "Enddatum",
+        "apply": "Anwenden",
+        "clear": "Löschen",
+        "noEntries": "Keine Prüfeinträge gefunden.",
+        "performedBy": "Durchgeführt von",
+        "createdAt": "Datum und Uhrzeit",
+        "duration": "Dauer",
+        "requestId": "Anforderungs-ID",
+        "invalidDateRange": "Startdatum muss vor dem Enddatum liegen"
       }
     }
   },
