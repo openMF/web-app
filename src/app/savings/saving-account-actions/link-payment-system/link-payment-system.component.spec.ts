@@ -35,13 +35,13 @@ describe('LinkPaymentSystemComponent', () => {
   const linkedPhones: SinpeLinkedPhone[] = [
     {
       savingsAccountId: 87,
-      iban: 'CR92037300110010000087',
+      maskedIban: '****0087',
       mobileNumber: '88781923',
       status: 'LINKED'
     },
     {
       savingsAccountId: 87,
-      iban: 'CR92037300110010000087',
+      maskedIban: '****0087',
       mobileNumber: '88781924',
       status: 'LINKED'
     }
@@ -130,7 +130,7 @@ describe('LinkPaymentSystemComponent', () => {
 
     const textContent = fixture.nativeElement.textContent;
 
-    expect(textContent).toContain('CR92037300110010000087');
+    expect(textContent).toContain('****0087');
     expect(textContent).toContain('88781923');
     expect(textContent).toContain('88781924');
     expect(textContent).toContain('LINKED');
@@ -297,7 +297,7 @@ describe('LinkPaymentSystemComponent', () => {
     expect(savingsService.requestSinpeEnrollment).toHaveBeenCalledWith(90, '88781924');
     expect(component.delinkOtpRequested).toBe(true);
     expect(component.delinkPaymentSystemForm.getRawValue()).toEqual({
-      accountToLink: 'CR92037300110010000087',
+      accountToLink: '****0087',
       phoneNumber: '88781924',
       otp: '924892'
     });

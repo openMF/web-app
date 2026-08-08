@@ -212,11 +212,15 @@ export class LinkPaymentSystemComponent implements OnInit {
     this.delinkOtpRequested = false;
     this.clearStatus();
     this.delinkPaymentSystemForm.reset({
-      accountToLink: linkedPhone.iban || '',
+      accountToLink: this.linkedPhoneAccountDisplay(linkedPhone),
       phoneNumber: normalizeFastPaymentPhoneNumber(linkedPhone.mobileNumber),
       otp: ''
     });
     this.requestDelinkOtp();
+  }
+
+  linkedPhoneAccountDisplay(linkedPhone: SinpeLinkedPhone): string {
+    return linkedPhone.maskedIban || linkedPhone.iban || '';
   }
 
   requestLinkOtp() {

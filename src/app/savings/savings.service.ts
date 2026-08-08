@@ -28,6 +28,7 @@ export interface SinpeDeleteSubscriptionPayload {
 export interface SinpeLinkedPhone {
   savingsAccountId: string | number;
   iban?: string | null;
+  maskedIban?: string | null;
   mobileNumber?: string | null;
   status?: string | null;
 }

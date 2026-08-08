@@ -27,7 +27,7 @@
               <table mat-table [dataSource]="linkedPhones">
                 <ng-container matColumnDef="iban">
                   <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account to link' | translate }}</th>
-                  <td mat-cell *matCellDef="let linkedPhone">{{ linkedPhone.iban || '' }}</td>
+                  <td mat-cell *matCellDef="let linkedPhone">{{ linkedPhoneAccountDisplay(linkedPhone) }}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="status">
