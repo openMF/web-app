@@ -145,8 +145,13 @@ describe('DatatableMultiRowComponent', () => {
   it('preserves the existing displayed columns and desktop table structure', () => {
     const table = fixture.nativeElement.querySelector('table[mat-table]');
     const headerCells = fixture.nativeElement.querySelectorAll('th[mat-header-cell]');
+    const tableScrollWrapper = fixture.nativeElement.querySelector('.table-scroll-wrapper');
+    const paginator = fixture.nativeElement.querySelector('mat-paginator');
 
     expect(table).toBeTruthy();
+    expect(table.classList).toContain('m-b-25');
+    expect(tableScrollWrapper.contains(table)).toBe(true);
+    expect(tableScrollWrapper.contains(paginator)).toBe(false);
     expect(component.datatableColumns).toEqual([
       'select',
       'id',
