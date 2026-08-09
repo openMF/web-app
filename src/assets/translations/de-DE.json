@@ -5485,6 +5485,16 @@
     },
     "confirmWarning": "Diese Aktion betrifft echtes Geld. Bitte bestätigen Sie.",
     "openAssistant": "KI-Assistenten öffnen",
-    "newChatTitle": "Neue Unterhaltung"
+    "newChatTitle": "Neue Unterhaltung",
+    "errors": {
+      "invalidLength": "Die Nachricht ist leer oder zu lang. Bitte kürzen Sie sie und versuchen Sie es erneut.",
+      "injectionBlocked": "Die Nachricht sieht wie ein Versuch aus, die Anweisungen zu umgehen, und wurde daher nicht gesendet. Bitte formulieren Sie sie um.",
+      "streamFailed": "Bei der Verbindung zum Assistenten ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+    },
+    "confirm": {
+      "reference": "Referenz",
+      "pendingAnnouncement": "Vor Ausführung dieser Aktion ist eine Bestätigung erforderlich."
+    },
+    "assistantAvatarAlt": "Mifos KI-Assistent"
   }
 }

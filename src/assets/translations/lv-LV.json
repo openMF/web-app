@@ -5195,6 +5195,16 @@
     },
     "confirmWarning": "Šī darbība ir saistīta ar reālu naudu. Lūdzu, apstipriniet.",
     "openAssistant": "Atvērt MI asistentu",
-    "newChatTitle": "Jauna saruna"
+    "newChatTitle": "Jauna saruna",
+    "errors": {
+      "invalidLength": "Ziņojums ir tukšs vai pārāk garš. Lūdzu, saīsiniet to un mēģiniet vēlreiz.",
+      "injectionBlocked": "Ziņojums izskatās pēc mēģinājuma apiet norādījumus, tāpēc tas netika nosūtīts. Lūdzu, pārformulējiet to.",
+      "streamFailed": "Sazinoties ar asistentu, radās kļūda. Lūdzu, mēģiniet vēlreiz."
+    },
+    "confirm": {
+      "reference": "Atsauce",
+      "pendingAnnouncement": "Pirms šīs darbības veikšanas nepieciešams apstiprinājums."
+    },
+    "assistantAvatarAlt": "Mifos MI asistents"
   }
 }

@@ -39,6 +39,7 @@ Mifos® X Web App is a modern single-page application (SPA) built on top of the 
     - [OIDC](#oidc-settings)
     - [External National ID](#external-national-id-system-integration)
     - [Interbank Transfers](#interbank-transfers-settings)
+    - [Mifos Copilot](#mifos-copilot-settings)
     - [Remittance Module](#remittance-module-settings)
   - [Client Data Masking](#client-data-masking-example)
 - [Production Mode](#production-mode)
@@ -446,6 +447,17 @@ For more detailed configuration options, refer to the `env.sample` file in the r
 | MIFOS_INTERBANK_TRANSFERS_API_PROVIDER | The Interbank server endpoint       | /vnext2                      |
 | MIFOS_INTERBANK_TRANSFERS_API_VERSION  | The Interbank server api version    | /v1.0                        |
 | MIFOS_INTERBANK_TRANSFERS_ENABLED      | If the Interbank feature is enabled | true                         |
+
+#### Mifos Copilot Settings
+
+These variables configure the Mifos Copilot, an AI assistant panel that lets officers operate Mifos X in natural language. Every action that writes data pauses for an explicit human confirmation.
+
+| Variable                   | Description                                               | Default Value |
+| -------------------------- | --------------------------------------------------------- | ------------- |
+| MIFOS_ENABLE_COPILOT       | If the Copilot panel is enabled                           | false         |
+| MIFOS_COPILOT_MCP_BASE_URL | Base URL of the Copilot gateway (empty uses mock replies) |               |
+
+Set `MIFOS_ENABLE_COPILOT` to `true` to show the panel. With `MIFOS_COPILOT_MCP_BASE_URL` empty the panel answers from built-in mock responses and contacts no server, which is useful for demos and UI work without a gateway. Once a gateway URL is configured, the web app talks only to that gateway: it never holds an LLM key and never calls an LLM directly. The gateway keeps the key server-side and runs banking tools with the logged-in officer's own Fineract credential, so existing permissions and the audit trail still apply.
 
 #### Remittance Module Settings
 

@@ -35,9 +35,12 @@
       [isStreaming]="isStreaming"
       [greetingTime]="greetingTime"
       [emptySuggestions]="emptySuggestions"
+      [pendingCard]="pendingCard"
       (promptSelected)="sendSuggestedPrompt($event)"
       (cardAction)="onActionClick($event)"
       (cardRoute)="onRouteClick($event)"
+      (confirmPending)="confirmPendingAction()"
+      (cancelPending)="cancelPendingAction()"
     >
     </mifosx-chat-area>
 

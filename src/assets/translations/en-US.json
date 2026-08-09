@@ -5370,6 +5370,16 @@
     },
     "confirmWarning": "This action involves real money. Please confirm.",
     "openAssistant": "Open AI Assistant",
-    "newChatTitle": "New conversation"
+    "newChatTitle": "New conversation",
+    "errors": {
+      "invalidLength": "That message is empty or too long. Please shorten it and try again.",
+      "injectionBlocked": "That message looks like an instruction-override attempt, so it was not sent. Please rephrase it.",
+      "streamFailed": "Something went wrong while contacting the assistant. Please try again."
+    },
+    "confirm": {
+      "reference": "Reference",
+      "pendingAnnouncement": "Confirmation required before this action runs."
+    },
+    "assistantAvatarAlt": "Mifos AI assistant"
   }
 }

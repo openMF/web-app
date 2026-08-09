@@ -364,7 +364,12 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
       padding: ($u * 2) ($u * 2 + 4px);
       font-size: 14.5px;
       line-height: 1.7;
-      overflow-wrap: break-word;
+
+      // 'anywhere' (unlike 'break-word') also shrinks min-content width, so an
+      // unbroken JSON/URL string can never push the bubble outside the panel.
+      overflow-wrap: anywhere;
+      min-width: 0;
+      max-width: 100%;
       letter-spacing: 0.01em;
 
       strong {
@@ -391,6 +396,50 @@ $ease: cubic-bezier(0.4, 0, 0.2, 1);
         li {
           margin-bottom: 4px;
           line-height: 1.6;
+        }
+      }
+
+      // Markdown tables (e.g. client lists): real rows and columns, scrolling
+      // horizontally inside their own box when narrow.
+      .md-table-wrap {
+        max-width: 100%;
+        overflow-x: auto;
+        margin: $u 0;
+        border-radius: $r-sm;
+      }
+
+      .md-table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 13px;
+
+        th {
+          text-align: left;
+          font-weight: 700;
+          padding: $u ($u * 2);
+          white-space: nowrap;
+        }
+
+        td {
+          padding: $u ($u * 2);
+          vertical-align: top;
+        }
+      }
+
+      // Fenced code blocks: scroll inside their own box, never widen the bubble.
+      .md-code {
+        margin: $u 0;
+        padding: $u ($u * 2);
+        border-radius: $r-sm;
+        max-width: 100%;
+        overflow-x: auto;
+        font-size: 12.5px;
+        line-height: 1.55;
+
+        code {
+          font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+          white-space: pre-wrap;
+          overflow-wrap: anywhere;
         }
       }
     }

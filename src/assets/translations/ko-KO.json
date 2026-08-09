@@ -5195,6 +5195,16 @@
     },
     "confirmWarning": "이 작업은 실제 자금과 관련이 있습니다. 확인해 주세요.",
     "openAssistant": "AI 어시스턴트 열기",
-    "newChatTitle": "새 대화"
+    "newChatTitle": "새 대화",
+    "errors": {
+      "invalidLength": "메시지가 비어 있거나 너무 깁니다. 줄여서 다시 시도해 주세요.",
+      "injectionBlocked": "메시지가 지시 무시 시도로 보여 전송되지 않았습니다. 다시 작성해 주세요.",
+      "streamFailed": "어시스턴트 연결 중 문제가 발생했습니다. 다시 시도해 주세요."
+    },
+    "confirm": {
+      "reference": "참조",
+      "pendingAnnouncement": "이 작업을 실행하기 전에 확인이 필요합니다."
+    },
+    "assistantAvatarAlt": "Mifos AI 어시스턴트"
   }
 }

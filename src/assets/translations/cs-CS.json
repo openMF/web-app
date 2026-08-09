@@ -5485,6 +5485,16 @@
     },
     "confirmWarning": "Tato akce se týká skutečných peněz. Potvrďte prosím.",
     "openAssistant": "Otevřít asistenta AI",
-    "newChatTitle": "Nová konverzace"
+    "newChatTitle": "Nová konverzace",
+    "errors": {
+      "invalidLength": "Zpráva je prázdná nebo příliš dlouhá. Zkraťte ji prosím a zkuste to znovu.",
+      "injectionBlocked": "Zpráva vypadá jako pokus o obejití pokynů, proto nebyla odeslána. Přeformulujte ji prosím.",
+      "streamFailed": "Při komunikaci s asistentem se něco pokazilo. Zkuste to prosím znovu."
+    },
+    "confirm": {
+      "reference": "Reference",
+      "pendingAnnouncement": "Před provedením této akce je vyžadováno potvrzení."
+    },
+    "assistantAvatarAlt": "Asistent Mifos AI"
   }
 }
