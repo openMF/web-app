@@ -6,23 +6,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-.container {
-  width: 100%;
-  max-width: none;
-
-  .content {
-    div {
-      margin: 1rem 0;
-      overflow-wrap: break-word;
-    }
-  }
-}
-
-.account-overview {
-  min-width: 85%;
-  margin-left: 10px;
-}
-
 mifosx-account-header {
   td,
   th,
@@ -35,11 +18,52 @@ mifosx-account-header {
   }
 
   img.profile-image {
-    width: 110px;
-    height: 110px;
     object-fit: cover;
     border-radius: 8px;
     display: block;
     background-color: var(--md-sys-color-on-primary, #fff);
+  }
+}
+
+.customer-title,
+.customer-metadata,
+.customer-summary-column,
+.customer-summary td,
+mifosx-entity-name,
+mifosx-account-number,
+mifosx-external-identifier {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.customer-metadata {
+  gap: 1rem;
+}
+
+.customer-summary-column {
+  flex: 1 1 0;
+  margin-bottom: 0;
+}
+
+.customer-summary {
+  width: 100%;
+  margin: 0;
+  table-layout: fixed;
+
+  td {
+    padding: 0.5rem 0;
+    vertical-align: top;
+  }
+
+  td:first-child {
+    width: 9rem;
+    padding-right: 1rem;
+    white-space: nowrap;
+  }
+}
+
+@media (width <=768px) {
+  .customer-summary-column {
+    flex-basis: auto;
   }
 }
