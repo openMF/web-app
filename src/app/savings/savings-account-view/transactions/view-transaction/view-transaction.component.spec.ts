@@ -12,18 +12,46 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { describe, expect, it, jest } from '@jest/globals';
 
 import { ClientsService } from 'app/clients/clients.service';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { ViewTransactionComponent } from './view-transaction.component';
 
+interface ClientViewData {
+  id: string | number;
+  displayName: string;
+  officeName: string;
+  accountNo: string;
+  externalId?: string;
+  staffName?: string;
+  mobileNo?: string;
+  emailAddress?: string;
+  status: {
+    code: string;
+    value: string;
+  };
+  groups?: { name: string }[];
+}
+
+interface ClientsServiceStub {
+  getClientProfileImage: (clientId: string) => Observable<string | null>;
+}
+
+interface RouteStub {
+  snapshot: {
+    data: Record<string, unknown>;
+  };
+  parent: RouteStub | null;
+}
+
 describe('Savings ViewTransactionComponent', () => {
   let fixture: ComponentFixture<ViewTransactionComponent>;
-  let clientsService: { getClientProfileImage: jest.Mock };
+  let getClientProfileImage: jest.Mock<(clientId: string) => Observable<string | null>>;
+  let clientsService: ClientsServiceStub;
 
-  const clientViewData = (overrides: any = {}) => ({
+  const clientViewData = (overrides: Partial<ClientViewData> = {}): ClientViewData => ({
     id: 90,
     displayName: 'Grace Hopper',
     officeName: 'Head Office',
@@ -37,13 +65,14 @@ describe('Savings ViewTransactionComponent', () => {
     ...overrides
   });
 
-  const setup = async (clientData: any = clientViewData()) => {
+  const setup = async (clientData: ClientViewData = clientViewData()) => {
     localStorage.setItem('mifosXLanguage', JSON.stringify({ code: 'en-US' }));
+    getClientProfileImage = jest.fn(() => of(null));
     clientsService = {
-      getClientProfileImage: jest.fn(() => of(null))
+      getClientProfileImage
     };
 
-    const clientRoute: any = {
+    const clientRoute: RouteStub = {
       snapshot: {
         data: {
           clientViewData: clientData
@@ -51,7 +80,7 @@ describe('Savings ViewTransactionComponent', () => {
       },
       parent: null
     };
-    const savingsRoute = {
+    const savingsRoute: RouteStub = {
       snapshot: { data: {} },
       parent: clientRoute
     };
@@ -110,7 +139,7 @@ describe('Savings ViewTransactionComponent', () => {
     expect(text()).toContain('Ada Lovelace');
     expect(text()).toContain('5551234567');
     expect(text()).toContain('grace@example.com');
-    expect(clientsService.getClientProfileImage).toHaveBeenCalledWith(90);
+    expect(getClientProfileImage).toHaveBeenCalledWith('90');
   });
 
   it('does not break when optional customer fields are missing', async () => {
@@ -127,6 +156,28 @@ describe('Savings ViewTransactionComponent', () => {
     expect(text()).toContain('Grace Hopper');
     expect(text()).toContain('labels.inputs.Unassigned');
     expect(text()).toContain('labels.heading.General');
+  });
+
+  it('renders long customer values without dropping account header information', async () => {
+    const longName = 'Grace Brewster Murray Hopper With A Very Long Customer Name';
+    const longExternalId = 'EXT-90-0000000000000000000000000000000000000000000000000000';
+    const longMobileNo = '555123456789012345678901234567890';
+    const longEmail = 'grace.hopper.with.a.very.long.email.address@example-financial-institution.test';
+
+    await setup(
+      clientViewData({
+        displayName: longName,
+        externalId: longExternalId,
+        mobileNo: longMobileNo,
+        emailAddress: longEmail
+      })
+    );
+
+    expect(text()).toContain(longName);
+    expect(text()).toContain(longExternalId);
+    expect(text()).toContain(longMobileNo);
+    expect(text()).toContain(longEmail);
+    expect(text()).toContain('000000090');
   });
 
   it('keeps existing transaction tabs rendered', async () => {

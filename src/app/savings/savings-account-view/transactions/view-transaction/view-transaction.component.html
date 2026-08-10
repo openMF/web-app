@@ -18,18 +18,21 @@
           mat-card-md-image
           class="profile-image"
           matTooltip="{{ 'tooltips.Client' | translate }}"
+          [alt]="'labels.inputs.Client' | translate"
           [src]="clientImage ? clientImage : 'assets/images/user_placeholder.png'"
         />
 
         <ng-container ngProjectAs="[accountTitle]">
-          <b>{{ 'labels.inputs.Client Name' | translate }} :</b>
-          <mifosx-entity-name [entityName]="clientViewData.displayName" [display]="'right'"></mifosx-entity-name>
+          <span class="customer-title">
+            <b>{{ 'labels.inputs.Client Name' | translate }} :</b>
+            <mifosx-entity-name [entityName]="clientViewData.displayName" [display]="'right'"></mifosx-entity-name>
+          </span>
         </ng-container>
 
         <div accountMetadata>
-          <div class="layout-row responsive-column">
-            <div class="flex-50">
-              <table class="account-overview">
+          <div class="layout-row responsive-column customer-metadata">
+            <div class="customer-summary-column">
+              <table class="account-overview customer-summary">
                 <tbody>
                   <tr>
                     <td>
@@ -63,8 +66,8 @@
                 </tbody>
               </table>
             </div>
-            <div class="flex-50">
-              <table class="account-overview">
+            <div class="customer-summary-column">
+              <table class="account-overview customer-summary">
                 <tbody>
                   @if (clientViewData.groups?.length > 0) {
                     <tr>

@@ -1447,6 +1447,7 @@
       "Overdue": "Vencido",
       "Overdue Charges": "Cobranças vencidas",
       "Password Preferences": "Preferências de senha",
+      "Past Due Amount": "Montante em atraso",
       "Payment Receipt": "Recibo de pagamento",
       "Payment Schedule": "Cronograma de pagamentos",
       "Payment Successful": "Pagamento bem-sucedido",
@@ -3257,7 +3258,8 @@
       "Phone": "Telefone",
       "Mail": "E-mail",
       "Link": "Ligação",
-      "Audit Trail": "Trilha de auditoria"
+      "Audit Trail": "Trilha de auditoria",
+      "Restart Period from Reset Date": "Reiniciar período a partir da data de reinício"
     },
     "links": {
       "Community": "Comunidade",
@@ -3480,7 +3482,8 @@
       "the Reschedule Loan": "o Empréstimo Reagendado",
       "the Transaction Type": "o tipo de transação",
       "undo_account_transfer": "Tem a certeza de que pretende reverter esta transferência de conta?",
-      "Are you sure you want to undo the charge-off": "Tem a certeza de que pretende desfazer a cobrança?"
+      "Are you sure you want to undo the charge-off": "Tem a certeza de que pretende desfazer a cobrança?",
+      "Restart Period from Reset Date splits the current period": "Se ativado, o período de incumprimento atual é dividido na data de reinício e um novo período começa a partir dessa data."
     },
     "text": {
       "Agriculture Loan": "Empréstimo agrícola",

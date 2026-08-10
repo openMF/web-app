@@ -11,7 +11,7 @@ import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { MatCard, MatCardMdImage } from '@angular/material/card';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
@@ -21,6 +21,38 @@ import { AccountHeaderComponent } from 'app/shared/account-header/account-header
 import { AccountNumberComponent } from 'app/shared/account-number/account-number.component';
 import { EntityNameComponent } from 'app/shared/entity-name/entity-name.component';
 import { ExternalIdentifierComponent } from 'app/shared/external-identifier/external-identifier.component';
+
+interface TransactionDatatable {
+  registeredTableName: string;
+}
+
+interface ClientStatus {
+  code: string;
+  value: string;
+}
+
+interface ClientGroup {
+  name: string;
+}
+
+interface ClientClassification {
+  name: string;
+}
+
+interface ClientViewData {
+  id: string | number;
+  displayName: string;
+  officeName: string;
+  accountNo: string;
+  externalId?: string;
+  staffName?: string;
+  mobileNo?: string;
+  emailAddress?: string;
+  status?: ClientStatus;
+  groups?: ClientGroup[];
+  clientType?: ClientClassification;
+  clientClassification?: ClientClassification;
+}
 
 @Component({
   selector: 'mifosx-view-transaction',
@@ -51,25 +83,21 @@ export class ViewTransactionComponent {
   private destroyRef = inject(DestroyRef);
 
   /** Client data inherited from the client route. */
-  clientViewData: any;
+  clientViewData?: ClientViewData;
   /** Client profile image. */
-  clientImage: any;
-  /** Transaction data. */
-  transactionData: any;
+  clientImage: SafeResourceUrl | null = null;
 
-  accountId: any;
+  accountId = '';
   /** Transaction Data Tables */
-  entityDatatables: any;
+  entityDatatables: TransactionDatatable[] = [];
 
-  /**
-   * @param {Router} router Router for navigation.
-   * @param {MatDialog} dialog Dialog reference.
-   */
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { transactionDatatables: any }) => {
-      this.accountId = this.route.snapshot.params['savingAccountId'];
-      this.entityDatatables = data.transactionDatatables;
-    });
+    this.route.data
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data: { transactionDatatables: TransactionDatatable[] }) => {
+        this.accountId = this.route.snapshot.params['savingAccountId'];
+        this.entityDatatables = data.transactionDatatables;
+      });
     this.setClientDataFromRoute();
   }
 
@@ -96,10 +124,10 @@ export class ViewTransactionComponent {
       return;
     }
     this.clientsService
-      .getClientProfileImage(this.clientViewData.id)
+      .getClientProfileImage(String(this.clientViewData.id))
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (base64Image: any) => {
+        next: (base64Image: string | null) => {
           this.clientImage = base64Image ? this.sanitizer.bypassSecurityTrustResourceUrl(base64Image) : null;
         },
         error: () => {

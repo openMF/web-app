@@ -1447,6 +1447,7 @@
       "Overdue": "अतिदेय",
       "Overdue Charges": "ओभरड्यू चार्जहरू",
       "Password Preferences": "पासवर्ड प्राथमिकताहरू",
+      "Past Due Amount": "म्याद नाघेको रकम",
       "Payment Receipt": "भुक्तानी रसिद",
       "Payment Schedule": "भुक्तानी तालिका",
       "Payment Successful": "भुक्तानी सफल",
@@ -3257,7 +3258,8 @@
       "Phone": "फोन",
       "Mail": "मेल",
       "Link": "लिंक",
-      "Audit Trail": "अडिट ट्रेल"
+      "Audit Trail": "अडिट ट्रेल",
+      "Restart Period from Reset Date": "रिसेट मितिबाट अवधि पुनः सुरु गर्नुहोस्"
     },
     "links": {
       "Community": "समुदाय",
@@ -3480,7 +3482,8 @@
       "the Reschedule Loan": "कर्जा पुनर्योजना",
       "the Transaction Type": "लेनदेन प्रकार",
       "undo_account_transfer": "के तपाईं यो खाता स्थानान्तरण रद्द गर्न निश्चित हुनुहुन्छ?",
-      "Are you sure you want to undo the charge-off": "के तपाईं चार्ज-अफ पूर्ववत गर्न निश्चित हुनुहुन्छ?"
+      "Are you sure you want to undo the charge-off": "के तपाईं चार्ज-अफ पूर्ववत गर्न निश्चित हुनुहुन्छ?",
+      "Restart Period from Reset Date splits the current period": "सक्षम पारेमा, हालको उल्लंघन अवधि रिसेट मितिमा विभाजन हुन्छ र सो मितिबाट नयाँ अवधि सुरु हुन्छ।"
     },
     "text": {
       "Agriculture Loan": "कृषि ऋण",
