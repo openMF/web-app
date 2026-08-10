@@ -21,6 +21,10 @@
       <span class="kpi-value peak">{{ kpis.peakOutstanding | formatNumber }}</span>
     </div>
     <div class="kpi">
+      <span class="kpi-label">{{ 'labels.heading.Past Due Amount' | translate }}</span>
+      <span class="kpi-value peak">{{ loanBalances.breachPastDueAmount | formatNumber }}</span>
+    </div>
+    <div class="kpi">
       <span class="kpi-label">{{ 'labels.heading.Average Gap' | translate }}</span>
       <span class="kpi-value">+{{ kpis.avgGapPercent | formatNumber: '' : '1' }}%</span>
     </div>

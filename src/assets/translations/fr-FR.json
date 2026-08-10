@@ -1451,6 +1451,7 @@
       "Overdue": "En retard",
       "Overdue Charges": "Frais de retard",
       "Password Preferences": "Préférences de mot de passe",
+      "Past Due Amount": "Montant en retard",
       "Payment Receipt": "Reçu de paiement",
       "Payment Schedule": "Calendrier de remboursement",
       "Payment Successful": "Paiement réussi",
@@ -3261,7 +3262,8 @@
       "Phone": "Téléphone",
       "Mail": "E-mail",
       "Link": "Lien",
-      "Audit Trail": "Piste d'audit"
+      "Audit Trail": "Piste d'audit",
+      "Restart Period from Reset Date": "Redémarrer la période à partir de la date de réinitialisation"
     },
     "links": {
       "Community": "Communauté",
@@ -3484,7 +3486,8 @@
       "the Reschedule Loan": "la révision du prêt",
       "the Transaction Type": "le type de transaction",
       "undo_account_transfer": "Êtes-vous sûr de vouloir annuler ce transfert de compte ?",
-      "Are you sure you want to undo the charge-off": "Êtes-vous sûr de vouloir annuler l'amortissement ?"
+      "Are you sure you want to undo the charge-off": "Êtes-vous sûr de vouloir annuler l'amortissement ?",
+      "Restart Period from Reset Date splits the current period": "Si activé, la période de manquement actuelle est scindée à la date de réinitialisation et une nouvelle période commence à cette date."
     },
     "text": {
       "Agriculture Loan": "Prêt agricole",

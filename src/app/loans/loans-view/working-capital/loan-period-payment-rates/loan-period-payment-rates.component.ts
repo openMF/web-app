@@ -30,6 +30,8 @@ import { SettingsService } from 'app/settings/settings.service';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
+import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
+import { Dates } from 'app/core/utils/dates';
 
 @Component({
   selector: 'mifosx-loan-period-payment-rates',
@@ -57,10 +59,16 @@ export class LoanPeriodPaymentRatesComponent implements OnInit {
   private translateService = inject(TranslateService);
   private loanService = inject(LoansService);
   private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
 
   loanPaymentRatesData: PeriodPaymentRateChange[] = [];
 
   loanId: number | null = null;
+
+  /** A rate change may not take effect before the loan was disbursed; the backend rejects earlier dates. */
+  minEffectiveDate: Date = new Date(2000, 0, 1);
+  /** Future effective dates are allowed: the rate is recorded now and takes over on its own date. */
+  maxEffectiveDate: Date = this.settingsService.maxFutureDate;
 
   loanPaymentRatesColumns: string[] = [
     'id',
@@ -74,6 +82,11 @@ export class LoanPeriodPaymentRatesComponent implements OnInit {
 
   ngOnInit(): void {
     this.loanId = this.route.parent.snapshot.params['loanId'];
+
+    const disbursementDate = this.route.parent.snapshot.data?.['loanDetailsData']?.timeline?.actualDisbursementDate;
+    if (disbursementDate) {
+      this.minEffectiveDate = this.dateUtils.parseDate(disbursementDate);
+    }
 
     this.route.data
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -93,13 +106,25 @@ export class LoanPeriodPaymentRatesComponent implements OnInit {
         required: true,
         order: 1
       }),
+      // Prefilled with the business date so the common case needs no thought, but required: the API expects the caller
+      // to state when the change takes effect, as it does for every other dated action on the loan.
+      new DatepickerBase({
+        controlName: 'effectiveDate',
+        label: this.translateService.instant('labels.inputs.Effective Date'),
+        value: this.settingsService.businessDate,
+        type: 'date',
+        minDate: this.minEffectiveDate,
+        maxDate: this.maxEffectiveDate,
+        required: true,
+        order: 2
+      }),
       new InputBase({
         controlName: 'note',
         label: this.translateService.instant('labels.inputs.Note'),
         value: '',
         type: 'text',
         required: false,
-        order: 2
+        order: 3
       })
     ];
     const data = {
@@ -110,10 +135,12 @@ export class LoanPeriodPaymentRatesComponent implements OnInit {
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response?.data) {
-        const { periodPaymentRate, note } = response.data.value;
+        const { periodPaymentRate, effectiveDate, note } = response.data.value;
         const payload = {
           periodPaymentRate: periodPaymentRate,
+          effectiveDate: this.dateUtils.formatDate(effectiveDate, this.settingsService.dateFormat),
           note: note || '',
+          dateFormat: this.settingsService.dateFormat,
           locale: this.settingsService.language.code
         };
         this.loanService.addWorkingCapitalPeriodPaymentRate(this.loanId, payload).subscribe((response: any) => {

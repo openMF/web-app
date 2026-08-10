@@ -87,6 +87,7 @@ export interface WorkingCapitalBalances {
   realizedIncome: number;
   unrealizedIncome: number;
   overpaymentAmount: number;
+  breachPastDueAmount: number | null | undefined;
 }
 
 export interface WorkingCapitalLoanDiscountUpdateRequest {
