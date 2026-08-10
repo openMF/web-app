@@ -5199,6 +5199,16 @@
     },
     "confirmWarning": "Šis veiksmas susijęs su tikrais pinigais. Patvirtinkite.",
     "openAssistant": "Atidaryti DI asistentą",
-    "newChatTitle": "Naujas pokalbis"
+    "newChatTitle": "Naujas pokalbis",
+    "errors": {
+      "invalidLength": "Žinutė tuščia arba per ilga. Sutrumpinkite ją ir bandykite dar kartą.",
+      "injectionBlocked": "Žinutė atrodo kaip bandymas apeiti nurodymus, todėl nebuvo išsiųsta. Perfrazuokite ją.",
+      "streamFailed": "Jungiantis prie asistento įvyko klaida. Bandykite dar kartą."
+    },
+    "confirm": {
+      "reference": "Nuoroda",
+      "pendingAnnouncement": "Prieš vykdant šį veiksmą reikalingas patvirtinimas."
+    },
+    "assistantAvatarAlt": "Mifos DI asistentas"
   }
 }

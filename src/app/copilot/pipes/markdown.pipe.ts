@@ -37,12 +37,49 @@ export class MarkdownPipe implements PipeTransform {
       .replace(/'/g, '&#39;');
   }
 
+  /**
+   * Fenced ```code``` blocks first (content is already escaped, so it is inserted
+   * verbatim inside <pre>), then line-based rendering for the prose between them.
+   */
   private render(escaped: string): string {
+    const segments = escaped.split(/```[a-zA-Z0-9_-]*\n?([\s\S]*?)```/g);
+    const out: string[] = [];
+    segments.forEach((segment, index) => {
+      if (index % 2 === 1) {
+        // No trim: leading indentation and trailing blank lines are meaningful in
+        // Python/YAML/nested JSON, so fenced content is rendered verbatim.
+        out.push(`<pre class="md-code"><code>${segment}</code></pre>`);
+      } else if (segment.trim().length > 0 || segments.length === 1) {
+        out.push(this.renderText(segment));
+      }
+    });
+    return out.join('\n');
+  }
+
+  private renderText(escaped: string): string {
     const lines = escaped.split('\n');
     const out: string[] = [];
     let listOpen = false;
 
-    for (const line of lines) {
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+
+      // GitHub-style table: a header row of pipes followed by a |---|---| separator.
+      if (this.isTableRow(line) && this.isTableSeparator(lines[i + 1])) {
+        const table: string[] = [];
+        while (i < lines.length && this.isTableRow(lines[i])) {
+          table.push(lines[i]);
+          i++;
+        }
+        i--; // step back; the outer loop will advance
+        if (listOpen) {
+          out.push('</ul>');
+          listOpen = false;
+        }
+        out.push(this.renderTable(table));
+        continue;
+      }
+
       const bullet = /^\s*[-*]\s+(.*)$/.exec(line);
       if (bullet) {
         if (!listOpen) {
@@ -66,6 +103,38 @@ export class MarkdownPipe implements PipeTransform {
       out.push('</ul>');
     }
     return out.join('\n');
+  }
+
+  private isTableRow(line: string | undefined): boolean {
+    return !!line && line.trim().startsWith('|') && line.includes('|', 1);
+  }
+
+  /** The |---|:--:|---| line under a table header (dashes, optional alignment colons). */
+  private isTableSeparator(line: string | undefined): boolean {
+    return !!line && /^\s*\|?[\s:|-]*-[\s:|-]*\|?\s*$/.test(line) && line.includes('-');
+  }
+
+  /** Render a fenced markdown table into a scrollable HTML table. */
+  private renderTable(rows: string[]): string {
+    const cells = (row: string): string[] =>
+      row
+        .trim()
+        .replace(/^\||\|$/g, '')
+        .split('|')
+        .map((cell) => cell.trim());
+    const header = cells(rows[0]);
+    const bodyRows = rows.slice(2); // rows[1] is the separator
+
+    const head = header.map((cell) => `<th>${this.inline(cell)}</th>`).join('');
+    const body = bodyRows
+      .map(
+        (row) =>
+          `<tr>${cells(row)
+            .map((cell) => `<td>${this.inline(cell)}</td>`)
+            .join('')}</tr>`
+      )
+      .join('');
+    return `<div class="md-table-wrap"><table class="md-table"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div>`;
   }
 
   /** Inline markdown: **bold**, *italic*, `code`. Operates on already-escaped text. */

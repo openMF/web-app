@@ -25,3 +25,9 @@ services:
       - MIFOS_SESSION_IDLE_TIMEOUT=300000
       - MIFOS_PRELOAD_CLIENTS=true
       - MIFOS_DEFAULT_CHAR_DELIMITER=,
+      # Mifos Copilot: off by default. Both variables are needed for real AI responses,
+      # MIFOS_ENABLE_COPILOT=true to show the panel and MIFOS_COPILOT_MCP_BASE_URL
+      # pointing at a Copilot gateway. Enabling the panel with an empty URL uses the
+      # built-in mock replies.
+      - MIFOS_ENABLE_COPILOT=false
+      - MIFOS_COPILOT_MCP_BASE_URL=

@@ -36,6 +36,9 @@ const INJECTION_PATTERNS: RegExp[] = [
  * Pure logic, no Angular dependency - see input-sanitizer.spec.ts.
  */
 export class InputSanitizer {
+  /** Configurable so deployments can tighten the limit via CopilotConfig. */
+  constructor(private readonly maxLength: number = MAX_INPUT_LENGTH) {}
+
   /** Remove script/style blocks, HTML tags, invisible/control characters, then collapse whitespace. */
   stripDangerous(input: string): string {
     return (input ?? '')
@@ -55,7 +58,7 @@ export class InputSanitizer {
   /** Clean -> length check -> injection check. Returns the cleaned text when allowed. */
   sanitize(input: string): SanitizeResult {
     const cleaned = this.stripDangerous(input);
-    if (cleaned.length === 0 || cleaned.length > MAX_INPUT_LENGTH) {
+    if (cleaned.length === 0 || cleaned.length > this.maxLength) {
       return { blocked: true, reason: 'invalid_length' };
     }
     if (this.matchesInjectionPattern(cleaned)) {

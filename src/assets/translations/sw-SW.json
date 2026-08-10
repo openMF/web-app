@@ -5195,6 +5195,16 @@
     },
     "confirmWarning": "Kitendo hiki kinahusisha pesa halisi. Tafadhali thibitisha.",
     "openAssistant": "Fungua Msaidizi wa AI",
-    "newChatTitle": "Mazungumzo mapya"
+    "newChatTitle": "Mazungumzo mapya",
+    "errors": {
+      "invalidLength": "Ujumbe ni tupu au mrefu sana. Tafadhali ufupishe na ujaribu tena.",
+      "injectionBlocked": "Ujumbe unaonekana kama jaribio la kukiuka maelekezo, hivyo haukutumwa. Tafadhali uandike upya.",
+      "streamFailed": "Hitilafu imetokea wakati wa kuwasiliana na msaidizi. Tafadhali jaribu tena."
+    },
+    "confirm": {
+      "reference": "Rejeleo",
+      "pendingAnnouncement": "Uthibitisho unahitajika kabla ya kutekeleza kitendo hiki."
+    },
+    "assistantAvatarAlt": "Msaidizi wa Mifos AI"
   }
 }

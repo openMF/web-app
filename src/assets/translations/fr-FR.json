@@ -5202,6 +5202,16 @@
     },
     "confirmWarning": "Cette action implique de l'argent réel. Veuillez confirmer.",
     "openAssistant": "Ouvrir l'assistant IA",
-    "newChatTitle": "Nouvelle conversation"
+    "newChatTitle": "Nouvelle conversation",
+    "errors": {
+      "invalidLength": "Le message est vide ou trop long. Veuillez le raccourcir et réessayer.",
+      "injectionBlocked": "Le message ressemble à une tentative de contournement des instructions, il n'a donc pas été envoyé. Veuillez le reformuler.",
+      "streamFailed": "Une erreur s'est produite lors de la connexion à l'assistant. Veuillez réessayer."
+    },
+    "confirm": {
+      "reference": "Référence",
+      "pendingAnnouncement": "Une confirmation est requise avant l'exécution de cette action."
+    },
+    "assistantAvatarAlt": "Assistant Mifos IA"
   }
 }

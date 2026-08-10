@@ -98,7 +98,8 @@ export const environment = {
    */
   enableCopilot: loadedEnv.enableCopilot === 'true' || loadedEnv.enableCopilot === true || false,
   /** Base URL of the Mifos MCP server the Copilot talks to. */
-  copilotMcpBaseUrl: loadedEnv.copilotMcpBaseUrl || 'https://ai.mifos.community',
+  // 'mock' serves fixture responses until a Copilot gateway is deployed (ADR-001).
+  copilotMcpBaseUrl: loadedEnv.copilotMcpBaseUrl || 'mock',
 
   /** Remittance Module Integration */
   mifosRemittanceApiUrl: window.env?.mifosRemittanceApiClientUrl || '',
