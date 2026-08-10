@@ -63,3 +63,9 @@ export { TransferClientPage } from './client-actions/transfer-client.page';
 export { AddChargePage } from './charges/add-charge.page';
 export { ClientChargesPage } from './charges/client-charges.page';
 export { ChargeViewPage } from './charges/charge-view.page';
+
+// ── Loan account page objects ──────────────────────────────────────
+
+export { CreateLoanAccountPage } from './loans/create-loan-account.page';
+export { LoanAccountViewPage } from './loans/loan-account-view.page';
+export { LoanAccountActionPage, type LoanAccountAction } from './loans/loan-account-action.page';
