@@ -29,7 +29,7 @@ export class SavingsAccountViewResolver {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const savingAccountId = route.paramMap.get('savingAccountId');
+    const savingAccountId = route.paramMap.get('savingAccountId') || route.parent?.paramMap.get('savingAccountId');
     return this.savingsService.getSavingsAccountData(savingAccountId);
   }
 }

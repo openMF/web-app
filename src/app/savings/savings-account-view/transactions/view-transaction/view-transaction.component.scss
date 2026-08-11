@@ -6,64 +6,67 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-mifosx-account-header {
-  td,
-  th,
-  b,
-  span:not(.status-dot),
-  h3,
-  p,
-  a {
-    color: var(--md-sys-color-on-primary, #fff);
-  }
-
-  img.profile-image {
-    object-fit: cover;
-    border-radius: 8px;
-    display: block;
-    background-color: var(--md-sys-color-on-primary, #fff);
-  }
+/**
+ * Match the savings account header used by the parent Transactions page.
+ */
+.container {
+  max-width: 90rem;
+  width: 92%;
 }
 
-.customer-title,
-.customer-metadata,
-.customer-summary-column,
-.customer-summary td,
-mifosx-entity-name,
-mifosx-account-number,
-mifosx-external-identifier {
-  min-width: 0;
-  overflow-wrap: anywhere;
-}
-
-.customer-metadata {
-  gap: 1rem;
-}
-
-.customer-summary-column {
-  flex: 1 1 0;
-  margin-bottom: 0;
-}
-
-.customer-summary {
+.account-card {
+  margin: 0 auto;
+  max-width: none;
   width: 100%;
-  margin: 0;
-  table-layout: fixed;
+  padding: 0;
 
-  td {
-    padding: 0.5rem 0;
-    vertical-align: top;
+  i,
+  img:hover {
+    cursor: pointer;
   }
 
-  td:first-child {
-    width: 9rem;
-    padding-right: 1rem;
-    white-space: nowrap;
+  .header {
+    background-color: var(--md-sys-color-primary, #1074b9);
+    padding: 1%;
+  }
+
+  .header-title-group {
+    .account-card-title {
+      color: var(--md-sys-color-on-primary, #fff);
+      width: 90%;
+    }
+
+    p {
+      color: var(--md-sys-color-on-primary, #fff);
+    }
+
+    .account-overview {
+      border: none;
+      max-width: 240px;
+      font-size: 14px;
+
+      tr:nth-child(even) {
+        background-color: transparent;
+      }
+    }
+  }
+
+  .profile-image-container {
+    margin: 1%;
+
+    .profile-image {
+      object-fit: cover;
+      border-radius: 20px;
+    }
   }
 }
 
-@media (width <=768px) {
-  .customer-summary-column {
-    flex-basis: auto;
-  }
+mat-card-title {
+  display: flex;
+}
+
+.product-row,
+.account-number-row,
+.external-id-row {
+  display: block;
 }
