@@ -9,49 +9,25 @@
 /** Angular Imports */
 import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { MatCard, MatCardMdImage } from '@angular/material/card';
+import { MatCard, MatCardHeader, MatCardTitleGroup, MatCardMdImage, MatCardTitle } from '@angular/material/card';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { ClientsService } from 'app/clients/clients.service';
-import { AccountHeaderComponent } from 'app/shared/account-header/account-header.component';
 import { AccountNumberComponent } from 'app/shared/account-number/account-number.component';
-import { EntityNameComponent } from 'app/shared/entity-name/entity-name.component';
-import { ExternalIdentifierComponent } from 'app/shared/external-identifier/external-identifier.component';
+import { CurrencyPipe, NgClass } from '@angular/common';
+import { Currency } from 'app/shared/models/general.model';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { LongTextComponent } from 'app/shared/long-text/long-text.component';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
+import { StatusLookupPipe } from 'app/pipes/status-lookup.pipe';
+import { SavingsButtonsConfiguration } from '../../savings-buttons.config';
 
 interface TransactionDatatable {
   registeredTableName: string;
-}
-
-interface ClientStatus {
-  code: string;
-  value: string;
-}
-
-interface ClientGroup {
-  name: string;
-}
-
-interface ClientClassification {
-  name: string;
-}
-
-interface ClientViewData {
-  id: string | number;
-  displayName: string;
-  officeName: string;
-  accountNo: string;
-  externalId?: string;
-  staffName?: string;
-  mobileNo?: string;
-  emailAddress?: string;
-  status?: ClientStatus;
-  groups?: ClientGroup[];
-  clientType?: ClientClassification;
-  clientClassification?: ClientClassification;
 }
 
 @Component({
@@ -60,32 +36,45 @@ interface ClientViewData {
   styleUrls: ['./view-transaction.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    AccountHeaderComponent,
     AccountNumberComponent,
-    EntityNameComponent,
-    ExternalIdentifierComponent,
     MatCard,
+    MatCardHeader,
+    MatCardTitleGroup,
     MatCardMdImage,
+    MatCardTitle,
     MatTooltip,
+    NgClass,
+    LongTextComponent,
+    MatIconButton,
+    MatMenuTrigger,
+    MatIcon,
+    FaIconComponent,
+    MatMenu,
+    MatMenuItem,
     MatTabNav,
     MatTabLink,
     RouterLinkActive,
     MatTabNavPanel,
-    RouterOutlet
+    RouterOutlet,
+    CurrencyPipe,
+    StatusLookupPipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewTransactionComponent {
   private route = inject(ActivatedRoute);
-  private clientsService = inject(ClientsService);
-  private sanitizer = inject(DomSanitizer);
+  private router = inject(Router);
   dialog = inject(MatDialog);
   private destroyRef = inject(DestroyRef);
 
-  /** Client data inherited from the client route. */
-  clientViewData?: ClientViewData;
-  /** Client profile image. */
-  clientImage: SafeResourceUrl | null = null;
+  /** Savings account data resolved from the transaction detail route. */
+  savingsAccountData: any;
+  /** Button Configurations */
+  buttonConfig?: SavingsButtonsConfiguration;
+  /** Entity Type */
+  entityType = 'Client';
+  /** Currency. */
+  currency: Currency;
 
   accountId = '';
   /** Transaction Data Tables */
@@ -94,45 +83,55 @@ export class ViewTransactionComponent {
   constructor() {
     this.route.data
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { transactionDatatables: TransactionDatatable[] }) => {
-        this.accountId = this.route.snapshot.params['savingAccountId'];
+      .subscribe((data: { savingsAccountData: any; transactionDatatables: TransactionDatatable[] }) => {
+        this.savingsAccountData = data.savingsAccountData;
+        this.currency = this.savingsAccountData?.currency;
+        if (this.savingsAccountData) {
+          this.setConditionalButtons();
+        }
+        this.accountId = this.getRouteParam('savingAccountId') || '';
         this.entityDatatables = data.transactionDatatables;
       });
-    this.setClientDataFromRoute();
+    if (this.router.url.includes('clients')) {
+      this.entityType = 'Client';
+    } else if (this.router.url.includes('groups')) {
+      this.entityType = 'Group';
+    } else if (this.router.url.includes('centers')) {
+      this.entityType = 'Center';
+    }
   }
 
   /**
-   * Finds resolved client data from the ancestor client route.
+   * Reads a route parameter from this route or any ancestor route.
    */
-  private setClientDataFromRoute(): void {
-    let route = this.route.parent;
-    while (route && !this.clientViewData) {
-      const clientViewData = route.snapshot.data['clientViewData'];
-      if (clientViewData) {
-        this.clientViewData = clientViewData;
-        this.loadClientImage();
+  private getRouteParam(paramName: string): string | null {
+    let route: ActivatedRoute | null = this.route;
+    while (route) {
+      const paramValue = route.snapshot.paramMap?.get(paramName) || route.snapshot.params?.[paramName];
+      if (paramValue) {
+        return paramValue;
       }
       route = route.parent;
     }
+    return null;
   }
 
   /**
-   * Loads the client profile image when available.
+   * Adds options to button config.
    */
-  private loadClientImage(): void {
-    if (!this.clientViewData?.id) {
-      return;
-    }
-    this.clientsService
-      .getClientProfileImage(String(this.clientViewData.id))
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (base64Image: string | null) => {
-          this.clientImage = base64Image ? this.sanitizer.bypassSecurityTrustResourceUrl(base64Image) : null;
-        },
-        error: () => {
-          this.clientImage = null;
-        }
-      });
+  private setConditionalButtons(): void {
+    const status = this.savingsAccountData.status?.value || '';
+    const subStatus = this.savingsAccountData.subStatus || {};
+    this.buttonConfig = new SavingsButtonsConfiguration(status, subStatus);
+  }
+
+  /**
+   * Performs action button/option action.
+   * @param name action name.
+   */
+  doAction(name: string): void {
+    const transactionsPathIndex = this.router.url.indexOf('/transactions');
+    const accountUrl = transactionsPathIndex > -1 ? this.router.url.slice(0, transactionsPathIndex) : this.router.url;
+    this.router.navigateByUrl(`${accountUrl}/actions/${name}`);
   }
 }
