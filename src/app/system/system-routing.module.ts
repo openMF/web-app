@@ -56,6 +56,7 @@ import { ViewRoleComponent } from './roles-and-permissions/view-role/view-role.c
 import { SystemComponent } from './system.component';
 import { SystemInformationComponent } from './system-information/system-information.component';
 import { AboutUsComponent } from './about-us/about-us.component';
+import { ManageDashboardsComponent } from './manage-dashboards/manage-dashboards.component';
 
 /** Custom Resolvers */
 import { AccountNumberPreferencesResolver } from './account-number-preferences/account-number-preferences.resolver';
@@ -593,6 +594,11 @@ const routes: Routes = [
           path: 'about-us',
           component: AboutUsComponent,
           data: { title: 'About Us', breadcrumb: 'About Us' }
+        },
+        {
+          path: 'manage-dashboards',
+          component: ManageDashboardsComponent,
+          data: { title: 'Manage Dashboards', breadcrumb: 'Manage Dashboards' }
         },
         {
           path: 'audit-trails',

@@ -147,7 +147,8 @@ import {
   faSackDollar,
   faCheckDouble,
   faUserPlus,
-  faChartPie
+  faChartPie,
+  faSlidersH
 } from '@fortawesome/free-solid-svg-icons';
 
 /**
@@ -302,7 +303,8 @@ export class IconsModule {
       faSave,
       faUnlink,
       faUserPlus,
-      faChartPie
+      faChartPie,
+      faSlidersH
     );
   }
 }
