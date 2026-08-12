@@ -6,10 +6,25 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  computed,
+  inject,
+  OnInit,
+  signal
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { NgClass } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTooltip } from '@angular/material/tooltip';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { TranslateService } from '@ngx-translate/core';
+import { forkJoin, of, Observable } from 'rxjs';
+import { catchError, finalize, switchMap } from 'rxjs/operators';
 import {
   MatCell,
   MatCellDef,
@@ -23,18 +38,23 @@ import {
   MatTable,
   MatTableDataSource
 } from '@angular/material/table';
+import { AlertService } from 'app/core/alert/alert.service';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
+import { LoansService } from 'app/loans/loans.service';
 import { BreachSchedule } from 'app/loans/models/working-capital-loan-account.model';
+import { LoanBreachActionResetDialogComponent } from 'app/loans/custom-dialog/loan-breach-action-reset-dialog/loan-breach-action-reset-dialog.component';
+import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 import { DateFormatPipe } from 'app/pipes/date-format.pipe';
 import { FormatNumberPipe } from 'app/pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import {
   WorkingCapitalBalances,
-  WorkingCapitalBreachAction
+  WorkingCapitalBreachAction,
+  WorkingCapitalBreachCommandRequest
 } from 'app/loans/models/working-capital/working-capital-loan-account.model';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { findActiveBreachDisable } from '../breach-evaluation';
+import { resolveBreachActionErrorMessage } from '../breach-action-error.helper';
 
 type Severity = 'mild' | 'moderate' | 'severe';
 
@@ -63,6 +83,16 @@ interface BreachKpis {
   peakOutstanding: number;
   avgGapPercent: number;
   status: 'in-breach' | 'resolved' | 'compliant';
+}
+
+interface ResetHistoryRow {
+  id: number;
+  action: 'RESET' | 'UNDO_RESET';
+  date: Date;
+  /** Only meaningful for RESET rows: true once a later UNDO_RESET popped it */
+  undone: boolean;
+  icon: string;
+  labelKey: string;
 }
 
 const SEVERITY_MILD_THRESHOLD = 25;
@@ -101,6 +131,7 @@ const MS_PER_DAY = 1000 * 60 * 60 * 24;
     MatHeaderRow,
     MatRowDef,
     MatRow,
+    MatTooltip,
     FaIconComponent,
     DateFormatPipe,
     FormatNumberPipe
@@ -112,10 +143,60 @@ export class LoanBreachScheduleTabComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
   private dateUtils = inject(Dates);
   private settingsService = inject(SettingsService);
+  private loansService = inject(LoansService);
+  private translateService = inject(TranslateService);
+  private alertService = inject(AlertService);
+  private cdr = inject(ChangeDetectorRef);
+  private dialog = inject(MatDialog);
 
   dataSource = new MatTableDataSource<BreachPeriodView>();
   currencyCode: string = '';
   loanBalances: WorkingCapitalBalances | null = null;
+  loanId: string;
+
+  breachActions = signal<WorkingCapitalBreachAction[]>([]);
+  actionInFlight = signal(false);
+
+  /**
+   * Every RESET / UNDO_RESET breach action, newest first. Undo does not delete
+   * history on the backend; it appends a compensating UNDO_RESET row, so the
+   * "Active"/"Undone" state of each RESET is derived client-side with stack
+   * semantics: iterating in id order, a RESET pushes and an UNDO_RESET pops the
+   * most recent still-open reset.
+   */
+  resetHistory = computed<ResetHistoryRow[]>(() => {
+    const relevant = this.breachActions()
+      .filter((item) => item.action === 'RESET' || item.action === 'UNDO_RESET')
+      .sort((a, b) => a.id - b.id);
+    const openResets: ResetHistoryRow[] = [];
+    const rows = relevant.map((item) => {
+      const isReset = item.action === 'RESET';
+      const row: ResetHistoryRow = {
+        id: item.id,
+        action: item.action as ResetHistoryRow['action'],
+        date: this.dateUtils.parseDate(item.startDate),
+        undone: false,
+        icon: isReset ? 'calendar' : 'undo',
+        labelKey: isReset ? 'labels.inputs.Reset' : 'labels.buttons.Undo Reset'
+      };
+      if (item.action === 'RESET') {
+        openResets.push(row);
+      } else {
+        const popped = openResets.pop();
+        if (popped) {
+          popped.undone = true;
+        }
+      }
+      return row;
+    });
+    return rows.reverse();
+  });
+
+  activeResets = computed<ResetHistoryRow[]>(() =>
+    this.resetHistory().filter((row) => row.action === 'RESET' && !row.undone)
+  );
+
+  hasActiveReset = computed<boolean>(() => this.activeResets().length > 0);
 
   /** True while a DISABLE window covers the business date; no evaluations are shown then. */
   breachEvaluationDisabled = false;
@@ -130,6 +211,13 @@ export class LoanBreachScheduleTabComponent implements OnInit {
     'minPaymentAmount',
     'outstandingAmount',
     'gap'
+  ];
+
+  readonly resetHistoryColumns: string[] = [
+    'id',
+    'action',
+    'date',
+    'status'
   ];
 
   breachPeriods: BreachPeriodView[] = [];
@@ -157,8 +245,11 @@ export class LoanBreachScheduleTabComponent implements OnInit {
 
   todayX: number | null = null;
   timelineYearLabel = '';
+  currentPeriod: BreachPeriodView | null = null;
 
   ngOnInit(): void {
+    this.loanId = this.route.parent?.snapshot.params['loanId'];
+
     this.route.data
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((data: { breachSchedule: BreachSchedule[]; loanBreachActions: WorkingCapitalBreachAction[] }) => {
@@ -180,6 +271,13 @@ export class LoanBreachScheduleTabComponent implements OnInit {
         this.dataSource.data = this.breachPeriods;
       });
 
+    this.loansService
+      .getWorkingCapitalLoanBreachActions(this.loanId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((actions: WorkingCapitalBreachAction[]) => {
+        this.breachActions.set(actions ?? []);
+      });
+
     if (this.route.parent) {
       this.route.parent.data
         .pipe(takeUntilDestroyed(this.destroyRef))
@@ -194,6 +292,115 @@ export class LoanBreachScheduleTabComponent implements OnInit {
 
   severityLabel(severity: Severity): string {
     return severity.charAt(0).toUpperCase() + severity.slice(1);
+  }
+
+  severityLabelKey(severity: Severity): string {
+    return `labels.text.${this.severityLabel(severity)}`;
+  }
+
+  /**
+   * Proactive guard for AC-2: the backend allows a single active reset per
+   * evaluation period, so the Reset button is disabled when the current period
+   * is already flagged (`reset === true`) or the client-side stack shows an
+   * active reset dated inside the current period. The 400 from the backend is
+   * still handled, since state can change server-side (COB, another user).
+   */
+  get currentPeriodAlreadyReset(): boolean {
+    const current = this.currentPeriod;
+    if (!current) {
+      return false;
+    }
+    if (current.reset) {
+      return true;
+    }
+    return this.activeResets().some((row) => row.date >= current.fromDateObj && row.date <= current.toDateObj);
+  }
+
+  get resetDisabledTooltip(): string {
+    return this.translateService.instant(
+      'errors.error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period'
+    );
+  }
+
+  get undoDisabledTooltip(): string {
+    return this.translateService.instant('errors.error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo');
+  }
+
+  openResetDialog(): void {
+    const dialogRef = this.dialog.open(LoanBreachActionResetDialogComponent, {
+      data: { action: 'reset' }
+    });
+    dialogRef.afterClosed().subscribe((response: { data: any }) => {
+      if (response?.data) {
+        this.executeBreachAction({
+          action: 'reset',
+          restartPeriodFromResetDate: !!response.data.value.restartPeriodFromResetDate
+        });
+      }
+    });
+  }
+
+  openUndoResetDialog(): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        heading: this.translateService.instant('labels.heading.Undo Reset'),
+        dialogContext: this.translateService.instant(
+          'labels.dialogContext.Are you sure you want to undo the last breach reset'
+        )
+      }
+    });
+    dialogRef.afterClosed().subscribe((response: { confirm: any }) => {
+      if (response?.confirm) {
+        this.executeBreachAction({ action: 'undo_reset' });
+      }
+    });
+  }
+
+  /**
+   * Posts a breach action command and re-reads both the breach schedule and the
+   * breach actions list. Data is also re-read on failure: a domain-rule 400
+   * usually means the server-side state moved under us (COB, another user), so
+   * the screen must catch up with it. `actionInFlight` stays true until the
+   * refresh completes, so the buttons cannot re-enable against stale state.
+   */
+  private executeBreachAction(command: { action: string; restartPeriodFromResetDate?: boolean }): void {
+    const payload: WorkingCapitalBreachCommandRequest = {
+      ...command,
+      locale: this.settingsService.language.code,
+      dateFormat: this.settingsService.dateFormat
+    };
+    this.actionInFlight.set(true);
+    this.loansService
+      .createBreachAction(this.loanId, payload)
+      .pipe(
+        catchError((error: unknown) => {
+          const message = resolveBreachActionErrorMessage(error, this.translateService);
+          if (message) {
+            this.alertService.alert({
+              type: this.translateService.instant('errors.error.bad.request.type'),
+              message
+            });
+          }
+          // Swallow the command error so the chain still refreshes.
+          return of(null);
+        }),
+        switchMap(() => this.refreshData()),
+        finalize(() => this.actionInFlight.set(false)),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe(({ schedule, actions }) => {
+        this.processBreachPeriods(schedule ?? []);
+        this.dataSource.data = this.breachPeriods;
+        this.breachActions.set(actions ?? []);
+        this.cdr.markForCheck();
+      });
+  }
+
+  private refreshData(): Observable<{ schedule: BreachSchedule[]; actions: WorkingCapitalBreachAction[] }> {
+    return forkJoin({
+      schedule: this.loansService.getWorkingCapitalLoanBreachSchedule(this.loanId),
+      actions: this.loansService.getWorkingCapitalLoanBreachActions(this.loanId)
+    });
   }
 
   buildTooltip(period: BreachPeriodView): string {
@@ -214,6 +421,7 @@ export class LoanBreachScheduleTabComponent implements OnInit {
       this.kpis = { count: 0, totalDays: 0, peakOutstanding: 0, avgGapPercent: 0, status: 'compliant' };
       this.todayX = null;
       this.timelineYearLabel = '';
+      this.currentPeriod = null;
       return;
     }
 
@@ -280,6 +488,8 @@ export class LoanBreachScheduleTabComponent implements OnInit {
         showLabel: barWidth >= LABEL_MIN_BAR_WIDTH
       };
     });
+
+    this.currentPeriod = this.breachPeriods.find((p) => today >= p.fromDateObj && today <= p.toDateObj) ?? null;
 
     this.kpis = {
       count: this.breachPeriods.length,

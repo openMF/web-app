@@ -8,6 +8,14 @@
     "accountingRule": {
       "duplicateName": "Sorry, but an Accounting Rule with this Name exists already."
     },
+    "error.msg.workingCapitalLoanBreachAction.breach.is.disabled": "Breach evaluation is disabled for this loan.",
+    "error.msg.workingCapitalLoanBreachAction.loan.is.not.active": "This action requires an active loan.",
+    "error.msg.workingCapitalLoanBreachAction.loan.not.disbursed": "The loan has not been disbursed yet.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.configuration": "The loan has no breach configuration.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.evaluation.period": "There is no breach evaluation period for the current date.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo": "There is no active breach reset to undo.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.schedule": "The loan has no breach schedule.",
+    "error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period": "This breach period has already been reset. Undo the existing reset before resetting again.",
     "linkedSavingsAccountOwnership": "Linked savings account does not belong to the selected client.",
     "clientNotInGSIM": "Client with ID {{id}} is not present in GSIM.",
     "Capitalized Income amount adjusted already adjusted": "Capitalized Income amount already adjusted",
@@ -1560,6 +1568,7 @@
       "Report Parameter": "Report Parameter",
       "Reports Catalog": "Reports Catalog",
       "Reschedule Loan": "Reschedule Loan",
+      "Reset History": "Reset History",
       "Revert Transaction": "Revert Transaction",
       "S3 Amazon External Service": "S3 Amazon External Service",
       "SMS Campaigns": "SMS Campaigns",
@@ -3677,6 +3686,7 @@
     "dialogContext": {
       "A new clean period will start today": "A new clean period will start from today.",
       "Are you sure you want to resume the breach pause": "Are you sure you want to resume the breach pause",
+      "Are you sure you want to undo the last breach reset": "Are you sure you want to undo the last breach reset? This reverts the reset flag and the past-due recalculation; a period split created by restarting the period from the reset date is not reverted.",
       "Are you sure you want Unassign Staff": "Are you sure you want Unassign Staff",
       "Are you sure you want to calculate interest ?": "Are you sure you want to calculate interest ?",
       "Are you sure you want to post interest ?": "Are you sure you want to post interest ?",
@@ -3740,6 +3750,7 @@
       "Long-tenure financing to purchase, construct, or renovate a residential property": "Long-tenure financing to purchase, construct, or renovate a residential property.",
       "Merchant Cash Advance": "Merchant Cash Advance",
       "Mortgage Loan (LAP)": "Mortgage Loan (LAP)",
+      "No resets have been recorded for this loan": "No resets have been recorded for this loan.",
       "Personal Loan": "Personal Loan",
       "Custom / Advanced": "Custom / Advanced",
       "Two Wheeler Loan": "Two Wheeler Loan",

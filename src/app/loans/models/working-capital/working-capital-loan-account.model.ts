@@ -108,6 +108,20 @@ export interface WorkingCapitalBreachActionRequest {
   locale: string;
 }
 
+/**
+ * Command payload for POST /working-capital-loans/{loanId}/breach-actions
+ * (pause, resume, disable, enable, reset, undo_reset). Distinct from
+ * WorkingCapitalBreachActionRequest, which carries the RESCHEDULE configuration.
+ */
+export interface WorkingCapitalBreachCommandRequest {
+  action: string;
+  locale: string;
+  dateFormat: string;
+  startDate?: string;
+  endDate?: string;
+  restartPeriodFromResetDate?: boolean;
+}
+
 export interface WorkingCapitalBreachAction {
   id: number;
   action: string;

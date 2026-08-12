@@ -6,6 +6,14 @@
     "accountingRule": {
       "duplicateName": "Desculpe, mas já existe uma regra contabilística com este nome."
     },
+    "error.msg.workingCapitalLoanBreachAction.breach.is.disabled": "A avaliação de incumprimento está desativada para este empréstimo.",
+    "error.msg.workingCapitalLoanBreachAction.loan.is.not.active": "Esta ação requer um empréstimo ativo.",
+    "error.msg.workingCapitalLoanBreachAction.loan.not.disbursed": "O empréstimo ainda não foi desembolsado.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.configuration": "O empréstimo não tem configuração de incumprimento.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.evaluation.period": "Não existe um período de avaliação de incumprimento para a data atual.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo": "Não há nenhuma redefinição ativa para desfazer.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.schedule": "O empréstimo não tem calendário de incumprimento.",
+    "error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period": "Este período de incumprimento já foi redefinido. Desfaça a redefinição existente antes de redefinir novamente.",
     "error.resource.notImplemented.type": "Não implementado",
     "error.resource.notImplemented.message": "Funcionalidade não implementada!",
     "linkedSavingsAccountOwnership": "A conta poupança vinculada não pertence ao cliente selecionado.",
@@ -1540,6 +1548,7 @@
       "Report Parameter": "Parâmetro de relatório",
       "Reports Catalog": "Catálogo de relatórios",
       "Reschedule Loan": "Empréstimo de remarcado",
+      "Reset History": "Histórico de redefinições",
       "Revert Transaction": "Reverter transação",
       "S3 Amazon External Service": "Serviço externo S3 Amazon",
       "SMS": "SMS",
@@ -3646,6 +3655,7 @@
     "dialogContext": {
       "A new clean period will start today": "Um novo período limpo começará a partir de hoje.",
       "Are you sure you want to resume the breach pause": "Tem a certeza de que quer retomar a violação?",
+      "Are you sure you want to undo the last breach reset": "Tem a certeza de que quer desfazer a última redefinição do incumprimento? Isto desfaz a marca de redefinição e o recálculo do montante vencido; uma divisão de período criada pelo reinício do período a partir da data de redefinição não é revertida.",
       "Are you sure you want Unassign Staff": "Tem a certeza que deseja desassociar o funcionário?",
       "Are you sure you want to calculate interest ?": "Tem a certeza que deseja calcular juros?",
       "Are you sure you want to post interest ?": "Tem a certeza que deseja registar juros?",
@@ -3708,6 +3718,7 @@
       "Long-tenure financing to purchase, construct, or renovate a residential property": "Financiamento de longo prazo para comprar, construir ou renovar um imóvel residencial.",
       "Merchant Cash Advance": "Adiantamento de tesouraria a comerciantes",
       "Mortgage Loan (LAP)": "Crédito hipotecário (LAP)",
+      "No resets have been recorded for this loan": "Não foram registadas redefinições para este empréstimo.",
       "Personal Loan": "Empréstimo pessoal",
       "Custom / Advanced": "Personalizado / Avançado",
       "Two Wheeler Loan": "Empréstimo para veículos de duas rodas",

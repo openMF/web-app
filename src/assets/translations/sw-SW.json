@@ -6,6 +6,14 @@
     "accountingRule": {
       "duplicateName": "Samahani, lakini Kanuni ya Uhasibu yenye jina hili tayari ipo."
     },
+    "error.msg.workingCapitalLoanBreachAction.breach.is.disabled": "Tathmini ya ukiukaji imezimwa kwa mkopo huu.",
+    "error.msg.workingCapitalLoanBreachAction.loan.is.not.active": "Kitendo hiki kinahitaji mkopo unaotumika.",
+    "error.msg.workingCapitalLoanBreachAction.loan.not.disbursed": "Mkopo bado haujatolewa.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.configuration": "Mkopo hauna usanidi wa ukiukaji.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.evaluation.period": "Hakuna kipindi cha tathmini ya ukiukaji kwa tarehe ya sasa.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo": "Hakuna uwekaji upya unaotumika wa kutengua.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.schedule": "Mkopo hauna ratiba ya ukiukaji.",
+    "error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period": "Kipindi hiki cha ukiukaji tayari kimewekwa upya. Tengua uwekaji upya uliopo kabla ya kuweka upya tena.",
     "error.resource.notImplemented.type": "Haijatekelezwa",
     "error.resource.notImplemented.message": "Utendaji haujatekelezwa!",
     "linkedSavingsAccountOwnership": "Akaunti ya akiba iliyounganishwa haimilikiwi na mteja aliyechaguliwa.",
@@ -1538,6 +1546,7 @@
       "Report Parameter": "Ripoti Parameta",
       "Reports Catalog": "Katalogi ya ripoti",
       "Reschedule Loan": "Rejesha mkopo",
+      "Reset History": "Historia ya uwekaji upya",
       "Revert Transaction": "Rejesha Muamala",
       "S3 Amazon External Service": "Huduma ya Nje ya S3 Amazon",
       "SMS": "SMS",
@@ -3643,6 +3652,7 @@
     "dialogContext": {
       "A new clean period will start today": "Kipindi kipya safi kitaanza kuanzia leo.",
       "Are you sure you want to resume the breach pause": "Je, una hakika unataka kuendelea na kusitishwa kwa ukiukaji?",
+      "Are you sure you want to undo the last breach reset": "Je, una hakika unataka kutengua uwekaji upya wa mwisho wa ukiukaji? Hii inatengua alama ya uwekaji upya na ukokotoaji upya wa kiasi kilichochelewa; mgawanyo wa kipindi ulioundwa kwa kuanzisha upya kipindi kuanzia tarehe ya uwekaji upya haurejeshwi.",
       "Are you sure you want Unassign Staff": "Je, una uhakika unataka kuondoa wafanyakazi?",
       "Are you sure you want to calculate interest ?": "Je, una uhakika unataka kuhesabu riba?",
       "Are you sure you want to post interest ?": "Je, una uhakika unataka kuchapisha riba?",
@@ -3705,6 +3715,7 @@
       "Long-tenure financing to purchase, construct, or renovate a residential property": "Ufadhili wa muda mrefu wa kununua, kujenga, au kukarabati nyumba ya makazi.",
       "Merchant Cash Advance": "Malipo ya Awali kwa Wafanyabiashara",
       "Mortgage Loan (LAP)": "Mkopo wa Rehani (LAP)",
+      "No resets have been recorded for this loan": "Hakuna uwekaji upya uliorekodiwa kwa mkopo huu.",
       "Personal Loan": "Mkopo wa Binafsi",
       "Custom / Advanced": "Maalum / wa Kina",
       "Two Wheeler Loan": "Mkopo wa Pikipiki",

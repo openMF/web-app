@@ -25,4 +25,8 @@ export interface BreachSchedule {
   numberOfDays: number;
   minPaymentAmount: number;
   outstandingAmount: number;
+  nearBreach?: boolean;
+  breach?: boolean;
+  /** True when the evaluation period was flagged by a breach reset action */
+  reset?: boolean;
 }
