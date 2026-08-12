@@ -6,6 +6,14 @@
     "accountingRule": {
       "duplicateName": "Lo sentimos, pero ya existe una regla contable con este nombre."
     },
+    "error.msg.workingCapitalLoanBreachAction.breach.is.disabled": "La evaluación de incumplimiento está deshabilitada para este préstamo.",
+    "error.msg.workingCapitalLoanBreachAction.loan.is.not.active": "Esta acción requiere un préstamo activo.",
+    "error.msg.workingCapitalLoanBreachAction.loan.not.disbursed": "El préstamo aún no ha sido desembolsado.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.configuration": "El préstamo no tiene configuración de incumplimiento.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.evaluation.period": "No existe un período de evaluación de incumplimiento para la fecha actual.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo": "No hay un reinicio de incumplimiento activo para deshacer.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.schedule": "El préstamo no tiene calendario de incumplimiento.",
+    "error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period": "Este período de incumplimiento ya fue reiniciado. Deshaz el reinicio existente antes de volver a reiniciar.",
     "error.resource.notImplemented.type": "No implementado",
     "error.resource.notImplemented.message": "¡Funcionalidad no implementada!",
     "linkedSavingsAccountOwnership": "La cuenta de ahorro vinculada no pertenece al cliente seleccionado.",
@@ -1541,6 +1549,7 @@
       "Report Parameter": "Parámetro de reporte",
       "Reports Catalog": "Catálogo de reportes",
       "Reschedule Loan": "Reprogramación del Crédito",
+      "Reset History": "Historial de Reinicios",
       "Revert Transaction": "Revertir transacción",
       "S3 Amazon External Service": "Servicio externo de Amazon S3",
       "SMS": "SMS",
@@ -3648,6 +3657,7 @@
     "dialogContext": {
       "A new clean period will start today": "Se abrirá un periodo nuevo y limpio a partir de hoy.",
       "Are you sure you want to resume the breach pause": "¿Estás seguro de que quieres reanudar la pausa del incumplimiento?",
+      "Are you sure you want to undo the last breach reset": "¿Estás seguro de que quieres deshacer el último reinicio de incumplimiento? Esto revierte la marca de reinicio y el recálculo del monto vencido; una división de período creada al reiniciar el período desde la fecha de reinicio no se revierte.",
       "Are you sure you want Unassign Staff": "¿Estás seguro de que deseas desasignar al asesor?",
       "Are you sure you want to calculate interest ?": "¿Estás seguro de que deseas calcular los intereses?",
       "Are you sure you want to post interest ?": "¿Estás seguro de que deseas contabilizar los intereses?",
@@ -3710,6 +3720,7 @@
       "Long-tenure financing to purchase, construct, or renovate a residential property": "Financiamiento a largo plazo para comprar, construir o renovar una propiedad residencial.",
       "Merchant Cash Advance": "Adelanto de Efectivo para Comercios",
       "Mortgage Loan (LAP)": "Crédito Hipotecario (LAP)",
+      "No resets have been recorded for this loan": "No se han registrado reinicios para este préstamo.",
       "Personal Loan": "Crédito Personal",
       "Custom / Advanced": "Personalizado / Avanzado",
       "Two Wheeler Loan": "Crédito para Motos",

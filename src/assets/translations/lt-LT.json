@@ -6,6 +6,14 @@
     "accountingRule": {
       "duplicateName": "Atsiprašome, bet apskaitos taisyklė su šiuo pavadinimu jau egzistuoja."
     },
+    "error.msg.workingCapitalLoanBreachAction.breach.is.disabled": "Šiai paskolai pažeidimo vertinimas yra išjungtas.",
+    "error.msg.workingCapitalLoanBreachAction.loan.is.not.active": "Šiam veiksmui reikalinga aktyvi paskola.",
+    "error.msg.workingCapitalLoanBreachAction.loan.not.disbursed": "Paskola dar nebuvo išmokėta.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.configuration": "Paskola neturi pažeidimo konfigūracijos.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.evaluation.period": "Nėra pažeidimo vertinimo laikotarpio dabartinei datai.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo": "Nėra aktyvaus atstatymo, kurį būtų galima atšaukti.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.schedule": "Paskola neturi pažeidimo grafiko.",
+    "error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period": "Šis pažeidimo laikotarpis jau buvo atstatytas. Prieš atstatydami dar kartą, atšaukite esamą atstatymą.",
     "error.resource.notImplemented.type": "Neįgyvendinta",
     "error.resource.notImplemented.message": "Neįgyvendinta funkcija!",
     "linkedSavingsAccountOwnership": "Susieta taupomoji sąskaita nepriklauso pasirinktam klientui.",
@@ -1540,6 +1548,7 @@
       "Report Parameter": "Ataskaitos parametras",
       "Reports Catalog": "Ataskaitų katalogas",
       "Reschedule Loan": "Paskelbta paskola",
+      "Reset History": "Atstatymų istorija",
       "Revert Transaction": "Grąžinti operaciją",
       "S3 Amazon External Service": "S3 Amazon išorinė paslauga",
       "SMS": "trumpoji žinutė",
@@ -3646,6 +3655,7 @@
     "dialogContext": {
       "A new clean period will start today": "Nuo šiandien prasidės naujas švarus laikotarpis.",
       "Are you sure you want to resume the breach pause": "Ar tikrai norite atnaujinti pažeidimo sustabdymą?",
+      "Are you sure you want to undo the last breach reset": "Ar tikrai norite atšaukti paskutinį pažeidimo atstatymą? Tai atšaukia atstatymo žymą ir pradelstos sumos perskaičiavimą; laikotarpio padalijimas, sukurtas iš naujo pradedant laikotarpį nuo atstatymo datos, nėra atšaukiamas.",
       "Are you sure you want Unassign Staff": "Ar tikrai norite atšaukti darbuotojo priskyrimą?",
       "Are you sure you want to calculate interest ?": "Ar tikrai norite skaičiuoti palūkanas?",
       "Are you sure you want to post interest ?": "Ar tikrai norite paskelbti palūkanas?",
@@ -3708,6 +3718,7 @@
       "Long-tenure financing to purchase, construct, or renovate a residential property": "Ilgalaikis finansavimas gyvenamajam būstui įsigyti, statyti ar renovuoti.",
       "Merchant Cash Advance": "Prekybininko grynųjų avansas",
       "Mortgage Loan (LAP)": "Hipotekos paskola (LAP)",
+      "No resets have been recorded for this loan": "Šiai paskolai neužregistruota jokių atstatymų.",
       "Personal Loan": "Vartojimo paskola",
       "Custom / Advanced": "Pasirinktinė / išplėstinė",
       "Two Wheeler Loan": "Motociklų ir motorolerių paskola",

@@ -319,6 +319,21 @@
   }
 }
 
+.toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.btn-primary {
+  @include shared.btn-action-primary;
+}
+
+.btn-ghost {
+  @include shared.btn-action-ghost;
+}
+
 .table-wrap {
   overflow-x: auto;
 }
@@ -329,11 +344,13 @@
 }
 
 :host ::ng-deep {
-  .breach-table .mat-mdc-header-row {
+  .breach-table .mat-mdc-header-row,
+  .reset-history-table .mat-mdc-header-row {
     background: var(--ch-surface-h);
   }
 
-  .breach-table .mat-mdc-header-cell {
+  .breach-table .mat-mdc-header-cell,
+  .reset-history-table .mat-mdc-header-cell {
     background: var(--ch-surface-h);
     font-size: 11px;
     font-weight: 700;
@@ -345,12 +362,17 @@
     white-space: nowrap;
   }
 
-  .breach-table .mat-mdc-row .mat-mdc-cell {
+  .breach-table .mat-mdc-row .mat-mdc-cell,
+  .reset-history-table .mat-mdc-row .mat-mdc-cell {
     border-bottom-color: var(--ch-border);
     padding: 12px 16px;
     font-size: 13.5px;
     color: var(--ch-text-1);
     background: var(--ch-surface);
+  }
+
+  .reset-history-table .mat-mdc-header-cell.id-col {
+    width: 90px;
   }
 
   .breach-table .mat-mdc-row:hover .mat-mdc-cell {
@@ -503,4 +525,114 @@
   background: var(--ch-alert-bg);
   color: var(--ch-alert);
   font-size: 13px;
+}
+
+/* ── Reset badge (periods flagged by a breach reset) ────────── */
+.reset-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: 8px;
+  padding: 3px 9px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  background: var(--ch-blue-50);
+  color: var(--ch-blue-700);
+  border: 1px solid var(--ch-blue-100);
+
+  fa-icon {
+    font-size: 10px;
+  }
+}
+
+/* ── Reset history section ──────────────────────────────────── */
+.history-section {
+  background: var(--ch-surface);
+  border-top: 1px solid var(--ch-border);
+
+  .section-header {
+    padding: 16px 20px 0;
+    margin-bottom: 10px;
+  }
+}
+
+/* Shares the mat-table cell styling with .breach-table (see :host ::ng-deep above). */
+.reset-history-table {
+  width: 100%;
+  background: var(--ch-surface);
+}
+
+.id-cell {
+  font-family: 'JetBrains Mono', 'Cascadia Code', monospace;
+  font-size: 12.5px;
+  color: var(--ch-text-2);
+}
+
+.action-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-weight: 600;
+  font-size: 13px;
+
+  fa-icon {
+    color: var(--ch-text-3);
+    font-size: 12px;
+  }
+}
+
+.date-cell {
+  font-size: 13px;
+
+  &.muted {
+    color: var(--ch-text-3);
+  }
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  white-space: nowrap;
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+}
+
+.status-pill--active {
+  background: var(--ch-paid-bg);
+  color: var(--ch-paid);
+  border-color: var(--ch-paid);
+
+  .dot {
+    background: var(--ch-paid);
+  }
+}
+
+.status-pill--undone {
+  background: var(--ch-surface-h);
+  color: var(--ch-text-3);
+  border-color: var(--ch-border);
+
+  .dot {
+    background: var(--ch-text-3);
+  }
+}
+
+.empty-history {
+  margin: 0;
+  padding: 14px 20px 18px;
+  font-size: 13px;
+  color: var(--ch-text-3);
 }
