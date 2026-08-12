@@ -2407,10 +2407,12 @@
       "Loading vendors": {
         "": {
           "": {
-            "": "विक्रेताहरू लोड हुँदैछ..."
+            "": "विक्रेताहरू लोड हुँदैछन्..."
           }
         }
       },
+      "Loading clients": "ग्राहकहरू लोड हुँदैछन्...",
+      "Loading loans": "ऋणहरू लोड हुँदैछन्...",
       "Loan": "ऋण",
       "Loan Account": "ऋण खाता",
       "Loan Account Classification": "ऋण खाता वर्गीकरण",
@@ -3422,7 +3424,7 @@
       "Enter last name": "थर प्रविष्ट गर्नुहोस्",
       "Enter remittance reference number": "रेमिट्यान्स सन्दर्भ नम्बर प्रविष्ट गर्नुहोस्",
       "Sender name": "पठाउनेको नाम",
-      "Loading vendors...": "विक्रेताहरू लोड हुँदैछ..."
+      "Loading vendors...": "विक्रेताहरू लोड हुँदैछन्..."
     },
     "status": {
       "Active": "सक्रिय",

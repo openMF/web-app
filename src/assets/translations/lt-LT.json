@@ -2411,6 +2411,8 @@
           }
         }
       },
+      "Loading clients": "Kraunami klientai...",
+      "Loading loans": "Kraunamos paskolos...",
       "Loan": "Paskola",
       "Loan Account": "Paskolos sąskaita",
       "Loan Account Classification": "Paskolos sąskaitų klasifikacija",

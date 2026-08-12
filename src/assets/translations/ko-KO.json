@@ -2413,6 +2413,8 @@
           }
         }
       },
+      "Loading clients": "클라이언트 로딩 중...",
+      "Loading loans": "대출 로딩 중...",
       "Loan": "대출",
       "Loan Account": "대출계좌",
       "Loan Account Classification": "대출계좌 분류",

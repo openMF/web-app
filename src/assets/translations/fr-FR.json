@@ -2415,6 +2415,8 @@
           }
         }
       },
+      "Loading clients": "Chargement des clients...",
+      "Loading loans": "Chargement des prêts...",
       "Loan": "Prêt",
       "Loan Account": "Compte de prêt",
       "Loan Account Classification": "Classification des comptes de prêt",

@@ -2412,6 +2412,8 @@
           }
         }
       },
+      "Loading clients": "Cargando clientes...",
+      "Loading loans": "Cargando créditos...",
       "Loan": "Crédito",
       "Loan Account": "Cuenta de Crédito",
       "Loan Account Classification": "Clasificación de cuentas de Créditos",

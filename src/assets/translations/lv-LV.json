@@ -2412,6 +2412,8 @@
           }
         }
       },
+      "Loading clients": "Ielādē klientus...",
+      "Loading loans": "Ielādē aizdevumus...",
       "Loan": "Aizdevums",
       "Loan Account": "Aizdevuma konts",
       "Loan Account Classification": "Aizdevuma kontu klasifikācija",
