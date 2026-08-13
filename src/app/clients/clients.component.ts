@@ -18,7 +18,6 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatProgressBar } from '@angular/material/progress-bar';
 
 /** rxjs Imports */
 import { Subject, Subscription } from 'rxjs';
@@ -33,6 +32,7 @@ import { LegalFormId } from './models/legal-form.enum';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { DateFormatPipe } from '../pipes/date-format.pipe';
 import { nameInitials } from 'app/core/utils/name-initials';
+import { PageLoaderComponent } from '../shared/page-loader/page-loader.component';
 
 export const DEBOUNCE_MS = 500;
 
@@ -44,7 +44,7 @@ type Severity = 'active' | 'pending' | 'closed' | 'rejected' | 'neutral';
   styleUrls: ['./clients.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    MatProgressBar,
+    PageLoaderComponent,
     AccountNumberComponent,
     ExternalIdentifierComponent,
     DateFormatPipe

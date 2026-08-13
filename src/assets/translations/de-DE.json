@@ -2429,6 +2429,8 @@
           }
         }
       },
+      "Loading clients": "Kunden werden geladen...",
+      "Loading loans": "Kredite werden geladen...",
       "Loan": "Darlehen",
       "Loan Account": "Darlehenskonto",
       "Loan Account Classification": "Klassifizierung des Kreditkontos",

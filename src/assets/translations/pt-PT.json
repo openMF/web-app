@@ -2426,6 +2426,8 @@
           }
         }
       },
+      "Loading clients": "A carregar clientes...",
+      "Loading loans": "A carregar empréstimos...",
       "Loan": "Empréstimo",
       "Loan Account": "Conta de empréstimo",
       "Loan Account Classification": "Classificação da conta de empréstimo",
