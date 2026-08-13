@@ -1145,6 +1145,7 @@
     },
     "heading": {
       "Create Agriculture Loan": "Crea prestito agricolo",
+      "Create BNPL Loan": "Crea prestito BNPL",
       "Create Education Loan": "Crea prestito per studi",
       "Create Personal Loan": "Crea prestito personale",
       "Create Two Wheeler Loan": "Crea prestito per veicoli a due ruote",
@@ -3505,6 +3506,7 @@
     },
     "text": {
       "Agriculture Loan": "Prestito agricolo",
+      "BNPL": "BNPL",
       "Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles": "Credito per esigenze agricole come la produzione di colture, i macchinari o la sistemazione dei terreni, generalmente legato ai cicli agricoli.",
       "Education Loan": "Prestito per studi",
       "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "Finanziamento delle tasse scolastiche e delle spese correlate per studi in Italia o all'estero, con opzioni di rimborso allineate alla durata del corso.",

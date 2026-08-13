@@ -1144,6 +1144,7 @@
     },
     "heading": {
       "Create Agriculture Loan": "Sukurti žemės ūkio paskolą",
+      "Create BNPL Loan": "Sukurti BNPL paskolą",
       "Create Education Loan": "Sukurti studijų paskolą",
       "Create Personal Loan": "Sukurti vartojimo paskolą",
       "Create Two Wheeler Loan": "Sukurti motociklų ir motorolerių paskolą",
@@ -3505,6 +3506,7 @@
     },
     "text": {
       "Agriculture Loan": "Žemės ūkio paskola",
+      "BNPL": "BNPL",
       "Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles": "Kreditas žemės ūkio poreikiams, tokiems kaip augalininkystė, technika ar žemės gerinimas, paprastai derinamas prie žemės ūkio ciklų.",
       "Education Loan": "Studijų paskola",
       "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "Studijų mokesčio ir kitų susijusių išlaidų finansavimas mokantis šalyje ar užsienyje, su studijų trukmei pritaikytomis grąžinimo galimybėmis.",

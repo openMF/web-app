@@ -1160,6 +1160,7 @@
     },
     "heading": {
       "Create Agriculture Loan": "Create Agriculture Loan",
+      "Create BNPL Loan": "Create BNPL Loan",
       "Create Education Loan": "Create Education Loan",
       "Create Personal Loan": "Create Personal Loan",
       "Create Two Wheeler Loan": "Create Two Wheeler Loan",
@@ -3544,6 +3545,7 @@
     },
     "text": {
       "Agriculture Loan": "Agriculture Loan",
+      "BNPL": "BNPL",
       "Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles": "Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles.",
       "Education Loan": "Education Loan",
       "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration.",

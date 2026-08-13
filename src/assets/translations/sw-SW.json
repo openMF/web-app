@@ -1143,6 +1143,7 @@
     },
     "heading": {
       "Create Agriculture Loan": "Unda Mkopo wa Kilimo",
+      "Create BNPL Loan": "Unda Mkopo wa BNPL",
       "Create Education Loan": "Unda Mkopo wa Elimu",
       "Create Personal Loan": "Unda Mkopo wa Binafsi",
       "Create Two Wheeler Loan": "Unda Mkopo wa Pikipiki",
@@ -3502,6 +3503,7 @@
     },
     "text": {
       "Agriculture Loan": "Mkopo wa Kilimo",
+      "BNPL": "BNPL",
       "Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles": "Mkopo kwa mahitaji ya kilimo kama vile uzalishaji wa mazao, vifaa au uendelezaji wa ardhi, ambao mara nyingi hufungamanishwa na misimu ya kilimo.",
       "Education Loan": "Mkopo wa Elimu",
       "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "Ufadhili wa ada na gharama zinazohusiana kwa masomo ya ndani au ya nje ya nchi, wenye chaguo za ulipaji zinazolingana na muda wa kozi.",

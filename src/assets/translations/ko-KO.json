@@ -1145,6 +1145,7 @@
     },
     "heading": {
       "Create Agriculture Loan": "농업 대출 생성",
+      "Create BNPL Loan": "BNPL 대출 생성",
       "Create Education Loan": "교육 대출 생성",
       "Create Personal Loan": "개인 대출 생성",
       "Create Two Wheeler Loan": "이륜차 대출 생성",
@@ -3505,6 +3506,7 @@
     },
     "text": {
       "Agriculture Loan": "농업 대출",
+      "BNPL": "BNPL",
       "Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles": "작물 생산, 장비, 농지 개발 등 영농 관련 자금을 지원하며, 일반적으로 영농 주기에 맞춰 운영되는 대출입니다.",
       "Education Loan": "교육 대출",
       "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "국내외 학업의 등록금 및 관련 비용을 지원하며, 학업 기간에 맞춘 상환 옵션을 제공합니다.",

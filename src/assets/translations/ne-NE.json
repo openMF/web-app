@@ -1144,6 +1144,7 @@
     },
     "heading": {
       "Create Agriculture Loan": "कृषि ऋण सिर्जना गर्नुहोस्",
+      "Create BNPL Loan": "BNPL ऋण सिर्जना गर्नुहोस्",
       "Create Education Loan": "शैक्षिक ऋण सिर्जना गर्नुहोस्",
       "Create Personal Loan": "व्यक्तिगत ऋण सिर्जना गर्नुहोस्",
       "Create Two Wheeler Loan": "दुई पाङ्ग्रे सवारी ऋण सिर्जना गर्नुहोस्",
@@ -3505,6 +3506,7 @@
     },
     "text": {
       "Agriculture Loan": "कृषि ऋण",
+      "BNPL": "BNPL",
       "Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles": "बाली उत्पादन, कृषि उपकरण वा जग्गा विकास जस्ता कृषिसम्बन्धी आवश्यकताका लागि ऋण, जुन प्रायः कृषि चक्रसँग मिलाइएको हुन्छ।",
       "Education Loan": "शैक्षिक ऋण",
       "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "स्वदेश वा विदेशमा अध्ययनका लागि शुल्क र सम्बन्धित खर्चको वित्तीय सहायता, पाठ्यक्रम अवधिअनुसार मिलाइएका भुक्तानी विकल्पसहित।",

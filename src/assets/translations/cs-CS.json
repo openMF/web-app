@@ -1146,6 +1146,7 @@
     },
     "heading": {
       "Create Agriculture Loan": "Vytvořit zemědělský úvěr",
+      "Create BNPL Loan": "Vytvořit úvěr BNPL",
       "Create Education Loan": "Vytvořit studentský úvěr",
       "Create Personal Loan": "Vytvořit osobní úvěr",
       "Create Two Wheeler Loan": "Vytvořit úvěr na motocykly a skútry",
@@ -3506,6 +3507,7 @@
     },
     "text": {
       "Agriculture Loan": "Zemědělský úvěr",
+      "BNPL": "BNPL",
       "Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles": "Úvěr na potřeby spojené se zemědělstvím, jako je rostlinná výroba, technika nebo zúrodnění půdy, obvykle navázaný na zemědělské cykly.",
       "Education Loan": "Studentský úvěr",
       "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "Financování školného a souvisejících výdajů při studiu v tuzemsku i zahraničí, se splácením přizpůsobeným délce studia.",
