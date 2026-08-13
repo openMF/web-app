@@ -426,7 +426,16 @@
     "validation.emailInvalid": "Email inválido",
     "validation.requiredField": "{{label}} é um campo obrigatório.",
     "validation.mustBeAtLeast": "{{field}} deve ser pelo menos {{min}}",
-    "validation.mustBePositive": "{{field}} deve ser um número positivo."
+    "validation.mustBePositive": "{{field}} deve ser um número positivo.",
+    "breach": {
+      "alreadyDisabled": "A avaliação de violações já está desativada para este empréstimo.",
+      "noActiveDisableToEnable": "Não existe uma desativação ativa para ativar neste empréstimo.",
+      "mustBeCurrentBusinessDate": "A data efetiva tem de ser a data de negócio atual.",
+      "endDateNotAllowed": "Não pode ser enviada uma data de fim ao desativar ou ativar a avaliação de violações.",
+      "noBreachConfiguration": "Este empréstimo não tem configuração de violações.",
+      "loanIsNotActive": "A avaliação de violações só pode ser alterada enquanto o empréstimo estiver ativo.",
+      "breachIsDisabled": "A avaliação de violações está desativada para este empréstimo. Ative-a para executar esta ação."
+    }
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -784,7 +793,9 @@
       "Create Exchange Rate": "Criar taxa de câmbio",
       "Create Transfer Fee": "Criar taxa de transferência",
       "Requesting": "A solicitar",
-      "Delink": "Desligar"
+      "Delink": "Desligar",
+      "Disable Breach": "Desativar Violação",
+      "Enable Breach": "Ativar Violação"
     },
     "catalogs": {
       "% Amount": "Quantia",
@@ -1134,6 +1145,7 @@
     },
     "heading": {
       "Create Agriculture Loan": "Criar empréstimo agrícola",
+      "Create BNPL Loan": "Criar empréstimo BNPL",
       "Create Education Loan": "Criar empréstimo para estudos",
       "Create Personal Loan": "Criar empréstimo pessoal",
       "Create Two Wheeler Loan": "Criar empréstimo para veículos de duas rodas",
@@ -1611,6 +1623,7 @@
       "undo_account_transfer": "Reverter transferência de conta",
       "Loan Breach Actions": "Ações de Violação do Empréstimo",
       "No Breach Actions": "Sem Ações de Violação",
+      "No Delinquency Actions": "Sem Ações de Inadimplência",
       "Pause Timeline": "Cronologia de Pausas",
       "Location Map": "Mapa de localização",
       "Exchange Rates": "Taxas de câmbio",
@@ -1622,7 +1635,9 @@
       "Exchange Rate": "Taxa de câmbio",
       "Create Exchange Rate": "Criar taxa de câmbio",
       "View Exchange Rate": "Ver taxa de câmbio",
-      "Edit Exchange Rate": "Editar taxa de câmbio"
+      "Edit Exchange Rate": "Editar taxa de câmbio",
+      "Disable Breach Evaluation": "Desativar Avaliação de Violações",
+      "Enable Breach Evaluation": "Ativar Avaliação de Violações"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3209,6 +3224,7 @@
       "Expired": "Expirada",
       "Last Action": "Última Ação",
       "No breach actions have been recorded for this loan": "Não foram registadas ações de violação para este empréstimo",
+      "No delinquency actions have been recorded for this loan": "Não foram registadas ações de inadimplência para este empréstimo",
       "No records match the selected filter": "Nenhum registo corresponde ao filtro selecionado",
       "Ongoing": "Em curso",
       "Pause Active": "Pausa Ativa",
@@ -3259,7 +3275,8 @@
       "Mail": "E-mail",
       "Link": "Ligação",
       "Audit Trail": "Trilha de auditoria",
-      "Restart Period from Reset Date": "Reiniciar período a partir da data de reinício"
+      "Restart Period from Reset Date": "Reiniciar período a partir da data de reinício",
+      "Breach evaluation disabled since": "Avaliação de violações desativada desde {{date}}"
     },
     "links": {
       "Community": "Comunidade",
@@ -3483,10 +3500,13 @@
       "the Transaction Type": "o tipo de transação",
       "undo_account_transfer": "Tem a certeza de que pretende reverter esta transferência de conta?",
       "Are you sure you want to undo the charge-off": "Tem a certeza de que pretende desfazer a cobrança?",
-      "Restart Period from Reset Date splits the current period": "Se ativado, o período de incumprimento atual é dividido na data de reinício e um novo período começa a partir dessa data."
+      "Restart Period from Reset Date splits the current period": "Se ativado, o período de incumprimento atual é dividido na data de reinício e um novo período começa a partir dessa data.",
+      "Breach evaluation will stop": "A avaliação de violações para em {{date}}. Os resultados anteriores são mantidos, mas ficam ocultos até voltar a ativá-la.",
+      "Breach evaluation will resume": "A avaliação de violações recomeça em {{date}}. O empréstimo volta a ser avaliado a partir dessa data."
     },
     "text": {
       "Agriculture Loan": "Empréstimo agrícola",
+      "BNPL": "BNPL",
       "Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles": "Crédito para necessidades agrícolas como a produção de culturas, equipamento ou valorização de terrenos, geralmente ajustado aos ciclos agrícolas.",
       "Education Loan": "Empréstimo para estudos",
       "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "Financiamento de propinas e despesas associadas para estudos no país ou no estrangeiro, com opções de reembolso ajustadas à duração do curso.",
@@ -3497,6 +3517,7 @@
       "Max": "Máx",
       "Hidden variables and predefined values are included in the final payload automatically.": "Hidden variables and predefined values are included in the final payload automatically.",
       "No Breach Actions": "Nenhuma ação de violação",
+      "Previous results are hidden while breach evaluation is disabled": "Os resultados anteriores estão ocultos enquanto a avaliação de violações estiver desativada",
       "No Near Breach Actions": "Nenhuma ação de violação próxima",
       "A": "A",
       "Ability to manage holidays for individual offices": "A capacidade de gerenciar feriados para escritórios individuais é uma ferramenta muito útil para uma organização que abrange vários locais. Use esta opção para personalizar feriados para cada escritório da sua organização.",

@@ -236,6 +236,15 @@ const routes: Routes = [
               }
             },
             {
+              path: 'bnpl-loan',
+              component: CreateLoanProductComponent,
+              data: { title: 'Create BNPL Loan', breadcrumb: 'BNPL Loan' },
+              resolve: {
+                loanProductsTemplate: LoanProductsTemplateResolver,
+                configurations: GlobalConfigurationsResolver
+              }
+            },
+            {
               path: ':productId',
               component: ViewLoanProductComponent,
               resolve: {

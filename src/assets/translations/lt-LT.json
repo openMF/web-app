@@ -426,7 +426,16 @@
     "validation.emailInvalid": "El. paštas neteisingas",
     "validation.requiredField": "{{label}} yra privalomas laukas.",
     "validation.mustBeAtLeast": "{{field}} turi būti bent {{min}}",
-    "validation.mustBePositive": "{{field}} turi būti teigiamas skaičius."
+    "validation.mustBePositive": "{{field}} turi būti teigiamas skaičius.",
+    "breach": {
+      "alreadyDisabled": "Šios paskolos pažeidimų vertinimas jau išjungtas.",
+      "noActiveDisableToEnable": "Šiai paskolai nėra aktyvaus išjungimo, kurį būtų galima įjungti.",
+      "mustBeCurrentBusinessDate": "Įsigaliojimo data turi būti dabartinė veiklos data.",
+      "endDateNotAllowed": "Išjungiant arba įjungiant pažeidimų vertinimą negalima siųsti pabaigos datos.",
+      "noBreachConfiguration": "Ši paskola neturi pažeidimų konfigūracijos.",
+      "loanIsNotActive": "Pažeidimų vertinimą galima keisti tik tada, kai paskola aktyvi.",
+      "breachIsDisabled": "Šios paskolos pažeidimų vertinimas išjungtas. Įjunkite jį, kad galėtumėte atlikti šį veiksmą."
+    }
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -784,7 +793,9 @@
       "Create Exchange Rate": "Sukurti valiutos kursą",
       "Create Transfer Fee": "Sukurti pervedimo mokestį",
       "Requesting": "Prašoma",
-      "Delink": "Atsieti"
+      "Delink": "Atsieti",
+      "Disable Breach": "Išjungti pažeidimą",
+      "Enable Breach": "Įjungti pažeidimą"
     },
     "catalogs": {
       "% Amount": "Suma",
@@ -1133,6 +1144,7 @@
     },
     "heading": {
       "Create Agriculture Loan": "Sukurti žemės ūkio paskolą",
+      "Create BNPL Loan": "Sukurti BNPL paskolą",
       "Create Education Loan": "Sukurti studijų paskolą",
       "Create Personal Loan": "Sukurti vartojimo paskolą",
       "Create Two Wheeler Loan": "Sukurti motociklų ir motorolerių paskolą",
@@ -1611,6 +1623,7 @@
       "undo_account_transfer": "Atšaukti sąskaitos pervedimą",
       "Loan Breach Actions": "Paskolos pažeidimo veiksmai",
       "No Breach Actions": "Nėra pažeidimo veiksmų",
+      "No Delinquency Actions": "Nėra įsiskolinimo veiksmų",
       "Pause Timeline": "Pauzių laiko juosta",
       "Location Map": "Vietos žemėlapis",
       "Exchange Rates": "Valiutų kursai",
@@ -1622,7 +1635,9 @@
       "Exchange Rate": "Valiutos kursas",
       "Create Exchange Rate": "Sukurti valiutos kursą",
       "View Exchange Rate": "Peržiūrėti valiutos kursą",
-      "Edit Exchange Rate": "Redaguoti valiutos kursą"
+      "Edit Exchange Rate": "Redaguoti valiutos kursą",
+      "Disable Breach Evaluation": "Išjungti pažeidimų vertinimą",
+      "Enable Breach Evaluation": "Įjungti pažeidimų vertinimą"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3209,6 +3224,7 @@
       "Expired": "Pasibaigė",
       "Last Action": "Paskutinis veiksmas",
       "No breach actions have been recorded for this loan": "Šiai paskolai nebuvo užregistruota jokių pažeidimo veiksmų",
+      "No delinquency actions have been recorded for this loan": "Šiai paskolai nebuvo užregistruota jokių įsiskolinimo veiksmų",
       "No records match the selected filter": "Joks įrašas neatitinka pasirinkto filtro",
       "Ongoing": "Vyksta",
       "Pause Active": "Pauzė aktyvi",
@@ -3259,7 +3275,8 @@
       "Mail": "El. paštas",
       "Link": "Susiejimas",
       "Audit Trail": "Audito takas",
-      "Restart Period from Reset Date": "Iš naujo paleisti laikotarpį nuo atstatymo datos"
+      "Restart Period from Reset Date": "Iš naujo paleisti laikotarpį nuo atstatymo datos",
+      "Breach evaluation disabled since": "Pažeidimų vertinimas išjungtas nuo {{date}}"
     },
     "links": {
       "Community": "bendruomenė",
@@ -3483,10 +3500,13 @@
       "the Transaction Type": "operacijos tipas",
       "undo_account_transfer": "Ar tikrai norite atšaukti šį sąskaitos pervedimą?",
       "Are you sure you want to undo the charge-off": "Ar tikrai norite anuliuoti Atsakingas už?",
-      "Restart Period from Reset Date splits the current period": "Jei įjungta, dabartinis pažeidimo laikotarpis padalijamas atstatymo data, o naujas laikotarpis prasideda nuo šios datos."
+      "Restart Period from Reset Date splits the current period": "Jei įjungta, dabartinis pažeidimo laikotarpis padalijamas atstatymo data, o naujas laikotarpis prasideda nuo šios datos.",
+      "Breach evaluation will stop": "Pažeidimų vertinimas sustabdomas {{date}}. Ankstesni rezultatai išsaugomi, bet paslepiami, kol vėl įjungsite.",
+      "Breach evaluation will resume": "Pažeidimų vertinimas atnaujinamas {{date}}. Nuo tos dienos paskola vėl vertinama."
     },
     "text": {
       "Agriculture Loan": "Žemės ūkio paskola",
+      "BNPL": "BNPL",
       "Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles": "Kreditas žemės ūkio poreikiams, tokiems kaip augalininkystė, technika ar žemės gerinimas, paprastai derinamas prie žemės ūkio ciklų.",
       "Education Loan": "Studijų paskola",
       "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "Studijų mokesčio ir kitų susijusių išlaidų finansavimas mokantis šalyje ar užsienyje, su studijų trukmei pritaikytomis grąžinimo galimybėmis.",
@@ -3497,6 +3517,7 @@
       "Max": "Maks",
       "Hidden variables and predefined values are included in the final payload automatically.": "Hidden variables and predefined values are included in the final payload automatically.",
       "No Breach Actions": "Nėra Pažeidimas Veiksmai",
+      "Previous results are hidden while breach evaluation is disabled": "Ankstesni rezultatai paslėpti, kol pažeidimų vertinimas išjungtas",
       "No Near Breach Actions": "Nėra Artėjantis pažeidimas Veiksmai",
       "A": "A",
       "Ability to manage holidays for individual offices": "Galimybė tvarkyti atskirų biurų atostogas yra labai naudingas įrankis organizacijai, kuri veikia keliose vietose. Naudokite šią parinktį, kad tinkintumėte atostogas kiekvienam savo organizacijos biurui.",

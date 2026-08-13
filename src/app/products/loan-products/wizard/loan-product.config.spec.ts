@@ -10,6 +10,7 @@ import { LoanProducts } from '../loan-products';
 import {
   buildPayload,
   INITIAL_FORM_STATE,
+  LoanWizardProfileMode,
   PRODUCT_CARDS,
   PROFILE_INITIAL_OVERRIDES,
   profileForRoutePath
@@ -609,6 +610,11 @@ describe('loan-product.config buildPayload golden parity', () => {
       multiDisburseLoan: true,
       maxTrancheCount: 4,
       allowFullTermForTranche: false,
+      // Classic's real partial-period control, which Custom/Advanced renders and therefore sends.
+      // `LoanProducts.buildPayload` re-keys it to Fineract's misspelled
+      // `allowPartialPeriodInterestCalcualtion` on the wire (see loan-products.spec.ts); this golden
+      // covers the config-level builder, which keeps the correct spelling.
+      allowPartialPeriodInterestCalculation: true,
       inArrearsTolerance: 50,
       graceOnArrearsAgeing: 5,
       overdueDaysForNPA: 90,
@@ -1164,8 +1170,96 @@ describe('loan-product.config PRODUCT_CARDS', () => {
         'custom-advanced',
         'two-wheeler-loan',
         'education-loan',
-        'agriculture-loan'
+        'agriculture-loan',
+        'bnpl-loan'
       ]).toContain(product.route);
+    });
+  });
+  describe('daysInYearCustomStrategy payload gating', () => {
+    // Classic registers the control (and its `Validators.required`) only for the advanced payment
+    // allocation strategy AND an ACTUAL days-in-year type, and never sends it otherwise. These lock
+    // that gate across every profile so the field can never reach the create API while hidden.
+    const allProfiles: LoanWizardProfileMode[] = [
+      'personal',
+      'two-wheeler',
+      'education',
+      'agriculture',
+      'custom-advanced',
+      'bnpl'
+    ];
+
+    function payloadFor(profile: LoanWizardProfileMode, overrides: Record<string, unknown>) {
+      return buildPayload({ ...INITIAL_FORM_STATE, ...overrides } as any, profile, undefined);
+    }
+
+    it('omits it for every profile when days in year is not ACTUAL', () => {
+      allProfiles.forEach((profile) => {
+        const payload = payloadFor(profile, {
+          daysInYearType: 360,
+          transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY
+        });
+        expect([
+          profile,
+          'daysInYearCustomStrategy' in payload
+        ]).toEqual([
+          profile,
+          false
+        ]);
+      });
+    });
+
+    it('omits it for every profile on a non-advanced strategy, even with ACTUAL days in year', () => {
+      allProfiles.forEach((profile) => {
+        const payload = payloadFor(profile, {
+          daysInYearType: 1,
+          transactionProcessingStrategyCode: 'mifos-standard-strategy'
+        });
+        expect([
+          profile,
+          'daysInYearCustomStrategy' in payload
+        ]).toEqual([
+          profile,
+          false
+        ]);
+      });
+    });
+
+    it('sends it only from the profiles that expose the control, as the backend code', () => {
+      const applicable = {
+        daysInYearType: 1,
+        transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+        loanScheduleType: 'Progressive'
+      };
+      // Guided profiles that keep the field hidden and pinned still omit it - unchanged behaviour.
+      ([
+          'personal',
+          'two-wheeler',
+          'education',
+          'agriculture'
+        ] as LoanWizardProfileMode[]).forEach((profile) => {
+        const payload = payloadFor(profile, applicable);
+        expect([
+          profile,
+          'daysInYearCustomStrategy' in payload
+        ]).toEqual([
+          profile,
+          false
+        ]);
+      });
+      // The two profiles that render it as an editable control send it.
+      ([
+          'custom-advanced',
+          'bnpl'
+        ] as LoanWizardProfileMode[]).forEach((profile) => {
+        const payload = payloadFor(profile, applicable);
+        expect([
+          profile,
+          payload.daysInYearCustomStrategy
+        ]).toEqual([
+          profile,
+          'FULL_LEAP_YEAR'
+        ]);
+      });
     });
   });
 });

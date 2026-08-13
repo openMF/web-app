@@ -490,3 +490,17 @@
 .gap-bar-fill.severe {
   background: var(--br-severe);
 }
+
+// Stands in for the whole evaluation while breach evaluation is disabled.
+.disabled-notice {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 14px 16px;
+  border-radius: 4px;
+  border-left: 3px solid var(--ch-alert);
+  background: var(--ch-alert-bg);
+  color: var(--ch-alert);
+  font-size: 13px;
+}

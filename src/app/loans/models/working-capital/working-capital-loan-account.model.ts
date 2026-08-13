@@ -120,6 +120,22 @@ export interface WorkingCapitalBreachAction {
   frequencyType?: string;
 }
 
+/**
+ * Request body for POST /working-capital-loans/{loanId}/breach-actions with
+ * action disable or enable.
+ *
+ * `startDate` must be exactly the current business date; any other date is
+ * rejected with must.be.current.business.date. `endDate` must never be sent,
+ * not even as null, or the backend answers
+ * must.not.be.provided.for.disable.or.enable.
+ */
+export interface WorkingCapitalBreachToggleRequest {
+  action: 'disable' | 'enable';
+  startDate: string;
+  dateFormat: string;
+  locale: string;
+}
+
 export interface WorkingCapitalNearBreachActionRequest {
   action: string;
   nearBreachThreshold: number;

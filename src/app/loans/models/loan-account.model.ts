@@ -53,6 +53,11 @@ export interface LoanDelinquencyAction {
   createdOn: Date;
   updatedById: number;
   lastModifiedOn: Date;
+  /** Payment rule, returned only for RESCHEDULE actions on working capital loans */
+  minimumPayment?: number;
+  minimumPaymentType?: string;
+  frequency?: number;
+  frequencyType?: string;
 }
 
 export interface DelinquencyPausePeriod {

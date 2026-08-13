@@ -426,7 +426,16 @@
     "validation.emailInvalid": "Correo electrónico no válido",
     "validation.requiredField": "{{label}} es un campo obligatorio.",
     "validation.mustBeAtLeast": "{{field}} debe ser al menos {{min}}",
-    "validation.mustBePositive": "{{field}} debe ser un número positivo."
+    "validation.mustBePositive": "{{field}} debe ser un número positivo.",
+    "breach": {
+      "alreadyDisabled": "La evaluación de incumplimiento ya está deshabilitada para este préstamo.",
+      "noActiveDisableToEnable": "No hay una deshabilitación activa que habilitar para este préstamo.",
+      "mustBeCurrentBusinessDate": "La fecha efectiva debe ser la fecha de negocio actual.",
+      "endDateNotAllowed": "No se puede enviar una fecha fin al deshabilitar o habilitar la evaluación de incumplimiento.",
+      "noBreachConfiguration": "Este préstamo no tiene configuración de incumplimiento.",
+      "loanIsNotActive": "La evaluación de incumplimiento solo se puede cambiar mientras el préstamo está activo.",
+      "breachIsDisabled": "La evaluación de incumplimiento está deshabilitada para este préstamo. Habilítala para ejecutar esta acción."
+    }
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -784,7 +793,9 @@
       "Resume Breach": "Reanudar Incumplimiento",
       "Currency Conversion": "Conversión de moneda",
       "Create Exchange Rate": "Crear tipo de cambio",
-      "Create Transfer Fee": "Crear comisión de transferencia"
+      "Create Transfer Fee": "Crear comisión de transferencia",
+      "Disable Breach": "Deshabilitar Incumplimiento",
+      "Enable Breach": "Habilitar Incumplimiento"
     },
     "catalogs": {
       "% Amount": "% Monto",
@@ -1133,6 +1144,7 @@
     },
     "heading": {
       "Create Agriculture Loan": "Crear Crédito Agrícola",
+      "Create BNPL Loan": "Crear Crédito BNPL",
       "Create Education Loan": "Crear Crédito Educativo",
       "Create Personal Loan": "Crear Crédito Personal",
       "Create Two Wheeler Loan": "Crear Crédito para Motos",
@@ -1612,6 +1624,7 @@
       "undo_account_transfer": "Revertir transferencia de cuenta",
       "Loan Breach Actions": "Acciones de Incumplimiento del Préstamo",
       "No Breach Actions": "Sin Acciones sobre Brechas",
+      "No Delinquency Actions": "Sin Acciones de Morosidad",
       "Pause Timeline": "Línea de Tiempo de Pausas",
       "Location Map": "Mapa de ubicación",
       "Exchange Rates": "Tipos de cambio",
@@ -1623,7 +1636,9 @@
       "Exchange Rate": "Tipo de cambio",
       "Create Exchange Rate": "Crear tipo de cambio",
       "View Exchange Rate": "Ver tipo de cambio",
-      "Edit Exchange Rate": "Editar tipo de cambio"
+      "Edit Exchange Rate": "Editar tipo de cambio",
+      "Disable Breach Evaluation": "Deshabilitar Evaluación de Incumplimiento",
+      "Enable Breach Evaluation": "Habilitar Evaluación de Incumplimiento"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3214,6 +3229,7 @@
       "Expired": "Expirada",
       "Last Action": "Última Acción",
       "No breach actions have been recorded for this loan": "No se han registrado acciones sobre brechas para este préstamo",
+      "No delinquency actions have been recorded for this loan": "No se han registrado acciones de morosidad para este préstamo",
       "No records match the selected filter": "Ningún registro coincide con el filtro seleccionado",
       "Ongoing": "En curso",
       "Pause Active": "Pausa Activa",
@@ -3261,7 +3277,8 @@
       "Provider": "Proveedor",
       "Dispute Management": "Gestión de disputas",
       "Audit Trail": "Registro de auditoría",
-      "Restart Period from Reset Date": "Reiniciar el período desde la fecha de reinicio"
+      "Restart Period from Reset Date": "Reiniciar el período desde la fecha de reinicio",
+      "Breach evaluation disabled since": "Evaluación de incumplimiento deshabilitada desde el {{date}}"
     },
     "links": {
       "Community": "Comunidad",
@@ -3485,10 +3502,13 @@
       "the Transaction Type": "el tipo de transacción",
       "undo_account_transfer": "¿Está seguro de que desea revertir esta transferencia de cuenta?",
       "Are you sure you want to undo the charge-off": "¿Está seguro de que desea deshacer la cancelación?",
-      "Restart Period from Reset Date splits the current period": "Si se activa, el periodo de incumplimiento actual se corta en la fecha de reinicio y arranca un periodo nuevo desde esa fecha."
+      "Restart Period from Reset Date splits the current period": "Si se activa, el periodo de incumplimiento actual se corta en la fecha de reinicio y arranca un periodo nuevo desde esa fecha.",
+      "Breach evaluation will stop": "La evaluación de incumplimiento se detiene el {{date}}. Los resultados anteriores se conservan pero quedan ocultos hasta que la habilites de nuevo.",
+      "Breach evaluation will resume": "La evaluación de incumplimiento se reanuda el {{date}}. El préstamo se vuelve a evaluar a partir de esa fecha."
     },
     "text": {
       "Agriculture Loan": "Crédito Agrícola",
+      "BNPL": "BNPL",
       "Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles": "Crédito para necesidades agrícolas como la producción de cultivos, maquinaria o habilitación de terrenos, generalmente ajustado a los ciclos agrícolas.",
       "Education Loan": "Crédito Educativo",
       "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "Financiamiento de matrícula y gastos asociados para estudios nacionales o internacionales, con opciones de pago ajustadas a la duración de la carrera.",
@@ -3499,6 +3519,7 @@
       "Max": "Máx",
       "Hidden variables and predefined values are included in the final payload automatically.": "Hidden variables and predefined values are included in the final payload automatically.",
       "No Breach Actions": "Sin acciones de incumplimiento",
+      "Previous results are hidden while breach evaluation is disabled": "Los resultados anteriores están ocultos mientras la evaluación de incumplimiento está deshabilitada",
       "No Near Breach Actions": "Sin acciones de incumplimiento inminente",
       "A": "Una",
       "Ability to manage holidays for individual offices": "La capacidad de gestionar días festivos para oficinas individuales es una herramienta muy útil para una organización que abarca varias ubicaciones. Utilice esta opción para personalizar los días festivos para cada oficina de su organización.",
