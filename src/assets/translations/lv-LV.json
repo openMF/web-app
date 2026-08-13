@@ -426,7 +426,16 @@
     "validation.emailInvalid": "E-pasts nav derīgs",
     "validation.requiredField": "{{label}} ir obligāts lauks.",
     "validation.mustBeAtLeast": "{{field}} jābūt vismaz {{min}}",
-    "validation.mustBePositive": "{{field}} jābūt pozitīvam skaitlim."
+    "validation.mustBePositive": "{{field}} jābūt pozitīvam skaitlim.",
+    "breach": {
+      "alreadyDisabled": "Šim aizdevumam pārkāpumu novērtēšana jau ir atspējota.",
+      "noActiveDisableToEnable": "Šim aizdevumam nav aktīvas atspējošanas, ko iespējot.",
+      "mustBeCurrentBusinessDate": "Spēkā stāšanās datumam jābūt pašreizējam darbības datumam.",
+      "endDateNotAllowed": "Atspējojot vai iespējojot pārkāpumu novērtēšanu, beigu datumu nedrīkst nosūtīt.",
+      "noBreachConfiguration": "Šim aizdevumam nav pārkāpumu konfigurācijas.",
+      "loanIsNotActive": "Pārkāpumu novērtēšanu var mainīt tikai tad, kad aizdevums ir aktīvs.",
+      "breachIsDisabled": "Šim aizdevumam pārkāpumu novērtēšana ir atspējota. Iespējojiet to, lai veiktu šo darbību."
+    }
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -784,7 +793,9 @@
       "Create Exchange Rate": "Izveidot valūtas kursu",
       "Create Transfer Fee": "Izveidot pārskaitījuma maksu",
       "Requesting": "Pieprasa",
-      "Delink": "Atsaistīt"
+      "Delink": "Atsaistīt",
+      "Disable Breach": "Atspējot pārkāpumu",
+      "Enable Breach": "Iespējot pārkāpumu"
     },
     "catalogs": {
       "% Amount": "Summa",
@@ -1134,6 +1145,7 @@
     },
     "heading": {
       "Create Agriculture Loan": "Izveidot lauksaimniecības aizdevumu",
+      "Create BNPL Loan": "Izveidot BNPL aizdevumu",
       "Create Education Loan": "Izveidot studiju aizdevumu",
       "Create Personal Loan": "Izveidot patēriņa aizdevumu",
       "Create Two Wheeler Loan": "Izveidot divriteņu transportlīdzekļa aizdevumu",
@@ -1612,6 +1624,7 @@
       "undo_account_transfer": "Atcelt konta pārskaitījumu",
       "Loan Breach Actions": "Aizdevuma pārkāpuma darbības",
       "No Breach Actions": "Nav pārkāpuma darbību",
+      "No Delinquency Actions": "Nav kavējuma darbību",
       "Pause Timeline": "Pauzes laika līnija",
       "Location Map": "Atrašanās vietas karte",
       "Exchange Rates": "Valūtas kursi",
@@ -1623,7 +1636,9 @@
       "Exchange Rate": "Valūtas kurss",
       "Create Exchange Rate": "Izveidot valūtas kursu",
       "View Exchange Rate": "Skatīt valūtas kursu",
-      "Edit Exchange Rate": "Rediģēt valūtas kursu"
+      "Edit Exchange Rate": "Rediģēt valūtas kursu",
+      "Disable Breach Evaluation": "Atspējot pārkāpumu novērtēšanu",
+      "Enable Breach Evaluation": "Iespējot pārkāpumu novērtēšanu"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3212,6 +3227,7 @@
       "Expired": "Beidzies",
       "Last Action": "Pēdējā darbība",
       "No breach actions have been recorded for this loan": "Šim aizdevumam nav reģistrētas pārkāpuma darbības",
+      "No delinquency actions have been recorded for this loan": "Šim aizdevumam nav reģistrētas kavējuma darbības",
       "No records match the selected filter": "Neviens ieraksts neatbilst atlasītajam filtram",
       "Ongoing": "Notiekoša",
       "Pause Active": "Pauze aktīva",
@@ -3262,7 +3278,8 @@
       "Mail": "E-pasts",
       "Link": "Saite",
       "Audit Trail": "Revīzijas taka",
-      "Restart Period from Reset Date": "Restartēt periodu no atiestatīšanas datuma"
+      "Restart Period from Reset Date": "Restartēt periodu no atiestatīšanas datuma",
+      "Breach evaluation disabled since": "Pārkāpumu novērtēšana atspējota kopš {{date}}"
     },
     "links": {
       "Community": "kopiena",
@@ -3485,10 +3502,13 @@
       "the Transaction Type": "Darījuma veids",
       "undo_account_transfer": "Vai tiešām vēlaties atcelt šo konta pārskaitījumu?",
       "Are you sure you want to undo the charge-off": "Vai tiešām vēlaties atcelt norakstīšanu?",
-      "Restart Period from Reset Date splits the current period": "Ja iespējots, pašreizējais pārkāpuma periods tiek sadalīts atiestatīšanas datumā un jauns periods sākas no šī datuma."
+      "Restart Period from Reset Date splits the current period": "Ja iespējots, pašreizējais pārkāpuma periods tiek sadalīts atiestatīšanas datumā un jauns periods sākas no šī datuma.",
+      "Breach evaluation will stop": "Pārkāpumu novērtēšana tiek pārtraukta {{date}}. Iepriekšējie rezultāti tiek saglabāti, bet paslēpti līdz atkārtotai iespējošanai.",
+      "Breach evaluation will resume": "Pārkāpumu novērtēšana atsākas {{date}}. No šī datuma aizdevums tiek novērtēts atkārtoti."
     },
     "text": {
       "Agriculture Loan": "Lauksaimniecības aizdevums",
+      "BNPL": "BNPL",
       "Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles": "Kredīts lauksaimniecības vajadzībām, piemēram, kultūraugu audzēšanai, tehnikai vai zemes uzlabošanai, parasti saistīts ar lauksaimniecības cikliem.",
       "Education Loan": "Studiju aizdevums",
       "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "Mācību maksas un ar to saistīto izdevumu finansējums studijām valstī vai ārzemēs ar studiju ilgumam pielāgotām atmaksas iespējām.",
@@ -3499,6 +3519,7 @@
       "Max": "Maks",
       "Hidden variables and predefined values are included in the final payload automatically.": "Hidden variables and predefined values are included in the final payload automatically.",
       "No Breach Actions": "Nav Pārkāpums Darbības",
+      "Previous results are hidden while breach evaluation is disabled": "Iepriekšējie rezultāti ir paslēpti, kamēr pārkāpumu novērtēšana ir atspējota",
       "No Near Breach Actions": "Nav Tuvu pārkāpumam Darbības",
       "A": "A",
       "Ability to manage holidays for individual offices": "Iespēja pārvaldīt brīvdienas atsevišķiem birojiem ir ļoti noderīgs rīks organizācijai, kas aptver vairākas atrašanās vietas. Izmantojiet šo opciju, lai pielāgotu brīvdienas katram savas organizācijas birojam.",

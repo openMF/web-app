@@ -34,6 +34,15 @@
       </span>
     </div>
     <div class="kpi-status">
+      @if (activeBreachDisable(); as activeDisable) {
+        <span class="status-chip status-chip--disabled">
+          <span class="dot"></span>
+          {{
+            'labels.inputs.Breach evaluation disabled since'
+              | translate: { date: (activeDisable.startDateObj | dateFormat) }
+          }}
+        </span>
+      }
       @if (hasPauseActiveToday()) {
         <span class="status-chip">
           <span class="dot"></span>
@@ -133,35 +142,61 @@
         }
       </div>
       <div class="toolbar-right">
-        @if (hasActivePause()) {
+        <!-- While a DISABLE window is active every breach action other than
+             Enable is removed, not just disabled (WEB-657 agreement). -->
+        @if (!breachEvaluationDisabled()) {
+          @if (hasActivePause()) {
+            <button
+              type="button"
+              class="btn btn-warn"
+              (click)="resumeBreachAction()"
+              *mifosxHasPermission="'CREATE_WC_BREACH_ACTION'"
+            >
+              <fa-icon icon="play"></fa-icon>
+              {{ 'labels.buttons.Resume Breach' | translate }}
+            </button>
+          }
           <button
             type="button"
-            class="btn btn-warn"
-            (click)="resumeBreachAction()"
+            class="btn btn-primary"
+            (click)="createBreachActionPause()"
             *mifosxHasPermission="'CREATE_WC_BREACH_ACTION'"
           >
-            <fa-icon icon="play"></fa-icon>
-            {{ 'labels.buttons.Resume Breach' | translate }}
+            <fa-icon icon="pause"></fa-icon>
+            {{ 'labels.buttons.Pause Breach' | translate }}
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="createBreachActionReset()"
+            *mifosxHasPermission="'CREATE_WC_BREACH_RESET'"
+          >
+            <fa-icon icon="calendar"></fa-icon>
+            {{ 'labels.buttons.Reset' | translate }}
           </button>
         }
-        <button
-          type="button"
-          class="btn btn-primary"
-          (click)="createBreachActionPause()"
-          *mifosxHasPermission="'CREATE_WC_BREACH_ACTION'"
-        >
-          <fa-icon icon="pause"></fa-icon>
-          {{ 'labels.buttons.Pause Breach' | translate }}
-        </button>
-        <button
-          type="button"
-          class="btn btn-primary"
-          (click)="createBreachActionReset()"
-          *mifosxHasPermission="'CREATE_WC_BREACH_RESET'"
-        >
-          <fa-icon icon="calendar"></fa-icon>
-          {{ 'labels.buttons.Reset' | translate }}
-        </button>
+        @if (breachToggleAvailable) {
+          <!-- Both permissions are required; nesting the directive ANDs them,
+               whereas passing an array would only require one of the two. -->
+          <span *mifosxHasPermission="'CREATE_WC_BREACH_ACTION'">
+            <span *mifosxHasPermission="'CREATE_WC_BREACH_DISABLE'">
+              <button
+                type="button"
+                class="btn"
+                [class.btn-warn]="!breachEvaluationDisabled()"
+                [class.btn-primary]="breachEvaluationDisabled()"
+                (click)="toggleBreachEvaluation()"
+              >
+                <fa-icon [icon]="breachEvaluationDisabled() ? 'play' : 'ban'"></fa-icon>
+                @if (breachEvaluationDisabled()) {
+                  {{ 'labels.buttons.Enable Breach' | translate }}
+                } @else {
+                  {{ 'labels.buttons.Disable Breach' | translate }}
+                }
+              </button>
+            </span>
+          </span>
+        }
       </div>
     </div>
 
@@ -185,10 +220,8 @@
                   <span class="id-cell">#{{ row.id }}</span>
                 </td>
                 <td>
-                  <span class="action-badge">
-                    <fa-icon
-                      [icon]="row.action === 'RESUME' ? 'play' : row.action === 'RESCHEDULE' ? 'calendar' : 'pause'"
-                    ></fa-icon>
+                  <span class="action-badge" [class.action-badge--disable]="row.action === 'DISABLE'">
+                    <fa-icon [icon]="actionIcon(row.action)"></fa-icon>
                     {{ row.action | titlecase }}
                   </span>
                 </td>
@@ -213,7 +246,7 @@
                   }
                 </td>
                 <td>
-                  @if (row.action !== 'RESUME') {
+                  @if (row.action !== 'RESUME' && row.action !== 'ENABLE') {
                     <span class="duration">
                       <span class="days">{{ row.durationDays }}{{ row.isOngoing ? '+' : '' }}</span>
                       <span class="duration-unit">{{ 'labels.inputs.days' | translate }}</span>
@@ -257,15 +290,17 @@
     <div class="list-section">
       <div class="list-section-header">
         <h3>{{ 'labels.heading.Breach Actions' | translate }}</h3>
-        <button
-          type="button"
-          class="btn btn-primary"
-          (click)="loanAction('Update Breach')"
-          *mifosxHasPermission="'CREATE_WC_BREACH_ACTION'"
-        >
-          <fa-icon icon="not-equal"></fa-icon>
-          {{ 'labels.menus.Update Breach' | translate }}
-        </button>
+        @if (!breachEvaluationDisabled()) {
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="loanAction('Update Breach')"
+            *mifosxHasPermission="'CREATE_WC_BREACH_ACTION'"
+          >
+            <fa-icon icon="not-equal"></fa-icon>
+            {{ 'labels.menus.Update Breach' | translate }}
+          </button>
+        }
       </div>
 
       @if (breachActionsList.length > 0) {
@@ -314,15 +349,17 @@
     <div class="list-section">
       <div class="list-section-header">
         <h3>{{ 'labels.heading.Near Breach Actions' | translate }}</h3>
-        <button
-          type="button"
-          class="btn btn-primary"
-          (click)="loanAction('Update Near Breach')"
-          *mifosxHasPermission="'CREATE_WC_NEAR_BREACH_ACTION'"
-        >
-          <fa-icon icon="not-equal"></fa-icon>
-          {{ 'labels.menus.Update Near Breach' | translate }}
-        </button>
+        @if (!breachEvaluationDisabled()) {
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="loanAction('Update Near Breach')"
+            *mifosxHasPermission="'CREATE_WC_NEAR_BREACH_ACTION'"
+          >
+            <fa-icon icon="not-equal"></fa-icon>
+            {{ 'labels.menus.Update Near Breach' | translate }}
+          </button>
+        }
       </div>
 
       @if (nearBreachActions.length > 0) {

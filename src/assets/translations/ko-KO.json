@@ -426,7 +426,16 @@
     "validation.emailInvalid": "유효하지 않은 이메일",
     "validation.requiredField": "{{label}}은(는) 필수 필드입니다.",
     "validation.mustBeAtLeast": "{{field}}은(는) 최소 {{min}}이어야 합니다",
-    "validation.mustBePositive": "{{field}}은(는) 양수여야 합니다."
+    "validation.mustBePositive": "{{field}}은(는) 양수여야 합니다.",
+    "breach": {
+      "alreadyDisabled": "이 대출의 위반 평가는 이미 비활성화되어 있습니다.",
+      "noActiveDisableToEnable": "이 대출에는 활성화할 수 있는 비활성화 상태가 없습니다.",
+      "mustBeCurrentBusinessDate": "적용 날짜는 현재 영업일이어야 합니다.",
+      "endDateNotAllowed": "위반 평가를 비활성화하거나 활성화할 때는 종료 날짜를 보낼 수 없습니다.",
+      "noBreachConfiguration": "이 대출에는 위반 구성이 없습니다.",
+      "loanIsNotActive": "위반 평가는 대출이 활성 상태일 때만 변경할 수 있습니다.",
+      "breachIsDisabled": "이 대출의 위반 평가가 비활성화되어 있습니다. 이 작업을 실행하려면 활성화하세요."
+    }
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -784,7 +793,9 @@
       "Create Exchange Rate": "환율 생성",
       "Create Transfer Fee": "송금 수수료 생성",
       "Requesting": "요청 중",
-      "Delink": "연결 해제"
+      "Delink": "연결 해제",
+      "Disable Breach": "위반 비활성화",
+      "Enable Breach": "위반 활성화"
     },
     "catalogs": {
       "% Amount": "양",
@@ -1134,6 +1145,7 @@
     },
     "heading": {
       "Create Agriculture Loan": "농업 대출 생성",
+      "Create BNPL Loan": "BNPL 대출 생성",
       "Create Education Loan": "교육 대출 생성",
       "Create Personal Loan": "개인 대출 생성",
       "Create Two Wheeler Loan": "이륜차 대출 생성",
@@ -1613,6 +1625,7 @@
       "undo_account_transfer": "계좌 이체 취소",
       "Loan Breach Actions": "대출 위반 작업",
       "No Breach Actions": "위반 작업 없음",
+      "No Delinquency Actions": "연체 작업 없음",
       "Pause Timeline": "일시중지 타임라인",
       "Location Map": "위치 지도",
       "Exchange Rates": "환율",
@@ -1624,7 +1637,9 @@
       "Exchange Rate": "환율",
       "Create Exchange Rate": "환율 생성",
       "View Exchange Rate": "환율 보기",
-      "Edit Exchange Rate": "환율 편집"
+      "Edit Exchange Rate": "환율 편집",
+      "Disable Breach Evaluation": "위반 평가 비활성화",
+      "Enable Breach Evaluation": "위반 평가 활성화"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3212,6 +3227,7 @@
       "Expired": "만료됨",
       "Last Action": "마지막 작업",
       "No breach actions have been recorded for this loan": "이 대출에 대한 위반 작업이 기록되지 않았습니다",
+      "No delinquency actions have been recorded for this loan": "이 대출에 대한 연체 작업이 기록되지 않았습니다",
       "No records match the selected filter": "선택한 필터와 일치하는 기록이 없습니다",
       "Ongoing": "진행 중",
       "Pause Active": "일시중지 활성",
@@ -3262,7 +3278,8 @@
       "Mail": "메일",
       "Link": "연결",
       "Audit Trail": "감사 추적",
-      "Restart Period from Reset Date": "리셋 날짜부터 기간 다시 시작"
+      "Restart Period from Reset Date": "리셋 날짜부터 기간 다시 시작",
+      "Breach evaluation disabled since": "{{date}}부터 위반 평가 비활성화됨"
     },
     "links": {
       "Community": "지역 사회",
@@ -3485,10 +3502,13 @@
       "the Transaction Type": "거래 유형",
       "undo_account_transfer": "이 계좌 이체를 취소하시겠습니까?",
       "Are you sure you want to undo the charge-off": "상각을 취소하시겠습니까?",
-      "Restart Period from Reset Date splits the current period": "활성화하면 현재 위반 기간이 리셋 날짜로 분할되고 해당 날짜부터 새 기간이 시작됩니다."
+      "Restart Period from Reset Date splits the current period": "활성화하면 현재 위반 기간이 리셋 날짜로 분할되고 해당 날짜부터 새 기간이 시작됩니다.",
+      "Breach evaluation will stop": "{{date}}부터 위반 평가가 중지됩니다. 이전 결과는 보존되지만 다시 활성화할 때까지 표시되지 않습니다.",
+      "Breach evaluation will resume": "{{date}}부터 위반 평가가 재개됩니다. 해당 날짜부터 대출이 다시 평가됩니다."
     },
     "text": {
       "Agriculture Loan": "농업 대출",
+      "BNPL": "BNPL",
       "Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles": "작물 생산, 장비, 농지 개발 등 영농 관련 자금을 지원하며, 일반적으로 영농 주기에 맞춰 운영되는 대출입니다.",
       "Education Loan": "교육 대출",
       "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "국내외 학업의 등록금 및 관련 비용을 지원하며, 학업 기간에 맞춘 상환 옵션을 제공합니다.",
@@ -3499,6 +3519,7 @@
       "Max": "최대",
       "Hidden variables and predefined values are included in the final payload automatically.": "Hidden variables and predefined values are included in the final payload automatically.",
       "No Breach Actions": "위반 행위 없음",
+      "Previous results are hidden while breach evaluation is disabled": "위반 평가가 비활성화된 동안 이전 결과는 표시되지 않습니다",
       "No Near Breach Actions": "위반 임박 행위 없음",
       "A": "ㅏ",
       "Ability to manage holidays for individual offices": "개별 사무실의 휴일을 관리하는 기능은 여러 위치에 걸쳐 있는 조직에 매우 유용한 도구입니다. 조직의 각 사무실에 대한 휴일을 사용자 정의하려면 이 옵션을 사용하십시오.",
