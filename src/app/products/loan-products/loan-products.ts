@@ -89,10 +89,23 @@ export class LoanProducts {
     delete loanProduct.allowAttributeConfiguration;
     delete loanProduct.advancedAccountingRules;
 
-    // In Fineract, the POST and PUT endpoints for /v1/loanproducts have a typo in the field
-    // allowPartialPeriodInterestCalculation. Until that is fixed, we need to replace the field name in the payload.
-    loanProduct.allowPartialPeriodInterestCalculation = loanProduct.allowPartialPeriodInterestCalculation;
-    delete loanProduct.allowPartialPeriodInterestCalculation;
+    // `allowPartialPeriodInterestCalculation` is sent through UNCHANGED, and must stay that way.
+    //
+    // History, because this field has now been broken in both directions: Fineract used to accept the
+    // misspelled `allowPartialPeriodInterestCalcualtion` ("Calcualtion"), so this method used to
+    // re-key the payload to that name. Fineract fixed the typo in FINERACT-2206 (commit ab9f4fd4,
+    // 2026-01-02) — the constant is still NAMED
+    // `ALLOW_PARTIAL_PERIOD_INTEREST_CALCUALTION_PARAM_NAME`, but its value is now the correct
+    // spelling — and #2993 dropped the re-key here 11 days later to match. Sending the misspelled
+    // name to a current backend fails with
+    // "[allowPartialPeriodInterestCalcualtion] ... unsupported parameter".
+    //
+    // #2993 did that by making both sides of the assignment identical, which left `x = x; delete x`
+    // and silently stripped the field from every create/update payload instead. That in turn made
+    // Fineract default the flag to false and reject `isInterestRecalculationEnabled` on any product
+    // using "Same as repayment period", with
+    // "[isInterestRecalculationEnabled] not.supported.for.selected.interest.calculation.type".
+    // Removing the dead statements entirely is what #2993 intended; see loan-products.spec.ts.
 
     // Set Default values If they were not set
     if (this.loanProductService.isLoanProduct) {

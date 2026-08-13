@@ -1134,6 +1134,7 @@
     },
     "heading": {
       "Create Agriculture Loan": "Izveidot lauksaimniecības aizdevumu",
+      "Create BNPL Loan": "Izveidot BNPL aizdevumu",
       "Create Education Loan": "Izveidot studiju aizdevumu",
       "Create Personal Loan": "Izveidot patēriņa aizdevumu",
       "Create Two Wheeler Loan": "Izveidot divriteņu transportlīdzekļa aizdevumu",
@@ -3487,6 +3488,7 @@
     },
     "text": {
       "Agriculture Loan": "Lauksaimniecības aizdevums",
+      "BNPL": "BNPL",
       "Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles": "Kredīts lauksaimniecības vajadzībām, piemēram, kultūraugu audzēšanai, tehnikai vai zemes uzlabošanai, parasti saistīts ar lauksaimniecības cikliem.",
       "Education Loan": "Studiju aizdevums",
       "Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration": "Mācību maksas un ar to saistīto izdevumu finansējums studijām valstī vai ārzemēs ar studiju ilgumam pielāgotām atmaksas iespējām.",

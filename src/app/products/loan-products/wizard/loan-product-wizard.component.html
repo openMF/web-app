@@ -53,11 +53,33 @@
           </div>
         </ng-container>
 
+        <ng-container *ngIf="step.kind === 'interest-refund' && loanProductsTemplate">
+          <mifosx-loan-product-interest-refund-step
+            [loanProductsTemplate]="loanProductsTemplate"
+            (supportedInterestRefundTypes)="setSupportedInterestRefundTypes($event)"
+          ></mifosx-loan-product-interest-refund-step>
+        </ng-container>
+
+        <ng-container *ngIf="step.kind === 'deferred-income' && loanProductsTemplate">
+          <mifosx-loan-product-capitalized-income-step
+            [deferredIncomeRecognition]="deferredIncomeRecognition"
+            [capitalizedIncomeCalculationTypeOptions]="loanProductsTemplate.capitalizedIncomeCalculationTypeOptions"
+            [capitalizedIncomeStrategyOptions]="loanProductsTemplate.capitalizedIncomeStrategyOptions"
+            [capitalizedIncomeTypeOptions]="loanProductsTemplate.capitalizedIncomeTypeOptions"
+            [buyDownFeeCalculationTypeOptions]="loanProductsTemplate.buyDownFeeCalculationTypeOptions"
+            [buyDownFeeStrategyOptions]="loanProductsTemplate.buyDownFeeStrategyOptions"
+            [buyDownFeeIncomeTypeOptions]="loanProductsTemplate.buyDownFeeIncomeTypeOptions"
+            (setViewChildForm)="setDeferredIncomeRecognitionForm($event)"
+          ></mifosx-loan-product-capitalized-income-step>
+        </ng-container>
+
         <ng-container
           *ngIf="
             step.kind !== 'payment-allocation' &&
             step.kind !== 'charges' &&
             step.kind !== 'accounting' &&
+            step.kind !== 'interest-refund' &&
+            step.kind !== 'deferred-income' &&
             step.kind !== 'review'
           "
         >
