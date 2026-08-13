@@ -426,7 +426,16 @@
     "validation.emailInvalid": "Email non valida",
     "validation.requiredField": "{{label}} è un campo obbligatorio.",
     "validation.mustBeAtLeast": "{{field}} deve essere almeno {{min}}",
-    "validation.mustBePositive": "{{field}} deve essere un numero positivo."
+    "validation.mustBePositive": "{{field}} deve essere un numero positivo.",
+    "breach": {
+      "alreadyDisabled": "La valutazione delle violazioni è già disabilitata per questo prestito.",
+      "noActiveDisableToEnable": "Non esiste una disabilitazione attiva da abilitare per questo prestito.",
+      "mustBeCurrentBusinessDate": "La data di efficacia deve essere la data operativa corrente.",
+      "endDateNotAllowed": "Non è possibile inviare una data di fine quando si disabilita o abilita la valutazione delle violazioni.",
+      "noBreachConfiguration": "Questo prestito non ha una configurazione delle violazioni.",
+      "loanIsNotActive": "La valutazione delle violazioni può essere modificata solo mentre il prestito è attivo.",
+      "breachIsDisabled": "La valutazione delle violazioni è disabilitata per questo prestito. Abilitala per eseguire questa azione."
+    }
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -784,7 +793,9 @@
       "Create Exchange Rate": "Crea tasso di cambio",
       "Create Transfer Fee": "Crea commissione di trasferimento",
       "Requesting": "Richiesta in corso",
-      "Delink": "Scollega"
+      "Delink": "Scollega",
+      "Disable Breach": "Disabilita Violazione",
+      "Enable Breach": "Abilita Violazione"
     },
     "catalogs": {
       "% Amount": "Quantità",
@@ -1613,6 +1624,7 @@
       "undo_account_transfer": "Annulla trasferimento conto",
       "Loan Breach Actions": "Azioni di Violazione del Prestito",
       "No Breach Actions": "Nessuna Azione sulle Violazioni",
+      "No Delinquency Actions": "Nessuna Azione sulla Morosità",
       "Pause Timeline": "Cronologia Pause",
       "Location Map": "Mappa della posizione",
       "Exchange Rates": "Tassi di cambio",
@@ -1624,7 +1636,9 @@
       "Exchange Rate": "Tasso di cambio",
       "Create Exchange Rate": "Crea tasso di cambio",
       "View Exchange Rate": "Visualizza tasso di cambio",
-      "Edit Exchange Rate": "Modifica tasso di cambio"
+      "Edit Exchange Rate": "Modifica tasso di cambio",
+      "Disable Breach Evaluation": "Disabilita Valutazione delle Violazioni",
+      "Enable Breach Evaluation": "Abilita Valutazione delle Violazioni"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3211,6 +3225,7 @@
       "Expired": "Scaduta",
       "Last Action": "Ultima Azione",
       "No breach actions have been recorded for this loan": "Nessuna azione sulle violazioni è stata registrata per questo prestito",
+      "No delinquency actions have been recorded for this loan": "Nessuna azione sulla morosità è stata registrata per questo prestito",
       "No records match the selected filter": "Nessun record corrisponde al filtro selezionato",
       "Ongoing": "In corso",
       "Pause Active": "Pausa Attiva",
@@ -3261,7 +3276,8 @@
       "Mail": "E-mail",
       "Link": "Collegamento",
       "Audit Trail": "Traccia di controllo",
-      "Restart Period from Reset Date": "Riavvia periodo dalla data di ripristino"
+      "Restart Period from Reset Date": "Riavvia periodo dalla data di ripristino",
+      "Breach evaluation disabled since": "Valutazione delle violazioni disabilitata dal {{date}}"
     },
     "links": {
       "Community": "Comunità",
@@ -3484,7 +3500,9 @@
       "the Transaction Type": "il tipo di transazione",
       "undo_account_transfer": "Sei sicuro di voler annullare questo trasferimento conto?",
       "Are you sure you want to undo the charge-off": "Sei sicuro di voler annullare l'addebito?",
-      "Restart Period from Reset Date splits the current period": "Se abilitato, il periodo di violazione corrente viene suddiviso alla data di ripristino e un nuovo periodo inizia da quella data."
+      "Restart Period from Reset Date splits the current period": "Se abilitato, il periodo di violazione corrente viene suddiviso alla data di ripristino e un nuovo periodo inizia da quella data.",
+      "Breach evaluation will stop": "La valutazione delle violazioni si interrompe il {{date}}. I risultati precedenti restano registrati ma vengono nascosti fino a una nuova abilitazione.",
+      "Breach evaluation will resume": "La valutazione delle violazioni riprende il {{date}}. Il prestito viene valutato di nuovo a partire da quella data."
     },
     "text": {
       "Agriculture Loan": "Prestito agricolo",
@@ -3499,6 +3517,7 @@
       "Max": "Max",
       "Hidden variables and predefined values are included in the final payload automatically.": "Hidden variables and predefined values are included in the final payload automatically.",
       "No Breach Actions": "Nessuna azione di violazione",
+      "Previous results are hidden while breach evaluation is disabled": "I risultati precedenti sono nascosti mentre la valutazione delle violazioni è disabilitata",
       "No Near Breach Actions": "Nessuna azione di violazione prossima",
       "A": "UN",
       "Ability to manage holidays for individual offices": "La possibilità di gestire le ferie per i singoli uffici è uno strumento molto utile per un'organizzazione che si estende su più sedi. Utilizza questa opzione per personalizzare le ferie per ciascun ufficio della tua organizzazione.",

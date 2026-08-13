@@ -426,7 +426,16 @@
     "validation.emailInvalid": "इमेल मान्य छैन",
     "validation.requiredField": "{{label}} एक आवश्यक फिल्ड हो।",
     "validation.mustBeAtLeast": "{{field}} कम्तिमा {{min}} हुनुपर्छ",
-    "validation.mustBePositive": "{{field}} धनात्मक संख्या हुनुपर्छ।"
+    "validation.mustBePositive": "{{field}} धनात्मक संख्या हुनुपर्छ।",
+    "breach": {
+      "alreadyDisabled": "यो ऋणको उल्लंघन मूल्यांकन पहिले नै असक्षम छ।",
+      "noActiveDisableToEnable": "यो ऋणको लागि सक्षम गर्न मिल्ने कुनै सक्रिय असक्षमता छैन।",
+      "mustBeCurrentBusinessDate": "प्रभावकारी मिति हालको कारोबार मिति हुनुपर्छ।",
+      "endDateNotAllowed": "उल्लंघन मूल्यांकन असक्षम वा सक्षम गर्दा अन्त्य मिति पठाउन मिल्दैन।",
+      "noBreachConfiguration": "यो ऋणमा उल्लंघन कन्फिगरेसन छैन।",
+      "loanIsNotActive": "ऋण सक्रिय हुँदा मात्र उल्लंघन मूल्यांकन परिवर्तन गर्न सकिन्छ।",
+      "breachIsDisabled": "यो ऋणको उल्लंघन मूल्यांकन असक्षम छ। यो कार्य चलाउन यसलाई सक्षम गर्नुहोस्।"
+    }
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -784,7 +793,9 @@
       "Create Exchange Rate": "विनिमय दर सिर्जना गर्नुहोस्",
       "Create Transfer Fee": "स्थानान्तरण शुल्क सिर्जना गर्नुहोस्",
       "Requesting": "अनुरोध गर्दै",
-      "Delink": "लिंक हटाउनुहोस्"
+      "Delink": "लिंक हटाउनुहोस्",
+      "Disable Breach": "उल्लंघन असक्षम गर्नुहोस्",
+      "Enable Breach": "उल्लंघन सक्षम गर्नुहोस्"
     },
     "catalogs": {
       "% Amount": "रकम",
@@ -1612,6 +1623,7 @@
       "undo_account_transfer": "खाता स्थानान्तरण रद्द गर्नुहोस्",
       "Loan Breach Actions": "ऋण उल्लङ्घन कार्यहरू",
       "No Breach Actions": "कुनै उल्लंघन कार्यहरू छैनन्",
+      "No Delinquency Actions": "कुनै अपराध कार्यहरू छैनन्",
       "Pause Timeline": "रोकावट समयरेखा",
       "Location Map": "स्थान नक्सा",
       "Exchange Rates": "विनिमय दरहरू",
@@ -1623,7 +1635,9 @@
       "Exchange Rate": "विनिमय दर",
       "Create Exchange Rate": "विनिमय दर सिर्जना गर्नुहोस्",
       "View Exchange Rate": "विनिमय दर हेर्नुहोस्",
-      "Edit Exchange Rate": "विनिमय दर सम्पादन गर्नुहोस्"
+      "Edit Exchange Rate": "विनिमय दर सम्पादन गर्नुहोस्",
+      "Disable Breach Evaluation": "उल्लंघन मूल्यांकन असक्षम गर्नुहोस्",
+      "Enable Breach Evaluation": "उल्लंघन मूल्यांकन सक्षम गर्नुहोस्"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3210,6 +3224,7 @@
       "Expired": "समाप्त",
       "Last Action": "अन्तिम कार्य",
       "No breach actions have been recorded for this loan": "यो ऋणको लागि कुनै उल्लंघन कार्यहरू रेकर्ड गरिएको छैन",
+      "No delinquency actions have been recorded for this loan": "यो ऋणको लागि कुनै अपराध कार्यहरू रेकर्ड गरिएको छैन",
       "No records match the selected filter": "कुनै पनि रेकर्ड चयन गरिएको फिल्टरसँग मेल खाँदैन",
       "Ongoing": "जारी",
       "Pause Active": "रोकावट सक्रिय",
@@ -3260,7 +3275,8 @@
       "Mail": "मेल",
       "Link": "लिंक",
       "Audit Trail": "अडिट ट्रेल",
-      "Restart Period from Reset Date": "रिसेट मितिबाट अवधि पुनः सुरु गर्नुहोस्"
+      "Restart Period from Reset Date": "रिसेट मितिबाट अवधि पुनः सुरु गर्नुहोस्",
+      "Breach evaluation disabled since": "{{date}} देखि उल्लंघन मूल्यांकन असक्षम"
     },
     "links": {
       "Community": "समुदाय",
@@ -3484,7 +3500,9 @@
       "the Transaction Type": "लेनदेन प्रकार",
       "undo_account_transfer": "के तपाईं यो खाता स्थानान्तरण रद्द गर्न निश्चित हुनुहुन्छ?",
       "Are you sure you want to undo the charge-off": "के तपाईं चार्ज-अफ पूर्ववत गर्न निश्चित हुनुहुन्छ?",
-      "Restart Period from Reset Date splits the current period": "सक्षम पारेमा, हालको उल्लंघन अवधि रिसेट मितिमा विभाजन हुन्छ र सो मितिबाट नयाँ अवधि सुरु हुन्छ।"
+      "Restart Period from Reset Date splits the current period": "सक्षम पारेमा, हालको उल्लंघन अवधि रिसेट मितिमा विभाजन हुन्छ र सो मितिबाट नयाँ अवधि सुरु हुन्छ।",
+      "Breach evaluation will stop": "{{date}} देखि उल्लंघन मूल्यांकन रोकिन्छ। अघिल्ला नतिजाहरू रेकर्डमा रहन्छन् तर पुनः सक्षम नगरेसम्म लुकाइन्छन्।",
+      "Breach evaluation will resume": "{{date}} देखि उल्लंघन मूल्यांकन पुनः सुरु हुन्छ। त्यो मितिदेखि ऋणको पुनः मूल्यांकन गरिन्छ।"
     },
     "text": {
       "Agriculture Loan": "कृषि ऋण",
@@ -3499,6 +3517,7 @@
       "Max": "अधिकतम",
       "Hidden variables and predefined values are included in the final payload automatically.": "Hidden variables and predefined values are included in the final payload automatically.",
       "No Breach Actions": "कुनै उल्लंघन कार्यहरू छैन",
+      "Previous results are hidden while breach evaluation is disabled": "उल्लंघन मूल्यांकन असक्षम भएको बेला अघिल्ला नतिजाहरू लुकाइएका छन्",
       "No Near Breach Actions": "कुनै नजिकको उल्लंघन कार्यहरू छैन",
       "A": "ए",
       "Ability to manage holidays for individual offices": "व्यक्तिगत कार्यालयहरूको लागि छुट्टिहरू व्यवस्थापन गर्ने क्षमता धेरै स्थानहरूमा फैलिएको संगठनको लागि एक धेरै उपयोगी उपकरण हो। तपाईंको संगठनको प्रत्येक कार्यालयको लागि छुट्टिहरू अनुकूलन गर्न यो विकल्प प्रयोग गर्नुहोस्।",

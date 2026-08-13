@@ -430,7 +430,16 @@
     "validation.requiredField": "{{label}} is a required field.",
     "validation.mustBeAtLeast": "{{field}} must be at least {{min}}",
     "validation.mustBePositive": "{{field}} must be a positive number.",
-    "validation.openingTimeBeforeClosingTime": "Opening time must be before closing time."
+    "validation.openingTimeBeforeClosingTime": "Opening time must be before closing time.",
+    "breach": {
+      "alreadyDisabled": "Breach evaluation is already disabled for this loan.",
+      "noActiveDisableToEnable": "There is no active disable to enable for this loan.",
+      "mustBeCurrentBusinessDate": "The effective date must be the current business date.",
+      "endDateNotAllowed": "An end date cannot be sent when disabling or enabling breach evaluation.",
+      "noBreachConfiguration": "This loan has no breach configuration.",
+      "loanIsNotActive": "Breach evaluation can only be changed while the loan is active.",
+      "breachIsDisabled": "Breach evaluation is disabled for this loan. Enable it to run this action."
+    }
   },
   "labels": {
     "Mifos Reporting Plugin for Eclipse Birt": "Mifos Reporting Plugin for Eclipse Birt",
@@ -796,7 +805,9 @@
       "All": "All",
       "Pause Breach": "Pause Breach",
       "Resume Breach": "Resume Breach",
-      "Currency Conversion": "Currency Conversion"
+      "Currency Conversion": "Currency Conversion",
+      "Disable Breach": "Disable Breach",
+      "Enable Breach": "Enable Breach"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -1632,6 +1643,7 @@
       "undo_account_transfer": "Undo Account Transfer",
       "Loan Breach Actions": "Loan Breach Actions",
       "No Breach Actions": "No Breach Actions",
+      "No Delinquency Actions": "No Delinquency Actions",
       "Pause Timeline": "Pause Timeline",
       "Location Map": "Location Map",
       "Services": "Services",
@@ -1644,7 +1656,9 @@
       "Create Exchange Rate": "Create Exchange Rate",
       "View Exchange Rate": "View Exchange Rate",
       "Edit Exchange Rate": "Edit Exchange Rate",
-      "Theme": "Theme"
+      "Theme": "Theme",
+      "Disable Breach Evaluation": "Disable Breach Evaluation",
+      "Enable Breach Evaluation": "Enable Breach Evaluation"
     },
     "inputs": {
       "Breach Actions": "Breach Actions",
@@ -3269,6 +3283,7 @@
       "Expired": "Expired",
       "Last Action": "Last Action",
       "No breach actions have been recorded for this loan": "No breach actions have been recorded for this loan",
+      "No delinquency actions have been recorded for this loan": "No delinquency actions have been recorded for this loan",
       "No records match the selected filter": "No records match the selected filter",
       "Ongoing": "Ongoing",
       "Pause Active": "Pause Active",
@@ -3298,7 +3313,8 @@
       "Red": "Red",
       "Yellow": "Yellow",
       "Primary Color": "Primary Color",
-      "Audit Trail": "Audit Trail"
+      "Audit Trail": "Audit Trail",
+      "Breach evaluation disabled since": "Breach evaluation disabled since {{date}}"
     },
     "links": {
       "Community": "Community",
@@ -3523,7 +3539,9 @@
       "the productmix component with id": "the productmix component with id",
       "the Reschedule Loan": " the Reschedule Loan",
       "the Transaction Type": "the Transaction Type",
-      "Are you sure you want to undo the charge-off": "Are you sure you want to undo the charge-off"
+      "Are you sure you want to undo the charge-off": "Are you sure you want to undo the charge-off",
+      "Breach evaluation will stop": "Breach evaluation stops on {{date}}. Previous results stay on record but are hidden until you enable it again.",
+      "Breach evaluation will resume": "Breach evaluation resumes on {{date}}. The loan is evaluated again from that date."
     },
     "text": {
       "Agriculture Loan": "Agriculture Loan",
@@ -3546,6 +3564,7 @@
       "No additional filters": "No additional filters",
       "Hidden variables and predefined values are included in the final payload automatically.": "Hidden variables and predefined values are included in the final payload automatically.",
       "No Breach Actions": "No Breach Actions",
+      "Previous results are hidden while breach evaluation is disabled": "Previous results are hidden while breach evaluation is disabled",
       "No Near Breach Actions": "No Near Breach Actions",
       "A": "A",
       "Ability to manage holidays for individual offices": "The ability to manage holidays for individual offices is a very useful tool for an organization spanning multiple locations.Use this option to customize holidays for each office of your organization.",

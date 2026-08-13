@@ -428,7 +428,16 @@
     "validation.emailInvalid": "E-mail není platný",
     "validation.requiredField": "{{label}} je povinné pole.",
     "validation.mustBeAtLeast": "{{field}} musí být alespoň {{min}}",
-    "validation.mustBePositive": "{{field}} musí být kladné číslo."
+    "validation.mustBePositive": "{{field}} musí být kladné číslo.",
+    "breach": {
+      "alreadyDisabled": "Hodnocení porušení je pro tento úvěr již zakázáno.",
+      "noActiveDisableToEnable": "Pro tento úvěr neexistuje aktivní zákaz, který by šlo povolit.",
+      "mustBeCurrentBusinessDate": "Datum účinnosti musí být aktuální obchodní datum.",
+      "endDateNotAllowed": "Při zakázání nebo povolení hodnocení porušení nelze odeslat datum konce.",
+      "noBreachConfiguration": "Tento úvěr nemá konfiguraci porušení.",
+      "loanIsNotActive": "Hodnocení porušení lze změnit pouze tehdy, když je úvěr aktivní.",
+      "breachIsDisabled": "Hodnocení porušení je pro tento úvěr zakázáno. Povolte je, abyste mohli tuto akci provést."
+    }
   },
   "labels": {
     "version": {
@@ -785,7 +794,9 @@
       "Create Exchange Rate": "Vytvořit směnný kurz",
       "Create Transfer Fee": "Vytvořit poplatek za převod",
       "Requesting": "Probíhá požadavek",
-      "Delink": "Odpojit"
+      "Delink": "Odpojit",
+      "Disable Breach": "Zakázat porušení",
+      "Enable Breach": "Povolit porušení"
     },
     "catalogs": {
       "% Amount": "% Amount",
@@ -1613,6 +1624,7 @@
       "undo_account_transfer": "Vrátit převod účtu",
       "Loan Breach Actions": "Akce porušení úvěru",
       "No Breach Actions": "Žádné akce při porušení",
+      "No Delinquency Actions": "Žádné akce delikvence",
       "Pause Timeline": "Časová osa pauz",
       "Location Map": "Mapa polohy",
       "Exchange Rates": "Směnné kurzy",
@@ -1624,7 +1636,9 @@
       "Exchange Rate": "Směnný kurz",
       "Create Exchange Rate": "Vytvořit směnný kurz",
       "View Exchange Rate": "Zobrazit směnný kurz",
-      "Edit Exchange Rate": "Upravit směnný kurz"
+      "Edit Exchange Rate": "Upravit směnný kurz",
+      "Disable Breach Evaluation": "Zakázat hodnocení porušení",
+      "Enable Breach Evaluation": "Povolit hodnocení porušení"
     },
     "inputs": {
       "Annual interest rate": "Roční úroková sazba",
@@ -3211,6 +3225,7 @@
       "Expired": "Vypršela",
       "Last Action": "Poslední akce",
       "No breach actions have been recorded for this loan": "Pro tento úvěr nebyly zaznamenány žádné akce při porušení",
+      "No delinquency actions have been recorded for this loan": "Pro tento úvěr nebyly zaznamenány žádné akce delikvence",
       "No records match the selected filter": "Žádné záznamy neodpovídají vybranému filtru",
       "Ongoing": "Probíhá",
       "Pause Active": "Pauza aktivní",
@@ -3261,7 +3276,8 @@
       "Mail": "E-mail",
       "Link": "Propojení",
       "Audit Trail": "Auditní stopa",
-      "Restart Period from Reset Date": "Restartovat období od data resetu"
+      "Restart Period from Reset Date": "Restartovat období od data resetu",
+      "Breach evaluation disabled since": "Hodnocení porušení zakázáno od {{date}}"
     },
     "links": {
       "Community": "Společenství",
@@ -3485,7 +3501,9 @@
       "the Transaction Type": "typ transakce",
       "undo_account_transfer": "Opravdu chcete vrátit tento převod účtu?",
       "Are you sure you want to undo the charge-off": "Opravdu chcete zrušit odpis?",
-      "Restart Period from Reset Date splits the current period": "Pokud je povoleno, aktuální období porušení se rozdělí k datu resetu a nové období začne od tohoto data."
+      "Restart Period from Reset Date splits the current period": "Pokud je povoleno, aktuální období porušení se rozdělí k datu resetu a nové období začne od tohoto data.",
+      "Breach evaluation will stop": "Hodnocení porušení se zastaví {{date}}. Předchozí výsledky zůstanou uloženy, ale budou skryty až do opětovného povolení.",
+      "Breach evaluation will resume": "Hodnocení porušení bude obnoveno {{date}}. Úvěr bude od tohoto data znovu hodnocen."
     },
     "text": {
       "Agriculture Loan": "Zemědělský úvěr",
@@ -3500,6 +3518,7 @@
       "Max": "Max",
       "Hidden variables and predefined values are included in the final payload automatically.": "Skryté proměnné a předdefinované hodnoty jsou automaticky zahrnuty do konečného payloadu.",
       "No Breach Actions": "Žádné Porušení Akce",
+      "Previous results are hidden while breach evaluation is disabled": "Předchozí výsledky jsou skryty, dokud je hodnocení porušení zakázáno",
       "No Near Breach Actions": "Žádné Blížící se porušení Akce",
       "A": "A",
       "Ability to manage holidays for individual offices": "Schopnost spravovat svátky pro jednotlivé kanceláře je velmi užitečným nástrojem pro organizaci zahrnující více míst. Tuto možnost použijte k přizpůsobení svátků pro každou kancelář vaší organizace.",

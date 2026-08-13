@@ -23,6 +23,7 @@ import {
   WorkingCapitalBreachAction,
   WorkingCapitalBreachActionRequest,
   WorkingCapitalMarkAsFraudRequest,
+  WorkingCapitalBreachToggleRequest,
   WorkingCapitalNearBreachActionRequest,
   WorkingCapitalNearBreachActions
 } from './models/working-capital/working-capital-loan-account.model';
@@ -191,6 +192,20 @@ export class LoansService {
   }
 
   createBreachAction(loanId: string, payload: any) {
+    return this.http.post(`/working-capital-loans/${loanId}/breach-actions`, payload);
+  }
+
+  /**
+   * Suspends or resumes breach evaluation for a Working Capital loan.
+   *
+   * Shares the breach-actions resource with pause and resume, but the payload
+   * carries no endDate: disable opens an open-ended window and enable closes
+   * the one currently open.
+   * @param {string} loanId Loan Id
+   * @param {WorkingCapitalBreachToggleRequest} payload Action and business date
+   * @returns {Observable<any>}
+   */
+  toggleWorkingCapitalBreachEvaluation(loanId: string, payload: WorkingCapitalBreachToggleRequest): Observable<any> {
     return this.http.post(`/working-capital-loans/${loanId}/breach-actions`, payload);
   }
 
