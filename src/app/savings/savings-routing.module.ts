@@ -51,6 +51,7 @@ import { SavingNotesResolver } from './common-resolvers/saving-notes.resolver';
 import { SavingDocumentsResolver } from './common-resolvers/saving-documents.resolver';
 import { SavingsTransactionGeneralTabComponent } from './savings-account-view/transactions/view-transaction/savings-transaction-general-tab/savings-transaction-general-tab.component';
 import { GeneralTabComponent } from './savings-account-view/general-tab/general-tab.component';
+import { SavingsAccountDashboardComponent } from './savings-account-view/savings-account-dashboard/savings-account-dashboard.component';
 
 /** Savings Routes */
 const routes: Routes = [
@@ -89,6 +90,11 @@ const routes: Routes = [
                 component: GeneralTabComponent
               }
             ]
+          },
+          {
+            path: 'dashboard',
+            component: SavingsAccountDashboardComponent,
+            data: { title: 'Dashboard', breadcrumb: 'Dashboard', routeParamBreadcrumb: false }
           },
           {
             path: 'transactions',

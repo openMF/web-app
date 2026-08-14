@@ -148,6 +148,10 @@ import {
   faCheckDouble,
   faUserPlus,
   faChartPie,
+  faWallet,
+  faChartArea,
+  faInbox,
+  faExchangeAlt,
   faSlidersH
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -304,6 +308,10 @@ export class IconsModule {
       faUnlink,
       faUserPlus,
       faChartPie,
+      faWallet,
+      faChartArea,
+      faInbox,
+      faExchangeAlt,
       faSlidersH
     );
   }

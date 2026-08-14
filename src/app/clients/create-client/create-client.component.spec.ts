@@ -380,6 +380,7 @@ describe('CreateClientComponent - Integration Tests', () => {
           get: jest.fn(() => ({
             address: [
               { addressTypeId: 1, street: '123 Main St', city: 'New York' },
+              { addressTypeId: 1, street: '123 Main St', city: 'New York' },
               { addressTypeId: 1, street: '123 Main St', city: 'New York', latitude: '12.9716', longitude: '77.5946' }
             ]
           })),
