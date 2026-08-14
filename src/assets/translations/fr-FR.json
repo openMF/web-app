@@ -1646,7 +1646,8 @@
       "View Exchange Rate": "Afficher le taux de change",
       "Edit Exchange Rate": "Modifier le taux de change",
       "Disable Breach Evaluation": "Désactiver l'évaluation des manquements",
-      "Enable Breach Evaluation": "Activer l'évaluation des manquements"
+      "Enable Breach Evaluation": "Activer l'évaluation des manquements",
+      "Theme": "Thème"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3287,7 +3288,19 @@
       "Link": "Lien",
       "Audit Trail": "Piste d'audit",
       "Restart Period from Reset Date": "Redémarrer la période à partir de la date de réinitialisation",
-      "Breach evaluation disabled since": "Évaluation des manquements désactivée depuis le {{date}}"
+      "Breach evaluation disabled since": "Évaluation des manquements désactivée depuis le {{date}}",
+      "Blue": "Bleu",
+      "Green": "Vert",
+      "Light Green": "Vert clair",
+      "Purple": "Violet",
+      "Pink": "Rose",
+      "Orange": "Orange",
+      "Red": "Rouge",
+      "Yellow": "Jaune",
+      "Black": "Noir",
+      "Primary Color": "Couleur principale",
+      "Custom": "Personnalisé",
+      "Custom Color": "Couleur personnalisée"
     },
     "links": {
       "Community": "Communauté",
@@ -4354,7 +4367,13 @@
       "Payment system delink OTP sent": "Un nouvel OTP a été demandé pour supprimer le lien avec le système de paiement.",
       "Payment system delink OTP request failed": "Impossible de demander un nouvel OTP pour la suppression du lien.",
       "Payment system delink successful": "Le lien avec le système de paiement a été supprimé avec succès.",
-      "Payment system delink failed": "Impossible de supprimer le lien avec le système de paiement."
+      "Payment system delink failed": "Impossible de supprimer le lien avec le système de paiement.",
+      "Theme": "Thème",
+      "Set the primary color used across this tenant": "Définissez la couleur principale utilisée dans ce locataire",
+      "Tenant theme explanation": "La couleur principale s'applique à tous les utilisateurs de ce locataire. Les utilisateurs ne peuvent pas la remplacer.",
+      "Tenant theme unavailable": "La configuration du thème n'est pas disponible sur ce serveur. La couleur par défaut est utilisée.",
+      "Tenant theme updated successfully": "Thème du locataire mis à jour avec succès",
+      "Custom color darkened for legibility": "La couleur choisie a été assombrie afin que le texte blanc reste lisible."
     },
     "permissions": {
       "actions": {

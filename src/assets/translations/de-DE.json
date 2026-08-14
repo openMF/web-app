@@ -1645,7 +1645,8 @@
       "View Exchange Rate": "Wechselkurs anzeigen",
       "Edit Exchange Rate": "Wechselkurs bearbeiten",
       "Disable Breach Evaluation": "Verstoßbewertung deaktivieren",
-      "Enable Breach Evaluation": "Verstoßbewertung aktivieren"
+      "Enable Breach Evaluation": "Verstoßbewertung aktivieren",
+      "Theme": "Thema"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3286,7 +3287,19 @@
       "Link": "Verknüpfung",
       "Audit Trail": "Prüfpfad",
       "Restart Period from Reset Date": "Periode ab Reset-Datum neu starten",
-      "Breach evaluation disabled since": "Verstoßbewertung deaktiviert seit {{date}}"
+      "Breach evaluation disabled since": "Verstoßbewertung deaktiviert seit {{date}}",
+      "Blue": "Blau",
+      "Green": "Grün",
+      "Light Green": "Hellgrün",
+      "Purple": "Lila",
+      "Pink": "Rosa",
+      "Orange": "Orange",
+      "Red": "Rot",
+      "Yellow": "Gelb",
+      "Black": "Schwarz",
+      "Primary Color": "Primärfarbe",
+      "Custom": "Benutzerdefiniert",
+      "Custom Color": "Benutzerdefinierte Farbe"
     },
     "links": {
       "Community": "Gemeinschaft",
@@ -4353,7 +4366,13 @@
       "Payment system delink OTP sent": "Ein neues OTP zum Entfernen der Zahlungssystem-Verknüpfung wurde angefordert.",
       "Payment system delink OTP request failed": "Ein neues OTP zum Entfernen der Verknüpfung konnte nicht angefordert werden.",
       "Payment system delink successful": "Die Zahlungssystem-Verknüpfung wurde erfolgreich entfernt.",
-      "Payment system delink failed": "Die Zahlungssystem-Verknüpfung konnte nicht entfernt werden."
+      "Payment system delink failed": "Die Zahlungssystem-Verknüpfung konnte nicht entfernt werden.",
+      "Theme": "Thema",
+      "Set the primary color used across this tenant": "Legen Sie die Primärfarbe fest, die in diesem Mandanten verwendet wird",
+      "Tenant theme explanation": "Die Primärfarbe gilt für alle Benutzer dieses Mandanten. Einzelne Benutzer können sie nicht überschreiben.",
+      "Tenant theme unavailable": "Die Themenkonfiguration ist auf diesem Server nicht verfügbar. Es wird die Standardfarbe verwendet.",
+      "Tenant theme updated successfully": "Thema des Mandanten erfolgreich aktualisiert",
+      "Custom color darkened for legibility": "Die ausgewählte Farbe wurde abgedunkelt, damit weißer Text darauf lesbar bleibt."
     },
     "permissions": {
       "actions": {

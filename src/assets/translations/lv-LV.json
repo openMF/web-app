@@ -1643,7 +1643,8 @@
       "View Exchange Rate": "Skatīt valūtas kursu",
       "Edit Exchange Rate": "Rediģēt valūtas kursu",
       "Disable Breach Evaluation": "Atspējot pārkāpumu novērtēšanu",
-      "Enable Breach Evaluation": "Iespējot pārkāpumu novērtēšanu"
+      "Enable Breach Evaluation": "Iespējot pārkāpumu novērtēšanu",
+      "Theme": "Tēma"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3284,7 +3285,19 @@
       "Link": "Saite",
       "Audit Trail": "Revīzijas taka",
       "Restart Period from Reset Date": "Restartēt periodu no atiestatīšanas datuma",
-      "Breach evaluation disabled since": "Pārkāpumu novērtēšana atspējota kopš {{date}}"
+      "Breach evaluation disabled since": "Pārkāpumu novērtēšana atspējota kopš {{date}}",
+      "Blue": "Zila",
+      "Green": "Zaļa",
+      "Light Green": "Gaiši zaļa",
+      "Purple": "Violeta",
+      "Pink": "Rozā",
+      "Orange": "Oranža",
+      "Red": "Sarkana",
+      "Yellow": "Dzeltena",
+      "Black": "Melna",
+      "Primary Color": "Primārā krāsa",
+      "Custom": "Pielāgota",
+      "Custom Color": "Pielāgota krāsa"
     },
     "links": {
       "Community": "kopiena",
@@ -4351,7 +4364,13 @@
       "Payment system delink OTP sent": "Tika pieprasīts jauns OTP maksājumu sistēmas saites noņemšanai.",
       "Payment system delink OTP request failed": "Neizdevās pieprasīt jaunu OTP atsaistīšanai.",
       "Payment system delink successful": "Maksājumu sistēmas saite veiksmīgi noņemta.",
-      "Payment system delink failed": "Neizdevās noņemt maksājumu sistēmas saiti."
+      "Payment system delink failed": "Neizdevās noņemt maksājumu sistēmas saiti.",
+      "Theme": "Tēma",
+      "Set the primary color used across this tenant": "Iestatiet primāro krāsu, ko izmanto visā šajā īrnieka vidē",
+      "Tenant theme explanation": "Primārā krāsa tiek lietota visiem šī īrnieka lietotājiem. Atsevišķi lietotāji to nevar mainīt.",
+      "Tenant theme unavailable": "Tēmas konfigurācija šajā serverī nav pieejama. Tiek izmantota noklusējuma krāsa.",
+      "Tenant theme updated successfully": "Īrnieka tēma veiksmīgi atjaunināta",
+      "Custom color darkened for legibility": "Izvēlētā krāsa tika padarīta tumšāka, lai baltais teksts paliktu salasāms."
     },
     "permissions": {
       "actions": {

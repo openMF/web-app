@@ -1643,7 +1643,8 @@
       "View Exchange Rate": "Visualizza tasso di cambio",
       "Edit Exchange Rate": "Modifica tasso di cambio",
       "Disable Breach Evaluation": "Disabilita Valutazione delle Violazioni",
-      "Enable Breach Evaluation": "Abilita Valutazione delle Violazioni"
+      "Enable Breach Evaluation": "Abilita Valutazione delle Violazioni",
+      "Theme": "Tema"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3284,7 +3285,19 @@
       "Link": "Collegamento",
       "Audit Trail": "Traccia di controllo",
       "Restart Period from Reset Date": "Riavvia periodo dalla data di ripristino",
-      "Breach evaluation disabled since": "Valutazione delle violazioni disabilitata dal {{date}}"
+      "Breach evaluation disabled since": "Valutazione delle violazioni disabilitata dal {{date}}",
+      "Blue": "Blu",
+      "Green": "Verde",
+      "Light Green": "Verde chiaro",
+      "Purple": "Viola",
+      "Pink": "Rosa",
+      "Orange": "Arancione",
+      "Red": "Rosso",
+      "Yellow": "Giallo",
+      "Black": "Nero",
+      "Primary Color": "Colore principale",
+      "Custom": "Personalizzato",
+      "Custom Color": "Colore personalizzato"
     },
     "links": {
       "Community": "Comunità",
@@ -4352,7 +4365,13 @@
       "Payment system delink OTP sent": "È stato richiesto un nuovo OTP per rimuovere il collegamento al sistema di pagamento.",
       "Payment system delink OTP request failed": "Impossibile richiedere un nuovo OTP per lo scollegamento.",
       "Payment system delink successful": "Collegamento al sistema di pagamento rimosso correttamente.",
-      "Payment system delink failed": "Impossibile rimuovere il collegamento al sistema di pagamento."
+      "Payment system delink failed": "Impossibile rimuovere il collegamento al sistema di pagamento.",
+      "Theme": "Tema",
+      "Set the primary color used across this tenant": "Imposta il colore principale usato in questo inquilino",
+      "Tenant theme explanation": "Il colore principale viene applicato a tutti gli utenti di questo inquilino. I singoli utenti non possono modificarlo.",
+      "Tenant theme unavailable": "La configurazione del tema non è disponibile su questo server. Viene usato il colore predefinito.",
+      "Tenant theme updated successfully": "Tema dell'inquilino aggiornato correttamente",
+      "Custom color darkened for legibility": "Il colore scelto è stato scurito affinché il testo bianco resti leggibile."
     },
     "permissions": {
       "actions": {

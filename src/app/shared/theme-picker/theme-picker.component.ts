@@ -19,7 +19,13 @@ import {
 } from '@angular/core';
 
 /** Custom Model */
-import { PRIMARY_COLOR_THEMES, Theme } from './theme.model';
+import {
+  createCustomTheme,
+  DEFAULT_PRIMARY_COLOR_THEME,
+  normalizeHexColor,
+  PRIMARY_COLOR_THEMES,
+  Theme
+} from './theme.model';
 
 /** Custom Services */
 import { ThemeStorageService } from './theme-storage.service';
@@ -54,6 +60,7 @@ export class ThemePickerComponent implements OnInit {
   @Input() set selected(theme: Theme) {
     if (theme) {
       this.currentTheme = theme;
+      this.syncCustomColor();
     }
   }
 
@@ -64,12 +71,17 @@ export class ThemePickerComponent implements OnInit {
   currentTheme: Theme;
   /** Available themes for the application. */
   themes = PRIMARY_COLOR_THEMES;
+  /** Hue shown in the free colour controls, always the one actually applied. */
+  customColor: string = DEFAULT_PRIMARY_COLOR_THEME.primary;
+  /** True when the last picked hue had to be darkened to stay legible. */
+  contrastAdjusted = false;
 
   /**
    * Falls back to the cached colour until the host supplies a selection.
    */
   ngOnInit() {
     this.currentTheme ??= this.themeStorageService.getCachedTheme();
+    this.syncCustomColor();
   }
 
   /**
@@ -79,8 +91,67 @@ export class ThemePickerComponent implements OnInit {
    */
   installTheme(theme: Theme) {
     this.currentTheme = theme;
+    if (!theme.isCustom) {
+      this.contrastAdjusted = false;
+    }
     this.themeStorageService.previewTheme(theme);
     this.themeSelected.emit(theme);
+  }
+
+  /**
+   * Keeps one swatch reachable by Tab. The selected preset owns the tab stop,
+   * as a radio group requires; with a custom colour selected no preset is, so
+   * the first one takes it rather than leaving the group unreachable.
+   * @param {number} index Index of the swatch.
+   * @returns {boolean} True when the swatch is the group's tab stop.
+   */
+  isTabbable(index: number): boolean {
+    const selectedIndex = this.themes.findIndex((theme) => theme.id === this.currentTheme.id);
+    return index === (selectedIndex === -1 ? 0 : selectedIndex);
+  }
+
+  /**
+   * Applies the hue chosen in the colour well, which reports every drag step.
+   * @param {Event} event
+   */
+  onCustomColorPicked(event: Event) {
+    this.applyCustomColor((event.target as HTMLInputElement).value);
+  }
+
+  /**
+   * Applies a typed hex, restoring the field when it is not a colour so the
+   * text never disagrees with what is applied.
+   * @param {Event} event
+   */
+  onCustomHexEntered(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (!this.applyCustomColor(input.value)) {
+      input.value = this.customColor;
+    }
+  }
+
+  /**
+   * @param {string} value Colour as typed or picked.
+   * @returns {boolean} True when it was a colour and has been applied.
+   */
+  private applyCustomColor(value: string): boolean {
+    const theme = createCustomTheme(value);
+    if (!theme) {
+      return false;
+    }
+    // Reported rather than silently corrected: the administrator gets the
+    // nearest legible hue, and is told the one they picked was not.
+    this.contrastAdjusted = theme.primary !== normalizeHexColor(value);
+    this.customColor = theme.primary;
+    this.installTheme(theme);
+    return true;
+  }
+
+  /** Points the free colour controls at the selection when it is a custom one. */
+  private syncCustomColor() {
+    if (this.currentTheme?.isCustom) {
+      this.customColor = this.currentTheme.primary;
+    }
   }
 
   /**

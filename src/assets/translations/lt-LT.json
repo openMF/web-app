@@ -1642,7 +1642,8 @@
       "View Exchange Rate": "Peržiūrėti valiutos kursą",
       "Edit Exchange Rate": "Redaguoti valiutos kursą",
       "Disable Breach Evaluation": "Išjungti pažeidimų vertinimą",
-      "Enable Breach Evaluation": "Įjungti pažeidimų vertinimą"
+      "Enable Breach Evaluation": "Įjungti pažeidimų vertinimą",
+      "Theme": "Tema"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3283,7 +3284,19 @@
       "Link": "Susiejimas",
       "Audit Trail": "Audito takas",
       "Restart Period from Reset Date": "Iš naujo paleisti laikotarpį nuo atstatymo datos",
-      "Breach evaluation disabled since": "Pažeidimų vertinimas išjungtas nuo {{date}}"
+      "Breach evaluation disabled since": "Pažeidimų vertinimas išjungtas nuo {{date}}",
+      "Blue": "Mėlyna",
+      "Green": "Žalia",
+      "Light Green": "Šviesiai žalia",
+      "Purple": "Violetinė",
+      "Pink": "Rožinė",
+      "Orange": "Oranžinė",
+      "Red": "Raudona",
+      "Yellow": "Geltona",
+      "Black": "Juoda",
+      "Primary Color": "Pagrindinė spalva",
+      "Custom": "Pasirinktinė",
+      "Custom Color": "Pasirinktinė spalva"
     },
     "links": {
       "Community": "bendruomenė",
@@ -4352,7 +4365,13 @@
       "Payment system delink OTP sent": "Paprašyta naujo OTP mokėjimo sistemos susiejimui pašalinti.",
       "Payment system delink OTP request failed": "Nepavyko paprašyti naujo OTP atsiejimui.",
       "Payment system delink successful": "Mokėjimo sistemos susiejimas sėkmingai pašalintas.",
-      "Payment system delink failed": "Nepavyko pašalinti mokėjimo sistemos susiejimo."
+      "Payment system delink failed": "Nepavyko pašalinti mokėjimo sistemos susiejimo.",
+      "Theme": "Tema",
+      "Set the primary color used across this tenant": "Nustatykite pagrindinę spalvą, naudojamą visame šiame nuomininke",
+      "Tenant theme explanation": "Pagrindinė spalva taikoma visiems šio nuomininko naudotojams. Atskiri naudotojai jos pakeisti negali.",
+      "Tenant theme unavailable": "Temos konfigūracija šiame serveryje neprieinama. Naudojama numatytoji spalva.",
+      "Tenant theme updated successfully": "Nuomininko tema sėkmingai atnaujinta",
+      "Custom color darkened for legibility": "Pasirinkta spalva buvo patamsinta, kad baltas tekstas liktų įskaitomas."
     },
     "permissions": {
       "actions": {
