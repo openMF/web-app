@@ -19,15 +19,21 @@
   <div class="metrics-grid">
     <mat-card class="metric-card">
       <mat-card-content>
-        <div class="metric-label">{{ 'labels.inputs.Principal Amount' | translate }}</div>
-        <div class="metric-value">{{ principalAmount | number: '1.2-2' }}</div>
+        <div class="metric-header">
+          <div class="metric-label">{{ 'labels.inputs.Principal Amount' | translate }}</div>
+          <fa-icon icon="money-bill-wave" class="metric-icon"></fa-icon>
+        </div>
+        <div class="metric-value">{{ currencySymbol || '$' }}{{ principalAmount | number: '1.2-2' }}</div>
       </mat-card-content>
     </mat-card>
 
     <mat-card class="metric-card">
       <mat-card-content>
-        <div class="metric-label">{{ 'labels.inputs.Total Repaid' | translate }}</div>
-        <div class="metric-value success">{{ totalRepaid | number: '1.2-2' }}</div>
+        <div class="metric-header">
+          <div class="metric-label">{{ 'labels.inputs.Total Repaid' | translate }}</div>
+          <fa-icon icon="check-circle" class="metric-icon success-icon"></fa-icon>
+        </div>
+        <div class="metric-value success">{{ currencySymbol || '$' }}{{ totalRepaid | number: '1.2-2' }}</div>
         <div class="metric-progress">
           <div class="progress-bar" [style.width.%]="progressPercentage"></div>
         </div>
@@ -36,15 +42,31 @@
 
     <mat-card class="metric-card">
       <mat-card-content>
-        <div class="metric-label">{{ 'labels.inputs.Outstanding Balance' | translate }}</div>
-        <div class="metric-value warning">{{ outstandingBalance | number: '1.2-2' }}</div>
+        <div class="metric-header">
+          <div class="metric-label">{{ 'labels.inputs.Outstanding Balance' | translate }}</div>
+          <fa-icon icon="clock" class="metric-icon warning-icon"></fa-icon>
+        </div>
+        <div class="metric-value warning">{{ currencySymbol || '$' }}{{ outstandingBalance | number: '1.2-2' }}</div>
       </mat-card-content>
     </mat-card>
 
     <mat-card class="metric-card">
       <mat-card-content>
-        <div class="metric-label">{{ 'labels.inputs.Interest Charged' | translate }}</div>
-        <div class="metric-value">{{ interestCharged | number: '1.2-2' }}</div>
+        <div class="metric-header">
+          <div class="metric-label">{{ 'labels.inputs.Interest Charged' | translate }}</div>
+          <fa-icon icon="percent" class="metric-icon"></fa-icon>
+        </div>
+        <div class="metric-value">{{ currencySymbol || '$' }}{{ interestCharged | number: '1.2-2' }}</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="metric-card" [class.danger-card]="totalOverdue > 0">
+      <mat-card-content>
+        <div class="metric-header">
+          <div class="metric-label">{{ 'labels.inputs.Over Due' | translate }}</div>
+          <fa-icon icon="exclamation-triangle" class="metric-icon danger-icon"></fa-icon>
+        </div>
+        <div class="metric-value danger">{{ currencySymbol || '$' }}{{ totalOverdue | number: '1.2-2' }}</div>
       </mat-card-content>
     </mat-card>
   </div>

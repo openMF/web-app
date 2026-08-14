@@ -1,0 +1,419 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+// ────────────────────────────────────────────────────────
+// Savings Account Dashboard — Premium Teal/Emerald theme
+// ────────────────────────────────────────────────────────
+
+.savings-dashboard {
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+// ─── Account Hero Card ───────────────────────────────────
+.account-hero-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 28px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #2563eb 0%, #1e3a5f 50%, #0f172a 100%);
+  color: #fff;
+  margin-bottom: 16px;
+  box-shadow:
+    0 4px 20px rgb(37 99 235 / 25%),
+    inset 0 1px 0 rgb(255 255 255 / 10%);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -8%;
+    width: 240px;
+    height: 240px;
+    background: radial-gradient(circle, rgb(255 255 255 / 10%) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -40%;
+    left: -5%;
+    width: 180px;
+    height: 180px;
+    background: radial-gradient(circle, rgb(255 255 255 / 6%) 0%, transparent 70%);
+    pointer-events: none;
+  }
+}
+
+.hero-left {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-chip-icon {
+  margin-bottom: 10px;
+  opacity: 0.85;
+}
+
+.hero-account-number {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 3px;
+}
+
+.hero-product-name {
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0.65;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.hero-right {
+  text-align: right;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-balance-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.65;
+  margin-bottom: 2px;
+}
+
+.hero-balance-value {
+  font-size: 28px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+  text-shadow: 0 1px 4px rgb(0 0 0 / 15%);
+}
+
+.hero-interest-rate {
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0.75;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.hero-rate-icon {
+  font-size: 10px;
+}
+
+// ─── KPI Metrics Strip ──────────────────────────────────
+.kpi-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.kpi-tile {
+  flex: 1 1 200px;
+  min-width: 200px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px;
+  background: #fff;
+  border: 1px solid rgb(0 0 0 / 6%);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    border-radius: 3px 0 0 3px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgb(0 0 0 / 6%);
+
+    &::after {
+      opacity: 1;
+    }
+  }
+
+  &.kpi-balance::after {
+    background: #2563eb;
+  }
+
+  &.kpi-deposits::after {
+    background: #0ea5e9;
+  }
+
+  &.kpi-withdrawals::after {
+    background: #f43f5e;
+  }
+
+  &.kpi-interest::after {
+    background: #8b5cf6;
+  }
+
+  &.kpi-balance:hover::after,
+  &.kpi-deposits:hover::after,
+  &.kpi-withdrawals:hover::after,
+  &.kpi-interest:hover::after {
+    opacity: 1;
+  }
+}
+
+.kpi-icon-wrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+
+  &.balance-icon {
+    background: linear-gradient(135deg, rgb(37 99 235 / 12%), rgb(37 99 235 / 3%));
+    color: #2563eb;
+  }
+
+  &.deposits-icon {
+    background: linear-gradient(135deg, rgb(14 165 233 / 12%), rgb(14 165 233 / 3%));
+    color: #0ea5e9;
+  }
+
+  &.withdrawals-icon {
+    background: linear-gradient(135deg, rgb(244 63 94 / 12%), rgb(244 63 94 / 3%));
+    color: #f43f5e;
+  }
+
+  &.interest-icon {
+    background: linear-gradient(135deg, rgb(139 92 246 / 12%), rgb(139 92 246 / 3%));
+    color: #8b5cf6;
+  }
+}
+
+.kpi-content {
+  min-width: 0;
+  flex: 1;
+}
+
+.kpi-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #94a3b8;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kpi-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+
+// ─── Main Dashboard Body ────────────────────────────────
+.dashboard-body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.dashboard-body .dashboard-card {
+  flex: 1 1 450px;
+  min-width: 450px;
+}
+
+// ─── Dashboard Cards ────────────────────────────────────
+.dashboard-card {
+  background: #fff;
+  border: 1px solid rgb(0 0 0 / 6%);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 3%);
+  overflow: hidden;
+
+  mat-card-header {
+    padding: 14px 18px;
+    border-bottom: 1px solid rgb(0 0 0 / 5%);
+    background: linear-gradient(180deg, #fafbfc 0%, #fff 100%);
+
+    mat-card-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+  }
+
+  mat-card-content {
+    padding: 16px 18px;
+    background: #fff;
+  }
+}
+
+.card-title-icon {
+  color: #2563eb;
+  font-size: 13px;
+}
+
+// ─── Chart Containers ───────────────────────────────────
+.chart-container {
+  width: 100%;
+  position: relative;
+
+  canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .no-data-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #94a3b8;
+    font-size: 13px;
+    text-align: center;
+    font-weight: 500;
+  }
+}
+
+.trend-chart-container {
+  height: 270px;
+  position: relative;
+  width: 100%;
+}
+
+.split-chart-container {
+  height: 270px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+}
+
+// ─── Dark Theme Styles ──────────────────────────────────
+:host-context(.dark-theme) {
+  .account-hero-card {
+    background: linear-gradient(135deg, #1e3a8a 0%, #172554 50%, #0f172a 100%);
+    border: 1px solid rgb(255 255 255 / 10%);
+    box-shadow: 0 4px 20px rgb(0 0 0 / 40%);
+  }
+
+  .kpi-tile {
+    background: #1e2124;
+    border-color: rgb(255 255 255 / 8%);
+
+    &:hover {
+      box-shadow: 0 4px 16px rgb(0 0 0 / 40%);
+    }
+
+    .kpi-value {
+      color: #fff;
+    }
+  }
+
+  .dashboard-card {
+    background: #1e2124;
+    border-color: rgb(255 255 255 / 8%);
+
+    mat-card-header {
+      background: #25282c;
+      border-bottom: 1px solid rgb(255 255 255 / 8%);
+
+      mat-card-title {
+        color: #fff;
+      }
+    }
+
+    mat-card-content {
+      background: #1e2124;
+    }
+
+    .chart-container .no-data-message {
+      color: #64748b;
+    }
+  }
+}
+
+// ─── Responsive ─────────────────────────────────────────
+@media (width <= 1024px) {
+  .dashboard-body .dashboard-card {
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+}
+
+@media (width <= 768px) {
+  .savings-dashboard {
+    padding: 10px;
+  }
+
+  .account-hero-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px 18px;
+    gap: 14px;
+  }
+
+  .hero-right {
+    text-align: center;
+  }
+
+  .hero-interest-rate {
+    justify-content: center;
+  }
+
+  .hero-balance-value {
+    font-size: 24px;
+  }
+
+  .kpi-strip .kpi-tile {
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+
+  .kpi-tile {
+    padding: 12px;
+  }
+
+  .kpi-value {
+    font-size: 14px;
+  }
+}

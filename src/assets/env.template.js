@@ -50,6 +50,9 @@
   window['env']['productionMode'] = '$MIFOS_PRODUCTION_MODE';
   window['env']['enableGlobalDashboard'] = '$MIFOS_ENABLE_GLOBAL_DASHBOARD';
 
+  // Enable Global Dashboard feature
+  window['env']['enableGlobalDashboard'] = '$MIFOS_ENABLE_GLOBAL_DASHBOARD';
+
   // Display or not the Tenant Selector
   window['env']['displayTenantSelector'] = '$MIFOS_DISPLAY_TENANT_SELECTOR';
 
