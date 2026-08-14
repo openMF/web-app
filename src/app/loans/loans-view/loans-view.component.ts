@@ -142,7 +142,7 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
         if (!this.loanDetailsData.loanProductName) {
           this.loanDetailsData.loanProductName = this.loanDetailsData.product?.name;
         }
-        this.loanDatatables = this.loanProductService.isLoanProduct ? data.loanDatatables : [];
+        this.loanDatatables = data.loanDatatables || [];
         this.loanStatus = this.loanDetailsData.status;
         this.currency = this.loanDetailsData.currency;
         if (this.loanProductService.isLoanProduct) {
@@ -162,6 +162,8 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
           }
           // Filter datatables based on entity datatable checks
           this.filterDatatablesByProduct();
+        } else {
+          this.datatablesReady = true;
         }
         this.setConditionalButtons();
       });
