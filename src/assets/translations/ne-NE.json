@@ -1642,7 +1642,8 @@
       "View Exchange Rate": "विनिमय दर हेर्नुहोस्",
       "Edit Exchange Rate": "विनिमय दर सम्पादन गर्नुहोस्",
       "Disable Breach Evaluation": "उल्लंघन मूल्यांकन असक्षम गर्नुहोस्",
-      "Enable Breach Evaluation": "उल्लंघन मूल्यांकन सक्षम गर्नुहोस्"
+      "Enable Breach Evaluation": "उल्लंघन मूल्यांकन सक्षम गर्नुहोस्",
+      "Theme": "विषयवस्तु"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3283,7 +3284,19 @@
       "Link": "लिंक",
       "Audit Trail": "अडिट ट्रेल",
       "Restart Period from Reset Date": "रिसेट मितिबाट अवधि पुनः सुरु गर्नुहोस्",
-      "Breach evaluation disabled since": "{{date}} देखि उल्लंघन मूल्यांकन असक्षम"
+      "Breach evaluation disabled since": "{{date}} देखि उल्लंघन मूल्यांकन असक्षम",
+      "Blue": "निलो",
+      "Green": "हरियो",
+      "Light Green": "हल्का हरियो",
+      "Purple": "बैजनी",
+      "Pink": "गुलाबी",
+      "Orange": "सुन्तला",
+      "Red": "रातो",
+      "Yellow": "पहेँलो",
+      "Black": "कालो",
+      "Primary Color": "प्राथमिक रङ",
+      "Custom": "अनुकूलित",
+      "Custom Color": "अनुकूलित रङ"
     },
     "links": {
       "Community": "समुदाय",
@@ -4351,7 +4364,13 @@
       "Payment system delink OTP sent": "भुक्तानी प्रणाली लिंक हटाउन नयाँ OTP अनुरोध गरियो।",
       "Payment system delink OTP request failed": "लिंक हटाउन नयाँ OTP अनुरोध गर्न सकिएन।",
       "Payment system delink successful": "भुक्तानी प्रणाली लिंक सफलतापूर्वक हटाइयो।",
-      "Payment system delink failed": "भुक्तानी प्रणाली लिंक हटाउन सकिएन।"
+      "Payment system delink failed": "भुक्तानी प्रणाली लिंक हटाउन सकिएन।",
+      "Theme": "विषयवस्तु",
+      "Set the primary color used across this tenant": "यो टेनेन्टभर प्रयोग हुने प्राथमिक रङ सेट गर्नुहोस्",
+      "Tenant theme explanation": "प्राथमिक रङ यो टेनेन्टका सबै प्रयोगकर्तामा लागू हुन्छ। व्यक्तिगत प्रयोगकर्ताले यसलाई परिवर्तन गर्न सक्दैनन्।",
+      "Tenant theme unavailable": "यो सर्भरमा विषयवस्तु कन्फिगरेसन उपलब्ध छैन। पूर्वनिर्धारित रङ प्रयोग भइरहेको छ।",
+      "Tenant theme updated successfully": "टेनेन्टको विषयवस्तु सफलतापूर्वक अद्यावधिक भयो",
+      "Custom color darkened for legibility": "छानिएको रङलाई सेतो पाठ पढ्न मिल्ने बनाउन गाढा बनाइयो।"
     },
     "permissions": {
       "actions": {

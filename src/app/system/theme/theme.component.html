@@ -23,7 +23,11 @@
 
         <p class="theme-selection">
           {{ 'labels.inputs.Theme' | translate }}:
-          <strong>{{ 'labels.inputs.' + selectedTheme.name | translate }}</strong>
+          @if (selectedTheme.isCustom) {
+            <strong>{{ 'labels.inputs.Custom' | translate }} ({{ selectedTheme.primary }})</strong>
+          } @else {
+            <strong>{{ 'labels.inputs.' + selectedTheme.name | translate }}</strong>
+          }
         </p>
       }
     </mat-card-content>

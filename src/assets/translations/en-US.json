@@ -3324,7 +3324,12 @@
       "Yellow": "Yellow",
       "Primary Color": "Primary Color",
       "Audit Trail": "Audit Trail",
-      "Breach evaluation disabled since": "Breach evaluation disabled since {{date}}"
+      "Breach evaluation disabled since": "Breach evaluation disabled since {{date}}",
+      "Light Green": "Light Green",
+      "Pink": "Pink",
+      "Black": "Black",
+      "Custom": "Custom",
+      "Custom Color": "Custom Color"
     },
     "links": {
       "Community": "Community",
@@ -4514,7 +4519,8 @@
       "Tenant theme explanation": "The primary color is applied to every user of this tenant. Individual users cannot override it.",
       "Tenant theme unavailable": "The theme configuration is not available on this server. The default color is being used.",
       "Tenant theme updated successfully": "Tenant theme updated successfully",
-      "Theme": "Theme"
+      "Theme": "Theme",
+      "Custom color darkened for legibility": "The selected color was darkened so that white text stays legible on it."
     },
     "permissions": {
       "actions": {

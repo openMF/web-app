@@ -17,6 +17,10 @@ $theme-picker-swatch-size: 36px;
 
 .mifosx-theme-picker-swatch {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
   width: $theme-picker-swatch-size;
   height: $theme-picker-swatch-size;
   padding: 0;
@@ -52,4 +56,51 @@ $theme-picker-swatch-size: 36px;
 
 .dark-theme .mifosx-theme-picker-swatch {
   border-color: rgb(255 255 255 / 30%);
+}
+
+/* Free colour choice, alongside the presets rather than inside the radio
+   group: the colour well is its own control and does not answer to the
+   group's arrow-key navigation. */
+.mifosx-theme-picker-custom {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+.mifosx-theme-picker-custom-swatch {
+  /* The spectrum reads as "any colour" until one has actually been picked. */
+  background: conic-gradient(#f44336, #ffeb3b, #4caf50, #00bcd4, #3f51b5, #9c27b0, #f44336);
+  cursor: pointer;
+  overflow: hidden;
+
+  &:focus-within {
+    outline: 2px solid var(--md-sys-color-primary, #1074b9);
+    outline-offset: 3px;
+  }
+}
+
+/* The native well is the whole swatch, so the circle itself opens the picker;
+   it is invisible because the swatch already shows the chosen colour. */
+.mifosx-theme-picker-custom-well {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.mifosx-theme-picker-custom-field {
+  width: 130px;
+}
+
+.mifosx-theme-picker-note {
+  margin: 0 0 12px;
+  font-size: 12px;
+  opacity: 0.75;
 }

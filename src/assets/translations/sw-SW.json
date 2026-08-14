@@ -1640,7 +1640,8 @@
       "View Exchange Rate": "Tazama kiwango cha ubadilishaji",
       "Edit Exchange Rate": "Hariri kiwango cha ubadilishaji",
       "Disable Breach Evaluation": "Zima Tathmini ya Ukiukaji",
-      "Enable Breach Evaluation": "Washa Tathmini ya Ukiukaji"
+      "Enable Breach Evaluation": "Washa Tathmini ya Ukiukaji",
+      "Theme": "Mandhari"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3281,7 +3282,19 @@
       "Link": "Kiungo",
       "Audit Trail": "Njia ya Ukaguzi",
       "Restart Period from Reset Date": "Anza upya kipindi kutoka tarehe ya uwekaji upya",
-      "Breach evaluation disabled since": "Tathmini ya ukiukaji imezimwa tangu {{date}}"
+      "Breach evaluation disabled since": "Tathmini ya ukiukaji imezimwa tangu {{date}}",
+      "Blue": "Bluu",
+      "Green": "Kijani",
+      "Light Green": "Kijani hafifu",
+      "Purple": "Zambarau",
+      "Pink": "Waridi",
+      "Orange": "Chungwa",
+      "Red": "Nyekundu",
+      "Yellow": "Njano",
+      "Black": "Nyeusi",
+      "Primary Color": "Rangi Kuu",
+      "Custom": "Maalum",
+      "Custom Color": "Rangi Maalum"
     },
     "links": {
       "Community": "Jumuiya",
@@ -4348,7 +4361,13 @@
       "Payment system delink OTP sent": "OTP mpya imeombwa ili kuondoa kiungo cha mfumo wa malipo.",
       "Payment system delink OTP request failed": "Imeshindikana kuomba OTP mpya ya kutenganisha.",
       "Payment system delink successful": "Kiungo cha mfumo wa malipo kimeondolewa kwa mafanikio.",
-      "Payment system delink failed": "Imeshindikana kuondoa kiungo cha mfumo wa malipo."
+      "Payment system delink failed": "Imeshindikana kuondoa kiungo cha mfumo wa malipo.",
+      "Theme": "Mandhari",
+      "Set the primary color used across this tenant": "Weka rangi kuu inayotumika katika mpangaji huyu",
+      "Tenant theme explanation": "Rangi kuu hutumika kwa watumiaji wote wa mpangaji huyu. Watumiaji binafsi hawawezi kuibadilisha.",
+      "Tenant theme unavailable": "Mipangilio ya mandhari haipatikani kwenye seva hii. Rangi chaguo-msingi inatumika.",
+      "Tenant theme updated successfully": "Mandhari ya mpangaji yamesasishwa kwa mafanikio",
+      "Custom color darkened for legibility": "Rangi uliyochagua imefanywa nyeusi zaidi ili maandishi meupe yaendelee kusomeka."
     },
     "permissions": {
       "actions": {

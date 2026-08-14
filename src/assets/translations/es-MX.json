@@ -1648,7 +1648,8 @@
       "View Exchange Rate": "Ver tipo de cambio",
       "Edit Exchange Rate": "Editar tipo de cambio",
       "Disable Breach Evaluation": "Deshabilitar Evaluación de Incumplimiento",
-      "Enable Breach Evaluation": "Habilitar Evaluación de Incumplimiento"
+      "Enable Breach Evaluation": "Habilitar Evaluación de Incumplimiento",
+      "Theme": "Tema"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3290,7 +3291,19 @@
       "Dispute Management": "Gestión de disputas",
       "Audit Trail": "Registro de auditoría",
       "Restart Period from Reset Date": "Reiniciar el período desde la fecha de reinicio",
-      "Breach evaluation disabled since": "Evaluación de incumplimiento deshabilitada desde el {{date}}"
+      "Breach evaluation disabled since": "Evaluación de incumplimiento deshabilitada desde el {{date}}",
+      "Blue": "Azul",
+      "Green": "Verde",
+      "Light Green": "Verde claro",
+      "Purple": "Morado",
+      "Pink": "Rosa",
+      "Orange": "Naranja",
+      "Red": "Rojo",
+      "Yellow": "Amarillo",
+      "Black": "Negro",
+      "Primary Color": "Color principal",
+      "Custom": "Personalizado",
+      "Custom Color": "Color personalizado"
     },
     "links": {
       "Community": "Comunidad",
@@ -4377,7 +4390,13 @@
       "View Exchange Rate": "Ver tipo de cambio",
       "Edit Exchange Rate": "Editar tipo de cambio",
       "Currency Conversion": "Conversión de moneda",
-      "Currency conversion failed. Please try again.": "La conversión de moneda falló. Inténtelo de nuevo."
+      "Currency conversion failed. Please try again.": "La conversión de moneda falló. Inténtelo de nuevo.",
+      "Theme": "Tema",
+      "Set the primary color used across this tenant": "Defina el color principal usado en toda esta instancia",
+      "Tenant theme explanation": "El color principal se aplica a todos los usuarios de esta instancia. Los usuarios individuales no pueden cambiarlo.",
+      "Tenant theme unavailable": "La configuración del tema no está disponible en este servidor. Se está usando el color predeterminado.",
+      "Tenant theme updated successfully": "Tema de la instancia actualizado correctamente",
+      "Custom color darkened for legibility": "El color seleccionado se oscureció para que el texto blanco siga siendo legible."
     },
     "permissions": {
       "actions": {
