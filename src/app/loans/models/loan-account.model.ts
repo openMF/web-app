@@ -194,7 +194,8 @@ export interface DelinquencyRangeSchedule {
   periodNumber: number;
   fromDate: string;
   toDate: string;
-  expectedAmount: number;
+  /** Null when the period was administratively reset — render as empty, not 0. */
+  expectedAmount: number | null;
   paidAmount: number;
   outstandingAmount: number;
   minPaymentCriteriaMet?: boolean;
