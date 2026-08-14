@@ -4608,7 +4608,26 @@
       "Custom color darkened for legibility": "선택한 색상은 흰색 글자가 잘 보이도록 어둡게 조정되었습니다.",
       "No Map Data": "No Map Data",
       "No offices with valid coordinates found.": "No offices with valid coordinates found.",
-      "p.a.": "p.a."
+      "p.a.": "p.a.",
+      "Search results": "검색 결과",
+      "People": "사람",
+      "Accounts": "계좌",
+      "Fixed Deposits": "정기예금",
+      "Loan Transactions": "대출 거래",
+      "Savings Transactions": "저축 거래",
+      "Accounting Entries": "회계 분개",
+      "Groups & Centers": "그룹 및 센터",
+      "Savings & Deposits": "저축 및 예금",
+      "Refine": "상세 필터",
+      "Journal Entry": "회계 분개",
+      "Posted": "전기됨",
+      "Reversed": "역분개됨",
+      "matches": "건",
+      "Search by account number, name, external ID or transaction ID": "계좌번호, 이름, 외부 ID 또는 거래 ID로 검색",
+      "No results found": "결과가 없습니다",
+      "Check the account number, external ID or transaction ID, or search across all entity types.": "계좌번호, 외부 ID 또는 거래 ID를 확인하거나 모든 엔터티 유형에서 검색하세요.",
+      "Result limit reached. Refine your query to narrow the results.": "결과 한도에 도달했습니다. 검색어를 구체화하여 결과 범위를 좁히세요.",
+      "Any": "전체"
     },
     "permissions": {
       "actions": {

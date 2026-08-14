@@ -4608,7 +4608,26 @@
       "Custom color darkened for legibility": "छानिएको रङलाई सेतो पाठ पढ्न मिल्ने बनाउन गाढा बनाइयो।",
       "No Map Data": "No Map Data",
       "No offices with valid coordinates found.": "No offices with valid coordinates found.",
-      "p.a.": "p.a."
+      "p.a.": "p.a.",
+      "Search results": "खोज परिणामहरू",
+      "People": "व्यक्तिहरू",
+      "Accounts": "खाताहरू",
+      "Fixed Deposits": "मुद्दती निक्षेपहरू",
+      "Loan Transactions": "ऋण कारोबारहरू",
+      "Savings Transactions": "बचत कारोबारहरू",
+      "Accounting Entries": "लेखा प्रविष्टिहरू",
+      "Groups & Centers": "समूह र केन्द्रहरू",
+      "Savings & Deposits": "बचत तथा निक्षेपहरू",
+      "Refine": "फिल्टर गर्नुहोस्",
+      "Journal Entry": "लेखा प्रविष्टि",
+      "Posted": "प्रविष्ट गरिएको",
+      "Reversed": "उल्टाइएको",
+      "matches": "मिल्दा परिणामहरू",
+      "Search by account number, name, external ID or transaction ID": "खाता नम्बर, नाम, बाह्य ID वा कारोबार ID द्वारा खोज्नुहोस्",
+      "No results found": "कुनै परिणाम फेला परेन",
+      "Check the account number, external ID or transaction ID, or search across all entity types.": "खाता नम्बर, बाह्य ID वा कारोबार ID जाँच गर्नुहोस्, वा सबै प्रकारका इकाइहरूमा खोज्नुहोस्।",
+      "Result limit reached. Refine your query to narrow the results.": "परिणाम सीमा पुग्यो। परिणामहरू घटाउन आफ्नो खोज परिष्कृत गर्नुहोस्।",
+      "Any": "जुनसुकै"
     },
     "permissions": {
       "actions": {

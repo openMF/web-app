@@ -4605,7 +4605,26 @@
       "Custom color darkened for legibility": "Rangi uliyochagua imefanywa nyeusi zaidi ili maandishi meupe yaendelee kusomeka.",
       "No Map Data": "No Map Data",
       "No offices with valid coordinates found.": "No offices with valid coordinates found.",
-      "p.a.": "p.a."
+      "p.a.": "p.a.",
+      "Search results": "Matokeo ya utafutaji",
+      "People": "Watu",
+      "Accounts": "Akaunti",
+      "Fixed Deposits": "Amana za muda maalum",
+      "Loan Transactions": "Miamala ya mkopo",
+      "Savings Transactions": "Miamala ya akiba",
+      "Accounting Entries": "Maingizo ya uhasibu",
+      "Groups & Centers": "Vikundi na vituo",
+      "Savings & Deposits": "Akiba na amana",
+      "Refine": "Chuja",
+      "Journal Entry": "Ingizo la uhasibu",
+      "Posted": "Imewekwa",
+      "Reversed": "Imebatilishwa",
+      "matches": "zinazolingana",
+      "Search by account number, name, external ID or transaction ID": "Tafuta kwa namba ya akaunti, jina, kitambulisho cha nje au kitambulisho cha muamala",
+      "No results found": "Hakuna matokeo yaliyopatikana",
+      "Check the account number, external ID or transaction ID, or search across all entity types.": "Kagua namba ya akaunti, kitambulisho cha nje au kitambulisho cha muamala, au tafuta katika aina zote.",
+      "Result limit reached. Refine your query to narrow the results.": "Kikomo cha matokeo kimefikiwa. Boresha utafutaji wako.",
+      "Any": "Yoyote"
     },
     "permissions": {
       "actions": {

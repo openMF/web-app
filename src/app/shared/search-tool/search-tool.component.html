@@ -44,20 +44,6 @@
           <mat-icon>arrow_forward</mat-icon>
         </button>
       </div>
-
-      <!-- Resource filter chips -->
-      <div class="filter-row">
-        @for (option of resourceOptions; track option) {
-          <button
-            class="filter-chip"
-            [class.filter-chip--active]="resource.value === option.value"
-            (click)="resource.patchValue(option.value)"
-            type="button"
-          >
-            {{ 'labels.text.' + option.name | translate }}
-          </button>
-        }
-      </div>
     </div>
   </div>
 }
