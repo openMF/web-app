@@ -29,6 +29,30 @@ export class UsersService {
     return this.http.get(`/users`);
   }
 
+  getSelfServiceUsers(): Observable<any> {
+    return this.http.get('/selfservice/users');
+  }
+
+  activateSelfServiceUser(userId: number): Observable<any> {
+    return this.http.put(`/selfservice/users/${userId}/activate`, {});
+  }
+
+  inactivateSelfServiceUser(userId: number): Observable<any> {
+    return this.http.put(`/selfservice/users/${userId}/inactivate`, {});
+  }
+
+  linkSelfServiceUserClient(userId: number, clientId: number): Observable<any> {
+    return this.http.put(`/selfservice/users/${userId}/clients/${clientId}`, {});
+  }
+
+  delinkSelfServiceUserClient(userId: number, clientId: number): Observable<any> {
+    return this.http.delete(`/selfservice/users/${userId}/clients/${clientId}`);
+  }
+
+  deleteSelfServiceUser(userId: number): Observable<any> {
+    return this.http.delete(`/selfservice/users/${userId}`);
+  }
+
   /**
    * @returns {Observable<any>} Users template data
    */
