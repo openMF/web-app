@@ -669,6 +669,7 @@
       "Import Offices": "Dovozní kanceláře",
       "Initiate Dividend": "Iniciovat dividendu",
       "Is Self Service": "Je samoobsluha",
+      "Link Client": "Propojit klienta",
       "Link Job Step": "Krok propojení úlohy",
       "Login": "Přihlásit se",
       "Manage Groups": "Správa skupin",
@@ -800,6 +801,7 @@
       "Create Transfer Fee": "Vytvořit poplatek za převod",
       "Requesting": "Probíhá požadavek",
       "Delink": "Odpojit",
+      "Delink Client": "Odpojit klienta",
       "Disable Breach": "Zakázat porušení",
       "Enable Breach": "Povolit porušení"
     },
@@ -1158,6 +1160,9 @@
       "Custom / Advanced Loan Configuration": "Vlastní / pokročilá konfigurace úvěru",
       "Breach Actions": "Porušení Akce",
       "Delinquency & Breach": "Delikvence a porušení",
+      "Delete Self Service User": "Odstranit samoobslužného uživatele",
+      "Delink Client": "Odpojit klienta",
+      "Inactivate Self Service User": "Deaktivovat samoobslužného uživatele",
       "Interest": "Úrok",
       "Mark as Fraud": "Označit jako podvod",
       "Multi-step form": "Vícekrokový formulář",
@@ -1712,8 +1717,8 @@
       "No Delinquency Actions": "Žádné akce delikvence",
       "Pause Timeline": "Časová osa pauz",
       "Location Map": "Mapa polohy",
-      "Exchange Rates": "Exchange Rates",
-      "Currency Conversion": "Currency Conversion",
+      "Exchange Rates": "Směnné kurzy",
+      "Currency Conversion": "Převod měny",
       "Transfer Fees": "Poplatky za převod",
       "Create Transfer Fee": "Vytvořit poplatek za převod",
       "View Transfer Fee": "Zobrazit poplatek za převod",
@@ -1723,7 +1728,8 @@
       "View Exchange Rate": "Zobrazit směnný kurz",
       "Edit Exchange Rate": "Upravit směnný kurz",
       "Disable Breach Evaluation": "Zakázat hodnocení porušení",
-      "Enable Breach Evaluation": "Povolit hodnocení porušení"
+      "Enable Breach Evaluation": "Povolit hodnocení porušení",
+      "Theme": "Motiv"
     },
     "inputs": {
       "Annual interest rate": "Roční úroková sazba",
@@ -3372,7 +3378,19 @@
       "Link": "Propojení",
       "Audit Trail": "Auditní stopa",
       "Restart Period from Reset Date": "Restartovat období od data resetu",
-      "Breach evaluation disabled since": "Hodnocení porušení zakázáno od {{date}}"
+      "Breach evaluation disabled since": "Hodnocení porušení zakázáno od {{date}}",
+      "Blue": "Modrá",
+      "Green": "Zelená",
+      "Light Green": "Světle zelená",
+      "Purple": "Fialová",
+      "Pink": "Růžová",
+      "Orange": "Oranžová",
+      "Red": "Červená",
+      "Yellow": "Žlutá",
+      "Black": "Černá",
+      "Primary Color": "Hlavní barva",
+      "Custom": "Vlastní",
+      "Custom Color": "Vlastní barva"
     },
     "links": {
       "Community": "Společenství",
@@ -4196,6 +4214,9 @@
       "Self Service App Configuration": "Konfigurace samoobslužné aplikace",
       "Self Service Task Management": "Samoobslužná správa úloh",
       "Self Service Users": "Samoobslužní uživatelé",
+      "Client will be removed from self service user": "{{ clientName }} bude odebrán od uživatele {{ username }}.",
+      "Self service user will no longer be able to sign in": "{{ username }} se již nebude moci přihlásit.",
+      "Self service user will no longer be usable": "{{ username }} již nebude použitelný.",
       "Session timed out": "Časový limit relace vypršel",
       "Session timed out after a period of inactivity": "Časový limit relace vypršel po určité době nečinnosti",
       "Set or update office-level opening balances for GL accounts": "Nastavte nebo aktualizujte počáteční zůstatky na úrovni kanceláře pro účty HK",
@@ -4483,7 +4504,13 @@
       "Payment system delink OTP sent": "Bylo vyžádáno nové OTP pro odebrání propojení s platebním systémem.",
       "Payment system delink OTP request failed": "Nepodařilo se vyžádat nové OTP pro odpojení.",
       "Payment system delink successful": "Propojení s platebním systémem bylo úspěšně odebráno.",
-      "Payment system delink failed": "Propojení s platebním systémem se nepodařilo odebrat."
+      "Payment system delink failed": "Propojení s platebním systémem se nepodařilo odebrat.",
+      "Theme": "Motiv",
+      "Set the primary color used across this tenant": "Nastavte hlavní barvu používanou v celém tomto nájemci",
+      "Tenant theme explanation": "Hlavní barva se použije pro všechny uživatele tohoto nájemce. Jednotliví uživatelé ji nemohou změnit.",
+      "Tenant theme unavailable": "Nastavení motivu není na tomto serveru k dispozici. Používá se výchozí barva.",
+      "Tenant theme updated successfully": "Motiv nájemce byl úspěšně aktualizován",
+      "Custom color darkened for legibility": "Vybraná barva byla ztmavena, aby na ní zůstal bílý text čitelný."
     },
     "permissions": {
       "actions": {

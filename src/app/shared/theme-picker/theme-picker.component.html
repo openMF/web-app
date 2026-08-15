@@ -16,7 +16,7 @@
       [style.background]="theme.primary"
       [attr.aria-checked]="currentTheme.id === theme.id"
       [attr.aria-label]="'labels.inputs.' + theme.name | translate"
-      [tabindex]="currentTheme.id === theme.id ? 0 : -1"
+      [tabindex]="isTabbable(i) ? 0 : -1"
       [matTooltip]="'labels.inputs.' + theme.name | translate"
       (click)="installTheme(theme)"
       (keydown)="onKeydown($event, i)"
@@ -27,3 +27,42 @@
     </button>
   }
 </div>
+
+<div class="mifosx-theme-picker-custom">
+  <span
+    class="mifosx-theme-picker-swatch mifosx-theme-picker-custom-swatch"
+    [class.is-selected]="currentTheme.isCustom"
+    [style.background]="currentTheme.isCustom ? currentTheme.primary : null"
+    [matTooltip]="'labels.inputs.Custom Color' | translate"
+  >
+    <input
+      type="color"
+      class="mifosx-theme-picker-custom-well"
+      [value]="customColor"
+      [attr.aria-label]="'labels.inputs.Custom Color' | translate"
+      (input)="onCustomColorPicked($event)"
+    />
+    @if (currentTheme.isCustom) {
+      <fa-icon class="mifosx-theme-chosen-icon" icon="check" aria-hidden="true"></fa-icon>
+    }
+  </span>
+
+  <mat-form-field class="mifosx-theme-picker-custom-field">
+    <mat-label>{{ 'labels.inputs.Custom Color' | translate }}</mat-label>
+    <input
+      matInput
+      type="text"
+      maxlength="7"
+      spellcheck="false"
+      autocomplete="off"
+      [value]="customColor"
+      (change)="onCustomHexEntered($event)"
+    />
+  </mat-form-field>
+</div>
+
+@if (contrastAdjusted) {
+  <p class="mifosx-theme-picker-note">
+    {{ 'labels.text.Custom color darkened for legibility' | translate }}
+  </p>
+}

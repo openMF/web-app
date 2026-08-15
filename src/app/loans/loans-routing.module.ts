@@ -185,15 +185,6 @@ const routes: Routes = [
             }
           },
           {
-            path: 'breach-actions',
-            component: LoanBreachActionsTabComponent,
-            data: { title: 'Breach Actions', breadcrumb: 'Breach Actions', routeParamBreadcrumb: false },
-            resolve: {
-              loanBreachActions: LoanBreachActionsResolver,
-              loanNearBreachActions: LoanNearBreachActionsResolver
-            }
-          },
-          {
             path: 'transactions',
             data: { title: 'Loans Account Transactions', breadcrumb: 'Transactions', routeParamBreadcrumb: false },
             resolve: {
