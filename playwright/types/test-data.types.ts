@@ -59,11 +59,27 @@ export interface TestClientTimeline {
   closedOnDate?: readonly number[];
 }
 
-/** Narrow loan-timeline projection — every field optional. */
+/**
+ * Narrow loan-timeline projection — every field optional.
+ *
+ * `expectedDisbursementDate` / `actualDisbursementDate` are the names
+ * Fineract actually returns on `GET /loans/{id}`; `disbursedOnDate` is
+ * kept for callers written against the older projection.
+ */
 export interface TestLoanTimeline {
   submittedOnDate?: readonly number[];
   approvedOnDate?: readonly number[];
+  expectedDisbursementDate?: readonly number[];
+  actualDisbursementDate?: readonly number[];
   disbursedOnDate?: readonly number[];
+  closedOnDate?: readonly number[];
+}
+
+/** Narrow savings-account-timeline projection — every field optional. */
+export interface TestSavingsTimeline {
+  submittedOnDate?: readonly number[];
+  approvedOnDate?: readonly number[];
+  activatedOnDate?: readonly number[];
   closedOnDate?: readonly number[];
 }
 
@@ -101,4 +117,34 @@ export interface TestLoan extends TestEntityIdentity {
   principal: number;
   status?: TestStatus;
   timeline?: TestLoanTimeline;
+}
+
+/** Created Fineract savings account as seen by E2E specs. */
+export interface TestSavingsAccount extends TestEntityIdentity {
+  clientId: number;
+  savingsProductId: number;
+  status?: TestStatus;
+  timeline?: TestSavingsTimeline;
+}
+
+/**
+ * Created Fineract loan product as seen by E2E specs.
+ *
+ * Products are shared, tenant-level infrastructure rather than
+ * per-test data — see `ensureMinimalLoanProduct` in
+ * `fixtures/fineract-api.ts` — so this shape omits a `displayName`
+ * projection and instead carries the two fields specs actually match
+ * against (`name`, `shortName`).
+ */
+export interface TestLoanProduct {
+  resourceId: number;
+  name: string;
+  shortName: string;
+}
+
+/** Created Fineract savings product as seen by E2E specs. */
+export interface TestSavingsProduct {
+  resourceId: number;
+  name: string;
+  shortName: string;
 }

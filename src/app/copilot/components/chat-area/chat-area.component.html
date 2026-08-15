@@ -23,7 +23,7 @@
   <ng-container *ngFor="let msg of messages; trackBy: trackByMessageId">
     <div class="msg" [class.msg--user]="msg.role === 'user'" [class.msg--ai]="msg.role === 'assistant'">
       <div *ngIf="msg.role === 'assistant' && !(msg.isStreaming && !msg.content?.trim())" class="msg__avatar">
-        <img src="assets/images/MifosX_logo.png" alt="Mifos AI" />
+        <img src="assets/images/MifosX_logo.png" [alt]="'copilot.assistantAvatarAlt' | translate" />
       </div>
       <div class="msg__content">
         <div class="msg__bubble" *ngIf="msg.content?.trim() || msg.role === 'user'">
@@ -55,9 +55,35 @@
     </div>
   </ng-container>
 
+  <!-- Pending write action: rendered in the conversation flow, scrolls with it.
+       aria-live announces the pending confirmation so it is not silent for screen readers. -->
+  <div
+    *ngIf="pendingCard"
+    class="msg msg--ai"
+    role="region"
+    aria-live="polite"
+    [attr.aria-label]="'copilot.confirm.pendingAnnouncement' | translate"
+  >
+    <div class="msg__avatar">
+      <img src="assets/images/MifosX_logo.png" [alt]="'copilot.assistantAvatarAlt' | translate" />
+    </div>
+    <div class="msg__content">
+      <div class="cards">
+        <mifosx-confirmation-card
+          [card]="pendingCard"
+          (confirmed)="confirmPending.emit()"
+          (cancelled)="cancelPending.emit()"
+        >
+        </mifosx-confirmation-card>
+      </div>
+    </div>
+  </div>
+
   <!-- Typing indicator -->
   <div *ngIf="isStreaming" class="typing">
-    <div class="msg__avatar"><img src="assets/images/MifosX_logo.png" alt="Mifos AI" /></div>
+    <div class="msg__avatar">
+      <img src="assets/images/MifosX_logo.png" [alt]="'copilot.assistantAvatarAlt' | translate" />
+    </div>
     <div class="typing__dots"><span></span><span></span><span></span></div>
   </div>
 </div>

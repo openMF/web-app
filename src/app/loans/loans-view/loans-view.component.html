@@ -28,6 +28,12 @@
       <ng-container ngProjectAs="[accountTitle]">
         <b>{{ 'labels.inputs.Account No' | translate }}:</b>
         <mifosx-account-number [accountNo]="loanDetailsData.accountNo" display="left"></mifosx-account-number>
+        <span class="account-status-pill" [ngClass]="iconLoanStatusColor() | statusLookup">
+          {{ 'labels.status.' + loanDetailsData.status.value | translate }}
+        </span>
+        @if (loanProductService.isWorkingCapital && loanDetailsData.fraud) {
+          <span class="fraud-badge">{{ 'labels.status.Fraud' | translate }}</span>
+        }
       </ng-container>
 
       <!-- Actions menu trigger -->
@@ -79,6 +85,18 @@
                           [externalId]="loanDetailsData.externalId"
                           [completed]="true"
                         ></mifosx-external-identifier>
+                      </td>
+                    </tr>
+                  }
+                  @if (loanProductService.isWorkingCapital && loanDetailsData.chargedOff) {
+                    <tr>
+                      <td>{{ 'labels.inputs.Charged Off On' | translate }}:</td>
+                      <td>
+                        <span class="charged-off-badge">{{ 'labels.status.Charged Off' | translate }}</span>
+                        <span class="m-l-10">{{ loanDetailsData.chargedOffOnDate | dateFormat }}</span>
+                        @if (loanDetailsData.chargeOffReason?.name) {
+                          <span class="m-l-10">· {{ loanDetailsData.chargeOffReason.name }}</span>
+                        }
                       </td>
                     </tr>
                   }
@@ -421,10 +439,10 @@
               productType: loanProductService.productType.value
             }"
             routerLinkActive
-            #accountdetail="routerLinkActive"
-            [active]="accountdetail.isActive"
+            #deferredIncome="routerLinkActive"
+            [active]="deferredIncome.isActive"
           >
-            {{ 'labels.inputs.Deferred Income' | translate }}
+            {{ 'labels.inputs.Deferred income' | translate }}
           </a>
         }
         @if (loanProductService.isLoanProduct && loanDetailsData.enableBuyDownFee) {

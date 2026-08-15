@@ -368,14 +368,15 @@ export class CreateLoanProductClassicComponent extends LoanProductBaseComponent 
       .subscribe((response: any) => {
         this.router.navigate(
           [
-            '../',
+            '/',
+            'products',
+            'loan-products',
             response.resourceId
           ],
           {
             queryParams: {
               productType: this.loanProductService.productType.value
-            },
-            relativeTo: this.route
+            }
           }
         );
       });
@@ -387,13 +388,12 @@ export class CreateLoanProductClassicComponent extends LoanProductBaseComponent 
     this.productsService
       .createLoanProduct(this.loanProductService.loanProductPath, loanProduct)
       .subscribe((response: any) => {
-        this.router.navigate(
-          [
-            '../',
-            response.resourceId
-          ],
-          { relativeTo: this.route }
-        );
+        this.router.navigate([
+          '/',
+          'products',
+          'loan-products',
+          response.resourceId
+        ]);
       });
   }
 

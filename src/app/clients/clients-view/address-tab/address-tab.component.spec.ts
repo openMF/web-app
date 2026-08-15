@@ -16,6 +16,8 @@ import * as L from 'leaflet';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import * as solidIcons from '@fortawesome/free-solid-svg-icons';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { By } from '@angular/platform-browser';
+import { MatExpansionPanel } from '@angular/material/expansion';
 
 import { AddressTabComponent } from './address-tab.component';
 import { ClientsService } from '../../clients.service';
@@ -153,6 +155,18 @@ describe('AddressTabComponent', () => {
     formGroupService = TestBed.inject(FormGroupService);
   });
 
+  function expandFirstAddressPanel() {
+    const panel = fixture.debugElement.query(By.directive(MatExpansionPanel)).componentInstance as MatExpansionPanel;
+    panel.afterExpand.emit();
+    fixture.detectChanges();
+  }
+
+  function collapseFirstAddressPanel() {
+    const panel = fixture.debugElement.query(By.directive(MatExpansionPanel)).componentInstance as MatExpansionPanel;
+    panel.afterCollapse.emit();
+    fixture.detectChanges();
+  }
+
   it('should show latitude and longitude fields when enabled', () => {
     const formFields = component.getAddressFormFields('add');
 
@@ -214,6 +228,18 @@ describe('AddressTabComponent', () => {
         longitude: '77.5946'
       })
     );
+  });
+
+  it('should pass the location map preview template to the add dialog', () => {
+    fixture.detectChanges();
+    dialog.open.mockReturnValue({
+      afterClosed: () => of({})
+    } as any);
+
+    component.addAddress();
+
+    const dialogConfig = dialog.open.mock.calls[0][1] as { data: any };
+    expect(dialogConfig.data.contentTemplate).toBe(component.addressLocationMapDialogTemplate);
   });
 
   it('should include latitude and longitude in the edit payload', () => {
@@ -333,7 +359,22 @@ describe('AddressTabComponent', () => {
 
     expect(fixture.nativeElement.textContent).toContain('12.9716');
     expect(fixture.nativeElement.textContent).toContain('77.5946');
+    expect(L.map).not.toHaveBeenCalled();
+
+    expandFirstAddressPanel();
+
     expect(L.map).toHaveBeenCalledTimes(1);
+  });
+
+  it('should recreate the map cleanly when the address panel is reopened', () => {
+    fixture.detectChanges();
+
+    expandFirstAddressPanel();
+    collapseFirstAddressPanel();
+    expandFirstAddressPanel();
+
+    expect(L.map).toHaveBeenCalledTimes(2);
+    expect(mockMapRemove).toHaveBeenCalledTimes(1);
   });
 
   it('should not render the map when coordinates are unavailable', () => {
@@ -378,6 +419,8 @@ describe('AddressTabComponent', () => {
     fixture.detectChanges();
 
     expect(fixture.nativeElement.textContent).toContain('0');
+    expandFirstAddressPanel();
+
     expect(fixture.nativeElement.querySelector('mifosx-address-location-map')).not.toBeNull();
     expect(L.map).toHaveBeenCalledTimes(1);
   });

@@ -6,115 +6,414 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/**
+ * Loan product selection landing page.
+ *
+ * Theming notes — this app is themed with Angular Material **M2**
+ * (`mat.m2-define-light-theme` in `theme/mifosx-theme.scss`), so the M3
+ * `--mat-sys-*` system tokens do **not** exist here. The tokens below are the
+ * ones M2 actually emits; they are declared on `html` for the light theme and
+ * re-declared under `.dark-theme`, so anything built on them flips themes for
+ * free:
+ *
+ *   --mat-card-elevated-container-color   #fff              / #424242
+ *   --mat-app-background-color            #fafafa           / #303030
+ *   --mat-app-text-color                  rgb(0 0 0 / 87%)  / #e2e2e5
+ *   --mat-card-outlined-outline-color     rgb(0 0 0 / 12%)  / rgb(255 255 255 / 12%)
+ *
+ * `--brand-primary-*` is set on the document at runtime by `ThemeStorageService`
+ * (see `theme/_material-palette.scss`), so deriving the accent from it keeps the
+ * page in sync with the user's brand colour without a rebuild.
+ *
+ * Everything else is derived with `color-mix()` from those tokens rather than
+ * hardcoded, so there is a single source of truth per theme.
+ */
+
+:host {
+  /* ---- Surfaces & text: straight off the Material theme, auto-flip ---- */
+  --lp-surface: var(--mat-card-elevated-container-color, #fff);
+  --lp-text: var(--mat-app-text-color, rgb(0 0 0 / 87%));
+  --lp-outline: var(--mat-card-outlined-outline-color, rgb(0 0 0 / 12%));
+
+  /**
+   * Secondary text is derived from the body text colour rather than taken from
+   * `--mat-card-subtitle-text-color`: that token is only `rgb(0 0 0 / 54%)` in
+   * the light theme, which lands at 4.49:1 on the recessed "Upcoming" card —
+   * just under AA. Fading the real text colour to 78% keeps one source of truth
+   * and clears AA on every surface here (7.5:1 light, 5.5:1 dark).
+   */
+  --lp-text-muted: color-mix(in srgb, var(--lp-text) 78%, transparent);
+
+  /* Glyphs are decorative and only need 3:1, so they sit lighter than body copy
+     — at full muted strength the "Upcoming" icons out-weighed the active ones. */
+  --lp-icon-muted: color-mix(in srgb, var(--lp-text) 55%, transparent);
+
+  /**
+   * Mixing operands, not theme colours. `--lp-ink` is whichever of black/white
+   * reads as "raised" against the current surface; `--lp-shade` always darkens,
+   * which is what "recessed" means in both themes.
+   */
+  --lp-ink: #000;
+  --lp-shade: #000;
+
+  /* ---- Brand accent ---- */
+
+  /* #1074b9 on #fff = 4.98:1 — AA for the CTA and the chip fill. */
+  --lp-accent: var(--brand-primary-500, #1074b9);
+  --lp-on-accent: #fff;
+
+  /* ---- Derived surfaces ---- */
+  --lp-surface-sunken: color-mix(in srgb, var(--lp-shade) 4%, var(--lp-surface));
+  --lp-accent-tint: color-mix(in srgb, var(--lp-accent) 10%, var(--lp-surface));
+  --lp-neutral-tint: color-mix(in srgb, var(--lp-ink) 6%, var(--lp-surface-sunken));
+  --lp-hero-bg: color-mix(in srgb, var(--lp-accent) 8%, var(--lp-surface));
+
+  /* ---- Elevation. M2 has no elevation-colour token, so it is defined once here. ---- */
+  --lp-shadow-rest: 0 1px 2px rgb(0 0 0 / 6%);
+  --lp-shadow-hover: 0 6px 16px rgb(0 0 0 / 12%), 0 2px 4px rgb(0 0 0 / 6%);
+
+  /**
+   * ---- Spacing scale — 8px grid, per `AGENTS.md` ----
+   * Named by pixel value to match the repo's spacing utilities (`m-b-16`).
+   * Kept in sync with `assets/styles/_loan-product-tokens.scss`, which this
+   * page can adopt wholesale later.
+   */
+  --lp-space-8: 0.5rem;
+  --lp-space-16: 1rem;
+  --lp-space-24: 1.5rem;
+  --lp-space-32: 2rem;
+
+  /* ---- Shape & motion ---- */
+  --lp-radius: 0.75rem;
+  --lp-radius-sm: 0.5rem;
+  --lp-radius-pill: 999px;
+  --lp-motion: 160ms ease-out;
+
+  display: block;
+  color: var(--lp-text);
+}
+
+:host-context(.dark-theme) {
+  --lp-ink: #fff;
+
+  /**
+   * The M2 dark theme reuses palette hue 500 for primary, so the stock accent
+   * would be #1074b9 on the #424242 card — 2.02:1, unreadable. Lightening the
+   * dark-mode brand hue toward the theme's text colour lands at ~#91bce9:
+   * 5.06:1 on the card, 4.27:1 against the icon tile. Derived (not hardcoded)
+   * so a runtime brand change still flows through.
+   */
+  --lp-accent: color-mix(in srgb, var(--brand-primary-100, #5ba2ec) 60%, var(--mat-app-text-color, #fff));
+
+  /* Filled chip inverts in dark mode: light container, dark label (6.65:1). */
+  --lp-on-accent: var(--mat-app-background-color, #303030);
+
+  /* Shadows read weakly on dark surfaces; keep them soft and lean on borders. */
+  --lp-shadow-rest: 0 1px 2px rgb(0 0 0 / 24%);
+  --lp-shadow-hover: 0 6px 16px rgb(0 0 0 / 32%), 0 2px 4px rgb(0 0 0 / 20%);
+}
+
+/* ============================== Page ============================== */
+
 .landing-page {
   display: grid;
-  gap: 1.5rem;
+  gap: var(--lp-space-24);
   max-width: 86rem;
   width: 96%;
   margin: 0 auto;
-  padding-bottom: 2rem;
+  padding-bottom: var(--lp-space-32);
 }
 
+/* ============================== Hero ============================== */
+
 .landing-page__hero {
-  border-radius: 1rem;
-  background: var(--mat-sys-surface-container, #2e2e2e);
-  padding: 1.25rem;
+  border: 1px solid var(--lp-outline);
+  border-radius: var(--lp-radius);
+
+  /* A light brand wash plus a real border — the previous flat fill sat within
+     1.02:1 of the page background and read as nothing. */
+  background: var(--lp-hero-bg);
+  box-shadow: var(--lp-shadow-rest);
+  padding: var(--lp-space-24);
 }
 
 .landing-page__eyebrow {
-  margin: 0 0 0.35rem;
+  margin: 0 0 var(--lp-space-8);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 0.75rem;
-  opacity: 0.8;
+  font-weight: 600;
+  line-height: 1.2;
+
+  /**
+   * Was `opacity: .8` on inherited text, which is unpredictable per theme.
+   * Deliberately muted rather than accent-coloured: the brand hue is
+   * user-switchable at runtime, and accent-on-tinted-hero only reaches ~4.5:1
+   * for the default blue — too thin a margin to survive a lighter brand colour
+   * at this size. The hero already carries the brand through its background.
+   */
+  color: var(--lp-text-muted);
+}
+
+/**
+ * `mat.typography-hierarchy` flattens every headline level to 14px/400 for this
+ * app, and it only applies inside `.mat-typography` — so an unstyled `h1` here
+ * falls back to the UA default (2em bold). Sizing the heading explicitly makes
+ * the hierarchy deterministic either way.
+ */
+.landing-page__hero h1 {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--lp-text);
 }
 
 .landing-page__copy {
   max-width: 48rem;
-  margin: 0.5rem 0 0;
+  margin: var(--lp-space-8) 0 0;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--lp-text-muted);
 }
 
+/* ============================== Grid ============================== */
+
+/**
+ * Real grid tracks rather than wrapped flex: with `flex: 1 1 16rem` the two
+ * leftover cards on the last row stretched to half the page each, which is why
+ * the bottom of the page looked unbalanced. `auto-fill` keeps the empty tracks
+ * so trailing cards stay column-width. `min(16rem, 100%)` stops the 16rem floor
+ * from overflowing viewports narrower than a single card.
+ */
 .product-grid {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: stretch;
-  gap: 1rem;
+  display: grid;
+
+  /* stylelint-disable-next-line unit-allowed-list -- `fr` is the only way to
+     express equal grid tracks; the repo allowlist predates any grid usage. */
+  grid-template-columns: repeat(auto-fill, minmax(min(16rem, 100%), 1fr));
+  gap: var(--lp-space-16);
 }
 
 .product-grid > mat-card {
-  flex: 1 1 14rem;
-  min-width: 14rem;
+  /* Grid items default to min-content width; this lets long words wrap. */
+  min-width: 0;
 }
+
+/* ============================== Card ============================== */
 
 .product-card {
-  display: grid;
-  gap: 0.75rem;
-  min-height: 11rem;
-  border-radius: 1rem;
-  background: var(--mat-sys-surface-container, #2e2e2e);
-  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--lp-space-16);
+  min-height: 12rem;
+  box-sizing: border-box;
+  padding: var(--lp-space-24);
+  border: 1px solid var(--lp-outline);
+  border-radius: var(--lp-radius);
+  background: var(--lp-surface);
+  box-shadow: var(--lp-shadow-rest);
+  transition:
+    box-shadow var(--lp-motion),
+    border-color var(--lp-motion),
+    transform var(--lp-motion),
+    background-color var(--lp-motion);
 }
 
+/**
+ * Only the actionable cards get the lift. An "Upcoming" card that reacts to the
+ * pointer would promise an interaction it cannot honour.
+ */
 .product-card--active {
-  border: 1px solid var(--mat-sys-primary, #1e88e5);
+  cursor: pointer;
+
+  &:hover,
+  &:focus-within {
+    transform: translateY(-2px);
+    border-color: var(--lp-accent);
+    box-shadow: var(--lp-shadow-hover);
+    background: color-mix(in srgb, var(--lp-accent) 3%, var(--lp-surface));
+  }
 }
 
+/**
+ * Unavailable, not broken: recessed surface, no elevation, muted accents — but
+ * the title and description keep full-contrast text (8.8:1 dark / 14.9:1 light).
+ * The old blanket `opacity: .7` dragged body copy down to ~2.5:1.
+ */
 .product-card--disabled {
-  opacity: 0.7;
+  background: var(--lp-surface-sunken);
+  border-style: dashed;
+  box-shadow: none;
+  cursor: not-allowed;
 }
 
 .product-card__header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  gap: 0.75rem;
+  align-items: center;
+  gap: var(--lp-space-16);
 }
 
+/* ============================== Icon ============================== */
+
 .product-card__icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 0.75rem;
-  background: rgb(255 255 255 / 8%);
-  color: rgb(255 255 255 / 70%);
+  display: grid;
+  place-items: center;
+
+  /* Fixed box so every tile is identical regardless of glyph metrics.
+     48px = 6 × 8px, keeping the tile on the grid around its 24px glyph. */
+  flex: 0 0 auto;
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--lp-radius);
+  background: var(--lp-neutral-tint);
+  color: var(--lp-icon-muted);
+  transition:
+    background-color var(--lp-motion),
+    color var(--lp-motion);
+
+  .mat-icon {
+    /* mat-icon ships its own width/height/font-size; pin all three together or
+       the glyph and its box drift apart. */
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+  }
 }
 
 .product-card--active .product-card__icon {
-  background: rgb(30 136 229 / 18%);
-  color: var(--mat-sys-primary, #1e88e5);
+  background: var(--lp-accent-tint);
+  color: var(--lp-accent);
 }
+
+/* ============================== Typography ============================== */
 
 .product-card__title {
   margin: 0;
-  font-size: 1.25rem;
+  font-size: 1.0625rem;
   font-weight: 600;
+  line-height: 1.3;
+  color: var(--lp-text);
 }
 
 .product-card__description {
+  /* Absorbs the slack so the CTA pins to the bottom and every card in a row
+     ends on the same baseline regardless of copy length. */
+  flex: 1 1 auto;
   margin: 0;
-  line-height: 1.4;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--lp-text-muted);
 }
 
-.product-card__cta {
-  justify-self: start;
+/* ============================== CTA ============================== */
+
+/**
+ * `mat-button color="primary"` resolves to palette hue 500 in *both* themes, so
+ * the label lands at 2.02:1 on the dark card. Repointing it at the
+ * contrast-corrected accent means out-specifying Material's own declarations,
+ * which live on `.mat-mdc-button.mat-primary` and again — one class heavier — on
+ * `.dark-theme .mat-mdc-button.mat-primary` (0,3,0). Hence the `.product-card`
+ * ancestor plus the `.mat-mdc-button` qualifier rather than a bare class.
+ */
+.product-card .product-card__cta.mat-mdc-button {
+  align-self: flex-start;
   padding: 0;
   min-width: 0;
+  font-weight: 600;
+  line-height: 1.5;
+
+  --mat-button-text-label-text-color: var(--lp-accent);
+  --mat-button-text-state-layer-color: var(--lp-accent);
+  --mat-button-text-ripple-color: color-mix(in srgb, var(--lp-accent) 12%, transparent);
+
+  color: var(--lp-accent);
+
+  &::after {
+    content: '→';
+
+    /* Margin rather than a leading space in `content` — the space renders
+       inconsistently and left the arrow crowding the label. */
+    display: inline-block;
+    margin-left: var(--lp-space-8);
+    transition: transform var(--lp-motion);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--lp-accent);
+    outline-offset: 2px;
+    border-radius: var(--lp-radius-sm);
+  }
 }
 
-.product-card__cta::after {
-  content: ' →';
+.product-card--active:hover .product-card__cta::after {
+  transform: translateX(2px);
 }
 
+/* ============================== Chips ============================== */
+
+/* Base = the "Upcoming" state: neutral fill, muted label, still >=4.5:1. */
 .product-chip {
-  align-self: flex-start;
-  border-radius: 999px;
-  padding: 0.35rem 0.75rem;
-  font-size: 0.8rem;
-  background: rgb(255 255 255 / 8%);
+  align-self: center;
+  flex: 0 0 auto;
+  border-radius: var(--lp-radius-pill);
+  padding: var(--lp-space-8) var(--lp-space-16);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  background: var(--lp-neutral-tint);
+  color: var(--lp-text-muted);
+  border: 1px solid var(--lp-outline);
 }
 
+/* Filled primary pill: white-on-brand in light (4.98:1), inverted in dark (6.65:1). */
 .product-chip--active {
-  background: rgb(30 136 229 / 22%);
+  background: var(--lp-accent);
+  color: var(--lp-on-accent);
+  border-color: transparent;
+}
+
+/* ============================== Responsive ============================== */
+
+@media (width <=1024px) {
+  .landing-page {
+    width: 100%;
+    padding-inline: var(--lp-space-16);
+  }
+}
+
+@media (width <=599px) {
+  .landing-page {
+    gap: var(--lp-space-16);
+  }
+
+  .landing-page__hero {
+    padding: var(--lp-space-16);
+  }
+
+  .landing-page__hero h1 {
+    font-size: 1.375rem;
+  }
+}
+
+/* ============================== Reduced motion ============================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .product-card,
+  .product-card__icon,
+  .product-card__cta::after {
+    transition: none;
+  }
+
+  .product-card--active:hover,
+  .product-card--active:focus-within,
+  .product-card--active:hover .product-card__cta::after {
+    /* Colour and elevation still change; only the movement is dropped. */
+    transform: none;
+  }
 }

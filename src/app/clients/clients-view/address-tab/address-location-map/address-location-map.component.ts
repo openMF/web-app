@@ -42,6 +42,7 @@ export class AddressLocationMapComponent implements AfterViewInit, OnChanges, On
   @ViewChild('mapContainer')
   set mapContainer(container: ElementRef<HTMLElement> | undefined) {
     this.mapContainerElement = container;
+    this.observeMapContainer(container);
     this.updateMap();
   }
 
@@ -49,6 +50,8 @@ export class AddressLocationMapComponent implements AfterViewInit, OnChanges, On
   private map: L.Map | null = null;
   private marker: L.Marker | null = null;
   private mapContainerElement?: ElementRef<HTMLElement>;
+  private resizeObserver: ResizeObserver | null = null;
+  private resizeTimeouts: ReturnType<typeof setTimeout>[] = [];
   tileLoadFailed = false;
 
   private readonly markerIcon = L.icon({
@@ -83,10 +86,20 @@ export class AddressLocationMapComponent implements AfterViewInit, OnChanges, On
 
   ngOnDestroy(): void {
     this.destroyMap();
+    this.disconnectResizeObserver();
   }
 
   get hasValidCoordinates(): boolean {
     return this.getCoordinatePair() !== null;
+  }
+
+  refresh(): void {
+    if (!this.map) {
+      this.updateMap();
+      return;
+    }
+
+    this.scheduleResize();
   }
 
   private updateMap(): void {
@@ -117,7 +130,33 @@ export class AddressLocationMapComponent implements AfterViewInit, OnChanges, On
       this.marker?.setLatLng(coordinates);
     }
 
-    setTimeout(() => this.map?.invalidateSize(), 0);
+    this.refresh();
+  }
+
+  private observeMapContainer(container: ElementRef<HTMLElement> | undefined): void {
+    this.disconnectResizeObserver();
+
+    if (!container || typeof ResizeObserver === 'undefined') {
+      return;
+    }
+
+    this.resizeObserver = new ResizeObserver(() => this.refresh());
+    this.resizeObserver.observe(container.nativeElement);
+  }
+
+  private scheduleResize(): void {
+    this.clearResizeTimeouts();
+
+    [
+      0,
+      250
+    ].forEach((delay) => {
+      const resizeTimeout = setTimeout(() => {
+        this.map?.invalidateSize();
+        this.resizeTimeouts = this.resizeTimeouts.filter((timeout) => timeout !== resizeTimeout);
+      }, delay);
+      this.resizeTimeouts.push(resizeTimeout);
+    });
   }
 
   private getCoordinatePair(): L.LatLngTuple | null {
@@ -125,9 +164,20 @@ export class AddressLocationMapComponent implements AfterViewInit, OnChanges, On
   }
 
   private destroyMap(): void {
+    this.clearResizeTimeouts();
     this.marker = null;
     this.map?.remove();
     this.map = null;
     this.tileLoadFailed = false;
+  }
+
+  private clearResizeTimeouts(): void {
+    this.resizeTimeouts.forEach((resizeTimeout) => clearTimeout(resizeTimeout));
+    this.resizeTimeouts = [];
+  }
+
+  private disconnectResizeObserver(): void {
+    this.resizeObserver?.disconnect();
+    this.resizeObserver = null;
   }
 }

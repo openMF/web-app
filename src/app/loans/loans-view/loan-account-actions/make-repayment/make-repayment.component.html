@@ -74,7 +74,7 @@
               <input matInput formControlName="externalId" />
             </mat-form-field>
 
-            @if (isCapitalizedIncome() || isBuyDownFee()) {
+            @if (isCapitalizedIncome() || isBuyDownFee() || (isWorkingCapital && classificationOptions?.length)) {
               <mat-form-field>
                 <mat-label>{{ 'labels.inputs.Classification' | translate }}</mat-label>
                 <mat-select formControlName="classificationId">

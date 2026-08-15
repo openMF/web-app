@@ -13,6 +13,26 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 /** rxjs Imports */
 import { Observable, map, switchMap } from 'rxjs';
 
+export interface SinpeSubscriptionPayload {
+  clientId: string | number;
+  phoneNumber: string;
+  iban: string;
+  otp: string;
+}
+
+export interface SinpeDeleteSubscriptionPayload {
+  clientId: string | number;
+  otp: string;
+}
+
+export interface SinpeLinkedPhone {
+  savingsAccountId: string | number;
+  iban?: string | null;
+  maskedIban?: string | null;
+  mobileNumber?: string | null;
+  status?: string | null;
+}
+
 /**
  * Savings Service.
  */
@@ -86,6 +106,51 @@ export class SavingsService {
         );
       })
     );
+  }
+
+  /**
+   * @param {string | number} clientId Client id that owns the savings account.
+   * @param {string} mobileNumber Normalized 8 digit phone number.
+   * @returns {Observable<any>}
+   */
+  requestSinpeEnrollment(clientId: string | number, mobileNumber: string): Observable<any> {
+    return this.http.post('/v2/sinpe/enrollment/request', {
+      clientId: clientId,
+      mobileNumber: mobileNumber
+    });
+  }
+
+  /**
+   * @param {string} phoneNumber Normalized 8 digit phone number.
+   * @returns {Observable<any>}
+   */
+  verifySinpeEnrollmentPhone(phoneNumber: string): Observable<any> {
+    return this.http.get(`/v2/sinpe/enrollment/phone/${phoneNumber}`);
+  }
+
+  /**
+   * @param {string | number} savingsAccountId Savings account id.
+   * @returns {Observable<SinpeLinkedPhone[]>}
+   */
+  getLinkedSinpePhones(savingsAccountId: string | number): Observable<SinpeLinkedPhone[]> {
+    return this.http.get<SinpeLinkedPhone[]>(`/v2/sinpe/enrollment/savingsaccounts/${savingsAccountId}/phones`);
+  }
+
+  /**
+   * @param {SinpeSubscriptionPayload} payload Fast payment subscription payload.
+   * @returns {Observable<any>}
+   */
+  createSinpeSubscription(payload: SinpeSubscriptionPayload): Observable<any> {
+    return this.http.post('/v2/sinpe/enrollment/subscription', payload);
+  }
+
+  /**
+   * @param {string} phoneNumber Normalized 8 digit phone number.
+   * @param {SinpeDeleteSubscriptionPayload} payload Delete subscription payload.
+   * @returns {Observable<any>}
+   */
+  deleteSinpeSubscription(phoneNumber: string, payload: SinpeDeleteSubscriptionPayload): Observable<any> {
+    return this.http.delete(`/v2/sinpe/enrollment/subscription/${phoneNumber}`, { body: payload });
   }
 
   /**

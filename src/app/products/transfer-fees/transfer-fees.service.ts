@@ -25,7 +25,7 @@ import { TransferFee, TransferFeePayload } from './models/transfer-fee.model';
 export class TransferFeesService {
   private http = inject(HttpClient);
 
-  private readonly resourceUrl = '/v1/self/transfer-fees';
+  private readonly resourceUrl = '/v2/transfer-fees';
 
   /**
    * @returns {Observable<TransferFee[]>} Transfer fees data.
@@ -40,8 +40,8 @@ export class TransferFeesService {
    */
   getTransferFee(transferFeeId: number | string): Observable<TransferFee> {
     const id = `${transferFeeId}`;
-    // The Self-Service Plugin currently exposes list/create/update/delete only; no GET /{id} endpoint exists.
-    // Load the supported list endpoint and resolve the selected fee client-side until the plugin adds one.
+    // The Transfer Fees API currently exposes list/create/update/delete only; no GET /{id} endpoint exists.
+    // Load the supported list endpoint and resolve the selected fee client-side until the API adds one.
     return this.getTransferFees().pipe(
       map((transferFees: TransferFee[]) => {
         const transferFee = (transferFees || []).find((item: TransferFee) => `${item.id}` === id);

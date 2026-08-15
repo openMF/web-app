@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -65,6 +65,7 @@ export class CreateBucketComponent extends DelinquencyBucketBaseComponent implem
   private router = inject(Router);
   dialog = inject(MatDialog);
   private translateService = inject(TranslateService);
+  private changeDetectorRef = inject(ChangeDetectorRef);
 
   /** Delinquency Bucket form. */
   bucketForm: UntypedFormGroup;
@@ -183,9 +184,11 @@ export class CreateBucketComponent extends DelinquencyBucketBaseComponent implem
     };
     const rangeDialogRef = this.dialog.open(FormDialogComponent, { data });
     rangeDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
+      if (response?.data) {
         this.rangesDataSource = this.rangesDataSource.concat(response.data.value);
         this.delinquencyRangesIds.push(response.data.value.rangeId);
+        // The dialog close event does not mark this OnPush view as dirty
+        this.changeDetectorRef.markForCheck();
       }
     });
   }
@@ -198,10 +201,12 @@ export class CreateBucketComponent extends DelinquencyBucketBaseComponent implem
       data: { deleteContext: this.translateService.instant('labels.text.this') }
     });
     dialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
+      if (response?.delete) {
         this.delinquencyRangesIds.splice(index, 1);
         this.rangesDataSource.splice(index, 1);
         this.rangesDataSource = this.rangesDataSource.concat([]);
+        // The dialog close event does not mark this OnPush view as dirty
+        this.changeDetectorRef.markForCheck();
       }
     });
   }

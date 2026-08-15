@@ -37,6 +37,11 @@ import { LoansService } from 'app/loans/loans.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsService } from 'app/settings/settings.service';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
+import {
+  WorkingCapitalUndoChargeOffDialogComponent,
+  WorkingCapitalUndoChargeOffDialogResult,
+  buildWorkingCapitalUndoChargeOffPayload
+} from '../working-capital/loan-account-actions/undo-charge-off-dialog/undo-charge-off-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import { LoanTransaction } from 'app/products/loan-products/models/loan-account.model';
 import { LoanTransactionType } from 'app/loans/models/loan-transaction-type.model';
@@ -209,7 +214,10 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
   setLoanTransactions() {
     this.transactionsData.forEach((element: any) => {
       if (!(element.date instanceof Date)) {
-        element.date = this.dateUtils.parseDate(element.date);
+        // Working Capital sends the date as transactionDate. Without the fallback
+        // parseDate would receive undefined, which moment resolves to today.
+        const rawDate = element.date ?? element.transactionDate;
+        element.date = rawDate ? this.dateUtils.parseDate(rawDate) : null;
       }
     });
     this.dataSource = new MatTableDataSource(this.transactionsData);
@@ -321,6 +329,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
       22,
       23,
       26,
+      27,
       28,
       29,
       30,
@@ -342,9 +351,12 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
     if (transaction.manuallyReversed || transaction.reversed) {
       return false;
     }
+    // Charge-off is never undone through the generic adjust command; it has its
+    // own menu entry. Matched by code as well because Working Capital does not
+    // always send the chargeoff flag.
     return !(
       transaction.type.disbursement ||
-      transaction.type.chargeoff ||
+      this.isChargeOff(transaction.type) ||
       this.isReAgoeOrReAmortize(transaction.type) ||
       transaction.type.interestRefund ||
       this.isDiscountFee(transaction.type) ||
@@ -434,28 +446,25 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const loanId = this.route.parent.parent.snapshot.params['loanId'];
+    const isLoanProduct = this.loanProductService.isLoanProduct;
     let command = 'undo';
     let operationDate = this.dateUtils.parseDate(transaction.date);
-    let payload = {};
-    if (this.isChargeOff(transaction.type)) {
-      command = 'undo-charge-off';
-      operationDate = this.settingsService.businessDate;
-      payload = {};
-    } else if (this.isWriteOff(transaction.type)) {
+    let payload: any = {};
+    // Working capital loan undo only accepts locale/dateFormat/note/reversalExternalId;
+    // transactionDate/transactionAmount are required only by the generic loan adjust endpoint.
+    const undoPayload = isLoanProduct
+      ? {
+          transactionDate: this.dateUtils.formatDate(operationDate && new Date(operationDate), dateFormat),
+          transactionAmount: 0,
+          dateFormat,
+          locale
+        }
+      : { dateFormat, locale };
+    if (this.isWriteOff(transaction.type)) {
       command = 'undowriteoff';
-      payload = {
-        transactionDate: this.dateUtils.formatDate(operationDate && new Date(operationDate), dateFormat),
-        transactionAmount: 0,
-        dateFormat,
-        locale
-      };
+      payload = undoPayload;
     } else {
-      payload = {
-        transactionDate: this.dateUtils.formatDate(operationDate && new Date(operationDate), dateFormat),
-        transactionAmount: 0,
-        dateFormat,
-        locale
-      };
+      payload = undoPayload;
     }
 
     const undoTransactionAccountDialogRef = this.dialog.open(ConfirmationDialogComponent, {
@@ -471,7 +480,7 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
     undoTransactionAccountDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
         let transactionId = transaction.id;
-        if (this.isChargeOff(transaction.type) || command === 'undowriteoff' || this.isWriteOff(transaction.type)) {
+        if (command === 'undowriteoff' || this.isWriteOff(transaction.type)) {
           transactionId = null;
         }
         if (this.loanProductService.isLoanProduct) {
@@ -491,6 +500,45 @@ export class TransactionsTabComponent extends LoanProductBaseComponent implement
         }
       }
     });
+  }
+
+  /** Working Capital charge-off transactions expose a dedicated undo action in the row menu. */
+  allowUndoChargeOff(transaction: LoanTransaction): boolean {
+    return (
+      this.loanProductService.isWorkingCapital &&
+      this.isChargeOff(transaction.type) &&
+      !transaction.manuallyReversed &&
+      !transaction.reversed
+    );
+  }
+
+  /**
+   * Undoes a Working Capital charge-off from the transactions tab.
+   * Uses the same dialog and command as the account header action so both
+   * entry points stay in sync.
+   * @param transaction Charge-off transaction
+   * @param $event Mouse Event
+   */
+  undoChargeOffTransaction(transaction: LoanTransaction, $event: MouseEvent): void {
+    $event.stopPropagation();
+    const loanId = String(this.loanId);
+    this.dialog
+      .open<WorkingCapitalUndoChargeOffDialogComponent, unknown, WorkingCapitalUndoChargeOffDialogResult>(
+        WorkingCapitalUndoChargeOffDialogComponent
+      )
+      .afterClosed()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((result) => {
+        if (!result?.confirm) {
+          return;
+        }
+        const payload = buildWorkingCapitalUndoChargeOffPayload(result, this.settingsService.language.code);
+        // The undo charge-off command targets the loan, not a single transaction.
+        this.loansService.applyWorkingCapitalLoanActionCommand(loanId, payload, 'undoChargeOff').subscribe(() => {
+          transaction.reversed = true;
+          this.reload();
+        });
+      });
   }
 
   undoReAgeOrReAmortize(transaction: LoanTransaction): void {

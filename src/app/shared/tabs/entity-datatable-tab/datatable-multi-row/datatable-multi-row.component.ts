@@ -12,6 +12,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  AfterViewInit,
   Input,
   OnChanges,
   OnDestroy,
@@ -22,9 +23,12 @@ import {
 } from '@angular/core';
 import { MatCheckboxChange as MatCheckboxChange, MatCheckbox } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
 import { formatDatatableDisplayLabel } from '@pipes/datatable-display-label.pipe';
 import {
   MatTable,
+  MatTableDataSource,
   MatColumnDef,
   MatHeaderCellDef,
   MatHeaderCell,
@@ -66,6 +70,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatCellDef,
     MatCell,
     MatCheckbox,
+    MatPaginator,
+    MatSort,
+    MatSortHeader,
     NgClass,
     MatHeaderRowDef,
     MatHeaderRow,
@@ -74,7 +81,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges {
+export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   formatTabLabel(label: string): string {
     return formatDatatableDisplayLabel(label);
   }
@@ -100,7 +107,7 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
   /** Data Table Columns */
   datatableColumns: string[] = [];
   /** Data Table Data */
-  datatableData: any;
+  datatableData = new MatTableDataSource<any>([]);
 
   /** Toggle button visibility */
   showDeleteBotton: boolean;
@@ -111,6 +118,8 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
 
   /** Data Table Reference */
   @ViewChild('dataTable') dataTableRef: MatTable<Element>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   /**
    * Fetches data table name from route params.
@@ -124,6 +133,12 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
     });
     this.setData();
     this.isSelected = false;
+  }
+
+  ngAfterViewInit(): void {
+    this.datatableData.paginator = this.paginator;
+    this.datatableData.sort = this.sort;
+    this.changeDetectorRef.markForCheck();
   }
 
   ngOnDestroy(): void {
@@ -151,7 +166,10 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
       }
     });
 
-    this.datatableData = this.dataObject.data;
+    this.datatableData = new MatTableDataSource(this.dataObject.data || []);
+    this.datatableData.sortingDataAccessor = (data: any, sortHeaderId: string) => this.getSortValue(data, sortHeaderId);
+    this.datatableData.paginator = this.paginator;
+    this.datatableData.sort = this.sort;
     if (this.dataTableRef) {
       this.dataTableRef.renderRows();
     }
@@ -160,7 +178,7 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
   resetData() {
     this.datatableName = null;
     this.datatableColumns = null;
-    this.datatableData = null;
+    this.datatableData = new MatTableDataSource<any>([]);
   }
 
   getData() {
@@ -242,9 +260,11 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
         this.isSelected = false;
         this.selection.selected.forEach((data) => {
           this.systemService.deleteDatatableEntry(this.entityId, data.row[0], this.datatableName).subscribe(() => {
-            this.datatableData.forEach((item: any, index: any) => {
+            this.datatableData.data.forEach((item: any, index: any) => {
               if (item.row[0] === data.row[0]) {
-                this.datatableData.splice(index, 1);
+                const datatableRows = this.datatableData.data;
+                datatableRows.splice(index, 1);
+                this.datatableData.data = datatableRows;
                 this.dataTableRef.renderRows();
                 this.selection = new SelectionModel(true, []);
                 this.isSelected = this.selection.selected.length > 0;
@@ -291,10 +311,49 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
     return value;
   }
 
+  getSortValue(data: any, columnName: string): string | number {
+    if (columnName === this.SELECT_NAME_FIELD || !this.dataObject?.columnHeaders) {
+      return '';
+    }
+    const columnIndex = this.dataObject.columnHeaders.findIndex(
+      (columnHeader: any) => columnHeader.columnName === columnName
+    );
+    if (columnIndex === -1) {
+      return '';
+    }
+    const columnHeader = this.dataObject.columnHeaders[columnIndex];
+    const value = data.row[columnIndex];
+    const isMissingValue = value === null || value === undefined || value === '';
+    switch (columnHeader.columnDisplayType) {
+      case 'INTEGER':
+      case 'DECIMAL': {
+        const numericValue = Number(value);
+        return isMissingValue || Number.isNaN(numericValue) ? Number.NEGATIVE_INFINITY : numericValue;
+      }
+      case 'DATE':
+      case 'DATETIME': {
+        const dateValue = new Date(value).getTime();
+        return isMissingValue || Number.isNaN(dateValue) ? Number.NEGATIVE_INFINITY : dateValue;
+      }
+      case 'CODELOOKUP': {
+        if (isMissingValue) {
+          return '';
+        }
+        const codeValue = columnHeader.columnValues?.find((cv: any) => cv.id === value);
+        return (codeValue ? codeValue.value : value).toString().toLocaleLowerCase();
+      }
+      default:
+        if (isMissingValue) {
+          return '';
+        }
+        return value.toString().toLocaleLowerCase();
+    }
+  }
+
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
-    const numSelected = this.selection.selected;
-    return this.datatableData.length === numSelected;
+    const numSelected = this.selection.selected.length;
+    return this.datatableData.data.length === numSelected;
   }
 
   isAnySelected() {
@@ -304,7 +363,7 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle(change: MatCheckboxChange): void {
     if (change.checked) {
-      this.datatableData.forEach((row: any) => this.selection.select(row));
+      this.datatableData.data.forEach((row: any) => this.selection.select(row));
     } else {
       this.selection = new SelectionModel(true, []);
     }

@@ -6,13 +6,67 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/**
+ * Match the savings account header used by the parent Transactions page.
+ */
 .container {
-  max-width: 37rem;
+  max-width: 90rem;
+  width: 92%;
+}
 
-  .content {
-    div {
-      margin: 1rem 0;
-      overflow-wrap: break-word;
+.account-card {
+  margin: 0 auto;
+  max-width: none;
+  width: 100%;
+  padding: 0;
+
+  i,
+  img:hover {
+    cursor: pointer;
+  }
+
+  .header {
+    background-color: var(--md-sys-color-primary, #1074b9);
+    padding: 1%;
+  }
+
+  .header-title-group {
+    .account-card-title {
+      color: var(--md-sys-color-on-primary, #fff);
+      width: 90%;
+    }
+
+    p {
+      color: var(--md-sys-color-on-primary, #fff);
+    }
+
+    .account-overview {
+      border: none;
+      max-width: 240px;
+      font-size: 14px;
+
+      tr:nth-child(even) {
+        background-color: transparent;
+      }
     }
   }
+
+  .profile-image-container {
+    margin: 1%;
+
+    .profile-image {
+      object-fit: cover;
+      border-radius: 20px;
+    }
+  }
+}
+
+mat-card-title {
+  display: flex;
+}
+
+.product-row,
+.account-number-row,
+.external-id-row {
+  display: block;
 }

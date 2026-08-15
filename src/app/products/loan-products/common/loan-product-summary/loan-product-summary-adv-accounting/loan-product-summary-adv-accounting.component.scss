@@ -7,7 +7,16 @@
  */
 
 @use 'assets/styles/helper';
-@use 'assets/styles/colours' as *;
+@use 'assets/styles/loan-product-tokens' as lpt;
+
+/* Accent only — see loan-product-summary.component.scss. */
+:host {
+  @include lpt.accent-tokens;
+}
+
+:host-context(.dark-theme) {
+  @include lpt.accent-dark-tokens;
+}
 
 table {
   width: 100%;
@@ -26,14 +35,18 @@ h4 {
   font-weight: 500;
 }
 
+/* Hardcoded #4461e2 → themed accent; `!important` dropped. See the sibling
+   loan-product-summary.component.scss for the full rationale. */
+.mat-h3,
+.mat-h4 {
+  margin-top: var(--lp-space-16, 1rem);
+  color: var(--lp-accent);
+}
+
 .mat-h3 {
-  margin-top: 10px !important;
-  font-weight: 300;
-  color: $status-approved;
+  font-weight: 500;
 }
 
 .mat-h4 {
-  margin-top: 10px !important;
-  font-weight: 200;
-  color: $status-approved;
+  font-weight: 400;
 }

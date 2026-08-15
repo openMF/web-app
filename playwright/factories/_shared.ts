@@ -38,3 +38,35 @@ export const FIRST_OFFICE_CACHE_KEY = 'office:first';
 export async function resolveDefaultOfficeId(setup: ApiSetupManager): Promise<number> {
   return setup.dedupe(FIRST_OFFICE_CACHE_KEY, () => setup.api.getFirstOfficeId());
 }
+
+/**
+ * Normalise a Fineract product payload down to its numeric id.
+ *
+ * `ensureMinimalLoanProduct` / `ensureMinimalSavingsProduct` return
+ * either an existing product straight off the product-list endpoint or
+ * a freshly-built `{ id, name, shortName }` projection. Both spell the
+ * key `id`, whereas the create-* envelope used everywhere else in this
+ * suite spells it `resourceId` — so a factory that reaches for
+ * `product.resourceId` silently gets `undefined` and posts an account
+ * with no product attached. Reading both spellings in one place stops
+ * every future product-backed factory from re-discovering that.
+ *
+ * @param product - Payload returned by an `ensure*Product` call.
+ * @param caller  - Factory name, used to make the failure traceable.
+ * @returns The numeric product id.
+ * @throws When neither `id` nor `resourceId` is a number.
+ */
+export function resolveProductId(product: unknown, caller: string): number {
+  const candidate = product as { id?: unknown; resourceId?: unknown } | null | undefined;
+  // Prefer a numeric `id`, then fall back to `resourceId`. Selecting on
+  // nullishness alone (`id ?? resourceId`) would latch onto a
+  // present-but-non-numeric `id` and reject a payload whose `resourceId`
+  // is a perfectly good number.
+  const id = typeof candidate?.id === 'number' ? candidate.id : candidate?.resourceId;
+
+  if (typeof id !== 'number') {
+    throw new Error(`${caller}: product payload missing a numeric id/resourceId, got ${JSON.stringify(product)}`);
+  }
+
+  return id;
+}

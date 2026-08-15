@@ -225,6 +225,12 @@
     </mat-icon>
     <span>{{ 'labels.menus.Help' | translate }}</span>
   </button>
+  <button mat-menu-item [routerLink]="['/system', 'system-information']" tabindex="0">
+    <mat-icon>
+      <fa-icon icon="info-circle" size="sm"></fa-icon>
+    </mat-icon>
+    <span>{{ 'labels.heading.System Information' | translate }}</span>
+  </button>
   <button mat-menu-item [routerLink]="['/profile']" tabindex="0">
     <mat-icon>
       <fa-icon icon="user" size="sm"></fa-icon>

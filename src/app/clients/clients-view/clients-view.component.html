@@ -508,6 +508,26 @@
         >
           {{ 'labels.inputs.Credit Profile' | translate }}
         </a>
+        <a
+          mat-tab-link
+          [routerLink]="['./dispute-management']"
+          routerLinkActive
+          #disputeManagement="routerLinkActive"
+          [active]="disputeManagement.isActive"
+        >
+          {{ 'labels.inputs.Dispute Management' | translate }}
+        </a>
+        @if (isCbildCompliance) {
+          <a
+            mat-tab-link
+            [routerLink]="['./audit-trail']"
+            routerLinkActive
+            #auditTrail="routerLinkActive"
+            [active]="auditTrail.isActive"
+          >
+            {{ 'labels.inputs.Audit Trail' | translate }}
+          </a>
+        }
       }
       @for (clientDatatable of clientDatatables; track clientDatatable) {
         <a

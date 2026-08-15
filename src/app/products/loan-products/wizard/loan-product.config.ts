@@ -51,7 +51,10 @@ export const HIDDEN_DEFAULTS: Record<string, unknown> = {
   'allowAttributeOverrides.graceOnPrincipalAndInterestPayment': true,
   'allowAttributeOverrides.graceOnArrearsAgeing': true,
   enableDownPayment: true,
-  loanChargeOffBehaviour: 'Regular',
+  // Backend code, matching the value space of the template-sourced `chargeOffBehaviourOptions`
+  // (whose select binds option ids). `normalizeEnumCodesToBackendValues` is idempotent, so an
+  // already-coded value passes straight through and the emitted payload is unchanged.
+  loanChargeOffBehaviour: 'REGULAR',
   enableInstallmentLevelDelinquency: false,
   useGlobalConfigForRepaymentEvent: true,
   dueDaysForRepaymentEvent: 1,
@@ -59,7 +62,7 @@ export const HIDDEN_DEFAULTS: Record<string, unknown> = {
   supportedInterestRefundTypes: null,
   enableIncomeCapitalization: false,
   enableBuydownFees: false,
-  calculateInterestForExactDays: true,
+  allowPartialPeriodInterestCalculation: true,
   isEqualAmortization: false,
   loanScheduleType: 'Progressive',
   loanScheduleProcessingType: 'Horizontal',
@@ -69,7 +72,9 @@ export const HIDDEN_DEFAULTS: Record<string, unknown> = {
   // because `defaults` is spread last in buildPayload's merge, listing them here would override the
   // user's form values. HIDDEN_DEFAULTS must only hold fields never exposed in the UI.
   daysInYearType: 360,
-  daysInYearCustomStrategy: 'Full Leap Year',
+  // Backend code, matching the value space of the template-sourced options (see the field config).
+  // `normalizeEnumCodesToBackendValues` is idempotent, so an already-coded value passes through.
+  daysInYearCustomStrategy: 'FULL_LEAP_YEAR',
   daysInMonthType: 30,
   principalThresholdForLastInstallment: 5,
   canUseForTopup: false,
@@ -112,7 +117,8 @@ export interface FormField {
  *   only while the selected repayment strategy is the advanced payment allocation strategy.
  * - `review`: the summary/confirmation step.
  */
-export type FormStepKind = 'fields' | 'payment-allocation' | 'charges' | 'review';
+export type FormStepKind =
+  'fields' | 'payment-allocation' | 'charges' | 'accounting' | 'interest-refund' | 'deferred-income' | 'review';
 export interface FormStep {
   id: number;
   title: string;
@@ -146,9 +152,12 @@ export const PRODUCT_CARDS: ProductCard[] = [
   },
   {
     name: 'Two Wheeler Loan',
-    description: 'Finance for new or used two-wheelers with quick approval and flexible down payment options.',
-    active: false,
-    disabled: true,
+    // Fully qualified translation key, same pattern as the Custom/Advanced card above.
+    description:
+      'labels.text.Finance for new or used two-wheelers with quick approval and flexible down payment options',
+    active: true,
+    disabled: false,
+    route: 'two-wheeler-loan',
     icon: 'pedal_bike'
   },
   {
@@ -161,10 +170,12 @@ export const PRODUCT_CARDS: ProductCard[] = [
   },
   {
     name: 'Education Loan',
+    // Fully qualified translation key, same pattern as the Custom/Advanced card above.
     description:
-      'Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration.',
-    active: false,
-    disabled: true,
+      'labels.text.Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration',
+    active: true,
+    disabled: false,
+    route: 'education-loan',
     icon: 'school'
   },
   {
@@ -182,11 +193,15 @@ export const PRODUCT_CARDS: ProductCard[] = [
     icon: 'home_work'
   },
   {
-    name: 'Agri Loan',
+    // Renamed from 'Agri Loan' to match the template's full product name everywhere else
+    // (profile label, breadcrumb, page title).
+    name: 'Agriculture Loan',
+    // Fully qualified translation key, same pattern as the Custom/Advanced card above.
     description:
-      'Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles.',
-    active: false,
-    disabled: true,
+      'labels.text.Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles',
+    active: true,
+    disabled: false,
+    route: 'agriculture-loan',
     icon: 'agriculture'
   },
   {
@@ -231,8 +246,9 @@ export const PRODUCT_CARDS: ProductCard[] = [
     name: 'BNPL',
     description:
       'Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments.',
-    active: false,
-    disabled: true,
+    active: true,
+    disabled: false,
+    route: 'bnpl-loan',
     icon: 'shopping_cart'
   },
   {
@@ -279,7 +295,7 @@ export const VALUE_MAP: Record<string, Record<string, string>> = {
   },
   canUseForTopup: { true: 'Yes', false: 'No' },
   isInterestRecalculationEnabled: { true: 'Enabled', false: 'Disabled' },
-  calculateInterestForExactDays: { true: 'Yes', false: 'No' },
+  allowPartialPeriodInterestCalculation: { true: 'Yes', false: 'No' },
   isEqualAmortization: { true: 'Yes', false: 'No' },
   delinquencyBucketId: { '': 'None', '1': 'Bucket 1 – Standard', '2': 'Bucket 2 – Aggressive' },
   canDefineInstallmentAmount: { true: 'Yes', false: 'No' },
@@ -305,7 +321,7 @@ export const VALUE_MAP: Record<string, Record<string, string>> = {
   'allowAttributeOverrides.graceOnArrearsAgeing': { true: 'Yes', false: 'No' },
   enableDownPayment: { true: 'Yes', false: 'No' },
   enableAutoRepaymentForDownPayment: { true: 'Yes', false: 'No' },
-  loanChargeOffBehaviour: { Regular: 'Regular' },
+  loanChargeOffBehaviour: { REGULAR: 'Regular', Regular: 'Regular' },
   enableInstallmentLevelDelinquency: { true: 'Yes', false: 'No' },
   useGlobalConfigForRepaymentEvent: { true: 'Yes', false: 'No' },
   enableIncomeCapitalization: { true: 'Yes', false: 'No' },
@@ -479,8 +495,14 @@ export const FORM_STEPS: FormStep[] = [
         ]
       },
       {
+        // Classic's control of the same label (loan-product-settings-step.component.html), shown only
+        // for the "Same as repayment period" interest calculation type. NOT the sheet's literal API
+        // param `calculateInterestForExactDays`, which is read-only — returned by the template and
+        // retrieve APIs and rejected by create — and therefore stays in UNSUPPORTED_CREATE_FIELDS.
+        // This flag matters: Fineract accepts `isInterestRecalculationEnabled` only with daily
+        // interest calculation OR this set to true.
         label: 'Calculate interest for exact days in partial period',
-        key: 'calculateInterestForExactDays',
+        key: 'allowPartialPeriodInterestCalculation',
         type: 'checkbox'
       },
       { label: 'Is equal amortization?', key: 'isEqualAmortization', type: 'checkbox' },
@@ -552,9 +574,12 @@ export const FORM_STEPS: FormStep[] = [
         label: 'Days in year – custom strategy',
         key: 'daysInYearCustomStrategy',
         type: 'select',
+        // Classic binds `[value]="daysInYearCustomStrategy.id"` against the template's
+        // `daysInYearCustomStrategyOptions`, i.e. the backend code — so this static list (the
+        // fallback for a template-less render) carries codes too, keeping one value space.
         options: [
-          { value: 'Full Leap Year', label: 'Full Leap Year' },
-          { value: 'Feb 29 Period Only', label: 'Feb 29 Period Only' }
+          { value: 'FULL_LEAP_YEAR', label: 'Full Leap Year' },
+          { value: 'FEB_29_PERIOD_ONLY', label: 'Feb 29 Period Only' }
         ]
       },
       {
@@ -574,6 +599,91 @@ export const FORM_STEPS: FormStep[] = [
       },
       { label: 'Allow top-up loans', key: 'canUseForTopup', type: 'checkbox' },
       { label: 'Recalculate interest', key: 'isInterestRecalculationEnabled', type: 'checkbox' },
+      // Interest recalculation family — every control Classic's Settings step registers while
+      // `isInterestRecalculationEnabled` is on (loan-product-settings-step.component.ts, the
+      // `isInterestRecalculationEnabled` valueChanges block) and removes when it is off. Options come
+      // from the backend template at render time, exactly like Classic, via TEMPLATE_OPTION_SOURCES;
+      // the static `options` here are only a fallback for a template-less render.
+      {
+        label: 'Pre-closure interest calculation rule',
+        key: 'preClosureInterestCalculationStrategy',
+        type: 'select',
+        required: true,
+        options: []
+      },
+      {
+        label: 'Advance payments adjustment type',
+        key: 'rescheduleStrategyMethod',
+        type: 'select',
+        required: true,
+        options: []
+      },
+      {
+        label: 'Interest recalculation compounding on',
+        key: 'interestRecalculationCompoundingMethod',
+        type: 'select',
+        required: true,
+        options: []
+      },
+      {
+        label: 'Frequency for compounding',
+        key: 'recalculationCompoundingFrequencyType',
+        type: 'select',
+        required: true,
+        options: []
+      },
+      {
+        label: 'Frequency Interval for compounding',
+        key: 'recalculationCompoundingFrequencyInterval',
+        type: 'number',
+        required: true,
+        placeholder: 'e.g. 1'
+      },
+      {
+        label: 'Compounding on nth day',
+        key: 'recalculationCompoundingFrequencyNthDayType',
+        type: 'select',
+        options: []
+      },
+      {
+        label: 'Compounding on day of week',
+        key: 'recalculationCompoundingFrequencyDayOfWeekType',
+        type: 'select',
+        options: []
+      },
+      { label: 'Compounding on day', key: 'recalculationCompoundingFrequencyOnDayType', type: 'select', options: [] },
+      {
+        label: 'Frequency for recalculate outstanding principal',
+        key: 'recalculationRestFrequencyType',
+        type: 'select',
+        required: true,
+        options: []
+      },
+      {
+        label: 'Frequency Interval for recalculation',
+        key: 'recalculationRestFrequencyInterval',
+        type: 'number',
+        required: true,
+        placeholder: 'e.g. 1'
+      },
+      { label: 'Recalculate on nth day', key: 'recalculationRestFrequencyNthDayType', type: 'select', options: [] },
+      {
+        label: 'Recalculate on day of week',
+        key: 'recalculationRestFrequencyDayOfWeekType',
+        type: 'select',
+        options: []
+      },
+      { label: 'Recalculate on day', key: 'recalculationRestFrequencyOnDayType', type: 'select', options: [] },
+      {
+        label: 'Is arrears recognition based on original schedule?',
+        key: 'isArrearsBasedOnOriginalSchedule',
+        type: 'checkbox'
+      },
+      {
+        label: 'Do not calculate interest on past due principal balances',
+        key: 'disallowInterestCalculationOnPastDue',
+        type: 'checkbox'
+      },
       {
         label: 'Delinquency bucket',
         key: 'delinquencyBucketId',
@@ -669,7 +779,8 @@ export const FORM_STEPS: FormStep[] = [
         label: 'Loan charge-off behaviour',
         key: 'loanChargeOffBehaviour',
         type: 'select',
-        options: [{ value: 'Regular', label: 'Regular' }]
+        // Codes, matching the template-sourced options this select prefers at render time.
+        options: [{ value: 'REGULAR', label: 'Regular' }]
       },
       { label: 'Enable installment level delinquency', key: 'enableInstallmentLevelDelinquency', type: 'checkbox' },
       { label: 'Enable income capitalization', key: 'enableIncomeCapitalization', type: 'checkbox' },
@@ -697,30 +808,42 @@ export const FORM_STEPS: FormStep[] = [
     fields: []
   },
   {
-    // Item 4 — Accounting is intentionally kept as its own self-contained, optional wizard step: a
-    // single `accountingRule` control with no cross-field dependencies on any other step. This is the
-    // decoupling seam. A richer accounting module (e.g. reusing the Classic
-    // `LoanProductAccountingStepComponent` for advanced GL-account mappings) can be plugged in behind
-    // this step later WITHOUT touching payload generation (`buildPayload` only reads `accountingRule`
-    // from form state) or any other step. Left as a documented future enhancement here to avoid a
-    // structural rewrite; behaviour is unchanged.
+    // Reuses the Classic `LoanProductAccountingStepComponent` (rendered by the wizard for
+    // `kind: 'accounting'`). It owns the accounting rule radio AND — when Cash/Accrual is selected —
+    // the full set of mandatory GL account selectors, validators and advanced mapping rules, exactly
+    // like Classic. The wizard folds its collected values (`loanProductAccounting`) into the payload
+    // in buildPayloadForSubmit, mirroring Classic's `...loanProductAccountingStep.loanProductAccounting`
+    // spread, so Cash / Accrual (periodic) / Accrual (upfront) all send every required account id.
     id: 6,
     title: 'Accounting',
     icon: 'ti-report',
-    fields: [
-      {
-        label: 'Accounting rule',
-        key: 'accountingRule',
-        type: 'select',
-        required: true,
-        options: [
-          { value: 1, label: 'None' },
-          { value: 2, label: 'Cash-based' },
-          { value: 3, label: 'Accrual (periodic)' },
-          { value: 4, label: 'Accrual (upfront)' }
-        ]
-      }
-    ]
+    kind: 'accounting',
+    fields: []
+  },
+  {
+    // Reuses the Classic `LoanProductInterestRefundStepComponent`. Sheet row 76 ("Interest Refunds",
+    // a highlighted group): the multi-select is only meaningful on the advanced payment allocation
+    // strategy, which is the same gate Classic applies, so the wizard shows this step under exactly
+    // that condition (see `visibleSteps`).
+    id: 10,
+    title: 'Interest Refunds',
+    icon: 'ti-receipt-refund',
+    kind: 'interest-refund',
+    fields: []
+  },
+  {
+    // Reuses the Classic `LoanProductDeferredIncomeRecognitionStepComponent`. Sheet rows 77-78
+    // ("Defered Income recognition", a highlighted group). The component owns both toggles AND their
+    // conditional dependents — `enableIncomeCapitalization` -> capitalizedIncomeCalculationType /
+    // capitalizedIncomeStrategy / capitalizedIncomeType, `enableBuyDownFee` -> buyDownFeeCalculationType /
+    // buyDownFeeStrategy / buyDownFeeIncomeType / merchantBuyDownFee — with Classic's own
+    // add/removeControl logic and `Validators.required`, so the conditional behaviour is reused
+    // rather than reimplemented.
+    id: 11,
+    title: 'Deferred Income Recognition',
+    icon: 'ti-cash-banknote',
+    kind: 'deferred-income',
+    fields: []
   },
   {
     id: 7,
@@ -777,7 +900,7 @@ export const INITIAL_FORM_STATE: Record<string, string | number | boolean | null
   repaymentStartDateType: 1,
   amortizationType: 1,
   interestType: 0,
-  calculateInterestForExactDays: true,
+  allowPartialPeriodInterestCalculation: true,
   isEqualAmortization: false,
   interestCalculationPeriodType: 1,
   loanScheduleType: 'Progressive',
@@ -787,11 +910,33 @@ export const INITIAL_FORM_STATE: Record<string, string | number | boolean | null
   graceOnInterestPayment: 0,
   interestFreePeriod: 0,
   daysInYearType: 360,
-  daysInYearCustomStrategy: 'Full Leap Year',
+  // Backend code, matching the value space of the template-sourced options (see the field config).
+  // `normalizeEnumCodesToBackendValues` is idempotent, so an already-coded value passes through.
+  daysInYearCustomStrategy: 'FULL_LEAP_YEAR',
   daysInMonthType: 30,
   principalThresholdForLastInstallment: 5,
   canUseForTopup: false,
   isInterestRecalculationEnabled: false,
+  // Interest recalculation family. Seeded empty: Classic creates each of these controls only when
+  // the toggle is switched on (defaulting each select to its first template option, which
+  // `seedInterestRecalculationDefaults` reproduces), and `sanitizeCreateLoanProductPayload` strips
+  // the whole family from the payload while the toggle is off — so these seeds never reach a payload
+  // for any existing profile.
+  preClosureInterestCalculationStrategy: '',
+  rescheduleStrategyMethod: '',
+  interestRecalculationCompoundingMethod: '',
+  recalculationCompoundingFrequencyType: '',
+  recalculationCompoundingFrequencyInterval: '',
+  recalculationCompoundingFrequencyNthDayType: '',
+  recalculationCompoundingFrequencyDayOfWeekType: '',
+  recalculationCompoundingFrequencyOnDayType: '',
+  recalculationRestFrequencyType: '',
+  recalculationRestFrequencyInterval: '',
+  recalculationRestFrequencyNthDayType: '',
+  recalculationRestFrequencyDayOfWeekType: '',
+  recalculationRestFrequencyOnDayType: '',
+  isArrearsBasedOnOriginalSchedule: false,
+  disallowInterestCalculationOnPastDue: false,
   delinquencyBucketId: '',
   canDefineInstallmentAmount: true,
   allowVariableInstallments: true,
@@ -816,7 +961,10 @@ export const INITIAL_FORM_STATE: Record<string, string | number | boolean | null
   enableDownPayment: false,
   disbursedAmountPercentageForDownPayment: 35,
   enableAutoRepaymentForDownPayment: true,
-  loanChargeOffBehaviour: 'Regular',
+  // Backend code, matching the value space of the template-sourced `chargeOffBehaviourOptions`
+  // (whose select binds option ids). `normalizeEnumCodesToBackendValues` is idempotent, so an
+  // already-coded value passes straight through and the emitted payload is unchanged.
+  loanChargeOffBehaviour: 'REGULAR',
   enableInstallmentLevelDelinquency: false,
   useGlobalConfigForRepaymentEvent: true,
   dueDaysForRepaymentEvent: 1,
@@ -828,9 +976,475 @@ export const INITIAL_FORM_STATE: Record<string, string | number | boolean | null
   accountingRule: 2
 };
 
-export type LoanWizardProfileMode = 'personal' | 'custom-advanced';
+export type LoanWizardProfileMode =
+  'personal' | 'custom-advanced' | 'two-wheeler' | 'education' | 'agriculture' | 'bnpl';
 
 export type FormState = typeof INITIAL_FORM_STATE;
+
+/**
+ * Guided template modes (Personal, Two Wheeler) hide the HIDDEN_DEFAULTS long-tail, force the
+ * Progressive + advanced-payment-allocation stack and run the guided payload transforms in
+ * {@link buildPayload}. Only Custom/Advanced exposes every control and lets the form win the merge.
+ */
+export function isGuidedProfileMode(profileMode: LoanWizardProfileMode): boolean {
+  return profileMode !== 'custom-advanced';
+}
+
+/**
+ * Guided profiles that pin the Progressive + advanced-payment-allocation stack (buildPayload forces
+ * schedule/strategy; the wizard seeds the strategy control to the advanced strategy).
+ *
+ * Education deliberately is NOT on this list: its defining feature is the principal moratorium
+ * (graceOnPrincipalPayment), and Fineract's ProgressiveLoanScheduleGenerator does not implement
+ * grace periods at all — the create API accepts them on a Progressive product but the generated
+ * schedule silently ignores them. Education therefore runs on the Classic Cumulative stack, pinned
+ * through its hidden defaults (CUMULATIVE + standard strategy + daily interest calculation).
+ *
+ * Agriculture is NOT on this list either: a bullet crop loan is the classic Cumulative pattern
+ * (numberOfRepayments: 1 with repaymentEvery = the crop-cycle length); Progressive is EMI-oriented
+ * and would drag in the advanced-allocation requirement for no benefit.
+ */
+export function forcesProgressiveStack(profileMode: LoanWizardProfileMode): boolean {
+  return profileMode === 'personal' || profileMode === 'two-wheeler';
+}
+
+/**
+ * Guided profiles whose payload transmits the multi-disburse family (multiDisburseLoan,
+ * maxTrancheCount, allowFullTermForTranche, disallowExpectedDisbursements). Every other guided
+ * profile omits all of them — the proven Personal Loan contract. Education needs them: education
+ * loans disburse in semester-wise tranches paid to the institution.
+ */
+export function sendsMultiDisburseFields(profileMode: LoanWizardProfileMode): boolean {
+  return profileMode === 'education' || profileMode === 'bnpl';
+}
+
+/**
+ * Guided profiles that transmit `outstandingLoanBalance`. Every other guided profile drops it — the
+ * form seeds the base 100000, which no guided product wants as a real cap. BNPL is the exception:
+ * its sheet marks the field Applicable (row 56), so it is an editable control whose value must
+ * reach the payload, gated on `multiDisburseLoan` exactly as the Classic Settings step gates it.
+ */
+export function sendsOutstandingLoanBalance(profileMode: LoanWizardProfileMode): boolean {
+  return profileMode === 'bnpl';
+}
+
+/**
+ * Profiles that render the reused Classic `LoanProductInterestRefundStepComponent` — the sheet's
+ * highlighted "Interest Refunds" group (row 76). When present, the operator's selection drives
+ * `supportedInterestRefundTypes` instead of the template's default list.
+ */
+export function rendersInterestRefundStep(profileMode: LoanWizardProfileMode): boolean {
+  return profileMode === 'bnpl';
+}
+
+/**
+ * Profiles that omit `overAppliedCalculationType` / `overAppliedNumber` from the payload while
+ * `allowApprovedDisbursedAmountsOverApplied` is off, exactly as Classic's disabled controls do. See
+ * the note in {@link sanitizeCreateLoanProductPayload} for why this is opt-in per profile.
+ */
+export function dropsDisabledOverAppliedFields(profileMode: LoanWizardProfileMode): boolean {
+  return profileMode === 'bnpl';
+}
+
+/**
+ * Profiles that render the reused Classic `LoanProductDeferredIncomeRecognitionStepComponent` — the
+ * sheet's highlighted "Defered Income recognition" group (rows 77-78). The step owns
+ * `enableIncomeCapitalization` / `enableBuyDownFee` and their conditional dependents, so those two
+ * flags are NOT rendered as flat Settings checkboxes for these profiles.
+ */
+export function rendersDeferredIncomeStep(profileMode: LoanWizardProfileMode): boolean {
+  return profileMode === 'bnpl';
+}
+
+/** Fewest tranches a `multiDisburseLoan: true` product can be created with — used as the floor and
+ * the empty-value fallback for `maxTrancheCount` in {@link buildPayload}. */
+export const MIN_TRANCHE_COUNT = 2;
+
+/**
+ * Keys the BNPL sheet marks `is Applicable = Y` that the base {@link HIDDEN_DEFAULTS} would
+ * otherwise pin. BNPL is the widest guided profile — it exposes nearly the whole Settings surface —
+ * so rather than re-listing the (shorter) hidden set, `hiddenDefaultsFor('bnpl')` subtracts these.
+ *
+ * Sheet rows, in order: 17, 18, 19, 25, 32, 33, 35, 37, 42, 43, 44, 49, 53, 54, 55, 56, 57, 58, 67,
+ * 68, 69, 70, 71, 72, 76, 77, 78. The remaining `Applicable = Y` rows (name, shortName, externalId,
+ * currencyCode, principal, numberOfRepayments, the interest/repayment terms, amortization, interest
+ * method, interest calculation period, repayment strategy and the three grace fields) are never in
+ * HIDDEN_DEFAULTS to begin with, so they need no entry here.
+ */
+/**
+ * Every control Classic registers under `isInterestRecalculationEnabled` and removes when it is off.
+ * The wizard holds them in its one flat FormGroup, so the toggle drives visibility, validators and
+ * — through {@link sanitizeCreateLoanProductPayload} — payload inclusion instead of control lifetime.
+ */
+export const INTEREST_RECALCULATION_FIELDS: readonly string[] = [
+  'preClosureInterestCalculationStrategy',
+  'rescheduleStrategyMethod',
+  'interestRecalculationCompoundingMethod',
+  'recalculationCompoundingFrequencyType',
+  'recalculationCompoundingFrequencyInterval',
+  'recalculationCompoundingFrequencyNthDayType',
+  'recalculationCompoundingFrequencyDayOfWeekType',
+  'recalculationCompoundingFrequencyOnDayType',
+  'recalculationRestFrequencyType',
+  'recalculationRestFrequencyInterval',
+  'recalculationRestFrequencyNthDayType',
+  'recalculationRestFrequencyDayOfWeekType',
+  'recalculationRestFrequencyOnDayType',
+  'isArrearsBasedOnOriginalSchedule',
+  'disallowInterestCalculationOnPastDue'
+];
+
+/**
+ * Wizard field key -> the backend template property holding its options, for selects Classic also
+ * populates from the template rather than a hardcoded list. Resolved at render time in the wizard's
+ * `visibleFields`, so the wizard and Classic always offer the identical choices.
+ */
+export const TEMPLATE_OPTION_SOURCES: Record<string, string> = {
+  preClosureInterestCalculationStrategy: 'preClosureInterestCalculationStrategyOptions',
+  rescheduleStrategyMethod: 'rescheduleStrategyTypeOptions',
+  interestRecalculationCompoundingMethod: 'interestRecalculationCompoundingTypeOptions',
+  recalculationCompoundingFrequencyType: 'interestRecalculationFrequencyTypeOptions',
+  recalculationRestFrequencyType: 'interestRecalculationFrequencyTypeOptions',
+  recalculationCompoundingFrequencyNthDayType: 'interestRecalculationNthDayTypeOptions',
+  recalculationRestFrequencyNthDayType: 'interestRecalculationNthDayTypeOptions',
+  recalculationCompoundingFrequencyDayOfWeekType: 'interestRecalculationDayOfWeekTypeOptions',
+  recalculationRestFrequencyDayOfWeekType: 'interestRecalculationDayOfWeekTypeOptions',
+  loanChargeOffBehaviour: 'chargeOffBehaviourOptions',
+  daysInYearCustomStrategy: 'daysInYearCustomStrategyOptions'
+};
+
+/**
+ * The "on day" pseudo-option Classic pushes onto the nth-day list
+ * (`interestRecalculationNthDayTypeData.push({ id: -2, code: 'onDay', value: 'on day' })`). Selecting
+ * it swaps the day-of-week select for the day-of-month one.
+ */
+export const NTH_DAY_ON_DAY_OPTION: SelectOption = { value: -2, label: 'on day' };
+
+/** Day-of-month choices Classic builds as `Array.from({ length: 28 }, (_, i) => i + 1)`. */
+export const ON_DAY_OF_MONTH_OPTIONS: SelectOption[] = Array.from({ length: 28 }, (_, index) => ({
+  value: index + 1,
+  label: String(index + 1)
+}));
+
+const BNPL_VISIBLE_KEYS: readonly string[] = [
+  'allowApprovedDisbursedAmountsOverApplied',
+  'overAppliedCalculationType',
+  'overAppliedNumber',
+  'interestRecognitionOnDisbursementDate',
+  'allowPartialPeriodInterestCalculation',
+  'isEqualAmortization',
+  'loanScheduleType',
+  'loanScheduleProcessingType',
+  'daysInYearType',
+  'daysInYearCustomStrategy',
+  'daysInMonthType',
+  'principalThresholdForLastInstallment',
+  'isInterestRecalculationEnabled',
+  'multiDisburseLoan',
+  'maxTrancheCount',
+  'outstandingLoanBalance',
+  'disallowExpectedDisbursements',
+  'allowFullTermForTranche',
+  'enableDownPayment',
+  'disbursedAmountPercentageForDownPayment',
+  'enableAutoRepaymentForDownPayment',
+  'loanChargeOffBehaviour',
+  'delinquencyBucketId',
+  'enableInstallmentLevelDelinquency',
+  // Owned by the reused Classic Interest Refund / Deferred Income Recognition steps for BNPL (the
+  // highlighted sheet groups), so the step's emitted value — not a pinned default — drives the payload.
+  'supportedInterestRefundTypes',
+  'enableIncomeCapitalization',
+  'enableBuydownFees'
+];
+
+/**
+ * The hidden, always-sent defaults for a profile mode. Guided profiles hide every key of the
+ * returned object in the UI and spread it LAST in {@link buildPayload}'s merge, so a key must be
+ * removed here (not just overridden) the moment a profile exposes it as an editable control —
+ * otherwise the default would clobber the user's input.
+ */
+export function hiddenDefaultsFor(profileMode: LoanWizardProfileMode): Record<string, unknown> {
+  if (profileMode === 'two-wheeler') {
+    const defaults: Record<string, unknown> = { ...HIDDEN_DEFAULTS, description: 'Two Wheeler Loan Product' };
+    // The down payment percentage is THE commercial lever of a two wheeler product (it is how
+    // lenders control loan-to-value on a fast-depreciating asset), so this profile exposes it as a
+    // visible, editable Settings control — see PROFILE_EXTRA_VISIBLE_FIELDS. `enableDownPayment`
+    // itself stays hidden and forced true: turning it off would make the product a personal loan.
+    delete defaults.disbursedAmountPercentageForDownPayment;
+    // The delinquency bucket is an editable risk control for this template (spreadsheet marks it
+    // Applicable for Two Wheeler): drop it from the hidden defaults so the visible select's value
+    // wins the guided "defaults win" merge. buildPayload normalizes the None option ('') back to
+    // null, keeping the same payload contract Personal sends from its hidden null default.
+    delete defaults.delinquencyBucketId;
+    return defaults;
+  }
+  if (profileMode === 'education') {
+    const defaults: Record<string, unknown> = {
+      ...HIDDEN_DEFAULTS,
+      description: 'Education Loan Product',
+      // No down payment concept in an education loan — overrides the base hidden true. The sanitize
+      // step then drops the two down-payment dependents exactly as it does for Classic.
+      enableDownPayment: false,
+      // Follow-on funding for higher studies is a real pattern; cheap to allow.
+      canUseForTopup: true,
+      // First (interest) installment a month after the first tranche reaches the institution.
+      minimumDaysBetweenDisbursalAndFirstRepayment: 30,
+      // The Cumulative stack (see forcesProgressiveStack): Fineract's Progressive schedule
+      // generator has no grace/moratorium support, so the moratorium product must run on the
+      // Classic Cumulative path. Daily interest calculation keeps the tranche-friendly
+      // configuration Classic uses for multi-disbursal products, and the standard strategy avoids
+      // the advanced-allocation requirement that would drag Progressive back in.
+      loanScheduleType: 'Cumulative',
+      transactionProcessingStrategyCode: 'mifos-standard-strategy',
+      interestCalculationPeriodType: 0,
+      // Universal for education loans: declining balance, fixed EMI after the moratorium. Pinned
+      // (and therefore hidden) so the operator's surface stays "course length → moratorium →
+      // repayment years".
+      interestType: 0,
+      amortizationType: 1,
+      // Banks charge interest from day one; an interest-free moratorium would be a pricing
+      // giveaway. Hidden to avoid confusion with the two real grace fields, which stay visible as
+      // this template's headline controls.
+      interestFreePeriod: 0
+    };
+    // Semester-wise tranche count is the product lever operators actually tune, so it is a
+    // visible, editable control (its default comes from PROFILE_INITIAL_OVERRIDES). It must leave
+    // the hidden defaults or the guided "defaults win" merge would clobber the user's input.
+    // (The rest of the multi-disburse family stays pinned here and is transmitted — see
+    // sendsMultiDisburseFields in buildPayload; the outstanding-balance cap is dropped there for
+    // every guided profile. loanScheduleProcessingType stays HORIZONTAL like every other profile —
+    // Fineract only restricts VERTICAL to the advanced strategy.)
+    delete defaults.maxTrancheCount;
+    // Editable delinquency bucket (spreadsheet marks it Applicable for Education): see the
+    // Two Wheeler branch — dropped from hidden defaults so the visible select drives the payload.
+    delete defaults.delinquencyBucketId;
+    return defaults;
+  }
+  if (profileMode === 'agriculture') {
+    const defaults: Record<string, unknown> = {
+      ...HIDDEN_DEFAULTS,
+      description: 'Agriculture Loan Product',
+      // Production credit carries no down payment concept — overrides the base hidden true; the
+      // sanitize step then drops the two down-payment dependents.
+      enableDownPayment: false,
+      // Bullet repayment at harvest is the classic Cumulative pattern (see forcesProgressiveStack).
+      // At settlement, clear principal first, then interest — the borrower-friendly ordering for
+      // partial harvest-time payments.
+      loanScheduleType: 'Cumulative',
+      transactionProcessingStrategyCode: 'principal-interest-penalties-fees-order-strategy',
+      // With a single installment, flat = simple interest on the full principal for the term —
+      // exactly how crop-loan interest is quoted and how subvention is computed. One period, one
+      // interest amount: daily calculation adds nothing; amortization is meaningless with N=1 and
+      // is pinned to a valid value.
+      interestType: 1,
+      amortizationType: 1,
+      interestCalculationPeriodType: 1,
+      // A bullet product has nothing to moratorium: Fineract requires grace < numberOfRepayments
+      // (= 1), so all three grace controls are pinned to 0 and hidden. The guided grace guard in
+      // buildPayload would drop any value >= 1 anyway; hiding removes the invalid states entirely.
+      graceOnPrincipalPayment: 0,
+      graceOnInterestPayment: 0,
+      interestFreePeriod: 0,
+      // Seasonal arrears behavior: post-harvest sale proceeds take weeks to arrive, so don't age
+      // arrears instantly, and tolerate small rounding/short-payments at settlement.
+      graceOnArrearsAgeing: 30,
+      inArrearsTolerance: 100,
+      // One fixed installment; nothing for the borrower to define or vary.
+      canDefineInstallmentAmount: false
+    };
+    // The seasonal NPA clock is the one risk lever Fineract exposes for the RBI "crop seasons"
+    // norm, so it is a visible, editable Settings control (default 180 ≈ one season, via
+    // PROFILE_INITIAL_OVERRIDES). It must leave the hidden defaults or the guided "defaults win"
+    // merge would clobber the user's input.
+    delete defaults.overdueDaysForNPA;
+    // Editable delinquency bucket (spreadsheet marks it Applicable for Agriculture): see the
+    // Two Wheeler branch — dropped from hidden defaults so the visible select drives the payload.
+    delete defaults.delinquencyBucketId;
+    return defaults;
+  }
+  if (profileMode === 'bnpl') {
+    const defaults: Record<string, unknown> = {
+      ...HIDDEN_DEFAULTS,
+      description: 'BNPL Loan Product',
+      // Spreadsheet row 11 pins the installment multiple to 1, not the base default of 10: a BNPL
+      // instalment is a plain split of the cart value and must not be rounded up to the nearest 10.
+      installmentAmountInMultiplesOf: 1
+    };
+    // Every key below is marked `is Applicable = Y` in the BNPL sheet, so BNPL renders it as an
+    // editable control. Each must be REMOVED (not overridden) from the hidden defaults, because the
+    // guided merge spreads `defaults` last and would otherwise clobber the user's input.
+    for (const exposedKey of BNPL_VISIBLE_KEYS) {
+      delete defaults[exposedKey];
+    }
+    return defaults;
+  }
+  if (profileMode === 'custom-advanced') {
+    const d: Record<string, unknown> = { ...HIDDEN_DEFAULTS };
+    delete d.canDefineInstallmentAmount;
+    delete d.allowVariableInstallments;
+    delete d.multiDisburseLoan;
+    delete d.maxTrancheCount;
+    delete d.allowFullTermForTranche;
+    delete d.inArrearsTolerance;
+    delete d.graceOnArrearsAgeing;
+    delete d.overdueDaysForNPA;
+    // `daysInYearType` and `daysInYearCustomStrategy` are visible, user-editable selects in the
+    // Custom/Advanced settings step (same as Classic). Leaving them in HIDDEN_DEFAULTS would
+    // force `daysInYearType` to 360 / `daysInYearCustomStrategy` to 'Full Leap Year' regardless
+    // of the user's choice, so the form value would never reach the payload. Drop them here so
+    // the form drives both, matching Classic — the gate in `sanitizeCreateLoanProductPayload`
+    // then removes `daysInYearCustomStrategy` for any non-ACTUAL type, exactly as Classic does.
+    delete d.daysInYearType;
+    delete d.daysInYearCustomStrategy;
+    return d;
+  }
+  return { ...HIDDEN_DEFAULTS };
+}
+
+/**
+ * Visible-control prefills that differ from INITIAL_FORM_STATE per profile. They seed the
+ * FormGroup AND win over the generic backend template in the wizard's `syncTemplateDefaults` —
+ * a curated product template deliberately overrides the template's generic defaults (e.g. two
+ * wheeler rates are quoted per YEAR, while the backend template defaults the frequency to
+ * per month; 14 per month would be a very different product).
+ */
+export const PROFILE_INITIAL_OVERRIDES: Partial<Record<LoanWizardProfileMode, Partial<FormState>>> = {
+  'two-wheeler': {
+    principal: 80000, // mid-range new two-wheeler on-road price
+    numberOfRepayments: 36, // standard 3-year EMI plan
+    interestRatePerPeriod: 14, // mid-market two-wheeler rate
+    interestRateFrequencyType: 3, // per year — how the product is quoted and sold
+    // Down payment is the product's defining feature. The `enableDownPayment` payload value is
+    // forced true via hiddenDefaultsFor, but the FormControl must ALSO be seeded true because the
+    // down payment %'s visibility gates on the control's value (see the wizard's visibleFields).
+    enableDownPayment: true,
+    disbursedAmountPercentageForDownPayment: 20 // ≈ 80% LTV, the industry midpoint
+  },
+  education: {
+    principal: 500000, // typical domestic education loan ticket
+    numberOfRepayments: 120, // 10-year repayment phase after the moratorium
+    interestRatePerPeriod: 10.5, // mid-market education loan rate
+    interestRateFrequencyType: 3, // per year — how the product is quoted
+    // The headline field: principal moratorium ≈ 2-year course + buffer, in monthly periods.
+    // Editable because it tracks the borrower's actual course length; stays < numberOfRepayments
+    // or the guided grace guard drops it (Fineract requires grace < numberOfRepayments).
+    graceOnPrincipalPayment: 24,
+    // 8 semester tranches cover a 4-year course. Editable; visibility of the control gates on the
+    // multiDisburseLoan control, which INITIAL_FORM_STATE already seeds true for guided profiles.
+    maxTrancheCount: 8,
+    // Seed the controls to the pinned Cumulative stack so the wizard UI agrees with the payload:
+    // the Payment Allocation step hides itself for a non-advanced strategy, exactly as intended.
+    loanScheduleType: 'Cumulative',
+    transactionProcessingStrategyCode: 'mifos-standard-strategy'
+  },
+  agriculture: {
+    principal: 100000, // typical scale-of-finance ticket
+    // THE bullet: one installment containing all principal and interest at cycle end. Editable so
+    // a two-season variant (2 × 6 months) stays possible without leaving the template.
+    numberOfRepayments: 1,
+    // Crop-cycle length — the field the product manager actually tunes (6 = single kharif/rabi
+    // season, 12 = annual, 18 = sugarcane).
+    repaymentEvery: 12,
+    interestRatePerPeriod: 7, // subvented crop-loan headline rate; fully policy-driven
+    interestRateFrequencyType: 3, // per year
+    // Day-based proxy for the RBI "one/two crop seasons" NPA norm: 180 ≈ one season,
+    // 360 ≈ two seasons for short-duration crops. Visible and editable per crop profile.
+    overdueDaysForNPA: 180,
+    // Seed the controls to the pinned Cumulative stack so the wizard UI agrees with the payload.
+    loanScheduleType: 'Cumulative',
+    transactionProcessingStrategyCode: 'principal-interest-penalties-fees-order-strategy'
+  },
+  bnpl: {
+    principal: 10000, // sheet row 13 — a typical cart value, not a lending ticket
+    numberOfRepayments: 12, // row 14
+    interestRatePerPeriod: 12, // row 20
+    interestRateFrequencyType: 2, // row 21 — per month
+    // Row 40. The defining BNPL lever: the promotional interest-free window at the start of the
+    // plan. Rows 38/39 sample 120 for the two grace fields against 12 repayments, which Fineract
+    // rejects (grace must be < numberOfRepayments) and the guided grace guard would drop, so those
+    // two keep the neutral 0 seed and stay editable.
+    interestFreePeriod: 1,
+    // Row 67/68/69. Down payment at checkout is intrinsic to BNPL, so the toggle is seeded on and
+    // its two dependents are seeded to the sheet's values; all three stay editable.
+    enableDownPayment: true,
+    disbursedAmountPercentageForDownPayment: 35,
+    enableAutoRepaymentForDownPayment: true,
+    // Row 77 — deferred income recognition is on by default for BNPL (merchant-subsidised income is
+    // recognised over the plan, not at disbursement). Rendered by the reused Classic step.
+    enableIncomeCapitalization: true,
+    // Rows 35/36/37. Progressive is the sheet's schedule type, and Fineract only accepts the
+    // advanced payment allocation strategy (and therefore loanScheduleProcessingType,
+    // chargeOffBehaviour and supportedInterestRefundTypes) on a Progressive product. Row 36 samples
+    // a non-advanced strategy, which cannot coexist with row 35 — Progressive wins, matching the
+    // Classic Settings step, which rewrites the strategy when the schedule type changes. Seeded
+    // rather than pinned because row 35 marks the schedule type Applicable.
+    loanScheduleType: 'Progressive',
+    transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+    loanScheduleProcessingType: 'Horizontal'
+  }
+};
+
+/**
+ * Keys from the guided-hidden lists (hidden defaults / custom-only fields) that a specific profile
+ * exposes as an editable control. `disbursedAmountPercentageForDownPayment` sits in the wizard's
+ * custom-only list, which hides it for every guided profile; Two Wheeler surfaces it as its
+ * headline field.
+ */
+export const PROFILE_EXTRA_VISIBLE_FIELDS: Partial<Record<LoanWizardProfileMode, readonly string[]>> = {
+  'two-wheeler': ['disbursedAmountPercentageForDownPayment'],
+  // BNPL marks these Applicable in the sheet even though the wizard's custom-only list hides them
+  // for every other guided profile. Dropping them from the hidden defaults is not enough on its own:
+  // `isCustomOnlyField` is a second, independent gate in the wizard's `visibleFields`.
+  bnpl: [
+    'allowApprovedDisbursedAmountsOverApplied',
+    'overAppliedCalculationType',
+    'overAppliedNumber',
+    'interestRecognitionOnDisbursementDate',
+    'outstandingLoanBalance',
+    'disallowExpectedDisbursements',
+    'enableDownPayment',
+    'disbursedAmountPercentageForDownPayment',
+    'enableAutoRepaymentForDownPayment',
+    'loanChargeOffBehaviour',
+    'enableInstallmentLevelDelinquency'
+  ]
+};
+
+/** Wizard header eyebrow, one translation key per profile. */
+export const PROFILE_LABEL_KEYS: Record<LoanWizardProfileMode, string> = {
+  personal: 'labels.text.Personal Loan',
+  'custom-advanced': 'labels.text.Custom / Advanced',
+  'two-wheeler': 'labels.text.Two Wheeler Loan',
+  education: 'labels.text.Education Loan',
+  agriculture: 'labels.text.Agriculture Loan',
+  bnpl: 'labels.text.BNPL'
+};
+
+/** Route path (under products/loan-products) → wizard profile and the page heading it renders. */
+const PROFILE_ROUTES: Record<string, { profileMode: LoanWizardProfileMode; pageTitle: string }> = {
+  'personal-loan': { profileMode: 'personal', pageTitle: 'labels.heading.Create Personal Loan' },
+  'custom-advanced': {
+    profileMode: 'custom-advanced',
+    pageTitle: 'labels.heading.Custom / Advanced Loan Configuration'
+  },
+  'two-wheeler-loan': { profileMode: 'two-wheeler', pageTitle: 'labels.heading.Create Two Wheeler Loan' },
+  'education-loan': { profileMode: 'education', pageTitle: 'labels.heading.Create Education Loan' },
+  'agriculture-loan': { profileMode: 'agriculture', pageTitle: 'labels.heading.Create Agriculture Loan' },
+  'bnpl-loan': { profileMode: 'bnpl', pageTitle: 'labels.heading.Create BNPL Loan' }
+};
+
+/**
+ * Resolves the wizard profile (and its page title translation key) from the matched route path,
+ * falling back to the Personal Loan profile for unknown paths — the same fallback the route
+ * mapping had when it was a `path === 'custom-advanced'` ternary.
+ */
+export function profileForRoutePath(routePath: string | undefined): {
+  profileMode: LoanWizardProfileMode;
+  pageTitle: string;
+} {
+  return PROFILE_ROUTES[routePath ?? ''] ?? PROFILE_ROUTES['personal-loan'];
+}
 
 /**
  * Fields that should use template defaults when not explicitly provided by user.
@@ -853,7 +1467,7 @@ export const TEMPLATE_DEFAULT_FIELDS = [
   'loanScheduleType',
   'loanScheduleProcessingType',
   'transactionProcessingStrategyCode',
-  'calculateInterestForExactDays',
+  'allowPartialPeriodInterestCalculation',
   'chargeOffBehaviour'
 ] as const;
 
@@ -1062,7 +1676,7 @@ const UNSUPPORTED_CREATE_FIELDS = [
  * byte-for-byte unchanged, while giving the Custom/Advanced flow the same create-contract
  * normalization the Classic flow gets from its typed step forms.
  */
-function sanitizeCreateLoanProductPayload(merged: Record<string, unknown>): void {
+function sanitizeCreateLoanProductPayload(merged: Record<string, unknown>, profileMode: LoanWizardProfileMode): void {
   // 1. Fold the UI-only charge selections into the backend `charges` array.
   if ('chargeName' in merged || 'overdueCharge' in merged) {
     merged.charges = buildChargeReferences(merged);
@@ -1079,6 +1693,61 @@ function sanitizeCreateLoanProductPayload(merged: Record<string, unknown>): void
   if (!merged.enableDownPayment) {
     delete merged.disbursedAmountPercentageForDownPayment;
     delete merged.enableAutoRepaymentForDownPayment;
+  }
+
+  // 1a2. The over-applied pair mirrors the Classic Terms step, which declares both controls
+  //      `{ value: null, disabled: true }` and only `.enable()`s them while
+  //      `allowApprovedDisbursedAmountsOverApplied` is ticked, patching both back to null otherwise
+  //      (loan-product-terms-step.component.ts). A disabled control is excluded from
+  //      `FormGroup.value`, so in Classic neither key reaches the payload while the toggle is off.
+  //
+  //      Deliberately scoped to the profiles that need it rather than applied globally: the older
+  //      profiles have shipped a payload carrying `overAppliedCalculationType`/`overAppliedNumber` as
+  //      an explicit null (their hidden defaults pin the toggle off, so the keys are inert), and
+  //      dropping them there would change the wire format of already-released product templates for
+  //      no functional gain. Fineract treats an explicit null and an absent key identically.
+  if (dropsDisabledOverAppliedFields(profileMode) && !merged.allowApprovedDisbursedAmountsOverApplied) {
+    delete merged.overAppliedCalculationType;
+    delete merged.overAppliedNumber;
+  }
+
+  // 1b2. `allowFullTermForTranche` is Progressive-only: Classic renders it inside the Progressive
+  //      branch of its multi-disburse block and patches it back to false whenever the schedule type
+  //      becomes Cumulative (loan-product-settings-step.component.ts `loanScheduleType` valueChanges).
+  if ('allowFullTermForTranche' in merged && !isProgressiveLoanSchedule(merged.loanScheduleType)) {
+    merged.allowFullTermForTranche = false;
+  }
+
+  // 1b3. The interest recalculation family exists in Classic only while the toggle is on — every one
+  //      of its controls is `addControl`ed then and `removeControl`ed otherwise, so none of the keys
+  //      reach `POST /loanproducts` for a product with recalculation disabled (which the backend
+  //      rejects with "not supported when interest recalculation is disabled"). The wizard's flat
+  //      form always carries them, so strip the whole family here instead. Within an enabled
+  //      product, the nested selects Classic never registers for the chosen frequency are blank, and
+  //      blank values are dropped just below.
+  if (!merged.isInterestRecalculationEnabled) {
+    INTEREST_RECALCULATION_FIELDS.forEach((field) => delete merged[field]);
+  } else {
+    INTEREST_RECALCULATION_FIELDS.forEach((field) => {
+      if (merged[field] === '' || merged[field] === null || merged[field] === undefined) {
+        delete merged[field];
+      }
+    });
+    // Progressive-only, exactly like Classic's
+    // `enableFieldsWhenScheduleTypeIsProgressiveAndInterestRateRecalculationEnabled`.
+    if (!isProgressiveLoanSchedule(merged.loanScheduleType)) {
+      delete merged.disallowInterestCalculationOnPastDue;
+    }
+  }
+
+  // 1c. Installment-level delinquency only exists under a delinquency bucket. Classic renders the
+  //     checkbox only while a bucket is selected and its clear button resets both together
+  //     (`clearProperty('delinquencyBucketId')` in loan-product-settings-step.component.ts), so the
+  //     flag can never be true without a bucket. Selecting the "None" option is the wizard's
+  //     equivalent of that clear, so mirror the same reset here. No-op for the profiles that pin the
+  //     flag false in HIDDEN_DEFAULTS.
+  if (!merged.delinquencyBucketId) {
+    merged.enableInstallmentLevelDelinquency = false;
   }
 
   // 2. Re-key wizard field names to their create-contract equivalents without overwriting a value
@@ -1134,37 +1803,18 @@ export function buildPayload(
   profileMode: LoanWizardProfileMode = 'personal',
   template?: unknown
 ): Record<string, unknown> {
-  const defaults =
-    profileMode === 'custom-advanced'
-      ? (() => {
-          const d = { ...HIDDEN_DEFAULTS };
-          delete d.canDefineInstallmentAmount;
-          delete d.allowVariableInstallments;
-          delete d.multiDisburseLoan;
-          delete d.maxTrancheCount;
-          delete d.allowFullTermForTranche;
-          delete d.inArrearsTolerance;
-          delete d.graceOnArrearsAgeing;
-          delete d.overdueDaysForNPA;
-          // `daysInYearType` and `daysInYearCustomStrategy` are visible, user-editable selects in the
-          // Custom/Advanced settings step (same as Classic). Leaving them in HIDDEN_DEFAULTS would
-          // force `daysInYearType` to 360 / `daysInYearCustomStrategy` to 'Full Leap Year' regardless
-          // of the user's choice, so the form value would never reach the payload. Drop them here so
-          // the form drives both, matching Classic — the gate in `sanitizeCreateLoanProductPayload`
-          // then removes `daysInYearCustomStrategy` for any non-ACTUAL type, exactly as Classic does.
-          delete d.daysInYearType;
-          delete d.daysInYearCustomStrategy;
-          return d;
-        })()
-      : { ...HIDDEN_DEFAULTS };
+  const defaults = hiddenDefaultsFor(profileMode);
 
-  /* Apply template defaults if template is provided for Personal Loan */
+  /* Apply template defaults if template is provided for a guided profile */
   const formValuesWithTemplateDefaults = template ? mergeTemplateDefaults(formState, template) : formState;
 
   // Merge order is profile-dependent:
-  // - Personal Loan hides every HIDDEN_DEFAULTS field in the UI (see the `hiddenFieldKeys` filter in
-  //   loan-product-wizard.component.ts), so those controls only ever carry their INITIAL_FORM_STATE
-  //   seed. The product-specific hidden defaults must therefore win — `defaults` is spread last.
+  // - Guided profiles (Personal, Two Wheeler) hide every key of their hidden defaults in the UI
+  //   (see the `hiddenFieldKeys` filter in loan-product-wizard.component.ts), so those controls only
+  //   ever carry their INITIAL_FORM_STATE seed. The product-specific hidden defaults must therefore
+  //   win — `defaults` is spread last. Any field a guided profile exposes as editable is REMOVED
+  //   from its hidden defaults in `hiddenDefaultsFor` (e.g. Two Wheeler's down payment %), so the
+  //   form value survives this spread.
   // - Custom/Advanced exposes those same fields as editable controls, so the user's form values must
   //   win. Spreading `defaults` first lets it fill in only the genuinely hidden, backend-only fields
   //   the form never carries (e.g. the borrower-cycle variation arrays) without clobbering visible
@@ -1174,23 +1824,33 @@ export function buildPayload(
       ? { ...defaults, ...formValuesWithTemplateDefaults }
       : { ...formValuesWithTemplateDefaults, ...defaults };
 
-  // Personal Loan specific transformations
-  if (profileMode === 'personal') {
+  // Guided-profile transformations: fold charges, validate grace, and normalize the payload to the
+  // contract the Personal Loan template has always sent. Profiles on the Progressive stack
+  // (Personal, Two Wheeler) additionally force the Progressive + advanced-payment-allocation pair;
+  // Education runs on the Classic Cumulative stack (its hidden defaults pin schedule/strategy), so
+  // no forcing happens and the progressive-only branches below turn themselves off.
+  if (isGuidedProfileMode(profileMode)) {
     const formValues = formState as Record<string, unknown>;
     const selectedTransactionProcessingStrategyCode = formValues.transactionProcessingStrategyCode;
+    const numberOfRepayments = toFiniteNumber(merged.numberOfRepayments);
+
+    if (forcesProgressiveStack(profileMode)) {
+      merged.transactionProcessingStrategyCode =
+        typeof selectedTransactionProcessingStrategyCode === 'string' &&
+        selectedTransactionProcessingStrategyCode !== ''
+          ? selectedTransactionProcessingStrategyCode
+          : LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY;
+      merged.loanScheduleType = LoanProducts.LOAN_SCHEDULE_TYPE_PROGRESSIVE;
+    }
+
+    // Computed AFTER any stack forcing so the progressive-only branches below key off the strategy
+    // and schedule the payload will actually carry.
     const transactionProcessingStrategyCode = merged.transactionProcessingStrategyCode;
     const supportsAdvancedPaymentAllocation =
       typeof transactionProcessingStrategyCode === 'string' &&
       LoanProducts.isAdvancedPaymentAllocationStrategy(transactionProcessingStrategyCode);
     const supportsProgressiveLoanFeatures =
       supportsAdvancedPaymentAllocation && isProgressiveLoanSchedule(merged.loanScheduleType);
-    const numberOfRepayments = toFiniteNumber(merged.numberOfRepayments);
-
-    merged.transactionProcessingStrategyCode =
-      typeof selectedTransactionProcessingStrategyCode === 'string' && selectedTransactionProcessingStrategyCode !== ''
-        ? selectedTransactionProcessingStrategyCode
-        : LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY;
-    merged.loanScheduleType = LoanProducts.LOAN_SCHEDULE_TYPE_PROGRESSIVE;
 
     // Map interest-free period to the backend field name used by the classic payload contract.
     if ('interestFreePeriod' in merged) {
@@ -1203,6 +1863,15 @@ export function buildPayload(
     delete merged.chargeName;
     delete merged.overdueCharge;
 
+    // Normalize the delinquency bucket "None" option ('') to null, mirroring the Classic Settings
+    // step (loan-product-settings-step.component.ts, which converts '' -> null before submit). For
+    // profiles that expose it as an editable select (Two Wheeler, Education, Agriculture) this keeps
+    // the untouched-form payload on the same `null` contract Personal sends from its hidden default;
+    // for profiles that keep it hidden the value is already null, so this is a no-op.
+    if (merged.delinquencyBucketId === '') {
+      merged.delinquencyBucketId = null;
+    }
+
     // Preserve backend field names expected by the classic payload contract.
     if ('enableBuydownFees' in merged) {
       merged.enableBuyDownFee = merged.enableBuydownFees;
@@ -1210,11 +1879,22 @@ export function buildPayload(
     }
 
     if (supportsProgressiveLoanFeatures) {
+      // A profile that renders the reused Classic Interest Refund step (BNPL — the sheet's
+      // highlighted "Interest Refunds" group) has already folded the operator's selection in, so it
+      // wins. Every other guided profile has no such UI and keeps the template's default list,
+      // exactly as before.
+      const selectedInterestRefundTypes = merged.supportedInterestRefundTypes;
       const templateSupportedInterestRefundTypes = getTemplateFieldValue(
         template as Record<string, unknown>,
         'supportedInterestRefundTypes'
       );
-      if (Array.isArray(templateSupportedInterestRefundTypes) && templateSupportedInterestRefundTypes.length > 0) {
+      if (Array.isArray(selectedInterestRefundTypes) && selectedInterestRefundTypes.length > 0) {
+        merged.supportedInterestRefundTypes = selectedInterestRefundTypes;
+      } else if (
+        Array.isArray(templateSupportedInterestRefundTypes) &&
+        templateSupportedInterestRefundTypes.length > 0 &&
+        !rendersInterestRefundStep(profileMode)
+      ) {
         merged.supportedInterestRefundTypes = templateSupportedInterestRefundTypes;
       } else {
         delete merged.supportedInterestRefundTypes;
@@ -1231,11 +1911,43 @@ export function buildPayload(
     delete merged.allowVariableInstallments;
     delete merged.minimumGap;
     delete merged.maximumGap;
-    delete merged.multiDisburseLoan;
-    delete merged.maxTrancheCount;
-    delete merged.allowFullTermForTranche;
-    delete merged.outstandingLoanBalance;
-    delete merged.disallowExpectedDisbursements;
+
+    // Profiles without tranches omit the entire multi-disburse family (the proven Personal Loan
+    // contract — the backend then applies its own defaults). Education transmits it: semester-wise
+    // tranche disbursement is intrinsic to the product, `multiDisburseLoan: true` is pinned in its
+    // hidden defaults and `maxTrancheCount` is a visible, editable control. The outstanding-balance
+    // cap is omitted for every guided profile — the form seeds it with the base 100000, which no
+    // guided product wants as an actual cap.
+    if (!sendsOutstandingLoanBalance(profileMode)) {
+      delete merged.outstandingLoanBalance;
+    }
+    if (!sendsMultiDisburseFields(profileMode)) {
+      delete merged.multiDisburseLoan;
+      delete merged.maxTrancheCount;
+      delete merged.allowFullTermForTranche;
+      delete merged.disallowExpectedDisbursements;
+    } else if (!merged.multiDisburseLoan) {
+      // Classic's `multiDisburseLoan` valueChanges handler removes the `maxTrancheCount` and
+      // `outstandingLoanBalance` controls and patches `disallowExpectedDisbursements` /
+      // `allowFullTermForTranche` back to false when multiple disbursals are switched off (see
+      // loan-product-settings-step.component.ts). Profiles that expose the toggle as an editable
+      // control (BNPL) must reproduce that, or the payload trips the backend rule "Allow Multiple
+      // Disbursals Not Set - Disallow Expected Disbursals Can't Be Set". Education pins the toggle
+      // true in its hidden defaults, so this branch never fires for it.
+      delete merged.maxTrancheCount;
+      delete merged.outstandingLoanBalance;
+      merged.disallowExpectedDisbursements = false;
+      merged.allowFullTermForTranche = false;
+    } else {
+      // The tranche cap is a visible, optional number control (Education), so clearing it leaves the
+      // FormControl at null and typing 0/1 is equally accepted by the input. Fineract rejects
+      // `multiDisburseLoan: true` without a valid cap, and a "multi"-disburse product needs at least
+      // two tranches, so coerce anything below the minimum back to it rather than shipping the
+      // invalid value.
+      const trancheCount = toFiniteNumber(merged.maxTrancheCount);
+      merged.maxTrancheCount =
+        trancheCount !== null && trancheCount >= MIN_TRANCHE_COUNT ? trancheCount : MIN_TRANCHE_COUNT;
+    }
 
     if (!hasValidGracePeriod(merged.graceOnPrincipalPayment, numberOfRepayments)) {
       delete merged.graceOnPrincipalPayment;
@@ -1249,14 +1961,30 @@ export function buildPayload(
       delete merged.chargeOffBehaviour;
     }
 
-    const templateOnlyFieldsNotAcceptedByCreateApi = [
-      'useGlobalConfigForRepaymentEvent',
-      'daysInYearCustomStrategy'
-    ] as const;
-    templateOnlyFieldsNotAcceptedByCreateApi.forEach((field) => {
-      delete merged[field];
-    });
-  } else if (profileMode === 'custom-advanced') {
+    delete merged.useGlobalConfigForRepaymentEvent;
+
+    // `daysInYearCustomStrategy` is dropped unconditionally for the guided profiles that keep it
+    // hidden and pinned — none of them can produce a meaningful value, so the key is pure noise.
+    // A profile that exposes it as an editable control (BNPL, sheet row 43) must instead let the
+    // shared gate in `sanitizeCreateLoanProductPayload` decide, which applies Classic's exact
+    // condition: keep it only for the advanced payment allocation strategy AND an ACTUAL
+    // days-in-year type, drop it otherwise. That keeps the field's required validator honest — it
+    // is only ever required when the value will actually be sent.
+    if (hiddenDefaultsFor(profileMode).daysInYearCustomStrategy !== undefined) {
+      delete merged.daysInYearCustomStrategy;
+    }
+
+    // Same opt-in for the partial-period flag. Classic sends it for every product, but the four
+    // older guided profiles have shipped without it (it was previously bound to the read-only
+    // `calculateInterestForExactDays`, which is stripped), and turning it on would change how
+    // interest is actually calculated for those templates — Education in particular pins the Daily
+    // interest calculation type, which the flag is invalid for. BNPL exposes it as an editable
+    // control (sheet row 32) and therefore keeps it.
+    if (hiddenDefaultsFor(profileMode).allowPartialPeriodInterestCalculation !== undefined) {
+      delete merged.allowPartialPeriodInterestCalculation;
+    }
+  } else {
+    // Custom/Advanced only.
     // Advanced Payment Allocation parity with Classic: `supportedInterestRefundTypes` is only ever
     // populated from the template's default list (there is no dedicated Interest Refund UI in either
     // wizard profile, same as Personal Loan above), and only once the advanced strategy + Progressive
@@ -1296,7 +2024,7 @@ export function buildPayload(
   // re-key wizard field names to their backend equivalents, and strip fields `POST /loanproducts`
   // does not accept. No-op for Personal (its block already consumed these fields); it is what brings
   // the Custom/Advanced payload in line with the Classic contract.
-  sanitizeCreateLoanProductPayload(merged);
+  sanitizeCreateLoanProductPayload(merged, profileMode);
 
   // Convert enum display strings to backend codes for every profile mode. The Classic flow submits
   // codes ('PROGRESSIVE', 'HORIZONTAL', ...); the custom-advanced wizard would otherwise send the

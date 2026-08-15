@@ -28,7 +28,7 @@
         }
       </ng-container>
       <ng-container *mifosxHasPermission="'DELETE_' + datatableName">
-        @if (datatableData.length > 0) {
+        @if (datatableData.data.length > 0) {
           <span>
             <button class="delete-button" mat-raised-button color="warn" (click)="delete()">
               <fa-icon icon="trash" class="m-r-10"></fa-icon>
@@ -43,7 +43,7 @@
   <mat-card class="data-table-card m-t-10">
     <mat-card-content>
       <div class="table-scroll-wrapper">
-        <table #dataTable mat-table [dataSource]="datatableData" class="mat-elevation-z2 m-b-25">
+        <table #dataTable mat-table [dataSource]="datatableData" matSort class="mat-elevation-z2 m-b-25">
           @for (datatableColumn of datatableColumns; track datatableColumn; let i = $index) {
             <ng-container [matColumnDef]="datatableColumn">
               @if (i === 0) {
@@ -59,7 +59,9 @@
                 </td>
               }
               @if (i > 0) {
-                <th mat-header-cell class="right" *matHeaderCellDef>{{ getInputName(datatableColumn) }}</th>
+                <th mat-header-cell class="right" *matHeaderCellDef mat-sort-header>
+                  {{ getInputName(datatableColumn) }}
+                </th>
                 <td
                   mat-cell
                   class="right responsive-data-cell"
@@ -78,6 +80,7 @@
           <tr mat-row *matRowDef="let row; columns: datatableColumns" class="data-row"></tr>
         </table>
       </div>
+      <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
     </mat-card-content>
   </mat-card>
 </div>

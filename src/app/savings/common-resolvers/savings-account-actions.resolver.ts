@@ -70,6 +70,7 @@ export class SavingsAccountActionsResolver {
           this.savingsService.getSavingsAccountData(savingAccountId)
         ]);
       case 'Apply Annual Fees':
+      case 'Link to payment system':
         return this.savingsService.getSavingsAccountData(savingAccountId);
       default:
         return undefined;

@@ -8,6 +8,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DatePipe, DecimalPipe } from '@angular/common';
+import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -28,27 +29,37 @@ describe('DatatableMultiRowComponent', () => {
   let fixture: ComponentFixture<DatatableMultiRowComponent>;
   let component: DatatableMultiRowComponent;
 
-  const dataObject = {
+  const row = (id: number, firstName: string, lastName: string, amount: number | null = id) => ({
+    row: [
+      id,
+      99,
+      firstName,
+      lastName,
+      amount,
+      null
+    ]
+  });
+
+  const createDataObject = (data: any[] = [row(7, 'Ada', 'Lovelace')]) => ({
     columnHeaders: [
       { columnName: 'id', columnDisplayType: 'INTEGER' },
       { columnName: 'client_id', columnDisplayType: 'INTEGER' },
       { columnName: 'first_name', columnDisplayType: 'STRING' },
       { columnName: 'last_name', columnDisplayType: 'STRING' },
-      { columnName: 'notes', columnDisplayType: 'TEXT' },
+      { columnName: 'amount', columnDisplayType: 'DECIMAL' },
       { columnName: 'empty_value', columnDisplayType: 'STRING' }
     ],
-    data: [
-      {
-        row: [
-          7,
-          99,
-          'Ada',
-          'Lovelace',
-          'A long datatable value that should remain readable when rendered in the responsive mobile row.',
-          null
-        ]
-      }
-    ]
+    data
+  });
+
+  const getRenderedRows = (): string[] =>
+    Array.from(fixture.nativeElement.querySelectorAll('tr.mat-mdc-row')).map((tableRow: Element) =>
+      tableRow.textContent.replace(/\s+/g, ' ').trim()
+    );
+
+  const detectChanges = () => {
+    fixture.detectChanges();
+    fixture.detectChanges();
   };
 
   beforeEach(async () => {
@@ -99,10 +110,10 @@ describe('DatatableMultiRowComponent', () => {
 
     fixture = TestBed.createComponent(DatatableMultiRowComponent);
     component = fixture.componentInstance;
-    component.dataObject = dataObject;
+    component.dataObject = createDataObject();
     component.entityId = '99';
     component.entityType = 'Client';
-    fixture.detectChanges();
+    detectChanges();
   });
 
   it('adds responsive labels to dynamic data cells', () => {
@@ -116,7 +127,7 @@ describe('DatatableMultiRowComponent', () => {
       'Id',
       'First name',
       'Last name',
-      'Notes',
+      'Amount',
       'Empty value'
     ]);
     expect(mobileLabels).toEqual(labels);
@@ -134,14 +145,19 @@ describe('DatatableMultiRowComponent', () => {
   it('preserves the existing displayed columns and desktop table structure', () => {
     const table = fixture.nativeElement.querySelector('table[mat-table]');
     const headerCells = fixture.nativeElement.querySelectorAll('th[mat-header-cell]');
+    const tableScrollWrapper = fixture.nativeElement.querySelector('.table-scroll-wrapper');
+    const paginator = fixture.nativeElement.querySelector('mat-paginator');
 
     expect(table).toBeTruthy();
+    expect(table.classList).toContain('m-b-25');
+    expect(tableScrollWrapper.contains(table)).toBe(true);
+    expect(tableScrollWrapper.contains(paginator)).toBe(false);
     expect(component.datatableColumns).toEqual([
       'select',
       'id',
       'first_name',
       'last_name',
-      'notes',
+      'amount',
       'empty_value'
     ]);
     expect(component.datatableColumns).not.toContain('client_id');
@@ -155,5 +171,181 @@ describe('DatatableMultiRowComponent', () => {
     expect(emptyValueCell).toBeTruthy();
     expect(emptyValue).toBeTruthy();
     expect(emptyValue.textContent.trim()).toBe('');
+  });
+
+  it('renders a paginator for multi row data tables', () => {
+    const paginator = fixture.nativeElement.querySelector('mat-paginator');
+
+    expect(paginator).toBeTruthy();
+    expect(component.datatableData.paginator).toBe(component.paginator);
+  });
+
+  it('displays the correct rows when changing pages', () => {
+    component.dataObject = createDataObject([
+      row(1, 'One', 'User'),
+      row(2, 'Two', 'User'),
+      row(3, 'Three', 'User')
+    ]);
+    component.ngOnChanges({ dataObject: { currentValue: component.dataObject } as any });
+    component.paginator._changePageSize(2);
+    detectChanges();
+
+    expect(getRenderedRows()[0]).toContain('One');
+    expect(getRenderedRows()[1]).toContain('Two');
+
+    component.paginator.pageIndex = 1;
+    component.paginator.page.emit({
+      pageIndex: 1,
+      previousPageIndex: 0,
+      pageSize: 2,
+      length: 3
+    });
+    detectChanges();
+
+    expect(getRenderedRows()).toHaveLength(1);
+    expect(getRenderedRows()[0]).toContain('Three');
+  });
+
+  it('updates rendered rows when page size changes', () => {
+    component.dataObject = createDataObject([
+      row(1, 'One', 'User'),
+      row(2, 'Two', 'User'),
+      row(3, 'Three', 'User')
+    ]);
+    component.ngOnChanges({ dataObject: { currentValue: component.dataObject } as any });
+    component.paginator._changePageSize(2);
+    detectChanges();
+
+    expect(getRenderedRows()).toHaveLength(2);
+
+    component.paginator._changePageSize(10);
+    detectChanges();
+
+    expect(getRenderedRows()).toHaveLength(3);
+  });
+
+  it('sorts dynamic columns ascending and descending', () => {
+    component.dataObject = createDataObject([
+      row(1, 'Charlie', 'Zephyr'),
+      row(2, 'Alice', 'Yellow'),
+      row(3, 'Bob', 'Xavier')
+    ]);
+    component.ngOnChanges({ dataObject: { currentValue: component.dataObject } as any });
+
+    component.sort.sort({ id: 'first_name', start: 'asc', disableClear: false });
+    detectChanges();
+
+    expect(getRenderedRows()[0]).toContain('Alice');
+    expect(getRenderedRows()[1]).toContain('Bob');
+
+    component.sort.active = 'first_name';
+    component.sort.direction = 'desc';
+    component.sort.sortChange.emit({ active: 'first_name', direction: 'desc' });
+    detectChanges();
+
+    expect(getRenderedRows()[0]).toContain('Charlie');
+    expect(getRenderedRows()[1]).toContain('Bob');
+  });
+
+  it('sorts and paginates together', () => {
+    component.dataObject = createDataObject([
+      row(1, 'Charlie', 'Zephyr'),
+      row(2, 'Alice', 'Yellow'),
+      row(3, 'Bob', 'Xavier')
+    ]);
+    component.ngOnChanges({ dataObject: { currentValue: component.dataObject } as any });
+    component.paginator._changePageSize(2);
+    component.sort.sort({ id: 'first_name', start: 'asc', disableClear: false });
+    detectChanges();
+
+    component.paginator.pageIndex = 1;
+    component.paginator.page.emit({
+      pageIndex: 1,
+      previousPageIndex: 0,
+      pageSize: 2,
+      length: 3
+    });
+    detectChanges();
+
+    expect(getRenderedRows()).toHaveLength(1);
+    expect(getRenderedRows()[0]).toContain('Charlie');
+  });
+
+  it('renders an empty data table without rows', () => {
+    component.dataObject = createDataObject([]);
+    component.ngOnChanges({ dataObject: { currentValue: component.dataObject } as any });
+    detectChanges();
+
+    expect(getRenderedRows()).toHaveLength(0);
+    expect(component.datatableData.paginator).toBe(component.paginator);
+  });
+
+  it('renders all rows for a dataset smaller than one page', () => {
+    component.dataObject = createDataObject([
+      row(1, 'One', 'User'),
+      row(2, 'Two', 'User')
+    ]);
+    component.ngOnChanges({ dataObject: { currentValue: component.dataObject } as any });
+    detectChanges();
+
+    expect(getRenderedRows()).toHaveLength(2);
+  });
+
+  it('keeps selection intact across pagination and sorting', () => {
+    component.dataObject = createDataObject([
+      row(1, 'Charlie', 'Zephyr'),
+      row(2, 'Alice', 'Yellow'),
+      row(3, 'Bob', 'Xavier')
+    ]);
+    component.ngOnChanges({ dataObject: { currentValue: component.dataObject } as any });
+    component.paginator._changePageSize(2);
+    detectChanges();
+    const selectedRow = component.datatableData.data[1];
+
+    component.itemToggle(selectedRow);
+    component.sort.sort({ id: 'first_name', start: 'asc', disableClear: false });
+    component.paginator.pageIndex = 1;
+    component.paginator.page.emit({
+      pageIndex: 1,
+      previousPageIndex: 0,
+      pageSize: 2,
+      length: 3
+    });
+    detectChanges();
+
+    expect(component.selection.isSelected(selectedRow)).toBe(true);
+    expect(component.selection.selected).toEqual([selectedRow]);
+    expect(component.isSelected).toBe(true);
+  });
+
+  it('keeps delete selected behavior functional', () => {
+    component.dataObject = createDataObject([
+      row(1, 'One', 'User'),
+      row(2, 'Two', 'User')
+    ]);
+    component.ngOnChanges({ dataObject: { currentValue: component.dataObject } as any });
+    const selectedRow = component.datatableData.data[0];
+
+    component.itemToggle(selectedRow);
+
+    expect(fixture.debugElement.query(By.css('.delete-button'))).toBeTruthy();
+    expect(component.selection.selected).toEqual([selectedRow]);
+  });
+
+  it('sorts numbers and null values safely', () => {
+    component.dataObject = createDataObject([
+      row(1, 'One', 'User', 30),
+      row(2, 'Two', 'User', null),
+      row(3, 'Three', 'User', 5)
+    ]);
+    component.ngOnChanges({ dataObject: { currentValue: component.dataObject } as any });
+
+    component.sort.sort({ id: 'amount', start: 'asc', disableClear: false });
+    detectChanges();
+
+    expect(getRenderedRows()[0]).toContain('Two');
+    expect(getRenderedRows()[1]).toContain('Three');
+    expect(getRenderedRows()[2]).toContain('One');
+    expect(component.getSortValue(row(4, 'Four', 'User', 'invalid' as any), 'amount')).toBe(Number.NEGATIVE_INFINITY);
   });
 });

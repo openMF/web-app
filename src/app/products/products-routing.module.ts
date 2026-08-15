@@ -209,6 +209,42 @@ const routes: Routes = [
               }
             },
             {
+              path: 'two-wheeler-loan',
+              component: CreateLoanProductComponent,
+              data: { title: 'Create Two Wheeler Loan', breadcrumb: 'Two Wheeler Loan' },
+              resolve: {
+                loanProductsTemplate: LoanProductsTemplateResolver,
+                configurations: GlobalConfigurationsResolver
+              }
+            },
+            {
+              path: 'education-loan',
+              component: CreateLoanProductComponent,
+              data: { title: 'Create Education Loan', breadcrumb: 'Education Loan' },
+              resolve: {
+                loanProductsTemplate: LoanProductsTemplateResolver,
+                configurations: GlobalConfigurationsResolver
+              }
+            },
+            {
+              path: 'agriculture-loan',
+              component: CreateLoanProductComponent,
+              data: { title: 'Create Agriculture Loan', breadcrumb: 'Agriculture Loan' },
+              resolve: {
+                loanProductsTemplate: LoanProductsTemplateResolver,
+                configurations: GlobalConfigurationsResolver
+              }
+            },
+            {
+              path: 'bnpl-loan',
+              component: CreateLoanProductComponent,
+              data: { title: 'Create BNPL Loan', breadcrumb: 'BNPL Loan' },
+              resolve: {
+                loanProductsTemplate: LoanProductsTemplateResolver,
+                configurations: GlobalConfigurationsResolver
+              }
+            },
+            {
               path: ':productId',
               component: ViewLoanProductComponent,
               resolve: {

@@ -99,6 +99,9 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
   }
 
   get requiredPermission(): string {
+    if (this.loanProductService.isWorkingCapital && this.command === 'payoutRefund') {
+      return 'PAYOUTREFUND_WORKINGCAPITALLOAN';
+    }
     const map: Record<string, string> = {
       repayment: 'REPAYMENT_LOAN',
       goodwillCredit: 'CREATE_GOODWILL_TRANSACTION',
@@ -141,7 +144,7 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
 
     this.repaymentLoanForm.addControl('transactionAmount', new FormControl(0, []));
     this.updateTransactionAmountValidators(false);
-    if (this.isCapitalizedIncome() || this.isBuyDownFee()) {
+    if (this.isCapitalizedIncome() || this.isBuyDownFee() || this.isWorkingCapital) {
       this.repaymentLoanForm.addControl('classificationId', new FormControl(null));
     }
   }
@@ -149,7 +152,7 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
   setRepaymentLoanDetails() {
     this.paymentTypes = this.dataObject.paymentTypeOptions;
     this.classificationOptions = this.dataObject.classificationOptions;
-    this.originalAmount = Number(this.dataObject.amount) || 0;
+    this.originalAmount = Number(this.dataObject.amount ?? this.dataObject.expectedAmount) || 0;
     if (this.repaymentLoanForm) {
       this.repaymentLoanForm.patchValue({
         transactionAmount: this.originalAmount
@@ -365,17 +368,29 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
     delete payload.skipInterestRefund;
 
     if (this.loanProductService.isWorkingCapital) {
-      if (payload['paymentTypeId'] === null) {
-        delete payload['paymentTypeId'];
-      } else {
-        if ('paymentDetails' in payload) {
-          payload['paymentDetails']['paymentTypeId'] = payload['paymentTypeId'];
-        } else {
-          payload['paymentDetails'] = {
-            paymentTypeId: payload['paymentTypeId']
-          };
+      if (payload['classificationId'] == null) {
+        delete payload['classificationId'];
+      }
+      // Working capital expects payment data nested in a paymentDetails object
+      const paymentDetails: any = 'paymentDetails' in payload ? payload['paymentDetails'] : {};
+      if (payload['paymentTypeId'] != null) {
+        paymentDetails['paymentTypeId'] = payload['paymentTypeId'];
+      }
+      delete payload['paymentTypeId'];
+      [
+        'accountNumber',
+        'checkNumber',
+        'routingCode',
+        'receiptNumber',
+        'bankNumber'
+      ].forEach((field: string) => {
+        if (payload[field]) {
+          paymentDetails[field] = payload[field];
         }
-        delete payload['paymentTypeId'];
+        delete payload[field];
+      });
+      if (Object.keys(paymentDetails).length > 0) {
+        payload['paymentDetails'] = paymentDetails;
       }
     }
 

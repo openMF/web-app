@@ -167,6 +167,7 @@ const routes: Routes = [
             path: '',
             component: ViewTransactionComponent,
             resolve: {
+              savingsAccountData: SavingsAccountViewResolver,
               transactionDatatables: TransactionDatatablesResolver
             },
             children: [

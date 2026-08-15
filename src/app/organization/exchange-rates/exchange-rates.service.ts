@@ -6,12 +6,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-
-import { SettingsService } from 'app/settings/settings.service';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 import {
   CurrencyConversionPayload,
@@ -22,20 +20,17 @@ import {
 } from './exchange-rate.model';
 import { getCurrencyCode } from './exchange-rate-form.util';
 
+type ExchangeRateResponse = ExchangeRate[] | ExchangeRate | { pageItems?: ExchangeRate[]; error?: string };
+type ExchangeRateResponseObject = ExchangeRate & { pageItems?: ExchangeRate[]; error?: string };
+
 @Injectable({
   providedIn: 'root'
 })
 export class ExchangeRatesService {
   private http = inject(HttpClient);
-  private settingsService = inject(SettingsService);
 
-  private get exchangeRatesResource(): string {
-    return `${this.settingsService.baseServerUrl}/api/v2/exchange-rates`;
-  }
-
-  private get currencyConversionResource(): string {
-    return `${this.settingsService.baseServerUrl}/exchange-rates`;
-  }
+  private readonly exchangeRatesResource = '/v2/exchange-rates';
+  private readonly currencyConversionResource = '/exchange-rates';
 
   getExchangeRates(filters: ExchangeRateFilters = {}): Observable<ExchangeRate[] | { pageItems?: ExchangeRate[] }> {
     let httpParams = this.addParam(new HttpParams(), 'sourceCurrency', filters.sourceCurrency);
@@ -43,15 +38,31 @@ export class ExchangeRatesService {
     httpParams = this.addParam(httpParams, 'latest', filters.latest);
     httpParams = this.addParam(httpParams, 'rateDate', filters.rateDate);
 
-    return this.http
-      .get<ExchangeRate[]>(`${this.exchangeRatesResource}/latest`, { params: httpParams })
-      .pipe(map((rates) => rates.map((rate) => this.normalizeExchangeRate(rate))));
+    return this.httpWithoutDefaultErrorHandler()
+      .get<ExchangeRateResponse>(`${this.exchangeRatesResource}/latest`, { params: httpParams })
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          if (error.status === 404) {
+            return of([]);
+          }
+          return throwError(() => error);
+        }),
+        map((rates) => this.normalizeExchangeRateResponse(rates).map((rate) => this.normalizeExchangeRate(rate)))
+      );
   }
 
   getExchangeRate(exchangeRateId: string): Observable<ExchangeRate> {
-    return this.http
-      .get<ExchangeRate>(`${this.exchangeRatesResource}/${exchangeRateId}`)
-      .pipe(map((rate) => this.normalizeExchangeRate(rate)));
+    return this.getExchangeRates().pipe(
+      map((rates) => {
+        const exchangeRate = this.normalizeExchangeRateResponse(rates).find(
+          (rate) => rate.id?.toString() === exchangeRateId.toString()
+        );
+        if (!exchangeRate) {
+          throw new Error(`Exchange rate not found with id: ${exchangeRateId}`);
+        }
+        return exchangeRate;
+      })
+    );
   }
 
   createExchangeRate(exchangeRate: ExchangeRatePayload): Observable<{ resourceId: number }> {
@@ -93,6 +104,39 @@ export class ExchangeRatesService {
 
   private addParam(httpParams: HttpParams, key: string, value: string | boolean | undefined | null): HttpParams {
     return value !== undefined && value !== null && value !== '' ? httpParams.set(key, value.toString()) : httpParams;
+  }
+
+  private httpWithoutDefaultErrorHandler(): HttpClient {
+    const configurableHttp = this.http as HttpClient & { skipErrorHandler?: () => HttpClient };
+    return configurableHttp.skipErrorHandler ? configurableHttp.skipErrorHandler() : this.http;
+  }
+
+  private normalizeExchangeRateResponse(response: ExchangeRateResponse): ExchangeRate[] {
+    if (Array.isArray(response)) {
+      return response;
+    }
+    const responseObject = response as ExchangeRateResponseObject;
+    if (Array.isArray(responseObject?.pageItems)) {
+      return responseObject.pageItems;
+    }
+    if (this.isExchangeRate(responseObject)) {
+      return [
+        responseObject
+      ];
+    }
+    return [];
+  }
+
+  private isExchangeRate(response: ExchangeRateResponseObject | null | undefined): response is ExchangeRate {
+    return !!(
+      response &&
+      !response.error &&
+      (response.id ||
+        response.sourceCurrency ||
+        response.targetCurrency ||
+        response.sourceCurrencyCode ||
+        response.targetCurrencyCode)
+    );
   }
 
   private toExchangeRateRequest(exchangeRate: ExchangeRatePayload) {

@@ -11,10 +11,21 @@ import { FormBuilder, FormGroup, UntypedFormControl, ValidatorFn, Validators } f
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import {
-  HIDDEN_DEFAULTS,
   FORM_STEPS,
   INITIAL_FORM_STATE,
+  PROFILE_EXTRA_VISIBLE_FIELDS,
+  PROFILE_INITIAL_OVERRIDES,
+  PROFILE_LABEL_KEYS,
   buildPayload,
+  forcesProgressiveStack,
+  hiddenDefaultsFor,
+  isGuidedProfileMode,
+  rendersDeferredIncomeStep,
+  rendersInterestRefundStep,
+  INTEREST_RECALCULATION_FIELDS,
+  TEMPLATE_OPTION_SOURCES,
+  NTH_DAY_ON_DAY_OPTION,
+  ON_DAY_OF_MONTH_OPTIONS,
   VALUE_MAP,
   SelectOption,
   LoanWizardProfileMode,
@@ -27,11 +38,19 @@ import {
   AdvancedCreditAllocation,
   AdvancedPaymentAllocation,
   AdvancedPaymentStrategy,
+  BuyDownFee,
+  CapitalizedIncome,
   CreditAllocation,
+  DeferredIncomeRecognition,
   PaymentAllocation
 } from '../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
+import { StringEnumOptionData } from 'app/shared/models/option-data.model';
 import { LoanProductPaymentStrategyStepComponent } from '../loan-product-stepper/loan-product-payment-strategy-step/loan-product-payment-strategy-step.component';
 import { LoanProductChargesStepComponent } from '../loan-product-stepper/loan-product-charges-step/loan-product-charges-step.component';
+import { LoanProductAccountingStepComponent } from '../loan-product-stepper/loan-product-accounting-step/loan-product-accounting-step.component';
+import { LoanProductInterestRefundStepComponent } from '../loan-product-stepper/loan-product-interest-refund-step/loan-product-interest-refund-step.component';
+import { LoanProductDeferredIncomeRecognitionStepComponent } from '../loan-product-stepper/loan-product-capitalized-income-step/loan-product-deferred-income-recognition-step.component';
+import { GlAccountDisplayComponent } from '../../../shared/accounting/gl-account-display/gl-account-display.component';
 import { LoanProductService } from '../services/loan-product.service';
 import { Router } from '@angular/router';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -39,9 +58,91 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
+import { rangeValidator } from 'app/shared/validators/percentage.validator';
 
 /** Currency symbols rendered in the Review banner, keyed by ISO currency code. */
 const CURRENCY_SYMBOLS: Record<string, string> = { INR: '₹', USD: '$', EUR: '€', GBP: '£' };
+
+/**
+ * Tranche-only fields Classic renders inside its single `@if (multiDisburseLoan)` block and
+ * removes/resets when multiple disbursals are switched off.
+ */
+const MULTI_DISBURSE_DEPENDENT_FIELDS: readonly string[] = [
+  'maxTrancheCount',
+  'outstandingLoanBalance',
+  'disallowExpectedDisbursements',
+  'allowFullTermForTranche'
+];
+
+/**
+ * Interest recalculation controls Classic registers with `Validators.required` (the rest of the
+ * family — the nth-day / day-of-week / on-day selects and the two checkboxes — are registered
+ * without validators).
+ */
+const REQUIRED_INTEREST_RECALCULATION_FIELDS: readonly string[] = [
+  'preClosureInterestCalculationStrategy',
+  'rescheduleStrategyMethod',
+  'interestRecalculationCompoundingMethod',
+  'recalculationCompoundingFrequencyType',
+  'recalculationCompoundingFrequencyInterval',
+  'recalculationRestFrequencyType',
+  'recalculationRestFrequencyInterval'
+];
+
+/**
+ * Fields whose `required: true` in FORM_STEPS is conditional on a controlling toggle rather than
+ * absolute. `validatorsFor` skips the static `Validators.required` for these so a hidden, empty
+ * control cannot hold the whole form invalid; `syncConditionalValidators` re-applies it while the
+ * field is actually visible. Currently the interest recalculation family, which is entirely gated
+ * behind `isInterestRecalculationEnabled` (off by default for every profile).
+ */
+const CONDITIONALLY_REQUIRED_FIELDS: readonly string[] = REQUIRED_INTEREST_RECALCULATION_FIELDS;
+
+/** `daysInYearType` id for the ACTUAL option — the only type `daysInYearCustomStrategy` applies to. */
+const DAYS_IN_YEAR_ACTUAL = 1;
+
+/**
+ * `interestCalculationPeriodType` id for "Same as repayment period" — the only type
+ * `allowPartialPeriodInterestCalculation` applies to (0 is Daily).
+ */
+const INTEREST_CALCULATION_SAME_AS_REPAYMENT_PERIOD = 1;
+
+/** Fields Classic keeps disabled (and null) until `allowApprovedDisbursedAmountsOverApplied` is on. */
+const OVER_APPLIED_DEPENDENT_FIELDS: readonly string[] = [
+  'overAppliedCalculationType',
+  'overAppliedNumber'
+];
+
+/**
+ * The GL account controls the reused Classic accounting step collects for a Cash/Accrual loan
+ * product, each paired with the exact account title Classic's summary renders. Used only to build the
+ * Review's accounting section (via the reused `mifosx-gl-account-display`); the payload itself is
+ * driven entirely by the step's raw form value. Receivable accounts appear only for Accrual and are
+ * simply absent from the step's value for Cash, so a single presence filter covers both rules.
+ */
+const ACCOUNTING_REVIEW_ACCOUNTS: ReadonlyArray<{ key: string; title: string }> = [
+  { key: 'fundSourceAccountId', title: 'Fund source' },
+  { key: 'loanPortfolioAccountId', title: 'Loan portfolio' },
+  { key: 'transfersInSuspenseAccountId', title: 'Transfer in suspense' },
+  { key: 'receivableInterestAccountId', title: 'Interest Receivable' },
+  { key: 'receivableFeeAccountId', title: 'Fees Receivable' },
+  { key: 'receivablePenaltyAccountId', title: 'Penalties Receivable' },
+  { key: 'interestOnLoanAccountId', title: 'Income from Interest' },
+  { key: 'incomeFromFeeAccountId', title: 'Income from fees' },
+  { key: 'incomeFromPenaltyAccountId', title: 'Income from penalties' },
+  { key: 'incomeFromRecoveryAccountId', title: 'Income from Recovery Repayments' },
+  { key: 'incomeFromChargeOffInterestAccountId', title: 'Income from ChargeOff Interest' },
+  { key: 'incomeFromChargeOffFeesAccountId', title: 'Income from ChargeOff Fees' },
+  { key: 'incomeFromChargeOffPenaltyAccountId', title: 'Income from ChargeOff Penalty' },
+  { key: 'incomeFromGoodwillCreditInterestAccountId', title: 'Income from Goodwill Credit Interest' },
+  { key: 'incomeFromGoodwillCreditFeesAccountId', title: 'Income from Goodwill Credit Fees' },
+  { key: 'incomeFromGoodwillCreditPenaltyAccountId', title: 'Income from Goodwill Credit Penalty' },
+  { key: 'writeOffAccountId', title: 'Losses written off' },
+  { key: 'goodwillCreditAccountId', title: 'Expenses from Goodwill Credit' },
+  { key: 'chargeOffExpenseAccountId', title: 'ChargeOff Expense' },
+  { key: 'chargeOffFraudExpenseAccountId', title: 'ChargeOff Fraud Expense' },
+  { key: 'overpaymentLiabilityAccountId', title: 'Over payment liability' }
+];
 
 @Component({
   selector: 'mifosx-loan-product-wizard',
@@ -51,7 +152,11 @@ const CURRENCY_SYMBOLS: Record<string, string> = { INR: '₹', USD: '$', EUR: '�
     MatStepperModule,
     MatButtonModule,
     LoanProductPaymentStrategyStepComponent,
-    LoanProductChargesStepComponent
+    LoanProductChargesStepComponent,
+    LoanProductAccountingStepComponent,
+    LoanProductInterestRefundStepComponent,
+    LoanProductDeferredIncomeRecognitionStepComponent,
+    GlAccountDisplayComponent
   ],
   templateUrl: './loan-product-wizard.component.html',
   styleUrls: ['./loan-product-wizard.component.scss']
@@ -68,7 +173,11 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
   private readonly translateService = inject(TranslateService);
   private readonly dateUtils = inject(Dates);
   private readonly settingsService = inject(SettingsService);
-  private readonly hiddenFieldKeys = new Set(Object.keys(HIDDEN_DEFAULTS));
+  // Hidden-key set derived from the ACTIVE profile's hidden defaults (Two Wheeler, for example,
+  // removes the down payment % from its defaults so it can be a visible control). Computed lazily
+  // and memoised per mode because `profileMode` is an @Input, not yet set when class fields
+  // initialize.
+  private hiddenFieldKeysCache?: { profileMode: LoanWizardProfileMode; keys: Set<string> };
   // Single source of truth for each control's config, so the `required`/`maxLength` metadata declared
   // in FORM_STEPS is wired into real Angular Validators instead of only decorating the template.
   private readonly fieldConfigByKey = new Map<string, FormField>(
@@ -81,10 +190,31 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
   @Input() loanProductsTemplate: any;
   @Input() itemsByDefault: any[] = [];
   @Input() profileMode: LoanWizardProfileMode = 'personal';
+  // The accounting-rule display names (NONE / CASH_BASED / ACCRUAL_PERIODIC / ACCRUAL_UPFRONT) the
+  // reused Classic accounting step renders as radio options — resolved by the host from the shared
+  // `Accounting` util, identical to Classic.
+  @Input() accountingRuleData: any[] = [];
 
   // Reused Classic Charges step. Rendered for the `kind: 'charges'` step; read at submit time to fold the
   // selected charge objects into the payload — mirrors Classic's `@ViewChild(LoanProductChargesStepComponent)`.
   @ViewChild(LoanProductChargesStepComponent) loanProductChargesStep?: LoanProductChargesStepComponent;
+
+  // Reused Classic Accounting step. Rendered for the `kind: 'accounting'` step; it owns the accounting
+  // rule and — for Cash/Accrual — every mandatory GL account selector, validator and advanced mapping
+  // rule. Read at submit time so its collected values are folded into the payload exactly like Classic.
+  @ViewChild(LoanProductAccountingStepComponent) loanProductAccountingStep?: LoanProductAccountingStepComponent;
+
+  // Reused Classic Interest Refund + Deferred Income Recognition steps — the sheet's highlighted
+  // "Interest Refunds" and "Defered Income recognition" groups. Both are advanced-payment-allocation
+  // only in Classic, and both own their conditional dependents internally, so the wizard only has to
+  // hold the values they emit and fold them into the payload exactly like Classic's create flow does.
+  @ViewChild(LoanProductDeferredIncomeRecognitionStepComponent)
+  loanProductDeferredIncomeRecognitionStep?: LoanProductDeferredIncomeRecognitionStepComponent;
+
+  /** Selected refund types, mirroring Classic's `supportedInterestRefundTypes` field. */
+  supportedInterestRefundTypes: StringEnumOptionData[] = [];
+  /** Deferred income state the reused step binds to, mirroring Classic's field of the same name. */
+  deferredIncomeRecognition: DeferredIncomeRecognition | null = null;
 
   steps = FORM_STEPS;
   valueMap = VALUE_MAP;
@@ -93,6 +223,9 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
   private formValueChangesSubscription?: Subscription;
   private transactionProcessingStrategyOptionsCache?: SelectOption[];
   private transactionProcessingStrategyOptionsCacheTemplate?: unknown;
+  // The strategy list depends on the schedule type too (Classic rebuilds it per type), so the cache
+  // must invalidate when the user switches between Progressive and Cumulative.
+  private transactionProcessingStrategyOptionsCacheProgressive?: boolean;
 
   // Editable Payment Allocation state, reused wholesale from the Classic flow. `advancedPaymentAllocations`
   // seeds the reused step's tabs/drag-and-drop; `paymentAllocation`/`creditAllocation` hold the payload-shaped
@@ -102,6 +235,13 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
   paymentAllocation: PaymentAllocation[] = [];
   creditAllocation: CreditAllocation[] = [];
   private advancedAllocationsTemplateRef?: unknown;
+  // Last repayment strategy the deferred-income seeding reacted to, so it re-seeds only on a real
+  // strategy change (Classic's `advancePaymentStrategy` emission) and never on unrelated edits.
+  private lastSeenStrategyCode?: unknown;
+  // Previous values of the two controllers whose transitions Classic reacts to with an explicit
+  // `patchValue` reset — see `syncDependentResets`.
+  private lastSeenMultiDisburseLoan?: boolean;
+  private lastSeenProgressiveSchedule?: boolean;
 
   ngOnInit(): void {
     this.initializeForm();
@@ -118,9 +258,32 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
     this.formValueChangesSubscription?.unsubscribe();
   }
 
-  /** Human-readable name of the active profile, shown in the wizard header. */
+  /** Translation key for the active profile's name, shown in the wizard header. */
   get profileLabel(): string {
-    return this.profileMode === 'custom-advanced' ? 'Custom / Advanced' : 'Personal Loan';
+    return PROFILE_LABEL_KEYS[this.profileMode];
+  }
+
+  private get hiddenFieldKeys(): Set<string> {
+    if (this.hiddenFieldKeysCache?.profileMode !== this.profileMode) {
+      this.hiddenFieldKeysCache = {
+        profileMode: this.profileMode,
+        keys: new Set(Object.keys(hiddenDefaultsFor(this.profileMode)))
+      };
+    }
+    return this.hiddenFieldKeysCache.keys;
+  }
+
+  private get isGuidedProfile(): boolean {
+    return isGuidedProfileMode(this.profileMode);
+  }
+
+  private get forcesProgressiveStack(): boolean {
+    return forcesProgressiveStack(this.profileMode);
+  }
+
+  /** Keys the active profile re-exposes even though the guided-hidden lists would hide them. */
+  private isProfileExtraVisibleField(key: string): boolean {
+    return (PROFILE_EXTRA_VISIBLE_FIELDS[this.profileMode] ?? []).includes(key);
   }
 
   /**
@@ -133,6 +296,19 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
     return typeof strategyCode === 'string' && LoanProducts.isAdvancedPaymentAllocationStrategy(strategyCode);
   }
 
+  /**
+   * Whether the selected schedule type is Progressive. The control carries the display label
+   * ('Progressive'), which `buildPayload` later normalizes to the backend code ('PROGRESSIVE'), so
+   * compare case-insensitively against the code — the same condition Classic tests as
+   * `loanScheduleType === LoanProducts.LOAN_SCHEDULE_TYPE_PROGRESSIVE`.
+   */
+  get isProgressiveSchedule(): boolean {
+    const scheduleType = this.form?.get('loanScheduleType')?.value;
+    return (
+      typeof scheduleType === 'string' && scheduleType.toUpperCase() === LoanProducts.LOAN_SCHEDULE_TYPE_PROGRESSIVE
+    );
+  }
+
   get visibleSteps(): FormStep[] {
     return this.steps.filter((step) => {
       if (step.kind === 'review') {
@@ -143,6 +319,18 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
       }
       if (step.kind === 'charges') {
         return true;
+      }
+      if (step.kind === 'accounting') {
+        return true;
+      }
+      // Same gate Classic puts on both steps (`@if (isAdvancedPaymentStrategy)` in
+      // create-loan-product-classic.component.html), plus the profile opt-in: only profiles whose
+      // sheet marks these groups Applicable render them.
+      if (step.kind === 'interest-refund') {
+        return rendersInterestRefundStep(this.profileMode) && this.isAdvancedPaymentStrategy;
+      }
+      if (step.kind === 'deferred-income') {
+        return rendersDeferredIncomeStep(this.profileMode) && this.isAdvancedPaymentStrategy;
       }
       return this.visibleFields(step).length > 0;
     });
@@ -190,6 +378,10 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
     return row.label;
   }
 
+  trackByAccountTitle(_index: number, account: { title: string }): string {
+    return account.title;
+  }
+
   visibleFields(step: FormStep): FormField[] {
     return step.fields
       .map((field) => {
@@ -204,6 +396,13 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
           };
         }
 
+        // Selects Classic also fills from the backend template (the interest recalculation family and
+        // the charge-off behaviour). Resolved here so both flows offer the identical choices.
+        const templateOptions = this.getTemplateSourcedOptions(field.key);
+        if (templateOptions) {
+          return { ...field, options: templateOptions };
+        }
+
         return field;
       })
       .filter((field) => {
@@ -211,14 +410,26 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
           return false;
         }
 
-        if (this.profileMode === 'personal' && this.hiddenFieldKeys.has(field.key)) {
+        if (
+          this.isGuidedProfile &&
+          this.hiddenFieldKeys.has(field.key) &&
+          !this.isProfileExtraVisibleField(field.key)
+        ) {
           return false;
         }
 
-        if (
-          (field.key === 'maxTrancheCount' || field.key === 'allowFullTermForTranche') &&
-          !this.form?.get('multiDisburseLoan')?.value
-        ) {
+        // Classic's Settings step wraps maxTrancheCount / outstandingLoanBalance /
+        // disallowExpectedDisbursements / allowFullTermForTranche in a single
+        // `@if (multiDisburseLoan)` block (loan-product-settings-step.component.html), and its
+        // `multiDisburseLoan` valueChanges removes/resets the same set.
+        if (MULTI_DISBURSE_DEPENDENT_FIELDS.includes(field.key) && !this.form?.get('multiDisburseLoan')?.value) {
+          return false;
+        }
+
+        // ...with allowFullTermForTranche carrying a second, nested gate in Classic: it renders only
+        // for a Progressive schedule, and Classic patches it back to false when the schedule type
+        // changes to Cumulative.
+        if (field.key === 'allowFullTermForTranche' && !this.isProgressiveSchedule) {
           return false;
         }
 
@@ -230,7 +441,40 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
           return false;
         }
 
-        if (this.profileMode === 'personal' && this.isCustomOnlyField(field.key)) {
+        // Classic's Terms step keeps both over-applied controls `disabled` until
+        // `allowApprovedDisbursedAmountsOverApplied` is ticked, and patches both back to null when it
+        // is unticked (loan-product-terms-step.component.ts) — so they are neither editable nor
+        // present in the payload while the toggle is off.
+        if (
+          OVER_APPLIED_DEPENDENT_FIELDS.includes(field.key) &&
+          !this.form?.get('allowApprovedDisbursedAmountsOverApplied')?.value
+        ) {
+          return false;
+        }
+
+        // Classic renders the installment-level delinquency checkbox only while a delinquency bucket
+        // is selected (`@if (... && loanProductSettingsForm.value.delinquencyBucketId)`).
+        if (field.key === 'enableInstallmentLevelDelinquency' && !this.form?.get('delinquencyBucketId')?.value) {
+          return false;
+        }
+
+        if (INTEREST_RECALCULATION_FIELDS.includes(field.key) && !this.isInterestRecalculationVisible(field.key)) {
+          return false;
+        }
+
+        // Classic renders the partial-period checkbox only for "Same as repayment period"
+        // (`@if (loanProductSettingsForm.value.interestCalculationPeriodType === 1)`); its tooltip says
+        // as much, and its `interestCalculationPeriodType` valueChanges patches the flag back to false
+        // for the Daily type.
+        if (
+          field.key === 'allowPartialPeriodInterestCalculation' &&
+          Number(this.form?.get('interestCalculationPeriodType')?.value) !==
+            INTEREST_CALCULATION_SAME_AS_REPAYMENT_PERIOD
+        ) {
+          return false;
+        }
+
+        if (this.isGuidedProfile && this.isCustomOnlyField(field.key) && !this.isProfileExtraVisibleField(field.key)) {
           return false;
         }
 
@@ -251,8 +495,8 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
    * flows expose the identical set of controls.
    */
   private isProfileOrStrategyDeterminedField(key: string): boolean {
-    // Single-option selects: the field config offers exactly one choice, so there is nothing to pick.
-    if (key === 'repaymentStartDateType' || key === 'loanChargeOffBehaviour') {
+    // Single-option select: the field config offers exactly one choice, so there is nothing to pick.
+    if (key === 'repaymentStartDateType') {
       return true;
     }
     // Classic registers `loanScheduleProcessingType` only for the advanced payment allocation
@@ -260,12 +504,112 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
     if (key === 'loanScheduleProcessingType') {
       return !this.isAdvancedPaymentStrategy;
     }
-    // `daysInYearCustomStrategy` is only applicable for the advanced strategy AND ACTUAL days-in-year
-    // (id 1) — the same gate Classic uses and the same gate buildPayload's sanitize step enforces.
+    // Classic adds the `chargeOffBehaviour` control only on a Progressive schedule and removes it on
+    // Cumulative (loan-product-settings-step.component.ts `loanScheduleType` valueChanges), which is
+    // also the only case `POST /loanproducts` accepts it. Classic's template additionally guards the
+    // select on the advanced strategy, so both conditions must hold.
+    if (key === 'loanChargeOffBehaviour') {
+      return !(this.isProgressiveSchedule && this.isAdvancedPaymentStrategy);
+    }
     if (key === 'daysInYearCustomStrategy') {
-      return !(this.isAdvancedPaymentStrategy && Number(this.form?.get('daysInYearType')?.value) === 1);
+      return !this.isDaysInYearCustomStrategyApplicable;
     }
     return false;
+  }
+
+  /**
+   * `daysInYearCustomStrategy` is applicable only for the advanced payment allocation strategy AND an
+   * ACTUAL days-in-year type — the pair of conditions under which Classic registers the control
+   * (`validateAdvancedPaymentStrategyControls` + the `daysInYearType` valueChanges handler), and the
+   * same pair `buildPayload`'s sanitize step enforces before letting the key reach the create API.
+   * Single source of truth for visibility, the required validator and payload inclusion.
+   */
+  private get isDaysInYearCustomStrategyApplicable(): boolean {
+    return this.isAdvancedPaymentStrategy && Number(this.form?.get('daysInYearType')?.value) === DAYS_IN_YEAR_ACTUAL;
+  }
+
+  /**
+   * The nested visibility matrix Classic applies inside its
+   * `@if (loanProductSettingsForm.value.isInterestRecalculationEnabled)` block
+   * (loan-product-settings-step.component.html). Frequency ids: 1 = Same as repayment period,
+   * 3 = Weekly, 4 = Monthly; compounding method 0 = None; nth-day -2 = the "on day" pseudo-option.
+   */
+  private isInterestRecalculationVisible(key: string): boolean {
+    if (!this.form?.get('isInterestRecalculationEnabled')?.value) {
+      return false;
+    }
+    const value = (controlKey: string): number => Number(this.form?.get(controlKey)?.value);
+    const compoundingMethod = value('interestRecalculationCompoundingMethod');
+    const compoundingFrequency = value('recalculationCompoundingFrequencyType');
+    const compoundingNthDay = value('recalculationCompoundingFrequencyNthDayType');
+    const restFrequency = value('recalculationRestFrequencyType');
+    const restNthDay = value('recalculationRestFrequencyNthDayType');
+
+    switch (key) {
+      case 'recalculationCompoundingFrequencyType':
+        return compoundingMethod !== 0;
+      case 'recalculationCompoundingFrequencyInterval':
+        return compoundingMethod !== 0 && compoundingFrequency !== 1;
+      case 'recalculationCompoundingFrequencyNthDayType':
+        return compoundingMethod !== 0 && compoundingFrequency === 4;
+      case 'recalculationCompoundingFrequencyDayOfWeekType':
+        return (
+          compoundingMethod !== 0 &&
+          ((compoundingFrequency === 4 && compoundingNthDay !== -2) || compoundingFrequency === 3)
+        );
+      case 'recalculationCompoundingFrequencyOnDayType':
+        return compoundingMethod !== 0 && compoundingFrequency === 4 && compoundingNthDay === -2;
+      case 'recalculationRestFrequencyInterval':
+        return restFrequency !== 1;
+      case 'recalculationRestFrequencyNthDayType':
+        return restFrequency === 4;
+      case 'recalculationRestFrequencyDayOfWeekType':
+        return (restFrequency === 4 && restNthDay !== -2) || restFrequency === 3;
+      case 'recalculationRestFrequencyOnDayType':
+        return restFrequency === 4 && restNthDay === -2;
+      case 'disallowInterestCalculationOnPastDue':
+        return this.isProgressiveSchedule;
+      default:
+        // preClosureInterestCalculationStrategy, rescheduleStrategyMethod,
+        // interestRecalculationCompoundingMethod, recalculationRestFrequencyType and
+        // isArrearsBasedOnOriginalSchedule are unconditional inside the block.
+        return true;
+    }
+  }
+
+  /**
+   * Options for a select Classic sources from the backend template. Returns `undefined` for fields
+   * that keep their static config list, so the caller leaves them untouched.
+   */
+  private getTemplateSourcedOptions(key: string): SelectOption[] | undefined {
+    if (key === 'recalculationCompoundingFrequencyOnDayType' || key === 'recalculationRestFrequencyOnDayType') {
+      return ON_DAY_OF_MONTH_OPTIONS;
+    }
+    const templateProperty = TEMPLATE_OPTION_SOURCES[key];
+    if (!templateProperty || !this.loanProductsTemplate) {
+      return undefined;
+    }
+    const rawOptions = this.loanProductsTemplate[templateProperty];
+    if (!Array.isArray(rawOptions)) {
+      return undefined;
+    }
+    // Classic's reschedule strategy list is filtered by schedule type in `setRescheduleStrategies`,
+    // keyed off `advancedTransactionProcessingStrategyDisabled` — which its `loanScheduleType`
+    // handler sets to TRUE on Progressive and FALSE on Cumulative. So Progressive keeps ids > 3 and
+    // Cumulative keeps ids < 4.
+    const filteredOptions =
+      key === 'rescheduleStrategyMethod'
+        ? rawOptions.filter((option: any) => (this.isProgressiveSchedule ? option.id > 3 : option.id < 4))
+        : rawOptions;
+    const options: SelectOption[] = filteredOptions.map((option: any) => ({
+      value: option.id,
+      label: option.value ?? option.code
+    }));
+    // Classic appends the "on day" pseudo-option to both nth-day selects.
+    if (key === 'recalculationCompoundingFrequencyNthDayType' || key === 'recalculationRestFrequencyNthDayType') {
+      options.push(NTH_DAY_ON_DAY_OPTION);
+    }
+    return options;
   }
 
   private isCustomOnlyField(key: string): boolean {
@@ -315,8 +659,23 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
     // Fold the charges selected in the reused Classic step into the same `charges` key the payload
     // builder reads (`buildChargeReferences` -> `LoanProducts.buildPayload` map them to `[{ id }]`).
     formValue.charges = this.selectedCharges;
+    // Fold the reused Interest Refund step's selection in as the id list the create contract expects,
+    // the same `mapStringEnumOptionToIdList` shape Classic submits. Only profiles that render the step
+    // set this; for the rest the key stays absent and buildPayload keeps its template-driven default.
+    if (rendersInterestRefundStep(this.profileMode) && this.supportedInterestRefundTypes.length > 0) {
+      formValue.supportedInterestRefundTypes = this.supportedInterestRefundTypes.map((type) => type.id);
+    }
     const merged = buildPayload(formValue, this.profileMode, this.loanProductsTemplate);
     this.applyAdvancedPaymentAllocation(merged);
+    // Fold in the accounting rule + GL account mappings collected by the reused Classic accounting
+    // step, mirroring Classic's `...this.loanProductAccountingStep.loanProductAccounting` spread. For
+    // None it overrides the seeded `accountingRule` with 1; for Cash/Accrual it also supplies every
+    // mandatory account id (fundSourceAccountId, loanPortfolioAccountId, …) so Fineract accepts the
+    // request. Guarded so unit tests that invoke the builder without rendering the step are unchanged.
+    if (this.loanProductAccountingStep) {
+      Object.assign(merged, this.loanProductAccountingStep.loanProductAccounting);
+    }
+    this.applyDeferredIncomeRecognition(merged);
     return this.loanProducts.buildPayload(merged, this.itemsByDefault || []);
   }
 
@@ -371,6 +730,48 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
   }
 
   /**
+   * Folds the reused Deferred Income Recognition step's state into the payload, mirroring Classic's
+   * create flow (create-loan-product-classic.component.ts): each family's dependent fields are only
+   * emitted while its toggle is on, and both toggles are dropped entirely unless the product is on
+   * the advanced payment allocation strategy — the same condition that renders the step.
+   *
+   * Runs only for profiles that render the step; every other profile keeps whatever
+   * `enableIncomeCapitalization` / `enableBuyDownFee` its hidden defaults already produced.
+   */
+  private applyDeferredIncomeRecognition(payload: Record<string, unknown>): void {
+    if (!rendersDeferredIncomeStep(this.profileMode)) {
+      return;
+    }
+    const strategyCode = payload['transactionProcessingStrategyCode'];
+    const usesAdvancedPaymentAllocation =
+      typeof strategyCode === 'string' && LoanProducts.isAdvancedPaymentAllocationStrategy(strategyCode);
+    if (!usesAdvancedPaymentAllocation || !this.deferredIncomeRecognition) {
+      delete payload['enableIncomeCapitalization'];
+      delete payload['enableBuyDownFee'];
+      return;
+    }
+
+    const { capitalizedIncome, buyDownFee } = this.deferredIncomeRecognition;
+    if (capitalizedIncome) {
+      payload['enableIncomeCapitalization'] = capitalizedIncome.enableIncomeCapitalization;
+      if (capitalizedIncome.enableIncomeCapitalization) {
+        payload['capitalizedIncomeCalculationType'] = capitalizedIncome.capitalizedIncomeCalculationType;
+        payload['capitalizedIncomeStrategy'] = capitalizedIncome.capitalizedIncomeStrategy;
+        payload['capitalizedIncomeType'] = capitalizedIncome.capitalizedIncomeType;
+      }
+    }
+    if (buyDownFee) {
+      payload['enableBuyDownFee'] = buyDownFee.enableBuyDownFee;
+      if (buyDownFee.enableBuyDownFee) {
+        payload['buyDownFeeCalculationType'] = buyDownFee.buyDownFeeCalculationType;
+        payload['buyDownFeeStrategy'] = buyDownFee.buyDownFeeStrategy;
+        payload['buyDownFeeIncomeType'] = buyDownFee.buyDownFeeIncomeType;
+        payload['merchantBuyDownFee'] = buyDownFee.merchantBuyDownFee;
+      }
+    }
+  }
+
+  /**
    * Builds (and memoises per template reference) the editable advanced payment allocation model the
    * reused step binds to. Delegates entirely to the Classic {@link AdvancedPaymentStrategy} service so
    * there is a single source of truth for the DEFAULT allocation.
@@ -397,6 +798,91 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
 
   setCreditAllocation(creditAllocation: CreditAllocation[]): void {
     this.creditAllocation = creditAllocation;
+  }
+
+  /** Mirrors Classic's handler of the same name (create-loan-product-classic.component.ts). */
+  setSupportedInterestRefundTypes(supportedInterestRefundTypes: StringEnumOptionData[]): void {
+    this.supportedInterestRefundTypes = supportedInterestRefundTypes;
+  }
+
+  /**
+   * Mirrors Classic's `setViewChildForm` + `setDeferredIncomeRecognition` pair: the reused step emits
+   * its whole FormGroup on every change, and the host reduces it to the `DeferredIncomeRecognition`
+   * shape — dropping each family's dependents whenever its toggle is off, which is what keeps the
+   * disabled halves out of the payload.
+   */
+  setDeferredIncomeRecognitionForm(viewChildForm: FormGroup): void {
+    if (!this.isAdvancedPaymentStrategy) {
+      return;
+    }
+    const formValues: any = viewChildForm.getRawValue();
+    const capitalizedIncome: CapitalizedIncome = formValues.enableIncomeCapitalization
+      ? {
+          enableIncomeCapitalization: true,
+          capitalizedIncomeCalculationType: formValues.capitalizedIncomeCalculationType,
+          capitalizedIncomeStrategy: formValues.capitalizedIncomeStrategy,
+          capitalizedIncomeType: formValues.capitalizedIncomeType
+        }
+      : { enableIncomeCapitalization: false };
+    const buyDownFee: BuyDownFee = formValues.enableBuyDownFee
+      ? {
+          enableBuyDownFee: true,
+          buyDownFeeCalculationType: formValues.buyDownFeeCalculationType,
+          buyDownFeeStrategy: formValues.buyDownFeeStrategy,
+          buyDownFeeIncomeType: formValues.buyDownFeeIncomeType,
+          merchantBuyDownFee: formValues.merchantBuyDownFee
+        }
+      : { enableBuyDownFee: false };
+    this.deferredIncomeRecognition = { capitalizedIncome, buyDownFee };
+  }
+
+  /**
+   * Seeds {@link deferredIncomeRecognition} from the template the first time the advanced payment
+   * allocation strategy is selected, mirroring Classic's `advancePaymentStrategy(value)`. Guarded by
+   * the last-seen strategy so a later edit to any other control cannot re-seed (and so discard) what
+   * the operator configured in the step.
+   */
+  private syncDeferredIncomeRecognition(): void {
+    if (!rendersDeferredIncomeStep(this.profileMode) || !this.loanProductsTemplate) {
+      return;
+    }
+    const strategyCode = this.form?.get('transactionProcessingStrategyCode')?.value;
+    if (strategyCode === this.lastSeenStrategyCode) {
+      return;
+    }
+    this.lastSeenStrategyCode = strategyCode;
+    if (!this.isAdvancedPaymentStrategy) {
+      return;
+    }
+    const template = this.loanProductsTemplate;
+    // Which halves start enabled comes from the profile's seeded form value (the sheet's default —
+    // BNPL rows 77/78 are TRUE/FALSE), falling back to the template exactly as Classic does when the
+    // profile expresses no opinion. The option defaults inside each half are the template's first
+    // option, identical to Classic's `advancePaymentStrategy`.
+    const enableIncomeCapitalization =
+      (this.form?.get('enableIncomeCapitalization')?.value as boolean | undefined) ??
+      template.enableIncomeCapitalization;
+    const enableBuyDownFee =
+      (this.form?.get('enableBuydownFees')?.value as boolean | undefined) ?? template.enableBuyDownFee;
+    this.deferredIncomeRecognition = {
+      capitalizedIncome: enableIncomeCapitalization
+        ? {
+            enableIncomeCapitalization: true,
+            capitalizedIncomeCalculationType: template.capitalizedIncomeCalculationTypeOptions?.[0],
+            capitalizedIncomeStrategy: template.capitalizedIncomeStrategyOptions?.[0],
+            capitalizedIncomeType: template.capitalizedIncomeTypeOptions?.[0]
+          }
+        : { enableIncomeCapitalization: false },
+      buyDownFee: enableBuyDownFee
+        ? {
+            enableBuyDownFee: true,
+            buyDownFeeCalculationType: template.buyDownFeeCalculationTypeOptions?.[0],
+            buyDownFeeStrategy: template.buyDownFeeStrategyOptions?.[0],
+            buyDownFeeIncomeType: template.buyDownFeeIncomeTypeOptions?.[0],
+            merchantBuyDownFee: true
+          }
+        : { enableBuyDownFee: false }
+    };
   }
 
   formatValue(key: string, val: unknown): string {
@@ -439,7 +925,8 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
   private getTransactionProcessingStrategyOptions(baseOptions: SelectOption[] = []): SelectOption[] {
     if (
       this.transactionProcessingStrategyOptionsCache &&
-      this.transactionProcessingStrategyOptionsCacheTemplate === this.loanProductsTemplate
+      this.transactionProcessingStrategyOptionsCacheTemplate === this.loanProductsTemplate &&
+      this.transactionProcessingStrategyOptionsCacheProgressive === this.isProgressiveSchedule
     ) {
       return this.transactionProcessingStrategyOptionsCache;
     }
@@ -451,7 +938,7 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
       label: option.name ?? option.label ?? option.value ?? option.code
     }));
 
-    const result = options.some(
+    const withAdvanced = options.some(
       (option: SelectOption) => option.value === LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY
     )
       ? options
@@ -463,8 +950,20 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
           }
         ];
 
+    // Classic's `loanScheduleType` handler rebuilds this list per schedule type: Progressive offers
+    // ONLY the advanced payment allocation strategy, Cumulative offers only the non-advanced ones
+    // (loan-product-settings-step.component.ts). Fineract enforces the same pairing, so without this
+    // filter a profile that exposes the schedule type (BNPL, Custom/Advanced) could submit an
+    // advanced strategy on a Cumulative product and be rejected.
+    const result = withAdvanced.filter((option: SelectOption) =>
+      this.isProgressiveSchedule
+        ? LoanProducts.isAdvancedPaymentAllocationStrategy(String(option.value))
+        : !LoanProducts.isAdvancedPaymentAllocationStrategy(String(option.value))
+    );
+
     this.transactionProcessingStrategyOptionsCache = result;
     this.transactionProcessingStrategyOptionsCacheTemplate = this.loanProductsTemplate;
+    this.transactionProcessingStrategyOptionsCacheProgressive = this.isProgressiveSchedule;
     return result;
   }
 
@@ -517,6 +1016,46 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
           .filter((row) => row.display !== '—')
       }))
       .filter((group) => group.rows.length > 0);
+  }
+
+  /**
+   * Accounting summary for the Review, driven by the reused Classic accounting step's collected
+   * values and rendered with the atomic Classic `mifosx-gl-account-display` (identical GL-code + name
+   * formatting). Each selected account id is resolved to its GL account object from the template's
+   * account options — account ids are globally unique in Fineract, so one union lookup covers every
+   * field without duplicating Classic's per-category mapping. Returns just the rule for None (or when
+   * the step has not been rendered), matching Classic's "Type: <rule>" summary line.
+   */
+  get accountingReview(): { ruleLabel: string; accounts: Array<{ title: string; glAccount: unknown }> } | null {
+    const accounting = this.loanProductAccountingStep?.loanProductAccounting;
+    if (!accounting) {
+      return null;
+    }
+    const ruleLabel = this.formatValue('accountingRule', accounting.accountingRule);
+    const ruleId = Number(accounting.accountingRule);
+    if (!(ruleId >= 2 && ruleId <= 4)) {
+      return { ruleLabel, accounts: [] };
+    }
+    const options = this.loanProductsTemplate?.accountingMappingOptions ?? {};
+    const glAccounts: any[] = [
+      ...(options.assetAccountOptions ?? []),
+      ...(options.incomeAccountOptions ?? []),
+      ...(options.expenseAccountOptions ?? []),
+      ...(options.liabilityAccountOptions ?? [])
+    ];
+    const accounts = ACCOUNTING_REVIEW_ACCOUNTS.map((field) => {
+      const id = (accounting as Record<string, unknown>)[field.key];
+      if (id === null || id === undefined || id === '') {
+        return null;
+      }
+      // Compared as strings: the control's value is a `mat-option` [value] binding of the numeric
+      // `GLAccount.id` today, but the guard above already tolerates a string (''), so a strict `===`
+      // would silently drop a row if any caller ever seeded the step with string ids. Both sides come
+      // from the same id space, so stringifying cannot introduce a false match.
+      const glAccount = glAccounts.find((account) => String(account.id) === String(id)) ?? null;
+      return glAccount ? { title: field.title, glAccount } : null;
+    }).filter((row): row is { title: string; glAccount: unknown } => row !== null);
+    return { ruleLabel, accounts };
   }
 
   /**
@@ -583,9 +1122,209 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
   }
 
   /**
+   * The wizard keeps every control in one flat FormGroup, so where Classic calls `addControl` /
+   * `removeControl` as a toggle flips, the wizard instead swaps the dependent control's validators.
+   * The effect is the same: while the controlling field is off the dependent carries no validators
+   * (and is hidden, and excluded from the payload by `buildPayload`); while it is on it carries
+   * exactly the validators Classic attaches at `addControl` time.
+   *
+   * Sources, all in the Classic stepper:
+   * - `overAppliedCalculationType` / `overAppliedNumber` — `required` in the Terms template, with
+   *   `[min]="0"` on the number input.
+   * - `maxTrancheCount` (required, min 0) and `outstandingLoanBalance` (min 0) — the `multiDisburseLoan`
+   *   valueChanges handler in the Settings step.
+   * - `disbursedAmountPercentageForDownPayment` (required, 0-100) — the `enableDownPayment` handler,
+   *   which uses the shared {@link rangeValidator}.
+   */
+  private syncConditionalValidators(): void {
+    if (!this.form) {
+      return;
+    }
+    const overAppliedEnabled = !!this.form.get('allowApprovedDisbursedAmountsOverApplied')?.value;
+    const multiDisburseEnabled = !!this.form.get('multiDisburseLoan')?.value;
+    const downPaymentEnabled = !!this.form.get('enableDownPayment')?.value;
+
+    this.applyValidators('overAppliedCalculationType', overAppliedEnabled ? [Validators.required] : []);
+    this.applyValidators(
+      'overAppliedNumber',
+      overAppliedEnabled ? [
+            Validators.required,
+            Validators.min(0)
+          ] : []
+    );
+    this.applyValidators(
+      'maxTrancheCount',
+      multiDisburseEnabled ? [
+            Validators.required,
+            Validators.min(0)
+          ] : []
+    );
+    this.applyValidators('outstandingLoanBalance', multiDisburseEnabled ? [Validators.min(0)] : []);
+    this.applyValidators(
+      'disbursedAmountPercentageForDownPayment',
+      downPaymentEnabled ? [
+            Validators.required,
+            rangeValidator(0, 100)
+          ] : []
+    );
+
+    // The interest recalculation family carries `Validators.required` in Classic only on the controls
+    // it actually registers for the chosen frequency — which is exactly the set the nested visibility
+    // matrix exposes. The nth-day / day-of-week / on-day selects are registered without validators.
+    INTEREST_RECALCULATION_FIELDS.forEach((key) => {
+      const isRequired =
+        REQUIRED_INTEREST_RECALCULATION_FIELDS.includes(key) && this.isInterestRecalculationVisible(key);
+      this.applyValidators(key, isRequired ? [Validators.required] : []);
+    });
+
+    // Classic registers `daysInYearCustomStrategy` with `Validators.required` — but only under the
+    // two conditions that make it applicable at all: the advanced payment allocation strategy AND an
+    // ACTUAL days-in-year type (`validateAdvancedPaymentStrategyControls` and the `daysInYearType`
+    // valueChanges handler both call `addControl(..., Validators.required)`; every other path calls
+    // `removeControl`). `isDaysInYearCustomStrategyApplicable` is the single expression of that gate,
+    // shared with the visibility filter, so the control can never be required while hidden.
+    this.applyValidators(
+      'daysInYearCustomStrategy',
+      this.isDaysInYearCustomStrategyApplicable ? [Validators.required] : []
+    );
+  }
+
+  /**
+   * The explicit `patchValue` resets Classic performs when a controlling field changes, which the
+   * wizard must reproduce because its controls survive the toggle instead of being removed:
+   *
+   * - `multiDisburseLoan` -> false resets `disallowExpectedDisbursements` and
+   *   `allowFullTermForTranche` to false (Settings step `multiDisburseLoan` valueChanges).
+   * - `loanScheduleType` -> Cumulative resets `allowFullTermForTranche` to false, and re-points
+   *   `transactionProcessingStrategyCode` / `rescheduleStrategyMethod` at the first option of the
+   *   newly filtered list (`loanScheduleType` valueChanges + `setRescheduleStrategies`).
+   *
+   * Without these the payload is still correct (buildPayload forces the same values), but the form
+   * would show stale values after the user toggles the controller back on — a visible divergence
+   * from Classic.
+   */
+  private syncDependentResets(): void {
+    if (!this.form) {
+      return;
+    }
+    const multiDisburseLoan = !!this.form.get('multiDisburseLoan')?.value;
+    const isProgressive = this.isProgressiveSchedule;
+
+    if (this.lastSeenMultiDisburseLoan === true && !multiDisburseLoan) {
+      this.form.patchValue(
+        { disallowExpectedDisbursements: false, allowFullTermForTranche: false },
+        { emitEvent: false }
+      );
+    }
+    this.lastSeenMultiDisburseLoan = multiDisburseLoan;
+
+    // Classic's `interestCalculationPeriodType` valueChanges patches the partial-period flag back to
+    // false as soon as the Daily type is chosen, so a hidden `true` can never reach the payload (the
+    // backend only accepts the flag for "Same as repayment period").
+    if (
+      Number(this.form.get('interestCalculationPeriodType')?.value) !== INTEREST_CALCULATION_SAME_AS_REPAYMENT_PERIOD &&
+      this.form.get('allowPartialPeriodInterestCalculation')?.value
+    ) {
+      this.form.patchValue({ allowPartialPeriodInterestCalculation: false }, { emitEvent: false });
+    }
+
+    // Only a real Progressive -> Cumulative transition clears the tranche flag, mirroring Classic's
+    // `patchValue({ allowFullTermForTranche: false })` in that branch.
+    if (this.lastSeenProgressiveSchedule === true && !isProgressive) {
+      this.form.patchValue({ allowFullTermForTranche: false }, { emitEvent: false });
+    }
+    const scheduleTypeChanged =
+      this.lastSeenProgressiveSchedule !== undefined && this.lastSeenProgressiveSchedule !== isProgressive;
+    this.lastSeenProgressiveSchedule = isProgressive;
+
+    // The strategy/reschedule re-point fires only on a real schedule-type change, mirroring Classic's
+    // `loanScheduleType` valueChanges. It deliberately does NOT run on the initial pass: the wizard
+    // treats the seeded strategy as the user's starting choice, and re-pointing at load would make
+    // `transactionProcessingStrategyCode` a pure function of the schedule type, so it could never be
+    // set independently. (Classic does normalize on load, because its `ngOnInit` patch re-fires the
+    // handler — see the note in the audit about Custom/Advanced's contradictory Progressive +
+    // non-advanced seed, which is pre-existing and tracked separately.)
+    if (!scheduleTypeChanged) {
+      return;
+    }
+    const strategyOptions = this.getTransactionProcessingStrategyOptions(
+      this.fieldConfigByKey.get('transactionProcessingStrategyCode')?.options
+    );
+    const strategyControl = this.form.get('transactionProcessingStrategyCode');
+    if (strategyOptions.length > 0 && !strategyOptions.some((option) => option.value === strategyControl?.value)) {
+      strategyControl?.setValue(strategyOptions[0].value, { emitEvent: false });
+    }
+    // Same for the reschedule strategy, whose valid id range flips with the schedule type.
+    if (this.form.get('isInterestRecalculationEnabled')?.value) {
+      const rescheduleOptions = this.getTemplateSourcedOptions('rescheduleStrategyMethod') ?? [];
+      const rescheduleControl = this.form.get('rescheduleStrategyMethod');
+      if (
+        rescheduleOptions.length > 0 &&
+        !rescheduleOptions.some((option) => option.value === rescheduleControl?.value)
+      ) {
+        rescheduleControl?.setValue(rescheduleOptions[0].value, { emitEvent: false });
+      }
+    }
+  }
+
+  /**
+   * Classic registers each interest recalculation select with its first template option as the
+   * initial value (`new UntypedFormControl(this.preClosureInterestCalculationStrategyData[0].id, ...)`
+   * and siblings), so switching the toggle on yields a complete, valid configuration rather than
+   * empty required selects. The wizard's controls already exist, so seed any that is currently
+   * visible and still empty — which happens the moment the toggle, or a parent frequency, first
+   * exposes it.
+   */
+  private seedInterestRecalculationDefaults(): void {
+    if (!this.form?.get('isInterestRecalculationEnabled')?.value) {
+      return;
+    }
+    INTEREST_RECALCULATION_FIELDS.forEach((key) => {
+      const field = this.fieldConfigByKey.get(key);
+      if (!field || field.type !== 'select' || !this.isInterestRecalculationVisible(key)) {
+        return;
+      }
+      const control = this.form.get(key);
+      if (!control || (control.value !== '' && control.value !== null && control.value !== undefined)) {
+        return;
+      }
+      const firstOption = this.getTemplateSourcedOptions(key)?.[0];
+      if (firstOption !== undefined) {
+        control.setValue(firstOption.value, { emitEvent: false });
+      }
+    });
+  }
+
+  /**
+   * Replaces a control's validators with the static ones declared in FORM_STEPS plus the supplied
+   * conditional ones, without emitting — the caller runs inside a `valueChanges` handler, and
+   * re-emitting there would recurse.
+   */
+  private applyValidators(key: string, conditionalValidators: ValidatorFn[]): void {
+    const control = this.form.get(key);
+    if (!control) {
+      return;
+    }
+    control.setValidators([
+      ...this.validatorsFor(key),
+      ...conditionalValidators
+    ]);
+    control.updateValueAndValidity({ emitEvent: false });
+  }
+
+  /**
    * Translates a field's FORM_STEPS metadata (`required`, `maxLength`) into Angular Validators so the
    * FormGroup — not just the template — actually rejects invalid input. Keys with no config entry
    * (UI-only helpers such as `charges`) get no validators.
+   *
+   * `required` in the field config means "required whenever this field is shown". For a field that is
+   * always shown the two readings coincide, but for a conditionally-shown one a static
+   * `Validators.required` would keep the control invalid while it is hidden and empty — silently
+   * blocking submit with no visible offending control. Those keys are listed in
+   * {@link CONDITIONALLY_REQUIRED_FIELDS} and get their `Validators.required` from
+   * {@link syncConditionalValidators} instead, which applies it only while the field is visible. The
+   * config flag still drives the template's `required` attribute, so the asterisk and inline error
+   * render exactly as before.
    */
   private validatorsFor(key: string): ValidatorFn[] {
     const field = this.fieldConfigByKey.get(key);
@@ -593,7 +1332,7 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
       return [];
     }
     const validators: ValidatorFn[] = [];
-    if (field.required) {
+    if (field.required && !CONDITIONALLY_REQUIRED_FIELDS.includes(key)) {
       validators.push(Validators.required);
     }
     if (typeof field.maxLength === 'number') {
@@ -604,10 +1343,20 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
 
   submit(): void {
     // Every required field is visible in both profiles, so an invalid form means the user left a
-    // required control blank (or exceeded a maxLength). Surface the errors instead of POSTing a
-    // payload the backend would reject.
-    if (this.form.invalid) {
+    // required control blank (or exceeded a maxLength). The reused Classic accounting step keeps its
+    // own FormGroup (with the mandatory GL account validators for Cash/Accrual), so it must be checked
+    // alongside the wizard form — otherwise a Cash product with unselected accounts would POST and the
+    // backend would reject it with "fundSourceAccountId is mandatory". Surface the errors instead.
+    const accountingForm = this.loanProductAccountingStep?.loanProductAccountingForm;
+    // Classic's `loanProductFormValid` additionally requires `loanIncomeCapitalizationForm.valid`
+    // whenever the advanced payment allocation strategy is selected: the reused Deferred Income
+    // Recognition step attaches `Validators.required` to each dependent it registers, so an
+    // incomplete capitalized-income / buydown-fee configuration must block submit here too.
+    const deferredIncomeForm = this.loanProductDeferredIncomeRecognitionStep?.loanDeferredIncomeRecognitionForm;
+    if (this.form.invalid || accountingForm?.invalid || deferredIncomeForm?.invalid) {
       this.form.markAllAsTouched();
+      accountingForm?.markAllAsTouched();
+      deferredIncomeForm?.markAllAsTouched();
       return;
     }
     const final = this.buildPayloadForSubmit();
@@ -638,9 +1387,26 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
       ];
     });
     this.form = this.fb.group(controls);
+    this.syncDependentResets();
+    // Must run BEFORE syncConditionalValidators: if the profile or the backend template arrives with
+    // `isInterestRecalculationEnabled` already true, the family is visible from the first render and
+    // would otherwise be handed `Validators.required` while still empty — leaving the form invalid at
+    // load and `submit()` returning early. Classic never has this window, because it seeds each
+    // control at `addControl` time.
+    this.seedInterestRecalculationDefaults();
     this.refreshReviewPayload();
+    this.syncConditionalValidators();
+    this.syncDeferredIncomeRecognition();
     this.formValueChangesSubscription?.unsubscribe();
-    this.formValueChangesSubscription = this.form.valueChanges.subscribe(() => this.refreshReviewPayload());
+    this.formValueChangesSubscription = this.form.valueChanges.subscribe(() => {
+      // Order matters: apply Classic's resets first, then seed anything the new state newly exposes,
+      // so validators and the review payload below observe the settled state.
+      this.syncDependentResets();
+      this.seedInterestRecalculationDefaults();
+      this.refreshReviewPayload();
+      this.syncConditionalValidators();
+      this.syncDeferredIncomeRecognition();
+    });
   }
 
   private syncTemplateDefaults(): void {
@@ -659,22 +1425,25 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
         repaymentFrequencyType: this.loanProductsTemplate.repaymentFrequencyType?.id ?? 2,
         amortizationType: this.loanProductsTemplate.amortizationType?.id ?? INITIAL_FORM_STATE.amortizationType,
         interestType: this.loanProductsTemplate.interestType?.id ?? INITIAL_FORM_STATE.interestType,
-        calculateInterestForExactDays:
-          this.loanProductsTemplate.calculateInterestForExactDays ?? INITIAL_FORM_STATE.calculateInterestForExactDays,
+        // Seeded from the template exactly as Classic's settings step does
+        // (`allowPartialPeriodInterestCalculation: this.loanProductsTemplate.allowPartialPeriodInterestCalculation`).
+        allowPartialPeriodInterestCalculation:
+          this.loanProductsTemplate.allowPartialPeriodInterestCalculation ??
+          INITIAL_FORM_STATE.allowPartialPeriodInterestCalculation,
         isEqualAmortization: this.loanProductsTemplate.isEqualAmortization ?? INITIAL_FORM_STATE.isEqualAmortization,
         interestCalculationPeriodType:
           this.loanProductsTemplate.interestCalculationPeriodType?.id ??
           INITIAL_FORM_STATE.interestCalculationPeriodType,
-        // Personal Loan always uses Progressive schedule type - never let template override this
-        loanScheduleType:
-          this.profileMode === 'personal'
-            ? INITIAL_FORM_STATE.loanScheduleType
-            : (this.loanProductsTemplate.loanScheduleType?.value ?? INITIAL_FORM_STATE.loanScheduleType),
-        transactionProcessingStrategyCode:
-          this.profileMode === 'personal'
-            ? LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY
-            : (this.loanProductsTemplate.transactionProcessingStrategyCode ??
-              INITIAL_FORM_STATE.transactionProcessingStrategyCode),
+        // Progressive-stack profiles pin the schedule type and strategy - never let the template
+        // override them. Education pins its Cumulative stack via PROFILE_INITIAL_OVERRIDES instead
+        // (spread last below), so it intentionally falls through this branch.
+        loanScheduleType: this.forcesProgressiveStack
+          ? INITIAL_FORM_STATE.loanScheduleType
+          : (this.loanProductsTemplate.loanScheduleType?.value ?? INITIAL_FORM_STATE.loanScheduleType),
+        transactionProcessingStrategyCode: this.forcesProgressiveStack
+          ? LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY
+          : (this.loanProductsTemplate.transactionProcessingStrategyCode ??
+            INITIAL_FORM_STATE.transactionProcessingStrategyCode),
         loanScheduleProcessingType:
           this.loanProductsTemplate.loanScheduleProcessingType?.value ?? INITIAL_FORM_STATE.loanScheduleProcessingType,
         graceOnPrincipalPayment:
@@ -686,11 +1455,13 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
         // contract use the integer id, e.g. 1 = "Actual", 30 = "30 days"). Read `?.id`, matching the
         // Classic settings step (`daysInYearType.id`/`daysInMonthType.id`) and the sibling enums above
         // — reading `?.value` would seed the FormControl with the display string ("Actual"), which the
-        // select can't match and the backend rejects. `daysInYearCustomStrategy` stays `?.value`: it is
-        // a display-string enum normalized to its backend code later.
+        // select can't match and the backend rejects. `daysInYearCustomStrategy` reads `?.id` for the
+        // same reason: Classic registers that control as
+        // `this.loanProductsTemplate.daysInYearCustomStrategy.id` and its select binds option ids, so
+        // the wizard's template-sourced options share that backend-code value space.
         daysInYearType: this.loanProductsTemplate.daysInYearType?.id ?? INITIAL_FORM_STATE.daysInYearType,
         daysInYearCustomStrategy:
-          this.loanProductsTemplate.daysInYearCustomStrategy?.value ?? INITIAL_FORM_STATE.daysInYearCustomStrategy,
+          this.loanProductsTemplate.daysInYearCustomStrategy?.id ?? INITIAL_FORM_STATE.daysInYearCustomStrategy,
         daysInMonthType: this.loanProductsTemplate.daysInMonthType?.id ?? INITIAL_FORM_STATE.daysInMonthType,
         principalThresholdForLastInstallment:
           this.loanProductsTemplate.principalThresholdForLastInstallment ??
@@ -703,17 +1474,18 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
           this.loanProductsTemplate.canDefineInstallmentAmount ?? INITIAL_FORM_STATE.canDefineInstallmentAmount,
         // Fineract rejects multiDisburseLoan/allowVariableInstallments unless the product uses daily
         // interest calculation or the advanced-payment-allocation repayment strategy
-        // (LoanProductDataValidator: "not.supported.for.selected.interest.calculation.type"). Personal
-        // Loan always forces the advanced strategy (see transactionProcessingStrategyCode below), so it
-        // keeps the existing checked-by-default template/INITIAL_FORM_STATE value. Custom/Advanced
-        // defaults to the standard repayment strategy, so it must default both to false here, same as
-        // the Classic stepper (loan-product-settings-step.component.ts).
+        // (LoanProductDataValidator: "not.supported.for.selected.interest.calculation.type"). Guided
+        // profiles satisfy the rule either way — Personal/Two Wheeler force the advanced strategy,
+        // Education pins daily interest calculation — so they keep the checked-by-default
+        // template/INITIAL_FORM_STATE value. Custom/Advanced defaults to the standard repayment
+        // strategy, so it must default both to false here, same as the Classic stepper
+        // (loan-product-settings-step.component.ts).
         allowVariableInstallments:
           this.loanProductsTemplate.allowVariableInstallments ??
-          (this.profileMode === 'personal' ? INITIAL_FORM_STATE.allowVariableInstallments : false),
+          (this.isGuidedProfile ? INITIAL_FORM_STATE.allowVariableInstallments : false),
         multiDisburseLoan:
           this.loanProductsTemplate.multiDisburseLoan ??
-          (this.profileMode === 'personal' ? INITIAL_FORM_STATE.multiDisburseLoan : false),
+          (this.isGuidedProfile ? INITIAL_FORM_STATE.multiDisburseLoan : false),
         maxTrancheCount: this.loanProductsTemplate.maxTrancheCount ?? INITIAL_FORM_STATE.maxTrancheCount,
         allowFullTermForTranche:
           this.loanProductsTemplate.allowFullTermForTranche ?? INITIAL_FORM_STATE.allowFullTermForTranche,
@@ -722,14 +1494,26 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
         overdueDaysForNPA: this.loanProductsTemplate.overdueDaysForNPA ?? INITIAL_FORM_STATE.overdueDaysForNPA,
         chargeName: this.loanProductsTemplate.chargeName ?? INITIAL_FORM_STATE.chargeName,
         overdueCharge: this.loanProductsTemplate.overdueCharge ?? INITIAL_FORM_STATE.overdueCharge,
-        accountingRule: this.loanProductsTemplate.accountingRule ?? INITIAL_FORM_STATE.accountingRule
+        accountingRule: this.loanProductsTemplate.accountingRule ?? INITIAL_FORM_STATE.accountingRule,
+        // Curated profile prefills win over the generic backend template for exactly the overridden
+        // keys (e.g. the Two Wheeler product quotes 14% per YEAR, while the template would reset the
+        // frequency to per month — a very different product). Every other key keeps its
+        // template-first behavior above. Spread order: template-derived entries first, profile
+        // overrides last.
+        ...PROFILE_INITIAL_OVERRIDES[this.profileMode]
       },
       { emitEvent: false }
     );
     // Seed the editable advanced payment allocation model so the reused step renders its tabs/order
     // immediately once the template is available.
     this.getAdvancedPaymentAllocations();
+    // Same ordering requirement as in initializeForm(): the patchValue above runs with
+    // `{ emitEvent: false }`, so the valueChanges subscription never fires for template-driven
+    // values and this is the only chance to seed before the validators are recomputed.
+    this.seedInterestRecalculationDefaults();
     this.refreshReviewPayload();
+    this.syncConditionalValidators();
+    this.syncDeferredIncomeRecognition();
   }
 
   private refreshReviewPayload(): void {
@@ -746,19 +1530,21 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
   }
 
   private getInitialFormState(): typeof INITIAL_FORM_STATE {
+    // Profile prefills layer between the shared seed and the template/profile-forced entries below:
+    // INITIAL_FORM_STATE < PROFILE_INITIAL_OVERRIDES < the explicit entries in the return object.
+    const state = { ...INITIAL_FORM_STATE, ...PROFILE_INITIAL_OVERRIDES[this.profileMode] };
     return {
-      ...INITIAL_FORM_STATE,
+      ...state,
       currencyCode: this.getDefaultCurrencyCode(),
-      principal: this.loanProductsTemplate?.principal ?? INITIAL_FORM_STATE.principal,
-      transactionProcessingStrategyCode:
-        this.profileMode === 'personal'
-          ? LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY
-          : INITIAL_FORM_STATE.transactionProcessingStrategyCode,
+      principal: this.loanProductsTemplate?.principal ?? state.principal,
+      transactionProcessingStrategyCode: this.forcesProgressiveStack
+        ? LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY
+        : state.transactionProcessingStrategyCode,
       // See the matching comment in syncTemplateDefaults(): Custom/Advanced defaults to the standard
       // repayment strategy, so multiDisburseLoan/allowVariableInstallments must default to false there
-      // to satisfy the same Fineract validation rule. Personal Loan is unaffected.
-      multiDisburseLoan: this.profileMode === 'personal' ? INITIAL_FORM_STATE.multiDisburseLoan : false,
-      allowVariableInstallments: this.profileMode === 'personal' ? INITIAL_FORM_STATE.allowVariableInstallments : false
+      // to satisfy the same Fineract validation rule. Guided profiles are unaffected.
+      multiDisburseLoan: this.isGuidedProfile ? state.multiDisburseLoan : false,
+      allowVariableInstallments: this.isGuidedProfile ? state.allowVariableInstallments : false
     };
   }
 

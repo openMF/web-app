@@ -207,6 +207,16 @@
                 <span>{{ 'tooltips.View Receipts' | translate }}</span>
               </button>
             }
+            @if (allowUndoChargeOff(transaction)) {
+              <button
+                mat-menu-item
+                *mifosxHasPermission="'UNDOCHARGEOFF_WORKINGCAPITALLOAN'"
+                (click)="undoChargeOffTransaction(transaction, $event)"
+              >
+                <mat-icon><fa-icon icon="undo" size="sm"></fa-icon></mat-icon>
+                <span>{{ 'labels.menus.Undo Charge-Off' | translate }}</span>
+              </button>
+            }
             @if (isReAge(transaction.type) && !transaction.manuallyReversed) {
               <button
                 mat-menu-item

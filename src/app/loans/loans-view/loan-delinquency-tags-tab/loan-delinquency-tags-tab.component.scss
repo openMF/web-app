@@ -6,17 +6,33 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+@use 'assets/styles/action-dashboard';
 @use 'assets/styles/pause-timeline';
+@use 'assets/styles/colours' as *;
 
-table {
-  width: 100%;
+:host {
+  display: block;
+  padding: 12px 4px 24px;
 }
 
-.container {
-  padding-top: 1%;
-  padding-bottom: 2%;
+// Reset delinquency period marker in the range schedule (expectedAmount === null)
+.reset-period {
+  font-style: italic;
+  color: var(--ds-text-3);
+}
 
-  .delete-button {
-    margin-left: 1%;
-  }
+// Active/undone flag next to a RESET row in the actions history
+.reset-flag {
+  margin-left: 8px;
+  font-size: 11px;
+  color: var(--ds-text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+// Minimum-payment-criteria marker: the shared .enabled/.disabled/.pending
+// colours carry the meaning, this only centres the glyph in its cell.
+.criteria-marker {
+  display: inline-grid;
+  place-items: center;
 }
