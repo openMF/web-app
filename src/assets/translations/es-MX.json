@@ -2437,6 +2437,8 @@
       "List of Accounts": "Lista de cuentas",
       "Loading vendors...": "Cargando proveedores...",
       "Loading clients": "Cargando clientes...",
+      "Loading datatables": "Cargando tablas de datos...",
+      "Loading savings transactions": "Cargando transacciones de ahorro...",
       "Loading loans": "Cargando préstamos...",
       "Loan": "Crédito",
       "Loan Account": "Cuenta de Crédito",

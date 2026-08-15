@@ -7,7 +7,15 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, ViewChild, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  OnInit,
+  ViewChild,
+  inject,
+  ChangeDetectorRef
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
@@ -48,6 +56,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 import { AccountTransfersService } from 'app/account-transfers/account-transfers.service';
 import { TranslateService } from '@ngx-translate/core';
+import { PageLoaderComponent } from 'app/shared/page-loader/page-loader.component';
 
 /**
  * Transactions Tab Component.
@@ -81,7 +90,8 @@ import { TranslateService } from '@ngx-translate/core';
     MatRow,
     MatPaginator,
     DateFormatPipe,
-    CurrencyPipe
+    CurrencyPipe,
+    PageLoaderComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -95,6 +105,7 @@ export class TransactionsTabComponent implements OnInit {
   private accountTransfersService = inject(AccountTransfersService);
   private translateService = inject(TranslateService);
   private destroyRef = inject(DestroyRef);
+  private cdr = inject(ChangeDetectorRef);
 
   /** Savings Account Status */
   status: any;
@@ -125,6 +136,7 @@ export class TransactionsTabComponent implements OnInit {
   accountWithTransactions = false;
 
   accountId: string;
+  isLoading = false;
 
   /**
    * Retrieves savings account data from `resolve`.
@@ -261,6 +273,8 @@ export class TransactionsTabComponent implements OnInit {
           dateFormat,
           locale
         };
+        this.isLoading = true;
+        this.cdr.markForCheck();
         this.savingsService
           .executeSavingsAccountTransactionsCommand(this.accountId, 'undo', data, transactionData.id)
           .subscribe(() => {
@@ -279,6 +293,8 @@ export class TransactionsTabComponent implements OnInit {
     });
     undoAccountTransferDialogRef.afterClosed().subscribe((response: any) => {
       if (response?.confirm) {
+        this.isLoading = true;
+        this.cdr.markForCheck();
         this.accountTransfersService.undoAccountTransfer(transactionData.transfer.id).subscribe(() => {
           this.reload();
         });

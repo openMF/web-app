@@ -2432,6 +2432,8 @@
         }
       },
       "Loading clients": "Kraunami klientai...",
+      "Loading datatables": "Kraunamos duomenų lentelės...",
+      "Loading savings transactions": "Kraunamos taupymo operacijos...",
       "Loading loans": "Kraunamos paskolos...",
       "Loan": "Paskola",
       "Loan Account": "Paskolos sąskaita",

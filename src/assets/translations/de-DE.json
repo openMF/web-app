@@ -2435,6 +2435,8 @@
         }
       },
       "Loading clients": "Kunden werden geladen...",
+      "Loading datatables": "Datentabellen werden geladen...",
+      "Loading savings transactions": "Spartransaktionen werden geladen...",
       "Loading loans": "Kredite werden geladen...",
       "Loan": "Darlehen",
       "Loan Account": "Darlehenskonto",

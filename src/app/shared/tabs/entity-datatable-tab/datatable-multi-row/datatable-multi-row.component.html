@@ -40,7 +40,11 @@
     </div>
   </div>
 
-  <mat-card class="data-table-card m-t-10">
+  @if (isLoading) {
+    <mifosx-page-loader [message]="'labels.inputs.Loading datatables' | translate"></mifosx-page-loader>
+  }
+
+  <mat-card [hidden]="isLoading" class="data-table-card m-t-10">
     <mat-card-content>
       <div class="table-scroll-wrapper">
         <table #dataTable mat-table [dataSource]="datatableData" matSort class="mat-elevation-z2 m-b-25">
