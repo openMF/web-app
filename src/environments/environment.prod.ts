@@ -148,6 +148,8 @@ export const environment = {
    */
   productionModeEnableRBAC:
     loadedEnv['productionModeEnableRBAC'] === 'true' || loadedEnv['productionModeEnableRBAC'] === true || false,
+  enableGlobalDashboard:
+    loadedEnv['enableGlobalDashboard'] === 'true' || loadedEnv['enableGlobalDashboard'] === true || false,
 
   /** CB-ILD Credit Bureau plugin base URL */
   /** CB-ILD feature flag — set cbIldEnabled=true in env to show CB-ILD tabs */

@@ -118,13 +118,7 @@ export interface FormField {
  * - `review`: the summary/confirmation step.
  */
 export type FormStepKind =
-  | 'fields'
-  | 'payment-allocation'
-  | 'charges'
-  | 'accounting'
-  | 'interest-refund'
-  | 'deferred-income'
-  | 'review';
+  'fields' | 'payment-allocation' | 'charges' | 'accounting' | 'interest-refund' | 'deferred-income' | 'review';
 export interface FormStep {
   id: number;
   title: string;
@@ -983,12 +977,7 @@ export const INITIAL_FORM_STATE: Record<string, string | number | boolean | null
 };
 
 export type LoanWizardProfileMode =
-  | 'personal'
-  | 'custom-advanced'
-  | 'two-wheeler'
-  | 'education'
-  | 'agriculture'
-  | 'bnpl';
+  'personal' | 'custom-advanced' | 'two-wheeler' | 'education' | 'agriculture' | 'bnpl';
 
 export type FormState = typeof INITIAL_FORM_STATE;
 

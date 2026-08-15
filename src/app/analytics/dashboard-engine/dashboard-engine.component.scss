@@ -10,30 +10,96 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+  padding: 24px;
 }
 
-.filter-card {
-  padding: 16px;
-}
-
-.filter-row {
+/* ── Header ── */
+.dashboard-header {
   display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
   flex-wrap: wrap;
-  align-items: center;
   gap: 16px;
 }
 
-.office-field {
-  flex: 1 1 240px;
-  min-width: 240px;
+.header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
+.dashboard-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.2;
+}
+
+.dashboard-subtitle {
+  margin: 0;
+  font-size: 13px;
+  color: #1565c0;
+  font-weight: 500;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* ── Filters Container ── */
+.filter-row {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 8px;
+
+  /* Spacing before grid */
+  background: white;
+  padding: 16px 20px;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 6%);
+}
+
+/* Remove invisible error space below dropdowns for perfect vertical alignment */
+.filter-row ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+.timescale-field,
+.office-field,
+.product-field,
+.client-group-field {
+  flex: 0 1 200px;
+  min-width: 150px;
+}
+
+.export-btn {
+  height: 56px;
+
+  /* Match the exact height of the outline dropdowns */
+  padding: 0 24px;
+  border-color: #1e88e5;
+  color: #1565c0;
+  border-radius: 4px;
+  font-weight: 500;
+  margin-left: auto;
+
+  /* Push it to the right if there's extra space, or just let it sit naturally */
+}
+
+/* ── Metric summary grid ── */
 .summary-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* stylelint-disable-line unit-allowed-list */
   gap: 16px;
 }
 
+/* ── Chart grid ── */
 .chart-grid {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr)); /* stylelint-disable-line unit-allowed-list */
@@ -48,26 +114,96 @@
   grid-column: span 6;
 }
 
-.empty-dashboard {
-  padding: 24px;
-  text-align: center;
+.widget-two-thirds {
+  grid-column: span 8;
 }
 
-@media screen and (width <= 1024px) {
+.widget-one-third {
+  grid-column: span 4;
+}
+
+/* ── Empty state ── */
+.empty-dashboard {
+  padding: 40px;
+  text-align: center;
+  border-radius: 12px !important;
+  color: rgb(0 0 0 / 38%);
+}
+
+/* ── Responsive ── */
+@media screen and (width <=1024px) {
   .widget-half,
+  .widget-two-thirds,
+  .widget-one-third,
   .widget-wide {
     grid-column: span 12;
   }
 }
 
-@media screen and (width <= 768px) {
+@media screen and (width <=768px) {
+  .dashboard-shell {
+    padding: 16px;
+  }
+
   .filter-row {
     align-items: stretch;
   }
 
   .office-field,
+  .product-field,
+  .client-group-field,
   .filter-row button,
   .filter-row mat-button-toggle-group {
     width: 100%;
+  }
+
+  .timescale-group {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+  }
+
+  .header-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+/* ── Dark theme ── */
+::ng-deep .dark-theme mifosx-analytics-dashboard {
+  .dashboard-title {
+    color: #f1f5f9;
+  }
+
+  .dashboard-subtitle {
+    color: #90caf9;
+  }
+
+  .timescale-label {
+    color: #94a3b8;
+  }
+
+  .filter-row {
+    background: #1e1e1e !important;
+    border: 1px solid rgb(255 255 255 / 8%) !important;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 20%) !important;
+  }
+
+  .export-btn {
+    border-color: #90caf9 !important;
+    color: #90caf9 !important;
+
+    &:hover {
+      background: rgb(144 202 249 / 8%) !important;
+    }
+  }
+
+  .empty-dashboard {
+    color: rgb(255 255 255 / 38%);
   }
 }
