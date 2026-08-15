@@ -73,6 +73,41 @@ test.describe('CleanupGuard.flush() ordering', () => {
     expect(summary.failed).toEqual([]);
   });
 
+  /**
+   * Regression guard: an earlier implementation snapshotted the stack
+   * in LIFO order but then dispatched every deleter in the same tick
+   * via `Promise.allSettled`. Ordering was therefore only apparent —
+   * a slow child deleter could still have its DELETE reach Fineract
+   * after its parent's, producing an FK violation. Staggered delays
+   * make a concurrent drain observably interleave.
+   */
+  test('awaits each deleter before starting the next', async () => {
+    const guard = new CleanupGuard();
+    const events: string[] = [];
+
+    const slowDeleter = (label: string, delayMs: number) => async () => {
+      events.push(`start:${label}`);
+      await new Promise((resolve) => setTimeout(resolve, delayMs));
+      events.push(`end:${label}`);
+    };
+
+    // Registered parent-first, so LIFO must run 'child' to completion
+    // before 'parent' even starts. The child is deliberately the
+    // slower of the two — under a concurrent drain 'parent' would
+    // finish first and the interleaving would be visible.
+    guard.register('parent', slowDeleter('parent', 1));
+    guard.register('child', slowDeleter('child', 25));
+
+    await guard.flush();
+
+    expect(events).toEqual([
+      'start:child',
+      'end:child',
+      'start:parent',
+      'end:parent'
+    ]);
+  });
+
   test('drains the stack to zero after a flush', async () => {
     const guard = new CleanupGuard();
     guard.register('a', async () => undefined);

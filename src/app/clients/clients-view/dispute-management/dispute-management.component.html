@@ -1,0 +1,188 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<!--
+  Copyright since 2025 Mifos Initiative
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="cbild-dispute-management">
+  <!-- Role selector -->
+  <mat-card class="cbild-role-card">
+    <mat-card-content>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'labels.cbild.dashboard.role' | translate }}</mat-label>
+        <mat-select [(ngModel)]="selectedRole" (ngModelChange)="onRoleChange($event)">
+          @for (role of roles; track role.value) {
+            <mat-option [value]="role.value">{{ role.label }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Raise Dispute Form -->
+  <mat-card class="cbild-section-card">
+    <mat-card-content>
+      <h3 class="cbild-section-title">
+        <mat-icon>report_problem</mat-icon>
+        {{ 'labels.cbild.dispute.raiseTitle' | translate }}
+      </h3>
+      <mat-divider></mat-divider>
+      <form [formGroup]="raiseForm" class="cbild-form">
+        <mat-form-field appearance="outline" class="cbild-full-width">
+          <mat-label>{{ 'labels.cbild.dispute.submissionRecordId' | translate }}</mat-label>
+          <input matInput type="number" formControlName="submissionRecordId" />
+          @if (raiseForm.get('submissionRecordId')?.invalid && raiseForm.get('submissionRecordId')?.touched) {
+            <mat-error>{{ 'labels.cbild.dispute.submissionIdRequired' | translate }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="cbild-full-width">
+          <mat-label>{{ 'labels.cbild.dispute.disputeDetails' | translate }}</mat-label>
+          <textarea matInput formControlName="disputeDetails" rows="3"></textarea>
+          @if (raiseForm.get('disputeDetails')?.invalid && raiseForm.get('disputeDetails')?.touched) {
+            <mat-error>{{ 'labels.cbild.dispute.detailsRequired' | translate }}</mat-error>
+          }
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" [disabled]="raiseForm.invalid || isRaising" (click)="raiseDispute()">
+          @if (isRaising) {
+            <mat-icon>hourglass_empty</mat-icon>
+          } @else {
+            <mat-icon>add_circle</mat-icon>
+          }
+          {{ 'labels.cbild.dispute.raise' | translate }}
+        </button>
+      </form>
+
+      <!-- Raised dispute result -->
+      @if (raisedDispute) {
+        <div class="cbild-dispute-result">
+          <ng-container *ngTemplateOutlet="disputeCard; context: { dispute: raisedDispute }"></ng-container>
+        </div>
+      }
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Look Up Dispute -->
+  <mat-card class="cbild-section-card">
+    <mat-card-content>
+      <h3 class="cbild-section-title">
+        <mat-icon>search</mat-icon>
+        {{ 'labels.cbild.dispute.lookupTitle' | translate }}
+      </h3>
+      <mat-divider></mat-divider>
+      <div class="cbild-lookup-row">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'labels.cbild.dispute.disputeId' | translate }}</mat-label>
+          <input matInput type="number" [(ngModel)]="lookupDisputeId" />
+        </mat-form-field>
+        <button mat-raised-button color="accent" [disabled]="!lookupDisputeId || isLooking" (click)="lookupDispute()">
+          @if (isLooking) {
+            <mat-icon>hourglass_empty</mat-icon>
+          } @else {
+            <mat-icon>search</mat-icon>
+          }
+          {{ 'labels.cbild.dispute.lookup' | translate }}
+        </button>
+      </div>
+
+      @if (lookedUpDispute) {
+        <ng-container *ngTemplateOutlet="disputeCard; context: { dispute: lookedUpDispute }"></ng-container>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Dispute Card Template -->
+<ng-template #disputeCard let-dispute="dispute">
+  <div class="cbild-dispute-card">
+    <div class="cbild-dispute-header">
+      <span class="cbild-dispute-id">{{ 'labels.cbild.dispute.id' | translate }} #{{ dispute.id }}</span>
+      <span [class]="'cbild-status-badge ' + getStatusClass(dispute.status)">{{ dispute.status }}</span>
+    </div>
+
+    <mat-divider class="cbild-divider"></mat-divider>
+
+    <div class="cbild-dispute-details">
+      <div class="cbild-detail-row">
+        <span class="cbild-label">{{ 'labels.cbild.dispute.submissionRef' | translate }}</span>
+        <span class="cbild-value">{{ dispute.submissionRecordId }}</span>
+      </div>
+      <div class="cbild-detail-row">
+        <span class="cbild-label">{{ 'labels.cbild.dispute.raisedBy' | translate }}</span>
+        <span class="cbild-value">{{ dispute.raisedBy }}</span>
+      </div>
+      <div class="cbild-detail-row">
+        <span class="cbild-label">{{ 'labels.cbild.dispute.openedAt' | translate }}</span>
+        <span class="cbild-value">{{ dispute.openedAt | dateFormat }}</span>
+      </div>
+      <div class="cbild-detail-row">
+        <span class="cbild-label">{{ 'labels.cbild.dispute.details' | translate }}</span>
+        <span class="cbild-value">{{ dispute.disputeDetails }}</span>
+      </div>
+      @if (dispute.resolvedAt) {
+        <div class="cbild-detail-row">
+          <span class="cbild-label">{{ 'labels.cbild.dispute.resolvedAt' | translate }}</span>
+          <span class="cbild-value">{{ dispute.resolvedAt | dateFormat }}</span>
+        </div>
+      }
+      @if (dispute.resolutionNotes) {
+        <div class="cbild-detail-row">
+          <span class="cbild-label">{{ 'labels.cbild.dispute.resolutionNotes' | translate }}</span>
+          <span class="cbild-value">{{ dispute.resolutionNotes }}</span>
+        </div>
+      }
+      <div class="cbild-detail-row">
+        <span class="cbild-label">{{ 'labels.cbild.dispute.expiry' | translate }}</span>
+        <span class="cbild-value">{{ dispute.expiryDate }}</span>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    @if (dispute.status !== 'RESOLVED') {
+      <div class="cbild-actions">
+        @if (canMoveToUnderReview(dispute)) {
+          <button
+            mat-stroked-button
+            color="primary"
+            [disabled]="isUpdating"
+            (click)="updateStatus(dispute, 'UNDER_REVIEW')"
+          >
+            <mat-icon>rate_review</mat-icon>
+            {{ 'labels.cbild.dispute.markUnderReview' | translate }}
+          </button>
+        }
+
+        @if (canResolve(dispute)) {
+          <mat-form-field appearance="outline" class="cbild-full-width">
+            <mat-label>{{ 'labels.cbild.dispute.resolutionNotes' | translate }}</mat-label>
+            <textarea
+              matInput
+              [ngModel]="resolutionNotesMap.get(dispute.id) || ''"
+              (ngModelChange)="resolutionNotesMap.set(dispute.id, $event)"
+              rows="2"
+            ></textarea>
+          </mat-form-field>
+          <button
+            mat-raised-button
+            color="warn"
+            [disabled]="isUpdating || !resolutionNotesMap.get(dispute.id)"
+            (click)="updateStatus(dispute, 'RESOLVED')"
+          >
+            <mat-icon>check_circle</mat-icon>
+            {{ 'labels.cbild.dispute.resolve' | translate }}
+          </button>
+        }
+      </div>
+    }
+  </div>
+</ng-template>

@@ -7,7 +7,20 @@
  */
 
 @use 'assets/styles/helper';
-@use 'assets/styles/colours' as *;
+@use 'assets/styles/loan-product-tokens' as lpt;
+
+/**
+ * Accent only. This summary is rendered by the Classic preview step and by the
+ * edit flow, not by the new wizard, so it takes the contrast-safe accent
+ * without the full Material remap that would restyle those pages.
+ */
+:host {
+  @include lpt.accent-tokens;
+}
+
+:host-context(.dark-theme) {
+  @include lpt.accent-dark-tokens;
+}
 
 .tab-container {
   padding: 1%;
@@ -41,18 +54,35 @@ mat-divider {
   margin: 0 0 0.5em;
 }
 
+/**
+ * These carried a hardcoded `$status-approved` (#4461e2). In dark mode the
+ * global `.dark-theme h3.mat-h3 { color: … !important }` rule in
+ * `theme/_dark_content.scss` was already forcing them white, so the visible
+ * change is in light mode: off-theme indigo becomes the flow accent (5.18:1 →
+ * 4.98:1, both AA) and matches the rest of the loan-product screens.
+ *
+ * The `!important` on the margins is gone: it existed only to outrank
+ * `mat.typography-hierarchy`'s `.mat-h3` shorthand, and view encapsulation
+ * already gives these selectors the extra specificity to win on their own.
+ */
+.mat-h3,
+.mat-h4 {
+  margin-top: var(--lp-space-16, 1rem);
+  color: var(--lp-accent);
+}
+
 .mat-h3 {
-  margin-top: 10px !important;
-  font-weight: 300;
-  color: $status-approved;
+  font-weight: 500;
 }
 
 .mat-h4 {
-  margin-top: 10px !important;
-  font-weight: 200;
-  color: $status-approved;
+  font-weight: 400;
 }
 
+/**
+ * A `<span>`, so the dark-theme heading override above never applied to it —
+ * this one really was #4461e2 on #424242 (1.94:1) in dark mode.
+ */
 .repayment-strategy {
-  color: $status-approved;
+  color: var(--lp-accent);
 }

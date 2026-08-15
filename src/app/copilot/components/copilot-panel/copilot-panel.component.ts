@@ -7,15 +7,23 @@
  */
 
 /** Angular Imports */
-import { Component, Input, ViewEncapsulation, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { startWith } from 'rxjs/operators';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 /** Models */
 import { ChatMessage, Conversation } from '../../core/models/chat-message.model';
+import { ActionCard } from '../../core/models/action-card.model';
+import { PendingAction } from '../../core/models/mcp-response.model';
 
 /** Services */
+import { AuthenticationService } from '../../../core/authentication/authentication.service';
 import { CopilotFeatureService } from '../../services/copilot-feature.service';
+import { ChatService } from '../../services/chat.service';
+import { AiContextService } from '../../services/ai-context.service';
 
 /** Child components */
 import { CopilotHeaderComponent } from '../copilot-header/copilot-header.component';
@@ -26,16 +34,13 @@ import { InputBarComponent } from '../input-bar/input-bar.component';
 export type CopilotTab = 'chat' | 'recent' | 'preferences' | 'help';
 
 /**
- * Container / shell for the Copilot. Owns panel state (open, active tab),
- * the message list and conversations, and orchestrates send / stop / clear.
+ * Container / shell for the Copilot. Owns panel state (open, active tab) and
+ * delegates the conversation to ChatService: sanitize -> gateway SSE -> typed
+ * events, including the mandatory human confirmation before any write.
  *
  * Styling: this component carries the entire Copilot stylesheet with
  * ViewEncapsulation.None, scoped under the `.mifos-copilot` root class so it
  * also styles the child components nested in its template without leaking.
- *
- * NOTE: the MCP server is not wired yet - sendMessage() currently produces a
- * mock assistant reply so the UI is demoable. Swap in ChatService once the
- * endpoint contract is finalised.
  */
 @Component({
   selector: 'mifosx-copilot-panel',
@@ -51,11 +56,20 @@ export type CopilotTab = 'chat' | 'recent' | 'preferences' | 'help';
   styleUrls: ['./copilot-panel.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class CopilotPanelComponent {
+export class CopilotPanelComponent implements OnInit {
   private readonly featureService = inject(CopilotFeatureService);
   private readonly translate = inject(TranslateService);
+  private readonly chatService = inject(ChatService);
+  private readonly contextService = inject(AiContextService);
+  private readonly authenticationService = inject(AuthenticationService);
+  private readonly router = inject(Router);
 
-  /** Master enable check (deployment + role + user preference). */
+  /**
+   * Master enable check (deployment + role + user preference). Re-evaluated whenever
+   * the authentication state changes: the shell can create this panel before the
+   * credentials (and therefore the permissions) are available, and a once-only check
+   * would leave the panel hidden until a page reload.
+   */
   isEnabled = this.featureService.shouldShowPanel();
   /** Whether the full-page panel is shown. */
   isOpen = false;
@@ -66,10 +80,12 @@ export class CopilotPanelComponent {
   @Input() sidenavCollapsed = true;
   @Input() isHandset = false;
 
-  /** Conversation state. */
+  /** Conversation state, mirrored from ChatService. */
   messages: ChatMessage[] = [];
   conversations: Conversation[] = [];
   isStreaming = false;
+  /** Write action awaiting confirmation, rendered as a confirmation card. */
+  pendingCard: ActionCard | null = null;
 
   /** Header context label, e.g. "Client: Rajesh Kumar". */
   contextLabel: string | null = null;
@@ -82,7 +98,42 @@ export class CopilotPanelComponent {
     'copilot.suggestions.overdueLoans'
   ];
 
-  private seq = 0;
+  // markForCheck() on every mirror update: this panel is created dynamically by the shell,
+  // and streaming callbacks arrive outside a template event — without it, an OnPush ancestor
+  // chain would never repaint the incoming tokens.
+  constructor() {
+    const cdr = inject(ChangeDetectorRef);
+    this.chatService.messages$.pipe(takeUntilDestroyed()).subscribe((messages) => {
+      this.messages = messages;
+      cdr.markForCheck();
+    });
+    this.chatService.conversations$.pipe(takeUntilDestroyed()).subscribe((conversations) => {
+      this.conversations = conversations;
+      cdr.markForCheck();
+    });
+    this.chatService.isStreaming$.pipe(takeUntilDestroyed()).subscribe((streaming) => {
+      this.isStreaming = streaming;
+      cdr.markForCheck();
+    });
+    this.chatService.pendingAction$.pipe(takeUntilDestroyed()).subscribe((pending) => {
+      this.pendingCard = pending ? this.toConfirmationCard(pending) : null;
+      cdr.markForCheck();
+    });
+    this.contextService.context$
+      .pipe(startWith(this.contextService.getContextSnapshot()), takeUntilDestroyed())
+      .subscribe((context) => {
+        this.contextLabel = context.clientName;
+        cdr.markForCheck();
+      });
+    this.authenticationService.isAuthenticated$.pipe(takeUntilDestroyed()).subscribe(() => {
+      this.isEnabled = this.featureService.shouldShowPanel();
+      cdr.markForCheck();
+    });
+  }
+
+  ngOnInit(): void {
+    this.chatService.loadHistory();
+  }
 
   /** Returns the translation key for the time-of-day greeting. */
   get greetingTime(): string {
@@ -105,7 +156,7 @@ export class CopilotPanelComponent {
   }
 
   clearChat(): void {
-    this.messages = [];
+    this.chatService.clearChat();
     this.activeTab = 'chat';
   }
 
@@ -116,11 +167,7 @@ export class CopilotPanelComponent {
       return;
     }
     this.activeTab = 'chat';
-    this.messages = [
-      ...this.messages,
-      { id: this.nextId(), role: 'user', content, timestamp: Date.now() }
-    ];
-    this.respondMock(content);
+    this.chatService.sendMessage(content);
   }
 
   /**
@@ -133,49 +180,64 @@ export class CopilotPanelComponent {
   }
 
   stopStreaming(): void {
-    this.isStreaming = false;
+    this.chatService.stopStreaming();
   }
 
-  openConversation(conv: Conversation): void {
-    this.messages = conv.messages ?? [];
+  /** Officer confirmed the pending write — the gateway executes it now. */
+  confirmPendingAction(): void {
+    this.chatService.decideAction('approve');
+  }
+
+  /** Officer rejected the pending write — nothing executes. */
+  cancelPendingAction(): void {
+    this.chatService.decideAction('reject');
+  }
+
+  openConversation(conversation: Conversation): void {
+    this.chatService.openConversation(conversation);
     this.activeTab = 'chat';
   }
 
   deleteConversation(event: Event, id: string): void {
     event.stopPropagation();
-    this.conversations = this.conversations.filter((c) => c.id !== id);
+    this.chatService.deleteConversation(id);
   }
 
-  onActionClick(_action: string | undefined): void {
-    // TODO: route write actions through a confirmation dialog + MCP.
+  /** Card buttons carry a follow-up prompt; send it as a normal message. */
+  onActionClick(action: string | undefined): void {
+    if (action) {
+      this.sendMessage(action);
+    }
   }
 
-  onRouteClick(_route: string | undefined): void {
-    // TODO: navigate via Angular Router.
+  /**
+   * Card buttons may deep-link into the app (e.g. "Open client profile"). The panel
+   * closes so the officer actually SEES the page they navigated to; the conversation
+   * is preserved and one click on the bubble brings it back.
+   */
+  onRouteClick(route: string | undefined): void {
+    if (route) {
+      this.router.navigateByUrl(route);
+      this.isOpen = false;
+    }
   }
 
-  /** Placeholder reply so the panel is demoable before MCP is connected. */
-  private respondMock(userText: string): void {
-    this.isStreaming = true;
-    const reply: ChatMessage = {
-      id: this.nextId(),
-      role: 'assistant',
-      content: `You asked: **${userText}**\n\nThis is a placeholder reply - the MCP server is not connected yet.`,
-      timestamp: Date.now(),
-      suggestedPrompts: [
-        'Show client portfolio',
-        'View overdue loans'
-      ]
+  /** Flatten the pending action into the confirmation card the officer reviews. */
+  private toConfirmationCard(pending: PendingAction): ActionCard {
+    const data: Record<string, string> = {};
+    for (const [
+      key,
+      value
+    ] of Object.entries(pending.args ?? {})) {
+      data[key] = value != null && typeof value === 'object' ? JSON.stringify(value) : String(value ?? '');
+    }
+    if (pending.idempotencyKey) {
+      data[this.translate.instant('copilot.confirm.reference')] = pending.idempotencyKey;
+    }
+    return {
+      type: 'confirmation',
+      title: pending.humanSummary || pending.tool,
+      data
     };
-    this.messages = [
-      ...this.messages,
-      reply
-    ];
-    this.isStreaming = false;
-  }
-
-  private nextId(): string {
-    this.seq += 1;
-    return `m-${this.seq}`;
   }
 }

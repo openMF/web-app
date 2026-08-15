@@ -6,8 +6,65 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+@use 'assets/styles/colours' as *;
+@use 'loan-tab-shared' as shared;
+
+// Charged-off and fraud pills shown in the account header.
+@include shared.account-flag-badges;
+
 .loans-overview {
   font-size: 14px;
+}
+
+// Loan status pill shown inline, next to the account number.
+// Background is driven by the same status class the status dot uses
+// (statusLookup), so the pill and dot always agree in colour.
+.account-status-pill {
+  display: inline-block;
+  margin-left: 12px;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  vertical-align: middle;
+  color: #fff;
+  background-color: $status-inactive;
+
+  &.status-active {
+    background-color: $status-active;
+  }
+
+  &.status-active-overdue,
+  &.status-block {
+    background-color: $status-active-overdue;
+  }
+
+  &.status-pending {
+    background-color: $status-pending;
+  }
+
+  &.status-approved {
+    background-color: $status-approved;
+  }
+
+  &.status-overpaid {
+    background-color: $status-overpaid;
+  }
+
+  &.status-chargeoff {
+    background-color: $status-chargeoff;
+  }
+
+  &.status-matured {
+    background-color: $status-matured;
+  }
+
+  &.subStatus-contract-termination {
+    background-color: $subStatus-contract-termination;
+  }
 }
 
 .account-overview {

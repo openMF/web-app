@@ -143,10 +143,10 @@ export class CreditBureauService {
     );
   }
 
-  updateDisputeStatus(disputeId: number, newStatus: string): Observable<DisputeCase> {
+  updateDisputeStatus(disputeId: number, newStatus: string, resolutionNotes?: string): Observable<DisputeCase> {
     return this.externalHttp.put<DisputeCase>(
       `${this.baseUrl}/api/disputes/${disputeId}/status`,
-      { newStatus },
+      { newStatus, ...(resolutionNotes ? { resolutionNotes } : {}) },
       { headers: this.getHeaders() }
     );
   }

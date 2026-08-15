@@ -12,8 +12,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, NavigationExtras, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
+/** rxjs Imports */
+import { catchError } from 'rxjs/operators';
+
 /** Custom Services */
 import { LoansService } from '../loans.service';
+import { ErrorHandlerService } from 'app/core/error-handler/error-handler.service';
 
 /** Custom Buttons Configuration */
 import { LoansAccountButtonConfiguration } from './loan-accounts-button-config';
@@ -21,8 +25,19 @@ import { LoansAccountButtonConfiguration } from './loan-accounts-button-config';
 /** Dialog Components */
 import { ConfirmationDialogComponent } from '../../shared/confirmation-dialog/confirmation-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import {
+  WorkingCapitalUndoChargeOffDialogComponent,
+  WorkingCapitalUndoChargeOffDialogResult,
+  buildWorkingCapitalUndoChargeOffPayload
+} from './working-capital/loan-account-actions/undo-charge-off-dialog/undo-charge-off-dialog.component';
+import {
+  WorkingCapitalMarkAsFraudDialogComponent,
+  WorkingCapitalMarkAsFraudDialogData,
+  WorkingCapitalMarkAsFraudDialogResult
+} from './working-capital/loan-account-actions/mark-as-fraud-dialog/mark-as-fraud-dialog.component';
 import { LoanStatus } from '../models/loan-status.model';
 import { Currency } from 'app/shared/models/general.model';
+import { SettingsService } from 'app/settings/settings.service';
 import { DelinquencyPausePeriod } from '../models/loan-account.model';
 import { TranslateService } from '@ngx-translate/core';
 import { LoanTransaction } from 'app/products/loan-products/models/loan-account.model';
@@ -41,6 +56,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../pipes/format-number.pipe';
+import { StatusLookupPipe } from '@pipes/status-lookup.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProducts } from 'app/products/loan-products/loan-products';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
@@ -71,7 +87,8 @@ import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan
     RouterOutlet,
     CurrencyPipe,
     DateFormatPipe,
-    FormatNumberPipe
+    FormatNumberPipe,
+    StatusLookupPipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -80,6 +97,8 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
   private route = inject(ActivatedRoute);
   loansService = inject(LoansService);
   private translateService = inject(TranslateService);
+  private settingsService = inject(SettingsService);
+  private errorHandler = inject(ErrorHandlerService);
   dialog = inject(MatDialog);
 
   /** Loan Details Data */
@@ -400,6 +419,23 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
         }
       }
 
+      // Allow Charge-Off only if the Working Capital loan is not already charged off
+      if (this.loanProductService.isWorkingCapital) {
+        if (!this.loanDetailsData.chargedOff) {
+          this.buttonConfig.addButton({
+            name: 'Charge-Off',
+            icon: 'coins',
+            taskPermissionName: 'CHARGEOFF_WORKINGCAPITALLOAN'
+          });
+        } else {
+          this.buttonConfig.addButton({
+            name: 'Undo Charge-Off',
+            icon: 'undo',
+            taskPermissionName: 'UNDOCHARGEOFF_WORKINGCAPITALLOAN'
+          });
+        }
+      }
+
       // Only Available when Near Breach is set in the Loan
       if (this.loanProductService.isWorkingCapital && this.loanDetailsData?.nearBreach != null) {
         this.buttonConfig.addButton({
@@ -436,6 +472,26 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
         });
       }
     }
+
+    // Fraud flag for Working Capital loans. It sits outside the status branches
+    // above because the backend only restricts marking: the loan must be active
+    // to be flagged, but clearing the flag stays valid in every status, and
+    // hiding it elsewhere would strand a loan that was flagged by mistake.
+    if (this.loanProductService.isWorkingCapital) {
+      if (this.loanDetailsData.fraud) {
+        this.buttonConfig.addButton({
+          name: 'Unmark as Fraud',
+          icon: 'user-shield',
+          taskPermissionName: 'SETFRAUD_WORKINGCAPITALLOAN'
+        });
+      } else if (this.status === 'Active') {
+        this.buttonConfig.addButton({
+          name: 'Mark as Fraud',
+          icon: 'user-shield',
+          taskPermissionName: 'SETFRAUD_WORKINGCAPITALLOAN'
+        });
+      }
+    }
   }
 
   loanAction(actionName: string) {
@@ -463,6 +519,12 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
       case 'Undo Re-Amortize':
       case 'Undo Charge-Off':
         this.undoLoanAction(actionName);
+        break;
+      case 'Mark as Fraud':
+        this.setWorkingCapitalFraud(true);
+        break;
+      case 'Unmark as Fraud':
+        this.setWorkingCapitalFraud(false);
         break;
       default:
         const navigationExtras: NavigationExtras = {
@@ -523,6 +585,11 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
 
   undoLoanAction(actionName: string): void {
     actionName = actionName.replace('Undo ', '');
+    // Working Capital charge-off is undone through its own resource and dialog.
+    if (this.loanProductService.isWorkingCapital && actionName === 'Charge-Off') {
+      this.undoWorkingCapitalChargeOff();
+      return;
+    }
     const undoTransactionAccountDialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
         heading: this.translateService.instant('labels.heading.Undo Transaction'),
@@ -554,6 +621,62 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
         });
       }
     });
+  }
+
+  /** Opens the Working Capital undo charge-off dialog and posts the command on confirmation. */
+  private undoWorkingCapitalChargeOff(): void {
+    const dialogRef = this.dialog.open<
+      WorkingCapitalUndoChargeOffDialogComponent,
+      unknown,
+      WorkingCapitalUndoChargeOffDialogResult
+    >(WorkingCapitalUndoChargeOffDialogComponent);
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((result) => {
+        if (!result?.confirm) {
+          return;
+        }
+        const payload = buildWorkingCapitalUndoChargeOffPayload(result, this.settingsService.language.code);
+        this.loansService
+          .applyWorkingCapitalLoanActionCommand(String(this.loanId), payload, 'undoChargeOff')
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe(() => this.reload());
+      });
+  }
+
+  /**
+   * Opens the fraud confirmation dialog and sets the flag on confirmation.
+   * The flag changes neither the loan status nor its transactions, so the view
+   * is reloaded explicitly; otherwise the action button would keep its previous
+   * label and the change would look like it never happened.
+   * @param fraud Target value of the fraud flag
+   */
+  private setWorkingCapitalFraud(fraud: boolean): void {
+    const dialogRef = this.dialog.open<
+      WorkingCapitalMarkAsFraudDialogComponent,
+      WorkingCapitalMarkAsFraudDialogData,
+      WorkingCapitalMarkAsFraudDialogResult
+    >(WorkingCapitalMarkAsFraudDialogComponent, { data: { fraud } });
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((result) => {
+        if (!result?.confirm) {
+          return;
+        }
+        this.loansService
+          .markWorkingCapitalLoanAsFraud(String(this.loanId), fraud)
+          .pipe(
+            catchError((error) => this.errorHandler.handleError(error, 'Working Capital Loan Fraud Flag')),
+            takeUntilDestroyed(this.destroyRef)
+          )
+          .subscribe({
+            next: () => this.reload(),
+            // The error handler already reported it through the snackbar.
+            error: () => undefined
+          });
+      });
   }
 
   iconLoanStatusColor() {

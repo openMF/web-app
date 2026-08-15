@@ -17,6 +17,13 @@ export interface SearchData {
   entityStatus: EntityStatus;
   parentType: string;
   subEntityType: string;
+  transactionId?: number;
+  transactionType?: string;
+  transactionExternalId?: string;
+  transactionRefNo?: string;
+  accountId?: number;
+  accountNo?: string;
+  accountType?: string;
 }
 
 export interface EntityStatus {

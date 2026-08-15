@@ -1,0 +1,103 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+.link-payment-system-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 4rem 1rem;
+}
+
+.link-payment-system-card {
+  width: min(680px, 100%);
+
+  h2 {
+    border: 1px solid #d5d5d5;
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin: 0;
+    padding: 1.25rem;
+    text-align: center;
+  }
+}
+
+.link-payment-system-header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 1.5rem 0;
+}
+
+.linked-phone-table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+}
+
+.payment-system-empty {
+  color: #666;
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.link-payment-system-form {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  max-width: 320px;
+}
+
+.payment-system-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0.5rem 0 0.25rem;
+}
+
+.mail-unavailable {
+  color: #666;
+  font-size: 0.8rem;
+  margin: 0 0 1.5rem 1.75rem;
+}
+
+.payment-system-status {
+  background-color: #edf4ff;
+  border-left: 4px solid #3f7cc5;
+  margin: 1rem auto;
+  max-width: 420px;
+  padding: 0.75rem 1rem;
+
+  &.success {
+    background-color: #edf8ef;
+    border-left-color: #2e7d32;
+  }
+
+  &.error {
+    background-color: #fdeeee;
+    border-left-color: #c62828;
+  }
+
+  span {
+    display: block;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+  }
+}
+
+@media (width <= 600px) {
+  .link-payment-system-wrapper {
+    padding: 1rem;
+  }
+
+  .link-payment-system-header {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}

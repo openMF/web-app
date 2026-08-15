@@ -46,6 +46,8 @@ import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan
 import { UpdateDiscountComponent } from './update-discount/update-discount.component';
 import { NearBreachConfigComponent } from '../working-capital/loan-account-actions/near-breach-config/near-breach-config.component';
 import { BreachConfigComponent } from '../working-capital/loan-account-actions/breach-config/breach-config.component';
+import { WorkingCapitalChargeOffComponent } from '../working-capital/loan-account-actions/charge-off/charge-off.component';
+import { LoanProductService } from 'app/products/loan-products/services/loan-product.service';
 
 /**
  * Loan Account Actions component.
@@ -89,7 +91,8 @@ import { BreachConfigComponent } from '../working-capital/loan-account-actions/b
     AttachOriginatorComponent,
     UpdateDiscountComponent,
     NearBreachConfigComponent,
-    BreachConfigComponent
+    BreachConfigComponent,
+    WorkingCapitalChargeOffComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -97,6 +100,7 @@ export class LoanAccountActionsComponent {
   private readonly destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  protected loanProductService = inject(LoanProductService);
 
   /** Loan Details Data */
   navigationData: any;

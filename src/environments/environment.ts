@@ -66,7 +66,8 @@ export const environment = {
 
   defaultCharDelimiter: loadedEnv.defaultCharDelimiter || ',',
 
-  displayBackEndInfo: loadedEnv.displayBackEndInfo || 'true',
+  // Backend info is available in the System Information view, so it is hidden by default
+  displayBackEndInfo: loadedEnv.displayBackEndInfo || 'false',
   displayTenantSelector: loadedEnv.displayTenantSelector || 'true',
   /** Production mode - when true, shows minimal hero with only branding at bottom */
   productionMode: loadedEnv.productionMode === 'true' || loadedEnv.productionMode === true || false,
@@ -97,7 +98,8 @@ export const environment = {
    */
   enableCopilot: loadedEnv.enableCopilot === 'true' || loadedEnv.enableCopilot === true || false,
   /** Base URL of the Mifos MCP server the Copilot talks to. */
-  copilotMcpBaseUrl: loadedEnv.copilotMcpBaseUrl || 'https://ai.mifos.community',
+  // 'mock' serves fixture responses until a Copilot gateway is deployed (ADR-001).
+  copilotMcpBaseUrl: loadedEnv.copilotMcpBaseUrl || 'mock',
 
   /** Remittance Module Integration */
   mifosRemittanceApiUrl: window.env?.mifosRemittanceApiClientUrl || '',

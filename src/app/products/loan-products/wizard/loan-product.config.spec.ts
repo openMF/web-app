@@ -7,7 +7,14 @@
  */
 
 import { LoanProducts } from '../loan-products';
-import { buildPayload, PRODUCT_CARDS } from './loan-product.config';
+import {
+  buildPayload,
+  INITIAL_FORM_STATE,
+  LoanWizardProfileMode,
+  PRODUCT_CARDS,
+  PROFILE_INITIAL_OVERRIDES,
+  profileForRoutePath
+} from './loan-product.config';
 
 describe('loan-product.config buildPayload', () => {
   it('removes unsupported hidden defaults from the personal loan payload', () => {
@@ -433,12 +440,826 @@ describe('loan-product.config buildPayload', () => {
   });
 });
 
+describe('loan-product.config buildPayload golden parity', () => {
+  // These two tests pin the COMPLETE create payload for the existing profile modes. Unlike the
+  // focused key-by-key tests above, `toEqual` on the whole object also fails when a key is ADDED,
+  // so any refactor of the shared payload path shows up as an explicit, reviewable diff here.
+  // Only an intentional product-behavior change may update these expected objects.
+
+  it('produces the exact Personal Loan create payload for an untouched wizard form', () => {
+    // The wizard form's raw value for a user who only filled the required fields: every other
+    // control still carries its INITIAL_FORM_STATE seed.
+    const formState = {
+      ...INITIAL_FORM_STATE,
+      name: 'Personal Loan – Standard',
+      shortName: 'PLS',
+      currencyCode: 'INR',
+      principal: 50000,
+      interestRatePerPeriod: 12
+    };
+
+    const payload = buildPayload(formState, 'personal', {
+      currencyCode: { id: 'INR' },
+      digitsAfterDecimal: { id: 2 },
+      inMultiplesOf: { id: 1 },
+      installmentAmountInMultiplesOf: { id: 10 },
+      amortizationType: { id: 1 },
+      interestType: { id: 0 },
+      interestCalculationPeriodType: { id: 1 },
+      repaymentFrequencyType: { id: 2 },
+      interestRateFrequencyType: { id: 2 },
+      repaymentStartDateType: { id: 1 },
+      accountingRule: { id: 2 },
+      daysInMonthType: { id: 30 },
+      daysInYearType: { id: 360 },
+      loanScheduleType: { value: 'Progressive' },
+      loanScheduleProcessingType: { value: 'Horizontal' },
+      transactionProcessingStrategyCode: { value: 'interest-principal-penalties-fees-order-strategy' }
+    });
+
+    expect(payload).toEqual({
+      name: 'Personal Loan – Standard',
+      shortName: 'PLS',
+      externalId: '',
+      description: 'Personal Loan Product',
+      startDate: '',
+      closeDate: '',
+      includeInBorrowerCycle: true,
+      currencyCode: 'INR',
+      digitsAfterDecimal: 2,
+      inMultiplesOf: 1,
+      installmentAmountInMultiplesOf: 10,
+      useBorrowerCycle: false,
+      principal: 50000,
+      numberOfRepayments: 12,
+      interestRatePerPeriod: 12,
+      interestRateFrequencyType: 2,
+      repaymentEvery: 1,
+      repaymentFrequencyType: 2,
+      isLinkedToFloatingInterestRates: false,
+      allowApprovedDisbursedAmountsOverApplied: false,
+      overAppliedCalculationType: null,
+      overAppliedNumber: null,
+      minimumDaysBetweenDisbursalAndFirstRepayment: 5,
+      interestRecognitionOnDisbursementDate: false,
+      repaymentStartDateType: 1,
+      amortizationType: 1,
+      interestType: 0,
+      isEqualAmortization: false,
+      interestCalculationPeriodType: 1,
+      loanScheduleType: 'PROGRESSIVE',
+      transactionProcessingStrategyCode: 'interest-principal-penalties-fees-order-strategy',
+      loanScheduleProcessingType: 'HORIZONTAL',
+      graceOnPrincipalPayment: 0,
+      graceOnInterestPayment: 0,
+      graceOnInterestCharged: 0,
+      daysInYearType: 360,
+      daysInMonthType: 30,
+      principalThresholdForLastInstallment: 5,
+      canUseForTopup: false,
+      isInterestRecalculationEnabled: false,
+      delinquencyBucketId: null,
+      canDefineInstallmentAmount: true,
+      inArrearsTolerance: 50,
+      graceOnArrearsAgeing: 5,
+      overdueDaysForNPA: 90,
+      accountMovesOutOfNPAOnlyOnArrearsCompletion: true,
+      holdGuaranteeFunds: false,
+      enableDownPayment: true,
+      disbursedAmountPercentageForDownPayment: 35,
+      enableAutoRepaymentForDownPayment: true,
+      enableInstallmentLevelDelinquency: false,
+      dueDaysForRepaymentEvent: 1,
+      overDueDaysForRepaymentEvent: 1,
+      enableIncomeCapitalization: false,
+      enableBuyDownFee: false,
+      accountingRule: 2,
+      principalVariationsForBorrowerCycle: [],
+      numberOfRepaymentVariationsForBorrowerCycle: [],
+      interestRateVariationsForBorrowerCycle: [],
+      charges: [],
+      allowAttributeOverrides: {
+        amortizationType: true,
+        interestType: true,
+        transactionProcessingStrategyCode: true,
+        interestCalculationPeriodType: true,
+        inArrearsTolerance: true,
+        repaymentEvery: true,
+        graceOnPrincipalAndInterestPayment: true,
+        graceOnArrearsAgeing: true
+      }
+    });
+  });
+
+  it('produces the exact Custom/Advanced create payload for an untouched wizard form', () => {
+    const formState = {
+      ...INITIAL_FORM_STATE,
+      name: 'Custom LP',
+      shortName: 'CLP',
+      currencyCode: 'INR',
+      principal: 50000,
+      interestRatePerPeriod: 12
+    };
+
+    const payload = buildPayload(formState, 'custom-advanced');
+
+    expect(payload).toEqual({
+      name: 'Custom LP',
+      shortName: 'CLP',
+      externalId: '',
+      description: '',
+      startDate: '',
+      closeDate: '',
+      includeInBorrowerCycle: false,
+      currencyCode: 'INR',
+      digitsAfterDecimal: 2,
+      inMultiplesOf: 1,
+      installmentAmountInMultiplesOf: 1,
+      useBorrowerCycle: false,
+      principal: 50000,
+      numberOfRepayments: 12,
+      interestRatePerPeriod: 12,
+      interestRateFrequencyType: 2,
+      repaymentEvery: 1,
+      repaymentFrequencyType: 2,
+      isLinkedToFloatingInterestRates: false,
+      allowApprovedDisbursedAmountsOverApplied: false,
+      overAppliedCalculationType: '',
+      overAppliedNumber: null,
+      minimumDaysBetweenDisbursalAndFirstRepayment: 5,
+      interestRecognitionOnDisbursementDate: false,
+      repaymentStartDateType: 1,
+      amortizationType: 1,
+      interestType: 0,
+      isEqualAmortization: false,
+      interestCalculationPeriodType: 1,
+      loanScheduleType: 'PROGRESSIVE',
+      transactionProcessingStrategyCode: 'interest-principal-penalties-fees-order-strategy',
+      loanScheduleProcessingType: 'HORIZONTAL',
+      graceOnPrincipalPayment: 0,
+      graceOnInterestPayment: 0,
+      graceOnInterestCharged: 0,
+      daysInYearType: 360,
+      daysInMonthType: 30,
+      principalThresholdForLastInstallment: 5,
+      canUseForTopup: false,
+      isInterestRecalculationEnabled: false,
+      delinquencyBucketId: '',
+      canDefineInstallmentAmount: true,
+      allowVariableInstallments: true,
+      multiDisburseLoan: true,
+      maxTrancheCount: 4,
+      allowFullTermForTranche: false,
+      // Classic's real partial-period control, which Custom/Advanced renders and therefore sends.
+      // `LoanProducts.buildPayload` re-keys it to Fineract's misspelled
+      // `allowPartialPeriodInterestCalcualtion` on the wire (see loan-products.spec.ts); this golden
+      // covers the config-level builder, which keeps the correct spelling.
+      allowPartialPeriodInterestCalculation: true,
+      inArrearsTolerance: 50,
+      graceOnArrearsAgeing: 5,
+      overdueDaysForNPA: 90,
+      accountMovesOutOfNPAOnlyOnArrearsCompletion: true,
+      holdGuaranteeFunds: false,
+      outstandingLoanBalance: 100000,
+      disallowExpectedDisbursements: true,
+      enableDownPayment: false,
+      chargeOffBehaviour: 'REGULAR',
+      enableInstallmentLevelDelinquency: false,
+      dueDaysForRepaymentEvent: 1,
+      overDueDaysForRepaymentEvent: 1,
+      enableIncomeCapitalization: false,
+      enableBuyDownFee: false,
+      accountingRule: 2,
+      principalVariationsForBorrowerCycle: [],
+      numberOfRepaymentVariationsForBorrowerCycle: [],
+      interestRateVariationsForBorrowerCycle: [],
+      charges: [],
+      allowAttributeOverrides: {
+        amortizationType: true,
+        interestType: true,
+        transactionProcessingStrategyCode: true,
+        interestCalculationPeriodType: true,
+        inArrearsTolerance: true,
+        repaymentEvery: true,
+        graceOnPrincipalAndInterestPayment: true,
+        graceOnArrearsAgeing: true
+      }
+    });
+  });
+});
+
+describe('loan-product.config buildPayload for the two-wheeler profile', () => {
+  /**
+   * The raw form value the wizard actually submits for Two Wheeler: the shared seed, the profile's
+   * curated prefills, and the guided-profile strategy forced by getInitialFormState — plus the two
+   * required fields the user types.
+   */
+  function twoWheelerFormState(edits: Record<string, unknown> = {}): typeof INITIAL_FORM_STATE {
+    return {
+      ...INITIAL_FORM_STATE,
+      ...PROFILE_INITIAL_OVERRIDES['two-wheeler'],
+      name: 'Two Wheeler Loan – Standard',
+      shortName: 'TWL',
+      currencyCode: 'INR',
+      transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+      ...edits
+    };
+  }
+
+  it('produces the exact Two Wheeler create payload for an untouched wizard form', () => {
+    // Identical contract to the Personal Loan golden above except for the profile's deltas:
+    // curated principal/tenure/rate prefills, per-year rate quoting, the 20% down payment carried
+    // by the (visible, editable) form control, and the product description.
+    expect(buildPayload(twoWheelerFormState(), 'two-wheeler')).toEqual({
+      name: 'Two Wheeler Loan – Standard',
+      shortName: 'TWL',
+      externalId: '',
+      description: 'Two Wheeler Loan Product',
+      startDate: '',
+      closeDate: '',
+      includeInBorrowerCycle: true,
+      currencyCode: 'INR',
+      digitsAfterDecimal: 2,
+      inMultiplesOf: 1,
+      installmentAmountInMultiplesOf: 10,
+      useBorrowerCycle: false,
+      principal: 80000,
+      numberOfRepayments: 36,
+      interestRatePerPeriod: 14,
+      interestRateFrequencyType: 3,
+      repaymentEvery: 1,
+      repaymentFrequencyType: 2,
+      isLinkedToFloatingInterestRates: false,
+      allowApprovedDisbursedAmountsOverApplied: false,
+      overAppliedCalculationType: null,
+      overAppliedNumber: null,
+      minimumDaysBetweenDisbursalAndFirstRepayment: 5,
+      interestRecognitionOnDisbursementDate: false,
+      repaymentStartDateType: 1,
+      amortizationType: 1,
+      interestType: 0,
+      isEqualAmortization: false,
+      interestCalculationPeriodType: 1,
+      loanScheduleType: 'PROGRESSIVE',
+      transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+      loanScheduleProcessingType: 'HORIZONTAL',
+      graceOnPrincipalPayment: 0,
+      graceOnInterestPayment: 0,
+      graceOnInterestCharged: 0,
+      daysInYearType: 360,
+      daysInMonthType: 30,
+      principalThresholdForLastInstallment: 5,
+      canUseForTopup: false,
+      isInterestRecalculationEnabled: false,
+      delinquencyBucketId: null,
+      canDefineInstallmentAmount: true,
+      inArrearsTolerance: 50,
+      graceOnArrearsAgeing: 5,
+      overdueDaysForNPA: 90,
+      accountMovesOutOfNPAOnlyOnArrearsCompletion: true,
+      holdGuaranteeFunds: false,
+      enableDownPayment: true,
+      disbursedAmountPercentageForDownPayment: 20,
+      enableAutoRepaymentForDownPayment: true,
+      chargeOffBehaviour: 'REGULAR',
+      enableInstallmentLevelDelinquency: false,
+      dueDaysForRepaymentEvent: 1,
+      overDueDaysForRepaymentEvent: 1,
+      enableIncomeCapitalization: false,
+      enableBuyDownFee: false,
+      accountingRule: 2,
+      principalVariationsForBorrowerCycle: [],
+      numberOfRepaymentVariationsForBorrowerCycle: [],
+      interestRateVariationsForBorrowerCycle: [],
+      charges: [],
+      allowAttributeOverrides: {
+        amortizationType: true,
+        interestType: true,
+        transactionProcessingStrategyCode: true,
+        interestCalculationPeriodType: true,
+        inArrearsTolerance: true,
+        repaymentEvery: true,
+        graceOnPrincipalAndInterestPayment: true,
+        graceOnArrearsAgeing: true
+      }
+    });
+  });
+
+  it('lets the user-edited down payment percentage win over the profile prefill', () => {
+    // disbursedAmountPercentageForDownPayment is REMOVED from the two-wheeler hidden defaults, so
+    // the guided "defaults win" merge must not clobber the visible control's value.
+    const payload = buildPayload(twoWheelerFormState({ disbursedAmountPercentageForDownPayment: 25 }), 'two-wheeler');
+
+    expect(payload.disbursedAmountPercentageForDownPayment).toBe(25);
+    expect(payload.enableDownPayment).toBe(true);
+    expect(payload.enableAutoRepaymentForDownPayment).toBe(true);
+  });
+
+  it('forces down payment on even if the form control was somehow toggled off', () => {
+    // enableDownPayment is the product's identity: it stays in the two-wheeler hidden defaults,
+    // which are spread last for guided profiles, so a stray false in the (hidden) control cannot
+    // turn the product into a personal loan.
+    const payload = buildPayload(twoWheelerFormState({ enableDownPayment: false }), 'two-wheeler');
+
+    expect(payload.enableDownPayment).toBe(true);
+    expect(payload.disbursedAmountPercentageForDownPayment).toBe(20);
+  });
+
+  it('omits the multi-disburse field family, matching the Personal Loan payload contract', () => {
+    const payload = buildPayload(twoWheelerFormState(), 'two-wheeler');
+
+    expect(payload.multiDisburseLoan).toBeUndefined();
+    expect(payload.maxTrancheCount).toBeUndefined();
+    expect(payload.allowFullTermForTranche).toBeUndefined();
+    expect(payload.outstandingLoanBalance).toBeUndefined();
+    expect(payload.disallowExpectedDisbursements).toBeUndefined();
+    expect(payload.allowVariableInstallments).toBeUndefined();
+  });
+
+  it('drops grace periods that are not shorter than the repayment count, like Personal', () => {
+    const payload = buildPayload(twoWheelerFormState({ graceOnPrincipalPayment: 36 }), 'two-wheeler');
+
+    expect(payload.graceOnPrincipalPayment).toBeUndefined();
+  });
+
+  it('lets a user-selected delinquency bucket win, and normalizes the None option to null', () => {
+    // delinquencyBucketId is REMOVED from the two-wheeler hidden defaults (spreadsheet marks it
+    // Applicable), so the visible select's value must survive the guided "defaults win" merge; the
+    // None option ('') is normalized back to the null contract Personal sends from its hidden default.
+    expect(buildPayload(twoWheelerFormState({ delinquencyBucketId: '1' }), 'two-wheeler').delinquencyBucketId).toBe(
+      '1'
+    );
+    expect(
+      buildPayload(twoWheelerFormState({ delinquencyBucketId: '' }), 'two-wheeler').delinquencyBucketId
+    ).toBeNull();
+  });
+});
+
+describe('loan-product.config buildPayload for the education profile', () => {
+  /**
+   * The raw form value the wizard actually submits for Education: the shared seed plus the
+   * profile's curated prefills (which include the pinned Cumulative-stack control values), plus
+   * the two required fields the user types.
+   */
+  function educationFormState(edits: Record<string, unknown> = {}): typeof INITIAL_FORM_STATE {
+    return {
+      ...INITIAL_FORM_STATE,
+      ...PROFILE_INITIAL_OVERRIDES['education'],
+      name: 'Education Loan – Domestic',
+      shortName: 'EDU',
+      currencyCode: 'INR',
+      ...edits
+    };
+  }
+
+  it('produces the exact Education create payload for an untouched wizard form', () => {
+    // Education is the first guided profile OFF the Progressive stack: Fineract's progressive
+    // schedule generator has no grace/moratorium support, so the moratorium product runs on the
+    // Classic Cumulative + standard-strategy + daily-interest configuration, and it is the only
+    // profile that transmits the multi-disburse family (semester tranches).
+    expect(buildPayload(educationFormState(), 'education')).toEqual({
+      name: 'Education Loan – Domestic',
+      shortName: 'EDU',
+      externalId: '',
+      description: 'Education Loan Product',
+      startDate: '',
+      closeDate: '',
+      includeInBorrowerCycle: true,
+      currencyCode: 'INR',
+      digitsAfterDecimal: 2,
+      inMultiplesOf: 1,
+      installmentAmountInMultiplesOf: 10,
+      useBorrowerCycle: false,
+      principal: 500000,
+      numberOfRepayments: 120,
+      interestRatePerPeriod: 10.5,
+      interestRateFrequencyType: 3,
+      repaymentEvery: 1,
+      repaymentFrequencyType: 2,
+      isLinkedToFloatingInterestRates: false,
+      allowApprovedDisbursedAmountsOverApplied: false,
+      overAppliedCalculationType: null,
+      overAppliedNumber: null,
+      minimumDaysBetweenDisbursalAndFirstRepayment: 30,
+      interestRecognitionOnDisbursementDate: false,
+      repaymentStartDateType: 1,
+      amortizationType: 1,
+      interestType: 0,
+      isEqualAmortization: false,
+      interestCalculationPeriodType: 0,
+      loanScheduleType: 'CUMULATIVE',
+      transactionProcessingStrategyCode: 'mifos-standard-strategy',
+      loanScheduleProcessingType: 'HORIZONTAL',
+      graceOnPrincipalPayment: 24,
+      graceOnInterestPayment: 0,
+      graceOnInterestCharged: 0,
+      daysInYearType: 360,
+      daysInMonthType: 30,
+      principalThresholdForLastInstallment: 5,
+      canUseForTopup: true,
+      isInterestRecalculationEnabled: false,
+      delinquencyBucketId: null,
+      canDefineInstallmentAmount: true,
+      multiDisburseLoan: true,
+      maxTrancheCount: 8,
+      allowFullTermForTranche: false,
+      disallowExpectedDisbursements: true,
+      inArrearsTolerance: 50,
+      graceOnArrearsAgeing: 5,
+      overdueDaysForNPA: 90,
+      accountMovesOutOfNPAOnlyOnArrearsCompletion: true,
+      holdGuaranteeFunds: false,
+      enableDownPayment: false,
+      enableInstallmentLevelDelinquency: false,
+      dueDaysForRepaymentEvent: 1,
+      overDueDaysForRepaymentEvent: 1,
+      enableIncomeCapitalization: false,
+      enableBuyDownFee: false,
+      accountingRule: 2,
+      principalVariationsForBorrowerCycle: [],
+      numberOfRepaymentVariationsForBorrowerCycle: [],
+      interestRateVariationsForBorrowerCycle: [],
+      charges: [],
+      allowAttributeOverrides: {
+        amortizationType: true,
+        interestType: true,
+        transactionProcessingStrategyCode: true,
+        interestCalculationPeriodType: true,
+        inArrearsTolerance: true,
+        repaymentEvery: true,
+        graceOnPrincipalAndInterestPayment: true,
+        graceOnArrearsAgeing: true
+      }
+    });
+  });
+
+  it('never forces the Progressive stack: schedule, strategy and interest calc stay pinned Cumulative', () => {
+    // Even if the (hidden) controls somehow carried Progressive-stack values, the education hidden
+    // defaults are spread last and must win — a Progressive education product would silently drop
+    // its moratorium at schedule generation.
+    const payload = buildPayload(
+      educationFormState({
+        loanScheduleType: 'Progressive',
+        transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+        interestCalculationPeriodType: 1
+      }),
+      'education'
+    );
+
+    expect(payload.loanScheduleType).toBe('CUMULATIVE');
+    expect(payload.transactionProcessingStrategyCode).toBe('mifos-standard-strategy');
+    expect(payload.interestCalculationPeriodType).toBe(0);
+    expect(payload.supportedInterestRefundTypes).toBeUndefined();
+    expect(payload.chargeOffBehaviour).toBeUndefined();
+  });
+
+  it('transmits the multi-disburse family but never the outstanding-balance cap', () => {
+    const payload = buildPayload(educationFormState(), 'education');
+
+    expect(payload.multiDisburseLoan).toBe(true);
+    expect(payload.maxTrancheCount).toBe(8);
+    expect(payload.allowFullTermForTranche).toBe(false);
+    expect(payload.disallowExpectedDisbursements).toBe(true);
+    expect(payload.outstandingLoanBalance).toBeUndefined();
+  });
+
+  it('lets the user-edited tranche count win over the profile prefill', () => {
+    expect(buildPayload(educationFormState({ maxTrancheCount: 12 }), 'education').maxTrancheCount).toBe(12);
+  });
+
+  it('floors an emptied or below-minimum tranche count instead of sending an invalid cap', () => {
+    // The control is a visible, optional number input: clearing it leaves the FormControl at null and
+    // 0/1 are typeable, but Fineract rejects `multiDisburseLoan: true` without a cap of 2 or more.
+    [
+      null,
+      undefined,
+      '',
+      0,
+      1
+    ].forEach((maxTrancheCount) => {
+      expect(buildPayload(educationFormState({ maxTrancheCount }), 'education').maxTrancheCount).toBe(2);
+    });
+  });
+
+  it('sends no down-payment fields (overrides the base hidden enableDownPayment: true)', () => {
+    const payload = buildPayload(educationFormState(), 'education');
+
+    expect(payload.enableDownPayment).toBe(false);
+    expect(payload.disbursedAmountPercentageForDownPayment).toBeUndefined();
+    expect(payload.enableAutoRepaymentForDownPayment).toBeUndefined();
+  });
+
+  it('keeps the moratorium while it is shorter than the repayment count and drops it otherwise', () => {
+    expect(buildPayload(educationFormState(), 'education').graceOnPrincipalPayment).toBe(24);
+    expect(
+      buildPayload(educationFormState({ graceOnPrincipalPayment: 120 }), 'education').graceOnPrincipalPayment
+    ).toBeUndefined();
+  });
+});
+
+describe('loan-product.config buildPayload for the agriculture profile', () => {
+  /**
+   * The raw form value the wizard actually submits for Agriculture: the shared seed plus the
+   * profile's curated prefills (which include the pinned Cumulative-stack control values), plus
+   * the two required fields the user types.
+   */
+  function agricultureFormState(edits: Record<string, unknown> = {}): typeof INITIAL_FORM_STATE {
+    return {
+      ...INITIAL_FORM_STATE,
+      ...PROFILE_INITIAL_OVERRIDES['agriculture'],
+      name: 'Agriculture Loan – Kharif',
+      shortName: 'AGR',
+      currencyCode: 'INR',
+      ...edits
+    };
+  }
+
+  it('produces the exact Agriculture create payload for an untouched wizard form', () => {
+    // The bullet crop loan: one installment (all principal + interest) at the end of the crop
+    // cycle, flat interest, Cumulative schedule, principal-first settlement ordering, seasonal
+    // arrears/NPA settings — and no down payment, tranches or progressive-only fields.
+    expect(buildPayload(agricultureFormState(), 'agriculture')).toEqual({
+      name: 'Agriculture Loan – Kharif',
+      shortName: 'AGR',
+      externalId: '',
+      description: 'Agriculture Loan Product',
+      startDate: '',
+      closeDate: '',
+      includeInBorrowerCycle: true,
+      currencyCode: 'INR',
+      digitsAfterDecimal: 2,
+      inMultiplesOf: 1,
+      installmentAmountInMultiplesOf: 10,
+      useBorrowerCycle: false,
+      principal: 100000,
+      numberOfRepayments: 1,
+      interestRatePerPeriod: 7,
+      interestRateFrequencyType: 3,
+      repaymentEvery: 12,
+      repaymentFrequencyType: 2,
+      isLinkedToFloatingInterestRates: false,
+      allowApprovedDisbursedAmountsOverApplied: false,
+      overAppliedCalculationType: null,
+      overAppliedNumber: null,
+      minimumDaysBetweenDisbursalAndFirstRepayment: 5,
+      interestRecognitionOnDisbursementDate: false,
+      repaymentStartDateType: 1,
+      amortizationType: 1,
+      interestType: 1,
+      isEqualAmortization: false,
+      interestCalculationPeriodType: 1,
+      loanScheduleType: 'CUMULATIVE',
+      transactionProcessingStrategyCode: 'principal-interest-penalties-fees-order-strategy',
+      loanScheduleProcessingType: 'HORIZONTAL',
+      graceOnPrincipalPayment: 0,
+      graceOnInterestPayment: 0,
+      graceOnInterestCharged: 0,
+      daysInYearType: 360,
+      daysInMonthType: 30,
+      principalThresholdForLastInstallment: 5,
+      canUseForTopup: false,
+      isInterestRecalculationEnabled: false,
+      delinquencyBucketId: null,
+      canDefineInstallmentAmount: false,
+      inArrearsTolerance: 100,
+      graceOnArrearsAgeing: 30,
+      overdueDaysForNPA: 180,
+      accountMovesOutOfNPAOnlyOnArrearsCompletion: true,
+      holdGuaranteeFunds: false,
+      enableDownPayment: false,
+      enableInstallmentLevelDelinquency: false,
+      dueDaysForRepaymentEvent: 1,
+      overDueDaysForRepaymentEvent: 1,
+      enableIncomeCapitalization: false,
+      enableBuyDownFee: false,
+      accountingRule: 2,
+      principalVariationsForBorrowerCycle: [],
+      numberOfRepaymentVariationsForBorrowerCycle: [],
+      interestRateVariationsForBorrowerCycle: [],
+      charges: [],
+      allowAttributeOverrides: {
+        amortizationType: true,
+        interestType: true,
+        transactionProcessingStrategyCode: true,
+        interestCalculationPeriodType: true,
+        inArrearsTolerance: true,
+        repaymentEvery: true,
+        graceOnPrincipalAndInterestPayment: true,
+        graceOnArrearsAgeing: true
+      }
+    });
+  });
+
+  it('keeps the pinned bullet stack even if the hidden controls carried other values', () => {
+    // Flat interest, Cumulative schedule, principal-first strategy and zero grace are the
+    // product's identity: the agriculture hidden defaults are spread last and must win over any
+    // stray control values (all of these controls are hidden for this profile).
+    const payload = buildPayload(
+      agricultureFormState({
+        interestType: 0,
+        loanScheduleType: 'Progressive',
+        transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+        graceOnPrincipalPayment: 6
+      }),
+      'agriculture'
+    );
+
+    expect(payload.interestType).toBe(1);
+    expect(payload.loanScheduleType).toBe('CUMULATIVE');
+    expect(payload.transactionProcessingStrategyCode).toBe('principal-interest-penalties-fees-order-strategy');
+    expect(payload.graceOnPrincipalPayment).toBe(0);
+    expect(payload.chargeOffBehaviour).toBeUndefined();
+    expect(payload.supportedInterestRefundTypes).toBeUndefined();
+  });
+
+  it('lets the user tune the seasonal NPA clock and the cycle structure', () => {
+    // overdueDaysForNPA (visible/editable) and the Terms fields are the operator's levers:
+    // 360 ≈ two crop seasons; 2 × 6 months is the two-season bullet variant.
+    const payload = buildPayload(
+      agricultureFormState({ overdueDaysForNPA: 360, numberOfRepayments: 2, repaymentEvery: 6 }),
+      'agriculture'
+    );
+
+    expect(payload.overdueDaysForNPA).toBe(360);
+    expect(payload.numberOfRepayments).toBe(2);
+    expect(payload.repaymentEvery).toBe(6);
+  });
+
+  it('omits the multi-disburse family and every down-payment field', () => {
+    const payload = buildPayload(agricultureFormState(), 'agriculture');
+
+    expect(payload.multiDisburseLoan).toBeUndefined();
+    expect(payload.maxTrancheCount).toBeUndefined();
+    expect(payload.allowFullTermForTranche).toBeUndefined();
+    expect(payload.disallowExpectedDisbursements).toBeUndefined();
+    expect(payload.outstandingLoanBalance).toBeUndefined();
+    expect(payload.disbursedAmountPercentageForDownPayment).toBeUndefined();
+    expect(payload.enableAutoRepaymentForDownPayment).toBeUndefined();
+  });
+});
+
+describe('loan-product.config profileForRoutePath', () => {
+  it('maps each wizard route to its profile and page title key', () => {
+    expect(profileForRoutePath('personal-loan')).toEqual({
+      profileMode: 'personal',
+      pageTitle: 'labels.heading.Create Personal Loan'
+    });
+    expect(profileForRoutePath('custom-advanced')).toEqual({
+      profileMode: 'custom-advanced',
+      pageTitle: 'labels.heading.Custom / Advanced Loan Configuration'
+    });
+    expect(profileForRoutePath('two-wheeler-loan')).toEqual({
+      profileMode: 'two-wheeler',
+      pageTitle: 'labels.heading.Create Two Wheeler Loan'
+    });
+    expect(profileForRoutePath('education-loan')).toEqual({
+      profileMode: 'education',
+      pageTitle: 'labels.heading.Create Education Loan'
+    });
+    expect(profileForRoutePath('agriculture-loan')).toEqual({
+      profileMode: 'agriculture',
+      pageTitle: 'labels.heading.Create Agriculture Loan'
+    });
+  });
+
+  it('falls back to the Personal Loan profile for unknown or missing paths', () => {
+    expect(profileForRoutePath('no-such-route').profileMode).toBe('personal');
+    expect(profileForRoutePath(undefined).profileMode).toBe('personal');
+  });
+});
+
 describe('loan-product.config PRODUCT_CARDS', () => {
   it('gives every product card a non-empty icon', () => {
     PRODUCT_CARDS.forEach((product) => {
       expect(product.icon).toBeDefined();
       expect(typeof product.icon).toBe('string');
       expect(product.icon.length).toBeGreaterThan(0);
+    });
+  });
+
+  it('activates the Two Wheeler Loan card with its wizard route', () => {
+    const card = PRODUCT_CARDS.find((product) => product.name === 'Two Wheeler Loan')!;
+
+    expect(card.active).toBe(true);
+    expect(card.disabled).toBe(false);
+    expect(card.route).toBe('two-wheeler-loan');
+  });
+
+  it('activates the Education Loan card with its wizard route', () => {
+    const card = PRODUCT_CARDS.find((product) => product.name === 'Education Loan')!;
+
+    expect(card.active).toBe(true);
+    expect(card.disabled).toBe(false);
+    expect(card.route).toBe('education-loan');
+  });
+
+  it('activates the Agriculture Loan card with its wizard route', () => {
+    const card = PRODUCT_CARDS.find((product) => product.name === 'Agriculture Loan')!;
+
+    expect(card.active).toBe(true);
+    expect(card.disabled).toBe(false);
+    expect(card.route).toBe('agriculture-loan');
+  });
+
+  it('routes every active card to a route a wizard profile claims', () => {
+    // The selection grid renders a Create button for every active card; a card whose route no
+    // profile claims would silently fall back to the Personal Loan wizard.
+    PRODUCT_CARDS.filter((product) => product.active).forEach((product) => {
+      expect([
+        'personal-loan',
+        'custom-advanced',
+        'two-wheeler-loan',
+        'education-loan',
+        'agriculture-loan',
+        'bnpl-loan'
+      ]).toContain(product.route);
+    });
+  });
+  describe('daysInYearCustomStrategy payload gating', () => {
+    // Classic registers the control (and its `Validators.required`) only for the advanced payment
+    // allocation strategy AND an ACTUAL days-in-year type, and never sends it otherwise. These lock
+    // that gate across every profile so the field can never reach the create API while hidden.
+    const allProfiles: LoanWizardProfileMode[] = [
+      'personal',
+      'two-wheeler',
+      'education',
+      'agriculture',
+      'custom-advanced',
+      'bnpl'
+    ];
+
+    function payloadFor(profile: LoanWizardProfileMode, overrides: Record<string, unknown>) {
+      return buildPayload({ ...INITIAL_FORM_STATE, ...overrides } as any, profile, undefined);
+    }
+
+    it('omits it for every profile when days in year is not ACTUAL', () => {
+      allProfiles.forEach((profile) => {
+        const payload = payloadFor(profile, {
+          daysInYearType: 360,
+          transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY
+        });
+        expect([
+          profile,
+          'daysInYearCustomStrategy' in payload
+        ]).toEqual([
+          profile,
+          false
+        ]);
+      });
+    });
+
+    it('omits it for every profile on a non-advanced strategy, even with ACTUAL days in year', () => {
+      allProfiles.forEach((profile) => {
+        const payload = payloadFor(profile, {
+          daysInYearType: 1,
+          transactionProcessingStrategyCode: 'mifos-standard-strategy'
+        });
+        expect([
+          profile,
+          'daysInYearCustomStrategy' in payload
+        ]).toEqual([
+          profile,
+          false
+        ]);
+      });
+    });
+
+    it('sends it only from the profiles that expose the control, as the backend code', () => {
+      const applicable = {
+        daysInYearType: 1,
+        transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+        loanScheduleType: 'Progressive'
+      };
+      // Guided profiles that keep the field hidden and pinned still omit it - unchanged behaviour.
+      ([
+          'personal',
+          'two-wheeler',
+          'education',
+          'agriculture'
+        ] as LoanWizardProfileMode[]).forEach((profile) => {
+        const payload = payloadFor(profile, applicable);
+        expect([
+          profile,
+          'daysInYearCustomStrategy' in payload
+        ]).toEqual([
+          profile,
+          false
+        ]);
+      });
+      // The two profiles that render it as an editable control send it.
+      ([
+          'custom-advanced',
+          'bnpl'
+        ] as LoanWizardProfileMode[]).forEach((profile) => {
+        const payload = payloadFor(profile, applicable);
+        expect([
+          profile,
+          payload.daysInYearCustomStrategy
+        ]).toEqual([
+          profile,
+          'FULL_LEAP_YEAR'
+        ]);
+      });
     });
   });
 });

@@ -24,6 +24,23 @@
  */
 
 export { BasePage } from './BasePage';
+
+/**
+ * Angular Material overlay helpers. Exported from the pages barrel so
+ * new page objects reach for the shared implementation rather than
+ * re-deriving the trigger → overlay click sequence. The React port
+ * exports the same names from its own Radix-based module, so page
+ * objects swap by changing this barrel only.
+ */
+export {
+  selectOption,
+  selectFilteredOption,
+  fillDateField,
+  fillIfVisible,
+  confirmDialog,
+  type SelectOptionOptions
+} from './material-form-helpers';
+
 export { LoginPage } from './login.page';
 export { ClientsListPage } from './clients-list.page';
 export {

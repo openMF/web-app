@@ -34,18 +34,6 @@ import { SettingsService } from 'app/settings/settings.service';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 import { Currency } from 'app/shared/models/general.model';
 import { NgClass, CurrencyPipe } from '@angular/common';
-import {
-  MatTable,
-  MatColumnDef,
-  MatHeaderCellDef,
-  MatHeaderCell,
-  MatCellDef,
-  MatCell,
-  MatHeaderRowDef,
-  MatHeaderRow,
-  MatRowDef,
-  MatRow
-} from '@angular/material/table';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatTooltip } from '@angular/material/tooltip';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
@@ -57,8 +45,27 @@ import { LoanDelinquencyActionRescheduleDialogComponent } from 'app/loans/custom
 import { StringEnumOptionData } from 'app/shared/models/option-data.model';
 import { ProductsService } from 'app/products/products.service';
 import { LoanDelinquencyActionResetDialogComponent } from 'app/loans/custom-dialog/loan-delinquency-action-reset-dialog/loan-delinquency-action-reset-dialog.component';
+import { LoanDelinquencyActionDisableDialogComponent } from 'app/loans/custom-dialog/loan-delinquency-action-disable-dialog/loan-delinquency-action-disable-dialog.component';
 
 type DelinquencyActionStatus = 'active' | 'scheduled' | 'expired';
+type DelinquencyActionFilter = 'all' | DelinquencyActionStatus;
+
+interface DelinquencyActionRow {
+  /** The action as returned by the backend, for the cells that render raw fields */
+  raw: LoanDelinquencyAction;
+  id: number;
+  action: string;
+  startDateObj: Date;
+  endDateObj: Date | null;
+  /** Whether the action type defines an end date at all (point-in-time actions and RESCHEDULE do not) */
+  hasEndDate: boolean;
+  status: DelinquencyActionStatus;
+  statusLabelKey: string;
+  isOngoing: boolean;
+  durationDays: number;
+  icon: string;
+  badgeClass: string;
+}
 
 interface DelinquencyTimelineBar {
   label: string;
@@ -73,22 +80,19 @@ const TIMELINE_PADDING_LEFT = 60;
 const TIMELINE_INNER_WIDTH = 1140;
 const MS_PER_DAY = 86_400_000;
 
+/** Actions that record a moment rather than a window, so they never carry an end date. */
+const POINT_IN_TIME_ACTIONS = [
+  'RESUME',
+  'ENABLE',
+  'UNDO_RESET'
+];
+
 @Component({
   selector: 'mifosx-loan-delinquency-tags-tab',
   templateUrl: './loan-delinquency-tags-tab.component.html',
   styleUrls: ['./loan-delinquency-tags-tab.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    MatTable,
-    MatColumnDef,
-    MatHeaderCellDef,
-    MatHeaderCell,
-    MatCellDef,
-    MatCell,
-    MatHeaderRowDef,
-    MatHeaderRow,
-    MatRowDef,
-    MatRow,
     FaIconComponent,
     NgClass,
     MatTooltip,
@@ -115,27 +119,14 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
   wcLoanDelinquencyRangeSchedule: DelinquencyRangeSchedule[] = [];
   currency: Currency;
   installmentLevelDelinquency: InstallmentLevelDelinquency[] = [];
-  loanDelinquencyTagsColumns: string[] = [
-    'classification',
-    'addedOn',
-    'liftedOn'
-  ];
-  loanDelinquencyActionsColumns: string[] = [];
-  installmentDelinquencyTagsColumns: string[] = [
-    'classification',
-    'minimumAgeDays',
-    'amount'
-  ];
-  loanDelinquencyRangeScheduleColumns: string[] = [
-    'periodNumber',
-    'fromDate',
-    'toDate',
-    'expectedAmount',
-    'paidAmount',
-    'outstandingAmount',
-    'delinquentDays',
-    'delinquentAmount',
-    'minPaymentCriteriaMet'
+
+  filter = signal<DelinquencyActionFilter>('all');
+
+  filters: { value: DelinquencyActionFilter; label: string }[] = [
+    { value: 'all', label: 'labels.buttons.All' },
+    { value: 'active', label: 'labels.inputs.Active' },
+    { value: 'scheduled', label: 'labels.inputs.Scheduled' },
+    { value: 'expired', label: 'labels.inputs.Expired' }
   ];
 
   loanId: any;
@@ -162,12 +153,106 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
     return !this.isCurrentAndPauseAction(current);
   });
 
+  /**
+   * Whether the delinquency evaluation is currently disabled for this working capital loan.
+   * Derived from the actions list: a `DISABLE` action with no (effective) end date is still in force.
+   * While disabled, the backend rejects pause/resume/reschedule, so those actions are hidden.
+   */
+  isDelinquencyDisabled = computed<boolean>(() =>
+    this.loanDelinquencyActions().some(
+      (item) => item.action === 'DISABLE' && (item.effectiveEndDate ?? item.endDate) == null
+    )
+  );
+
+  /**
+   * Whether there is an active RESET that can still be undone.
+   * Undo Reset is LIFO and only meaningful while a RESET remains open (endDate === null);
+   * once a reset is undone the backend closes it by setting its endDate.
+   */
+  hasActiveReset = computed<boolean>(() =>
+    this.loanDelinquencyActions().some((item) => item.action === 'RESET' && item.endDate == null)
+  );
+
+  /**
+   * The delinquency actions decorated with everything the dashboard renders:
+   * resolved dates, lifecycle status, duration and badge styling.
+   */
+  actionRows = computed<DelinquencyActionRow[]>(() => {
+    const businessDate = this.businessDate();
+    return this.loanDelinquencyActions().map((item) => {
+      const isPointInTime = POINT_IN_TIME_ACTIONS.includes(item.action);
+      const isReschedule = item.action === 'RESCHEDULE';
+      const isResumedPause = item.action === 'PAUSE' && !!item.effectiveEndDate;
+      const start = this.dateUtils.parseDate(item.startDate);
+      const rawEnd = item.effectiveEndDate ?? item.endDate;
+      // An action without an end date is an open window. parseDate turns a missing
+      // value into today, which would render an open window as closing now.
+      const end = isPointInTime || !rawEnd ? null : this.dateUtils.parseDate(rawEnd);
+      const reference = end ?? businessDate ?? start;
+      // Both boundary dates count: a pause from Jul 1st to Jul 16th lasts 16 days, not 15.
+      // A pause closed by a RESUME is the exception: the loan is already active on the resume
+      // date, so that day is not a paused day and must not be added.
+      const elapsedDays = Math.round((reference.getTime() - start.getTime()) / MS_PER_DAY);
+      const durationDays = Math.max(1, isResumedPause ? elapsedDays : elapsedDays + 1);
+      const status = this.actionStatus(start, end);
+
+      return {
+        raw: item,
+        id: item.id,
+        action: item.action,
+        startDateObj: start,
+        endDateObj: end,
+        hasEndDate: !isPointInTime && !isReschedule,
+        status,
+        statusLabelKey: this.statusKey(status),
+        isOngoing: !end && status === 'active',
+        durationDays,
+        icon: this.actionIcon(item.action),
+        badgeClass: this.actionBadgeClass(item.action)
+      };
+    });
+  });
+
+  filteredActionRows = computed<DelinquencyActionRow[]>(() => {
+    const filter = this.filter();
+    if (filter === 'all') {
+      return this.actionRows();
+    }
+    return this.actionRows().filter((row) => row.status === filter);
+  });
+
+  pauseRows = computed<DelinquencyActionRow[]>(() => this.actionRows().filter((row) => row.action === 'PAUSE'));
+
+  kpis = computed(() => {
+    const rows = this.actionRows();
+    const pauses = this.pauseRows();
+    const lastAction = rows.length
+      ? rows.reduce((latest, row) => (row.startDateObj.getTime() > latest.startDateObj.getTime() ? row : latest))
+      : null;
+    return {
+      total: rows.length,
+      activePauses: pauses.filter((row) => row.status === 'active').length,
+      totalDaysPaused: pauses.reduce((sum, row) => sum + row.durationDays, 0),
+      lastActionDate: lastAction?.startDateObj ?? null
+    };
+  });
+
+  hasPauseActiveToday = computed<boolean>(() => this.pauseRows().some((row) => row.status === 'active'));
+
+  maxDurationDays = computed<number>(() => {
+    const rows = this.actionRows();
+    if (rows.length === 0) {
+      return 1;
+    }
+    return Math.max(...rows.map((row) => row.durationDays));
+  });
+
   timelineYear = computed<number>(() => {
-    const actions = this.loanDelinquencyActions();
-    if (actions.length === 0) {
+    const rows = this.actionRows();
+    if (rows.length === 0) {
       return (this.businessDate() ?? new Date()).getFullYear();
     }
-    return this.dateUtils.parseDate(actions[0].startDate).getFullYear();
+    return rows[0].startDateObj.getFullYear();
   });
 
   timelineBars = computed<DelinquencyTimelineBar[]>(() => {
@@ -177,29 +262,25 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
     const pxPerDay = TIMELINE_INNER_WIDTH / daysInYear;
     const ongoingLabel = this.translateService.instant('labels.inputs.Ongoing');
 
-    return this.loanDelinquencyActions()
-      .filter((item) => item.action === 'PAUSE')
-      .map((item, index) => {
-        const start = this.dateUtils.parseDate(item.startDate);
-        const endDate = item.effectiveEndDate ?? item.endDate;
-        const end = endDate ? this.dateUtils.parseDate(endDate) : null;
-        const endRef = end ?? this.businessDate() ?? start;
-        const durationDays = Math.max(1, Math.round((endRef.getTime() - start.getTime()) / MS_PER_DAY));
-        const startDay = this.clamp(Math.floor((start.getTime() - yearStart) / MS_PER_DAY), 0, daysInYear);
-        const endDay = this.clamp(Math.floor((endRef.getTime() - yearStart) / MS_PER_DAY), 0, daysInYear);
-        const x = TIMELINE_PADDING_LEFT + startDay * pxPerDay;
-        const width = Math.max(8, (endDay - startDay) * pxPerDay);
-        const label = `P${index + 1}`;
-        const tooltip = `${label} · ${this.shortDate(start)} → ${end ? this.shortDate(end) : ongoingLabel} (${durationDays}d)`;
-        return {
-          label,
-          status: this.actionStatus(start, end),
-          x,
-          width,
-          midX: x + width / 2,
-          tooltip
-        };
-      });
+    return this.pauseRows().map((row, index) => {
+      const endRef = row.endDateObj ?? this.businessDate() ?? row.startDateObj;
+      const startDay = this.clamp(Math.floor((row.startDateObj.getTime() - yearStart) / MS_PER_DAY), 0, daysInYear);
+      const endDay = this.clamp(Math.floor((endRef.getTime() - yearStart) / MS_PER_DAY), 0, daysInYear);
+      const x = TIMELINE_PADDING_LEFT + startDay * pxPerDay;
+      const width = Math.max(8, (endDay - startDay) * pxPerDay);
+      // The lane charts pauses only, so it numbers them consecutively: the index
+      // within the full action list would skip numbers on every non-pause action.
+      const label = `P${index + 1}`;
+      const endLabel = row.endDateObj ? this.shortDate(row.endDateObj) : ongoingLabel;
+      return {
+        label,
+        status: row.status,
+        x,
+        width,
+        midX: x + width / 2,
+        tooltip: `${label} · ${this.shortDate(row.startDateObj)} → ${endLabel} (${row.durationDays}d)`
+      };
+    });
   });
 
   todayMarker = computed<number | null>(() => {
@@ -226,22 +307,6 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
   constructor() {
     super();
     this.loanId = this.route.parent.parent.snapshot.params['loanId'];
-    this.loanDelinquencyActionsColumns = this.loanProductService.isWorkingCapital ? [
-          'identifier',
-          'action',
-          'startDate',
-          'endDate',
-          'minimumPayment',
-          'frequency',
-          'actions'
-        ] : [
-          'identifier',
-          'action',
-          'startDate',
-          'endDate',
-          'createdOn',
-          'actions'
-        ];
 
     this.route.parent.data
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -264,7 +329,7 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
           if (loanDelinquencyDataResponse?.product) {
             this.loanProductId = loanDelinquencyDataResponse.product.id;
           }
-          this.wcLoanDelinquencyRangeSchedule = data.wcLoanDelinquencyRangeSchedule;
+          this.wcLoanDelinquencyRangeSchedule = data.wcLoanDelinquencyRangeSchedule || [];
           this.cdr.markForCheck();
         }
       );
@@ -281,6 +346,26 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
           this.minimumPaymentTypeOptions = response.delinquencyMinimumPaymentTypeOptions;
         });
     }
+  }
+
+  selectFilter(value: DelinquencyActionFilter): void {
+    this.filter.set(value);
+  }
+
+  durationBarWidth(row: DelinquencyActionRow): number {
+    const max = this.maxDurationDays();
+    if (max === 0) {
+      return 0;
+    }
+    return Math.min(100, Math.round((row.durationDays / max) * 100));
+  }
+
+  trackByRowId(_index: number, row: DelinquencyActionRow): number {
+    return row.id;
+  }
+
+  trackByLabel(_index: number, bar: DelinquencyTimelineBar): string {
+    return bar.label;
   }
 
   createDelinquencyAction(): void {
@@ -360,6 +445,41 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
     });
   }
 
+  createDelinquencyDisable(): void {
+    this.confirmDelinquencyToggle('disable');
+  }
+
+  createDelinquencyEnable(): void {
+    this.confirmDelinquencyToggle('enable');
+  }
+
+  /**
+   * Opens the disable/enable confirmation dialog. The start date is always the current business date
+   * (no backdating), so it is only displayed, and the action is submitted without an end date.
+   */
+  private confirmDelinquencyToggle(action: 'disable' | 'enable'): void {
+    const dialogRef = this.dialog.open(LoanDelinquencyActionDisableDialogComponent, {
+      data: {
+        action,
+        businessDate: this.businessDate()
+      }
+    });
+    dialogRef.afterClosed().subscribe((response: { confirm: any }) => {
+      if (response?.confirm) {
+        this.sendDelinquencyAction(
+          action,
+          this.dateUtils.parseDate(this.businessDate()),
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        );
+      }
+    });
+  }
+
   resumeDelinquencyClassification(item: LoanDelinquencyAction): void {
     const removePauseDialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
@@ -430,6 +550,12 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
         locale: this.locale,
         startNewPeriod
       };
+    } else if (action === 'undo_reset') {
+      payload = {
+        action,
+        locale: this.locale,
+        dateFormat: this.dateFormat
+      };
     }
 
     this.loansServices
@@ -460,11 +586,37 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
     );
   }
 
-  actionClass(action: string): string {
-    if (action === 'PAUSE') {
-      return 'status-pending';
+  /** Whether the row offers the inline resume button. */
+  canResume(row: DelinquencyActionRow): boolean {
+    return this.isCurrentAndPauseAction(row.raw) && !this.isDelinquencyDisabled();
+  }
+
+  private actionIcon(action: string): string {
+    switch (action) {
+      case 'PAUSE':
+        return 'pause';
+      case 'RESUME':
+      case 'ENABLE':
+        return 'play';
+      case 'DISABLE':
+        return 'ban';
+      default:
+        return 'calendar';
     }
-    return 'status-active';
+  }
+
+  /**
+   * Badge tint by intent: suppressing evaluation reads as an alert, restoring it
+   * reads as positive, and everything else keeps the neutral blue.
+   */
+  private actionBadgeClass(action: string): string {
+    if (action === 'DISABLE') {
+      return 'action-badge--alert';
+    }
+    if (action === 'ENABLE' || action === 'RESUME') {
+      return 'action-badge--positive';
+    }
+    return '';
   }
 
   private actionStatus(start: Date, end: Date | null): DelinquencyActionStatus {
@@ -479,6 +631,17 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
       return 'expired';
     }
     return 'active';
+  }
+
+  private statusKey(status: DelinquencyActionStatus): string {
+    switch (status) {
+      case 'active':
+        return 'labels.inputs.Active';
+      case 'scheduled':
+        return 'labels.inputs.Scheduled';
+      case 'expired':
+        return 'labels.inputs.Expired';
+    }
   }
 
   private isLeapYear(year: number): boolean {

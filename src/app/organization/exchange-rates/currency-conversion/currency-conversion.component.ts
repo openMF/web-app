@@ -11,6 +11,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { TranslateService } from '@ngx-translate/core';
 import { take } from 'rxjs';
 
 import { Dates } from 'app/core/utils/dates';
@@ -42,6 +43,7 @@ export class CurrencyConversionComponent implements OnInit {
   private dateUtils = inject(Dates);
   private cdr = inject(ChangeDetectorRef);
   private destroyRef = inject(DestroyRef);
+  private translateService = inject(TranslateService);
 
   currencyOptions: Currency[] = [];
   conversionForm: FormGroup;
@@ -103,7 +105,7 @@ export class CurrencyConversionComponent implements OnInit {
           this.apiError =
             error.error?.errors?.[0]?.defaultUserMessage ||
             error.error?.defaultUserMessage ||
-            'Currency conversion failed. Please try again.';
+            this.translateService.instant('labels.text.Currency conversion failed. Please try again.');
           this.loading = false;
           this.cdr.markForCheck();
         }
@@ -127,18 +129,20 @@ export class CurrencyConversionComponent implements OnInit {
     const normalizedRateSource = rateSource.toLowerCase().replace(/[_-]/g, ' ');
     if (normalizedRateSource.includes('cross')) {
       return this.conversionResult?.baseCurrency
-        ? `Cross Rate (via ${this.conversionResult.baseCurrency})`
-        : 'Cross Rate';
+        ? this.translateService.instant('labels.inputs.Cross Rate via', {
+            currency: this.conversionResult.baseCurrency
+          })
+        : this.translateService.instant('labels.inputs.Cross Rate');
     }
     if (
       normalizedRateSource.includes('admin') ||
       normalizedRateSource.includes('manual') ||
       normalizedRateSource.includes('direct')
     ) {
-      return 'Administrator';
+      return this.translateService.instant('labels.inputs.Administrator');
     }
     if (normalizedRateSource.includes('provider')) {
-      return 'Provider';
+      return this.translateService.instant('labels.inputs.Provider');
     }
     return rateSource;
   }

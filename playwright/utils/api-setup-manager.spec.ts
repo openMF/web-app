@@ -466,3 +466,79 @@ test.describe('getClientTemplate domain wrapper', () => {
     expect(result).toEqual({ offices: ['recovered'] });
   });
 });
+
+// ─────────────────────────────────────────────────────────────────────
+// Product seeding wrappers
+// ─────────────────────────────────────────────────────────────────────
+
+test.describe('ApiSetupManager product wrappers', () => {
+  test('ensureMinimalSavingsProduct() creates the product at most once', async () => {
+    let calls = 0;
+    const stub = {
+      ensureMinimalSavingsProduct: async () => {
+        calls += 1;
+        return { id: 7, name: 'E2E Savings Product' };
+      }
+    } as unknown as FineractApiClient;
+    const manager = new ApiSetupManager(stub, { cache: new Map() });
+
+    // Concurrent callers must share the in-flight promise, and later
+    // sequential callers must hit the resolved cache entry. This is
+    // what keeps a 15-spec shard from issuing 15 product creates.
+    const [
+      a,
+      b
+    ] = await Promise.all([
+      manager.ensureMinimalSavingsProduct(),
+      manager.ensureMinimalSavingsProduct()
+    ]);
+    const c = await manager.ensureMinimalSavingsProduct();
+
+    expect(calls).toBe(1);
+    expect(a).toEqual({ id: 7, name: 'E2E Savings Product' });
+    expect(b).toBe(a);
+    expect(c).toBe(a);
+  });
+
+  test('loan and savings product wrappers use distinct cache keys', async () => {
+    const stub = {
+      ensureMinimalLoanProduct: async () => ({ id: 1, name: 'E2E Loan Product' }),
+      ensureMinimalSavingsProduct: async () => ({ id: 2, name: 'E2E Savings Product' })
+    } as unknown as FineractApiClient;
+    const manager = new ApiSetupManager(stub, { cache: new Map() });
+
+    expect(await manager.ensureMinimalLoanProduct()).toEqual({ id: 1, name: 'E2E Loan Product' });
+    expect(await manager.ensureMinimalSavingsProduct()).toEqual({ id: 2, name: 'E2E Savings Product' });
+  });
+
+  test('a failed product create is evicted so the next caller retries', async () => {
+    let calls = 0;
+    const stub = {
+      ensureMinimalSavingsProduct: async () => {
+        calls += 1;
+        if (calls === 1) throw new Error('duplicate race lost');
+        return { id: 9 };
+      }
+    } as unknown as FineractApiClient;
+    const manager = new ApiSetupManager(stub, { cache: new Map() });
+
+    await expect(manager.ensureMinimalSavingsProduct()).rejects.toThrow('duplicate race lost');
+    expect(await manager.ensureMinimalSavingsProduct()).toEqual({ id: 9 });
+    expect(calls).toBe(2);
+  });
+
+  test('getSavingsProductTemplate() is fetched once per run', async () => {
+    let calls = 0;
+    const stub = {
+      getSavingsProductTemplate: async () => {
+        calls += 1;
+        return { interestPostingPeriodTypeOptions: [{ id: 4, value: 'Monthly' }] };
+      }
+    } as unknown as FineractApiClient;
+    const manager = new ApiSetupManager(stub, { cache: new Map() });
+
+    await manager.getSavingsProductTemplate();
+    await manager.getSavingsProductTemplate();
+    expect(calls).toBe(1);
+  });
+});

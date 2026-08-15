@@ -24,6 +24,7 @@ import { SavingsAccountTransactionsComponent } from './savings-account-transacti
 import { CloseSavingsAccountComponent } from './close-savings-account/close-savings-account.component';
 import { ApplyAnnualFeesSavingsAccountComponent } from './apply-annual-fees-savings-account/apply-annual-fees-savings-account.component';
 import { ManageSavingsAccountComponent } from './manage-savings-account/manage-savings-account.component';
+import { LinkPaymentSystemComponent } from './link-payment-system/link-payment-system.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -47,7 +48,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     SavingsAccountTransactionsComponent,
     CloseSavingsAccountComponent,
     ApplyAnnualFeesSavingsAccountComponent,
-    ManageSavingsAccountComponent
+    ManageSavingsAccountComponent,
+    LinkPaymentSystemComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -77,6 +79,7 @@ export class SavingAccountActionsComponent {
     'Unblock Deposit': boolean;
     'Block Withdrawal': boolean;
     'Unblock Withdrawal': boolean;
+    'Link to payment system': boolean;
   } = {
     Approve: false,
     Reject: false,
@@ -97,7 +100,8 @@ export class SavingAccountActionsComponent {
     'Block Deposit': false,
     'Unblock Deposit': false,
     'Block Withdrawal': false,
-    'Unblock Withdrawal': false
+    'Unblock Withdrawal': false,
+    'Link to payment system': false
   };
 
   currency: Currency;

@@ -170,11 +170,11 @@
     </div>
 
     @if (isLoading) {
-      <mat-progress-bar class="loading-bar" mode="indeterminate"></mat-progress-bar>
+      <mifosx-page-loader [message]="'labels.inputs.Loading loans' | translate"></mifosx-page-loader>
     }
 
     <!-- ── List ───────────────────────────────────────────────── -->
-    <div [hidden]="!hasResults" class="list">
+    <div [hidden]="!hasResults || isLoading" class="list">
       <!--
       A second horizontal scrollbar synced with the real one below, so it's reachable
       right by the header instead of only after however many rows are on the page.

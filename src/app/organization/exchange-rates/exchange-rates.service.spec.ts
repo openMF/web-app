@@ -11,17 +11,14 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { TestBed } from '@angular/core/testing';
 import { firstValueFrom } from 'rxjs';
 
-import { SettingsService } from 'app/settings/settings.service';
-
 import { CurrencyConversionPayload, ExchangeRatePayload } from './exchange-rate.model';
 import { ExchangeRatesService } from './exchange-rates.service';
 
 describe('ExchangeRatesService', () => {
   let service: ExchangeRatesService;
   let httpMock: HttpTestingController;
-  const baseServerUrl = 'http://localhost:4200/fineract-provider/api';
-  const exchangeRatesResource = `${baseServerUrl}/api/v2/exchange-rates`;
-  const currencyConversionResource = `${baseServerUrl}/exchange-rates`;
+  const exchangeRatesResource = '/v2/exchange-rates';
+  const currencyConversionResource = '/exchange-rates';
 
   const exchangeRatePayload: ExchangeRatePayload = {
     rateDate: '2026-01-15',
@@ -48,7 +45,6 @@ describe('ExchangeRatesService', () => {
     TestBed.configureTestingModule({
       providers: [
         ExchangeRatesService,
-        { provide: SettingsService, useValue: { baseServerUrl } },
         provideHttpClient(),
         provideHttpClientTesting()
       ]
@@ -75,6 +71,8 @@ describe('ExchangeRatesService', () => {
     const req = httpMock.expectOne(
       (request) => request.url === `${exchangeRatesResource}/latest` && request.method === 'GET'
     );
+    expect(req.request.url).toBe('/v2/exchange-rates/latest');
+    expect(req.request.url).not.toContain('/api/');
     expect(req.request.params.get('sourceCurrency')).toBe('USD');
     expect(req.request.params.get('targetCurrency')).toBe('KES');
     expect(req.request.params.get('latest')).toBe('true');
@@ -84,6 +82,140 @@ describe('ExchangeRatesService', () => {
     expect(await resultPromise).toEqual([
       { id: 1, sourceCurrency: 'USD', sourceCurrencyCode: 'USD', targetCurrency: 'KES', targetCurrencyCode: 'KES' }
     ]);
+  });
+
+  it('should return an empty exchange rate list when the latest endpoint is unavailable', async () => {
+    const resultPromise = firstValueFrom(service.getExchangeRates());
+
+    const req = httpMock.expectOne(
+      (request) => request.url === `${exchangeRatesResource}/latest` && request.method === 'GET'
+    );
+    req.flush({ message: 'Not Found' }, { status: 404, statusText: 'Not Found' });
+
+    expect(await resultPromise).toEqual([]);
+  });
+
+  it('should return an empty exchange rate list when the latest endpoint has no rates', async () => {
+    const resultPromise = firstValueFrom(service.getExchangeRates());
+
+    const req = httpMock.expectOne(
+      (request) => request.url === `${exchangeRatesResource}/latest` && request.method === 'GET'
+    );
+    req.flush({ error: 'No exchange rate available' });
+
+    expect(await resultPromise).toEqual([]);
+  });
+
+  it('should fetch exchange rates from pageItems response', async () => {
+    const resultPromise = firstValueFrom(service.getExchangeRates());
+
+    const req = httpMock.expectOne(
+      (request) => request.url === `${exchangeRatesResource}/latest` && request.method === 'GET'
+    );
+    req.flush({ pageItems: [{ id: 2, sourceCurrency: 'EUR', targetCurrency: 'USD' }] });
+
+    expect(await resultPromise).toEqual([
+      { id: 2, sourceCurrency: 'EUR', sourceCurrencyCode: 'EUR', targetCurrency: 'USD', targetCurrencyCode: 'USD' }
+    ]);
+  });
+
+  it('should fetch exchange rates from a single exchange rate response', async () => {
+    const resultPromise = firstValueFrom(service.getExchangeRates());
+
+    const req = httpMock.expectOne(
+      (request) => request.url === `${exchangeRatesResource}/latest` && request.method === 'GET'
+    );
+    req.flush({
+      id: 3,
+      sourceCurrency: 'USD',
+      targetCurrency: 'CRC',
+      buyRate: 510.5,
+      sellRate: 455.48,
+      referenceRate: 513.12,
+      rateDate: '2026-07-12',
+      latest: true
+    });
+
+    expect(await resultPromise).toEqual([
+      {
+        id: 3,
+        sourceCurrency: 'USD',
+        sourceCurrencyCode: 'USD',
+        targetCurrency: 'CRC',
+        targetCurrencyCode: 'CRC',
+        buyRate: 510.5,
+        sellRate: 455.48,
+        referenceRate: 513.12,
+        rateDate: '2026-07-12',
+        latest: true
+      }
+    ]);
+  });
+
+  it('should return an empty exchange rate list for an empty response object', async () => {
+    const resultPromise = firstValueFrom(service.getExchangeRates());
+
+    const req = httpMock.expectOne(
+      (request) => request.url === `${exchangeRatesResource}/latest` && request.method === 'GET'
+    );
+    req.flush({});
+
+    expect(await resultPromise).toEqual([]);
+  });
+
+  it('should resolve one exchange rate for edit from the latest response', async () => {
+    const resultPromise = firstValueFrom(service.getExchangeRate('3'));
+
+    const req = httpMock.expectOne(
+      (request) => request.url === `${exchangeRatesResource}/latest` && request.method === 'GET'
+    );
+    expect(req.request.url).not.toBe(`${exchangeRatesResource}/3`);
+    req.flush([
+      {
+        id: 2,
+        sourceCurrency: 'EUR',
+        targetCurrency: 'USD',
+        buyRate: 1.1,
+        sellRate: 1.2,
+        referenceRate: 1.15,
+        rateDate: '2026-07-11',
+        latest: false
+      },
+      {
+        id: 3,
+        sourceCurrency: 'USD',
+        targetCurrency: 'CRC',
+        buyRate: 510.5,
+        sellRate: 455.48,
+        referenceRate: 513.12,
+        rateDate: '2026-07-12',
+        latest: true
+      }
+    ]);
+
+    expect(await resultPromise).toEqual({
+      id: 3,
+      sourceCurrency: 'USD',
+      sourceCurrencyCode: 'USD',
+      targetCurrency: 'CRC',
+      targetCurrencyCode: 'CRC',
+      buyRate: 510.5,
+      sellRate: 455.48,
+      referenceRate: 513.12,
+      rateDate: '2026-07-12',
+      latest: true
+    });
+  });
+
+  it('should error when an exchange rate cannot be resolved for edit', async () => {
+    const resultPromise = firstValueFrom(service.getExchangeRate('9'));
+
+    const req = httpMock.expectOne(
+      (request) => request.url === `${exchangeRatesResource}/latest` && request.method === 'GET'
+    );
+    req.flush([{ id: 3, sourceCurrency: 'USD', targetCurrency: 'CRC' }]);
+
+    await expect(resultPromise).rejects.toThrow('Exchange rate not found with id: 9');
   });
 
   it('should create an exchange rate', async () => {

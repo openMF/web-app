@@ -18,7 +18,7 @@ import {
 } from '@angular/core';
 import { formatCurrency, formatNumber, getCurrencySymbol } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { MatProgressBar } from '@angular/material/progress-bar';
+import { PageLoaderComponent } from '../shared/page-loader/page-loader.component';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
@@ -160,7 +160,7 @@ function humanizeName(name: string): string {
   styleUrls: ['./loans.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    MatProgressBar,
+    PageLoaderComponent,
     MatSlideToggle,
     MatIcon,
     MatIconButton,

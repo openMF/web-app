@@ -27,15 +27,17 @@
         <fa-icon icon="calendar-alt" class="m-r-10"></fa-icon>
         {{ 'labels.buttons.Create Loan Product (Classic)' | translate }}
       </button>
-      <button
-        mat-menu-item
-        [routerLink]="['create']"
-        [queryParams]="{ productType: 'loan' }"
-        *mifosxHasPermission="'CREATE_LOANPRODUCT'"
-      >
-        <fa-icon icon="calendar-check" class="m-r-10"></fa-icon>
-        {{ 'labels.buttons.Create Loan Product (Convenient)' | translate }}
-      </button>
+      @if (!productionMode) {
+        <button
+          mat-menu-item
+          [routerLink]="['create']"
+          [queryParams]="{ productType: 'loan' }"
+          *mifosxHasPermission="'CREATE_LOANPRODUCT'"
+        >
+          <fa-icon icon="calendar-check" class="m-r-10"></fa-icon>
+          {{ 'labels.buttons.Create Loan Product (Convenient)' | translate }}
+        </button>
+      }
       <button
         mat-menu-item
         [routerLink]="['create/classic']"

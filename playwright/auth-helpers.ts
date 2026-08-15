@@ -93,6 +93,17 @@ export async function authenticateRole(role: AuthRole, page: Page, browser: Brow
     );
   }
 
+  // Seed mifosXServerURL so SettingsService.server resolves to the
+  // local Fineract instance rather than falling through to
+  // environment.baseApiUrl (which defaults to demo.mifos.community).
+  // Without this, browser-side API calls like the group client
+  // autocomplete hit the wrong server and return empty results.
+  const fineractUrl = process.env.E2E_FINERACT_URL || 'https://localhost:8443';
+  await page.evaluate((url) => {
+    localStorage.setItem('mifosXServerURL', url);
+  }, fineractUrl);
+  console.log(`[auth:${role.id}] seeded mifosXServerURL = ${fineractUrl}`);
+
   await page.context().storageState({ path: role.storageStateFile });
   console.log(`[auth:${role.id}] storageState saved to ${role.storageStateFile}`);
 

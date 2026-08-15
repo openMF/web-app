@@ -39,8 +39,10 @@ Mifos® X Web App is a modern single-page application (SPA) built on top of the 
     - [OIDC](#oidc-settings)
     - [External National ID](#external-national-id-system-integration)
     - [Interbank Transfers](#interbank-transfers-settings)
+    - [Mifos Copilot](#mifos-copilot-settings)
     - [Remittance Module](#remittance-module-settings)
   - [Client Data Masking](#client-data-masking-example)
+- [Production Mode](#production-mode)
 - [Interbank Transfer Menu](#interbank-transfer-menu)
 - [Role-Based Access Control](#role-based-access-control-rbac)
 - [Releases](#releases)
@@ -374,14 +376,14 @@ MIFOS_PASSWORD_REGEX=^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,50}$
 
 #### UI Display Settings
 
-| Variable                           | Description                                        | Default Value |
-| ---------------------------------- | -------------------------------------------------- | ------------- |
-| MIFOS_DISPLAY_TENANT_SELECTOR      | Display tenant selector in Login view              | true          |
-| MIFOS_DISPLAY_BACKEND_INFO         | Display backend info in footer                     | true          |
-| MIFOS_PRODUCTION_MODE              | Show minimal production hero on login page         | false         |
-| MIFOS_ALLOW_SERVER_SWITCH_SELECTOR | Display DNS server list                            | true          |
-| MIFOS_COMPLIANCE_HIDE_CLIENT_DATA  | Hide client names in UI (mask with \*)             | false         |
-| MIFOS_PRODUCTION_MODE_ENABLE_RBAC  | Enable Role-Based Access Control for menus/buttons | false         |
+| Variable                           | Description                                                         | Default Value |
+| ---------------------------------- | ------------------------------------------------------------------- | ------------- |
+| MIFOS_DISPLAY_TENANT_SELECTOR      | Display tenant selector in Login view                               | true          |
+| MIFOS_DISPLAY_BACKEND_INFO         | Display backend info in footer and Login view                       | false         |
+| MIFOS_PRODUCTION_MODE              | Enable production UI mode (see [Production Mode](#production-mode)) | false         |
+| MIFOS_ALLOW_SERVER_SWITCH_SELECTOR | Display DNS server list                                             | true          |
+| MIFOS_COMPLIANCE_HIDE_CLIENT_DATA  | Hide client names in UI (mask with \*)                              | false         |
+| MIFOS_PRODUCTION_MODE_ENABLE_RBAC  | Enable Role-Based Access Control for menus/buttons                  | false         |
 
 #### OAUTH Settings
 
@@ -446,6 +448,17 @@ For more detailed configuration options, refer to the `env.sample` file in the r
 | MIFOS_INTERBANK_TRANSFERS_API_VERSION  | The Interbank server api version    | /v1.0                        |
 | MIFOS_INTERBANK_TRANSFERS_ENABLED      | If the Interbank feature is enabled | true                         |
 
+#### Mifos Copilot Settings
+
+These variables configure the Mifos Copilot, an AI assistant panel that lets officers operate Mifos X in natural language. Every action that writes data pauses for an explicit human confirmation.
+
+| Variable                   | Description                                               | Default Value |
+| -------------------------- | --------------------------------------------------------- | ------------- |
+| MIFOS_ENABLE_COPILOT       | If the Copilot panel is enabled                           | false         |
+| MIFOS_COPILOT_MCP_BASE_URL | Base URL of the Copilot gateway (empty uses mock replies) |               |
+
+Set `MIFOS_ENABLE_COPILOT` to `true` to show the panel. With `MIFOS_COPILOT_MCP_BASE_URL` empty the panel answers from built-in mock responses and contacts no server, which is useful for demos and UI work without a gateway. Once a gateway URL is configured, the web app talks only to that gateway: it never holds an LLM key and never calls an LLM directly. The gateway keeps the key server-side and runs banking tools with the logged-in officer's own Fineract credential, so existing permissions and the audit trail still apply.
+
 #### Remittance Module Settings
 
 These variables configure the Remittance Module, which provides a 7-step wizard for processing remittance payouts (search, validate recipient, assign payout, confirm payment, and generate receipt).
@@ -482,6 +495,26 @@ E**\*** C**\*\*\***
 M**\*** T\*\*\*
 
 This applies to client name display, e.g. in Institution/Clients list.
+
+## Production Mode
+
+`MIFOS_PRODUCTION_MODE` switches the Web App into a leaner, deployment-oriented UI. It is **disabled by default** (`false`), so existing deployments keep the full development-friendly experience.
+
+```bash
+MIFOS_PRODUCTION_MODE=true
+```
+
+**What changes when `MIFOS_PRODUCTION_MODE=true`:**
+
+| Area                                     | Behaviour                                                                                                         |
+| ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Login page                               | Shows the minimal production hero with branding only                                                              |
+| Products → Loan Products → _Create_ menu | The **Create Loan Product (Convenient)** entry is hidden; **Classic** becomes the only loan product creation flow |
+| Loan account → Screen Reports            | The **Print** button is available on the screen report output                                                     |
+
+The _Convenient_ flow is the guided wizard for the pre-configured loan profiles (Personal, Two Wheeler, Education, Agriculture, Custom/Advanced), which apply opinionated defaults suited to evaluation and quick setup. In a production tenant, loan products are expected to be created through the **Classic** form, where every field is set explicitly.
+
+`MIFOS_PRODUCTION_MODE` and [`MIFOS_PRODUCTION_MODE_ENABLE_RBAC`](#role-based-access-control-rbac) are independent flags and can be enabled separately.
 
 ## Interbank Transfer Menu
 

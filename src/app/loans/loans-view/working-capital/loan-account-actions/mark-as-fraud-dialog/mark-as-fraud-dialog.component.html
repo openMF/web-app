@@ -1,0 +1,30 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<h1 mat-dialog-title>
+  @if (isMarking) {
+    {{ 'labels.heading.Mark as Fraud' | translate }}
+  } @else {
+    {{ 'labels.heading.Unmark as Fraud' | translate }}
+  }
+</h1>
+<div mat-dialog-content class="fraud-dialog-content">
+  @if (isMarking) {
+    <p>{{ 'labels.dialogContext.Mark this loan as fraud' | translate }}</p>
+    <p class="fraud-consequence">{{ 'labels.dialogContext.Fraud accounting consequence' | translate }}</p>
+  } @else {
+    <p>{{ 'labels.dialogContext.Unmark this loan as fraud' | translate }}</p>
+    <p class="fraud-consequence">{{ 'labels.dialogContext.Unmark fraud accounting consequence' | translate }}</p>
+  }
+</div>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
+  <button mat-raised-button color="warn" (click)="confirm()">
+    {{ 'labels.buttons.Confirm' | translate }}
+  </button>
+</mat-dialog-actions>

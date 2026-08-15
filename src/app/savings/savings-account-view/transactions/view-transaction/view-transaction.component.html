@@ -7,6 +7,149 @@
 -->
 
 <div class="container">
+  @if (savingsAccountData) {
+    <mat-card class="account-card m-b-20">
+      <mat-card-header class="header layout-column">
+        <mat-card-title-group class="header-title-group">
+          <div class="profile-image-container">
+            <div>
+              <img
+                mat-card-md-image
+                class="profile-image"
+                matTooltip="{{ 'tooltips.Savings Account' | translate }}"
+                [src]="'assets/images/savings_account_placeholder.png'"
+              />
+            </div>
+          </div>
+
+          <div class="mat-typography account-card-title">
+            <mat-card-title class="layout-row layout-lt-md-column">
+              <div class="flex-60">
+                <h3>
+                  @if (!savingsAccountData.subStatus?.block) {
+                    <i
+                      class="fa fa-stop"
+                      [ngClass]="savingsAccountData.status?.code | statusLookup"
+                      [matTooltip]="savingsAccountData.status?.value"
+                    ></i>
+                  }
+                  @if (savingsAccountData.subStatus?.block) {
+                    <i
+                      class="fa fa-stop"
+                      [ngClass]="savingsAccountData.subStatus?.value | statusLookup"
+                      [matTooltip]="savingsAccountData.subStatus?.value"
+                    ></i>
+                  }
+                </h3>
+                <span class="product-row">
+                  <span class="m-r-5">{{ 'labels.inputs.Savings Product' | translate }} :</span>
+                  <span class="m-r-5">
+                    <mifosx-long-text textValue="{{ savingsAccountData.savingsProductName }}"></mifosx-long-text>
+                  </span>
+                </span>
+                <span class="account-number-row">
+                  <span class="m-r-5">{{ 'labels.inputs.Account Number' | translate }} :</span>
+                  <span class="m-r-5">
+                    <mifosx-account-number
+                      accountNo="{{ savingsAccountData.accountNo }}"
+                      display="left"
+                    ></mifosx-account-number>
+                  </span>
+                </span>
+                @if (savingsAccountData.externalId) {
+                  <span class="external-id-row">
+                    <span class="m-r-5">{{ 'labels.inputs.External Id' | translate }} :</span>
+                    <span>{{ savingsAccountData.externalId }}</span>
+                  </span>
+                }
+                <span class="account-overview">
+                  {{ 'labels.text.' + entityType | translate }} {{ 'labels.inputs.name' | translate }}:
+                  {{ savingsAccountData.clientName || savingsAccountData.groupName }}
+                  @if (savingsAccountData.clientAccountNo) {
+                    <span class="m-l-10">
+                      <mifosx-account-number
+                        accountNo="{{ savingsAccountData.clientAccountNo }}"
+                      ></mifosx-account-number>
+                    </span>
+                  }
+                </span>
+              </div>
+
+              @if (!savingsAccountData.status?.rejected && !savingsAccountData.status?.submittedAndPendingApproval) {
+                <div class="flex-30">
+                  <h3>{{ 'labels.heading.Account Overview' | translate }}</h3>
+                  <table class="account-overview">
+                    <tbody>
+                      <tr>
+                        <td>{{ 'labels.inputs.Current Balance' | translate }}</td>
+                        <td class="r-amount">
+                          {{
+                            savingsAccountData.summary?.accountBalance
+                              | currency: currency?.code : 'symbol-narrow' : '1.2-2'
+                          }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>{{ 'labels.inputs.Available Balance' | translate }}</td>
+                        <td class="r-amount">
+                          {{
+                            savingsAccountData.summary?.availableBalance
+                              | currency: currency?.code : 'symbol-narrow' : '1.2-2'
+                          }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              }
+
+              <div class="flex-5">
+                <button
+                  mat-icon-button
+                  [matMenuTriggerFor]="accountMenu"
+                  [attr.aria-label]="'labels.text.Savings Account Actions' | translate"
+                  yPosition="below"
+                >
+                  <mat-icon matListIcon class="actions-menu">
+                    <fa-icon icon="bars" size="sm"></fa-icon>
+                  </mat-icon>
+                </button>
+              </div>
+            </mat-card-title>
+          </div>
+
+          <mat-menu #accountMenu="matMenu">
+            @for (item of buttonConfig?.singleButtons; track item) {
+              <button mat-menu-item *mifosxHasPermission="item.taskPermissionName" (click)="doAction(item.name)">
+                <mat-icon matListIcon>
+                  <fa-icon icon="{{ item.icon }}" size="sm"></fa-icon>
+                </mat-icon>
+                <span> {{ 'labels.menus.' + item.name | translate }} </span>
+              </button>
+            }
+
+            @if (buttonConfig?.options && !savingsAccountData.subStatus?.block) {
+              <button mat-menu-item [matMenuTriggerFor]="More">{{ 'labels.menus.More' | translate }}</button>
+              <mat-menu #More="matMenu">
+                @for (option of buttonConfig?.options; track option) {
+                  <span>
+                    <button
+                      mat-menu-item
+                      *mifosxHasPermission="option.taskPermissionName"
+                      (click)="doAction(option.name)"
+                    >
+                      {{ 'labels.menus.' + option.name | translate }}
+                    </button>
+                  </span>
+                }
+              </mat-menu>
+            }
+          </mat-menu>
+        </mat-card-title-group>
+      </mat-card-header>
+    </mat-card>
+  }
+
   <nav mat-tab-nav-bar class="navigation-tabs" [tabPanel]="tabPanel">
     <a
       mat-tab-link

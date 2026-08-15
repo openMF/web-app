@@ -8,7 +8,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { describe, it, expect, jest, beforeEach } from '@jest/globals';
+import { describe, it, expect, jest, beforeEach, afterEach } from '@jest/globals';
 import * as L from 'leaflet';
 
 import { AddressLocationMapComponent } from './address-location-map.component';
@@ -19,6 +19,9 @@ const mockMapInvalidateSize = jest.fn();
 const mockMarkerSetLatLng = jest.fn();
 const mockTileLayerAddTo = jest.fn().mockReturnThis();
 let mockTileErrorHandler: (() => void) | undefined;
+const mockResizeObserve = jest.fn();
+const mockResizeDisconnect = jest.fn();
+let mockResizeCallback: ResizeObserverCallback | undefined;
 const mockTileLayerOn = jest.fn().mockImplementation((_event: string, handler: () => void) => {
   mockTileErrorHandler = handler;
   return {
@@ -48,10 +51,20 @@ jest.mock('leaflet', () => ({
 describe('AddressLocationMapComponent', () => {
   let component: AddressLocationMapComponent;
   let fixture: ComponentFixture<AddressLocationMapComponent>;
+  let originalResizeObserver: typeof ResizeObserver | undefined;
 
   beforeEach(async () => {
     jest.clearAllMocks();
     mockTileErrorHandler = undefined;
+    mockResizeCallback = undefined;
+    originalResizeObserver = globalThis.ResizeObserver;
+    globalThis.ResizeObserver = jest.fn().mockImplementation((callback: ResizeObserverCallback) => {
+      mockResizeCallback = callback;
+      return {
+        observe: mockResizeObserve,
+        disconnect: mockResizeDisconnect
+      };
+    }) as unknown as typeof ResizeObserver;
 
     await TestBed.configureTestingModule({
       imports: [
@@ -62,6 +75,11 @@ describe('AddressLocationMapComponent', () => {
 
     fixture = TestBed.createComponent(AddressLocationMapComponent);
     component = fixture.componentInstance;
+  });
+
+  afterEach(() => {
+    globalThis.ResizeObserver = originalResizeObserver as typeof ResizeObserver;
+    jest.useRealTimers();
   });
 
   it('should initialize a map for valid coordinates', () => {
@@ -79,6 +97,17 @@ describe('AddressLocationMapComponent', () => {
       ],
       expect.any(Object)
     );
+  });
+
+  it('should refresh map sizing after the view and dialog animations settle', () => {
+    jest.useFakeTimers();
+    component.latitude = 12.9716;
+    component.longitude = 77.5946;
+
+    fixture.detectChanges();
+    jest.runOnlyPendingTimers();
+
+    expect(mockMapInvalidateSize).toHaveBeenCalledTimes(2);
   });
 
   it('should not initialize without valid coordinates', () => {
@@ -99,6 +128,24 @@ describe('AddressLocationMapComponent', () => {
     component.ngOnDestroy();
 
     expect(mockMapRemove).toHaveBeenCalledTimes(1);
+    expect(mockResizeDisconnect).toHaveBeenCalled();
+  });
+
+  it('should refresh the map when the container size changes', () => {
+    jest.useFakeTimers();
+    component.latitude = 12.9716;
+    component.longitude = 77.5946;
+
+    fixture.detectChanges();
+
+    expect(mockResizeObserve).toHaveBeenCalledWith(fixture.nativeElement.querySelector('.map-container'));
+
+    jest.runOnlyPendingTimers();
+    mockMapInvalidateSize.mockClear();
+    mockResizeCallback?.([] as ResizeObserverEntry[], {} as ResizeObserver);
+    jest.runOnlyPendingTimers();
+
+    expect(mockMapInvalidateSize).toHaveBeenCalledTimes(2);
   });
 
   it('should not initialize duplicate map instances', () => {
@@ -115,6 +162,19 @@ describe('AddressLocationMapComponent', () => {
       13,
       78
     ]);
+  });
+
+  it('should remove an existing map when coordinates become invalid', () => {
+    component.latitude = 12.9716;
+    component.longitude = 77.5946;
+    fixture.detectChanges();
+
+    fixture.componentRef.setInput('latitude', '');
+    fixture.componentRef.setInput('longitude', 78);
+    fixture.detectChanges();
+
+    expect(mockMapRemove).toHaveBeenCalledTimes(1);
+    expect(fixture.nativeElement.querySelector('.address-location-map')).toBeNull();
   });
 
   it('should preserve zero values as valid coordinates', () => {

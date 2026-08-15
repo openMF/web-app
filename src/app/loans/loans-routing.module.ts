@@ -171,7 +171,17 @@ const routes: Routes = [
             component: LoanBreachScheduleTabComponent,
             data: { title: 'Breach Schedule', breadcrumb: 'Breach Schedule', routeParamBreadcrumb: false },
             resolve: {
-              breachSchedule: LoanBreachScheduleResolver
+              breachSchedule: LoanBreachScheduleResolver,
+              loanBreachActions: LoanBreachActionsResolver
+            }
+          },
+          {
+            path: 'breach-actions',
+            component: LoanBreachActionsTabComponent,
+            data: { title: 'Breach Actions', breadcrumb: 'Breach Actions', routeParamBreadcrumb: false },
+            resolve: {
+              loanBreachActions: LoanBreachActionsResolver,
+              loanNearBreachActions: LoanNearBreachActionsResolver
             }
           },
           {

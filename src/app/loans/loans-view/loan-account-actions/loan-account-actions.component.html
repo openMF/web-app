@@ -97,7 +97,11 @@
   <mifosx-edit-repayment-schedule></mifosx-edit-repayment-schedule>
 }
 @if (actions['Charge-Off']) {
-  <mifosx-charge-off [dataObject]="actionButtonData"></mifosx-charge-off>
+  @if (loanProductService.isWorkingCapital) {
+    <mifosx-wc-charge-off [dataObject]="actionButtonData"></mifosx-wc-charge-off>
+  } @else {
+    <mifosx-charge-off [dataObject]="actionButtonData"></mifosx-charge-off>
+  }
 }
 @if (actions['Sell Loan'] || actions['Buy Back Loan']) {
   <mifosx-asset-transfer-loan></mifosx-asset-transfer-loan>

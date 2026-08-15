@@ -29,7 +29,7 @@ import { LoansService } from 'app/loans/loans.service';
 import { SavingsService } from 'app/savings/savings.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { DocumentPreviewService } from 'app/shared/services/document-preview.service';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -112,6 +112,9 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
   }
 
   deleteDocument(documentId: string, name: string): void {
+    if (!this.isValidDocumentId(documentId)) {
+      return;
+    }
     const deleteDocumentDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `Document: ${name}` }
     });
@@ -129,7 +132,7 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
   }
 
   isPreviewable(document: any): boolean {
-    return this.documentPreviewService.isPreviewable(document);
+    return this.isValidDocumentId(document?.id) && this.documentPreviewService.isPreviewable(document);
   }
 
   async openPreview(document: any): Promise<void> {
@@ -192,6 +195,9 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
   }
 
   private getDownloadObservable(documentId: string): Observable<Blob> {
+    if (!this.isValidDocumentId(documentId)) {
+      return throwError(() => new Error('Invalid document id.'));
+    }
     if (this.entityType === 'savings') {
       return this.savingsService.downloadSavingsDocument(this.entityId, documentId);
     }
@@ -216,7 +222,7 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
   }
 
   private setThumbnail(document: any): void {
-    if (!this.documentPreviewService.isPreviewable(document)) {
+    if (!this.isPreviewable(document)) {
       return;
     }
     this.documentPreviewService
@@ -234,5 +240,10 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
       return;
     }
     this.entityDocuments.forEach((doc: any) => this.setThumbnail(doc));
+  }
+
+  private isValidDocumentId(documentId: string | number | null | undefined): boolean {
+    const parsedDocumentId = Number(documentId);
+    return Number.isFinite(parsedDocumentId) && parsedDocumentId > 0;
   }
 }

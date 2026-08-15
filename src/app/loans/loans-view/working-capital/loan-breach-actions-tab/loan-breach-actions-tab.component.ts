@@ -6,7 +6,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, computed, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  OnInit,
+  computed,
+  inject,
+  signal
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
@@ -25,6 +34,7 @@ import {
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TranslateService } from '@ngx-translate/core';
 import { Dates } from 'app/core/utils/dates';
+import { LoanBreachActionResetDialogComponent } from 'app/loans/custom-dialog/loan-breach-action-reset-dialog/loan-breach-action-reset-dialog.component';
 import { LoanDelinquencyActionDialogComponent } from 'app/loans/custom-dialog/loan-delinquency-action-dialog/loan-delinquency-action-dialog.component';
 import { LoansService } from 'app/loans/loans.service';
 import { LoanDelinquencyAction } from 'app/loans/models/loan-account.model';
@@ -35,9 +45,22 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { LoanProductBaseComponent } from 'app/products/loan-products/common/loan-product-base.component';
 import {
   WorkingCapitalBreachAction,
+  WorkingCapitalBreachToggleRequest,
   WorkingCapitalNearBreachActions
 } from 'app/loans/models/working-capital/working-capital-loan-account.model';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
+import { ErrorHandlerService } from 'app/core/error-handler/error-handler.service';
+import { AlertService } from 'app/core/alert/alert.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import {
+  BreachToggleDialogComponent,
+  BreachToggleDialogData,
+  BreachToggleDialogResult
+} from '../loan-account-actions/breach-toggle-dialog/breach-toggle-dialog.component';
+import { resolveBreachErrorKey } from '../breach-error-messages';
+import { findActiveBreachDisable } from '../breach-evaluation';
 
 type BreachActionStatus = 'active' | 'scheduled' | 'expired';
 type BreachActionFilter = 'all' | BreachActionStatus;
@@ -49,12 +72,13 @@ interface BreachActionRow {
   endDate: number[];
   startDateObj: Date;
   endDateObj: Date | null;
+  /** Whether the action type defines an end date at all (RESUME and RESCHEDULE do not) */
+  hasEndDate: boolean;
   status: BreachActionStatus;
   statusLabelKey: string;
   isOngoing: boolean;
   isResumedPause: boolean;
   durationDays: number;
-  label: string;
 }
 
 interface TimelineBar {
@@ -99,6 +123,9 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
   private dateUtils = inject(Dates);
   private settingsService = inject(SettingsService);
   private translateService = inject(TranslateService);
+  private errorHandler = inject(ErrorHandlerService);
+  private alertService = inject(AlertService);
+  private changeDetectorRef = inject(ChangeDetectorRef);
   dialog = inject(MatDialog);
 
   // Pause dashboard state
@@ -131,17 +158,30 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
 
   rows = computed<BreachActionRow[]>(() => {
     const businessDate = this.settingsService.businessDate;
-    return this.breachActions().map((item, index) => {
-      const isResumeAction = item.action === 'RESUME';
+    return this.breachActions().map((item) => {
+      // RESUME and ENABLE mark a moment rather than a window.
+      const isPointInTime = item.action === 'RESUME' || item.action === 'ENABLE';
+      const isRescheduleAction = item.action === 'RESCHEDULE';
       const isResumedPause = item.action === 'PAUSE' && !!item.effectiveEndDate;
       const start = this.dateUtils.parseDate(item.startDate);
-      const end = isResumeAction ? null : this.dateUtils.parseDate(item.effectiveEndDate ?? item.endDate);
+      const rawEnd = item.effectiveEndDate ?? item.endDate;
+      // Any action without an end date is an open window: an open DISABLE, but also
+      // a RESCHEDULE, which never carries one. Parsing the missing value would yield
+      // today for an absent field and an invalid date for an explicit null, and the
+      // resulting NaN propagates through the status and the duration bars.
+      const end = isPointInTime || !rawEnd ? null : this.dateUtils.parseDate(rawEnd);
       const reference = end ?? businessDate;
-      const durationDays = Math.max(1, Math.round((reference.getTime() - start.getTime()) / MS_PER_DAY));
+      // Both boundary dates count: a pause from Jul 1st to Jul 16th lasts 16 days, not 15.
+      // A pause closed by a RESUME is the exception: the loan is already active on the resume
+      // date, so that day is not a paused day and must not be added.
+      const elapsedDays = Math.round((reference.getTime() - start.getTime()) / MS_PER_DAY);
+      const durationDays = Math.max(1, isResumedPause ? elapsedDays : elapsedDays + 1);
 
       let status: BreachActionStatus;
-      if (isResumeAction) {
+      if (isPointInTime) {
         status = 'active';
+      } else if (!end) {
+        status = start.getTime() <= businessDate.getTime() ? 'active' : 'scheduled';
       } else if (start.getTime() < businessDate.getTime() && end.getTime() < businessDate.getTime()) {
         status = 'expired';
       } else if (start.getTime() > businessDate.getTime() && end.getTime() > businessDate.getTime()) {
@@ -159,12 +199,12 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
         endDate: item.endDate,
         startDateObj: start,
         endDateObj: end,
+        hasEndDate: !isPointInTime && !isRescheduleAction,
         status,
         statusLabelKey: this.statusKey(status),
         isOngoing: !end && status === 'active',
         isResumedPause: isResumedPause,
-        durationDays,
-        label: `P${index + 1}`
+        durationDays
       };
     });
   });
@@ -205,6 +245,14 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
 
   hasPauseActiveToday = computed<boolean>(() => this.rows().some((r) => r.action === 'PAUSE' && r.status === 'active'));
 
+  /** DISABLE window covering the business date, if any. */
+  activeBreachDisable = computed<BreachActionRow | null>(() =>
+    findActiveBreachDisable(this.rows(), this.settingsService.businessDate)
+  );
+
+  /** True while breach evaluation is suspended for this loan. */
+  breachEvaluationDisabled = computed<boolean>(() => this.activeBreachDisable() !== null);
+
   timelineYear = computed<number>(() => {
     const rows = this.rows();
     if (rows.length === 0) return new Date().getFullYear();
@@ -221,20 +269,23 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
 
     return this.rows()
       .filter((row) => row.action === 'PAUSE')
-      .map((row) => {
+      .map((row, index) => {
         const endRef = row.endDateObj ?? today;
         const startDay = this.clamp(Math.floor((row.startDateObj.getTime() - yearStart) / MS_PER_DAY), 0, daysInYear);
         const endDay = this.clamp(Math.floor((endRef.getTime() - yearStart) / MS_PER_DAY), 0, daysInYear);
         const x = TIMELINE_PADDING_LEFT + startDay * pxPerDay;
         const width = Math.max(8, (endDay - startDay) * pxPerDay);
-        const tooltip = `${row.label} · ${this.shortDate(row.startDateObj)} → ${row.endDateObj ? this.shortDate(row.endDateObj) : ongoingLabel} (${row.durationDays}d)`;
+        // The lane charts pauses only, so it numbers them consecutively: the index
+        // within the full action list would skip numbers on every non-pause action.
+        const label = `P${index + 1}`;
+        const endLabel = row.endDateObj ? this.shortDate(row.endDateObj) : ongoingLabel;
         return {
-          label: row.label,
+          label,
           status: row.status,
           x,
           width,
           midX: x + width / 2,
-          tooltip
+          tooltip: `${label} · ${this.shortDate(row.startDateObj)} → ${endLabel} (${row.durationDays}d)`
         };
       });
   });
@@ -301,6 +352,15 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
     return this.loanProductService.isWorkingCapital && this.loanDetails?.nearBreach != null;
   }
 
+  /**
+   * Whether disabling or enabling breach evaluation applies at all. The backend
+   * rejects the action with loan.is.not.active or no.breach.configuration, so
+   * both conditions are checked here instead of surfacing an avoidable error.
+   */
+  get breachToggleAvailable(): boolean {
+    return this.breachEnabled && this.loanDetails?.status?.active === true;
+  }
+
   loanAction(actionName: string): void {
     this.router.navigate(
       [
@@ -331,6 +391,17 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
       const startDate: Date = response.data.value.startDate;
       const endDate: Date = response.data.value.endDate;
       this.sendBreachAction(action, startDate, endDate);
+    });
+  }
+
+  createBreachActionReset(): void {
+    const dialogRef = this.dialog.open(LoanBreachActionResetDialogComponent, {
+      data: { action: 'reset' }
+    });
+    dialogRef.afterClosed().subscribe((response: { data: any }) => {
+      if (response?.data) {
+        this.sendBreachResetAction(!!response.data.value.restartPeriodFromResetDate);
+      }
     });
   }
 
@@ -383,11 +454,134 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
     });
   }
 
+  sendBreachResetAction(restartPeriodFromResetDate: boolean): void {
+    const payload = {
+      action: 'reset',
+      locale: this.locale,
+      dateFormat: this.dateFormat,
+      restartPeriodFromResetDate
+    };
+
+    this.loansService.createBreachAction(this.loanId, payload).subscribe(() => {
+      this.reload();
+    });
+  }
+
+  /**
+   * Opens the confirmation dialog and suspends or resumes breach evaluation.
+   *
+   * The action is derived from the current state so the two are never offered
+   * at the same time.
+   */
+  toggleBreachEvaluation(): void {
+    const action: 'disable' | 'enable' = this.breachEvaluationDisabled() ? 'enable' : 'disable';
+    const businessDate = this.settingsService.businessDate;
+    this.dialog
+      .open<BreachToggleDialogComponent, BreachToggleDialogData, BreachToggleDialogResult>(
+        BreachToggleDialogComponent,
+        {
+          data: { action, businessDate }
+        }
+      )
+      .afterClosed()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((result) => {
+        if (!result?.confirm) {
+          return;
+        }
+        // endDate is deliberately absent: the backend rejects it for both actions.
+        const payload: WorkingCapitalBreachToggleRequest = {
+          action,
+          startDate: this.dateUtils.formatDate(businessDate, this.dateFormat),
+          dateFormat: this.dateFormat,
+          locale: this.locale
+        };
+        this.loansService
+          .toggleWorkingCapitalBreachEvaluation(this.loanId, payload)
+          .pipe(
+            catchError((error) => this.handleBreachError(error)),
+            takeUntilDestroyed(this.destroyRef)
+          )
+          .subscribe({
+            next: () => this.refreshBreachData(),
+            // Already surfaced by the error handler.
+            error: () => undefined
+          });
+      });
+  }
+
+  /**
+   * Reloads the breach actions and the breach schedule after a successful
+   * toggle, so the history, the disabled badge and the schedule all reflect the
+   * recalculation the backend performs on enable.
+   *
+   * The breach and near-breach result lists are reloaded too: they arrive from
+   * the route resolver, which does not re-run on a toggle, so without this they
+   * would keep showing the evaluation from before the action.
+   */
+  private refreshBreachData(): void {
+    this.loansService
+      .getBreachActions(this.loanId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((breachActions: LoanDelinquencyAction[]) => {
+        this.breachActionsList = (breachActions as WorkingCapitalBreachAction[]) || [];
+        this.setBreachActions(breachActions);
+        // breachActionsList is a plain field, so OnPush needs to be told it changed.
+        this.changeDetectorRef.markForCheck();
+      });
+    this.loansService
+      .getWorkingCapitalLoanNearBreachActions(this.loanId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((nearBreachActions: WorkingCapitalNearBreachActions[]) => {
+        this.nearBreachActions = nearBreachActions || [];
+        this.changeDetectorRef.markForCheck();
+      });
+    this.loansService
+      .getWorkingCapitalLoanBreachSchedule(this.loanId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe();
+  }
+
+  /**
+   * Reports a breach failure.
+   *
+   * Known validation codes become a translated business rule alert; anything
+   * else falls back to the shared HTTP handler, which already covers
+   * connectivity, authorisation and server errors.
+   * @param error Failed HTTP response
+   */
+  private handleBreachError(error: HttpErrorResponse): Observable<never> {
+    const key = resolveBreachErrorKey(error);
+    if (!key) {
+      return this.errorHandler.handleError(error, 'Breach Evaluation');
+    }
+    this.alertService.alert({
+      type: this.translateService.instant('errors.loans.businessRule'),
+      message: this.translateService.instant(key)
+    });
+    return throwError(() => error);
+  }
+
   setBreachActions(breachActions: LoanDelinquencyAction[]): void {
     const sorted = [...(breachActions || [])].sort(
       (a, b) => this.dateUtils.parseDate(a.startDate).getTime() - this.dateUtils.parseDate(b.startDate).getTime()
     );
     this.breachActions.set(sorted);
+  }
+
+  /** Icon representing a breach action type in the history table. */
+  actionIcon(action: string): string {
+    switch (action) {
+      case 'RESUME':
+      case 'ENABLE':
+        return 'play';
+      case 'RESCHEDULE':
+        return 'calendar';
+      case 'DISABLE':
+        return 'ban';
+      default:
+        return 'pause';
+    }
   }
 
   durationBarWidth(row: BreachActionRow): number {

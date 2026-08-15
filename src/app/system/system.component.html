@@ -467,6 +467,40 @@
             </div>
           </mat-list-item>
 
+          <mat-list-item [routerLink]="['theme']" *mifosxHasPermission="'READ_CONFIGURATION'">
+            <div class="menu-list-item-content">
+              <div class="menu-left-section" [routerLink]="['theme']">
+                <mat-icon>
+                  <fa-icon icon="fill-drip" size="sm"></fa-icon>
+                </mat-icon>
+                <div matLine>
+                  {{ 'labels.heading.Theme' | translate }}
+                  @if (arrowBooleans[17]) {
+                    <p matLine [routerLink]="['theme']" class="menu-explanation">
+                      {{ 'labels.text.Set the primary color used across this tenant' | translate }}
+                    </p>
+                  }
+                </div>
+              </div>
+              <div class="menu-right-section">
+                @if (!arrowBooleans[17]) {
+                  <fa-icon
+                    (click)="arrowBooleansToggle(17); $event.stopPropagation()"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                }
+                @if (arrowBooleans[17]) {
+                  <fa-icon
+                    (click)="arrowBooleansToggle(17); $event.stopPropagation()"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
+                }
+              </div>
+            </div>
+          </mat-list-item>
+
           <mat-list-item [routerLink]="['account-number-preferences']">
             <div class="menu-list-item-content">
               <div class="menu-left-section" [routerLink]="['account-number-preferences']">

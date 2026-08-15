@@ -22,6 +22,8 @@ import { BreachSchedule } from './models/working-capital-loan-account.model';
 import {
   WorkingCapitalBreachAction,
   WorkingCapitalBreachActionRequest,
+  WorkingCapitalMarkAsFraudRequest,
+  WorkingCapitalBreachToggleRequest,
   WorkingCapitalNearBreachActionRequest,
   WorkingCapitalNearBreachActions
 } from './models/working-capital/working-capital-loan-account.model';
@@ -190,6 +192,20 @@ export class LoansService {
   }
 
   createBreachAction(loanId: string, payload: any) {
+    return this.http.post(`/working-capital-loans/${loanId}/breach-actions`, payload);
+  }
+
+  /**
+   * Suspends or resumes breach evaluation for a Working Capital loan.
+   *
+   * Shares the breach-actions resource with pause and resume, but the payload
+   * carries no endDate: disable opens an open-ended window and enable closes
+   * the one currently open.
+   * @param {string} loanId Loan Id
+   * @param {WorkingCapitalBreachToggleRequest} payload Action and business date
+   * @returns {Observable<any>}
+   */
+  toggleWorkingCapitalBreachEvaluation(loanId: string, payload: WorkingCapitalBreachToggleRequest): Observable<any> {
     return this.http.post(`/working-capital-loans/${loanId}/breach-actions`, payload);
   }
 
@@ -465,6 +481,21 @@ export class LoansService {
     return this.http.post(`/working-capital-loans/${loanId}`, data, { params: httpParams });
   }
 
+  /**
+   * Marks or unmarks a Working Capital loan as fraud.
+   *
+   * Uses PUT on a dedicated resource rather than the transactions command
+   * endpoint, and sends `fraud` as the only parameter: the backend rejects any
+   * extra field, including the locale and dateFormat the other actions send.
+   * @param {string} loanId Loan Id
+   * @param {boolean} fraud Target value of the fraud flag
+   * @returns {Observable<any>}
+   */
+  markWorkingCapitalLoanAsFraud(loanId: string, fraud: boolean): Observable<any> {
+    const payload: WorkingCapitalMarkAsFraudRequest = { fraud };
+    return this.http.put(`/working-capital-loans/${loanId}/mark-as-fraud`, payload);
+  }
+
   applyWorkingCapitalLoanActionCommand(
     loanId: string,
     data: any,
@@ -668,6 +699,16 @@ export class LoansService {
   getWorkingCapitalLoanActionTemplate(loanId: string, actionName: string): Observable<any> {
     const httpParams = new HttpParams().set('templateType', actionName);
     return this.http.get(`/working-capital-loans/${loanId}/template`, { params: httpParams });
+  }
+
+  getWorkingCapitalLoanPayoutTemplate(loanId: string, actionName: string): Observable<any> {
+    const httpParams = new HttpParams().set('templateType', actionName);
+    return this.http.get(`/workingcapitalloans/${loanId}/template`, { params: httpParams });
+  }
+
+  getWorkingCapitalLoanTransactionTemplate(loanId: string, actionName: string): Observable<any> {
+    const httpParams = new HttpParams().set('command', actionName);
+    return this.http.get(`/working-capital-loans/${loanId}/transactions/template`, { params: httpParams });
   }
 
   guarantorAccountResource(loanId: string, clientId: any): Observable<any> {

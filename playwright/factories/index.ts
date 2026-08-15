@@ -17,13 +17,82 @@
  * The barrel keeps spec files insulated from factory file moves and lets
  * the React counterpart export an identically-shaped module — making the
  * cross-framework portability swap a path-only change.
+ *
+ * Two flavours of factory live behind this barrel, and the distinction
+ * matters:
+ *
+ *  - **API factories** (`client.factory.ts`) hit Fineract REST, return
+ *    a real `resourceId`, and register their own teardown on the
+ *    per-test `CleanupGuard`. Use these to arrange preconditions.
+ *  - **Payload builders** (`client.ts`) are pure and never touch the
+ *    network. They produce form-shaped data for driving a page object
+ *    through the UI.
+ *
+ * Both modules previously exported a function called `createTestClient`
+ * with incompatible signatures, and only the pure builder was reachable
+ * through this barrel — so `import { createTestClient } from '../../factories'`
+ * and `import { createTestClient } from '../../factories/client.factory'`
+ * silently resolved to different functions. The pure builder is now
+ * re-exported as `buildTestClientPayload` to make the distinction
+ * explicit at the import site.
  */
+
+// ── API factories (network + cleanup registration) ─────────────────
 
 export {
   createTestClient,
+  createActiveTestClient,
+  DEFAULT_TEST_CLIENT_LASTNAME,
+  DEFAULT_TEST_CLIENT_SUBMITTED_ON_DATE,
+  DEFAULT_TEST_CLIENT_ACTIVATION_DATE,
+  DEFAULT_ACCOUNT_OPENING_DATE,
+  type CreateTestClientOverrides,
+  type CreateActiveTestClientOverrides
+} from './client.factory';
+
+export {
+  createTestLoan,
+  createApprovedLoan,
+  createActiveLoan,
+  E2E_LOAN_PRODUCT_NAME,
+  type CreateTestLoanOverrides
+} from './loan.factory';
+
+export {
+  createTestSavingsAccount,
+  createApprovedSavingsAccount,
+  createActiveSavingsAccount,
+  E2E_SAVINGS_PRODUCT_NAME,
+  type CreateTestSavingsAccountOverrides
+} from './savings.factory';
+
+export {
+  createTestClientCharge,
+  ensureClientChargeDefinition,
+  E2E_CHARGE_NAMES,
+  CHARGE_TIME_TYPE,
+  DEFAULT_CHARGE_AMOUNT,
+  type TestClientCharge,
+  type CreateTestClientChargeOverrides
+} from './charge.factory';
+
+// `createTestGroup` produces a *pending*, memberless group precisely so
+// its registered deleter can succeed. Tests that activate the group or
+// attach members are opting into a teardown failure — expected, and
+// recorded rather than thrown.
+export { createTestGroup, DEFAULT_TEST_GROUP_SUBMITTED_ON_DATE, type CreateTestGroupOverrides } from './group.factory';
+
+// ── Pure payload builders (no network) ─────────────────────────────
+
+export {
+  createTestClient as buildTestClientPayload,
   createSeededClient,
   type TestClientPayload,
   type ClientState,
-  type CreateTestClientOverrides,
+  type CreateTestClientOverrides as BuildTestClientPayloadOverrides,
   type SeededTestClient
 } from './client';
+
+// ── Shared resolvers ───────────────────────────────────────────────
+
+export { resolveDefaultOfficeId, resolveProductId, FIRST_OFFICE_CACHE_KEY } from './_shared';

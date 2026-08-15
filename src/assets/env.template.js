@@ -43,7 +43,8 @@
   // Display or not the Server Selector
   window['env']['allowServerSwitch'] = '$MIFOS_ALLOW_SERVER_SWITCH_SELECTOR';
 
-  // Display or not the BackEnd Info
+  // Display or not the BackEnd Info in the footer and the Login view.
+  // Regardless of this setting, it is always available in Admin > System > System Information
   window['env']['displayBackEndInfo'] = '$MIFOS_DISPLAY_BACKEND_INFO';
 
   // Show minimal production hero on login page
@@ -122,6 +123,8 @@
   // Mifos Copilot AI assistant
   // Set MIFOS_ENABLE_COPILOT=true to load the Copilot panel for this deployment (off by default)
   window['env']['enableCopilot'] = '$MIFOS_ENABLE_COPILOT';
+  // Base URL of the Copilot gateway, which holds the LLM key server-side and runs banking
+  // tools as the logged-in officer. Leave unset to use the built-in mock responses.
   window['env']['copilotMcpBaseUrl'] = '$MIFOS_COPILOT_MCP_BASE_URL';
 
   // Enable Role-Based Access Control (RBAC) for menu/button permissions

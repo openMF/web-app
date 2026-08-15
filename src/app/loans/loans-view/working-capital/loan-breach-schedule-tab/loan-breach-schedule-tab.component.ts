@@ -29,6 +29,12 @@ import { BreachSchedule } from 'app/loans/models/working-capital-loan-account.mo
 import { DateFormatPipe } from 'app/pipes/date-format.pipe';
 import { FormatNumberPipe } from 'app/pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import {
+  WorkingCapitalBalances,
+  WorkingCapitalBreachAction
+} from 'app/loans/models/working-capital/working-capital-loan-account.model';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { findActiveBreachDisable } from '../breach-evaluation';
 
 type Severity = 'mild' | 'moderate' | 'severe';
 
@@ -95,6 +101,7 @@ const MS_PER_DAY = 1000 * 60 * 60 * 24;
     MatHeaderRow,
     MatRowDef,
     MatRow,
+    FaIconComponent,
     DateFormatPipe,
     FormatNumberPipe
   ],
@@ -108,6 +115,11 @@ export class LoanBreachScheduleTabComponent implements OnInit {
 
   dataSource = new MatTableDataSource<BreachPeriodView>();
   currencyCode: string = '';
+  loanBalances: WorkingCapitalBalances | null = null;
+
+  /** True while a DISABLE window covers the business date; no evaluations are shown then. */
+  breachEvaluationDisabled = false;
+  breachDisabledSince: Date | null = null;
 
   readonly displayedColumns: string[] = [
     'periodNumber',
@@ -149,7 +161,21 @@ export class LoanBreachScheduleTabComponent implements OnInit {
   ngOnInit(): void {
     this.route.data
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data: { breachSchedule: BreachSchedule[] }) => {
+      .subscribe((data: { breachSchedule: BreachSchedule[]; loanBreachActions: WorkingCapitalBreachAction[] }) => {
+        const activeDisable = findActiveBreachDisable(
+          (data.loanBreachActions ?? []).map((action) => {
+            // An ENABLE closes the window through effectiveEndDate, mirroring the actions tab rows.
+            const rawEnd = action.effectiveEndDate ?? action.endDate;
+            return {
+              action: action.action,
+              startDateObj: this.toDate(action.startDate),
+              endDateObj: rawEnd ? this.toDate(rawEnd) : null
+            };
+          }),
+          this.settingsService.businessDate
+        );
+        this.breachEvaluationDisabled = activeDisable !== null;
+        this.breachDisabledSince = activeDisable?.startDateObj ?? null;
         this.processBreachPeriods(data.breachSchedule ?? []);
         this.dataSource.data = this.breachPeriods;
       });
@@ -157,10 +183,11 @@ export class LoanBreachScheduleTabComponent implements OnInit {
     if (this.route.parent) {
       this.route.parent.data
         .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe((data: { loanDetailsData: { currency?: { code: string } } }) => {
+        .subscribe((data: { loanDetailsData: { currency?: { code: string }; balance: WorkingCapitalBalances } }) => {
           if (data?.loanDetailsData?.currency?.code) {
             this.currencyCode = data.loanDetailsData.currency.code;
           }
+          this.loanBalances = data?.loanDetailsData.balance;
         });
     }
   }

@@ -68,11 +68,11 @@
   </div>
 
   @if (isLoading) {
-    <mat-progress-bar class="loading-bar" mode="indeterminate"></mat-progress-bar>
+    <mifosx-page-loader [message]="'labels.inputs.Loading clients' | translate"></mifosx-page-loader>
   }
 
   <!-- ── List ───────────────────────────────────────────────── -->
-  <div [hidden]="!existsClientsToFilter" class="list">
+  <div [hidden]="!existsClientsToFilter || isLoading" class="list">
     <div class="list-header">
       <span></span>
       <span></span>
