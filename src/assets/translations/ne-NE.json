@@ -2519,6 +2519,8 @@
         }
       },
       "Loading clients": "ग्राहकहरू लोड हुँदैछन्...",
+      "Loading datatables": "डेटा तालिकाहरू लोड हुँदैछन्...",
+      "Loading savings transactions": "बचत लेनदेनहरू लोड हुँदैछन्...",
       "Loading loans": "ऋणहरू लोड हुँदैछन्...",
       "Loan": "ऋण",
       "Loan Account": "ऋण खाता",

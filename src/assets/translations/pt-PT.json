@@ -2519,6 +2519,8 @@
         }
       },
       "Loading clients": "A carregar clientes...",
+      "Loading datatables": "A carregar tabelas de dados...",
+      "Loading savings transactions": "A carregar transações de poupança...",
       "Loading loans": "A carregar empréstimos...",
       "Loan": "Empréstimo",
       "Loan Account": "Conta de empréstimo",

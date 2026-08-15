@@ -2555,6 +2555,8 @@
       "List of Accounts": "List of Accounts",
       "Loading vendors...": "Loading vendors...",
       "Loading clients": "Loading clients...",
+      "Loading datatables": "Loading data tables...",
+      "Loading savings transactions": "Loading savings transactions...",
       "Loading loans": "Loading loans...",
       "Loan": "Loan",
       "Loan Account": "Loan Account",

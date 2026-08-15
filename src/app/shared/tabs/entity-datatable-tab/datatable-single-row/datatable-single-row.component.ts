@@ -38,6 +38,7 @@ import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
 import { PrettyPrintPipe } from '../../../../pipes/pretty-print.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { formatDatatableDisplayLabel } from '@pipes/datatable-display-label.pipe';
+import { PageLoaderComponent } from 'app/shared/page-loader/page-loader.component';
 
 @Component({
   selector: 'mifosx-datatable-single-row',
@@ -45,6 +46,7 @@ import { formatDatatableDisplayLabel } from '@pipes/datatable-display-label.pipe
   styleUrls: ['./datatable-single-row.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    PageLoaderComponent,
     FaIconComponent,
     MatDivider,
     MatCard,
@@ -73,6 +75,7 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
   @Input() entityId: string;
   @Input() entityType: string;
   datatableName: string;
+  isLoading = false;
 
   formatTabLabel(label: string): string {
     return formatDatatableDisplayLabel(label);
@@ -123,8 +126,11 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
         this.systemService
           .addEntityDatatableEntry(this.entityId, this.datatableName, dataTableEntryObject)
           .subscribe(() => {
+            this.isLoading = true;
+            this.changeDetectorRef.markForCheck();
             this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
               this.dataObject = dataObject;
+              this.isLoading = false;
               this.changeDetectorRef.markForCheck();
             });
           });
@@ -178,8 +184,11 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
         this.systemService
           .editEntityDatatableEntry(this.entityId, this.datatableName, dataTableEntryObject)
           .subscribe(() => {
+            this.isLoading = true;
+            this.changeDetectorRef.markForCheck();
             this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
               this.dataObject = dataObject;
+              this.isLoading = false;
               this.changeDetectorRef.markForCheck();
             });
           });
@@ -193,9 +202,12 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
     });
     deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
       if (response?.delete) {
+        this.isLoading = true;
+        this.changeDetectorRef.markForCheck();
         this.systemService.deleteDatatableContent(this.entityId, this.datatableName).subscribe(() => {
           this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
             this.dataObject = dataObject;
+            this.isLoading = false;
             this.changeDetectorRef.markForCheck();
           });
         });

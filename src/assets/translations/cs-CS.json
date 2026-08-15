@@ -2520,6 +2520,8 @@
         }
       },
       "Loading clients": "Načítání klientů...",
+      "Loading datatables": "Načítání datových tabulek...",
+      "Loading savings transactions": "Načítání spořicích transakcí...",
       "Loading loans": "Načítání půjček...",
       "Loan": "Půjčka",
       "Loan Account": "Úvěrový účet",

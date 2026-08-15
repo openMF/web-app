@@ -53,6 +53,7 @@ import { SystemService } from 'app/system/system.service';
 import * as _ from 'lodash';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { PageLoaderComponent } from 'app/shared/page-loader/page-loader.component';
 
 @Component({
   selector: 'mifosx-datatable-multi-row',
@@ -60,6 +61,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./datatable-multi-row.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    PageLoaderComponent,
     FaIconComponent,
     MatCard,
     MatCardContent,
@@ -221,6 +223,8 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
           );
         });
         dataTableEntryObject = { ...response.data.value, ...dataTableEntryObject };
+        this.isLoading = true;
+        this.changeDetectorRef.markForCheck();
         this.systemService
           .addEntityDatatableEntry(this.entityId, this.datatableName, dataTableEntryObject)
           .subscribe((result: any) => {
@@ -239,6 +243,8 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
     });
     deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
+        this.isLoading = true;
+        this.changeDetectorRef.markForCheck();
         this.systemService.deleteDatatableContent(this.entityId, this.datatableName).subscribe(() => {
           this.getData();
         });
@@ -259,6 +265,8 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
       if (response.delete) {
         this.isSelected = false;
         this.selection.selected.forEach((data) => {
+          this.isLoading = true;
+          this.changeDetectorRef.markForCheck();
           this.systemService.deleteDatatableEntry(this.entityId, data.row[0], this.datatableName).subscribe(() => {
             this.datatableData.data.forEach((item: any, index: any) => {
               if (item.row[0] === data.row[0]) {
@@ -270,6 +278,8 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
                 this.isSelected = this.selection.selected.length > 0;
               }
             });
+            this.isLoading = false;
+            this.changeDetectorRef.markForCheck();
           });
         });
       } else {

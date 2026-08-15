@@ -28,8 +28,12 @@
 
   <mat-divider></mat-divider>
 
+  @if (isLoading) {
+    <mifosx-page-loader [message]="'labels.inputs.Loading datatables' | translate"></mifosx-page-loader>
+  }
+
   @if (dataObject.data.length > 0) {
-    <mat-card class="data-display-card m-t-20">
+    <mat-card [hidden]="isLoading" class="data-display-card m-t-20">
       <mat-card-content>
         <div class="table-scroll-wrapper">
           <div class="data-grid">

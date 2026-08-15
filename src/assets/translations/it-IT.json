@@ -2520,6 +2520,8 @@
         }
       },
       "Loading clients": "Caricamento clienti...",
+      "Loading datatables": "Caricamento tabelle dati...",
+      "Loading savings transactions": "Caricamento transazioni di risparmio...",
       "Loading loans": "Caricamento prestiti...",
       "Loan": "Prestito",
       "Loan Account": "Conto di prestito",
