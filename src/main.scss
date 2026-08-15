@@ -23,6 +23,9 @@
 @use 'app/core/error-handler/error-handler.component';
 
 // Global Imports
+@import url('leaflet/dist/leaflet.css');
+@import url('leaflet.markercluster/dist/MarkerCluster.css');
+@import url('leaflet.markercluster/dist/MarkerCluster.Default.css');
 
 /* You can add global styles to this file, and also import other style files */
 
@@ -48,7 +51,7 @@
 }
 
 .custom-snackbar-top-right {
-  top: 48px !important;
+  top: 76px !important;
   right: 24px !important;
   left: auto !important;
   transform: none !important;

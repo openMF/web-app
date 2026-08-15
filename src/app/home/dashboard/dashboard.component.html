@@ -8,23 +8,11 @@
 
 <div class="container">
   <div class="dashboard-layout">
-    <mat-card class="search-card">
-      <mat-card-content>
-        <mat-form-field>
-          <mat-label>{{ 'labels.placeholders.Search Activity' | translate }}</mat-label>
-          <input matInput [matAutocomplete]="activitySearch" [formControl]="searchText" />
-        </mat-form-field>
-
-        <mat-autocomplete #activitySearch="matAutocomplete">
-          @for (activity of filteredActivities | async; track activity) {
-            <mat-option [routerLink]="activity.path">
-              <span>{{ activity.activity }}</span>
-            </mat-option>
-          }
-        </mat-autocomplete>
-      </mat-card-content>
-    </mat-card>
-
-    <mifosx-analytics-dashboard [dashboard]="dashboardDefinition" [offices]="offices"></mifosx-analytics-dashboard>
+    <mifosx-analytics-dashboard
+      [dashboard]="dashboardDefinition"
+      [offices]="offices"
+      [products]="products"
+      [clientGroups]="clientGroups"
+    ></mifosx-analytics-dashboard>
   </div>
 </div>

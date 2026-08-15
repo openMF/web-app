@@ -44,6 +44,9 @@
   // Show minimal production hero on login page
   window['env']['productionMode'] = '';
 
+  // Enable Global Dashboard feature
+  window['env']['enableGlobalDashboard'] = false;
+
   // Display or not the Tenant Selector
   window['env']['displayTenantSelector'] = '';
 

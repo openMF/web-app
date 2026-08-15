@@ -14,8 +14,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { activities } from '../activities';
-import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
-import { AsyncPipe } from '@angular/common';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { DashboardEngineComponent } from 'app/analytics/dashboard-engine/dashboard-engine.component';
 import { GLOBAL_ANALYTICS_DASHBOARD } from 'app/analytics/global-dashboard.config';
@@ -30,10 +28,7 @@ import { GLOBAL_ANALYTICS_DASHBOARD } from 'app/analytics/global-dashboard.confi
   styleUrls: ['./dashboard.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    MatAutocompleteTrigger,
-    MatAutocomplete,
-    DashboardEngineComponent,
-    AsyncPipe
+    DashboardEngineComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -51,10 +46,16 @@ export class DashboardComponent implements OnInit {
   dashboardDefinition = GLOBAL_ANALYTICS_DASHBOARD;
   /** Office options from resolver */
   offices: any[] = [];
+  /** Product options */
+  products: any[] = [];
+  /** Client group options */
+  clientGroups: any[] = [];
 
   constructor() {
-    this.route.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: { offices: any[] }) => {
+    this.route.data.subscribe((data: { offices: any[]; products?: any[]; clientGroups?: any[] }) => {
       this.offices = data.offices || [];
+      this.products = data.products || [];
+      this.clientGroups = data.clientGroups || [];
     });
   }
 

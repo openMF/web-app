@@ -20,13 +20,7 @@ export type McpStreamEventType = 'token' | 'tool_call' | 'action_card' | 'sugges
 
 /** Error codes defined by wire contract v1. */
 export type McpErrorCode =
-  | 'AUTH_EXPIRED'
-  | 'PERMISSION_DENIED'
-  | 'LLM_UNAVAILABLE'
-  | 'TOOL_FAILED'
-  | 'RATE_LIMITED'
-  | 'CANCELLED'
-  | 'INTERNAL';
+  'AUTH_EXPIRED' | 'PERMISSION_DENIED' | 'LLM_UNAVAILABLE' | 'TOOL_FAILED' | 'RATE_LIMITED' | 'CANCELLED' | 'INTERNAL';
 
 /**
  * A write action awaiting human confirmation. Constructed server-side from the

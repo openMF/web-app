@@ -6,14 +6,16 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<div class="layout-row align-end gap-2px responsive-column container m-b-20">
-  <div #buttonDashboard class="in-block">
-    <button mat-raised-button color="primary" [routerLink]="['/dashboard']">
-      <fa-icon icon="tachometer-alt" class="m-r-10"></fa-icon>
-      {{ 'labels.buttons.Dashboard' | translate }}
-    </button>
+@if (enableGlobalDashboard) {
+  <div class="layout-row align-end gap-2px responsive-column container m-b-20">
+    <div #buttonDashboard class="in-block">
+      <button mat-raised-button color="primary" [routerLink]="['/dashboard']">
+        <fa-icon icon="tachometer-alt" class="m-r-10"></fa-icon>
+        Global Dashboard
+      </button>
+    </div>
   </div>
-</div>
+}
 
 <div class="container">
   <mat-card>

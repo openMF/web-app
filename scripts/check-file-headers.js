@@ -64,6 +64,7 @@ const EXCLUDE_PATTERNS = [
   'version.js',
   'environment.ts',
   'environment.prod.ts',
+  '.env.ts',
   'polyfills.ts',
   'typings.d.ts',
   'global.d.ts',

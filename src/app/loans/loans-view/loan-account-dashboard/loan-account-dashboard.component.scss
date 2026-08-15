@@ -45,57 +45,92 @@
 }
 
 .metric-card {
-  background: rgb(255 255 255 / 95%);
-  border: none;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgb(0 0 0 / 15%);
-  transition: all 0.3s ease;
+  background: #fff;
+  border: 1px solid rgb(0 0 0 / 8%);
+  border-radius: 12px;
+  box-shadow: none;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgb(0 0 0 / 20%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgb(0 0 0 / 4%);
+  }
+
+  &.danger-card {
+    border-color: rgb(239 68 68 / 25%);
+    background-color: rgb(239 68 68 / 1%);
   }
 
   mat-card-content {
-    padding: 24px;
+    padding: 20px 24px;
+  }
+
+  .metric-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
   }
 
   .metric-label {
-    font-size: 12px;
-    color: var(--md-sys-color-on-surface-variant, #666);
-    margin-bottom: 8px;
+    font-size: 11px;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: #94a3b8;
+  }
+
+  .metric-icon {
+    font-size: 16px;
+    color: #94a3b8;
+
+    &.success-icon {
+      color: #10b981;
+    }
+
+    &.warning-icon {
+      color: #f59e0b;
+    }
+
+    &.danger-icon {
+      color: #ef4444;
+    }
   }
 
   .metric-value {
-    font-size: 32px;
-    font-weight: 700;
-    color: #1976d2;
-    margin-bottom: 12px;
+    font-size: 26px;
+    font-weight: 600;
+    color: #0f172a;
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 0;
 
     &.success {
-      color: #4caf50;
+      color: #10b981;
     }
 
     &.warning {
-      color: #ff9800;
+      color: #f59e0b;
+    }
+
+    &.danger {
+      color: #ef4444;
     }
   }
 
   .metric-progress {
     margin-top: 12px;
-    height: 8px;
-    background: linear-gradient(90deg, #e3f2fd 0%, #bbdefb 100%);
-    border-radius: 4px;
+    height: 6px;
+    background: #f1f5f9;
+    border-radius: 999px;
     overflow: hidden;
 
     .progress-bar {
       height: 100%;
-      background: linear-gradient(90deg, #4caf50 0%, #66bb6a 100%);
-      transition: width 0.6s ease;
-      box-shadow: 0 2px 8px rgb(76 175 80 / 30%);
+      background: #10b981;
+      border-radius: 999px;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
   }
 }
@@ -112,45 +147,112 @@
 }
 
 .chart-card {
-  background: rgb(255 255 255 / 95%);
-  border: none;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgb(0 0 0 / 15%);
+  background: #fff;
+  border: 1px solid rgb(0 0 0 / 8%);
+  border-radius: 12px;
+  box-shadow: none;
   overflow: hidden;
 
   mat-card-header {
-    padding: 20px 24px;
-    border-bottom: 1px solid #e0e0e0;
-    background: linear-gradient(135deg, #f5f5f5 0%, #fafafa 100%);
+    padding: 16px 24px;
+    border-bottom: 1px solid rgb(0 0 0 / 6%);
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
     mat-card-title {
-      font-size: 18px;
+      font-size: 15px;
       font-weight: 600;
-      color: #1976d2;
+      color: #0f172a;
       display: flex;
       align-items: center;
       gap: 10px;
       margin: 0;
 
       fa-icon {
-        color: #1976d2;
+        color: #64748b;
+      }
+    }
+  }
+
+  .chart-type-segmented-control {
+    display: inline-flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    overflow: hidden;
+    height: 32px;
+    padding: 2px;
+    gap: 2px;
+    flex-shrink: 0;
+
+    .segment-btn {
+      background: transparent;
+      border: none;
+      border-radius: 4px;
+      color: #64748b;
+      height: 26px;
+      min-width: 32px;
+      padding: 0 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s ease-in-out;
+
+      &:focus-visible {
+        outline: 2px solid #1976d2;
+        outline-offset: 2px;
+      }
+
+      .chart-symbol-svg {
+        stroke: currentcolor;
+        display: block;
+      }
+
+      .chart-symbol-icon {
+        font-size: 0.95rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      &:hover:not(.active) {
+        background: #f1f5f9;
+        color: #1e293b;
+      }
+
+      &.active {
+        background-color: #1976d2 !important;
+        color: #fff !important;
+
+        .chart-symbol-svg {
+          stroke: #fff !important;
+        }
+
+        .chart-symbol-icon {
+          color: #fff !important;
+        }
       }
     }
   }
 
   mat-card-content {
-    padding: 24px;
-    background: var(--md-sys-color-surface, white);
+    padding: 20px 24px;
+    background: #fff;
   }
 
   .chart-container {
     width: 100%;
-    height: 350px;
+    height: 300px;
     position: relative;
 
     canvas {
-      max-width: 100%;
-      height: auto !important;
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
     }
 
     .no-data-message {
@@ -162,6 +264,103 @@
       font-size: 14px;
       text-align: center;
       font-weight: 500;
+    }
+  }
+}
+
+:host-context(.dark-theme) {
+  .dashboard-header-card {
+    background: rgb(255 255 255 / 5%);
+
+    .header {
+      border-bottom: 1px solid rgb(255 255 255 / 10%);
+
+      h3 {
+        color: #fff;
+      }
+    }
+  }
+
+  .metric-card {
+    background: #1e2124;
+    border-color: rgb(255 255 255 / 8%);
+
+    &:hover {
+      box-shadow: 0 4px 16px rgb(0 0 0 / 40%);
+    }
+
+    &.danger-card {
+      border-color: rgb(239 68 68 / 40%);
+      background-color: rgb(239 68 68 / 5%);
+    }
+
+    .metric-value {
+      color: #fff;
+
+      &.success {
+        color: #34d399;
+      }
+
+      &.warning {
+        color: #fbbf24;
+      }
+
+      &.danger {
+        color: #f87171;
+      }
+    }
+
+    .metric-progress {
+      background: rgb(255 255 255 / 10%);
+    }
+  }
+
+  .chart-card {
+    background: #1e2124;
+    border-color: rgb(255 255 255 / 8%);
+
+    mat-card-header {
+      background: #25282c;
+      border-bottom: 1px solid rgb(255 255 255 / 8%);
+
+      mat-card-title {
+        color: #fff;
+
+        fa-icon {
+          color: #94a3b8;
+        }
+      }
+    }
+
+    .chart-type-segmented-control {
+      background: #25282c !important;
+      border-color: rgb(255 255 255 / 15%) !important;
+
+      .segment-btn {
+        color: #94a3b8 !important;
+
+        &:focus-visible {
+          outline-color: #60a5fa !important;
+        }
+
+        &:hover:not(.active) {
+          background: #373e48 !important;
+          color: #fff !important;
+        }
+
+        &.active {
+          background-color: #1976d2 !important;
+          color: #fff !important;
+        }
+      }
+    }
+
+    mat-card-content {
+      background: #1e2124;
+    }
+
+    .chart-container .no-data-message {
+      color: #64748b;
     }
   }
 }
