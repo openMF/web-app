@@ -15,12 +15,7 @@ const OPTIONAL_SLAB_BOUND_FIELDS = [
 ];
 
 type SlabRangeErrorType =
-  | 'gap'
-  | 'overlap'
-  | 'invalidRange'
-  | 'openEndedRange'
-  | 'missingAmountRangeFrom'
-  | 'periodTypeMismatch';
+  'gap' | 'overlap' | 'invalidRange' | 'openEndedRange' | 'missingAmountRangeFrom' | 'periodTypeMismatch';
 
 interface SlabRangeError {
   type: SlabRangeErrorType;

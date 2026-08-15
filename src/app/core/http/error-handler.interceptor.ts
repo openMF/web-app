@@ -124,8 +124,10 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
       }
     }
     const isClientImage404 = status === 404 && request.url.includes('/clients/') && request.url.includes('/images');
+    // Analytics dashboard reports that don't exist on this server are silently handled by the data service fallbacks
+    const isAnalyticsReport404 = status === 404 && request.url.includes('/runreports/');
 
-    if (!environment.production && !isClientImage404) {
+    if (!environment.production && !isClientImage404 && !isAnalyticsReport404) {
       log.error(`Request Error: ${errorMessage}`);
     }
 
@@ -155,7 +157,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
         message: errorMessage || this.translate.instant('errors.error.unauthorized.message')
       });
     } else if (status === 404) {
-      if (isClientImage404) {
+      if (isClientImage404 || isAnalyticsReport404) {
         return throwError(() => response);
       } else {
         this.alertService.alert({

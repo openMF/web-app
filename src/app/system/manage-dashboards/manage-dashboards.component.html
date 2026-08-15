@@ -1,0 +1,434 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<!-- Top Filter & Action Bar -->
+<div class="container m-b-15 top-action-bar">
+  <div class="action-bar-left">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic" class="compact-office-select">
+      <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
+      <mat-select [(ngModel)]="selectedOfficeId" (selectionChange)="fetchLiveInstitutionalData()">
+        @for (office of offices; track office.id) {
+          <mat-option [value]="office.id.toString()">{{ office.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="fetchLiveInstitutionalData(true)" [disabled]="isLoading">
+      <fa-icon icon="sync" class="m-r-10" [class.fa-spin]="isLoading"></fa-icon>
+      {{ 'labels.buttons.Refresh' | translate }}
+    </button>
+  </div>
+
+  <div class="auto-refresh-status-badge">
+    <fa-icon icon="clock" class="clock-icon"></fa-icon>
+    <span class="status-text">{{ 'labels.text.Auto-updated every 10 mins' | translate }}</span>
+    <span class="status-dot">·</span>
+    <span class="last-time"
+      >{{ 'labels.heading.Last Updated' | translate }}: <strong>{{ lastUpdatedTime }}</strong></span
+    >
+  </div>
+</div>
+
+<!-- Loading Bar -->
+@if (isLoading) {
+  <div class="container m-b-10">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+}
+
+<!-- Main Content Container -->
+<div class="container m-b-20 manage-dashboards-wrapper">
+  <mat-card class="dashboard-main-card mat-elevation-z2 p-0">
+    <mat-tab-group animationDuration="150ms" class="dashboard-tabs">
+      <!-- TAB 1: Institutional Operations Overview -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <fa-icon icon="chart-pie" class="tab-icon m-r-5"></fa-icon>
+          <span class="tab-label-text">{{ 'labels.heading.Institutional Operations Overview' | translate }}</span>
+        </ng-template>
+
+        <div class="tab-inner-content p-20">
+          <!-- 4 Top Business KPI Cards -->
+          <div class="kpi-grid m-b-20">
+            <!-- 1. Clients KPI -->
+            <mat-card class="kpi-card client-card mat-elevation-z1">
+              <div class="kpi-icon-badge client-badge">
+                <fa-icon icon="users"></fa-icon>
+              </div>
+              <div class="kpi-info">
+                <span class="kpi-label">{{ 'labels.heading.Total Clients' | translate }}</span>
+                <h3 class="kpi-value">{{ clientsKpi.total | number }}</h3>
+                <div class="kpi-sub-stats">
+                  <span class="sub-stat active-stat">
+                    <fa-icon icon="check-circle"></fa-icon> {{ clientsKpi.active | number }}
+                    {{ 'labels.heading.Active' | translate }} ({{ clientsKpi.activeRatio }}%)
+                  </span>
+                  <span class="sub-stat new-stat"
+                    >+{{ clientsKpi.newThisMonth }} {{ 'labels.heading.this month' | translate }}</span
+                  >
+                </div>
+              </div>
+            </mat-card>
+
+            <!-- 2. Loans KPI -->
+            <mat-card class="kpi-card loan-card mat-elevation-z1">
+              <div class="kpi-icon-badge loan-badge">
+                <fa-icon icon="hand-holding-usd"></fa-icon>
+              </div>
+              <div class="kpi-info">
+                <span class="kpi-label">{{ 'labels.heading.Active Loans Portfolio' | translate }}</span>
+                <h3 class="kpi-value">${{ loansKpi.totalOutstanding | number: '1.0-0' }}</h3>
+                <div class="kpi-sub-stats">
+                  <span class="sub-stat">
+                    <strong>{{ loansKpi.activeCount | number }}</strong>
+                    {{ 'labels.heading.Active Accounts' | translate }}
+                  </span>
+                  <span class="sub-stat avg-stat"
+                    >{{ 'labels.heading.Avg' | translate }}: ${{ loansKpi.avgLoanSize | number }}</span
+                  >
+                </div>
+              </div>
+            </mat-card>
+
+            <!-- 3. Deposits & Savings Portfolio KPI -->
+            <mat-card class="kpi-card savings-card mat-elevation-z1">
+              <div class="kpi-icon-badge savings-badge">
+                <fa-icon icon="piggy-bank"></fa-icon>
+              </div>
+              <div class="kpi-info">
+                <span class="kpi-label">{{ 'labels.heading.Total Deposits Balance' | translate }}</span>
+                <h3 class="kpi-value">${{ savingsKpi.totalBalance | number: '1.0-0' }}</h3>
+                <div class="kpi-sub-stats">
+                  <span
+                    class="sub-stat"
+                    [matTooltip]="
+                      savingsKpi.savingsCount +
+                      ' ' +
+                      ('labels.heading.Savings' | translate) +
+                      ' · ' +
+                      savingsKpi.fixedCount +
+                      ' ' +
+                      ('labels.heading.Fixed' | translate) +
+                      ' · ' +
+                      savingsKpi.recurringCount +
+                      ' ' +
+                      ('labels.heading.Recurring' | translate)
+                    "
+                  >
+                    <strong>{{ savingsKpi.activeCount | number }}</strong>
+                    {{ 'labels.heading.Active Accounts' | translate }}
+                  </span>
+                  <span class="sub-stat avg-stat"
+                    >{{ 'labels.heading.Avg' | translate }}: ${{ savingsKpi.avgBalance | number: '1.0-0' }}</span
+                  >
+                </div>
+              </div>
+            </mat-card>
+
+            <!-- 4. Shares KPI -->
+            <mat-card class="kpi-card shares-card mat-elevation-z1">
+              <div class="kpi-icon-badge shares-badge">
+                <fa-icon icon="chart-pie"></fa-icon>
+              </div>
+              <div class="kpi-info">
+                <span class="kpi-label">{{ 'labels.heading.Total Share Capital' | translate }}</span>
+                <h3 class="kpi-value">${{ sharesKpi.totalCapital | number: '1.0-0' }}</h3>
+                <div class="kpi-sub-stats">
+                  <span class="sub-stat">
+                    <strong>{{ sharesKpi.activeCount | number }}</strong>
+                    {{ 'labels.heading.Shareholders' | translate }}
+                  </span>
+                  <span class="sub-stat avg-stat"
+                    >{{ sharesKpi.totalSubscribed | number }} {{ 'labels.heading.Shares' | translate }}</span
+                  >
+                </div>
+              </div>
+            </mat-card>
+          </div>
+
+          <!-- Charts Grid: Transaction Execution Breakdown & Monthly Trend -->
+          <div class="charts-grid m-b-20">
+            <!-- Left: Executed Transaction Volume Breakdown -->
+            <mat-card class="chart-card mat-elevation-z1">
+              <div class="chart-card-header">
+                <div class="header-text-group">
+                  <h4 class="chart-title m-0">
+                    <fa-icon icon="receipt" class="m-r-5 text-primary"></fa-icon>
+                    {{ 'labels.heading.Executed Transactions Breakdown' | translate }}
+                  </h4>
+                  <p class="chart-subtitle text-muted m-t-5 m-b-0">
+                    {{
+                      'labels.text.Distribution of executed transaction volume across loans, deposits, repayments and shares.'
+                        | translate
+                    }}
+                  </p>
+                </div>
+                <div class="chart-type-segmented-control">
+                  <button
+                    type="button"
+                    class="segment-btn"
+                    [class.active]="txnChartType === 'doughnut'"
+                    (click)="changeTxnChartType('doughnut')"
+                    [matTooltip]="'labels.heading.Ring Chart' | translate"
+                  >
+                    <svg
+                      class="chart-symbol-svg"
+                      viewBox="0 0 24 24"
+                      width="16"
+                      height="16"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="3.5"
+                    >
+                      <circle cx="12" cy="12" r="7" />
+                    </svg>
+                  </button>
+                  <button
+                    type="button"
+                    class="segment-btn"
+                    [class.active]="txnChartType === 'pie'"
+                    (click)="changeTxnChartType('pie')"
+                    [matTooltip]="'labels.heading.Pie Chart' | translate"
+                  >
+                    <fa-icon icon="chart-pie" class="chart-symbol-icon"></fa-icon>
+                  </button>
+                </div>
+              </div>
+              <div class="chart-canvas-container doughnut-container m-t-10">
+                <canvas #transactionSplitCanvas></canvas>
+              </div>
+            </mat-card>
+
+            <!-- Right: Monthly Operational Trends -->
+            <mat-card class="chart-card mat-elevation-z1">
+              <div class="chart-card-header">
+                <div class="header-text-group">
+                  <h4 class="chart-title m-0">
+                    <fa-icon icon="chart-bar" class="m-r-5 text-primary"></fa-icon>
+                    {{ 'labels.heading.Monthly Operations & Growth Trend' | translate }}
+                  </h4>
+                  <p class="chart-subtitle text-muted m-t-5 m-b-0">
+                    {{
+                      'labels.text.Comparative monthly flow of disbursements, savings deposits and loan repayments.'
+                        | translate
+                    }}
+                  </p>
+                </div>
+                <div class="chart-type-segmented-control">
+                  <button
+                    type="button"
+                    class="segment-btn"
+                    [class.active]="trendChartType === 'bar'"
+                    (click)="changeTrendChartType('bar')"
+                    [matTooltip]="'labels.heading.Bar Chart' | translate"
+                  >
+                    <fa-icon icon="chart-bar" class="chart-symbol-icon"></fa-icon>
+                  </button>
+                  <button
+                    type="button"
+                    class="segment-btn"
+                    [class.active]="trendChartType === 'line'"
+                    (click)="changeTrendChartType('line')"
+                    [matTooltip]="'labels.heading.Line Trend' | translate"
+                  >
+                    <fa-icon icon="chart-line" class="chart-symbol-icon"></fa-icon>
+                  </button>
+                </div>
+              </div>
+              <div class="chart-canvas-container bar-container m-t-10">
+                <canvas #businessTrendCanvas></canvas>
+              </div>
+            </mat-card>
+          </div>
+
+          <!-- Executed Transaction Types Breakdown Table -->
+          <mat-card class="table-card mat-elevation-z1 p-0">
+            <div class="table-card-header p-15">
+              <h4 class="table-title m-0">
+                <fa-icon icon="exchange" class="m-r-5 text-primary"></fa-icon>
+                {{ 'labels.heading.Transaction Execution Summary by Type' | translate }}
+              </h4>
+            </div>
+
+            <div class="table-responsive">
+              <table class="mifos-table">
+                <thead>
+                  <tr>
+                    <th>{{ 'labels.heading.Transaction Type' | translate }}</th>
+                    <th>{{ 'labels.heading.Category' | translate }}</th>
+                    <th class="text-right">{{ 'labels.heading.24h / Period Count' | translate }}</th>
+                    <th class="text-right">{{ 'labels.heading.Total Volume ($)' | translate }}</th>
+                    <th class="text-right">{{ 'labels.heading.Volume Share (%)' | translate }}</th>
+                    <th class="text-right">{{ 'labels.heading.Trend' | translate }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (item of transactionTypes; track item.type) {
+                    <tr>
+                      <td class="cell-type">
+                        <div class="type-with-icon">
+                          <fa-icon [icon]="item.icon" class="type-icon"></fa-icon>
+                          <span class="type-name">{{ 'labels.heading.' + item.type | translate }}</span>
+                        </div>
+                      </td>
+                      <td>
+                        <span class="category-chip" [ngClass]="item.badgeClass">{{
+                          'labels.heading.' + item.category | translate
+                        }}</span>
+                      </td>
+                      <td class="text-right font-mono font-medium">{{ item.count | number }}</td>
+                      <td class="text-right font-mono font-bold text-primary">${{ item.volume | number: '1.2-2' }}</td>
+                      <td class="text-right">
+                        <div class="percentage-bar-cell">
+                          <div class="progress-track">
+                            <div class="progress-fill" [style.width.%]="item.percentage"></div>
+                          </div>
+                          <span class="font-mono">{{ item.percentage }}%</span>
+                        </div>
+                      </td>
+                      <td class="text-right">
+                        <span
+                          class="trend-badge"
+                          [ngClass]="item.trend.startsWith('+') ? 'trend-positive' : 'trend-negative'"
+                        >
+                          {{ item.trend }}
+                        </span>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </mat-card>
+        </div>
+      </mat-tab>
+
+      <!-- TAB 2: Dashboard Widget Governance & Role-Based Access Control -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <fa-icon icon="sliders-h" class="tab-icon m-r-5"></fa-icon>
+          <span class="tab-label-text">{{ 'labels.heading.Widget Configuration & RBAC' | translate }}</span>
+          @if (hasUnsavedChanges) {
+            <span class="unsaved-badge m-l-5">!</span>
+          }
+        </ng-template>
+
+        <div class="tab-inner-content p-20">
+          <!-- Unsaved Changes Banner -->
+          @if (hasUnsavedChanges) {
+            <div class="unsaved-banner m-b-15 layout-row align-center p-10 gap-10px">
+              <fa-icon icon="exclamation-circle" class="unsaved-icon"></fa-icon>
+              <span>{{ 'labels.text.You have unsaved changes in widget configurations.' | translate }}</span>
+            </div>
+          }
+
+          <!-- Filter & Search Toolbar -->
+          <div class="widget-filter-toolbar m-b-20">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic" class="search-input-field">
+              <mat-label>{{ 'labels.inputs.Filter widgets by name or description...' | translate }}</mat-label>
+              <input matInput [(ngModel)]="searchFilter" placeholder="Search widgets..." />
+              <mat-icon matSuffix>
+                <fa-icon icon="search"></fa-icon>
+              </mat-icon>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" subscriptSizing="dynamic" class="module-select-field">
+              <mat-label>{{ 'labels.heading.Module' | translate }}</mat-label>
+              <mat-select [(ngModel)]="selectedModuleFilter">
+                <mat-option value="all">{{ 'labels.inputs.All Modules' | translate }}</mat-option>
+                <mat-option value="global">{{ 'labels.heading.Global Financial' | translate }}</mat-option>
+                <mat-option value="loan">{{ 'labels.heading.Loan Accounts' | translate }}</mat-option>
+                <mat-option value="savings">{{ 'labels.heading.Savings Accounts' | translate }}</mat-option>
+                <mat-option value="shares">{{ 'labels.heading.Share Products' | translate }}</mat-option>
+                <mat-option value="client">{{ 'labels.heading.Client Analytics' | translate }}</mat-option>
+                <mat-option value="admin">{{ 'labels.heading.Admin Operations' | translate }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <button
+              mat-raised-button
+              color="primary"
+              [disabled]="!hasUnsavedChanges"
+              (click)="saveWidgetConfigurations()"
+            >
+              <fa-icon icon="save" class="m-r-5"></fa-icon>
+              {{ 'labels.buttons.Save Changes' | translate }}
+            </button>
+          </div>
+
+          <!-- Widgets Config Table -->
+          <mat-card class="widgets-table-card mat-elevation-z1 p-0">
+            <div class="table-responsive">
+              <table class="mifos-table">
+                <thead>
+                  <tr>
+                    <th class="col-status">{{ 'labels.heading.Status' | translate }}</th>
+                    <th>{{ 'labels.heading.Widget Name' | translate }}</th>
+                    <th>{{ 'labels.heading.Module' | translate }}</th>
+                    <th class="col-roles">{{ 'labels.heading.Access Roles' | translate }}</th>
+                    <th class="col-updated">{{ 'labels.heading.Last Updated' | translate }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (widget of filteredWidgets; track widget.id) {
+                    <tr [class.disabled-row]="!widget.enabled">
+                      <td>
+                        <mat-slide-toggle
+                          [checked]="widget.enabled"
+                          (change)="toggleWidget(widget)"
+                          color="primary"
+                          [matTooltip]="widget.enabled ? 'Enabled (Visible)' : 'Disabled (Hidden)'"
+                        ></mat-slide-toggle>
+                      </td>
+                      <td>
+                        <div class="widget-name-cell">
+                          <div class="widget-icon-container">
+                            <fa-icon [icon]="widget.icon"></fa-icon>
+                          </div>
+                          <div>
+                            <strong class="widget-name-text">{{ 'labels.heading.' + widget.name | translate }}</strong>
+                            <p class="widget-desc-text text-muted m-0">
+                              {{ 'labels.text.' + widget.description | translate }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <span class="module-tag" [ngClass]="'tag-' + widget.module">{{
+                          widget.module | uppercase
+                        }}</span>
+                      </td>
+                      <td>
+                        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="role-select-field">
+                          <mat-select
+                            multiple
+                            [(ngModel)]="widget.allowedRoles"
+                            (selectionChange)="onRolesChanged(widget, $event.value)"
+                            placeholder="Select roles"
+                          >
+                            @for (role of availableRoles; track role) {
+                              <mat-option [value]="role">{{ role }}</mat-option>
+                            }
+                          </mat-select>
+                        </mat-form-field>
+                      </td>
+                      <td class="cell-audit">
+                        <span class="audit-date">{{ widget.lastUpdated }}</span>
+                        <span class="audit-user text-muted">{{ widget.updatedBy }}</span>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </mat-card>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</div>

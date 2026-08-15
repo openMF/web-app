@@ -21,8 +21,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MatCard, MatCardHeader, MatCardContent, MatCardTitle } from '@angular/material/card';
+import { MatTooltip } from '@angular/material/tooltip';
 import { Chart, registerables } from 'chart.js';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { ThemingService } from 'app/shared/theme-toggle/theming.service';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 Chart.register(...registerables);
 
@@ -37,10 +40,12 @@ Chart.register(...registerables);
   styleUrls: ['./loan-account-dashboard.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent,
     MatCard,
     MatCardHeader,
     MatCardContent,
-    MatCardTitle
+    MatCardTitle,
+    MatTooltip
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -48,13 +53,18 @@ export class LoanAccountDashboardComponent implements OnInit, AfterViewInit, OnD
   private readonly destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
   private translate = inject(TranslateService);
+  private themingService = inject(ThemingService);
 
   @ViewChild('statusChart', { static: false }) statusChartCanvas!: ElementRef<HTMLCanvasElement>;
   @ViewChild('paymentsChart', { static: false }) paymentsChartCanvas!: ElementRef<HTMLCanvasElement>;
 
-  private statusChart: any;
-  private paymentsChart: any;
-  private initTimeout: number | null = null;
+  statusChartType: 'doughnut' | 'pie' = 'doughnut';
+  paymentsChartType: 'line' | 'bar' = 'line';
+
+  private statusChart: any = null;
+  private paymentsChart: any = null;
+  private isViewInitialized = false;
+  private themeRedrawTimer: any = null;
 
   /** Loan data */
   loanData: any;
@@ -65,8 +75,11 @@ export class LoanAccountDashboardComponent implements OnInit, AfterViewInit, OnD
   totalRepaid: number = 0;
   outstandingBalance: number = 0;
   interestCharged: number = 0;
+  totalOverdue: number = 0;
   totalExpected: number = 0;
   progressPercentage: number = 0;
+  currencyCode: string = '';
+  currencySymbol: string = '';
 
   ngOnInit(): void {
     this.loanId = this.route.parent?.snapshot.paramMap.get('loanId') || '';
@@ -75,28 +88,40 @@ export class LoanAccountDashboardComponent implements OnInit, AfterViewInit, OnD
       if (data.loanDetailsData) {
         this.loanData = data.loanDetailsData;
         this.calculateMetrics();
-        this.initTimeout = window.setTimeout(() => {
+        if (this.isViewInitialized) {
           this.createStatusChart();
           this.createPaymentsChart();
-        }, 100);
+        }
       }
     });
 
     this.translate.onLangChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-      if (this.statusChart) {
+      if (this.isViewInitialized && this.loanData) {
         this.createStatusChart();
-      }
-      if (this.paymentsChart) {
         this.createPaymentsChart();
+      }
+    });
+
+    this.themingService.theme.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+      if (this.isViewInitialized && this.loanData) {
+        if (this.themeRedrawTimer) {
+          clearTimeout(this.themeRedrawTimer);
+        }
+        this.themeRedrawTimer = setTimeout(() => {
+          this.themeRedrawTimer = null;
+          this.createStatusChart();
+          this.createPaymentsChart();
+        }, 50);
       }
     });
   }
 
   ngAfterViewInit(): void {
-    setTimeout(() => {
+    this.isViewInitialized = true;
+    if (this.loanData) {
       this.createStatusChart();
       this.createPaymentsChart();
-    }, 100);
+    }
   }
 
   calculateMetrics(): void {
@@ -106,13 +131,28 @@ export class LoanAccountDashboardComponent implements OnInit, AfterViewInit, OnD
     this.totalRepaid = this.loanData.summary?.totalRepayment || 0;
     this.outstandingBalance = this.loanData.summary?.totalOutstanding || 0;
     this.interestCharged = this.loanData.summary?.interestCharged || 0;
+    this.totalOverdue = this.loanData.summary?.totalOverdue || 0;
     this.totalExpected = this.loanData.summary?.totalExpectedRepayment || 0;
+    this.currencyCode = this.loanData.currency?.code || 'USD';
+    this.currencySymbol = this.loanData.currency?.displaySymbol || '$';
 
     if (this.totalExpected === 0) {
       this.progressPercentage = 0;
     } else {
       this.progressPercentage = Math.min(100, Math.max(0, (this.totalRepaid / this.totalExpected) * 100));
     }
+  }
+
+  changeStatusChartType(type: 'doughnut' | 'pie'): void {
+    if (this.statusChartType === type) return;
+    this.statusChartType = type;
+    this.createStatusChart();
+  }
+
+  changePaymentsChartType(type: 'line' | 'bar'): void {
+    if (this.paymentsChartType === type) return;
+    this.paymentsChartType = type;
+    this.createPaymentsChart();
   }
 
   createStatusChart(): void {
@@ -126,46 +166,56 @@ export class LoanAccountDashboardComponent implements OnInit, AfterViewInit, OnD
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    const isDark = document.body.classList.contains('dark-theme');
+    const isPie = this.statusChartType === 'pie';
+
     const repaidPercentage = Math.min(
       100,
       Math.max(0, this.totalExpected > 0 ? (this.totalRepaid / this.totalExpected) * 100 : 0)
     );
-    const outstandingPercentage = Math.max(0, 100 - repaidPercentage);
+    const overduePercentage = Math.min(
+      100,
+      Math.max(0, this.totalExpected > 0 ? (this.totalOverdue / this.totalExpected) * 100 : 0)
+    );
+    const outstandingPercentage = Math.max(0, 100 - repaidPercentage - overduePercentage);
 
     this.statusChart = new Chart(ctx, {
-      type: 'doughnut',
+      type: isPie ? 'pie' : 'doughnut',
       data: {
         labels: [
           this.translate.instant('labels.inputs.Total Repaid'),
+          this.translate.instant('labels.inputs.Over Due') || 'Over Due',
           this.translate.instant('labels.inputs.Outstanding Balance')
         ],
         datasets: [
           {
             data: [
               repaidPercentage,
+              overduePercentage,
               outstandingPercentage
             ],
             backgroundColor: [
-              '#4CAF50',
-              '#FF9800'
+              '#10b981',
+              '#ef4444',
+              '#2563eb'
             ],
             borderWidth: 0,
             borderColor: 'transparent',
             hoverBorderWidth: 3,
-            hoverBorderColor: '#fff'
+            hoverBorderColor: isDark ? '#1e2124' : '#ffffff'
           }
         ]
       },
       options: {
         responsive: true,
-        maintainAspectRatio: true,
-        aspectRatio: 1.5,
-        cutout: '70%',
+        maintainAspectRatio: false,
+        cutout: isPie ? 0 : '65%',
         plugins: {
           legend: {
             position: 'bottom',
             labels: {
               padding: 20,
+              color: isDark ? '#e2e8f0' : '#475569',
               font: {
                 size: 13,
                 weight: '600'
@@ -180,6 +230,7 @@ export class LoanAccountDashboardComponent implements OnInit, AfterViewInit, OnD
                     return {
                       text: `${label}: ${value.toFixed(1)}%`,
                       fillStyle: data.datasets[0].backgroundColor[i],
+                      fontColor: isDark ? '#e2e8f0' : '#475569',
                       hidden: false,
                       index: i
                     };
@@ -190,7 +241,7 @@ export class LoanAccountDashboardComponent implements OnInit, AfterViewInit, OnD
             }
           },
           tooltip: {
-            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            backgroundColor: isDark ? 'rgba(30, 41, 59, 0.95)' : 'rgba(15, 23, 42, 0.9)',
             padding: 12,
             titleFont: {
               size: 14,
@@ -208,7 +259,42 @@ export class LoanAccountDashboardComponent implements OnInit, AfterViewInit, OnD
             }
           }
         }
-      }
+      },
+      plugins: isPie
+        ? []
+        : [
+            {
+              id: 'loanCenterText',
+              afterDraw: (chart: any) => {
+                const { ctx: c, chartArea } = chart;
+                if (!chartArea) return;
+                const width = chartArea.right - chartArea.left;
+                const height = chartArea.bottom - chartArea.top;
+                c.save();
+
+                // Draw Percentage value
+                const valFontSize = Math.round(Math.min(width, height) * 0.13);
+                c.font = `600 ${valFontSize}px 'DM Sans', sans-serif`;
+                c.textBaseline = 'bottom';
+                c.textAlign = 'center';
+                const text = `${this.progressPercentage.toFixed(1)}%`;
+                const textX = chartArea.left + width / 2;
+                const textY = chartArea.top + height / 2;
+                c.fillStyle = isDark ? '#ffffff' : '#0f172a';
+                c.fillText(text, textX, textY - 2);
+
+                // Draw Sub-label "REPAID"
+                const labelFontSize = Math.round(Math.min(width, height) * 0.055);
+                c.font = `700 ${labelFontSize}px 'DM Sans', sans-serif`;
+                c.textBaseline = 'top';
+                c.fillStyle = isDark ? '#94a3b8' : '#64748b';
+                const repaidLabel = (this.translate.instant('labels.heading.Repaid') || 'REPAID').toUpperCase();
+                c.fillText(repaidLabel, textX, textY + 8);
+
+                c.restore();
+              }
+            }
+          ]
     });
   }
 
@@ -222,6 +308,9 @@ export class LoanAccountDashboardComponent implements OnInit, AfterViewInit, OnD
     const canvas = this.paymentsChartCanvas.nativeElement;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
+
+    const isDark = document.body.classList.contains('dark-theme');
+    const isBar = this.paymentsChartType === 'bar';
 
     const repaymentSchedule = this.loanData?.repaymentSchedule?.periods || [];
     const labels: string[] = [];
@@ -237,32 +326,45 @@ export class LoanAccountDashboardComponent implements OnInit, AfterViewInit, OnD
     });
 
     this.paymentsChart = new Chart(ctx, {
-      type: 'bar',
+      type: isBar ? 'bar' : 'line',
       data: {
         labels: labels,
         datasets: [
           {
             label: this.translate.instant('labels.inputs.Principal'),
             data: principalData,
-            backgroundColor: '#2196F3',
-            borderWidth: 0,
-            borderRadius: 8,
-            barThickness: 24
+            backgroundColor: isBar ? '#2563eb' : isDark ? 'rgba(37, 99, 235, 0.35)' : 'rgba(37, 99, 235, 0.15)',
+            borderColor: '#2563eb',
+            borderWidth: isBar ? 0 : 2.5,
+            borderRadius: isBar ? 4 : 0,
+            fill: !isBar,
+            tension: 0.3,
+            pointRadius: labels.length > 20 ? 0 : 3.5,
+            pointHoverRadius: 5.5,
+            pointBackgroundColor: '#2563eb'
           },
           {
             label: this.translate.instant('labels.inputs.Interest'),
             data: interestData,
-            backgroundColor: '#FFC107',
-            borderWidth: 0,
-            borderRadius: 8,
-            barThickness: 24
+            backgroundColor: isBar ? '#f59e0b' : isDark ? 'rgba(245, 158, 11, 0.25)' : 'rgba(245, 158, 11, 0.12)',
+            borderColor: '#f59e0b',
+            borderWidth: isBar ? 0 : 2.5,
+            borderRadius: isBar ? 4 : 0,
+            fill: !isBar,
+            tension: 0.3,
+            pointRadius: labels.length > 20 ? 0 : 3.5,
+            pointHoverRadius: 5.5,
+            pointBackgroundColor: '#f59e0b'
           }
         ]
       },
       options: {
         responsive: true,
-        maintainAspectRatio: true,
-        aspectRatio: 2,
+        maintainAspectRatio: false,
+        interaction: {
+          mode: 'index',
+          intersect: false
+        },
         plugins: {
           legend: {
             position: 'top',
@@ -270,6 +372,7 @@ export class LoanAccountDashboardComponent implements OnInit, AfterViewInit, OnD
               usePointStyle: true,
               pointStyle: 'circle',
               padding: 15,
+              color: isDark ? '#e2e8f0' : '#334155',
               font: {
                 size: 13,
                 weight: '600'
@@ -277,7 +380,7 @@ export class LoanAccountDashboardComponent implements OnInit, AfterViewInit, OnD
             }
           },
           tooltip: {
-            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            backgroundColor: isDark ? 'rgba(30, 41, 59, 0.95)' : 'rgba(15, 23, 42, 0.9)',
             padding: 12,
             titleFont: {
               size: 14,
@@ -302,21 +405,24 @@ export class LoanAccountDashboardComponent implements OnInit, AfterViewInit, OnD
               display: false
             },
             ticks: {
+              color: isDark ? '#94a3b8' : '#64748b',
               font: {
                 size: 10
               },
               maxRotation: 45,
-              minRotation: 45,
-              autoSkip: false
+              minRotation: 0,
+              autoSkip: true,
+              maxTicksLimit: 15
             }
           },
           y: {
             stacked: true,
             beginAtZero: true,
             grid: {
-              color: 'rgba(0, 0, 0, 0.05)'
+              color: isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.05)'
             },
             ticks: {
+              color: isDark ? '#94a3b8' : '#64748b',
               font: {
                 size: 11
               }
@@ -328,15 +434,17 @@ export class LoanAccountDashboardComponent implements OnInit, AfterViewInit, OnD
   }
 
   ngOnDestroy(): void {
-    if (this.initTimeout !== null) {
-      clearTimeout(this.initTimeout);
-      this.initTimeout = null;
+    if (this.themeRedrawTimer) {
+      clearTimeout(this.themeRedrawTimer);
+      this.themeRedrawTimer = null;
     }
     if (this.statusChart) {
       this.statusChart.destroy();
+      this.statusChart = null;
     }
     if (this.paymentsChart) {
       this.paymentsChart.destroy();
+      this.paymentsChart = null;
     }
   }
 }
