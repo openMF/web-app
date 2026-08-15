@@ -18,6 +18,7 @@ import { UsersComponent } from './users.component';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { ViewUserComponent } from './view-user/view-user.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
+import { SelfServiceUsersComponent } from './self-service-users/self-service-users.component';
 
 /** Custom Resolvers */
 import { UsersResolver } from './users.resolver';
@@ -44,6 +45,11 @@ const mifosRoutes: Routes = [
     path: '',
     component: UsersComponent,
     resolve: { users: UsersResolver }
+  },
+  {
+    path: 'self-service',
+    component: SelfServiceUsersComponent,
+    data: { title: 'Self-Service Users', breadcrumb: 'Self-Service Users' }
   },
   {
     path: 'create',
@@ -81,6 +87,11 @@ const zitadelRoutes: Routes = [
     path: '',
     component: UserZitadelComponent,
     resolve: { users: UsersZitadelResolver }
+  },
+  {
+    path: 'self-service',
+    component: SelfServiceUsersComponent,
+    data: { title: 'Self-Service Users', breadcrumb: 'Self-Service Users' }
   },
   {
     path: 'create',

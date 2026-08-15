@@ -50,10 +50,6 @@ export class FooterComponent implements OnInit, OnDestroy {
   private translateService = inject(TranslateService);
   private cdr = inject(ChangeDetectorRef);
 
-  username: string = '';
-  name: string = '';
-  renderTime: Date = new Date();
-
   @Input() styleClass: string = '';
   @Input() variant: 'default' | 'compact' = 'default';
 

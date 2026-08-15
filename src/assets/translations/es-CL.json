@@ -620,6 +620,7 @@
       "Delete All": "Eliminar todos",
       "Delete Code": "Eliminar código",
       "Delink": "Desvincular",
+      "Delink Client": "Desvincular cliente",
       "Delete Question": "Eliminar pregunta",
       "Delete Selected": "Eliminar seleccionado",
       "Delete Signature": "Eliminar firma",
@@ -669,6 +670,7 @@
       "Import Offices": "Oficinas de Importación",
       "Initiate Dividend": "Iniciar dividendo",
       "Is Self Service": "Es usuario de autoservicio",
+      "Link Client": "Vincular cliente",
       "Link Job Step": "Agregar tarea a proceso",
       "Login": "Acceso",
       "Manage Groups": "Administrar grupos",
@@ -796,8 +798,8 @@
       "All": "Todos",
       "Pause Breach": "Pausar Incumplimiento",
       "Resume Breach": "Reanudar Incumplimiento",
-      "Currency Conversion": "Currency Conversion",
-      "Create Exchange Rate": "Create Exchange Rate",
+      "Currency Conversion": "Conversión de moneda",
+      "Create Exchange Rate": "Crear tipo de cambio",
       "Create Transfer Fee": "Crear comisión de transferencia",
       "Disable Breach": "Deshabilitar Incumplimiento",
       "Enable Breach": "Habilitar Incumplimiento"
@@ -1156,6 +1158,9 @@
       "Custom / Advanced Loan Configuration": "Configuración de Crédito Personalizada / Avanzada",
       "Breach Actions": "Acciones de Incumplimiento",
       "Delinquency & Breach": "Morosidad e Incumplimiento",
+      "Delete Self Service User": "Eliminar usuario de autoservicio",
+      "Delink Client": "Desvincular cliente",
+      "Inactivate Self Service User": "Inactivar usuario de autoservicio",
       "Interest": "Interés",
       "Mark as Fraud": "Marcar como Fraude",
       "Multi-step form": "Multi-step form",
@@ -1712,8 +1717,8 @@
       "No Delinquency Actions": "Sin Acciones de Morosidad",
       "Pause Timeline": "Línea de Tiempo de Pausas",
       "Location Map": "Mapa de ubicación",
-      "Exchange Rates": "Exchange Rates",
-      "Currency Conversion": "Currency Conversion",
+      "Exchange Rates": "Tipos de cambio",
+      "Currency Conversion": "Conversión de moneda",
       "Transfer Fees": "Comisiones de transferencia",
       "Create Transfer Fee": "Crear comisión de transferencia",
       "View Transfer Fee": "Ver comisión de transferencia",
@@ -1723,7 +1728,8 @@
       "View Exchange Rate": "Ver tipo de cambio",
       "Edit Exchange Rate": "Editar tipo de cambio",
       "Disable Breach Evaluation": "Deshabilitar Evaluación de Incumplimiento",
-      "Enable Breach Evaluation": "Habilitar Evaluación de Incumplimiento"
+      "Enable Breach Evaluation": "Habilitar Evaluación de Incumplimiento",
+      "Theme": "Tema"
     },
     "inputs": {
       "Annual interest rate": "Annual interest rate",
@@ -3373,7 +3379,19 @@
       "Dispute Management": "Gestión de disputas",
       "Audit Trail": "Registro de auditoría",
       "Restart Period from Reset Date": "Reiniciar el período desde la fecha de reinicio",
-      "Breach evaluation disabled since": "Evaluación de incumplimiento deshabilitada desde el {{date}}"
+      "Breach evaluation disabled since": "Evaluación de incumplimiento deshabilitada desde el {{date}}",
+      "Blue": "Azul",
+      "Green": "Verde",
+      "Light Green": "Verde claro",
+      "Purple": "Morado",
+      "Pink": "Rosa",
+      "Orange": "Naranja",
+      "Red": "Rojo",
+      "Yellow": "Amarillo",
+      "Black": "Negro",
+      "Primary Color": "Color principal",
+      "Custom": "Personalizado",
+      "Custom Color": "Color personalizado"
     },
     "links": {
       "Community": "Comunidad",
@@ -4212,6 +4230,9 @@
       "Self Service App Configuration": "Configuración de la aplicación de autoservicio",
       "Self Service Task Management": "Gestión de tareas de autoservicio",
       "Self Service Users": "Usuarios de autoservicio",
+      "Client will be removed from self service user": "{{ clientName }} se eliminará de {{ username }}.",
+      "Self service user will no longer be able to sign in": "{{ username }} ya no podrá iniciar sesión.",
+      "Self service user will no longer be usable": "{{ username }} ya no podrá utilizarse.",
       "Session timed out": "Sesión agotada",
       "Session timed out after a period of inactivity": "La sesión se agotara después de un período de inactividad",
       "Set or update office-level opening balances for GL accounts": "Establecer o actualizar saldos de apertura a nivel de oficina para cuentas del libro mayor",
@@ -4484,7 +4505,13 @@
       "View Exchange Rate": "Ver tipo de cambio",
       "Edit Exchange Rate": "Editar tipo de cambio",
       "Currency Conversion": "Conversión de moneda",
-      "Currency conversion failed. Please try again.": "La conversión de moneda falló. Inténtelo de nuevo."
+      "Currency conversion failed. Please try again.": "La conversión de moneda falló. Inténtelo de nuevo.",
+      "Theme": "Tema",
+      "Set the primary color used across this tenant": "Defina el color principal usado en toda esta instancia",
+      "Tenant theme explanation": "El color principal se aplica a todos los usuarios de esta instancia. Los usuarios individuales no pueden cambiarlo.",
+      "Tenant theme unavailable": "La configuración del tema no está disponible en este servidor. Se está usando el color predeterminado.",
+      "Tenant theme updated successfully": "Tema de la instancia actualizado correctamente",
+      "Custom color darkened for legibility": "El color seleccionado se oscureció para que el texto blanco siga siendo legible."
     },
     "permissions": {
       "actions": {
