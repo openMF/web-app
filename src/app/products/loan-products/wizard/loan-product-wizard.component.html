@@ -86,14 +86,14 @@
           <div class="field-grid">
             <ng-container *ngFor="let field of visibleFields(step); trackBy: trackByFieldKey">
               <mat-form-field *ngIf="field.type !== 'checkbox'" appearance="outline">
-                <mat-label>{{ field.label }}</mat-label>
+                <mat-label>{{ field.label | translate }}</mat-label>
 
                 <input
                   *ngIf="field.type === 'text' || field.type === 'number'"
                   matInput
                   [type]="field.type"
                   [formControlName]="field.key"
-                  [placeholder]="field.placeholder"
+                  [placeholder]="field.placeholder | translate"
                   [required]="!!field.required"
                   [attr.maxlength]="field.maxLength || null"
                 />
@@ -102,7 +102,7 @@
                     matInput
                     [matDatepicker]="picker"
                     [formControlName]="field.key"
-                    [placeholder]="field.placeholder"
+                    [placeholder]="field.placeholder | translate"
                     [required]="!!field.required"
                   />
                   <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
@@ -112,7 +112,7 @@
                   *ngIf="field.type === 'textarea'"
                   matInput
                   [formControlName]="field.key"
-                  [placeholder]="field.placeholder"
+                  [placeholder]="field.placeholder | translate"
                   [required]="!!field.required"
                   rows="3"
                 ></textarea>
@@ -128,12 +128,12 @@
 
                 <mat-hint *ngIf="field.hint">{{ field.hint }}</mat-hint>
                 <mat-error *ngIf="form.get(field.key)?.hasError('required')">
-                  {{ field.label }} <span>{{ 'labels.commons.is required' | translate }}</span>
+                  {{ field.label | translate }} <span>{{ 'labels.commons.is required' | translate }}</span>
                 </mat-error>
               </mat-form-field>
 
               <mat-checkbox *ngIf="field.type === 'checkbox'" [formControlName]="field.key">
-                {{ field.label }}
+                {{ field.label | translate }}
               </mat-checkbox>
             </ng-container>
           </div>
@@ -172,7 +172,7 @@
             <div class="review-section">
               <p class="review-section__title">{{ group.title }}</p>
               <div class="review-row" *ngFor="let row of group.rows; trackBy: trackByRowLabel">
-                <span class="review-row__label">{{ row.label }}</span>
+                <span class="review-row__label">{{ row.label | translate }}</span>
                 <span class="review-row__value">{{ row.display }}</span>
               </div>
             </div>

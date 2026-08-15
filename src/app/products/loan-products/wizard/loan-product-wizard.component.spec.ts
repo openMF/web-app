@@ -95,10 +95,10 @@ describe('LoanProductWizardComponent', () => {
     // The Review summarizes the visible wizard form state (via reviewGroups), not the final payload.
     const strategyRow = component.reviewGroups
       .flatMap((group) => group.rows)
-      .find((row) => row.label === 'Repayment strategy');
+      .find((row) => row.label === 'labels.inputs.Repayment Strategy');
 
     expect(strategyRow).toEqual({
-      label: 'Repayment strategy',
+      label: 'labels.inputs.Repayment Strategy',
       display: 'Advanced Payment Allocation'
     });
     expect(
@@ -687,16 +687,20 @@ describe('LoanProductWizardComponent', () => {
     it('reflects a user select via the field option label (form-driven, not payload-driven)', () => {
       const component = customAdvancedComponent();
       component.form.patchValue({ amortizationType: 0 });
-      const row = component.reviewGroups.flatMap((group) => group.rows).find((r) => r.label === 'Amortization type');
+      const row = component.reviewGroups
+        .flatMap((group) => group.rows)
+        .find((r) => r.label === 'labels.inputs.Amortization Type');
       expect(row?.display).toBe('Equal principal payments');
     });
 
     it('renders visible checkboxes as Yes/No and drops empty optional fields', () => {
       const component = customAdvancedComponent();
-      const topup = component.reviewGroups.flatMap((g) => g.rows).find((r) => r.label === 'Allow top-up loans');
+      const topup = component.reviewGroups
+        .flatMap((g) => g.rows)
+        .find((r) => r.label === 'labels.inputs.Allow top-up loans');
       expect(topup?.display).toBe('No');
       // externalId is visible but empty by default → dropped from the summary.
-      expect(reviewLabels(component)).not.toContain('External ID');
+      expect(reviewLabels(component)).not.toContain('labels.inputs.External ID');
     });
 
     it('sources the banner from the form state', () => {
@@ -1449,6 +1453,160 @@ describe('LoanProductWizardComponent', () => {
       expect(review?.accounts).toEqual([]);
     });
   });
+  describe('Home and Mortgage profiles (spreadsheet-driven, Classic-parity conditionals)', () => {
+    function homeComponent(profileMode: LoanWizardProfileMode = 'home'): LoanProductWizardComponent {
+      const component = createComponent();
+      component.profileMode = profileMode;
+      component.loanProductsTemplate = {
+        currencyOptions: [{ code: 'INR' }],
+        transactionProcessingStrategyOptions: [
+          { code: 'mifos-standard-strategy', name: 'Mifos standard' },
+          { code: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY, name: 'Advanced Payment Allocation' }
+        ],
+        preClosureInterestCalculationStrategyOptions: [{ id: 1, value: 'Till pre-close date' }],
+        rescheduleStrategyTypeOptions: [{ id: 4, value: 'Adjust last, unpaid period' }],
+        interestRecalculationCompoundingTypeOptions: [{ id: 0, value: 'None' }],
+        interestRecalculationFrequencyTypeOptions: [{ id: 1, value: 'Same as repayment period' }],
+        interestRecalculationNthDayTypeOptions: [{ id: 1, value: 'first' }],
+        interestRecalculationDayOfWeekTypeOptions: [{ id: 1, value: 'Monday' }],
+        daysInYearCustomStrategyOptions: [{ id: 'FULL_LEAP_YEAR', value: 'Full Leap Year' }]
+      };
+      component.ngOnInit();
+      return component;
+    }
+
+    function visibleKeys(component: LoanProductWizardComponent): string[] {
+      return component.steps.flatMap((step) => component.visibleFields(step)).map((field) => field.key);
+    }
+
+    /** `is Applicable = Y` rows that the other guided profiles keep hidden. */
+    const APPLICABLE_KEYS = [
+      'isLinkedToFloatingInterestRates',
+      'isEqualAmortization',
+      'loanScheduleType',
+      'daysInYearType',
+      'daysInMonthType',
+      'principalThresholdForLastInstallment',
+      'holdGuaranteeFunds',
+      'isInterestRecalculationEnabled',
+      'multiDisburseLoan',
+      'maxTrancheCount',
+      'outstandingLoanBalance',
+      'disallowExpectedDisbursements',
+      'allowFullTermForTranche',
+      'delinquencyBucketId'
+    ];
+
+    /**
+     * `is Hidden = Y` rows that must stay hidden — including the whole down-payment trio (rows
+     * 68-70), which separates these two profiles from BNPL and Two Wheeler.
+     */
+    const HIDDEN_KEYS = [
+      'description',
+      'startDate',
+      'closeDate',
+      'includeInBorrowerCycle',
+      'digitsAfterDecimal',
+      'inArrearsTolerance',
+      'canDefineInstallmentAmount',
+      'graceOnArrearsAgeing',
+      'overdueDaysForNPA',
+      'canUseForTopup',
+      'allowVariableInstallments',
+      'useGlobalConfigForRepaymentEvent',
+      'enableDownPayment',
+      'disbursedAmountPercentageForDownPayment',
+      'enableAutoRepaymentForDownPayment',
+      'loanChargeOffBehaviour',
+      'enableInstallmentLevelDelinquency',
+      'allowApprovedDisbursedAmountsOverApplied',
+      'interestRecognitionOnDisbursementDate'
+    ];
+
+    it('exposes every field the sheet marks Applicable and hides every field it marks Hidden', () => {
+      const component = homeComponent();
+      const keys = visibleKeys(component);
+      APPLICABLE_KEYS.forEach((key) => expect(keys).toContain(key));
+      HIDDEN_KEYS.forEach((key) => expect(keys).not.toContain(key));
+
+      // Some of the hidden keys also sit behind a parent display condition, so the assertion above
+      // would pass for the wrong reason while that parent is unset. Satisfy each parent and confirm
+      // the field is still hidden — i.e. hidden by the profile, not merely by its gate.
+      component.form.get('delinquencyBucketId')!.setValue('1'); // gates enableInstallmentLevelDelinquency
+      component.form.get('holdGuaranteeFunds')!.setValue(true); // gates the guarantee trio
+      const withParentsOn = visibleKeys(component);
+      expect(withParentsOn).toContain('mandatoryGuarantee'); // control: the gate really did open
+      expect(withParentsOn).not.toContain('enableInstallmentLevelDelinquency');
+      expect(withParentsOn).not.toContain('loanChargeOffBehaviour');
+    });
+
+    it('renders the same field surface for Mortgage, whose sheet is identical to Home', () => {
+      // The two sheets are cell-for-cell identical; the index sheet's remark explains why
+      // ("Collateral fields are at the loan account level and not product level").
+      const keys = visibleKeys(homeComponent('mortgage'));
+      APPLICABLE_KEYS.forEach((key) => expect(keys).toContain(key));
+      HIDDEN_KEYS.forEach((key) => expect(keys).not.toContain(key));
+    });
+
+    it('keeps the guarantee inputs hidden until guarantee funds are held', () => {
+      const component = homeComponent();
+      expect(visibleKeys(component)).not.toContain('mandatoryGuarantee');
+
+      component.form.get('holdGuaranteeFunds')!.setValue(true);
+      const keys = visibleKeys(component);
+      expect(keys).toContain('mandatoryGuarantee');
+      expect(keys).toContain('minimumGuaranteeFromOwnFunds');
+      expect(keys).toContain('minimumGuaranteeFromGuarantor');
+    });
+
+    it('requires the mandatory guarantee only while guarantee funds are held', () => {
+      const component = homeComponent();
+      const control = component.form.get('mandatoryGuarantee')!;
+      // Hidden and empty must not hold the whole form invalid.
+      expect(control.valid).toBe(true);
+
+      component.form.get('holdGuaranteeFunds')!.setValue(true);
+      expect(control.valid).toBe(false);
+
+      control.setValue(100);
+      expect(control.valid).toBe(true);
+    });
+
+    it('hides the tranche dependents when multiple disbursals are switched off, like Classic', () => {
+      const component = homeComponent();
+      expect(visibleKeys(component)).toContain('maxTrancheCount');
+
+      component.form.get('multiDisburseLoan')!.setValue(false);
+      const keys = visibleKeys(component);
+      expect(keys).not.toContain('maxTrancheCount');
+      expect(keys).not.toContain('outstandingLoanBalance');
+      expect(keys).not.toContain('disallowExpectedDisbursements');
+      expect(keys).not.toContain('allowFullTermForTranche');
+    });
+
+    it('seeds the Progressive + advanced payment allocation stack the sheet implies', () => {
+      const component = homeComponent();
+      expect(component.form.get('loanScheduleType')!.value).toBe('Progressive');
+      expect(component.form.get('transactionProcessingStrategyCode')!.value).toBe(
+        LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY
+      );
+      expect(component.visibleSteps.map((step) => step.title)).toContain('Payment Allocation');
+    });
+
+    it('carries a paymentAllocation collection in the submitted payload', () => {
+      // Fineract rejects the advanced payment allocation strategy without it.
+      const payload = homeComponent().buildPayloadForSubmit();
+      expect(payload.transactionProcessingStrategyCode).toBe(LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY);
+      expect(Array.isArray(payload.paymentAllocation)).toBe(true);
+    });
+
+    it('does not render the Interest Refunds or Deferred Income steps (rows 76-78 are Hidden)', () => {
+      const titles = homeComponent().visibleSteps.map((step) => step.title);
+      expect(titles).not.toContain('Interest Refunds');
+      expect(titles).not.toContain('Deferred Income Recognition');
+    });
+  });
+
   describe('BNPL profile (spreadsheet-driven, Classic-parity conditionals)', () => {
     function bnplComponent(): LoanProductWizardComponent {
       const component = createComponent();

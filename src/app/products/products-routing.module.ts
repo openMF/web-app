@@ -245,6 +245,24 @@ const routes: Routes = [
               }
             },
             {
+              path: 'home-loan',
+              component: CreateLoanProductComponent,
+              data: { title: 'Create Home Loan', breadcrumb: 'Home Loan' },
+              resolve: {
+                loanProductsTemplate: LoanProductsTemplateResolver,
+                configurations: GlobalConfigurationsResolver
+              }
+            },
+            {
+              path: 'mortgage-loan',
+              component: CreateLoanProductComponent,
+              data: { title: 'Create Mortgage Loan', breadcrumb: 'Mortgage Loan' },
+              resolve: {
+                loanProductsTemplate: LoanProductsTemplateResolver,
+                configurations: GlobalConfigurationsResolver
+              }
+            },
+            {
               path: ':productId',
               component: ViewLoanProductComponent,
               resolve: {
