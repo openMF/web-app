@@ -96,10 +96,33 @@ describe('ClientAddressStepComponent', () => {
     expect(formFields.some((field) => field.controlName === 'longitude')).toBe(true);
   });
 
-  it('should use the countyDistrict backend field name in the address form', () => {
+  it('should include WEB-1125 address fields with backend field names', () => {
     const formFields = component.getAddressFormFields();
 
+    expect(formFields.some((field) => field.controlName === 'street')).toBe(true);
+    expect(formFields.some((field) => field.controlName === 'townVillage')).toBe(true);
     expect(formFields.some((field) => field.controlName === 'countyDistrict')).toBe(true);
+  });
+
+  it('should populate WEB-1125 address fields when editing', () => {
+    const formFields = component.getAddressFormFields({
+      addressTypeId: 1,
+      street: 'MG Road',
+      townVillage: 'Indiranagar',
+      countyDistrict: 'Bangalore Urban'
+    });
+
+    expect(formFields.find((field) => field.controlName === 'street')?.value).toBe('MG Road');
+    expect(formFields.find((field) => field.controlName === 'townVillage')?.value).toBe('Indiranagar');
+    expect(formFields.find((field) => field.controlName === 'countyDistrict')?.value).toBe('Bangalore Urban');
+  });
+
+  it('should not conflict with another address field order when countyDistrict uses order 9', () => {
+    const formFields = component.getAddressFormFields();
+    const fieldsWithOrderNine = formFields.filter((field) => field.order === 9);
+
+    expect(fieldsWithOrderNine).toHaveLength(1);
+    expect(fieldsWithOrderNine[0].controlName).toBe('countyDistrict');
   });
 
   it('should hide latitude and longitude fields when disabled', () => {
@@ -131,13 +154,16 @@ describe('ClientAddressStepComponent', () => {
     expect(form.get('longitude')?.hasError('max')).toBe(true);
   });
 
-  it('should include latitude and longitude in the address array', () => {
+  it('should include WEB-1125 address fields in the address array', () => {
     dialog.open.mockReturnValue({
       afterClosed: () =>
         of({
           data: {
             value: {
               addressTypeId: 1,
+              street: 'Church Street',
+              townVillage: 'MG Layout',
+              countyDistrict: 'Central District',
               latitude: '12.9716',
               longitude: '77.5946'
             }
@@ -150,6 +176,9 @@ describe('ClientAddressStepComponent', () => {
     expect(component.address.address).toEqual([
       expect.objectContaining({
         addressTypeId: 1,
+        street: 'Church Street',
+        townVillage: 'MG Layout',
+        countyDistrict: 'Central District',
         latitude: '12.9716',
         longitude: '77.5946'
       })
@@ -234,6 +263,9 @@ describe('ClientAddressStepComponent', () => {
     component.clientAddressData = [
       {
         addressTypeId: 1,
+        street: 'MG Road',
+        townVillage: 'Indiranagar',
+        countyDistrict: 'Bangalore Urban',
         latitude: '12.9716',
         longitude: '77.5946'
       }
@@ -243,5 +275,8 @@ describe('ClientAddressStepComponent', () => {
 
     expect(fixture.nativeElement.textContent).toContain('12.9716');
     expect(fixture.nativeElement.textContent).toContain('77.5946');
+    expect(fixture.nativeElement.textContent).toContain('MG Road');
+    expect(fixture.nativeElement.textContent).toContain('Indiranagar');
+    expect(fixture.nativeElement.textContent).toContain('Bangalore Urban');
   });
 });

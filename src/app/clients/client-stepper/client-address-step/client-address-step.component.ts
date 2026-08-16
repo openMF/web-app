@@ -310,10 +310,10 @@ export class ClientAddressStepComponent {
       this.isFieldEnabled('countyDistrict')
         ? new InputBase({
             controlName: 'countyDistrict',
-            label: this.translateService.instant('labels.inputs.Country District'),
+            label: this.translateService.instant('labels.inputs.County / District'),
             value: address ? address.countyDistrict : '',
             type: 'text',
-            order: 11
+            order: 9
           })
         : null
     );
