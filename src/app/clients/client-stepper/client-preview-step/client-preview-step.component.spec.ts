@@ -53,6 +53,9 @@ describe('ClientPreviewStepComponent', () => {
     component = fixture.componentInstance;
     component.clientAddressFieldConfig = [
       { field: 'addressType', isEnabled: true },
+      { field: 'street', isEnabled: true },
+      { field: 'townVillage', isEnabled: true },
+      { field: 'countyDistrict', isEnabled: true },
       { field: 'latitude', isEnabled: true },
       { field: 'longitude', isEnabled: true }
     ];
@@ -73,6 +76,9 @@ describe('ClientPreviewStepComponent', () => {
       address: [
         {
           addressTypeId: 1,
+          street: 'MG Road',
+          townVillage: 'Indiranagar',
+          countyDistrict: 'Bangalore Urban',
           latitude: '12.9716',
           longitude: '77.5946'
         }
@@ -85,6 +91,14 @@ describe('ClientPreviewStepComponent', () => {
 
     expect(fixture.nativeElement.textContent).toContain('12.9716');
     expect(fixture.nativeElement.textContent).toContain('77.5946');
+  });
+
+  it('should display WEB-1125 address fields when present', () => {
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.textContent).toContain('MG Road');
+    expect(fixture.nativeElement.textContent).toContain('Indiranagar');
+    expect(fixture.nativeElement.textContent).toContain('Bangalore Urban');
   });
 
   it('should preserve zero coordinates as displayable values', () => {

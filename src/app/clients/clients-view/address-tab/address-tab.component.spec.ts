@@ -100,6 +100,15 @@ describe('AddressTabComponent', () => {
           addressTypeId: 1,
           addressType: 'Home',
           street: 'MG Road',
+          addressLine1: 'Line 1',
+          addressLine2: 'Line 2',
+          addressLine3: 'Line 3',
+          townVillage: 'Indiranagar',
+          city: 'Bengaluru',
+          stateProvinceId: 2,
+          countyDistrict: 'Bangalore Urban',
+          countryId: 3,
+          postalCode: '560038',
           latitude: '12.9716',
           longitude: '77.5946',
           isActive: true
@@ -174,10 +183,20 @@ describe('AddressTabComponent', () => {
     expect(formFields.some((field) => field.controlName === 'longitude')).toBe(true);
   });
 
-  it('should use the countyDistrict backend field name in the address form', () => {
+  it('should include the missing address form controls with backend field names', () => {
     const formFields = component.getAddressFormFields('add');
 
+    expect(formFields.some((field) => field.controlName === 'street')).toBe(true);
+    expect(formFields.some((field) => field.controlName === 'townVillage')).toBe(true);
     expect(formFields.some((field) => field.controlName === 'countyDistrict')).toBe(true);
+  });
+
+  it('should populate missing address fields when editing', () => {
+    const formFields = component.getAddressFormFields('edit', component.clientAddressData[0]);
+
+    expect(formFields.find((field) => field.controlName === 'street')?.value).toBe('MG Road');
+    expect(formFields.find((field) => field.controlName === 'townVillage')?.value).toBe('Indiranagar');
+    expect(formFields.find((field) => field.controlName === 'countyDistrict')?.value).toBe('Bangalore Urban');
   });
 
   it('should hide latitude and longitude fields when disabled', () => {
@@ -198,13 +217,21 @@ describe('AddressTabComponent', () => {
     expect(formFields.some((field) => field.controlName === 'longitude')).toBe(false);
   });
 
-  it('should include latitude and longitude in the add payload', () => {
+  it('should include address fields in the add payload', () => {
     dialog.open.mockReturnValue({
       afterClosed: () =>
         of({
           data: {
             value: {
               addressType: 1,
+              street: 'Church Street',
+              addressLine1: 'Apartment 4',
+              addressLine2: 'Near Metro',
+              addressLine3: 'Block A',
+              townVillage: 'MG Layout',
+              countyDistrict: 'Central District',
+              city: 'Bengaluru',
+              postalCode: '560001',
               latitude: '12.9716',
               longitude: '77.5946'
             }
@@ -218,12 +245,23 @@ describe('AddressTabComponent', () => {
       '7',
       1,
       expect.objectContaining({
+        street: 'Church Street',
+        addressLine1: 'Apartment 4',
+        addressLine2: 'Near Metro',
+        addressLine3: 'Block A',
+        townVillage: 'MG Layout',
+        countyDistrict: 'Central District',
+        city: 'Bengaluru',
+        postalCode: '560001',
         latitude: '12.9716',
         longitude: '77.5946'
       })
     );
     expect(component.clientAddressData[component.clientAddressData.length - 1]).toEqual(
       expect.objectContaining({
+        street: 'Church Street',
+        townVillage: 'MG Layout',
+        countyDistrict: 'Central District',
         latitude: '12.9716',
         longitude: '77.5946'
       })
@@ -242,12 +280,20 @@ describe('AddressTabComponent', () => {
     expect(dialogConfig.data.contentTemplate).toBe(component.addressLocationMapDialogTemplate);
   });
 
-  it('should include latitude and longitude in the edit payload', () => {
+  it('should include address fields in the edit payload', () => {
     dialog.open.mockReturnValue({
       afterClosed: () =>
         of({
           data: {
             value: {
+              street: 'Updated Street',
+              addressLine1: 'Updated Line 1',
+              addressLine2: 'Updated Line 2',
+              addressLine3: 'Updated Line 3',
+              townVillage: 'Updated Village',
+              countyDistrict: 'Updated District',
+              city: 'Mysuru',
+              postalCode: '570001',
               latitude: '13',
               longitude: '78'
             }
@@ -262,12 +308,23 @@ describe('AddressTabComponent', () => {
       1,
       expect.objectContaining({
         addressId: 11,
+        street: 'Updated Street',
+        addressLine1: 'Updated Line 1',
+        addressLine2: 'Updated Line 2',
+        addressLine3: 'Updated Line 3',
+        townVillage: 'Updated Village',
+        countyDistrict: 'Updated District',
+        city: 'Mysuru',
+        postalCode: '570001',
         latitude: '13',
         longitude: '78'
       })
     );
     expect(component.clientAddressData[0]).toEqual(
       expect.objectContaining({
+        street: 'Updated Street',
+        townVillage: 'Updated Village',
+        countyDistrict: 'Updated District',
         latitude: '13',
         longitude: '78'
       })
@@ -352,6 +409,14 @@ describe('AddressTabComponent', () => {
 
     expect(form.get('latitude')?.hasError('max')).toBe(true);
     expect(form.get('longitude')?.hasError('min')).toBe(true);
+  });
+
+  it('should display returned missing address fields', () => {
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.textContent).toContain('MG Road');
+    expect(fixture.nativeElement.textContent).toContain('Indiranagar');
+    expect(fixture.nativeElement.textContent).toContain('Bangalore Urban');
   });
 
   it('should display saved coordinates and render the map for valid coordinates', () => {
