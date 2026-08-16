@@ -251,6 +251,9 @@
                   {{ getSelectedValue('stateProvinceIdOptions', address.stateProvinceId)?.name }}<br
                 /></span>
               }
+              @if (isFieldEnabled('countyDistrict')) {
+                <span>{{ 'labels.inputs.County / District' | translate }} : {{ address.countyDistrict }}<br /></span>
+              }
               @if (isFieldEnabled('countryId')) {
                 <span
                   >{{ 'labels.inputs.Country' | translate }} :
