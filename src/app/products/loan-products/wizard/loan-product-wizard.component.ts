@@ -22,6 +22,7 @@ import {
   isGuidedProfileMode,
   rendersDeferredIncomeStep,
   rendersInterestRefundStep,
+  GUARANTEE_FUNDS_DEPENDENT_FIELDS,
   INTEREST_RECALCULATION_FIELDS,
   TEMPLATE_OPTION_SOURCES,
   NTH_DAY_ON_DAY_OPTION,
@@ -93,10 +94,14 @@ const REQUIRED_INTEREST_RECALCULATION_FIELDS: readonly string[] = [
  * Fields whose `required: true` in FORM_STEPS is conditional on a controlling toggle rather than
  * absolute. `validatorsFor` skips the static `Validators.required` for these so a hidden, empty
  * control cannot hold the whole form invalid; `syncConditionalValidators` re-applies it while the
- * field is actually visible. Currently the interest recalculation family, which is entirely gated
- * behind `isInterestRecalculationEnabled` (off by default for every profile).
+ * field is actually visible. The interest recalculation family, which is entirely gated behind
+ * `isInterestRecalculationEnabled` (off by default for every profile), plus `mandatoryGuarantee`,
+ * which Classic marks required in its template but only registers while `holdGuaranteeFunds` is on.
  */
-const CONDITIONALLY_REQUIRED_FIELDS: readonly string[] = REQUIRED_INTEREST_RECALCULATION_FIELDS;
+const CONDITIONALLY_REQUIRED_FIELDS: readonly string[] = [
+  ...REQUIRED_INTEREST_RECALCULATION_FIELDS,
+  'mandatoryGuarantee'
+];
 
 /** `daysInYearType` id for the ACTUAL option — the only type `daysInYearCustomStrategy` applies to. */
 const DAYS_IN_YEAR_ACTUAL = 1;
@@ -462,6 +467,12 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
           return false;
         }
 
+        // Classic wraps the three guarantee inputs in `@if (loanProductSettingsForm.value
+        // .holdGuaranteeFunds)` and its valueChanges handler removes the same three controls.
+        if (GUARANTEE_FUNDS_DEPENDENT_FIELDS.includes(field.key) && !this.form?.get('holdGuaranteeFunds')?.value) {
+          return false;
+        }
+
         // Classic renders the partial-period checkbox only for "Same as repayment period"
         // (`@if (loanProductSettingsForm.value.interestCalculationPeriodType === 1)`); its tooltip says
         // as much, and its `interestCalculationPeriodType` valueChanges patches the flag back to false
@@ -631,6 +642,7 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
       'repaymentStartDateType',
       'accountMovesOutOfNPAOnlyOnArrearsCompletion',
       'holdGuaranteeFunds',
+      ...GUARANTEE_FUNDS_DEPENDENT_FIELDS,
       'outstandingLoanBalance',
       'disallowExpectedDisbursements',
       'allowAttributeOverrides.amortizationType',
@@ -1143,6 +1155,7 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
     const overAppliedEnabled = !!this.form.get('allowApprovedDisbursedAmountsOverApplied')?.value;
     const multiDisburseEnabled = !!this.form.get('multiDisburseLoan')?.value;
     const downPaymentEnabled = !!this.form.get('enableDownPayment')?.value;
+    const guaranteeFundsEnabled = !!this.form.get('holdGuaranteeFunds')?.value;
 
     this.applyValidators('overAppliedCalculationType', overAppliedEnabled ? [Validators.required] : []);
     this.applyValidators(
@@ -1160,6 +1173,18 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
           ] : []
     );
     this.applyValidators('outstandingLoanBalance', multiDisburseEnabled ? [Validators.min(0)] : []);
+    // Classic's `holdGuaranteeFunds` handler registers `mandatoryGuarantee` with
+    // `[Validators.required, Validators.min(0)]` and the two minimum-guarantee inputs with
+    // `Validators.min(0)` (their templates carry `min="0"` but no `required`).
+    this.applyValidators(
+      'mandatoryGuarantee',
+      guaranteeFundsEnabled ? [
+            Validators.required,
+            Validators.min(0)
+          ] : []
+    );
+    this.applyValidators('minimumGuaranteeFromOwnFunds', guaranteeFundsEnabled ? [Validators.min(0)] : []);
+    this.applyValidators('minimumGuaranteeFromGuarantor', guaranteeFundsEnabled ? [Validators.min(0)] : []);
     this.applyValidators(
       'disbursedAmountPercentageForDownPayment',
       downPaymentEnabled ? [
