@@ -173,6 +173,10 @@ describe('DatatableMultiRowComponent', () => {
     expect(emptyValue.textContent.trim()).toBe('');
   });
 
+  it('keeps multi-row Code Value column labels unchanged', () => {
+    expect(component.getInputName('Marital Status_cd_Estado Civil')).toBe('Marital status');
+  });
+
   it('renders a paginator for multi row data tables', () => {
     const paginator = fixture.nativeElement.querySelector('mat-paginator');
 

@@ -209,13 +209,11 @@ export class Datatables {
       const parts = columnName.split('_cd_');
       // Ensure parts[1] exists and is not empty before processing
       if (parts.length > 1 && parts[1] && parts[1].trim()) {
-        // Return the part after _cd_ converted to Title Case
         // Filter out standalone "cd" or "CD" words that are artifacts from naming convention
         // This only affects display, not database column names
         const displayWords = parts[1]
           .split('_')
           .filter((word) => word.trim() && word.toLowerCase() !== 'cd') // Remove empty strings and standalone "cd" artifacts
-          .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
           .join(' ');
 
         // Return empty string if all words were filtered out, otherwise return formatted label
