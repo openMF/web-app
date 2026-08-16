@@ -82,7 +82,7 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
   }
 
   formatDisplayLabel(label: string): string {
-    return formatDatatableDisplayLabel(label);
+    return this.datatables.toDisplayLabel(label);
   }
 
   ngOnInit() {
