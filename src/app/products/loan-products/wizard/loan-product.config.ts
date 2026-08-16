@@ -129,7 +129,7 @@ export interface FormStep {
 
 export const PRODUCT_CARDS: ProductCard[] = [
   {
-    name: 'Custom / Advanced',
+    name: 'labels.text.Custom / Advanced',
     // Fully qualified translation key (rather than literal display text like the other cards below) so
     // this specific description can be localized; the template applies `| translate` to every card's
     // `description`, and untranslated literal text safely falls through the missing-translation handler
@@ -142,7 +142,7 @@ export const PRODUCT_CARDS: ProductCard[] = [
     icon: 'tune'
   },
   {
-    name: 'Personal Loan',
+    name: 'labels.text.Personal Loan',
     description:
       'Unsecured funding for personal needs like travel, medical expenses, or weddings, with flexible tenure and minimal documentation.',
     active: true,
@@ -151,7 +151,7 @@ export const PRODUCT_CARDS: ProductCard[] = [
     icon: 'account_balance_wallet'
   },
   {
-    name: 'Two Wheeler Loan',
+    name: 'labels.text.Two Wheeler Loan',
     // Fully qualified translation key, same pattern as the Custom/Advanced card above.
     description:
       'labels.text.Finance for new or used two-wheelers with quick approval and flexible down payment options',
@@ -161,7 +161,7 @@ export const PRODUCT_CARDS: ProductCard[] = [
     icon: 'pedal_bike'
   },
   {
-    name: 'JLG Loan',
+    name: 'labels.text.JLG Loan',
     description:
       'Group-backed microloans for individuals in a Joint Liability Group, typically for income-generating activities.',
     active: false,
@@ -169,7 +169,7 @@ export const PRODUCT_CARDS: ProductCard[] = [
     icon: 'group'
   },
   {
-    name: 'Education Loan',
+    name: 'labels.text.Education Loan',
     // Fully qualified translation key, same pattern as the Custom/Advanced card above.
     description:
       'labels.text.Funding for tuition and related expenses for domestic or international studies, with repayment options aligned to course duration',
@@ -179,23 +179,28 @@ export const PRODUCT_CARDS: ProductCard[] = [
     icon: 'school'
   },
   {
-    name: 'Home Loan',
-    description: 'Long-tenure financing to purchase, construct, or renovate a residential property.',
-    active: false,
-    disabled: true,
+    name: 'labels.text.Home Loan',
+    // Fully qualified translation key, same pattern as the Custom/Advanced card above.
+    description: 'labels.text.Long-tenure financing to purchase, construct, or renovate a residential property',
+    active: true,
+    disabled: false,
+    route: 'home-loan',
     icon: 'home'
   },
   {
-    name: 'Mortgage Loan (LAP)',
-    description: 'Loan against property where an existing residential or commercial asset is pledged as collateral.',
-    active: false,
-    disabled: true,
+    name: 'labels.text.Mortgage Loan (LAP)',
+    // Fully qualified translation key, same pattern as the Custom/Advanced card above.
+    description:
+      'labels.text.Loan against property where an existing residential or commercial asset is pledged as collateral',
+    active: true,
+    disabled: false,
+    route: 'mortgage-loan',
     icon: 'home_work'
   },
   {
     // Renamed from 'Agri Loan' to match the template's full product name everywhere else
     // (profile label, breadcrumb, page title).
-    name: 'Agriculture Loan',
+    name: 'labels.text.Agriculture Loan',
     // Fully qualified translation key, same pattern as the Custom/Advanced card above.
     description:
       'labels.text.Credit for farming-related needs such as crop production, equipment, or land development, often tied to agricultural cycles',
@@ -205,14 +210,14 @@ export const PRODUCT_CARDS: ProductCard[] = [
     icon: 'agriculture'
   },
   {
-    name: 'Auto Loan',
+    name: 'labels.text.Auto Loan',
     description: 'Financing for new or used car purchases with structured EMIs over a chosen tenure.',
     active: false,
     disabled: true,
     icon: 'directions_car'
   },
   {
-    name: 'Gold Loan',
+    name: 'labels.text.Gold Loan',
     description:
       'Quick secured loan against pledged gold ornaments or coins, with fast disbursal and minimal paperwork.',
     active: false,
@@ -220,7 +225,7 @@ export const PRODUCT_CARDS: ProductCard[] = [
     icon: 'diamond'
   },
   {
-    name: 'Consumer Durable Loan',
+    name: 'labels.text.Consumer Durable Loan',
     description:
       'Point-of-sale financing for electronics, appliances, and other durable goods, often with zero-cost EMI options.',
     active: false,
@@ -228,7 +233,7 @@ export const PRODUCT_CARDS: ProductCard[] = [
     icon: 'devices'
   },
   {
-    name: 'Loan vs Securities / FD',
+    name: 'labels.text.Loan vs Securities / FD',
     description:
       'Credit extended against shares, mutual funds, or fixed deposits without liquidating the underlying investment.',
     active: false,
@@ -236,14 +241,14 @@ export const PRODUCT_CARDS: ProductCard[] = [
     icon: 'account_balance'
   },
   {
-    name: 'Credit Card EMI',
+    name: 'labels.text.Credit Card EMI',
     description: 'Converts card spends or available credit limit into structured EMIs.',
     active: false,
     disabled: true,
     icon: 'credit_card'
   },
   {
-    name: 'BNPL',
+    name: 'labels.text.BNPL',
     description:
       'Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments.',
     active: true,
@@ -252,7 +257,7 @@ export const PRODUCT_CARDS: ProductCard[] = [
     icon: 'shopping_cart'
   },
   {
-    name: 'Invoice Discounting',
+    name: 'labels.text.Invoice Discounting',
     description:
       'Short-term financing against unpaid invoices to improve business cash flow before customer payment is due.',
     active: false,
@@ -260,7 +265,7 @@ export const PRODUCT_CARDS: ProductCard[] = [
     icon: 'receipt_long'
   },
   {
-    name: 'Merchant Cash Advance',
+    name: 'labels.text.Merchant Cash Advance',
     description:
       'Working capital advanced against future card or digital sales, repaid as a percentage of daily transactions.',
     active: false,
@@ -268,7 +273,7 @@ export const PRODUCT_CARDS: ProductCard[] = [
     icon: 'storefront'
   },
   {
-    name: 'Line of Credit',
+    name: 'labels.text.Line of Credit',
     description:
       'A revolving credit limit that can be drawn, repaid, and reused as needed, with interest charged only on the amount utilized.',
     active: false,
@@ -336,31 +341,46 @@ export const FORM_STEPS: FormStep[] = [
     icon: 'ti-id',
     fields: [
       {
-        label: 'Loan product name',
+        label: 'labels.inputs.Loan product name',
         key: 'name',
         type: 'text',
         required: true,
-        placeholder: 'e.g. Personal Loan – Standard'
+        placeholder: 'labels.placeholders.Example loan product name'
       },
       {
-        label: 'Short name',
+        label: 'labels.inputs.Short Name',
         key: 'shortName',
         type: 'text',
         required: true,
-        placeholder: 'e.g. PLS',
+        placeholder: 'labels.placeholders.Example short name',
         maxLength: 4,
         hint: 'max 4 chars'
       },
-      { label: 'External ID', key: 'externalId', type: 'text', placeholder: 'e.g. PL001' },
       {
-        label: 'Description',
+        label: 'labels.inputs.External ID',
+        key: 'externalId',
+        type: 'text',
+        placeholder: 'labels.placeholders.Example external id'
+      },
+      {
+        label: 'labels.inputs.Description',
         key: 'description',
         type: 'textarea',
-        placeholder: 'e.g. Custom advance loan product'
+        placeholder: 'labels.placeholders.Example description'
       },
-      { label: 'Start date', key: 'startDate', type: 'date', placeholder: 'Select start date' },
-      { label: 'Close date', key: 'closeDate', type: 'date', placeholder: 'Select close date' },
-      { label: 'Include in customer loan counter', key: 'includeInBorrowerCycle', type: 'checkbox' }
+      {
+        label: 'labels.inputs.Start Date',
+        key: 'startDate',
+        type: 'date',
+        placeholder: 'labels.placeholders.Select start date'
+      },
+      {
+        label: 'labels.inputs.Close Date',
+        key: 'closeDate',
+        type: 'date',
+        placeholder: 'labels.placeholders.Select close date'
+      },
+      { label: 'labels.inputs.Include in Customer Loan Counter', key: 'includeInBorrowerCycle', type: 'checkbox' }
     ]
   },
   {
@@ -369,7 +389,7 @@ export const FORM_STEPS: FormStep[] = [
     icon: 'ti-currency-dollar',
     fields: [
       {
-        label: 'Currency',
+        label: 'labels.inputs.CURRENCY',
         key: 'currencyCode',
         type: 'select',
         required: true,
@@ -380,15 +400,25 @@ export const FORM_STEPS: FormStep[] = [
           { value: 'GBP', label: 'GBP – British Pound' }
         ]
       },
-      { label: 'Decimal places', key: 'digitsAfterDecimal', type: 'number', placeholder: 'e.g. 2' },
-      { label: 'Currency in multiples of', key: 'inMultiplesOf', type: 'number', placeholder: 'e.g. 1' },
       {
-        label: 'Installment in multiples of',
+        label: 'labels.inputs.Decimal Places',
+        key: 'digitsAfterDecimal',
+        type: 'number',
+        placeholder: 'labels.placeholders.Example 2'
+      },
+      {
+        label: 'labels.inputs.Currency In Multiples Of',
+        key: 'inMultiplesOf',
+        type: 'number',
+        placeholder: 'labels.placeholders.Example 1'
+      },
+      {
+        label: 'labels.inputs.Installment in multiples of',
         key: 'installmentAmountInMultiplesOf',
         type: 'number',
-        placeholder: 'e.g. 10'
+        placeholder: 'labels.placeholders.Example 10'
       },
-      { label: 'Use borrower cycle', key: 'useBorrowerCycle', type: 'checkbox' }
+      { label: 'labels.inputs.Use borrower cycle', key: 'useBorrowerCycle', type: 'checkbox' }
     ]
   },
   {
@@ -396,23 +426,29 @@ export const FORM_STEPS: FormStep[] = [
     title: 'Terms',
     icon: 'ti-calculator',
     fields: [
-      { label: 'Principal amount', key: 'principal', type: 'number', required: true, placeholder: 'e.g. 50000' },
       {
-        label: 'Number of repayments',
+        label: 'labels.inputs.Principal Amount',
+        key: 'principal',
+        type: 'number',
+        required: true,
+        placeholder: 'labels.placeholders.Example 50000'
+      },
+      {
+        label: 'labels.inputs.Number of Repayments',
         key: 'numberOfRepayments',
         type: 'number',
         required: true,
-        placeholder: 'e.g. 12'
+        placeholder: 'labels.placeholders.Example 12'
       },
       {
-        label: 'Annual interest rate (%)',
+        label: 'labels.inputs.Annual interest rate',
         key: 'interestRatePerPeriod',
         type: 'number',
         required: true,
-        placeholder: 'e.g. 12'
+        placeholder: 'labels.placeholders.Example 12'
       },
       {
-        label: 'Interest rate frequency',
+        label: 'labels.inputs.Interest rate frequency',
         key: 'interestRateFrequencyType',
         type: 'select',
         required: true,
@@ -421,9 +457,15 @@ export const FORM_STEPS: FormStep[] = [
           { value: 3, label: 'Per year' }
         ]
       },
-      { label: 'Repaid every – value', key: 'repaymentEvery', type: 'number', required: true, placeholder: 'e.g. 1' },
       {
-        label: 'Repaid every – period',
+        label: 'labels.inputs.Repaid every – value',
+        key: 'repaymentEvery',
+        type: 'number',
+        required: true,
+        placeholder: 'labels.placeholders.Example 1'
+      },
+      {
+        label: 'labels.inputs.Repaid every – period',
         key: 'repaymentFrequencyType',
         type: 'select',
         required: true,
@@ -433,14 +475,18 @@ export const FORM_STEPS: FormStep[] = [
           { value: 2, label: 'Months' }
         ]
       },
-      { label: 'Linked to floating interest rates', key: 'isLinkedToFloatingInterestRates', type: 'checkbox' },
       {
-        label: 'Allow approval/disbursal above applied amount',
+        label: 'labels.inputs.Linked to floating interest rates',
+        key: 'isLinkedToFloatingInterestRates',
+        type: 'checkbox'
+      },
+      {
+        label: 'labels.inputs.Allow approval/disbursal above applied amount',
         key: 'allowApprovedDisbursedAmountsOverApplied',
         type: 'checkbox'
       },
       {
-        label: 'Over amount calculation type',
+        label: 'labels.inputs.Over Amount Calculation Type',
         key: 'overAppliedCalculationType',
         type: 'select',
         options: [
@@ -449,20 +495,25 @@ export const FORM_STEPS: FormStep[] = [
           { value: 'Amount', label: 'Amount' }
         ]
       },
-      { label: 'Over amount', key: 'overAppliedNumber', type: 'number', placeholder: 'e.g. 10' },
       {
-        label: 'Minimum days between disbursal and first repayment',
-        key: 'minimumDaysBetweenDisbursalAndFirstRepayment',
+        label: 'labels.inputs.Over Amount',
+        key: 'overAppliedNumber',
         type: 'number',
-        placeholder: 'e.g. 5'
+        placeholder: 'labels.placeholders.Example 10'
       },
       {
-        label: 'Interest recognition on disbursement date',
+        label: 'labels.inputs.Minimum days between disbursal and first repayment',
+        key: 'minimumDaysBetweenDisbursalAndFirstRepayment',
+        type: 'number',
+        placeholder: 'labels.placeholders.Example 5'
+      },
+      {
+        label: 'labels.inputs.Interest recognition on disbursement date',
         key: 'interestRecognitionOnDisbursementDate',
         type: 'checkbox'
       },
       {
-        label: 'Repayment start date type',
+        label: 'labels.inputs.Repayment start date type',
         key: 'repaymentStartDateType',
         type: 'select',
         options: [{ value: 1, label: 'Disbursement date' }]
@@ -475,7 +526,7 @@ export const FORM_STEPS: FormStep[] = [
     icon: 'ti-settings',
     fields: [
       {
-        label: 'Amortization type',
+        label: 'labels.inputs.Amortization Type',
         key: 'amortizationType',
         type: 'select',
         required: true,
@@ -485,7 +536,7 @@ export const FORM_STEPS: FormStep[] = [
         ]
       },
       {
-        label: 'Interest method',
+        label: 'labels.inputs.Interest Method',
         key: 'interestType',
         type: 'select',
         required: true,
@@ -501,13 +552,13 @@ export const FORM_STEPS: FormStep[] = [
         // retrieve APIs and rejected by create — and therefore stays in UNSUPPORTED_CREATE_FIELDS.
         // This flag matters: Fineract accepts `isInterestRecalculationEnabled` only with daily
         // interest calculation OR this set to true.
-        label: 'Calculate interest for exact days in partial period',
+        label: 'labels.inputs.Calculate interest for exact days in partial period',
         key: 'allowPartialPeriodInterestCalculation',
         type: 'checkbox'
       },
-      { label: 'Is equal amortization?', key: 'isEqualAmortization', type: 'checkbox' },
+      { label: 'labels.inputs.Is Equal Amortization', key: 'isEqualAmortization', type: 'checkbox' },
       {
-        label: 'Interest calculation period',
+        label: 'labels.inputs.Interest Calculation Period',
         key: 'interestCalculationPeriodType',
         type: 'select',
         options: [
@@ -516,7 +567,7 @@ export const FORM_STEPS: FormStep[] = [
         ]
       },
       {
-        label: 'Loan schedule type',
+        label: 'labels.inputs.Loan Schedule Type',
         key: 'loanScheduleType',
         type: 'select',
         options: [
@@ -525,25 +576,25 @@ export const FORM_STEPS: FormStep[] = [
         ]
       },
       {
-        label: 'Repayment strategy',
+        label: 'labels.inputs.Repayment Strategy',
         key: 'transactionProcessingStrategyCode',
         type: 'select',
         required: true,
         options: [
           {
             value: 'interest-principal-penalties-fees-order-strategy',
-            label: 'Interest → Principal → Penalties → Fees'
+            label: 'labels.inputs.Interest → Principal → Penalties → Fees'
           },
           {
             value: 'principal-interest-penalties-fees-order-strategy',
-            label: 'Principal → Interest → Penalties → Fees'
+            label: 'labels.inputs.Principal → Interest → Penalties → Fees'
           },
           { value: 'mifos-standard-strategy', label: 'Mifos standard' },
           { value: 'early-repayment-strategy', label: 'Early repayment' }
         ]
       },
       {
-        label: 'Loan schedule processing type',
+        label: 'labels.inputs.Loan Schedule Processing Type',
         key: 'loanScheduleProcessingType',
         type: 'select',
         options: [
@@ -552,15 +603,25 @@ export const FORM_STEPS: FormStep[] = [
         ]
       },
       {
-        label: 'Grace on principal payment (months)',
+        label: 'labels.inputs.Grace on principal payment (months)',
         key: 'graceOnPrincipalPayment',
         type: 'number',
         placeholder: '0'
       },
-      { label: 'Grace on interest payment (months)', key: 'graceOnInterestPayment', type: 'number', placeholder: '0' },
-      { label: 'Interest free period (months)', key: 'interestFreePeriod', type: 'number', placeholder: '0' },
       {
-        label: 'Days in year',
+        label: 'labels.inputs.Grace on interest payment (months)',
+        key: 'graceOnInterestPayment',
+        type: 'number',
+        placeholder: '0'
+      },
+      {
+        label: 'labels.inputs.Interest free period (months)',
+        key: 'interestFreePeriod',
+        type: 'number',
+        placeholder: '0'
+      },
+      {
+        label: 'labels.inputs.Days in Year',
         key: 'daysInYearType',
         type: 'select',
         options: [
@@ -571,7 +632,7 @@ export const FORM_STEPS: FormStep[] = [
         ]
       },
       {
-        label: 'Days in year – custom strategy',
+        label: 'labels.inputs.Days in year custom strategy',
         key: 'daysInYearCustomStrategy',
         type: 'select',
         // Classic binds `[value]="daysInYearCustomStrategy.id"` against the template's
@@ -583,7 +644,7 @@ export const FORM_STEPS: FormStep[] = [
         ]
       },
       {
-        label: 'Days in month',
+        label: 'labels.inputs.Days in month',
         key: 'daysInMonthType',
         type: 'select',
         options: [
@@ -592,100 +653,115 @@ export const FORM_STEPS: FormStep[] = [
         ]
       },
       {
-        label: 'Principal threshold (%) for last installment',
+        label: 'labels.inputs.Principal threshold (%) for last installment',
         key: 'principalThresholdForLastInstallment',
         type: 'number',
         placeholder: '5'
       },
-      { label: 'Allow top-up loans', key: 'canUseForTopup', type: 'checkbox' },
-      { label: 'Recalculate interest', key: 'isInterestRecalculationEnabled', type: 'checkbox' },
+      { label: 'labels.inputs.Allow top-up loans', key: 'canUseForTopup', type: 'checkbox' },
+      { label: 'labels.inputs.Recalculate Interest', key: 'isInterestRecalculationEnabled', type: 'checkbox' },
       // Interest recalculation family — every control Classic's Settings step registers while
       // `isInterestRecalculationEnabled` is on (loan-product-settings-step.component.ts, the
       // `isInterestRecalculationEnabled` valueChanges block) and removes when it is off. Options come
       // from the backend template at render time, exactly like Classic, via TEMPLATE_OPTION_SOURCES;
       // the static `options` here are only a fallback for a template-less render.
       {
-        label: 'Pre-closure interest calculation rule',
+        label: 'labels.inputs.Pre-closure interest calculation rule',
         key: 'preClosureInterestCalculationStrategy',
         type: 'select',
         required: true,
         options: []
       },
       {
-        label: 'Advance payments adjustment type',
+        label: 'labels.inputs.Advance payments adjustment type',
         key: 'rescheduleStrategyMethod',
         type: 'select',
         required: true,
         options: []
       },
       {
-        label: 'Interest recalculation compounding on',
+        label: 'labels.inputs.Interest recalculation compounding on',
         key: 'interestRecalculationCompoundingMethod',
         type: 'select',
         required: true,
         options: []
       },
       {
-        label: 'Frequency for compounding',
+        label: 'labels.inputs.Frequency for compounding',
         key: 'recalculationCompoundingFrequencyType',
         type: 'select',
         required: true,
         options: []
       },
       {
-        label: 'Frequency Interval for compounding',
+        label: 'labels.inputs.Frequency Interval for compounding',
         key: 'recalculationCompoundingFrequencyInterval',
         type: 'number',
         required: true,
-        placeholder: 'e.g. 1'
+        placeholder: 'labels.placeholders.Example 1'
       },
       {
-        label: 'Compounding on nth day',
+        label: 'labels.inputs.Compounding on nth day',
         key: 'recalculationCompoundingFrequencyNthDayType',
         type: 'select',
         options: []
       },
       {
-        label: 'Compounding on day of week',
+        label: 'labels.inputs.Compounding on day of week',
         key: 'recalculationCompoundingFrequencyDayOfWeekType',
         type: 'select',
         options: []
       },
-      { label: 'Compounding on day', key: 'recalculationCompoundingFrequencyOnDayType', type: 'select', options: [] },
       {
-        label: 'Frequency for recalculate outstanding principal',
+        label: 'labels.inputs.Compounding on day',
+        key: 'recalculationCompoundingFrequencyOnDayType',
+        type: 'select',
+        options: []
+      },
+      {
+        label: 'labels.inputs.Frequency for recalculate Outstanding Principal',
         key: 'recalculationRestFrequencyType',
         type: 'select',
         required: true,
         options: []
       },
       {
-        label: 'Frequency Interval for recalculation',
+        label: 'labels.inputs.Frequency Interval for recalculation',
         key: 'recalculationRestFrequencyInterval',
         type: 'number',
         required: true,
-        placeholder: 'e.g. 1'
+        placeholder: 'labels.placeholders.Example 1'
       },
-      { label: 'Recalculate on nth day', key: 'recalculationRestFrequencyNthDayType', type: 'select', options: [] },
       {
-        label: 'Recalculate on day of week',
+        label: 'labels.inputs.Recalculate on nth day',
+        key: 'recalculationRestFrequencyNthDayType',
+        type: 'select',
+        options: []
+      },
+      {
+        label: 'labels.inputs.Recalculate on day of week',
         key: 'recalculationRestFrequencyDayOfWeekType',
         type: 'select',
         options: []
       },
-      { label: 'Recalculate on day', key: 'recalculationRestFrequencyOnDayType', type: 'select', options: [] },
       {
-        label: 'Is arrears recognition based on original schedule?',
+        label: 'labels.inputs.Recalculate on day',
+        key: 'recalculationRestFrequencyOnDayType',
+        type: 'select',
+        options: []
+      },
+      {
+        label: 'labels.inputs.Is arrears recognition based on original schedule?',
         key: 'isArrearsBasedOnOriginalSchedule',
         type: 'checkbox'
       },
       {
-        label: 'Do not calculate interest on past due principal balances',
+        label: 'labels.inputs.Do not calculate interest on past due principal balances',
         key: 'disallowInterestCalculationOnPastDue',
         type: 'checkbox'
       },
       {
-        label: 'Delinquency bucket',
+        label: 'labels.inputs.Delinquency Bucket',
         key: 'delinquencyBucketId',
         type: 'select',
         options: [
@@ -694,97 +770,145 @@ export const FORM_STEPS: FormStep[] = [
           { value: '2', label: 'Bucket 2 – Aggressive' }
         ]
       },
-      { label: 'Define installment amount', key: 'canDefineInstallmentAmount', type: 'checkbox' },
-      { label: 'Allow variable installments', key: 'allowVariableInstallments', type: 'checkbox' },
-      { label: 'Allow multiple disbursements', key: 'multiDisburseLoan', type: 'checkbox' },
+      { label: 'labels.inputs.Define installment amount', key: 'canDefineInstallmentAmount', type: 'checkbox' },
+      { label: 'labels.inputs.Allow variable installments', key: 'allowVariableInstallments', type: 'checkbox' },
+      { label: 'labels.inputs.Allow multiple disbursements', key: 'multiDisburseLoan', type: 'checkbox' },
       {
-        label: 'Maximum tranche count',
+        label: 'labels.inputs.Maximum Tranche count',
         key: 'maxTrancheCount',
         type: 'number',
-        placeholder: 'e.g. 4'
+        placeholder: 'labels.placeholders.Example 4'
       },
       {
-        label: 'Allow full term for tranche',
+        label: 'labels.inputs.Allow full term for tranche',
         key: 'allowFullTermForTranche',
         type: 'checkbox'
       },
       {
-        label: 'In arrears tolerance',
+        label: 'labels.inputs.In arrears tolerance',
         key: 'inArrearsTolerance',
         type: 'number',
-        placeholder: 'e.g. 50'
+        placeholder: 'labels.placeholders.Example 50'
       },
       {
-        label: 'Grace on arrears ageing',
+        label: 'labels.inputs.Grace on Arrears Ageing',
         key: 'graceOnArrearsAgeing',
         type: 'number',
-        placeholder: 'e.g. 5'
+        placeholder: 'labels.placeholders.Example 5'
       },
       {
-        label: 'Overdue days for NPA',
+        label: 'labels.inputs.Overdue days for NPA',
         key: 'overdueDaysForNPA',
         type: 'number',
-        placeholder: 'e.g. 90'
+        placeholder: 'labels.placeholders.Example 90'
       },
       {
-        label: 'Account moves out of NPA only on arrears completion',
+        label: 'labels.inputs.Account moves out of NPA only on arrears completion',
         key: 'accountMovesOutOfNPAOnlyOnArrearsCompletion',
         type: 'checkbox'
       },
-      { label: 'Place guarantee funds on-hold', key: 'holdGuaranteeFunds', type: 'checkbox' },
+      { label: 'labels.inputs.Place Guarantee Funds On-Hold', key: 'holdGuaranteeFunds', type: 'checkbox' },
+      // Classic registers these three only while `holdGuaranteeFunds` is ticked and `removeControl`s
+      // them otherwise (loan-product-settings-step.component.ts), with `mandatoryGuarantee` marked
+      // required in its template. The wizard's flat form keeps them registered, so the same gating is
+      // reproduced by the GUARANTEE_FUNDS_DEPENDENT_FIELDS visibility rule in the wizard component and
+      // the matching strip in sanitizeCreateLoanProductPayload.
       {
-        label: 'Maximum allowed outstanding balance',
+        label: 'labels.inputs.Mandatory Guarantee(%)',
+        key: 'mandatoryGuarantee',
+        type: 'number',
+        required: true,
+        placeholder: 'labels.placeholders.Example 100'
+      },
+      {
+        label: 'labels.inputs.Minimum Guarantee from Own Funds(%)',
+        key: 'minimumGuaranteeFromOwnFunds',
+        type: 'number',
+        placeholder: 'labels.placeholders.Example 0'
+      },
+      {
+        label: 'labels.inputs.Minimum guarantee from guarantor (%)',
+        key: 'minimumGuaranteeFromGuarantor',
+        type: 'number',
+        placeholder: 'labels.placeholders.Example 0'
+      },
+      {
+        label: 'labels.inputs.Maximum allowed outstanding balance',
         key: 'outstandingLoanBalance',
         type: 'number',
-        placeholder: 'e.g. 100000'
+        placeholder: 'labels.placeholders.Example 100000'
       },
-      { label: 'Disallow expected disbursements', key: 'disallowExpectedDisbursements', type: 'checkbox' },
-      { label: 'Allow amortization override', key: 'allowAttributeOverrides.amortizationType', type: 'checkbox' },
-      { label: 'Allow interest method override', key: 'allowAttributeOverrides.interestType', type: 'checkbox' },
       {
-        label: 'Allow repayment strategy override',
+        label: 'labels.inputs.Disallow Expected Disbursements',
+        key: 'disallowExpectedDisbursements',
+        type: 'checkbox'
+      },
+      {
+        label: 'labels.inputs.Allow amortization override',
+        key: 'allowAttributeOverrides.amortizationType',
+        type: 'checkbox'
+      },
+      {
+        label: 'labels.inputs.Allow interest method override',
+        key: 'allowAttributeOverrides.interestType',
+        type: 'checkbox'
+      },
+      {
+        label: 'labels.inputs.Allow repayment strategy override',
         key: 'allowAttributeOverrides.transactionProcessingStrategyCode',
         type: 'checkbox'
       },
       {
-        label: 'Allow interest calculation period override',
+        label: 'labels.inputs.Allow interest calculation period override',
         key: 'allowAttributeOverrides.interestCalculationPeriodType',
         type: 'checkbox'
       },
       {
-        label: 'Allow arrears tolerance override',
+        label: 'labels.inputs.Allow arrears tolerance override',
         key: 'allowAttributeOverrides.inArrearsTolerance',
         type: 'checkbox'
       },
-      { label: 'Allow repaid every override', key: 'allowAttributeOverrides.repaymentEvery', type: 'checkbox' },
       {
-        label: 'Allow moratorium override',
+        label: 'labels.inputs.Allow repaid every override',
+        key: 'allowAttributeOverrides.repaymentEvery',
+        type: 'checkbox'
+      },
+      {
+        label: 'labels.inputs.Allow moratorium override',
         key: 'allowAttributeOverrides.graceOnPrincipalAndInterestPayment',
         type: 'checkbox'
       },
       {
-        label: 'Allow arrears ageing override',
+        label: 'labels.inputs.Allow arrears ageing override',
         key: 'allowAttributeOverrides.graceOnArrearsAgeing',
         type: 'checkbox'
       },
-      { label: 'Enable downpayment', key: 'enableDownPayment', type: 'checkbox' },
+      { label: 'labels.inputs.Enable Down Payment', key: 'enableDownPayment', type: 'checkbox' },
       {
-        label: 'Disbursed amount percentage for downpayment',
+        label: 'labels.inputs.Disbursed amount percentage for downpayment',
         key: 'disbursedAmountPercentageForDownPayment',
         type: 'number',
-        placeholder: 'e.g. 35'
+        placeholder: 'labels.placeholders.Example 35'
       },
-      { label: 'Enable auto repayment for downpayment', key: 'enableAutoRepaymentForDownPayment', type: 'checkbox' },
       {
-        label: 'Loan charge-off behaviour',
+        label: 'labels.inputs.Enable Auto Repayment for Down Payment',
+        key: 'enableAutoRepaymentForDownPayment',
+        type: 'checkbox'
+      },
+      {
+        label: 'labels.inputs.Loan Charge-off behaviour',
         key: 'loanChargeOffBehaviour',
         type: 'select',
         // Codes, matching the template-sourced options this select prefers at render time.
         options: [{ value: 'REGULAR', label: 'Regular' }]
       },
-      { label: 'Enable installment level delinquency', key: 'enableInstallmentLevelDelinquency', type: 'checkbox' },
-      { label: 'Enable income capitalization', key: 'enableIncomeCapitalization', type: 'checkbox' },
-      { label: 'Enable buydown fees', key: 'enableBuydownFees', type: 'checkbox' }
+      {
+        label: 'labels.inputs.Enable installment level Delinquency',
+        key: 'enableInstallmentLevelDelinquency',
+        type: 'checkbox'
+      },
+      { label: 'labels.inputs.Enable income capitalization', key: 'enableIncomeCapitalization', type: 'checkbox' },
+      { label: 'labels.inputs.Enable buydown fees', key: 'enableBuydownFees', type: 'checkbox' }
     ]
   },
   {
@@ -851,21 +975,21 @@ export const FORM_STEPS: FormStep[] = [
     icon: 'ti-panel',
     fields: [
       {
-        label: 'Use global config values for repayment event',
+        label: 'labels.inputs.Use global config values for repayment event',
         key: 'useGlobalConfigForRepaymentEvent',
         type: 'checkbox'
       },
       {
-        label: 'Due days for repayment event',
+        label: 'labels.inputs.Due days for repayment event',
         key: 'dueDaysForRepaymentEvent',
         type: 'number',
-        placeholder: 'e.g. 1'
+        placeholder: 'labels.placeholders.Example 1'
       },
       {
-        label: 'Overdue days for repayment event',
+        label: 'labels.inputs.OverDue days for repayment event',
         key: 'overDueDaysForRepaymentEvent',
         type: 'number',
-        placeholder: 'e.g. 1'
+        placeholder: 'labels.placeholders.Example 1'
       }
     ]
   },
@@ -948,6 +1072,12 @@ export const INITIAL_FORM_STATE: Record<string, string | number | boolean | null
   overdueDaysForNPA: 90,
   accountMovesOutOfNPAOnlyOnArrearsCompletion: true,
   holdGuaranteeFunds: false,
+  // Classic's guarantee controls default to empty and are only registered while the toggle is on;
+  // null keeps them out of the payload until the user fills them in (see the strip in
+  // sanitizeCreateLoanProductPayload).
+  mandatoryGuarantee: null,
+  minimumGuaranteeFromOwnFunds: null,
+  minimumGuaranteeFromGuarantor: null,
   outstandingLoanBalance: 100000,
   disallowExpectedDisbursements: true,
   'allowAttributeOverrides.amortizationType': true,
@@ -977,7 +1107,20 @@ export const INITIAL_FORM_STATE: Record<string, string | number | boolean | null
 };
 
 export type LoanWizardProfileMode =
-  'personal' | 'custom-advanced' | 'two-wheeler' | 'education' | 'agriculture' | 'bnpl';
+  'personal' | 'custom-advanced' | 'two-wheeler' | 'education' | 'agriculture' | 'bnpl' | 'home' | 'mortgage';
+
+/**
+ * Home Loan and Mortgage Loan (LAP) share one product-level configuration. This is what the workbook
+ * specifies, not an assumption: the `Home L` and `Mortage L` sheets are cell-for-cell identical, and
+ * the index sheet's remark against Mortgage Loan (LAP) gives the reason — "Collateral fields are at
+ * the loan account level and not product level". The pledged asset is the only thing that separates a
+ * LAP from a home loan, and Fineract carries it on the loan account, so at product level there is
+ * nothing left to differentiate. The two profiles therefore differ only in identity (card, route,
+ * page title, product description) and share every field-visibility and payload rule below.
+ */
+export function isHomeOrMortgageProfile(profileMode: LoanWizardProfileMode): boolean {
+  return profileMode === 'home' || profileMode === 'mortgage';
+}
 
 export type FormState = typeof INITIAL_FORM_STATE;
 
@@ -1012,10 +1155,12 @@ export function forcesProgressiveStack(profileMode: LoanWizardProfileMode): bool
  * Guided profiles whose payload transmits the multi-disburse family (multiDisburseLoan,
  * maxTrancheCount, allowFullTermForTranche, disallowExpectedDisbursements). Every other guided
  * profile omits all of them — the proven Personal Loan contract. Education needs them: education
- * loans disburse in semester-wise tranches paid to the institution.
+ * loans disburse in semester-wise tranches paid to the institution. Home needs them for the same
+ * structural reason: the Home L sheet marks the whole family Applicable (rows 55-59) because a
+ * construction-linked home loan disburses against build stages rather than in one lump sum.
  */
 export function sendsMultiDisburseFields(profileMode: LoanWizardProfileMode): boolean {
-  return profileMode === 'education' || profileMode === 'bnpl';
+  return profileMode === 'education' || profileMode === 'bnpl' || isHomeOrMortgageProfile(profileMode);
 }
 
 /**
@@ -1023,9 +1168,10 @@ export function sendsMultiDisburseFields(profileMode: LoanWizardProfileMode): bo
  * form seeds the base 100000, which no guided product wants as a real cap. BNPL is the exception:
  * its sheet marks the field Applicable (row 56), so it is an editable control whose value must
  * reach the payload, gated on `multiDisburseLoan` exactly as the Classic Settings step gates it.
+ * Home and Mortgage are the same case (Home L / Mortage L row 57).
  */
 export function sendsOutstandingLoanBalance(profileMode: LoanWizardProfileMode): boolean {
-  return profileMode === 'bnpl';
+  return profileMode === 'bnpl' || isHomeOrMortgageProfile(profileMode);
 }
 
 /**
@@ -1059,6 +1205,18 @@ export function rendersDeferredIncomeStep(profileMode: LoanWizardProfileMode): b
 /** Fewest tranches a `multiDisburseLoan: true` product can be created with — used as the floor and
  * the empty-value fallback for `maxTrancheCount` in {@link buildPayload}. */
 export const MIN_TRANCHE_COUNT = 2;
+
+/**
+ * The guarantee inputs Classic registers under `holdGuaranteeFunds` and removes when it is off (see
+ * loan-product-settings-step.component.ts). Like the interest recalculation family, the wizard holds
+ * them in its one flat FormGroup, so the toggle drives visibility, validators and — through
+ * {@link sanitizeCreateLoanProductPayload} — payload inclusion instead of control lifetime.
+ */
+export const GUARANTEE_FUNDS_DEPENDENT_FIELDS: readonly string[] = [
+  'mandatoryGuarantee',
+  'minimumGuaranteeFromOwnFunds',
+  'minimumGuaranteeFromGuarantor'
+];
 
 /**
  * Keys the BNPL sheet marks `is Applicable = Y` that the base {@link HIDDEN_DEFAULTS} would
@@ -1156,6 +1314,44 @@ const BNPL_VISIBLE_KEYS: readonly string[] = [
   'supportedInterestRefundTypes',
   'enableIncomeCapitalization',
   'enableBuydownFees'
+];
+
+/**
+ * Keys the Home L sheet marks `is Applicable = Y` that the base {@link HIDDEN_DEFAULTS} would
+ * otherwise pin. Sheet rows, in order: 16, 33, 34, 36, 38, 43, 44, 45, 50, 53, 54, 55, 56, 57, 58,
+ * 59, 72. The remaining `Applicable = Y` rows (name, shortName, externalId, currencyCode, principal,
+ * numberOfRepayments, the interest/repayment terms, amortization, interest method, interest
+ * calculation period, repayment strategy, the three grace fields, charges and accounting) are never
+ * in HIDDEN_DEFAULTS to begin with, so they need no entry here.
+ *
+ * Two sheet rows are deliberately NOT listed:
+ * - Row 17 ("Installment day calculation from", sample "Disbursement Date") and row 29
+ *   (`repaymentStartDateType`, sample 1) are the same backend field, and the sheet marks the first
+ *   Applicable and the second Hidden. The wizard's select offers exactly that one option, so
+ *   `isProfileOrStrategyDeterminedField` hides it for every profile — the same resolution BNPL made
+ *   for the identical contradiction on its own sheet.
+ * - Rows 68-70 (the down payment trio) are marked Hidden with a blank Default Value, so they inherit
+ *   the master defaults from HIDDEN_DEFAULTS (enabled, 35%, auto-repayment on) exactly as Personal
+ *   Loan does. A home loan's margin money is therefore fixed by the template rather than editable.
+ */
+const HOME_VISIBLE_KEYS: readonly string[] = [
+  'isLinkedToFloatingInterestRates',
+  'allowPartialPeriodInterestCalculation',
+  'isEqualAmortization',
+  'loanScheduleType',
+  'loanScheduleProcessingType',
+  'daysInYearType',
+  'daysInYearCustomStrategy',
+  'daysInMonthType',
+  'principalThresholdForLastInstallment',
+  'holdGuaranteeFunds',
+  'isInterestRecalculationEnabled',
+  'multiDisburseLoan',
+  'maxTrancheCount',
+  'outstandingLoanBalance',
+  'disallowExpectedDisbursements',
+  'allowFullTermForTranche',
+  'delinquencyBucketId'
 ];
 
 /**
@@ -1279,6 +1475,19 @@ export function hiddenDefaultsFor(profileMode: LoanWizardProfileMode): Record<st
     }
     return defaults;
   }
+  if (isHomeOrMortgageProfile(profileMode)) {
+    const defaults: Record<string, unknown> = {
+      ...HIDDEN_DEFAULTS,
+      description: profileMode === 'mortgage' ? 'Mortgage Loan Product' : 'Home Loan Product'
+    };
+    // Every key below is marked `is Applicable = Y` on the Home L sheet, so the profile renders it as
+    // an editable control. Each must be REMOVED (not overridden) from the hidden defaults, because
+    // the guided merge spreads `defaults` last and would otherwise clobber the user's input.
+    for (const exposedKey of HOME_VISIBLE_KEYS) {
+      delete defaults[exposedKey];
+    }
+    return defaults;
+  }
   if (profileMode === 'custom-advanced') {
     const d: Record<string, unknown> = { ...HIDDEN_DEFAULTS };
     delete d.canDefineInstallmentAmount;
@@ -1301,6 +1510,38 @@ export function hiddenDefaultsFor(profileMode: LoanWizardProfileMode): Record<st
   }
   return { ...HIDDEN_DEFAULTS };
 }
+
+/**
+ * The visible-control prefills shared by the Home and Mortgage profiles (see
+ * {@link isHomeOrMortgageProfile} for why one object serves both).
+ *
+ * Deliberately absent: `principal`, `interestRatePerPeriod` and `numberOfRepayments`. Every sheet in
+ * the workbook carries the SAME boilerplate sample values in column E (10000 / 12% / 12), inherited
+ * from the `All Params` master — they are not per-product figures, and the sheets' `Default Value`
+ * column is blank for all three. Seeding a headline ticket size or tenure here would be inventing a
+ * commercial policy the workbook does not state, so these stay on the shared INITIAL_FORM_STATE seed
+ * and the operator enters them.
+ */
+const HOME_AND_MORTGAGE_INITIAL_OVERRIDES: Partial<FormState> = {
+  // Rows 36/37/38, resolved exactly as BNPL resolves the same three: the sheet's Progressive schedule
+  // cannot coexist with the non-advanced strategy row 37 samples, because Fineract only accepts
+  // loanScheduleProcessingType (and the other Progressive-only settings) alongside the advanced
+  // payment allocation strategy. Progressive wins and the strategy is seeded to match. Seeded rather
+  // than pinned because row 36 marks the schedule type Applicable.
+  loanScheduleType: 'Progressive',
+  transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+  loanScheduleProcessingType: 'Horizontal',
+  // Rows 55-59. Staged disbursement is the structural difference between these two profiles and the
+  // single-disbursal templates: the sheet marks the whole tranche family Applicable, so the toggle is
+  // seeded on and the tranche cap, the balance cap and both tranche flags are editable controls.
+  // `disallowExpectedDisbursements` keeps the base default rather than being re-seeded here.
+  multiDisburseLoan: true,
+  maxTrancheCount: 4,
+  outstandingLoanBalance: 100000,
+  // Rows 43/45 — seeded to the sheet's values, and editable because both rows are Applicable.
+  daysInYearType: 360,
+  daysInMonthType: 30
+};
 
 /**
  * Visible-control prefills that differ from INITIAL_FORM_STATE per profile. They seed the
@@ -1382,8 +1623,25 @@ export const PROFILE_INITIAL_OVERRIDES: Partial<Record<LoanWizardProfileMode, Pa
     loanScheduleType: 'Progressive',
     transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
     loanScheduleProcessingType: 'Horizontal'
-  }
+  },
+  home: HOME_AND_MORTGAGE_INITIAL_OVERRIDES,
+  // Identical product-level configuration to Home — see isHomeOrMortgageProfile.
+  mortgage: HOME_AND_MORTGAGE_INITIAL_OVERRIDES
 };
+
+/**
+ * Home L / Mortage L rows 16, 53, 57 and 58 — Applicable on the sheet but in the wizard's custom-only
+ * list, so they need the same second-gate exemption BNPL needs. The three guarantee inputs come with
+ * `holdGuaranteeFunds`: they are custom-only for the same reason it is, and the sheet marks the
+ * guarantee feature Applicable as a whole (row 53) rather than listing its dependents separately.
+ */
+const HOME_AND_MORTGAGE_EXTRA_VISIBLE_FIELDS: readonly string[] = [
+  'isLinkedToFloatingInterestRates',
+  'holdGuaranteeFunds',
+  ...GUARANTEE_FUNDS_DEPENDENT_FIELDS,
+  'outstandingLoanBalance',
+  'disallowExpectedDisbursements'
+];
 
 /**
  * Keys from the guided-hidden lists (hidden defaults / custom-only fields) that a specific profile
@@ -1408,7 +1666,9 @@ export const PROFILE_EXTRA_VISIBLE_FIELDS: Partial<Record<LoanWizardProfileMode,
     'enableAutoRepaymentForDownPayment',
     'loanChargeOffBehaviour',
     'enableInstallmentLevelDelinquency'
-  ]
+  ],
+  home: HOME_AND_MORTGAGE_EXTRA_VISIBLE_FIELDS,
+  mortgage: HOME_AND_MORTGAGE_EXTRA_VISIBLE_FIELDS
 };
 
 /** Wizard header eyebrow, one translation key per profile. */
@@ -1418,7 +1678,9 @@ export const PROFILE_LABEL_KEYS: Record<LoanWizardProfileMode, string> = {
   'two-wheeler': 'labels.text.Two Wheeler Loan',
   education: 'labels.text.Education Loan',
   agriculture: 'labels.text.Agriculture Loan',
-  bnpl: 'labels.text.BNPL'
+  bnpl: 'labels.text.BNPL',
+  home: 'labels.text.Home Loan',
+  mortgage: 'labels.text.Mortgage Loan (LAP)'
 };
 
 /** Route path (under products/loan-products) → wizard profile and the page heading it renders. */
@@ -1431,7 +1693,9 @@ const PROFILE_ROUTES: Record<string, { profileMode: LoanWizardProfileMode; pageT
   'two-wheeler-loan': { profileMode: 'two-wheeler', pageTitle: 'labels.heading.Create Two Wheeler Loan' },
   'education-loan': { profileMode: 'education', pageTitle: 'labels.heading.Create Education Loan' },
   'agriculture-loan': { profileMode: 'agriculture', pageTitle: 'labels.heading.Create Agriculture Loan' },
-  'bnpl-loan': { profileMode: 'bnpl', pageTitle: 'labels.heading.Create BNPL Loan' }
+  'bnpl-loan': { profileMode: 'bnpl', pageTitle: 'labels.heading.Create BNPL Loan' },
+  'home-loan': { profileMode: 'home', pageTitle: 'labels.heading.Create Home Loan' },
+  'mortgage-loan': { profileMode: 'mortgage', pageTitle: 'labels.heading.Create Mortgage Loan' }
 };
 
 /**
@@ -1693,6 +1957,24 @@ function sanitizeCreateLoanProductPayload(merged: Record<string, unknown>, profi
   if (!merged.enableDownPayment) {
     delete merged.disbursedAmountPercentageForDownPayment;
     delete merged.enableAutoRepaymentForDownPayment;
+  }
+
+  // 1b1. The guarantee trio mirrors the Classic Settings step, which `addControl`s
+  //      `mandatoryGuarantee` / `minimumGuaranteeFromOwnFunds` / `minimumGuaranteeFromGuarantor` only
+  //      while `holdGuaranteeFunds` is ticked and `removeControl`s all three otherwise, so none of
+  //      them reach `POST /loanproducts` for a product that holds no guarantee funds. The wizard's
+  //      flat form always carries them, so strip the family here. This is a no-op for every profile
+  //      that pins `holdGuaranteeFunds: false` in its hidden defaults (all of them except Home and
+  //      Mortgage), leaving those payloads byte-for-byte unchanged. Blank optional entries are
+  //      dropped for the enabled case too — an empty value is not a valid number.
+  if (!merged.holdGuaranteeFunds) {
+    GUARANTEE_FUNDS_DEPENDENT_FIELDS.forEach((field) => delete merged[field]);
+  } else {
+    GUARANTEE_FUNDS_DEPENDENT_FIELDS.forEach((field) => {
+      if (merged[field] === '' || merged[field] === null || merged[field] === undefined) {
+        delete merged[field];
+      }
+    });
   }
 
   // 1a2. The over-applied pair mirrors the Classic Terms step, which declares both controls
