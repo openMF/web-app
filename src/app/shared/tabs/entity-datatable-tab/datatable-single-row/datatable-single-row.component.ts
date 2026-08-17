@@ -85,6 +85,17 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
     return this.datatables.toDisplayLabel(label);
   }
 
+  getSystemColumnTranslationKey(columnName: string): string | null {
+    switch (columnName) {
+      case 'created_at':
+        return 'labels.inputs.Created At';
+      case 'updated_at':
+        return 'labels.inputs.Updated At';
+      default:
+        return null;
+    }
+  }
+
   ngOnInit() {
     this.route.params.subscribe((routeParams: any) => {
       this.datatableName = routeParams.datatableName;
