@@ -23,11 +23,13 @@ import { SettingsService } from 'app/settings/settings.service';
 import { SystemService } from 'app/system/system.service';
 import { DateFormatPipe } from 'app/pipes/date-format.pipe';
 import { DatetimeFormatPipe } from 'app/pipes/datetime-format.pipe';
+import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { DatatableMultiRowComponent } from './datatable-multi-row.component';
 
 describe('DatatableMultiRowComponent', () => {
   let fixture: ComponentFixture<DatatableMultiRowComponent>;
   let component: DatatableMultiRowComponent;
+  let matDialog: { open: jest.Mock };
 
   const row = (id: number, firstName: string, lastName: string, amount: number | null = id) => ({
     row: [
@@ -63,13 +65,20 @@ describe('DatatableMultiRowComponent', () => {
   };
 
   beforeEach(async () => {
+    const translations: Record<string, string> = {
+      'labels.buttons.Add': 'Agregar',
+      'labels.text.Client': 'Cliente',
+      'labels.text.for': 'para'
+    };
     const translateService = {
-      instant: jest.fn((key: string) => key),
-      get: jest.fn((key: string) => of(key)),
+      instant: jest.fn((key: string) => translations[key] || key),
+      get: jest.fn((key: string) => of(translations[key] || key)),
       onLangChange: of({ lang: 'en' }),
       onTranslationChange: of({}),
       onDefaultLangChange: of({ lang: 'en' })
     };
+
+    matDialog = { open: jest.fn(() => ({ afterClosed: () => of({}) })) };
 
     await TestBed.configureTestingModule({
       imports: [
@@ -88,7 +97,7 @@ describe('DatatableMultiRowComponent', () => {
           provide: AuthenticationService,
           useValue: { getCredentials: jest.fn(() => ({ permissions: ['ALL_FUNCTIONS'] })) }
         },
-        { provide: MatDialog, useValue: { open: jest.fn() } },
+        { provide: MatDialog, useValue: matDialog },
         DatePipe,
         DecimalPipe,
         DateFormatPipe,
@@ -282,6 +291,17 @@ describe('DatatableMultiRowComponent', () => {
 
     expect(getRenderedRows()).toHaveLength(0);
     expect(component.datatableData.paginator).toBe(component.paginator);
+  });
+
+  it('translates the Add dialog title while preserving the Data Table name', () => {
+    component.add();
+
+    expect(matDialog.open).toHaveBeenCalledWith(FormDialogComponent, {
+      data: expect.objectContaining({
+        title: 'Agregar Client extra data para Cliente'
+      }),
+      width: '50rem'
+    });
   });
 
   it('renders all rows for a dataset smaller than one page', () => {
