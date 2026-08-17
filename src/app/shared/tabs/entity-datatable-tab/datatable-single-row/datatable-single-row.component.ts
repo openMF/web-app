@@ -32,6 +32,7 @@ import { MatDivider } from '@angular/material/divider';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateService } from '@ngx-translate/core';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 import { DatetimeFormatPipe } from '../../../../pipes/datetime-format.pipe';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
@@ -70,6 +71,7 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
   private settingsService = inject(SettingsService);
   public datatables = inject(Datatables);
   private systemService = inject(SystemService);
+  private translateService = inject(TranslateService);
 
   @Input() dataObject: any;
   @Input() entityId: string;
@@ -121,7 +123,7 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
       dataTableEntryObject
     );
     const data = {
-      title: 'Add ' + formatDatatableDisplayLabel(this.datatableName) + ' for ' + this.entityType,
+      title: this.getAddDialogTitle(),
       formfields: formfields
     };
     const addDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
@@ -147,6 +149,19 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
           });
       }
     });
+  }
+
+  getAddDialogTitle(): string {
+    return `${this.translateService.instant('labels.buttons.Add')} ${formatDatatableDisplayLabel(
+      this.datatableName
+    )} ${this.translateService.instant('labels.text.for')} ${this.getTranslatedEntityType()}`;
+  }
+
+  private getTranslatedEntityType(): string {
+    const entityTypeKey = `labels.text.${this.entityType}`;
+    const translatedEntityType = this.translateService.instant(entityTypeKey);
+
+    return translatedEntityType === entityTypeKey ? this.entityType : translatedEntityType;
   }
 
   edit() {
