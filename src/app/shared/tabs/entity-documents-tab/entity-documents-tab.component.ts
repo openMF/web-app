@@ -14,7 +14,8 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
-  inject
+  inject,
+  ChangeDetectorRef
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import lightGallery from 'lightgallery';
@@ -46,6 +47,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
   dialog = inject(MatDialog);
+  private cdr = inject(ChangeDetectorRef);
   private savingsService = inject(SavingsService);
   private loansService = inject(LoansService);
   private clientsService = inject(ClientsService);
@@ -106,6 +108,7 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
           };
           this.entityDocuments.push(newDocument);
           this.setThumbnail(newDocument);
+          this.cdr.markForCheck();
         });
       }
     });
@@ -126,7 +129,9 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
           this.entityDocuments.splice(index, 1);
         }
         this.documentPreviewService.release(documentId);
+        this.previewThumbnails = { ...this.previewThumbnails };
         delete this.previewThumbnails[documentId];
+        this.cdr.markForCheck();
       }
     });
   }
@@ -149,7 +154,8 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
             this.getDownloadObservable(descriptor.id)
           );
           if (preview.type === 'image') {
-            this.previewThumbnails[item.id] = preview.url;
+            this.previewThumbnails = { ...this.previewThumbnails, [item.id]: preview.url };
+            this.cdr.markForCheck();
           }
           galleryItems.push({
             src: preview.url,
@@ -229,7 +235,8 @@ export class EntityDocumentsTabComponent implements OnInit, OnDestroy {
       .resolvePreviewUrl(document, () => this.getDownloadObservable(document.id))
       .then((preview) => {
         if (preview.type === 'image') {
-          this.previewThumbnails[document.id] = preview.url;
+          this.previewThumbnails = { ...this.previewThumbnails, [document.id]: preview.url };
+          this.cdr.markForCheck();
         }
       })
       .catch((): void => undefined);
