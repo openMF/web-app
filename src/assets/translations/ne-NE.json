@@ -3252,6 +3252,7 @@
       "Unit Type": "एकाइ प्रकार",
       "Unrealized Income": "अप्राप्त आम्दानी",
       "Unrecognized Amount": "अपरिचित रकम",
+      "Updated At": "मा अद्यावधिक गरियो",
       "Updated By": "द्वारा अपडेट गरिएको",
       "Updated on": "मा अद्यावधिक गरियो",
       "Url": "Url",
@@ -3314,6 +3315,7 @@
       "Write-off": "राइट-अफ",
       "WriteOff Reason": "कारण लेख्नुहोस्",
       "Written Off": "लिखित बन्द",
+      "Written Off On": "राइट अफ मिति",
       "Yearly": "वार्षिक",
       "Zip": "जिप कोड",
       "accounting": {
@@ -3486,6 +3488,7 @@
       "Centers": "केन्द्रहरू",
       "Change Loan Officer": "ऋण अधिकारी परिवर्तन गर्नुहोस्",
       "Charge-Off": "चार्ज-अफ",
+      "Write-Off": "राइट-अफ",
       "Chart of Accounts": "लेखाको चार्ट",
       "Checker Inbox and Tasks": "जाँचकर्ता इनबक्स र कार्यहरू",
       "Clients": "ग्राहकहरु",
@@ -3637,7 +3640,8 @@
       "Submitted and pending approval": "बुझाइएको र अनुमोदन पेन्डिंग",
       "Transfer in progress": "प्रगतिमा स्थानान्तरण",
       "Transfer on hold": "होल्डमा स्थानान्तरण गर्नुहोस्",
-      "Withdrawn": "फिर्ता लिन"
+      "Withdrawn": "फिर्ता लिन",
+      "Written Off": "राइट अफ"
     },
     "dialogContext": {
       "A new clean period will start today": "आजबाट नयाँ सफा अवधि सुरु हुनेछ।",
@@ -4466,6 +4470,7 @@
       "elimination of poverty": "जसले विश्वका गरिब र बैंकविहीनहरूलाई जिम्मेवार वित्तीय सेवाहरू अझ प्रभावकारी र कुशलतापूर्वक प्रदान गर्न संगठनहरूलाई सक्षम बनाएर गरिबी उन्मूलनको गति बढाउने लक्ष्य राख्छ। रोचक लाग्छ?",
       "end_point": "end_point",
       "fcm_end_point": "fcm_end_point",
+      "for": "लागि",
       "fromEmail": "इमेलबाट",
       "fromName": "नामबाट",
       "gcm_end_point": "gcm_end_point",

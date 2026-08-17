@@ -22,11 +22,13 @@ import { SettingsService } from 'app/settings/settings.service';
 import { SystemService } from 'app/system/system.service';
 import { DateFormatPipe } from 'app/pipes/date-format.pipe';
 import { DatetimeFormatPipe } from 'app/pipes/datetime-format.pipe';
+import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { DatatableSingleRowComponent } from './datatable-single-row.component';
 
 describe('DatatableSingleRowComponent', () => {
   let fixture: ComponentFixture<DatatableSingleRowComponent>;
   let component: DatatableSingleRowComponent;
+  let matDialog: { open: jest.Mock };
 
   const createDataObject = () => ({
     columnHeaders: [
@@ -39,14 +41,18 @@ describe('DatatableSingleRowComponent', () => {
           { id: 12, value: 'Married' }
         ]
       },
-      { columnName: 'first_name', columnDisplayType: 'STRING' }
+      { columnName: 'first_name', columnDisplayType: 'STRING' },
+      { columnName: 'created_at', columnDisplayType: 'DATETIME', columnType: 'created_at' },
+      { columnName: 'updated_at', columnDisplayType: 'DATETIME', columnType: 'updated_at' }
     ],
     data: [
       {
         row: [
           7,
           12,
-          'Ada'
+          'Ada',
+          '2025-01-15T12:30:00Z',
+          '2025-01-16T13:45:00Z'
         ]
       }
     ]
@@ -58,13 +64,22 @@ describe('DatatableSingleRowComponent', () => {
     getDataItems()[index].querySelector(selector).textContent.replace(/\s+/g, ' ').trim();
 
   beforeEach(async () => {
+    const translations: Record<string, string> = {
+      'labels.buttons.Add': 'Agregar',
+      'labels.text.Client': 'Cliente',
+      'labels.text.for': 'para',
+      'labels.inputs.Created At': 'Creado en',
+      'labels.inputs.Updated At': 'Actualizado en'
+    };
     const translateService = {
-      instant: jest.fn((key: string) => key),
-      get: jest.fn((key: string) => of(key)),
+      instant: jest.fn((key: string) => translations[key] || key),
+      get: jest.fn((key: string) => of(translations[key] || key)),
       onLangChange: of({ lang: 'en' }),
       onTranslationChange: of({}),
       onDefaultLangChange: of({ lang: 'en' })
     };
+
+    matDialog = { open: jest.fn(() => ({ afterClosed: () => of({}) })) };
 
     await TestBed.configureTestingModule({
       imports: [
@@ -83,7 +98,7 @@ describe('DatatableSingleRowComponent', () => {
           provide: AuthenticationService,
           useValue: { getCredentials: jest.fn(() => ({ permissions: ['ALL_FUNCTIONS'] })) }
         },
-        { provide: MatDialog, useValue: { open: jest.fn() } },
+        { provide: MatDialog, useValue: matDialog },
         DatePipe,
         DecimalPipe,
         DateFormatPipe,
@@ -122,5 +137,21 @@ describe('DatatableSingleRowComponent', () => {
   it('leaves normal single-row field labels unchanged', () => {
     expect(getDataItemText(2, '.data-label')).toBe('First Name');
     expect(getDataItemText(2, '.data-value')).toBe('Ada');
+  });
+
+  it('translates single-row system timestamp labels', () => {
+    expect(getDataItemText(3, '.data-label')).toBe('Creado en');
+    expect(getDataItemText(4, '.data-label')).toBe('Actualizado en');
+  });
+
+  it('translates the Add dialog title while preserving the Data Table name', () => {
+    component.add();
+
+    expect(matDialog.open).toHaveBeenCalledWith(FormDialogComponent, {
+      data: expect.objectContaining({
+        title: 'Agregar Client extra data para Cliente'
+      }),
+      width: '50rem'
+    });
   });
 });

@@ -3262,6 +3262,7 @@
       "Unit Type": "Tipo de unidad",
       "Unrealized Income": "Ingreso No Realizado",
       "Unrecognized Amount": "Monto no reconocido",
+      "Updated At": "Actualizado en",
       "Updated By": "Actualizado por",
       "Updated on": "Actualizado en",
       "Url": "URL",
@@ -3324,6 +3325,7 @@
       "Write-off": "Cancelaciones",
       "WriteOff Reason": "Motivo de la cancelación",
       "Written Off": "Cancelado",
+      "Written Off On": "Castigado el",
       "Yearly": "Anual",
       "Zip": "Comprimir",
       "accounting": {
@@ -3493,6 +3495,7 @@
       "Centers": "Centros",
       "Change Loan Officer": "Cambiar Promotor de Crédito",
       "Charge-Off": "Cancelación",
+      "Write-Off": "Castigo",
       "Chart of Accounts": "Catálogo de cuentas",
       "Checker Inbox and Tasks": "Bandeja de entrada y tareas de Checker",
       "Clients": "Clientes",
@@ -3643,7 +3646,8 @@
       "Submitted and pending approval": "Aprobación pendiente",
       "Transfer in progress": "Transferencia en progreso",
       "Transfer on hold": "Transferencia en pausa",
-      "Withdrawn": "Retirado"
+      "Withdrawn": "Retirado",
+      "Written Off": "Castigado"
     },
     "dialogContext": {
       "A new clean period will start today": "Se abrirá un periodo nuevo y limpio a partir de hoy.",
@@ -4507,6 +4511,7 @@
       "elimination of poverty": "que tiene como objetivo acelerar la eliminación de la pobreza al permitir que las organizaciones brinden de manera más efectiva y eficiente servicios financieros responsables a las personas de escasos recursos y no bancarizados alrededor del mundo. ¿Suena interesante?",
       "end_point": "punto_final",
       "fcm_end_point": "fcm_end_point",
+      "for": "para",
       "fromEmail": "desde el e-mail",
       "fromName": "deNombre",
       "gcm_end_point": "gcm_end_point",

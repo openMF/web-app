@@ -3250,6 +3250,7 @@
       "Unit Type": "Aina ya kitengo",
       "Unrealized Income": "Mapato Yasiyopatikana",
       "Unrecognized Amount": "Kiasi Kisichotambulika",
+      "Updated At": "Ilisasishwa",
       "Updated By": "Imesasishwa Na",
       "Updated on": "Ilisasishwa",
       "Url": "Url",
@@ -3312,6 +3313,7 @@
       "Write-off": "Kufuta",
       "WriteOff Reason": "Sababu ya Kufuta",
       "Written Off": "Imeandikwa Mbali",
+      "Written Off On": "Imefutwa tarehe",
       "Yearly": "Kila mwaka",
       "Zip": "Msimbo wa Posta",
       "accounting": {
@@ -3483,6 +3485,7 @@
       "Centers": "Vituo",
       "Change Loan Officer": "Badilisha Afisa Mikopo",
       "Charge-Off": "Chaji-Zima",
+      "Write-Off": "Ufutaji",
       "Chart of Accounts": "Chati ya Hesabu",
       "Checker Inbox and Tasks": "Kikasha cha Kusahihisha na Majukumu",
       "Clients": "Wateja",
@@ -3634,7 +3637,8 @@
       "Submitted and pending approval": "Imewasilishwa na idhini inayosubiri",
       "Transfer in progress": "Uhamisho unaendelea",
       "Transfer on hold": "Uhamisho juu ya kushikilia",
-      "Withdrawn": "Kutolewa"
+      "Withdrawn": "Kutolewa",
+      "Written Off": "Imefutwa"
     },
     "dialogContext": {
       "A new clean period will start today": "Kipindi kipya safi kitaanza kuanzia leo.",
@@ -4463,6 +4467,7 @@
       "elimination of poverty": "ambayo inalenga kuharakisha uondoaji wa umaskini kwa kuwezesha Mashirika kutoa huduma za kifedha kwa ufanisi na kwa ufanisi zaidi kwa watu maskini na wasio na benki duniani. Inapendeza?",
       "end_point": "sehemu_ya_mwisho",
       "fcm_end_point": "fcm_mwisho_point",
+      "for": "kwa",
       "fromEmail": "kutoka kwa Barua pepe",
       "fromName": "kutoka kwaJina",
       "gcm_end_point": "gcm_end_point",

@@ -31,6 +31,25 @@
           </div>
         </div>
       }
+      @if (loanProductService.isWorkingCapital && loanDetails.writtenOffOnDate) {
+        <div class="section">
+          <div class="section-head">
+            <h3 class="section-title">{{ 'labels.menus.Write-Off' | translate }}</h3>
+          </div>
+          <div class="fact-grid">
+            <div class="fact">
+              <div class="fact-label">{{ 'labels.status.Written Off' | translate }}</div>
+              <div class="fact-value">{{ loanDetails.writtenOffOnDate | dateFormat }}</div>
+            </div>
+            @if (loanDetails.writeOffReason?.name) {
+              <div class="fact">
+                <div class="fact-label">{{ 'labels.inputs.Reason for Write-Off' | translate }}</div>
+                <div class="fact-value">{{ loanDetails.writeOffReason.name }}</div>
+              </div>
+            }
+          </div>
+        </div>
+      }
 
       @if (hasNumberOfRepayments() || loanDetails.timeline?.expectedMaturityDate) {
         <div class="section">
@@ -128,7 +147,7 @@
               {{ loanDetails.principal | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
             </div>
           </div>
-          @if (loanDetails.writeOffReason) {
+          @if (loanProductService.isLoanProduct && loanDetails.writeOffReason) {
             <div class="fact">
               <div class="fact-label">{{ 'labels.inputs.Write-off Reason' | translate }}</div>
               <div class="fact-value">{{ loanDetails.writeOffReason }}</div>

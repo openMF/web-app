@@ -3252,6 +3252,7 @@
       "Unit Type": "Vieneto tipas",
       "Unrealized Income": "Nerealizuotos pajamos",
       "Unrecognized Amount": "Neatpažinta suma",
+      "Updated At": "Atnaujinta",
       "Updated By": "Atnaujino",
       "Updated on": "Atnaujinta",
       "Url": "URL",
@@ -3314,6 +3315,7 @@
       "Write-off": "Nusirašinėti",
       "WriteOff Reason": "Nurašymo priežastis",
       "Written Off": "Nurašytas",
+      "Written Off On": "Nurašyta",
       "Yearly": "Kasmet",
       "Zip": "Pašto kodas",
       "accounting": {
@@ -3486,6 +3488,7 @@
       "Centers": "Centrai",
       "Change Loan Officer": "Keisti paskolos pareigūną",
       "Charge-Off": "Atsakingas už",
+      "Write-Off": "Nurašymas",
       "Chart of Accounts": "Sąskaitų planas",
       "Checker Inbox and Tasks": "Tikrinti gautuosius ir užduotis",
       "Clients": "Klientai",
@@ -3637,7 +3640,8 @@
       "Submitted and pending approval": "Pateikta ir laukiama patvirtinimo",
       "Transfer in progress": "Vykdomas perkėlimas",
       "Transfer on hold": "Perkelti sustabdytas",
-      "Withdrawn": "Pasitraukė"
+      "Withdrawn": "Pasitraukė",
+      "Written Off": "Nurašyta"
     },
     "dialogContext": {
       "A new clean period will start today": "Nuo šiandien prasidės naujas švarus laikotarpis.",
@@ -4467,6 +4471,7 @@
       "elimination of poverty": "kuriuo siekiama paspartinti skurdo panaikinimą, suteikiant organizacijoms galimybę veiksmingiau ir efektyviau teikti atsakingas finansines paslaugas pasaulio neturtingiesiems ir neturintiems bankų. Skamba įdomiai?",
       "end_point": "pabaigos_taškas",
       "fcm_end_point": "fcm_end_point",
+      "for": "skirta",
       "fromEmail": "iš el. pašto",
       "fromName": "išVardas",
       "gcm_end_point": "gcm_end_point",

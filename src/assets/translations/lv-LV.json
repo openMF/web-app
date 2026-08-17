@@ -3253,6 +3253,7 @@
       "Unit Type": "Vienības veids",
       "Unrealized Income": "Nerealizētie ienākumi",
       "Unrecognized Amount": "Neatpazīta summa",
+      "Updated At": "Atjaunināts",
       "Updated By": "Atjaunināja",
       "Updated on": "Atjaunināts",
       "Url": "URL",
@@ -3315,6 +3316,7 @@
       "Write-off": "Norakstīt",
       "WriteOff Reason": "Norakstīšanas iemesls",
       "Written Off": "Norakstīti",
+      "Written Off On": "Norakstīts",
       "Yearly": "Ik gadu",
       "Zip": "Pasta indekss",
       "accounting": {
@@ -3486,6 +3488,7 @@
       "Centers": "Centri",
       "Change Loan Officer": "Mainīt aizdevuma speciālistu",
       "Charge-Off": "Norakstīšana",
+      "Write-Off": "Norakstīšana",
       "Chart of Accounts": "Kontu plāns",
       "Checker Inbox and Tasks": "Pārbaudīt iesūtni un uzdevumus",
       "Clients": "Klienti",
@@ -3637,7 +3640,8 @@
       "Submitted and pending approval": "Iesniegts un gaidīts apstiprinājums",
       "Transfer in progress": "Iepriekšējā pārnešana",
       "Transfer on hold": "Pārnešana aizturēta",
-      "Withdrawn": "Atsaukts"
+      "Withdrawn": "Atsaukts",
+      "Written Off": "Norakstīts"
     },
     "dialogContext": {
       "A new clean period will start today": "No šodienas sāksies jauns, tīrs periods.",
@@ -4466,6 +4470,7 @@
       "elimination of poverty": "kuras mērķis ir paātrināt nabadzības izskaušanu, ļaujot organizācijām efektīvāk un produktīvāk sniegt atbildīgus finanšu pakalpojumus pasaules nabadzīgajiem un bez bankām. Izklausās interesanti?",
       "end_point": "beigu_punkts",
       "fcm_end_point": "fcm_end_point",
+      "for": "priekš",
       "fromEmail": "no e-pasta",
       "fromName": "noVārds",
       "gcm_end_point": "gcm_end_point",

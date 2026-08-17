@@ -3256,6 +3256,7 @@
       "Unit Type": "Type d'unité",
       "Unrealized Income": "Revenu non réalisé",
       "Unrecognized Amount": "Montant non reconnu",
+      "Updated At": "Mis à jour le",
       "Updated By": "Mis à jour par",
       "Updated on": "Mis à jour le",
       "Url": "URL",
@@ -3318,6 +3319,7 @@
       "Write-off": "Radier",
       "WriteOff Reason": "Motif de radiation",
       "Written Off": "Radié",
+      "Written Off On": "Passé en perte le",
       "Yearly": "Annuel",
       "Zip": "Fermeture éclair",
       "accounting": {
@@ -3490,6 +3492,7 @@
       "Centers": "Centres",
       "Change Loan Officer": "Changer l'agent de crédit",
       "Charge-Off": "Amortir",
+      "Write-Off": "Passer en perte",
       "Chart of Accounts": "Plan comptable",
       "Checker Inbox and Tasks": "Boîte de réception et tâches du vérificateur",
       "Clients": "Clientèle",
@@ -3641,7 +3644,8 @@
       "Submitted and pending approval": "Approbation soumise et en attente",
       "Transfer in progress": "Transfert en cours",
       "Transfer on hold": "Transfert en attente",
-      "Withdrawn": "Retiré"
+      "Withdrawn": "Retiré",
+      "Written Off": "Passé en perte"
     },
     "dialogContext": {
       "A new clean period will start today": "Une nouvelle période vierge commencera aujourd’hui.",
@@ -4470,6 +4474,7 @@
       "elimination of poverty": "qui vise à accélérer l’élimination de la pauvreté en permettant aux organisations de fournir plus efficacement des services financiers responsables aux pauvres et aux non-bancarisés du monde. Cela semble intéressant ?",
       "end_point": "point_fin",
       "fcm_end_point": "fcm_end_point",
+      "for": "pour",
       "fromEmail": "de l'email",
       "fromName": "deNom",
       "global community": "Communauté globale",

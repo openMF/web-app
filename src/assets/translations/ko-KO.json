@@ -3253,6 +3253,7 @@
       "Unit Type": "단위 유형",
       "Unrealized Income": "미실현 수익",
       "Unrecognized Amount": "인식되지 않은 금액",
+      "Updated At": "업데이트 날짜",
       "Updated By": "업데이트한 사람",
       "Updated on": "업데이트 날짜",
       "Url": "URL",
@@ -3315,6 +3316,7 @@
       "Write-off": "상각",
       "WriteOff Reason": "상각 사유",
       "Written Off": "상각",
+      "Written Off On": "상각일",
       "Yearly": "매년",
       "Zip": "지퍼",
       "accounting": {
@@ -3487,6 +3489,7 @@
       "Centers": "센터",
       "Change Loan Officer": "대출 담당자 변경",
       "Charge-Off": "상각",
+      "Write-Off": "대손상각",
       "Chart of Accounts": "계정 목록",
       "Checker Inbox and Tasks": "Checker 받은 편지함 및 작업",
       "Clients": "클라이언트",
@@ -3637,7 +3640,8 @@
       "Submitted and pending approval": "제출 및 보류 승인",
       "Transfer in progress": "진행중인 양도",
       "Transfer on hold": "보류에 이체하십시오",
-      "Withdrawn": "빼는"
+      "Withdrawn": "빼는",
+      "Written Off": "상각됨"
     },
     "dialogContext": {
       "A new clean period will start today": "오늘부터 새로운 깨끗한 기간이 시작됩니다.",
@@ -4466,6 +4470,7 @@
       "elimination of poverty": "이는 조직이 전 세계의 가난하고 은행 서비스를 이용할 수 없는 사람들에게 책임 있는 금융 서비스를 보다 효과적이고 효율적으로 제공할 수 있도록 하여 빈곤 퇴치 속도를 높이는 것을 목표로 합니다. 흥미롭나요?",
       "end_point": "끝점",
       "fcm_end_point": "fcm_end_point",
+      "for": "대상",
       "fromEmail": "보낸사람이메일",
       "fromName": "이름에서",
       "gcm_end_point": "gcm_end_point",
