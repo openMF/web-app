@@ -6,6 +6,14 @@
     "accountingRule": {
       "duplicateName": "माफ गर्नुहोस्, यो नामको लेखा नियम पहिले नै अवस्थित छ।"
     },
+    "error.msg.workingCapitalLoanBreachAction.breach.is.disabled": "यस ऋणका लागि उल्लंघन मूल्याङ्कन असक्षम गरिएको छ।",
+    "error.msg.workingCapitalLoanBreachAction.loan.is.not.active": "यस कार्यका लागि सक्रिय ऋण आवश्यक छ।",
+    "error.msg.workingCapitalLoanBreachAction.loan.not.disbursed": "ऋण अझै वितरण गरिएको छैन।",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.configuration": "ऋणमा उल्लंघन कन्फिगरेसन छैन।",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.evaluation.period": "हालको मितिका लागि उल्लंघन मूल्याङ्कन अवधि छैन।",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo": "पूर्ववत गर्न सकिने कुनै सक्रिय रिसेट छैन।",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.schedule": "ऋणमा उल्लंघन तालिका छैन।",
+    "error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period": "यो उल्लंघन अवधि पहिले नै रिसेट गरिएको छ। फेरि रिसेट गर्नु अघि अवस्थित रिसेट पूर्ववत गर्नुहोस्।",
     "error.resource.notImplemented.type": "कार्यान्वयन भएको छैन",
     "error.resource.notImplemented.message": "कार्यान्वयन नभएको कार्यक्षमता!",
     "linkedSavingsAccountOwnership": "लिंक गरिएको बचत खाता चयनित ग्राहकको होइन।",
@@ -1540,6 +1548,7 @@
       "Report Parameter": "रिपोर्ट प्यारामिटर",
       "Reports Catalog": "रिपोर्ट सूची",
       "Reschedule Loan": "Receplate ण लिएको",
+      "Reset History": "रिसेट इतिहास",
       "Revert Transaction": "लेनदेन उल्टाउनुहोस्",
       "S3 Amazon External Service": "S3 Amazon बाह्य सेवा",
       "SMS": "एस एम एस",
@@ -3647,6 +3656,7 @@
     "dialogContext": {
       "A new clean period will start today": "आजबाट नयाँ सफा अवधि सुरु हुनेछ।",
       "Are you sure you want to resume the breach pause": "के तपाईं उल्लंघन रोकी राखिएको अवस्था पुनः सुरु गर्न चाहनुहुन्छ?",
+      "Are you sure you want to undo the last breach reset": "के तपाईं पछिल्लो उल्लंघन रिसेट पूर्ववत गर्न निश्चित हुनुहुन्छ? यसले रिसेट चिन्ह र भुक्तानी बाँकी रकमको पुनर्गणना फिर्ता गर्छ; रिसेट मितिबाट अवधि पुनः सुरु गरेर बनेको अवधि विभाजन फिर्ता हुँदैन।",
       "Are you sure you want Unassign Staff": "के तपाईं निश्चित हुनुहुन्छ कि तपाईंले कर्मचारीलाई अनपाइन्ट गर्न चाहनुहुन्छ?",
       "Are you sure you want to calculate interest ?": "के तपाईं निश्चित हुनुहुन्छ कि तपाईं ब्याजहरू गणना गर्न चाहनुहुन्छ?",
       "Are you sure you want to post interest ?": "के तपाईं निश्चित हुनुहुन्छ कि तपाईं ब्याज पोस्ट गर्न चाहनुहुन्छ?",
@@ -3709,6 +3719,7 @@
       "Long-tenure financing to purchase, construct, or renovate a residential property": "आवासीय सम्पत्ति किन्न, निर्माण गर्न वा मर्मत गर्न दीर्घकालीन वित्तपोषण।",
       "Merchant Cash Advance": "व्यापारी नगद अग्रिम",
       "Mortgage Loan (LAP)": "धितो ऋण (LAP)",
+      "No resets have been recorded for this loan": "यस ऋणका लागि कुनै रिसेट रेकर्ड गरिएको छैन।",
       "Personal Loan": "व्यक्तिगत ऋण",
       "Custom / Advanced": "अनुकूलित / उन्नत",
       "Two Wheeler Loan": "दुई पाङ्ग्रे सवारी ऋण",

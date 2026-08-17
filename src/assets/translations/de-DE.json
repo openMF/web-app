@@ -8,6 +8,14 @@
     "accountingRule": {
       "duplicateName": "Entschuldigung, aber eine Buchungsregel mit diesem Namen existiert bereits."
     },
+    "error.msg.workingCapitalLoanBreachAction.breach.is.disabled": "Die Verstoßprüfung ist für dieses Darlehen deaktiviert.",
+    "error.msg.workingCapitalLoanBreachAction.loan.is.not.active": "Diese Aktion erfordert ein aktives Darlehen.",
+    "error.msg.workingCapitalLoanBreachAction.loan.not.disbursed": "Das Darlehen wurde noch nicht ausgezahlt.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.configuration": "Das Darlehen hat keine Verstoßkonfiguration.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.evaluation.period": "Für das aktuelle Datum existiert kein Verstoßprüfungszeitraum.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo": "Es gibt keine aktive Zurücksetzung, die rückgängig gemacht werden kann.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.schedule": "Das Darlehen hat keinen Verstoßplan.",
+    "error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period": "Diese Verstoßperiode wurde bereits zurückgesetzt. Machen Sie die bestehende Zurücksetzung rückgängig, bevor Sie erneut zurücksetzen.",
     "linkedSavingsAccountOwnership": "Verknüpftes Sparkonto gehört nicht zum ausgewählten Kunden.",
     "clientNotInGSIM": "Kunde mit der ID {{id}} ist nicht in GSIM vorhanden.",
     "Capitalized Income amount adjusted already adjusted": "Kapitalisiertes Einkommen Betrag angepasst bereits angepasst",
@@ -1543,6 +1551,7 @@
       "Report Parameter": "Berichtsparameter",
       "Reports Catalog": "Berichtskatalog",
       "Reschedule Loan": "Darlehen neu plant",
+      "Reset History": "Zurücksetzungsverlauf",
       "Revert Transaction": "Transaktion rückgängig machen",
       "S3 Amazon External Service": "S3 Amazon Externer Service",
       "SMS": "SMS",
@@ -3650,6 +3659,7 @@
     "dialogContext": {
       "A new clean period will start today": "Ab heute beginnt eine neue, saubere Periode.",
       "Are you sure you want to resume the breach pause": "Sind Sie sicher, dass Sie den Verstoß wirklich fortsetzen",
+      "Are you sure you want to undo the last breach reset": "Sind Sie sicher, dass Sie die letzte Zurücksetzung des Verstoßes rückgängig machen möchten? Dies macht die Zurücksetzungsmarkierung und die Neuberechnung des überfälligen Betrags rückgängig; eine Aufteilung der Periode durch den Neustart ab dem Zurücksetzungsdatum wird nicht rückgängig gemacht.",
       "Are you sure you want Unassign Staff": "Sind Sie sicher, dass Sie das Personal freistellen möchten",
       "Are you sure you want to calculate interest ?": "Sind Sie sicher, dass Sie Zinsen berechnen möchten ?",
       "Are you sure you want to post interest ?": "Sind Sie sicher, dass Sie Zinsen buchen möchten ?",
@@ -3712,6 +3722,7 @@
       "Long-tenure financing to purchase, construct, or renovate a residential property": "Langfristige Finanzierung für den Kauf, den Bau oder die Renovierung einer Wohnimmobilie.",
       "Merchant Cash Advance": "Händlervorschuss",
       "Mortgage Loan (LAP)": "Hypothekendarlehen (LAP)",
+      "No resets have been recorded for this loan": "Für dieses Darlehen wurden keine Zurücksetzungen erfasst.",
       "Personal Loan": "Privatkredit",
       "Custom / Advanced": "Benutzerdefiniert / Erweitert",
       "Two Wheeler Loan": "Zweiradkredit",

@@ -173,6 +173,58 @@
   }
 }
 
+/* Toolbar action buttons (charges-tab design system) */
+@mixin btn-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  font:
+    600 13px 'DM Sans',
+    sans-serif;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--ch-blue-600);
+    outline-offset: 1px;
+  }
+}
+
+@mixin btn-action-primary {
+  @include btn-action;
+
+  background: var(--ch-blue-700);
+  color: #fff;
+
+  &:hover:not(:disabled) {
+    background: var(--ch-blue-600);
+  }
+}
+
+@mixin btn-action-ghost {
+  @include btn-action;
+
+  background: var(--ch-surface);
+  color: var(--ch-text-2);
+  border-color: var(--ch-border);
+
+  &:hover:not(:disabled) {
+    color: var(--ch-text-1);
+    border-color: var(--ch-text-3);
+  }
+}
+
 @mixin btn-export {
   display: inline-flex;
   align-items: center;

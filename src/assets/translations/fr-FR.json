@@ -6,6 +6,14 @@
     "accountingRule": {
       "duplicateName": "Désolé, mais une règle comptable portant ce nom existe déjà."
     },
+    "error.msg.workingCapitalLoanBreachAction.breach.is.disabled": "L'évaluation du manquement est désactivée pour ce prêt.",
+    "error.msg.workingCapitalLoanBreachAction.loan.is.not.active": "Cette action nécessite un prêt actif.",
+    "error.msg.workingCapitalLoanBreachAction.loan.not.disbursed": "Le prêt n'a pas encore été décaissé.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.configuration": "Le prêt n'a pas de configuration de manquement.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.evaluation.period": "Il n'existe aucune période d'évaluation du manquement pour la date actuelle.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo": "Il n'y a aucune réinitialisation active à annuler.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.schedule": "Le prêt n'a pas de calendrier de manquement.",
+    "error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period": "Cette période de manquement a déjà été réinitialisée. Annulez la réinitialisation existante avant de réinitialiser à nouveau.",
     "error.resource.notImplemented.type": "Non implémenté",
     "error.resource.notImplemented.message": "Fonctionnalité non implémentée !",
     "linkedSavingsAccountOwnership": "Le compte d'épargne lié n'appartient pas au client sélectionné.",
@@ -1544,6 +1552,7 @@
       "Report Parameter": "Paramètre de rapport",
       "Reports Catalog": "Catalogue de rapports",
       "Reschedule Loan": "Prêt de reproduction",
+      "Reset History": "Historique des réinitialisations",
       "Revert Transaction": "Annuler la transaction",
       "S3 Amazon External Service": "Service externe S3 Amazon",
       "SMS": "SMS",
@@ -3651,6 +3660,7 @@
     "dialogContext": {
       "A new clean period will start today": "Une nouvelle période vierge commencera aujourd’hui.",
       "Are you sure you want to resume the breach pause": "Êtes-vous sûr de vouloir reprendre le manquement après sa mise en pause ?",
+      "Are you sure you want to undo the last breach reset": "Êtes-vous sûr de vouloir annuler la dernière réinitialisation du manquement ? Cela annule l'indicateur de réinitialisation et le recalcul du montant en retard ; une division de période créée par le redémarrage de la période à la date de réinitialisation n'est pas annulée.",
       "Are you sure you want Unassign Staff": "Êtes-vous sûr de vouloir désassigner le personnel",
       "Are you sure you want to calculate interest ?": "Êtes-vous sûr de vouloir calculer les intérêts ?",
       "Are you sure you want to post interest ?": "Êtes-vous sûr de vouloir enregistrer les intérêts ?",
@@ -3713,6 +3723,7 @@
       "Long-tenure financing to purchase, construct, or renovate a residential property": "Financement à long terme pour l'achat, la construction ou la rénovation d'un bien résidentiel.",
       "Merchant Cash Advance": "Avance de trésorerie commerçant",
       "Mortgage Loan (LAP)": "Prêt hypothécaire (LAP)",
+      "No resets have been recorded for this loan": "Aucune réinitialisation n'a été enregistrée pour ce prêt.",
       "Personal Loan": "Prêt personnel",
       "Custom / Advanced": "Personnalisé / Avancé",
       "Two Wheeler Loan": "Prêt deux-roues",

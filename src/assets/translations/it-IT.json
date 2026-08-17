@@ -6,6 +6,14 @@
     "accountingRule": {
       "duplicateName": "Spiacenti, ma esiste già una regola contabile con questo nome."
     },
+    "error.msg.workingCapitalLoanBreachAction.breach.is.disabled": "La valutazione della violazione è disabilitata per questo prestito.",
+    "error.msg.workingCapitalLoanBreachAction.loan.is.not.active": "Questa azione richiede un prestito attivo.",
+    "error.msg.workingCapitalLoanBreachAction.loan.not.disbursed": "Il prestito non è ancora stato erogato.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.configuration": "Il prestito non ha una configurazione di violazione.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.evaluation.period": "Non esiste un periodo di valutazione della violazione per la data corrente.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo": "Non c'è alcun ripristino attivo da annullare.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.schedule": "Il prestito non ha un piano di violazione.",
+    "error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period": "Questo periodo di violazione è già stato ripristinato. Annulla il ripristino esistente prima di ripristinare di nuovo.",
     "error.resource.notImplemented.type": "Non implementato",
     "error.resource.notImplemented.message": "Funzionalità non implementata!",
     "linkedSavingsAccountOwnership": "Il conto di risparmio collegato non appartiene al cliente selezionato.",
@@ -1541,6 +1549,7 @@
       "Report Parameter": "Parametro del report",
       "Reports Catalog": "Catalogo report",
       "Reschedule Loan": "Prestito riprogrammato",
+      "Reset History": "Cronologia dei ripristini",
       "Revert Transaction": "Annulla transazione",
       "S3 Amazon External Service": "Servizio esterno Amazon S3",
       "SMS": "sms",
@@ -3647,6 +3656,7 @@
     "dialogContext": {
       "A new clean period will start today": "Da oggi inizierà un nuovo periodo pulito.",
       "Are you sure you want to resume the breach pause": "Sei sicuro di voler riprendere la violazione dopo la pausa ?",
+      "Are you sure you want to undo the last breach reset": "Sei sicuro di voler annullare l'ultimo ripristino della violazione? Questo annulla il contrassegno di ripristino e il ricalcolo dell'importo scaduto; una divisione del periodo creata riavviando il periodo dalla data di ripristino non viene annullata.",
       "Are you sure you want Unassign Staff": "Sei sicuro di voler deassegnare il personale",
       "Are you sure you want to calculate interest ?": "Sei sicuro di voler calcolare gli interessi ?",
       "Are you sure you want to post interest ?": "Sei sicuro di voler registrare gli interessi ?",
@@ -3709,6 +3719,7 @@
       "Long-tenure financing to purchase, construct, or renovate a residential property": "Finanziamento a lungo termine per acquistare, costruire o ristrutturare un immobile residenziale.",
       "Merchant Cash Advance": "Anticipo di cassa per esercenti",
       "Mortgage Loan (LAP)": "Prestito ipotecario (LAP)",
+      "No resets have been recorded for this loan": "Nessun ripristino è stato registrato per questo prestito.",
       "Personal Loan": "Prestito personale",
       "Custom / Advanced": "Personalizzato / Avanzato",
       "Two Wheeler Loan": "Prestito per veicoli a due ruote",

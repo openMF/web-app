@@ -8,6 +8,14 @@
     "accountingRule": {
       "duplicateName": "Omlouváme se, ale účetní pravidlo s tímto názvem již existuje."
     },
+    "error.msg.workingCapitalLoanBreachAction.breach.is.disabled": "Vyhodnocování porušení je pro tento úvěr zakázáno.",
+    "error.msg.workingCapitalLoanBreachAction.loan.is.not.active": "Tato akce vyžaduje aktivní úvěr.",
+    "error.msg.workingCapitalLoanBreachAction.loan.not.disbursed": "Úvěr dosud nebyl vyplacen.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.configuration": "Úvěr nemá konfiguraci porušení.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.evaluation.period": "Pro aktuální datum neexistuje žádné období vyhodnocení porušení.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo": "Neexistuje žádný aktivní reset, který by bylo možné vrátit.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.schedule": "Úvěr nemá plán porušení.",
+    "error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period": "Toto období porušení již bylo resetováno. Před dalším resetem vraťte stávající reset.",
     "linkedSavingsAccountOwnership": "Propojený spořicí účet nepatří vybranému klientovi.",
     "clientNotInGSIM": "Klient s ID {{id}} není přítomen v GSIM.",
     "Capitalized Income amount adjusted already adjusted": "Výše kapitalizovaného příjmu již upravená",
@@ -1541,6 +1549,7 @@
       "Report Parameter": "Parametr sestavy",
       "Reports Catalog": "Katalog sestav",
       "Reschedule Loan": "Přeplánovací půjčka",
+      "Reset History": "Historie resetů",
       "Revert Transaction": "Vrátit transakci",
       "S3 Amazon External Service": "Externí služba S3 Amazon",
       "SMS": "SMS",
@@ -3648,6 +3657,7 @@
     "dialogContext": {
       "A new clean period will start today": "Ode dneška začne nové čisté období.",
       "Are you sure you want to resume the breach pause": "Opravdu chcete obnovit porušení?",
+      "Are you sure you want to undo the last breach reset": "Opravdu chcete vrátit poslední reset porušení? Tím se vrátí označení resetu a přepočet dlužné částky; rozdělení období vytvořené restartem období od data resetu se nevrátí.",
       "Are you sure you want Unassign Staff": "Opravdu chcete odebrat přiřazení zaměstnance?",
       "Are you sure you want to calculate interest ?": "Jste si jisti, že chcete spočítat zájem?",
       "Are you sure you want to post interest ?": "Jste si jisti, že chcete zveřejnit zájem?",
@@ -3710,6 +3720,7 @@
       "Long-tenure financing to purchase, construct, or renovate a residential property": "Dlouhodobé financování na koupi, výstavbu nebo rekonstrukci nemovitosti určené k bydlení.",
       "Merchant Cash Advance": "Záloha pro obchodníky",
       "Mortgage Loan (LAP)": "Hypoteční úvěr (LAP)",
+      "No resets have been recorded for this loan": "Pro tento úvěr nebyly zaznamenány žádné resety.",
       "Personal Loan": "Osobní úvěr",
       "Custom / Advanced": "Vlastní / pokročilé",
       "Two Wheeler Loan": "Úvěr na motocykly a skútry",

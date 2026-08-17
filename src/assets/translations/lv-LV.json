@@ -6,6 +6,14 @@
     "accountingRule": {
       "duplicateName": "Atvainojiet, bet grāmatvedības noteikums ar šo nosaukumu jau pastāv."
     },
+    "error.msg.workingCapitalLoanBreachAction.breach.is.disabled": "Šim aizdevumam pārkāpuma novērtēšana ir atspējota.",
+    "error.msg.workingCapitalLoanBreachAction.loan.is.not.active": "Šai darbībai ir nepieciešams aktīvs aizdevums.",
+    "error.msg.workingCapitalLoanBreachAction.loan.not.disbursed": "Aizdevums vēl nav izmaksāts.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.configuration": "Aizdevumam nav pārkāpuma konfigurācijas.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.evaluation.period": "Pašreizējam datumam nav pārkāpuma novērtēšanas perioda.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo": "Nav aktīvas atiestatīšanas, ko atsaukt.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.schedule": "Aizdevumam nav pārkāpuma grafika.",
+    "error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period": "Šis pārkāpuma periods jau ir atiestatīts. Pirms atkārtotas atiestatīšanas atsauciet esošo atiestatīšanu.",
     "error.resource.notImplemented.type": "Nav ieviests",
     "error.resource.notImplemented.message": "Neieviesta funkcionalitāte!",
     "linkedSavingsAccountOwnership": "Saistītais krājkonts nepieder izvēlētajam klientam.",
@@ -1541,6 +1549,7 @@
       "Report Parameter": "Pārskata parametrs",
       "Reports Catalog": "Pārskatu katalogs",
       "Reschedule Loan": "Pārplānot aizdevumu",
+      "Reset History": "Atiestatīšanas vēsture",
       "Revert Transaction": "Atsaukt darījumu",
       "S3 Amazon External Service": "S3 Amazon ārējais pakalpojums",
       "SMS": "īsziņa",
@@ -3647,6 +3656,7 @@
     "dialogContext": {
       "A new clean period will start today": "No šodienas sāksies jauns, tīrs periods.",
       "Are you sure you want to resume the breach pause": "Vai esat pārliecināts, ka vēlaties atsākt pārtraukumu?",
+      "Are you sure you want to undo the last breach reset": "Vai tiešām vēlaties atsaukt pēdējo pārkāpuma atiestatīšanu? Tas atceļ atiestatīšanas atzīmi un kavētās summas pārrēķinu; perioda sadalījums, kas izveidots, restartējot periodu no atiestatīšanas datuma, netiek atcelts.",
       "Are you sure you want Unassign Staff": "Vai tiešām vēlaties atcelt darbinieka piešķiršanu?",
       "Are you sure you want to calculate interest ?": "Vai tiešām vēlaties aprēķināt procentus?",
       "Are you sure you want to post interest ?": "Vai tiešām vēlaties reģistrēt procentus?",
@@ -3709,6 +3719,7 @@
       "Long-tenure financing to purchase, construct, or renovate a residential property": "Ilgtermiņa finansējums mājokļa iegādei, būvniecībai vai renovācijai.",
       "Merchant Cash Advance": "Tirgotāja naudas avanss",
       "Mortgage Loan (LAP)": "Hipotekārais aizdevums (LAP)",
+      "No resets have been recorded for this loan": "Šim aizdevumam nav reģistrēta neviena atiestatīšana.",
       "Personal Loan": "Patēriņa aizdevums",
       "Custom / Advanced": "Pielāgots / paplašināts",
       "Two Wheeler Loan": "Divriteņu transportlīdzekļa aizdevums",

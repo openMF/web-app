@@ -33,6 +33,7 @@ import {
 } from '@angular/material/table';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TranslateService } from '@ngx-translate/core';
+import { AlertService } from 'app/core/alert/alert.service';
 import { Dates } from 'app/core/utils/dates';
 import { LoanBreachActionResetDialogComponent } from 'app/loans/custom-dialog/loan-breach-action-reset-dialog/loan-breach-action-reset-dialog.component';
 import { LoanDelinquencyActionDialogComponent } from 'app/loans/custom-dialog/loan-delinquency-action-dialog/loan-delinquency-action-dialog.component';
@@ -50,7 +51,6 @@ import {
 } from 'app/loans/models/working-capital/working-capital-loan-account.model';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 import { ErrorHandlerService } from 'app/core/error-handler/error-handler.service';
-import { AlertService } from 'app/core/alert/alert.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -61,6 +61,7 @@ import {
 } from '../loan-account-actions/breach-toggle-dialog/breach-toggle-dialog.component';
 import { resolveBreachErrorKey } from '../breach-error-messages';
 import { findActiveBreachDisable } from '../breach-evaluation';
+import { resolveBreachActionErrorMessage } from '../breach-action-error.helper';
 
 type BreachActionStatus = 'active' | 'scheduled' | 'expired';
 type BreachActionFilter = 'all' | BreachActionStatus;
@@ -131,6 +132,7 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
   // Pause dashboard state
   breachActions = signal<LoanDelinquencyAction[]>([]);
   filter = signal<BreachActionFilter>('all');
+  resetInFlight = signal(false);
 
   loanId: string;
   locale: string;
@@ -462,8 +464,24 @@ export class LoanBreachActionsTabComponent extends LoanProductBaseComponent impl
       restartPeriodFromResetDate
     };
 
-    this.loansService.createBreachAction(this.loanId, payload).subscribe(() => {
-      this.reload();
+    this.resetInFlight.set(true);
+    this.loansService.createBreachAction(this.loanId, payload).subscribe({
+      // resetInFlight is intentionally not released on success: reload()
+      // re-navigates and recreates the component, so releasing it earlier
+      // would re-enable the button against stale state before the reload lands.
+      next: () => this.reload(),
+      error: (error: unknown) => {
+        // The interceptor already alerts with the raw backend message; this
+        // supersedes it with the translated breach-action message when one exists.
+        const message = resolveBreachActionErrorMessage(error, this.translateService);
+        if (message) {
+          this.alertService.alert({
+            type: this.translateService.instant('errors.error.bad.request.type'),
+            message
+          });
+        }
+        this.resetInFlight.set(false);
+      }
     });
   }
 

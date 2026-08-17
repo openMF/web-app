@@ -23,6 +23,7 @@ import { BreachSchedule } from './models/working-capital-loan-account.model';
 import {
   WorkingCapitalBreachAction,
   WorkingCapitalBreachActionRequest,
+  WorkingCapitalBreachCommandRequest,
   WorkingCapitalMarkAsFraudRequest,
   WorkingCapitalBreachToggleRequest,
   WorkingCapitalNearBreachActionRequest,
@@ -192,7 +193,7 @@ export class LoansService {
     return this.http.get(`/working-capital-loans/${loanId}/breach-actions`);
   }
 
-  createBreachAction(loanId: string, payload: any) {
+  createBreachAction(loanId: string, payload: WorkingCapitalBreachCommandRequest) {
     return this.http.post(`/working-capital-loans/${loanId}/breach-actions`, payload);
   }
 
