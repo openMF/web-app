@@ -39,14 +39,18 @@ describe('DatatableSingleRowComponent', () => {
           { id: 12, value: 'Married' }
         ]
       },
-      { columnName: 'first_name', columnDisplayType: 'STRING' }
+      { columnName: 'first_name', columnDisplayType: 'STRING' },
+      { columnName: 'created_at', columnDisplayType: 'DATETIME', columnType: 'created_at' },
+      { columnName: 'updated_at', columnDisplayType: 'DATETIME', columnType: 'updated_at' }
     ],
     data: [
       {
         row: [
           7,
           12,
-          'Ada'
+          'Ada',
+          '2025-01-15T12:30:00Z',
+          '2025-01-16T13:45:00Z'
         ]
       }
     ]
@@ -58,9 +62,13 @@ describe('DatatableSingleRowComponent', () => {
     getDataItems()[index].querySelector(selector).textContent.replace(/\s+/g, ' ').trim();
 
   beforeEach(async () => {
+    const translations: Record<string, string> = {
+      'labels.inputs.Created At': 'Creado en',
+      'labels.inputs.Updated At': 'Actualizado en'
+    };
     const translateService = {
-      instant: jest.fn((key: string) => key),
-      get: jest.fn((key: string) => of(key)),
+      instant: jest.fn((key: string) => translations[key] || key),
+      get: jest.fn((key: string) => of(translations[key] || key)),
       onLangChange: of({ lang: 'en' }),
       onTranslationChange: of({}),
       onDefaultLangChange: of({ lang: 'en' })
@@ -122,5 +130,10 @@ describe('DatatableSingleRowComponent', () => {
   it('leaves normal single-row field labels unchanged', () => {
     expect(getDataItemText(2, '.data-label')).toBe('First Name');
     expect(getDataItemText(2, '.data-value')).toBe('Ada');
+  });
+
+  it('translates single-row system timestamp labels', () => {
+    expect(getDataItemText(3, '.data-label')).toBe('Creado en');
+    expect(getDataItemText(4, '.data-label')).toBe('Actualizado en');
   });
 });

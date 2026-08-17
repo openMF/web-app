@@ -40,7 +40,11 @@
             @for (columnHeader of dataObject.columnHeaders; track columnHeader; let i = $index) {
               <div class="data-item" [ngClass]="setAttributeClass(columnHeader.columnName)">
                 <div class="data-label mat-body-strong">
-                  {{ formatDisplayLabel(columnHeader.columnName) }}
+                  @if (getSystemColumnTranslationKey(columnHeader.columnName); as translationKey) {
+                    {{ translationKey | translate }}
+                  } @else {
+                    {{ formatDisplayLabel(columnHeader.columnName) }}
+                  }
                 </div>
                 <div class="data-value">
                   @switch (getColumnType(columnHeader.columnDisplayType, columnHeader.columnType)) {
