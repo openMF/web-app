@@ -6,6 +6,14 @@
     "accountingRule": {
       "duplicateName": "죄송합니다. 이미 동일한 이름의 회계 규칙이 존재합니다."
     },
+    "error.msg.workingCapitalLoanBreachAction.breach.is.disabled": "이 대출에 대한 위반 평가가 비활성화되어 있습니다.",
+    "error.msg.workingCapitalLoanBreachAction.loan.is.not.active": "이 작업에는 활성 상태의 대출이 필요합니다.",
+    "error.msg.workingCapitalLoanBreachAction.loan.not.disbursed": "대출이 아직 실행되지 않았습니다.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.configuration": "대출에 위반 구성이 없습니다.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.evaluation.period": "현재 날짜에 해당하는 위반 평가 기간이 없습니다.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.reset.to.undo": "실행 취소할 활성 초기화가 없습니다.",
+    "error.msg.workingCapitalLoanBreachAction.no.breach.schedule": "대출에 위반 일정이 없습니다.",
+    "error.msg.workingCapitalLoanBreachAction.reset.already.exists.in.current.period": "이 위반 기간은 이미 초기화되었습니다. 다시 초기화하려면 기존 초기화를 먼저 실행 취소하세요.",
     "error.resource.notImplemented.type": "구현되지 않음",
     "error.resource.notImplemented.message": "구현되지 않은 기능입니다!",
     "linkedSavingsAccountOwnership": "연결된 저축 계좌가 선택한 클라이언트에 속하지 않습니다.",
@@ -1542,6 +1550,7 @@
       "Report Parameter": "보고서 매개변수",
       "Reports Catalog": "보고서 카탈로그",
       "Reschedule Loan": "일정 조정 대출",
+      "Reset History": "초기화 이력",
       "Revert Transaction": "거래 되돌리기",
       "S3 Amazon External Service": "S3 Amazon 외부 서비스",
       "SMS": "SMS",
@@ -3646,6 +3655,7 @@
     "dialogContext": {
       "A new clean period will start today": "오늘부터 새로운 깨끗한 기간이 시작됩니다.",
       "Are you sure you want to resume the breach pause": "중단된 작업을 재개하시겠습니까?",
+      "Are you sure you want to undo the last breach reset": "마지막 위반 초기화를 실행 취소하시겠습니까? 초기화 표시와 연체 금액 재계산이 되돌려집니다. 초기화 날짜부터 기간을 다시 시작하여 생성된 기간 분할은 되돌려지지 않습니다.",
       "Are you sure you want Unassign Staff": "직원 해제를 하시겠습니까?",
       "Are you sure you want to calculate interest ?": "이자를 계산하시겠습니까?",
       "Are you sure you want to post interest ?": "이자를 등록하시겠습니까?",
@@ -3708,6 +3718,7 @@
       "Long-tenure financing to purchase, construct, or renovate a residential property": "주거용 부동산의 구입, 건축 또는 개보수를 위한 장기 금융.",
       "Merchant Cash Advance": "가맹점 매출 선지급",
       "Mortgage Loan (LAP)": "부동산 담보 대출 (LAP)",
+      "No resets have been recorded for this loan": "이 대출에 기록된 초기화가 없습니다.",
       "Personal Loan": "개인 대출",
       "Custom / Advanced": "사용자 지정 / 고급",
       "Two Wheeler Loan": "이륜차 대출",
