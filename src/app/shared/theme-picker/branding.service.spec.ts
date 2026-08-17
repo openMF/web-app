@@ -12,6 +12,7 @@ import { TestBed } from '@angular/core/testing';
 import { firstValueFrom } from 'rxjs';
 
 import { SettingsService } from 'app/settings/settings.service';
+import { environment } from 'environments/environment';
 import { BrandingService } from './branding.service';
 import { BRANDING_API_PATH } from './theme.model';
 
@@ -22,9 +23,12 @@ describe('BrandingService', () => {
   const serverUrl = 'https://core.example.org/fineract-provider/api/v1';
   const brandingUrl = `${serverUrl}${BRANDING_API_PATH}`;
   let tenantIdentifier: string;
+  const productionMode = environment.productionMode;
 
   beforeEach(() => {
     tenantIdentifier = 'acme';
+    // Branding is a production-mode feature; these cases cover it switched on.
+    environment.productionMode = true;
 
     TestBed.configureTestingModule({
       providers: [
@@ -51,6 +55,7 @@ describe('BrandingService', () => {
 
   afterEach(() => {
     httpMock.verify();
+    environment.productionMode = productionMode;
   });
 
   it('reads branding without credentials', async () => {
@@ -109,5 +114,27 @@ describe('BrandingService', () => {
     httpMock.expectOne(brandingUrl).flush('Unauthorized', { status: 401, statusText: 'Unauthorized' });
 
     await expect(result).rejects.toMatchObject({ status: 401 });
+  });
+
+  describe('when production mode is disabled', () => {
+    beforeEach(() => {
+      environment.productionMode = false;
+    });
+
+    it('does not read the branding endpoint', async () => {
+      // Branding is a production-mode feature: with it off the endpoint must
+      // never be contacted. `httpMock.verify()` in afterEach asserts no request
+      // was issued; the read fails so callers take the same fallback they do on
+      // a deployment without the plugin.
+      await expect(firstValueFrom(service.getTenantBranding())).rejects.toThrow(/production mode is off/);
+
+      httpMock.expectNone(brandingUrl);
+    });
+
+    it('does not write to the branding endpoint', async () => {
+      await expect(firstValueFrom(service.updateTenantBranding('purple'))).rejects.toThrow(/production mode is off/);
+
+      httpMock.expectNone((req) => req.url === BRANDING_API_PATH);
+    });
   });
 });
