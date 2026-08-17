@@ -39,6 +39,7 @@ import { AccountNumberComponent } from '../../shared/account-number/account-numb
 import { ExternalIdentifierComponent } from '../../shared/external-identifier/external-identifier.component';
 import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
+import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { formatTabLabel } from 'app/shared/utils/format-tab-label.util';
 import { AccountHeaderComponent } from 'app/shared/account-header/account-header.component';
@@ -66,7 +67,8 @@ import { AccountHeaderComponent } from 'app/shared/account-header/account-header
     RouterLinkActive,
     MatTabNavPanel,
     RouterOutlet,
-    DateFormatPipe
+    DateFormatPipe,
+    StatusLookupPipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

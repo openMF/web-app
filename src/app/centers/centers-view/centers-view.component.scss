@@ -6,28 +6,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-.account-card {
-  .center-meeting {
-    align-self: flex-end;
-    width: 100%;
+@use 'assets/styles/entity-header' as entity;
 
-    div,
-    ng-template > div {
-      background-color: #0a6aac;
+/* Shared entity-header system: tokens, projected header content and tabs. */
+@include entity.tokens;
+@include entity.header-content;
+@include entity.tabs;
 
-      p {
-        color: white;
-        padding: 0 10px;
-      }
-    }
-  }
-}
-
-.meetingDetails {
-  float: right;
-  margin-right: 10px;
-  border: 1px black solid;
-  padding: 10px;
+.account-overview {
+  min-width: 85%;
+  margin-left: 10px;
 }
 
 .make-flex {

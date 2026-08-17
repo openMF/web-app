@@ -1,0 +1,611 @@
+/**
+ * Copyright since 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+@use 'sass:map';
+@use 'assets/styles/colours' as *;
+@use 'theme/material-palette' as palette;
+
+/* ── Shared entity list (clients / groups) ───────────────────────
+   Redesigned list system: toolbar with search + toggle + actions,
+   grid rows with rail/avatar/status pill, custom footer pager and
+   empty state. Include from a component stylesheet:
+
+     @use 'entity-list';
+     @include entity-list.tokens;  // CSS custom props, light + dark
+     @include entity-list.list;    // toolbar, rows, pager, empty state
+──────────────────────────────────────────────────────────────── */
+
+@mixin tokens {
+  // Sourced from the app's real Material primary palette (src/theme/_material-palette.scss)
+  // and the shared status/neutral colours (src/assets/styles/_colours.scss) instead of an
+  // invented one-off scale — kept in sync with loans.component.scss's identical tokens.
+  :host {
+    --loan-blue-700: #{map.get(palette.$primary-palette, 500)};
+    --loan-blue-600: #{map.get(palette.$primary-palette, 700)};
+    --loan-blue-100: #{rgba(map.get(palette.$primary-palette, 500), 25%)};
+    --loan-blue-50: #{rgba(map.get(palette.$primary-palette, 500), 10%)};
+    --loan-blue-20: #{rgba(map.get(palette.$primary-palette, 500), 6%)};
+    --loan-surface: #{$white};
+    --loan-surface-alt: #{$light-grey};
+    --loan-surface-h: #{rgba(map.get(palette.$primary-palette, 500), 5%)};
+    --loan-border: #{$mid-grey};
+    --loan-text-1: #{$dark-grey};
+    --loan-text-2: #{rgba($dark-grey, 70%)};
+    --loan-text-3: #{rgba($dark-grey, 45%)};
+    --loan-paid: #{$status-active};
+    --loan-paid-bg: #{rgba($status-active, 12%)};
+    --loan-partial: #{$status-pending};
+    --loan-partial-bg: #{rgba($status-pending, 12%)};
+    --loan-alert: #{$msg-danger};
+    --loan-alert-bg: #{rgba($msg-danger, 12%)};
+    --loan-violet: #{$amethyst};
+    --loan-btn-primary-bg: #{map.get(palette.$primary-palette, 500)};
+    --loan-btn-primary-bg-h: #{map.get(palette.$primary-palette, 700)};
+
+    display: block;
+  }
+
+  :host-context(.dark-theme) {
+    --loan-blue-700: #{map.get(palette.$primary-palette, 100)};
+    --loan-blue-600: #{map.get(palette.$primary-palette, 500)};
+    --loan-blue-100: #{rgba(map.get(palette.$primary-palette, 100), 30%)};
+    --loan-blue-50: #{rgba(map.get(palette.$primary-palette, 100), 16%)};
+    --loan-blue-20: #{rgba(map.get(palette.$primary-palette, 100), 10%)};
+    --loan-surface: #2c2f36;
+    --loan-surface-alt: #23262c;
+    --loan-surface-h: rgb(255 255 255 / 4%);
+    --loan-border: rgb(255 255 255 / 12%);
+    --loan-text-1: rgb(255 255 255 / 87%);
+    --loan-text-2: rgb(255 255 255 / 60%);
+    --loan-text-3: rgb(255 255 255 / 38%);
+    --loan-paid: #{$status-active};
+    --loan-paid-bg: #{rgba($status-active, 20%)};
+    --loan-partial: #{$status-pending};
+    --loan-partial-bg: #{rgba($status-pending, 20%)};
+    --loan-alert: #{$msg-danger};
+    --loan-alert-bg: #{rgba($msg-danger, 20%)};
+    --loan-violet: #{$amethyst};
+
+    // Solid mid blue keeps white button text readable on the dark surface
+    // (the dark --loan-blue-700 is a light tint meant for text accents).
+    --loan-btn-primary-bg: #{map.get(palette.$primary-palette, 500)};
+    --loan-btn-primary-bg-h: #{map.get(palette.$primary-palette, 700)};
+  }
+}
+
+@mixin list {
+  .entity-list-container {
+    margin: 16px auto;
+    max-width: 70%;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--loan-border);
+    background: var(--loan-surface-alt);
+    box-shadow: 0 1px 3px rgb(13 43 94 / 6%);
+  }
+
+  /* ── Toolbar ──────────────────────────────────────────────── */
+  .toolbar {
+    background: var(--loan-surface);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--loan-border);
+  }
+
+  .search {
+    flex: 1 1 320px;
+    position: relative;
+    max-width: 480px;
+  }
+
+  .search input {
+    width: 100%;
+    height: 36px;
+    padding: 0 12px 0 36px;
+    border: 1px solid var(--loan-border);
+    border-radius: 6px;
+    background: var(--loan-surface);
+    font-family: inherit;
+    font-size: 13px;
+    color: var(--loan-text-1);
+    transition:
+      border-color 0.14s ease,
+      box-shadow 0.14s ease;
+  }
+
+  .search input::placeholder {
+    color: var(--loan-text-3);
+  }
+
+  .search input:focus {
+    outline: none;
+    border-color: var(--loan-blue-700);
+    box-shadow: 0 0 0 3px rgb(21 101 192 / 12%);
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 14px;
+    height: 14px;
+    color: var(--loan-text-3);
+    pointer-events: none;
+  }
+
+  .search-clear {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: none;
+    background: var(--loan-surface-h);
+    color: var(--loan-text-2);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    line-height: 1;
+  }
+
+  .toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    color: var(--loan-text-2);
+    cursor: pointer;
+    user-select: none;
+    padding: 6px 4px;
+    margin: 0;
+  }
+
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 16px;
+    background: var(--loan-border);
+    border-radius: 100px;
+    transition: background 0.14s ease;
+  }
+
+  .switch::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    border-radius: 50%;
+    transition: left 0.14s ease;
+  }
+
+  .switch.on {
+    background: var(--loan-blue-700);
+  }
+
+  .switch.on::after {
+    left: 16px;
+  }
+
+  .count-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 12px;
+    background: var(--loan-blue-20);
+    border: 1px solid var(--loan-blue-100);
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--loan-blue-700);
+  }
+
+  .count-badge strong {
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 700;
+  }
+
+  .toolbar-spacer {
+    flex: 1;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 36px;
+    padding: 0 14px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition:
+      background 0.14s ease,
+      border-color 0.14s ease,
+      color 0.14s ease;
+  }
+
+  .btn svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  .btn-ghost {
+    background: var(--loan-surface);
+    color: var(--loan-text-2);
+    border-color: var(--loan-border);
+  }
+
+  .btn-ghost:hover {
+    color: var(--loan-blue-700);
+    border-color: var(--loan-blue-700);
+    background: var(--loan-blue-50);
+  }
+
+  .btn-primary {
+    background: var(--loan-btn-primary-bg, var(--loan-blue-700));
+    color: #fff;
+  }
+
+  .btn-primary:hover {
+    background: var(--loan-btn-primary-bg-h, var(--loan-blue-600));
+  }
+
+  .loading-bar {
+    display: block;
+  }
+
+  /* ── List ─────────────────────────────────────────────────── */
+  .list {
+    background: var(--loan-surface);
+  }
+
+  .list-header,
+  .list-row {
+    display: grid;
+    grid-template-columns: 4px 36px minmax(220px, 32%) 110px minmax(120px, 16%) minmax(120px, 16%) minmax(150px, 18%);
+    align-items: center;
+    gap: 14px;
+    padding: 8px 16px;
+  }
+
+  .list-header {
+    padding: 10px 16px;
+    background: var(--loan-surface-h);
+    border-bottom: 1px solid var(--loan-border);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--loan-text-2);
+    user-select: none;
+  }
+
+  .list-header > span {
+    white-space: nowrap;
+  }
+
+  .sortable {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .sortable:hover {
+    color: var(--loan-blue-700);
+  }
+
+  .sortable.active {
+    color: var(--loan-blue-700);
+  }
+
+  .sortable svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  .list-row {
+    background: var(--loan-surface);
+    border-bottom: 1px solid var(--loan-border);
+    cursor: pointer;
+    transition: background 0.12s ease;
+    min-height: 52px;
+  }
+
+  .list-row:last-of-type {
+    border-bottom: none;
+  }
+
+  .list-row:hover {
+    background: var(--loan-blue-20);
+  }
+
+  .list-row.closed,
+  .list-row.rejected {
+    opacity: 0.75;
+  }
+
+  .rail {
+    width: 4px;
+    align-self: stretch;
+    border-radius: 4px;
+    background: transparent;
+  }
+
+  .list-row.active .rail {
+    background: var(--loan-paid);
+  }
+
+  .list-row.pending .rail {
+    background: var(--loan-partial);
+  }
+
+  .list-row.closed .rail {
+    background: var(--loan-text-3);
+  }
+
+  .list-row.rejected .rail {
+    background: var(--loan-alert);
+  }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--loan-blue-700), var(--loan-blue-600));
+    color: #fff;
+    font-weight: 700;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+
+  .avatar.entity {
+    background: linear-gradient(135deg, var(--loan-violet), #ab47bc);
+  }
+
+  .avatar.muted {
+    background: linear-gradient(135deg, #8fa5bc, #b0bec5);
+  }
+
+  .name-block {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+  }
+
+  .name {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--loan-text-1);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .name-meta {
+    font-size: 11px;
+    color: var(--loan-text-3);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 9px;
+    border-radius: 100px;
+    font-size: 10.5px;
+    font-weight: 600;
+    border: 1px solid transparent;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    width: fit-content;
+  }
+
+  .status-pill .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+  }
+
+  .status-pill.active {
+    color: var(--loan-paid);
+    border-color: var(--loan-paid);
+    background: var(--loan-paid-bg);
+  }
+
+  .status-pill.active .dot {
+    background: var(--loan-paid);
+  }
+
+  .status-pill.pending {
+    color: var(--loan-partial);
+    border-color: var(--loan-partial);
+    background: var(--loan-partial-bg);
+  }
+
+  .status-pill.pending .dot {
+    background: var(--loan-partial);
+  }
+
+  .status-pill.closed {
+    color: var(--loan-text-3);
+    border-color: var(--loan-text-3);
+    background: var(--loan-surface-h);
+  }
+
+  .status-pill.closed .dot {
+    background: var(--loan-text-3);
+  }
+
+  .status-pill.rejected {
+    color: var(--loan-alert);
+    border-color: var(--loan-alert);
+    background: var(--loan-alert-bg);
+  }
+
+  .status-pill.rejected .dot {
+    background: var(--loan-alert);
+  }
+
+  .status-pill.neutral {
+    color: var(--loan-text-3);
+    border-color: var(--loan-text-3);
+    background: var(--loan-surface-h);
+  }
+
+  .status-pill.neutral .dot {
+    background: var(--loan-text-3);
+  }
+
+  .mono {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 12.5px;
+    color: var(--loan-text-1);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+  }
+
+  .muted-dash {
+    color: var(--loan-text-3);
+  }
+
+  .office {
+    font-size: 13px;
+    color: var(--loan-text-1);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ── Empty state ──────────────────────────────────────────── */
+  .empty-state {
+    padding: 60px 24px;
+    text-align: center;
+    color: var(--loan-text-3);
+    background: var(--loan-surface);
+  }
+
+  .empty-state svg {
+    width: 48px;
+    height: 48px;
+    opacity: 0.4;
+    margin-bottom: 12px;
+  }
+
+  .empty-state h4 {
+    color: var(--loan-text-2);
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  /* ── Footer / pagination ──────────────────────────────────── */
+  .list-footer {
+    padding: 10px 16px;
+    background: var(--loan-surface-h);
+    border-top: 1px solid var(--loan-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 12px;
+    color: var(--loan-text-2);
+    flex-wrap: wrap;
+  }
+
+  .list-footer strong {
+    color: var(--loan-text-1);
+  }
+
+  .pager {
+    display: inline-flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .page-size {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .page-size select {
+    height: 26px;
+    padding: 0 6px;
+    border: 1px solid var(--loan-border);
+    border-radius: 4px;
+    background: var(--loan-surface);
+    font-family: inherit;
+    font-size: 12px;
+    color: var(--loan-text-1);
+    cursor: pointer;
+  }
+
+  .page-nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .page-btn {
+    width: 26px;
+    height: 26px;
+    border: 1px solid var(--loan-border);
+    border-radius: 4px;
+    background: var(--loan-surface);
+    color: var(--loan-text-2);
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .page-btn:hover:not(:disabled) {
+    border-color: var(--loan-blue-700);
+    color: var(--loan-blue-700);
+  }
+
+  .page-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .page-info {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 12px;
+  }
+}

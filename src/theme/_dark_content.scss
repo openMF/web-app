@@ -65,6 +65,7 @@
 
   mifosx-clients-view,
   mifosx-centers-view,
+  mifosx-groups-view,
   mifosx-fixed-deposit-account-view,
   mifosx-loans-view,
   mifosx-shares-account-view,
@@ -235,6 +236,27 @@ body.dark-theme {
   a.mat-tab-link,
   a.tab-link {
     color: white !important;
+  }
+
+  // Related-entity links (member groups, parent center) inside the blue
+  // account header; the global dark link blue is unreadable there. Links
+  // with .entity-link on regular surfaces keep the global dark link blue.
+  mifosx-account-header a.entity-link {
+    color: #e3f2fd !important;
+  }
+
+  // Entity-list toolbar buttons are anchors; keep their own colors instead
+  // of the global dark link blue.
+  a.btn-primary {
+    color: #fff !important;
+  }
+
+  a.btn-ghost {
+    color: var(--loan-text-2, rgb(255 255 255 / 60%)) !important;
+  }
+
+  a.btn-ghost:hover {
+    color: var(--loan-blue-700, #90caf9) !important;
   }
 
   .cdk-drag-preview {
