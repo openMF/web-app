@@ -1157,6 +1157,7 @@
     },
     "heading": {
       "Create Agriculture Loan": "Unda Mkopo wa Kilimo",
+      "Create Auto Loan": "Unda Mkopo wa Gari",
       "Create BNPL Loan": "Unda Mkopo wa BNPL",
       "Create Education Loan": "Unda Mkopo wa Elimu",
       "Create Gold Loan": "Unda Mkopo wa Dhahabu",
@@ -3701,6 +3702,7 @@
     "text": {
       "Agriculture Loan": "Mkopo wa Kilimo",
       "Auto Loan": "Mkopo wa Gari",
+      "Financing for new or used car purchases with structured EMIs over a chosen tenure": "Ufadhili wa ununuzi wa magari mapya au yaliyotumika kwa malipo ya kila mwezi yaliyopangwa katika muda uliochaguliwa.",
       "BNPL": "BNPL",
       "Consumer Durable Loan": "Mkopo wa Bidhaa za Kudumu",
       "Credit Card EMI": "Malipo ya Awamu kwa Kadi ya Mkopo",

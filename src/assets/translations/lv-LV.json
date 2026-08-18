@@ -1159,6 +1159,7 @@
     },
     "heading": {
       "Create Agriculture Loan": "Izveidot lauksaimniecības aizdevumu",
+      "Create Auto Loan": "Izveidot auto aizdevumu",
       "Create BNPL Loan": "Izveidot BNPL aizdevumu",
       "Create Education Loan": "Izveidot studiju aizdevumu",
       "Create Gold Loan": "Izveidot aizdevumu pret zeltu",
@@ -3704,6 +3705,7 @@
     "text": {
       "Agriculture Loan": "Lauksaimniecības aizdevums",
       "Auto Loan": "Auto aizdevums",
+      "Financing for new or used car purchases with structured EMIs over a chosen tenure": "Finansējums jaunu vai lietotu automobiļu iegādei ar fiksētiem ikmēneša maksājumiem izvēlētajā termiņā.",
       "BNPL": "BNPL",
       "Consumer Durable Loan": "Ilglietojuma preču aizdevums",
       "Credit Card EMI": "Kredītkartes maksājumi pa daļām",

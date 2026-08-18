@@ -1162,6 +1162,7 @@
     },
     "heading": {
       "Create Agriculture Loan": "Créer un prêt agricole",
+      "Create Auto Loan": "Créer un prêt automobile",
       "Create BNPL Loan": "Créer un prêt BNPL",
       "Create Education Loan": "Créer un prêt étudiant",
       "Create Gold Loan": "Créer un prêt sur or",
@@ -3708,6 +3709,7 @@
     "text": {
       "Agriculture Loan": "Prêt agricole",
       "Auto Loan": "Prêt automobile",
+      "Financing for new or used car purchases with structured EMIs over a chosen tenure": "Financement pour l'achat de voitures neuves ou d'occasion avec des mensualités fixes sur une durée choisie.",
       "BNPL": "BNPL",
       "Consumer Durable Loan": "Prêt biens de consommation durables",
       "Credit Card EMI": "Paiement échelonné par carte de crédit",
