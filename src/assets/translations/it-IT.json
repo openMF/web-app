@@ -691,7 +691,7 @@
       "New Savings Account": "Nuovo conto di risparmio",
       "New Share Account": "Nuovo conto condiviso",
       "Next": "Prossimo",
-      "No": "NO",
+      "No": "No",
       "OK": "OK",
       "PRINT": "Stampa",
       "Parameters": "Parametri",
@@ -792,7 +792,7 @@
       "Waive Selected": "Rinuncia selezionati",
       "Week": "Settimana",
       "Withdraw": "Ritirare",
-      "Yes": "SÌ",
+      "Yes": "Sì",
       "undo_account_transfer": "Annulla trasferimento conto",
       "Year": "Anno",
       "Export Options": "Opzioni di esportazione",
@@ -1142,8 +1142,8 @@
       "Must be less or equal to": "Deve essere minore o uguale a",
       "must be after or equal to start date": "deve essere successiva o uguale alla data di inizio",
       "No classification data available": "Nessun dato di classificazione trovato",
-      "No": "NO",
-      "Yes": "SÌ"
+      "No": "No",
+      "Yes": "Sì"
     },
     "passwordPreferences": {
       "Password most be at least 1 character and not more that 50 characters long": "La password deve contenere almeno 1 carattere e non più di 50 caratteri",
@@ -5143,7 +5143,7 @@
     "Name of the loan product": "Il nome del prodotto di prestito su cui si basa il conto di prestito",
     "Navigation": "Navigazione",
     "New Loan Application": "Nuova richiesta di prestito",
-    "No": "NO",
+    "No": "No",
     "Not Allowed": "Non autorizzato",
     "Notifications": "Notifiche",
     "Number of days in month": "Numero di giorni nel mese.",
@@ -5242,7 +5242,7 @@
     "Waive Charge": "Rinuncia all'addebito",
     "With Arrears tolerance": "Con 'Tolleranza arretrati' è possibile specificare un importo di tolleranza e se il prestito è in ritardo (in arretrato), ma entro la tolleranza, non sarà classificato come 'in arretrato' e parte del portafoglio a rischio.",
     "Withdraw": "Ritirare",
-    "Yes": "SÌ",
+    "Yes": "Sì",
     "loan product will be active and available to clients": "La data in cui il prodotto di prestito sarà attivo e disponibile per i clienti. Se vuoto, il prodotto di prestito sarà attivo non appena verrà creato.",
     "loan product will become inactive and unavailable to clients": "La data in cui il prodotto di prestito diventerà inattivo e non disponibile per i clienti. Se vuoto, il prodotto di prestito non diventerà mai inattivo."
   },

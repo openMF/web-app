@@ -312,7 +312,9 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
         if (columnHeader.columnName === columnName) {
           const columnDisplayType = columnHeader.columnDisplayType;
           value = data.row[idx];
-          if (columnDisplayType === 'DATE') {
+          if (typeof value === 'boolean') {
+            value = this.translateService.instant(`labels.buttons.${value ? 'Yes' : 'No'}`);
+          } else if (columnDisplayType === 'DATE') {
             value = this.dateFormat.transform(value);
           } else if (columnDisplayType === 'DATETIME') {
             value = this.dateTimeFormat.transform(value);

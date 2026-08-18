@@ -274,6 +274,9 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
       case 'CODELOOKUP': {
         return columnDisplayType;
       }
+      case 'BOOLEAN': {
+        return columnDisplayType;
+      }
       case 'TEXT': {
         if (columnType === 'JSON') {
           return 'JSON';
@@ -289,6 +292,14 @@ export class DatatableSingleRowComponent implements OnInit, OnChanges {
 
   getInputName(attr: string): string {
     return this.datatables.getName(attr);
+  }
+
+  formatValue(value: any): any {
+    if (typeof value === 'boolean') {
+      return this.translateService.instant(`labels.buttons.${value ? 'Yes' : 'No'}`);
+    }
+
+    return value;
   }
 
   isValidUrl(urlString: string): boolean {
