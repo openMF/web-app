@@ -125,13 +125,17 @@ Choose ONE of the following methods to install the web app:
 
 #### Method 2: Docker Container Only
 
-1. Build the Docker image:
+1. Pull the Docker image:
+
+   ```bash
+   docker pull openmf/web-app:1.15.0
    ```
-   docker build -t openmf/web-app:latest .
-   ```
+
+   _(Note: You can use `:latest` for the newest stable release, or `:dev` for the latest development build. Pinning to a specific version like `:1.15.0` is recommended for production.)_
+
 2. Run the container:
-   ```
-   docker run -d -p 4200:80 openmf/web-app:latest
+   ```bash
+   docker run -d -p 4200:80 --env-file .env openmf/web-app:1.15.0
    ```
 3. Access the application at `http://localhost:4200/`
 
@@ -574,6 +578,10 @@ Set `MIFOS_PRODUCTION_MODE_ENABLE_RBAC=true` to activate permission-based UI con
 - **Product Owner**: Product and system configuration
 
 ## Releases
+
+The Mifos X Web App uses Semantic Versioning. You can find all formal releases, changelogs, and their supported Apache Fineract® versions on the [GitHub Releases](https://github.com/openMF/web-app/releases) page.
+
+For details on the release process and Docker Hub tagging strategy, see [docs/RELEASE.md](./docs/RELEASE.md).
 
 ### 1.0.0 (Tag: 1.0.0-fineract1.11)
 
