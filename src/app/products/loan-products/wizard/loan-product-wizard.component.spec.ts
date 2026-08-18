@@ -1761,6 +1761,162 @@ describe('LoanProductWizardComponent', () => {
     });
   });
 
+  describe('Auto profile (spreadsheet-driven, Classic-parity conditionals)', () => {
+    function autoComponent(): LoanProductWizardComponent {
+      const component = createComponent();
+      component.profileMode = 'auto';
+      component.loanProductsTemplate = {
+        currencyOptions: [{ code: 'INR' }],
+        transactionProcessingStrategyOptions: [
+          { code: 'mifos-standard-strategy', name: 'Mifos standard' },
+          { code: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY, name: 'Advanced Payment Allocation' }
+        ],
+        preClosureInterestCalculationStrategyOptions: [{ id: 1, value: 'Till pre-close date' }],
+        rescheduleStrategyTypeOptions: [{ id: 4, value: 'Adjust last, unpaid period' }],
+        interestRecalculationCompoundingTypeOptions: [{ id: 0, value: 'None' }],
+        interestRecalculationFrequencyTypeOptions: [{ id: 1, value: 'Same as repayment period' }],
+        interestRecalculationNthDayTypeOptions: [{ id: 1, value: 'first' }],
+        interestRecalculationDayOfWeekTypeOptions: [{ id: 1, value: 'Monday' }],
+        daysInYearCustomStrategyOptions: [{ id: 'FULL_LEAP_YEAR', value: 'Full Leap Year' }],
+        // The allocation template data the Progressive + advanced-allocation stack needs; without it
+        // the strategy's fallback yields an empty `paymentAllocation`, which Fineract rejects.
+        advancedPaymentAllocationTransactionTypes: [{ id: 1, code: 'DEFAULT', value: 'Default' }],
+        advancedPaymentAllocationTypes: [
+          { id: 1, code: 'PENALTY', value: 'Penalty' },
+          { id: 2, code: 'FEE', value: 'Fee' },
+          { id: 3, code: 'INTEREST', value: 'Interest' },
+          { id: 4, code: 'PRINCIPAL', value: 'Principal' }
+        ],
+        advancedPaymentAllocationFutureInstallmentAllocationRules: [
+          { id: 1, code: 'NEXT_INSTALLMENT', value: 'Next installment' }
+        ]
+      };
+      component.ngOnInit();
+      return component;
+    }
+
+    function visibleKeys(component: LoanProductWizardComponent): string[] {
+      return component.steps.flatMap((step) => component.visibleFields(step)).map((field) => field.key);
+    }
+
+    /** Auto L `is Applicable = Y` rows that the other guided profiles keep hidden. */
+    const APPLICABLE_KEYS = [
+      'isLinkedToFloatingInterestRates',
+      'isEqualAmortization',
+      'loanScheduleType',
+      'daysInYearType',
+      'daysInMonthType',
+      'principalThresholdForLastInstallment',
+      'isInterestRecalculationEnabled',
+      // Rows 67-69 — the whole trio, unlike Two Wheeler (percentage only) and Gold (none).
+      'enableDownPayment',
+      'disbursedAmountPercentageForDownPayment',
+      'enableAutoRepaymentForDownPayment',
+      'delinquencyBucketId'
+    ];
+
+    /**
+     * `is Hidden = Y` rows that must stay hidden. The tranche family (rows 54-58), the arrears
+     * tolerance (row 41) and guarantee funds (row 52) are what separate Auto from Gold.
+     */
+    const HIDDEN_KEYS = [
+      'description',
+      'startDate',
+      'closeDate',
+      'includeInBorrowerCycle',
+      'digitsAfterDecimal',
+      'inArrearsTolerance',
+      'holdGuaranteeFunds',
+      'multiDisburseLoan',
+      'maxTrancheCount',
+      'outstandingLoanBalance',
+      'disallowExpectedDisbursements',
+      'allowFullTermForTranche',
+      'canDefineInstallmentAmount',
+      'graceOnArrearsAgeing',
+      'overdueDaysForNPA',
+      'canUseForTopup',
+      'allowVariableInstallments',
+      'useGlobalConfigForRepaymentEvent',
+      'loanChargeOffBehaviour',
+      'enableInstallmentLevelDelinquency',
+      'allowApprovedDisbursedAmountsOverApplied',
+      'interestRecognitionOnDisbursementDate'
+    ];
+
+    it('exposes every field the sheet marks Applicable and hides every field it marks Hidden', () => {
+      const component = autoComponent();
+      const keys = visibleKeys(component);
+      APPLICABLE_KEYS.forEach((key) => expect(keys).toContain(key));
+      HIDDEN_KEYS.forEach((key) => expect(keys).not.toContain(key));
+
+      // Some of the hidden keys also sit behind a parent display condition, so the assertion above
+      // would pass for the wrong reason while that parent is unset. Satisfy each parent and confirm
+      // the field is still hidden — i.e. hidden by the profile, not merely by its gate.
+      component.form.get('delinquencyBucketId')!.setValue('1'); // gates enableInstallmentLevelDelinquency
+      const withParentsOn = visibleKeys(component);
+      expect(withParentsOn).not.toContain('enableInstallmentLevelDelinquency');
+      expect(withParentsOn).not.toContain('loanChargeOffBehaviour');
+    });
+
+    it('seeds the down payment trio on, per rows 67-69', () => {
+      const component = autoComponent();
+      expect(component.form.get('enableDownPayment')!.value).toBe(true);
+      expect(component.form.get('disbursedAmountPercentageForDownPayment')!.value).toBe(35);
+      expect(component.form.get('enableAutoRepaymentForDownPayment')!.value).toBe(true);
+    });
+
+    it('gates the down payment dependents on the toggle, with the Classic 0-100 range validator', () => {
+      const component = autoComponent();
+      expect(visibleKeys(component)).toContain('disbursedAmountPercentageForDownPayment');
+
+      const percentage = component.form.get('disbursedAmountPercentageForDownPayment')!;
+      percentage.setValue(150);
+      expect(percentage.valid).toBe(false);
+      percentage.setValue(20);
+      expect(percentage.valid).toBe(true);
+
+      component.form.get('enableDownPayment')!.setValue(false);
+      const keys = visibleKeys(component);
+      expect(keys).not.toContain('disbursedAmountPercentageForDownPayment');
+      expect(keys).not.toContain('enableAutoRepaymentForDownPayment');
+    });
+
+    it('seeds the Progressive + advanced payment allocation stack the sheet implies', () => {
+      const component = autoComponent();
+      expect(component.form.get('loanScheduleType')!.value).toBe('Progressive');
+      expect(component.form.get('transactionProcessingStrategyCode')!.value).toBe(
+        LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY
+      );
+      expect(component.visibleSteps.map((step) => step.title)).toContain('Payment Allocation');
+    });
+
+    it('carries a populated paymentAllocation collection in the submitted payload', () => {
+      // Fineract rejects the advanced payment allocation strategy without it, so assert the actual
+      // DEFAULT rule and its ordering rather than merely that the key holds an array.
+      const payload = autoComponent().buildPayloadForSubmit();
+      const paymentAllocation = payload.paymentAllocation as Array<Record<string, unknown>>;
+
+      expect(payload.transactionProcessingStrategyCode).toBe(LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY);
+      expect(Array.isArray(paymentAllocation)).toBe(true);
+      expect(paymentAllocation.length).toBeGreaterThan(0);
+      expect(paymentAllocation[0].transactionType).toBe('DEFAULT');
+      expect(paymentAllocation[0].futureInstallmentAllocationRule).toBe('NEXT_INSTALLMENT');
+      expect(paymentAllocation[0].paymentAllocationOrder).toEqual([
+        { order: 1, paymentAllocationRule: 'PENALTY' },
+        { order: 2, paymentAllocationRule: 'FEE' },
+        { order: 3, paymentAllocationRule: 'INTEREST' },
+        { order: 4, paymentAllocationRule: 'PRINCIPAL' }
+      ]);
+    });
+
+    it('does not render the Interest Refunds or Deferred Income steps (rows 76-78 are Hidden)', () => {
+      const titles = autoComponent().visibleSteps.map((step) => step.title);
+      expect(titles).not.toContain('Interest Refunds');
+      expect(titles).not.toContain('Deferred Income Recognition');
+    });
+  });
+
   describe('BNPL profile (spreadsheet-driven, Classic-parity conditionals)', () => {
     function bnplComponent(): LoanProductWizardComponent {
       const component = createComponent();
@@ -2155,7 +2311,8 @@ describe('LoanProductWizardComponent', () => {
       'bnpl',
       'home',
       'mortgage',
-      'gold'
+      'gold',
+      'auto'
     ];
 
     function componentFor(profile: LoanWizardProfileMode): LoanProductWizardComponent {

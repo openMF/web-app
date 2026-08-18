@@ -1158,6 +1158,7 @@
     },
     "heading": {
       "Create Agriculture Loan": "कृषि ऋण सिर्जना गर्नुहोस्",
+      "Create Auto Loan": "सवारी साधन ऋण सिर्जना गर्नुहोस्",
       "Create BNPL Loan": "BNPL ऋण सिर्जना गर्नुहोस्",
       "Create Education Loan": "शैक्षिक ऋण सिर्जना गर्नुहोस्",
       "Create Gold Loan": "सुन धितो ऋण सिर्जना गर्नुहोस्",
@@ -3704,6 +3705,7 @@
     "text": {
       "Agriculture Loan": "कृषि ऋण",
       "Auto Loan": "सवारी साधन ऋण",
+      "Financing for new or used car purchases with structured EMIs over a chosen tenure": "नयाँ वा प्रयोग भएका कार खरिदका लागि वित्तपोषण, छनोट गरिएको अवधिभर नियमित मासिक किस्तासहित।",
       "BNPL": "BNPL",
       "Consumer Durable Loan": "उपभोग्य वस्तु ऋण",
       "Credit Card EMI": "क्रेडिट कार्ड किस्ता",

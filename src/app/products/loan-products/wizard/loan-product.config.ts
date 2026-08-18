@@ -211,9 +211,11 @@ export const PRODUCT_CARDS: ProductCard[] = [
   },
   {
     name: 'labels.text.Auto Loan',
-    description: 'Financing for new or used car purchases with structured EMIs over a chosen tenure.',
-    active: false,
-    disabled: true,
+    // Fully qualified translation key, same pattern as the Custom/Advanced card above.
+    description: 'labels.text.Financing for new or used car purchases with structured EMIs over a chosen tenure',
+    active: true,
+    disabled: false,
+    route: 'auto-loan',
     icon: 'directions_car'
   },
   {
@@ -1109,7 +1111,16 @@ export const INITIAL_FORM_STATE: Record<string, string | number | boolean | null
 };
 
 export type LoanWizardProfileMode =
-  'personal' | 'custom-advanced' | 'two-wheeler' | 'education' | 'agriculture' | 'bnpl' | 'home' | 'mortgage' | 'gold';
+  | 'personal'
+  | 'custom-advanced'
+  | 'two-wheeler'
+  | 'education'
+  | 'agriculture'
+  | 'bnpl'
+  | 'home'
+  | 'mortgage'
+  | 'gold'
+  | 'auto';
 
 /**
  * Home Loan and Mortgage Loan (LAP) share one product-level configuration. This is what the workbook
@@ -1388,6 +1399,38 @@ const GOLD_VISIBLE_KEYS: readonly string[] = [
 ];
 
 /**
+ * Keys the Auto L sheet marks `is Applicable = Y` that the base {@link HIDDEN_DEFAULTS} would
+ * otherwise pin. Sheet rows, in order: 15, 32, 33, 35, 37, 42, 43, 44, 49, 53, 67, 68, 69, 71. The
+ * remaining `Applicable = Y` rows (name, shortName, externalId, currencyCode, principal,
+ * numberOfRepayments, the interest/repayment terms, amortization, interest method, interest
+ * calculation period, repayment strategy, the three grace fields, charges and accounting) are never in
+ * HIDDEN_DEFAULTS to begin with, so they need no entry here.
+ *
+ * Row 16 ("Installment day calculation from") is deliberately NOT listed, for the same reason it is
+ * omitted from {@link GOLD_VISIBLE_KEYS} — see the note there.
+ */
+const AUTO_VISIBLE_KEYS: readonly string[] = [
+  'isLinkedToFloatingInterestRates',
+  'allowPartialPeriodInterestCalculation',
+  'isEqualAmortization',
+  'loanScheduleType',
+  'loanScheduleProcessingType',
+  'daysInYearType',
+  'daysInYearCustomStrategy',
+  'daysInMonthType',
+  'principalThresholdForLastInstallment',
+  'isInterestRecalculationEnabled',
+  // Rows 67-69. Unlike Two Wheeler — which pins the toggle on and exposes only the percentage — the
+  // Auto sheet marks all three down-payment fields Applicable, so the whole trio is editable. This is
+  // the structural difference between this profile and Gold, whose sheet keeps the trio on the master
+  // defaults.
+  'enableDownPayment',
+  'disbursedAmountPercentageForDownPayment',
+  'enableAutoRepaymentForDownPayment',
+  'delinquencyBucketId'
+];
+
+/**
  * The hidden, always-sent defaults for a profile mode. Guided profiles hide every key of the
  * returned object in the UI and spread it LAST in {@link buildPayload}'s merge, so a key must be
  * removed here (not just overridden) the moment a profile exposes it as an editable control —
@@ -1545,6 +1588,24 @@ export function hiddenDefaultsFor(profileMode: LoanWizardProfileMode): Record<st
     // an editable control. Each must be REMOVED (not overridden) from the hidden defaults, because
     // the guided merge spreads `defaults` last and would otherwise clobber the user's input.
     for (const exposedKey of GOLD_VISIBLE_KEYS) {
+      delete defaults[exposedKey];
+    }
+    return defaults;
+  }
+  if (profileMode === 'auto') {
+    const defaults: Record<string, unknown> = {
+      ...HIDDEN_DEFAULTS,
+      description: 'Auto Loan Product'
+      // The multi-disburse family (rows 54-58) is Not Applicable with a BLANK Default Value, so unlike
+      // Gold — whose row 54 pins an explicit FALSE — it simply inherits the master defaults and is
+      // dropped from the payload wholesale, since Auto is absent from `sendsMultiDisburseFields` and
+      // `sendsOutstandingLoanBalance`. That is exactly what Two Wheeler, the closest existing analogue,
+      // already does.
+    };
+    // Every key below is marked `is Applicable = Y` on the Auto L sheet, so the profile renders it as
+    // an editable control. Each must be REMOVED (not overridden) from the hidden defaults, because
+    // the guided merge spreads `defaults` last and would otherwise clobber the user's input.
+    for (const exposedKey of AUTO_VISIBLE_KEYS) {
       delete defaults[exposedKey];
     }
     return defaults;
@@ -1709,6 +1770,27 @@ export const PROFILE_INITIAL_OVERRIDES: Partial<Record<LoanWizardProfileMode, Pa
     // boilerplate every other sheet inherits from `All Params`, with a blank Default Value column, so
     // seeding a loan-to-value or a pledge tenure here would invent commercial policy the sheet does
     // not state.
+  },
+  auto: {
+    // Rows 35/36/37 — the same Progressive + advanced-allocation resolution Home, Gold and BNPL apply
+    // to the identical contradiction on their own sheets.
+    loanScheduleType: 'Progressive',
+    transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+    loanScheduleProcessingType: 'Horizontal',
+    // Rows 67/68/69, seeded to the sheet's sample values. Down payment is intrinsic to vehicle finance
+    // (it is how the lender controls loan-to-value on a depreciating asset), so the toggle is seeded on
+    // — INITIAL_FORM_STATE seeds it false — and all three stay editable, per the sheet.
+    enableDownPayment: true,
+    disbursedAmountPercentageForDownPayment: 35,
+    enableAutoRepaymentForDownPayment: true,
+    // Rows 42/44 — seeded to the sheet's values, and editable because both rows are Applicable.
+    daysInYearType: 360,
+    daysInMonthType: 30
+    // Deliberately absent: `principal`, `interestRatePerPeriod` and `numberOfRepayments` — see the note
+    // on HOME_AND_MORTGAGE_INITIAL_OVERRIDES. The Auto L sheet carries the same 10000 / 12% / 12
+    // boilerplate every other sheet inherits from `All Params`, with a blank Default Value column, so
+    // seeding a headline ticket size or tenure here would invent commercial policy the sheet does not
+    // state.
   }
 };
 
@@ -1759,6 +1841,15 @@ export const PROFILE_EXTRA_VISIBLE_FIELDS: Partial<Record<LoanWizardProfileMode,
   gold: [
     'holdGuaranteeFunds',
     ...GUARANTEE_FUNDS_DEPENDENT_FIELDS
+  ],
+  // Auto L rows 15 and 67-69 — Applicable on the sheet but in the wizard's custom-only list, so they
+  // need the same second-gate exemption Home, Gold and BNPL need. Unlike Two Wheeler, which exposes
+  // only the percentage, the whole down-payment trio is editable here.
+  auto: [
+    'isLinkedToFloatingInterestRates',
+    'enableDownPayment',
+    'disbursedAmountPercentageForDownPayment',
+    'enableAutoRepaymentForDownPayment'
   ]
 };
 
@@ -1772,7 +1863,8 @@ export const PROFILE_LABEL_KEYS: Record<LoanWizardProfileMode, string> = {
   bnpl: 'labels.text.BNPL',
   home: 'labels.text.Home Loan',
   mortgage: 'labels.text.Mortgage Loan (LAP)',
-  gold: 'labels.text.Gold Loan'
+  gold: 'labels.text.Gold Loan',
+  auto: 'labels.text.Auto Loan'
 };
 
 /** Route path (under products/loan-products) → wizard profile and the page heading it renders. */
@@ -1788,7 +1880,8 @@ const PROFILE_ROUTES: Record<string, { profileMode: LoanWizardProfileMode; pageT
   'bnpl-loan': { profileMode: 'bnpl', pageTitle: 'labels.heading.Create BNPL Loan' },
   'home-loan': { profileMode: 'home', pageTitle: 'labels.heading.Create Home Loan' },
   'mortgage-loan': { profileMode: 'mortgage', pageTitle: 'labels.heading.Create Mortgage Loan' },
-  'gold-loan': { profileMode: 'gold', pageTitle: 'labels.heading.Create Gold Loan' }
+  'gold-loan': { profileMode: 'gold', pageTitle: 'labels.heading.Create Gold Loan' },
+  'auto-loan': { profileMode: 'auto', pageTitle: 'labels.heading.Create Auto Loan' }
 };
 
 /**

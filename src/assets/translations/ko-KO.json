@@ -1159,6 +1159,7 @@
     },
     "heading": {
       "Create Agriculture Loan": "농업 대출 생성",
+      "Create Auto Loan": "자동차 대출 생성",
       "Create BNPL Loan": "BNPL 대출 생성",
       "Create Education Loan": "교육 대출 생성",
       "Create Gold Loan": "금 담보 대출 생성",
@@ -3704,6 +3705,7 @@
     "text": {
       "Agriculture Loan": "농업 대출",
       "Auto Loan": "자동차 대출",
+      "Financing for new or used car purchases with structured EMIs over a chosen tenure": "신차 또는 중고차 구매를 위한 금융으로, 선택한 기간 동안 매월 일정한 할부금을 상환합니다.",
       "BNPL": "BNPL",
       "Consumer Durable Loan": "내구소비재 대출",
       "Credit Card EMI": "신용카드 할부",

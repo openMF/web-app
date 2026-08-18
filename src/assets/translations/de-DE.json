@@ -1161,6 +1161,7 @@
     },
     "heading": {
       "Create Agriculture Loan": "Agrarkredit erstellen",
+      "Create Auto Loan": "Autokredit erstellen",
       "Create BNPL Loan": "BNPL-Kredit erstellen",
       "Create Education Loan": "Bildungskredit erstellen",
       "Create Gold Loan": "Goldkredit erstellen",
@@ -3707,6 +3708,7 @@
     "text": {
       "Agriculture Loan": "Agrarkredit",
       "Auto Loan": "Autokredit",
+      "Financing for new or used car purchases with structured EMIs over a chosen tenure": "Finanzierung für den Kauf von Neu- oder Gebrauchtwagen mit festen monatlichen Raten über eine gewählte Laufzeit.",
       "BNPL": "BNPL",
       "Consumer Durable Loan": "Konsumgüterkredit",
       "Credit Card EMI": "Kreditkarten-Ratenzahlung",

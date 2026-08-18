@@ -1507,6 +1507,190 @@ describe('loan-product.config buildPayload for the gold profile', () => {
   });
 });
 
+describe('loan-product.config buildPayload for the auto profile', () => {
+  /**
+   * The raw form value the wizard submits for Auto: the shared seed, the profile's prefills (the
+   * Progressive + advanced-allocation stack, the down-payment trio and the sheet's day counts), plus
+   * the fields the user must type. `principal` and `interestRatePerPeriod` are deliberately not
+   * prefilled by the profile — the workbook states no per-product figure — so they are user input.
+   */
+  function autoFormState(edits: Record<string, unknown> = {}): typeof INITIAL_FORM_STATE {
+    return {
+      ...INITIAL_FORM_STATE,
+      ...PROFILE_INITIAL_OVERRIDES['auto'],
+      name: 'Auto Loan – Standard',
+      shortName: 'AL',
+      currencyCode: 'INR',
+      principal: 800000,
+      interestRatePerPeriod: 11,
+      numberOfRepayments: 60,
+      ...edits
+    };
+  }
+
+  it('produces the exact Auto create payload for an untouched wizard form', () => {
+    // Auto L rows 67-69: the whole down-payment trio is Applicable and editable, which is what
+    // separates this profile from Gold. Rows 54-58 keep the tranche family out of the payload, row 15
+    // makes the floating-rate link editable and row 53 does the same for interest recalculation.
+    expect(buildPayload(autoFormState(), 'auto')).toEqual({
+      name: 'Auto Loan – Standard',
+      shortName: 'AL',
+      externalId: '',
+      description: 'Auto Loan Product',
+      startDate: '',
+      closeDate: '',
+      includeInBorrowerCycle: true,
+      currencyCode: 'INR',
+      digitsAfterDecimal: 2,
+      inMultiplesOf: 1,
+      installmentAmountInMultiplesOf: 10,
+      useBorrowerCycle: false,
+      principal: 800000,
+      numberOfRepayments: 60,
+      interestRatePerPeriod: 11,
+      interestRateFrequencyType: 2,
+      repaymentEvery: 1,
+      repaymentFrequencyType: 2,
+      isLinkedToFloatingInterestRates: false,
+      allowApprovedDisbursedAmountsOverApplied: false,
+      overAppliedCalculationType: null,
+      overAppliedNumber: null,
+      minimumDaysBetweenDisbursalAndFirstRepayment: 5,
+      interestRecognitionOnDisbursementDate: false,
+      repaymentStartDateType: 1,
+      amortizationType: 1,
+      interestType: 0,
+      allowPartialPeriodInterestCalculation: true,
+      isEqualAmortization: false,
+      interestCalculationPeriodType: 1,
+      loanScheduleType: 'PROGRESSIVE',
+      transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+      loanScheduleProcessingType: 'HORIZONTAL',
+      graceOnPrincipalPayment: 0,
+      graceOnInterestPayment: 0,
+      graceOnInterestCharged: 0,
+      daysInYearType: 360,
+      daysInMonthType: 30,
+      principalThresholdForLastInstallment: 5,
+      canUseForTopup: false,
+      isInterestRecalculationEnabled: false,
+      delinquencyBucketId: null,
+      canDefineInstallmentAmount: true,
+      inArrearsTolerance: 50,
+      graceOnArrearsAgeing: 5,
+      overdueDaysForNPA: 90,
+      accountMovesOutOfNPAOnlyOnArrearsCompletion: true,
+      holdGuaranteeFunds: false,
+      enableDownPayment: true,
+      disbursedAmountPercentageForDownPayment: 35,
+      enableAutoRepaymentForDownPayment: true,
+      chargeOffBehaviour: 'REGULAR',
+      enableInstallmentLevelDelinquency: false,
+      dueDaysForRepaymentEvent: 1,
+      overDueDaysForRepaymentEvent: 1,
+      enableIncomeCapitalization: false,
+      enableBuyDownFee: false,
+      accountingRule: 2,
+      principalVariationsForBorrowerCycle: [],
+      numberOfRepaymentVariationsForBorrowerCycle: [],
+      interestRateVariationsForBorrowerCycle: [],
+      charges: [],
+      allowAttributeOverrides: {
+        amortizationType: true,
+        interestType: true,
+        transactionProcessingStrategyCode: true,
+        interestCalculationPeriodType: true,
+        inArrearsTolerance: true,
+        repaymentEvery: true,
+        graceOnPrincipalAndInterestPayment: true,
+        graceOnArrearsAgeing: true
+      }
+    });
+  });
+
+  it('omits the whole multi-disburse family, which the sheet marks Not Applicable', () => {
+    // Auto L rows 54-58. A car loan disburses once to the dealer.
+    const payload = buildPayload(autoFormState(), 'auto');
+
+    [
+      'multiDisburseLoan',
+      'maxTrancheCount',
+      'outstandingLoanBalance',
+      'disallowExpectedDisbursements',
+      'allowFullTermForTranche'
+    ].forEach((key) => {
+      expect([
+        key,
+        key in payload
+      ]).toEqual([
+        key,
+        false
+      ]);
+    });
+  });
+
+  it('lets user input win over the hidden defaults for every field the sheet marks Applicable', () => {
+    // Each of these is REMOVED from the profile's hidden defaults, so the guided "defaults win" merge
+    // must not clobber the visible control's value.
+    const payload = buildPayload(
+      autoFormState({
+        isLinkedToFloatingInterestRates: true,
+        principalThresholdForLastInstallment: 10,
+        daysInMonthType: 1,
+        daysInYearType: 365,
+        delinquencyBucketId: '2',
+        isEqualAmortization: true,
+        disbursedAmountPercentageForDownPayment: 20,
+        enableAutoRepaymentForDownPayment: false
+      }),
+      'auto'
+    );
+
+    expect(payload.isLinkedToFloatingInterestRates).toBe(true);
+    expect(payload.principalThresholdForLastInstallment).toBe(10);
+    expect(payload.daysInMonthType).toBe(1);
+    expect(payload.daysInYearType).toBe(365);
+    expect(payload.delinquencyBucketId).toBe('2');
+    expect(payload.isEqualAmortization).toBe(true);
+    expect(payload.disbursedAmountPercentageForDownPayment).toBe(20);
+    expect(payload.enableAutoRepaymentForDownPayment).toBe(false);
+  });
+
+  it('drops the down payment dependents when the operator turns the toggle off', () => {
+    // Rows 67-69 are all editable here, so unlike Gold the toggle can actually be switched off — and
+    // Classic removes both dependents when it is, exactly as sanitizeCreateLoanProductPayload does.
+    const payload = buildPayload(autoFormState({ enableDownPayment: false }), 'auto');
+
+    expect(payload.enableDownPayment).toBe(false);
+    expect('disbursedAmountPercentageForDownPayment' in payload).toBe(false);
+    expect('enableAutoRepaymentForDownPayment' in payload).toBe(false);
+  });
+
+  it('omits the guarantee inputs, which the sheet marks Not Applicable', () => {
+    // Row 52 is Not Applicable for Auto (Home and Gold mark it Applicable): a hypothecated vehicle is
+    // the security, so there is no guarantee-funds feature to configure.
+    const payload = buildPayload(autoFormState(), 'auto');
+
+    expect(payload.holdGuaranteeFunds).toBe(false);
+    expect('mandatoryGuarantee' in payload).toBe(false);
+    expect('minimumGuaranteeFromOwnFunds' in payload).toBe(false);
+    expect('minimumGuaranteeFromGuarantor' in payload).toBe(false);
+  });
+
+  it('normalizes the delinquency bucket "None" option to null', () => {
+    expect(buildPayload(autoFormState({ delinquencyBucketId: '' }), 'auto').delinquencyBucketId).toBeNull();
+  });
+
+  it('drops a grace period that is not shorter than the tenure', () => {
+    // Fineract requires grace < numberOfRepayments; the sheet samples 120 against 12 repayments.
+    expect(buildPayload(autoFormState({ graceOnPrincipalPayment: 6 }), 'auto').graceOnPrincipalPayment).toBe(6);
+    expect(
+      buildPayload(autoFormState({ numberOfRepayments: 12, graceOnPrincipalPayment: 120 }), 'auto')
+        .graceOnPrincipalPayment
+    ).toBeUndefined();
+  });
+});
+
 describe('loan-product.config profileForRoutePath', () => {
   it('maps each wizard route to its profile and page title key', () => {
     expect(profileForRoutePath('personal-loan')).toEqual({
@@ -1540,6 +1724,10 @@ describe('loan-product.config profileForRoutePath', () => {
     expect(profileForRoutePath('gold-loan')).toEqual({
       profileMode: 'gold',
       pageTitle: 'labels.heading.Create Gold Loan'
+    });
+    expect(profileForRoutePath('auto-loan')).toEqual({
+      profileMode: 'auto',
+      pageTitle: 'labels.heading.Create Auto Loan'
     });
   });
 
@@ -1606,6 +1794,14 @@ describe('loan-product.config PRODUCT_CARDS', () => {
     expect(card.route).toBe('gold-loan');
   });
 
+  it('activates the Auto Loan card with its wizard route', () => {
+    const card = PRODUCT_CARDS.find((product) => product.name === 'labels.text.Auto Loan')!;
+
+    expect(card.active).toBe(true);
+    expect(card.disabled).toBe(false);
+    expect(card.route).toBe('auto-loan');
+  });
+
   it('routes every active card to a route a wizard profile claims', () => {
     // The selection grid renders a Create button for every active card; a card whose route no
     // profile claims would silently fall back to the Personal Loan wizard.
@@ -1619,7 +1815,8 @@ describe('loan-product.config PRODUCT_CARDS', () => {
         'bnpl-loan',
         'home-loan',
         'mortgage-loan',
-        'gold-loan'
+        'gold-loan',
+        'auto-loan'
       ]).toContain(product.route);
     });
   });
@@ -1636,7 +1833,8 @@ describe('loan-product.config PRODUCT_CARDS', () => {
       'bnpl',
       'home',
       'mortgage',
-      'gold'
+      'gold',
+      'auto'
     ];
 
     function payloadFor(profile: LoanWizardProfileMode, overrides: Record<string, unknown>) {
@@ -1703,7 +1901,8 @@ describe('loan-product.config PRODUCT_CARDS', () => {
           'bnpl',
           'home',
           'mortgage',
-          'gold'
+          'gold',
+          'auto'
         ] as LoanWizardProfileMode[]).forEach((profile) => {
         const payload = payloadFor(profile, applicable);
         expect([

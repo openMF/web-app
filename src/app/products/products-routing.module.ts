@@ -272,6 +272,15 @@ const routes: Routes = [
               }
             },
             {
+              path: 'auto-loan',
+              component: CreateLoanProductComponent,
+              data: { title: 'Create Auto Loan', breadcrumb: 'Auto Loan' },
+              resolve: {
+                loanProductsTemplate: LoanProductsTemplateResolver,
+                configurations: GlobalConfigurationsResolver
+              }
+            },
+            {
               path: ':productId',
               component: ViewLoanProductComponent,
               resolve: {
