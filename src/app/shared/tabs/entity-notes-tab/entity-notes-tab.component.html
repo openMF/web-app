@@ -55,6 +55,7 @@
                   mat-raised-button
                   color="primary"
                   (click)="editNote(entityNote.id, entityNote.note, i)"
+                  data-testid="note-edit-action"
                   [title]="'labels.heading.Edit Note' | translate"
                 >
                   <fa-icon icon="edit" class="m-r-10" aria-hidden="true"></fa-icon
@@ -65,6 +66,7 @@
                   mat-raised-button
                   color="warn"
                   (click)="deleteNote(entityNote.id, i)"
+                  data-testid="note-delete-action"
                   [title]="('labels.inputs.Note' | translate) + ': ' + ('labels.buttons.Delete' | translate)"
                 >
                   <fa-icon icon="trash" class="m-r-10" aria-hidden="true"></fa-icon
