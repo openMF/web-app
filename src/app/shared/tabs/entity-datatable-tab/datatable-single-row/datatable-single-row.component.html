@@ -60,7 +60,7 @@
                     }
                     @case ('INTEGER') {
                       <span>
-                        {{ dataObject.data[0].row[i] }}
+                        {{ formatValue(dataObject.data[0].row[i]) }}
                       </span>
                     }
                     @case ('DECIMAL') {
@@ -79,7 +79,12 @@
                     }
                     @case ('TEXT') {
                       <span class="long-text">
-                        {{ dataObject.data[0].row[i] }}
+                        {{ formatValue(dataObject.data[0].row[i]) }}
+                      </span>
+                    }
+                    @case ('BOOLEAN') {
+                      <span>
+                        {{ formatValue(dataObject.data[0].row[i]) }}
                       </span>
                     }
                     @case ('JSON') {
@@ -112,7 +117,7 @@
                           </span>
                           {{ dataObject.data[0].row[i] }}
                         } @else {
-                          {{ dataObject.data[0].row[i] }}
+                          {{ formatValue(dataObject.data[0].row[i]) }}
                         }
                       </div>
                     }
