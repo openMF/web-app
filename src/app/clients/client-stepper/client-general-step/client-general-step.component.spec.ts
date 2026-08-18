@@ -461,3 +461,118 @@ describe('ClientGeneralStepComponent WEB-1330 mobile country calling code', () =
     expect(component.clientGeneralDetails).not.toHaveProperty('mobileNo');
   });
 });
+
+describe('ClientGeneralStepComponent WEB-1118 clearing optional dropdowns', () => {
+  let fixture: ComponentFixture<ClientGeneralStepComponent>;
+  let component: ClientGeneralStepComponent;
+
+  const clientTemplate: any = {
+    officeOptions: [{ id: 1, name: 'Head Office' }],
+    staffOptions: [],
+    clientLegalFormOptions: [
+      { id: LegalFormId.PERSON, value: 'PERSON' },
+      { id: LegalFormId.ENTITY, value: 'ENTITY' }
+    ],
+    clientTypeOptions: [],
+    clientClassificationOptions: [],
+    clientNonPersonMainBusinessLineOptions: [],
+    clientNonPersonConstitutionOptions: [],
+    genderOptions: [
+      { id: 28, name: 'Male' },
+      { id: 29, name: 'Female' }
+    ],
+    savingProductOptions: []
+  };
+
+  function genderSelectElement(): HTMLElement {
+    return fixture.debugElement.query(By.css('mat-select[formcontrolname="genderId"]')).nativeElement;
+  }
+
+  function genderClearButton(): HTMLButtonElement | null {
+    return genderSelectElement().closest('mat-form-field').querySelector('button[mat-icon-button]');
+  }
+
+  function selectGender(name: string): void {
+    fixture.debugElement
+      .query(By.css('mat-select[formcontrolname="genderId"]'))
+      .injector.get<MatSelect>(MatSelect)
+      .open();
+    fixture.detectChanges();
+    fixture.debugElement
+      .queryAll(By.css('mat-option'))
+      .find((option) => option.nativeElement.textContent.trim() === name)!
+      .nativeElement.click();
+    fixture.detectChanges();
+  }
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [
+        ClientGeneralStepComponent,
+        TranslateModule.forRoot()
+      ],
+      providers: [
+        provideNativeDateAdapter(),
+        provideNoopAnimations(),
+        { provide: CdkStepper, useValue: { next: jest.fn(), previous: jest.fn() } },
+        { provide: Dates, useValue: { formatDate: jest.fn(() => '15 January 2026') } },
+        {
+          provide: SettingsService,
+          useValue: {
+            businessDate: new Date(2026, 0, 15),
+            maxFutureDate: new Date(2100, 0, 1),
+            dateFormat: 'dd MMMM yyyy',
+            language: { code: 'en-US' }
+          }
+        },
+        { provide: ClientsService, useValue: { getClientWithOfficeTemplate: jest.fn(() => of(clientTemplate)) } }
+      ]
+    }).compileComponents();
+
+    const faIconLibrary = TestBed.inject(FaIconLibrary);
+    faIconLibrary.addIcons(
+      ...Object.keys(solidIcons)
+        .filter((key) => key !== 'fas' && key !== 'prefix' && key.startsWith('fa'))
+        .map((icon) => (solidIcons as any)[icon])
+    );
+
+    fixture = TestBed.createComponent(ClientGeneralStepComponent);
+    component = fixture.componentInstance;
+    component.clientTemplate = clientTemplate;
+    fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    TestBed.inject(OverlayContainer).ngOnDestroy?.();
+  });
+
+  it('shows the clear button only once a value is selected', () => {
+    expect(genderClearButton()).toBeNull();
+
+    selectGender('Female');
+
+    expect(component.createClientForm.get('genderId').value).toBe(29);
+    expect(genderClearButton()).not.toBeNull();
+  });
+
+  it('clears the value, hides the button and returns focus to the select', () => {
+    selectGender('Female');
+    const clearButton = genderClearButton()!;
+    clearButton.focus();
+    expect(document.activeElement).toBe(clearButton);
+
+    clearButton.click();
+    fixture.detectChanges();
+
+    expect(component.createClientForm.get('genderId').value).toBe('');
+    expect(component.createClientForm.dirty).toBe(true);
+    expect(genderClearButton()).toBeNull();
+    expect(document.activeElement).toBe(genderSelectElement());
+  });
+
+  it('is a non-submitting button', () => {
+    selectGender('Male');
+
+    expect(genderClearButton()!.type).toBe('button');
+  });
+});

@@ -193,25 +193,47 @@
     @if (createClientForm.value.legalFormId === LegalFormId.PERSON) {
       <mat-form-field class="flex-48">
         <mat-label>{{ 'labels.inputs.Gender' | translate }}</mat-label>
-        <mat-select formControlName="genderId">
+        <mat-select #genderSelect formControlName="genderId">
           @for (gender of genderOptions; track gender) {
             <mat-option [value]="gender.id">
               {{ gender.name }}
             </mat-option>
           }
         </mat-select>
+        @if (createClientForm.value.genderId) {
+          <button
+            matSuffix
+            mat-icon-button
+            type="button"
+            aria-label="{{ 'labels.buttons.Clear' | translate }}"
+            (click)="clearProperty($event, 'genderId', genderSelect)"
+          >
+            <fa-icon icon="close" size="md"></fa-icon>
+          </button>
+        }
       </mat-form-field>
     }
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Staff' | translate }}</mat-label>
-      <mat-select formControlName="staffId">
+      <mat-select #staffSelect formControlName="staffId">
         @for (staff of staffOptions; track staff) {
           <mat-option [value]="staff.id">
             {{ staff.displayName }}
           </mat-option>
         }
       </mat-select>
+      @if (createClientForm.value.staffId) {
+        <button
+          matSuffix
+          mat-icon-button
+          type="button"
+          aria-label="{{ 'labels.buttons.Clear' | translate }}"
+          (click)="clearProperty($event, 'staffId', staffSelect)"
+        >
+          <fa-icon icon="close" size="md"></fa-icon>
+        </button>
+      }
     </mat-form-field>
 
     @if (createClientForm.value.legalFormId === LegalFormId.PERSON) {
@@ -253,24 +275,46 @@
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Client Type' | translate }}</mat-label>
-      <mat-select formControlName="clientTypeId">
+      <mat-select #clientTypeSelect formControlName="clientTypeId">
         @for (clientType of clientTypeOptions; track clientType) {
           <mat-option [value]="clientType.id">
             {{ clientType.name }}
           </mat-option>
         }
       </mat-select>
+      @if (createClientForm.value.clientTypeId) {
+        <button
+          matSuffix
+          mat-icon-button
+          type="button"
+          aria-label="{{ 'labels.buttons.Clear' | translate }}"
+          (click)="clearProperty($event, 'clientTypeId', clientTypeSelect)"
+        >
+          <fa-icon icon="close" size="md"></fa-icon>
+        </button>
+      }
     </mat-form-field>
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Client Classification' | translate }}</mat-label>
-      <mat-select formControlName="clientClassificationId">
+      <mat-select #clientClassificationSelect formControlName="clientClassificationId">
         @for (clientClassification of clientClassificationTypeOptions; track clientClassification) {
           <mat-option [value]="clientClassification.id">
             {{ clientClassification.name }}
           </mat-option>
         }
       </mat-select>
+      @if (createClientForm.value.clientClassificationId) {
+        <button
+          matSuffix
+          mat-icon-button
+          type="button"
+          aria-label="{{ 'labels.buttons.Clear' | translate }}"
+          (click)="clearProperty($event, 'clientClassificationId', clientClassificationSelect)"
+        >
+          <fa-icon icon="close" size="md"></fa-icon>
+        </button>
+      }
     </mat-form-field>
 
     <mat-form-field class="flex-48" (click)="submittedOnDatePicker.open()">
