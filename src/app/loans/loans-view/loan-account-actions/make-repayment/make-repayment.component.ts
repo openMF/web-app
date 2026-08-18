@@ -102,6 +102,9 @@ export class MakeRepaymentComponent extends LoanAccountActionsBaseComponent impl
     if (this.loanProductService.isWorkingCapital && this.command === 'payoutRefund') {
       return 'PAYOUTREFUND_WORKINGCAPITALLOAN';
     }
+    if (this.loanProductService.isWorkingCapital && this.command === 'repayment') {
+      return 'REPAYMENT_WORKINGCAPITALLOAN';
+    }
     const map: Record<string, string> = {
       repayment: 'REPAYMENT_LOAN',
       goodwillCredit: 'CREATE_GOODWILL_TRANSACTION',

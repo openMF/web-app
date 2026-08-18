@@ -63,6 +63,11 @@ describe('DatatableSingleRowComponent', () => {
   const getDataItemText = (index: number, selector: string): string =>
     getDataItems()[index].querySelector(selector).textContent.replace(/\s+/g, ' ').trim();
 
+  const setDataObject = (dataObject: any) => {
+    fixture.componentRef.setInput('dataObject', dataObject);
+    fixture.detectChanges();
+  };
+
   beforeEach(async () => {
     const translations: Record<string, string> = {
       'labels.buttons.Add': 'Agregar',
@@ -137,6 +142,26 @@ describe('DatatableSingleRowComponent', () => {
   it('leaves normal single-row field labels unchanged', () => {
     expect(getDataItemText(2, '.data-label')).toBe('First Name');
     expect(getDataItemText(2, '.data-value')).toBe('Ada');
+  });
+
+  it('renders long field labels and text values in wrapping containers', () => {
+    const longFieldName = 'custom_field_name_with_a_very_long_unbroken_label_for_wrapping';
+    const longValue = 'averylongunbrokenfieldvaluethatshouldwrapandremainfullyvisible';
+    setDataObject({
+      columnHeaders: [{ columnName: longFieldName, columnDisplayType: 'TEXT' }],
+      data: [{ row: [longValue] }]
+    });
+
+    const dataItem = getDataItems()[0];
+    const label = dataItem.querySelector('.data-label') as HTMLElement;
+    const value = dataItem.querySelector('.data-value') as HTMLElement;
+    const longText = dataItem.querySelector('.long-text') as HTMLElement;
+
+    expect(label.textContent.replace(/\s+/g, ' ').trim()).toBe(
+      'Custom Field Name With A Very Long Unbroken Label For Wrapping'
+    );
+    expect(value.textContent.trim()).toBe(longValue);
+    expect(longText.textContent.trim()).toBe(longValue);
   });
 
   it('translates single-row system timestamp labels', () => {
