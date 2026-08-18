@@ -454,8 +454,8 @@ export class LoansViewComponent extends LoanProductBaseComponent implements OnIn
         });
       }
     } else if (
-      (this.loanProductService.isLoanProduct && this.status === 'Closed (obligations met)') ||
-      this.status === 'Overpaid'
+      this.loanProductService.isLoanProduct &&
+      (this.status === 'Closed (obligations met)' || this.status === 'Overpaid')
     ) {
       if (this.loanDetailsData.multiDisburseLoan) {
         this.buttonConfig.addButton({
