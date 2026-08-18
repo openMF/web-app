@@ -38,6 +38,8 @@ describe('DatatableMultiRowComponent', () => {
       firstName,
       lastName,
       amount,
+      true,
+      false,
       null
     ]
   });
@@ -49,6 +51,8 @@ describe('DatatableMultiRowComponent', () => {
       { columnName: 'first_name', columnDisplayType: 'STRING' },
       { columnName: 'last_name', columnDisplayType: 'STRING' },
       { columnName: 'amount', columnDisplayType: 'DECIMAL' },
+      { columnName: 'is_active', columnDisplayType: 'BOOLEAN' },
+      { columnName: 'is_verified', columnDisplayType: 'BOOLEAN' },
       { columnName: 'empty_value', columnDisplayType: 'STRING' }
     ],
     data
@@ -73,7 +77,9 @@ describe('DatatableMultiRowComponent', () => {
     const translations: Record<string, string> = {
       'labels.buttons.Add': 'Agregar',
       'labels.text.Client': 'Cliente',
-      'labels.text.for': 'para'
+      'labels.text.for': 'para',
+      'labels.buttons.Yes': 'Sí',
+      'labels.buttons.No': 'No'
     };
     const translateService = {
       instant: jest.fn((key: string) => translations[key] || key),
@@ -142,6 +148,8 @@ describe('DatatableMultiRowComponent', () => {
       'First name',
       'Last name',
       'Amount',
+      'Is active',
+      'Is verified',
       'Empty value'
     ]);
     expect(mobileLabels).toEqual(labels);
@@ -172,6 +180,8 @@ describe('DatatableMultiRowComponent', () => {
       'first_name',
       'last_name',
       'amount',
+      'is_active',
+      'is_verified',
       'empty_value'
     ]);
     expect(component.datatableColumns).not.toContain('client_id');
@@ -218,6 +228,14 @@ describe('DatatableMultiRowComponent', () => {
     );
     expect(mobileLabel.textContent.trim()).toBe(expectedLabel);
     expect(cellValue.textContent.trim()).toBe(longValue);
+  });
+
+  it('renders boolean values as translated Yes and No labels', () => {
+    const activeCell = fixture.nativeElement.querySelector('td[data-label="Is active"] .cell-value');
+    const verifiedCell = fixture.nativeElement.querySelector('td[data-label="Is verified"] .cell-value');
+
+    expect(activeCell.textContent.trim()).toBe('Sí');
+    expect(verifiedCell.textContent.trim()).toBe('No');
   });
 
   it('keeps multi-row Code Value column labels unchanged', () => {
