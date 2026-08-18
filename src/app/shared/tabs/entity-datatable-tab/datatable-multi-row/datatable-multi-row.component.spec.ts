@@ -8,6 +8,8 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DatePipe, DecimalPipe } from '@angular/common';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
@@ -162,6 +164,23 @@ describe('DatatableMultiRowComponent', () => {
     expect(selectionCell.getAttribute('data-label')).toBeNull();
     expect(selectionCell.querySelector('.mobile-cell-label')).toBeNull();
     expect(selectionCell.querySelector('mat-checkbox')).toBeTruthy();
+  });
+
+  it('keeps dynamic sortable headers aligned with their data cells', () => {
+    const headerCells = Array.from(
+      fixture.nativeElement.querySelectorAll('th[mat-header-cell]:not(.checkbox-column)')
+    ) as HTMLElement[];
+    const dataCells = Array.from(fixture.nativeElement.querySelectorAll('td.responsive-data-cell')) as HTMLElement[];
+    const stylesheet = readFileSync(join(__dirname, 'datatable-multi-row.component.scss'), 'utf8');
+
+    expect(headerCells.length).toBe(dataCells.length);
+    expect(stylesheet).toContain('::ng-deep .mat-mdc-header-cell.right .mat-sort-header-container');
+    expect(stylesheet).toContain('justify-content: flex-end;');
+    headerCells.forEach((headerCell, index) => {
+      expect(headerCell.classList).toContain('right');
+      expect(headerCell.querySelector('.mat-sort-header-container')).toBeTruthy();
+      expect(dataCells[index].classList).toContain('right');
+    });
   });
 
   it('preserves the existing displayed columns and desktop table structure', () => {
