@@ -64,6 +64,11 @@ describe('DatatableMultiRowComponent', () => {
     fixture.detectChanges();
   };
 
+  const setDataObject = (dataObject: any) => {
+    fixture.componentRef.setInput('dataObject', dataObject);
+    detectChanges();
+  };
+
   beforeEach(async () => {
     const translations: Record<string, string> = {
       'labels.buttons.Add': 'Agregar',
@@ -182,6 +187,39 @@ describe('DatatableMultiRowComponent', () => {
     expect(emptyValue.textContent.trim()).toBe('');
   });
 
+  it('renders long field labels and values in wrapping multi-row cell containers', () => {
+    const longColumnName = 'custom_field_name_with_a_very_long_unbroken_label_for_wrapping';
+    const longValue = 'averylongunbrokenfieldvaluethatshouldwrapandremainfullyvisible';
+    setDataObject({
+      columnHeaders: [
+        { columnName: 'id', columnDisplayType: 'INTEGER' },
+        { columnName: 'client_id', columnDisplayType: 'INTEGER' },
+        { columnName: longColumnName, columnDisplayType: 'STRING' }
+      ],
+      data: [
+        {
+          row: [
+            7,
+            99,
+            longValue
+          ]
+        }
+      ]
+    });
+
+    const expectedLabel = 'Custom field name with a very long unbroken label for wrapping';
+    const headerCells = Array.from(fixture.nativeElement.querySelectorAll('th[mat-header-cell]')) as HTMLElement[];
+    const longValueCell = fixture.nativeElement.querySelector(`td[data-label="${expectedLabel}"]`) as HTMLElement;
+    const mobileLabel = longValueCell.querySelector('.mobile-cell-label') as HTMLElement;
+    const cellValue = longValueCell.querySelector('.cell-value') as HTMLElement;
+
+    expect(headerCells.some((headerCell) => headerCell.textContent.replace(/\s+/g, ' ').trim() === expectedLabel)).toBe(
+      true
+    );
+    expect(mobileLabel.textContent.trim()).toBe(expectedLabel);
+    expect(cellValue.textContent.trim()).toBe(longValue);
+  });
+
   it('keeps multi-row Code Value column labels unchanged', () => {
     expect(component.getInputName('Marital Status_cd_Estado Civil')).toBe('Marital status');
   });
@@ -194,12 +232,13 @@ describe('DatatableMultiRowComponent', () => {
   });
 
   it('displays the correct rows when changing pages', () => {
-    component.dataObject = createDataObject([
-      row(1, 'One', 'User'),
-      row(2, 'Two', 'User'),
-      row(3, 'Three', 'User')
-    ]);
-    component.ngOnChanges({ dataObject: { currentValue: component.dataObject } as any });
+    setDataObject(
+      createDataObject([
+        row(1, 'One', 'User'),
+        row(2, 'Two', 'User'),
+        row(3, 'Three', 'User')
+      ])
+    );
     component.paginator._changePageSize(2);
     detectChanges();
 
@@ -220,12 +259,13 @@ describe('DatatableMultiRowComponent', () => {
   });
 
   it('updates rendered rows when page size changes', () => {
-    component.dataObject = createDataObject([
-      row(1, 'One', 'User'),
-      row(2, 'Two', 'User'),
-      row(3, 'Three', 'User')
-    ]);
-    component.ngOnChanges({ dataObject: { currentValue: component.dataObject } as any });
+    setDataObject(
+      createDataObject([
+        row(1, 'One', 'User'),
+        row(2, 'Two', 'User'),
+        row(3, 'Three', 'User')
+      ])
+    );
     component.paginator._changePageSize(2);
     detectChanges();
 
@@ -238,12 +278,13 @@ describe('DatatableMultiRowComponent', () => {
   });
 
   it('sorts dynamic columns ascending and descending', () => {
-    component.dataObject = createDataObject([
-      row(1, 'Charlie', 'Zephyr'),
-      row(2, 'Alice', 'Yellow'),
-      row(3, 'Bob', 'Xavier')
-    ]);
-    component.ngOnChanges({ dataObject: { currentValue: component.dataObject } as any });
+    setDataObject(
+      createDataObject([
+        row(1, 'Charlie', 'Zephyr'),
+        row(2, 'Alice', 'Yellow'),
+        row(3, 'Bob', 'Xavier')
+      ])
+    );
 
     component.sort.sort({ id: 'first_name', start: 'asc', disableClear: false });
     detectChanges();
@@ -261,12 +302,13 @@ describe('DatatableMultiRowComponent', () => {
   });
 
   it('sorts and paginates together', () => {
-    component.dataObject = createDataObject([
-      row(1, 'Charlie', 'Zephyr'),
-      row(2, 'Alice', 'Yellow'),
-      row(3, 'Bob', 'Xavier')
-    ]);
-    component.ngOnChanges({ dataObject: { currentValue: component.dataObject } as any });
+    setDataObject(
+      createDataObject([
+        row(1, 'Charlie', 'Zephyr'),
+        row(2, 'Alice', 'Yellow'),
+        row(3, 'Bob', 'Xavier')
+      ])
+    );
     component.paginator._changePageSize(2);
     component.sort.sort({ id: 'first_name', start: 'asc', disableClear: false });
     detectChanges();
@@ -285,9 +327,7 @@ describe('DatatableMultiRowComponent', () => {
   });
 
   it('renders an empty data table without rows', () => {
-    component.dataObject = createDataObject([]);
-    component.ngOnChanges({ dataObject: { currentValue: component.dataObject } as any });
-    detectChanges();
+    setDataObject(createDataObject([]));
 
     expect(getRenderedRows()).toHaveLength(0);
     expect(component.datatableData.paginator).toBe(component.paginator);
@@ -305,23 +345,24 @@ describe('DatatableMultiRowComponent', () => {
   });
 
   it('renders all rows for a dataset smaller than one page', () => {
-    component.dataObject = createDataObject([
-      row(1, 'One', 'User'),
-      row(2, 'Two', 'User')
-    ]);
-    component.ngOnChanges({ dataObject: { currentValue: component.dataObject } as any });
-    detectChanges();
+    setDataObject(
+      createDataObject([
+        row(1, 'One', 'User'),
+        row(2, 'Two', 'User')
+      ])
+    );
 
     expect(getRenderedRows()).toHaveLength(2);
   });
 
   it('keeps selection intact across pagination and sorting', () => {
-    component.dataObject = createDataObject([
-      row(1, 'Charlie', 'Zephyr'),
-      row(2, 'Alice', 'Yellow'),
-      row(3, 'Bob', 'Xavier')
-    ]);
-    component.ngOnChanges({ dataObject: { currentValue: component.dataObject } as any });
+    setDataObject(
+      createDataObject([
+        row(1, 'Charlie', 'Zephyr'),
+        row(2, 'Alice', 'Yellow'),
+        row(3, 'Bob', 'Xavier')
+      ])
+    );
     component.paginator._changePageSize(2);
     detectChanges();
     const selectedRow = component.datatableData.data[1];
@@ -343,11 +384,12 @@ describe('DatatableMultiRowComponent', () => {
   });
 
   it('keeps delete selected behavior functional', () => {
-    component.dataObject = createDataObject([
-      row(1, 'One', 'User'),
-      row(2, 'Two', 'User')
-    ]);
-    component.ngOnChanges({ dataObject: { currentValue: component.dataObject } as any });
+    setDataObject(
+      createDataObject([
+        row(1, 'One', 'User'),
+        row(2, 'Two', 'User')
+      ])
+    );
     const selectedRow = component.datatableData.data[0];
 
     component.itemToggle(selectedRow);
@@ -357,12 +399,13 @@ describe('DatatableMultiRowComponent', () => {
   });
 
   it('sorts numbers and null values safely', () => {
-    component.dataObject = createDataObject([
-      row(1, 'One', 'User', 30),
-      row(2, 'Two', 'User', null),
-      row(3, 'Three', 'User', 5)
-    ]);
-    component.ngOnChanges({ dataObject: { currentValue: component.dataObject } as any });
+    setDataObject(
+      createDataObject([
+        row(1, 'One', 'User', 30),
+        row(2, 'Two', 'User', null),
+        row(3, 'Three', 'User', 5)
+      ])
+    );
 
     component.sort.sort({ id: 'amount', start: 'asc', disableClear: false });
     detectChanges();
