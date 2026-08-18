@@ -73,6 +73,13 @@
           ></mifosx-loan-product-capitalized-income-step>
         </ng-container>
 
+        <ng-container *ngIf="step.kind === 'borrower-cycle' && loanProductsTemplate">
+          <mifosx-loan-product-borrower-cycle-step
+            [loanProductsTemplate]="loanProductsTemplate"
+            (setBorrowerCycleVariations)="setBorrowerCycleVariations($event)"
+          ></mifosx-loan-product-borrower-cycle-step>
+        </ng-container>
+
         <ng-container
           *ngIf="
             step.kind !== 'payment-allocation' &&
@@ -80,6 +87,7 @@
             step.kind !== 'accounting' &&
             step.kind !== 'interest-refund' &&
             step.kind !== 'deferred-income' &&
+            step.kind !== 'borrower-cycle' &&
             step.kind !== 'review'
           "
         >
@@ -211,6 +219,10 @@
             </div>
           </div>
         </ng-container>
+
+        <p *ngIf="i === visibleSteps.length - 1 && borrowerCycleStepInvalid" class="step-actions__blocked">
+          {{ 'labels.text.Fix the loan cycle variations before creating the product' | translate }}
+        </p>
 
         <div class="step-actions">
           <button mat-stroked-button matStepperPrevious *ngIf="i > 0">

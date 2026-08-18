@@ -86,3 +86,11 @@ mat-divider {
 .repayment-strategy {
   color: var(--lp-accent);
 }
+
+/* The borrower-cycle variation tables previously carried `.flex-fill`, which sets `display: flex` and
+   so discards table layout — the <tr>s become flex items in a row, putting the header row beside the
+   data instead of above it. A table needs its own layout and only wants to fill the available width. */
+.variation-table {
+  width: 100%;
+  margin-bottom: 1rem;
+}

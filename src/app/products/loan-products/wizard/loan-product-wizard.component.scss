@@ -293,3 +293,9 @@ mat-checkbox {
 .wizard-charges ::ng-deep .layout-row.margin-t {
   display: none;
 }
+
+.step-actions__blocked {
+  margin: 0 0 0.75rem;
+  color: var(--mat-sys-error, #b3261e);
+  font-size: 0.875rem;
+}
