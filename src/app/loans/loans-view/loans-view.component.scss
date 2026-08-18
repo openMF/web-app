@@ -72,6 +72,18 @@
   font-weight: 400;
 }
 
+// Written-off pill shown in the account header for Working Capital loans.
+.written-off-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  background-color: var(--md-sys-color-error, #b3261e);
+}
+
 .datatable-scroll-x {
   width: 100%;
   overflow-x: auto;
