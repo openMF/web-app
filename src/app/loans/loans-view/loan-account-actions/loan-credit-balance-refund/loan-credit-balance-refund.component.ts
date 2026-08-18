@@ -55,13 +55,17 @@ export class LoanCreditBalanceRefundComponent extends LoanAccountActionsBaseComp
     }
   }
 
+  get requiredPermission(): string {
+    return this.isWorkingCapital ? 'CREDITBALANCEREFUND_WORKINGCAPITALLOAN' : 'CREDITBALANCEREFUND_LOAN';
+  }
+
   /**
    * Creates the create close form.
    */
   createCreditBalanceLoanForm() {
     this.creditBalanceLoanForm = this.formBuilder.group({
       transactionDate: [
-        new Date(),
+        this.isWorkingCapital ? this.settingsService.businessDate : new Date(),
         Validators.required
       ],
       transactionAmount: [
@@ -75,7 +79,7 @@ export class LoanCreditBalanceRefundComponent extends LoanAccountActionsBaseComp
 
   setCreditBalanceLoanDetails() {
     this.creditBalanceLoanForm.patchValue({
-      transactionAmount: this.dataObject.amount
+      transactionAmount: this.dataObject.amount ?? this.dataObject.expectedAmount
     });
   }
 
@@ -93,9 +97,11 @@ export class LoanCreditBalanceRefundComponent extends LoanAccountActionsBaseComp
       dateFormat,
       locale
     };
-    const command = this.dataObject.type.code.split('.')[1];
     data['transactionAmount'] = data['transactionAmount'] * 1;
-    this.loanService.submitLoanActionButton(this.loanId, data, command).subscribe((response: any) => {
+    const request = this.isWorkingCapital
+      ? this.loanService.applyWorkingCapitalLoanActionCommand(this.loanId, data, 'creditBalanceRefund')
+      : this.loanService.submitLoanActionButton(this.loanId, data, this.dataObject.type.code.split('.')[1]);
+    request.subscribe((_response: any) => {
       this.gotoLoanView('transactions');
     });
   }
