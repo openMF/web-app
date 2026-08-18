@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { AuthenticationService } from '../../../core/authentication/authentication.service';
@@ -28,6 +28,7 @@ export class NotesTabComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private authenticationService = inject(AuthenticationService);
   private centersService = inject(CentersService);
+  private cdr = inject(ChangeDetectorRef);
 
   entityId: string;
   username: string;
@@ -50,24 +51,32 @@ export class NotesTabComponent implements OnInit {
 
   addNote(noteContent: any) {
     this.centersService.createCenterNote(this.entityId, noteContent).subscribe((response: any) => {
-      this.entityNotes.push({
-        id: response.resourceId,
-        createdByUsername: this.username,
-        createdOn: new Date(),
-        note: noteContent.note
-      });
+      this.entityNotes = [
+        ...this.entityNotes,
+        {
+          id: response.resourceId,
+          createdByUsername: this.username,
+          createdOn: new Date(),
+          note: noteContent.note
+        }
+      ];
+      this.cdr.markForCheck();
     });
   }
 
   editNote(noteId: string, noteContent: any, index: number) {
     this.centersService.editCenterNote(this.entityId, noteId, noteContent).subscribe(() => {
-      this.entityNotes[index].note = noteContent.note;
+      this.entityNotes = this.entityNotes.map((entityNote: any, i: number) =>
+        i === index ? { ...entityNote, note: noteContent.note } : entityNote
+      );
+      this.cdr.markForCheck();
     });
   }
 
   deleteNote(noteId: string, index: number) {
     this.centersService.deleteCenterNote(this.entityId, noteId).subscribe(() => {
-      this.entityNotes.splice(index, 1);
+      this.entityNotes = this.entityNotes.filter((_: any, i: number) => i !== index);
+      this.cdr.markForCheck();
     });
   }
 }
