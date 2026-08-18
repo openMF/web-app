@@ -218,10 +218,12 @@ export const PRODUCT_CARDS: ProductCard[] = [
   },
   {
     name: 'labels.text.Gold Loan',
+    // Fully qualified translation key, same pattern as the Custom/Advanced card above.
     description:
-      'Quick secured loan against pledged gold ornaments or coins, with fast disbursal and minimal paperwork.',
-    active: false,
-    disabled: true,
+      'labels.text.Quick secured loan against pledged gold ornaments or coins, with fast disbursal and minimal paperwork',
+    active: true,
+    disabled: false,
+    route: 'gold-loan',
     icon: 'diamond'
   },
   {
@@ -1107,7 +1109,7 @@ export const INITIAL_FORM_STATE: Record<string, string | number | boolean | null
 };
 
 export type LoanWizardProfileMode =
-  'personal' | 'custom-advanced' | 'two-wheeler' | 'education' | 'agriculture' | 'bnpl' | 'home' | 'mortgage';
+  'personal' | 'custom-advanced' | 'two-wheeler' | 'education' | 'agriculture' | 'bnpl' | 'home' | 'mortgage' | 'gold';
 
 /**
  * Home Loan and Mortgage Loan (LAP) share one product-level configuration. This is what the workbook
@@ -1355,6 +1357,37 @@ const HOME_VISIBLE_KEYS: readonly string[] = [
 ];
 
 /**
+ * Keys the Gold L sheet marks `is Applicable = Y` that the base {@link HIDDEN_DEFAULTS} would
+ * otherwise pin. Sheet rows, in order: 32, 33, 35, 37, 41, 42, 43, 44, 49, 52, 71. The remaining
+ * `Applicable = Y` rows (name, shortName, externalId, currencyCode, principal, numberOfRepayments,
+ * the interest/repayment terms, amortization, interest method, interest calculation period, repayment
+ * strategy, the three grace fields, charges and accounting) are never in HIDDEN_DEFAULTS to begin
+ * with, so they need no entry here.
+ *
+ * Row 16 ("Installment day calculation from", sample "Disbursement Date") is deliberately NOT listed:
+ * it and row 28 (`repaymentStartDateType`, sample 1) are the same backend field, and the sheet marks
+ * the first Applicable and the second Hidden. The wizard's select offers exactly that one option, so
+ * `isProfileOrStrategyDeterminedField` hides it for every profile — the same resolution Home and BNPL
+ * made for the identical contradiction on their own sheets.
+ */
+const GOLD_VISIBLE_KEYS: readonly string[] = [
+  'allowPartialPeriodInterestCalculation',
+  'isEqualAmortization',
+  'loanScheduleType',
+  'loanScheduleProcessingType',
+  // Row 41. Gold is the only sheet so far that marks the arrears tolerance Applicable: the pledged
+  // ornament is revalued and auctioned on default, so the tolerance band is a real underwriting lever
+  // rather than a fixed product constant.
+  'inArrearsTolerance',
+  'daysInYearType',
+  'daysInYearCustomStrategy',
+  'daysInMonthType',
+  'principalThresholdForLastInstallment',
+  'holdGuaranteeFunds',
+  'delinquencyBucketId'
+];
+
+/**
  * The hidden, always-sent defaults for a profile mode. Guided profiles hide every key of the
  * returned object in the UI and spread it LAST in {@link buildPayload}'s merge, so a key must be
  * removed here (not just overridden) the moment a profile exposes it as an editable control —
@@ -1484,6 +1517,34 @@ export function hiddenDefaultsFor(profileMode: LoanWizardProfileMode): Record<st
     // an editable control. Each must be REMOVED (not overridden) from the hidden defaults, because
     // the guided merge spreads `defaults` last and would otherwise clobber the user's input.
     for (const exposedKey of HOME_VISIBLE_KEYS) {
+      delete defaults[exposedKey];
+    }
+    return defaults;
+  }
+  if (profileMode === 'gold') {
+    const defaults: Record<string, unknown> = {
+      ...HIDDEN_DEFAULTS,
+      description: 'Gold Loan Product',
+      // Row 54 is the only sheet row in the workbook that pins `multiDisburseLoan` to an explicit
+      // FALSE (Home marks the whole tranche family Applicable; the older guided sheets leave the
+      // Default Value blank). A gold loan disburses once against a single pledged lot, so the whole
+      // family stays hidden AND is dropped from the payload — Gold is absent from both
+      // `sendsMultiDisburseFields` and `sendsOutstandingLoanBalance`. Overriding the base `true` here
+      // matters even though the key never reaches the payload: `hiddenDefaultsFor` also feeds the
+      // wizard's hidden-key set, and PROFILE_INITIAL_OVERRIDES seeds the matching FormControl false so
+      // the reused Classic Charges step stops offering tranche-only charges.
+      multiDisburseLoan: false,
+      // Row 53, pinned FALSE. Interest recalculation is meaningless on a short bullet-style pledge
+      // loan, and Home is the profile that exposes it — Gold's sheet marks it Not Applicable.
+      isInterestRecalculationEnabled: false,
+      // Row 15, Not Applicable (Home marks it Applicable). Gold is quoted at a fixed rate for the
+      // pledge period; the base hidden `false` already matches, and it stays hidden.
+      isLinkedToFloatingInterestRates: false
+    };
+    // Every key below is marked `is Applicable = Y` on the Gold L sheet, so the profile renders it as
+    // an editable control. Each must be REMOVED (not overridden) from the hidden defaults, because
+    // the guided merge spreads `defaults` last and would otherwise clobber the user's input.
+    for (const exposedKey of GOLD_VISIBLE_KEYS) {
       delete defaults[exposedKey];
     }
     return defaults;
@@ -1626,7 +1687,29 @@ export const PROFILE_INITIAL_OVERRIDES: Partial<Record<LoanWizardProfileMode, Pa
   },
   home: HOME_AND_MORTGAGE_INITIAL_OVERRIDES,
   // Identical product-level configuration to Home — see isHomeOrMortgageProfile.
-  mortgage: HOME_AND_MORTGAGE_INITIAL_OVERRIDES
+  mortgage: HOME_AND_MORTGAGE_INITIAL_OVERRIDES,
+  gold: {
+    // Rows 35/36/37, resolved exactly as Home and BNPL resolve the same three: the sheet's Progressive
+    // schedule cannot coexist with the non-advanced strategy row 36 samples, because Fineract only
+    // accepts loanScheduleProcessingType (and the other Progressive-only settings) alongside the
+    // advanced payment allocation strategy. Progressive wins and the strategy is seeded to match.
+    // Seeded rather than pinned because row 35 marks the schedule type Applicable.
+    loanScheduleType: 'Progressive',
+    transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+    loanScheduleProcessingType: 'Horizontal',
+    // Row 54's explicit FALSE. The control is hidden for this profile, but it still has to carry the
+    // sheet's value: the reused Classic Charges step binds to it (`chargesMultiDisburseControl`) and
+    // would otherwise offer tranche-only charges on a single-disbursal product. See hiddenDefaultsFor.
+    multiDisburseLoan: false,
+    // Rows 42/44 — seeded to the sheet's values, and editable because both rows are Applicable.
+    daysInYearType: 360,
+    daysInMonthType: 30
+    // Deliberately absent: `principal`, `interestRatePerPeriod` and `numberOfRepayments` — see the note
+    // on HOME_AND_MORTGAGE_INITIAL_OVERRIDES. The Gold L sheet carries the same 10000 / 12% / 12
+    // boilerplate every other sheet inherits from `All Params`, with a blank Default Value column, so
+    // seeding a loan-to-value or a pledge tenure here would invent commercial policy the sheet does
+    // not state.
+  }
 };
 
 /**
@@ -1668,7 +1751,15 @@ export const PROFILE_EXTRA_VISIBLE_FIELDS: Partial<Record<LoanWizardProfileMode,
     'enableInstallmentLevelDelinquency'
   ],
   home: HOME_AND_MORTGAGE_EXTRA_VISIBLE_FIELDS,
-  mortgage: HOME_AND_MORTGAGE_EXTRA_VISIBLE_FIELDS
+  mortgage: HOME_AND_MORTGAGE_EXTRA_VISIBLE_FIELDS,
+  // Gold L row 52 — Applicable on the sheet but in the wizard's custom-only list, so it needs the same
+  // second-gate exemption Home needs. The three guarantee inputs come with `holdGuaranteeFunds`: they
+  // are custom-only for the same reason it is, and the sheet marks the guarantee feature Applicable as
+  // a whole rather than listing its dependents separately.
+  gold: [
+    'holdGuaranteeFunds',
+    ...GUARANTEE_FUNDS_DEPENDENT_FIELDS
+  ]
 };
 
 /** Wizard header eyebrow, one translation key per profile. */
@@ -1680,7 +1771,8 @@ export const PROFILE_LABEL_KEYS: Record<LoanWizardProfileMode, string> = {
   agriculture: 'labels.text.Agriculture Loan',
   bnpl: 'labels.text.BNPL',
   home: 'labels.text.Home Loan',
-  mortgage: 'labels.text.Mortgage Loan (LAP)'
+  mortgage: 'labels.text.Mortgage Loan (LAP)',
+  gold: 'labels.text.Gold Loan'
 };
 
 /** Route path (under products/loan-products) → wizard profile and the page heading it renders. */
@@ -1695,7 +1787,8 @@ const PROFILE_ROUTES: Record<string, { profileMode: LoanWizardProfileMode; pageT
   'agriculture-loan': { profileMode: 'agriculture', pageTitle: 'labels.heading.Create Agriculture Loan' },
   'bnpl-loan': { profileMode: 'bnpl', pageTitle: 'labels.heading.Create BNPL Loan' },
   'home-loan': { profileMode: 'home', pageTitle: 'labels.heading.Create Home Loan' },
-  'mortgage-loan': { profileMode: 'mortgage', pageTitle: 'labels.heading.Create Mortgage Loan' }
+  'mortgage-loan': { profileMode: 'mortgage', pageTitle: 'labels.heading.Create Mortgage Loan' },
+  'gold-loan': { profileMode: 'gold', pageTitle: 'labels.heading.Create Gold Loan' }
 };
 
 /**
