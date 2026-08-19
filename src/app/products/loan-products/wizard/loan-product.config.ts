@@ -239,10 +239,12 @@ export const PRODUCT_CARDS: ProductCard[] = [
   },
   {
     name: 'labels.text.Consumer Durable Loan',
+    // Fully qualified translation key, same pattern as the Custom/Advanced card above.
     description:
-      'Point-of-sale financing for electronics, appliances, and other durable goods, often with zero-cost EMI options.',
-    active: false,
-    disabled: true,
+      'labels.text.Point-of-sale financing for electronics, appliances, and other durable goods, often with zero-cost EMI options',
+    active: true,
+    disabled: false,
+    route: 'consumer-durable-loan',
     icon: 'devices'
   },
   {
@@ -1146,7 +1148,8 @@ export type LoanWizardProfileMode =
   | 'mortgage'
   | 'gold'
   | 'auto'
-  | 'jlg';
+  | 'jlg'
+  | 'consumer-durable';
 
 /**
  * Home Loan and Mortgage Loan (LAP) share one product-level configuration. This is what the workbook
@@ -1502,6 +1505,40 @@ const JLG_VISIBLE_KEYS: readonly string[] = [
 ];
 
 /**
+ * Keys the Consumer Durable L sheet marks `is Applicable = Y` that the base {@link HIDDEN_DEFAULTS}
+ * would otherwise pin. Sheet rows, in order: 32, 33, 35, 37, 42, 43, 44, 49, 51, 53, 67, 68, 69, 71.
+ * The remaining `Applicable = Y` rows (name, shortName, externalId, currencyCode, principal,
+ * numberOfRepayments, the interest/repayment terms, amortization, interest method, interest
+ * calculation period, repayment strategy, the three grace fields, charges and accounting) are never in
+ * HIDDEN_DEFAULTS to begin with, so they need no entry here.
+ *
+ * Row 16 needs no exemption on this sheet: unlike Home, Gold and Auto — where row 16 is Applicable and
+ * contradicts the Hidden row 28 for the same backend field — Consumer Durable marks it Not Applicable
+ * with the sample as its default, so `repaymentStartDateType` simply stays hidden.
+ */
+const CONSUMER_DURABLE_VISIBLE_KEYS: readonly string[] = [
+  'allowPartialPeriodInterestCalculation',
+  'isEqualAmortization',
+  'loanScheduleType',
+  'loanScheduleProcessingType',
+  'daysInYearType',
+  'daysInYearCustomStrategy',
+  'daysInMonthType',
+  'principalThresholdForLastInstallment',
+  // Row 51. Unique to this sheet among the profiles shipped so far: a customer who has repaid one
+  // appliance is the prime candidate for financing the next, so top-up is a real product lever here
+  // rather than the fixed `false` every other guided template pins.
+  'canUseForTopup',
+  'isInterestRecalculationEnabled',
+  // Rows 67-69, all three Applicable — the same shape as Auto. Point-of-sale finance is quoted as
+  // "pay X% today, the rest over N months", so the down payment is the headline commercial term.
+  'enableDownPayment',
+  'disbursedAmountPercentageForDownPayment',
+  'enableAutoRepaymentForDownPayment',
+  'delinquencyBucketId'
+];
+
+/**
  * The hidden, always-sent defaults for a profile mode. Guided profiles hide every key of the
  * returned object in the UI and spread it LAST in {@link buildPayload}'s merge, so a key must be
  * removed here (not just overridden) the moment a profile exposes it as an editable control —
@@ -1698,6 +1735,27 @@ export function hiddenDefaultsFor(profileMode: LoanWizardProfileMode): Record<st
     // guided merge spreads `defaults` last and would otherwise clobber the user's input — and for the
     // three variation arrays it would clobber the borrower-cycle step's collected rows with `[]`.
     for (const exposedKey of JLG_VISIBLE_KEYS) {
+      delete defaults[exposedKey];
+    }
+    return defaults;
+  }
+  if (profileMode === 'consumer-durable') {
+    const defaults: Record<string, unknown> = {
+      ...HIDDEN_DEFAULTS,
+      description: 'Consumer Durable Loan Product',
+      // Row 11 pins the installment multiple to 1, not the base default of 10 — the same call the BNPL
+      // sheet makes, and for the same reason: a point-of-sale instalment is a plain split of the item
+      // price and must not be rounded up to the nearest 10.
+      installmentAmountInMultiplesOf: 1
+      // The multi-disburse family (rows 54-58) is Not Applicable with a BLANK Default Value, so it
+      // inherits the master defaults and is dropped from the payload wholesale — this profile is absent
+      // from both `sendsMultiDisburseFields` and `sendsOutstandingLoanBalance`. Same treatment as Auto
+      // and Two Wheeler; only Gold's sheet pins an explicit FALSE.
+    };
+    // Every key below is marked `is Applicable = Y` on the Consumer Durable L sheet, so the profile
+    // renders it as an editable control. Each must be REMOVED (not overridden) from the hidden
+    // defaults, because the guided merge spreads `defaults` last and would clobber the user's input.
+    for (const exposedKey of CONSUMER_DURABLE_VISIBLE_KEYS) {
       delete defaults[exposedKey];
     }
     return defaults;
@@ -1904,6 +1962,27 @@ export const PROFILE_INITIAL_OVERRIDES: Partial<Record<LoanWizardProfileMode, Pa
     // boilerplate every other sheet inherits from `All Params`, with a blank Default Value column. It
     // matters more here than elsewhere: the per-cycle bands entered in the borrower-cycle step are the
     // real ticket sizes, so seeding a headline figure would actively mislead.
+  },
+  'consumer-durable': {
+    // Rows 35/36/37 — the same Progressive + advanced-allocation resolution Home, Gold, Auto and BNPL
+    // apply to the identical contradiction on their own sheets.
+    loanScheduleType: 'Progressive',
+    transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+    loanScheduleProcessingType: 'Horizontal',
+    // Rows 67/68/69, seeded to the sheet's sample values. Point-of-sale finance is sold as "pay X%
+    // today, the rest over N months", so the toggle is seeded on — INITIAL_FORM_STATE seeds it false —
+    // and all three stay editable, per the sheet. Same shape as Auto.
+    enableDownPayment: true,
+    disbursedAmountPercentageForDownPayment: 35,
+    enableAutoRepaymentForDownPayment: true,
+    // Rows 42/44 — seeded to the sheet's values, and editable because both rows are Applicable.
+    daysInYearType: 360,
+    daysInMonthType: 30
+    // Deliberately absent: `principal`, `interestRatePerPeriod` and `numberOfRepayments` — see the note
+    // on HOME_AND_MORTGAGE_INITIAL_OVERRIDES. The Consumer Durable L sheet carries the same
+    // 10000 / 12% / 12 boilerplate every other sheet inherits from `All Params`, with a blank Default
+    // Value column, so seeding a headline ticket size or tenure would invent commercial policy the
+    // sheet does not state.
   }
 };
 
@@ -1970,6 +2049,14 @@ export const PROFILE_EXTRA_VISIBLE_FIELDS: Partial<Record<LoanWizardProfileMode,
   jlg: [
     'includeInBorrowerCycle',
     'useBorrowerCycle'
+  ],
+  // Consumer Durable L rows 67-69 — Applicable on the sheet but in the wizard's custom-only list, so
+  // they need the same second-gate exemption Auto and BNPL need. Unlike Auto, the floating-rate link
+  // (row 15) is Not Applicable here, so it is deliberately absent.
+  'consumer-durable': [
+    'enableDownPayment',
+    'disbursedAmountPercentageForDownPayment',
+    'enableAutoRepaymentForDownPayment'
   ]
 };
 
@@ -1985,7 +2072,8 @@ export const PROFILE_LABEL_KEYS: Record<LoanWizardProfileMode, string> = {
   mortgage: 'labels.text.Mortgage Loan (LAP)',
   gold: 'labels.text.Gold Loan',
   auto: 'labels.text.Auto Loan',
-  jlg: 'labels.text.JLG Loan'
+  jlg: 'labels.text.JLG Loan',
+  'consumer-durable': 'labels.text.Consumer Durable Loan'
 };
 
 /** Route path (under products/loan-products) → wizard profile and the page heading it renders. */
@@ -2003,7 +2091,11 @@ const PROFILE_ROUTES: Record<string, { profileMode: LoanWizardProfileMode; pageT
   'mortgage-loan': { profileMode: 'mortgage', pageTitle: 'labels.heading.Create Mortgage Loan' },
   'gold-loan': { profileMode: 'gold', pageTitle: 'labels.heading.Create Gold Loan' },
   'auto-loan': { profileMode: 'auto', pageTitle: 'labels.heading.Create Auto Loan' },
-  'jlg-loan': { profileMode: 'jlg', pageTitle: 'labels.heading.Create JLG Loan' }
+  'jlg-loan': { profileMode: 'jlg', pageTitle: 'labels.heading.Create JLG Loan' },
+  'consumer-durable-loan': {
+    profileMode: 'consumer-durable',
+    pageTitle: 'labels.heading.Create Consumer Durable Loan'
+  }
 };
 
 /**
