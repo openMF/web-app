@@ -67,9 +67,9 @@
         </mat-select>
       </mat-form-field>
 
-      <button mat-stroked-button class="export-btn" [matMenuTriggerFor]="exportMenu">
+      <button mat-raised-button color="primary" class="export-btn" [matMenuTriggerFor]="exportMenu">
         <mat-icon>download</mat-icon>
-        Export PDF/CSV
+        {{ 'labels.buttons.Export PDF/CSV' | translate }}
       </button>
     </div>
 

@@ -9,7 +9,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, of } from 'rxjs';
 import { describe, it, expect, jest, beforeEach } from '@jest/globals';
 import * as L from 'leaflet';
@@ -162,6 +162,18 @@ describe('AddressTabComponent', () => {
     fixture = TestBed.createComponent(AddressTabComponent);
     component = fixture.componentInstance;
     formGroupService = TestBed.inject(FormGroupService);
+    const translateService = TestBed.inject(TranslateService);
+    translateService.setTranslation('en', {
+      labels: {
+        inputs: {
+          'Address Line': 'Shared Address Line',
+          'Address Line 1': 'Address Line One Label',
+          'Address Line 2': 'Address Line Two Label',
+          'Address Line 3': 'Address Line Three Label'
+        }
+      }
+    });
+    translateService.use('en');
   });
 
   function expandFirstAddressPanel() {
@@ -189,6 +201,20 @@ describe('AddressTabComponent', () => {
     expect(formFields.some((field) => field.controlName === 'street')).toBe(true);
     expect(formFields.some((field) => field.controlName === 'townVillage')).toBe(true);
     expect(formFields.some((field) => field.controlName === 'countyDistrict')).toBe(true);
+  });
+
+  it('should use independent address line translation keys in add and edit forms', () => {
+    const addFormFields = component.getAddressFormFields('add');
+    const editFormFields = component.getAddressFormFields('edit', component.clientAddressData[0]);
+
+    [
+      addFormFields,
+      editFormFields
+    ].forEach((formFields) => {
+      expect(formFields.find((field) => field.controlName === 'addressLine1')?.label).toBe('Address Line One Label');
+      expect(formFields.find((field) => field.controlName === 'addressLine2')?.label).toBe('Address Line Two Label');
+      expect(formFields.find((field) => field.controlName === 'addressLine3')?.label).toBe('Address Line Three Label');
+    });
   });
 
   it('should populate missing address fields when editing', () => {

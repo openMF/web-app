@@ -33,6 +33,8 @@ describe('DatatableSingleRowComponent', () => {
   const createDataObject = () => ({
     columnHeaders: [
       { columnName: 'id', columnDisplayType: 'INTEGER' },
+      { columnName: 'is_active', columnDisplayType: 'BOOLEAN' },
+      { columnName: 'is_verified', columnDisplayType: 'BOOLEAN' },
       {
         columnName: 'Marital Status_cd_Estado Civil',
         columnDisplayType: 'CODELOOKUP',
@@ -49,6 +51,8 @@ describe('DatatableSingleRowComponent', () => {
       {
         row: [
           7,
+          true,
+          false,
           12,
           'Ada',
           '2025-01-15T12:30:00Z',
@@ -63,11 +67,18 @@ describe('DatatableSingleRowComponent', () => {
   const getDataItemText = (index: number, selector: string): string =>
     getDataItems()[index].querySelector(selector).textContent.replace(/\s+/g, ' ').trim();
 
+  const setDataObject = (dataObject: any) => {
+    fixture.componentRef.setInput('dataObject', dataObject);
+    fixture.detectChanges();
+  };
+
   beforeEach(async () => {
     const translations: Record<string, string> = {
       'labels.buttons.Add': 'Agregar',
       'labels.text.Client': 'Cliente',
       'labels.text.for': 'para',
+      'labels.buttons.Yes': 'Sí',
+      'labels.buttons.No': 'No',
       'labels.inputs.Created At': 'Creado en',
       'labels.inputs.Updated At': 'Actualizado en'
     };
@@ -127,21 +138,46 @@ describe('DatatableSingleRowComponent', () => {
   });
 
   it('displays the configured field name for a Code Value column label', () => {
-    expect(getDataItemText(1, '.data-label')).toBe('Estado Civil');
+    expect(getDataItemText(3, '.data-label')).toBe('Estado Civil');
   });
 
   it('renders the Code Value display value', () => {
-    expect(getDataItemText(1, '.data-value')).toBe('Married');
+    expect(getDataItemText(3, '.data-value')).toBe('Married');
+  });
+
+  it('renders boolean values as translated Yes and No labels', () => {
+    expect(getDataItemText(1, '.data-value')).toBe('Sí');
+    expect(getDataItemText(2, '.data-value')).toBe('No');
   });
 
   it('leaves normal single-row field labels unchanged', () => {
-    expect(getDataItemText(2, '.data-label')).toBe('First Name');
-    expect(getDataItemText(2, '.data-value')).toBe('Ada');
+    expect(getDataItemText(4, '.data-label')).toBe('First Name');
+    expect(getDataItemText(4, '.data-value')).toBe('Ada');
+  });
+
+  it('renders long field labels and text values in wrapping containers', () => {
+    const longFieldName = 'custom_field_name_with_a_very_long_unbroken_label_for_wrapping';
+    const longValue = 'averylongunbrokenfieldvaluethatshouldwrapandremainfullyvisible';
+    setDataObject({
+      columnHeaders: [{ columnName: longFieldName, columnDisplayType: 'TEXT' }],
+      data: [{ row: [longValue] }]
+    });
+
+    const dataItem = getDataItems()[0];
+    const label = dataItem.querySelector('.data-label') as HTMLElement;
+    const value = dataItem.querySelector('.data-value') as HTMLElement;
+    const longText = dataItem.querySelector('.long-text') as HTMLElement;
+
+    expect(label.textContent.replace(/\s+/g, ' ').trim()).toBe(
+      'Custom Field Name With A Very Long Unbroken Label For Wrapping'
+    );
+    expect(value.textContent.trim()).toBe(longValue);
+    expect(longText.textContent.trim()).toBe(longValue);
   });
 
   it('translates single-row system timestamp labels', () => {
-    expect(getDataItemText(3, '.data-label')).toBe('Creado en');
-    expect(getDataItemText(4, '.data-label')).toBe('Actualizado en');
+    expect(getDataItemText(5, '.data-label')).toBe('Creado en');
+    expect(getDataItemText(6, '.data-label')).toBe('Actualizado en');
   });
 
   it('translates the Add dialog title while preserving the Data Table name', () => {

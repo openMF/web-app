@@ -263,6 +263,24 @@ const routes: Routes = [
               }
             },
             {
+              path: 'gold-loan',
+              component: CreateLoanProductComponent,
+              data: { title: 'Create Gold Loan', breadcrumb: 'Gold Loan' },
+              resolve: {
+                loanProductsTemplate: LoanProductsTemplateResolver,
+                configurations: GlobalConfigurationsResolver
+              }
+            },
+            {
+              path: 'auto-loan',
+              component: CreateLoanProductComponent,
+              data: { title: 'Create Auto Loan', breadcrumb: 'Auto Loan' },
+              resolve: {
+                loanProductsTemplate: LoanProductsTemplateResolver,
+                configurations: GlobalConfigurationsResolver
+              }
+            },
+            {
               path: ':productId',
               component: ViewLoanProductComponent,
               resolve: {

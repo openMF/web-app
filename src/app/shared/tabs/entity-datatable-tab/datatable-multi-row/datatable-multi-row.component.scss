@@ -62,12 +62,18 @@
       overflow-wrap: anywhere;
     }
 
+    ::ng-deep .mat-mdc-header-cell.right .mat-sort-header-container {
+      justify-content: flex-end;
+    }
+
     .mobile-cell-label {
       display: none;
     }
 
     .cell-value {
+      min-width: 0;
       overflow-wrap: anywhere;
+      white-space: normal;
     }
 
     .data-row {
