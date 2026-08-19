@@ -4770,7 +4770,25 @@
       "Custom color darkened for legibility": "The selected color was darkened so that white text stays legible on it.",
       "No Map Data": "No Map Data",
       "No offices with valid coordinates found.": "No offices with valid coordinates found.",
-      "p.a.": "p.a."
+      "p.a.": "p.a.",
+      "Search results": "Search results",
+      "People": "People",
+      "Accounts": "Accounts",
+      "Fixed Deposits": "Fixed Deposits",
+      "Loan Transactions": "Loan Transactions",
+      "Savings Transactions": "Savings Transactions",
+      "Accounting Entries": "Accounting Entries",
+      "Groups & Centers": "Groups & Centers",
+      "Savings & Deposits": "Savings & Deposits",
+      "Refine": "Refine",
+      "Journal Entry": "Journal Entry",
+      "Posted": "Posted",
+      "Reversed": "Reversed",
+      "matches": "matches",
+      "Search by account number, name, external ID or transaction ID": "Search by account number, name, external ID or transaction ID",
+      "No results found": "No results found",
+      "Check the account number, external ID or transaction ID, or search across all entity types.": "Check the account number, external ID or transaction ID, or search across all entity types.",
+      "Result limit reached. Refine your query to narrow the results.": "Result limit reached. Refine your query to narrow the results."
     },
     "permissions": {
       "actions": {

@@ -4619,7 +4619,26 @@
       "Custom color darkened for legibility": "Die ausgewählte Farbe wurde abgedunkelt, damit weißer Text darauf lesbar bleibt.",
       "No Map Data": "No Map Data",
       "No offices with valid coordinates found.": "No offices with valid coordinates found.",
-      "p.a.": "p.a."
+      "p.a.": "p.a.",
+      "Search results": "Suchergebnisse",
+      "People": "Personen",
+      "Accounts": "Konten",
+      "Fixed Deposits": "Festgelder",
+      "Loan Transactions": "Kredittransaktionen",
+      "Savings Transactions": "Spartransaktionen",
+      "Accounting Entries": "Buchungssätze",
+      "Groups & Centers": "Gruppen & Zentren",
+      "Savings & Deposits": "Sparen & Einlagen",
+      "Refine": "Verfeinern",
+      "Journal Entry": "Buchungssatz",
+      "Posted": "Gebucht",
+      "Reversed": "Storniert",
+      "matches": "Treffer",
+      "Search by account number, name, external ID or transaction ID": "Suche nach Kontonummer, Name, externer ID oder Transaktions-ID",
+      "No results found": "Keine Ergebnisse gefunden",
+      "Check the account number, external ID or transaction ID, or search across all entity types.": "Prüfen Sie Kontonummer, externe ID oder Transaktions-ID, oder suchen Sie über alle Entitätstypen.",
+      "Result limit reached. Refine your query to narrow the results.": "Ergebnislimit erreicht. Verfeinern Sie Ihre Suche, um die Ergebnisse einzugrenzen.",
+      "Any": "Beliebig"
     },
     "permissions": {
       "actions": {

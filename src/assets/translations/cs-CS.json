@@ -4618,7 +4618,26 @@
       "Custom color darkened for legibility": "Vybraná barva byla ztmavena, aby na ní zůstal bílý text čitelný.",
       "No Map Data": "No Map Data",
       "No offices with valid coordinates found.": "No offices with valid coordinates found.",
-      "p.a.": "p.a."
+      "p.a.": "p.a.",
+      "Search results": "Výsledky vyhledávání",
+      "People": "Osoby",
+      "Accounts": "Účty",
+      "Fixed Deposits": "Termínované vklady",
+      "Loan Transactions": "Úvěrové transakce",
+      "Savings Transactions": "Spořicí transakce",
+      "Accounting Entries": "Účetní zápisy",
+      "Groups & Centers": "Skupiny a centra",
+      "Savings & Deposits": "Úspory a vklady",
+      "Refine": "Upřesnit",
+      "Journal Entry": "Účetní zápis",
+      "Posted": "Zaúčtováno",
+      "Reversed": "Stornováno",
+      "matches": "shod",
+      "Search by account number, name, external ID or transaction ID": "Hledat podle čísla účtu, jména, externího ID nebo ID transakce",
+      "No results found": "Nebyly nalezeny žádné výsledky",
+      "Check the account number, external ID or transaction ID, or search across all entity types.": "Zkontrolujte číslo účtu, externí ID nebo ID transakce, nebo hledejte ve všech typech entit.",
+      "Result limit reached. Refine your query to narrow the results.": "Dosažen limit výsledků. Upřesněte dotaz pro zúžení výsledků.",
+      "Any": "Jakýkoli"
     },
     "permissions": {
       "actions": {

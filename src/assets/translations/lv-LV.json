@@ -4617,7 +4617,26 @@
       "Custom color darkened for legibility": "Izvēlētā krāsa tika padarīta tumšāka, lai baltais teksts paliktu salasāms.",
       "No Map Data": "No Map Data",
       "No offices with valid coordinates found.": "No offices with valid coordinates found.",
-      "p.a.": "p.a."
+      "p.a.": "p.a.",
+      "Search results": "Meklēšanas rezultāti",
+      "People": "Cilvēki",
+      "Accounts": "Konti",
+      "Fixed Deposits": "Termiņnoguldījumi",
+      "Loan Transactions": "Aizdevumu darījumi",
+      "Savings Transactions": "Uzkrājumu darījumi",
+      "Accounting Entries": "Grāmatvedības ieraksti",
+      "Groups & Centers": "Grupas un centri",
+      "Savings & Deposits": "Uzkrājumi un noguldījumi",
+      "Refine": "Precizēt",
+      "Journal Entry": "Grāmatvedības ieraksts",
+      "Posted": "Iegrāmatots",
+      "Reversed": "Atcelts",
+      "matches": "atbilstības",
+      "Search by account number, name, external ID or transaction ID": "Meklēt pēc konta numura, vārda, ārējā ID vai darījuma ID",
+      "No results found": "Rezultāti nav atrasti",
+      "Check the account number, external ID or transaction ID, or search across all entity types.": "Pārbaudiet konta numuru, ārējo ID vai darījuma ID, vai meklējiet visos entītiju veidos.",
+      "Result limit reached. Refine your query to narrow the results.": "Sasniegts rezultātu limits. Precizējiet vaicājumu.",
+      "Any": "Jebkurš"
     },
     "permissions": {
       "actions": {

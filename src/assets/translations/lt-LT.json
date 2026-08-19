@@ -4618,7 +4618,26 @@
       "Custom color darkened for legibility": "Pasirinkta spalva buvo patamsinta, kad baltas tekstas liktų įskaitomas.",
       "No Map Data": "No Map Data",
       "No offices with valid coordinates found.": "No offices with valid coordinates found.",
-      "p.a.": "p.a."
+      "p.a.": "p.a.",
+      "Search results": "Paieškos rezultatai",
+      "People": "Žmonės",
+      "Accounts": "Sąskaitos",
+      "Fixed Deposits": "Terminuotieji indėliai",
+      "Loan Transactions": "Paskolų operacijos",
+      "Savings Transactions": "Taupymo operacijos",
+      "Accounting Entries": "Apskaitos įrašai",
+      "Groups & Centers": "Grupės ir centrai",
+      "Savings & Deposits": "Taupymas ir indėliai",
+      "Refine": "Tikslinti",
+      "Journal Entry": "Apskaitos įrašas",
+      "Posted": "Užregistruota",
+      "Reversed": "Atšaukta",
+      "matches": "atitikmenys",
+      "Search by account number, name, external ID or transaction ID": "Ieškoti pagal sąskaitos numerį, vardą, išorinį ID arba operacijos ID",
+      "No results found": "Rezultatų nerasta",
+      "Check the account number, external ID or transaction ID, or search across all entity types.": "Patikrinkite sąskaitos numerį, išorinį ID arba operacijos ID, arba ieškokite visų tipų įrašuose.",
+      "Result limit reached. Refine your query to narrow the results.": "Pasiektas rezultatų limitas. Patikslinkite užklausą.",
+      "Any": "Bet koks"
     },
     "permissions": {
       "actions": {
