@@ -108,6 +108,20 @@ export interface WorkingCapitalBreachActionRequest {
   locale: string;
 }
 
+/**
+ * Command payload for POST /working-capital-loans/{loanId}/breach-actions
+ * (pause, resume, disable, enable, reset, undo_reset). Distinct from
+ * WorkingCapitalBreachActionRequest, which carries the RESCHEDULE configuration.
+ */
+export interface WorkingCapitalBreachCommandRequest {
+  action: string;
+  locale: string;
+  dateFormat: string;
+  startDate?: string;
+  endDate?: string;
+  restartPeriodFromResetDate?: boolean;
+}
+
 export interface WorkingCapitalBreachAction {
   id: number;
   action: string;
@@ -152,4 +166,20 @@ export interface WorkingCapitalNearBreachActions {
   frequency: number;
   frequencyType: string;
   createdDate: Date;
+}
+
+export interface WorkingCapitalWriteOffRequest {
+  transactionDate: string;
+  /** Lower-case "writeoff" on purpose: the backend follows the term/progressive loan parameter shape. */
+  writeoffReasonId?: number;
+  note?: string;
+  externalId?: string;
+  locale: string;
+  dateFormat: string;
+}
+
+export interface WorkingCapitalUndoWriteOffRequest {
+  reversalExternalId?: string;
+  note?: string;
+  locale: string;
 }

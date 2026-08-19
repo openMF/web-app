@@ -218,7 +218,8 @@ export class RunReportComponent implements OnInit {
       { name: 'Normal format', value: 'HTML', i18nKey: 'labels.inputs.Normal format' },
       { name: 'Excel format', value: 'XLS', i18nKey: 'labels.inputs.Excel format' },
       { name: 'Excel 2007 format', value: 'XLSX', i18nKey: 'labels.inputs.Excel 2007 format' },
-      { name: 'CSV format', value: 'CSV', i18nKey: 'labels.inputs.CSV format' }
+      { name: 'CSV format', value: 'CSV', i18nKey: 'labels.inputs.CSV format' },
+      { name: 'XML format', value: 'XML', i18nKey: 'labels.inputs.XML format' }
     ];
   }
 

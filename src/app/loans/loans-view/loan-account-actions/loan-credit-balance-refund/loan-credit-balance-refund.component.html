@@ -58,7 +58,7 @@
             mat-raised-button
             color="primary"
             [disabled]="!creditBalanceLoanForm.valid"
-            *mifosxHasPermission="'REPAYMENT_LOAN'"
+            *mifosxHasPermission="requiredPermission"
           >
             {{ 'labels.buttons.Submit' | translate }}
           </button>

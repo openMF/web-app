@@ -566,6 +566,26 @@ export class LoanDelinquencyTagsTabComponent extends LoanProductBaseComponent im
           .subscribe((loanDelinquencyActions: LoanDelinquencyAction[]) => {
             this.setLoanDelinquencyAction(loanDelinquencyActions);
           });
+        this.refreshDelinquencyRangeSchedule();
+      });
+  }
+
+  /**
+   * Re-fetches the working capital range schedule after a delinquency command succeeds.
+   * The backend recomputes the whole schedule synchronously (expected amounts, period
+   * boundaries, delinquency figures), but this table is seeded by a route resolver, so
+   * without an explicit re-read it keeps rendering the pre-command snapshot. The full
+   * array is replaced because a reschedule can renumber periods and change the row count.
+   */
+  private refreshDelinquencyRangeSchedule(): void {
+    if (!this.loanProductService.isWorkingCapital) {
+      return;
+    }
+    this.loansServices
+      .getWorkingCapitalLoanDelinquencyRangeSchedule(this.loanId)
+      .subscribe((rangeSchedule: DelinquencyRangeSchedule[]) => {
+        this.wcLoanDelinquencyRangeSchedule = rangeSchedule || [];
+        this.cdr.markForCheck();
       });
   }
 

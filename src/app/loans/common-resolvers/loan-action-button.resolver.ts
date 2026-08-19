@@ -56,11 +56,15 @@ export class LoanActionButtonResolver {
     } else if (loanActionButton === 'Merchant Issued Refund') {
       return this.loansService.getLoanActionTemplate(loanId, 'merchantIssuedRefund');
     } else if (loanActionButton === 'Credit Balance Refund') {
-      return this.loansService.getLoanActionTemplate(loanId, 'creditBalanceRefund');
+      return this.loanProductService.isLoanProduct
+        ? this.loansService.getLoanActionTemplate(loanId, 'creditBalanceRefund')
+        : this.loansService.getWorkingCapitalLoanActionTemplate(loanId, 'creditBalanceRefund');
     } else if (loanActionButton === 'Waive Interest') {
       return this.loansService.getLoanActionTemplate(loanId, 'waiveinterest');
     } else if (loanActionButton === 'Write Off') {
-      return this.loansService.getLoanActionTemplate(loanId, 'writeoff');
+      return this.loanProductService.isLoanProduct
+        ? this.loansService.getLoanActionTemplate(loanId, 'writeoff')
+        : this.loansService.getWorkingCapitalWriteOffTemplate();
     } else if (loanActionButton === 'Close') {
       return this.loansService.getLoanActionTemplate(loanId, 'close');
     } else if (loanActionButton === 'Close (as Rescheduled)') {

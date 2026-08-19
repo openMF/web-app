@@ -56,13 +56,16 @@
   letter-spacing: 0.3px;
   font-weight: 500;
   line-height: 1.2;
+  overflow-wrap: anywhere;
+  white-space: normal;
 }
 
 .data-value {
   font-size: 1.0625rem;
   color: rgb(0 0 0 / 87%);
-  word-break: break-word;
+  overflow-wrap: anywhere;
   min-height: 28px;
+  min-width: 0;
   display: flex;
   align-items: center;
   font-weight: 400;
@@ -78,6 +81,8 @@
   display: flex;
   align-items: center;
   width: 100%;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .table-name {
@@ -95,7 +100,7 @@
 }
 
 .long-text {
-  word-break: break-word;
+  overflow-wrap: anywhere;
   white-space: normal;
   line-height: 1.5;
 }

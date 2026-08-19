@@ -26,7 +26,10 @@ export class LoansAccountButtonConfiguration {
     taskPermissionName?: string;
   }[];
 
+  private readonly isWorkingCapital: boolean;
+
   constructor(isWorkingCapital: boolean, status: string, substatus: OptionData) {
+    this.isWorkingCapital = isWorkingCapital;
     if (!isWorkingCapital) {
       this.setOptions(status, substatus);
       this.setButtons(status);
@@ -111,7 +114,7 @@ export class LoansAccountButtonConfiguration {
           {
             name: 'Credit Balance Refund',
             icon: 'coins',
-            taskPermissionName: 'CREATE_CREDIT_BALANCE_REFUND'
+            taskPermissionName: 'CREDITBALANCEREFUND_LOAN'
           },
           {
             name: 'Make Repayment',
@@ -173,7 +176,7 @@ export class LoansAccountButtonConfiguration {
           {
             name: 'Add Loan Charge',
             icon: 'plus',
-            taskPermissionName: 'CREATE_LOANCHARGE'
+            taskPermissionName: 'CREATE_WORKINGCAPITALLOANCHARGE'
           },
           {
             name: 'Disburse',
@@ -192,12 +195,12 @@ export class LoansAccountButtonConfiguration {
           {
             name: 'Add Loan Charge',
             icon: 'plus',
-            taskPermissionName: 'CREATE_LOANCHARGE'
+            taskPermissionName: 'CREATE_WORKINGCAPITALLOANCHARGE'
           },
           {
             name: 'Make Repayment',
             icon: 'coins',
-            taskPermissionName: 'REPAYMENT_LOAN'
+            taskPermissionName: 'REPAYMENT_WORKINGCAPITALLOAN'
           },
           {
             name: 'Payout Refund',
@@ -228,9 +231,34 @@ export class LoansAccountButtonConfiguration {
       case 'Overpaid':
         this.buttonsArray = [
           {
+            name: 'Credit Balance Refund',
+            icon: 'coins',
+            taskPermissionName: 'CREDITBALANCEREFUND_WORKINGCAPITALLOAN'
+          },
+          {
+            name: 'Make Repayment',
+            icon: 'coins',
+            taskPermissionName: 'REPAYMENT_WORKINGCAPITALLOAN'
+          },
+          {
+            name: 'Add Loan Charge',
+            icon: 'plus',
+            taskPermissionName: 'CREATE_WORKINGCAPITALLOANCHARGE'
+          },
+          {
             name: 'Payout Refund',
             icon: 'coins',
             taskPermissionName: 'PAYOUTREFUND_WORKINGCAPITALLOAN'
+          }
+        ];
+        break;
+      case 'Closed (written off)':
+        // Terminal state: only Undo Write-off remains available.
+        this.buttonsArray = [
+          {
+            name: 'Undo Write-off',
+            icon: 'undo',
+            taskPermissionName: 'UNDOWRITEOFF_WORKINGCAPITALLOAN'
           }
         ];
         break;
@@ -389,6 +417,10 @@ export class LoansAccountButtonConfiguration {
           {
             name: 'Goodwill Credit',
             taskPermissionName: 'CREATE_GOODWILL_TRANSACTION'
+          },
+          {
+            name: 'Write Off',
+            taskPermissionName: 'WRITEOFF_WORKINGCAPITALLOAN'
           }
         ];
         this.optionPaymentArray = [];
@@ -421,7 +453,7 @@ export class LoansAccountButtonConfiguration {
           {
             name: 'Add Loan Charge',
             icon: 'plus',
-            taskPermissionName: 'CREATE_LOANCHARGE'
+            taskPermissionName: this.isWorkingCapital ? 'CREATE_WORKINGCAPITALLOANCHARGE' : 'CREATE_LOANCHARGE'
           },
           {
             name: 'Approve',

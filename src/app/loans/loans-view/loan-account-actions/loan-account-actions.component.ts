@@ -47,6 +47,8 @@ import { UpdateDiscountComponent } from './update-discount/update-discount.compo
 import { NearBreachConfigComponent } from '../working-capital/loan-account-actions/near-breach-config/near-breach-config.component';
 import { BreachConfigComponent } from '../working-capital/loan-account-actions/breach-config/breach-config.component';
 import { WorkingCapitalChargeOffComponent } from '../working-capital/loan-account-actions/charge-off/charge-off.component';
+import { WorkingCapitalWriteOffComponent } from '../working-capital/loan-account-actions/write-off/write-off.component';
+import { WorkingCapitalUndoWriteOffComponent } from '../working-capital/loan-account-actions/undo-write-off/undo-write-off.component';
 import { LoanProductService } from 'app/products/loan-products/services/loan-product.service';
 
 /**
@@ -92,7 +94,9 @@ import { LoanProductService } from 'app/products/loan-products/services/loan-pro
     UpdateDiscountComponent,
     NearBreachConfigComponent,
     BreachConfigComponent,
-    WorkingCapitalChargeOffComponent
+    WorkingCapitalChargeOffComponent,
+    WorkingCapitalWriteOffComponent,
+    WorkingCapitalUndoWriteOffComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -100,7 +104,12 @@ export class LoanAccountActionsComponent {
   private readonly destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  protected loanProductService = inject(LoanProductService);
+  private loanProductService = inject(LoanProductService);
+
+  /** Whether the current account is a Working Capital loan. */
+  get isWorkingCapital(): boolean {
+    return this.loanProductService.isWorkingCapital;
+  }
 
   /** Loan Details Data */
   navigationData: any;

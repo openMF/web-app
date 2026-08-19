@@ -11,7 +11,8 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
 
 export type LoanAccountPath = 'loans' | 'working-capital-loans';
 import { Dates } from 'app/core/utils/dates';
@@ -22,6 +23,7 @@ import { BreachSchedule } from './models/working-capital-loan-account.model';
 import {
   WorkingCapitalBreachAction,
   WorkingCapitalBreachActionRequest,
+  WorkingCapitalBreachCommandRequest,
   WorkingCapitalMarkAsFraudRequest,
   WorkingCapitalBreachToggleRequest,
   WorkingCapitalNearBreachActionRequest,
@@ -191,7 +193,7 @@ export class LoansService {
     return this.http.get(`/working-capital-loans/${loanId}/breach-actions`);
   }
 
-  createBreachAction(loanId: string, payload: any) {
+  createBreachAction(loanId: string, payload: WorkingCapitalBreachCommandRequest) {
     return this.http.post(`/working-capital-loans/${loanId}/breach-actions`, payload);
   }
 
@@ -699,6 +701,29 @@ export class LoansService {
   getWorkingCapitalLoanActionTemplate(loanId: string, actionName: string): Observable<any> {
     const httpParams = new HttpParams().set('templateType', actionName);
     return this.http.get(`/working-capital-loans/${loanId}/template`, { params: httpParams });
+  }
+
+  /**
+   * Builds the Working Capital Loan write-off form data.
+   *
+   * There is no write-off template for Working Capital loans, so the write-off
+   * reasons dropdown is populated directly from the "WriteOffReasons" code values.
+   * @returns {Observable<any>} An object shaped like a write-off template ({ writeOffReasonOptions }).
+   */
+  getWorkingCapitalWriteOffTemplate(): Observable<any> {
+    return this.http.get<any[]>('/codes').pipe(
+      switchMap((codes) => {
+        const reasonsCode = codes?.find((code) => code.name === 'WriteOffReasons');
+        if (!reasonsCode) {
+          return of({ writeOffReasonOptions: [] });
+        }
+        return this.http.get<any[]>(`/codes/${reasonsCode.id}/codevalues`).pipe(
+          map((writeOffReasonOptions) => ({ writeOffReasonOptions })),
+          catchError(() => of({ writeOffReasonOptions: [] }))
+        );
+      }),
+      catchError(() => of({ writeOffReasonOptions: [] }))
+    );
   }
 
   getWorkingCapitalLoanPayoutTemplate(loanId: string, actionName: string): Observable<any> {

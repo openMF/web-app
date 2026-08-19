@@ -45,6 +45,7 @@ import { Datatables } from 'app/core/utils/datatables';
 import { Dates } from 'app/core/utils/dates';
 import { DateFormatPipe } from 'app/pipes/date-format.pipe';
 import { DatetimeFormatPipe } from 'app/pipes/datetime-format.pipe';
+import { TranslateService } from '@ngx-translate/core';
 import { SettingsService } from 'app/settings/settings.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -97,6 +98,7 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
   private dateFormat = inject(DateFormatPipe);
   private dateTimeFormat = inject(DatetimeFormatPipe);
   private numberFormat = inject(DecimalPipe);
+  private translateService = inject(TranslateService);
 
   SELECT_NAME_FIELD = 'select';
   /** Data Object */
@@ -210,7 +212,7 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
       dataTableEntryObject
     );
     const data = {
-      title: 'Add ' + formatDatatableDisplayLabel(this.datatableName) + ' for ' + this.entityType,
+      title: this.getAddDialogTitle(),
       formfields: formfields
     };
     const addDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
@@ -232,6 +234,19 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
           });
       }
     });
+  }
+
+  getAddDialogTitle(): string {
+    return `${this.translateService.instant('labels.buttons.Add')} ${formatDatatableDisplayLabel(
+      this.datatableName
+    )} ${this.translateService.instant('labels.text.for')} ${this.getTranslatedEntityType()}`;
+  }
+
+  private getTranslatedEntityType(): string {
+    const entityTypeKey = `labels.text.${this.entityType}`;
+    const translatedEntityType = this.translateService.instant(entityTypeKey);
+
+    return translatedEntityType === entityTypeKey ? this.entityType : translatedEntityType;
   }
 
   /**
@@ -297,7 +312,9 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
         if (columnHeader.columnName === columnName) {
           const columnDisplayType = columnHeader.columnDisplayType;
           value = data.row[idx];
-          if (columnDisplayType === 'DATE') {
+          if (typeof value === 'boolean') {
+            value = this.translateService.instant(`labels.buttons.${value ? 'Yes' : 'No'}`);
+          } else if (columnDisplayType === 'DATE') {
             value = this.dateFormat.transform(value);
           } else if (columnDisplayType === 'DATETIME') {
             value = this.dateTimeFormat.transform(value);
