@@ -290,6 +290,15 @@ const routes: Routes = [
               }
             },
             {
+              path: 'consumer-durable-loan',
+              component: CreateLoanProductComponent,
+              data: { title: 'Create Consumer Durable Loan', breadcrumb: 'Consumer Durable Loan' },
+              resolve: {
+                loanProductsTemplate: LoanProductsTemplateResolver,
+                configurations: GlobalConfigurationsResolver
+              }
+            },
+            {
               path: ':productId',
               component: ViewLoanProductComponent,
               resolve: {
