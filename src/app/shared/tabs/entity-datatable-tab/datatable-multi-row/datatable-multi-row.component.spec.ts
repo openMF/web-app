@@ -217,8 +217,9 @@ describe('DatatableMultiRowComponent', () => {
   });
 
   it('renders long field labels and values in wrapping multi-row cell containers', () => {
-    const longColumnName = 'custom_field_name_with_a_very_long_unbroken_label_for_wrapping';
-    const longValue = 'averylongunbrokenfieldvaluethatshouldwrapandremainfullyvisible';
+    const longColumnName = 'very_long_customer_information_field_name_that_should_wrap_completely';
+    const longValue =
+      'This is a very long customer information value that should wrap across multiple lines instead of being truncated or hidden.';
     setDataObject({
       columnHeaders: [
         { columnName: 'id', columnDisplayType: 'INTEGER' },
@@ -236,17 +237,21 @@ describe('DatatableMultiRowComponent', () => {
       ]
     });
 
-    const expectedLabel = 'Custom field name with a very long unbroken label for wrapping';
+    const expectedLabel = 'Very long customer information field name that should wrap completely';
     const headerCells = Array.from(fixture.nativeElement.querySelectorAll('th[mat-header-cell]')) as HTMLElement[];
     const longValueCell = fixture.nativeElement.querySelector(`td[data-label="${expectedLabel}"]`) as HTMLElement;
     const mobileLabel = longValueCell.querySelector('.mobile-cell-label') as HTMLElement;
     const cellValue = longValueCell.querySelector('.cell-value') as HTMLElement;
+    const stylesheet = readFileSync(join(__dirname, 'datatable-multi-row.component.scss'), 'utf8');
 
     expect(headerCells.some((headerCell) => headerCell.textContent.replace(/\s+/g, ' ').trim() === expectedLabel)).toBe(
       true
     );
     expect(mobileLabel.textContent.trim()).toBe(expectedLabel);
     expect(cellValue.textContent.trim()).toBe(longValue);
+    expect(stylesheet).toContain('display: block;');
+    expect(stylesheet).toContain('max-width: 24rem;');
+    expect(stylesheet).toContain('vertical-align: top;');
   });
 
   it('renders boolean values as translated Yes and No labels', () => {
