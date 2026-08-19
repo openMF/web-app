@@ -46,6 +46,7 @@ import {
   normalizeAddressCoordinates
 } from 'app/clients/utils/address-coordinate.util';
 import { environment } from 'environments/environment';
+import { YesnoPipe } from 'app/pipes/yesno.pipe';
 
 /**
  * Clients Address Tab Component
@@ -64,7 +65,8 @@ import { environment } from 'environments/environment';
     MatExpansionPanelDescription,
     MatDivider,
     MatSlideToggle,
-    AddressLocationMapComponent
+    AddressLocationMapComponent,
+    YesnoPipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
