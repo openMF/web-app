@@ -29,11 +29,13 @@
   padding: 12px 0;
   grid-auto-flow: column;
   grid-auto-columns: minmax(220px, 220px);
+  align-items: stretch;
 }
 
 .data-item {
   display: flex;
   flex-direction: column;
+  min-width: 0;
   padding: 16px;
   background-color: rgb(0 0 0 / 2%);
   border-radius: 8px;
@@ -67,19 +69,20 @@
   min-height: 28px;
   min-width: 0;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   font-weight: 400;
   line-height: 1.5;
 
   span,
   div {
+    min-width: 0;
     width: 100%;
   }
 }
 
 .default-value {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
   min-width: 0;
   overflow-wrap: anywhere;

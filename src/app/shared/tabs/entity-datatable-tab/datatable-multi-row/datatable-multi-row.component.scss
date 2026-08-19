@@ -36,7 +36,6 @@
     min-width: 100%;
     width: max-content;
     border-radius: 4px;
-    overflow: hidden;
     table-layout: auto;
 
     th {
@@ -50,6 +49,7 @@
       max-width: 24rem;
       white-space: normal;
       overflow-wrap: anywhere;
+      vertical-align: top;
     }
 
     td {
@@ -60,6 +60,7 @@
       max-width: 24rem;
       white-space: normal;
       overflow-wrap: anywhere;
+      vertical-align: top;
     }
 
     ::ng-deep .mat-mdc-header-cell.right .mat-sort-header-container {
@@ -71,7 +72,9 @@
     }
 
     .cell-value {
+      display: block;
       min-width: 0;
+      max-width: 24rem;
       overflow-wrap: anywhere;
       white-space: normal;
     }
@@ -141,7 +144,6 @@
         display: block;
         width: 100%;
         margin-bottom: 16px;
-        overflow: hidden;
         border: 1px solid rgb(0 0 0 / 12%);
         border-radius: 8px;
         background: var(--mat-card-background-color, var(--card-background, #fff));
@@ -185,6 +187,7 @@
 
       .cell-value {
         min-width: 0;
+        max-width: none;
         line-height: 1.45;
       }
     }

@@ -8,6 +8,8 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DatePipe, DecimalPipe } from '@angular/common';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -156,8 +158,9 @@ describe('DatatableSingleRowComponent', () => {
   });
 
   it('renders long field labels and text values in wrapping containers', () => {
-    const longFieldName = 'custom_field_name_with_a_very_long_unbroken_label_for_wrapping';
-    const longValue = 'averylongunbrokenfieldvaluethatshouldwrapandremainfullyvisible';
+    const longFieldName = 'very_long_customer_information_field_name_that_should_wrap_completely';
+    const longValue =
+      'This is a very long customer information value that should wrap across multiple lines instead of being truncated or hidden.';
     setDataObject({
       columnHeaders: [{ columnName: longFieldName, columnDisplayType: 'TEXT' }],
       data: [{ row: [longValue] }]
@@ -167,12 +170,17 @@ describe('DatatableSingleRowComponent', () => {
     const label = dataItem.querySelector('.data-label') as HTMLElement;
     const value = dataItem.querySelector('.data-value') as HTMLElement;
     const longText = dataItem.querySelector('.long-text') as HTMLElement;
+    const stylesheet = readFileSync(join(__dirname, 'datatable-single-row.component.scss'), 'utf8');
 
     expect(label.textContent.replace(/\s+/g, ' ').trim()).toBe(
-      'Custom Field Name With A Very Long Unbroken Label For Wrapping'
+      'Very Long Customer Information Field Name That Should Wrap Completely'
     );
     expect(value.textContent.trim()).toBe(longValue);
     expect(longText.textContent.trim()).toBe(longValue);
+    expect(dataItem.classList).toContain('data-item');
+    expect(stylesheet).toContain('align-items: stretch;');
+    expect(stylesheet).toContain('align-items: flex-start;');
+    expect(stylesheet).toContain('min-width: 0;');
   });
 
   it('translates single-row system timestamp labels', () => {
