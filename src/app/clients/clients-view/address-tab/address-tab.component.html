@@ -92,7 +92,9 @@
             <span>{{ 'labels.inputs.Longitude' | translate }} : {{ address.longitude }}<br /></span>
           }
           @if (isFieldEnabled('isActive')) {
-            <span>{{ 'labels.inputs.Active Status' | translate }} : {{ address.isActive }}<br /></span>
+            <span data-testid="client-address-active-status"
+              >{{ 'labels.inputs.Active Status' | translate }} : {{ address.isActive | yesNo }}<br
+            /></span>
           }
         </p>
         @if (
