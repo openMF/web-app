@@ -62,6 +62,10 @@
       overflow-wrap: anywhere;
     }
 
+    ::ng-deep .mat-mdc-header-cell.right .mat-sort-header-container {
+      justify-content: flex-end;
+    }
+
     .mobile-cell-label {
       display: none;
     }
