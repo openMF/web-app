@@ -281,6 +281,15 @@ const routes: Routes = [
               }
             },
             {
+              path: 'jlg-loan',
+              component: CreateLoanProductComponent,
+              data: { title: 'Create JLG Loan', breadcrumb: 'JLG Loan' },
+              resolve: {
+                loanProductsTemplate: LoanProductsTemplateResolver,
+                configurations: GlobalConfigurationsResolver
+              }
+            },
+            {
               path: ':productId',
               component: ViewLoanProductComponent,
               resolve: {

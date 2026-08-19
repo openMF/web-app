@@ -8,12 +8,14 @@
 
 import { LoanProducts } from '../loan-products';
 import {
-  buildPayload,
   INITIAL_FORM_STATE,
   LoanWizardProfileMode,
   PRODUCT_CARDS,
   PROFILE_INITIAL_OVERRIDES,
-  profileForRoutePath
+  buildPayload,
+  hiddenDefaultsFor,
+  profileForRoutePath,
+  rendersBorrowerCycleStep
 } from './loan-product.config';
 
 describe('loan-product.config buildPayload', () => {
@@ -1691,6 +1693,242 @@ describe('loan-product.config buildPayload for the auto profile', () => {
   });
 });
 
+describe('loan-product.config buildPayload for the jlg profile', () => {
+  /**
+   * The raw form value the wizard submits for JLG: the shared seed, the profile's prefills (the
+   * Progressive + advanced-allocation stack, both borrower-cycle toggles and the sheet's day counts),
+   * plus the fields the user must type.
+   */
+  function jlgFormState(edits: Record<string, unknown> = {}): typeof INITIAL_FORM_STATE {
+    return {
+      ...INITIAL_FORM_STATE,
+      ...PROFILE_INITIAL_OVERRIDES['jlg'],
+      name: 'JLG Loan – Standard',
+      shortName: 'JLG',
+      currencyCode: 'INR',
+      principal: 30000,
+      interestRatePerPeriod: 24,
+      numberOfRepayments: 24,
+      ...edits
+    };
+  }
+
+  it('produces the exact JLG create payload for an untouched wizard form', () => {
+    // JLG L rows 7/12 seed both borrower-cycle toggles on, row 67 pins the down payment off (so the
+    // sanitize step drops its two dependents), and rows 54-58 keep the tranche family out. The three
+    // variation arrays are deliberately absent here: they are removed from the hidden defaults so the
+    // borrower-cycle step's rows can win, and the wizard folds them in at submit time — see the
+    // component spec's coverage of `buildPayloadForSubmit`.
+    expect(buildPayload(jlgFormState(), 'jlg')).toEqual({
+      name: 'JLG Loan – Standard',
+      shortName: 'JLG',
+      externalId: '',
+      description: 'JLG Loan Product',
+      startDate: '',
+      closeDate: '',
+      includeInBorrowerCycle: true,
+      currencyCode: 'INR',
+      digitsAfterDecimal: 2,
+      inMultiplesOf: 1,
+      installmentAmountInMultiplesOf: 10,
+      useBorrowerCycle: true,
+      principal: 30000,
+      numberOfRepayments: 24,
+      interestRatePerPeriod: 24,
+      interestRateFrequencyType: 2,
+      repaymentEvery: 1,
+      repaymentFrequencyType: 2,
+      isLinkedToFloatingInterestRates: false,
+      allowApprovedDisbursedAmountsOverApplied: false,
+      overAppliedCalculationType: null,
+      overAppliedNumber: null,
+      minimumDaysBetweenDisbursalAndFirstRepayment: 5,
+      interestRecognitionOnDisbursementDate: false,
+      repaymentStartDateType: 1,
+      amortizationType: 1,
+      interestType: 0,
+      allowPartialPeriodInterestCalculation: true,
+      isEqualAmortization: false,
+      interestCalculationPeriodType: 1,
+      loanScheduleType: 'PROGRESSIVE',
+      transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+      loanScheduleProcessingType: 'HORIZONTAL',
+      graceOnPrincipalPayment: 0,
+      graceOnInterestPayment: 0,
+      graceOnInterestCharged: 0,
+      daysInYearType: 360,
+      daysInMonthType: 30,
+      principalThresholdForLastInstallment: 5,
+      canUseForTopup: false,
+      isInterestRecalculationEnabled: false,
+      delinquencyBucketId: null,
+      canDefineInstallmentAmount: true,
+      inArrearsTolerance: 50,
+      graceOnArrearsAgeing: 5,
+      overdueDaysForNPA: 90,
+      accountMovesOutOfNPAOnlyOnArrearsCompletion: true,
+      holdGuaranteeFunds: false,
+      enableDownPayment: false,
+      chargeOffBehaviour: 'REGULAR',
+      enableInstallmentLevelDelinquency: false,
+      dueDaysForRepaymentEvent: 1,
+      overDueDaysForRepaymentEvent: 1,
+      enableIncomeCapitalization: false,
+      enableBuyDownFee: false,
+      accountingRule: 2,
+      charges: [],
+      allowAttributeOverrides: {
+        amortizationType: true,
+        interestType: true,
+        transactionProcessingStrategyCode: true,
+        interestCalculationPeriodType: true,
+        inArrearsTolerance: true,
+        repaymentEvery: true,
+        graceOnPrincipalAndInterestPayment: true,
+        graceOnArrearsAgeing: true
+      }
+    });
+  });
+
+  it('seeds both borrower-cycle toggles on, per rows 7 and 12', () => {
+    // These two are what make the profile a cycle-based product: the counter must be kept, and the
+    // terms must be allowed to vary against it.
+    expect(PROFILE_INITIAL_OVERRIDES['jlg']!.useBorrowerCycle).toBe(true);
+    expect(PROFILE_INITIAL_OVERRIDES['jlg']!.includeInBorrowerCycle).toBe(true);
+  });
+
+  it('leaves the variation arrays out of the hidden defaults so the step can supply them', () => {
+    // If any of the three stayed pinned, the guided merge — which spreads the defaults LAST — would
+    // overwrite the operator's rows with the base empty array.
+    const defaults = hiddenDefaultsFor('jlg');
+
+    [
+      'principalVariationsForBorrowerCycle',
+      'numberOfRepaymentVariationsForBorrowerCycle',
+      'interestRateVariationsForBorrowerCycle'
+    ].forEach((key) => {
+      expect([
+        key,
+        key in defaults
+      ]).toEqual([
+        key,
+        false
+      ]);
+    });
+  });
+
+  it('keeps the arrays pinned for every other profile', () => {
+    // Only JLG's sheet marks rows 26/27/29 Applicable; the rest must keep sending the empty arrays.
+    ([
+        'personal',
+        'two-wheeler',
+        'education',
+        'agriculture',
+        'bnpl',
+        'home',
+        'mortgage',
+        'gold'
+      ] as LoanWizardProfileMode[]).forEach((profile) => {
+      expect([
+        profile,
+        hiddenDefaultsFor(profile).principalVariationsForBorrowerCycle
+      ]).toEqual([
+        profile,
+        []
+      ]);
+    });
+  });
+
+  it('pins the down payment off, dropping its dependents', () => {
+    // Row 67 is Not Applicable with an explicit FALSE — the group guarantee is the security, so there
+    // is no margin money — and the base hidden default is TRUE, so this must be an override.
+    const payload = buildPayload(jlgFormState({ enableDownPayment: true }), 'jlg');
+
+    expect(payload.enableDownPayment).toBe(false);
+    expect('disbursedAmountPercentageForDownPayment' in payload).toBe(false);
+    expect('enableAutoRepaymentForDownPayment' in payload).toBe(false);
+  });
+
+  it('omits the whole multi-disburse family, which the sheet marks Not Applicable', () => {
+    const payload = buildPayload(jlgFormState(), 'jlg');
+
+    [
+      'multiDisburseLoan',
+      'maxTrancheCount',
+      'outstandingLoanBalance',
+      'disallowExpectedDisbursements',
+      'allowFullTermForTranche'
+    ].forEach((key) => {
+      expect([
+        key,
+        key in payload
+      ]).toEqual([
+        key,
+        false
+      ]);
+    });
+  });
+
+  it('lets user input win over the hidden defaults for every field the sheet marks Applicable', () => {
+    const payload = buildPayload(
+      jlgFormState({
+        includeInBorrowerCycle: false,
+        useBorrowerCycle: false,
+        principalThresholdForLastInstallment: 10,
+        daysInMonthType: 1,
+        daysInYearType: 365,
+        delinquencyBucketId: '2',
+        isEqualAmortization: true,
+        isInterestRecalculationEnabled: false
+      }),
+      'jlg'
+    );
+
+    expect(payload.includeInBorrowerCycle).toBe(false);
+    expect(payload.useBorrowerCycle).toBe(false);
+    expect(payload.principalThresholdForLastInstallment).toBe(10);
+    expect(payload.daysInMonthType).toBe(1);
+    expect(payload.daysInYearType).toBe(365);
+    expect(payload.delinquencyBucketId).toBe('2');
+    expect(payload.isEqualAmortization).toBe(true);
+  });
+
+  it('keeps the floating rate link pinned off, which the sheet marks Not Applicable', () => {
+    expect(
+      buildPayload(jlgFormState({ isLinkedToFloatingInterestRates: true }), 'jlg').isLinkedToFloatingInterestRates
+    ).toBe(false);
+  });
+
+  it('normalizes the delinquency bucket "None" option to null', () => {
+    expect(buildPayload(jlgFormState({ delinquencyBucketId: '' }), 'jlg').delinquencyBucketId).toBeNull();
+  });
+});
+
+describe('loan-product.config rendersBorrowerCycleStep', () => {
+  it('renders the step for JLG only', () => {
+    expect(rendersBorrowerCycleStep('jlg')).toBe(true);
+    ([
+        'personal',
+        'custom-advanced',
+        'two-wheeler',
+        'education',
+        'agriculture',
+        'bnpl',
+        'home',
+        'mortgage',
+        'gold'
+      ] as LoanWizardProfileMode[]).forEach((profile) => {
+      expect([
+        profile,
+        rendersBorrowerCycleStep(profile)
+      ]).toEqual([
+        profile,
+        false
+      ]);
+    });
+  });
+});
+
 describe('loan-product.config profileForRoutePath', () => {
   it('maps each wizard route to its profile and page title key', () => {
     expect(profileForRoutePath('personal-loan')).toEqual({
@@ -1728,6 +1966,10 @@ describe('loan-product.config profileForRoutePath', () => {
     expect(profileForRoutePath('auto-loan')).toEqual({
       profileMode: 'auto',
       pageTitle: 'labels.heading.Create Auto Loan'
+    });
+    expect(profileForRoutePath('jlg-loan')).toEqual({
+      profileMode: 'jlg',
+      pageTitle: 'labels.heading.Create JLG Loan'
     });
   });
 
@@ -1802,6 +2044,14 @@ describe('loan-product.config PRODUCT_CARDS', () => {
     expect(card.route).toBe('auto-loan');
   });
 
+  it('activates the JLG Loan card with its wizard route', () => {
+    const card = PRODUCT_CARDS.find((product) => product.name === 'labels.text.JLG Loan')!;
+
+    expect(card.active).toBe(true);
+    expect(card.disabled).toBe(false);
+    expect(card.route).toBe('jlg-loan');
+  });
+
   it('routes every active card to a route a wizard profile claims', () => {
     // The selection grid renders a Create button for every active card; a card whose route no
     // profile claims would silently fall back to the Personal Loan wizard.
@@ -1816,7 +2066,8 @@ describe('loan-product.config PRODUCT_CARDS', () => {
         'home-loan',
         'mortgage-loan',
         'gold-loan',
-        'auto-loan'
+        'auto-loan',
+        'jlg-loan'
       ]).toContain(product.route);
     });
   });
@@ -1834,7 +2085,8 @@ describe('loan-product.config PRODUCT_CARDS', () => {
       'home',
       'mortgage',
       'gold',
-      'auto'
+      'auto',
+      'jlg'
     ];
 
     function payloadFor(profile: LoanWizardProfileMode, overrides: Record<string, unknown>) {
@@ -1902,7 +2154,8 @@ describe('loan-product.config PRODUCT_CARDS', () => {
           'home',
           'mortgage',
           'gold',
-          'auto'
+          'auto',
+          'jlg'
         ] as LoanWizardProfileMode[]).forEach((profile) => {
         const payload = payloadFor(profile, applicable);
         expect([

@@ -1,0 +1,84 @@
+<!--
+  Copyright since 2025 Mifos Initiative
+
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="borrower-cycle">
+  @for (section of sections; track section.key) {
+    <div class="borrower-cycle__section">
+      <div class="borrower-cycle__header">
+        <h4 class="borrower-cycle__heading">{{ section.heading | translate }}</h4>
+        <button type="button" mat-raised-button color="primary" (click)="add(section)">
+          <fa-icon icon="plus" class="m-r-10"></fa-icon>
+          {{ 'labels.buttons.Add' | translate }}
+        </button>
+      </div>
+
+      @if (rowsFor(section.key).length) {
+        <div class="borrower-cycle__table-wrapper">
+          <table class="mat-elevation-z1 borrower-cycle__table" mat-table [dataSource]="rowsFor(section.key)">
+            <ng-container matColumnDef="valueConditionType">
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Condition' | translate }}</th>
+              <td mat-cell *matCellDef="let variation">
+                {{ variation.valueConditionType | find: valueConditionTypeData : 'id' : 'value' }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="borrowerCycleNumber">
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Loan Cycle' | translate }}</th>
+              <td mat-cell *matCellDef="let variation">{{ variation.borrowerCycleNumber }}</td>
+            </ng-container>
+            <ng-container matColumnDef="minValue">
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Minimum' | translate }}</th>
+              <td mat-cell *matCellDef="let variation">{{ variation.minValue }}</td>
+            </ng-container>
+            <ng-container matColumnDef="defaultValue">
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Default' | translate }}</th>
+              <td mat-cell *matCellDef="let variation">{{ variation.defaultValue }}</td>
+            </ng-container>
+            <ng-container matColumnDef="maxValue">
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Maximum' | translate }}</th>
+              <td mat-cell *matCellDef="let variation">{{ variation.maxValue }}</td>
+            </ng-container>
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
+              <td mat-cell *matCellDef="let variation; let i = index">
+                <button
+                  mat-icon-button
+                  color="primary"
+                  type="button"
+                  [attr.aria-label]="'labels.buttons.Edit' | translate"
+                  (click)="edit(section, i)"
+                >
+                  <fa-icon icon="edit"></fa-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="warn"
+                  type="button"
+                  [attr.aria-label]="'labels.buttons.Delete' | translate"
+                  (click)="delete(section, i)"
+                >
+                  <fa-icon icon="trash"></fa-icon>
+                </button>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+        </div>
+      } @else {
+        <p class="borrower-cycle__empty">{{ 'labels.text.No variations added yet' | translate }}</p>
+      }
+
+      @if (sectionErrorKey(section); as errorKey) {
+        <p class="borrower-cycle__error">
+          <fa-icon icon="exclamation-circle" class="m-r-10"></fa-icon>
+          {{ errorKey | translate }}
+        </p>
+      }
+    </div>
+  }
+</div>

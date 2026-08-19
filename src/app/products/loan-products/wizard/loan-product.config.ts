@@ -118,7 +118,14 @@ export interface FormField {
  * - `review`: the summary/confirmation step.
  */
 export type FormStepKind =
-  'fields' | 'payment-allocation' | 'charges' | 'accounting' | 'interest-refund' | 'deferred-income' | 'review';
+  | 'fields'
+  | 'payment-allocation'
+  | 'charges'
+  | 'accounting'
+  | 'interest-refund'
+  | 'deferred-income'
+  | 'borrower-cycle'
+  | 'review';
 export interface FormStep {
   id: number;
   title: string;
@@ -162,10 +169,12 @@ export const PRODUCT_CARDS: ProductCard[] = [
   },
   {
     name: 'labels.text.JLG Loan',
+    // Fully qualified translation key, same pattern as the Custom/Advanced card above.
     description:
-      'Group-backed microloans for individuals in a Joint Liability Group, typically for income-generating activities.',
-    active: false,
-    disabled: true,
+      'labels.text.Group-backed microloans for individuals in a Joint Liability Group, typically for income-generating activities',
+    active: true,
+    disabled: false,
+    route: 'jlg-loan',
     icon: 'group'
   },
   {
@@ -523,6 +532,22 @@ export const FORM_STEPS: FormStep[] = [
         options: [{ value: 1, label: 'Disbursement date' }]
       }
     ]
+  },
+  {
+    // The "Terms vary based on loan cycle" surface (sheet rows 26, 27 and 29), rendered by
+    // `LoanProductBorrowerCycleStepComponent`. Only JLG marks those rows Applicable, and the step is
+    // additionally gated on the `useBorrowerCycle` control — see `visibleSteps`. It carries no
+    // config-driven fields: the component owns three FormArrays and emits them, because the wizard's
+    // single flat FormGroup cannot hold arrays of objects.
+    //
+    // Placed immediately after Terms because the per-cycle bands ARE the product's terms — Classic
+    // renders the same block inside its Terms step. Declaration order is what `visibleSteps`
+    // preserves, so this is what fixes the operator-facing ordering.
+    id: 12,
+    title: 'Loan Cycle Variations',
+    icon: 'ti-repeat',
+    kind: 'borrower-cycle',
+    fields: []
   },
   {
     id: 4,
@@ -1120,7 +1145,8 @@ export type LoanWizardProfileMode =
   | 'home'
   | 'mortgage'
   | 'gold'
-  | 'auto';
+  | 'auto'
+  | 'jlg';
 
 /**
  * Home Loan and Mortgage Loan (LAP) share one product-level configuration. This is what the workbook
@@ -1213,6 +1239,19 @@ export function dropsDisabledOverAppliedFields(profileMode: LoanWizardProfileMod
  */
 export function rendersDeferredIncomeStep(profileMode: LoanWizardProfileMode): boolean {
   return profileMode === 'bnpl';
+}
+
+/**
+ * Profiles that render the borrower-cycle variations step — the sheet's "Terms vary based on loan
+ * cycle" rows (26, 27 and 29). JLG is the only sheet in the workbook that marks them Applicable: a
+ * joint liability group member's entitlement is expected to grow with each completed cycle, so the
+ * product carries per-cycle principal, tenure and rate bands.
+ *
+ * The step is additionally gated on the `useBorrowerCycle` control at render time (sheet row 12, which
+ * JLG also marks Applicable), mirroring Classic's `@if (loanProductTermsForm.value.useBorrowerCycle)`.
+ */
+export function rendersBorrowerCycleStep(profileMode: LoanWizardProfileMode): boolean {
+  return profileMode === 'jlg';
 }
 
 /** Fewest tranches a `multiDisburseLoan: true` product can be created with — used as the floor and
@@ -1431,6 +1470,38 @@ const AUTO_VISIBLE_KEYS: readonly string[] = [
 ];
 
 /**
+ * Keys the JLG L sheet marks `is Applicable = Y` that the base {@link HIDDEN_DEFAULTS} would
+ * otherwise pin. Sheet rows, in order: 7, 12, 26, 27, 29, 32, 33, 35, 37, 42, 43, 44, 49, 53, 71. The
+ * remaining `Applicable = Y` rows (name, shortName, externalId, currencyCode, principal,
+ * numberOfRepayments, the interest/repayment terms, amortization, interest method, interest
+ * calculation period, repayment strategy, the three grace fields, charges and accounting) are never in
+ * HIDDEN_DEFAULTS to begin with, so they need no entry here.
+ *
+ * Rows 7/12 and 26/27/29 are what make this sheet unlike every other one in the workbook: JLG is the
+ * only product whose terms vary by the borrower's loan cycle, which is the defining microfinance
+ * pattern — a group member's entitlement grows with each successfully repaid cycle. Rows 26/27/29 are
+ * therefore rendered by the dedicated `borrower-cycle` step rather than as flat form controls; see
+ * {@link rendersBorrowerCycleStep}.
+ */
+const JLG_VISIBLE_KEYS: readonly string[] = [
+  'includeInBorrowerCycle',
+  'useBorrowerCycle',
+  'principalVariationsForBorrowerCycle',
+  'numberOfRepaymentVariationsForBorrowerCycle',
+  'interestRateVariationsForBorrowerCycle',
+  'allowPartialPeriodInterestCalculation',
+  'isEqualAmortization',
+  'loanScheduleType',
+  'loanScheduleProcessingType',
+  'daysInYearType',
+  'daysInYearCustomStrategy',
+  'daysInMonthType',
+  'principalThresholdForLastInstallment',
+  'isInterestRecalculationEnabled',
+  'delinquencyBucketId'
+];
+
+/**
  * The hidden, always-sent defaults for a profile mode. Guided profiles hide every key of the
  * returned object in the UI and spread it LAST in {@link buildPayload}'s merge, so a key must be
  * removed here (not just overridden) the moment a profile exposes it as an editable control —
@@ -1606,6 +1677,27 @@ export function hiddenDefaultsFor(profileMode: LoanWizardProfileMode): Record<st
     // an editable control. Each must be REMOVED (not overridden) from the hidden defaults, because
     // the guided merge spreads `defaults` last and would otherwise clobber the user's input.
     for (const exposedKey of AUTO_VISIBLE_KEYS) {
+      delete defaults[exposedKey];
+    }
+    return defaults;
+  }
+  if (profileMode === 'jlg') {
+    const defaults: Record<string, unknown> = {
+      ...HIDDEN_DEFAULTS,
+      description: 'JLG Loan Product',
+      // Row 67, pinned FALSE, overriding the base hidden `true`. A joint liability group loan has no
+      // down payment concept — the group's guarantee is the security — so the sanitize step then drops
+      // the two down-payment dependents exactly as it does for Education and Agriculture.
+      enableDownPayment: false,
+      // Row 15, Not Applicable with an explicit FALSE. Group lending is quoted at a fixed rate for the
+      // cycle; the base hidden `false` already matches and it stays hidden.
+      isLinkedToFloatingInterestRates: false
+    };
+    // Every key below is marked `is Applicable = Y` on the JLG L sheet, so the profile renders it as an
+    // editable control. Each must be REMOVED (not overridden) from the hidden defaults, because the
+    // guided merge spreads `defaults` last and would otherwise clobber the user's input — and for the
+    // three variation arrays it would clobber the borrower-cycle step's collected rows with `[]`.
+    for (const exposedKey of JLG_VISIBLE_KEYS) {
       delete defaults[exposedKey];
     }
     return defaults;
@@ -1791,6 +1883,27 @@ export const PROFILE_INITIAL_OVERRIDES: Partial<Record<LoanWizardProfileMode, Pa
     // boilerplate every other sheet inherits from `All Params`, with a blank Default Value column, so
     // seeding a headline ticket size or tenure here would invent commercial policy the sheet does not
     // state.
+  },
+  jlg: {
+    // Rows 35/36/37 — the same Progressive + advanced-allocation resolution Home, Gold and BNPL apply
+    // to the identical contradiction on their own sheets.
+    loanScheduleType: 'Progressive',
+    transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+    loanScheduleProcessingType: 'Horizontal',
+    // Row 12. The defining JLG feature, and the gate the borrower-cycle step renders behind, so the
+    // toggle is seeded ON — INITIAL_FORM_STATE seeds it false — and stays editable per the sheet.
+    useBorrowerCycle: true,
+    // Row 7, Applicable and seeded on: a JLG product only makes sense if the member's completed loans
+    // are counted, since that counter is what the cycle variations key off.
+    includeInBorrowerCycle: true,
+    // Rows 42/44 — seeded to the sheet's values, and editable because both rows are Applicable.
+    daysInYearType: 360,
+    daysInMonthType: 30
+    // Deliberately absent: `principal`, `interestRatePerPeriod` and `numberOfRepayments` — see the note
+    // on HOME_AND_MORTGAGE_INITIAL_OVERRIDES. The JLG L sheet carries the same 10000 / 12% / 12
+    // boilerplate every other sheet inherits from `All Params`, with a blank Default Value column. It
+    // matters more here than elsewhere: the per-cycle bands entered in the borrower-cycle step are the
+    // real ticket sizes, so seeding a headline figure would actively mislead.
   }
 };
 
@@ -1850,6 +1963,13 @@ export const PROFILE_EXTRA_VISIBLE_FIELDS: Partial<Record<LoanWizardProfileMode,
     'enableDownPayment',
     'disbursedAmountPercentageForDownPayment',
     'enableAutoRepaymentForDownPayment'
+  ],
+  // JLG L rows 7 and 12 — Applicable on the sheet but in the wizard's custom-only list, so they need
+  // the same second-gate exemption Home, Gold and BNPL need. `useBorrowerCycle` additionally gates the
+  // borrower-cycle step, so it must be reachable for the operator to turn the feature off.
+  jlg: [
+    'includeInBorrowerCycle',
+    'useBorrowerCycle'
   ]
 };
 
@@ -1864,7 +1984,8 @@ export const PROFILE_LABEL_KEYS: Record<LoanWizardProfileMode, string> = {
   home: 'labels.text.Home Loan',
   mortgage: 'labels.text.Mortgage Loan (LAP)',
   gold: 'labels.text.Gold Loan',
-  auto: 'labels.text.Auto Loan'
+  auto: 'labels.text.Auto Loan',
+  jlg: 'labels.text.JLG Loan'
 };
 
 /** Route path (under products/loan-products) → wizard profile and the page heading it renders. */
@@ -1881,7 +2002,8 @@ const PROFILE_ROUTES: Record<string, { profileMode: LoanWizardProfileMode; pageT
   'home-loan': { profileMode: 'home', pageTitle: 'labels.heading.Create Home Loan' },
   'mortgage-loan': { profileMode: 'mortgage', pageTitle: 'labels.heading.Create Mortgage Loan' },
   'gold-loan': { profileMode: 'gold', pageTitle: 'labels.heading.Create Gold Loan' },
-  'auto-loan': { profileMode: 'auto', pageTitle: 'labels.heading.Create Auto Loan' }
+  'auto-loan': { profileMode: 'auto', pageTitle: 'labels.heading.Create Auto Loan' },
+  'jlg-loan': { profileMode: 'jlg', pageTitle: 'labels.heading.Create JLG Loan' }
 };
 
 /**

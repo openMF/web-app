@@ -1917,6 +1917,155 @@ describe('LoanProductWizardComponent', () => {
     });
   });
 
+  describe('JLG profile (spreadsheet-driven, Classic-parity conditionals)', () => {
+    function jlgComponent(): LoanProductWizardComponent {
+      const component = createComponent();
+      component.profileMode = 'jlg';
+      component.loanProductsTemplate = {
+        currencyOptions: [{ code: 'INR' }],
+        transactionProcessingStrategyOptions: [
+          { code: 'mifos-standard-strategy', name: 'Mifos standard' },
+          { code: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY, name: 'Advanced Payment Allocation' }
+        ],
+        preClosureInterestCalculationStrategyOptions: [{ id: 1, value: 'Till pre-close date' }],
+        rescheduleStrategyTypeOptions: [{ id: 4, value: 'Adjust last, unpaid period' }],
+        interestRecalculationCompoundingTypeOptions: [{ id: 0, value: 'None' }],
+        interestRecalculationFrequencyTypeOptions: [{ id: 1, value: 'Same as repayment period' }],
+        interestRecalculationNthDayTypeOptions: [{ id: 1, value: 'first' }],
+        interestRecalculationDayOfWeekTypeOptions: [{ id: 1, value: 'Monday' }],
+        daysInYearCustomStrategyOptions: [{ id: 'FULL_LEAP_YEAR', value: 'Full Leap Year' }],
+        valueConditionTypeOptions: [
+          { id: 2, code: 'loanProduct.valueConditionType.equal', value: 'equals' },
+          { id: 3, code: 'loanProduct.valueConditionType.greterthan', value: 'greater than' }
+        ],
+        advancedPaymentAllocationTransactionTypes: [{ id: 1, code: 'DEFAULT', value: 'Default' }],
+        advancedPaymentAllocationTypes: [
+          { id: 1, code: 'PENALTY', value: 'Penalty' },
+          { id: 2, code: 'FEE', value: 'Fee' },
+          { id: 3, code: 'INTEREST', value: 'Interest' },
+          { id: 4, code: 'PRINCIPAL', value: 'Principal' }
+        ],
+        advancedPaymentAllocationFutureInstallmentAllocationRules: [
+          { id: 1, code: 'NEXT_INSTALLMENT', value: 'Next installment' }
+        ]
+      };
+      component.ngOnInit();
+      return component;
+    }
+
+    function visibleKeys(component: LoanProductWizardComponent): string[] {
+      return component.steps.flatMap((step) => component.visibleFields(step)).map((field) => field.key);
+    }
+
+    const SAMPLE_VARIATIONS = {
+      principalVariationsForBorrowerCycle: [{ valueConditionType: 2, borrowerCycleNumber: 1, defaultValue: 20000 }],
+      numberOfRepaymentVariationsForBorrowerCycle: [
+        { valueConditionType: 2, borrowerCycleNumber: 1, defaultValue: 12 }
+      ],
+      interestRateVariationsForBorrowerCycle: [{ valueConditionType: 2, borrowerCycleNumber: 1, defaultValue: 22 }]
+    } as any;
+
+    it('exposes the borrower-cycle toggles the sheet marks Applicable (rows 7 and 12)', () => {
+      // Both sit in the wizard's custom-only list, which hides them for every other guided profile.
+      const keys = visibleKeys(jlgComponent());
+      expect(keys).toContain('includeInBorrowerCycle');
+      expect(keys).toContain('useBorrowerCycle');
+    });
+
+    it('renders the Loan Cycle Variations step, gated on useBorrowerCycle like Classic', () => {
+      const component = jlgComponent();
+      expect(component.visibleSteps.map((step) => step.title)).toContain('Loan Cycle Variations');
+
+      component.form.get('useBorrowerCycle')!.setValue(false);
+      expect(component.visibleSteps.map((step) => step.title)).not.toContain('Loan Cycle Variations');
+    });
+
+    it('does not render the step for any other profile', () => {
+      // Only the JLG sheet marks rows 26/27/29 Applicable.
+      const gold = createComponent();
+      gold.profileMode = 'gold';
+      gold.loanProductsTemplate = { currencyOptions: [{ code: 'INR' }] };
+      gold.ngOnInit();
+      gold.form.get('useBorrowerCycle')?.setValue(true);
+
+      expect(gold.visibleSteps.map((step) => step.title)).not.toContain('Loan Cycle Variations');
+    });
+
+    it('folds the collected variation rows into the submitted payload', () => {
+      const component = jlgComponent();
+      component.setBorrowerCycleVariations(SAMPLE_VARIATIONS);
+
+      const payload = component.buildPayloadForSubmit();
+
+      expect(payload.principalVariationsForBorrowerCycle).toEqual(
+        SAMPLE_VARIATIONS.principalVariationsForBorrowerCycle
+      );
+      expect(payload.numberOfRepaymentVariationsForBorrowerCycle).toEqual(
+        SAMPLE_VARIATIONS.numberOfRepaymentVariationsForBorrowerCycle
+      );
+      expect(payload.interestRateVariationsForBorrowerCycle).toEqual(
+        SAMPLE_VARIATIONS.interestRateVariationsForBorrowerCycle
+      );
+    });
+
+    it('sends empty arrays when the operator never opens the step', () => {
+      // The keys are removed from JLG's hidden defaults, so without this fold they would go missing
+      // from the payload entirely rather than arriving empty.
+      const payload = jlgComponent().buildPayloadForSubmit();
+
+      expect(payload.principalVariationsForBorrowerCycle).toEqual([]);
+      expect(payload.numberOfRepaymentVariationsForBorrowerCycle).toEqual([]);
+      expect(payload.interestRateVariationsForBorrowerCycle).toEqual([]);
+    });
+
+    it('discards collected rows when the operator switches the cycle feature back off', () => {
+      // Classic removes all three controls when `useBorrowerCycle` goes off, so stale rows must not
+      // survive on a product that no longer varies by cycle.
+      const component = jlgComponent();
+      component.setBorrowerCycleVariations(SAMPLE_VARIATIONS);
+      component.form.get('useBorrowerCycle')!.setValue(false);
+
+      const payload = component.buildPayloadForSubmit();
+
+      expect(payload.useBorrowerCycle).toBe(false);
+      expect(payload.principalVariationsForBorrowerCycle).toEqual([]);
+      expect(payload.numberOfRepaymentVariationsForBorrowerCycle).toEqual([]);
+      expect(payload.interestRateVariationsForBorrowerCycle).toEqual([]);
+    });
+
+    it('pins the down payment off and keeps its dependents hidden (row 67)', () => {
+      const component = jlgComponent();
+      const keys = visibleKeys(component);
+
+      expect(keys).not.toContain('enableDownPayment');
+      expect(keys).not.toContain('disbursedAmountPercentageForDownPayment');
+      expect(component.buildPayloadForSubmit().enableDownPayment).toBe(false);
+    });
+
+    it('seeds the Progressive + advanced payment allocation stack the sheet implies', () => {
+      const component = jlgComponent();
+      expect(component.form.get('loanScheduleType')!.value).toBe('Progressive');
+      expect(component.form.get('transactionProcessingStrategyCode')!.value).toBe(
+        LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY
+      );
+      expect(component.visibleSteps.map((step) => step.title)).toContain('Payment Allocation');
+    });
+
+    it('carries a populated paymentAllocation collection in the submitted payload', () => {
+      const payload = jlgComponent().buildPayloadForSubmit();
+      const paymentAllocation = payload.paymentAllocation as Array<Record<string, unknown>>;
+
+      expect(paymentAllocation.length).toBeGreaterThan(0);
+      expect(paymentAllocation[0].transactionType).toBe('DEFAULT');
+      expect(paymentAllocation[0].paymentAllocationOrder).toEqual([
+        { order: 1, paymentAllocationRule: 'PENALTY' },
+        { order: 2, paymentAllocationRule: 'FEE' },
+        { order: 3, paymentAllocationRule: 'INTEREST' },
+        { order: 4, paymentAllocationRule: 'PRINCIPAL' }
+      ]);
+    });
+  });
+
   describe('BNPL profile (spreadsheet-driven, Classic-parity conditionals)', () => {
     function bnplComponent(): LoanProductWizardComponent {
       const component = createComponent();
@@ -2312,7 +2461,8 @@ describe('LoanProductWizardComponent', () => {
       'home',
       'mortgage',
       'gold',
-      'auto'
+      'auto',
+      'jlg'
     ];
 
     function componentFor(profile: LoanWizardProfileMode): LoanProductWizardComponent {
