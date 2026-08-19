@@ -13,7 +13,9 @@
       <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
       <mat-select [(ngModel)]="selectedOfficeId" (selectionChange)="fetchLiveInstitutionalData()">
         @for (office of offices; track office.id) {
-          <mat-option [value]="office.id.toString()">{{ office.name }}</mat-option>
+          <mat-option [value]="office.id.toString()">
+            {{ office.id === 0 ? ('labels.text.All Offices (Institution-Wide)' | translate) : office.name }}
+          </mat-option>
         }
       </mat-select>
     </mat-form-field>
