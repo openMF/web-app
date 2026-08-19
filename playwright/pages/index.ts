@@ -57,3 +57,9 @@ export { RejectClientPage } from './client-actions/reject-client.page';
 export { WithdrawClientPage } from './client-actions/withdraw-client.page';
 export { ReactivateClientPage } from './client-actions/reactivate-client.page';
 export { TransferClientPage } from './client-actions/transfer-client.page';
+
+// ── Client charge page objects ─────────────────────────────────────
+
+export { AddChargePage } from './charges/add-charge.page';
+export { ClientChargesPage } from './charges/client-charges.page';
+export { ChargeViewPage } from './charges/charge-view.page';
