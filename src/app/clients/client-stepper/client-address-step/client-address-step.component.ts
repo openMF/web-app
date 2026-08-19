@@ -244,7 +244,7 @@ export class ClientAddressStepComponent {
       this.isFieldEnabled('addressLine1')
         ? new InputBase({
             controlName: 'addressLine1',
-            label: this.translateService.instant('labels.inputs.Address Line') + ' 1',
+            label: this.translateService.instant('labels.inputs.Address Line 1'),
             value: address ? address.addressLine1 : '',
             type: 'text',
             order: 3
@@ -255,7 +255,7 @@ export class ClientAddressStepComponent {
       this.isFieldEnabled('addressLine2')
         ? new InputBase({
             controlName: 'addressLine2',
-            label: this.translateService.instant('labels.inputs.Address Line') + ' 2',
+            label: this.translateService.instant('labels.inputs.Address Line 2'),
             value: address ? address.addressLine2 : '',
             type: 'text',
             order: 4
@@ -266,7 +266,7 @@ export class ClientAddressStepComponent {
       this.isFieldEnabled('addressLine3')
         ? new InputBase({
             controlName: 'addressLine3',
-            label: this.translateService.instant('labels.inputs.Address Line') + ' 3',
+            label: this.translateService.instant('labels.inputs.Address Line 3'),
             value: address ? address.addressLine3 : '',
             type: 'text',
             order: 5
