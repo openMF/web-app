@@ -1154,6 +1154,7 @@
       "every": "every",
       "Password validation": "The password should contain a minimum of {{minchar}} characters, including 1 uppercase, 1 lowercase and a special character and should not include repeated characters or spaces.",
       "Must be a positive integer": "Must be a positive integer",
+      "Must be greater than 0": "Must be greater than 0",
       "Must be at least": "Must be at least",
       "Must be less or equal to": "Must be less or equal to",
       "must be after or equal to start date": "must be after or equal to start date",
