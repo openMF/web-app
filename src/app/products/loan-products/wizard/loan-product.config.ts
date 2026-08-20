@@ -249,10 +249,12 @@ export const PRODUCT_CARDS: ProductCard[] = [
   },
   {
     name: 'labels.text.Loan vs Securities / FD',
+    // Fully qualified translation key, same pattern as the Custom/Advanced card above.
     description:
-      'Credit extended against shares, mutual funds, or fixed deposits without liquidating the underlying investment.',
-    active: false,
-    disabled: true,
+      'labels.text.Credit extended against shares, mutual funds, or fixed deposits without liquidating the underlying investment',
+    active: true,
+    disabled: false,
+    route: 'loan-against-securities',
     icon: 'account_balance'
   },
   {
@@ -1152,7 +1154,8 @@ export type LoanWizardProfileMode =
   | 'auto'
   | 'jlg'
   | 'consumer-durable'
-  | 'credit-card-emi';
+  | 'credit-card-emi'
+  | 'loan-against-securities';
 
 /**
  * Home Loan and Mortgage Loan (LAP) share one product-level configuration. This is what the workbook
@@ -1596,6 +1599,46 @@ const CREDIT_CARD_EMI_VISIBLE_KEYS: readonly string[] = [
 ];
 
 /**
+ * Keys the LAS L sheet marks `is Applicable = Y` that the base {@link HIDDEN_DEFAULTS} would
+ * otherwise pin. Sheet rows, in order: 15, 32, 33, 35, 37, 42, 43, 44, 49, 52, 53, 71. The remaining
+ * `Applicable = Y` rows (name, shortName, externalId, currencyCode, principal, numberOfRepayments,
+ * the interest/repayment terms, amortization, interest method, interest calculation period, repayment
+ * strategy, the three grace fields, charges and accounting) are never in HIDDEN_DEFAULTS to begin with.
+ *
+ * Two Applicable rows are deliberately NOT listed, both because the sheet contradicts itself:
+ *
+ * - Row 16 ("Installment day calculation from") and row 28 (`repaymentStartDateType`) are the same
+ *   backend field, marked Applicable and Hidden respectively. The wizard's select offers exactly that
+ *   one option, so `isProfileOrStrategyDeterminedField` hides it for every profile — the resolution
+ *   Home, Gold, Auto and BNPL all made for this identical pair.
+ *
+ * - Row 58 (`allowFullTermForTranche`) is Applicable while rows 54-57 — `multiDisburseLoan` and the
+ *   rest of the multi-disburse family — are all Not Applicable. A "full term for tranche" flag is
+ *   meaningless without tranches: it is gated on `multiDisburseLoan` in the UI and dropped from the
+ *   payload entirely for any profile outside {@link sendsMultiDisburseFields}, which this one is.
+ *   Exposing it alone would render a control that cannot affect the product, so the family is treated
+ *   as Not Applicable as a whole — the reading rows 54-57 support.
+ */
+const LOAN_AGAINST_SECURITIES_VISIBLE_KEYS: readonly string[] = [
+  // Row 15. Securities-backed lending is commonly priced off a floating benchmark, so this profile
+  // exposes the link — the same call Home and Auto make, and the opposite of Gold and JLG.
+  'isLinkedToFloatingInterestRates',
+  'allowPartialPeriodInterestCalculation',
+  'isEqualAmortization',
+  'loanScheduleType',
+  'loanScheduleProcessingType',
+  'daysInYearType',
+  'daysInYearCustomStrategy',
+  'daysInMonthType',
+  'principalThresholdForLastInstallment',
+  // Row 52. The pledged portfolio is held as security, so the guarantee-funds machinery is a real
+  // control here, as it is for Home and Gold.
+  'holdGuaranteeFunds',
+  'isInterestRecalculationEnabled',
+  'delinquencyBucketId'
+];
+
+/**
  * The hidden, always-sent defaults for a profile mode. Guided profiles hide every key of the
  * returned object in the UI and spread it LAST in {@link buildPayload}'s merge, so a key must be
  * removed here (not just overridden) the moment a profile exposes it as an editable control —
@@ -1830,6 +1873,26 @@ export function hiddenDefaultsFor(profileMode: LoanWizardProfileMode): Record<st
     // an editable control. Each must be REMOVED (not overridden) from the hidden defaults, because the
     // guided merge spreads `defaults` last and would otherwise clobber the user's input.
     for (const exposedKey of CREDIT_CARD_EMI_VISIBLE_KEYS) {
+      delete defaults[exposedKey];
+    }
+    return defaults;
+  }
+  if (profileMode === 'loan-against-securities') {
+    const defaults: Record<string, unknown> = {
+      ...HIDDEN_DEFAULTS,
+      description: 'Loan vs Securities / FD Product',
+      // Row 11 pins the installment multiple to 1, not the base default of 10.
+      installmentAmountInMultiplesOf: 1
+      // The multi-disburse family (rows 54-58) is Not Applicable with blank Default Values, so it
+      // inherits the master defaults and is dropped from the payload wholesale — this profile is
+      // absent from both `sendsMultiDisburseFields` and `sendsOutstandingLoanBalance`. Same treatment
+      // as Auto and Consumer Durable; see LOAN_AGAINST_SECURITIES_VISIBLE_KEYS for why row 58 does not
+      // change that.
+    };
+    // Every key below is marked `is Applicable = Y` on the LAS L sheet, so the profile renders it as an
+    // editable control. Each must be REMOVED (not overridden) from the hidden defaults, because the
+    // guided merge spreads `defaults` last and would otherwise clobber the user's input.
+    for (const exposedKey of LOAN_AGAINST_SECURITIES_VISIBLE_KEYS) {
       delete defaults[exposedKey];
     }
     return defaults;
@@ -2087,6 +2150,21 @@ export const PROFILE_INITIAL_OVERRIDES: Partial<Record<LoanWizardProfileMode, Pa
     // Deliberately absent: `principal`, `interestRatePerPeriod` and `numberOfRepayments` — see the note
     // on HOME_AND_MORTGAGE_INITIAL_OVERRIDES. The Card L sheet carries the same 10000 / 12% / 12
     // boilerplate every other sheet inherits from `All Params`, with a blank Default Value column.
+  },
+  'loan-against-securities': {
+    // Rows 35/36/37 — the same Progressive + advanced-allocation resolution Home, Gold, Auto, Consumer
+    // Durable and BNPL apply to the identical contradiction on their own sheets.
+    loanScheduleType: 'Progressive',
+    transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+    loanScheduleProcessingType: 'Horizontal',
+    // Rows 42/44 — seeded to the sheet's values, and editable because both rows are Applicable.
+    daysInYearType: 360,
+    daysInMonthType: 30
+    // Deliberately absent: `principal`, `interestRatePerPeriod` and `numberOfRepayments` — see the note
+    // on HOME_AND_MORTGAGE_INITIAL_OVERRIDES. The LAS L sheet carries the same 10000 / 12% / 12
+    // boilerplate every other sheet inherits from `All Params`, with a blank Default Value column. It
+    // matters here in particular: the advance against a portfolio is a loan-to-value calculation made
+    // per pledge, so any seeded ticket size would be arbitrary.
   }
 };
 
@@ -2178,6 +2256,15 @@ export const PROFILE_EXTRA_VISIBLE_FIELDS: Partial<Record<LoanWizardProfileMode,
     'enableAutoRepaymentForDownPayment',
     'loanChargeOffBehaviour',
     'enableInstallmentLevelDelinquency'
+  ],
+  // LAS L rows 15 and 52 — Applicable on the sheet but in the wizard's custom-only list, so they need
+  // the same second-gate exemption Home and Gold need. The three guarantee inputs come with
+  // `holdGuaranteeFunds`: they are custom-only for the same reason it is, and the sheet marks the
+  // guarantee feature Applicable as a whole rather than listing its dependents separately.
+  'loan-against-securities': [
+    'isLinkedToFloatingInterestRates',
+    'holdGuaranteeFunds',
+    ...GUARANTEE_FUNDS_DEPENDENT_FIELDS
   ]
 };
 
@@ -2195,7 +2282,8 @@ export const PROFILE_LABEL_KEYS: Record<LoanWizardProfileMode, string> = {
   auto: 'labels.text.Auto Loan',
   jlg: 'labels.text.JLG Loan',
   'consumer-durable': 'labels.text.Consumer Durable Loan',
-  'credit-card-emi': 'labels.text.Credit Card EMI'
+  'credit-card-emi': 'labels.text.Credit Card EMI',
+  'loan-against-securities': 'labels.text.Loan vs Securities / FD'
 };
 
 /** Route path (under products/loan-products) → wizard profile and the page heading it renders. */
@@ -2221,6 +2309,10 @@ const PROFILE_ROUTES: Record<string, { profileMode: LoanWizardProfileMode; pageT
   'credit-card-emi-loan': {
     profileMode: 'credit-card-emi',
     pageTitle: 'labels.heading.Create Credit Card EMI Loan'
+  },
+  'loan-against-securities': {
+    profileMode: 'loan-against-securities',
+    pageTitle: 'labels.heading.Create Loan vs Securities / FD'
   }
 };
 
