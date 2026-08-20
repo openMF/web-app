@@ -21,6 +21,7 @@ import {
   hiddenDefaultsFor,
   isGuidedProfileMode,
   rendersDeferredIncomeStep,
+  rendersBorrowerCycleStep,
   rendersInterestRefundStep,
   GUARANTEE_FUNDS_DEPENDENT_FIELDS,
   INTEREST_RECALCULATION_FIELDS,
@@ -51,6 +52,10 @@ import { LoanProductChargesStepComponent } from '../loan-product-stepper/loan-pr
 import { LoanProductAccountingStepComponent } from '../loan-product-stepper/loan-product-accounting-step/loan-product-accounting-step.component';
 import { LoanProductInterestRefundStepComponent } from '../loan-product-stepper/loan-product-interest-refund-step/loan-product-interest-refund-step.component';
 import { LoanProductDeferredIncomeRecognitionStepComponent } from '../loan-product-stepper/loan-product-capitalized-income-step/loan-product-deferred-income-recognition-step.component';
+import {
+  LoanProductBorrowerCycleStepComponent,
+  BorrowerCycleVariations
+} from './borrower-cycle-step/loan-product-borrower-cycle-step.component';
 import { GlAccountDisplayComponent } from '../../../shared/accounting/gl-account-display/gl-account-display.component';
 import { LoanProductService } from '../services/loan-product.service';
 import { Router } from '@angular/router';
@@ -161,6 +166,7 @@ const ACCOUNTING_REVIEW_ACCOUNTS: ReadonlyArray<{ key: string; title: string }> 
     LoanProductAccountingStepComponent,
     LoanProductInterestRefundStepComponent,
     LoanProductDeferredIncomeRecognitionStepComponent,
+    LoanProductBorrowerCycleStepComponent,
     GlAccountDisplayComponent
   ],
   templateUrl: './loan-product-wizard.component.html',
@@ -216,10 +222,23 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
   @ViewChild(LoanProductDeferredIncomeRecognitionStepComponent)
   loanProductDeferredIncomeRecognitionStep?: LoanProductDeferredIncomeRecognitionStepComponent;
 
+  // Borrower-cycle variations step. Read at submit time for its validity: Fineract rejects a variation
+  // list that does not start with `equals`, end with `greater than` and carry advancing cycle numbers,
+  // so the step's own check gates the POST rather than letting the backend 400.
+  @ViewChild(LoanProductBorrowerCycleStepComponent)
+  loanProductBorrowerCycleStep?: LoanProductBorrowerCycleStepComponent;
+
   /** Selected refund types, mirroring Classic's `supportedInterestRefundTypes` field. */
   supportedInterestRefundTypes: StringEnumOptionData[] = [];
   /** Deferred income state the reused step binds to, mirroring Classic's field of the same name. */
   deferredIncomeRecognition: DeferredIncomeRecognition | null = null;
+
+  /**
+   * Per-cycle variation rows collected by {@link LoanProductBorrowerCycleStepComponent}. Held here
+   * rather than in the FormGroup because the wizard's single flat group cannot carry FormArrays of
+   * objects; folded into the payload at submit time, like the other reused steps' emitted state.
+   */
+  borrowerCycleVariations: BorrowerCycleVariations | null = null;
 
   steps = FORM_STEPS;
   valueMap = VALUE_MAP;
@@ -336,6 +355,12 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
       }
       if (step.kind === 'deferred-income') {
         return rendersDeferredIncomeStep(this.profileMode) && this.isAdvancedPaymentStrategy;
+      }
+      // Same gate Classic puts on the block (`@if (loanProductTermsForm.value.useBorrowerCycle)` in
+      // loan-product-terms-step.component.html), plus the profile opt-in: only JLG's sheet marks the
+      // variation rows Applicable.
+      if (step.kind === 'borrower-cycle') {
+        return rendersBorrowerCycleStep(this.profileMode) && !!this.form?.get('useBorrowerCycle')?.value;
       }
       return this.visibleFields(step).length > 0;
     });
@@ -688,7 +713,33 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
       Object.assign(merged, this.loanProductAccountingStep.loanProductAccounting);
     }
     this.applyDeferredIncomeRecognition(merged);
+    this.applyBorrowerCycleVariations(merged);
     return this.loanProducts.buildPayload(merged, this.itemsByDefault || []);
+  }
+
+  /**
+   * Folds the borrower-cycle step's collected rows into the payload (sheet rows 26, 27 and 29).
+   *
+   * The three keys are removed from JLG's hidden defaults — otherwise the guided merge, which spreads
+   * the defaults last, would overwrite the operator's rows with the base `[]`. That leaves them absent
+   * from the payload, so this method supplies them.
+   *
+   * Classic removes all three controls when `useBorrowerCycle` is off
+   * (loan-product-terms-step.component.ts), so an unchecked toggle must send empty arrays regardless
+   * of anything the step collected before it was unchecked — otherwise stale rows would reach a
+   * product that no longer varies by cycle. Every other profile keeps the `[]` from its hidden
+   * defaults and never enters this branch.
+   */
+  private applyBorrowerCycleVariations(payload: Record<string, unknown>): void {
+    if (!rendersBorrowerCycleStep(this.profileMode)) {
+      return;
+    }
+    const usesBorrowerCycle = !!this.form?.get('useBorrowerCycle')?.value;
+    const collected = usesBorrowerCycle ? this.borrowerCycleVariations : null;
+    payload['principalVariationsForBorrowerCycle'] = collected?.principalVariationsForBorrowerCycle ?? [];
+    payload['numberOfRepaymentVariationsForBorrowerCycle'] =
+      collected?.numberOfRepaymentVariationsForBorrowerCycle ?? [];
+    payload['interestRateVariationsForBorrowerCycle'] = collected?.interestRateVariationsForBorrowerCycle ?? [];
   }
 
   /**
@@ -815,6 +866,20 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
   /** Mirrors Classic's handler of the same name (create-loan-product-classic.component.ts). */
   setSupportedInterestRefundTypes(supportedInterestRefundTypes: StringEnumOptionData[]): void {
     this.supportedInterestRefundTypes = supportedInterestRefundTypes;
+  }
+
+  /**
+   * True while the borrower-cycle step has a rule violation. The step renders its own inline messages,
+   * but those live on a different wizard step from the submit button, so the Review step surfaces this
+   * too — otherwise the button would just appear dead.
+   */
+  get borrowerCycleStepInvalid(): boolean {
+    return this.loanProductBorrowerCycleStep ? !this.loanProductBorrowerCycleStep.isValid : false;
+  }
+
+  /** Receives the borrower-cycle step's collected rows; folded into the payload at submit time. */
+  setBorrowerCycleVariations(borrowerCycleVariations: BorrowerCycleVariations): void {
+    this.borrowerCycleVariations = borrowerCycleVariations;
   }
 
   /**
@@ -1378,7 +1443,10 @@ export class LoanProductWizardComponent implements OnInit, OnChanges, OnDestroy 
     // Recognition step attaches `Validators.required` to each dependent it registers, so an
     // incomplete capitalized-income / buydown-fee configuration must block submit here too.
     const deferredIncomeForm = this.loanProductDeferredIncomeRecognitionStep?.loanDeferredIncomeRecognitionForm;
-    if (this.form.invalid || accountingForm?.invalid || deferredIncomeForm?.invalid) {
+    // The borrower-cycle step holds FormArrays of objects rather than a FormGroup, so its rules cannot
+    // ride on `form.invalid`. It renders inline messages on its own step, and the Review step shows a
+    // notice next to the button, so there is nothing extra to mark as touched here.
+    if (this.form.invalid || accountingForm?.invalid || deferredIncomeForm?.invalid || this.borrowerCycleStepInvalid) {
       this.form.markAllAsTouched();
       accountingForm?.markAllAsTouched();
       deferredIncomeForm?.markAllAsTouched();

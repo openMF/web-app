@@ -8,14 +8,16 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DatePipe, DecimalPipe } from '@angular/common';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { of } from 'rxjs';
+import { faEdit, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { of, throwError } from 'rxjs';
 import { describe, it, expect, jest, beforeEach } from '@jest/globals';
 
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
@@ -23,11 +25,20 @@ import { SettingsService } from 'app/settings/settings.service';
 import { SystemService } from 'app/system/system.service';
 import { DateFormatPipe } from 'app/pipes/date-format.pipe';
 import { DatetimeFormatPipe } from 'app/pipes/datetime-format.pipe';
+import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { DatatableMultiRowComponent } from './datatable-multi-row.component';
 
 describe('DatatableMultiRowComponent', () => {
   let fixture: ComponentFixture<DatatableMultiRowComponent>;
   let component: DatatableMultiRowComponent;
+  let matDialog: { open: jest.Mock };
+  let systemService: {
+    getEntityDatatable: jest.Mock;
+    addEntityDatatableEntry: jest.Mock;
+    editEntityDatatableEntryOneToMany: jest.Mock;
+    deleteDatatableContent: jest.Mock;
+    deleteDatatableEntry: jest.Mock;
+  };
 
   const row = (id: number, firstName: string, lastName: string, amount: number | null = id) => ({
     row: [
@@ -36,7 +47,13 @@ describe('DatatableMultiRowComponent', () => {
       firstName,
       lastName,
       amount,
-      null
+      true,
+      false,
+      null,
+      `2025-01-${String(id).padStart(2, '0')}T12:30:00`,
+      `2025-02-${String(id).padStart(2, '0')}T13:45:00`,
+      '2025-01-15',
+      12
     ]
   });
 
@@ -47,7 +64,20 @@ describe('DatatableMultiRowComponent', () => {
       { columnName: 'first_name', columnDisplayType: 'STRING' },
       { columnName: 'last_name', columnDisplayType: 'STRING' },
       { columnName: 'amount', columnDisplayType: 'DECIMAL' },
-      { columnName: 'empty_value', columnDisplayType: 'STRING' }
+      { columnName: 'is_active', columnDisplayType: 'BOOLEAN' },
+      { columnName: 'is_verified', columnDisplayType: 'BOOLEAN' },
+      { columnName: 'empty_value', columnDisplayType: 'STRING' },
+      { columnName: 'created_at', columnDisplayType: 'DATETIME' },
+      { columnName: 'updated_at', columnDisplayType: 'DATETIME' },
+      { columnName: 'date_of_birth', columnDisplayType: 'DATE' },
+      {
+        columnName: 'Relationship_cd_Relationship Type',
+        columnDisplayType: 'CODELOOKUP',
+        columnValues: [
+          { id: 11, value: 'Parent' },
+          { id: 12, value: 'Sibling' }
+        ]
+      }
     ],
     data
   });
@@ -62,13 +92,39 @@ describe('DatatableMultiRowComponent', () => {
     fixture.detectChanges();
   };
 
+  const setDataObject = (dataObject: any) => {
+    fixture.componentRef.setInput('dataObject', dataObject);
+    detectChanges();
+  };
+
   beforeEach(async () => {
+    localStorage.setItem('mifosXLanguage', JSON.stringify({ code: 'en' }));
+    const translations: Record<string, string> = {
+      'labels.buttons.Add': 'Agregar',
+      'labels.buttons.Edit': 'Editar',
+      'labels.buttons.Save': 'Guardar',
+      'labels.text.Client': 'Cliente',
+      'labels.text.for': 'para',
+      'labels.buttons.Yes': 'Sí',
+      'labels.buttons.No': 'No',
+      'labels.inputs.Created At': 'Creado en',
+      'labels.inputs.Updated At': 'Actualizado en'
+    };
     const translateService = {
-      instant: jest.fn((key: string) => key),
-      get: jest.fn((key: string) => of(key)),
+      instant: jest.fn((key: string) => translations[key] || key),
+      get: jest.fn((key: string) => of(translations[key] || key)),
       onLangChange: of({ lang: 'en' }),
       onTranslationChange: of({}),
       onDefaultLangChange: of({ lang: 'en' })
+    };
+
+    matDialog = { open: jest.fn(() => ({ afterClosed: () => of({}) })) };
+    systemService = {
+      getEntityDatatable: jest.fn(() => of(createDataObject())),
+      addEntityDatatableEntry: jest.fn(() => of({})),
+      editEntityDatatableEntryOneToMany: jest.fn(() => of({})),
+      deleteDatatableContent: jest.fn(() => of({})),
+      deleteDatatableEntry: jest.fn(() => of({}))
     };
 
     await TestBed.configureTestingModule({
@@ -88,12 +144,12 @@ describe('DatatableMultiRowComponent', () => {
           provide: AuthenticationService,
           useValue: { getCredentials: jest.fn(() => ({ permissions: ['ALL_FUNCTIONS'] })) }
         },
-        { provide: MatDialog, useValue: { open: jest.fn() } },
+        { provide: MatDialog, useValue: matDialog },
         DatePipe,
         DecimalPipe,
         DateFormatPipe,
         DatetimeFormatPipe,
-        { provide: SystemService, useValue: { getEntityDatatable: jest.fn() } },
+        { provide: SystemService, useValue: systemService },
         {
           provide: SettingsService,
           useValue: {
@@ -106,7 +162,7 @@ describe('DatatableMultiRowComponent', () => {
       ]
     }).compileComponents();
 
-    TestBed.inject(FaIconLibrary).addIcons(faPlus, faTrash);
+    TestBed.inject(FaIconLibrary).addIcons(faEdit, faPlus, faTrash);
 
     fixture = TestBed.createComponent(DatatableMultiRowComponent);
     component = fixture.componentInstance;
@@ -128,7 +184,13 @@ describe('DatatableMultiRowComponent', () => {
       'First name',
       'Last name',
       'Amount',
-      'Empty value'
+      'Is active',
+      'Is verified',
+      'Empty value',
+      'Creado en',
+      'Actualizado en',
+      'Date of birth',
+      'Relationship'
     ]);
     expect(mobileLabels).toEqual(labels);
   });
@@ -140,6 +202,23 @@ describe('DatatableMultiRowComponent', () => {
     expect(selectionCell.getAttribute('data-label')).toBeNull();
     expect(selectionCell.querySelector('.mobile-cell-label')).toBeNull();
     expect(selectionCell.querySelector('mat-checkbox')).toBeTruthy();
+  });
+
+  it('keeps dynamic sortable headers aligned with their data cells', () => {
+    const headerCells = Array.from(
+      fixture.nativeElement.querySelectorAll('th[mat-header-cell]:not(.checkbox-column):not(.actions-column)')
+    ) as HTMLElement[];
+    const dataCells = Array.from(fixture.nativeElement.querySelectorAll('td.responsive-data-cell')) as HTMLElement[];
+    const stylesheet = readFileSync(join(__dirname, 'datatable-multi-row.component.scss'), 'utf8');
+
+    expect(headerCells.length).toBe(dataCells.length);
+    expect(stylesheet).toContain('::ng-deep .mat-mdc-header-cell.right .mat-sort-header-container');
+    expect(stylesheet).toContain('justify-content: flex-end;');
+    headerCells.forEach((headerCell, index) => {
+      expect(headerCell.classList).toContain('right');
+      expect(headerCell.querySelector('.mat-sort-header-container')).toBeTruthy();
+      expect(dataCells[index].classList).toContain('right');
+    });
   });
 
   it('preserves the existing displayed columns and desktop table structure', () => {
@@ -154,14 +233,47 @@ describe('DatatableMultiRowComponent', () => {
     expect(tableScrollWrapper.contains(paginator)).toBe(false);
     expect(component.datatableColumns).toEqual([
       'select',
+      'actions',
       'id',
       'first_name',
       'last_name',
       'amount',
-      'empty_value'
+      'is_active',
+      'is_verified',
+      'empty_value',
+      'created_at',
+      'updated_at',
+      'date_of_birth',
+      'Relationship_cd_Relationship Type'
     ]);
     expect(component.datatableColumns).not.toContain('client_id');
     expect(headerCells.length).toBe(component.datatableColumns.length);
+  });
+
+  it('translates system timestamp labels in desktop and responsive multi-row cells', () => {
+    const headerLabels = Array.from(
+      fixture.nativeElement.querySelectorAll('th[mat-header-cell]:not(.checkbox-column)')
+    ).map((headerCell: Element) => headerCell.textContent.replace(/\s+/g, ' ').trim());
+    const createdCell = fixture.nativeElement.querySelector('td[data-label="Creado en"]') as HTMLElement;
+    const updatedCell = fixture.nativeElement.querySelector('td[data-label="Actualizado en"]') as HTMLElement;
+
+    expect(component.datatableColumns).toContain('created_at');
+    expect(component.datatableColumns).toContain('updated_at');
+    expect(headerLabels).toContain('Creado en');
+    expect(headerLabels).toContain('Actualizado en');
+    expect(createdCell.querySelector('.mobile-cell-label').textContent.trim()).toBe('Creado en');
+    expect(updatedCell.querySelector('.mobile-cell-label').textContent.trim()).toBe('Actualizado en');
+  });
+
+  it('preserves timestamp formatting and raw-column sorting for translated system timestamp columns', () => {
+    const createdCellValue = fixture.nativeElement.querySelector('td[data-label="Creado en"] .cell-value');
+    const updatedCellValue = fixture.nativeElement.querySelector('td[data-label="Actualizado en"] .cell-value');
+
+    expect(createdCellValue.textContent.trim()).toBe('07 January 2025 12:30');
+    expect(updatedCellValue.textContent.trim()).toBe('07 February 2025 13:45');
+    expect(component.getSortValue(row(3, 'Grace', 'Hopper'), 'created_at')).toBe(
+      new Date('2025-01-03T12:30:00').getTime()
+    );
   });
 
   it('keeps empty values renderable inside labeled responsive cells', () => {
@@ -171,6 +283,52 @@ describe('DatatableMultiRowComponent', () => {
     expect(emptyValueCell).toBeTruthy();
     expect(emptyValue).toBeTruthy();
     expect(emptyValue.textContent.trim()).toBe('');
+  });
+
+  it('renders long field labels and values in wrapping multi-row cell containers', () => {
+    const longColumnName = 'very_long_customer_information_field_name_that_should_wrap_completely';
+    const longValue =
+      'This is a very long customer information value that should wrap across multiple lines instead of being truncated or hidden.';
+    setDataObject({
+      columnHeaders: [
+        { columnName: 'id', columnDisplayType: 'INTEGER' },
+        { columnName: 'client_id', columnDisplayType: 'INTEGER' },
+        { columnName: longColumnName, columnDisplayType: 'STRING' }
+      ],
+      data: [
+        {
+          row: [
+            7,
+            99,
+            longValue
+          ]
+        }
+      ]
+    });
+
+    const expectedLabel = 'Very long customer information field name that should wrap completely';
+    const headerCells = Array.from(fixture.nativeElement.querySelectorAll('th[mat-header-cell]')) as HTMLElement[];
+    const longValueCell = fixture.nativeElement.querySelector(`td[data-label="${expectedLabel}"]`) as HTMLElement;
+    const mobileLabel = longValueCell.querySelector('.mobile-cell-label') as HTMLElement;
+    const cellValue = longValueCell.querySelector('.cell-value') as HTMLElement;
+    const stylesheet = readFileSync(join(__dirname, 'datatable-multi-row.component.scss'), 'utf8');
+
+    expect(headerCells.some((headerCell) => headerCell.textContent.replace(/\s+/g, ' ').trim() === expectedLabel)).toBe(
+      true
+    );
+    expect(mobileLabel.textContent.trim()).toBe(expectedLabel);
+    expect(cellValue.textContent.trim()).toBe(longValue);
+    expect(stylesheet).toContain('display: block;');
+    expect(stylesheet).toContain('max-width: 24rem;');
+    expect(stylesheet).toContain('vertical-align: top;');
+  });
+
+  it('renders boolean values as translated Yes and No labels', () => {
+    const activeCell = fixture.nativeElement.querySelector('td[data-label="Is active"] .cell-value');
+    const verifiedCell = fixture.nativeElement.querySelector('td[data-label="Is verified"] .cell-value');
+
+    expect(activeCell.textContent.trim()).toBe('Sí');
+    expect(verifiedCell.textContent.trim()).toBe('No');
   });
 
   it('keeps multi-row Code Value column labels unchanged', () => {
@@ -184,13 +342,160 @@ describe('DatatableMultiRowComponent', () => {
     expect(component.datatableData.paginator).toBe(component.paginator);
   });
 
+  it('shows an edit action for each existing multi-row record', () => {
+    setDataObject(
+      createDataObject([
+        row(7, 'Ada', 'Lovelace'),
+        row(8, 'Grace', 'Hopper')
+      ])
+    );
+
+    const editButtons = fixture.nativeElement.querySelectorAll('td.actions-cell button[mat-icon-button]');
+
+    expect(component.datatableColumns).toContain('actions');
+    expect(editButtons.length).toBe(2);
+    expect(editButtons[0].getAttribute('aria-label')).toBe('Editar');
+  });
+
+  it('opens the selected multi-row record for editing with existing values prefilled', () => {
+    const selectedRow = {
+      row: [
+        7,
+        99,
+        'Ada',
+        'Lovelace',
+        0,
+        true,
+        false,
+        null,
+        '2025-01-07T12:30:00',
+        '2025-02-07T13:45:00',
+        '2025-01-15',
+        12
+      ]
+    };
+    setDataObject(createDataObject([selectedRow]));
+
+    component.edit(selectedRow);
+
+    const dialogData = (matDialog.open.mock.calls[0][1] as any).data;
+    const formfieldValues = Object.fromEntries(
+      dialogData.formfields.map((formfield: any) => [
+        formfield.controlName,
+        formfield.value
+      ])
+    );
+
+    expect(dialogData.title).toBe('Editar Client extra data para Cliente');
+    expect(dialogData.layout.addButtonText).toBe('labels.buttons.Save');
+    expect(formfieldValues.first_name).toBe('Ada');
+    expect(formfieldValues.is_active).toBe(true);
+    expect(formfieldValues.is_verified).toBe(false);
+    expect(formfieldValues.amount).toBe(0);
+    expect(formfieldValues.date_of_birth).toEqual(new Date(2025, 0, 15));
+    expect(formfieldValues['Relationship_cd_Relationship Type']).toBe(12);
+    expect(formfieldValues.empty_value).toBeNull();
+  });
+
+  it('updates the selected multi-row record without creating a duplicate row', () => {
+    const selectedRow = row(7, 'Ada', 'Lovelace', 0);
+    const updatedDataObject = createDataObject([row(7, 'Ada Jane', 'Lovelace', 0)]);
+    const afterClosed = jest.fn(() =>
+      of({
+        data: {
+          value: {
+            first_name: 'Ada Jane',
+            last_name: 'Lovelace',
+            amount: 0,
+            is_active: true,
+            is_verified: false,
+            date_of_birth: new Date(2025, 0, 16),
+            'Relationship_cd_Relationship Type': 11,
+            empty_value: ''
+          }
+        }
+      })
+    );
+    matDialog.open.mockReturnValueOnce({
+      afterClosed
+    });
+    const formatDateSpy = jest.spyOn((component as any).dateUtils, 'formatDate').mockReturnValue('2025-01-16');
+    systemService.getEntityDatatable.mockReturnValueOnce(of(updatedDataObject));
+
+    expect(matDialog.open).not.toHaveBeenCalled();
+    component.edit(selectedRow);
+
+    expect(matDialog.open).toHaveBeenCalled();
+    expect(afterClosed).toHaveBeenCalled();
+    expect(formatDateSpy).toHaveBeenCalledWith(new Date(2025, 0, 16), 'yyyy-MM-dd');
+    expect(systemService.editEntityDatatableEntryOneToMany).toHaveBeenCalledWith('99', 7, 'client_extra_data', {
+      first_name: 'Ada Jane',
+      last_name: 'Lovelace',
+      amount: 0,
+      is_active: true,
+      is_verified: false,
+      date_of_birth: '2025-01-16',
+      'Relationship_cd_Relationship Type': 11,
+      empty_value: '',
+      locale: 'en',
+      dateFormat: 'yyyy-MM-dd'
+    });
+    expect(systemService.addEntityDatatableEntry).not.toHaveBeenCalled();
+    expect(systemService.getEntityDatatable).toHaveBeenCalledWith('99', 'client_extra_data');
+    expect(component.datatableData.data).toEqual(updatedDataObject.data);
+    expect(component.datatableData.data).toHaveLength(1);
+  });
+
+  it('does not update when editing is cancelled', () => {
+    matDialog.open.mockReturnValueOnce({ afterClosed: () => of({}) });
+
+    component.edit(row(7, 'Ada', 'Lovelace'));
+
+    expect(systemService.editEntityDatatableEntryOneToMany).not.toHaveBeenCalled();
+    expect(systemService.addEntityDatatableEntry).not.toHaveBeenCalled();
+  });
+
+  it('restores loading state and preserves existing rows when update fails', () => {
+    const selectedRow = row(7, 'Ada', 'Lovelace');
+    const originalRows = component.datatableData.data;
+    matDialog.open.mockReturnValueOnce({
+      afterClosed: () =>
+        of({
+          data: {
+            value: {
+              first_name: 'Ada Jane'
+            }
+          }
+        })
+    });
+    systemService.editEntityDatatableEntryOneToMany.mockReturnValueOnce(throwError(() => new Error('Update failed')));
+
+    expect(() => component.edit(selectedRow)).not.toThrow();
+    expect(systemService.editEntityDatatableEntryOneToMany).toHaveBeenCalled();
+    expect(systemService.getEntityDatatable).not.toHaveBeenCalled();
+    expect(component.isLoading).toBe(false);
+    expect(component.datatableData.data).toBe(originalRows);
+  });
+
+  it('restores loading state and preserves existing rows when reload fails', () => {
+    const originalRows = component.datatableData.data;
+    systemService.getEntityDatatable.mockReturnValueOnce(throwError(() => new Error('Reload failed')));
+
+    component.getData();
+
+    expect(systemService.getEntityDatatable).toHaveBeenCalledWith('99', 'client_extra_data');
+    expect(component.isLoading).toBe(false);
+    expect(component.datatableData.data).toBe(originalRows);
+  });
+
   it('displays the correct rows when changing pages', () => {
-    component.dataObject = createDataObject([
-      row(1, 'One', 'User'),
-      row(2, 'Two', 'User'),
-      row(3, 'Three', 'User')
-    ]);
-    component.ngOnChanges({ dataObject: { currentValue: component.dataObject } as any });
+    setDataObject(
+      createDataObject([
+        row(1, 'One', 'User'),
+        row(2, 'Two', 'User'),
+        row(3, 'Three', 'User')
+      ])
+    );
     component.paginator._changePageSize(2);
     detectChanges();
 
@@ -211,12 +516,13 @@ describe('DatatableMultiRowComponent', () => {
   });
 
   it('updates rendered rows when page size changes', () => {
-    component.dataObject = createDataObject([
-      row(1, 'One', 'User'),
-      row(2, 'Two', 'User'),
-      row(3, 'Three', 'User')
-    ]);
-    component.ngOnChanges({ dataObject: { currentValue: component.dataObject } as any });
+    setDataObject(
+      createDataObject([
+        row(1, 'One', 'User'),
+        row(2, 'Two', 'User'),
+        row(3, 'Three', 'User')
+      ])
+    );
     component.paginator._changePageSize(2);
     detectChanges();
 
@@ -229,12 +535,13 @@ describe('DatatableMultiRowComponent', () => {
   });
 
   it('sorts dynamic columns ascending and descending', () => {
-    component.dataObject = createDataObject([
-      row(1, 'Charlie', 'Zephyr'),
-      row(2, 'Alice', 'Yellow'),
-      row(3, 'Bob', 'Xavier')
-    ]);
-    component.ngOnChanges({ dataObject: { currentValue: component.dataObject } as any });
+    setDataObject(
+      createDataObject([
+        row(1, 'Charlie', 'Zephyr'),
+        row(2, 'Alice', 'Yellow'),
+        row(3, 'Bob', 'Xavier')
+      ])
+    );
 
     component.sort.sort({ id: 'first_name', start: 'asc', disableClear: false });
     detectChanges();
@@ -252,12 +559,13 @@ describe('DatatableMultiRowComponent', () => {
   });
 
   it('sorts and paginates together', () => {
-    component.dataObject = createDataObject([
-      row(1, 'Charlie', 'Zephyr'),
-      row(2, 'Alice', 'Yellow'),
-      row(3, 'Bob', 'Xavier')
-    ]);
-    component.ngOnChanges({ dataObject: { currentValue: component.dataObject } as any });
+    setDataObject(
+      createDataObject([
+        row(1, 'Charlie', 'Zephyr'),
+        row(2, 'Alice', 'Yellow'),
+        row(3, 'Bob', 'Xavier')
+      ])
+    );
     component.paginator._changePageSize(2);
     component.sort.sort({ id: 'first_name', start: 'asc', disableClear: false });
     detectChanges();
@@ -276,32 +584,42 @@ describe('DatatableMultiRowComponent', () => {
   });
 
   it('renders an empty data table without rows', () => {
-    component.dataObject = createDataObject([]);
-    component.ngOnChanges({ dataObject: { currentValue: component.dataObject } as any });
-    detectChanges();
+    setDataObject(createDataObject([]));
 
     expect(getRenderedRows()).toHaveLength(0);
     expect(component.datatableData.paginator).toBe(component.paginator);
   });
 
+  it('translates the Add dialog title while preserving the Data Table name', () => {
+    component.add();
+
+    expect(matDialog.open).toHaveBeenCalledWith(FormDialogComponent, {
+      data: expect.objectContaining({
+        title: 'Agregar Client extra data para Cliente'
+      }),
+      width: '50rem'
+    });
+  });
+
   it('renders all rows for a dataset smaller than one page', () => {
-    component.dataObject = createDataObject([
-      row(1, 'One', 'User'),
-      row(2, 'Two', 'User')
-    ]);
-    component.ngOnChanges({ dataObject: { currentValue: component.dataObject } as any });
-    detectChanges();
+    setDataObject(
+      createDataObject([
+        row(1, 'One', 'User'),
+        row(2, 'Two', 'User')
+      ])
+    );
 
     expect(getRenderedRows()).toHaveLength(2);
   });
 
   it('keeps selection intact across pagination and sorting', () => {
-    component.dataObject = createDataObject([
-      row(1, 'Charlie', 'Zephyr'),
-      row(2, 'Alice', 'Yellow'),
-      row(3, 'Bob', 'Xavier')
-    ]);
-    component.ngOnChanges({ dataObject: { currentValue: component.dataObject } as any });
+    setDataObject(
+      createDataObject([
+        row(1, 'Charlie', 'Zephyr'),
+        row(2, 'Alice', 'Yellow'),
+        row(3, 'Bob', 'Xavier')
+      ])
+    );
     component.paginator._changePageSize(2);
     detectChanges();
     const selectedRow = component.datatableData.data[1];
@@ -323,11 +641,12 @@ describe('DatatableMultiRowComponent', () => {
   });
 
   it('keeps delete selected behavior functional', () => {
-    component.dataObject = createDataObject([
-      row(1, 'One', 'User'),
-      row(2, 'Two', 'User')
-    ]);
-    component.ngOnChanges({ dataObject: { currentValue: component.dataObject } as any });
+    setDataObject(
+      createDataObject([
+        row(1, 'One', 'User'),
+        row(2, 'Two', 'User')
+      ])
+    );
     const selectedRow = component.datatableData.data[0];
 
     component.itemToggle(selectedRow);
@@ -337,12 +656,13 @@ describe('DatatableMultiRowComponent', () => {
   });
 
   it('sorts numbers and null values safely', () => {
-    component.dataObject = createDataObject([
-      row(1, 'One', 'User', 30),
-      row(2, 'Two', 'User', null),
-      row(3, 'Three', 'User', 5)
-    ]);
-    component.ngOnChanges({ dataObject: { currentValue: component.dataObject } as any });
+    setDataObject(
+      createDataObject([
+        row(1, 'One', 'User', 30),
+        row(2, 'Two', 'User', null),
+        row(3, 'Three', 'User', 5)
+      ])
+    );
 
     component.sort.sort({ id: 'amount', start: 'asc', disableClear: false });
     detectChanges();

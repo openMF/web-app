@@ -29,11 +29,13 @@
   padding: 12px 0;
   grid-auto-flow: column;
   grid-auto-columns: minmax(220px, 220px);
+  align-items: stretch;
 }
 
 .data-item {
   display: flex;
   flex-direction: column;
+  min-width: 0;
   padding: 16px;
   background-color: rgb(0 0 0 / 2%);
   border-radius: 8px;
@@ -56,28 +58,34 @@
   letter-spacing: 0.3px;
   font-weight: 500;
   line-height: 1.2;
+  overflow-wrap: anywhere;
+  white-space: normal;
 }
 
 .data-value {
   font-size: 1.0625rem;
   color: rgb(0 0 0 / 87%);
-  word-break: break-word;
+  overflow-wrap: anywhere;
   min-height: 28px;
+  min-width: 0;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   font-weight: 400;
   line-height: 1.5;
 
   span,
   div {
+    min-width: 0;
     width: 100%;
   }
 }
 
 .default-value {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .table-name {
@@ -95,7 +103,7 @@
 }
 
 .long-text {
-  word-break: break-word;
+  overflow-wrap: anywhere;
   white-space: normal;
   line-height: 1.5;
 }

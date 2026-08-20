@@ -22,9 +22,11 @@ import {
   inject
 } from '@angular/core';
 import { MatCheckboxChange as MatCheckboxChange, MatCheckbox } from '@angular/material/checkbox';
+import { MatIconButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { MatTooltip } from '@angular/material/tooltip';
 import { formatDatatableDisplayLabel } from '@pipes/datatable-display-label.pipe';
 import {
   MatTable,
@@ -45,6 +47,7 @@ import { Datatables } from 'app/core/utils/datatables';
 import { Dates } from 'app/core/utils/dates';
 import { DateFormatPipe } from 'app/pipes/date-format.pipe';
 import { DatetimeFormatPipe } from 'app/pipes/datetime-format.pipe';
+import { TranslateService } from '@ngx-translate/core';
 import { SettingsService } from 'app/settings/settings.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -72,9 +75,11 @@ import { PageLoaderComponent } from 'app/shared/page-loader/page-loader.componen
     MatCellDef,
     MatCell,
     MatCheckbox,
+    MatIconButton,
     MatPaginator,
     MatSort,
     MatSortHeader,
+    MatTooltip,
     NgClass,
     MatHeaderRowDef,
     MatHeaderRow,
@@ -97,8 +102,10 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
   private dateFormat = inject(DateFormatPipe);
   private dateTimeFormat = inject(DatetimeFormatPipe);
   private numberFormat = inject(DecimalPipe);
+  private translateService = inject(TranslateService);
 
   SELECT_NAME_FIELD = 'select';
+  ACTIONS_NAME_FIELD = 'actions';
   /** Data Object */
   @Input() dataObject: any;
   @Input() entityId: string;
@@ -160,7 +167,10 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
     if (!this.dataObject) {
       return;
     }
-    this.datatableColumns = [this.SELECT_NAME_FIELD];
+    this.datatableColumns = [
+      this.SELECT_NAME_FIELD,
+      this.ACTIONS_NAME_FIELD
+    ];
     this.dataObject.columnHeaders.filter((columnHeader: any) => {
       if (!this.datatables.isEntityId(columnHeader.columnName)) {
         this.datatableColumns.push(columnHeader.columnName);
@@ -184,16 +194,29 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
   }
 
   getData() {
+    const pageIndex = this.paginator?.pageIndex;
+    const pageSize = this.paginator?.pageSize;
     this.isLoading = true;
-    this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
-      this.dataObject.data = dataObject.data;
-      this.showDeleteBotton = false;
-      if (this.dataTableRef) {
-        this.setData();
+    this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe({
+      next: (dataObject: any) => {
+        this.dataObject.data = dataObject.data;
+        this.showDeleteBotton = false;
+        if (this.dataTableRef) {
+          this.setData();
+        }
+        if (this.paginator && pageIndex !== undefined && pageSize !== undefined) {
+          this.paginator.pageSize = pageSize;
+          const lastPageIndex = Math.max(Math.ceil(this.datatableData.data.length / pageSize) - 1, 0);
+          this.paginator.pageIndex = Math.min(pageIndex, lastPageIndex);
+        }
+        this.isSelected = false;
+        this.isLoading = false;
+        this.changeDetectorRef.markForCheck();
+      },
+      error: () => {
+        this.isLoading = false;
+        this.changeDetectorRef.markForCheck();
       }
-      this.isSelected = false;
-      this.isLoading = false;
-      this.changeDetectorRef.markForCheck();
     });
   }
 
@@ -210,7 +233,7 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
       dataTableEntryObject
     );
     const data = {
-      title: 'Add ' + formatDatatableDisplayLabel(this.datatableName) + ' for ' + this.entityType,
+      title: this.getAddDialogTitle(),
       formfields: formfields
     };
     const addDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
@@ -232,6 +255,87 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
           });
       }
     });
+  }
+
+  getAddDialogTitle(): string {
+    return `${this.translateService.instant('labels.buttons.Add')} ${formatDatatableDisplayLabel(
+      this.datatableName
+    )} ${this.translateService.instant('labels.text.for')} ${this.getTranslatedEntityType()}`;
+  }
+
+  /**
+   * Updates the selected row in the given multi row data table.
+   */
+  edit(row: any) {
+    let dataTableEntryObject: any = { locale: this.settingsService.language.code };
+    const dateTransformColumns: string[] = [];
+    const columns = this.datatables.filterSystemColumns(this.dataObject.columnHeaders);
+    const formfields: FormfieldBase[] = this.datatables
+      .getFormfields(columns, dateTransformColumns, dataTableEntryObject)
+      .map((formfield: FormfieldBase, index: number) => {
+        const column = columns[index];
+        const value = row.row[column.idx];
+        if (value === null || value === undefined) {
+          formfield.value = value;
+        } else if (formfield.controlType === 'datepicker') {
+          formfield.value = this.dateUtils.parseDate(value);
+        } else if (formfield.controlType === 'datetimepicker') {
+          formfield.value = this.dateUtils.parseDatetime(value);
+        } else {
+          formfield.value = value;
+        }
+        return formfield;
+      });
+    const data = {
+      title: this.getEditDialogTitle(),
+      formfields: formfields,
+      layout: { addButtonText: 'labels.buttons.Save' },
+      pristine: false
+    };
+    const editDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
+    editDialogRef.afterClosed().subscribe((response: any) => {
+      if (response?.data) {
+        dateTransformColumns.forEach((column) => {
+          if (
+            response.data.value[column] !== null &&
+            response.data.value[column] !== undefined &&
+            response.data.value[column] !== ''
+          ) {
+            response.data.value[column] = this.dateUtils.formatDate(
+              response.data.value[column],
+              dataTableEntryObject.dateFormat
+            );
+          }
+        });
+        dataTableEntryObject = { ...response.data.value, ...dataTableEntryObject };
+        this.isLoading = true;
+        this.changeDetectorRef.markForCheck();
+        this.systemService
+          .editEntityDatatableEntryOneToMany(this.entityId, row.row[0], this.datatableName, dataTableEntryObject)
+          .subscribe({
+            next: () => {
+              this.getData();
+            },
+            error: () => {
+              this.isLoading = false;
+              this.changeDetectorRef.markForCheck();
+            }
+          });
+      }
+    });
+  }
+
+  getEditDialogTitle(): string {
+    return `${this.translateService.instant('labels.buttons.Edit')} ${formatDatatableDisplayLabel(
+      this.datatableName
+    )} ${this.translateService.instant('labels.text.for')} ${this.getTranslatedEntityType()}`;
+  }
+
+  private getTranslatedEntityType(): string {
+    const entityTypeKey = `labels.text.${this.entityType}`;
+    const translatedEntityType = this.translateService.instant(entityTypeKey);
+
+    return translatedEntityType === entityTypeKey ? this.entityType : translatedEntityType;
   }
 
   /**
@@ -297,7 +401,9 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
         if (columnHeader.columnName === columnName) {
           const columnDisplayType = columnHeader.columnDisplayType;
           value = data.row[idx];
-          if (columnDisplayType === 'DATE') {
+          if (typeof value === 'boolean') {
+            value = this.translateService.instant(`labels.buttons.${value ? 'Yes' : 'No'}`);
+          } else if (columnDisplayType === 'DATE') {
             value = this.dateFormat.transform(value);
           } else if (columnDisplayType === 'DATETIME') {
             value = this.dateTimeFormat.transform(value);
@@ -322,7 +428,11 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
   }
 
   getSortValue(data: any, columnName: string): string | number {
-    if (columnName === this.SELECT_NAME_FIELD || !this.dataObject?.columnHeaders) {
+    if (
+      columnName === this.SELECT_NAME_FIELD ||
+      columnName === this.ACTIONS_NAME_FIELD ||
+      !this.dataObject?.columnHeaders
+    ) {
       return '';
     }
     const columnIndex = this.dataObject.columnHeaders.findIndex(
@@ -400,7 +510,22 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
     return '';
   }
 
+  getSystemColumnTranslationKey(columnName: string): string | null {
+    switch (columnName) {
+      case 'created_at':
+        return 'labels.inputs.Created At';
+      case 'updated_at':
+        return 'labels.inputs.Updated At';
+      default:
+        return null;
+    }
+  }
+
   getInputName(attr: string): string {
+    const translationKey = this.getSystemColumnTranslationKey(attr);
+    if (translationKey) {
+      return this.translateService.instant(translationKey);
+    }
     return formatDatatableDisplayLabel(this.datatables.getName(attr));
   }
 }

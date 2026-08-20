@@ -49,7 +49,11 @@
   <mifosx-waive-interest [dataObject]="actionButtonData"></mifosx-waive-interest>
 }
 @if (actions['Write Off']) {
-  <mifosx-write-off-page [dataObject]="actionButtonData"></mifosx-write-off-page>
+  @if (isWorkingCapital) {
+    <mifosx-working-capital-write-off [dataObject]="actionButtonData"></mifosx-working-capital-write-off>
+  } @else {
+    <mifosx-write-off-page [dataObject]="actionButtonData"></mifosx-write-off-page>
+  }
 }
 @if (actions['Close (as Rescheduled)']) {
   <mifosx-close-as-rescheduled [dataObject]="actionButtonData"></mifosx-close-as-rescheduled>
@@ -116,7 +120,11 @@
   <mifosx-add-interest-pause [dataObject]="navigationData"></mifosx-add-interest-pause>
 }
 @if (actions['Undo Write-off']) {
-  <mifosx-undo-write-off [dataObject]="actionButtonData"></mifosx-undo-write-off>
+  @if (isWorkingCapital) {
+    <mifosx-working-capital-undo-write-off [dataObject]="actionButtonData"></mifosx-working-capital-undo-write-off>
+  } @else {
+    <mifosx-undo-write-off [dataObject]="actionButtonData"></mifosx-undo-write-off>
+  }
 }
 @if (actions['Attach Loan Originator']) {
   <mifosx-attach-originator [dataObject]="actionButtonData"></mifosx-attach-originator>
