@@ -745,6 +745,11 @@ export class SystemService {
     return this.http.put(`/datatables/${datatableName}/${entityId}`, data, { params: httpParams });
   }
 
+  editEntityDatatableEntryOneToMany(entityId: string, rowId: string, datatableName: string, data: any) {
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.put(`/datatables/${datatableName}/${entityId}/${rowId}`, data, { params: httpParams });
+  }
+
   deleteDatatableContent(entityId: string, datatableName: string) {
     const httpParams = new HttpParams().set('genericResultSet', 'true');
     return this.http.delete(`/datatables/${datatableName}/${entityId}`, { params: httpParams });

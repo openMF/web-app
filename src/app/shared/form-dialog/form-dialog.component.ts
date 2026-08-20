@@ -88,4 +88,8 @@ export class FormDialogComponent implements OnInit {
       this.form.markAsDirty();
     }
   }
+
+  getButtonTranslationKey(buttonText: string = ''): string {
+    return buttonText?.startsWith('labels.') ? buttonText : `labels.buttons.${buttonText}`;
+  }
 }
