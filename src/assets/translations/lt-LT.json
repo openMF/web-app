@@ -1144,6 +1144,7 @@
       "every": "kiekvienas",
       "Password validation": "Slaptažodį turi sudaryti ne mažiau kaip {{minchar}} simbolių, iš kurių turi būti 1 didžioji, mažoji raidė ir specialus simbolis, o jį neturėtų sudaryti pasikartojantys simboliai ar tarpai",
       "Must be a positive integer": "Turi būti teigiamas sveikasis skaičius",
+      "Must be greater than 0": "Turi būti didesnis nei 0",
       "Must be at least": "Turi būti bent jau",
       "Must be less or equal to": "Turi būti mažesnis arba lygus",
       "must be after or equal to start date": "turi būti po pradžios datos arba jai lygi",

@@ -1146,6 +1146,7 @@
       "every": "každý",
       "Password validation": "Heslo by mělo obsahovat minimálně {{minchar}} znaků, které by měly obsahovat 1 velké písmeno, malé písmeno a speciální znak a nemělo by se skládat z opakujících se znaků nebo mezer.",
       "Must be a positive integer": "Musí být kladné celé číslo",
+      "Must be greater than 0": "Musí být větší než 0",
       "Must be at least": "Musí být alespoň",
       "Must be less or equal to": "Musí být menší nebo rovno",
       "must be after or equal to start date": "musí být po nebo rovno datu zahájení",
