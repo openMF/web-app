@@ -100,7 +100,7 @@ export class EditTellerComponent implements OnInit {
         this.tellerData.name,
         [
           Validators.required,
-          Validators.pattern('(^[A-z]).*')
+          Validators.pattern('(^[A-Za-z]).*')
         ]
       ],
       description: [this.tellerData.description],
