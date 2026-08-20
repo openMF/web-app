@@ -6,69 +6,188 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<mat-card class="container">
-  <div class="layout-column layout-gt-sm-row align-gt-sm-start-center">
-    <div class="search-box m-r-30">
-      <mat-form-field class="search-box">
-        <input matInput placeholder="{{ 'labels.text.SearchByName' | translate }}" [formControl]="name" />
-      </mat-form-field>
-      <mat-checkbox #showClosedGroups labelPosition="after" (change)="changeShowClosedGroups()" class="m-r-10">{{
-        'labels.inputs.Show Closed Groups' | translate
-      }}</mat-checkbox>
+<div class="entity-list-container">
+  <!-- ── Toolbar (single line) ──────────────────────────────── -->
+  <div class="toolbar">
+    <div class="search m-r-60">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.3-4.3"></path>
+      </svg>
+      <input
+        type="text"
+        #searchInput
+        placeholder="{{ 'labels.text.SearchByName' | translate }}"
+        (input)="onSearchInput(searchInput.value)"
+        (keydown.enter)="search(searchInput.value)"
+        (compositionstart)="onCompositionStart()"
+        (compositionend)="onCompositionEnd(searchInput.value)"
+      />
+      @if (searchInput.value) {
+        <button
+          type="button"
+          class="search-clear"
+          (click)="clearSearch(searchInput)"
+          [attr.aria-label]="'labels.buttons.Clear' | translate"
+        >
+          ×
+        </button>
+      }
     </div>
-    <div class="action-button gap-25px">
-      <button mat-raised-button color="primary" [routerLink]="['../', 'organization', 'bulk-import', 'Groups']">
-        <fa-icon icon="download" class="m-r-20"></fa-icon>{{ 'labels.buttons.Import Group' | translate }}
-      </button>
-      <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_GROUP'">
-        <fa-icon icon="plus" class="m-r-20"></fa-icon>{{ 'labels.buttons.Create Group' | translate }}
-      </button>
+
+    <label class="toggle" (click)="toggleShowClosed()">
+      <span class="switch" [class.on]="showClosedGroups"></span>
+      {{ 'labels.inputs.Show Closed Groups' | translate }}
+    </label>
+
+    @if (existsGroupsToFilter && totalRows > 0) {
+      <span class="count-badge">
+        <strong>{{ totalRows | number }}</strong>
+        {{ 'labels.heading.Groups' | translate | lowercase }}
+      </span>
+    }
+
+    <div class="toolbar-spacer"></div>
+
+    <a
+      class="btn btn-ghost"
+      [routerLink]="['../', 'organization', 'bulk-import', 'Groups']"
+      *mifosxHasPermission="'CREATE_GROUP'"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 3v12M7 10l5 5 5-5M5 21h14"></path>
+      </svg>
+      {{ 'labels.buttons.Import Group' | translate }}
+    </a>
+    <a class="btn btn-primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_GROUP'">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M5 12h14"></path>
+      </svg>
+      {{ 'labels.buttons.Create Group' | translate }}
+    </a>
+  </div>
+
+  @if (isLoading) {
+    <mifosx-page-loader [message]="'labels.inputs.Loading groups' | translate"></mifosx-page-loader>
+  }
+
+  <!-- ── List ───────────────────────────────────────────────── -->
+  <div [hidden]="!existsGroupsToFilter || isLoading" class="list">
+    <div class="list-header">
+      <span></span>
+      <span></span>
+      <span class="sortable" [class.active]="sortAttribute === 'name'" (click)="setSort('name')">
+        {{ 'labels.inputs.name' | translate }}
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M7 10l5-5 5 5M7 14l5 5 5-5"></path>
+        </svg>
+      </span>
+      <span>{{ 'labels.inputs.Status' | translate }}</span>
+      <span>{{ 'labels.inputs.Account No' | translate }}</span>
+      <span>{{ 'labels.inputs.External Id' | translate }}</span>
+      <span class="sortable" [class.active]="sortAttribute === 'officeName'" (click)="setSort('officeName')">
+        {{ 'labels.inputs.Office Name' | translate }}
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M7 10l5-5 5 5M7 14l5 5 5-5"></path>
+        </svg>
+      </span>
+    </div>
+
+    @for (row of dataSource.data; track row.id) {
+      <div class="list-row" [ngClass]="severity(row)" [routerLink]="[row.id, 'general']">
+        <div class="rail"></div>
+        <div class="avatar" [class.muted]="severity(row) === 'closed' || severity(row) === 'rejected'">
+          {{ initials(row.name) }}
+        </div>
+        <div class="name-block">
+          <span class="name">{{ row.name }}</span>
+        </div>
+        @if (row.status?.value) {
+          <span class="status-pill" [ngClass]="severity(row)">
+            <span class="dot"></span>
+            {{ 'labels.status.' + row.status.value | translate }}
+          </span>
+        } @else {
+          <span class="muted-dash">—</span>
+        }
+        <span class="mono"
+          ><mifosx-account-number display="left" [accountNo]="row.accountNo"></mifosx-account-number
+        ></span>
+        <span class="mono">
+          @if (row.externalId) {
+            <mifosx-external-identifier display="left" [externalId]="row.externalId"></mifosx-external-identifier>
+          } @else {
+            <span class="muted-dash">—</span>
+          }
+        </span>
+        <span class="office">{{ row.officeName }}</span>
+      </div>
+    }
+
+    <div class="list-footer">
+      <span>
+        {{ 'labels.text.Showing' | translate }}
+        <strong>{{ rangeStart() | number }}–{{ rangeEnd() | number }}</strong>
+        {{ 'labels.text.of' | translate }}
+        <strong>{{ totalRows | number }}</strong>
+      </span>
+      <div class="pager">
+        <span class="page-size">
+          {{ 'labels.text.Rows' | translate }}
+          <select [value]="pageSize" (change)="onPageSizeChange(+$any($event.target).value)">
+            @for (size of pageSizeOptions; track size) {
+              <option [value]="size">{{ size }}</option>
+            }
+          </select>
+        </span>
+        <span class="page-info">
+          {{ 'labels.text.Page' | translate }} {{ currentPage + 1 }} {{ 'labels.text.of' | translate }}
+          {{ totalPages() }}
+        </span>
+        <div class="page-nav">
+          <button
+            class="page-btn"
+            [disabled]="currentPage === 0"
+            (click)="goToPage(0)"
+            [attr.aria-label]="'labels.text.First Page' | translate"
+          >
+            «
+          </button>
+          <button
+            class="page-btn"
+            [disabled]="currentPage === 0"
+            (click)="goToPage(currentPage - 1)"
+            [attr.aria-label]="'labels.text.Previous Page' | translate"
+          >
+            ‹
+          </button>
+          <button
+            class="page-btn"
+            [disabled]="currentPage >= totalPages() - 1"
+            (click)="goToPage(currentPage + 1)"
+            [attr.aria-label]="'labels.text.Next Page' | translate"
+          >
+            ›
+          </button>
+          <button
+            class="page-btn"
+            [disabled]="currentPage >= totalPages() - 1"
+            (click)="goToPage(totalPages() - 1)"
+            [attr.aria-label]="'labels.text.Last Page' | translate"
+          >
+            »
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
-  <table mat-table [dataSource]="dataSource" matSort class="bordered-table">
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.name' | translate }}</th>
-      <td mat-cell *matCellDef="let group">{{ group.name }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="accountNo">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account' | translate }} #</th>
-      <td mat-cell *matCellDef="let group">{{ group.accountNo }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="externalId">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.External Id' | translate }}</th>
-      <td mat-cell *matCellDef="let group">{{ group.externalId }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Status' | translate }}</th>
-      <td mat-cell *matCellDef="let row">
-        <div [ngClass]="row.status.code | statusLookup">
-          <fa-icon icon="stop"></fa-icon>
-        </div>
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="officeName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Office Name' | translate }}</th>
-      <td mat-cell *matCellDef="let group">{{ group.officeName }}</td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr
-      mat-row
-      *matRowDef="let row; columns: displayedColumns"
-      [routerLink]="[row.id, 'general']"
-      class="select-row"
-    ></tr>
-  </table>
-
-  <mat-paginator
-    [length]="dataSource?.records$ | async"
-    [pageSize]="10"
-    [pageSizeOptions]="[10, 25, 50, 100]"
-    showFirstLastButtons
-  ></mat-paginator>
-</mat-card>
+  <!-- ── Empty state ────────────────────────────────────────── -->
+  <div [hidden]="!notExistsGroupsToFilter" class="empty-state">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <circle cx="11" cy="11" r="8"></circle>
+      <path d="m21 21-4.3-4.3"></path>
+    </svg>
+    <h4>{{ 'labels.text.No group was found' | translate }}</h4>
+  </div>
+</div>

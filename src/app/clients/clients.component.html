@@ -6,7 +6,7 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<div class="clients-container">
+<div class="entity-list-container">
   <!-- ── Toolbar (single line) ──────────────────────────────── -->
   <div class="toolbar">
     <div class="search m-r-60">
@@ -90,7 +90,6 @@
         {{ 'labels.inputs.External Id' | translate }}
       </span>
       <span>{{ 'labels.inputs.Office Name' | translate }}</span>
-      <span></span>
     </div>
 
     @for (row of dataSource.data; track row.id) {
@@ -113,10 +112,14 @@
             <span class="name-meta">{{ legalFormLabel(row) | translate }}</span>
           }
         </div>
-        <span class="status-pill" [ngClass]="severity(row)">
-          <span class="dot"></span>
-          {{ 'labels.status.' + row.status.value | translate }}
-        </span>
+        @if (row.status?.value) {
+          <span class="status-pill" [ngClass]="severity(row)">
+            <span class="dot"></span>
+            {{ 'labels.status.' + row.status.value | translate }}
+          </span>
+        } @else {
+          <span class="muted-dash">—</span>
+        }
         <span class="mono"
           ><mifosx-account-number display="left" [accountNo]="row.accountNumber"></mifosx-account-number
         ></span>
@@ -128,17 +131,6 @@
           }
         </span>
         <span class="office">{{ row.officeName }}</span>
-        <button
-          class="row-action"
-          (click)="$event.stopPropagation()"
-          [attr.aria-label]="'labels.buttons.More' | translate"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="1"></circle>
-            <circle cx="12" cy="5" r="1"></circle>
-            <circle cx="12" cy="19" r="1"></circle>
-          </svg>
-        </button>
       </div>
     }
 
@@ -163,14 +155,19 @@
           {{ totalPages() }}
         </span>
         <div class="page-nav">
-          <button class="page-btn" [disabled]="currentPage === 0" (click)="goToPage(0)" aria-label="First page">
+          <button
+            class="page-btn"
+            [disabled]="currentPage === 0"
+            (click)="goToPage(0)"
+            [attr.aria-label]="'labels.text.First Page' | translate"
+          >
             «
           </button>
           <button
             class="page-btn"
             [disabled]="currentPage === 0"
             (click)="goToPage(currentPage - 1)"
-            aria-label="Previous page"
+            [attr.aria-label]="'labels.text.Previous Page' | translate"
           >
             ‹
           </button>
@@ -178,7 +175,7 @@
             class="page-btn"
             [disabled]="currentPage >= totalPages() - 1"
             (click)="goToPage(currentPage + 1)"
-            aria-label="Next page"
+            [attr.aria-label]="'labels.text.Next Page' | translate"
           >
             ›
           </button>
@@ -186,7 +183,7 @@
             class="page-btn"
             [disabled]="currentPage >= totalPages() - 1"
             (click)="goToPage(totalPages() - 1)"
-            aria-label="Last page"
+            [attr.aria-label]="'labels.text.Last Page' | translate"
           >
             »
           </button>

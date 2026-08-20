@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, AfterViewInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, AfterViewInit, inject } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -21,8 +21,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
 import { MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatListSubheaderCssMatStyler, MatNavList } from '@angular/material/list';
-import { MatLine } from '@angular/material/grid-list';
+import { MatListSubheaderCssMatStyler } from '@angular/material/list';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
@@ -35,9 +34,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatAutocomplete,
     MatIconButton,
     FaIconComponent,
-    MatListSubheaderCssMatStyler,
-    MatNavList,
-    MatLine
+    MatListSubheaderCssMatStyler
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -45,6 +42,7 @@ export class ManageGroupsComponent implements AfterViewInit {
   private route = inject(ActivatedRoute);
   private centersService = inject(CentersService);
   private groupsService = inject(GroupsService);
+  private changeDetectorRef = inject(ChangeDetectorRef);
   dialog = inject(MatDialog);
 
   /** Center Data */
@@ -80,8 +78,13 @@ export class ManageGroupsComponent implements AfterViewInit {
           .getFilteredGroups('name', 'ASC', value, this.centerData.officeId, 'true')
           .subscribe((data: any) => {
             this.groupsData = data;
+            // Results arrive outside any template event: notify OnPush change detection.
+            this.changeDetectorRef.markForCheck();
           });
       }
+      // Selecting an autocomplete option happens in the CDK overlay, which does
+      // not mark this OnPush component dirty; refresh the group details panel.
+      this.changeDetectorRef.markForCheck();
     });
   }
 
@@ -97,6 +100,7 @@ export class ManageGroupsComponent implements AfterViewInit {
           })
           .subscribe(() => {
             this.groupMembers.push(this.groupChoice.value);
+            this.changeDetectorRef.markForCheck();
           });
       }
     } else {
@@ -106,6 +110,7 @@ export class ManageGroupsComponent implements AfterViewInit {
         })
         .subscribe(() => {
           this.groupMembers.push(this.groupChoice.value);
+          this.changeDetectorRef.markForCheck();
         });
     }
   }
@@ -124,6 +129,7 @@ export class ManageGroupsComponent implements AfterViewInit {
           .executeCenterActionCommand(this.centerData.id, 'disassociateGroups', { groupMembers: [group.id] })
           .subscribe(() => {
             this.groupMembers.splice(index, 1);
+            this.changeDetectorRef.markForCheck();
           });
       }
     });
