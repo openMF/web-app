@@ -13,9 +13,14 @@ import {
   PRODUCT_CARDS,
   PROFILE_INITIAL_OVERRIDES,
   buildPayload,
+  dropsDisabledOverAppliedFields,
   hiddenDefaultsFor,
   profileForRoutePath,
-  rendersBorrowerCycleStep
+  rendersBorrowerCycleStep,
+  rendersDeferredIncomeStep,
+  rendersInterestRefundStep,
+  sendsMultiDisburseFields,
+  sendsOutstandingLoanBalance
 } from './loan-product.config';
 
 describe('loan-product.config buildPayload', () => {
@@ -2135,6 +2140,223 @@ describe('loan-product.config buildPayload for the consumer durable profile', ()
   });
 });
 
+describe('loan-product.config buildPayload for the credit card EMI profile', () => {
+  /**
+   * The raw form value the wizard submits for Credit Card EMI: the shared seed, the profile's prefills
+   * (the Progressive + advanced-allocation stack, the tranche family, the down-payment trio and the
+   * promotional interest-free window), plus the fields the user must type.
+   */
+  function cardFormState(edits: Record<string, unknown> = {}): typeof INITIAL_FORM_STATE {
+    return {
+      ...INITIAL_FORM_STATE,
+      ...PROFILE_INITIAL_OVERRIDES['credit-card-emi'],
+      name: 'Card EMI \u2013 Standard',
+      shortName: 'CCE',
+      currencyCode: 'INR',
+      principal: 50000,
+      interestRatePerPeriod: 14,
+      numberOfRepayments: 12,
+      ...edits
+    };
+  }
+
+  it('produces the exact Credit Card EMI create payload for an untouched wizard form', () => {
+    // Card L rows 54-58 transmit the tranche family (a card EMI draws against a limit rather than
+    // disbursing once), row 40 seeds the interest-free window, row 11 pins the installment multiple to
+    // 1, and rows 77-78 keep the deferred income flags on the master defaults.
+    expect(buildPayload(cardFormState(), 'credit-card-emi')).toEqual({
+      name: 'Card EMI \u2013 Standard',
+      shortName: 'CCE',
+      externalId: '',
+      description: 'Credit Card EMI Loan Product',
+      startDate: '',
+      closeDate: '',
+      includeInBorrowerCycle: true,
+      currencyCode: 'INR',
+      digitsAfterDecimal: 2,
+      inMultiplesOf: 1,
+      installmentAmountInMultiplesOf: 1,
+      useBorrowerCycle: false,
+      principal: 50000,
+      numberOfRepayments: 12,
+      interestRatePerPeriod: 14,
+      interestRateFrequencyType: 2,
+      repaymentEvery: 1,
+      repaymentFrequencyType: 2,
+      isLinkedToFloatingInterestRates: false,
+      allowApprovedDisbursedAmountsOverApplied: false,
+      minimumDaysBetweenDisbursalAndFirstRepayment: 5,
+      interestRecognitionOnDisbursementDate: false,
+      repaymentStartDateType: 1,
+      amortizationType: 1,
+      interestType: 0,
+      allowPartialPeriodInterestCalculation: true,
+      isEqualAmortization: false,
+      interestCalculationPeriodType: 1,
+      loanScheduleType: 'PROGRESSIVE',
+      transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+      loanScheduleProcessingType: 'HORIZONTAL',
+      graceOnPrincipalPayment: 0,
+      graceOnInterestPayment: 0,
+      graceOnInterestCharged: 1,
+      daysInYearType: 360,
+      daysInMonthType: 30,
+      principalThresholdForLastInstallment: 5,
+      canUseForTopup: false,
+      isInterestRecalculationEnabled: false,
+      delinquencyBucketId: null,
+      canDefineInstallmentAmount: true,
+      multiDisburseLoan: true,
+      maxTrancheCount: 4,
+      outstandingLoanBalance: 100000,
+      disallowExpectedDisbursements: true,
+      allowFullTermForTranche: false,
+      inArrearsTolerance: 50,
+      graceOnArrearsAgeing: 5,
+      overdueDaysForNPA: 90,
+      accountMovesOutOfNPAOnlyOnArrearsCompletion: true,
+      holdGuaranteeFunds: false,
+      enableDownPayment: true,
+      disbursedAmountPercentageForDownPayment: 35,
+      enableAutoRepaymentForDownPayment: true,
+      chargeOffBehaviour: 'REGULAR',
+      enableInstallmentLevelDelinquency: false,
+      dueDaysForRepaymentEvent: 1,
+      overDueDaysForRepaymentEvent: 1,
+      enableIncomeCapitalization: false,
+      enableBuyDownFee: false,
+      accountingRule: 2,
+      principalVariationsForBorrowerCycle: [],
+      numberOfRepaymentVariationsForBorrowerCycle: [],
+      interestRateVariationsForBorrowerCycle: [],
+      charges: [],
+      allowAttributeOverrides: {
+        amortizationType: true,
+        interestType: true,
+        transactionProcessingStrategyCode: true,
+        interestCalculationPeriodType: true,
+        inArrearsTolerance: true,
+        repaymentEvery: true,
+        graceOnPrincipalAndInterestPayment: true,
+        graceOnArrearsAgeing: true
+      }
+    });
+  });
+
+  it('transmits the tranche family, which the sheet marks Applicable', () => {
+    // Rows 54-58. This is the structural difference from Gold, Auto and Consumer Durable, which drop
+    // the whole family: a card EMI draws against an available limit rather than disbursing once.
+    const payload = buildPayload(cardFormState(), 'credit-card-emi');
+
+    expect(payload.multiDisburseLoan).toBe(true);
+    expect(payload.maxTrancheCount).toBe(4);
+    expect(payload.outstandingLoanBalance).toBe(100000);
+    expect(payload.disallowExpectedDisbursements).toBe(true);
+    expect(payload.allowFullTermForTranche).toBe(false);
+  });
+
+  it("reproduces Classic's reset when multiple disbursals are switched off", () => {
+    // Otherwise the payload trips "Allow Multiple Disbursals Not Set - Disallow Expected Disbursals
+    // Can't Be Set".
+    const payload = buildPayload(cardFormState({ multiDisburseLoan: false }), 'credit-card-emi');
+
+    expect(payload.multiDisburseLoan).toBe(false);
+    expect('maxTrancheCount' in payload).toBe(false);
+    expect('outstandingLoanBalance' in payload).toBe(false);
+    expect(payload.disallowExpectedDisbursements).toBe(false);
+    expect(payload.allowFullTermForTranche).toBe(false);
+  });
+
+  it('omits the over-applied pair while its toggle is off, and sends it when on', () => {
+    // Rows 17-19 are all Applicable, so the profile opts into Classic's disabled-control behaviour.
+    const off = buildPayload(cardFormState(), 'credit-card-emi');
+    expect('overAppliedCalculationType' in off).toBe(false);
+    expect('overAppliedNumber' in off).toBe(false);
+
+    const on = buildPayload(
+      cardFormState({
+        allowApprovedDisbursedAmountsOverApplied: true,
+        overAppliedCalculationType: 'Percentage',
+        overAppliedNumber: 10
+      }),
+      'credit-card-emi'
+    );
+    expect(on.allowApprovedDisbursedAmountsOverApplied).toBe(true);
+    expect(on.overAppliedCalculationType).toBe('Percentage');
+    expect(on.overAppliedNumber).toBe(10);
+  });
+
+  it('seeds the promotional interest-free window from row 40', () => {
+    // Mapped to the backend's `graceOnInterestCharged`. Rows 38/39 sample 120 against 12 repayments,
+    // which Fineract rejects, so those two keep the neutral 0 seed — the same call BNPL made.
+    expect(buildPayload(cardFormState(), 'credit-card-emi').graceOnInterestCharged).toBe(1);
+    expect(buildPayload(cardFormState(), 'credit-card-emi').graceOnPrincipalPayment).toBe(0);
+  });
+
+  it('keeps the deferred income flags on the master defaults (rows 77-78 are Hidden)', () => {
+    // This is what separates Card from BNPL: it takes the Interest Refund step without the Deferred
+    // Income one, so both flags stay pinned rather than being driven by a step.
+    const defaults = hiddenDefaultsFor('credit-card-emi');
+
+    expect(defaults.enableIncomeCapitalization).toBe(false);
+    expect(defaults.enableBuydownFees).toBe(false);
+  });
+
+  it('pins the installment multiple to 1, per row 11', () => {
+    expect(hiddenDefaultsFor('credit-card-emi').installmentAmountInMultiplesOf).toBe(1);
+  });
+
+  it('lets user input win over the hidden defaults for every field the sheet marks Applicable', () => {
+    const payload = buildPayload(
+      cardFormState({
+        principalThresholdForLastInstallment: 10,
+        daysInMonthType: 1,
+        daysInYearType: 365,
+        delinquencyBucketId: '2',
+        isEqualAmortization: true,
+        maxTrancheCount: 6,
+        outstandingLoanBalance: 250000,
+        disbursedAmountPercentageForDownPayment: 20
+      }),
+      'credit-card-emi'
+    );
+
+    expect(payload.principalThresholdForLastInstallment).toBe(10);
+    expect(payload.daysInMonthType).toBe(1);
+    expect(payload.daysInYearType).toBe(365);
+    expect(payload.delinquencyBucketId).toBe('2');
+    expect(payload.isEqualAmortization).toBe(true);
+    expect(payload.maxTrancheCount).toBe(6);
+    expect(payload.outstandingLoanBalance).toBe(250000);
+    expect(payload.disbursedAmountPercentageForDownPayment).toBe(20);
+  });
+
+  it('normalizes the delinquency bucket "None" option to null', () => {
+    expect(buildPayload(cardFormState({ delinquencyBucketId: '' }), 'credit-card-emi').delinquencyBucketId).toBeNull();
+  });
+});
+
+describe('loan-product.config step predicates for the credit card EMI profile', () => {
+  it('renders the Interest Refund step but not the Deferred Income one', () => {
+    // Card L marks row 76 Applicable and rows 77-78 Hidden, making this the first profile to take one
+    // of the pair without the other.
+    expect(rendersInterestRefundStep('credit-card-emi')).toBe(true);
+    expect(rendersDeferredIncomeStep('credit-card-emi')).toBe(false);
+    // BNPL, the only other profile with an Interest Refund step, still takes both.
+    expect(rendersInterestRefundStep('bnpl')).toBe(true);
+    expect(rendersDeferredIncomeStep('bnpl')).toBe(true);
+  });
+
+  it('transmits the multi-disburse family and the outstanding balance cap', () => {
+    expect(sendsMultiDisburseFields('credit-card-emi')).toBe(true);
+    expect(sendsOutstandingLoanBalance('credit-card-emi')).toBe(true);
+  });
+
+  it('opts into dropping the disabled over-applied fields', () => {
+    expect(dropsDisabledOverAppliedFields('credit-card-emi')).toBe(true);
+  });
+});
+
 describe('loan-product.config profileForRoutePath', () => {
   it('maps each wizard route to its profile and page title key', () => {
     expect(profileForRoutePath('personal-loan')).toEqual({
@@ -2180,6 +2402,10 @@ describe('loan-product.config profileForRoutePath', () => {
     expect(profileForRoutePath('consumer-durable-loan')).toEqual({
       profileMode: 'consumer-durable',
       pageTitle: 'labels.heading.Create Consumer Durable Loan'
+    });
+    expect(profileForRoutePath('credit-card-emi-loan')).toEqual({
+      profileMode: 'credit-card-emi',
+      pageTitle: 'labels.heading.Create Credit Card EMI Loan'
     });
   });
 
@@ -2270,6 +2496,14 @@ describe('loan-product.config PRODUCT_CARDS', () => {
     expect(card.route).toBe('consumer-durable-loan');
   });
 
+  it('activates the Credit Card EMI card with its wizard route', () => {
+    const card = PRODUCT_CARDS.find((product) => product.name === 'labels.text.Credit Card EMI')!;
+
+    expect(card.active).toBe(true);
+    expect(card.disabled).toBe(false);
+    expect(card.route).toBe('credit-card-emi-loan');
+  });
+
   it('routes every active card to a route a wizard profile claims', () => {
     // The selection grid renders a Create button for every active card; a card whose route no
     // profile claims would silently fall back to the Personal Loan wizard.
@@ -2286,7 +2520,8 @@ describe('loan-product.config PRODUCT_CARDS', () => {
         'gold-loan',
         'auto-loan',
         'jlg-loan',
-        'consumer-durable-loan'
+        'consumer-durable-loan',
+        'credit-card-emi-loan'
       ]).toContain(product.route);
     });
   });
@@ -2306,7 +2541,8 @@ describe('loan-product.config PRODUCT_CARDS', () => {
       'gold',
       'auto',
       'jlg',
-      'consumer-durable'
+      'consumer-durable',
+      'credit-card-emi'
     ];
 
     function payloadFor(profile: LoanWizardProfileMode, overrides: Record<string, unknown>) {
@@ -2376,7 +2612,8 @@ describe('loan-product.config PRODUCT_CARDS', () => {
           'gold',
           'auto',
           'jlg',
-          'consumer-durable'
+          'consumer-durable',
+          'credit-card-emi'
         ] as LoanWizardProfileMode[]).forEach((profile) => {
         const payload = payloadFor(profile, applicable);
         expect([
