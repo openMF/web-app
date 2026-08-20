@@ -51,10 +51,9 @@ describe('DatatableMultiRowComponent', () => {
       false,
       null,
       `2025-01-${String(id).padStart(2, '0')}T12:30:00`,
-      `2025-02-${String(id).padStart(2, '0')}T13:45:00`
+      `2025-02-${String(id).padStart(2, '0')}T13:45:00`,
       '2025-01-15',
-      12,
-      null
+      12
     ]
   });
 
@@ -69,7 +68,7 @@ describe('DatatableMultiRowComponent', () => {
       { columnName: 'is_verified', columnDisplayType: 'BOOLEAN' },
       { columnName: 'empty_value', columnDisplayType: 'STRING' },
       { columnName: 'created_at', columnDisplayType: 'DATETIME' },
-      { columnName: 'updated_at', columnDisplayType: 'DATETIME' }
+      { columnName: 'updated_at', columnDisplayType: 'DATETIME' },
       { columnName: 'date_of_birth', columnDisplayType: 'DATE' },
       {
         columnName: 'Relationship_cd_Relationship Type',
@@ -78,8 +77,7 @@ describe('DatatableMultiRowComponent', () => {
           { id: 11, value: 'Parent' },
           { id: 12, value: 'Sibling' }
         ]
-      },
-      { columnName: 'empty_value', columnDisplayType: 'STRING' }
+      }
     ],
     data
   });
@@ -190,10 +188,9 @@ describe('DatatableMultiRowComponent', () => {
       'Is verified',
       'Empty value',
       'Creado en',
-      'Actualizado en'
+      'Actualizado en',
       'Date of birth',
-      'Relationship',
-      'Empty value'
+      'Relationship'
     ]);
     expect(mobileLabels).toEqual(labels);
   });
@@ -245,10 +242,9 @@ describe('DatatableMultiRowComponent', () => {
       'is_verified',
       'empty_value',
       'created_at',
-      'updated_at'
+      'updated_at',
       'date_of_birth',
-      'Relationship_cd_Relationship Type',
-      'empty_value'
+      'Relationship_cd_Relationship Type'
     ]);
     expect(component.datatableColumns).not.toContain('client_id');
     expect(headerCells.length).toBe(component.datatableColumns.length);
@@ -371,9 +367,11 @@ describe('DatatableMultiRowComponent', () => {
         0,
         true,
         false,
+        null,
+        '2025-01-07T12:30:00',
+        '2025-02-07T13:45:00',
         '2025-01-15',
-        12,
-        null
+        12
       ]
     };
     setDataObject(createDataObject([selectedRow]));
