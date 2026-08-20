@@ -49,9 +49,8 @@ describe('DatatableMultiRowComponent', () => {
       amount,
       true,
       false,
-      null,
       `2025-01-${String(id).padStart(2, '0')}T12:30:00`,
-      `2025-02-${String(id).padStart(2, '0')}T13:45:00`
+      `2025-02-${String(id).padStart(2, '0')}T13:45:00`,
       '2025-01-15',
       12,
       null
@@ -67,9 +66,8 @@ describe('DatatableMultiRowComponent', () => {
       { columnName: 'amount', columnDisplayType: 'DECIMAL' },
       { columnName: 'is_active', columnDisplayType: 'BOOLEAN' },
       { columnName: 'is_verified', columnDisplayType: 'BOOLEAN' },
-      { columnName: 'empty_value', columnDisplayType: 'STRING' },
       { columnName: 'created_at', columnDisplayType: 'DATETIME' },
-      { columnName: 'updated_at', columnDisplayType: 'DATETIME' }
+      { columnName: 'updated_at', columnDisplayType: 'DATETIME' },
       { columnName: 'date_of_birth', columnDisplayType: 'DATE' },
       {
         columnName: 'Relationship_cd_Relationship Type',
@@ -188,9 +186,8 @@ describe('DatatableMultiRowComponent', () => {
       'Amount',
       'Is active',
       'Is verified',
-      'Empty value',
       'Creado en',
-      'Actualizado en'
+      'Actualizado en',
       'Date of birth',
       'Relationship',
       'Empty value'
@@ -243,9 +240,8 @@ describe('DatatableMultiRowComponent', () => {
       'amount',
       'is_active',
       'is_verified',
-      'empty_value',
       'created_at',
-      'updated_at'
+      'updated_at',
       'date_of_birth',
       'Relationship_cd_Relationship Type',
       'empty_value'
@@ -371,6 +367,8 @@ describe('DatatableMultiRowComponent', () => {
         0,
         true,
         false,
+        '2025-03-07T12:30:00',
+        '2025-04-07T13:45:00',
         '2025-01-15',
         12,
         null
