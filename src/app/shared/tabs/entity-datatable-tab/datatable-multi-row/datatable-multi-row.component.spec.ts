@@ -42,7 +42,9 @@ describe('DatatableMultiRowComponent', () => {
       amount,
       true,
       false,
-      null
+      null,
+      `2025-01-${String(id).padStart(2, '0')}T12:30:00`,
+      `2025-02-${String(id).padStart(2, '0')}T13:45:00`
     ]
   });
 
@@ -55,7 +57,9 @@ describe('DatatableMultiRowComponent', () => {
       { columnName: 'amount', columnDisplayType: 'DECIMAL' },
       { columnName: 'is_active', columnDisplayType: 'BOOLEAN' },
       { columnName: 'is_verified', columnDisplayType: 'BOOLEAN' },
-      { columnName: 'empty_value', columnDisplayType: 'STRING' }
+      { columnName: 'empty_value', columnDisplayType: 'STRING' },
+      { columnName: 'created_at', columnDisplayType: 'DATETIME' },
+      { columnName: 'updated_at', columnDisplayType: 'DATETIME' }
     ],
     data
   });
@@ -81,7 +85,9 @@ describe('DatatableMultiRowComponent', () => {
       'labels.text.Client': 'Cliente',
       'labels.text.for': 'para',
       'labels.buttons.Yes': 'Sí',
-      'labels.buttons.No': 'No'
+      'labels.buttons.No': 'No',
+      'labels.inputs.Created At': 'Creado en',
+      'labels.inputs.Updated At': 'Actualizado en'
     };
     const translateService = {
       instant: jest.fn((key: string) => translations[key] || key),
@@ -152,7 +158,9 @@ describe('DatatableMultiRowComponent', () => {
       'Amount',
       'Is active',
       'Is verified',
-      'Empty value'
+      'Empty value',
+      'Creado en',
+      'Actualizado en'
     ]);
     expect(mobileLabels).toEqual(labels);
   });
@@ -201,10 +209,38 @@ describe('DatatableMultiRowComponent', () => {
       'amount',
       'is_active',
       'is_verified',
-      'empty_value'
+      'empty_value',
+      'created_at',
+      'updated_at'
     ]);
     expect(component.datatableColumns).not.toContain('client_id');
     expect(headerCells.length).toBe(component.datatableColumns.length);
+  });
+
+  it('translates system timestamp labels in desktop and responsive multi-row cells', () => {
+    const headerLabels = Array.from(
+      fixture.nativeElement.querySelectorAll('th[mat-header-cell]:not(.checkbox-column)')
+    ).map((headerCell: Element) => headerCell.textContent.replace(/\s+/g, ' ').trim());
+    const createdCell = fixture.nativeElement.querySelector('td[data-label="Creado en"]') as HTMLElement;
+    const updatedCell = fixture.nativeElement.querySelector('td[data-label="Actualizado en"]') as HTMLElement;
+
+    expect(component.datatableColumns).toContain('created_at');
+    expect(component.datatableColumns).toContain('updated_at');
+    expect(headerLabels).toContain('Creado en');
+    expect(headerLabels).toContain('Actualizado en');
+    expect(createdCell.querySelector('.mobile-cell-label').textContent.trim()).toBe('Creado en');
+    expect(updatedCell.querySelector('.mobile-cell-label').textContent.trim()).toBe('Actualizado en');
+  });
+
+  it('preserves timestamp formatting and raw-column sorting for translated system timestamp columns', () => {
+    const createdCellValue = fixture.nativeElement.querySelector('td[data-label="Creado en"] .cell-value');
+    const updatedCellValue = fixture.nativeElement.querySelector('td[data-label="Actualizado en"] .cell-value');
+
+    expect(createdCellValue.textContent.trim()).toBe('07 January 2025 12:30');
+    expect(updatedCellValue.textContent.trim()).toBe('07 February 2025 13:45');
+    expect(component.getSortValue(row(3, 'Grace', 'Hopper'), 'created_at')).toBe(
+      new Date('2025-01-03T12:30:00').getTime()
+    );
   });
 
   it('keeps empty values renderable inside labeled responsive cells', () => {

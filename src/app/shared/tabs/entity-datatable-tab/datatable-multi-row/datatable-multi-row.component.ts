@@ -417,7 +417,22 @@ export class DatatableMultiRowComponent implements OnInit, AfterViewInit, OnDest
     return '';
   }
 
+  getSystemColumnTranslationKey(columnName: string): string | null {
+    switch (columnName) {
+      case 'created_at':
+        return 'labels.inputs.Created At';
+      case 'updated_at':
+        return 'labels.inputs.Updated At';
+      default:
+        return null;
+    }
+  }
+
   getInputName(attr: string): string {
+    const translationKey = this.getSystemColumnTranslationKey(attr);
+    if (translationKey) {
+      return this.translateService.instant(translationKey);
+    }
     return formatDatatableDisplayLabel(this.datatables.getName(attr));
   }
 }
