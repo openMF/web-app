@@ -176,7 +176,7 @@ export interface WorkingCapitalNearBreachActions {
   threshold: number;
   frequency: number;
   frequencyType: string;
-  createdDate: Date;
+  submittedOnDate: number[];
 }
 
 export interface WorkingCapitalWriteOffRequest {
