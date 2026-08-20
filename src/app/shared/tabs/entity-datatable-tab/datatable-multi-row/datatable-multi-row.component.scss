@@ -100,6 +100,18 @@
       min-width: 60px;
       max-width: 60px;
     }
+
+    .actions-column,
+    .mat-column-actions {
+      width: 72px;
+      min-width: 72px;
+      max-width: 72px;
+      text-align: center;
+    }
+
+    .actions-cell {
+      text-align: center;
+    }
   }
 }
 
@@ -168,6 +180,18 @@
         background-color: rgb(0 0 0 / 3%);
       }
 
+      .actions-cell,
+      .mat-column-actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        max-width: none;
+        min-width: 0;
+        padding: 8px 16px;
+        background-color: rgb(0 0 0 / 3%);
+      }
+
       .responsive-data-cell {
         display: grid;
         grid-template-columns: minmax(7rem, 38%) minmax(0, 1fr); /* stylelint-disable-line unit-allowed-list */
@@ -204,7 +228,9 @@
         }
 
         .selection-cell,
-        .mat-column-select {
+        .mat-column-select,
+        .actions-cell,
+        .mat-column-actions {
           background-color: rgb(255 255 255 / 8%);
         }
 
