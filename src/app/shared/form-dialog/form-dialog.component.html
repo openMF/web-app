@@ -29,13 +29,13 @@
 </div>
 
 <mat-dialog-actions class="layout-row layout-xs-column layout-align-center gap-2percent" align="end">
-  <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.' + layout.cancelButtonText | translate }}</button>
+  <button mat-raised-button mat-dialog-close>{{ getButtonTranslationKey(layout.cancelButtonText) | translate }}</button>
   <button
     mat-raised-button
     color="primary"
     [mat-dialog-close]="{ data: form }"
     [disabled]="!form.valid || form.pristine"
   >
-    {{ 'labels.buttons.' + layout.addButtonText | translate }}
+    {{ getButtonTranslationKey(layout.addButtonText) | translate }}
   </button>
 </mat-dialog-actions>
