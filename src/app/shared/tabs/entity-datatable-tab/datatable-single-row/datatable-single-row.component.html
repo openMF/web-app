@@ -60,7 +60,11 @@
                     }
                     @case ('INTEGER') {
                       <span>
-                        {{ formatValue(dataObject.data[0].row[i]) }}
+                        @if (getResolvedUserName(columnHeader.columnName, dataObject.data[0].row[i])) {
+                          {{ getResolvedUserName(columnHeader.columnName, dataObject.data[0].row[i]) }}
+                        } @else {
+                          {{ formatValue(dataObject.data[0].row[i]) }}
+                        }
                       </span>
                     }
                     @case ('DECIMAL') {
