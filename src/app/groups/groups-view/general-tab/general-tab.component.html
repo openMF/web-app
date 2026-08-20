@@ -9,18 +9,32 @@
 <div class="tab-container mat-typography">
   <h3>{{ 'labels.heading.Group Details' | translate }}</h3>
 
-  <div class="layout-row gap-32px group-details-container m-b-30">
+  <!-- GroupSummaryCounts report returns lowercase column names -->
+  <div class="layout-row responsive-column gap-32px group-details-container m-b-30">
     <p>
-      {{ 'labels.inputs.Active Client Loans' | translate }}: {{ groupSummary?.activeClientLoans }}<br />
-      {{ 'labels.inputs.Active Client Borrowers' | translate }}: {{ groupSummary?.activeClientBorrowers }}<br />
-      {{ 'labels.inputs.Active Overdue Client Loans' | translate }}: {{ groupSummary?.overdueClientLoans }}<br />
+      {{ 'labels.inputs.Active Client Loans' | translate }}: {{ groupSummary?.activeclientloans }}<br />
+      {{ 'labels.inputs.Active Client Borrowers' | translate }}: {{ groupSummary?.activeclientborrowers }}<br />
+      {{ 'labels.inputs.Active Overdue Client Loans' | translate }}: {{ groupSummary?.overdueclientloans }}<br />
     </p>
     <p>
-      {{ 'labels.inputs.Active Group Loans' | translate }}: {{ groupSummary?.activeGroupLoans }}<br />
-      {{ 'labels.inputs.Active Group Borrowers' | translate }}: {{ groupSummary?.activeGroupBorrowers }}<br />
-      {{ 'labels.inputs.Active Overdue Group Loans' | translate }}: {{ groupSummary?.overdueGroupLoans }}<br />
+      {{ 'labels.inputs.Active Group Loans' | translate }}: {{ groupSummary?.activegrouploans }}<br />
+      {{ 'labels.inputs.Active Group Borrowers' | translate }}: {{ groupSummary?.activegroupborrowers }}<br />
+      {{ 'labels.inputs.Active Overdue Group Loans' | translate }}: {{ groupSummary?.overduegrouploans }}<br />
     </p>
-    <p>{{ 'labels.inputs.Active Clients' | translate }}: {{ groupSummary?.activeClients }}<br /></p>
+    <p>
+      {{ 'labels.inputs.Active Clients' | translate }}: {{ activeMembersCount }} / {{ totalMembersCount }}<br />
+      @if (groupViewData?.timeline?.submittedOnDate) {
+        {{ 'labels.inputs.Submitted On' | translate }}: {{ groupViewData.timeline.submittedOnDate | dateFormat }} ({{
+          groupViewData.timeline.submittedByUsername
+        }})<br />
+      }
+      @if (groupLeader) {
+        {{ 'labels.inputs.Leader' | translate }}:
+        <a class="entity-link" [routerLink]="['/clients', groupLeader.clientId, 'general']">{{
+          groupLeader.clientName
+        }}</a>
+      }
+    </p>
   </div>
 
   <!-- Client Members Table -->

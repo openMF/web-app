@@ -6,6 +6,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+@use 'assets/styles/member-list';
+
 .container {
   max-width: 50rem;
 }
@@ -31,4 +33,50 @@
   flex: 1;
   overflow: hidden;
   overflow-wrap: break-word;
+}
+
+/* Rich autocomplete option: name | id | office
+   (same row pattern as the loan product breach dropdown). */
+.client-option-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+
+  .client-col {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .name-col {
+    font-weight: 500;
+  }
+
+  .office-col {
+    text-align: right;
+  }
+}
+
+/* Selected clients list, aligned with the details table on the left.
+   Row styles come from the shared member-list mixin. */
+@include member-list.member-list;
+
+.selected-clients {
+  flex: 1;
+  min-width: 0;
+  margin-left: 3rem;
+
+  .selected-clients-title {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    margin: 0;
+    padding: 0 8px;
+    font-size: inherit;
+    font-weight: 500;
+    border-bottom: 1px solid var(--mdc-outlined-text-field-outline-color, #e0e0e0);
+  }
 }

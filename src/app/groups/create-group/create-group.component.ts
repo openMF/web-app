@@ -7,7 +7,7 @@
  */
 
 /** Angular Imports */
-import { ChangeDetectionStrategy, Component, OnInit, AfterViewInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, AfterViewInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -26,8 +26,6 @@ import { MatOption, MatAutocompleteTrigger, MatAutocomplete } from '@angular/mat
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatIconButton, MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatNavList, MatListSubheaderCssMatStyler } from '@angular/material/list';
-import { MatLine } from '@angular/material/grid-list';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -43,10 +41,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatAutocompleteTrigger,
     MatAutocomplete,
     MatIconButton,
-    FaIconComponent,
-    MatNavList,
-    MatListSubheaderCssMatStyler,
-    MatLine
+    FaIconComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -58,6 +53,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
   private groupService = inject(GroupsService);
   private dateUtils = inject(Dates);
   private settingsService = inject(SettingsService);
+  private changeDetectorRef = inject(ChangeDetectorRef);
 
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -110,8 +106,13 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
           .getFilteredClients('displayName', 'ASC', true, value, this.groupForm.get('officeId').value)
           .subscribe((data: any) => {
             this.clientsData = data.pageItems;
+            // Results arrive outside any template event: notify OnPush change detection.
+            this.changeDetectorRef.markForCheck();
           });
       }
+      // Selecting an autocomplete option happens in the CDK overlay, which does
+      // not mark this OnPush component dirty; refresh the client details panel.
+      this.changeDetectorRef.markForCheck();
     });
   }
 

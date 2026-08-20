@@ -225,7 +225,7 @@
         @for (group of clientViewData.groups; track group) {
           <div class="data-item">
             <span class="label">{{ 'labels.inputs.Group' | translate }}</span>
-            <span class="value">{{ group.name }}</span>
+            <a class="value entity-link" [routerLink]="['/groups', group.id, 'general']">{{ group.name }}</a>
           </div>
         }
       </div>

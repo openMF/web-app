@@ -227,19 +227,19 @@ export interface ClientsListSelectors {
 }
 
 export const CLIENTS_LIST_SELECTORS: ClientsListSelectors = {
-  searchInput: '.clients-container .search input[type="text"]',
-  searchClearButton: '.clients-container .search-clear',
-  showClosedToggle: '.clients-container .toggle',
+  searchInput: '.entity-list-container .search input[type="text"]',
+  searchClearButton: '.entity-list-container .search-clear',
+  showClosedToggle: '.entity-list-container .toggle',
   createClientButton: 'Create Client',
   importClientButton: 'Import Client',
-  loadingBar: '.clients-container .loading-bar',
-  list: '.clients-container .list',
-  row: '.clients-container .list-row',
+  loadingBar: '.entity-list-container .loading-bar',
+  list: '.entity-list-container .list',
+  row: '.entity-list-container .list-row',
   rowName: '.name',
   rowStatus: '.status-pill',
-  emptyState: '.clients-container .empty-state',
-  countBadge: '.clients-container .count-badge',
-  pageSizeSelect: '.clients-container .page-size select',
+  emptyState: '.entity-list-container .empty-state',
+  countBadge: '.entity-list-container .count-badge',
+  pageSizeSelect: '.entity-list-container .page-size select',
   nextPageButton: 'Next page',
   previousPageButton: 'Previous page'
 };

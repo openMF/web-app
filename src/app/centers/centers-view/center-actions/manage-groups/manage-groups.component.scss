@@ -6,6 +6,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+@use 'assets/styles/member-list';
+
+@include member-list.member-list;
+
 .container {
   max-width: 70rem;
 
@@ -56,12 +60,6 @@
       border-color 0.3s ease;
   }
 
-  .p-t-10 {
-    padding-top: 10px;
-    font-weight: 500;
-    margin-left: 1rem;
-  }
-
   .flex-50 {
     max-height: 20rem;
     margin-bottom: 1rem;
@@ -72,29 +70,5 @@
     transition:
       background-color 0.3s ease,
       border-color 0.3s ease;
-
-    .mat-nav-list {
-      .member-item {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.25rem 0;
-      }
-
-      .center-gap {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      .member-item .p-t-10 {
-        margin: 0;
-        font-weight: 500;
-      }
-
-      .delete-btn {
-        margin-left: 0.25rem;
-      }
-    }
   }
 }
