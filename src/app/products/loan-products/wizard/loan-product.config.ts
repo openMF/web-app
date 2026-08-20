@@ -257,9 +257,11 @@ export const PRODUCT_CARDS: ProductCard[] = [
   },
   {
     name: 'labels.text.Credit Card EMI',
-    description: 'Converts card spends or available credit limit into structured EMIs.',
-    active: false,
-    disabled: true,
+    // Fully qualified translation key, same pattern as the Custom/Advanced card above.
+    description: 'labels.text.Converts card spends or available credit limit into structured EMIs',
+    active: true,
+    disabled: false,
+    route: 'credit-card-emi-loan',
     icon: 'credit_card'
   },
   {
@@ -1149,7 +1151,8 @@ export type LoanWizardProfileMode =
   | 'gold'
   | 'auto'
   | 'jlg'
-  | 'consumer-durable';
+  | 'consumer-durable'
+  | 'credit-card-emi';
 
 /**
  * Home Loan and Mortgage Loan (LAP) share one product-level configuration. This is what the workbook
@@ -1202,7 +1205,12 @@ export function forcesProgressiveStack(profileMode: LoanWizardProfileMode): bool
  * construction-linked home loan disburses against build stages rather than in one lump sum.
  */
 export function sendsMultiDisburseFields(profileMode: LoanWizardProfileMode): boolean {
-  return profileMode === 'education' || profileMode === 'bnpl' || isHomeOrMortgageProfile(profileMode);
+  return (
+    profileMode === 'education' ||
+    profileMode === 'bnpl' ||
+    profileMode === 'credit-card-emi' ||
+    isHomeOrMortgageProfile(profileMode)
+  );
 }
 
 /**
@@ -1213,7 +1221,7 @@ export function sendsMultiDisburseFields(profileMode: LoanWizardProfileMode): bo
  * Home and Mortgage are the same case (Home L / Mortage L row 57).
  */
 export function sendsOutstandingLoanBalance(profileMode: LoanWizardProfileMode): boolean {
-  return profileMode === 'bnpl' || isHomeOrMortgageProfile(profileMode);
+  return profileMode === 'bnpl' || profileMode === 'credit-card-emi' || isHomeOrMortgageProfile(profileMode);
 }
 
 /**
@@ -1222,7 +1230,7 @@ export function sendsOutstandingLoanBalance(profileMode: LoanWizardProfileMode):
  * `supportedInterestRefundTypes` instead of the template's default list.
  */
 export function rendersInterestRefundStep(profileMode: LoanWizardProfileMode): boolean {
-  return profileMode === 'bnpl';
+  return profileMode === 'bnpl' || profileMode === 'credit-card-emi';
 }
 
 /**
@@ -1231,7 +1239,7 @@ export function rendersInterestRefundStep(profileMode: LoanWizardProfileMode): b
  * the note in {@link sanitizeCreateLoanProductPayload} for why this is opt-in per profile.
  */
 export function dropsDisabledOverAppliedFields(profileMode: LoanWizardProfileMode): boolean {
-  return profileMode === 'bnpl';
+  return profileMode === 'bnpl' || profileMode === 'credit-card-emi';
 }
 
 /**
@@ -1539,6 +1547,55 @@ const CONSUMER_DURABLE_VISIBLE_KEYS: readonly string[] = [
 ];
 
 /**
+ * Keys the Card L sheet marks `is Applicable = Y` that the base {@link HIDDEN_DEFAULTS} would
+ * otherwise pin. Sheet rows, in order: 17, 18, 19, 25, 32, 33, 35, 37, 42, 43, 44, 49, 53, 54, 55,
+ * 56, 57, 58, 67, 68, 69, 70, 71, 72, 76. The remaining `Applicable = Y` rows (name, shortName,
+ * externalId, currencyCode, principal, numberOfRepayments, the interest/repayment terms,
+ * amortization, interest method, interest calculation period, repayment strategy, the three grace
+ * fields, charges and accounting) are never in HIDDEN_DEFAULTS to begin with.
+ *
+ * This is BNPL's list exactly, minus `enableIncomeCapitalization` and `enableBuydownFees`: the Card L
+ * sheet marks rows 77-78 Not Applicable, so a card EMI product does not render the Deferred Income
+ * Recognition step even though it does render the Interest Refund step (row 76). It is the first
+ * profile to take one of that pair without the other — see {@link rendersInterestRefundStep} and
+ * {@link rendersDeferredIncomeStep}.
+ *
+ * Row 16 is deliberately NOT listed. It and row 28 (`repaymentStartDateType`) are the same backend
+ * field, and the sheet marks the first Applicable and the second Hidden. The wizard's select offers
+ * exactly that one option, so `isProfileOrStrategyDeterminedField` hides it for every profile — the
+ * same resolution Home, Gold, Auto and BNPL made for the identical contradiction.
+ */
+const CREDIT_CARD_EMI_VISIBLE_KEYS: readonly string[] = [
+  'allowApprovedDisbursedAmountsOverApplied',
+  'overAppliedCalculationType',
+  'overAppliedNumber',
+  'interestRecognitionOnDisbursementDate',
+  'allowPartialPeriodInterestCalculation',
+  'isEqualAmortization',
+  'loanScheduleType',
+  'loanScheduleProcessingType',
+  'daysInYearType',
+  'daysInYearCustomStrategy',
+  'daysInMonthType',
+  'principalThresholdForLastInstallment',
+  'isInterestRecalculationEnabled',
+  'multiDisburseLoan',
+  'maxTrancheCount',
+  'outstandingLoanBalance',
+  'disallowExpectedDisbursements',
+  'allowFullTermForTranche',
+  'enableDownPayment',
+  'disbursedAmountPercentageForDownPayment',
+  'enableAutoRepaymentForDownPayment',
+  'loanChargeOffBehaviour',
+  'delinquencyBucketId',
+  'enableInstallmentLevelDelinquency',
+  // Owned by the reused Classic Interest Refund step (row 76), so the step's emitted value — not a
+  // pinned default — drives the payload.
+  'supportedInterestRefundTypes'
+];
+
+/**
  * The hidden, always-sent defaults for a profile mode. Guided profiles hide every key of the
  * returned object in the UI and spread it LAST in {@link buildPayload}'s merge, so a key must be
  * removed here (not just overridden) the moment a profile exposes it as an editable control —
@@ -1756,6 +1813,23 @@ export function hiddenDefaultsFor(profileMode: LoanWizardProfileMode): Record<st
     // renders it as an editable control. Each must be REMOVED (not overridden) from the hidden
     // defaults, because the guided merge spreads `defaults` last and would clobber the user's input.
     for (const exposedKey of CONSUMER_DURABLE_VISIBLE_KEYS) {
+      delete defaults[exposedKey];
+    }
+    return defaults;
+  }
+  if (profileMode === 'credit-card-emi') {
+    const defaults: Record<string, unknown> = {
+      ...HIDDEN_DEFAULTS,
+      description: 'Credit Card EMI Loan Product',
+      // Row 11 pins the installment multiple to 1, not the base default of 10 — the same call BNPL and
+      // Consumer Durable make. A card EMI is a plain split of the converted spend and must not be
+      // rounded up to the nearest 10.
+      installmentAmountInMultiplesOf: 1
+    };
+    // Every key below is marked `is Applicable = Y` on the Card L sheet, so the profile renders it as
+    // an editable control. Each must be REMOVED (not overridden) from the hidden defaults, because the
+    // guided merge spreads `defaults` last and would otherwise clobber the user's input.
+    for (const exposedKey of CREDIT_CARD_EMI_VISIBLE_KEYS) {
       delete defaults[exposedKey];
     }
     return defaults;
@@ -1983,6 +2057,36 @@ export const PROFILE_INITIAL_OVERRIDES: Partial<Record<LoanWizardProfileMode, Pa
     // 10000 / 12% / 12 boilerplate every other sheet inherits from `All Params`, with a blank Default
     // Value column, so seeding a headline ticket size or tenure would invent commercial policy the
     // sheet does not state.
+  },
+  'credit-card-emi': {
+    // Rows 35/36/37. Progressive is the sheet's schedule type, and Fineract only accepts the advanced
+    // payment allocation strategy — and therefore loanScheduleProcessingType, chargeOffBehaviour and
+    // supportedInterestRefundTypes — on a Progressive product. Row 36 samples a non-advanced strategy,
+    // which cannot coexist with row 35, so Progressive wins and the strategy is seeded to match. This
+    // matters more here than elsewhere: three of this profile's Applicable rows are gated on it.
+    loanScheduleType: 'Progressive',
+    transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+    loanScheduleProcessingType: 'Horizontal',
+    // Row 40. The promotional interest-free window at the start of the plan — the "no cost EMI" a card
+    // issuer advertises. Rows 38/39 sample 120 for the two grace fields against 12 repayments, which
+    // Fineract rejects (grace must be < numberOfRepayments), so those keep the neutral 0 seed and stay
+    // editable, exactly as BNPL resolved the same rows.
+    interestFreePeriod: 1,
+    // Rows 54-58. A card EMI draws against a limit rather than disbursing once, so the tranche family
+    // is Applicable here (unlike Gold, Auto or Consumer Durable) and the toggle is seeded on.
+    multiDisburseLoan: true,
+    maxTrancheCount: 4,
+    outstandingLoanBalance: 100000,
+    // Rows 67/68/69, seeded to the sheet's sample values and all three editable.
+    enableDownPayment: true,
+    disbursedAmountPercentageForDownPayment: 35,
+    enableAutoRepaymentForDownPayment: true,
+    // Rows 42/44 — seeded to the sheet's values, and editable because both rows are Applicable.
+    daysInYearType: 360,
+    daysInMonthType: 30
+    // Deliberately absent: `principal`, `interestRatePerPeriod` and `numberOfRepayments` — see the note
+    // on HOME_AND_MORTGAGE_INITIAL_OVERRIDES. The Card L sheet carries the same 10000 / 12% / 12
+    // boilerplate every other sheet inherits from `All Params`, with a blank Default Value column.
   }
 };
 
@@ -2057,6 +2161,23 @@ export const PROFILE_EXTRA_VISIBLE_FIELDS: Partial<Record<LoanWizardProfileMode,
     'enableDownPayment',
     'disbursedAmountPercentageForDownPayment',
     'enableAutoRepaymentForDownPayment'
+  ],
+  // Card L marks these Applicable even though the wizard's custom-only list hides them for most guided
+  // profiles. Dropping them from the hidden defaults is not enough on its own: `isCustomOnlyField` is a
+  // second, independent gate in the wizard's `visibleFields`. Same set BNPL needs, since the two sheets
+  // agree on every one of these rows.
+  'credit-card-emi': [
+    'allowApprovedDisbursedAmountsOverApplied',
+    'overAppliedCalculationType',
+    'overAppliedNumber',
+    'interestRecognitionOnDisbursementDate',
+    'outstandingLoanBalance',
+    'disallowExpectedDisbursements',
+    'enableDownPayment',
+    'disbursedAmountPercentageForDownPayment',
+    'enableAutoRepaymentForDownPayment',
+    'loanChargeOffBehaviour',
+    'enableInstallmentLevelDelinquency'
   ]
 };
 
@@ -2073,7 +2194,8 @@ export const PROFILE_LABEL_KEYS: Record<LoanWizardProfileMode, string> = {
   gold: 'labels.text.Gold Loan',
   auto: 'labels.text.Auto Loan',
   jlg: 'labels.text.JLG Loan',
-  'consumer-durable': 'labels.text.Consumer Durable Loan'
+  'consumer-durable': 'labels.text.Consumer Durable Loan',
+  'credit-card-emi': 'labels.text.Credit Card EMI'
 };
 
 /** Route path (under products/loan-products) → wizard profile and the page heading it renders. */
@@ -2095,6 +2217,10 @@ const PROFILE_ROUTES: Record<string, { profileMode: LoanWizardProfileMode; pageT
   'consumer-durable-loan': {
     profileMode: 'consumer-durable',
     pageTitle: 'labels.heading.Create Consumer Durable Loan'
+  },
+  'credit-card-emi-loan': {
+    profileMode: 'credit-card-emi',
+    pageTitle: 'labels.heading.Create Credit Card EMI Loan'
   }
 };
 

@@ -2203,6 +2203,150 @@ describe('LoanProductWizardComponent', () => {
     });
   });
 
+  describe('Credit Card EMI profile (spreadsheet-driven, Classic-parity conditionals)', () => {
+    function cardComponent(): LoanProductWizardComponent {
+      const component = createComponent();
+      component.profileMode = 'credit-card-emi';
+      component.loanProductsTemplate = {
+        currencyOptions: [{ code: 'INR' }],
+        transactionProcessingStrategyOptions: [
+          { code: 'mifos-standard-strategy', name: 'Mifos standard' },
+          { code: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY, name: 'Advanced Payment Allocation' }
+        ],
+        preClosureInterestCalculationStrategyOptions: [{ id: 1, value: 'Till pre-close date' }],
+        rescheduleStrategyTypeOptions: [{ id: 4, value: 'Adjust last, unpaid period' }],
+        interestRecalculationCompoundingTypeOptions: [{ id: 0, value: 'None' }],
+        interestRecalculationFrequencyTypeOptions: [{ id: 1, value: 'Same as repayment period' }],
+        interestRecalculationNthDayTypeOptions: [{ id: 1, value: 'first' }],
+        interestRecalculationDayOfWeekTypeOptions: [{ id: 1, value: 'Monday' }],
+        daysInYearCustomStrategyOptions: [{ id: 'FULL_LEAP_YEAR', value: 'Full Leap Year' }],
+        chargeOffBehaviourOptions: [{ id: 'REGULAR', value: 'Regular' }],
+        supportedInterestRefundTypes: [{ id: 'MERCHANT_ISSUED_REFUND', value: 'Merchant issued refund' }],
+        advancedPaymentAllocationTransactionTypes: [{ id: 1, code: 'DEFAULT', value: 'Default' }],
+        advancedPaymentAllocationTypes: [
+          { id: 1, code: 'PENALTY', value: 'Penalty' },
+          { id: 2, code: 'FEE', value: 'Fee' },
+          { id: 3, code: 'INTEREST', value: 'Interest' },
+          { id: 4, code: 'PRINCIPAL', value: 'Principal' }
+        ],
+        advancedPaymentAllocationFutureInstallmentAllocationRules: [
+          { id: 1, code: 'NEXT_INSTALLMENT', value: 'Next installment' }
+        ]
+      };
+      component.ngOnInit();
+      return component;
+    }
+
+    function visibleKeys(component: LoanProductWizardComponent): string[] {
+      return component.steps.flatMap((step) => component.visibleFields(step)).map((field) => field.key);
+    }
+
+    /** Card L `is Applicable = Y` rows that most guided profiles keep hidden. */
+    const APPLICABLE_KEYS = [
+      'allowApprovedDisbursedAmountsOverApplied',
+      'isEqualAmortization',
+      'loanScheduleType',
+      'daysInYearType',
+      'daysInMonthType',
+      'principalThresholdForLastInstallment',
+      'isInterestRecalculationEnabled',
+      'multiDisburseLoan',
+      'maxTrancheCount',
+      'outstandingLoanBalance',
+      'disallowExpectedDisbursements',
+      'allowFullTermForTranche',
+      'enableDownPayment',
+      'disbursedAmountPercentageForDownPayment',
+      'delinquencyBucketId'
+    ];
+
+    /** `is Hidden = Y` rows that must stay hidden. */
+    const HIDDEN_KEYS = [
+      'description',
+      'startDate',
+      'closeDate',
+      'includeInBorrowerCycle',
+      'digitsAfterDecimal',
+      'isLinkedToFloatingInterestRates',
+      'holdGuaranteeFunds',
+      'canUseForTopup',
+      'inArrearsTolerance',
+      'canDefineInstallmentAmount',
+      'graceOnArrearsAgeing',
+      'overdueDaysForNPA',
+      'allowVariableInstallments',
+      'useGlobalConfigForRepaymentEvent',
+      // Rows 77-78: the deferred income flags stay pinned for this profile.
+      'enableIncomeCapitalization',
+      'enableBuydownFees'
+    ];
+
+    it('exposes every field the sheet marks Applicable and hides every field it marks Hidden', () => {
+      const component = cardComponent();
+      const keys = visibleKeys(component);
+      APPLICABLE_KEYS.forEach((key) => expect(keys).toContain(key));
+      HIDDEN_KEYS.forEach((key) => expect(keys).not.toContain(key));
+    });
+
+    it('renders the Interest Refund step but not the Deferred Income one', () => {
+      // The defining structural difference from BNPL, which renders both.
+      const titles = cardComponent().visibleSteps.map((step) => step.title);
+      expect(titles).toContain('Interest Refunds');
+      expect(titles).not.toContain('Deferred Income Recognition');
+    });
+
+    it('hides the Interest Refund step when the strategy is not advanced payment allocation', () => {
+      // Same gate Classic applies.
+      const component = cardComponent();
+      component.form.get('transactionProcessingStrategyCode')!.setValue('mifos-standard-strategy');
+
+      expect(component.visibleSteps.map((step) => step.title)).not.toContain('Interest Refunds');
+    });
+
+    it('gates the over-applied pair on its toggle, like Classic', () => {
+      const component = cardComponent();
+      expect(visibleKeys(component)).not.toContain('overAppliedCalculationType');
+
+      component.form.get('allowApprovedDisbursedAmountsOverApplied')!.setValue(true);
+      const keys = visibleKeys(component);
+      expect(keys).toContain('overAppliedCalculationType');
+      expect(keys).toContain('overAppliedNumber');
+    });
+
+    it('gates the tranche family on multiDisburseLoan and resets it like Classic', () => {
+      const component = cardComponent();
+      expect(visibleKeys(component)).toContain('maxTrancheCount');
+
+      component.form.get('multiDisburseLoan')!.setValue(false);
+      const keys = visibleKeys(component);
+      expect(keys).not.toContain('maxTrancheCount');
+      expect(keys).not.toContain('outstandingLoanBalance');
+    });
+
+    it('seeds the Progressive + advanced payment allocation stack the sheet implies', () => {
+      const component = cardComponent();
+      expect(component.form.get('loanScheduleType')!.value).toBe('Progressive');
+      expect(component.form.get('transactionProcessingStrategyCode')!.value).toBe(
+        LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY
+      );
+      expect(component.visibleSteps.map((step) => step.title)).toContain('Payment Allocation');
+    });
+
+    it('carries a populated paymentAllocation collection in the submitted payload', () => {
+      const payload = cardComponent().buildPayloadForSubmit();
+      const paymentAllocation = payload.paymentAllocation as Array<Record<string, unknown>>;
+
+      expect(paymentAllocation.length).toBeGreaterThan(0);
+      expect(paymentAllocation[0].transactionType).toBe('DEFAULT');
+      expect(paymentAllocation[0].paymentAllocationOrder).toEqual([
+        { order: 1, paymentAllocationRule: 'PENALTY' },
+        { order: 2, paymentAllocationRule: 'FEE' },
+        { order: 3, paymentAllocationRule: 'INTEREST' },
+        { order: 4, paymentAllocationRule: 'PRINCIPAL' }
+      ]);
+    });
+  });
+
   describe('BNPL profile (spreadsheet-driven, Classic-parity conditionals)', () => {
     function bnplComponent(): LoanProductWizardComponent {
       const component = createComponent();
@@ -2600,7 +2744,8 @@ describe('LoanProductWizardComponent', () => {
       'gold',
       'auto',
       'jlg',
-      'consumer-durable'
+      'consumer-durable',
+      'credit-card-emi'
     ];
 
     function componentFor(profile: LoanWizardProfileMode): LoanProductWizardComponent {

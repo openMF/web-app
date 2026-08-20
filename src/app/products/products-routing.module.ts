@@ -299,6 +299,15 @@ const routes: Routes = [
               }
             },
             {
+              path: 'credit-card-emi-loan',
+              component: CreateLoanProductComponent,
+              data: { title: 'Create Credit Card EMI Loan', breadcrumb: 'Credit Card EMI' },
+              resolve: {
+                loanProductsTemplate: LoanProductsTemplateResolver,
+                configurations: GlobalConfigurationsResolver
+              }
+            },
+            {
               path: ':productId',
               component: ViewLoanProductComponent,
               resolve: {
