@@ -88,7 +88,7 @@ export class EditCenterComponent implements OnInit {
         this.centerData.name,
         [
           Validators.required,
-          Validators.pattern('(^[A-z]).*')
+          Validators.pattern('(^[A-Za-z]).*')
         ]
       ],
       staffId: [this.centerData.staffId],

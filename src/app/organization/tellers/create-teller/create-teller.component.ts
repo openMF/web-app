@@ -93,7 +93,7 @@ export class CreateTellerComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern('(^[A-z]).*')
+          Validators.pattern('(^[A-Za-z]).*')
         ]
       ],
       description: [''],

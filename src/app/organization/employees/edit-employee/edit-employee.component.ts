@@ -81,14 +81,14 @@ export class EditEmployeeComponent implements OnInit {
         this.employeeData.firstname,
         [
           Validators.required,
-          Validators.pattern('(^[A-z]).*')
+          Validators.pattern('(^[A-Za-z]).*')
         ]
       ],
       lastname: [
         this.employeeData.lastname,
         [
           Validators.required,
-          Validators.pattern('(^[A-z]).*')
+          Validators.pattern('(^[A-Za-z]).*')
         ]
       ],
       isLoanOfficer: [this.employeeData.isLoanOfficer],
