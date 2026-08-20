@@ -308,6 +308,15 @@ const routes: Routes = [
               }
             },
             {
+              path: 'loan-against-securities',
+              component: CreateLoanProductComponent,
+              data: { title: 'Create Loan vs Securities / FD', breadcrumb: 'Loan vs Securities / FD' },
+              resolve: {
+                loanProductsTemplate: LoanProductsTemplateResolver,
+                configurations: GlobalConfigurationsResolver
+              }
+            },
+            {
               path: ':productId',
               component: ViewLoanProductComponent,
               resolve: {

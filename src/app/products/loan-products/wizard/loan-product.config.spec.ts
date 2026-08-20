@@ -2357,6 +2357,187 @@ describe('loan-product.config step predicates for the credit card EMI profile', 
   });
 });
 
+describe('loan-product.config buildPayload for the loan against securities profile', () => {
+  /**
+   * The raw form value the wizard submits for Loan vs Securities / FD: the shared seed, the profile's
+   * prefills (the Progressive + advanced-allocation stack and the sheet's day counts), plus the fields
+   * the user must type.
+   */
+  function lasFormState(edits: Record<string, unknown> = {}): typeof INITIAL_FORM_STATE {
+    return {
+      ...INITIAL_FORM_STATE,
+      ...PROFILE_INITIAL_OVERRIDES['loan-against-securities'],
+      name: 'LAS \u2013 Standard',
+      shortName: 'LAS',
+      currencyCode: 'INR',
+      principal: 500000,
+      interestRatePerPeriod: 10,
+      numberOfRepayments: 12,
+      ...edits
+    };
+  }
+
+  it('produces the exact Loan vs Securities create payload for an untouched wizard form', () => {
+    // LAS L rows 54-58: the tranche family is Not Applicable and absent from the payload. Row 11 pins
+    // the installment multiple to 1, rows 15 and 52 expose the floating-rate link and guarantee funds,
+    // and rows 67-69 keep the down payment on the master defaults.
+    expect(buildPayload(lasFormState(), 'loan-against-securities')).toEqual({
+      name: 'LAS \u2013 Standard',
+      shortName: 'LAS',
+      externalId: '',
+      description: 'Loan vs Securities / FD Product',
+      startDate: '',
+      closeDate: '',
+      includeInBorrowerCycle: true,
+      currencyCode: 'INR',
+      digitsAfterDecimal: 2,
+      inMultiplesOf: 1,
+      installmentAmountInMultiplesOf: 1,
+      useBorrowerCycle: false,
+      principal: 500000,
+      numberOfRepayments: 12,
+      interestRatePerPeriod: 10,
+      interestRateFrequencyType: 2,
+      repaymentEvery: 1,
+      repaymentFrequencyType: 2,
+      isLinkedToFloatingInterestRates: false,
+      allowApprovedDisbursedAmountsOverApplied: false,
+      overAppliedCalculationType: null,
+      overAppliedNumber: null,
+      minimumDaysBetweenDisbursalAndFirstRepayment: 5,
+      interestRecognitionOnDisbursementDate: false,
+      repaymentStartDateType: 1,
+      amortizationType: 1,
+      interestType: 0,
+      allowPartialPeriodInterestCalculation: true,
+      isEqualAmortization: false,
+      interestCalculationPeriodType: 1,
+      loanScheduleType: 'PROGRESSIVE',
+      transactionProcessingStrategyCode: LoanProducts.ADVANCED_PAYMENT_ALLOCATION_STRATEGY,
+      loanScheduleProcessingType: 'HORIZONTAL',
+      graceOnPrincipalPayment: 0,
+      graceOnInterestPayment: 0,
+      graceOnInterestCharged: 0,
+      daysInYearType: 360,
+      daysInMonthType: 30,
+      principalThresholdForLastInstallment: 5,
+      canUseForTopup: false,
+      isInterestRecalculationEnabled: false,
+      delinquencyBucketId: null,
+      canDefineInstallmentAmount: true,
+      inArrearsTolerance: 50,
+      graceOnArrearsAgeing: 5,
+      overdueDaysForNPA: 90,
+      accountMovesOutOfNPAOnlyOnArrearsCompletion: true,
+      holdGuaranteeFunds: false,
+      enableDownPayment: true,
+      disbursedAmountPercentageForDownPayment: 35,
+      enableAutoRepaymentForDownPayment: true,
+      chargeOffBehaviour: 'REGULAR',
+      enableInstallmentLevelDelinquency: false,
+      dueDaysForRepaymentEvent: 1,
+      overDueDaysForRepaymentEvent: 1,
+      enableIncomeCapitalization: false,
+      enableBuyDownFee: false,
+      accountingRule: 2,
+      principalVariationsForBorrowerCycle: [],
+      numberOfRepaymentVariationsForBorrowerCycle: [],
+      interestRateVariationsForBorrowerCycle: [],
+      charges: [],
+      allowAttributeOverrides: {
+        amortizationType: true,
+        interestType: true,
+        transactionProcessingStrategyCode: true,
+        interestCalculationPeriodType: true,
+        inArrearsTolerance: true,
+        repaymentEvery: true,
+        graceOnPrincipalAndInterestPayment: true,
+        graceOnArrearsAgeing: true
+      }
+    });
+  });
+
+  it('omits the whole multi-disburse family, including the contradictory row 58', () => {
+    // Rows 54-57 are Not Applicable while row 58 (`allowFullTermForTranche`) is marked Applicable. A
+    // tranche flag cannot apply to a product with no tranches, so the family is treated as Not
+    // Applicable as a whole and none of it reaches the payload.
+    const payload = buildPayload(lasFormState(), 'loan-against-securities');
+
+    [
+      'multiDisburseLoan',
+      'maxTrancheCount',
+      'outstandingLoanBalance',
+      'disallowExpectedDisbursements',
+      'allowFullTermForTranche'
+    ].forEach((key) => {
+      expect([
+        key,
+        key in payload
+      ]).toEqual([
+        key,
+        false
+      ]);
+    });
+  });
+
+  it('does not expose the contradictory tranche flag as an editable control', () => {
+    // It must stay in the hidden defaults; removing it would render a control that cannot affect the
+    // product, since the whole family is dropped from the payload for this profile.
+    expect('allowFullTermForTranche' in hiddenDefaultsFor('loan-against-securities')).toBe(true);
+    expect(sendsMultiDisburseFields('loan-against-securities')).toBe(false);
+    expect(sendsOutstandingLoanBalance('loan-against-securities')).toBe(false);
+  });
+
+  it('pins the installment multiple to 1, per row 11', () => {
+    expect(hiddenDefaultsFor('loan-against-securities').installmentAmountInMultiplesOf).toBe(1);
+  });
+
+  it('lets user input win over the hidden defaults for every field the sheet marks Applicable', () => {
+    const payload = buildPayload(
+      lasFormState({
+        isLinkedToFloatingInterestRates: true,
+        principalThresholdForLastInstallment: 10,
+        daysInMonthType: 1,
+        daysInYearType: 365,
+        delinquencyBucketId: '2',
+        isEqualAmortization: true,
+        holdGuaranteeFunds: true,
+        mandatoryGuarantee: 100
+      }),
+      'loan-against-securities'
+    );
+
+    expect(payload.isLinkedToFloatingInterestRates).toBe(true);
+    expect(payload.principalThresholdForLastInstallment).toBe(10);
+    expect(payload.daysInMonthType).toBe(1);
+    expect(payload.daysInYearType).toBe(365);
+    expect(payload.delinquencyBucketId).toBe('2');
+    expect(payload.isEqualAmortization).toBe(true);
+    expect(payload.holdGuaranteeFunds).toBe(true);
+    expect(payload.mandatoryGuarantee).toBe(100);
+  });
+
+  it('omits the guarantee inputs while guarantee funds are not held', () => {
+    const payload = buildPayload(lasFormState(), 'loan-against-securities');
+
+    expect(payload.holdGuaranteeFunds).toBe(false);
+    expect('mandatoryGuarantee' in payload).toBe(false);
+    expect('minimumGuaranteeFromOwnFunds' in payload).toBe(false);
+    expect('minimumGuaranteeFromGuarantor' in payload).toBe(false);
+  });
+
+  it('normalizes the delinquency bucket "None" option to null', () => {
+    expect(
+      buildPayload(lasFormState({ delinquencyBucketId: '' }), 'loan-against-securities').delinquencyBucketId
+    ).toBeNull();
+  });
+
+  it('does not render the Interest Refunds or Deferred Income steps (rows 76-78 are Hidden)', () => {
+    expect(rendersInterestRefundStep('loan-against-securities')).toBe(false);
+    expect(rendersDeferredIncomeStep('loan-against-securities')).toBe(false);
+  });
+});
+
 describe('loan-product.config profileForRoutePath', () => {
   it('maps each wizard route to its profile and page title key', () => {
     expect(profileForRoutePath('personal-loan')).toEqual({
@@ -2406,6 +2587,10 @@ describe('loan-product.config profileForRoutePath', () => {
     expect(profileForRoutePath('credit-card-emi-loan')).toEqual({
       profileMode: 'credit-card-emi',
       pageTitle: 'labels.heading.Create Credit Card EMI Loan'
+    });
+    expect(profileForRoutePath('loan-against-securities')).toEqual({
+      profileMode: 'loan-against-securities',
+      pageTitle: 'labels.heading.Create Loan vs Securities / FD'
     });
   });
 
@@ -2504,6 +2689,14 @@ describe('loan-product.config PRODUCT_CARDS', () => {
     expect(card.route).toBe('credit-card-emi-loan');
   });
 
+  it('activates the Loan vs Securities / FD card with its wizard route', () => {
+    const card = PRODUCT_CARDS.find((product) => product.name === 'labels.text.Loan vs Securities / FD')!;
+
+    expect(card.active).toBe(true);
+    expect(card.disabled).toBe(false);
+    expect(card.route).toBe('loan-against-securities');
+  });
+
   it('routes every active card to a route a wizard profile claims', () => {
     // The selection grid renders a Create button for every active card; a card whose route no
     // profile claims would silently fall back to the Personal Loan wizard.
@@ -2521,7 +2714,8 @@ describe('loan-product.config PRODUCT_CARDS', () => {
         'auto-loan',
         'jlg-loan',
         'consumer-durable-loan',
-        'credit-card-emi-loan'
+        'credit-card-emi-loan',
+        'loan-against-securities'
       ]).toContain(product.route);
     });
   });
@@ -2542,7 +2736,8 @@ describe('loan-product.config PRODUCT_CARDS', () => {
       'auto',
       'jlg',
       'consumer-durable',
-      'credit-card-emi'
+      'credit-card-emi',
+      'loan-against-securities'
     ];
 
     function payloadFor(profile: LoanWizardProfileMode, overrides: Record<string, unknown>) {
@@ -2613,7 +2808,8 @@ describe('loan-product.config PRODUCT_CARDS', () => {
           'auto',
           'jlg',
           'consumer-durable',
-          'credit-card-emi'
+          'credit-card-emi',
+          'loan-against-securities'
         ] as LoanWizardProfileMode[]).forEach((profile) => {
         const payload = payloadFor(profile, applicable);
         expect([
