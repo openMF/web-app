@@ -8,7 +8,11 @@
 
 <h1 mat-dialog-title>
   @if (documentIdentifier) {
-    {{ 'labels.heading.Add Client Identifier' | translate }}
+    @if (editIdentifier) {
+      {{ 'labels.buttons.Edit' | translate }} {{ 'labels.heading.Client Identifier' | translate }}
+    } @else {
+      {{ 'labels.heading.Add Client Identifier' | translate }}
+    }
   } @else {
     {{ 'labels.heading.Upload' | translate }} {{ entityType }} {{ 'labels.heading.Documents' | translate }}
   }
@@ -33,22 +37,24 @@
           </mat-error>
         }
       </mat-form-field>
-      <mat-form-field class="flex-fill">
-        <mat-label>{{ 'labels.inputs.Status' | translate }}</mat-label>
-        <mat-select formControlName="status" required>
-          @for (status of statusOptions; track status) {
-            <mat-option [value]="status.value">
-              {{ status.label }}
-            </mat-option>
+      @if (!editIdentifier) {
+        <mat-form-field class="flex-fill">
+          <mat-label>{{ 'labels.inputs.Status' | translate }}</mat-label>
+          <mat-select formControlName="status" required>
+            @for (status of statusOptions; track status) {
+              <mat-option [value]="status.value">
+                {{ status.label }}
+              </mat-option>
+            }
+          </mat-select>
+          @if (uploadDocumentForm.controls.status?.hasError('required')) {
+            <mat-error>
+              {{ 'labels.inputs.Status' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
           }
-        </mat-select>
-        @if (uploadDocumentForm.controls.status?.hasError('required')) {
-          <mat-error>
-            {{ 'labels.inputs.Status' | translate }} {{ 'labels.commons.is' | translate }}
-            <strong>{{ 'labels.commons.required' | translate }}</strong>
-          </mat-error>
-        }
-      </mat-form-field>
+        </mat-form-field>
+      }
       <mat-form-field class="flex-fill">
         <mat-label>{{ 'labels.inputs.Document Key' | translate }}</mat-label>
         <input formControlName="documentKey" required matInput />
@@ -63,18 +69,32 @@
         <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
         <input formControlName="description" matInput />
       </mat-form-field>
+      <mat-form-field class="flex-fill">
+        <mat-label>{{ 'labels.inputs.Issuance Date' | translate }}</mat-label>
+        <input matInput [matDatepicker]="issuanceDatePicker" formControlName="issuanceDate" />
+        <mat-datepicker-toggle matSuffix [for]="issuanceDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #issuanceDatePicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field class="flex-fill">
+        <mat-label>{{ 'labels.inputs.Expiry Date' | translate }}</mat-label>
+        <input matInput [matDatepicker]="expiryDatePicker" formControlName="expiryDate" />
+        <mat-datepicker-toggle matSuffix [for]="expiryDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #expiryDatePicker></mat-datepicker>
+      </mat-form-field>
     }
 
-    <mat-form-field class="flex-fill">
-      <mat-label>{{ 'labels.inputs.File Name' | translate }}</mat-label>
-      <input formControlName="fileName" required matInput />
-      @if (uploadDocumentForm.controls.fileName.hasError('required')) {
-        <mat-error>
-          {{ 'labels.inputs.File Name' | translate }} {{ 'labels.commons.is' | translate }}
-          <strong>{{ 'labels.commons.required' | translate }}</strong>
-        </mat-error>
-      }
-    </mat-form-field>
+    @if (!editIdentifier) {
+      <mat-form-field class="flex-fill">
+        <mat-label>{{ 'labels.inputs.File Name' | translate }}</mat-label>
+        <input formControlName="fileName" required matInput />
+        @if (uploadDocumentForm.controls.fileName.hasError('required')) {
+          <mat-error>
+            {{ 'labels.inputs.File Name' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
+          </mat-error>
+        }
+      </mat-form-field>
+    }
 
     @if (!documentIdentifier) {
       <mat-form-field class="flex-fill">
@@ -83,7 +103,9 @@
       </mat-form-field>
     }
 
-    <mifosx-file-upload flex="60%" (change)="onFileSelect($event)"></mifosx-file-upload>
+    @if (!editIdentifier) {
+      <mifosx-file-upload flex="60%" (change)="onFileSelect($event)"></mifosx-file-upload>
+    }
 
     <mat-dialog-actions align="end">
       <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
@@ -94,7 +116,11 @@
         [mat-dialog-close]="uploadDocumentForm.value"
       >
         @if (documentIdentifier) {
-          {{ 'labels.buttons.Add' | translate }}
+          @if (editIdentifier) {
+            {{ 'labels.buttons.Edit' | translate }}
+          } @else {
+            {{ 'labels.buttons.Add' | translate }}
+          }
         } @else {
           {{ 'labels.buttons.Upload' | translate }}
         }
