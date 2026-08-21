@@ -122,6 +122,10 @@
 .meta {
   font-size: 12px;
   color: $asbestos;
+
+  span {
+    display: block;
+  }
 }
 
 .description {

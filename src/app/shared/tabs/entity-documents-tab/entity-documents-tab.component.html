@@ -59,6 +59,18 @@
               @if (document.description) {
                 <div class="description">{{ document.description }}</div>
               }
+              @if (document.issuanceDate || document.expiryDate) {
+                <div class="meta">
+                  @if (document.issuanceDate) {
+                    <span
+                      >{{ 'labels.inputs.Issuance Date' | translate }}: {{ document.issuanceDate | dateFormat }}</span
+                    >
+                  }
+                  @if (document.expiryDate) {
+                    <span>{{ 'labels.inputs.Expiry Date' | translate }}: {{ document.expiryDate | dateFormat }}</span>
+                  }
+                </div>
+              }
               <div class="actions">
                 <button
                   mat-icon-button
