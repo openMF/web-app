@@ -4672,7 +4672,8 @@
       "Added": "Pievienots",
       "Default Filters": "Noklusējuma filtri",
       "Additional Filters": "Papildu filtri",
-      "No additional filters": "Nav papildu filtru"
+      "No additional filters": "Nav papildu filtru",
+      "Global Financial Dashboard": "Globālais finanšu panelis"
     },
     "permissions": {
       "actions": {

@@ -4672,7 +4672,8 @@
       "Added": "थपियो",
       "Default Filters": "पूर्वनिर्धारित फिल्टरहरू",
       "Additional Filters": "थप फिल्टरहरू",
-      "No additional filters": "कुनै थप फिल्टर छैन"
+      "No additional filters": "कुनै थप फिल्टर छैन",
+      "Global Financial Dashboard": "विश्वव्यापी वित्तीय ड्यासबोर्ड"
     },
     "permissions": {
       "actions": {

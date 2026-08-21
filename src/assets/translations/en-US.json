@@ -4811,7 +4811,8 @@
       "Search by account number, name, external ID or transaction ID": "Search by account number, name, external ID or transaction ID",
       "No results found": "No results found",
       "Check the account number, external ID or transaction ID, or search across all entity types.": "Check the account number, external ID or transaction ID, or search across all entity types.",
-      "Result limit reached. Refine your query to narrow the results.": "Result limit reached. Refine your query to narrow the results."
+      "Result limit reached. Refine your query to narrow the results.": "Result limit reached. Refine your query to narrow the results.",
+      "Global Financial Dashboard": "Global Financial Dashboard"
     },
     "permissions": {
       "actions": {

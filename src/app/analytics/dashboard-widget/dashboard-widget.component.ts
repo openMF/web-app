@@ -131,6 +131,8 @@ export class DashboardWidgetComponent implements AfterViewInit, OnChanges, OnDes
   }
 
   selectOffice(officeId: number): void {
+    this.selectedOfficeId = officeId;
+    this.highlightActiveMarker();
     this.officeSelected.emit(officeId);
   }
 
@@ -211,12 +213,13 @@ export class DashboardWidgetComponent implements AfterViewInit, OnChanges, OnDes
     this.markerClusterGroup = L.markerClusterGroup({
       showCoverageOnHover: false,
       zoomToBoundsOnClick: true,
+      maxClusterRadius: 100,
       iconCreateFunction: (cluster) => {
         const count = cluster.getChildCount();
         return L.divIcon({
           html: `<div class="cluster-inner"><span>${count}</span></div>`,
           className: 'custom-marker-cluster',
-          iconSize: L.point(40, 40)
+          iconSize: L.point(44, 44)
         });
       }
     });
@@ -335,31 +338,24 @@ export class DashboardWidgetComponent implements AfterViewInit, OnChanges, OnDes
         minWidth: 220
       });
 
-      // Bind tooltip for hover
-      marker.bindTooltip(pin.officeName, {
+      // Bind full statistics card to tooltip so hovering any pin displays full information card
+      marker.bindTooltip(popupHtml, {
         permanent: false,
-        direction: 'bottom',
-        className: 'custom-leaflet-tooltip',
-        offset: L.point(0, 5)
+        direction: 'top',
+        className: 'leaflet-custom-popup custom-tooltip-card',
+        offset: L.point(0, -38)
       });
 
-      // Close and unbind tooltip when popup opens to avoid overlapping UI
+      // Close tooltip when popup opens to avoid duplication
       marker.on('popupopen', () => {
         marker.closeTooltip();
-        marker.unbindTooltip();
       });
 
-      // Re-bind tooltip when popup closes
-      marker.on('popupclose', () => {
-        marker.bindTooltip(pin.officeName, {
-          permanent: false,
-          direction: 'bottom',
-          className: 'custom-leaflet-tooltip',
-          offset: L.point(0, 5)
-        });
-      });
-
-      marker.on('click', () => {
+      marker.on('click', (e: any) => {
+        if (e && e.originalEvent) {
+          L.DomEvent.stopPropagation(e.originalEvent);
+        }
+        marker.openPopup();
         this.selectOffice(pin.officeId);
       });
 
@@ -390,32 +386,26 @@ export class DashboardWidgetComponent implements AfterViewInit, OnChanges, OnDes
 
   private highlightActiveMarker(): void {
     this.markersMap.forEach((marker, officeId) => {
-      const pin = this.state?.mapData?.find((p: any) => p.officeId === officeId);
-      if (pin) {
-        const isActive = officeId === this.selectedOfficeId;
-        const markerColor = isActive ? '#ea580c' : '#0284c7';
-        const newIcon = L.divIcon({
-          className: `custom-map-pin ${isActive ? 'active' : ''}`,
-          html: `
-            <div class="pin-pulse"></div>
-            <svg class="pin-svg" width="28" height="38" viewBox="0 0 28 38" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M14 0C6.27 0 0 6.27 0 14C0 24.5 14 38 14 38C14 38 28 24.5 28 14C28 6.27 21.73 0 14 0Z" fill="${markerColor}" stroke="#ffffff" stroke-width="2"/>
-              <circle cx="14" cy="14" r="5" fill="#ffffff"/>
-            </svg>
-          `,
-          iconSize: L.point(28, 38),
-          iconAnchor: L.point(14, 38),
-          popupAnchor: L.point(0, -38)
-        });
-        marker.setIcon(newIcon);
+      const isActive = officeId === this.selectedOfficeId;
+      const element = marker.getElement();
+      if (element) {
+        if (isActive) {
+          element.classList.add('active');
+        } else {
+          element.classList.remove('active');
+        }
       }
     });
 
     if (this.selectedOfficeId !== null && this.markersMap.has(this.selectedOfficeId) && this.map) {
       const marker = this.markersMap.get(this.selectedOfficeId);
       if (marker) {
-        marker.openPopup();
-        this.map.panTo(marker.getLatLng());
+        setTimeout(() => {
+          if (this.map && marker) {
+            marker.openPopup();
+            this.map.panTo(marker.getLatLng());
+          }
+        }, 50);
       }
     }
   }

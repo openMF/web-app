@@ -4672,7 +4672,8 @@
       "Added": "추가됨",
       "Default Filters": "기본 필터",
       "Additional Filters": "추가 필터",
-      "No additional filters": "추가 필터 없음"
+      "No additional filters": "추가 필터 없음",
+      "Global Financial Dashboard": "글로벌 재무 대시보드"
     },
     "permissions": {
       "actions": {
