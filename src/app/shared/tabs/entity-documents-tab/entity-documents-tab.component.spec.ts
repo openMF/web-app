@@ -7,6 +7,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
@@ -19,6 +20,7 @@ import { ClientsService } from 'app/clients/clients.service';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { LoansService } from 'app/loans/loans.service';
 import { SavingsService } from 'app/savings/savings.service';
+import { SettingsService } from 'app/settings/settings.service';
 import { DocumentPreviewService } from 'app/shared/services/document-preview.service';
 import { EntityDocumentsTabComponent } from './entity-documents-tab.component';
 
@@ -27,10 +29,14 @@ describe('EntityDocumentsTabComponent', () => {
   let component: EntityDocumentsTabComponent;
   let clientsService: jest.Mocked<ClientsService>;
   let documentPreviewService: jest.Mocked<DocumentPreviewService>;
+  let dialog: jest.Mocked<MatDialog>;
 
   beforeEach(async () => {
     clientsService = {
       downloadClientDocument: jest.fn()
+    } as any;
+    dialog = {
+      open: jest.fn(() => ({ afterClosed: () => of(null) }))
     } as any;
     documentPreviewService = {
       isPreviewable: jest.fn(() => true),
@@ -51,9 +57,11 @@ describe('EntityDocumentsTabComponent', () => {
         { provide: ClientsService, useValue: clientsService },
         { provide: LoansService, useValue: {} },
         { provide: SavingsService, useValue: {} },
+        { provide: SettingsService, useValue: { dateFormat: 'dd MMMM yyyy', language: { code: 'en' } } },
+        DatePipe,
         { provide: DocumentPreviewService, useValue: documentPreviewService },
         { provide: AuthenticationService, useValue: { getCredentials: () => ({ permissions: ['ALL_FUNCTIONS'] }) } },
-        { provide: MatDialog, useValue: { open: jest.fn(() => ({ afterClosed: () => of(null) })) } }
+        { provide: MatDialog, useValue: dialog }
       ]
     }).compileComponents();
 
@@ -96,5 +104,81 @@ describe('EntityDocumentsTabComponent', () => {
     expect(component.isPreviewable(component.entityDocuments[0])).toBe(true);
     expect(documentPreviewService.resolvePreviewUrl).toHaveBeenCalled();
     expect(clientsService.downloadClientDocument).toHaveBeenCalledWith('3616', 45);
+  });
+
+  it('uploads a document with issuance and expiry dates', () => {
+    const file = new File(['content'], 'statement.pdf', { type: 'application/pdf' });
+    component.entityDocuments = [];
+    component.callbackUpload = jest.fn(() => of({ resourceId: 99 }));
+    dialog.open.mockReturnValue({
+      afterClosed: () =>
+        of({
+          fileName: 'statement.pdf',
+          description: 'Monthly statement',
+          issuanceDate: new Date(2024, 0, 2),
+          expiryDate: new Date(2030, 5, 30),
+          file
+        })
+    } as any);
+
+    component.uploadDocument();
+
+    const formData = (component.callbackUpload as jest.Mock).mock.calls[0][0] as FormData;
+    expect(formData.get('name')).toBe('statement.pdf');
+    expect(formData.get('description')).toBe('Monthly statement');
+    expect(formData.get('file')).toBe(file);
+    expect(formData.get('dateFormat')).toBe('yyyy-MM-dd');
+    expect(formData.get('locale')).toBe('en');
+    expect(formData.get('issuanceDate')).toBe('2024-01-02');
+    expect(formData.get('expiryDate')).toBe('2030-06-30');
+    expect(component.entityDocuments[0]).toEqual(
+      expect.objectContaining({
+        id: 99,
+        issuanceDate: '2024-01-02',
+        expiryDate: '2030-06-30'
+      })
+    );
+  });
+
+  it('uploads a document without optional dates', () => {
+    const file = new File(['content'], 'receipt.pdf', { type: 'application/pdf' });
+    component.entityDocuments = [];
+    component.callbackUpload = jest.fn(() => of({ resourceId: 100 }));
+    dialog.open.mockReturnValue({
+      afterClosed: () =>
+        of({
+          fileName: 'receipt.pdf',
+          description: '',
+          issuanceDate: '',
+          expiryDate: '',
+          file
+        })
+    } as any);
+
+    component.uploadDocument();
+
+    const formData = (component.callbackUpload as jest.Mock).mock.calls[0][0] as FormData;
+    expect(formData.has('issuanceDate')).toBe(false);
+    expect(formData.has('expiryDate')).toBe(false);
+    expect(formData.get('file')).toBe(file);
+  });
+
+  it('displays issuance and expiry dates with the date format pipe', () => {
+    component.entityDocuments = [
+      {
+        id: 101,
+        name: 'license.pdf',
+        fileName: 'license.pdf',
+        issuanceDate: '2024-01-02',
+        expiryDate: '2030-06-30'
+      }
+    ];
+    documentPreviewService.isPreviewable.mockReturnValue(false);
+
+    fixture.detectChanges();
+
+    const text = fixture.nativeElement.textContent;
+    expect(text).toContain('Issuance Date: 02 January 2024');
+    expect(text).toContain('Expiry Date: 30 June 2030');
   });
 });

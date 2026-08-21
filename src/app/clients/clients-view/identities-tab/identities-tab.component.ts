@@ -55,6 +55,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
+import { AlertService } from 'app/core/alert/alert.service';
 
 interface ClientIdentifierDocumentType {
   id: number | string;
@@ -128,6 +129,7 @@ export class IdentitiesTabComponent implements OnDestroy {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private dateUtils = inject(Dates);
   private settingsService = inject(SettingsService);
+  private alertService = inject(AlertService);
 
   private destroyRef = inject(DestroyRef);
 
@@ -328,6 +330,33 @@ export class IdentitiesTabComponent implements OnDestroy {
             identity.documentKey = response.documentKey;
             identity.issuanceDate = response.issuanceDate || null;
             identity.expiryDate = response.expiryDate || null;
+            if (response.file) {
+              const formData: FormData = new FormData();
+              formData.append('name', response.fileName);
+              formData.append('file', response.file);
+              this.clientService.uploadClientIdentifierDocument(identity.id, formData).subscribe({
+                next: (docRes: any) => {
+                  const newDoc = {
+                    id: docRes.resourceId,
+                    parentEntityType: 'client_identifiers',
+                    parentEntityId: identity.id,
+                    name: response.fileName,
+                    fileName: response.file.name
+                  };
+                  identity.documents = identity.documents || [];
+                  identity.documents.push(newDoc);
+                  this.setThumbnail(newDoc, identity);
+                  this.changeDetectorRef.markForCheck();
+                },
+                error: (err: any) => {
+                  console.error('Failed to upload document', err);
+                  this.alertService.alert({
+                    type: 'error',
+                    message: 'Failed to upload document'
+                  });
+                }
+              });
+            }
             this.identifiersTable.renderRows();
             this.changeDetectorRef.markForCheck();
           },
