@@ -4671,7 +4671,8 @@
       "Added": "Aggiunto",
       "Default Filters": "Filtri predefiniti",
       "Additional Filters": "Filtri aggiuntivi",
-      "No additional filters": "Nessun filtro aggiuntivo"
+      "No additional filters": "Nessun filtro aggiuntivo",
+      "Global Financial Dashboard": "Dashboard finanziaria globale"
     },
     "permissions": {
       "actions": {

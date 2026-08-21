@@ -1165,9 +1165,10 @@ export class AnalyticsDataSourceService {
   }
 
   private getOfficeClients(officeId: number, filters: AnalyticsFilters): number {
-    const base = ((officeId * 149) % 300) + 150;
+    const safeId = Math.abs(Number(officeId)) || 1;
+    const base = ((safeId * 149) % 300) + 150;
     const scale = filters.productId ? 0.25 : 1.0;
-    return Math.floor(base * scale);
+    return Math.max(50, Math.floor(base * scale));
   }
 
   private getOfficeLoans(officeId: number, filters: AnalyticsFilters): number {
