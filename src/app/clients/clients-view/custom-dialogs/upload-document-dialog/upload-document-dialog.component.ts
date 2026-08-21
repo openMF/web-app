@@ -72,6 +72,10 @@ export class UploadDocumentDialogComponent implements OnInit {
     this.createUploadDocumentForm();
   }
 
+  get fileNameRequired(): boolean {
+    return !this.documentIdentifier || !this.editIdentifier;
+  }
+
   /**
    * Creates the upload Document form.
    */
@@ -95,19 +99,22 @@ export class UploadDocumentDialogComponent implements OnInit {
         issuanceDate: [this.parseIdentifierDate(this.data.identifier?.issuanceDate)],
         expiryDate: [this.parseIdentifierDate(this.data.identifier?.expiryDate)],
         fileName: [
-          '',
-          this.editIdentifier ? [] : Validators.required
+          this.data.identifier?.documents?.[0]?.fileName || this.data.identifier?.documents?.[0]?.name || '',
+          this.fileNameRequired ? Validators.required : []
         ],
         file: ['']
       });
     } else {
       // Standard document upload form
+      const document = this.data.document || {};
       this.uploadDocumentForm = this.formBuilder.group({
         fileName: [
-          '',
+          document.fileName || document.name || '',
           Validators.required
         ],
-        description: [''],
+        description: [document.description || ''],
+        issuanceDate: [this.parseDate(document.issuanceDate)],
+        expiryDate: [this.parseDate(document.expiryDate)],
         file: ['']
       });
     }
@@ -127,6 +134,10 @@ export class UploadDocumentDialogComponent implements OnInit {
   }
 
   private parseIdentifierDate(value: any): Date | string {
+    return this.parseDate(value);
+  }
+
+  private parseDate(value: any): Date | string {
     return value ? this.dateUtils.parseDate(value) : '';
   }
 }

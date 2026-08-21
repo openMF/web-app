@@ -10,10 +10,11 @@ import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { describe, it, expect, jest, beforeEach } from '@jest/globals';
 
 import { ClientsService } from '../../clients.service';
+import { AlertService } from 'app/core/alert/alert.service';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { DocumentPreviewService } from 'app/shared/services/document-preview.service';
 import { IdentitiesTabComponent } from './identities-tab.component';
@@ -27,11 +28,13 @@ describe('IdentitiesTabComponent', () => {
   let markForCheck: jest.Mock;
   let dialog: { open: jest.Mock };
   let dateUtils: { formatDate: jest.Mock; parseDate: jest.Mock };
+  let alertService: { alert: jest.Mock };
 
   beforeEach(async () => {
     clientsService = {
       addClientIdentifier: jest.fn(() => of({ resourceId: 'identifier-3' })),
       editClientIdentifier: jest.fn(() => of({})),
+      uploadClientIdentifierDocument: jest.fn(() => of({ resourceId: 'doc-3' })),
       downloadClientIdentificationDocument: jest.fn(() => of(new Blob(['image'], { type: 'image/png' })))
     } as any;
     documentPreviewService = {
@@ -43,6 +46,7 @@ describe('IdentitiesTabComponent', () => {
       release: jest.fn()
     } as any;
     dialog = { open: jest.fn() };
+    alertService = { alert: jest.fn() };
     dateUtils = {
       formatDate: jest.fn(
         (value: Date) =>
@@ -66,6 +70,7 @@ describe('IdentitiesTabComponent', () => {
         },
         { provide: DocumentPreviewService, useValue: documentPreviewService },
         { provide: MatDialog, useValue: dialog },
+        { provide: AlertService, useValue: alertService },
         { provide: Dates, useValue: dateUtils },
         { provide: SettingsService, useValue: { dateFormat: 'dd MMMM yyyy', language: { code: 'en' } } },
         {
@@ -208,6 +213,45 @@ describe('IdentitiesTabComponent', () => {
       issuanceDate: null,
       expiryDate: null,
       status: 'clientIdentifierStatusType.active'
+    });
+  });
+
+  it('keeps identifier edits and reports an error when replacement document upload fails', () => {
+    const identity: any = {
+      id: 'identifier-5',
+      documentType: { id: 5, name: 'Passport' },
+      documentKey: 'OLD',
+      description: 'Old value',
+      status: 'clientIdentifierStatusType.active',
+      documents: []
+    };
+    const replacement = new File(['replacement'], 'replacement.pdf', { type: 'application/pdf' });
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+    clientsService.uploadClientIdentifierDocument.mockReturnValue(throwError(() => new Error('upload failed')) as any);
+    dialog.open.mockReturnValue({
+      afterClosed: () =>
+        of({
+          documentTypeId: 5,
+          documentKey: 'NEW',
+          description: 'New value',
+          issuanceDate: '',
+          expiryDate: '',
+          fileName: 'replacement.pdf',
+          file: replacement
+        })
+    });
+
+    component.editIdentifier(identity);
+
+    expect(clientsService.editClientIdentifier).toHaveBeenCalled();
+    expect(clientsService.uploadClientIdentifierDocument).toHaveBeenCalledWith('identifier-5', expect.any(FormData));
+    expect(identity).toMatchObject({
+      description: 'New value',
+      documentKey: 'NEW'
+    });
+    expect(alertService.alert).toHaveBeenCalledWith({
+      type: 'error',
+      message: 'Failed to upload document'
     });
   });
 });
