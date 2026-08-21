@@ -17,15 +17,21 @@ import { ClientsService } from '../../clients.service';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { DocumentPreviewService } from 'app/shared/services/document-preview.service';
 import { IdentitiesTabComponent } from './identities-tab.component';
+import { Dates } from 'app/core/utils/dates';
+import { SettingsService } from 'app/settings/settings.service';
 
 describe('IdentitiesTabComponent', () => {
   let component: IdentitiesTabComponent;
   let clientsService: jest.Mocked<ClientsService>;
   let documentPreviewService: jest.Mocked<DocumentPreviewService>;
   let markForCheck: jest.Mock;
+  let dialog: { open: jest.Mock };
+  let dateUtils: { formatDate: jest.Mock; parseDate: jest.Mock };
 
   beforeEach(async () => {
     clientsService = {
+      addClientIdentifier: jest.fn(() => of({ resourceId: 'identifier-3' })),
+      editClientIdentifier: jest.fn(() => of({})),
       downloadClientIdentificationDocument: jest.fn(() => of(new Blob(['image'], { type: 'image/png' })))
     } as any;
     documentPreviewService = {
@@ -36,6 +42,16 @@ describe('IdentitiesTabComponent', () => {
       }),
       release: jest.fn()
     } as any;
+    dialog = { open: jest.fn() };
+    dateUtils = {
+      formatDate: jest.fn(
+        (value: Date) =>
+          `formatted:${value.getFullYear()}-${String(value.getMonth() + 1).padStart(2, '0')}-${String(
+            value.getDate()
+          ).padStart(2, '0')}`
+      ),
+      parseDate: jest.fn()
+    };
 
     await TestBed.configureTestingModule({
       imports: [
@@ -49,7 +65,9 @@ describe('IdentitiesTabComponent', () => {
           useValue: { getCredentials: jest.fn(() => ({ permissions: ['ALL_FUNCTIONS'] })) }
         },
         { provide: DocumentPreviewService, useValue: documentPreviewService },
-        { provide: MatDialog, useValue: { open: jest.fn() } },
+        { provide: MatDialog, useValue: dialog },
+        { provide: Dates, useValue: dateUtils },
+        { provide: SettingsService, useValue: { dateFormat: 'dd MMMM yyyy', language: { code: 'en' } } },
         {
           provide: ActivatedRoute,
           useValue: {
@@ -70,6 +88,15 @@ describe('IdentitiesTabComponent', () => {
     component = fixture.componentInstance;
     markForCheck = jest.fn();
     (component as any).changeDetectorRef = { markForCheck };
+    (component as any).identifiersTable = { renderRows: jest.fn() };
+    component.clientIdentifierTemplate = {
+      allowedDocumentTypes: [
+        {
+          id: 5,
+          name: 'Passport'
+        }
+      ]
+    };
   });
 
   it('uses document parentEntityId when resolving a thumbnail', async () => {
@@ -102,5 +129,85 @@ describe('IdentitiesTabComponent', () => {
     expect(clientsService.downloadClientIdentificationDocument).not.toHaveBeenCalledWith('client-99', 'doc-2');
     expect(component.previewThumbnails).toEqual({ 'doc-2': 'blob:doc-2' });
     expect(markForCheck).toHaveBeenCalledTimes(1);
+  });
+
+  it('adds issuance and expiry dates to the create payload using Fineract date settings', () => {
+    const issuanceDate = new Date('2026-01-15T00:00:00');
+    const expiryDate = new Date('2028-01-15T00:00:00');
+    dialog.open.mockReturnValue({
+      afterClosed: () =>
+        of({
+          documentTypeId: 5,
+          status: 'Active',
+          documentKey: 'A-123',
+          description: 'Passport',
+          issuanceDate,
+          expiryDate
+        })
+    });
+
+    component.addIdentifier();
+
+    expect(dateUtils.formatDate).toHaveBeenCalledWith(issuanceDate, 'dd MMMM yyyy');
+    expect(dateUtils.formatDate).toHaveBeenCalledWith(expiryDate, 'dd MMMM yyyy');
+    expect(clientsService.addClientIdentifier).toHaveBeenCalledWith('client-99', {
+      documentTypeId: 5,
+      status: 'Active',
+      documentKey: 'A-123',
+      description: 'Passport',
+      dateFormat: 'dd MMMM yyyy',
+      locale: 'en',
+      issuanceDate: 'formatted:2026-01-15',
+      expiryDate: 'formatted:2028-01-15'
+    });
+  });
+
+  it('updates identifier dates without sending status and sends null when optional dates are cleared', () => {
+    const identity: any = {
+      id: 'identifier-4',
+      documentType: { id: 5, name: 'Passport' },
+      documentKey: 'OLD',
+      description: 'Old value',
+      issuanceDate: [
+        2026,
+        1,
+        15
+      ],
+      expiryDate: [
+        2028,
+        1,
+        15
+      ],
+      status: 'clientIdentifierStatusType.active'
+    };
+    dialog.open.mockReturnValue({
+      afterClosed: () =>
+        of({
+          documentTypeId: 5,
+          documentKey: 'NEW',
+          description: 'New value',
+          issuanceDate: '',
+          expiryDate: null
+        })
+    });
+
+    component.editIdentifier(identity);
+
+    expect(clientsService.editClientIdentifier).toHaveBeenCalledWith('client-99', 'identifier-4', {
+      documentTypeId: 5,
+      documentKey: 'NEW',
+      description: 'New value',
+      dateFormat: 'dd MMMM yyyy',
+      locale: 'en',
+      issuanceDate: null,
+      expiryDate: null
+    });
+    expect(identity).toMatchObject({
+      description: 'New value',
+      documentKey: 'NEW',
+      issuanceDate: null,
+      expiryDate: null,
+      status: 'clientIdentifierStatusType.active'
+    });
   });
 });
