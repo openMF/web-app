@@ -3726,7 +3726,7 @@
       "Auto Loan": "Prestito auto",
       "Financing for new or used car purchases with structured EMIs over a chosen tenure": "Finanziamento per l'acquisto di auto nuove o usate con rate mensili fisse per la durata scelta.",
       "BNPL": "BNPL",
-      "Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments": "Finanziamento \u00abcompra ora, paga dopo\u00bb per acquisti a breve termine, spesso senza interessi, saldato in rate fisse.",
+      "Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments": "Finanziamento «compra ora, paga dopo» per acquisti a breve termine, spesso senza interessi, saldato in rate fisse.",
       "Consumer Durable Loan": "Prestito per beni durevoli",
       "Point-of-sale financing for electronics, appliances, and other durable goods, often with zero-cost EMI options": "Finanziamento nel punto vendita per elettronica, elettrodomestici e altri beni durevoli, spesso con rate a interessi zero.",
       "Credit Card EMI": "Rateizzazione carta di credito",
@@ -3742,7 +3742,7 @@
       "JLG Loan": "Prestito JLG",
       "Group-backed microloans for individuals in a Joint Liability Group, typically for income-generating activities": "Microcrediti garantiti dal gruppo per i membri di un gruppo a responsabilità solidale, in genere per attività generatrici di reddito.",
       "Line of Credit": "Linea di credito",
-      "A revolving credit limit that can be drawn, repaid, and reused as needed, with interest charged only on the amount utilized": "Un fido rotativo che pu\u00f2 essere utilizzato, rimborsato e riutilizzato secondo necessit\u00e0, con interessi addebitati solo sull'importo utilizzato.",
+      "A revolving credit limit that can be drawn, repaid, and reused as needed, with interest charged only on the amount utilized": "Un fido rotativo che può essere utilizzato, rimborsato e riutilizzato secondo necessità, con interessi addebitati solo sull'importo utilizzato.",
       "Loan against property where an existing residential or commercial asset is pledged as collateral": "Prestito garantito da un immobile residenziale o commerciale esistente dato in pegno.",
       "Loan vs Securities / FD": "Prestito su titoli / deposito vincolato",
       "Credit extended against shares, mutual funds, or fixed deposits without liquidating the underlying investment": "Credito concesso su azioni, fondi comuni o depositi vincolati senza liquidare l'investimento sottostante.",
@@ -5496,7 +5496,7 @@
     }
   },
   "copilot": {
-    "brand": "Mifos Intelligence AI",
+    "brand": "Mifos X Copilot",
     "currentSession": "Sessione corrente",
     "newChat": "Nuova chat",
     "close": "Chiudi",
@@ -5505,21 +5505,21 @@
       "afternoon": "Buon pomeriggio",
       "evening": "Buonasera"
     },
-    "welcomeHeading": "Come posso aiutarti ad assistere i tuoi clienti oggi?",
+    "welcomeHeading": "Cosa vuoi fare?",
     "suggestions": {
-      "clientDetails": "Mostrami i dettagli del cliente John Doe",
-      "repaymentSchedule": "Qual è il piano di rimborso del prestito n. 107?",
-      "savingsBalance": "Mostra il saldo del conto di risparmio del cliente n. 52",
-      "overdueLoans": "Quanti prestiti sono scaduti questa settimana?"
+      "clientDetails": "Mostrami il profilo di questo cliente",
+      "repaymentSchedule": "Qual è il piano di rimborso di questo prestito?",
+      "savingsBalance": "Qual è il saldo di risparmio di questo cliente?",
+      "overdueLoans": "Quali prestiti sono scaduti questa settimana?"
     },
     "input": {
-      "placeholder": "Chiedi informazioni su clienti, prestiti o conti...",
+      "placeholder": "Chiedi di un cliente, un prestito o un conto",
       "attach": "Allega file",
       "voice": "Input vocale",
       "send": "Invia messaggio",
       "stop": "Interrompi generazione"
     },
-    "disclaimer": "Mifos Intelligence AI è progettata per assistere, non sostituire, le decisioni umane.",
+    "disclaimer": "Mifos X Copilot ti aiuta a trovare risposte. Tutto ciò che muove denaro richiede comunque la tua approvazione.",
     "nav": {
       "recentChats": "Chat recenti",
       "chat": "Chat",
@@ -5534,20 +5534,20 @@
       "delete": "Elimina conversazione"
     },
     "help": {
-      "capabilitiesTitle": "Cosa può fare Mifos Intelligence AI?",
+      "capabilitiesTitle": "Cosa può fare Mifos X Copilot",
       "capabilities": {
-        "lookup": "Cercare informazioni e profili dei clienti",
-        "loans": "Visualizzare dettagli dei prestiti e piani di rimborso",
-        "savings": "Controllare i saldi dei conti di risparmio",
-        "portfolio": "Ottenere informazioni sui portafogli dei clienti",
-        "navigate": "Navigare verso pagine specifiche in Mifos X"
+        "lookup": "Trovare un cliente e mostrarne il profilo",
+        "loans": "Mostrare dettagli del prestito e piani di rimborso",
+        "savings": "Controllare un saldo di risparmio",
+        "portfolio": "Riassumere il portafoglio di un cliente",
+        "navigate": "Portarti alla pagina giusta"
       },
-      "examplesTitle": "Esempi di richieste",
-      "importantTitle": "Importante",
+      "examplesTitle": "Cose da provare",
+      "importantTitle": "Da sapere",
       "important": {
-        "assist": "Le risposte dell'IA sono solo di supporto, non decisioni finali",
-        "verify": "Verifica sempre i dati finanziari critici prima di agire",
-        "noExecute": "L'IA non esegue transazioni autonomamente"
+        "assist": "Le risposte ti aiutano a decidere. Non sono la decisione.",
+        "verify": "Controlla i numeri prima di agire.",
+        "noExecute": "Nessun denaro si muove finché non confermi."
       }
     },
     "cardType": {
@@ -5557,18 +5557,79 @@
       "insight": "Approfondimento",
       "confirmation": "Conferma"
     },
-    "confirmWarning": "Questa azione coinvolge denaro reale. Si prega di confermare.",
-    "openAssistant": "Apri l'assistente IA",
+    "confirmWarning": "Questa operazione muove denaro reale. Controlla i dati, poi conferma.",
+    "openAssistant": "Apri Mifos X Copilot",
     "newChatTitle": "Nuova conversazione",
     "errors": {
       "invalidLength": "Il messaggio è vuoto o troppo lungo. Per favore accorcialo e riprova.",
       "injectionBlocked": "Il messaggio sembra un tentativo di aggirare le istruzioni, quindi non è stato inviato. Per favore riformulalo.",
-      "streamFailed": "Qualcosa è andato storto durante il contatto con l'assistente. Per favore riprova."
+      "streamFailed": "Mifos X Copilot non è raggiungibile. Riprova."
     },
     "confirm": {
       "reference": "Riferimento",
-      "pendingAnnouncement": "È richiesta una conferma prima di eseguire questa azione."
+      "pendingAnnouncement": "Controlla i dati prima che questa azione venga eseguita."
     },
-    "assistantAvatarAlt": "Assistente Mifos AI"
+    "assistantAvatarAlt": "Mifos X Copilot",
+    "cardLabels": {
+      "activationDate": "Data di attivazione",
+      "activeLoans": "Prestiti attivi",
+      "amount": "Importo",
+      "appliedFor": "Importo richiesto",
+      "approvalDate": "Data di approvazione",
+      "approvedAmount": "Importo approvato",
+      "approvedBy": "Approvato da",
+      "client": "Cliente",
+      "clientAccount": "Conto cliente",
+      "disbursementDate": "Data di erogazione",
+      "expectedDisbursement": "Erogazione prevista",
+      "firstName": "Nome",
+      "lastName": "Cognome",
+      "loanAccount": "Conto di prestito",
+      "mobileNumber": "Numero di cellulare",
+      "nextInstalment": "Prossima rata",
+      "office": "Ufficio",
+      "outstanding": "Importo residuo",
+      "principal": "Capitale",
+      "product": "Prodotto",
+      "reference": "Riferimento",
+      "repaymentAmount": "Importo del rimborso",
+      "repayments": "Rimborsi",
+      "savingsAccount": "Conto di risparmio",
+      "savingsBalance": "Saldo di risparmio",
+      "search": "Ricerca",
+      "status": "Stato",
+      "submittedOn": "Inserito il",
+      "transactionDate": "Data della transazione"
+    },
+    "demo": {
+      "product": "Prestito agricolo a termine",
+      "office": "Sede centrale",
+      "statusActive": "Attivo",
+      "statusApproved": "Approvato",
+      "writeIntro": "Posso farlo. Controlla i dati qui sotto e conferma prima che l'operazione venga eseguita.",
+      "approveSummary": "Approva {{product}} per {{client}}",
+      "loanIntro": "Ecco il prestito attivo di **{{client}}**:",
+      "loanTitle": "{{product}}, attivo",
+      "nextInstalment": "{{amount}}, in scadenza tra {{days}} giorni",
+      "clientIntro": "Ho trovato questo cliente:",
+      "modeNotice": "Sto funzionando in **modalità demo** e nessun gateway è ancora collegato, ma tutto quello che vedi qui (la risposta in streaming, le schede, il passaggio di conferma) è reale.",
+      "approved": "Approvato. Il prestito è ora registrato a tuo nome nella traccia di controllo.",
+      "approvedTitle": "Prestito approvato",
+      "approvedByYou": "Tu, con le tue autorizzazioni",
+      "cancelled": "Annullato. Non è stata eseguita alcuna operazione.",
+      "suggest": {
+        "schedule": "Mostra il piano di rimborso",
+        "recordRepayment": "Registra un rimborso",
+        "overdue": "Mostra i prestiti scaduti",
+        "theirLoans": "Mostra i suoi prestiti",
+        "kyc": "Mostra i documenti KYC",
+        "savings": "Controlla il saldo di risparmio",
+        "clientLoans": "Mostra i prestiti di questo cliente",
+        "approve": "Approva questo prestito",
+        "searchClient": "Cerca un cliente",
+        "disburse": "Eroga questo prestito",
+        "backToClient": "Torna al profilo del cliente"
+      }
+    }
   }
 }

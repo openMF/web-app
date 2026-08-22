@@ -25,7 +25,7 @@ const PANEL_STATE_KEY = 'copilot_panel_state';
  *   L1 deployment  -> environment.enableCopilot (master switch, zero bytes when off)
  *   L2 role        -> the logged-in user holds one of the allowed permissions
  *                     (ALL_FUNCTIONS / USE_MCP_TOOLS / READ_COPILOT). This is a
- *                     UX gate only — Fineract RBAC re-checks every tool call
+ *                     UX gate only, since Fineract RBAC re-checks every tool call
  *                     server-side with the officer's own credential.
  *   L3 user pref   -> expanded / collapsed / hidden in localStorage
  */

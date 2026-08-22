@@ -3726,7 +3726,7 @@
       "Auto Loan": "Automobilio paskola",
       "Financing for new or used car purchases with structured EMIs over a chosen tenure": "Finansavimas naujų ar naudotų automobilių pirkimui su fiksuotomis mėnesinėmis įmokomis pasirinktu laikotarpiu.",
       "BNPL": "BNPL",
-      "Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments": "\u201ePirk dabar, mok\u0117k v\u0117liau\u201c finansavimas trumpalaikiams, da\u017enai be pal\u016bkan\u0173, pirkiniams, apmokamas fiksuotomis \u012fmokomis.",
+      "Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments": "„Pirk dabar, mokėk vėliau“ finansavimas trumpalaikiams, dažnai be palūkanų, pirkiniams, apmokamas fiksuotomis įmokomis.",
       "Consumer Durable Loan": "Ilgalaikio vartojimo prekių paskola",
       "Point-of-sale financing for electronics, appliances, and other durable goods, often with zero-cost EMI options": "Finansavimas pardavimo vietoje elektronikai, buitinei technikai ir kitoms ilgalaikio vartojimo prekėms, dažnai su nemokamomis įmokomis.",
       "Credit Card EMI": "Kredito kortelės dalinis mokėjimas",
@@ -3738,17 +3738,17 @@
       "Quick secured loan against pledged gold ornaments or coins, with fast disbursal and minimal paperwork": "Greita užtikrinta paskola už įkeistus aukso dirbinius ar monetas, su skubiu išmokėjimu ir minimaliais dokumentais.",
       "Home Loan": "Būsto paskola",
       "Invoice Discounting": "Sąskaitų faktūrų diskontavimas",
-      "Short-term financing against unpaid invoices to improve business cash flow before customer payment is due": "Trumpalaikis finansavimas pagal neapmok\u0117tas s\u0105skaitas fakt\u016bras, gerinantis \u012fmon\u0117s pinig\u0173 srautus dar prie\u0161 kliento mok\u0117jimo termin\u0105.",
+      "Short-term financing against unpaid invoices to improve business cash flow before customer payment is due": "Trumpalaikis finansavimas pagal neapmokėtas sąskaitas faktūras, gerinantis įmonės pinigų srautus dar prieš kliento mokėjimo terminą.",
       "JLG Loan": "JLG paskola",
       "Group-backed microloans for individuals in a Joint Liability Group, typically for income-generating activities": "Grupės garantuojami mikrokreditai solidariosios atsakomybės grupės nariams, paprastai pajamas generuojančiai veiklai.",
       "Line of Credit": "Kredito linija",
-      "A revolving credit limit that can be drawn, repaid, and reused as needed, with interest charged only on the amount utilized": "Atnaujinamoji kredito linija, kuri\u0105 galima pagal poreik\u012f i\u0161siimti, gr\u0105\u017einti ir naudoti pakartotinai; pal\u016bkanos skai\u010diuojamos tik nuo panaudotos sumos.",
+      "A revolving credit limit that can be drawn, repaid, and reused as needed, with interest charged only on the amount utilized": "Atnaujinamoji kredito linija, kurią galima pagal poreikį išsiimti, grąžinti ir naudoti pakartotinai; palūkanos skaičiuojamos tik nuo panaudotos sumos.",
       "Loan against property where an existing residential or commercial asset is pledged as collateral": "Paskola, užtikrinta esamu gyvenamuoju ar komerciniu nekilnojamuoju turtu.",
       "Loan vs Securities / FD": "Paskola už vertybinius popierius / terminuotąjį indėlį",
       "Credit extended against shares, mutual funds, or fixed deposits without liquidating the underlying investment": "Kreditas, suteikiamas už akcijas, investicinius fondus ar terminuotuosius indėlius, neparduodant pačios investicijos.",
       "Long-tenure financing to purchase, construct, or renovate a residential property": "Ilgalaikis finansavimas gyvenamajam būstui įsigyti, statyti ar renovuoti.",
       "Merchant Cash Advance": "Prekybininko grynųjų avansas",
-      "Working capital advanced against future card or digital sales, repaid as a percentage of daily transactions": "Apyvartinis kapitalas, avansuojamas pagal b\u016bsimus mok\u0117jimus kortele ar skaitmeninius pardavimus ir gr\u0105\u017einamas kaip dienos operacij\u0173 procentas.",
+      "Working capital advanced against future card or digital sales, repaid as a percentage of daily transactions": "Apyvartinis kapitalas, avansuojamas pagal būsimus mokėjimus kortele ar skaitmeninius pardavimus ir grąžinamas kaip dienos operacijų procentas.",
       "Mortgage Loan (LAP)": "Hipotekos paskola (LAP)",
       "No resets have been recorded for this loan": "Šiai paskolai neužregistruota jokių atstatymų.",
       "No variations added yet": "Kol kas nepridėta jokių variacijų",
@@ -3756,7 +3756,7 @@
       "A row with the greater than condition must repeat the cycle number above it": "Eilutė su sąlyga „daugiau nei“ turi pakartoti aukščiau esančios eilutės ciklo numerį",
       "Fix the loan cycle variations before creating the product": "Prieš kurdami produktą pataisykite paskolos ciklo variacijas",
       "Personal Loan": "Vartojimo paskola",
-      "Unsecured funding for personal needs like travel, medical expenses, or weddings, with flexible tenure and minimal documentation": "Nesuteikiant u\u017estato teikiamas finansavimas asmeniniams poreikiams, tokiems kaip kelion\u0117s, medicinos i\u0161laidos ar vestuv\u0117s, su lanks\u010diu terminu ir minimaliais dokumentais.",
+      "Unsecured funding for personal needs like travel, medical expenses, or weddings, with flexible tenure and minimal documentation": "Nesuteikiant užstato teikiamas finansavimas asmeniniams poreikiams, tokiems kaip kelionės, medicinos išlaidos ar vestuvės, su lanksčiu terminu ir minimaliais dokumentais.",
       "Custom / Advanced": "Pasirinktinė / išplėstinė",
       "Two Wheeler Loan": "Motociklų ir motorolerių paskola",
       "Finance for new or used two-wheelers with quick approval and flexible down payment options": "Naujų ar naudotų motociklų ir motorolerių finansavimas su greitu patvirtinimu ir lanksčia pradine įmoka.",
@@ -5496,7 +5496,7 @@
     }
   },
   "copilot": {
-    "brand": "Mifos Intelligence AI",
+    "brand": "Mifos X Copilot",
     "currentSession": "Dabartinė sesija",
     "newChat": "Naujas pokalbis",
     "close": "Uždaryti",
@@ -5505,21 +5505,21 @@
       "afternoon": "Laba diena",
       "evening": "Labas vakaras"
     },
-    "welcomeHeading": "Kaip galiu padėti jums aptarnauti klientus šiandien?",
+    "welcomeHeading": "Ką norėtumėte atlikti?",
     "suggestions": {
-      "clientDetails": "Parodykite kliento John Doe informaciją",
-      "repaymentSchedule": "Koks yra paskolos Nr. 107 grąžinimo grafikas?",
-      "savingsBalance": "Parodykite kliento Nr. 52 taupomosios sąskaitos likutį",
-      "overdueLoans": "Kiek paskolų yra pradelsta šią savaitę?"
+      "clientDetails": "Parodykite šio kliento profilį",
+      "repaymentSchedule": "Koks šios paskolos grąžinimo grafikas?",
+      "savingsBalance": "Koks šio kliento santaupų likutis?",
+      "overdueLoans": "Kurios paskolos pradelstos šią savaitę?"
     },
     "input": {
-      "placeholder": "Klauskite apie klientus, paskolas ar sąskaitas...",
+      "placeholder": "Klauskite apie klientą, paskolą ar sąskaitą",
       "attach": "Pridėti failą",
       "voice": "Balso įvestis",
       "send": "Siųsti žinutę",
       "stop": "Stabdyti generavimą"
     },
-    "disclaimer": "Mifos Intelligence AI skirta padėti, o ne pakeisti žmogaus sprendimų priėmimą.",
+    "disclaimer": "Mifos X Copilot padeda rasti atsakymus. Bet kokiam pinigų judėjimui vis tiek reikia jūsų patvirtinimo.",
     "nav": {
       "recentChats": "Naujausi pokalbiai",
       "chat": "Pokalbis",
@@ -5534,20 +5534,20 @@
       "delete": "Ištrinti pokalbį"
     },
     "help": {
-      "capabilitiesTitle": "Ką gali Mifos Intelligence AI?",
+      "capabilitiesTitle": "Ką gali Mifos X Copilot",
       "capabilities": {
-        "lookup": "Ieškoti klientų informacijos ir profilių",
-        "loans": "Peržiūrėti paskolų informaciją ir grąžinimo grafikus",
-        "savings": "Tikrinti taupomųjų sąskaitų likučius",
-        "portfolio": "Gauti įžvalgų apie klientų portfelius",
-        "navigate": "Pereiti į konkrečius Mifos X puslapius"
+        "lookup": "Rasti klientą ir parodyti jo profilį",
+        "loans": "Parodyti paskolos duomenis ir grąžinimo grafikus",
+        "savings": "Patikrinti santaupų likutį",
+        "portfolio": "Apibendrinti kliento portfelį",
+        "navigate": "Nuvesti į reikiamą puslapį"
       },
-      "examplesTitle": "Užklausų pavyzdžiai",
-      "importantTitle": "Svarbu",
+      "examplesTitle": "Ką išbandyti",
+      "importantTitle": "Verta žinoti",
       "important": {
-        "assist": "AI atsakymai skirti tik pagalbai, o ne galutiniams sprendimams",
-        "verify": "Prieš veikdami visada patikrinkite svarbius finansinius duomenis",
-        "noExecute": "AI pati nevykdo operacijų"
+        "assist": "Atsakymai padeda apsispręsti. Jie nėra sprendimas.",
+        "verify": "Patikrinkite skaičius prieš jais remdamiesi.",
+        "noExecute": "Pinigai nejuda, kol nepatvirtinate."
       }
     },
     "cardType": {
@@ -5557,18 +5557,79 @@
       "insight": "Įžvalga",
       "confirmation": "Patvirtinimas"
     },
-    "confirmWarning": "Šis veiksmas susijęs su tikrais pinigais. Patvirtinkite.",
-    "openAssistant": "Atidaryti DI asistentą",
+    "confirmWarning": "Čia juda tikri pinigai. Patikrinkite duomenis ir patvirtinkite.",
+    "openAssistant": "Atidaryti Mifos X Copilot",
     "newChatTitle": "Naujas pokalbis",
     "errors": {
       "invalidLength": "Žinutė tuščia arba per ilga. Sutrumpinkite ją ir bandykite dar kartą.",
       "injectionBlocked": "Žinutė atrodo kaip bandymas apeiti nurodymus, todėl nebuvo išsiųsta. Perfrazuokite ją.",
-      "streamFailed": "Jungiantis prie asistento įvyko klaida. Bandykite dar kartą."
+      "streamFailed": "Nepavyko pasiekti Mifos X Copilot. Bandykite dar kartą."
     },
     "confirm": {
       "reference": "Nuoroda",
-      "pendingAnnouncement": "Prieš vykdant šį veiksmą reikalingas patvirtinimas."
+      "pendingAnnouncement": "Prieš vykdant šį veiksmą patikrinkite duomenis."
     },
-    "assistantAvatarAlt": "Mifos DI asistentas"
+    "assistantAvatarAlt": "Mifos X Copilot",
+    "cardLabels": {
+      "activationDate": "Aktyvinimo data",
+      "activeLoans": "Aktyvios paskolos",
+      "amount": "Suma",
+      "appliedFor": "Prašoma suma",
+      "approvalDate": "Patvirtinimo data",
+      "approvedAmount": "Patvirtinta suma",
+      "approvedBy": "Patvirtino",
+      "client": "Klientas",
+      "clientAccount": "Kliento sąskaita",
+      "disbursementDate": "Išmokėjimo data",
+      "expectedDisbursement": "Numatomas išmokėjimas",
+      "firstName": "Pirmas vardas",
+      "lastName": "Pavardė",
+      "loanAccount": "Paskolos sąskaita",
+      "mobileNumber": "Mobiliojo nr.",
+      "nextInstalment": "Kita įmoka",
+      "office": "Biuras",
+      "outstanding": "Neapmokėta suma",
+      "principal": "Pagrindinė suma",
+      "product": "Produktas",
+      "reference": "Nuoroda",
+      "repaymentAmount": "Grąžinimo suma",
+      "repayments": "Grąžinimai",
+      "savingsAccount": "Taupomoji sąskaita",
+      "savingsBalance": "Santaupų likutis",
+      "search": "Paieška",
+      "status": "Būsena",
+      "submittedOn": "Pateikta",
+      "transactionDate": "Sandorio data"
+    },
+    "demo": {
+      "product": "Žemės ūkio terminuotoji paskola",
+      "office": "Pagrindinis biuras",
+      "statusActive": "Aktyvus",
+      "statusApproved": "Patvirtinta",
+      "writeIntro": "Tai galiu atlikti. Peržiūrėkite toliau pateiktus duomenis ir patvirtinkite, kad galėčiau įvykdyti.",
+      "approveSummary": "Patvirtinti: {{product}} — klientas {{client}}",
+      "loanIntro": "Štai aktyvi kliento **{{client}}** paskola:",
+      "loanTitle": "{{product}}, aktyvi",
+      "nextInstalment": "{{amount}}, terminas po {{days}} d.",
+      "clientIntro": "Radau šį klientą:",
+      "modeNotice": "Veikiu **demonstraciniu režimu**, vartai dar neprijungti, tačiau viskas, ką čia matote (srautinis atsakymas, kortelės, patvirtinimo žingsnis), yra tikra.",
+      "approved": "Patvirtinta. Paskola įrašyta audito žurnale jūsų vartotojo vardu.",
+      "approvedTitle": "Paskola patvirtinta",
+      "approvedByYou": "Jūs, su savo prisijungimu ir leidimais",
+      "cancelled": "Atšaukta. Nieko nebuvo įvykdyta.",
+      "suggest": {
+        "schedule": "Parodykite grąžinimo grafiką",
+        "recordRepayment": "Užregistruokite grąžinimą",
+        "overdue": "Parodykite pradelstas paskolas",
+        "theirLoans": "Parodykite šio kliento paskolas",
+        "kyc": "Parodykite KYC dokumentus",
+        "savings": "Patikrinkite santaupų likutį",
+        "clientLoans": "Parodykite šio kliento paskolas",
+        "approve": "Patvirtinkite šią paskolą",
+        "searchClient": "Ieškokite kliento",
+        "disburse": "Išmokėkite šią paskolą",
+        "backToClient": "Grįžkite į kliento profilį"
+      }
+    }
   }
 }

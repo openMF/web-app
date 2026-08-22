@@ -3729,7 +3729,7 @@
       "Auto Loan": "Autokredit",
       "Financing for new or used car purchases with structured EMIs over a chosen tenure": "Finanzierung für den Kauf von Neu- oder Gebrauchtwagen mit festen monatlichen Raten über eine gewählte Laufzeit.",
       "BNPL": "BNPL",
-      "Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments": "Finanzierung kurzfristiger, h\u00e4ufig zinsfreier K\u00e4ufe nach dem Prinzip \u201eJetzt kaufen, sp\u00e4ter bezahlen\u201c, die in festen Raten beglichen werden.",
+      "Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments": "Finanzierung kurzfristiger, häufig zinsfreier Käufe nach dem Prinzip „Jetzt kaufen, später bezahlen“, die in festen Raten beglichen werden.",
       "Consumer Durable Loan": "Konsumgüterkredit",
       "Point-of-sale financing for electronics, appliances, and other durable goods, often with zero-cost EMI options": "Finanzierung direkt am Verkaufsort für Elektronik, Haushaltsgeräte und andere langlebige Güter, oft mit zinsfreien Ratenoptionen.",
       "Credit Card EMI": "Kreditkarten-Ratenzahlung",
@@ -3741,17 +3741,17 @@
       "Quick secured loan against pledged gold ornaments or coins, with fast disbursal and minimal paperwork": "Schneller, durch verpfändeten Goldschmuck oder Goldmünzen besicherter Kredit mit zügiger Auszahlung und geringem bürokratischem Aufwand.",
       "Home Loan": "Wohnbaukredit",
       "Invoice Discounting": "Rechnungsvorfinanzierung",
-      "Short-term financing against unpaid invoices to improve business cash flow before customer payment is due": "Kurzfristige Finanzierung gegen unbezahlte Rechnungen, um den Gesch\u00e4ftscashflow vor F\u00e4lligkeit der Kundenzahlung zu verbessern.",
+      "Short-term financing against unpaid invoices to improve business cash flow before customer payment is due": "Kurzfristige Finanzierung gegen unbezahlte Rechnungen, um den Geschäftscashflow vor Fälligkeit der Kundenzahlung zu verbessern.",
       "JLG Loan": "JLG-Kredit",
       "Group-backed microloans for individuals in a Joint Liability Group, typically for income-generating activities": "Gruppengestützte Kleinkredite für Mitglieder einer Solidarhaftungsgruppe, in der Regel für einkommensschaffende Tätigkeiten.",
       "Line of Credit": "Kreditlinie",
-      "A revolving credit limit that can be drawn, repaid, and reused as needed, with interest charged only on the amount utilized": "Ein revolvierender Kreditrahmen, der bei Bedarf in Anspruch genommen, zur\u00fcckgezahlt und erneut genutzt werden kann; Zinsen fallen nur auf den genutzten Betrag an.",
+      "A revolving credit limit that can be drawn, repaid, and reused as needed, with interest charged only on the amount utilized": "Ein revolvierender Kreditrahmen, der bei Bedarf in Anspruch genommen, zurückgezahlt und erneut genutzt werden kann; Zinsen fallen nur auf den genutzten Betrag an.",
       "Loan against property where an existing residential or commercial asset is pledged as collateral": "Darlehen, bei dem eine bestehende Wohn- oder Gewerbeimmobilie als Sicherheit dient.",
       "Loan vs Securities / FD": "Kredit gegen Wertpapiere / Festgeld",
       "Credit extended against shares, mutual funds, or fixed deposits without liquidating the underlying investment": "Kredit gegen Aktien, Investmentfonds oder Festgeld, ohne die zugrunde liegende Anlage aufzulösen.",
       "Long-tenure financing to purchase, construct, or renovate a residential property": "Langfristige Finanzierung für den Kauf, den Bau oder die Renovierung einer Wohnimmobilie.",
       "Merchant Cash Advance": "Händlervorschuss",
-      "Working capital advanced against future card or digital sales, repaid as a percentage of daily transactions": "Betriebskapital, das gegen k\u00fcnftige Karten- oder Digitalums\u00e4tze vorgestreckt und als Prozentsatz der t\u00e4glichen Transaktionen zur\u00fcckgezahlt wird.",
+      "Working capital advanced against future card or digital sales, repaid as a percentage of daily transactions": "Betriebskapital, das gegen künftige Karten- oder Digitalumsätze vorgestreckt und als Prozentsatz der täglichen Transaktionen zurückgezahlt wird.",
       "Mortgage Loan (LAP)": "Hypothekendarlehen (LAP)",
       "No resets have been recorded for this loan": "Für dieses Darlehen wurden keine Zurücksetzungen erfasst.",
       "No variations added yet": "Noch keine Varianten hinzugefügt",
@@ -3759,7 +3759,7 @@
       "A row with the greater than condition must repeat the cycle number above it": "Eine Zeile mit der Bedingung „größer als“ muss die Zyklusnummer der Zeile darüber wiederholen",
       "Fix the loan cycle variations before creating the product": "Korrigieren Sie die Kreditzyklus-Varianten, bevor Sie das Produkt erstellen",
       "Personal Loan": "Privatkredit",
-      "Unsecured funding for personal needs like travel, medical expenses, or weddings, with flexible tenure and minimal documentation": "Unbesicherte Finanzierung f\u00fcr pers\u00f6nliche Bed\u00fcrfnisse wie Reisen, medizinische Ausgaben oder Hochzeiten, mit flexibler Laufzeit und minimalem Dokumentationsaufwand.",
+      "Unsecured funding for personal needs like travel, medical expenses, or weddings, with flexible tenure and minimal documentation": "Unbesicherte Finanzierung für persönliche Bedürfnisse wie Reisen, medizinische Ausgaben oder Hochzeiten, mit flexibler Laufzeit und minimalem Dokumentationsaufwand.",
       "Custom / Advanced": "Benutzerdefiniert / Erweitert",
       "Two Wheeler Loan": "Zweiradkredit",
       "Finance for new or used two-wheelers with quick approval and flexible down payment options": "Finanzierung neuer oder gebrauchter Zweiräder mit schneller Zusage und flexibler Anzahlung.",
@@ -5785,7 +5785,7 @@
     }
   },
   "copilot": {
-    "brand": "Mifos Intelligence AI",
+    "brand": "Mifos X Copilot",
     "currentSession": "Aktuelle Sitzung",
     "newChat": "Neuer Chat",
     "close": "Schließen",
@@ -5794,21 +5794,21 @@
       "afternoon": "Guten Tag",
       "evening": "Guten Abend"
     },
-    "welcomeHeading": "Wie kann ich Sie heute bei der Betreuung Ihrer Kunden unterstützen?",
+    "welcomeHeading": "Was möchten Sie tun?",
     "suggestions": {
-      "clientDetails": "Zeige mir die Details des Kunden John Doe",
-      "repaymentSchedule": "Wie lautet der Tilgungsplan für Kredit Nr. 107?",
-      "savingsBalance": "Zeige den Kontostand des Sparkontos von Kunde Nr. 52",
-      "overdueLoans": "Wie viele Kredite sind diese Woche überfällig?"
+      "clientDetails": "Zeigen Sie das Profil dieses Kunden",
+      "repaymentSchedule": "Wie lautet der Tilgungsplan dieses Kredits?",
+      "savingsBalance": "Wie hoch ist das Sparguthaben dieses Kunden?",
+      "overdueLoans": "Welche Kredite sind diese Woche überfällig?"
     },
     "input": {
-      "placeholder": "Fragen Sie zu Kunden, Krediten oder Konten...",
+      "placeholder": "Fragen Sie nach einem Kunden, einem Kredit oder einem Konto",
       "attach": "Datei anhängen",
       "voice": "Spracheingabe",
       "send": "Nachricht senden",
       "stop": "Generierung stoppen"
     },
-    "disclaimer": "Mifos Intelligence AI soll die menschliche Entscheidungsfindung unterstützen, nicht ersetzen.",
+    "disclaimer": "Mifos X Copilot hilft Ihnen, Antworten zu finden. Alles, was Geld bewegt, benötigt weiterhin Ihre Freigabe.",
     "nav": {
       "recentChats": "Letzte Chats",
       "chat": "Chat",
@@ -5823,20 +5823,20 @@
       "delete": "Unterhaltung löschen"
     },
     "help": {
-      "capabilitiesTitle": "Was kann Mifos Intelligence AI?",
+      "capabilitiesTitle": "Was Mifos X Copilot kann",
       "capabilities": {
-        "lookup": "Kundeninformationen und -profile nachschlagen",
+        "lookup": "Einen Kunden finden und sein Profil anzeigen",
         "loans": "Kreditdetails und Tilgungspläne anzeigen",
-        "savings": "Sparkontostände prüfen",
-        "portfolio": "Einblicke in Kundenportfolios erhalten",
-        "navigate": "Zu bestimmten Seiten in Mifos X navigieren"
+        "savings": "Ein Sparguthaben prüfen",
+        "portfolio": "Das Portfolio eines Kunden zusammenfassen",
+        "navigate": "Sie zur richtigen Seite bringen"
       },
-      "examplesTitle": "Beispielfragen",
-      "importantTitle": "Wichtig",
+      "examplesTitle": "Zum Ausprobieren",
+      "importantTitle": "Gut zu wissen",
       "important": {
-        "assist": "KI-Antworten dienen nur als Hilfe, nicht als endgültige Entscheidungen",
-        "verify": "Überprüfen Sie immer kritische Finanzdaten, bevor Sie handeln",
-        "noExecute": "Die KI führt keine Transaktionen selbstständig aus"
+        "assist": "Antworten helfen Ihnen bei der Entscheidung. Sie sind nicht die Entscheidung.",
+        "verify": "Prüfen Sie die Zahlen, bevor Sie danach handeln.",
+        "noExecute": "Es wird kein Geld bewegt, bevor Sie es bestätigen."
       }
     },
     "cardType": {
@@ -5846,18 +5846,79 @@
       "insight": "Einblick",
       "confirmation": "Bestätigung"
     },
-    "confirmWarning": "Diese Aktion betrifft echtes Geld. Bitte bestätigen Sie.",
-    "openAssistant": "KI-Assistenten öffnen",
+    "confirmWarning": "Hier wird echtes Geld bewegt. Prüfen Sie die Angaben und bestätigen Sie dann.",
+    "openAssistant": "Mifos X Copilot öffnen",
     "newChatTitle": "Neue Unterhaltung",
     "errors": {
       "invalidLength": "Die Nachricht ist leer oder zu lang. Bitte kürzen Sie sie und versuchen Sie es erneut.",
       "injectionBlocked": "Die Nachricht sieht wie ein Versuch aus, die Anweisungen zu umgehen, und wurde daher nicht gesendet. Bitte formulieren Sie sie um.",
-      "streamFailed": "Bei der Verbindung zum Assistenten ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+      "streamFailed": "Mifos X Copilot ist nicht erreichbar. Bitte versuchen Sie es erneut."
     },
     "confirm": {
       "reference": "Referenz",
-      "pendingAnnouncement": "Vor Ausführung dieser Aktion ist eine Bestätigung erforderlich."
+      "pendingAnnouncement": "Prüfen Sie die Angaben, bevor diese Aktion ausgeführt wird."
     },
-    "assistantAvatarAlt": "Mifos KI-Assistent"
+    "assistantAvatarAlt": "Mifos X Copilot",
+    "cardLabels": {
+      "activationDate": "Aktivierungsdatum",
+      "activeLoans": "Aktive Kredite",
+      "amount": "Betrag",
+      "appliedFor": "Beantragt",
+      "approvalDate": "Genehmigungsdatum",
+      "approvedAmount": "Genehmigter Betrag",
+      "approvedBy": "Genehmigt durch",
+      "client": "Kunde",
+      "clientAccount": "Kundenkonto",
+      "disbursementDate": "Auszahlungsdatum",
+      "expectedDisbursement": "Voraussichtliche Auszahlung",
+      "firstName": "Vorname",
+      "lastName": "Nachname",
+      "loanAccount": "Kreditkonto",
+      "mobileNumber": "Handynummer",
+      "nextInstalment": "Nächste Rate",
+      "office": "Büro",
+      "outstanding": "Ausstehender Betrag",
+      "principal": "Kapital",
+      "product": "Produkt",
+      "reference": "Referenz",
+      "repaymentAmount": "Rückzahlungsbetrag",
+      "repayments": "Rückzahlungen",
+      "savingsAccount": "Sparkonto",
+      "savingsBalance": "Sparguthaben",
+      "search": "Suche",
+      "status": "Status",
+      "submittedOn": "Eingereicht am",
+      "transactionDate": "Transaktionsdatum"
+    },
+    "demo": {
+      "product": "Agrar-Ratenkredit",
+      "office": "Hauptbüro",
+      "statusActive": "Aktiv",
+      "statusApproved": "Genehmigt",
+      "writeIntro": "Das kann ich für Sie erledigen. Bitte überprüfen Sie die Angaben unten und bestätigen Sie, bevor ich die Aktion ausführe.",
+      "approveSummary": "{{product}} für {{client}} genehmigen",
+      "loanIntro": "Hier ist der aktive Kredit von **{{client}}**:",
+      "loanTitle": "{{product}}, aktiv",
+      "nextInstalment": "{{amount}}, fällig in {{days}} Tagen",
+      "clientIntro": "Ich habe diesen Kunden gefunden:",
+      "modeNotice": "Ich befinde mich im **Demomodus**, es ist noch kein Gateway verbunden. Alles, was Sie hier sehen (die gestreamte Antwort, die Karten, der Bestätigungsschritt), ist jedoch echt.",
+      "approved": "Genehmigt. Der Kredit ist nun im Prüfpfad unter Ihrem Benutzer erfasst.",
+      "approvedTitle": "Kredit genehmigt",
+      "approvedByYou": "Sie, mit Ihrer Anmeldung und Ihren eigenen Berechtigungen",
+      "cancelled": "Abgebrochen. Es wurde nichts ausgeführt.",
+      "suggest": {
+        "schedule": "Zeigen Sie den Tilgungsplan",
+        "recordRepayment": "Erfassen Sie eine Rückzahlung",
+        "overdue": "Zeigen Sie überfällige Kredite",
+        "theirLoans": "Zeigen Sie die Kredite dieser Person",
+        "kyc": "Zeigen Sie die KYC-Dokumente",
+        "savings": "Prüfen Sie das Sparguthaben",
+        "clientLoans": "Zeigen Sie die Kredite dieses Kunden",
+        "approve": "Genehmigen Sie diesen Kredit",
+        "searchClient": "Suchen Sie nach einem Kunden",
+        "disburse": "Zahlen Sie diesen Kredit aus",
+        "backToClient": "Zurück zum Kundenprofil"
+      }
+    }
   }
 }

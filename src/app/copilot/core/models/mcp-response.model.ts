@@ -12,7 +12,7 @@ import { CopilotContext } from './copilot-context.model';
 /**
  * Wire contract v1 (ADR-001) between the web-app and the Copilot gateway.
  * The gateway streams typed SSE events; the frontend never derives approval
- * state from model prose — action cards arrive as structured events.
+ * state from model prose. Action cards arrive as structured events.
  */
 
 /** Discriminator for events arriving over the SSE stream. */
@@ -23,16 +23,35 @@ export type McpErrorCode =
   'AUTH_EXPIRED' | 'PERMISSION_DENIED' | 'LLM_UNAVAILABLE' | 'TOOL_FAILED' | 'RATE_LIMITED' | 'CANCELLED' | 'INTERNAL';
 
 /**
+ * One labelled line on a confirmation card, as the gateway wrote it.
+ *
+ * The gateway resolves the account before the card is shown, so the label is already
+ * chosen and the value already formatted. The panel translates the label and renders
+ * the value as given; it does no formatting of its own, because the value on screen has
+ * to be the one the gateway will act on.
+ */
+export interface CardRow {
+  label: string;
+  value: string;
+}
+
+/**
  * A write action awaiting human confirmation. Constructed server-side from the
- * model's parsed function call — never authored by the model as prose.
+ * model's parsed function call, never authored by the model as prose.
  */
 export interface PendingAction {
   /** Server-issued id used to approve/reject via the decision endpoint. */
   cardId: string;
   /** MCP tool the gateway will execute on approval. */
   tool: string;
-  /** Parsed tool arguments, shown to the officer verbatim. */
+  /** Parsed tool arguments: the machine record of exactly what will execute. */
   args: Record<string, unknown>;
+  /**
+   * What the officer reads: labelled, formatted rows the gateway built by reading the
+   * account first, so the card names the client, account and product instead of echoing
+   * raw ids and unformatted numbers back.
+   */
+  display: CardRow[];
   /** One-sentence summary of what will happen, built by the gateway. */
   humanSummary: string;
   /** Display-only. The gateway's copy is authoritative (ADR-001 §04). */

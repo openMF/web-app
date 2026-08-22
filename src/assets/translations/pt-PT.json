@@ -3726,7 +3726,7 @@
       "Auto Loan": "Crédito automóvel",
       "Financing for new or used car purchases with structured EMIs over a chosen tenure": "Financiamento para a compra de automóveis novos ou usados com prestações mensais fixas durante o prazo escolhido.",
       "BNPL": "BNPL",
-      "Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments": "Financiamento \u00abcompre agora, pague depois\u00bb para compras de curto prazo, muitas vezes sem juros, liquidado em presta\u00e7\u00f5es fixas.",
+      "Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments": "Financiamento «compre agora, pague depois» para compras de curto prazo, muitas vezes sem juros, liquidado em prestações fixas.",
       "Consumer Durable Loan": "Crédito para bens duradouros",
       "Point-of-sale financing for electronics, appliances, and other durable goods, often with zero-cost EMI options": "Financiamento no ponto de venda para eletrónica, eletrodomésticos e outros bens duradouros, muitas vezes com prestações sem juros.",
       "Credit Card EMI": "Pagamento a prestações com cartão de crédito",
@@ -3742,13 +3742,13 @@
       "JLG Loan": "Crédito JLG",
       "Group-backed microloans for individuals in a Joint Liability Group, typically for income-generating activities": "Microcréditos garantidos pelo grupo para membros de um grupo de responsabilidade solidária, normalmente para atividades geradoras de rendimento.",
       "Line of Credit": "Linha de crédito",
-      "A revolving credit limit that can be drawn, repaid, and reused as needed, with interest charged only on the amount utilized": "Uma linha de cr\u00e9dito renov\u00e1vel que pode ser utilizada, reembolsada e reutilizada conforme necess\u00e1rio, com juros cobrados apenas sobre o montante utilizado.",
+      "A revolving credit limit that can be drawn, repaid, and reused as needed, with interest charged only on the amount utilized": "Uma linha de crédito renovável que pode ser utilizada, reembolsada e reutilizada conforme necessário, com juros cobrados apenas sobre o montante utilizado.",
       "Loan against property where an existing residential or commercial asset is pledged as collateral": "Empréstimo garantido por um imóvel residencial ou comercial existente dado em garantia.",
       "Loan vs Securities / FD": "Crédito sobre títulos / depósito a prazo",
       "Credit extended against shares, mutual funds, or fixed deposits without liquidating the underlying investment": "Crédito concedido sobre ações, fundos de investimento ou depósitos a prazo sem liquidar o investimento subjacente.",
       "Long-tenure financing to purchase, construct, or renovate a residential property": "Financiamento de longo prazo para comprar, construir ou renovar um imóvel residencial.",
       "Merchant Cash Advance": "Adiantamento de tesouraria a comerciantes",
-      "Working capital advanced against future card or digital sales, repaid as a percentage of daily transactions": "Fundo de maneio adiantado sobre vendas futuras com cart\u00e3o ou digitais, reembolsado como uma percentagem das transa\u00e7\u00f5es di\u00e1rias.",
+      "Working capital advanced against future card or digital sales, repaid as a percentage of daily transactions": "Fundo de maneio adiantado sobre vendas futuras com cartão ou digitais, reembolsado como uma percentagem das transações diárias.",
       "Mortgage Loan (LAP)": "Crédito hipotecário (LAP)",
       "No resets have been recorded for this loan": "Não foram registadas redefinições para este empréstimo.",
       "No variations added yet": "Ainda não foram adicionadas variações",
@@ -3756,7 +3756,7 @@
       "A row with the greater than condition must repeat the cycle number above it": "Uma linha com a condição «maior que» deve repetir o número de ciclo da linha acima",
       "Fix the loan cycle variations before creating the product": "Corrija as variações por ciclo de crédito antes de criar o produto",
       "Personal Loan": "Empréstimo pessoal",
-      "Unsecured funding for personal needs like travel, medical expenses, or weddings, with flexible tenure and minimal documentation": "Financiamento sem garantia para necessidades pessoais como viagens, despesas m\u00e9dicas ou casamentos, com prazo flex\u00edvel e documenta\u00e7\u00e3o m\u00ednima.",
+      "Unsecured funding for personal needs like travel, medical expenses, or weddings, with flexible tenure and minimal documentation": "Financiamento sem garantia para necessidades pessoais como viagens, despesas médicas ou casamentos, com prazo flexível e documentação mínima.",
       "Custom / Advanced": "Personalizado / Avançado",
       "Two Wheeler Loan": "Empréstimo para veículos de duas rodas",
       "Finance for new or used two-wheelers with quick approval and flexible down payment options": "Financiamento de veículos de duas rodas novos ou usados, com aprovação rápida e pagamento inicial flexível.",
@@ -5495,7 +5495,7 @@
     }
   },
   "copilot": {
-    "brand": "Mifos Intelligence AI",
+    "brand": "Mifos X Copilot",
     "currentSession": "Sessão atual",
     "newChat": "Nova conversa",
     "close": "Fechar",
@@ -5504,21 +5504,21 @@
       "afternoon": "Boa tarde",
       "evening": "Boa noite"
     },
-    "welcomeHeading": "Como posso ajudá-lo a apoiar os seus clientes hoje?",
+    "welcomeHeading": "O que pretende fazer?",
     "suggestions": {
-      "clientDetails": "Mostre-me os detalhes do cliente John Doe",
-      "repaymentSchedule": "Qual é o plano de reembolso do empréstimo n.º 107?",
-      "savingsBalance": "Mostre o saldo da conta poupança do cliente n.º 52",
-      "overdueLoans": "Quantos empréstimos estão em atraso esta semana?"
+      "clientDetails": "Mostre o perfil deste cliente",
+      "repaymentSchedule": "Qual é o plano de reembolso deste empréstimo?",
+      "savingsBalance": "Qual é o saldo de poupança deste cliente?",
+      "overdueLoans": "Que empréstimos estão em atraso esta semana?"
     },
     "input": {
-      "placeholder": "Pergunte sobre clientes, empréstimos ou contas...",
+      "placeholder": "Pergunte sobre um cliente, um empréstimo ou uma conta",
       "attach": "Anexar ficheiro",
       "voice": "Entrada de voz",
       "send": "Enviar mensagem",
       "stop": "Parar geração"
     },
-    "disclaimer": "O Mifos Intelligence AI foi concebido para auxiliar, não substituir, a tomada de decisões humana.",
+    "disclaimer": "O Mifos X Copilot ajuda a encontrar respostas. Tudo o que movimenta dinheiro continua a precisar da sua aprovação.",
     "nav": {
       "recentChats": "Conversas recentes",
       "chat": "Conversa",
@@ -5533,20 +5533,20 @@
       "delete": "Eliminar conversa"
     },
     "help": {
-      "capabilitiesTitle": "O que pode o Mifos Intelligence AI fazer?",
+      "capabilitiesTitle": "O que o Mifos X Copilot pode fazer",
       "capabilities": {
-        "lookup": "Procurar informações e perfis de clientes",
-        "loans": "Ver detalhes de empréstimos e planos de reembolso",
-        "savings": "Consultar saldos de contas poupança",
-        "portfolio": "Obter informações sobre as carteiras de clientes",
-        "navigate": "Navegar para páginas específicas no Mifos X"
+        "lookup": "Encontrar um cliente e mostrar o seu perfil",
+        "loans": "Mostrar detalhes do empréstimo e planos de reembolso",
+        "savings": "Consultar um saldo de poupança",
+        "portfolio": "Resumir a carteira de um cliente",
+        "navigate": "Levá-lo à página certa"
       },
-      "examplesTitle": "Exemplos de perguntas",
-      "importantTitle": "Importante",
+      "examplesTitle": "Coisas para experimentar",
+      "importantTitle": "Vale a pena saber",
       "important": {
-        "assist": "As respostas da IA servem apenas de apoio, não são decisões finais",
-        "verify": "Verifique sempre os dados financeiros críticos antes de agir",
-        "noExecute": "A IA não executa transações por si própria"
+        "assist": "As respostas ajudam a decidir. Não são a decisão.",
+        "verify": "Verifique os números antes de agir com base neles.",
+        "noExecute": "Não se movimenta dinheiro até que confirme."
       }
     },
     "cardType": {
@@ -5556,18 +5556,79 @@
       "insight": "Análise",
       "confirmation": "Confirmação"
     },
-    "confirmWarning": "Esta ação envolve dinheiro real. Por favor, confirme.",
-    "openAssistant": "Abrir o assistente de IA",
+    "confirmWarning": "Isto movimenta dinheiro real. Verifique os dados e depois confirme.",
+    "openAssistant": "Abrir o Mifos X Copilot",
     "newChatTitle": "Nova conversa",
     "errors": {
       "invalidLength": "A mensagem está vazia ou é demasiado longa. Por favor, encurte-a e tente novamente.",
       "injectionBlocked": "A mensagem parece uma tentativa de contornar as instruções, por isso não foi enviada. Por favor, reformule-a.",
-      "streamFailed": "Ocorreu um erro ao contactar o assistente. Por favor, tente novamente."
+      "streamFailed": "Não foi possível contactar o Mifos X Copilot. Tente novamente."
     },
     "confirm": {
       "reference": "Referência",
-      "pendingAnnouncement": "É necessária confirmação antes de executar esta ação."
+      "pendingAnnouncement": "Verifique os dados antes de esta ação ser executada."
     },
-    "assistantAvatarAlt": "Assistente Mifos AI"
+    "assistantAvatarAlt": "Mifos X Copilot",
+    "cardLabels": {
+      "activationDate": "Data de ativação",
+      "activeLoans": "Empréstimos ativos",
+      "amount": "Montante",
+      "appliedFor": "Valor solicitado",
+      "approvalDate": "Data de aprovação",
+      "approvedAmount": "Valor aprovado",
+      "approvedBy": "Aprovado por",
+      "client": "Cliente",
+      "clientAccount": "Conta do cliente",
+      "disbursementDate": "Data de desembolso",
+      "expectedDisbursement": "Desembolso previsto",
+      "firstName": "Primeiro nome",
+      "lastName": "Sobrenome",
+      "loanAccount": "Conta de empréstimo",
+      "mobileNumber": "Número de telemóvel",
+      "nextInstalment": "Próxima prestação",
+      "office": "Escritório",
+      "outstanding": "Em dívida",
+      "principal": "Principal",
+      "product": "Produto",
+      "reference": "Referência",
+      "repaymentAmount": "Valor do reembolso",
+      "repayments": "Reembolsos",
+      "savingsAccount": "Conta poupança",
+      "savingsBalance": "Saldo de poupança",
+      "search": "Procurar",
+      "status": "Estado",
+      "submittedOn": "Enviado em",
+      "transactionDate": "Data da transação"
+    },
+    "demo": {
+      "product": "Empréstimo Agrícola a Prazo",
+      "office": "Sede",
+      "statusActive": "Ativo",
+      "statusApproved": "Aprovado",
+      "writeIntro": "Posso fazer isso. Por favor, reveja os dados abaixo e confirme antes de eu executar a ação.",
+      "approveSummary": "Aprovar {{product}} para {{client}}",
+      "loanIntro": "Eis o empréstimo ativo de **{{client}}**:",
+      "loanTitle": "{{product}}, ativo",
+      "nextInstalment": "{{amount}}, vence dentro de {{days}} dias",
+      "clientIntro": "Encontrei este cliente:",
+      "modeNotice": "Estou a funcionar em **modo de demonstração**, ainda sem gateway ligado, mas tudo o que vê aqui (a resposta em streaming, os cartões, o passo de confirmação) é real.",
+      "approved": "Aprovado. O empréstimo fica agora registado em seu nome na trilha de auditoria.",
+      "approvedTitle": "Empréstimo aprovado",
+      "approvedByYou": "Você, com as suas próprias permissões de acesso",
+      "cancelled": "Cancelado. Nada foi executado.",
+      "suggest": {
+        "schedule": "Mostre o plano de reembolso",
+        "recordRepayment": "Registe um reembolso",
+        "overdue": "Mostre os empréstimos em atraso",
+        "theirLoans": "Mostre os empréstimos do cliente",
+        "kyc": "Mostre os documentos KYC",
+        "savings": "Consulte o saldo de poupança",
+        "clientLoans": "Mostre os empréstimos deste cliente",
+        "approve": "Aprove este empréstimo",
+        "searchClient": "Procure um cliente",
+        "disburse": "Desembolse este empréstimo",
+        "backToClient": "Voltar ao perfil do cliente"
+      }
+    }
   }
 }
