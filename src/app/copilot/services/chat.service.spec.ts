@@ -29,10 +29,37 @@ const CONTEXT: CopilotContext = {
   language: 'en'
 };
 
+/**
+ * Give this suite a localStorage that actually stores.
+ *
+ * The repo-wide stub in setup-jest.ts is a bare jest.fn() for every method, so writes go
+ * nowhere and reads answer undefined. Assertions about what survives a logout would pass
+ * against any implementation at all, including one that leaks.
+ */
+function useRealLocalStorage(): Record<string, string> {
+  const backing: Record<string, string> = {};
+  const storage = window.localStorage as unknown as Record<string, jest.Mock>;
+  storage['getItem'].mockImplementation((key: string) => (key in backing ? backing[key] : null));
+  storage['setItem'].mockImplementation((key: string, value: string) => {
+    backing[key] = String(value);
+  });
+  storage['removeItem'].mockImplementation((key: string) => {
+    delete backing[key];
+  });
+  storage['clear'].mockImplementation(() => {
+    for (const key of Object.keys(backing)) {
+      delete backing[key];
+    }
+  });
+  return backing;
+}
+
 describe('ChatService', () => {
   let service: ChatService;
   let mcpMock: { chat: jest.Mock; decision: jest.Mock };
   let loggedIn$: BehaviorSubject<boolean>;
+  let currentUser: string | null;
+  let store: Record<string, string>;
 
   beforeEach(() => {
     mcpMock = {
@@ -40,6 +67,8 @@ describe('ChatService', () => {
       decision: jest.fn(() => from([{ type: 'done' }] as McpStreamEvent[]))
     };
     loggedIn$ = new BehaviorSubject<boolean>(true);
+    currentUser = 'priya';
+    store = useRealLocalStorage();
     TestBed.configureTestingModule({
       providers: [
         ChatService,
@@ -53,7 +82,7 @@ describe('ChatService', () => {
           provide: AuthenticationService,
           useValue: {
             isAuthenticated$: loggedIn$.asObservable(),
-            getCredentials: () => ({ username: 'priya' })
+            getCredentials: () => (currentUser ? { username: currentUser } : null)
           }
         },
         { provide: TranslateService, useValue: { instant: (key: string) => key } }
@@ -123,8 +152,9 @@ describe('ChatService', () => {
         type: 'action_card',
         pendingAction: {
           cardId: 'card-7',
-          tool: 'fineract_loan_approve',
+          tool: 'mifos_loan_approve',
           args: { loanId: 4521 },
+          display: [],
           humanSummary: 'Approve loan #4521'
         }
       })
@@ -148,11 +178,11 @@ describe('ChatService', () => {
   });
 
   it('never sends a locally minted archive id as the wire conversationId', () => {
-    // Turn 1 pauses at an action card — no 'done', so no gateway id was ever issued.
+    // Turn 1 pauses at an action card, so no 'done' and no gateway id was ever issued.
     mcpMock.chat.mockReturnValueOnce(
       of<McpStreamEvent>({
         type: 'action_card',
-        pendingAction: { cardId: 'card-1', tool: 't', args: {}, humanSummary: 's' }
+        pendingAction: { cardId: 'card-1', tool: 't', args: {}, display: [], humanSummary: 's' }
       })
     );
     service.sendMessage('Approve the loan');
@@ -169,7 +199,7 @@ describe('ChatService', () => {
     mcpMock.chat.mockReturnValue(
       of<McpStreamEvent>({
         type: 'action_card',
-        pendingAction: { cardId: 'card-9', tool: 't', args: {}, humanSummary: 's' }
+        pendingAction: { cardId: 'card-9', tool: 't', args: {}, display: [], humanSummary: 's' }
       })
     );
     service.sendMessage('Approve the loan');
@@ -181,7 +211,7 @@ describe('ChatService', () => {
     );
     service.decideAction('approve');
 
-    // The card came back — the officer can retry instead of losing the action.
+    // The card came back, so the officer can retry instead of losing the action.
     expect(service.pendingAction$.value?.cardId).toBe('card-9');
   });
 
@@ -189,12 +219,12 @@ describe('ChatService', () => {
     mcpMock.chat.mockReturnValue(
       of<McpStreamEvent>({
         type: 'action_card',
-        pendingAction: { cardId: 'card-9', tool: 't', args: {}, humanSummary: 's' }
+        pendingAction: { cardId: 'card-9', tool: 't', args: {}, display: [], humanSummary: 's' }
       })
     );
     service.sendMessage('Approve the loan');
 
-    // e.g. the LLM summarization failed AFTER the write executed — the gateway did not
+    // e.g. the LLM summarization failed AFTER the write executed, and the gateway did not
     // restore the card, so offering it back would be a dead card and manufactured doubt.
     mcpMock.decision.mockReturnValue(
       from([
@@ -272,7 +302,7 @@ describe('ChatService', () => {
     mcpMock.chat.mockReturnValueOnce(
       of<McpStreamEvent>({
         type: 'action_card',
-        pendingAction: { cardId: 'card-1', tool: 't', args: {}, humanSummary: 's' }
+        pendingAction: { cardId: 'card-1', tool: 't', args: {}, display: [], humanSummary: 's' }
       })
     );
     service.sendMessage('Approve the loan');
@@ -306,5 +336,115 @@ describe('ChatService', () => {
     mcpMock.chat.mockReturnValue(from([{ type: 'done' }] as McpStreamEvent[]));
     service.sendMessage('New session');
     expect(mcpMock.chat).toHaveBeenCalledWith(expect.objectContaining({ conversationId: undefined }));
+  });
+
+  describe('one officer per session', () => {
+    const keyFor = (user: string) => `mifosXCopilotChats:default:${user}`;
+
+    it('wipes the previous officer when another logs in directly over them', () => {
+      // isAuthenticated$ carries a bare boolean and emits true again on a direct switch,
+      // so a de-duplicated subscription would leave the first officer's chat on screen.
+      service.sendMessage('Show loans for Aisha');
+      expect(service.messages$.value.length).toBeGreaterThan(0);
+
+      currentUser = 'daniel';
+      loggedIn$.next(true);
+      service.sendMessage('Show loans for Kwame');
+
+      const authors = service.messages$.value.filter((message) => message.role === 'user');
+      expect(authors).toHaveLength(1);
+      expect(authors[0].content).toBe('Show loans for Kwame');
+    });
+
+    it('never lets a card raised by one officer be approved by the next', () => {
+      mcpMock.chat.mockReturnValueOnce(
+        from([
+          {
+            type: 'action_card',
+            pendingAction: { cardId: 'card-1', tool: 'mifos_loan_approve', args: {}, display: [], humanSummary: 's' }
+          }
+        ] as McpStreamEvent[])
+      );
+      service.sendMessage('Approve the loan');
+      expect(service.pendingAction$.value).not.toBeNull();
+
+      currentUser = 'daniel';
+      loggedIn$.next(true);
+      service.decideAction('approve');
+
+      expect(service.pendingAction$.value).toBeNull();
+      expect(mcpMock.decision).not.toHaveBeenCalled();
+    });
+
+    it('catches the switch even when the auth event arrives before the new credentials', () => {
+      // onLoginSuccess() announces the login and writes the credentials afterwards, so the
+      // new identity is not readable at the moment of the event. It must still be caught.
+      service.sendMessage('Show loans for Aisha');
+      loggedIn$.next(true); // Announced while getCredentials() still returns the old user.
+
+      // Cleared on the event itself, not merely by the time the next officer acts.
+      expect(service.messages$.value).toHaveLength(0);
+      expect(service.pendingAction$.value).toBeNull();
+      expect(service.conversations$.value).toHaveLength(0);
+
+      currentUser = 'daniel'; // Credentials land a moment later.
+      service.sendMessage('Show loans for Kwame');
+
+      const authors = service.messages$.value.filter((message) => message.role === 'user');
+      expect(authors).toHaveLength(1);
+      expect(authors[0].content).toBe('Show loans for Kwame');
+    });
+
+    it("does not put the previous officer's transcripts into Recent Chats", () => {
+      // The login event fires while getCredentials() still names the previous officer, so
+      // reading storage at that moment would list their conversations to the new one.
+      service.sendMessage('Aisha');
+      service.clearChat();
+      expect(service.conversations$.value).toHaveLength(1);
+
+      loggedIn$.next(true); // Announced; credentials have not been replaced yet.
+
+      // Observed before the incoming officer performs any chat operation.
+      expect(service.conversations$.value).toHaveLength(0);
+    });
+
+    it('gives an officer their own archive back when the panel asks for it', () => {
+      service.sendMessage('Aisha');
+      service.clearChat();
+      const mine = service.conversations$.value.length;
+      expect(mine).toBe(1);
+
+      loggedIn$.next(true);
+      expect(service.conversations$.value).toHaveLength(0);
+
+      service.loadHistory(); // What the panel does when it shows Recent Chats.
+
+      expect(service.conversations$.value).toHaveLength(mine);
+    });
+
+    it('clears the transcript of whoever was signed in, not of nobody', () => {
+      // logout() clears the credentials before it announces itself, so reading the username
+      // at that point yields the anonymous key and the real transcript would survive.
+      service.sendMessage('Show loans for Aisha');
+      service.clearChat(); // Archives the conversation under priya's key.
+      expect(localStorage.getItem(keyFor('priya'))).not.toBeNull();
+
+      currentUser = null;
+      loggedIn$.next(false);
+
+      expect(localStorage.getItem(keyFor('priya'))).toBeNull();
+      expect(Object.keys(store)).toHaveLength(0);
+    });
+
+    it("keeps each officer's archive separate", () => {
+      service.sendMessage('Aisha');
+      service.clearChat();
+
+      currentUser = 'daniel';
+      loggedIn$.next(true);
+
+      expect(service.conversations$.value).toHaveLength(0);
+      expect(localStorage.getItem(keyFor('priya'))).not.toBeNull();
+    });
   });
 });

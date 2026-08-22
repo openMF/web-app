@@ -3727,7 +3727,7 @@
       "Auto Loan": "Úvěr na automobil",
       "Financing for new or used car purchases with structured EMIs over a chosen tenure": "Financování nákupu nových i ojetých vozů s pevnými měsíčními splátkami po zvolenou dobu splatnosti.",
       "BNPL": "BNPL",
-      "Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments": "Financov\u00e1n\u00ed \u201ekup te\u010f, zapla\u0165 pozd\u011bji\u201c pro kr\u00e1tkodob\u00e9, \u010dasto bez\u00faro\u010dn\u00e9 n\u00e1kupy, spl\u00e1cen\u00e9 v pevn\u00fdch spl\u00e1tk\u00e1ch.",
+      "Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments": "Financování „kup teď, zaplať později“ pro krátkodobé, často bezúročné nákupy, splácené v pevných splátkách.",
       "Consumer Durable Loan": "Úvěr na spotřební zboží",
       "Point-of-sale financing for electronics, appliances, and other durable goods, often with zero-cost EMI options": "Financování přímo v prodejně pro elektroniku, spotřebiče a další zboží dlouhodobé spotřeby, často s bezúročnými splátkami.",
       "Credit Card EMI": "Splátky kreditní kartou",
@@ -3739,17 +3739,17 @@
       "Quick secured loan against pledged gold ornaments or coins, with fast disbursal and minimal paperwork": "Rychlý zajištěný úvěr proti zastaveným zlatým šperkům nebo mincím, s rychlým vyplacením a minimem papírování.",
       "Home Loan": "Úvěr na bydlení",
       "Invoice Discounting": "Odkup faktur",
-      "Short-term financing against unpaid invoices to improve business cash flow before customer payment is due": "Kr\u00e1tkodob\u00e9 financov\u00e1n\u00ed oproti neuhrazen\u00fdm faktur\u00e1m pro zlep\u0161en\u00ed pen\u011b\u017en\u00edho toku podniku p\u0159ed splatnost\u00ed platby od z\u00e1kazn\u00edka.",
+      "Short-term financing against unpaid invoices to improve business cash flow before customer payment is due": "Krátkodobé financování oproti neuhrazeným fakturám pro zlepšení peněžního toku podniku před splatností platby od zákazníka.",
       "JLG Loan": "Úvěr JLG",
       "Group-backed microloans for individuals in a Joint Liability Group, typically for income-generating activities": "Skupinou zajištěné mikroúvěry pro jednotlivce ve skupině se společnou odpovědností, obvykle na výdělečnou činnost.",
       "Line of Credit": "Úvěrová linka",
-      "A revolving credit limit that can be drawn, repaid, and reused as needed, with interest charged only on the amount utilized": "Revolvingov\u00fd \u00fav\u011brov\u00fd r\u00e1mec, kter\u00fd lze podle pot\u0159eby \u010derpat, spl\u00e1cet a znovu vyu\u017e\u00edvat, s \u00faroky \u00fa\u010dtovan\u00fdmi pouze z vyu\u017eit\u00e9 \u010d\u00e1stky.",
+      "A revolving credit limit that can be drawn, repaid, and reused as needed, with interest charged only on the amount utilized": "Revolvingový úvěrový rámec, který lze podle potřeby čerpat, splácet a znovu využívat, s úroky účtovanými pouze z využité částky.",
       "Loan against property where an existing residential or commercial asset is pledged as collateral": "Úvěr zajištěný stávající obytnou nebo komerční nemovitostí zastavenou jako zajištění.",
       "Loan vs Securities / FD": "Úvěr proti cenným papírům / termínovanému vkladu",
       "Credit extended against shares, mutual funds, or fixed deposits without liquidating the underlying investment": "Úvěr poskytnutý proti akciím, podílovým fondům nebo termínovaným vkladům bez nutnosti prodat samotnou investici.",
       "Long-tenure financing to purchase, construct, or renovate a residential property": "Dlouhodobé financování na koupi, výstavbu nebo rekonstrukci nemovitosti určené k bydlení.",
       "Merchant Cash Advance": "Záloha pro obchodníky",
-      "Working capital advanced against future card or digital sales, repaid as a percentage of daily transactions": "Provozn\u00ed kapit\u00e1l poskytnut\u00fd oproti budouc\u00edm platb\u00e1m kartou nebo digit\u00e1ln\u00edm tr\u017eb\u00e1m, spl\u00e1cen\u00fd procentem z denn\u00edch transakc\u00ed.",
+      "Working capital advanced against future card or digital sales, repaid as a percentage of daily transactions": "Provozní kapitál poskytnutý oproti budoucím platbám kartou nebo digitálním tržbám, splácený procentem z denních transakcí.",
       "Mortgage Loan (LAP)": "Hypoteční úvěr (LAP)",
       "No resets have been recorded for this loan": "Pro tento úvěr nebyly zaznamenány žádné resety.",
       "No variations added yet": "Zatím nebyly přidány žádné varianty",
@@ -3757,7 +3757,7 @@
       "A row with the greater than condition must repeat the cycle number above it": "Řádek s podmínkou „větší než“ musí zopakovat číslo cyklu z řádku nad ním",
       "Fix the loan cycle variations before creating the product": "Před vytvořením produktu opravte varianty úvěrových cyklů",
       "Personal Loan": "Osobní úvěr",
-      "Unsecured funding for personal needs like travel, medical expenses, or weddings, with flexible tenure and minimal documentation": "Nezaji\u0161t\u011bn\u00e9 financov\u00e1n\u00ed osobn\u00edch pot\u0159eb, jako je cestov\u00e1n\u00ed, l\u00e9\u010debn\u00e9 v\u00fddaje nebo svatby, s flexibiln\u00ed dobou splatnosti a minimem dokumentace.",
+      "Unsecured funding for personal needs like travel, medical expenses, or weddings, with flexible tenure and minimal documentation": "Nezajištěné financování osobních potřeb, jako je cestování, léčebné výdaje nebo svatby, s flexibilní dobou splatnosti a minimem dokumentace.",
       "Custom / Advanced": "Vlastní / pokročilé",
       "Two Wheeler Loan": "Úvěr na motocykly a skútry",
       "Finance for new or used two-wheelers with quick approval and flexible down payment options": "Financování nových i ojetých motocyklů a skútrů s rychlým schválením a flexibilní zálohou.",
@@ -5785,7 +5785,7 @@
     }
   },
   "copilot": {
-    "brand": "Mifos Intelligence AI",
+    "brand": "Mifos X Copilot",
     "currentSession": "Aktuální relace",
     "newChat": "Nový chat",
     "close": "Zavřít",
@@ -5794,21 +5794,21 @@
       "afternoon": "Dobré odpoledne",
       "evening": "Dobrý večer"
     },
-    "welcomeHeading": "Jak vám dnes mohu pomoci s obsluhou vašich klientů?",
+    "welcomeHeading": "Co byste chtěli udělat?",
     "suggestions": {
-      "clientDetails": "Zobrazte mi údaje o klientovi John Doe",
-      "repaymentSchedule": "Jaký je splátkový kalendář úvěru č. 107?",
-      "savingsBalance": "Zobrazte zůstatek spořicího účtu klienta č. 52",
-      "overdueLoans": "Kolik úvěrů je tento týden po splatnosti?"
+      "clientDetails": "Zobrazte profil tohoto klienta",
+      "repaymentSchedule": "Jaký je splátkový kalendář tohoto úvěru?",
+      "savingsBalance": "Jaký je zůstatek spoření tohoto klienta?",
+      "overdueLoans": "Které úvěry jsou tento týden po splatnosti?"
     },
     "input": {
-      "placeholder": "Zeptejte se na klienty, úvěry nebo účty...",
+      "placeholder": "Zeptejte se na klienta, úvěr nebo účet",
       "attach": "Připojit soubor",
       "voice": "Hlasový vstup",
       "send": "Odeslat zprávu",
       "stop": "Zastavit generování"
     },
-    "disclaimer": "Mifos Intelligence AI je navržena tak, aby pomáhala, nikoli nahrazovala lidské rozhodování.",
+    "disclaimer": "Mifos X Copilot vám pomáhá najít odpovědi. Vše, co pohybuje penězi, stále vyžaduje vaše schválení.",
     "nav": {
       "recentChats": "Nedávné chaty",
       "chat": "Chat",
@@ -5823,20 +5823,20 @@
       "delete": "Smazat konverzaci"
     },
     "help": {
-      "capabilitiesTitle": "Co umí Mifos Intelligence AI?",
+      "capabilitiesTitle": "Co Mifos X Copilot umí",
       "capabilities": {
-        "lookup": "Vyhledávat informace a profily klientů",
-        "loans": "Zobrazit podrobnosti úvěrů a splátkové kalendáře",
-        "savings": "Kontrolovat zůstatky spořicích účtů",
-        "portfolio": "Získat přehled o portfoliích klientů",
-        "navigate": "Přejít na konkrétní stránky v Mifos X"
+        "lookup": "Najít klienta a zobrazit jeho profil",
+        "loans": "Zobrazit detaily úvěru a splátkový kalendář",
+        "savings": "Zkontrolovat zůstatek spoření",
+        "portfolio": "Shrnout portfolio klienta",
+        "navigate": "Přejít na správnou stránku"
       },
-      "examplesTitle": "Příklady dotazů",
-      "importantTitle": "Důležité",
+      "examplesTitle": "Co vyzkoušet",
+      "importantTitle": "Dobré vědět",
       "important": {
-        "assist": "Odpovědi AI slouží pouze jako pomoc, nikoli jako konečná rozhodnutí",
-        "verify": "Před provedením akce vždy ověřte kritická finanční data",
-        "noExecute": "AI neprovádí transakce sama"
+        "assist": "Odpovědi vám pomáhají rozhodnout. Nejsou rozhodnutím.",
+        "verify": "Než podle údajů jednáte, zkontrolujte je.",
+        "noExecute": "Nic nepohne penězi, dokud to nepotvrdíte."
       }
     },
     "cardType": {
@@ -5846,18 +5846,79 @@
       "insight": "Přehled",
       "confirmation": "Potvrzení"
     },
-    "confirmWarning": "Tato akce se týká skutečných peněz. Potvrďte prosím.",
-    "openAssistant": "Otevřít asistenta AI",
+    "confirmWarning": "Tato akce pohybuje skutečnými penězi. Zkontrolujte údaje a potvrďte.",
+    "openAssistant": "Otevřít Mifos X Copilot",
     "newChatTitle": "Nová konverzace",
     "errors": {
       "invalidLength": "Zpráva je prázdná nebo příliš dlouhá. Zkraťte ji prosím a zkuste to znovu.",
       "injectionBlocked": "Zpráva vypadá jako pokus o obejití pokynů, proto nebyla odeslána. Přeformulujte ji prosím.",
-      "streamFailed": "Při komunikaci s asistentem se něco pokazilo. Zkuste to prosím znovu."
+      "streamFailed": "Mifos X Copilot je nedostupný. Zkuste to prosím znovu."
     },
     "confirm": {
       "reference": "Reference",
-      "pendingAnnouncement": "Před provedením této akce je vyžadováno potvrzení."
+      "pendingAnnouncement": "Před provedením akce zkontrolujte údaje."
     },
-    "assistantAvatarAlt": "Asistent Mifos AI"
+    "assistantAvatarAlt": "Mifos X Copilot",
+    "cardLabels": {
+      "activationDate": "Datum aktivace",
+      "activeLoans": "Aktivní úvěry",
+      "amount": "Částka",
+      "appliedFor": "Požadovaná částka",
+      "approvalDate": "Datum schválení",
+      "approvedAmount": "Schválená částka",
+      "approvedBy": "Schválil",
+      "client": "Klient",
+      "clientAccount": "Klientský účet",
+      "disbursementDate": "Datum výplaty",
+      "expectedDisbursement": "Očekávaná výplata",
+      "firstName": "Jméno",
+      "lastName": "Příjmení",
+      "loanAccount": "Úvěrový účet",
+      "mobileNumber": "Mobilní číslo",
+      "nextInstalment": "Další splátka",
+      "office": "Kancelář",
+      "outstanding": "Nesplacený zůstatek",
+      "principal": "Jistina",
+      "product": "Produkt",
+      "reference": "Reference",
+      "repaymentAmount": "Výše splátky",
+      "repayments": "Splátky",
+      "savingsAccount": "Spořicí účet",
+      "savingsBalance": "Zůstatek spoření",
+      "search": "Vyhledávání",
+      "status": "Stav",
+      "submittedOn": "Odesláno dne",
+      "transactionDate": "Datum transakce"
+    },
+    "demo": {
+      "product": "Zemědělský termínovaný úvěr",
+      "office": "Hlavní kancelář",
+      "statusActive": "Aktivní",
+      "statusApproved": "Schválený",
+      "writeIntro": "Mohu to udělat. Než akci provedu, zkontrolujte prosím níže uvedené údaje a potvrďte ji.",
+      "approveSummary": "Schválit {{product}} pro klienta {{client}}",
+      "loanIntro": "Zde je aktivní úvěr klienta **{{client}}**:",
+      "loanTitle": "{{product}}, aktivní",
+      "nextInstalment": "{{amount}}, splatná za {{days}} dní",
+      "clientIntro": "Našel jsem tohoto klienta:",
+      "modeNotice": "Pracuji v **ukázkovém režimu**, zatím bez připojené brány, ale všechno, co zde vidíte (průběžně načítaná odpověď, karty i krok potvrzení), je skutečné.",
+      "approved": "Schváleno. Úvěr je nyní zaznamenán v auditní stopě pod vaším uživatelským účtem.",
+      "approvedTitle": "Úvěr schválen",
+      "approvedByYou": "Vy, pod vaším přihlášením a vašimi oprávněními",
+      "cancelled": "Zrušeno. Nic nebylo provedeno.",
+      "suggest": {
+        "schedule": "Zobrazte splátkový kalendář",
+        "recordRepayment": "Proveďte splátku",
+        "overdue": "Zobrazte úvěry po splatnosti",
+        "theirLoans": "Zobrazte úvěry klienta",
+        "kyc": "Zobrazte dokumenty KYC",
+        "savings": "Zkontrolujte zůstatek spoření",
+        "clientLoans": "Zobrazte úvěry tohoto klienta",
+        "approve": "Schvalte tento úvěr",
+        "searchClient": "Vyhledejte klienta",
+        "disburse": "Vyplaťte tento úvěr",
+        "backToClient": "Zpět na profil klienta"
+      }
+    }
   }
 }

@@ -6,11 +6,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import moment from 'moment';
+import { SettingsService } from 'app/settings/settings.service';
+import { Dates } from 'app/core/utils/dates';
 import { Conversation } from '../../core/models/chat-message.model';
+import { relativeTime } from '../../core/relative-time';
 
 /** Recent Chats tab: list of saved conversations with preview, meta and delete. */
 @Component({
@@ -36,8 +38,11 @@ export class RecentChatsComponent {
     return conv.id;
   }
 
-  /** Relative time via moment (localizes with the active moment locale). */
+  private readonly settingsService = inject(SettingsService);
+  private readonly dateUtils = inject(Dates);
+
+  /** "3 minutes ago", in the language the officer chose rather than whichever one a date pipe set last. */
   relativeTime(timestamp: number): string {
-    return moment(timestamp).fromNow();
+    return relativeTime(timestamp, this.dateUtils.getMomentLocale(this.settingsService.language));
   }
 }

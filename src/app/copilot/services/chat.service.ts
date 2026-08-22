@@ -9,7 +9,6 @@
 /** Angular Imports */
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
 /** Custom Services */
@@ -54,13 +53,14 @@ function isConversation(value: unknown): value is Conversation {
  *
  * Security invariants (ADR-001):
  *  - every outgoing message passes the InputSanitizer first;
- *  - approvable actions come ONLY from typed action_card events — fenced
+ *  - approvable actions come ONLY from typed action_card events, and fenced
  *    ```action_card``` text in model prose is never parsed into a card;
  *  - stopping a stream aborts the underlying request (nothing keeps running);
- *  - all conversation state resets on auth changes so one user's chat can
- *    never leak into (or be archived under) another user's session;
- *  - the wire conversationId is gateway-assigned only — locally minted archive
- *    ids never leave the browser.
+ *  - conversation state belongs to exactly one tenant+user, and is wiped the
+ *    moment that changes, so one officer's chat can never leak into (or be
+ *    archived under) another's session;
+ *  - the wire conversationId only ever comes from the gateway, so locally minted
+ *    archive ids never leave the browser.
  */
 @Injectable({ providedIn: 'root' })
 export class ChatService {
@@ -84,32 +84,66 @@ export class ChatService {
   private readonly parser = new ResponseParser();
 
   private subscription: Subscription | null = null;
-  /** Gateway-assigned conversation id — set ONLY from 'done' events, sent on the wire. */
+  /**
+   * Gateway-assigned conversation id, sent on the wire. Only ever set from a 'done' event
+   * or restored from an archived conversation that carried one; a locally minted archive id
+   * never gets in here.
+   */
   private wireConversationId?: string;
-  /** Local id used for the Recent Chats archive — never sent to the gateway. */
+  /** Local id used for the Recent Chats archive, never sent to the gateway. */
   private archiveId?: string;
   /** Pending action backed up during a decision, restored if the decision fails retryably. */
   private decisionBackup: PendingAction | null = null;
+  /**
+   * Storage key of the officer the in-memory conversation belongs to, or null when nothing
+   * is loaded. This is the identity check; the auth service's boolean is only the trigger.
+   */
+  private stateOwner: string | null = null;
   private seq = 0;
 
   constructor() {
-    // Root-singleton services outlive logins: wipe all conversation state whenever the
-    // authenticated user changes, so user A's chat never leaks into user B's session.
-    this.authenticationService.isAuthenticated$.pipe(distinctUntilChanged()).subscribe((loggedIn) => {
-      const previousKey = this.storageKey();
+    // Root-singleton services outlive logins, so this service has to notice when the
+    // officer changes. isAuthenticated$ carries a bare boolean and emits true again when
+    // one officer logs in directly over another, so it cannot be de-duplicated: every
+    // emission wipes state, and storageKey() decides whose history may be read back.
+    this.authenticationService.isAuthenticated$.subscribe((loggedIn) => {
+      const previousOwner = this.stateOwner;
       this.reset();
       if (loggedIn) {
-        this.loadHistory();
-      } else {
-        // Transcripts hold client names and loan ids. Do not leave them on a shared
-        // branch machine after logout.
-        this.clearPersistedHistory(previousKey);
+        // Deliberately no load here. The credentials still name the previous officer at
+        // this point, so reading a transcript now would put theirs in front of the new
+        // one. State stays unowned until something asks for it, which is late enough.
+        return;
+      }
+      if (previousOwner) {
+        // Transcripts hold client names and loan amounts. Do not leave them on a shared
+        // branch machine after logout. The key comes from whoever the state belonged to,
+        // because logout clears the credentials before it announces itself.
+        this.clearPersistedHistory(previousOwner);
       }
     });
   }
 
+  /**
+   * Rebind to whoever is signed in now, wiping state that belongs to someone else.
+   *
+   * The auth service announces a login before it writes the new credentials, so the
+   * identity is not yet readable at the moment of the event. Every entry point that
+   * touches conversation state checks again here, by which point it is.
+   */
+  private ensureCurrentUser(): void {
+    const key = this.storageKey();
+    if (this.stateOwner !== null && this.stateOwner !== key) {
+      this.reset();
+    }
+    if (this.stateOwner === null) {
+      this.loadHistory();
+    }
+  }
+
   /** Send a user message and stream the assistant reply. */
   sendMessage(content: string): void {
+    this.ensureCurrentUser();
     if (this.isStreaming$.value) {
       return;
     }
@@ -151,6 +185,7 @@ export class ChatService {
 
   /** Approve or reject the pending write action; the reply continues streaming. */
   decideAction(decision: 'approve' | 'reject'): void {
+    this.ensureCurrentUser(); // A card must never be approved under a different login.
     const pending = this.pendingAction$.value;
     if (!pending || this.isStreaming$.value) {
       return;
@@ -174,6 +209,7 @@ export class ChatService {
 
   /** Start a fresh conversation, archiving the current one. */
   clearChat(): void {
+    this.ensureCurrentUser();
     this.stopStreaming();
     this.archiveCurrentConversation();
     this.messages$.next([]);
@@ -183,10 +219,12 @@ export class ChatService {
     this.archiveId = undefined;
   }
 
-  /** Load persisted conversations for the current user + tenant. */
+  /** Load persisted conversations for the current user + tenant, and bind state to them. */
   loadHistory(): void {
+    const key = this.storageKey();
+    this.stateOwner = key;
     try {
-      const raw = localStorage.getItem(this.storageKey());
+      const raw = localStorage.getItem(key);
       const parsed = raw ? JSON.parse(raw) : [];
       // localStorage is writable by any script on the origin and by older versions of
       // this feature, so validate each record instead of trusting the array.
@@ -198,6 +236,10 @@ export class ChatService {
 
   /** Reopen a saved conversation. */
   openConversation(conversation: Conversation): void {
+    this.ensureCurrentUser();
+    if (!this.conversations$.value.some((saved) => saved.id === conversation.id)) {
+      return; // Belonged to a previous session; ensureCurrentUser() has already wiped it.
+    }
     this.stopStreaming();
     this.archiveCurrentConversation();
     this.messages$.next(conversation.messages ?? []);
@@ -210,6 +252,7 @@ export class ChatService {
 
   /** Remove a saved conversation. */
   deleteConversation(id: string): void {
+    this.ensureCurrentUser();
     const remaining = this.conversations$.value.filter((conversation) => conversation.id !== id);
     this.conversations$.next(remaining);
     this.persistConversations(remaining);
@@ -276,7 +319,7 @@ export class ChatService {
         this.appendToDraft(
           `${this.draftContent() ? '\n\n' : ''}${event.message ?? this.translate.instant('copilot.errors.streamFailed')}`
         );
-        // Restore the card ONLY on AUTH_EXPIRED — the one code the gateway pairs with a
+        // Restore the card ONLY on AUTH_EXPIRED, the one code the gateway pairs with a
         // server-side card restore. Restoring on other retryable errors (e.g. the LLM
         // summarization failing AFTER a successful write) would offer the officer a dead
         // card and manufacture doubt about whether the action executed.
@@ -290,7 +333,7 @@ export class ChatService {
 
   /**
    * Close out the streaming draft: extract fenced ```suggest``` follow-ups
-   * (kept per ADR-001) — any fenced action_card text stays as plain prose and
+   * (kept per ADR-001), so any fenced action_card text stays as plain prose and
    * is deliberately NOT turned into an approvable card.
    */
   private finalizeDraft(): void {
@@ -317,7 +360,7 @@ export class ChatService {
 
   /**
    * A turn that paused at a confirmation card (or errored before any token) leaves an
-   * assistant message with nothing in it — remove it so no empty bubble ever renders.
+   * assistant message with nothing in it, so remove it and no empty bubble ever renders.
    */
   private dropEmptyDraft(): void {
     const messages = this.messages$.value;
@@ -332,7 +375,7 @@ export class ChatService {
     }
   }
 
-  /** Full wipe on auth changes — aborts any stream WITHOUT archiving (wrong user's key). */
+  /** Full wipe on auth changes, aborting any stream WITHOUT archiving (wrong user's key). */
   private reset(): void {
     this.subscription?.unsubscribe();
     this.subscription = null;
@@ -343,6 +386,7 @@ export class ChatService {
     this.decisionBackup = null;
     this.wireConversationId = undefined;
     this.archiveId = undefined;
+    this.stateOwner = null;
   }
 
   // ─── Message-list helpers (immutable updates for change detection) ────────
@@ -381,7 +425,7 @@ export class ChatService {
 
   // ─── History persistence (localStorage; gateway sync arrives later) ───────
 
-  /** The gateway issued the real id — migrate any local archive record onto it. */
+  /** The gateway issued the real id, so migrate any local archive record onto it. */
   private adoptServerConversationId(serverId: string): void {
     this.wireConversationId = serverId;
     if (this.archiveId && this.archiveId !== serverId && this.archiveId.startsWith('local-')) {

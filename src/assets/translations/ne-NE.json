@@ -3726,7 +3726,7 @@
       "Auto Loan": "सवारी साधन ऋण",
       "Financing for new or used car purchases with structured EMIs over a chosen tenure": "नयाँ वा प्रयोग भएका कार खरिदका लागि वित्तपोषण, छनोट गरिएको अवधिभर नियमित मासिक किस्तासहित।",
       "BNPL": "BNPL",
-      "Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments": "\u091b\u094b\u091f\u094b \u0905\u0935\u0927\u093f\u0915\u093e, \u092a\u094d\u0930\u093e\u092f\u0903 \u092c\u094d\u092f\u093e\u091c\u0930\u0939\u093f\u0924 \u0916\u0930\u093f\u0926\u0915\u093e \u0932\u093e\u0917\u093f \u0905\u0939\u093f\u0932\u0947 \u0915\u093f\u0928\u094d\u0928\u0941\u0939\u094b\u0938\u094d, \u092a\u091b\u093f \u0924\u093f\u0930\u094d\u0928\u0941\u0939\u094b\u0938\u094d \u0935\u093f\u0924\u094d\u0924\u092a\u094b\u0937\u0923, \u0928\u093f\u0936\u094d\u091a\u093f\u0924 \u0915\u093f\u0938\u094d\u0924\u093e\u092e\u093e \u092d\u0941\u0915\u094d\u0924\u093e\u0928\u0940 \u0917\u0930\u093f\u0928\u0947\u0964",
+      "Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments": "छोटो अवधिका, प्रायः ब्याजरहित खरिदका लागि अहिले किन्नुहोस्, पछि तिर्नुहोस् वित्तपोषण, निश्चित किस्तामा भुक्तानी गरिने।",
       "Consumer Durable Loan": "उपभोग्य वस्तु ऋण",
       "Point-of-sale financing for electronics, appliances, and other durable goods, often with zero-cost EMI options": "इलेक्ट्रोनिक्स, घरायसी उपकरण र अन्य उपभोग्य वस्तुका लागि बिक्री केन्द्रमै उपलब्ध वित्तपोषण, प्रायः शून्य ब्याज किस्ता विकल्पसहित।",
       "Credit Card EMI": "क्रेडिट कार्ड किस्ता",
@@ -3738,17 +3738,17 @@
       "Quick secured loan against pledged gold ornaments or coins, with fast disbursal and minimal paperwork": "धितो राखिएको सुनका गहना वा सिक्काविरुद्ध द्रुत सुरक्षित ऋण, छिटो ऋण वितरण र न्यूनतम कागजी प्रक्रियासहित।",
       "Home Loan": "घर ऋण",
       "Invoice Discounting": "बिजक छुट",
-      "Short-term financing against unpaid invoices to improve business cash flow before customer payment is due": "\u0917\u094d\u0930\u093e\u0939\u0915\u0915\u094b \u092d\u0941\u0915\u094d\u0924\u093e\u0928\u0940 \u0905\u0935\u0927\u093f \u0906\u0909\u0928\u0941\u0905\u0918\u093f \u0935\u094d\u092f\u0935\u0938\u093e\u092f\u0915\u094b \u0928\u0917\u0926 \u092a\u094d\u0930\u0935\u093e\u0939 \u0938\u0941\u0927\u093e\u0930 \u0917\u0930\u094d\u0928 \u0905\u092d\u0941\u0915\u094d\u0924\u093e\u0928\u0940 \u092c\u0940\u091c\u0915\u0939\u0930\u0942\u0915\u094b \u0906\u0927\u093e\u0930\u092e\u093e \u0905\u0932\u094d\u092a\u0915\u093e\u0932\u0940\u0928 \u0935\u093f\u0924\u094d\u0924\u092a\u094b\u0937\u0923\u0964",
+      "Short-term financing against unpaid invoices to improve business cash flow before customer payment is due": "ग्राहकको भुक्तानी अवधि आउनुअघि व्यवसायको नगद प्रवाह सुधार गर्न अभुक्तानी बीजकहरूको आधारमा अल्पकालीन वित्तपोषण।",
       "JLG Loan": "JLG ऋण",
       "Group-backed microloans for individuals in a Joint Liability Group, typically for income-generating activities": "संयुक्त दायित्व समूहका सदस्यहरूका लागि समूह जमानीमा आधारित लघु ऋण, प्रायः आय आर्जन गर्ने गतिविधिका लागि।",
       "Line of Credit": "ऋण सीमा",
-      "A revolving credit limit that can be drawn, repaid, and reused as needed, with interest charged only on the amount utilized": "\u0906\u0935\u0936\u094d\u092f\u0915\u0924\u093e\u0905\u0928\u0941\u0938\u093e\u0930 \u0928\u093f\u0915\u093e\u0932\u094d\u0928, \u0924\u093f\u0930\u094d\u0928 \u0930 \u092a\u0941\u0928\u0903 \u092a\u094d\u0930\u092f\u094b\u0917 \u0917\u0930\u094d\u0928 \u0938\u0915\u093f\u0928\u0947 \u0918\u0941\u092e\u094d\u0924\u0940 \u090b\u0923 \u0938\u0940\u092e\u093e, \u092a\u094d\u0930\u092f\u094b\u0917 \u0917\u0930\u093f\u090f\u0915\u094b \u0930\u0915\u092e\u092e\u093e \u092e\u093e\u0924\u094d\u0930 \u092c\u094d\u092f\u093e\u091c \u0932\u093e\u0917\u094d\u0928\u0947\u0964",
+      "A revolving credit limit that can be drawn, repaid, and reused as needed, with interest charged only on the amount utilized": "आवश्यकताअनुसार निकाल्न, तिर्न र पुनः प्रयोग गर्न सकिने घुम्ती ऋण सीमा, प्रयोग गरिएको रकममा मात्र ब्याज लाग्ने।",
       "Loan against property where an existing residential or commercial asset is pledged as collateral": "विद्यमान आवासीय वा व्यावसायिक सम्पत्ति धितोमा राखी प्रदान गरिने ऋण।",
       "Loan vs Securities / FD": "धितोपत्र / मुद्दती निक्षेप विरुद्ध ऋण",
       "Credit extended against shares, mutual funds, or fixed deposits without liquidating the underlying investment": "सेयर, म्युचुअल फन्ड वा मुद्दती निक्षेपलाई धितो राखेर, सो लगानी नबेची उपलब्ध गराइने कर्जा।",
       "Long-tenure financing to purchase, construct, or renovate a residential property": "आवासीय सम्पत्ति किन्न, निर्माण गर्न वा मर्मत गर्न दीर्घकालीन वित्तपोषण।",
       "Merchant Cash Advance": "व्यापारी नगद अग्रिम",
-      "Working capital advanced against future card or digital sales, repaid as a percentage of daily transactions": "\u092d\u0935\u093f\u0937\u094d\u092f\u0915\u093e \u0915\u093e\u0930\u094d\u0921 \u0935\u093e \u0921\u093f\u091c\u093f\u091f\u0932 \u092c\u093f\u0915\u094d\u0930\u0940\u0915\u094b \u0906\u0927\u093e\u0930\u092e\u093e \u0905\u0917\u094d\u0930\u093f\u092e \u0926\u093f\u0907\u0928\u0947 \u0915\u093e\u0930\u094d\u092f\u0936\u0940\u0932 \u092a\u0941\u0901\u091c\u0940, \u0926\u0948\u0928\u093f\u0915 \u0915\u093e\u0930\u094b\u092c\u093e\u0930\u0915\u094b \u0928\u093f\u0936\u094d\u091a\u093f\u0924 \u092a\u094d\u0930\u0924\u093f\u0936\u0924\u0915\u093e \u0930\u0942\u092a\u092e\u093e \u092d\u0941\u0915\u094d\u0924\u093e\u0928\u0940 \u0917\u0930\u093f\u0928\u0947\u0964",
+      "Working capital advanced against future card or digital sales, repaid as a percentage of daily transactions": "भविष्यका कार्ड वा डिजिटल बिक्रीको आधारमा अग्रिम दिइने कार्यशील पुँजी, दैनिक कारोबारको निश्चित प्रतिशतका रूपमा भुक्तानी गरिने।",
       "Mortgage Loan (LAP)": "धितो ऋण (LAP)",
       "No resets have been recorded for this loan": "यस ऋणका लागि कुनै रिसेट रेकर्ड गरिएको छैन।",
       "No variations added yet": "अहिलेसम्म कुनै भिन्नता थपिएको छैन",
@@ -3756,7 +3756,7 @@
       "A row with the greater than condition must repeat the cycle number above it": "‘भन्दा बढी’ सर्त भएको पङ्क्तिले माथिको पङ्क्तिकै चक्र संख्या दोहोर्‍याउनुपर्छ",
       "Fix the loan cycle variations before creating the product": "उत्पादन सिर्जना गर्नुअघि ऋण चक्र भिन्नताहरू सच्याउनुहोस्",
       "Personal Loan": "व्यक्तिगत ऋण",
-      "Unsecured funding for personal needs like travel, medical expenses, or weddings, with flexible tenure and minimal documentation": "\u092f\u093e\u0924\u094d\u0930\u093e, \u091a\u093f\u0915\u093f\u0924\u094d\u0938\u093e \u0916\u0930\u094d\u091a \u0935\u093e \u0935\u093f\u0935\u093e\u0939 \u091c\u0938\u094d\u0924\u093e \u0935\u094d\u092f\u0915\u094d\u0924\u093f\u0917\u0924 \u0906\u0935\u0936\u094d\u092f\u0915\u0924\u093e\u0915\u093e \u0932\u093e\u0917\u093f \u0927\u093f\u0924\u094b\u0930\u0939\u093f\u0924 \u090b\u0923, \u0932\u091a\u093f\u0932\u094b \u0905\u0935\u0927\u093f \u0930 \u0928\u094d\u092f\u0942\u0928\u0924\u092e \u0915\u093e\u0917\u091c\u093e\u0924\u0938\u0939\u093f\u0924\u0964",
+      "Unsecured funding for personal needs like travel, medical expenses, or weddings, with flexible tenure and minimal documentation": "यात्रा, चिकित्सा खर्च वा विवाह जस्ता व्यक्तिगत आवश्यकताका लागि धितोरहित ऋण, लचिलो अवधि र न्यूनतम कागजातसहित।",
       "Custom / Advanced": "अनुकूलित / उन्नत",
       "Two Wheeler Loan": "दुई पाङ्ग्रे सवारी ऋण",
       "Finance for new or used two-wheelers with quick approval and flexible down payment options": "नयाँ वा प्रयोग भइसकेका दुई पाङ्ग्रे सवारीका लागि छिटो स्वीकृति र लचिलो डाउन पेमेन्ट विकल्पसहितको वित्तीय सुविधा।",
@@ -5495,7 +5495,7 @@
     }
   },
   "copilot": {
-    "brand": "Mifos Intelligence AI",
+    "brand": "Mifos X Copilot",
     "currentSession": "हालको सत्र",
     "newChat": "नयाँ कुराकानी",
     "close": "बन्द गर्नुहोस्",
@@ -5504,21 +5504,21 @@
       "afternoon": "शुभ अपराह्न",
       "evening": "शुभ सन्ध्या"
     },
-    "welcomeHeading": "आज म तपाईंलाई तपाईंका ग्राहकहरूलाई सहयोग गर्न कसरी मद्दत गर्न सक्छु?",
+    "welcomeHeading": "तपाईं के गर्न चाहनुहुन्छ?",
     "suggestions": {
-      "clientDetails": "ग्राहक John Doe को विवरण देखाउनुहोस्",
-      "repaymentSchedule": "ऋण #107 को भुक्तानी तालिका के हो?",
-      "savingsBalance": "ग्राहक #52 को बचत खाताको ब्यालेन्स देखाउनुहोस्",
-      "overdueLoans": "यो हप्ता कति ऋणहरू बाँकी छन्?"
+      "clientDetails": "यो ग्राहकको प्रोफाइल देखाउनुहोस्",
+      "repaymentSchedule": "यो ऋणको भुक्तानी तालिका के हो?",
+      "savingsBalance": "यो ग्राहकको बचत ब्यालेन्स कति छ?",
+      "overdueLoans": "यो हप्ता कुन ऋणहरू म्याद नाघेका छन्?"
     },
     "input": {
-      "placeholder": "ग्राहक, ऋण, वा खाताहरूको बारेमा सोध्नुहोस्...",
+      "placeholder": "ग्राहक, ऋण वा खाताको बारेमा सोध्नुहोस्",
       "attach": "फाइल संलग्न गर्नुहोस्",
       "voice": "आवाज इनपुट",
       "send": "सन्देश पठाउनुहोस्",
       "stop": "उत्पादन रोक्नुहोस्"
     },
-    "disclaimer": "Mifos Intelligence AI मानव निर्णयलाई प्रतिस्थापन गर्न होइन, सहयोग गर्न डिजाइन गरिएको हो।",
+    "disclaimer": "Mifos X Copilot ले जवाफ खोज्न मद्दत गर्छ। पैसा चल्ने कुनै पनि काममा तपाईंको स्वीकृति चाहिन्छ।",
     "nav": {
       "recentChats": "हालैका कुराकानीहरू",
       "chat": "कुराकानी",
@@ -5533,20 +5533,20 @@
       "delete": "कुराकानी मेटाउनुहोस्"
     },
     "help": {
-      "capabilitiesTitle": "Mifos Intelligence AI ले के गर्न सक्छ?",
+      "capabilitiesTitle": "Mifos X Copilot ले के गर्न सक्छ",
       "capabilities": {
-        "lookup": "ग्राहक जानकारी र प्रोफाइलहरू खोज्नुहोस्",
-        "loans": "ऋण विवरण र भुक्तानी तालिकाहरू हेर्नुहोस्",
-        "savings": "बचत खाताको ब्यालेन्स जाँच्नुहोस्",
-        "portfolio": "ग्राहक पोर्टफोलियोहरूको बारेमा अन्तर्दृष्टि प्राप्त गर्नुहोस्",
-        "navigate": "Mifos X मा निर्दिष्ट पृष्ठहरूमा नेभिगेट गर्नुहोस्"
+        "lookup": "ग्राहक खोजेर प्रोफाइल देखाउने",
+        "loans": "ऋण विवरण र भुक्तानी तालिका देखाउने",
+        "savings": "बचत ब्यालेन्स जाँच्ने",
+        "portfolio": "ग्राहकको पोर्टफोलियो संक्षेप गर्ने",
+        "navigate": "सही पृष्ठमा लैजाने"
       },
-      "examplesTitle": "उदाहरण प्रश्नहरू",
-      "importantTitle": "महत्त्वपूर्ण",
+      "examplesTitle": "प्रयास गर्न सकिने कुराहरू",
+      "importantTitle": "जान्न योग्य",
       "important": {
-        "assist": "AI प्रतिक्रियाहरू सहायताका लागि मात्र हुन्, अन्तिम निर्णय होइनन्",
-        "verify": "कार्य गर्नु अघि सधैं महत्त्वपूर्ण वित्तीय डेटा प्रमाणित गर्नुहोस्",
-        "noExecute": "AI ले आफैं कारोबार गर्दैन"
+        "assist": "जवाफले निर्णय गर्न मद्दत गर्छ। यो आफैँमा निर्णय होइन।",
+        "verify": "अंकहरूमा आधारित भएर काम गर्नुअघि जाँच गर्नुहोस्।",
+        "noExecute": "तपाईंले पुष्टि नगरेसम्म पैसा चल्दैन।"
       }
     },
     "cardType": {
@@ -5556,18 +5556,79 @@
       "insight": "अन्तर्दृष्टि",
       "confirmation": "पुष्टि"
     },
-    "confirmWarning": "यो कार्यमा वास्तविक पैसा संलग्न छ। कृपया पुष्टि गर्नुहोस्।",
-    "openAssistant": "AI सहायक खोल्नुहोस्",
+    "confirmWarning": "यसले वास्तविक पैसा चलाउँछ। विवरण जाँच गरेर मात्र पुष्टि गर्नुहोस्।",
+    "openAssistant": "Mifos X Copilot खोल्नुहोस्",
     "newChatTitle": "नयाँ कुराकानी",
     "errors": {
       "invalidLength": "सन्देश खाली छ वा धेरै लामो छ। कृपया छोटो पारेर फेरि प्रयास गर्नुहोस्।",
       "injectionBlocked": "सन्देश निर्देशन उल्लंघन गर्ने प्रयास जस्तो देखिन्छ, त्यसैले पठाइएन। कृपया फरक तरिकाले लेख्नुहोस्।",
-      "streamFailed": "सहायकसँग सम्पर्क गर्दा केही गडबड भयो। कृपया फेरि प्रयास गर्नुहोस्।"
+      "streamFailed": "Mifos X Copilot मा पुग्न सकिएन। कृपया फेरि प्रयास गर्नुहोस्।"
     },
     "confirm": {
       "reference": "सन्दर्भ",
-      "pendingAnnouncement": "यो कार्य चलाउनु अघि पुष्टि आवश्यक छ।"
+      "pendingAnnouncement": "यो कार्य चल्नुअघि विवरण जाँच गर्नुहोस्।"
     },
-    "assistantAvatarAlt": "Mifos AI सहायक"
+    "assistantAvatarAlt": "Mifos X Copilot",
+    "cardLabels": {
+      "activationDate": "सक्रियता मिति",
+      "activeLoans": "सक्रिय ऋणहरू",
+      "amount": "रकम",
+      "appliedFor": "आवेदन रकम",
+      "approvalDate": "स्वीकृति मिति",
+      "approvedAmount": "स्वीकृत रकम",
+      "approvedBy": "स्वीकृत गर्ने",
+      "client": "ग्राहक",
+      "clientAccount": "ग्राहक खाता",
+      "disbursementDate": "वितरण मिति",
+      "expectedDisbursement": "अपेक्षित वितरण",
+      "firstName": "पहिलो नाम",
+      "lastName": "थर",
+      "loanAccount": "ऋण खाता",
+      "mobileNumber": "मोबाइल नम्बर",
+      "nextInstalment": "अर्को किस्ता",
+      "office": "कार्यालय",
+      "outstanding": "बाँकी रकम",
+      "principal": "प्रिन्सिपल",
+      "product": "उत्पादन",
+      "reference": "सन्दर्भ",
+      "repaymentAmount": "भुक्तानी रकम",
+      "repayments": "भुक्तानीहरू",
+      "savingsAccount": "बचत खाता",
+      "savingsBalance": "बचत ब्यालेन्स",
+      "search": "खोजी",
+      "status": "स्थिति",
+      "submittedOn": "पेश गरिएको मिति",
+      "transactionDate": "लेनदेन मिति"
+    },
+    "demo": {
+      "product": "कृषि अवधि ऋण",
+      "office": "प्रधान कार्यालय",
+      "statusActive": "सक्रिय",
+      "statusApproved": "स्वीकृत",
+      "writeIntro": "म यो गर्न सक्छु। तल दिइएको विवरण जाँच गर्नुहोस् र म चलाउनुअघि पुष्टि गर्नुहोस्।",
+      "approveSummary": "{{client}} का लागि {{product}} अनुमोदन गर्नुहोस्",
+      "loanIntro": "**{{client}}** को सक्रिय ऋण यहाँ छ:",
+      "loanTitle": "{{product}}, सक्रिय",
+      "nextInstalment": "{{amount}}, {{days}} दिनमा तिर्नुपर्ने",
+      "clientIntro": "मैले यो ग्राहक फेला पारेँ:",
+      "modeNotice": "म अहिले **डेमो मोड** मा चलिरहेको छु र कुनै गेटवे जोडिएको छैन, तर यहाँ देखिने सबै कुरा (स्ट्रिमिङ जवाफ, कार्डहरू, पुष्टि चरण) वास्तविक हो।",
+      "approved": "स्वीकृत भयो। यो ऋण अब अडिट ट्रेलमा तपाईंको प्रयोगकर्ता खातासँग अभिलेख भएको छ।",
+      "approvedTitle": "ऋण स्वीकृत भयो",
+      "approvedByYou": "तपाईं आफैँ, तपाईंकै लगइन र अनुमतिअनुसार",
+      "cancelled": "रद्द गरियो। कुनै पनि कार्य चलेन।",
+      "suggest": {
+        "schedule": "भुक्तानी तालिका देखाउनुहोस्",
+        "recordRepayment": "भुक्तानी दर्ता गर्नुहोस्",
+        "overdue": "म्याद नाघेका ऋणहरू देखाउनुहोस्",
+        "theirLoans": "उहाँका ऋणहरू देखाउनुहोस्",
+        "kyc": "KYC कागजातहरू देखाउनुहोस्",
+        "savings": "बचत ब्यालेन्स जाँच्नुहोस्",
+        "clientLoans": "यो ग्राहकका ऋणहरू देखाउनुहोस्",
+        "approve": "यो ऋण अनुमोदन गर्नुहोस्",
+        "searchClient": "ग्राहक खोज्नुहोस्",
+        "disburse": "यो ऋण वितरण गर्नुहोस्",
+        "backToClient": "ग्राहक प्रोफाइलमा फर्कनुहोस्"
+      }
+    }
   }
 }

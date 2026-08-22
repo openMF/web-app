@@ -3726,7 +3726,7 @@
       "Auto Loan": "Auto aizdevums",
       "Financing for new or used car purchases with structured EMIs over a chosen tenure": "Finansējums jaunu vai lietotu automobiļu iegādei ar fiksētiem ikmēneša maksājumiem izvēlētajā termiņā.",
       "BNPL": "BNPL",
-      "Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments": "\u201eP\u0113rc tagad, maks\u0101 v\u0113l\u0101k\u201c finans\u0113jums \u012bstermi\u0146a, bie\u017ei bezprocentu pirkumiem, kas tiek atmaks\u0101ts fiks\u0113t\u0101s da\u013c\u0101s.",
+      "Buy now, pay later financing for short-term, often interest-free purchases, settled in fixed installments": "„Pērc tagad, maksā vēlāk“ finansējums īstermiņa, bieži bezprocentu pirkumiem, kas tiek atmaksāts fiksētās daļās.",
       "Consumer Durable Loan": "Ilglietojuma preču aizdevums",
       "Point-of-sale financing for electronics, appliances, and other durable goods, often with zero-cost EMI options": "Finansējums tirdzniecības vietā elektronikai, sadzīves tehnikai un citām ilglietojuma precēm, bieži ar bezprocentu maksājumiem.",
       "Credit Card EMI": "Kredītkartes maksājumi pa daļām",
@@ -3738,17 +3738,17 @@
       "Quick secured loan against pledged gold ornaments or coins, with fast disbursal and minimal paperwork": "Ātrs nodrošināts aizdevums pret ieķīlātām zelta rotaslietām vai monētām, ar strauju izmaksu un minimālu dokumentāciju.",
       "Home Loan": "Mājokļa aizdevums",
       "Invoice Discounting": "Rēķinu diskontēšana",
-      "Short-term financing against unpaid invoices to improve business cash flow before customer payment is due": "\u012astermi\u0146a finans\u0113jums pret neapmaks\u0101tiem r\u0113\u0137iniem, lai uzlabotu uz\u0146\u0113muma naudas pl\u016bsmu pirms klienta maks\u0101juma termi\u0146a.",
+      "Short-term financing against unpaid invoices to improve business cash flow before customer payment is due": "Īstermiņa finansējums pret neapmaksātiem rēķiniem, lai uzlabotu uzņēmuma naudas plūsmu pirms klienta maksājuma termiņa.",
       "JLG Loan": "JLG aizdevums",
       "Group-backed microloans for individuals in a Joint Liability Group, typically for income-generating activities": "Grupas galvoti mikrokredīti solidāras atbildības grupas dalībniekiem, parasti ienākumus radošai darbībai.",
       "Line of Credit": "Kredītlīnija",
-      "A revolving credit limit that can be drawn, repaid, and reused as needed, with interest charged only on the amount utilized": "Atjaunojama kred\u012btl\u012bnija, ko var izmantot, atmaks\u0101t un izmantot atk\u0101rtoti p\u0113c nepiecie\u0161am\u012bbas; procenti tiek apr\u0113\u0137in\u0101ti tikai par izmantoto summu.",
+      "A revolving credit limit that can be drawn, repaid, and reused as needed, with interest charged only on the amount utilized": "Atjaunojama kredītlīnija, ko var izmantot, atmaksāt un izmantot atkārtoti pēc nepieciešamības; procenti tiek aprēķināti tikai par izmantoto summu.",
       "Loan against property where an existing residential or commercial asset is pledged as collateral": "Aizdevums pret esoša dzīvojamā vai komerciālā īpašuma ķīlu.",
       "Loan vs Securities / FD": "Aizdevums pret vērtspapīriem / termiņnoguldījumu",
       "Credit extended against shares, mutual funds, or fixed deposits without liquidating the underlying investment": "Kredīts pret akcijām, ieguldījumu fondiem vai termiņnoguldījumiem, nelikvidējot pašu ieguldījumu.",
       "Long-tenure financing to purchase, construct, or renovate a residential property": "Ilgtermiņa finansējums mājokļa iegādei, būvniecībai vai renovācijai.",
       "Merchant Cash Advance": "Tirgotāja naudas avanss",
-      "Working capital advanced against future card or digital sales, repaid as a percentage of daily transactions": "Apgroz\u0101mais kapit\u0101ls, kas tiek avans\u0113ts pret n\u0101kotnes kar\u0161u vai digit\u0101lajiem p\u0101rdo\u0161anas ie\u0146\u0113mumiem un atmaks\u0101ts k\u0101 procentu\u0101la da\u013ca no ikdienas dar\u012bjumiem.",
+      "Working capital advanced against future card or digital sales, repaid as a percentage of daily transactions": "Apgrozāmais kapitāls, kas tiek avansēts pret nākotnes karšu vai digitālajiem pārdošanas ieņēmumiem un atmaksāts kā procentuāla daļa no ikdienas darījumiem.",
       "Mortgage Loan (LAP)": "Hipotekārais aizdevums (LAP)",
       "No resets have been recorded for this loan": "Šim aizdevumam nav reģistrēta neviena atiestatīšana.",
       "No variations added yet": "Vēl nav pievienota neviena variācija",
@@ -3756,7 +3756,7 @@
       "A row with the greater than condition must repeat the cycle number above it": "Rindai ar nosacījumu “lielāks nekā” jāatkārto iepriekšējās rindas cikla numurs",
       "Fix the loan cycle variations before creating the product": "Pirms produkta izveides izlabojiet aizdevuma cikla variācijas",
       "Personal Loan": "Patēriņa aizdevums",
-      "Unsecured funding for personal needs like travel, medical expenses, or weddings, with flexible tenure and minimal documentation": "Nenodro\u0161in\u0101ts finans\u0113jums person\u012bg\u0101m vajadz\u012bb\u0101m, piem\u0113ram, ce\u013cojumiem, medic\u012bnas izdevumiem vai k\u0101z\u0101m, ar elast\u012bgu termi\u0146u un minim\u0101lu dokument\u0101ciju.",
+      "Unsecured funding for personal needs like travel, medical expenses, or weddings, with flexible tenure and minimal documentation": "Nenodrošināts finansējums personīgām vajadzībām, piemēram, ceļojumiem, medicīnas izdevumiem vai kāzām, ar elastīgu termiņu un minimālu dokumentāciju.",
       "Custom / Advanced": "Pielāgots / paplašināts",
       "Two Wheeler Loan": "Divriteņu transportlīdzekļa aizdevums",
       "Finance for new or used two-wheelers with quick approval and flexible down payment options": "Jaunu vai lietotu divriteņu transportlīdzekļu finansējums ar ātru apstiprinājumu un elastīgu pirmo iemaksu.",
@@ -5495,7 +5495,7 @@
     }
   },
   "copilot": {
-    "brand": "Mifos Intelligence AI",
+    "brand": "Mifos X Copilot",
     "currentSession": "Pašreizējā sesija",
     "newChat": "Jauna saruna",
     "close": "Aizvērt",
@@ -5504,21 +5504,21 @@
       "afternoon": "Labdien",
       "evening": "Labvakar"
     },
-    "welcomeHeading": "Kā es varu jums šodien palīdzēt apkalpot klientus?",
+    "welcomeHeading": "Ko vēlaties darīt?",
     "suggestions": {
-      "clientDetails": "Parādiet klienta John Doe informāciju",
-      "repaymentSchedule": "Kāds ir aizdevuma Nr. 107 atmaksas grafiks?",
-      "savingsBalance": "Parādiet klienta Nr. 52 krājkonta atlikumu",
-      "overdueLoans": "Cik aizdevumu šonedēļ ir nokavēti?"
+      "clientDetails": "Parādiet šī klienta profilu",
+      "repaymentSchedule": "Kāds ir šī aizdevuma atmaksas grafiks?",
+      "savingsBalance": "Kāds ir šī klienta uzkrājumu atlikums?",
+      "overdueLoans": "Kuri aizdevumi šonedēļ ir nokavēti?"
     },
     "input": {
-      "placeholder": "Jautājiet par klientiem, aizdevumiem vai kontiem...",
+      "placeholder": "Jautājiet par klientu, aizdevumu vai kontu",
       "attach": "Pievienot failu",
       "voice": "Balss ievade",
       "send": "Sūtīt ziņojumu",
       "stop": "Apturēt ģenerēšanu"
     },
-    "disclaimer": "Mifos Intelligence AI ir paredzēta, lai palīdzētu, nevis aizstātu cilvēku lēmumu pieņemšanu.",
+    "disclaimer": "Mifos X Copilot palīdz atrast atbildes. Jebkurai naudas kustībai joprojām nepieciešams jūsu apstiprinājums.",
     "nav": {
       "recentChats": "Nesenās sarunas",
       "chat": "Saruna",
@@ -5533,20 +5533,20 @@
       "delete": "Dzēst sarunu"
     },
     "help": {
-      "capabilitiesTitle": "Ko Mifos Intelligence AI var darīt?",
+      "capabilitiesTitle": "Ko Mifos X Copilot var izdarīt",
       "capabilities": {
-        "lookup": "Meklēt klientu informāciju un profilus",
-        "loans": "Skatīt aizdevumu informāciju un atmaksas grafikus",
-        "savings": "Pārbaudīt krājkontu atlikumus",
-        "portfolio": "Iegūt ieskatu par klientu portfeļiem",
-        "navigate": "Pāriet uz konkrētām Mifos X lapām"
+        "lookup": "Atrast klientu un parādīt viņa profilu",
+        "loans": "Parādīt aizdevuma datus un atmaksas grafikus",
+        "savings": "Pārbaudīt uzkrājumu atlikumu",
+        "portfolio": "Apkopot klienta portfeli",
+        "navigate": "Aizvest uz vajadzīgo lapu"
       },
-      "examplesTitle": "Pieprasījumu piemēri",
-      "importantTitle": "Svarīgi",
+      "examplesTitle": "Ko izmēģināt",
+      "importantTitle": "Vērts zināt",
       "important": {
-        "assist": "AI atbildes ir paredzētas tikai kā palīdzība, nevis galīgie lēmumi",
-        "verify": "Pirms rīkojaties, vienmēr pārbaudiet svarīgus finanšu datus",
-        "noExecute": "AI pati neveic darījumus"
+        "assist": "Atbildes palīdz izlemt. Tās nav lēmums.",
+        "verify": "Pārbaudiet skaitļus, pirms rīkojaties.",
+        "noExecute": "Nauda nekustas, kamēr to neapstiprināt."
       }
     },
     "cardType": {
@@ -5556,18 +5556,79 @@
       "insight": "Ieskats",
       "confirmation": "Apstiprinājums"
     },
-    "confirmWarning": "Šī darbība ir saistīta ar reālu naudu. Lūdzu, apstipriniet.",
-    "openAssistant": "Atvērt MI asistentu",
+    "confirmWarning": "Šeit kustas reāla nauda. Pārbaudiet datus un tad apstipriniet.",
+    "openAssistant": "Atvērt Mifos X Copilot",
     "newChatTitle": "Jauna saruna",
     "errors": {
       "invalidLength": "Ziņojums ir tukšs vai pārāk garš. Lūdzu, saīsiniet to un mēģiniet vēlreiz.",
       "injectionBlocked": "Ziņojums izskatās pēc mēģinājuma apiet norādījumus, tāpēc tas netika nosūtīts. Lūdzu, pārformulējiet to.",
-      "streamFailed": "Sazinoties ar asistentu, radās kļūda. Lūdzu, mēģiniet vēlreiz."
+      "streamFailed": "Neizdevās sasniegt Mifos X Copilot. Lūdzu, mēģiniet vēlreiz."
     },
     "confirm": {
       "reference": "Atsauce",
-      "pendingAnnouncement": "Pirms šīs darbības veikšanas nepieciešams apstiprinājums."
+      "pendingAnnouncement": "Pārbaudiet datus, pirms šī darbība tiek izpildīta."
     },
-    "assistantAvatarAlt": "Mifos MI asistents"
+    "assistantAvatarAlt": "Mifos X Copilot",
+    "cardLabels": {
+      "activationDate": "Aktivizācijas datums",
+      "activeLoans": "Aktīvie aizdevumi",
+      "amount": "Summa",
+      "appliedFor": "Pieteiktā summa",
+      "approvalDate": "Apstiprināšanas datums",
+      "approvedAmount": "Apstiprinātā summa",
+      "approvedBy": "Apstiprināja",
+      "client": "Klients",
+      "clientAccount": "Klienta konts",
+      "disbursementDate": "Izmaksas datums",
+      "expectedDisbursement": "Paredzamā izmaksa",
+      "firstName": "Vārds",
+      "lastName": "Uzvārds",
+      "loanAccount": "Aizdevuma konts",
+      "mobileNumber": "Mobilā telefona numurs",
+      "nextInstalment": "Nākamā iemaksa",
+      "office": "Birojs",
+      "outstanding": "Nesamaksātais atlikums",
+      "principal": "Pamatsumma",
+      "product": "Produkts",
+      "reference": "Atsauce",
+      "repaymentAmount": "Atmaksas summa",
+      "repayments": "Atmaksas",
+      "savingsAccount": "Krājkonts",
+      "savingsBalance": "Uzkrājumu atlikums",
+      "search": "Meklēt",
+      "status": "Statuss",
+      "submittedOn": "Iesniegts",
+      "transactionDate": "Darījuma datums"
+    },
+    "demo": {
+      "product": "Lauksaimniecības termiņaizdevums",
+      "office": "Galvenais birojs",
+      "statusActive": "Aktīvs",
+      "statusApproved": "Apstiprināts",
+      "writeIntro": "To varu izdarīt. Lūdzu, pārbaudiet zemāk redzamos datus un apstipriniet, pirms to izpildu.",
+      "approveSummary": "Apstiprināt {{product}} klientam {{client}}",
+      "loanIntro": "Šis ir klienta **{{client}}** aktīvais aizdevums:",
+      "loanTitle": "{{product}}, aktīvs",
+      "nextInstalment": "{{amount}}, termiņš pēc {{days}} dienām",
+      "clientIntro": "Atradu šo klientu:",
+      "modeNotice": "Šobrīd darbojos **demonstrācijas režīmā**, vārteja vēl nav pievienota, taču viss, ko šeit redzat (straumētā atbilde, kartītes, apstiprināšanas solis), ir īsts.",
+      "approved": "Apstiprināts. Aizdevums revīzijas takā tagad ir reģistrēts uz jūsu lietotāja vārda.",
+      "approvedTitle": "Aizdevums apstiprināts",
+      "approvedByYou": "Jūs — ar savām lietotāja atļaujām",
+      "cancelled": "Atcelts. Nekas netika izpildīts.",
+      "suggest": {
+        "schedule": "Parādiet atmaksas grafiku",
+        "recordRepayment": "Reģistrējiet atmaksu",
+        "overdue": "Parādiet nokavētos aizdevumus",
+        "theirLoans": "Parādiet viņa aizdevumus",
+        "kyc": "Parādiet KYC dokumentus",
+        "savings": "Pārbaudiet uzkrājumu atlikumu",
+        "clientLoans": "Parādiet šī klienta aizdevumus",
+        "approve": "Apstipriniet šo aizdevumu",
+        "searchClient": "Meklējiet klientu",
+        "disburse": "Izmaksājiet šo aizdevumu",
+        "backToClient": "Atpakaļ uz klienta profilu"
+      }
+    }
   }
 }

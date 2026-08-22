@@ -5492,7 +5492,7 @@
     }
   },
   "copilot": {
-    "brand": "Mifos Intelligence AI",
+    "brand": "Mifos X Copilot",
     "currentSession": "Kipindi cha sasa",
     "newChat": "Mazungumzo mapya",
     "close": "Funga",
@@ -5501,21 +5501,21 @@
       "afternoon": "Habari za mchana",
       "evening": "Habari za jioni"
     },
-    "welcomeHeading": "Ninawezaje kukusaidia kuhudumia wateja wako leo?",
+    "welcomeHeading": "Ungependa kufanya nini?",
     "suggestions": {
-      "clientDetails": "Nionyeshe maelezo ya mteja John Doe",
-      "repaymentSchedule": "Je, ratiba ya ulipaji wa mkopo #107 ni ipi?",
-      "savingsBalance": "Onyesha salio la akaunti ya akiba ya mteja #52",
-      "overdueLoans": "Ni mikopo mingapi imechelewa wiki hii?"
+      "clientDetails": "Nionyeshe wasifu wa mteja huyu",
+      "repaymentSchedule": "Ratiba ya ulipaji wa mkopo huu ni ipi?",
+      "savingsBalance": "Salio la akiba la mteja huyu ni kiasi gani?",
+      "overdueLoans": "Ni mikopo ipi imechelewa wiki hii?"
     },
     "input": {
-      "placeholder": "Uliza kuhusu wateja, mikopo, au akaunti...",
+      "placeholder": "Uliza kuhusu mteja, mkopo au akaunti",
       "attach": "Ambatisha faili",
       "voice": "Ingizo la sauti",
       "send": "Tuma ujumbe",
       "stop": "Simamisha uzalishaji"
     },
-    "disclaimer": "Mifos Intelligence AI imeundwa kusaidia, si kuchukua nafasi ya, maamuzi ya binadamu.",
+    "disclaimer": "Mifos X Copilot hukusaidia kupata majibu. Kila kinachohamisha pesa bado kinahitaji idhini yako.",
     "nav": {
       "recentChats": "Mazungumzo ya hivi karibuni",
       "chat": "Mazungumzo",
@@ -5530,20 +5530,20 @@
       "delete": "Futa mazungumzo"
     },
     "help": {
-      "capabilitiesTitle": "Mifos Intelligence AI inaweza kufanya nini?",
+      "capabilitiesTitle": "Mifos X Copilot inaweza kufanya nini",
       "capabilities": {
-        "lookup": "Tafuta taarifa na wasifu wa wateja",
-        "loans": "Angalia maelezo ya mikopo na ratiba za ulipaji",
-        "savings": "Angalia salio la akaunti za akiba",
-        "portfolio": "Pata maarifa kuhusu portfolio za wateja",
-        "navigate": "Nenda kwenye kurasa mahususi katika Mifos X"
+        "lookup": "Kutafuta mteja na kuonyesha wasifu wake",
+        "loans": "Kuonyesha maelezo ya mkopo na ratiba za ulipaji",
+        "savings": "Kukagua salio la akiba",
+        "portfolio": "Kufupisha portfolio ya mteja",
+        "navigate": "Kukupeleka kwenye ukurasa sahihi"
       },
-      "examplesTitle": "Mifano ya maswali",
-      "importantTitle": "Muhimu",
+      "examplesTitle": "Mambo ya kujaribu",
+      "importantTitle": "Ya kufahamu",
       "important": {
-        "assist": "Majibu ya AI ni kwa usaidizi tu, si maamuzi ya mwisho",
-        "verify": "Daima thibitisha data muhimu za kifedha kabla ya kuchukua hatua",
-        "noExecute": "AI haifanyi miamala yenyewe"
+        "assist": "Majibu hukusaidia kuamua. Si uamuzi wenyewe.",
+        "verify": "Kagua takwimu kabla ya kuzitegemea.",
+        "noExecute": "Hakuna pesa inayohama hadi uthibitishe."
       }
     },
     "cardType": {
@@ -5553,18 +5553,79 @@
       "insight": "Maarifa",
       "confirmation": "Uthibitisho"
     },
-    "confirmWarning": "Kitendo hiki kinahusisha pesa halisi. Tafadhali thibitisha.",
-    "openAssistant": "Fungua Msaidizi wa AI",
+    "confirmWarning": "Hii inahamisha pesa halisi. Kagua maelezo, kisha thibitisha.",
+    "openAssistant": "Fungua Mifos X Copilot",
     "newChatTitle": "Mazungumzo mapya",
     "errors": {
       "invalidLength": "Ujumbe ni tupu au mrefu sana. Tafadhali ufupishe na ujaribu tena.",
       "injectionBlocked": "Ujumbe unaonekana kama jaribio la kukiuka maelekezo, hivyo haukutumwa. Tafadhali uandike upya.",
-      "streamFailed": "Hitilafu imetokea wakati wa kuwasiliana na msaidizi. Tafadhali jaribu tena."
+      "streamFailed": "Imeshindwa kufikia Mifos X Copilot. Tafadhali jaribu tena."
     },
     "confirm": {
       "reference": "Rejeleo",
-      "pendingAnnouncement": "Uthibitisho unahitajika kabla ya kutekeleza kitendo hiki."
+      "pendingAnnouncement": "Kagua maelezo kabla kitendo hiki hakijatekelezwa."
     },
-    "assistantAvatarAlt": "Msaidizi wa Mifos AI"
+    "assistantAvatarAlt": "Mifos X Copilot",
+    "cardLabels": {
+      "activationDate": "Tarehe ya uanzishaji",
+      "activeLoans": "Mikopo inayotumika",
+      "amount": "Kiasi",
+      "appliedFor": "Kiasi kilichoombwa",
+      "approvalDate": "Tarehe ya kuidhinishwa",
+      "approvedAmount": "Kiasi kilichoidhinishwa",
+      "approvedBy": "Imeidhinishwa na",
+      "client": "Mteja",
+      "clientAccount": "Akaunti ya mteja",
+      "disbursementDate": "Tarehe ya utoaji",
+      "expectedDisbursement": "Utoaji unaotarajiwa",
+      "firstName": "Jina la kwanza",
+      "lastName": "Jina la familia",
+      "loanAccount": "Akaunti ya mkopo",
+      "mobileNumber": "Namba ya simu",
+      "nextInstalment": "Awamu inayofuata",
+      "office": "Ofisi",
+      "outstanding": "Salio linalobaki",
+      "principal": "Mtaji",
+      "product": "Bidhaa",
+      "reference": "Rejeleo",
+      "repaymentAmount": "Kiasi cha ulipaji",
+      "repayments": "Ulipaji",
+      "savingsAccount": "Akaunti ya akiba",
+      "savingsBalance": "Salio la akiba",
+      "search": "Tafuta",
+      "status": "Hali",
+      "submittedOn": "Imewasilishwa tarehe",
+      "transactionDate": "Tarehe ya muamala"
+    },
+    "demo": {
+      "product": "Mkopo wa Kilimo wa Muda Maalum",
+      "office": "Ofisi Kuu",
+      "statusActive": "Inayotumika",
+      "statusApproved": "Imeidhinishwa",
+      "writeIntro": "Naweza kufanya hivyo. Tafadhali kagua maelezo yaliyo hapa chini na uthibitishe kabla sijatekeleza.",
+      "approveSummary": "Idhinisha {{product}} kwa {{client}}",
+      "loanIntro": "Huu hapa mkopo unaotumika wa **{{client}}**:",
+      "loanTitle": "{{product}}, unaotumika",
+      "nextInstalment": "{{amount}}, inastahili kulipwa baada ya siku {{days}}",
+      "clientIntro": "Nimempata mteja huyu:",
+      "modeNotice": "Ninafanya kazi katika **hali ya onyesho**, bado hakuna lango lililounganishwa, lakini kila kitu unachokiona hapa (jibu linalotiririka, kadi, na hatua ya uthibitisho) ni halisi.",
+      "approved": "Imeidhinishwa. Sasa mkopo umerekodiwa kwa jina lako kwenye njia ya ukaguzi.",
+      "approvedTitle": "Mkopo umeidhinishwa",
+      "approvedByYou": "Wewe, kwa kitambulisho na ruhusa zako mwenyewe",
+      "cancelled": "Imeghairiwa. Hakuna kilichotekelezwa.",
+      "suggest": {
+        "schedule": "Nionyeshe ratiba ya ulipaji",
+        "recordRepayment": "Sajili ulipaji",
+        "overdue": "Nionyeshe mikopo iliyochelewa",
+        "theirLoans": "Nionyeshe mikopo yake",
+        "kyc": "Nionyeshe nyaraka za KYC",
+        "savings": "Kagua salio la akiba",
+        "clientLoans": "Nionyeshe mikopo ya mteja huyu",
+        "approve": "Idhinisha mkopo huu",
+        "searchClient": "Tafuta mteja",
+        "disburse": "Toa mkopo huu",
+        "backToClient": "Rudi kwenye wasifu wa mteja"
+      }
+    }
   }
 }

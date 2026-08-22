@@ -11,11 +11,33 @@ import { McpChatRequest, McpStreamEvent } from '../core/models/mcp-response.mode
 /**
  * Mock transport used while the Copilot gateway is not deployed
  * (copilotMcpBaseUrl = 'mock'). Streams contract-v1 events with realistic
- * pacing so the full UI — tokens, cards, approval flow — works end to end.
+ * pacing so the full UI (tokens, cards, approval flow) works end to end.
  * Swapping to the real gateway is a configuration change only.
+ *
+ * The wording here is held to the same bar as production: accounts are named,
+ * amounts carry their currency, no record id is shown to the officer, and
+ * every string an officer reads comes from the translation files. A demo that
+ * only speaks English would misrepresent a product that ships in thirteen
+ * languages.
  */
 
+/** Resolves a translation key, supplied by the caller so this module stays DI-free. */
+export type Translator = (key: string, params?: Record<string, unknown>) => string;
+
 const TOKEN_DELAY_MS = 18;
+
+/** Stand-ins used when no client is in focus, so the demo still reads like a branch. */
+const DEMO_CLIENT = 'Rajesh Kumar';
+const DEMO_LOAN_ACCOUNT = '000000004521';
+const DEMO_CLIENT_ACCOUNT = '000000000052';
+const DEMO_CURRENCY = 'INR';
+
+/**
+ * The one date the demo runs on. Both the value sent for execution and the value shown on
+ * the card derive from it, because a card that disagrees with what will execute is the
+ * exact failure this feature exists to prevent, and a demo should not model that.
+ */
+const DEMO_DATE = new Date(Date.UTC(2026, 7, 21));
 
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -35,27 +57,84 @@ function suggest(...items: string[]): McpStreamEvent {
   return { type: 'suggest', suggestions: items };
 }
 
+/** yyyy-MM-dd, the form a write tool takes. */
+function isoDate(date: Date): string {
+  return date.toISOString().slice(0, 10);
+}
+
+/** "21 August 2026", the form an officer reads. */
+function readableDate(date: Date, locale: string): string {
+  return new Intl.DateTimeFormat(locale || 'en', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC'
+  }).format(date);
+}
+
+/** Grouped thousands with the currency in front, matching what the gateway sends. */
+function money(amount: number, locale: string): string {
+  const formatted = new Intl.NumberFormat(locale || 'en', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }).format(amount);
+  return `${DEMO_CURRENCY} ${formatted}`;
+}
+
+/**
+ * A card id that is unique even for two approvals raised in the same millisecond, and whose
+ * tail varies so the reference shown on the card is not the same string every time.
+ */
+let cardSequence = 0;
+function nextCardId(): string {
+  cardSequence += 1;
+  return `mock-card-${Date.now().toString(36)}-${cardSequence.toString(36).padStart(4, '0')}`;
+}
+
+/** A name is only a name once it has a non-blank value. */
+function clientName(request: McpChatRequest): string {
+  return request.context.clientName?.trim() || DEMO_CLIENT;
+}
+
 /** Streams a mock reply for a chat turn, selected by simple intent matching. */
-export async function* mockChatStream(request: McpChatRequest): AsyncGenerator<McpStreamEvent> {
+export async function* mockChatStream(
+  request: McpChatRequest,
+  t: Translator,
+  locale = 'en'
+): AsyncGenerator<McpStreamEvent> {
   const message = request.message.toLowerCase();
-  const clientLabel =
-    request.context.clientName ?? (request.context.clientId ? `client #${request.context.clientId}` : null);
+  const client = clientName(request);
+  const loanAccount = request.context.loanId ? String(request.context.loanId).padStart(12, '0') : DEMO_LOAN_ACCOUNT;
+  const clientAccount = request.context.clientId
+    ? String(request.context.clientId).padStart(12, '0')
+    : DEMO_CLIENT_ACCOUNT;
+  const product = t('copilot.demo.product');
 
   if (/(approve|disburse|repay|repayment|record|transfer|waive)/.test(message)) {
-    // Write intent -> the gateway pauses with an approval card; nothing executes yet.
-    yield* tokens('I can do that. Please review and confirm the action below before I execute it.\n');
+    // Write intent, so the gateway pauses with an approval card and nothing executes yet.
+    yield* tokens(t('copilot.demo.writeIntro'));
     await sleep(120);
     yield {
       type: 'action_card',
       pendingAction: {
-        cardId: `mock-card-${Date.now()}`,
-        tool: 'fineract_loan_approve',
+        cardId: nextCardId(),
+        tool: 'mifos_loan_approve',
         args: {
           loanId: request.context.loanId ?? 4521,
-          approvedAmount: 25000,
-          client: clientLabel ?? 'Rajesh Kumar'
+          approvedLoanAmount: 25000,
+          approvedOnDate: isoDate(DEMO_DATE)
         },
-        humanSummary: `Approve loan #${request.context.loanId ?? 4521} for ${clientLabel ?? 'Rajesh Kumar'} (₹25,000)`,
+        // What the officer reads: the gateway looked the account up first. Every value
+        // here is derived from the same source as the argument it stands for.
+        display: [
+          { label: 'Client', value: client },
+          { label: 'Loan account', value: loanAccount },
+          { label: 'Product', value: product },
+          { label: 'Applied for', value: money(30000, locale) },
+          { label: 'Approved amount', value: money(25000, locale) },
+          { label: 'Approval date', value: readableDate(DEMO_DATE, locale) }
+        ],
+        humanSummary: t('copilot.demo.approveSummary', { product, client }),
         idempotencyKey: 'srv-mock-0001',
         expiresAt: new Date(Date.now() + 5 * 60_000).toISOString()
       }
@@ -64,88 +143,103 @@ export async function* mockChatStream(request: McpChatRequest): AsyncGenerator<M
   }
 
   if (/loan/.test(message)) {
-    yield { type: 'tool_call', toolName: 'fineract_loan_details', toolPhase: 'started', readOnly: true };
+    yield { type: 'tool_call', toolName: 'mifos_loan_details', toolPhase: 'started', readOnly: true };
     await sleep(350);
-    yield { type: 'tool_call', toolName: 'fineract_loan_details', toolPhase: 'finished', readOnly: true };
-    yield* tokens(`Here is the active loan${clientLabel ? ` for **${clientLabel}**` : ''}:\n`);
+    yield { type: 'tool_call', toolName: 'mifos_loan_details', toolPhase: 'finished', readOnly: true };
+    yield* tokens(t('copilot.demo.loanIntro', { client }));
     yield {
       type: 'action_card',
       card: {
         type: 'loan',
-        title: `Loan #${request.context.loanId ?? 4521} — Active`,
+        title: t('copilot.demo.loanTitle', { product }),
         data: {
-          Product: 'Agriculture Term Loan',
-          Principal: '₹50,000',
-          Outstanding: '₹31,250',
-          'Next EMI': '₹5,000 due in 2 days',
-          Status: 'Active'
+          // Keys are the shared card vocabulary; the card components translate them.
+          'Loan account': loanAccount,
+          Principal: money(50000, locale),
+          Outstanding: money(31250, locale),
+          'Next instalment': t('copilot.demo.nextInstalment', { amount: money(5000, locale), days: 2 }),
+          Status: t('copilot.demo.statusActive')
         }
       }
     };
-    yield suggest('Show repayment schedule', 'Record a repayment', 'Show overdue loans');
+    yield suggest(
+      t('copilot.demo.suggest.schedule'),
+      t('copilot.demo.suggest.recordRepayment'),
+      t('copilot.demo.suggest.overdue')
+    );
     yield { type: 'done', conversationId: request.conversationId ?? 'mock-conv-1' };
     return;
   }
 
   if (/(client|search|who is)/.test(message)) {
-    yield { type: 'tool_call', toolName: 'fineract_client_search', toolPhase: 'started', readOnly: true };
+    yield { type: 'tool_call', toolName: 'mifos_client_search', toolPhase: 'started', readOnly: true };
     await sleep(300);
-    yield { type: 'tool_call', toolName: 'fineract_client_search', toolPhase: 'finished', readOnly: true };
-    yield* tokens('I found this client:\n');
+    yield { type: 'tool_call', toolName: 'mifos_client_search', toolPhase: 'finished', readOnly: true };
+    yield* tokens(t('copilot.demo.clientIntro'));
     yield {
       type: 'action_card',
       card: {
         type: 'client',
-        title: clientLabel ?? 'Rajesh Kumar',
+        title: client,
         data: {
-          'Client ID': String(request.context.clientId ?? 4521),
-          Office: 'Head Office',
-          Status: 'Active',
+          'Client account': clientAccount,
+          Office: t('copilot.demo.office'),
+          Status: t('copilot.demo.statusActive'),
           'Active loans': '1',
-          'Savings balance': '₹12,300'
+          'Savings balance': money(12300, locale)
         }
       }
     };
-    yield suggest('Show their loans', 'Show KYC documents', 'Check savings balance');
+    yield suggest(
+      t('copilot.demo.suggest.theirLoans'),
+      t('copilot.demo.suggest.kyc'),
+      t('copilot.demo.suggest.savings')
+    );
     yield { type: 'done', conversationId: request.conversationId ?? 'mock-conv-1' };
     return;
   }
 
-  yield* tokens(
-    'I am running in **mock mode** (no gateway connected yet), but the full pipeline you are ' +
-      'seeing — streaming, cards, confirmations — is the real one. Try “show loans for this client” ' +
-      'or “approve this loan”.'
+  yield* tokens(t('copilot.demo.modeNotice'));
+  yield suggest(
+    t('copilot.demo.suggest.clientLoans'),
+    t('copilot.demo.suggest.approve'),
+    t('copilot.demo.suggest.searchClient')
   );
-  yield suggest('Show loans for this client', 'Approve this loan', 'Search client Rajesh');
   yield { type: 'done', conversationId: request.conversationId ?? 'mock-conv-1' };
 }
 
 /** Streams the continuation of a paused turn after approve/reject. */
 export async function* mockDecisionStream(
   cardId: string,
-  decision: 'approve' | 'reject'
+  decision: 'approve' | 'reject',
+  t: Translator
 ): AsyncGenerator<McpStreamEvent> {
   await sleep(250);
   if (decision === 'approve') {
-    yield { type: 'tool_call', toolName: 'fineract_loan_approve', toolPhase: 'started', readOnly: false };
+    yield { type: 'tool_call', toolName: 'mifos_loan_approve', toolPhase: 'started', readOnly: false };
     await sleep(600);
-    yield { type: 'tool_call', toolName: 'fineract_loan_approve', toolPhase: 'finished', readOnly: false };
-    yield* tokens('Done — the loan has been approved and recorded in the audit trail.\n');
+    yield { type: 'tool_call', toolName: 'mifos_loan_approve', toolPhase: 'finished', readOnly: false };
+    yield* tokens(t('copilot.demo.approved'));
     yield {
       type: 'action_card',
       card: {
         type: 'insight',
-        title: 'Loan approved',
+        title: t('copilot.demo.approvedTitle'),
         data: {
-          Status: 'Approved',
-          'Audit reference': cardId,
-          'Executed as': 'your user (Fineract RBAC applied)'
+          Status: t('copilot.demo.statusApproved'),
+          // Take the varying tail: every demo card id starts "mock-card-".
+          Reference: cardId.slice(-8).toUpperCase(),
+          'Approved by': t('copilot.demo.approvedByYou')
         }
       }
     };
-    yield suggest('Disburse this loan', 'Show the repayment schedule', 'Back to client profile');
+    yield suggest(
+      t('copilot.demo.suggest.disburse'),
+      t('copilot.demo.suggest.schedule'),
+      t('copilot.demo.suggest.backToClient')
+    );
   } else {
-    yield* tokens('Understood — I cancelled the action. Nothing was executed.');
+    yield* tokens(t('copilot.demo.cancelled'));
   }
   yield { type: 'done', conversationId: 'mock-conv-1' };
 }
