@@ -23,7 +23,8 @@ import { Dates } from 'app/core/utils/dates';
 import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { switchMap } from 'rxjs/operators';
+import { EMPTY } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
 
 /**
  * Add Fixed Deposits Charge component.
@@ -90,7 +91,7 @@ export class AddChargeFixedDepositsAccountComponent implements OnInit {
   buildDependencies() {
     this.fixedDepositsChargeForm.controls.chargeId.valueChanges
       .pipe(
-        switchMap((chargeId) => this.savingsService.getChargeTemplate(chargeId)),
+        switchMap((chargeId) => this.savingsService.getChargeTemplate(chargeId).pipe(catchError(() => EMPTY))),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe((data: any) => {

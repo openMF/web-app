@@ -17,7 +17,8 @@ import { SavingsService } from '../../savings.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { switchMap } from 'rxjs/operators';
+import { EMPTY } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
 
 /**
  * Add Savings Charge component.
@@ -81,7 +82,7 @@ export class AddChargeSavingsAccountComponent implements OnInit {
   buildDependencies() {
     this.savingsChargeForm.controls.chargeId.valueChanges
       .pipe(
-        switchMap((chargeId) => this.savingsService.getChargeTemplate(chargeId)),
+        switchMap((chargeId) => this.savingsService.getChargeTemplate(chargeId).pipe(catchError(() => EMPTY))),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe((data: any) => {

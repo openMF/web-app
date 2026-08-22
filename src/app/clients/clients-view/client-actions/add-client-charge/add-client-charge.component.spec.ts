@@ -8,7 +8,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { delay, of, throwError } from 'rxjs';
+import { of, Subject, throwError } from 'rxjs';
 import { AddClientChargeComponent } from './add-client-charge.component';
 import { ClientsService } from 'app/clients/clients.service';
 import { SettingsService } from 'app/settings/settings.service';
@@ -112,23 +112,50 @@ describe('AddClientChargeComponent', () => {
     expect(notifier.notifyAndNavigate).not.toHaveBeenCalled();
   });
 
-  it('should apply only the latest charge template when chargeId changes rapidly', (done) => {
+  it('should apply only the latest charge template when chargeId changes rapidly', () => {
+    const firstResponse$ = new Subject<any>();
+    const secondResponse$ = new Subject<any>();
     clientsService.getChargeAndTemplate.mockReset();
     clientsService.getChargeAndTemplate.mockImplementation((chargeId: number) =>
-      of({
-        chargeTimeType: { id: chargeId, value: chargeId === 1 ? 'Specified due date' : 'Annual Fee' },
-        chargeCalculationType: { id: 1 },
-        amount: chargeId * 100,
-        feeInterval: null
-      }).pipe(delay(chargeId === 1 ? 50 : 0))
+      chargeId === 1 ? firstResponse$ : secondResponse$
     );
 
     component.clientChargeForm.controls.chargeId.setValue(1);
     component.clientChargeForm.controls.chargeId.setValue(2);
 
-    setTimeout(() => {
-      expect(component.clientChargeForm.value.amount).toBe(200);
-      done();
-    }, 100);
+    secondResponse$.next({
+      chargeTimeType: { id: 2, value: 'Annual Fee' },
+      chargeCalculationType: { id: 1 },
+      amount: 200,
+      feeInterval: null
+    });
+    firstResponse$.next({
+      chargeTimeType: { id: 1, value: 'Specified due date' },
+      chargeCalculationType: { id: 1 },
+      amount: 100,
+      feeInterval: null
+    });
+
+    expect(component.clientChargeForm.value.amount).toBe(200);
+  });
+
+  it('should load template after a failed request when chargeId changes again', () => {
+    clientsService.getChargeAndTemplate.mockReset();
+    clientsService.getChargeAndTemplate.mockImplementation((chargeId: number) => {
+      if (chargeId === 1) {
+        return throwError(() => new Error('API error'));
+      }
+      return of({
+        chargeTimeType: { id: 2, value: 'Annual Fee' },
+        chargeCalculationType: { id: 1 },
+        amount: 200,
+        feeInterval: null
+      });
+    });
+
+    component.clientChargeForm.controls.chargeId.setValue(1);
+    component.clientChargeForm.controls.chargeId.setValue(2);
+
+    expect(component.clientChargeForm.value.amount).toBe(200);
   });
 });

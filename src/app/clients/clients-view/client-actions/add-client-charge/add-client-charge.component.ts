@@ -18,7 +18,8 @@ import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 import { ClientActionNotifierService } from '../client-action-notifier.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { switchMap } from 'rxjs/operators';
+import { EMPTY } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
 
 /**
  * Add Clients Charge component.
@@ -76,7 +77,7 @@ export class AddClientChargeComponent implements OnInit {
   buildDependencies() {
     this.clientChargeForm.controls.chargeId.valueChanges
       .pipe(
-        switchMap((chargeId) => this.clientsService.getChargeAndTemplate(chargeId)),
+        switchMap((chargeId) => this.clientsService.getChargeAndTemplate(chargeId).pipe(catchError(() => EMPTY))),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe((data: any) => {
